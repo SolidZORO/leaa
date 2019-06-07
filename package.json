@@ -1,5 +1,5 @@
 {
-  "name": "leaa",
+  "name": "@leaa/root",
   "private": true,
   "workspaces": ["packages/*"],
   "dependencies": {

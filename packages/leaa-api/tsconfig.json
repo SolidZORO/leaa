@@ -1,5 +1,5 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "baseUrl": ".",
     "outDir": "./dist",
@@ -7,10 +7,17 @@
     "target": "es6",
     "declaration": true,
     "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "sourceMap": false,
-    "incremental": true
+    "incremental": true,
+    "paths": {
+      "@leaa/common": ["../_leaa-common/src"],
+      "@leaa/common/*": ["../_leaa-common/src/*"],
+      "@leaa/api": ["./src"],
+      "@leaa/api/*": ["./src/*"]
+    }
   },
-  "exclude": ["node_modules"]
+  "include": ["src/**/*.ts", "src/**/*.tsx", "typings/*"],
+  "exclude": ["node_modules", "dist"]
 }

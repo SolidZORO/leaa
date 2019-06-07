@@ -8,6 +8,7 @@ module.exports = {
       jsx: true,
     },
   },
+  plugins: ['@typescript-eslint', 'react', 'typescript', 'import', 'css-modules'],
   extends: [
     'airbnb',
     'airbnb-typescript',
@@ -15,7 +16,6 @@ module.exports = {
     'plugin:css-modules/recommended',
     'plugin:prettier/recommended',
   ],
-  plugins: ['@typescript-eslint', 'react', 'typescript', 'import', 'css-modules'],
   globals: {
     __DEV__: true,
     status: false,
@@ -61,25 +61,25 @@ module.exports = {
     '@typescript-eslint/camelcase': ['error', { properties: 'never' }],
     '@typescript-eslint/no-empty-interface': 0,
     //
-    //
-    // TODO 具有破坏性，全部修复后，尽量注释掉
-    '@typescript-eslint/no-explicit-any': 0,
-    '@typescript-eslint/ban-types': 0,
-    '@typescript-eslint/explicit-function-return-type': 0,
-    //
-    //
     // FOR NESTJS
     '@typescript-eslint/no-parameter-properties': 0,
     'no-useless-constructor': 0,
     'no-empty-function': 0,
     'class-methods-use-this': 0,
     //
+    // FOR MONO
     'prettier/prettier': 'error',
+    'import/no-unresolved': ['error', { ignore: ['@leaa'] }],
+    //
+    // TODO will remove
+    '@typescript-eslint/no-explicit-any': 0,
+    '@typescript-eslint/ban-types': 0,
+    '@typescript-eslint/explicit-function-return-type': 0,
   },
   settings: {
     'import/resolver': {
       node: {
-        moduleDirectory: ['node_modules', 'src'],
+        extensions: ['.ts', '.tsx', '.js', '.jsx'],
       },
     },
   },
