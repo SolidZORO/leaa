@@ -1,0 +1,11 @@
+{
+  "name": "leaa",
+  "private": true,
+  "workspaces": ["packages/*"],
+  "dependencies": {
+  },
+  "scripts": {
+    "u": "yarn upgrade-interactive --latest",
+    "tsc": "yarn workspaces run tsc"
+  }
+}

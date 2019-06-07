@@ -1,0 +1,8 @@
+.cache
+.idea
+.vscode/*
+
+/_documents
+/public
+/tools/webpack
+/src/assets/fonts/**/*.js

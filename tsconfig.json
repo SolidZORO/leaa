@@ -1,0 +1,38 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "pretty": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "esModuleInterop": true,
+    "noImplicitReturns": true,
+    "noImplicitAny": true,
+    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true,
+    "lib": [
+      "es6",
+      "es7",
+      "esnext",
+      "dom"
+    ],
+    "types": [
+      "node",
+      "jest"
+    ]
+  },
+  "compileOnSave": false,
+  "exclude": [
+    "node_modules",
+    "build",
+    "deploy",
+    "_build",
+    "_deploy",
+    "_deploys",
+    "_tsc",
+    "jest",
+    "__mocks__",
+    "__webpack_test__",
+    "**/*.spec.ts",
+    "**/*.test.ts"
+  ]
+}
