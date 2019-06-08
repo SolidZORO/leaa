@@ -21,8 +21,8 @@ module.exports = {
       {
         root: ['.'],
         alias: {
-          "@leaa-common/*": ["../leaa-common/src/*"],
-          "@leaa-api/*": ["./src/*"]
+          '@leaa-common/*': ['../leaa-common/src/*'],
+          '@leaa-api/*': ['./src/*'],
         },
       },
     ],

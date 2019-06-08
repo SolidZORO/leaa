@@ -8,7 +8,13 @@ module.exports = {
       jsx: true,
     },
   },
-  plugins: ['@typescript-eslint', 'react', 'typescript', 'import', 'css-modules'],
+  plugins: [
+    '@typescript-eslint',
+    'react',
+    'typescript',
+    'import',
+    'css-modules',
+  ],
   extends: [
     'airbnb',
     'airbnb-typescript',

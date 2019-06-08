@@ -21,13 +21,13 @@ import { AppModule } from './modules/app/app.module';
   app.useStaticAssets(publicPath);
 
   const configService = await app.get(ConfigService);
-  await app.listen(configService.get('PORT'));
+  await app.listen(configService.PORT);
 
   cliUtil.emoji({
-    PROTOCOL: configService.get('PROTOCOL'),
-    PORT: configService.get('PORT'),
-    BASE_HOST: configService.get('BASE_HOST'),
-    NODE_ENV: configService.get('NODE_ENV'),
+    PROTOCOL: configService.PROTOCOL,
+    PORT: configService.PORT,
+    BASE_HOST: configService.BASE_HOST,
+    NODE_ENV: configService.NODE_ENV,
     showGraphql: true,
   });
 })();

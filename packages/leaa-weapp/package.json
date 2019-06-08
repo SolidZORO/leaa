@@ -9,10 +9,7 @@
     "node": ">=10.13.0",
     "npm": ">=6.4.0"
   },
-  "scripts": {
-  },
-  "dependencies": {
-  },
-  "devDependencies": {
-  }
+  "scripts": {},
+  "dependencies": {},
+  "devDependencies": {}
 }

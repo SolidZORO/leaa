@@ -9,13 +9,9 @@ export class AppService {
   }
 
   getHello(): string {
-    const helloString = 'Hello Jason!';
+    const helloString = 'Hello Jason and Logger!';
 
-    try {
-      this.logger.error(helloString);
-    } catch (e) {
-      this.logger.error(e.message);
-    }
+    this.logger.log(helloString);
 
     return helloString;
   }

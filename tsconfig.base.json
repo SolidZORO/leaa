@@ -7,6 +7,8 @@
     "noImplicitReturns": true,
     "noImplicitAny": true,
     "resolveJsonModule": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "forceConsistentCasingInFileNames": true,
     "lib": ["es6", "es7", "esnext", "dom"],
     "types": ["node", "jest"],

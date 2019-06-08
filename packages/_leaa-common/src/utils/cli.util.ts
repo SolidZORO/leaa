@@ -6,7 +6,7 @@ export const emoji = ({
   showGraphql,
 }: {
   PROTOCOL: string;
-  PORT: string;
+  PORT: number;
   BASE_HOST: string;
   NODE_ENV: string;
   showGraphql?: boolean;
