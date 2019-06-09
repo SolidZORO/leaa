@@ -2,9 +2,9 @@ import Joi from 'joi';
 import dotenv, { DotenvParseOutput } from 'dotenv';
 import fs from 'fs';
 
-import { configInterface } from '@leaa/common/interfaces';
+import { IDotEnv } from '@leaa/common/interfaces';
 
-type IEnvConfig = configInterface.IDotEnv | DotenvParseOutput;
+type IEnvConfig = IDotEnv | DotenvParseOutput;
 
 export class ConfigService {
   private readonly envConfig: IEnvConfig;
@@ -53,6 +53,22 @@ export class ConfigService {
     return this.envConfig.MYSQL_DATABASE;
   }
 
+  get TRUST_PROXY(): string {
+    return this.envConfig.MYSQL_DATABASE;
+  }
+
+  get JWT_SECRET_KEY(): string {
+    return this.envConfig.MYSQL_DATABASE;
+  }
+
+  get CLIENT_COOKIE_EXPIRES_DAY(): number {
+    return Number(this.envConfig.CLIENT_COOKIE_EXPIRES_DAY);
+  }
+
+  get SERVER_COOKIE_EXPIRES_DAY(): number {
+    return Number(this.envConfig.SERVER_COOKIE_EXPIRES_DAY);
+  }
+
   private validate(envConfig: IEnvConfig): IEnvConfig {
     const envVarsSchema: Joi.ObjectSchema = Joi.object({
       NODE_ENV: Joi.string()
@@ -68,6 +84,11 @@ export class ConfigService {
       MYSQL_USER: Joi.string(),
       MYSQL_PASSWORD: Joi.string(),
       MYSQL_DATABASE: Joi.string(),
+
+      TRUST_PROXY: Joi.string(),
+      JWT_SECRET_KEY: Joi.string(),
+      CLIENT_COOKIE_EXPIRES_DAY: Joi.number().default(180),
+      SERVER_COOKIE_EXPIRES_DAY: Joi.number().default(180),
     });
 
     const { error, value: validatedEnvConfig } = Joi.validate(envConfig, envVarsSchema, { allowUnknown: true });

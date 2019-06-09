@@ -1,3 +1,2 @@
-import * as configInterface from './config.interface';
-
-export { configInterface };
+export * from './config.interface';
+export * from './user.interface';

@@ -1,10 +1,10 @@
-import { Index, Entity, PrimaryGeneratedColumn, Column, UpdateDateColumn, CreateDateColumn } from 'typeorm';
+import { Index, Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 import { ObjectType, Field, ID } from 'type-graphql';
 
-@ObjectType()
 @Entity('users')
 @Index('users_phone_unique', ['phone'], { unique: true })
 @Index('users_email_unique', ['email'], { unique: true })
+@ObjectType()
 export class User {
   @PrimaryGeneratedColumn()
   @Field(() => ID)

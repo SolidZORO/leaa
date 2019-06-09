@@ -6,7 +6,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { cliUtil } from '@leaa/common/utils';
 import { LoggerService } from '@leaa/api/modules/logger/logger.service';
 import { ConfigService } from '@leaa/api/modules/config/config.service';
-import { AppModule } from './modules/app/app.module';
+import { AppModule } from './app.module';
 
 (async function bootstrap() {
   const logger = new Logger('Log');
@@ -17,7 +17,7 @@ import { AppModule } from './modules/app/app.module';
   });
 
   const publicPath = path.resolve('public');
-  logger.log(publicPath, 'StaticAssets');
+  // logger.log(publicPath, 'StaticAssets');
   app.useStaticAssets(publicPath);
 
   const configService = await app.get(ConfigService);

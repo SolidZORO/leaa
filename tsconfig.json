@@ -4,7 +4,6 @@
     "baseUrl": ".",
     "paths": {
       "~/*": ["packages/*"]
-      //      "@leaa-api/*": ["packages/leaa-api/src/*"]
     }
   }
 }
