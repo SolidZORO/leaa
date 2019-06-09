@@ -13,8 +13,10 @@ export class UserResolver {
     const [items, total] = await this.userService.getUsers(args);
 
     return {
-      items,
+      current: 1,
+      pageSize: 1,
       total,
+      items,
     };
   }
 }

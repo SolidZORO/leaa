@@ -26,8 +26,8 @@ export class User {
   @Field()
   status!: number;
 
-  @Column({ type: 'varchar', length: 64 })
-  @Field()
+  @Column({ type: 'varchar', length: 64, select: false })
+  // @Field()
   password!: string;
 
   @Column({ type: 'varchar', length: 32, nullable: true })

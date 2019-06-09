@@ -1,13 +1,11 @@
 // import { Max, Min } from 'class-validator';
-import { ObjectType, Field, Int } from 'type-graphql';
+import { ObjectType, Field } from 'type-graphql';
 
 import { User } from '@leaa/common/entrys';
+import { CommonPaginationObjectDto } from '@leaa/common/dtos/_common';
 
 @ObjectType()
-export class GetUsersObjectDto {
-  @Field(() => Int)
-  readonly total: number = 0;
-
+export class GetUsersObjectDto extends CommonPaginationObjectDto {
   @Field(() => [User])
   readonly items: User[] = [];
 }
