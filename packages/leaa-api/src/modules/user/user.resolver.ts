@@ -10,13 +10,6 @@ export class UserResolver {
 
   @Query(() => GetUsersObjectDto)
   async users(@Args() args: GetUsersArgsDto): Promise<GetUsersObjectDto> {
-    const [items, total] = await this.userService.getUsers(args);
-
-    return {
-      current: 1,
-      pageSize: 1,
-      total,
-      items,
-    };
+    return this.userService.getUsers(args);
   }
 }

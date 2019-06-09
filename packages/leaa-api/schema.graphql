@@ -4,7 +4,7 @@
 # -----------------------------------------------
 
 type CommonPaginationObjectDto {
-  current: Int!
+  page: Int
   pageSize: Int!
   total: Int!
 }
@@ -21,14 +21,14 @@ The javascript `Date` as string. Type represents date and time as the ISO Date s
 scalar DateTime
 
 type GetUsersObjectDto {
-  current: Int!
+  page: Int
   pageSize: Int!
   total: Int!
   items: [User!]!
 }
 
 type Query {
-  users(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "ASC", q: String, skip: Int = 0, take: Int = 30): GetUsersObjectDto!
+  users(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "ASC", q: String): GetUsersObjectDto!
 }
 
 type User {

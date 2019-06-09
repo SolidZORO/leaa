@@ -1,18 +1,8 @@
 import { CommonGetItemsArgsDto } from '@leaa/common/dtos/_common';
 
-// const argsSample = {
-//   page: 1,      -> skip -> page * take
-//   pageSize: 30, -> take
-//   orderBy: 'id',
-//   orderSort: 'ASC',
-//   skip: 0,
-//   take: 1,
-// };
-
 interface IFormatArgs extends CommonGetItemsArgsDto {
   take?: number;
   skip?: number;
-  current?: number;
   order?: {
     [key: string]: 'ASC' | 'DESC';
   };
@@ -20,11 +10,11 @@ interface IFormatArgs extends CommonGetItemsArgsDto {
 
 function formatArgs<T>(args: IFormatArgs & T): IFormatArgs & T {
   // console.log('FORMAT-ARGS BEFORE:', args);
-  const nextArgs = args;
-
-  if (args.page) {
-    nextArgs.current = args.page;
-  }
+  const nextArgs: IFormatArgs & T = {
+    page: 1,
+    pageSize: 30,
+    ...args,
+  };
 
   if (args.pageSize) {
     nextArgs.take = args.pageSize;
