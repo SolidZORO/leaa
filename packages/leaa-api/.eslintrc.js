@@ -60,7 +60,7 @@ module.exports = {
     //
     //
     '@typescript-eslint/no-var-requires': 0,
-    '@typescript-eslint/indent': ['error', 2],
+    '@typescript-eslint/indent': 0,
     '@typescript-eslint/explicit-member-accessibility': 0,
     '@typescript-eslint/interface-name-prefix': 0,
     '@typescript-eslint/no-unused-vars': 0,

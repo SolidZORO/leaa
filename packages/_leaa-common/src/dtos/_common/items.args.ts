@@ -1,6 +1,6 @@
 import { ArgsType, Field, Int } from 'type-graphql';
 
-export enum OrderSort {
+enum OrderSort {
   ASC = 'ASC',
   DESC = 'DESC',
   asc = 'ASC',
@@ -8,7 +8,7 @@ export enum OrderSort {
 }
 
 @ArgsType()
-export class CommonGetItemsArgsDto {
+export class ItemsArgs {
   @Field(() => Int, { nullable: true })
   readonly page?: number = 1;
 

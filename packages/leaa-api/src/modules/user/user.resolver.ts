@@ -1,15 +1,15 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
 
 import { User } from '@leaa/common/entrys';
-import { GetUsersArgsDto, GetUsersObjectDto } from '@leaa/common/dtos/user';
+import { UsersArgs, UsersResponse } from '@leaa/common/dtos/user';
 import { UserService } from './user.service';
 
 @Resolver(() => User)
 export class UserResolver {
   constructor(private readonly userService: UserService) {}
 
-  @Query(() => GetUsersObjectDto)
-  async users(@Args() args: GetUsersArgsDto): Promise<GetUsersObjectDto> {
-    return this.userService.getUsers(args);
+  @Query(() => UsersResponse)
+  async users(@Args() args: UsersArgs): Promise<UsersResponse> {
+    return this.userService.users(args);
   }
 }

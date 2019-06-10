@@ -1,20 +1,11 @@
-import { CommonGetItemsArgsDto } from '@leaa/common/dtos/_common';
+import { FindManyOptions } from 'typeorm';
+import { ItemsArgs } from '@leaa/common/dtos/_common';
+// import { GetCommonItemsArgsDto } from '@leaa/common/dtos/_common';
 
-interface IFormatArgs extends CommonGetItemsArgsDto {
-  take?: number;
-  skip?: number;
-  order?: {
-    [key: string]: 'ASC' | 'DESC';
-  };
-}
+type IFormatArgs = ItemsArgs & FindManyOptions;
 
-function formatArgs<T>(args: IFormatArgs & T): IFormatArgs & T {
-  // console.log('FORMAT-ARGS BEFORE:', args);
-  const nextArgs: IFormatArgs & T = {
-    page: 1,
-    pageSize: 30,
-    ...args,
-  };
+function formatArgs(args: IFormatArgs): IFormatArgs {
+  const nextArgs = args;
 
   if (args.pageSize) {
     nextArgs.take = args.pageSize;

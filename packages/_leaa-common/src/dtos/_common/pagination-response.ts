@@ -1,7 +1,7 @@
 import { ObjectType, Field, Int } from 'type-graphql';
 
 @ObjectType()
-export class CommonPaginationObjectDto {
+export class PaginationResponse {
   @Field(() => Int, { nullable: true })
   readonly page: number = 1;
 
