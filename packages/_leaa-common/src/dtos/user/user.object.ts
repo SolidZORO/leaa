@@ -1,4 +1,3 @@
-// import { Max, Min } from 'class-validator';
 import { ObjectType, Field } from 'type-graphql';
 
 import { User } from '@leaa/common/entrys';
