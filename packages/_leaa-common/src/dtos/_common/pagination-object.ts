@@ -1,13 +1,13 @@
 import { ObjectType, Field, Int } from 'type-graphql';
 
 @ObjectType()
-export class PaginationResponse {
+export class PaginationObject {
   @Field(() => Int, { nullable: true })
-  readonly page: number = 1;
+  readonly page!: number;
 
   @Field(() => Int)
-  readonly pageSize: number = 30;
+  readonly pageSize!: number;
 
   @Field(() => Int)
-  readonly total: number = 0;
+  readonly total!: number;
 }

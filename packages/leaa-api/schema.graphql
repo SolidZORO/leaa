@@ -3,19 +3,42 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+input CreateUserInput {
+  phone: String!
+  email: String!
+  name: String
+  password: String!
+  status: Float!
+}
+
 """
 The javascript `Date` as string. Type represents date and time as the ISO Date string.
 """
 scalar DateTime
 
-type PaginationResponse {
+type Mutation {
+  createUser(user: CreateUserInput!): User!
+  updateUser(user: UpdateUserInput!, id: Int!): User!
+  deleteUser(id: Int!): User!
+}
+
+type PaginationObject {
   page: Int
   pageSize: Int!
   total: Int!
 }
 
 type Query {
-  users(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "ASC", q: String): UsersResponse!
+  users(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "ASC", q: String): UsersObject!
+  user(id: Int!): User!
+}
+
+input UpdateUserInput {
+  phone: String
+  email: String
+  name: String
+  password: String
+  status: Float
 }
 
 type User {
@@ -31,17 +54,7 @@ type User {
   deleted_at: DateTime!
 }
 
-input UserInput {
-  phone: String!
-  email: String!
-  name: String
-}
-
-type UserResponse {
-  item: User!
-}
-
-type UsersResponse {
+type UsersObject {
   page: Int
   pageSize: Int!
   total: Int!

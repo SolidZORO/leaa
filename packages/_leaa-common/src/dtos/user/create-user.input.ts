@@ -2,7 +2,7 @@ import { IsOptional, IsNotEmpty, Length, MinLength, IsEmail, IsPhoneNumber } fro
 import { Field, InputType } from 'type-graphql';
 
 @InputType()
-export class UserInput {
+export class CreateUserInput {
   @Field()
   @IsPhoneNumber('CN')
   @IsNotEmpty()
@@ -18,4 +18,12 @@ export class UserInput {
   @IsOptional()
   @Length(4, 64)
   name?: string;
+
+  @Field()
+  @Length(6, 64)
+  password?: string;
+
+  @Field()
+  @Length(1)
+  status?: number;
 }

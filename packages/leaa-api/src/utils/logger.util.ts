@@ -15,7 +15,7 @@ const log = (
   const WINSTON_INFO_FORMAT = winston.format.combine(
     winston.format.label(),
     winston.format.timestamp({ format: WINSTON_TIMESTAMP_FORMAT }),
-    winston.format.printf((info: any) => `\n[${info.timestamp}] ${info.level.toUpperCase()}: ${info.message}`),
+    winston.format.printf((info: any) => `[${info.timestamp}] ${info.level.toUpperCase()}: ${info.message}`),
   );
 
   const winstonLogger = winston.createLogger();
@@ -33,11 +33,11 @@ const log = (
         level: 'verbose',
       }),
       new winston.transports.File({
-        filename: `${LOG_DIR_PATH}/0x--error.log`,
+        filename: `${LOG_DIR_PATH}/_error.log`,
         level: 'error',
       }),
       new winston.transports.File({
-        filename: `${LOG_DIR_PATH}/0x--warn.log`,
+        filename: `${LOG_DIR_PATH}/_warn.log`,
         level: 'warn',
       }),
     ],
