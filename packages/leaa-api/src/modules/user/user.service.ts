@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
+import bcryptjs from 'bcryptjs';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { User } from '@leaa/common/entrys';
@@ -21,7 +22,14 @@ export class UserService extends BaseService<User, UsersArgs, UsersObject, UserA
   }
 
   async craeteUser(args: CreateUserInput): Promise<User | undefined> {
-    return this.create(args);
+    const nextArgs = args;
+
+    if (args.password) {
+      const salt = bcryptjs.genSaltSync();
+      nextArgs.password = bcryptjs.hashSync(args.password, salt);
+    }
+
+    return this.userRepository.save({ ...nextArgs });
   }
 
   async updateUser(id: number, args: UpdateUserInput): Promise<User | undefined> {
