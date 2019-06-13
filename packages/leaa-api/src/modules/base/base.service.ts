@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import { diff } from 'jsondiffpatch';
 import { Injectable } from '@nestjs/common';
 import { Repository, ObjectLiteral, FindConditions } from 'typeorm';

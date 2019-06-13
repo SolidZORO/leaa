@@ -3,10 +3,9 @@ import { Field, InputType } from 'type-graphql';
 
 @InputType()
 export class CreateUserInput {
-  @Field()
+  @Field({ nullable: true })
   @IsPhoneNumber('CN')
-  @IsNotEmpty()
-  phone!: string;
+  phone?: string;
 
   @Field()
   @IsNotEmpty()
@@ -20,10 +19,11 @@ export class CreateUserInput {
   name?: string;
 
   @Field()
+  @IsNotEmpty()
   @Length(6, 64)
-  password?: string;
+  password!: string;
 
-  @Field()
+  @Field({ nullable: true })
   @Length(1)
   status?: number;
 }

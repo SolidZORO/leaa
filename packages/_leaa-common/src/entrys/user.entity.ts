@@ -2,7 +2,7 @@ import { Index, Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 import { ObjectType, Field, ID } from 'type-graphql';
 
 @Entity('users')
-@Index('users_phone_unique', ['phone'], { unique: true })
+// @Index('users_phone_unique', ['phone'], { unique: true })
 @Index('users_email_unique', ['email'], { unique: true })
 @ObjectType()
 export class User {
@@ -10,21 +10,22 @@ export class User {
   @Field(() => ID)
   id!: number;
 
-  @Column({ type: 'varchar', length: 64, unique: true, nullable: true })
+  @Column({ type: 'varchar', length: 64, nullable: true, default: '' })
   @Field({ nullable: true })
   name?: string;
 
-  @Column({ type: 'varchar', length: 32, unique: true })
-  @Field({ nullable: true })
+  // @Column({ type: 'varchar', length: 32, unique: true })
+  @Column({ type: 'varchar', length: 32, default: '18688880000' })
+  @Field()
   phone!: string;
 
   @Column({ type: 'varchar', length: 64, unique: true })
   @Field()
   email!: string;
 
-  @Column({ type: 'tinyint' })
+  @Column({ type: 'tinyint', default: -1 })
   @Field()
-  status!: number;
+  status?: number;
 
   @Column({ type: 'varchar', length: 64, select: false })
   // @Field()

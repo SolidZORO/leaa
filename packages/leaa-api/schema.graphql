@@ -3,12 +3,23 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+input AuthLoginInput {
+  email: String!
+  password: String!
+}
+
+input AuthRegisterInput {
+  email: String!
+  name: String!
+  password: String!
+}
+
 input CreateUserInput {
-  phone: String!
+  phone: String
   email: String!
   name: String
   password: String!
-  status: Float!
+  status: Float
 }
 
 """
@@ -20,6 +31,8 @@ type Mutation {
   createUser(user: CreateUserInput!): User!
   updateUser(user: UpdateUserInput!, id: Int!): User!
   deleteUser(id: Int!): User!
+  login(user: AuthLoginInput!): User!
+  register(user: AuthRegisterInput!): User!
 }
 
 type PaginationObject {
@@ -44,7 +57,7 @@ input UpdateUserInput {
 type User {
   id: ID!
   name: String
-  phone: String
+  phone: String!
   email: String!
   status: Float!
   last_login_ip: String!

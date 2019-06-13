@@ -10,6 +10,7 @@ import { GraphqlService } from '@leaa/api/modules/graphql/graphql.service';
 
 // import { UserService } from '@leaa/api/modules/user/user.service';
 import { UserModule } from '@leaa/api/modules/user/user.module';
+import { AuthModule } from '@leaa/api/modules/auth/auth.module';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { UserModule } from '@leaa/api/modules/user/user.module';
     ConfigModule,
     // RecipesModule,
     UserModule,
+    AuthModule,
   ],
   providers: [
     // AppService,
