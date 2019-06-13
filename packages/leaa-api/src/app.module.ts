@@ -1,16 +1,15 @@
-import { Connection } from 'typeorm';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GraphQLModule } from '@nestjs/graphql';
 
-import { User } from '@leaa/common/entrys';
+import { User, Role, Permission } from '@leaa/common/entrys';
 import { ConfigModule, envConfig } from '@leaa/api/modules/config/config.module';
 
 import { GraphqlService } from '@leaa/api/modules/graphql/graphql.service';
 
-// import { UserService } from '@leaa/api/modules/user/user.service';
 import { UserModule } from '@leaa/api/modules/user/user.module';
 import { AuthModule } from '@leaa/api/modules/auth/auth.module';
+import { PermissionModule } from '@leaa/api/modules/permission/permission.module';
 
 @Module({
   imports: [
@@ -31,24 +30,19 @@ import { AuthModule } from '@leaa/api/modules/auth/auth.module';
         //
         // for @zeit/ncc import
         User,
+        Role,
+        Permission,
       ],
     }),
     GraphQLModule.forRootAsync({
       useClass: GraphqlService,
     }),
     ConfigModule,
-    // RecipesModule,
     UserModule,
     AuthModule,
+    PermissionModule,
   ],
-  providers: [
-    // AppService,
-    // UserService,
-  ],
-  controllers: [
-    // AppController
-  ],
+  providers: [],
+  controllers: [],
 })
-export class AppModule {
-  // constructor(private readonly connection: Connection) {}
-}
+export class AppModule {}

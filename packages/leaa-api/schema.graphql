@@ -14,6 +14,11 @@ input AuthRegisterInput {
   password: String!
 }
 
+input CreatePermissionInput {
+  name: String!
+  slug: String!
+}
+
 input CreateUserInput {
   phone: String
   email: String!
@@ -33,6 +38,9 @@ type Mutation {
   deleteUser(id: Int!): User!
   login(user: AuthLoginInput!): User!
   register(user: AuthRegisterInput!): User!
+  createPermission(permission: CreatePermissionInput!): Permission!
+  updatePermission(permission: UpdatePermissionInput!, id: Int!): Permission!
+  deletePermission(id: Int!): Permission!
 }
 
 type PaginationObject {
@@ -41,9 +49,41 @@ type PaginationObject {
   total: Int!
 }
 
+type Permission {
+  id: ID!
+  name: String!
+  slug: String!
+  created_at: DateTime!
+  updated_at: DateTime!
+  deleted_at: DateTime!
+}
+
+type PermissionsObject {
+  page: Int
+  pageSize: Int!
+  total: Int!
+  items: [Permission!]!
+}
+
 type Query {
   users(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "ASC", q: String): UsersObject!
   user(id: Int!): User!
+  permissions(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "ASC", q: String): PermissionsObject!
+  permission(id: Int!): Permission!
+}
+
+type Role {
+  id: ID!
+  name: String!
+  slug: String!
+  created_at: DateTime!
+  updated_at: DateTime!
+  deleted_at: DateTime!
+}
+
+input UpdatePermissionInput {
+  name: String!
+  slug: String!
 }
 
 input UpdateUserInput {

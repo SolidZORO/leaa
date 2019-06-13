@@ -9,16 +9,16 @@ enum OrderSort {
 
 @ArgsType()
 export class ItemsArgs {
-  @Field(() => Int, { nullable: true })
+  @Field(() => Int, { nullable: true, defaultValue: 1 })
   readonly page?: number = 1;
 
-  @Field(() => Int, { nullable: true })
+  @Field(() => Int, { nullable: true, defaultValue: 30 })
   readonly pageSize?: number = 30;
 
-  @Field(() => String, { nullable: true })
+  @Field(() => String, { nullable: true, defaultValue: 'id' })
   readonly orderBy?: string = 'id';
 
-  @Field(() => String, { nullable: true })
+  @Field(() => String, { nullable: true, defaultValue: OrderSort.ASC })
   readonly orderSort?: OrderSort = OrderSort.ASC;
 
   // q -> query -> keyword

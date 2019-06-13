@@ -12,6 +12,7 @@ export abstract class BaseService<Entity, ItemsArgs, ItemsObject, ItemArgs, Crea
   // Base Service C U R D
   // --------------------
   async findAll(args: ItemsArgs & FindConditions<Entity>): Promise<ItemsObject & ObjectLiteral> {
+    console.log('FIND-ALL', args);
     const formatArgs = formatUtil.formatArgs(args);
     const [items, total] = await this.repository.findAndCount(formatArgs);
 
