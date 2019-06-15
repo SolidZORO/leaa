@@ -2,6 +2,7 @@ import { Index, Entity, PrimaryGeneratedColumn, Column, JoinTable, ManyToMany } 
 import { ObjectType, Field, ID } from 'type-graphql';
 
 import { Role } from './role.entity';
+import { Permission } from './permission.entity';
 
 @Entity('users')
 // @Index('users_phone_unique', ['phone'], { unique: true })
@@ -45,6 +46,10 @@ export class User {
   @JoinTable()
   @Field(() => [Role], { nullable: true })
   roles?: Role[];
+
+  // Virtual Field (not in DB)
+  @Field(() => [Permission], { nullable: true })
+  permissions?: Permission[];
 
   //
   //

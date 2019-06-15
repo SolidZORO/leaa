@@ -130,6 +130,7 @@ type User {
   last_login_ip: String!
   last_login_at: DateTime!
   roles: [Role!]
+  permissions: [Permission!]
   created_at: DateTime!
   updated_at: DateTime
   deleted_at: DateTime

@@ -1,16 +1,4 @@
-import {
-  Index,
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  JoinTable,
-  ManyToMany,
-  ManyToOne,
-  BeforeRemove,
-  AfterInsert,
-  AfterUpdate,
-  BeforeUpdate,
-} from 'typeorm';
+import { Index, Entity, PrimaryGeneratedColumn, Column, JoinTable, ManyToMany } from 'typeorm';
 import { ObjectType, Field, ID } from 'type-graphql';
 
 import { Permission } from './permission.entity';

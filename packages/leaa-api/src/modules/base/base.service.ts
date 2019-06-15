@@ -31,7 +31,16 @@ export abstract class BaseService<Entity, ItemsArgs, ItemsObject, ItemArgs, Crea
   // R item
   // --------------------
   async findOne(id: number, args?: ItemArgs & FindOneOptions<Entity>): Promise<Entity | undefined> {
-    return this.repository.findOne(id, args);
+    const item = await this.repository.findOne(id, args);
+
+    if (!item) {
+      const message = `item ${id} does not exist`;
+
+      loggerUtil.warn(message, this.constructor.name);
+      throw new Error(message);
+    }
+
+    return item;
   }
 
   //

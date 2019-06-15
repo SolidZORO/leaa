@@ -35,10 +35,10 @@ export class UserService extends BaseService<User, UsersArgs, UsersObject, UserA
 
     const nextUser = await this.findOne(id, nextArgs);
 
-    // if (nextUser && nextUser.roles && nextUser.roles.length > 0) {
-    //   const roleIds = nextUser.roles.map(r => r.id);
-    //   nextUser.permissions = await this.permissionRepository.findByIds(roleIds);
-    // }
+    if (nextUser && nextUser.roles) {
+      const roleIds = nextUser.roles.map(r => r.id);
+      nextUser.permissions = await this.permissionRepository.findByIds(roleIds);
+    }
 
     return nextUser;
   }

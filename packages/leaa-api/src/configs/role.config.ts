@@ -5,7 +5,6 @@ import { envConfig } from '@leaa/api/modules/config/config.module';
 
 export const hasRole = (allowedRoles: string) =>
   rule(`has-role-${allowedRoles}`)(async (parent, args, context, info) => {
-    console.log(info);
 
     const { authorization } = context.req.headers;
     const token = authorization.replace('Bearer ', '');
