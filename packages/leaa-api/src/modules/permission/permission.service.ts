@@ -29,8 +29,8 @@ export class PermissionService extends BaseService<
     return this.findAll(args);
   }
 
-  async permission(args: PermissionArgs): Promise<Permission | undefined> {
-    return this.findOne(args);
+  async permission(id: number, args?: PermissionArgs): Promise<Permission | undefined> {
+    return this.findOne(id, args);
   }
 
   async craetePermission(args: CreatePermissionInput): Promise<Permission | undefined> {

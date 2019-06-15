@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Repository, FindConditions, FindOneOptions } from 'typeorm';
+import { Repository, FindOneOptions } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { Role, Permission } from '@leaa/common/entrys';
@@ -17,44 +17,36 @@ export class RoleService extends BaseService<Role, RolesArgs, RolesObject, RoleA
     super(roleRepository);
   }
 
-  async roles(args: RolesArgs & FindConditions<Role>): Promise<RolesObject> {
+  async roles(args: RolesArgs): Promise<RolesObject> {
     const nextArgs = formatUtil.formatArgs(args);
     nextArgs.relations = ['permissions'];
 
     return this.findAll(nextArgs);
   }
 
-  async role(args: RoleArgs & FindOneOptions<Role>): Promise<Role | undefined> {
-    const nextArgs = args;
-    nextArgs.relations = ['permissions'];
+  async role(id: number, args?: FindOneOptions<Role>): Promise<Role | undefined> {
+    let nextArgs: FindOneOptions<Role> = {};
 
-    return this.findOne(nextArgs);
+    if (args) {
+      nextArgs = args;
+      nextArgs.relations = ['permissions'];
+    }
+
+    return this.findOne(id, nextArgs);
   }
 
   async craeteRole(args: CreateRoleInput): Promise<Role | undefined> {
     return this.roleRepository.save({ ...args });
   }
 
-  async updateRole(id: number, args: UpdateRoleInput): Promise<Role | undefined> {
-    const prevItem = await this.roleRepository.findOne(id, { relations: ['permissions'] });
+  async updateRole(id: number, args?: UpdateRoleInput): Promise<Role | undefined> {
+    const relationArgs: { permissions?: Permission[] } = {};
 
-    if (!prevItem) {
-      const message = `update item ${id} does not exist`;
-
-      loggerUtil.warn(message, this.constructor.name);
-      throw new Error(message);
-    }
-
-    const nextItem = {
-      ...prevItem,
-      ...args,
-    };
-
-    if (args.permissionIds) {
+    if (args && args.permissionIds) {
       const permissionObjects = await this.permissionRepository.findByIds(args.permissionIds);
 
       if (permissionObjects && permissionObjects.length && permissionObjects.length > 0) {
-        nextItem.permissions = permissionObjects;
+        relationArgs.permissions = permissionObjects;
       } else {
         const message = `permissions error`;
 
@@ -63,9 +55,7 @@ export class RoleService extends BaseService<Role, RolesArgs, RolesObject, RoleA
       }
     }
 
-    loggerUtil.updateLog({ id, prevItem, nextItem, constructorName: this.constructor.name });
-
-    return this.roleRepository.save(nextItem);
+    return this.update(id, args, relationArgs);
   }
 
   async deleteRole(id: number): Promise<Role | undefined> {

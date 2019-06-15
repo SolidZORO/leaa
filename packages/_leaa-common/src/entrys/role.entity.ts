@@ -5,6 +5,7 @@ import {
   Column,
   JoinTable,
   ManyToMany,
+  ManyToOne,
   BeforeRemove,
   AfterInsert,
   AfterUpdate,
@@ -13,6 +14,7 @@ import {
 import { ObjectType, Field, ID } from 'type-graphql';
 
 import { Permission } from './permission.entity';
+import { User } from './user.entity';
 
 @Entity('roles')
 @Index('roles_name_unique', ['name'], { unique: true })
@@ -35,6 +37,10 @@ export class Role {
   @JoinTable()
   @Field(() => [Permission], { nullable: true })
   permissions?: Permission[];
+
+  @ManyToMany(() => User, user => user.roles)
+  @Field(() => User, { nullable: true })
+  user?: User;
 
   //
   //

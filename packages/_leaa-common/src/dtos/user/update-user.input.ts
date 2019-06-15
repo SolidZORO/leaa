@@ -1,5 +1,5 @@
 import { IsOptional, Length, MinLength, IsEmail, IsPhoneNumber } from 'class-validator';
-import { Field, InputType } from 'type-graphql';
+import { Field, InputType, Int } from 'type-graphql';
 
 @InputType()
 export class UpdateUserInput {
@@ -24,4 +24,7 @@ export class UpdateUserInput {
   @Field({ nullable: true })
   @Length(1)
   status?: number;
+
+  @Field(() => [Int], { nullable: true })
+  roleIds?: number[];
 }

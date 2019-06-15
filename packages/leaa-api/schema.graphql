@@ -88,6 +88,7 @@ type Role {
   name: String!
   slug: String!
   permissions: [Permission!]
+  user: User
   created_at: DateTime!
   updated_at: DateTime
   deleted_at: DateTime
@@ -117,6 +118,7 @@ input UpdateUserInput {
   name: String
   password: String
   status: Float
+  roleIds: [Int!]
 }
 
 type User {
@@ -127,6 +129,7 @@ type User {
   status: Float!
   last_login_ip: String!
   last_login_at: DateTime!
+  roles: [Role!]
   created_at: DateTime!
   updated_at: DateTime
   deleted_at: DateTime

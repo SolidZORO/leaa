@@ -15,8 +15,8 @@ export class RoleResolver {
   }
 
   @Query(() => Role)
-  async role(@Args() args: RoleArgs): Promise<Role | undefined> {
-    return this.roleService.role(args);
+  async role(@Args({ name: 'id', type: () => Int }) id: number, @Args() args?: RoleArgs): Promise<Role | undefined> {
+    return this.roleService.role(id, args);
   }
 
   @Mutation(() => Role)
@@ -27,7 +27,7 @@ export class RoleResolver {
   @Mutation(() => Role)
   async updateRole(
     @Args({ name: 'id', type: () => Int }) id: number,
-    @Args('role') args: UpdateRoleInput,
+    @Args('role') args?: UpdateRoleInput,
   ): Promise<Role | undefined> {
     return this.roleService.updateRole(id, args);
   }

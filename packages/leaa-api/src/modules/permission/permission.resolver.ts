@@ -21,8 +21,11 @@ export class PermissionResolver {
   }
 
   @Query(() => Permission)
-  async permission(@Args() args: PermissionArgs): Promise<Permission | undefined> {
-    return this.permissionService.permission(args);
+  async permission(
+    @Args({ name: 'id', type: () => Int }) id: number,
+    @Args() args: PermissionArgs,
+  ): Promise<Permission | undefined> {
+    return this.permissionService.permission(id, args);
   }
 
   @Mutation(() => Permission)

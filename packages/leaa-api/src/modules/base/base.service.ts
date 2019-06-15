@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Repository, ObjectLiteral, FindConditions } from 'typeorm';
+import { Repository, ObjectLiteral, FindConditions, FindOneOptions } from 'typeorm';
 
 import { formatUtil, loggerUtil } from '@leaa/api/utils';
 
@@ -30,8 +30,8 @@ export abstract class BaseService<Entity, ItemsArgs, ItemsObject, ItemArgs, Crea
   //
   // R item
   // --------------------
-  async findOne(args: ItemArgs & { id: number }): Promise<Entity | undefined> {
-    return this.repository.findOne(args.id);
+  async findOne(id: number, args?: ItemArgs): Promise<Entity | undefined> {
+    return this.repository.findOne(id, args);
   }
 
   //
@@ -44,8 +44,19 @@ export abstract class BaseService<Entity, ItemsArgs, ItemsObject, ItemArgs, Crea
   //
   // U item
   // --------------------
-  async update(id: number, args: UpdateItemInput): Promise<Entity | undefined> {
-    let prevItem = await this.repository.findOne(id);
+  async update(
+    id: number,
+    args?: UpdateItemInput & FindOneOptions,
+    relationArgs: any = {},
+  ): Promise<Entity | undefined> {
+    if (!args) {
+      const message = `update item ${id} args does not exist`;
+
+      loggerUtil.warn(message, this.constructor.name);
+      throw new Error(message);
+    }
+
+    let prevItem = await this.repository.findOne(id, args.relations ? { relations: ['permissions'] } : undefined);
 
     if (!prevItem) {
       const message = `update item ${id} does not exist`;
@@ -57,8 +68,10 @@ export abstract class BaseService<Entity, ItemsArgs, ItemsObject, ItemArgs, Crea
     prevItem = {
       ...prevItem,
       ...args,
+      ...relationArgs,
     };
 
+    // @ts-ignore
     const nextItem = await this.repository.save(prevItem);
 
     loggerUtil.updateLog({ id, prevItem, nextItem, constructorName: this.constructor.name });

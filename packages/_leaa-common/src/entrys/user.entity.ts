@@ -1,5 +1,7 @@
-import { Index, Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Index, Entity, PrimaryGeneratedColumn, Column, JoinTable, ManyToMany } from 'typeorm';
 import { ObjectType, Field, ID } from 'type-graphql';
+
+import { Role } from './role.entity';
 
 @Entity('users')
 // @Index('users_phone_unique', ['phone'], { unique: true })
@@ -38,6 +40,11 @@ export class User {
   @Column({ type: 'timestamp', nullable: true })
   @Field(() => Date)
   last_login_at?: Date;
+
+  @ManyToMany(() => Role, role => role.user)
+  @JoinTable()
+  @Field(() => [Role], { nullable: true })
+  roles?: Role[];
 
   //
   //
