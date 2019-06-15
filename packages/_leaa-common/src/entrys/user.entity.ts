@@ -42,17 +42,15 @@ export class User {
   //
   //
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  // @CreateDateColumn()
+  @Column({ default: () => 'CURRENT_TIMESTAMP' })
   @Field(() => Date)
-  created_at?: Date;
+  created_at!: Date;
 
-  @Column({ type: 'timestamp', nullable: true })
-  // @UpdateDateColumn()
-  @Field(() => Date)
+  @Column({ nullable: true, onUpdate: 'CURRENT_TIMESTAMP' })
+  @Field(() => Date, { nullable: true })
   updated_at?: Date;
 
-  @Column({ type: 'timestamp', nullable: true })
-  @Field(() => Date)
+  @Column({ nullable: true })
+  @Field(() => Date, { nullable: true })
   deleted_at?: Date;
 }

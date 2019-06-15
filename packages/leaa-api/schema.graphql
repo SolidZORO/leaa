@@ -61,9 +61,10 @@ type Permission {
   id: ID!
   name: String!
   slug: String!
+  roles: [Role!]
   created_at: DateTime!
-  updated_at: DateTime!
-  deleted_at: DateTime!
+  updated_at: DateTime
+  deleted_at: DateTime
 }
 
 type PermissionsObject {
@@ -86,9 +87,10 @@ type Role {
   id: ID!
   name: String!
   slug: String!
+  permissions: [Permission!]
   created_at: DateTime!
-  updated_at: DateTime!
-  deleted_at: DateTime!
+  updated_at: DateTime
+  deleted_at: DateTime
 }
 
 type RolesObject {
@@ -104,8 +106,9 @@ input UpdatePermissionInput {
 }
 
 input UpdateRoleInput {
-  name: String!
-  slug: String!
+  name: String
+  slug: String
+  permissionIds: [Int!]
 }
 
 input UpdateUserInput {
@@ -125,8 +128,8 @@ type User {
   last_login_ip: String!
   last_login_at: DateTime!
   created_at: DateTime!
-  updated_at: DateTime!
-  deleted_at: DateTime!
+  updated_at: DateTime
+  deleted_at: DateTime
 }
 
 type UsersObject {

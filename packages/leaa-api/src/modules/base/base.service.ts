@@ -1,15 +1,17 @@
-import { diff } from 'jsondiffpatch';
 import { Injectable } from '@nestjs/common';
 import { Repository, ObjectLiteral, FindConditions } from 'typeorm';
 
 import { formatUtil, loggerUtil } from '@leaa/api/utils';
 
+//
+// Base Service C U R D Class
+// --------------------------
 @Injectable()
 export abstract class BaseService<Entity, ItemsArgs, ItemsObject, ItemArgs, CreateItemInput, UpdateItemInput> {
   protected constructor(private readonly repository: Repository<Entity>) {}
 
   //
-  // Base Service C U R D
+  // R items
   // --------------------
   async findAll(args: ItemsArgs & FindConditions<Entity>): Promise<ItemsObject & ObjectLiteral> {
     console.log('FIND-ALL', args);
@@ -25,16 +27,25 @@ export abstract class BaseService<Entity, ItemsArgs, ItemsObject, ItemArgs, Crea
     };
   }
 
+  //
+  // R item
+  // --------------------
   async findOne(args: ItemArgs & { id: number }): Promise<Entity | undefined> {
     return this.repository.findOne(args.id);
   }
 
+  //
+  // C item
+  // --------------------
   async create(args: CreateItemInput): Promise<Entity | undefined> {
     return this.repository.save({ ...args });
   }
 
+  //
+  // U item
+  // --------------------
   async update(id: number, args: UpdateItemInput): Promise<Entity | undefined> {
-    const prevItem = await this.repository.findOne(id);
+    let prevItem = await this.repository.findOne(id);
 
     if (!prevItem) {
       const message = `update item ${id} does not exist`;
@@ -43,22 +54,21 @@ export abstract class BaseService<Entity, ItemsArgs, ItemsObject, ItemArgs, Crea
       throw new Error(message);
     }
 
-    await this.repository
-      .createQueryBuilder()
-      .update()
-      .set({ ...args })
-      .where('id = :id', { id })
-      .execute();
+    prevItem = {
+      ...prevItem,
+      ...args,
+    };
 
-    const nextItem = await this.repository.findOne(id);
+    const nextItem = await this.repository.save(prevItem);
 
-    loggerUtil.log(`update item ${id} successful PREV-ITEM: \n${JSON.stringify(prevItem)}\n\n`, this.constructor.name);
-    loggerUtil.log(`update item ${id} successful NEXT-ITEM: \n${JSON.stringify(nextItem)}\n\n`, this.constructor.name);
-    loggerUtil.log(`update item ${id} DIFF: ${JSON.stringify(diff(prevItem, nextItem))}`, this.constructor.name);
+    loggerUtil.updateLog({ id, prevItem, nextItem, constructorName: this.constructor.name });
 
     return nextItem;
   }
 
+  //
+  // D item
+  // --------------------
   async delete(id: number): Promise<Entity | undefined> {
     const prevItem = await this.repository.findOne(id);
 

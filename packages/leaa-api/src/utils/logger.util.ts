@@ -1,5 +1,6 @@
 import path from 'path';
 import winston from 'winston';
+import { diff } from 'jsondiffpatch';
 
 const DailyRotateFile = require('winston-daily-rotate-file');
 
@@ -58,4 +59,19 @@ export const loggerUtil = {
   warn: (message: string, context?: string) => log('warn', message, context),
   debug: (message: string, context?: string) => log('debug', message, context),
   verbose: (message: string, context?: string) => log('verbose', message, context),
+  updateLog: ({
+    id,
+    prevItem,
+    nextItem,
+    constructorName,
+  }: {
+    id: number;
+    prevItem: any;
+    nextItem: any;
+    constructorName: string;
+  }) => {
+    log('info', `update item #${id} successful PREV-ITEM: \n${JSON.stringify(prevItem)}\n\n`, constructorName);
+    log('info', `update item #${id} successful NEXT-ITEM: \n${JSON.stringify(nextItem)}\n\n`, constructorName);
+    log('info', `↔️ update item #${id} DIFF: ${JSON.stringify(diff(prevItem, nextItem))}`, constructorName);
+  },
 };

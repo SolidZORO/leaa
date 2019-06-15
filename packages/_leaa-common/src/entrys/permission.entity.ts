@@ -1,5 +1,7 @@
-import { Index, Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Index, Entity, PrimaryGeneratedColumn, Column, ManyToMany } from 'typeorm';
 import { ObjectType, Field, ID } from 'type-graphql';
+
+import { Role } from './role.entity';
 
 @Entity('permissions')
 @Index('permissions_name_unique', ['name'], { unique: true })
@@ -18,20 +20,22 @@ export class Permission {
   @Field()
   slug!: string;
 
+  @ManyToMany(() => Role, role => role.permissions)
+  @Field(() => [Role], { nullable: true })
+  roles?: Role[];
+
   //
   //
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  // @CreateDateColumn()
+  @Column({ default: () => 'CURRENT_TIMESTAMP' })
   @Field(() => Date)
-  created_at?: Date;
+  created_at!: Date;
 
-  @Column({ type: 'timestamp', nullable: true })
-  // @UpdateDateColumn()
-  @Field(() => Date)
+  @Column({ nullable: true, onUpdate: 'CURRENT_TIMESTAMP' })
+  @Field(() => Date, { nullable: true })
   updated_at?: Date;
 
-  @Column({ type: 'timestamp', nullable: true })
-  @Field(() => Date)
+  @Column({ nullable: true })
+  @Field(() => Date, { nullable: true })
   deleted_at?: Date;
 }

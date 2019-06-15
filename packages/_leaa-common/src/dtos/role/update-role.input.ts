@@ -1,10 +1,13 @@
-import { Field, InputType } from 'type-graphql';
+import { Field, InputType, Int } from 'type-graphql';
 
 @InputType()
 export class UpdateRoleInput {
-  @Field()
+  @Field({ nullable: true })
   name?: string;
 
-  @Field()
+  @Field({ nullable: true })
   slug?: string;
+
+  @Field(() => [Int], { nullable: true })
+  permissionIds?: number[];
 }

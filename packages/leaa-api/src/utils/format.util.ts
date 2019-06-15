@@ -5,7 +5,9 @@ import { ItemsArgs } from '@leaa/common/dtos/_common';
 type IFormatArgs = ItemsArgs & FindManyOptions;
 
 function formatArgs(args: IFormatArgs): IFormatArgs {
-  const nextArgs = args;
+  const nextArgs = {
+    ...args,
+  };
 
   if (args.pageSize) {
     nextArgs.take = args.pageSize;
