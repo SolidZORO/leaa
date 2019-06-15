@@ -30,7 +30,7 @@ export abstract class BaseService<Entity, ItemsArgs, ItemsObject, ItemArgs, Crea
   //
   // R item
   // --------------------
-  async findOne(id: number, args?: ItemArgs): Promise<Entity | undefined> {
+  async findOne(id: number, args?: ItemArgs & FindOneOptions<Entity>): Promise<Entity | undefined> {
     return this.repository.findOne(id, args);
   }
 
@@ -56,7 +56,7 @@ export abstract class BaseService<Entity, ItemsArgs, ItemsObject, ItemArgs, Crea
       throw new Error(message);
     }
 
-    let prevItem = await this.repository.findOne(id, args.relations ? { relations: ['permissions'] } : undefined);
+    let prevItem = await this.repository.findOne(id, args.relations ? { relations: args.relations } : undefined);
 
     if (!prevItem) {
       const message = `update item ${id} does not exist`;

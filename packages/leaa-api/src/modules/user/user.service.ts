@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { Repository, FindOneOptions } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { User, Role } from '@leaa/common/entrys';
+import { User, Role, Permission } from '@leaa/common/entrys';
 import { UsersArgs, UsersObject, UserArgs, CreateUserInput, UpdateUserInput } from '@leaa/common/dtos/user';
 import { BaseService } from '@leaa/api/modules/base/base.service';
 import { formatUtil, loggerUtil } from '@leaa/api/utils';
@@ -13,6 +13,7 @@ export class UserService extends BaseService<User, UsersArgs, UsersObject, UserA
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
     @InjectRepository(Role) private readonly roleRepository: Repository<Role>,
+    @InjectRepository(Permission) private readonly permissionRepository: Repository<Permission>,
   ) {
     super(userRepository);
   }
@@ -24,7 +25,7 @@ export class UserService extends BaseService<User, UsersArgs, UsersObject, UserA
     return this.findAll(nextArgs);
   }
 
-  async user(id: number, args?: FindOneOptions<User>): Promise<User | undefined> {
+  async user(id: number, args?: UserArgs & FindOneOptions<User>): Promise<User | undefined> {
     let nextArgs: FindOneOptions<User> = {};
 
     if (args) {
@@ -32,7 +33,14 @@ export class UserService extends BaseService<User, UsersArgs, UsersObject, UserA
       nextArgs.relations = ['roles'];
     }
 
-    return this.findOne(id, nextArgs);
+    const nextUser = await this.findOne(id, nextArgs);
+
+    // if (nextUser && nextUser.roles && nextUser.roles.length > 0) {
+    //   const roleIds = nextUser.roles.map(r => r.id);
+    //   nextUser.permissions = await this.permissionRepository.findByIds(roleIds);
+    // }
+
+    return nextUser;
   }
 
   async craeteUser(args: CreateUserInput): Promise<User | undefined> {

@@ -1,12 +1,13 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { User, Role } from '@leaa/common/entrys';
-import { UserResolver } from './user.resolver';
-import { UserService } from './user.service';
+import { User, Role, Permission } from '@leaa/common/entrys';
+
+import { UserService } from '@leaa/api/modules/user/user.service';
+import { UserResolver } from '@leaa/api/modules/user/user.resolver';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User, Role])],
+  imports: [TypeOrmModule.forFeature([User, Role, Permission])],
   providers: [UserResolver, UserService],
 })
 export class UserModule {}
