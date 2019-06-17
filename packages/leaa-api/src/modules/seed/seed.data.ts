@@ -1,20 +1,22 @@
 // prettier-ignore
 export const permissionsSeed = [
-  { name: 'Role List', slug: 'role.list' },
-  { name: 'Role Item', slug: 'role.item' },
   { name: 'Permission List', slug: 'permission.list' },
   { name: 'Permission Item', slug: 'permission.item' },
+  { name: 'Permission Create', slug: 'permission.create' },
+  { name: 'Permission Update', slug: 'permission.update' },
+  { name: 'Permission Delete', slug: 'permission.delete' },
+  //
+  { name: 'Role List', slug: 'role.list' },
+  { name: 'Role Item', slug: 'role.item' },
+  { name: 'Role Create', slug: 'role.create' },
+  { name: 'Role Update', slug: 'role.update' },
+  { name: 'Role Delete', slug: 'role.delete' },
+  //
   { name: 'User List', slug: 'user.list' },
   { name: 'User Item', slug: 'user.item' },
   { name: 'User Create', slug: 'user.create' },
   { name: 'User Update', slug: 'user.update' },
   { name: 'User Delete', slug: 'user.delete' },
-  { name: 'Permission Create', slug: 'permission.create' },
-  { name: 'Permission Update', slug: 'permission.update' },
-  { name: 'Permission Delete', slug: 'permission.delete' },
-  { name: 'Role Create', slug: 'role.create' },
-  { name: 'Role Update', slug: 'role.update' },
-  { name: 'Role Delete', slug: 'role.delete' },
 ];
 
 // prettier-ignore

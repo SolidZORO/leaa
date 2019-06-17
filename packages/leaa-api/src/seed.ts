@@ -2,7 +2,6 @@ import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 
-// import { LoggerService } from '@leaa/api/modules/logger/logger.service';
 import { AppModule } from '@leaa/api/app.module';
 import { SeedService } from './modules/seed/seed.service';
 

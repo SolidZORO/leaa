@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-
 import { PermissionService } from '@leaa/api/modules/permission/permission.service';
 import { RoleService } from '@leaa/api/modules/role/role.service';
 import { UserService } from '@leaa/api/modules/user/user.service';
@@ -14,65 +13,58 @@ export class SeedService {
     private readonly userService: UserService,
   ) {}
 
-  public async insertPermissions() {
-    await Promise.all(
-      permissionsSeed.map(async p => {
-        const item = await this.permissionService.craetePermission(p);
+  /* eslint-disable no-restricted-syntax */
+  /* eslint-disable no-await-in-loop */
 
-        console.log(item);
-      }),
-    );
+  public async insertPermissions() {
+    for (const i of permissionsSeed) {
+      const item = await this.permissionService.craetePermission(i);
+
+      console.log(item);
+    }
   }
 
   public async insertRoles() {
-    await Promise.all(
-      rolesSeed.map(async r => {
-        const item = await this.roleService.craeteRole(r);
+    for (const i of rolesSeed) {
+      const item = await this.roleService.craeteRole(i);
 
-        console.log(item);
-      }),
-    );
+      console.log(item);
+    }
   }
 
   public async insertUsers() {
-    await Promise.all(
-      usersSeed.map(async u => {
-        const item = await this.userService.craeteUser(u);
+    for (const i of usersSeed) {
+      const item = await this.userService.craeteUser(i);
 
-        console.log(item);
-      }),
-    );
+      console.log(item);
+    }
   }
 
   public async insertRoleAddPermissions() {
-    await Promise.all(
-      roleAddPermissionsSeed.map(async r => {
-        const role = await this.roleService.roleBySlug(r.roleSlug);
+    for (const i of roleAddPermissionsSeed) {
+      const role = await this.roleService.roleBySlug(i.roleSlug);
 
-        console.log(role);
+      console.log(role);
 
-        if (role) {
-          const nextRole = await this.roleService.updateRole(role.id, { permissionSlugs: r.permissionSlugs });
+      if (role) {
+        const nextRole = await this.roleService.updateRole(role.id, { permissionSlugs: i.permissionSlugs });
 
-          console.log(nextRole);
-        }
-      }),
-    );
+        console.log(nextRole);
+      }
+    }
   }
 
   public async insertUserAddRole() {
-    await Promise.all(
-      userAddRolesSeed.map(async u => {
-        const user = await this.userService.userByEmail(u.userEmail);
+    for (const i of userAddRolesSeed) {
+      const user = await this.userService.userByEmail(i.userEmail);
 
-        console.log(user);
+      console.log(user);
 
-        if (user) {
-          const nextUser = await this.userService.updateUser(user.id, { roleSlugs: u.roleSlugs });
+      if (user) {
+        const nextUser = await this.userService.updateUser(user.id, { roleSlugs: i.roleSlugs });
 
-          console.log(nextUser);
-        }
-      }),
-    );
+        console.log(nextUser);
+      }
+    }
   }
 }
