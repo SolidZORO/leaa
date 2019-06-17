@@ -1,10 +1,10 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 
 import { PermissionService } from '@leaa/api/modules/permission/permission.service';
 import { RoleService } from '@leaa/api/modules/role/role.service';
 import { UserService } from '@leaa/api/modules/user/user.service';
 
-import { permissionsSeed, rolesSeed, usersSeed } from './seed.data';
+import { permissionsSeed, rolesSeed, usersSeed, roleAddPermissionsSeed, userAddRolesSeed } from './seed.data';
 
 @Injectable()
 export class SeedService {
@@ -40,6 +40,38 @@ export class SeedService {
         const item = await this.userService.craeteUser(u);
 
         console.log(item);
+      }),
+    );
+  }
+
+  public async insertRoleAddPermissions() {
+    await Promise.all(
+      roleAddPermissionsSeed.map(async r => {
+        const role = await this.roleService.roleBySlug(r.roleSlug);
+
+        console.log(role);
+
+        if (role) {
+          const nextRole = await this.roleService.updateRole(role.id, { permissionSlugs: r.permissionSlugs });
+
+          console.log(nextRole);
+        }
+      }),
+    );
+  }
+
+  public async insertUserAddRole() {
+    await Promise.all(
+      userAddRolesSeed.map(async u => {
+        const user = await this.userService.userByEmail(u.userEmail);
+
+        console.log(user);
+
+        if (user) {
+          const nextUser = await this.userService.updateUser(user.id, { roleSlugs: u.roleSlugs });
+
+          console.log(nextUser);
+        }
       }),
     );
   }

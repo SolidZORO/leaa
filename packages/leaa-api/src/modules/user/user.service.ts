@@ -27,15 +27,8 @@ export class UserService extends BaseService<User, UsersArgs, UsersObject, UserA
     return this.findAll(nextArgs);
   }
 
-  async user(id: number, args?: UserArgs & FindOneOptions<User>): Promise<User | undefined> {
-    let nextArgs: FindOneOptions<User> = {};
-
-    if (args) {
-      nextArgs = args;
-      nextArgs.relations = ['roles'];
-    }
-
-    const nextUser = await this.findOne(id, nextArgs);
+  async addPermissionsTouser(user: User | undefined): Promise<User | undefined> {
+    const nextUser = user;
 
     if (nextUser && nextUser.roles) {
       const roleIds = nextUser.roles.map(r => r.id);
@@ -48,6 +41,28 @@ export class UserService extends BaseService<User, UsersArgs, UsersObject, UserA
     }
 
     return nextUser;
+  }
+
+  async user(id: number, args?: UserArgs & FindOneOptions<User>): Promise<User | undefined> {
+    let nextArgs: FindOneOptions<User> = {};
+
+    if (args) {
+      nextArgs = args;
+      nextArgs.relations = ['roles'];
+    }
+
+    const user = await this.findOne(id, nextArgs);
+
+    return this.addPermissionsTouser(user);
+  }
+
+  async userByEmail(email: string): Promise<User | undefined> {
+    const user = await this.userRepository.findOne({
+      relations: ['roles'],
+      where: { email },
+    });
+
+    return this.addPermissionsTouser(user);
   }
 
   async craeteUser(args: CreateUserInput): Promise<User | undefined> {
@@ -67,6 +82,11 @@ export class UserService extends BaseService<User, UsersArgs, UsersObject, UserA
 
     if (args && args.roleIds) {
       roleObjects = await this.roleRepository.findByIds(args.roleIds);
+    }
+
+    if (args && args.roleSlugs) {
+      const roleIds = await this.roleService.roleSlugsToIds(args.roleSlugs);
+      roleObjects = await this.roleRepository.findByIds(roleIds);
     }
 
     if (roleObjects && roleObjects.length && roleObjects.length > 0) {

@@ -1,3 +1,4 @@
+// prettier-ignore
 export const permissionsSeed = [
   { name: 'Role List', slug: 'role.list' },
   { name: 'Role Item', slug: 'role.item' },
@@ -27,4 +28,16 @@ export const usersSeed = [
   { email: 'admin@admin.com', name: 'admin', password: 'h8Hx9qvPKoHMLQgj', status: 1 },
   { email: 'staff@staff.com', name: 'staff', password: '7PkQGjvHMMkoo4RZ', status: 1 },
   { email: 'disabled@disabled.com', name: 'disabled', password: 'uUB3YGrdL3gJZYij', status: -1 },
+];
+
+// prettier-ignore
+export const roleAddPermissionsSeed = [
+  { roleSlug: 'admin', permissionSlugs: permissionsSeed.map(p => p.slug) }, // allpermissions
+  { roleSlug: 'staff', permissionSlugs: permissionsSeed.filter(p => p.slug.includes('user.')).map(p => p.slug) },
+];
+
+// prettier-ignore
+export const userAddRolesSeed = [
+  { userEmail: 'admin@admin.com', roleSlugs: ['admin', 'staff'] },
+  { userEmail: 'staff@staff.com', roleSlugs: ['staff'] },
 ];

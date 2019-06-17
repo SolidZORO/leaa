@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { Repository, In } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { Permission } from '@leaa/common/entrys';
@@ -31,6 +31,20 @@ export class PermissionService extends BaseService<
 
   async permission(id: number, args?: PermissionArgs): Promise<Permission | undefined> {
     return this.findOne(id, args);
+  }
+
+  async permissionSlugsToIds(slugs: string[]): Promise<number[]> {
+    let permissionIds: number[] = [];
+
+    const permissions = await this.permissionRepository.find({
+      slug: In(slugs),
+    });
+
+    if (permissions && permissions.length > 0) {
+      permissionIds = permissions.map(p => p.id);
+    }
+
+    return permissionIds;
   }
 
   async craetePermission(args: CreatePermissionInput): Promise<Permission | undefined> {

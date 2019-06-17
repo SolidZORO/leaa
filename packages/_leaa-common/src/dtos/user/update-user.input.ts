@@ -27,4 +27,7 @@ export class UpdateUserInput {
 
   @Field(() => [Int], { nullable: true })
   roleIds?: number[];
+
+  @Field(() => [String], { nullable: true })
+  roleSlugs?: string[];
 }

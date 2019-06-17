@@ -10,4 +10,7 @@ export class UpdateRoleInput {
 
   @Field(() => [Int], { nullable: true })
   permissionIds?: number[];
+
+  @Field(() => [String], { nullable: true })
+  permissionSlugs?: string[];
 }

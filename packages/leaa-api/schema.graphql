@@ -110,6 +110,7 @@ input UpdateRoleInput {
   name: String
   slug: String
   permissionIds: [Int!]
+  permissionSlugs: [String!]
 }
 
 input UpdateUserInput {
@@ -119,6 +120,7 @@ input UpdateUserInput {
   password: String
   status: Float
   roleIds: [Int!]
+  roleSlugs: [String!]
 }
 
 type User {
