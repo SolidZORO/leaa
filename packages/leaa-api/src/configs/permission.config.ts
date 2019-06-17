@@ -1,29 +1,23 @@
 import { shield, allow, rule } from 'graphql-shield';
 
-import { User } from '@leaa/common/entrys';
+import { authUtil } from '@leaa/common/utils';
 import { envConfig } from '../modules/config/config.module';
 
-const getFlatPermissions = (user: User): string[] => {
-  if (!user) {
-    return [];
-  }
-
-  if (!user.permissions) {
-    return [];
-  }
-
-  if (user.permissions.length && user.permissions.length < 1) {
-    return [];
-  }
-
-  return user.permissions.map(p => p.slug);
+const checkPermission = (permissionSlug: string) => {
+  return rule()(async (parent, args, ctx) => authUtil.getFlatPermissions(ctx.user).includes(permissionSlug));
 };
 
 export const permissions = shield(
   {
     Query: {
-      user: rule()(async (parent, args, ctx) => getFlatPermissions(ctx.user).includes('user.edit')),
-      users: rule()(async (parent, args, ctx) => getFlatPermissions(ctx.user).includes('user.edit111')),
+      roles: checkPermission('user.edit'),
+      role: checkPermission('user.edit'),
+      //
+      permissions: checkPermission('user.edit'),
+      permission: checkPermission('user.edit'),
+      //
+      users: checkPermission('user.edit'),
+      user: checkPermission('user.edit'),
     },
     Mutation: {
       login: allow,

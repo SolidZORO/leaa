@@ -33,7 +33,7 @@ export class AuthService {
     const token = req.headers.authorization;
 
     if (!token) {
-      throw new AuthenticationError('Request header lacks authorization parameters，it should be: Authorization');
+      throw new AuthenticationError('Header miss Authorization');
     }
 
     let tokenWithoutBearer = token;
@@ -41,7 +41,7 @@ export class AuthService {
     if (token.slice(0, 6) === 'Bearer') {
       tokenWithoutBearer = token.slice(7);
     } else {
-      throw new AuthenticationError('The authorization code prefix is incorrect. it should be: Bearer');
+      throw new AuthenticationError('Header include incorrect Bearer prefix');
     }
 
     let userPayload;
@@ -49,10 +49,8 @@ export class AuthService {
     try {
       userPayload = jwt.verify(tokenWithoutBearer, this.configService.JWT_SECRET_KEY) as (IJwtPayload | undefined);
     } catch (error) {
-      console.log(error);
-
       if (error instanceof jwt.NotBeforeError) {
-        throw new AuthenticationError('token not before');
+        throw new AuthenticationError('Token not before');
       }
 
       if (error instanceof jwt.TokenExpiredError) {
@@ -65,7 +63,7 @@ export class AuthService {
     }
 
     if (!userPayload) {
-      throw Error('User Payload error');
+      throw Error('User payload error');
     }
 
     return this.userService.user(userPayload.id, {});

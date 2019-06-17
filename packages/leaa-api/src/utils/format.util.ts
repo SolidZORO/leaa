@@ -29,7 +29,6 @@ function formatArgs(args: IFormatArgs): IFormatArgs {
     nextArgs.order = { [args.orderBy]: isDesc ? 'DESC' : 'ASC' };
   }
 
-  // console.log('FORMAT-ARGS AFTER:', nextArgs);
   return nextArgs;
 }
 
