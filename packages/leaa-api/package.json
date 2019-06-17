@@ -23,6 +23,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "---------------------------------------------------------------------- DEV ----": "----",
     "dev": "NODE_ENV=development ts-node-dev --respawn --transpileOnly -r tsconfig-paths/register ./src/main.ts",
+    "seed": "NODE_ENV=development ts-node -r tsconfig-paths/register ./src/seed.ts",
     "nodemon": "NODE_ENV=development nodemon",
     "tsc": "tsc --noEmit",
     "---------------------------------------------------------------------- PROD ----": "----",

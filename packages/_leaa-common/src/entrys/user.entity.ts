@@ -18,9 +18,9 @@ export class User {
   name?: string;
 
   // @Column({ type: 'varchar', length: 32, unique: true })
-  @Column({ type: 'varchar', length: 32, default: '18688880000' })
+  @Column({ type: 'varchar', length: 32, default: '', nullable: true })
   @Field()
-  phone!: string;
+  phone?: string;
 
   @Column({ type: 'varchar', length: 64, unique: true })
   @Field()

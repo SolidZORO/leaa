@@ -8,6 +8,7 @@ import { TypeormService } from '@leaa/api/modules/typeorm/typeorm.service';
 import { ConfigModule } from '@leaa/api/modules/config/config.module';
 import { UserModule } from '@leaa/api/modules/user/user.module';
 import { AuthModule } from '@leaa/api/modules/auth/auth.module';
+import { SeedModule } from '@leaa/api/modules/seed/seed.module';
 import { PermissionModule } from '@leaa/api/modules/permission/permission.module';
 import { RoleModule } from '@leaa/api/modules/role/role.module';
 
@@ -21,6 +22,7 @@ import { RoleModule } from '@leaa/api/modules/role/role.module';
       useClass: GraphqlService,
     }),
     ConfigModule,
+    SeedModule,
     //
     AuthModule,
     UserModule,

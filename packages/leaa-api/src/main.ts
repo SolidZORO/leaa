@@ -9,7 +9,7 @@ import { ConfigService } from '@leaa/api/modules/config/config.service';
 import { AppModule } from './app.module';
 
 (async function bootstrap() {
-  const logger = new Logger('Log');
+  const logger = new Logger('App-Log');
   logger.log('App Launcher...', ' 🚀 ');
 
   const app: NestExpressApplication = await NestFactory.create(AppModule, {
