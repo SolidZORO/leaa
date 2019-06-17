@@ -1,22 +1,15 @@
-import { Request } from 'express';
 import { GraphQLSchema } from 'graphql';
 import { applyMiddleware } from 'graphql-middleware';
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { GqlOptionsFactory, GqlModuleOptions } from '@nestjs/graphql';
-
+import { AuthService } from '@leaa/api/modules/auth/auth.service';
 import { permissions } from '@leaa/api/configs/permission.config';
-
-export interface IRequest {
-  req: Request;
-}
+// import { IncomingMessage } from 'http';
+import { Request } from 'express';
 
 @Injectable()
 export class GraphqlService implements GqlOptionsFactory {
-  private logger: Logger;
-
-  constructor() {
-    this.logger = new Logger(this.constructor.name);
-  }
+  constructor(@Inject(AuthService) private readonly authService: AuthService) {}
 
   createGqlOptions(): GqlModuleOptions {
     return {
@@ -27,7 +20,11 @@ export class GraphqlService implements GqlOptionsFactory {
       transformSchema: (schema: GraphQLSchema) => {
         return applyMiddleware(schema, permissions);
       },
-      context: ({ req }: IRequest) => ({ req }),
+      context: async ({ req }: { req: Request }) => {
+        const user = await this.authService.validateUser(req);
+
+        return { req, user };
+      },
     };
   }
 }

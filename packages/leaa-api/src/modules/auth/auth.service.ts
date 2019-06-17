@@ -1,15 +1,75 @@
 import bcryptjs from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
+import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
+import { AuthenticationError } from 'apollo-server-core';
 
 import { User } from '@leaa/common/entrys';
 import { AuthLoginInput } from '@leaa/common/dtos/auth';
+import { IJwtPayload } from '@leaa/common/interfaces';
+import { ConfigService } from '@leaa/api/modules/config/config.service';
 import { loggerUtil } from '@leaa/api/utils';
+import { UserService } from '@leaa/api/modules/user/user.service';
+import { Request } from 'express';
 
 @Injectable()
 export class AuthService {
-  constructor(@InjectRepository(User) private readonly userRepository: Repository<User>) {}
+  constructor(
+    @InjectRepository(User) private readonly userRepository: Repository<User>,
+    private readonly jwtService: JwtService,
+    private readonly configService: ConfigService,
+    private readonly userService: UserService,
+  ) {}
+
+  async createToken(user: User): Promise<string> {
+    const userPayload: IJwtPayload = { id: user.id };
+
+    return this.jwtService.sign(userPayload);
+  }
+
+  public async validateUser(req: Request): Promise<User | undefined> {
+    const token = req.headers.authorization;
+
+    if (!token) {
+      throw new AuthenticationError('Request header lacks authorization parameters，it should be: Authorization');
+    }
+
+    let tokenWithoutBearer = token;
+
+    if (token.slice(0, 6) === 'Bearer') {
+      tokenWithoutBearer = token.slice(7);
+    } else {
+      throw new AuthenticationError('The authorization code prefix is incorrect. it should be: Bearer');
+    }
+
+    let userPayload;
+
+    try {
+      userPayload = jwt.verify(tokenWithoutBearer, this.configService.JWT_SECRET_KEY) as (IJwtPayload | undefined);
+    } catch (error) {
+      console.log(error);
+
+      if (error instanceof jwt.NotBeforeError) {
+        throw new AuthenticationError('token not before');
+      }
+
+      if (error instanceof jwt.TokenExpiredError) {
+        throw new AuthenticationError('Token has expired');
+      }
+
+      if (error instanceof jwt.JsonWebTokenError) {
+        throw new AuthenticationError('Token is incorrect');
+      }
+    }
+
+    if (!userPayload) {
+      throw Error('User Payload error');
+    }
+
+    return this.userService.user(userPayload.id, {});
+  }
 
   async login(args: AuthLoginInput): Promise<User | undefined> {
     const user = await this.userRepository.findOne({
@@ -41,6 +101,8 @@ export class AuthService {
       loggerUtil.warn(message, this.constructor.name);
       throw new Error(message);
     }
+
+    user.authToken = await this.createToken(user);
 
     return user;
   }

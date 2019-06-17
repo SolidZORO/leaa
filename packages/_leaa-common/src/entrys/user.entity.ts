@@ -51,6 +51,10 @@ export class User {
   @Field(() => [Permission], { nullable: true })
   permissions?: Permission[];
 
+  // Virtual Field (not in DB)
+  @Field({ nullable: true })
+  authToken?: string;
+
   //
   //
 

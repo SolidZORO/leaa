@@ -17,8 +17,19 @@ import { AppModule } from './app.module';
   });
 
   const publicPath = path.resolve('public');
-  // logger.log(publicPath, 'StaticAssets');
   app.useStaticAssets(publicPath);
+
+  app.disable('x-powered-by');
+  app.enableCors({
+    origin: true,
+    credentials: true,
+    maxAge: 0,
+    optionsSuccessStatus: 200,
+    exposedHeaders: ['Authorization'],
+    // methods: '';
+    // allowedHeaders: '';
+    // preflightContinue: false;
+  });
 
   const configService = await app.get(ConfigService);
   await app.listen(configService.PORT);
