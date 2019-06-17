@@ -38,6 +38,10 @@ export class UserService extends BaseService<User, UsersArgs, UsersObject, UserA
     if (nextUser && nextUser.roles) {
       const roleIds = nextUser.roles.map(r => r.id);
       nextUser.permissions = await this.permissionRepository.findByIds(roleIds);
+
+      if (nextUser.permissions && nextUser.permissions.length && nextUser.permissions.length > 0) {
+        nextUser.flatePermissions = [...new Set(nextUser.permissions.map(p => p.slug))];
+      }
     }
 
     return nextUser;

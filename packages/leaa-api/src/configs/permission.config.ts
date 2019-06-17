@@ -1,10 +1,8 @@
 import { shield, allow, rule } from 'graphql-shield';
-
-import { authUtil } from '@leaa/common/utils';
 import { envConfig } from '../modules/config/config.module';
 
 const checkPermission = (permissionSlug: string) => {
-  return rule()(async (parent, args, ctx) => authUtil.getFlatPermissions(ctx.user).includes(permissionSlug));
+  return rule()(async (parent, args, ctx) => ctx.user.flatePermissions.includes(permissionSlug));
 };
 
 export const permissions = shield(

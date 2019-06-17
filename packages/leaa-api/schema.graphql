@@ -131,6 +131,7 @@ type User {
   last_login_at: DateTime!
   roles: [Role!]
   permissions: [Permission!]
+  flatePermissions: [String!]
   authToken: String
   created_at: DateTime!
   updated_at: DateTime
