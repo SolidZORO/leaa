@@ -6,6 +6,7 @@ import { PassportModule } from '@nestjs/passport';
 import { User, Role, Permission } from '@leaa/common/entrys';
 
 import { UserService } from '@leaa/api/modules/user/user.service';
+import { RoleService } from '@leaa/api/modules/role/role.service';
 import { UserResolver } from '@leaa/api/modules/user/user.resolver';
 import { ConfigService } from '@leaa/api/modules/config/config.service';
 
@@ -27,7 +28,7 @@ import { AuthService } from './auth.service';
       }),
     }),
   ],
-  providers: [AuthResolver, AuthService, UserResolver, UserService],
+  providers: [AuthResolver, AuthService, UserResolver, UserService, RoleService],
   exports: [PassportModule, AuthService],
 })
 export class AuthModule {}

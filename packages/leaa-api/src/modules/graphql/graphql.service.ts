@@ -20,11 +20,6 @@ export class GraphqlService implements GqlOptionsFactory {
         return applyMiddleware(schema, permissions);
       },
       context: async ({ req }: { req: Request }) => {
-        // avoid graphql playground query user
-        if (req.body && req.body.operationName === 'IntrospectionQuery') {
-          return req;
-        }
-
         const user = await this.authService.validateUser(req);
 
         return { req, user };

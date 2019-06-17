@@ -35,6 +35,20 @@ export class RoleService extends BaseService<Role, RolesArgs, RolesObject, RoleA
     return this.findOne(id, nextArgs);
   }
 
+  async rolePermissionsByRoleIds(roleIds: number[]): Promise<Permission[] | undefined> {
+    const roles = await this.roleRepository.findByIds(roleIds, { relations: ['permissions'] });
+
+    let nextPermissions: Permission[] = [];
+
+    roles.forEach(r => {
+      if (r.permissions && r.permissions.length > 0) {
+        nextPermissions = nextPermissions.concat(r.permissions);
+      }
+    });
+
+    return nextPermissions;
+  }
+
   async craeteRole(args: CreateRoleInput): Promise<Role | undefined> {
     return this.roleRepository.save({ ...args });
   }

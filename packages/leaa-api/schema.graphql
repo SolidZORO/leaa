@@ -41,14 +41,14 @@ type Mutation {
   createUser(user: CreateUserInput!): User!
   updateUser(user: UpdateUserInput!, id: Int!): User!
   deleteUser(id: Int!): User!
+  createRole(role: CreateRoleInput!): Role!
+  updateRole(role: UpdateRoleInput!, id: Int!): Role!
+  deleteRole(id: Int!): Role!
   login(user: AuthLoginInput!): User!
   register(user: AuthRegisterInput!): User!
   createPermission(permission: CreatePermissionInput!): Permission!
   updatePermission(permission: UpdatePermissionInput!, id: Int!): Permission!
   deletePermission(id: Int!): Permission!
-  createRole(role: CreateRoleInput!): Role!
-  updateRole(role: UpdateRoleInput!, id: Int!): Role!
-  deleteRole(id: Int!): Role!
 }
 
 type PaginationObject {
@@ -77,10 +77,10 @@ type PermissionsObject {
 type Query {
   users(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "ASC", q: String): UsersObject!
   user(id: Int!): User!
-  permissions(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "ASC", q: String): PermissionsObject!
-  permission(id: Int!): Permission!
   roles(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "ASC", q: String): RolesObject!
   role(id: Int!): Role!
+  permissions(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "ASC", q: String): PermissionsObject!
+  permission(id: Int!): Permission!
 }
 
 type Role {

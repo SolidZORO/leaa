@@ -29,7 +29,11 @@ export class AuthService {
     return this.jwtService.sign(userPayload);
   }
 
-  public async validateUser(req: Request): Promise<User | undefined> {
+  public async validateUser(req: Request): Promise<User | undefined | boolean> {
+    if (req.body && ['IntrospectionQuery', 'login', 'register'].some(item => req.body.query.includes(item))) {
+      return true;
+    }
+
     const token = req.headers.authorization;
 
     if (!token) {

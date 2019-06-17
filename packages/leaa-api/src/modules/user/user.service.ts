@@ -1,11 +1,12 @@
 import bcryptjs from 'bcryptjs';
-import { Injectable } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { Repository, FindOneOptions } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { User, Role, Permission } from '@leaa/common/entrys';
 import { UsersArgs, UsersObject, UserArgs, CreateUserInput, UpdateUserInput } from '@leaa/common/dtos/user';
 import { BaseService } from '@leaa/api/modules/base/base.service';
+import { RoleService } from '@leaa/api/modules/role/role.service';
 import { formatUtil, loggerUtil } from '@leaa/api/utils';
 
 @Injectable()
@@ -14,6 +15,7 @@ export class UserService extends BaseService<User, UsersArgs, UsersObject, UserA
     @InjectRepository(User) private readonly userRepository: Repository<User>,
     @InjectRepository(Role) private readonly roleRepository: Repository<Role>,
     @InjectRepository(Permission) private readonly permissionRepository: Repository<Permission>,
+    @Inject(RoleService) private readonly roleService: RoleService,
   ) {
     super(userRepository);
   }
@@ -37,7 +39,8 @@ export class UserService extends BaseService<User, UsersArgs, UsersObject, UserA
 
     if (nextUser && nextUser.roles) {
       const roleIds = nextUser.roles.map(r => r.id);
-      nextUser.permissions = await this.permissionRepository.findByIds(roleIds);
+
+      nextUser.permissions = await this.roleService.rolePermissionsByRoleIds(roleIds);
 
       if (nextUser.permissions && nextUser.permissions.length && nextUser.permissions.length > 0) {
         nextUser.flatePermissions = [...new Set(nextUser.permissions.map(p => p.slug))];
@@ -60,18 +63,19 @@ export class UserService extends BaseService<User, UsersArgs, UsersObject, UserA
 
   async updateUser(id: number, args?: UpdateUserInput): Promise<User | undefined> {
     const relationArgs: { roles?: Role[] } = {};
+    let roleObjects;
 
     if (args && args.roleIds) {
-      const roleObjects = await this.roleRepository.findByIds(args.roleIds);
+      roleObjects = await this.roleRepository.findByIds(args.roleIds);
+    }
 
-      if (roleObjects && roleObjects.length && roleObjects.length > 0) {
-        relationArgs.roles = roleObjects;
-      } else {
-        const message = `roles error`;
+    if (roleObjects && roleObjects.length && roleObjects.length > 0) {
+      relationArgs.roles = roleObjects;
+    } else {
+      const message = `roles error`;
 
-        loggerUtil.warn(message, this.constructor.name);
-        throw new Error(message);
-      }
+      loggerUtil.warn(message, this.constructor.name);
+      throw new Error(message);
     }
 
     return this.update(id, args, relationArgs);
