@@ -4,7 +4,6 @@ import { Injectable, Inject } from '@nestjs/common';
 import { GqlOptionsFactory, GqlModuleOptions } from '@nestjs/graphql';
 import { AuthService } from '@leaa/api/modules/auth/auth.service';
 import { permissions } from '@leaa/api/configs/permission.config';
-// import { IncomingMessage } from 'http';
 import { Request } from 'express';
 
 @Injectable()
