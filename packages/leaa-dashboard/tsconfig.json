@@ -1,0 +1,20 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "./dist",
+    "module": "commonjs",
+    "target": "es6",
+    "declaration": true,
+    "sourceMap": false,
+    "incremental": true,
+    "paths": {
+      "@leaa/common": ["../_leaa-common/src"],
+      "@leaa/common/*": ["../_leaa-common/src/*"],
+      "@leaa/api": ["./src"],
+      "@leaa/api/*": ["./src/*"]
+    }
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx", "typings/*"],
+  "exclude": ["node_modules", "dist"]
+}

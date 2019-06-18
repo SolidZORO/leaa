@@ -1,29 +1,29 @@
 # OS
 .DS_Store
 
-# Docker
-/_docker*
-
 # Compiled
 /dist
-/node_modules
+node_modules
+docker_data
+_docker_data
 
 # Logs
 logs
 *.log
-lerna-debug.log*
+.env*
+!.env.example
 
 # Test
 /coverage
-/.nyc_output
+.nyc_output
 
 # IDEs
-/.idea
+.idea
 .project
 .classpath
-.c9/
+.c9
 *.launch
-.settings/
+.settings
 *.sublime-workspace
 .vscode/*
 !.vscode/settings.json
