@@ -5,6 +5,7 @@
     "outDir": "./dist",
     "module": "commonjs",
     "target": "es6",
+    "jsx": "react",
     "declaration": true,
     "sourceMap": false,
     "incremental": true,

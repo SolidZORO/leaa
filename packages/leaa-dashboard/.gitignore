@@ -1,7 +1,11 @@
 # OS
+*~
 .DS_Store
 
 # Compiled
+/.build
+/.deploy
+/.dist
 /dist
 node_modules
 docker_data
@@ -10,8 +14,11 @@ _docker_data
 # Logs
 logs
 *.log
+
+# Env
 .env*
 !.env.example
+robots.txt
 
 # Test
 /coverage

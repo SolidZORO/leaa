@@ -13,11 +13,13 @@ module.exports = {
     'react',
     'typescript',
     'import',
+    'css-modules',
   ],
   extends: [
     'airbnb',
     'airbnb-typescript',
     'plugin:@typescript-eslint/recommended',
+    'plugin:css-modules/recommended',
     'plugin:prettier/recommended',
   ],
   globals: {
