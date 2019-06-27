@@ -6,12 +6,14 @@ import { GraphqlService } from '@leaa/api/modules/graphql/graphql.service';
 import { TypeormService } from '@leaa/api/modules/typeorm/typeorm.service';
 
 import { ConfigModule } from '@leaa/api/modules/config/config.module';
+import { SeedModule } from '@leaa/api/modules/seed/seed.module';
+import { PlaygroundModule } from '@leaa/api/modules/playground/playground.module';
+import { IndexModule } from '@leaa/api/modules/index/index.module';
+//
 import { UserModule } from '@leaa/api/modules/user/user.module';
 import { AuthModule } from '@leaa/api/modules/auth/auth.module';
-import { SeedModule } from '@leaa/api/modules/seed/seed.module';
 import { PermissionModule } from '@leaa/api/modules/permission/permission.module';
 import { RoleModule } from '@leaa/api/modules/role/role.module';
-import { TestModule } from '@leaa/api/modules/test/test.module';
 
 @Module({
   imports: [
@@ -24,12 +26,13 @@ import { TestModule } from '@leaa/api/modules/test/test.module';
     }),
     ConfigModule,
     SeedModule,
+    PlaygroundModule,
+    IndexModule,
     //
     AuthModule,
     UserModule,
     PermissionModule,
     RoleModule,
-    TestModule,
   ],
   providers: [ConfigModule, AuthModule, UserModule],
   controllers: [],

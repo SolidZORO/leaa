@@ -16,7 +16,8 @@ const webpackServerConfig = {
     // 'host.com',
     // 'host2.com'
   ],
-  quiet: true,
+  // quiet: true,
+  quiet: false,
   noInfo: false,
   openPage: '',
   // watchContentBase: true,

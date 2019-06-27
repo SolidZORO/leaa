@@ -4,7 +4,7 @@ import { RoleService } from '@leaa/api/modules/role/role.service';
 import { UserService } from '@leaa/api/modules/user/user.service';
 
 @Injectable()
-export class TestService {
+export class PlaygroundService {
   constructor(
     private readonly permissionService: PermissionService,
     private readonly roleService: RoleService,

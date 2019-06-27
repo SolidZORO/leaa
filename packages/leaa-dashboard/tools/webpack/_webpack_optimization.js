@@ -114,9 +114,7 @@ if (webpackConst.__DEV__) {
   //       reduceIdents: false, // https://github.com/ben-eb/cssnano/issues/247
   //       mergeLonghand: false,
   //       discardComments: { removeAll: true },
-  //       // 避免 cssnano 重新计算 z-index
   //       safe: true,
-  //       // 不清理 autoprefixer，继承使用 postcss 的 autoprefixer 功能
   //       autoprefixer: false,
   //     },
   //     canPrint: true,

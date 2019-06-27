@@ -38,17 +38,17 @@ The javascript `Date` as string. Type represents date and time as the ISO Date s
 scalar DateTime
 
 type Mutation {
-  createUser(user: CreateUserInput!): User!
-  updateUser(user: UpdateUserInput!, id: Int!): User!
-  deleteUser(id: Int!): User!
   createRole(role: CreateRoleInput!): Role!
   updateRole(role: UpdateRoleInput!, id: Int!): Role!
   deleteRole(id: Int!): Role!
-  login(user: AuthLoginInput!): User!
-  register(user: AuthRegisterInput!): User!
   createPermission(permission: CreatePermissionInput!): Permission!
   updatePermission(permission: UpdatePermissionInput!, id: Int!): Permission!
   deletePermission(id: Int!): Permission!
+  createUser(user: CreateUserInput!): User!
+  updateUser(user: UpdateUserInput!, id: Int!): User!
+  deleteUser(id: Int!): User!
+  login(user: AuthLoginInput!): User!
+  register(user: AuthRegisterInput!): User!
 }
 
 type PaginationObject {
@@ -58,7 +58,7 @@ type PaginationObject {
 }
 
 type Permission {
-  id: ID!
+  id: Int!
   name: String!
   slug: String!
   roles: [Role!]
@@ -75,16 +75,16 @@ type PermissionsObject {
 }
 
 type Query {
-  users(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "ASC", q: String): UsersObject!
-  user(id: Int!): User!
   roles(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "ASC", q: String): RolesObject!
   role(id: Int!): Role!
   permissions(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "ASC", q: String): PermissionsObject!
   permission(id: Int!): Permission!
+  users(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "ASC", q: String): UsersObject!
+  user(id: Int!): User!
 }
 
 type Role {
-  id: ID!
+  id: Int!
   name: String!
   slug: String!
   permissions: [Permission!]
@@ -124,7 +124,7 @@ input UpdateUserInput {
 }
 
 type User {
-  id: ID!
+  id: Int!
   name: String
   phone: String!
   email: String!

@@ -1,0 +1,76 @@
+@import '../../../../styles/variables.less';
+
+@sidebar-background-color: #001529;
+
+.full-layout-sidebar {
+  display: none;
+  position: relative;
+  background: shade(@primary-color, 95%);
+  background: linear-gradient(shade(@primary-color, 85%), shade(@primary-color, 80%), shade(@primary-color, 75%));
+
+  @media (min-width: @screen-md) {
+    display: block;
+  }
+}
+
+.logo {
+  cursor: pointer;
+  display: table;
+  margin: 0 auto;
+  padding: 16px 0 8px 0;
+
+  img {
+    width: 36px;
+  }
+}
+
+.menu {
+  background-color: transparent;
+
+  // fixed must click span, click li not work.
+  li {
+    padding: 0 !important;
+
+    span {
+      display: block;
+      padding-left: 24px;
+
+      i {
+        font-size: 110% !important;
+      }
+    }
+  }
+
+  :global {
+    .ant-menu-submenu {
+      span {
+        padding-left: 0 !important;
+      }
+
+      .ant-menu-item {
+        padding-left: 48px !important;
+      }
+    }
+
+    .ant-menu-item-selected {
+      background-color: shade(@primary-color, 50%) !important;
+    }
+  }
+}
+
+
+.can-create-button {
+  position: absolute;
+  right: 6px;
+  top: 0;
+  opacity: 0.4;
+  transition: all 0.4s;
+
+  i {
+    padding: 2px;
+  }
+
+  &:hover {
+    opacity: 1;
+  }
+}

@@ -4,13 +4,13 @@ import { PermissionModule } from '@leaa/api/modules/permission/permission.module
 import { RoleModule } from '@leaa/api/modules/role/role.module';
 import { UserModule } from '@leaa/api/modules/user/user.module';
 
-import { TestService } from './test.service';
-import { TestController } from './test.controller';
+import { PlaygroundService } from './playground.service';
+import { PlaygroundController } from './playground.controller';
 
 @Module({
   imports: [PermissionModule, RoleModule, UserModule],
-  providers: [TestService],
-  controllers: [TestController],
-  exports: [TestService],
+  providers: [PlaygroundService],
+  controllers: [PlaygroundController],
+  exports: [PlaygroundService],
 })
-export class TestModule {}
+export class PlaygroundModule {}

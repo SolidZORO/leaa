@@ -1,0 +1,27 @@
+@import '../../../../styles/variables.less';
+
+.breadcrumb-wrapper {
+  position: relative;
+
+  :global {
+    .ant-breadcrumb {
+      //font-size: 95%;
+
+      a {
+        color: #0009;
+
+        &:hover {
+          color: @primary-color;
+        }
+      }
+    }
+
+    .ant-breadcrumb-link {
+      em {
+        font-weight: normal;
+        font-style: normal;
+        color: #0007;
+      }
+    }
+  }
+}

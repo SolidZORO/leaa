@@ -1,5 +1,5 @@
 import { Index, Entity, PrimaryGeneratedColumn, Column, ManyToMany } from 'typeorm';
-import { ObjectType, Field, ID } from 'type-graphql';
+import { ObjectType, Field, Int } from 'type-graphql';
 
 import { Role } from './role.entity';
 
@@ -9,7 +9,7 @@ import { Role } from './role.entity';
 @ObjectType()
 export class Permission {
   @PrimaryGeneratedColumn()
-  @Field(() => ID)
+  @Field(() => Int)
   id!: number;
 
   @Column({ type: 'varchar', length: 32 })
