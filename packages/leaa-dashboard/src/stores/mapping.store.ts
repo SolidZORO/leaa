@@ -1,15 +1,16 @@
 import { observable } from 'mobx';
 
-import { IMenuItem } from '@leaa/dashboard/configs/menu.config';
-
-export interface IMappingStoreDTO {
-  menuMapping: IMenuItem[];
+export interface IMappingStore {
+  orderStatusMapping?: string[];
+  abcMapping?: string[];
 }
 
 export class MappingStore {
-  @observable menuMapping: IMenuItem[] = [];
+  @observable orderStatusMapping: string[] = ['paid', 'finished', 'padding'];
+  @observable abcMapping: string[] = ['A', 'B', 'C'];
 
-  constructor(initData: IMappingStoreDTO) {
-    this.menuMapping = initData.menuMapping || [];
+  constructor(initData?: IMappingStore) {
+    this.orderStatusMapping = (initData && initData.orderStatusMapping) || this.orderStatusMapping;
+    this.abcMapping = (initData && initData.abcMapping) || this.abcMapping;
   }
 }

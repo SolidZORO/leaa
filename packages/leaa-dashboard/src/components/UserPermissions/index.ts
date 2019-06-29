@@ -1,0 +1,1 @@
+export { UserPermissions } from './UserPermissions';

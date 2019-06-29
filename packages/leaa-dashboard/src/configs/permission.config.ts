@@ -1,0 +1,17 @@
+export const flatePermissions = [
+  'permission.list',
+  'permission.item',
+  'permission.create',
+  'permission.update',
+  'permission.delete',
+  'role.list',
+  'role.item',
+  'role.create',
+  'role.update',
+  'role.delete',
+  'user.list',
+  'user.item',
+  'user.create',
+  'user.update',
+  'user.delete',
+];

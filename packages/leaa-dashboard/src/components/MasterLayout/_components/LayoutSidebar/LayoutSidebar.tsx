@@ -4,28 +4,30 @@ import { observable } from 'mobx';
 import { Layout, Menu, Icon } from 'antd';
 import { Link } from 'react-router-dom';
 
-import { IMenuItem } from '@leaa/dashboard/configs/menu.config';
-import { RootStore } from '@leaa/dashboard/stores';
+import { IRouteMenu } from '@leaa/dashboard/interfaces';
+import { IStore } from '@leaa/dashboard/stores';
+import { masterRouteMenus } from '@leaa/dashboard/routes/master.route';
+
 import style from './style.less';
 
 interface IProps {
-  store?: RootStore;
+  store?: IStore;
 }
 
-const makeFlatMenuItem = (menu: IMenuItem) => {
-  let itemDom = null;
+const makeFlatMenu = (menu: IRouteMenu): React.ReactNode => {
+  let dom = null;
 
   if (menu.hasParam) {
-    return itemDom;
+    return dom;
   }
 
   if (menu.isCreate) {
-    return itemDom;
+    return dom;
   }
 
-  itemDom = (
-    <Menu.Item key={menu.pattern} className={`g-sidebar-menu-${menu.pattern}`}>
-      <Link to={menu.pattern}>
+  dom = (
+    <Menu.Item key={menu.path} className={`g-sidebar-menu-${menu.path}`}>
+      <Link to={menu.path}>
         <span className="nav-text">
           {menu.icon && <Icon type={menu.icon} />}
           {menu.name}
@@ -33,22 +35,23 @@ const makeFlatMenuItem = (menu: IMenuItem) => {
       </Link>
 
       {menu.canCreate && (
-        <Link to={`${menu.pattern}/create`} className={style['can-create-button']}>
+        <Link to={`${menu.path}/create`} className={style['can-create-button']}>
           <Icon type="plus" />
         </Link>
       )}
     </Menu.Item>
   );
 
-  return itemDom;
+  return dom;
 };
 
-const makeFlatMenuList = (menus: IMenuItem[]) =>
+//
+const makeFlatMenus = (menus: IRouteMenu[]): React.ReactNode =>
   menus.map(menu =>
     menu.children ? (
       <Menu.SubMenu
-        className={`g-sidebar-submenu-${menu.pattern}`}
-        key={menu.pattern}
+        className={`g-sidebar-submenu-${menu.path}`}
+        key={menu.path}
         title={
           <span className="nav-text">
             {menu.icon && <Icon type={menu.icon} />}
@@ -56,14 +59,14 @@ const makeFlatMenuList = (menus: IMenuItem[]) =>
           </span>
         }
       >
-        {menu.children.map(subMenu => makeFlatMenuItem(subMenu))}
+        {menu.children.map(subMenu => makeFlatMenu(subMenu))}
       </Menu.SubMenu>
     ) : (
-      makeFlatMenuItem(menu)
+      makeFlatMenu(menu)
     ),
   );
 
-@inject('store')
+// @inject('store')
 export class LayoutSidebar extends React.Component<IProps> {
   @observable private uiUrlForSelect = '';
   @observable private uiUrlForOpen = '';
@@ -73,30 +76,28 @@ export class LayoutSidebar extends React.Component<IProps> {
   }
 
   public render() {
-    const store: RootStore = this.props.store!;
-    const { router } = this.props;
-
-    if (router && router.asPath) {
-      // onRemove query
-
-      const urlPath = router.asPath.replace(/(.*?)\?.*/, '$1');
-
-      this.uiUrlForSelect = urlPath;
-      // if (urlPath.replace === ''), SET asPath
-      this.uiUrlForOpen = (urlPath.replace(/(^.*)\/.*/, '$1') || urlPath).replace(/\/item/, ''); // e.g. /news/item --> /news
-    }
-
-    // console.log(this.uiUrlForSelect, this.uiUrlForOpen);
+    // const store: IStore = this.props.store!;
+    // const { router } = this.props;
+    //
+    // if (router && router.asPath) {
+    //   // onRemove query
+    //
+    //   const urlPath = router.asPath.replace(/(.*?)\?.*/, '$1');
+    //
+    //   this.uiUrlForSelect = urlPath;
+    //   // if (urlPath.replace === ''), SET asPath
+    //   this.uiUrlForOpen = (urlPath.replace(/(^.*)\/.*/, '$1') || urlPath).replace(/\/item/, ''); // e.g. /news/item --> /news
+    // }
 
     return (
       <Layout.Sider collapsible={false} className={style['full-layout-sidebar']}>
         <div className={style.logo}>
           <Link to="/">
-            <img src="/static/images/logo_white.svg" alt="" width={40} />
+            <img src="" alt="" width={40} />
           </Link>
         </div>
 
-        {store.mapping && (
+        {masterRouteMenus && (
           <Menu
             className={style.menu}
             defaultSelectedKeys={[this.uiUrlForOpen]}
@@ -105,7 +106,7 @@ export class LayoutSidebar extends React.Component<IProps> {
             mode="inline"
             theme="dark"
           >
-            {makeFlatMenuList(store.mapping.menuMapping)}
+            {makeFlatMenus(masterRouteMenus)}
           </Menu>
         )}
       </Layout.Sider>

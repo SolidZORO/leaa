@@ -1,20 +1,63 @@
+import _ from 'lodash';
 import React from 'react';
+import { Route, RouteComponentProps } from 'react-router-dom';
 import { MasterLayout } from '@leaa/dashboard/components/MasterLayout';
-import { RouterLazyLoader } from '@leaa/dashboard/components/RouterLazyLoader';
+import { SuspenseFallback } from '@leaa/dashboard/components/SuspenseFallback';
+import { IRouteItem, IRouteMenu } from '@leaa/dashboard/interfaces';
 
-const masterRouteList: any[] = [
+export const routes: IRouteItem[] = [
   {
+    name: 'UserPermissions',
+    path: '/show/user-permissions',
+    icon: 'user',
+    LazyComponent: React.lazy(() =>
+      import(/* webpackChunkName: 'ShowCreate' */ '../pages/Playground/ShowUserPermissions/ShowUserPermissions'),
+    ),
     exact: true,
-    path: '/',
-    loader: () => import(/* webpackChunkName: 'ShowShow' */ '../pages/Playground/ShowShow'),
+  },
+  {
+    name: 'Show Create',
+    path: '/show/create',
+    LazyComponent: React.lazy(() =>
+      import(/* webpackChunkName: 'ShowCreate' */ '../pages/Playground/ShowShow/ShowShow'),
+    ),
+    isCreate: true,
+    hasParam: true,
+    exact: true,
+  },
+  {
+    name: 'Show Item',
+    path: '/show/:id(\\d+)',
+    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'ShowItem' */ '../pages/Playground/ShowShow/ShowShow')),
+    hasParam: true,
+    exact: true,
+  },
+  {
+    name: 'Show All',
+    path: '/show',
+    icon: 'setting',
+    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'ShowShow' */ '../pages/Playground/ShowShow/ShowShow')),
+    canCreate: true,
+    exact: true,
+  },
+  {
+    name: 'Login',
+    path: '/login',
+    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'Login' */ '../pages/Login/Login/Login')),
+    exact: true,
   },
 ];
 
-export const masterRoute = masterRouteList.map(route => (
-  <MasterLayout
-    key={route.path}
-    exact={Boolean(route.exact)}
-    path={route.path}
-    component={(matchProps: any) => <RouterLazyLoader loader={route.loader} matchProps={matchProps} />}
-  />
+export const masterRouteMenus: IRouteMenu[] = routes.map(r => _.omit(r, 'LazyComponent'));
+
+export const masterRoute = routes.map(({ path, LazyComponent, exact }: IRouteItem) => (
+  <Route key={path} exact={exact} path={path}>
+    <MasterLayout
+      component={(matchProps: RouteComponentProps) => (
+        <React.Suspense fallback={<SuspenseFallback />}>
+          <LazyComponent {...matchProps} />
+        </React.Suspense>
+      )}
+    />
+  </Route>
 ));

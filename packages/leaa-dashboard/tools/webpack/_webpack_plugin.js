@@ -2,7 +2,7 @@
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 // const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-// const Dotenv = require('dotenv-webpack');
+const Dotenv = require('dotenv-webpack');
 // const opn = require('opn');
 // const SizePlugin = require('size-plugin');
 const WriteFilePlugin = require('write-file-webpack-plugin');
@@ -34,7 +34,6 @@ pluginList.push(
     test: /(favicon\.ico$|index\.html$|env\.js$|\/assets\/)/,
     useHashIndex: true,
   }),
-  // new Dotenv(),
   // new SizePlugin(),
   new webpack.ProvidePlugin(webpackShimming.provide),
   new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /zh-cn|zh-hk|en/),
@@ -50,6 +49,9 @@ if (webpackConst.__DEV__) {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('development'),
     }),
+    new Dotenv({
+      path: './.env.development',
+    }),
     new WebpackCallbackPlugin(),
   );
 } else {
@@ -64,6 +66,9 @@ if (webpackConst.__DEV__) {
     }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production'),
+    }),
+    new Dotenv({
+      path: './.env',
     }),
   );
 }

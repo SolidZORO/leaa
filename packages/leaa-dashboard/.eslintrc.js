@@ -8,13 +8,7 @@ module.exports = {
       jsx: true,
     },
   },
-  plugins: [
-    '@typescript-eslint',
-    'react',
-    'typescript',
-    'import',
-    'css-modules',
-  ],
+  plugins: ['@typescript-eslint', 'react', 'typescript', 'import', 'css-modules'],
   extends: [
     'airbnb',
     'airbnb-typescript',
@@ -50,9 +44,10 @@ module.exports = {
     ],
     'import/prefer-default-export': 0,
     //
-    'react/forbid-prop-types': 0,
-    'react/destructuring-assignment': 0,
+    // 'react/forbid-prop-types': 0,
+    // 'react/destructuring-assignment': 0,
     'react/jsx-one-expression-per-line': 0,
+    'react/jsx-wrap-multilines': 0,
     'react/sort-comp': 0,
     //
     //
@@ -64,23 +59,23 @@ module.exports = {
     '@typescript-eslint/explicit-member-accessibility': 0,
     '@typescript-eslint/interface-name-prefix': 0,
     '@typescript-eslint/no-unused-vars': 0,
-    '@typescript-eslint/camelcase': ['error', { properties: 'never' }],
+    '@typescript-eslint/camelcase': [1, { properties: 'never' }],
     '@typescript-eslint/no-empty-interface': 0,
+    '@typescript-eslint/explicit-function-return-type': 0,
     //
     // FOR NESTJS
-    '@typescript-eslint/no-parameter-properties': 0,
+    // '@typescript-eslint/no-parameter-properties': 0,
     'no-useless-constructor': 0,
-    'no-empty-function': 0,
-    'class-methods-use-this': 0,
+    // 'no-empty-function': 0,
+    // 'class-methods-use-this': 0,
     //
     // FOR MONO
     'prettier/prettier': 'error',
     'import/no-unresolved': ['error', { ignore: ['@leaa'] }],
     //
     // TODO will remove
-    '@typescript-eslint/no-explicit-any': 0,
-    '@typescript-eslint/ban-types': 0,
-    '@typescript-eslint/explicit-function-return-type': 0,
+    // '@typescript-eslint/no-explicit-any': 0,
+    // '@typescript-eslint/ban-types': 0,
   },
   settings: {
     'import/resolver': {

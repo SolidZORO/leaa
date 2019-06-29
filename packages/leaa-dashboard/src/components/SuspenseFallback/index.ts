@@ -1,0 +1,1 @@
+export { SuspenseFallback } from './SuspenseFallback';

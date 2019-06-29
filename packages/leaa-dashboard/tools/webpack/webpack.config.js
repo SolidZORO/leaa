@@ -21,11 +21,6 @@ const outputHtmlOption = {
       ? ' - DEV'
       : ''
     }`,
-  envFilePath: `/${
-    (webpackConst.IS_SERVER || webpackConst.__DEV__)
-      ? '____env.js'
-      : '.env.js'
-    }`,
   filename: `${webpackConst.BUILD_PUBLIC_DIR}/index.html`,
   template: `${webpackConst.VIEWS_DIR}/index.ejs`,
   // inject: 'body',

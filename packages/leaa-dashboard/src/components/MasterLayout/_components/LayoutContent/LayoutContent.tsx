@@ -4,10 +4,9 @@ import { Layout } from 'antd';
 import style from './style.less';
 
 interface IProps {
-  contentChildren: React.ReactNode;
+  children: React.ReactNode;
 }
 
-export const LayoutContent = ({ contentChildren }: IProps) => (
-  <p>222</p>
-  // <Layout.Content className={style['full-layout-content']}>{contentChildren}</Layout.Content>
+export const LayoutContent = ({ children }: IProps) => (
+  <Layout.Content className={style['full-layout-content']}>{children}</Layout.Content>
 );
