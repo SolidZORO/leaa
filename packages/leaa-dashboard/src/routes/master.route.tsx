@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, { ReactNode } from 'react';
 import { Route, RouteComponentProps } from 'react-router-dom';
 
@@ -7,25 +8,31 @@ import { SuspenseFallback } from '@leaa/dashboard/components/SuspenseFallback';
 
 export const masterRoutes: IRouteItem[] = [
   {
-    name: 'Userxxxxxxxxxxxxxx',
-    path: '__group-user',
-    icon: 'user',
+    name: 'Folder',
+    path: '_group',
+    icon: 'folder',
     children: [
       {
-        name: 'Show Item222',
-        path: '/show22/:id(\\d+)',
+        name: 'Create Show',
+        path: '/show/create',
         LazyComponent: React.lazy(() =>
-          import(/* webpackChunkName: 'ShowItem' */ '../pages/Playground/ShowShow/ShowShow'),
+          import(/* webpackChunkName: 'CreateShow' */ '../pages/Playground/ShowShow/ShowShow'),
         ),
-        hasParam: true,
+        isCreate: true,
         exact: true,
       },
       {
-        name: 'Show All3333',
-        path: '/show22',
+        name: 'Show',
+        path: '/show/:id(\\d+)',
+        LazyComponent: React.lazy(() => import(/* webpackChunkName: 'Show' */ '../pages/Playground/ShowShow/ShowShow')),
+        exact: true,
+      },
+      {
+        name: 'Shows',
+        path: '/show',
         icon: 'setting',
         LazyComponent: React.lazy(() =>
-          import(/* webpackChunkName: 'ShowShow' */ '../pages/Playground/ShowShow/ShowShow'),
+          import(/* webpackChunkName: 'Shows' */ '../pages/Playground/ShowShow/ShowShow'),
         ),
         canCreate: true,
         exact: true,
@@ -33,56 +40,27 @@ export const masterRoutes: IRouteItem[] = [
     ],
   },
   {
-    name: 'UserPermissions',
+    name: 'Permissions',
     path: '/user-permissions',
-    icon: 'user',
+    icon: 'flag',
     LazyComponent: React.lazy(() =>
-      import(/* webpackChunkName: 'UserPermissions' */ '../pages/Playground/ShowUserPermissions/ShowUserPermissions'),
+      import(/* webpackChunkName: 'Permissions' */ '../pages/Playground/ShowUserPermissions/ShowUserPermissions'),
     ),
     exact: true,
   },
   {
-    name: 'UserPermissions111',
+    name: 'Permission',
     path: '/user-permissions/:id(\\d+)',
     icon: 'user',
     LazyComponent: React.lazy(() =>
-      import(/* webpackChunkName: 'UserPermissions22' */ '../pages/Playground/ShowUserPermissions/ShowUserPermissions'),
+      import(/* webpackChunkName: 'Permission' */ '../pages/Playground/ShowUserPermissions/ShowUserPermissions'),
     ),
     exact: true,
-    hasParam: true,
   },
   {
-    name: 'Show Create',
-    path: '/show/create',
-    LazyComponent: React.lazy(() =>
-      import(/* webpackChunkName: 'ShowCreate' */ '../pages/Playground/ShowShow/ShowShow'),
-    ),
-    isCreate: true,
-    hasParam: true,
-    exact: true,
-  },
-  {
-    name: 'Show Item',
-    path: '/show/:id(\\d+)',
-    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'ShowItem' */ '../pages/Playground/ShowShow/ShowShow')),
-    hasParam: true,
-    exact: true,
-  },
-  {
-    name: 'Show All',
-    path: '/show',
-    icon: 'setting',
-    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'ShowShow' */ '../pages/Playground/ShowShow/ShowShow')),
-    canCreate: true,
-    exact: true,
-  },
-  {
-    name: 'Show Item',
+    name: 'HOME',
     path: '/',
-    LazyComponent: React.lazy(() =>
-      import(/* webpackChunkName: 'ShowItemxx' */ '../pages/Playground/ShowShow/ShowShow'),
-    ),
-    hasParam: true,
+    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'Home' */ '../pages/Playground/ShowShow/ShowShow')),
     exact: true,
   },
 ];
@@ -110,4 +88,25 @@ const parseRoutes = (routeList: IRouteItem[]) => {
   return routerDom;
 };
 
+const flateRoutes: IRouteItem[] = [];
+const parseFlatRoutes = (routeList: IRouteItem[], groupName?: string) => {
+  routeList.forEach(item => {
+    const nextItem = _.omit(item, 'LazyComponent');
+
+    if (nextItem.children) {
+      parseFlatRoutes(nextItem.children, nextItem.path);
+    }
+
+    // loop for children groupName
+    if (groupName) {
+      nextItem.groupName = groupName;
+    }
+
+    flateRoutes.push(nextItem);
+  });
+
+  return flateRoutes;
+};
+
 export const masterRoute = parseRoutes(masterRoutes);
+export const flateMasterRoutes = parseFlatRoutes(masterRoutes);

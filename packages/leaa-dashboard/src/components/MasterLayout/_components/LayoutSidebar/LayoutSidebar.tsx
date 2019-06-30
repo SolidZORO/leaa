@@ -4,7 +4,7 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 
 import logo from '@leaa/dashboard/assets/images/logo/logo-white.svg';
 import { IRouteItem } from '@leaa/dashboard/interfaces';
-import { masterRoutes } from '@leaa/dashboard/routes/master.route';
+import { masterRoutes, flateMasterRoutes } from '@leaa/dashboard/routes/master.route';
 
 import style from './style.less';
 
@@ -13,7 +13,13 @@ interface IProps extends RouteComponentProps {}
 const makeFlatMenu = (menu: IRouteItem): React.ReactNode => {
   let dom = null;
 
-  if (menu.hasParam) {
+  // Home
+  if (menu.path === '/') {
+    return null;
+  }
+
+  // hasParam
+  if (menu.path.includes(':')) {
     return dom;
   }
 
@@ -63,13 +69,11 @@ const makeFlatMenus = (menus: IRouteItem[]): React.ReactNode =>
   );
 
 export const LayoutSidebar = (props: IProps) => {
-  // let uiSelectedKeys = '';
-  const uiOpenKeys = '';
   const pathWithoutParams = props.match.path.replace(/(^.*)\/.*/, '$1') || props.match.path;
-
-  console.log(props.match);
-
   const [selectedKeys, setSelectedKeys] = useState<string>(pathWithoutParams);
+
+  const curremtSelectedKey = flateMasterRoutes.find(r => r.path === props.match.path);
+  const uiOpenKeys = curremtSelectedKey ? curremtSelectedKey.groupName || '' : '';
 
   return (
     <Layout.Sider collapsible={false} className={style['full-layout-sidebar']}>

@@ -10,7 +10,6 @@ export interface IRouteItem extends RouteProps {
   groupName?: string;
   canCreate?: boolean;
   isCreate?: boolean;
-  hasParam?: boolean;
   exact?: boolean;
   children?: IRouteItem[];
   LazyComponent?: React.LazyExoticComponent<React.FunctionComponent<RouteComponentProps>>;
