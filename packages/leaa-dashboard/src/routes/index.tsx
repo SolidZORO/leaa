@@ -1,3 +1,3 @@
-export { masterRoute } from './master.route';
-export { otherRoute } from './other.route';
-export { authRoute } from './auth.route';
+export * from './master.route';
+export * from './other.route';
+export * from './auth.route';

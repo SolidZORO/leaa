@@ -1,16 +1,16 @@
-import React from 'react';
-import { observable } from 'mobx';
+import React, { useState } from 'react';
 import { Layout, Menu, Icon } from 'antd';
 import { Link, RouteComponentProps } from 'react-router-dom';
 
-import { IRouteMenu } from '@leaa/dashboard/interfaces';
-import { masterRouteMenus } from '@leaa/dashboard/routes/master.route';
+import logo from '@leaa/dashboard/assets/images/logo/logo-white.svg';
+import { IRouteItem } from '@leaa/dashboard/interfaces';
+import { masterRoutes } from '@leaa/dashboard/routes/master.route';
 
 import style from './style.less';
 
 interface IProps extends RouteComponentProps {}
 
-const makeFlatMenu = (menu: IRouteMenu): React.ReactNode => {
+const makeFlatMenu = (menu: IRouteItem): React.ReactNode => {
   let dom = null;
 
   if (menu.hasParam) {
@@ -42,11 +42,11 @@ const makeFlatMenu = (menu: IRouteMenu): React.ReactNode => {
 };
 
 //
-const makeFlatMenus = (menus: IRouteMenu[]): React.ReactNode =>
+const makeFlatMenus = (menus: IRouteItem[]): React.ReactNode =>
   menus.map(menu =>
     menu.children ? (
       <Menu.SubMenu
-        className={`g-sidebar-submenu-${menu.path}`}
+        className={`g-sidebar-group-menu-${menu.path}`}
         key={menu.path}
         title={
           <span className="nav-text">
@@ -62,50 +62,36 @@ const makeFlatMenus = (menus: IRouteMenu[]): React.ReactNode =>
     ),
   );
 
-// @inject('store')
-export class LayoutSidebar extends React.Component<IProps> {
-  @observable private uiUrlForSelect = '';
-  @observable private uiUrlForOpen = '';
+export const LayoutSidebar = (props: IProps) => {
+  // let uiSelectedKeys = '';
+  const uiOpenKeys = '';
+  const pathWithoutParams = props.match.path.replace(/(^.*)\/.*/, '$1') || props.match.path;
 
-  constructor(props: IProps) {
-    super(props);
-  }
+  console.log(props.match);
 
-  public render() {
-    // const store: IStore = this.props.store!;
-    // const { router } = this.props;
-    //
-    // if (router && router.asPath) {
-    //   // onRemove query
-    //
-    //   const urlPath = router.asPath.replace(/(.*?)\?.*/, '$1');
-    //
-    //   this.uiUrlForSelect = urlPath;
-    //   // if (urlPath.replace === ''), SET asPath
-    //   this.uiUrlForOpen = (urlPath.replace(/(^.*)\/.*/, '$1') || urlPath).replace(/\/item/, ''); // e.g. /news/item --> /news
-    // }
+  const [selectedKeys, setSelectedKeys] = useState<string>(pathWithoutParams);
 
-    return (
-      <Layout.Sider collapsible={false} className={style['full-layout-sidebar']}>
-        <div className={style.logo}>
-          <Link to="/">
-            <img src="" alt="" width={40} />
-          </Link>
-        </div>
+  return (
+    <Layout.Sider collapsible={false} className={style['full-layout-sidebar']}>
+      <div className={style['logo']}>
+        <Link to="/">
+          <img src={logo} alt="" width={40} />
+        </Link>
+      </div>
 
-        {masterRouteMenus && (
-          <Menu
-            className={style.menu}
-            defaultSelectedKeys={[this.uiUrlForOpen]}
-            defaultOpenKeys={[this.uiUrlForOpen]}
-            selectable
-            mode="inline"
-            theme="dark"
-          >
-            {makeFlatMenus(masterRouteMenus)}
-          </Menu>
-        )}
-      </Layout.Sider>
-    );
-  }
-}
+      {masterRoutes && (
+        <Menu
+          className={style['menu']}
+          defaultSelectedKeys={[selectedKeys]}
+          defaultOpenKeys={[uiOpenKeys]}
+          selectable
+          mode="inline"
+          theme="dark"
+          onSelect={() => setSelectedKeys(pathWithoutParams)}
+        >
+          {makeFlatMenus(masterRoutes)}
+        </Menu>
+      )}
+    </Layout.Sider>
+  );
+};

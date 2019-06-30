@@ -24,7 +24,7 @@ const setAuthToken = (token: string, expiresIn: number) => {
 
 const removeAuthToken = (): boolean => {
   if (!getAuthToken) {
-    console.log('not found auth token.');
+    console.log('Not found auth token.');
 
     return false;
   }
@@ -38,8 +38,6 @@ const removeAuthToken = (): boolean => {
 const checkAuthIsAvailably = (): boolean => {
   const authExpiresIn = localStorage.getItem(AUTH_EXPIRES_IN_NAME);
   const authToken = getAuthToken();
-
-  console.log(authExpiresIn);
 
   if (!authToken || !authToken || !authExpiresIn || Math.floor(Date.now() / 1000) >= Number(authExpiresIn)) {
     removeAuthToken();

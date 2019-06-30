@@ -1,5 +1,5 @@
 import React from 'react';
-import { RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps, Link } from 'react-router-dom';
 import { useStore } from '@leaa/dashboard/stores';
 
 export default (props: RouteComponentProps) => {
@@ -11,7 +11,17 @@ export default (props: RouteComponentProps) => {
     <div>
       <h1>SHOW SHOW</h1>
       <hr />
-      <p>{JSON.stringify(store)}</p>
+      <Link to="/show/9">SHOW 9</Link>
+      <hr />
+      <Link to="/user-permissions/9">user-permissions 9</Link>
+
+      <h2>STORE</h2>
+      <hr />
+      <div>{JSON.stringify(store)}</div>
+
+      <h2>PROPS</h2>
+      <hr />
+      <div>{JSON.stringify(props.match)}</div>
     </div>
   );
 };

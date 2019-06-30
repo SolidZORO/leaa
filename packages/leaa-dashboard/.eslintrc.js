@@ -39,7 +39,7 @@ module.exports = {
     'import/prefer-default-export': 0,
     //
     // 'react/forbid-prop-types': 0,
-    // 'react/destructuring-assignment': 0,
+    'react/destructuring-assignment': 0,
     'react/jsx-one-expression-per-line': 0,
     'react/jsx-wrap-multilines': 0,
     'react/sort-comp': 0,

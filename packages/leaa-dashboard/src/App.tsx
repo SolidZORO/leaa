@@ -6,7 +6,7 @@ import { Router, Switch } from 'react-router-dom';
 
 import { apolloClient } from '@leaa/dashboard/libs';
 
-import { masterRoute, otherRoute, authRoute } from './routes';
+import { masterRoute, authRoute, otherRoute } from './routes';
 import { initStore, StoreProvider } from './stores';
 
 const store = initStore();
