@@ -1,4 +1,6 @@
 // prettier-ignore
+import { decodeBase64 } from 'bcryptjs';
+
 export const permissionsSeed = [
   { name: 'Permission List', slug: 'permission.list' },
   { name: 'Permission Item', slug: 'permission.item' },
@@ -31,6 +33,23 @@ export const usersSeed = [
   { email: 'staff@staff.com', name: 'staff', password: '7PkQGjvHMMkoo4RZ', status: 1 },
   { email: 'disabled@disabled.com', name: 'disabled', password: 'uUB3YGrdL3gJZYij', status: -1 },
 ];
+
+const randomSersSeedData = [];
+
+for (let i = 0; i < 100; i += 1) {
+  const name = `RANDOM_USER_${i.toString().padStart(4, '0')}`;
+
+  randomSersSeedData.push({
+    email: `${name}@RRRR.com`,
+    name,
+    password: Math.random()
+      .toString(36)
+      .slice(-8),
+    status: 1,
+  });
+}
+
+export const randomSersSeed = randomSersSeedData;
 
 // prettier-ignore
 export const roleAddPermissionsSeed = [

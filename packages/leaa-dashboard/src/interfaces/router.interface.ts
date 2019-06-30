@@ -1,5 +1,7 @@
 import React from 'react';
-import { RouteComponentProps, RouteProps } from 'react-router-dom';
+import { RouteProps } from 'react-router-dom';
+
+import { IPage } from '@leaa/dashboard/interfaces';
 
 export interface IRouteItem extends RouteProps {
   name: string;
@@ -12,5 +14,5 @@ export interface IRouteItem extends RouteProps {
   isCreate?: boolean;
   exact?: boolean;
   children?: IRouteItem[];
-  LazyComponent?: React.LazyExoticComponent<React.FunctionComponent<RouteComponentProps>>;
+  LazyComponent?: React.LazyExoticComponent<React.FunctionComponent<IPage>>;
 }

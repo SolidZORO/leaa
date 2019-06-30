@@ -3,7 +3,14 @@ import { PermissionService } from '@leaa/api/modules/permission/permission.servi
 import { RoleService } from '@leaa/api/modules/role/role.service';
 import { UserService } from '@leaa/api/modules/user/user.service';
 
-import { permissionsSeed, rolesSeed, usersSeed, roleAddPermissionsSeed, userAddRolesSeed } from './seed.data';
+import {
+  permissionsSeed,
+  rolesSeed,
+  usersSeed,
+  randomSersSeed,
+  roleAddPermissionsSeed,
+  userAddRolesSeed,
+} from './seed.data';
 
 @Injectable()
 export class SeedService {
@@ -37,6 +44,12 @@ export class SeedService {
       const item = await this.userService.craeteUser(i);
 
       console.log(item);
+    }
+  }
+
+  public async insertRandomUsers() {
+    for (const i of randomSersSeed) {
+      await this.userService.craeteUser(i);
     }
   }
 

@@ -1,12 +1,44 @@
 import _ from 'lodash';
 import React, { ReactNode } from 'react';
-import { Route, RouteComponentProps } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
-import { IRouteItem } from '@leaa/dashboard/interfaces';
+import { IRouteItem, IPage } from '@leaa/dashboard/interfaces';
 import { MasterLayout } from '@leaa/dashboard/components/MasterLayout';
 import { SuspenseFallback } from '@leaa/dashboard/components/SuspenseFallback';
 
 export const masterRoutes: IRouteItem[] = [
+  {
+    name: 'User List',
+    path: '/users',
+    icon: 'user',
+    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'User' */ '../pages/User/UserList/UserList')),
+    canCreate: true,
+    exact: true,
+  },
+  {
+    name: 'Permissions',
+    path: '/user-permissions',
+    icon: 'flag',
+    LazyComponent: React.lazy(() =>
+      import(/* webpackChunkName: 'Permissions' */ '../pages/Playground/ShowUserPermissions/ShowUserPermissions'),
+    ),
+    exact: true,
+  },
+  {
+    name: 'Permission',
+    path: '/user-permissions/:id(\\d+)',
+    icon: 'user',
+    LazyComponent: React.lazy(() =>
+      import(/* webpackChunkName: 'Permission' */ '../pages/Playground/ShowUserPermissions/ShowUserPermissions'),
+    ),
+    exact: true,
+  },
+  {
+    name: 'HOME',
+    path: '/',
+    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'Home' */ '../pages/Playground/ShowShow/ShowShow')),
+    exact: true,
+  },
   {
     name: 'Folder',
     path: '_group',
@@ -39,30 +71,6 @@ export const masterRoutes: IRouteItem[] = [
       },
     ],
   },
-  {
-    name: 'Permissions',
-    path: '/user-permissions',
-    icon: 'flag',
-    LazyComponent: React.lazy(() =>
-      import(/* webpackChunkName: 'Permissions' */ '../pages/Playground/ShowUserPermissions/ShowUserPermissions'),
-    ),
-    exact: true,
-  },
-  {
-    name: 'Permission',
-    path: '/user-permissions/:id(\\d+)',
-    icon: 'user',
-    LazyComponent: React.lazy(() =>
-      import(/* webpackChunkName: 'Permission' */ '../pages/Playground/ShowUserPermissions/ShowUserPermissions'),
-    ),
-    exact: true,
-  },
-  {
-    name: 'HOME',
-    path: '/',
-    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'Home' */ '../pages/Playground/ShowShow/ShowShow')),
-    exact: true,
-  },
 ];
 
 const routerDom: ReactNode[] = [];
@@ -75,7 +83,8 @@ const parseRoutes = (routeList: IRouteItem[]) => {
     routerDom.push(
       <Route key={item.children ? `group-${item.name}` : item.path} exact={item.exact} path={item.path}>
         <MasterLayout
-          component={(matchProps: RouteComponentProps) => (
+          route={item}
+          component={(matchProps: IPage) => (
             <React.Suspense fallback={<SuspenseFallback />}>
               {item.LazyComponent && <item.LazyComponent {...matchProps} />}
             </React.Suspense>

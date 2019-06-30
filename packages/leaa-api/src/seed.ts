@@ -16,6 +16,7 @@ import { SeedService } from './modules/seed/seed.service';
     await seedService.insertPermissions();
     await seedService.insertRoles();
     await seedService.insertUsers();
+    await seedService.insertRandomUsers();
     await seedService.insertRoleAddPermissions();
     await seedService.insertUserAddRole();
   } catch (e) {

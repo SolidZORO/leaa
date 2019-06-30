@@ -4,6 +4,7 @@ import { RouteProps, RouteComponentProps, Redirect } from 'react-router-dom';
 import { Layout } from 'antd';
 
 import { urlUtil, authUtil } from '@leaa/dashboard/utils';
+import { IRouteItem } from '@leaa/dashboard/interfaces';
 import { DefaultLayout } from '@leaa/dashboard/components/DefaultLayout';
 import { LayoutHeader } from './_components/LayoutHeader/LayoutHeader';
 import { LayoutSidebar } from './_components/LayoutSidebar/LayoutSidebar';
@@ -15,6 +16,7 @@ import style from './style.less';
 interface IProps extends RouteProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   component: any;
+  route: IRouteItem;
   disableSidebar?: boolean;
   disableHeader?: boolean;
 }
@@ -46,7 +48,7 @@ export const MasterLayout = (props: IProps) => {
               <Layout>
                 {!props.disableHeader && <LayoutHeader {...matchProps} />}
                 <LayoutContent>
-                  <props.component {...matchProps} />
+                  <props.component {...matchProps} route={props.route} />
                 </LayoutContent>
               </Layout>
             </Layout>
