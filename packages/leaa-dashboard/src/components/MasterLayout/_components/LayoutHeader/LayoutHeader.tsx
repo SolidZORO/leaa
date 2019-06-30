@@ -12,7 +12,7 @@ export const LayoutHeader = (props: IProps) => (
   <Layout.Header className={style['full-layout-header']}>
     <Row type="flex" justify="space-between" align="middle">
       <Col>
-        <Breadcrumb />
+        <Breadcrumb {...props} />
       </Col>
 
       <Col>
