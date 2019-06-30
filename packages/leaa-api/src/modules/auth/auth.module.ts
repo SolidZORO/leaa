@@ -22,10 +22,6 @@ import { AuthService } from './auth.service';
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => ({
         secretOrPrivateKey: configService.JWT_SECRET_KEY,
-        // https://github.com/auth0/node-jsonwebtoken#jwtsignpayload-secretorprivatekey-options-callback
-        signOptions: {
-          expiresIn: `${configService.SERVER_COOKIE_EXPIRES_DAY}d`,
-        },
       }),
     }),
   ],

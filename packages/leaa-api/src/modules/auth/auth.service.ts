@@ -23,10 +23,24 @@ export class AuthService {
     private readonly userService: UserService,
   ) {}
 
-  async createToken(user: User): Promise<string> {
-    const userPayload: IJwtPayload = { id: user.id };
+  async createToken(
+    user: User,
+  ): Promise<{
+    authExpiresIn: number;
+    authToken: string;
+  }> {
+    const jwtPayload: IJwtPayload = { id: user.id };
 
-    return this.jwtService.sign(userPayload);
+    // https://github.com/auth0/node-jsonwebtoken#jwtsignpayload-secretorprivatekey-options-callback
+    // const authExpiresIn = `${this.configService.SERVER_COOKIE_EXPIRES_DAY}d`;
+
+    const authExpiresIn = this.configService.SERVER_COOKIE_EXPIRES_DAY * (60 * 60 * 24);
+    const authToken = await this.jwtService.sign(jwtPayload, { expiresIn: authExpiresIn });
+
+    return {
+      authExpiresIn,
+      authToken,
+    };
   }
 
   public async validateUser(req: Request): Promise<User | undefined | boolean> {
@@ -104,7 +118,12 @@ export class AuthService {
       throw new Error(message);
     }
 
-    user.authToken = await this.createToken(user);
+    const userAuthInfo = await this.createToken(user);
+
+    console.log(userAuthInfo);
+
+    user.authToken = userAuthInfo.authToken;
+    user.authExpiresIn = userAuthInfo.authExpiresIn;
 
     return user;
   }

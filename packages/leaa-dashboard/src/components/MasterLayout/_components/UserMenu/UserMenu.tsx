@@ -1,13 +1,19 @@
 import React from 'react';
 import { Skeleton, Icon, Avatar, Popover, Button } from 'antd';
+import { RouteComponentProps } from 'react-router-dom';
+
+import { authUtil } from '@leaa/dashboard/utils';
+import { LOGOUT_REDIRECT_URL } from '@leaa/dashboard/constants';
 
 import style from './style.less';
 
-export const UserMenu = (): JSX.Element => {
+interface IProps extends RouteComponentProps {}
+
+export const UserMenu = (props: IProps): JSX.Element => {
   const onLogout = (): void => {
-    // if (AuthUtil.removeAuthToken()) {
-    //   console.log('/login');
-    // }
+    if (authUtil.removeAuthToken()) {
+      props.history.push(LOGOUT_REDIRECT_URL);
+    }
 
     return console.log('onLogout failed.');
   };

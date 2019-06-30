@@ -40,6 +40,15 @@ export const routes: IRouteItem[] = [
     canCreate: true,
     exact: true,
   },
+  {
+    name: 'Show Item',
+    path: '/',
+    LazyComponent: React.lazy(() =>
+      import(/* webpackChunkName: 'ShowItemxx' */ '../pages/Playground/ShowShow/ShowShow'),
+    ),
+    hasParam: true,
+    exact: true,
+  },
 ];
 
 export const masterRouteMenus: IRouteMenu[] = routes.map(r => _.omit(r, 'LazyComponent'));

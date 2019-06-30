@@ -1,18 +1,14 @@
 import React from 'react';
-import { inject } from 'mobx-react';
 import { observable } from 'mobx';
 import { Layout, Menu, Icon } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, RouteComponentProps } from 'react-router-dom';
 
 import { IRouteMenu } from '@leaa/dashboard/interfaces';
-import { IStore } from '@leaa/dashboard/stores';
 import { masterRouteMenus } from '@leaa/dashboard/routes/master.route';
 
 import style from './style.less';
 
-interface IProps {
-  store?: IStore;
-}
+interface IProps extends RouteComponentProps {}
 
 const makeFlatMenu = (menu: IRouteMenu): React.ReactNode => {
   let dom = null;

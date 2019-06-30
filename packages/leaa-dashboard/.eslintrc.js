@@ -36,6 +36,7 @@ module.exports = {
     'object-curly-newline': 0,
     semi: ['error', 'always'],
     'lines-between-class-members': 0,
+    'import/prefer-default-export': 0,
     //
     // 'react/forbid-prop-types': 0,
     // 'react/destructuring-assignment': 0,

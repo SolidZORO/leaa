@@ -4,23 +4,33 @@ import { Button, Col, Checkbox, Form, Input, Row, message } from 'antd';
 import { useMutation } from '@apollo/react-hooks';
 import { FormComponentProps } from 'antd/lib/form';
 
+import { User } from '@leaa/common/entrys';
 import { AuthLoginInput } from '@leaa/common/dtos/auth';
 import { LOGIN } from '@leaa/common/graphqls';
+import { authUtil } from '@leaa/dashboard/utils';
 import style from './style.less';
 
 interface IProps extends FormComponentProps {
   className?: string;
+  onLoginedCallback?: () => void;
 }
 
 const LoginFormInner = (props: IProps) => {
   const { className, form } = props;
   const { getFieldDecorator } = form;
 
-  const [submitLogin, { loading }] = useMutation<{
-    user: AuthLoginInput;
-  }>(LOGIN, {
+  const [submitLogin, { loading }] = useMutation<{ login: Pick<User, 'authToken' | 'authExpiresIn' | 'name'> }>(LOGIN, {
     onError(e) {
       message.error(e.message);
+    },
+    onCompleted({ login }) {
+      if (login && login.authToken && login.authExpiresIn) {
+        authUtil.setAuthToken(login.authToken, login.authExpiresIn);
+
+        if (props.onLoginedCallback) {
+          props.onLoginedCallback();
+        }
+      }
     },
   });
 
@@ -41,6 +51,12 @@ const LoginFormInner = (props: IProps) => {
 
       await submitLogin({ variables });
     });
+  };
+
+  const onBack = async () => {
+    message.info('here is not back now ; >');
+
+    authUtil.removeAuthToken();
   };
 
   return (
@@ -91,11 +107,7 @@ const LoginFormInner = (props: IProps) => {
             Login
           </Button>
 
-          <Button
-            className={style['button-back']}
-            size="large"
-            // onClick={this.onBack}
-          >
+          <Button className={style['button-back']} size="large" onClick={onBack}>
             Back
           </Button>
         </Row>

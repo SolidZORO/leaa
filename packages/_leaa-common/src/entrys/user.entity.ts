@@ -57,6 +57,9 @@ export class User {
   @Field({ nullable: true })
   authToken?: string;
 
+  @Field({ nullable: true })
+  authExpiresIn?: number;
+
   //
   //
 
