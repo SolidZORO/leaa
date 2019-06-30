@@ -1,5 +1,5 @@
 import React from 'react';
-import { UserPermissions } from '@leaa/dashboard/components/UserPermissions';
+import { UserPermissions } from './_components/UserPermissions/UserPermissions';
 
 export default () => (
   <div>

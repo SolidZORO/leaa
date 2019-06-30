@@ -6,7 +6,7 @@ import { Router, Switch } from 'react-router-dom';
 
 import { apolloClient } from '@leaa/dashboard/libs';
 
-import { masterRoute, otherRoute } from './routes';
+import { masterRoute, otherRoute, authRoute } from './routes';
 import { initStore, StoreProvider } from './stores';
 
 const store = initStore();
@@ -17,6 +17,7 @@ export const App = (): JSX.Element => (
       <StoreProvider value={store}>
         <Router history={createBrowserHistory()}>
           <Switch>
+            {authRoute}
             {masterRoute}
             {otherRoute}
           </Switch>

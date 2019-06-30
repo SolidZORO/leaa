@@ -1,0 +1,62 @@
+@import '~@leaa/dashboard/src/styles/variables.less';
+
+.page-wrapper {
+  height: 100%;
+}
+
+@bg-color: @primary-color;
+
+.login-bg {
+  background-color: shade(@bg-color, 10%);
+  background-image: radial-gradient(at 40% 100%, shade(@bg-color, 5%), shade(@bg-color, 60%));
+}
+
+.login-box {
+  background: #fffe;
+  min-height: 100vh;
+  padding: 0 20px;
+  box-shadow: 1px 0 15px 0 shade(@bg-color, 50%);
+
+  @media (min-width: @screen-md) {
+    padding: 0 40px;
+  }
+
+  .logo {
+    padding: 30px 0 20px 0;
+
+    @media (min-width: @screen-md) {
+      padding: 50px 0 45px 0;
+    }
+
+    img {
+      width: 46px;
+
+      @media (min-width: @screen-md) {
+        width: 52px;
+      }
+    }
+  }
+
+  .title {
+    font-size: 170%;
+    font-weight: bold;
+
+    @media (min-width: @screen-md) {
+      font-size: 190%;
+    }
+  }
+
+  .description {
+    color: #3337;
+    padding-top: 20px;
+    font-size: 100%;
+  }
+}
+
+.login-form {
+  padding-top: 30px;
+
+  @media (min-width: @screen-md) {
+    padding-top: 20px;
+  }
+}

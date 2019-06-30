@@ -1,22 +1,8 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
-import gql from 'graphql-tag';
 
 import { IPermission } from '@leaa/common/interfaces';
-import style from './style.less';
-
-const GET_PERMISSIONS = gql`
-  query {
-    permissions {
-      total
-      items {
-        id
-        name
-        slug
-      }
-    }
-  }
-`;
+import { GET_PERMISSIONS } from '@leaa/common/graphqls';
 
 export const UserPermissions = () => {
   const { loading, data, variables, error } = useQuery(GET_PERMISSIONS);

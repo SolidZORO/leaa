@@ -40,12 +40,6 @@ export const routes: IRouteItem[] = [
     canCreate: true,
     exact: true,
   },
-  {
-    name: 'Login',
-    path: '/login',
-    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'Login' */ '../pages/Login/Login/Login')),
-    exact: true,
-  },
 ];
 
 export const masterRouteMenus: IRouteMenu[] = routes.map(r => _.omit(r, 'LazyComponent'));

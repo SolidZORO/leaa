@@ -15,6 +15,8 @@ import style from './style.less';
 interface IProps extends RouteProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   component: any;
+  disableSidebar?: boolean;
+  disableHeader?: boolean;
 }
 
 export const MasterLayout = (props: IProps) => (
@@ -30,10 +32,10 @@ export const MasterLayout = (props: IProps) => (
           })}
         >
           <Layout className={style['full-layout-inner']} hasSider>
-            <LayoutSidebar />
+            {!props.disableSidebar && <LayoutSidebar />}
 
             <Layout>
-              <LayoutHeader />
+              {!props.disableHeader && <LayoutHeader />}
               <LayoutContent>
                 <props.component {...matchProps} />
               </LayoutContent>

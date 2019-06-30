@@ -1,1 +1,0 @@
-export { UserPermissions } from './UserPermissions';

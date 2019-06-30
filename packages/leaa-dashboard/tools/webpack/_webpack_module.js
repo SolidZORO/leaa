@@ -1,9 +1,11 @@
+const fs = require('fs');
+const lessToJS = require('less-vars-to-js');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const webpackConst = require('./_webpack_const');
-// const antdModifyVars = require('../../src/styles/antd-modify-vars');
 
 const globalExtractCSS = [/[\\/]node_modules[\\/].*antd/, /[\\/]src[\\/].*font_fi/];
+const antdModifyVars = lessToJS(fs.readFileSync(`${webpackConst.SRC_DIR}/styles/variables.less`, 'utf8'));
 
 // REQUIRE
 const webpackModule = {
@@ -83,7 +85,7 @@ webpackModule.rules = [
         loader: 'less-loader',
         options: {
           javascriptEnabled: true,
-          // modifyVars: antdModifyVars,
+          modifyVars: antdModifyVars,
         },
       },
     ],
