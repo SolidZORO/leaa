@@ -2,30 +2,33 @@ import React, { useState } from 'react';
 import { Table } from 'antd';
 import { useQuery } from '@apollo/react-hooks';
 
-import { IPage } from '@leaa/dashboard/interfaces';
 import { GET_USERS } from '@leaa/common/graphqls';
-import { PageCard } from '@leaa/dashboard/components/PageCard';
+import { DEFAULT_PAGE_SIZE_OPTIONS } from '@leaa/dashboard/constants';
 import { UsersObject, UsersArgs } from '@leaa/common/dtos/user';
+import { urlUtil } from '@leaa/dashboard/utils';
+import { IPage } from '@leaa/dashboard/interfaces';
+import { PageCard } from '@leaa/dashboard/components/PageCard';
+import { ErrorCard } from '@leaa/dashboard/components/ErrorCard';
+import { SearchInput } from '@leaa/dashboard/components/SearchInput';
 
 import style from './style.less';
 
-const DEFAULT_PAGE = 1;
-const DEFAULT_PAGE_SIZE = 15;
-
 export default (props: IPage) => {
-  const [page, setPage] = useState<number>(DEFAULT_PAGE);
-  const [pageSize, setPageSize] = useState<number>(DEFAULT_PAGE_SIZE);
+  const urlPagination = urlUtil.getPagination(window);
+
+  const [page, setPage] = useState<number | undefined>(urlPagination.page);
+  const [pageSize, setPageSize] = useState<number | undefined>(urlPagination.pageSize);
+
+  const variables = { page, pageSize };
+  console.log('VARIABLES --->', variables);
 
   const { loading, data, error } = useQuery<{ users: UsersObject }, UsersArgs>(GET_USERS, {
-    variables: {
-      page,
-      pageSize,
-    },
+    variables,
   });
 
-  if (error) {
-    return <div>{JSON.stringify(error)}</div>;
-  }
+  // if (error) {
+  //   return <ErrorCard message={error.message} />;
+  // }
 
   const columns = [
     {
@@ -42,36 +45,52 @@ export default (props: IPage) => {
       title: 'Action',
       key: 'operation',
       width: 100,
-      render: () => <a href="javascript:;">action</a>,
+      render: () => <div>Action</div>,
     },
   ];
 
-  console.log(props);
-
   return (
-    <PageCard title={props.route.name} className={style['page-wapper']} loading={loading}>
+    <PageCard
+      title={props.route.name}
+      extra={
+        <SearchInput
+          onChange={(e: string) => {
+            urlUtil.mergeParamToUrlQuery({
+              window,
+              params: {
+                q: e,
+              },
+              replace: true,
+            });
+          }}
+        />
+      }
+      className={style['page-wapper']}
+      loading={loading}
+    >
       {data && data.users && data.users.items && (
         <Table
+          rowKey="id"
+          size="small"
+          loading={loading}
           columns={columns}
           dataSource={data.users.items}
-          size="small"
           pagination={{
             total: data.users.total,
             showSizeChanger: true,
-            defaultPageSize: DEFAULT_PAGE_SIZE,
-            defaultCurrent: DEFAULT_PAGE,
-            pageSizeOptions: [5, 10, 15, 20, 30, 40, 50, 100, 500, 1000],
+            defaultCurrent: page,
+            defaultPageSize: pageSize,
+            pageSizeOptions: DEFAULT_PAGE_SIZE_OPTIONS,
           }}
-          onChange={(pagination, filters, sorter) => {
-            console.log('params', pagination, filters, sorter);
+          onChange={pagination => {
+            setPage(pagination.current);
+            setPageSize(pagination.pageSize);
 
-            if (pagination.current) {
-              setPage(pagination.current);
-            }
-
-            if (pagination.pageSize) {
-              setPageSize(pagination.pageSize);
-            }
+            urlUtil.mergeParamToUrlQuery({
+              window,
+              params: urlUtil.pickPagination(pagination),
+              replace: true,
+            });
           }}
         />
       )}
