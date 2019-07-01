@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Table } from 'antd';
+import queryString from 'query-string';
 import { useQuery } from '@apollo/react-hooks';
 
 import { GET_USERS } from '@leaa/common/graphqls';
@@ -15,20 +16,22 @@ import style from './style.less';
 
 export default (props: IPage) => {
   const urlPagination = urlUtil.getPagination(window);
+  const qs = queryString.parse(window.location.search);
 
   const [page, setPage] = useState<number | undefined>(urlPagination.page);
   const [pageSize, setPageSize] = useState<number | undefined>(urlPagination.pageSize);
+  const [q, setQ] = useState<string | undefined>(qs && qs.q ? `${qs.q}` : undefined);
 
-  const variables = { page, pageSize };
+  const variables = { page, pageSize, q };
   console.log('VARIABLES --->', variables);
 
   const { loading, data, error } = useQuery<{ users: UsersObject }, UsersArgs>(GET_USERS, {
     variables,
   });
 
-  // if (error) {
-  //   return <ErrorCard message={error.message} />;
-  // }
+  if (error) {
+    return <ErrorCard message={error.message} />;
+  }
 
   const columns = [
     {
@@ -54,11 +57,16 @@ export default (props: IPage) => {
       title={props.route.name}
       extra={
         <SearchInput
-          onChange={(e: string) => {
+          value={q}
+          onChange={(keyword: string) => {
+            setPage(1);
+            setQ(keyword);
+
             urlUtil.mergeParamToUrlQuery({
               window,
               params: {
-                q: e,
+                page: 1,
+                q: keyword,
               },
               replace: true,
             });
@@ -80,6 +88,8 @@ export default (props: IPage) => {
             showSizeChanger: true,
             defaultCurrent: page,
             defaultPageSize: pageSize,
+            current: page,
+            pageSize: pageSize,
             pageSizeOptions: DEFAULT_PAGE_SIZE_OPTIONS,
           }}
           onChange={pagination => {

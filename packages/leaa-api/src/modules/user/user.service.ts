@@ -1,6 +1,6 @@
 import bcryptjs from 'bcryptjs';
 import { Injectable, Inject } from '@nestjs/common';
-import { Repository, FindOneOptions } from 'typeorm';
+import { Repository, FindOneOptions, Like } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { User, Role, Permission } from '@leaa/common/entrys';
@@ -24,7 +24,22 @@ export class UserService extends BaseService<User, UsersArgs, UsersObject, UserA
     const nextArgs = formatUtil.formatArgs(args);
     nextArgs.relations = ['roles'];
 
-    return this.findAll(nextArgs);
+    let whereQuery = {};
+
+    if (nextArgs.q) {
+      whereQuery = { ...whereQuery, email: Like(`%${nextArgs.q}%`) };
+    }
+
+    nextArgs.where = whereQuery;
+
+    const [items, total] = await this.userRepository.findAndCount(nextArgs);
+
+    return {
+      items,
+      total,
+      page: nextArgs.page || 1,
+      pageSize: nextArgs.pageSize || 30,
+    };
   }
 
   async addPermissionsTouser(user: User | undefined): Promise<User | undefined> {

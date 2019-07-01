@@ -19,26 +19,29 @@ interface IMergeParamToUrlQuery {
 }
 
 const mergeParamToUrlQuery = ({ window, params, replace }: IMergeParamToUrlQuery): string => {
-  // const currentUrl = `${window.location.origin}${window.location.pathname}`;
-  const currentUrl = `${window.location.href}`;
+  const prevBaseUrl = `${window.location.origin}${window.location.pathname}`;
+  const query = queryString.parse(window.location.search);
 
-  console.log(currentUrl);
+  const paramsObject = {
+    ...query,
+    ...params,
+  };
 
-  let urlQuery;
+  let nextUrl = prevBaseUrl;
 
-  if (params) {
-    urlQuery = queryString.stringify(params);
+  let paramsString = '';
+
+  if (paramsObject) {
+    paramsString = queryString.stringify(paramsObject);
   }
 
-  urlQuery = urlQuery ? `?${urlQuery}` : urlQuery;
-
-  const url = `${currentUrl}${urlQuery}`;
+  nextUrl += `${paramsString ? '?' : ''}${paramsString}`;
 
   if (replace) {
-    window.history.pushState(null, '', url);
+    window.history.pushState(null, '', nextUrl);
   }
 
-  return url;
+  return nextUrl;
 };
 
 //
