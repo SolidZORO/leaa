@@ -48,10 +48,10 @@ export const masterRoutes: IRouteItem[] = [
     exact: true,
   },
   {
-    name: 'User Item',
+    name: 'User Edit',
     path: '/users/:id(\\d+)',
     icon: 'user',
-    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'UserItem' */ '../pages/User/UserItem/UserItem')),
+    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'UserEdit' */ '../pages/User/UserEdit/UserEdit')),
     exact: true,
   },
   {

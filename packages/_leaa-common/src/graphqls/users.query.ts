@@ -19,13 +19,18 @@ export const GET_USER = gql`
       id
       name
       email
+      created_at
+      updated_at
+      status
       permissions {
         id
         name
+        slug
       }
       roles {
         id
         name
+        slug
       }
     }
   }

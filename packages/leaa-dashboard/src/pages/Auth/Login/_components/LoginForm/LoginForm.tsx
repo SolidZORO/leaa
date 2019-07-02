@@ -60,7 +60,7 @@ const LoginFormInner = (props: IProps) => {
   };
 
   return (
-    <div className={cx(style['page-wrapper'], className)}>
+    <div className={cx(style['wrapper'], className)}>
       <Form>
         <Row gutter={16} className={style['form-row']}>
           <Col xs={24} sm={12}>
