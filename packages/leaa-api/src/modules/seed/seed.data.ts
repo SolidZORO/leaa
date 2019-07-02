@@ -1,6 +1,4 @@
 // prettier-ignore
-import { decodeBase64 } from 'bcryptjs';
-
 export const permissionsSeed = [
   { name: 'Permission List', slug: 'permission.list' },
   { name: 'Permission Item', slug: 'permission.item' },

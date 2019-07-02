@@ -1,22 +1,29 @@
-// for layout className of full-wrap className
-import queryString from 'query-string';
-import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from '@leaa/dashboard/constants';
+import queryString, { ParsedQuery } from 'query-string';
 import { PaginationProps } from 'antd/lib/pagination';
 
-const routerPathToClassName = (routerPath: string): string =>
-  routerPath
-    .replace(/^\//, '') // remove ^/
-    .replace(/\/\d+/g, '-item') // replace /444  ->  -item
-    .replace(/\//g, '-'); // replace all /  ->  -
-
-//
-//
+import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from '@leaa/dashboard/constants';
 
 interface IMergeParamToUrlQuery {
   window: Window;
   params: {} | undefined;
   replace: boolean;
 }
+
+interface IGetPaginationResult {
+  page: number;
+  pageSize: number;
+}
+
+interface IPickPaginationResult {
+  page?: number;
+  pageSize?: number;
+}
+
+const routerPathToClassName = (routerPath: string): string =>
+  routerPath
+    .replace(/^\//, '') // remove ^/
+    .replace(/\/\d+/g, '-item') // replace /444  ->  -item
+    .replace(/\//g, '-'); // replace all /  ->  -
 
 const mergeParamToUrlQuery = ({ window, params, replace }: IMergeParamToUrlQuery): string => {
   const prevBaseUrl = `${window.location.origin}${window.location.pathname}`;
@@ -44,40 +51,22 @@ const mergeParamToUrlQuery = ({ window, params, replace }: IMergeParamToUrlQuery
   return nextUrl;
 };
 
-//
-//
-
-interface IGetPaginationResult {
-  page: number;
-  pageSize: number;
-}
-
-const getPagination = (window: Window): IGetPaginationResult => {
+const getPagination = (urlParams: ParsedQuery): IGetPaginationResult => {
   const result: IGetPaginationResult = {
     page: DEFAULT_PAGE,
     pageSize: DEFAULT_PAGE_SIZE,
   };
 
-  const qs = queryString.parse(window.location.search);
-
-  if (qs.page) {
-    result.page = Number(qs.page);
+  if (urlParams.page) {
+    result.page = Number(urlParams.page);
   }
 
-  if (qs.pageSize) {
-    result.pageSize = Number(qs.pageSize);
+  if (urlParams.pageSize) {
+    result.pageSize = Number(urlParams.pageSize);
   }
 
   return result;
 };
-
-//
-//
-
-interface IPickPaginationResult {
-  page?: number;
-  pageSize?: number;
-}
 
 const pickPagination = (params: PaginationProps): IPickPaginationResult => {
   const result: IPickPaginationResult = {};

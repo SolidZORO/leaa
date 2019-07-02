@@ -8,38 +8,6 @@ import { SuspenseFallback } from '@leaa/dashboard/components/SuspenseFallback';
 
 export const masterRoutes: IRouteItem[] = [
   {
-    name: 'User List',
-    path: '/users',
-    icon: 'user',
-    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'User' */ '../pages/User/UserList/UserList')),
-    canCreate: true,
-    exact: true,
-  },
-  {
-    name: 'Permissions',
-    path: '/user-permissions',
-    icon: 'flag',
-    LazyComponent: React.lazy(() =>
-      import(/* webpackChunkName: 'Permissions' */ '../pages/Playground/ShowUserPermissions/ShowUserPermissions'),
-    ),
-    exact: true,
-  },
-  {
-    name: 'Permission',
-    path: '/user-permissions/:id(\\d+)',
-    icon: 'user',
-    LazyComponent: React.lazy(() =>
-      import(/* webpackChunkName: 'Permission' */ '../pages/Playground/ShowUserPermissions/ShowUserPermissions'),
-    ),
-    exact: true,
-  },
-  {
-    name: 'HOME',
-    path: '/',
-    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'Home' */ '../pages/Playground/ShowShow/ShowShow')),
-    exact: true,
-  },
-  {
     name: 'Folder',
     path: '_group',
     icon: 'folder',
@@ -70,6 +38,45 @@ export const masterRoutes: IRouteItem[] = [
         exact: true,
       },
     ],
+  },
+  {
+    name: 'User List',
+    path: '/users',
+    icon: 'user',
+    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'UserList' */ '../pages/User/UserList/UserList')),
+    canCreate: true,
+    exact: true,
+  },
+  {
+    name: 'User Item',
+    path: '/users/:id(\\d+)',
+    icon: 'user',
+    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'UserItem' */ '../pages/User/UserItem/UserItem')),
+    exact: true,
+  },
+  {
+    name: 'Permissions',
+    path: '/user-permissions',
+    icon: 'flag',
+    LazyComponent: React.lazy(() =>
+      import(/* webpackChunkName: 'Permissions' */ '../pages/Playground/ShowUserPermissions/ShowUserPermissions'),
+    ),
+    exact: true,
+  },
+  {
+    name: 'Permission',
+    path: '/user-permissions/:id(\\d+)',
+    icon: 'user',
+    LazyComponent: React.lazy(() =>
+      import(/* webpackChunkName: 'Permission' */ '../pages/Playground/ShowUserPermissions/ShowUserPermissions'),
+    ),
+    exact: true,
+  },
+  {
+    name: 'HOME',
+    path: '/',
+    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'Home' */ '../pages/Playground/ShowShow/ShowShow')),
+    exact: true,
   },
 ];
 

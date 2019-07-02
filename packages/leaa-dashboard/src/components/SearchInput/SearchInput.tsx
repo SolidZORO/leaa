@@ -12,24 +12,23 @@ interface IProps {
 }
 
 export const SearchInput = (props: IProps) => {
-  const [inputValue, setInputValue] = useState<string | string[]>(props.value || '');
+  const [searchText, setSearchText] = useState<string | string[] | undefined>(props.value || undefined);
 
-  const onPassToParent = (e: any | 'clear') => {
-    const value = e === 'clear' ? undefined : e.currentTarget.value;
-    setInputValue(value);
+  const onPassToParent = (text: string | string[] | undefined) => {
+    const nextText = text === '__CLEAR__' ? undefined : text;
 
-    console.log('SearchInputKit:', value);
+    setSearchText(nextText);
 
     if (props.onChange) {
-      props.onChange(value);
+      props.onChange(nextText);
     }
   };
 
-  const onChange = (e: any) => {
-    if (typeof e.button !== 'undefined' || e.currentTarget.value === '') {
-      onPassToParent('clear');
+  const onChange = (event: React.FormEvent<HTMLInputElement>) => {
+    if (!event.currentTarget.value) {
+      onPassToParent('__CLEAR__');
     } else {
-      setInputValue(e.currentTarget.value);
+      setSearchText(event.currentTarget.value);
     }
   };
 
@@ -39,22 +38,16 @@ export const SearchInput = (props: IProps) => {
       className={cx(style['search-input-wrapper'], 'search-input-wrapper')}
       allowClear
       onChange={onChange}
-      defaultValue={inputValue}
-      value={inputValue}
+      defaultValue={searchText}
+      value={searchText}
       addonAfter={
         <Icon
           type="search"
           className={style['search-input-search-button']}
-          onClick={() =>
-            onPassToParent({
-              currentTarget: {
-                value: inputValue,
-              },
-            })
-          }
+          onClick={() => onPassToParent(searchText)}
         />
       }
-      onPressEnter={onPassToParent}
+      onPressEnter={() => onPassToParent(searchText)}
       {...props.componentProps}
     />
   );

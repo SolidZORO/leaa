@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
-import { Table } from 'antd';
+import _ from 'lodash';
+import React, { useState, useEffect } from 'react';
+import { Table, Button } from 'antd';
 import queryString from 'query-string';
 import { useQuery } from '@apollo/react-hooks';
+import { Link } from 'react-router-dom';
 
-import { GET_USERS } from '@leaa/common/graphqls';
 import { DEFAULT_PAGE_SIZE_OPTIONS } from '@leaa/dashboard/constants';
+import { GET_USERS } from '@leaa/common/graphqls';
+import { User } from '@leaa/common/entrys';
 import { UsersObject, UsersArgs } from '@leaa/common/dtos/user';
 import { urlUtil } from '@leaa/dashboard/utils';
 import { IPage } from '@leaa/dashboard/interfaces';
@@ -15,19 +18,31 @@ import { SearchInput } from '@leaa/dashboard/components/SearchInput';
 import style from './style.less';
 
 export default (props: IPage) => {
-  const urlPagination = urlUtil.getPagination(window);
-  const qs = queryString.parse(window.location.search);
+  const urlParams = queryString.parse(window.location.search);
+  const urlPagination = urlUtil.getPagination(urlParams);
 
   const [page, setPage] = useState<number | undefined>(urlPagination.page);
   const [pageSize, setPageSize] = useState<number | undefined>(urlPagination.pageSize);
-  const [q, setQ] = useState<string | undefined>(qs && qs.q ? `${qs.q}` : undefined);
+  const [q, setQ] = useState<string | undefined>(urlParams && urlParams.q ? `${urlParams.q}` : undefined);
+
+  const resetUrlParams = () => {
+    setPage(urlPagination.page);
+    setPageSize(urlPagination.pageSize);
+    setQ(undefined);
+  };
+
+  useEffect(() => {
+    if (_.isEmpty(urlParams)) {
+      resetUrlParams();
+    }
+  }, [urlParams]);
 
   const variables = { page, pageSize, q };
-  console.log('VARIABLES --->', variables);
-
   const { loading, data, error } = useQuery<{ users: UsersObject }, UsersArgs>(GET_USERS, {
     variables,
   });
+
+  // console.log('🍄', variables, urlParams, props.route);
 
   if (error) {
     return <ErrorCard message={error.message} />;
@@ -36,19 +51,20 @@ export default (props: IPage) => {
   const columns = [
     {
       title: 'Email',
-      width: 100,
+      width: 300,
       dataIndex: 'email',
+      render: (text: string, record: User) => <Link to={`${props.route.path}/${record.id}`}>{record.email}</Link>,
     },
     {
       title: 'Name',
-      width: 100,
+      width: 'auto',
       dataIndex: 'name',
     },
     {
       title: 'Action',
-      key: 'operation',
-      width: 100,
-      render: () => <div>Action</div>,
+      dataIndex: 'operation',
+      width: 50,
+      render: () => <Button size="small" icon="delete" />,
     },
   ];
 
@@ -80,17 +96,17 @@ export default (props: IPage) => {
         <Table
           rowKey="id"
           size="small"
-          loading={loading}
           columns={columns}
           dataSource={data.users.items}
           pagination={{
-            total: data.users.total,
-            showSizeChanger: true,
             defaultCurrent: page,
             defaultPageSize: pageSize,
-            current: page,
-            pageSize: pageSize,
             pageSizeOptions: DEFAULT_PAGE_SIZE_OPTIONS,
+            showSizeChanger: true,
+            //
+            total: data.users.total,
+            current: page,
+            pageSize,
           }}
           onChange={pagination => {
             setPage(pagination.current);
