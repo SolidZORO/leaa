@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'classnames';
-import { Col, Form, Input, Row, Descriptions, Card } from 'antd';
+import { Col, Form, Input, Row, Descriptions, Card, Select, Switch } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 
 import { User } from '@leaa/common/entrys';
@@ -25,7 +25,7 @@ class UserInfoFormInner extends React.PureComponent<IProps> {
     return (
       <div className={cx(style['wrapper'], props.className)}>
         <Form className={style['form-wrapper']}>
-          <Card loading={props.loading}>
+          <Card>
             <Descriptions title="User Info" />
 
             <Row gutter={16} className={style['form-row']}>
@@ -55,6 +55,16 @@ class UserInfoFormInner extends React.PureComponent<IProps> {
                     validateTrigger: ['onBlur'],
                     initialValue: props.item ? props.item.password : undefined,
                   })(<Input placeholder="Password" type="password" />)}
+                </Form.Item>
+              </Col>
+
+              <Col xs={24} sm={6}>
+                <Form.Item label="Status">
+                  {getFieldDecorator('status', {
+                    validateTrigger: ['onBlur'],
+                    initialValue: props.item ? Boolean(Number(props.item.status) === 1) : false,
+                    valuePropName: 'checked',
+                  })(<Switch />)}
                 </Form.Item>
               </Col>
             </Row>

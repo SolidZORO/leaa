@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import cx from 'classnames';
-import { RouteProps, RouteComponentProps, Redirect } from 'react-router-dom';
+import { RouteProps, RouteComponentProps } from 'react-router-dom';
 import { Layout } from 'antd';
+import animateScrollTo from 'animated-scroll-to';
 
 import { urlUtil, authUtil } from '@leaa/dashboard/utils';
 import { IRouteItem } from '@leaa/dashboard/interfaces';
@@ -29,6 +30,8 @@ export const MasterLayout = (props: IProps) => {
           matchProps && matchProps.match.url ? `page-${urlUtil.routerPathToClassName(matchProps.match.url)}` : null;
 
         useEffect(() => {
+          matchProps.history.listen(() => animateScrollTo(0));
+
           const authIsAvailably = authUtil.checkAuthIsAvailably();
 
           if (!authIsAvailably) {

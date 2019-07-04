@@ -13,7 +13,7 @@ interface IProps {
 }
 
 export const PageCard = ({ children, title, className, loading, extra }: IProps) => (
-  <div className={cx(style['page-card-wrapper'], className)}>
+  <div className={cx(style['wrapper'], className)}>
     <Spin spinning={loading}>
       <div className={style['header']}>
         {title && <div className={style['title']}>{title}</div>}

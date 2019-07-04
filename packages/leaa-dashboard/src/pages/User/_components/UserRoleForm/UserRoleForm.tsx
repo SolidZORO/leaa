@@ -63,7 +63,7 @@ class UserRoleFormInner extends React.PureComponent<IProps> {
     return (
       <div className={cx(style['wrapper'], props.className)}>
         <Form className={style['form-wrapper']}>
-          <Card loading={props.loading}>
+          <Card>
             <Descriptions title="Permissions" />
             {props.roles && (
               <Row gutter={16} className={style['form-row']}>

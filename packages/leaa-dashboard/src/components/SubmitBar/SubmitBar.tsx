@@ -1,6 +1,5 @@
 import React from 'react';
 import cx from 'classnames';
-import { Spin } from 'antd';
 
 import style from './style.less';
 
@@ -10,10 +9,15 @@ interface IProps {
   extra?: React.ReactNode;
   className?: string;
   loading?: boolean;
+  full?: boolean;
 }
 
-export const SubmitBar = ({ children, title, className, loading, extra }: IProps) => (
-  <div className={cx(style['page-card-wrapper'], className)}>
-    <div className={style['container']}>{children}</div>
+export const SubmitBar = (props: IProps) => (
+  <div
+    className={cx(style['wrapper'], props.className, {
+      [style['wrapper--full']]: props.full,
+    })}
+  >
+    <div className={style['container']}>{props.children}</div>
   </div>
 );

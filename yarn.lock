@@ -1871,6 +1871,11 @@ alphanum-sort@^1.0.0:
   resolved "https://registry.npm.taobao.org/alphanum-sort/download/alphanum-sort-1.0.2.tgz#97a1119649b211ad33691d9f9f486a8ec9fbe0a3"
   integrity sha1-l6ERlkmyEa0zaR2fn0hqjsn74KM=
 
+animated-scroll-to@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.npm.taobao.org/animated-scroll-to/download/animated-scroll-to-1.2.2.tgz#d6688e72f3ecec1a296fc2b36fe29290e7fff694"
+  integrity sha1-1miOcvPs7Bopb8Kzb+KSkOf/9pQ=
+
 ansi-align@^2.0.0:
   version "2.0.0"
   resolved "https://registry.npm.taobao.org/ansi-align/download/ansi-align-2.0.0.tgz#c36aeccba563b89ceb556f3690f0b1d9e3547f7f"
