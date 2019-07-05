@@ -20,10 +20,16 @@ interface IProps extends FormComponentProps {
 @observer
 class UserRoleFormInner extends React.PureComponent<IProps> {
   @observable checkAll: boolean = false;
-  @observable indeterminate: boolean = true;
+  @observable indeterminate: boolean = false;
 
   constructor(props: IProps) {
     super(props);
+  }
+
+  componentDidUpdate(prevProps: Readonly<IProps>): void {
+    if (this.props.form.getFieldValue('roleIds') && typeof this.props.roles.length !== 'undefined') {
+      this.calcCheckStatus(this.props.form.getFieldValue('roleIds'));
+    }
   }
 
   @action.bound
@@ -45,9 +51,20 @@ class UserRoleFormInner extends React.PureComponent<IProps> {
   onChange = (value: CheckboxValueType[]) => {
     const nextValue = value.map(v => Number(v));
     this.props.form.setFieldsValue({ roleIds: nextValue });
+    this.calcCheckStatus(nextValue);
+  };
+
+  calcCheckStatus = (nextValue: number[]) => {
+    if (nextValue.length === this.props.roles.length) {
+      this.setCheckAll(true);
+      this.setIndeterminate(false);
+      return;
+    }
 
     if (nextValue.length > 0) {
+      this.setCheckAll(false);
       this.setIndeterminate(true);
+      return;
     }
 
     if (nextValue.length === 0) {

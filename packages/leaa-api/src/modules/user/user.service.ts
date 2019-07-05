@@ -104,13 +104,10 @@ export class UserService extends BaseService<User, UsersArgs, UsersObject, UserA
       roleObjects = await this.roleRepository.findByIds(roleIds);
     }
 
+    relationArgs.roles = [];
+
     if (roleObjects && roleObjects.length && roleObjects.length > 0) {
       relationArgs.roles = roleObjects;
-    } else {
-      const message = `roles error`;
-
-      loggerUtil.warn(message, this.constructor.name);
-      throw new Error(message);
     }
 
     return this.update(id, args, relationArgs);

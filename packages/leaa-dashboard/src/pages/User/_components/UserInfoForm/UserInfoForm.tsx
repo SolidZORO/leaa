@@ -4,6 +4,7 @@ import { Col, Form, Input, Row, Descriptions, Card, Select, Switch } from 'antd'
 import { FormComponentProps } from 'antd/lib/form';
 
 import { User } from '@leaa/common/entrys';
+import { SwitchNumber } from '@leaa/dashboard/components/SwitchNumber';
 
 import style from './style.less';
 
@@ -62,9 +63,9 @@ class UserInfoFormInner extends React.PureComponent<IProps> {
                 <Form.Item label="Status">
                   {getFieldDecorator('status', {
                     validateTrigger: ['onBlur'],
-                    initialValue: props.item ? Boolean(Number(props.item.status) === 1) : false,
-                    valuePropName: 'checked',
-                  })(<Switch />)}
+                    initialValue: props.item ? Number(props.item.status) : 0,
+                    getValueFromEvent: (v: boolean) => Number(v),
+                  })(<SwitchNumber />)}
                 </Form.Item>
               </Col>
             </Row>
