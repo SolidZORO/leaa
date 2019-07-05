@@ -2,7 +2,6 @@
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 // const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 // const opn = require('opn');
 // const SizePlugin = require('size-plugin');
@@ -33,29 +32,6 @@ pluginList.push(
   new WriteFilePlugin({
     test: /(favicon\.ico$|index\.html$|env\.js$|\/assets\/)/,
     useHashIndex: true,
-  }),
-  new FaviconsWebpackPlugin({
-    logo: `${webpackConst.SRC_DIR}/assets/images/logo/logo-black.svg`,
-    prefix: 'favicon/',
-    emitStats: false,
-    statsFilename: 'iconstats.json',
-    persistentCache: true,
-    inject: true,
-
-    // which icons should be generated (see https://github.com/haydenbleasel/favicons#usage)
-    icons: {
-      favicons: true,
-      appleIcon: true,
-      //
-      android: false,
-      appleStartup: false,
-      coast: false,
-      firefox: false,
-      opengraph: false,
-      twitter: false,
-      yandex: false,
-      windows: false,
-    },
   }),
   // new SizePlugin(),
   new webpack.ProvidePlugin(webpackShimming.provide),

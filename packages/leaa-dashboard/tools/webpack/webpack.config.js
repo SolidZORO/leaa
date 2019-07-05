@@ -16,14 +16,10 @@ const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 // output HTML
 const outputHtmlOption = {
-  title: `${process.env.NAME}${
-    (webpackConst.IS_SERVER || webpackConst.__DEV__)
-      ? ' - DEV'
-      : ''
-    }`,
+  title: `${process.env.NAME}${webpackConst.IS_SERVER || webpackConst.__DEV__ ? ' - DEV' : ''}`,
   filename: `${webpackConst.BUILD_PUBLIC_DIR}/index.html`,
   template: `${webpackConst.VIEWS_DIR}/index.ejs`,
-  // inject: 'body',
+  favicon: `${webpackConst.SRC_DIR}/assets/images/favicon/favicon.ico`,
   inject: true,
   hash: true,
   minify: {
@@ -34,13 +30,9 @@ const outputHtmlOption = {
 
 webpackPlugin.push(new HtmlWebpackPlugin(outputHtmlOption));
 
-
 if (webpackConst.IS_ANALYZER) {
-  webpackPlugin.push(
-    new BundleAnalyzerPlugin(webpackAnalyzerConfig),
-  );
+  webpackPlugin.push(new BundleAnalyzerPlugin(webpackAnalyzerConfig));
 }
-
 
 const webpackConfig = {
   entry: {
@@ -70,13 +62,12 @@ const webpackConfig = {
   // https://webpack.docschina.org/configuration/devtool/
   devtool: webpackConst.DEVTOOL,
   optimization: webpackOptimization,
-  node: {
-    fs: 'empty',
-    path: 'empty',
-    net: 'empty',
-    tls: 'empty',
-  },
+  // node: {
+  //   fs: 'empty',
+  //   path: 'empty',
+  //   net: 'empty',
+  //   tls: 'empty',
+  // },
 };
 
 module.exports = webpackConfig;
-
