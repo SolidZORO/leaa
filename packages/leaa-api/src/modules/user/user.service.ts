@@ -7,7 +7,7 @@ import { User, Role, Permission } from '@leaa/common/entrys';
 import { UsersArgs, UsersObject, UserArgs, CreateUserInput, UpdateUserInput } from '@leaa/common/dtos/user';
 import { BaseService } from '@leaa/api/modules/base/base.service';
 import { RoleService } from '@leaa/api/modules/role/role.service';
-import { formatUtil, loggerUtil } from '@leaa/api/utils';
+import { formatUtil } from '@leaa/api/utils';
 
 @Injectable()
 export class UserService extends BaseService<User, UsersArgs, UsersObject, UserArgs, CreateUserInput, UpdateUserInput> {
@@ -22,7 +22,6 @@ export class UserService extends BaseService<User, UsersArgs, UsersObject, UserA
 
   async users(args: UsersArgs): Promise<UsersObject> {
     const nextArgs = formatUtil.formatArgs(args);
-    nextArgs.relations = ['roles'];
 
     let whereQuery = {};
 
@@ -31,6 +30,7 @@ export class UserService extends BaseService<User, UsersArgs, UsersObject, UserA
     }
 
     nextArgs.where = whereQuery;
+    nextArgs.relations = ['roles'];
 
     const [items, total] = await this.userRepository.findAndCount(nextArgs);
 

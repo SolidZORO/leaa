@@ -40,11 +40,10 @@ export const masterRoutes: IRouteItem[] = [
     ],
   },
   {
-    name: 'User List',
-    path: '/users',
+    name: 'User Create',
+    path: '/users/create',
     icon: 'user',
-    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'UserList' */ '../pages/User/UserList/UserList')),
-    canCreate: true,
+    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'UserCreate' */ '../pages/User/UserCreate/UserCreate')),
     exact: true,
   },
   {
@@ -52,6 +51,14 @@ export const masterRoutes: IRouteItem[] = [
     path: '/users/:id(\\d+)',
     icon: 'user',
     LazyComponent: React.lazy(() => import(/* webpackChunkName: 'UserEdit' */ '../pages/User/UserEdit/UserEdit')),
+    exact: true,
+  },
+  {
+    name: 'User',
+    path: '/users',
+    icon: 'user',
+    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'UserList' */ '../pages/User/UserList/UserList')),
+    canCreate: true,
     exact: true,
   },
   {

@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'classnames';
-import { Col, Form, Input, Row, Descriptions, Card, Select, Switch } from 'antd';
+import { Col, Form, Input, Row, Descriptions, Card } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 
 import { User } from '@leaa/common/entrys';
@@ -33,9 +33,8 @@ class UserInfoFormInner extends React.PureComponent<IProps> {
               <Col xs={24} sm={6}>
                 <Form.Item label="Email">
                   {getFieldDecorator('email', {
-                    validateTrigger: ['onBlur'],
                     initialValue: props.item ? props.item.email : undefined,
-                    rules: [{ required: true }],
+                    rules: [{ required: true }, { type: 'email' }],
                   })(<Input placeholder="Email" />)}
                 </Form.Item>
               </Col>
@@ -43,7 +42,6 @@ class UserInfoFormInner extends React.PureComponent<IProps> {
               <Col xs={24} sm={6}>
                 <Form.Item label="Name">
                   {getFieldDecorator('name', {
-                    validateTrigger: ['onBlur'],
                     initialValue: props.item ? props.item.name : undefined,
                     rules: [{ required: true }],
                   })(<Input placeholder="Name" />)}
@@ -53,7 +51,6 @@ class UserInfoFormInner extends React.PureComponent<IProps> {
               <Col xs={24} sm={6}>
                 <Form.Item label="Password">
                   {getFieldDecorator('password', {
-                    validateTrigger: ['onBlur'],
                     initialValue: props.item ? props.item.password : undefined,
                   })(<Input placeholder="Password" type="password" />)}
                 </Form.Item>
@@ -62,7 +59,6 @@ class UserInfoFormInner extends React.PureComponent<IProps> {
               <Col xs={24} sm={6}>
                 <Form.Item label="Status">
                   {getFieldDecorator('status', {
-                    validateTrigger: ['onBlur'],
                     initialValue: props.item ? Number(props.item.status) : 0,
                     getValueFromEvent: (v: boolean) => Number(v),
                   })(<SwitchNumber />)}

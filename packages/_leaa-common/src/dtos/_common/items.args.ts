@@ -1,10 +1,12 @@
 import { ArgsType, Field, Int } from 'type-graphql';
 
-enum OrderSort {
+export enum IOrderSort {
   ASC = 'ASC',
   DESC = 'DESC',
   asc = 'ASC',
   desc = 'DESC',
+  // ascend = 'ASC',
+  // descend = 'DESC',
 }
 
 @ArgsType()
@@ -18,8 +20,8 @@ export class ItemsArgs {
   @Field(() => String, { nullable: true, defaultValue: 'id' })
   readonly orderBy?: string = 'id';
 
-  @Field(() => String, { nullable: true, defaultValue: OrderSort.ASC })
-  readonly orderSort?: OrderSort = OrderSort.ASC;
+  @Field(() => String, { nullable: true, defaultValue: IOrderSort.DESC })
+  readonly orderSort?: IOrderSort | string = IOrderSort.DESC;
 
   // q -> query -> keyword
   @Field(() => String, { nullable: true })

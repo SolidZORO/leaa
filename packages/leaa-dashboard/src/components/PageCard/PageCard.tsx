@@ -12,16 +12,16 @@ interface IProps {
   loading?: boolean;
 }
 
-export const PageCard = ({ children, title, className, loading, extra }: IProps) => (
-  <div className={cx(style['wrapper'], className)}>
-    <Spin spinning={loading}>
+export const PageCard = (props: IProps) => (
+  <div className={cx(style['wrapper'], props.className)}>
+    <Spin spinning={props.loading}>
       <div className={style['header']}>
-        {title && <div className={style['title']}>{title}</div>}
+        {props.title && <div className={style['title']}>{props.title}</div>}
 
-        {extra && <div className={style['extra']}>{extra}</div>}
+        {props.extra && <div className={style['extra']}>{props.extra}</div>}
       </div>
 
-      <div className={style['container']}>{children}</div>
+      <div className={style['container']}>{props.children}</div>
     </Spin>
   </div>
 );

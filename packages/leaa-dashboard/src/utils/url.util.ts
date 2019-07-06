@@ -1,5 +1,8 @@
+import _ from 'lodash';
+import animateScrollTo from 'animated-scroll-to';
 import queryString, { ParsedQuery } from 'query-string';
 import { PaginationProps } from 'antd/lib/pagination';
+import { SortOrder } from 'antd/lib/table';
 
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from '@leaa/dashboard/constants';
 
@@ -18,6 +21,18 @@ interface IPickPaginationResult {
   page?: number;
   pageSize?: number;
 }
+
+interface IPickOrderProps {
+  field?: string;
+  order?: SortOrder;
+}
+
+interface IPickOrderResult {
+  orderBy?: string;
+  orderSort?: string;
+}
+
+type IFormatOrderSortResult = 'DESC' | 'ASC' | undefined;
 
 const routerPathToClassName = (routerPath: string): string =>
   routerPath
@@ -48,6 +63,8 @@ const mergeParamToUrlQuery = ({ window, params, replace }: IMergeParamToUrlQuery
     window.history.pushState(null, '', nextUrl);
   }
 
+  animateScrollTo(0);
+
   return nextUrl;
 };
 
@@ -68,7 +85,29 @@ const getPagination = (urlParams: ParsedQuery): IGetPaginationResult => {
   return result;
 };
 
+const formatOrderSort = (orderSort?: string): IFormatOrderSortResult => {
+  if (!orderSort) {
+    return undefined;
+  }
+
+  const result = orderSort.toLowerCase();
+
+  if (['desc', 'descend'].includes(result)) {
+    return 'DESC';
+  }
+
+  if (['asc', 'ascend'].includes(result)) {
+    return 'ASC';
+  }
+
+  return undefined;
+};
+
 const pickPagination = (params: PaginationProps): IPickPaginationResult => {
+  if (_.isEmpty(params)) {
+    return { page: undefined, pageSize: undefined };
+  }
+
   const result: IPickPaginationResult = {};
 
   if (params.current) {
@@ -82,9 +121,29 @@ const pickPagination = (params: PaginationProps): IPickPaginationResult => {
   return result;
 };
 
+const pickOrder = (params: IPickOrderProps): IPickOrderResult => {
+  if (_.isEmpty(params)) {
+    return { orderBy: undefined, orderSort: undefined };
+  }
+
+  const result: IPickOrderResult = {};
+
+  if (params.field) {
+    result.orderBy = params.field;
+  }
+
+  if (params.order) {
+    result.orderSort = formatOrderSort(params.order);
+  }
+
+  return result;
+};
+
 export const urlUtil = {
   routerPathToClassName,
   mergeParamToUrlQuery,
-  pickPagination,
   getPagination,
+  pickPagination,
+  pickOrder,
+  formatOrderSort,
 };
