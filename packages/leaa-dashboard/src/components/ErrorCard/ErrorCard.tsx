@@ -12,7 +12,7 @@ export const ErrorCard = ({ message }: IProps) => {
     notification.error({
       message,
     });
-  });
+  }, []);
 
   return (
     <div className={style['wrapper']}>

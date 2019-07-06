@@ -17,10 +17,9 @@ webpackConst.CHUNK_HASH = webpackConst.__DEV__ ? '_devvvvvvvvvvvv' : '_[chunkhas
 webpackConst.STYLE_CHUNK_HASH = webpackConst.__DEV__ ? '_devvvvvvvvvvvv' : '_[contenthash:8]';
 webpackConst.MODE = webpackConst.__DEV__ ? 'development' : 'production';
 webpackConst.DEVTOOL = webpackConst.__DEV__
-  ? // ? 'cheap-module-eval-source-map'
-    // ? 'eval-source-map'
+    ? 'eval-source-map'
     // ? 'source-map'
-    false
+    // false
   : false;
 
 // DIR PATH

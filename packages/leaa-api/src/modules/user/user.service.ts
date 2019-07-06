@@ -61,12 +61,16 @@ export class UserService extends BaseService<User, UsersArgs, UsersObject, UserA
   async user(id: number, args?: UserArgs & FindOneOptions<User>): Promise<User | undefined> {
     let nextArgs: FindOneOptions<User> = {};
 
+    console.log(id);
+
     if (args) {
       nextArgs = args;
       nextArgs.relations = ['roles'];
     }
 
     const user = await this.findOne(id, nextArgs);
+
+    console.log(user);
 
     return this.addPermissionsTouser(user);
   }

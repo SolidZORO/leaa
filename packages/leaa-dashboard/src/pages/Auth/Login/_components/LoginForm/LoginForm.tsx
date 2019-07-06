@@ -19,20 +19,23 @@ const LoginFormInner = (props: IProps) => {
   const { className, form } = props;
   const { getFieldDecorator } = form;
 
-  const [submitLogin, { loading }] = useMutation<{ login: Pick<User, 'authToken' | 'authExpiresIn' | 'name'> }>(LOGIN, {
-    onError(e) {
-      message.error(e.message);
-    },
-    onCompleted({ login }) {
-      if (login && login.authToken && login.authExpiresIn) {
-        authUtil.setAuthToken(login.authToken, login.authExpiresIn);
+  const [submitLoginMutate, { loading }] = useMutation<{ login: Pick<User, 'authToken' | 'authExpiresIn' | 'name'> }>(
+    LOGIN,
+    {
+      onError(e) {
+        message.error(e.message);
+      },
+      onCompleted({ login }) {
+        if (login && login.authToken && login.authExpiresIn) {
+          authUtil.setAuthToken(login.authToken, login.authExpiresIn);
 
-        if (props.onLoginedCallback) {
-          props.onLoginedCallback();
+          if (props.onLoginedCallback) {
+            props.onLoginedCallback();
+          }
         }
-      }
+      },
     },
-  });
+  );
 
   const onSubmit = async () => {
     form.validateFieldsAndScroll(async (e: Error, formData: AuthLoginInput) => {
@@ -49,7 +52,7 @@ const LoginFormInner = (props: IProps) => {
         },
       };
 
-      await submitLogin({ variables });
+      await submitLoginMutate({ variables });
     });
   };
 

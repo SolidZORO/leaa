@@ -1,13 +1,14 @@
 import _ from 'lodash';
 import moment from 'moment';
 import React, { useState, useEffect } from 'react';
-import { Table, Button } from 'antd';
+import { Table, Button, message } from 'antd';
 import queryString from 'query-string';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery, useMutation } from '@apollo/react-hooks';
 import { Link } from 'react-router-dom';
 
 import { DEFAULT_PAGE_SIZE_OPTIONS } from '@leaa/dashboard/constants';
 import { GET_USERS } from '@leaa/common/graphqls';
+import { DELETE_USER } from '@leaa/common/graphqls/user.mutation';
 import { User } from '@leaa/common/entrys';
 import { IOrderSort } from '@leaa/common/dtos/_common';
 import { UsersObject, UsersArgs } from '@leaa/common/dtos/user';
@@ -17,6 +18,7 @@ import { PageCard } from '@leaa/dashboard/components/PageCard';
 import { ErrorCard } from '@leaa/dashboard/components/ErrorCard';
 import { SearchInput } from '@leaa/dashboard/components/SearchInput';
 import { TableCard } from '@leaa/dashboard/components/TableCard';
+import { TableItemDeleteButton } from '@leaa/dashboard/components/TableItemDeleteButton';
 
 import style from './style.less';
 
@@ -49,12 +51,24 @@ export default (props: IPage) => {
     }
   }, [urlParams]);
 
-  const variables = { page, pageSize, q, orderBy, orderSort };
-  const { loading, data, error } = useQuery<{ users: UsersObject }, UsersArgs>(GET_USERS, { variables });
+  const getUsersVariables = { page, pageSize, q, orderBy, orderSort };
+  const { loading, data, error } = useQuery<{ users: UsersObject }, UsersArgs>(GET_USERS, {
+    variables: getUsersVariables,
+  });
 
   if (error) {
     return <ErrorCard message={error.message} />;
   }
+
+  const [deleteUserMutate, { loading: deleteItemLoading }] = useMutation<User>(DELETE_USER, {
+    onError(e) {
+      message.error(e.message);
+    },
+    onCompleted() {
+      message.success('Delete Successful');
+    },
+    refetchQueries: () => [{ query: GET_USERS, variables: getUsersVariables }],
+  });
 
   const calcDefaultSortOrder = (sort?: string, by?: string, field?: string): 'descend' | 'ascend' | boolean => {
     if (!by || !sort || !field) {
@@ -83,6 +97,16 @@ export default (props: IPage) => {
 
   const columns = [
     {
+      title: 'ID',
+      dataIndex: 'id',
+      render: (text: string, record: User) => (
+        <code>
+          <sup>#</sup>
+          {record.id}
+        </code>
+      ),
+    },
+    {
       title: 'Email',
       width: 300,
       dataIndex: 'email',
@@ -107,7 +131,17 @@ export default (props: IPage) => {
       title: 'Action',
       dataIndex: 'operation',
       width: 50,
-      render: () => <Button size="small" icon="delete" />,
+      render: (text: string, record: User) => (
+        <TableItemDeleteButton
+          loading={deleteItemLoading}
+          id={record.id}
+          onClick={async () =>
+            deleteUserMutate({
+              variables: { id: Number(record.id) },
+            })
+          }
+        />
+      ),
     },
   ];
 

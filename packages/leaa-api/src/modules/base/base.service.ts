@@ -91,6 +91,7 @@ export abstract class BaseService<Entity, ItemsArgs, ItemsObject, ItemArgs, Crea
   // D item
   // --------------------
   async delete(id: number): Promise<Entity | undefined> {
+    const prevId = id;
     const prevItem = await this.repository.findOne(id);
 
     if (!prevItem) {
@@ -111,6 +112,9 @@ export abstract class BaseService<Entity, ItemsArgs, ItemsObject, ItemArgs, Crea
 
     loggerUtil.warn(`delete item ${id} successful: ${JSON.stringify(nextItem)}\n\n`, this.constructor.name);
 
-    return nextItem;
+    return {
+      ...nextItem,
+      id: prevId,
+    };
   }
 }

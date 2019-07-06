@@ -45,7 +45,7 @@ export default (props: IPage) => {
     user: {},
   });
 
-  const [updateUser, { loading: submitLoading }] = useMutation<User>(UPDATE_USER, {
+  const [updateUserMutate, { loading: submitLoading }] = useMutation<User>(UPDATE_USER, {
     variables: submitVariables,
     onError(e) {
       message.error(e.message);
@@ -89,7 +89,7 @@ export default (props: IPage) => {
       ...submitVariables,
       ...{ user: submitData },
     });
-    await updateUser();
+    await updateUserMutate();
   };
 
   return (

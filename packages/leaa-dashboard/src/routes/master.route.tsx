@@ -45,6 +45,7 @@ export const masterRoutes: IRouteItem[] = [
     icon: 'user',
     LazyComponent: React.lazy(() => import(/* webpackChunkName: 'UserCreate' */ '../pages/User/UserCreate/UserCreate')),
     exact: true,
+    isCreate: true,
   },
   {
     name: 'User Edit',
