@@ -2,7 +2,6 @@ import React from 'react';
 import { Route, RouteProps } from 'react-router-dom';
 
 interface IDefaultLayoutParam extends RouteProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   component: any;
 }
 

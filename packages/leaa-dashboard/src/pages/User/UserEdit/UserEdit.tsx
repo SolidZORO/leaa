@@ -19,8 +19,8 @@ import style from './style.less';
 export default (props: IPage) => {
   const { id } = props.match.params as { id: string };
 
-  let userInfoFormRef: any; // eslint-disable-line @typescript-eslint/no-explicit-any
-  let userRoleFormRef: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  let userInfoFormRef: any;
+  let userRoleFormRef: any;
 
   const getUserVariables = { id: Number(id) };
   const { loading, data: userData, error: userError } = useQuery<{ user: User }, UserArgs>(GET_USER, {
@@ -60,10 +60,10 @@ export default (props: IPage) => {
     let hasError = false;
     let submitData: UpdateUserInput = { roleIds: [] };
 
-    userRoleFormRef.props.form.validateFieldsAndScroll(async (err: Error, formData: { roleIds: number[] }) => {
+    userRoleFormRef.props.form.validateFieldsAndScroll(async (err: any, formData: { roleIds: number[] }) => {
       if (err) {
         hasError = true;
-        message.error(err.message);
+        message.error(err[Object.keys(err)[0]].errors[0].message);
       }
 
       submitData.roleIds = formData.roleIds;
@@ -73,10 +73,10 @@ export default (props: IPage) => {
       return;
     }
 
-    userInfoFormRef.props.form.validateFieldsAndScroll(async (err: Error, formData: User) => {
+    userInfoFormRef.props.form.validateFieldsAndScroll(async (err: any, formData: User) => {
       if (err) {
         hasError = true;
-        message.error(err.message);
+        message.error(err[Object.keys(err)[0]].errors[0].message);
       }
 
       submitData = {

@@ -15,7 +15,6 @@ import '@leaa/dashboard/styles/global.less';
 import style from './style.less';
 
 interface IProps extends RouteProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   component: any;
   route: IRouteItem;
   disableSidebar?: boolean;

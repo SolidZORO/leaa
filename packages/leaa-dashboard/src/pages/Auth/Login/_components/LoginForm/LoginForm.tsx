@@ -38,9 +38,9 @@ const LoginFormInner = (props: IProps) => {
   );
 
   const onSubmit = async () => {
-    form.validateFieldsAndScroll(async (e: Error, formData: AuthLoginInput) => {
-      if (e) {
-        message.error(e.message);
+    form.validateFieldsAndScroll(async (err: any, formData: AuthLoginInput) => {
+      if (err) {
+        message.error(err[Object.keys(err)[0]].errors[0].message);
 
         return;
       }

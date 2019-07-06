@@ -13,7 +13,7 @@ import { UserInfoForm } from '../_components/UserInfoForm/UserInfoForm';
 import style from './style.less';
 
 export default (props: IPage) => {
-  let userInfoFormRef: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  let userInfoFormRef: any;
 
   const [submitVariables, setSubmitVariables] = useState<{ user: UpdateUserInput }>({
     user: {},
@@ -26,7 +26,7 @@ export default (props: IPage) => {
     },
     onCompleted({ createUser }) {
       console.log(createUser.id);
-      message.success('Update Successful');
+      message.success('Create Successful');
       props.history.push(`/users/${createUser.id}`);
     },
   });
@@ -35,10 +35,10 @@ export default (props: IPage) => {
     let hasError = false;
     let submitData: UpdateUserInput = {};
 
-    userInfoFormRef.props.form.validateFieldsAndScroll(async (err: Error, formData: User) => {
+    userInfoFormRef.props.form.validateFieldsAndScroll(async (err: any, formData: User) => {
       if (err) {
         hasError = true;
-        message.error(err.message);
+        message.error(err[Object.keys(err)[0]].errors[0].message);
       }
 
       submitData = {
@@ -47,10 +47,9 @@ export default (props: IPage) => {
       };
     });
 
-    console.log({
-      ...submitVariables,
-      ...{ user: submitData },
-    });
+    if (hasError) {
+      return;
+    }
 
     await setSubmitVariables({
       ...submitVariables,

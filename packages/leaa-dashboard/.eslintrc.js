@@ -57,6 +57,7 @@ module.exports = {
     '@typescript-eslint/camelcase': [1, { properties: 'never' }],
     '@typescript-eslint/no-empty-interface': 0,
     '@typescript-eslint/explicit-function-return-type': 0,
+    '@typescript-eslint/no-explicit-any': 0,
     //
     // NESTJS
     'no-useless-constructor': 0,
