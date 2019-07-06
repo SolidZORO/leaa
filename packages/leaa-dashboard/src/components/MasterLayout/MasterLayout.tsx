@@ -35,7 +35,7 @@ export const MasterLayout = (props: IProps) => {
           const authIsAvailably = authUtil.checkAuthIsAvailably();
 
           if (!authIsAvailably) {
-            matchProps.history.push('/login');
+            matchProps.history.push(`/login?redirect=${window.location.pathname}`);
           }
         });
 
