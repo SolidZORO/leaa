@@ -13,12 +13,11 @@ interface IProps extends RouteComponentProps {}
 export const LayoutHeader = (props: IProps) => (
   <Layout.Header className={style['full-layout-header']}>
     <Row type="flex" justify="space-between" align="middle">
-      <Col>
+      <Col className={style['breadcrumb']}>
         <Breadcrumb {...props} />
       </Col>
 
-      <Col>
-        <SwitchLanguage />
+      <Col className={style['toolsbar']}>
         <UserMenu {...props} />
       </Col>
     </Row>

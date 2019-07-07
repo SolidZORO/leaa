@@ -1,5 +1,7 @@
 export default {
   test: '0x00中文',
+  langEn: '英文',
+  langCn: '中文',
   //
   // Form
   email: 'Email',

@@ -1,5 +1,71 @@
-@import '../../../../../node_modules/@leaa/dashboard/src/styles/variables.less';
+@import '~@leaa/dashboard/src/styles/variables.less';
 
 .wrapper {
   position: relative;
+}
+
+.switch-language-popover {
+  margin-left: 10px;
+  min-width: 150px;
+}
+
+.lang-flag {
+  display: block;
+
+  &:before {
+    position: relative;
+    content: '';
+    border-radius: 0;
+    display: inline-block;
+    background-color: transparent;
+    background-image: url(../../assets/images/icon/flag.svg);
+    background-repeat: no-repeat;
+    opacity: 1;
+    background-size: 100%;
+    width: 21px;
+    height: 15px;
+    margin-right: 7px;
+    vertical-align: -3px;
+  }
+}
+
+.lang-flag--current {
+  font-size: 12px;
+
+  &:before {
+    transition: all 0.3s;
+    opacity: 0.2;
+    vertical-align: -4px;
+  }
+
+  span {
+    transition: all 0.3s;
+    opacity: 0.35;
+  }
+
+  &:hover {
+    &:before,
+    span {
+      opacity: 1;
+    }
+  }
+}
+
+.lang-flag--en {
+  &:before {
+    background-position: 0 0;
+  }
+}
+
+.lang-flag--cn {
+  &:before {
+    background-position: 0 -20px;
+  }
+}
+
+.wrapper--dark {
+  .lang-flag--current {
+    font-weight: 200;
+    color: #fff9;
+  }
 }

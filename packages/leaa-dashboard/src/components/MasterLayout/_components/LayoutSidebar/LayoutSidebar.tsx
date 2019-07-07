@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import logo from '@leaa/dashboard/assets/images/logo/logo-white.svg';
 import { IRouteItem } from '@leaa/dashboard/interfaces';
 import { masterRoutes, flateMasterRoutes } from '@leaa/dashboard/routes/master.route';
+import { SwitchLanguage } from '@leaa/dashboard/components/SwitchLanguage';
 
 import style from './style.less';
 
@@ -90,7 +91,7 @@ export const LayoutSidebar = (props: IProps) => {
 
   return (
     <Layout.Sider collapsible={false} className={style['full-layout-sidebar']}>
-      <div className={style['logo']}>
+      <div className={style['logo-wrapper']}>
         <Link to="/">
           <img src={logo} alt="" width={40} />
         </Link>
@@ -98,7 +99,7 @@ export const LayoutSidebar = (props: IProps) => {
 
       {masterRoutes && (
         <Menu
-          className={style['menu']}
+          className={style['menu-wrapper']}
           defaultSelectedKeys={[selectedKeys]}
           defaultOpenKeys={[uiOpenKeys]}
           selectable
@@ -109,6 +110,10 @@ export const LayoutSidebar = (props: IProps) => {
           {makeFlatMenus(masterRoutes)}
         </Menu>
       )}
+
+      <div className={style['switch-language-wrapper']}>
+        <SwitchLanguage className={style['switch-language']} placement="topLeft" dark />
+      </div>
     </Layout.Sider>
   );
 };

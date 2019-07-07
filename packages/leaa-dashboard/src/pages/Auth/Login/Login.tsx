@@ -27,7 +27,7 @@ export default (props: RouteComponentProps) => {
     <div className={style['wrapper']}>
       <div className={style['login-bg']}>
         <div className={style['switch-language']}>
-          <SwitchLanguage />
+          <SwitchLanguage placement="topRight" dark />
         </div>
 
         <Row>
