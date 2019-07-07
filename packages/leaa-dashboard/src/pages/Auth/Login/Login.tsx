@@ -1,15 +1,18 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Row, Col } from 'antd';
 import { RouteComponentProps } from 'react-router-dom';
 import queryString from 'query-string';
 
 import logo from '@leaa/dashboard/assets/images/logo/logo-black.svg';
 import { LOGIN_REDIRECT_URL } from '@leaa/dashboard/constants';
+import { SwitchLanguage } from '@leaa/dashboard/components/SwitchLanguage';
 import { LoginForm } from './_components/LoginForm/LoginForm';
 
 import style from './style.less';
 
 export default (props: RouteComponentProps) => {
+  const { t } = useTranslation();
   const query = queryString.parse(window.location.search);
 
   const onLoginedCallback = () => {
@@ -23,6 +26,10 @@ export default (props: RouteComponentProps) => {
   return (
     <div className={style['wrapper']}>
       <div className={style['login-bg']}>
+        <div className={style['switch-language']}>
+          <SwitchLanguage />
+        </div>
+
         <Row>
           <Col xs={24} lg={16} xl={12} xxl={10}>
             <div className={style['login-box']}>
@@ -30,8 +37,8 @@ export default (props: RouteComponentProps) => {
                 <img src={logo} alt="" />
               </div>
 
-              <div className={style['title']}>Dashboard</div>
-              <div className={style['description']}>Welcome Back, Please login to your account</div>
+              <div className={style['title']}>{t('_page:Auth.Login.title')}</div>
+              <div className={style['description']}>{t('_page:Auth.Login.subTitle')}</div>
 
               <div className={style['login-form']}>
                 <LoginForm onLoginedCallback={onLoginedCallback} />

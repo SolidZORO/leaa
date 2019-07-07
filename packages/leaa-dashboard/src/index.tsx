@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 
 import { App } from './App';
 
-const renderComponent = (Component: React.ComponentClass | React.FunctionComponent): void => {
-  ReactDOM.render(<Component />, document.getElementById('app'));
+const renderComponent = (AppComponent: React.ComponentClass | React.FunctionComponent): void => {
+  ReactDOM.render(<AppComponent />, document.getElementById('app'));
 };
 
 renderComponent(App);

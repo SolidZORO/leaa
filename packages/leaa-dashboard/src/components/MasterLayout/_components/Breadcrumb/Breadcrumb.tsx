@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Breadcrumb as AntdBreadcrumb, Icon } from 'antd';
 import { Route } from 'antd/lib/breadcrumb/Breadcrumb';
 
@@ -16,6 +17,7 @@ interface IBreadcrumb {
 interface IProps extends RouteComponentProps {}
 
 export const Breadcrumb = (props: IProps) => {
+  const { t } = useTranslation();
   const spaceToSlash = (path: string) => (path === '' ? '/' : path);
 
   const urlPath = (props && props.match && props.match.path.replace(/(.*?)\?.*/, '$1')) || '';
@@ -40,7 +42,14 @@ export const Breadcrumb = (props: IProps) => {
 
     // not found name, use urlPathList[last]
     // e.g. /news/101, urlPathList[last] = 101
-    const breadcrumbName = (currentMenu && currentMenu.name) || urlPathList[i];
+    // let breadcrumbName = (currentMenu && t(`${currentMenu.namei18n}`)) || urlPathList[i];
+    let breadcrumbName = urlPathList[i];
+
+    if (currentMenu && currentMenu.namei18n) {
+      breadcrumbName = t(`${currentMenu.namei18n}`);
+    } else if (currentMenu && currentMenu.name) {
+      breadcrumbName = currentMenu.name;
+    }
 
     if (breadcrumbName && path === '') {
       breadcrumbs.push({ path: spaceToSlash(path), breadcrumbName, children: [] });

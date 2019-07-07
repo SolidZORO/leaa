@@ -7,6 +7,7 @@ export interface IRouteItem extends RouteProps {
   name: string;
   path: string;
   //
+  namei18n?: string;
   icon?: string;
   isGroup?: boolean; // gropu of sidebar, not into rotues (flatMenu).
   groupName?: string;

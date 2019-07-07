@@ -9,11 +9,13 @@ import { SuspenseFallback } from '@leaa/dashboard/components/SuspenseFallback';
 export const masterRoutes: IRouteItem[] = [
   {
     name: 'Folder',
+    namei18n: '_route:folder.title',
     path: '_group',
     icon: 'folder',
     children: [
       {
         name: 'Create Show',
+        namei18n: '_route:folder.createShow',
         path: '/show/create',
         LazyComponent: React.lazy(() =>
           import(/* webpackChunkName: 'CreateShow' */ '../pages/Playground/ShowShow/ShowShow'),
@@ -23,12 +25,7 @@ export const masterRoutes: IRouteItem[] = [
       },
       {
         name: 'Show',
-        path: '/show/:id(\\d+)',
-        LazyComponent: React.lazy(() => import(/* webpackChunkName: 'Show' */ '../pages/Playground/ShowShow/ShowShow')),
-        exact: true,
-      },
-      {
-        name: 'Shows',
+        namei18n: '_route:folder.show',
         path: '/show',
         icon: 'setting',
         LazyComponent: React.lazy(() =>
@@ -40,22 +37,25 @@ export const masterRoutes: IRouteItem[] = [
     ],
   },
   {
-    name: 'User Create',
+    name: 'Create User',
+    namei18n: '_route:createUser',
     path: '/users/create',
     icon: 'user',
-    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'UserCreate' */ '../pages/User/UserCreate/UserCreate')),
+    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'CreateUser' */ '../pages/User/CreateUser/CreateUser')),
     exact: true,
     isCreate: true,
   },
   {
-    name: 'User Edit',
+    name: 'Edit User',
+    namei18n: '_route:editUser',
     path: '/users/:id(\\d+)',
     icon: 'user',
-    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'UserEdit' */ '../pages/User/UserEdit/UserEdit')),
+    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'UserEdit' */ '../pages/User/EditUser/EditUser')),
     exact: true,
   },
   {
     name: 'User',
+    namei18n: '_route:user',
     path: '/users',
     icon: 'user',
     LazyComponent: React.lazy(() => import(/* webpackChunkName: 'UserList' */ '../pages/User/UserList/UserList')),
@@ -63,7 +63,8 @@ export const masterRoutes: IRouteItem[] = [
     exact: true,
   },
   {
-    name: 'Permissions',
+    name: 'Permission',
+    namei18n: '_route:permission',
     path: '/user-permissions',
     icon: 'flag',
     LazyComponent: React.lazy(() =>
@@ -72,16 +73,8 @@ export const masterRoutes: IRouteItem[] = [
     exact: true,
   },
   {
-    name: 'Permission',
-    path: '/user-permissions/:id(\\d+)',
-    icon: 'user',
-    LazyComponent: React.lazy(() =>
-      import(/* webpackChunkName: 'Permission' */ '../pages/Playground/ShowUserPermissions/ShowUserPermissions'),
-    ),
-    exact: true,
-  },
-  {
     name: 'HOME',
+    namei18n: '_route:home',
     path: '/',
     LazyComponent: React.lazy(() => import(/* webpackChunkName: 'Home' */ '../pages/Playground/ShowShow/ShowShow')),
     exact: true,

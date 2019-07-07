@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'classnames';
-import { Col, Form, Input, Row, Descriptions, Card } from 'antd';
+import { Col, Form, Input, Row, Descriptions, Card, DatePicker } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 
 import { User } from '@leaa/common/entrys';
@@ -86,6 +86,12 @@ class UserInfoFormInner extends React.PureComponent<IProps> {
                     readOnly
                     disabled
                   />
+                </Form.Item>
+              </Col>
+
+              <Col xs={24} sm={6}>
+                <Form.Item label="Updated At">
+                  <DatePicker />
                 </Form.Item>
               </Col>
             </Row>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button, message } from 'antd';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
@@ -17,6 +18,7 @@ import { UserRoleForm } from '../_components/UserRoleForm/UserRoleForm';
 import style from './style.less';
 
 export default (props: IPage) => {
+  const { t } = useTranslation();
   const { id } = props.match.params as { id: string };
 
   let userInfoFormRef: any;
@@ -93,7 +95,7 @@ export default (props: IPage) => {
   };
 
   return (
-    <PageCard title={props.route.name} className={style['page-wapper']} loading={false}>
+    <PageCard title={t(`${props.route.namei18n}`)} className={style['page-wapper']} loading={false}>
       <UserInfoForm
         item={userData && userData.user}
         loading={loading}

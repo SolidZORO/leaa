@@ -7,6 +7,7 @@ import { IRouteItem, IPage } from '@leaa/dashboard/interfaces';
 export const authRoutes: IRouteItem[] = [
   {
     name: 'Login',
+    namei18n: '_route:login',
     path: '/login',
     LazyComponent: React.lazy(() => import(/* webpackChunkName: 'Login' */ '../pages/Auth/Login/Login')),
     exact: true,

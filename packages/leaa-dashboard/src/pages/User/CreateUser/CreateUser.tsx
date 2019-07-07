@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button, message } from 'antd';
+import { useTranslation } from 'react-i18next';
 import { useMutation } from '@apollo/react-hooks';
 
 import { User } from '@leaa/common/entrys';
@@ -13,6 +14,7 @@ import { UserInfoForm } from '../_components/UserInfoForm/UserInfoForm';
 import style from './style.less';
 
 export default (props: IPage) => {
+  const { t } = useTranslation();
   let userInfoFormRef: any;
 
   const [submitVariables, setSubmitVariables] = useState<{ user: UpdateUserInput }>({
@@ -59,7 +61,7 @@ export default (props: IPage) => {
   };
 
   return (
-    <PageCard title={props.route.name} className={style['page-wapper']} loading={false}>
+    <PageCard title={t(`${props.route.namei18n}`)} className={style['page-wapper']} loading={false}>
       <UserInfoForm
         wrappedComponentRef={(inst: unknown) => {
           userInfoFormRef = inst;

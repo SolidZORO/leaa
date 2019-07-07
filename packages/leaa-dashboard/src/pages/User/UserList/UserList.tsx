@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import moment from 'moment';
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Table, Button, message } from 'antd';
 import queryString from 'query-string';
 import { useQuery, useMutation } from '@apollo/react-hooks';
@@ -23,6 +24,7 @@ import { TableItemDeleteButton } from '@leaa/dashboard/components/TableItemDelet
 import style from './style.less';
 
 export default (props: IPage) => {
+  const { t } = useTranslation();
   const urlParams = queryString.parse(window.location.search);
   const urlPagination = urlUtil.getPagination(urlParams);
 
@@ -107,7 +109,7 @@ export default (props: IPage) => {
       ),
     },
     {
-      title: 'Email',
+      title: t('_page:User.UserList.email'),
       width: 300,
       dataIndex: 'email',
       sorter: true,
@@ -115,20 +117,20 @@ export default (props: IPage) => {
       render: (text: string, record: User) => <Link to={`${props.route.path}/${record.id}`}>{record.email}</Link>,
     },
     {
-      title: 'Name',
+      title: t('_page:User.UserList.name'),
       dataIndex: 'name',
       sorter: true,
       sortOrder: calcDefaultSortOrder(orderSort, orderBy, 'name'),
     },
     {
-      title: 'Created At',
+      title: t('_page:User.UserList.createdAt'),
       dataIndex: 'created_at',
       sorter: true,
       sortOrder: calcDefaultSortOrder(orderSort, orderBy, 'created_at'),
       render: (text: string) => <small>{moment(text).format('YYYY-MM-DD HH:mm:ss')}</small>,
     },
     {
-      title: 'Action',
+      title: t('_page:User.UserList.action'),
       dataIndex: 'operation',
       width: 50,
       render: (text: string, record: User) => (
@@ -147,7 +149,7 @@ export default (props: IPage) => {
 
   return (
     <PageCard
-      title={props.route.name}
+      title={t(`${props.route.namei18n}`)}
       extra={
         <SearchInput
           value={q}
@@ -174,7 +176,7 @@ export default (props: IPage) => {
           selectedRowKeys={selectedRowKeys}
           selectedRowBar={
             <Button type="danger" size="small" icon="delete">
-              Delete
+              {t('_lang:delete')}
             </Button>
           }
         >

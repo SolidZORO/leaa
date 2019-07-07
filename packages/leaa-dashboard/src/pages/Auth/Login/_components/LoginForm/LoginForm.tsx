@@ -1,5 +1,6 @@
 import React from 'react';
 import cx from 'classnames';
+import { useTranslation } from 'react-i18next';
 import { Button, Col, Checkbox, Form, Input, Row, message } from 'antd';
 import { useMutation } from '@apollo/react-hooks';
 import { FormComponentProps } from 'antd/lib/form';
@@ -16,6 +17,7 @@ interface IProps extends FormComponentProps {
 }
 
 const LoginFormInner = (props: IProps) => {
+  const { t } = useTranslation();
   const { className, form } = props;
   const { getFieldDecorator } = form;
 
@@ -57,7 +59,7 @@ const LoginFormInner = (props: IProps) => {
   };
 
   const onBack = async () => {
-    message.info('here is not back now ; >');
+    message.info(t('_page:Auth.Login.backTips'));
 
     authUtil.removeAuthToken();
   };
@@ -67,22 +69,22 @@ const LoginFormInner = (props: IProps) => {
       <Form>
         <Row gutter={16} className={style['form-row']}>
           <Col xs={24} sm={12}>
-            <Form.Item label="Email">
+            <Form.Item label={t('_page:Auth.Login.email')}>
               {getFieldDecorator('email', {
                 validateTrigger: ['onBlur'],
                 initialValue: 'admin@admin.com',
                 rules: [{ required: true }],
-              })(<Input size="large" placeholder="Email" />)}
+              })(<Input size="large" placeholder={t('_page:Auth.Login.email')} />)}
             </Form.Item>
           </Col>
 
           <Col xs={24} sm={12}>
-            <Form.Item label="Password">
+            <Form.Item label={t('_page:Auth.Login.password')}>
               {getFieldDecorator('password', {
                 validateTrigger: ['onBlur'],
                 initialValue: 'h8Hx9qvPKoHMLQgj',
                 rules: [{ required: true }],
-              })(<Input size="large" placeholder="Password" type="password" />)}
+              })(<Input size="large" type="password" placeholder={t('_page:Auth.Login.password')} />)}
             </Form.Item>
           </Col>
         </Row>
@@ -93,7 +95,7 @@ const LoginFormInner = (props: IProps) => {
               {getFieldDecorator('remember', {
                 valuePropName: 'checked',
                 initialValue: true,
-              })(<Checkbox>Remember me</Checkbox>)}
+              })(<Checkbox>{t('_page:Auth.Login.rememberMe')}</Checkbox>)}
             </Form.Item>
           </Col>
         </Row>
@@ -107,11 +109,11 @@ const LoginFormInner = (props: IProps) => {
             htmlType="submit"
             onClick={onSubmit}
           >
-            Login
+            {t('_page:Auth.Login.login')}
           </Button>
 
           <Button className={style['button-back']} size="large" onClick={onBack}>
-            Back
+            {t('_page:Auth.Login.back')}
           </Button>
         </Row>
       </Form>

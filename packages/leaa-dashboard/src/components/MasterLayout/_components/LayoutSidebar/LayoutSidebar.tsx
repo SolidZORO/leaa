@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Layout, Menu, Icon } from 'antd';
 import { Link, RouteComponentProps } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import logo from '@leaa/dashboard/assets/images/logo/logo-white.svg';
 import { IRouteItem } from '@leaa/dashboard/interfaces';
@@ -10,7 +11,18 @@ import style from './style.less';
 
 interface IProps extends RouteComponentProps {}
 
+const getMenuName = (menu: IRouteItem) => {
+  const { t } = useTranslation();
+
+  if (menu.namei18n) {
+    return t(`${menu.namei18n}`);
+  }
+
+  return menu.name;
+};
+
 const makeFlatMenu = (menu: IRouteItem): React.ReactNode => {
+  const { t } = useTranslation();
   let dom = null;
 
   // Home
@@ -32,7 +44,7 @@ const makeFlatMenu = (menu: IRouteItem): React.ReactNode => {
       <Link to={menu.path}>
         <span className="nav-text">
           {menu.icon && <Icon type={menu.icon} />}
-          {menu.name}
+          {getMenuName(menu)}
         </span>
       </Link>
 
@@ -48,16 +60,16 @@ const makeFlatMenu = (menu: IRouteItem): React.ReactNode => {
 };
 
 //
-const makeFlatMenus = (menus: IRouteItem[]): React.ReactNode =>
-  menus.map(menu =>
-    menu.children ? (
+const makeFlatMenus = (menus: IRouteItem[]): React.ReactNode => {
+  return menus.map(menu => {
+    return menu.children ? (
       <Menu.SubMenu
         className={`g-sidebar-group-menu-${menu.path}`}
         key={menu.path}
         title={
           <span className="nav-text">
             {menu.icon && <Icon type={menu.icon} />}
-            {menu.name}
+            {getMenuName(menu)}
           </span>
         }
       >
@@ -65,8 +77,9 @@ const makeFlatMenus = (menus: IRouteItem[]): React.ReactNode =>
       </Menu.SubMenu>
     ) : (
       makeFlatMenu(menu)
-    ),
-  );
+    );
+  });
+};
 
 export const LayoutSidebar = (props: IProps) => {
   const pathWithoutParams = props.match.path.replace(/(^.*)\/.*/, '$1') || props.match.path;
