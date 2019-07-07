@@ -53,7 +53,7 @@ export default (props: IPage) => {
       message.error(e.message);
     },
     onCompleted() {
-      message.success('Update Successful');
+      message.success(t('_lang:updatedSuccessfully'));
     },
     refetchQueries: () => [{ query: GET_USER, variables: getUserVariables }],
   });
@@ -114,8 +114,15 @@ export default (props: IPage) => {
       />
 
       <SubmitBar>
-        <Button type="primary" size="large" loading={submitLoading} onClick={onSubmit}>
-          Submit
+        <Button
+          type="primary"
+          size="large"
+          icon="edit"
+          className="submit-button"
+          loading={submitLoading}
+          onClick={onSubmit}
+        >
+          {t('_lang:update')}
         </Button>
       </SubmitBar>
     </PageCard>

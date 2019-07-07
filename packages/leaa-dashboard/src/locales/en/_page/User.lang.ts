@@ -1,10 +1,10 @@
-import _lang from '../_lang.lang';
+// import _lang from '../_lang.lang';
 
 export default {
-  UserList: {
-    email: 'Email',
-    name: 'Name',
-    createdAt: 'Created At',
-    action: 'Action',
+  Component: {
+    userInfo: 'User Info',
+    userRoles: 'User Roles',
   },
+  UserList: {},
+  CreateUser: {},
 };

@@ -28,7 +28,7 @@ export default (props: IPage) => {
     },
     onCompleted({ createUser }) {
       console.log(createUser.id);
-      message.success('Create Successful');
+      message.success(t('_lang:createdSuccessfully'));
       props.history.push(`/users/${createUser.id}`);
     },
   });
@@ -69,8 +69,15 @@ export default (props: IPage) => {
       />
 
       <SubmitBar>
-        <Button type="primary" size="large" loading={submitLoading} onClick={onSubmit}>
-          Submit
+        <Button
+          type="primary"
+          size="large"
+          icon="plus"
+          className="submit-button"
+          loading={submitLoading}
+          onClick={onSubmit}
+        >
+          {t('_lang:create')}
         </Button>
       </SubmitBar>
     </PageCard>

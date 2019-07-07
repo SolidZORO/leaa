@@ -109,7 +109,7 @@ export default (props: IPage) => {
       ),
     },
     {
-      title: t('_page:User.UserList.email'),
+      title: t('_lang:email'),
       width: 300,
       dataIndex: 'email',
       sorter: true,
@@ -117,20 +117,20 @@ export default (props: IPage) => {
       render: (text: string, record: User) => <Link to={`${props.route.path}/${record.id}`}>{record.email}</Link>,
     },
     {
-      title: t('_page:User.UserList.name'),
+      title: t('_lang:name'),
       dataIndex: 'name',
       sorter: true,
       sortOrder: calcDefaultSortOrder(orderSort, orderBy, 'name'),
     },
     {
-      title: t('_page:User.UserList.createdAt'),
+      title: t('_lang:createdAt'),
       dataIndex: 'created_at',
       sorter: true,
       sortOrder: calcDefaultSortOrder(orderSort, orderBy, 'created_at'),
       render: (text: string) => <small>{moment(text).format('YYYY-MM-DD HH:mm:ss')}</small>,
     },
     {
-      title: t('_page:User.UserList.action'),
+      title: t('_lang:action'),
       dataIndex: 'operation',
       width: 50,
       render: (text: string, record: User) => (
