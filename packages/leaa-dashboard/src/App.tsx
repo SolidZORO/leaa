@@ -1,47 +1,45 @@
 import React, { useState } from 'react';
 import { Spin, Icon, LocaleProvider } from 'antd';
-import { createBrowserHistory } from 'history';
-import { I18nextProvider } from 'react-i18next';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { Router, Switch } from 'react-router-dom';
+import { I18nextProvider } from 'react-i18next';
 import zhCN from 'antd/lib/locale-provider/zh_CN';
 import enUS from 'antd/lib/locale-provider/en_US';
 
 import { apolloClient } from '@leaa/dashboard/libs';
 import { ErrorBoundary } from '@leaa/dashboard/components/ErrorBoundary';
 
-import i18n from './i18n';
+import { history } from './libs';
 import { masterRoute, authRoute, otherRoute } from './routes';
 import { initStore, StoreProvider } from './stores';
+import i18n from './i18n';
 
 const store = initStore();
 
 Spin.setDefaultIndicator(<Icon type="loading" spin />);
 
 export const App = (): JSX.Element => {
-  // const [lang, setLang] = useState(i18n.language === 'cn' ? zhCN : enUS);
-  //
-  // i18n.on('languageChanged', e => {
-  //   if (e === 'cn') {
-  //     setLang(zhCN);
-  //   }
-  //   if (e === 'en') {
-  //     setLang(enUS);
-  //   }
-  // });
+  const getLocale = () => (i18n.language === 'cn' ? zhCN : enUS);
+  const [locale, setLocale] = useState(getLocale());
+
+  i18n.on('languageChanged', () => {
+    setLocale(getLocale());
+  });
 
   return (
     <ErrorBoundary>
       <I18nextProvider i18n={i18n}>
         <ApolloProvider client={apolloClient}>
           <StoreProvider value={store}>
-            <Router history={createBrowserHistory()}>
-              <Switch>
-                {authRoute}
-                {masterRoute}
-                {otherRoute}
-              </Switch>
-            </Router>
+            <LocaleProvider locale={locale}>
+              <Router history={history}>
+                <Switch>
+                  {authRoute}
+                  {masterRoute}
+                  {otherRoute}
+                </Switch>
+              </Router>
+            </LocaleProvider>
           </StoreProvider>
         </ApolloProvider>
       </I18nextProvider>
