@@ -15,7 +15,7 @@ export class UserResolver {
   }
 
   @Query(() => User)
-  async user(@Args({ name: 'id', type: () => Int }) id: number, @Args() args: UserArgs): Promise<User | undefined> {
+  async user(@Args({ name: 'id', type: () => Int }) id: number, @Args() args?: UserArgs): Promise<User | undefined> {
     return this.userService.user(id, args);
   }
 

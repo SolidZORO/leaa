@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import { Injectable } from '@nestjs/common';
 import { Repository, FindOneOptions, In, Like } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -6,7 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Role, Permission } from '@leaa/common/entrys';
 import { BaseService } from '@leaa/api/modules/base/base.service';
 import { RolesArgs, RolesObject, RoleArgs, CreateRoleInput, UpdateRoleInput } from '@leaa/common/dtos/role';
-import { formatUtil, loggerUtil, validatorUtil } from '@leaa/api/utils';
+import { formatUtil, loggerUtil } from '@leaa/api/utils';
 import { PermissionService } from '@leaa/api/modules/permission/permission.service';
 
 const CONSTRUCTOR_NAME = 'RoleService';

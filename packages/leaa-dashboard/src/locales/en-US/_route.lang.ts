@@ -20,4 +20,7 @@ export default {
   editRole: 'Edit Role',
   //
   permission: 'Permission',
+  createPermission: 'Create Permission',
+  editPermission: 'Edit Permission',
+  //
 };

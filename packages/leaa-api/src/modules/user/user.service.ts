@@ -60,7 +60,7 @@ export class UserService extends BaseService<User, UsersArgs, UsersObject, UserA
     return nextUser;
   }
 
-  async user(id: number, args: UserArgs & FindOneOptions<User>): Promise<User | undefined> {
+  async user(id: number, args?: UserArgs & FindOneOptions<User>): Promise<User | undefined> {
     let nextArgs: FindOneOptions<User> = {};
 
     if (args) {

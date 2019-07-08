@@ -101,15 +101,41 @@ export const masterRoutes: IRouteItem[] = [
   //
   //
   {
-    name: 'Permission',
-    namei18n: '_route:permission',
-    path: '/user-permissions',
-    icon: 'flag',
+    name: 'Create Permission',
+    namei18n: '_route:createPermission',
+    path: '/permissions/create',
+    icon: 'key',
     LazyComponent: React.lazy(() =>
-      import(/* webpackChunkName: 'Permissions' */ '../pages/Playground/ShowUserPermissions/ShowUserPermissions'),
+      import(/* webpackChunkName: 'CreatePermission' */ '../pages/Permission/CreatePermission/CreatePermission'),
+    ),
+    exact: true,
+    isCreate: true,
+  },
+  {
+    name: 'Edit Permission',
+    namei18n: '_route:editPermission',
+    path: '/permissions/:id(\\d+)',
+    icon: 'key',
+    LazyComponent: React.lazy(() =>
+      import(/* webpackChunkName: 'EditPermission' */ '../pages/Permission/EditPermission/EditPermission'),
     ),
     exact: true,
   },
+  {
+    name: 'Permission',
+    namei18n: '_route:permission',
+    path: '/permissions',
+    icon: 'key',
+    LazyComponent: React.lazy(() =>
+      import(/* webpackChunkName: 'PermissionList' */ '../pages/Permission/PermissionList/PermissionList'),
+    ),
+    canCreate: true,
+    exact: true,
+  },
+  //
+  //
+  //
+  //
   {
     name: 'HOME',
     namei18n: '_route:home',

@@ -20,4 +20,7 @@ export default {
   editRole: '编辑角色',
   //
   permission: '权限',
+  createPermission: '新建权限',
+  editPermission: '编辑权限',
+  //
 };
