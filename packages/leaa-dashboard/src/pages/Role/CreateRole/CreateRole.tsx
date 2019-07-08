@@ -3,42 +3,43 @@ import { Button, message } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useMutation } from '@apollo/react-hooks';
 
-import { User } from '@leaa/common/entrys';
-import { UpdateUserInput } from '@leaa/common/dtos/user';
+import { Role } from '@leaa/common/entrys';
+import { UpdateRoleInput } from '@leaa/common/dtos/role';
 import { IPage } from '@leaa/dashboard/interfaces';
 import { PageCard } from '@leaa/dashboard/components/PageCard';
 import { SubmitBar } from '@leaa/dashboard/components/SubmitBar/SubmitBar';
-import { CREATE_USER } from '@leaa/common/graphqls/user.mutation';
-// import { UserInfoForm } from '../_components/UserInfoForm/UserInfoForm';
+import { RoleInfoForm } from '@leaa/dashboard/pages/Role/_components/RoleInfoForm/RoleInfoForm';
+import { CREATE_ROLE } from '@leaa/common/graphqls';
+import { CREATE_BUTTON_ICON } from '@leaa/dashboard/constants';
 
 import style from './style.less';
 
 export default (props: IPage) => {
   const { t } = useTranslation();
 
-  let userInfoFormRef: any;
+  let roleInfoFormRef: any;
 
-  const [submitVariables, setSubmitVariables] = useState<{ user: UpdateUserInput }>({
-    user: {},
+  const [submitVariables, setSubmitVariables] = useState<{ role: UpdateRoleInput }>({
+    role: {},
   });
 
-  const [createUserMutate, { loading: submitLoading }] = useMutation<{ createUser: User }>(CREATE_USER, {
+  const [createRoleMutate, { loading: submitLoading }] = useMutation<{ createRole: Role }>(CREATE_ROLE, {
     variables: submitVariables,
     onError(e) {
       message.error(e.message);
     },
-    onCompleted({ createUser }) {
-      console.log(createUser.id);
+    onCompleted({ createRole }) {
+      console.log(createRole.id);
       message.success(t('_lang:createdSuccessfully'));
-      props.history.push(`/users/${createUser.id}`);
+      props.history.push(`/roles/${createRole.id}`);
     },
   });
 
   const onSubmit = async () => {
     let hasError = false;
-    let submitData: UpdateUserInput = {};
+    let submitData: UpdateRoleInput = {};
 
-    userInfoFormRef.props.form.validateFieldsAndScroll(async (err: any, formData: User) => {
+    roleInfoFormRef.props.form.validateFieldsAndScroll(async (err: any, formData: Role) => {
       if (err) {
         hasError = true;
         message.error(err[Object.keys(err)[0]].errors[0].message);
@@ -56,24 +57,24 @@ export default (props: IPage) => {
 
     await setSubmitVariables({
       ...submitVariables,
-      ...{ user: submitData },
+      ...{ role: submitData },
     });
-    await createUserMutate();
+    await createRoleMutate();
   };
 
   return (
     <PageCard title={t(`${props.route.namei18n}`)} className={style['page-wapper']} loading={false}>
-      {/*<UserInfoForm*/}
-      {/*  wrappedComponentRef={(inst: unknown) => {*/}
-      {/*    userInfoFormRef = inst;*/}
-      {/*  }}*/}
-      {/*/>*/}
+      <RoleInfoForm
+        wrappedComponentRef={(inst: unknown) => {
+          roleInfoFormRef = inst;
+        }}
+      />
 
       <SubmitBar>
         <Button
           type="primary"
           size="large"
-          icon="plus"
+          icon={CREATE_BUTTON_ICON}
           className="submit-button"
           loading={submitLoading}
           onClick={onSubmit}

@@ -73,29 +73,31 @@ class UserInfoFormInner extends React.PureComponent<IProps> {
               </Col>
             </Row>
 
-            <Row gutter={16} className={style['form-row']}>
-              <Col xs={24} sm={6}>
-                <Form.Item label={t('_lang:createdAt')}>
-                  <Input
-                    value={props.item ? `${props.item.created_at}` : undefined}
-                    placeholder={t('_lang:createdAt')}
-                    readOnly
-                    disabled
-                  />
-                </Form.Item>
-              </Col>
+            {props.item && (
+              <Row gutter={16} className={style['form-row']}>
+                <Col xs={24} sm={6}>
+                  <Form.Item label={t('_lang:createdAt')}>
+                    <Input
+                      value={props.item ? `${props.item.created_at}` : undefined}
+                      placeholder={t('_lang:createdAt')}
+                      readOnly
+                      disabled
+                    />
+                  </Form.Item>
+                </Col>
 
-              <Col xs={24} sm={6}>
-                <Form.Item label={t('_lang:updatedAt')}>
-                  <Input
-                    value={props.item ? `${props.item.updated_at}` : undefined}
-                    placeholder={t('_lang:updatedAt')}
-                    readOnly
-                    disabled
-                  />
-                </Form.Item>
-              </Col>
-            </Row>
+                <Col xs={24} sm={6}>
+                  <Form.Item label={t('_lang:updatedAt')}>
+                    <Input
+                      value={props.item ? `${props.item.updated_at}` : undefined}
+                      placeholder={t('_lang:updatedAt')}
+                      readOnly
+                      disabled
+                    />
+                  </Form.Item>
+                </Col>
+              </Row>
+            )}
           </Card>
         </Form>
       </div>
