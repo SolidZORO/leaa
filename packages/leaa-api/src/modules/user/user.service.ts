@@ -104,7 +104,7 @@ export class UserService extends BaseService<User, UsersArgs, UsersObject, UserA
     let roleObjects;
 
     if (args.roleIds) {
-      roleObjects = await this.roleRepository.findByIds(args.roleIds);
+      roleObjects = await this.roleRepository.findByIds(args.roleIds);1
     }
 
     if (args.roleSlugs) {
@@ -114,7 +114,7 @@ export class UserService extends BaseService<User, UsersArgs, UsersObject, UserA
 
     relationArgs.roles = [];
 
-    if (roleObjects && roleObjects.length && roleObjects.length > 0) {
+    if (roleObjects) {
       relationArgs.roles = roleObjects;
     } else {
       const message = `roles error`;

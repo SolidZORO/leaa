@@ -45,12 +45,6 @@ export default (props: IPage) => {
     setQ(undefined);
   };
 
-  useEffect(() => {
-    if (_.isEmpty(urlParams)) {
-      resetUrlParams();
-    }
-  }, [urlParams]);
-
   const getRolesVariables = { page, pageSize, q, orderBy, orderSort };
   const getRolesQuery = useQuery<{ roles: RolesObject }, RolesArgs>(GET_ROLES, {
     variables: getRolesVariables,
@@ -59,6 +53,16 @@ export default (props: IPage) => {
   if (getRolesQuery.error) {
     return <ErrorCard message={getRolesQuery.error.message} />;
   }
+
+  useEffect(() => {
+    if (_.isEmpty(urlParams)) {
+      resetUrlParams();
+    }
+  }, [urlParams]);
+
+  useEffect(() => {
+    (async () => getRolesQuery.refetch())();
+  }, [props.history.location.key]);
 
   const [deleteRoleMutate, { loading: deleteItemLoading }] = useMutation<Role>(DELETE_ROLE, {
     onError(e) {

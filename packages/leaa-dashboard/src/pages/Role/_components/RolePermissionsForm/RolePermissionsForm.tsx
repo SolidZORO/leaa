@@ -76,7 +76,7 @@ class RolePermissionsFormInner extends React.PureComponent<IProps> {
       return;
     }
 
-    if (selected.length === this.props.permissions.length) {
+    if (selected.length > 0 && this.props.permissions.length > 0 && selected.length === this.props.permissions.length) {
       this.setCheckAll(true);
       this.setIndeterminate(false);
       return;

@@ -88,8 +88,6 @@ export default (props: IPage) => {
         ...submitData,
         ...formData,
       };
-
-      console.log('submitData', submitData);
     });
 
     if (hasError) {

@@ -29,7 +29,6 @@ export default (props: IPage) => {
       message.error(e.message);
     },
     onCompleted({ createRole }) {
-      console.log(createRole.id);
       message.success(t('_lang:createdSuccessfully'));
       props.history.push(`/roles/${createRole.id}`);
     },

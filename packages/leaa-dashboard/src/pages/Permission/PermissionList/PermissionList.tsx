@@ -60,6 +60,10 @@ export default (props: IPage) => {
     }
   }, [urlParams]);
 
+  useEffect(() => {
+    (async () => getPermissionsQuery.refetch())();
+  }, [props.history.location.key]);
+
   const [deletePermissionMutate, { loading: deleteItemLoading }] = useMutation<Permission>(DELETE_PERMISSION, {
     onError(e) {
       message.error(e.message);

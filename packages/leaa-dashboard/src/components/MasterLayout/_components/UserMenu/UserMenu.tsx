@@ -19,8 +19,7 @@ export const UserMenu = (props: IProps): JSX.Element => {
       return props.history.push(LOGOUT_REDIRECT_URL);
     }
 
-    const messageText = 'Logout Failed.';
-    message.error(messageText);
+    const messageText = t(`_comp:UserMenu.logoutFaild`);
 
     return console.log(messageText);
   };

@@ -73,7 +73,7 @@ class UserRolesFormInner extends React.PureComponent<IProps> {
       return;
     }
 
-    if (selected.length === this.props.roles.length) {
+    if (selected.length > 0 && this.props.roles.length > 0 && selected.length === this.props.roles.length) {
       this.setCheckAll(true);
       this.setIndeterminate(false);
       return;
@@ -101,7 +101,7 @@ class UserRolesFormInner extends React.PureComponent<IProps> {
           <Card>
             <Descriptions title={t('_page:User.Component.userRoles')} />
             {props.roles && (
-              <Row gutter={16} className={style['form-row']}>
+              <Row gutter={0} className={style['form-row']}>
                 <Checkbox
                   indeterminate={this.indeterminate}
                   checked={this.checkAll}

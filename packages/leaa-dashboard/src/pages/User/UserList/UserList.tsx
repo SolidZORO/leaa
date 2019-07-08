@@ -45,12 +45,6 @@ export default (props: IPage) => {
     setQ(undefined);
   };
 
-  useEffect(() => {
-    if (_.isEmpty(urlParams)) {
-      resetUrlParams();
-    }
-  }, [urlParams]);
-
   const getUsersVariables = { page, pageSize, q, orderBy, orderSort };
   const getUsersQuery = useQuery<{ users: UsersObject }, UsersArgs>(GET_USERS, {
     variables: getUsersVariables,
@@ -59,6 +53,16 @@ export default (props: IPage) => {
   if (getUsersQuery.error) {
     return <ErrorCard message={getUsersQuery.error.message} />;
   }
+
+  useEffect(() => {
+    if (_.isEmpty(urlParams)) {
+      resetUrlParams();
+    }
+  }, [urlParams]);
+
+  useEffect(() => {
+    (async () => getUsersQuery.refetch())();
+  }, [props.history.location.key]);
 
   const [deleteUserMutate, { loading: deleteItemLoading }] = useMutation<User>(DELETE_USER, {
     onError(e) {

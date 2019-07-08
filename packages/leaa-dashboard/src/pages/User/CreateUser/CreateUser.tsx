@@ -29,7 +29,6 @@ export default (props: IPage) => {
       message.error(e.message);
     },
     onCompleted({ createUser }) {
-      console.log(createUser.id);
       message.success(t('_lang:createdSuccessfully'));
       props.history.push(`/users/${createUser.id}`);
     },

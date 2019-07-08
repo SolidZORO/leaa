@@ -31,7 +31,6 @@ export default (props: IPage) => {
         message.error(e.message);
       },
       onCompleted({ createPermission }) {
-        console.log(createPermission.id);
         message.success(t('_lang:createdSuccessfully'));
         props.history.push(`/permissions/${createPermission.id}`);
       },
