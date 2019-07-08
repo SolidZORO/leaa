@@ -1,11 +1,10 @@
 import _ from 'lodash';
-import moment from 'moment';
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Table, Button, message } from 'antd';
 import queryString from 'query-string';
-import { useQuery, useMutation } from '@apollo/react-hooks';
 import { Link } from 'react-router-dom';
+import { useQuery, useMutation } from '@apollo/react-hooks';
+import { Table, Button, message } from 'antd';
 
 import { DEFAULT_PAGE_SIZE_OPTIONS } from '@leaa/dashboard/constants';
 import { GET_USERS } from '@leaa/common/graphqls';
@@ -19,13 +18,15 @@ import { PageCard } from '@leaa/dashboard/components/PageCard';
 import { ErrorCard } from '@leaa/dashboard/components/ErrorCard';
 import { SearchInput } from '@leaa/dashboard/components/SearchInput';
 import { TableCard } from '@leaa/dashboard/components/TableCard';
-import { DateField } from '@leaa/dashboard/components/DateField';
-import { TableItemDeleteButton } from '@leaa/dashboard/components/TableItemDeleteButton';
+import { TableColumnId } from '@leaa/dashboard/components/TableColumnId';
+import { TableColumnDate } from '@leaa/dashboard/components/TableColumnDate';
+import { TableColumnDeleteButton } from '@leaa/dashboard/components/TableColumnDeleteButton';
 
 import style from './style.less';
 
 export default (props: IPage) => {
   const { t } = useTranslation();
+
   const urlParams = queryString.parse(window.location.search);
   const urlPagination = urlUtil.getPagination(urlParams);
 
@@ -85,12 +86,7 @@ export default (props: IPage) => {
     {
       title: 'ID',
       dataIndex: 'id',
-      render: (text: string, record: User) => (
-        <code>
-          <sup>#</sup>
-          {record.id}
-        </code>
-      ),
+      render: (text: string) => <TableColumnId id={text} />,
     },
     {
       title: t('_lang:email'),
@@ -111,21 +107,17 @@ export default (props: IPage) => {
       dataIndex: 'created_at',
       sorter: true,
       sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'created_at'),
-      render: (text: string) => <DateField date={text} size="small" />,
+      render: (text: string) => <TableColumnDate date={text} size="small" />,
     },
     {
       title: t('_lang:action'),
       dataIndex: 'operation',
       width: 50,
       render: (text: string, record: User) => (
-        <TableItemDeleteButton
-          loading={deleteItemLoading}
+        <TableColumnDeleteButton
           id={record.id}
-          onClick={async () =>
-            deleteUserMutate({
-              variables: { id: Number(record.id) },
-            })
-          }
+          loading={deleteItemLoading}
+          onClick={async () => deleteUserMutate({ variables: { id: Number(record.id) } })}
         />
       ),
     },
@@ -173,12 +165,12 @@ export default (props: IPage) => {
             pagination={{
               defaultCurrent: page,
               defaultPageSize: pageSize,
-              pageSizeOptions: DEFAULT_PAGE_SIZE_OPTIONS,
-              showSizeChanger: true,
-              //
               total: data.users.total,
               current: page,
               pageSize,
+              //
+              pageSizeOptions: DEFAULT_PAGE_SIZE_OPTIONS,
+              showSizeChanger: true,
             }}
             onChange={(pagination, filters, sorter) => {
               setPage(pagination.current);

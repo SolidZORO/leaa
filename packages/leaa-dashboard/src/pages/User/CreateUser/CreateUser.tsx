@@ -15,6 +15,7 @@ import style from './style.less';
 
 export default (props: IPage) => {
   const { t } = useTranslation();
+
   let userInfoFormRef: any;
 
   const [submitVariables, setSubmitVariables] = useState<{ user: UpdateUserInput }>({

@@ -1,4 +1,5 @@
 import React from 'react';
+import { DatePicker } from 'antd';
 import { RouteComponentProps, Link } from 'react-router-dom';
 import { useStore } from '@leaa/dashboard/stores';
 
@@ -11,6 +12,7 @@ export default (props: RouteComponentProps) => {
     <div>
       <h1>SHOW SHOW</h1>
       <hr />
+      <DatePicker />
       <Link to="/show/9">SHOW 9</Link>
       <hr />
       <Link to="/user-permissions/9">user-permissions 9</Link>

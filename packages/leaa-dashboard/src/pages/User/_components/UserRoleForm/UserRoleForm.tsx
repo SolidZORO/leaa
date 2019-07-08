@@ -79,9 +79,10 @@ class UserRoleFormInner extends React.PureComponent<IProps> {
   };
 
   render() {
+    const { t } = this.props;
+
     const { props } = this;
     const { getFieldDecorator } = this.props.form;
-    const { t } = props;
 
     return (
       <div className={cx(style['wrapper'], props.className)}>

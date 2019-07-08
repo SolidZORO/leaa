@@ -4,25 +4,22 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import enUs from './locales/en-US';
 import zhCn from './locales/zh-CN';
 
-// import locales from './locales';
-
 i18n
   .use(initReactI18next)
   .use(LanguageDetector)
   .init({
-    whitelist: ['en', 'zh', 'en-US', 'zh-CN'],
+    whitelist: ['en-US', 'zh-CN', 'zh', 'en'],
     resources: {
-      en: enUs,
-      zh: zhCn,
       'en-US': enUs,
       'zh-CN': zhCn,
+      'zh-HK': zhCn,
+      'zh-TW': zhCn,
+      zh: zhCn,
+      us: enUs,
     },
     fallbackLng: 'zh-CN',
     saveMissing: true,
     debug: true,
-    interpolation: {
-      escapeValue: false,
-    },
   });
 
 export default i18n;

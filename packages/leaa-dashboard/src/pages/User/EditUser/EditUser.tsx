@@ -19,6 +19,7 @@ import style from './style.less';
 
 export default (props: IPage) => {
   const { t } = useTranslation();
+
   const { id } = props.match.params as { id: string };
 
   let userInfoFormRef: any;

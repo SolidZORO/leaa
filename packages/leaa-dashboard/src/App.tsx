@@ -19,7 +19,7 @@ const store = initStore();
 Spin.setDefaultIndicator(<Icon type="loading" spin />);
 
 export const App = (): JSX.Element => {
-  const getLocale = () => (i18n.language === 'cn' ? zhCN : enUS);
+  const getLocale = () => (i18n.language === 'zh-CN' ? zhCN : enUS);
   const [locale, setLocale] = useState(getLocale());
 
   i18n.on('languageChanged', () => {

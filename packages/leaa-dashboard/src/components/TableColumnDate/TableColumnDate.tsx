@@ -12,7 +12,7 @@ interface IProps {
   className?: string;
 }
 
-export const DateField = (props: IProps) => {
+export const TableColumnDate = (props: IProps) => {
   const FORMAT = props.format || 'YYYY-MM-DD';
 
   return (
