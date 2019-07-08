@@ -30,16 +30,12 @@ export default (props: IPage) => {
   const urlParams = queryString.parse(window.location.search);
   const urlPagination = urlUtil.getPagination(urlParams);
 
+  const [q, setQ] = useState<string | undefined>(urlParams && urlParams.q ? `${urlParams.q}` : undefined);
   const [page, setPage] = useState<number | undefined>(urlPagination.page);
   const [pageSize, setPageSize] = useState<number | undefined>(urlPagination.pageSize);
-  const [q, setQ] = useState<string | undefined>(urlParams && urlParams.q ? `${urlParams.q}` : undefined);
+  const [orderBy, setOrderBy] = useState<string | undefined>(urlParams && urlParams.orderBy ? `${urlParams.orderBy}` : undefined); // prettier-ignore
+  const [orderSort, setOrderSort] = useState<IOrderSort | string | undefined>(urlParams && urlParams.orderSort ? urlUtil.formatOrderSort(`${urlParams.orderSort}`) : undefined); // prettier-ignore
   const [selectedRowKeys, setSelectedRowKeys] = useState<number[] | string[]>([]);
-  const [orderSort, setOrderSort] = useState<IOrderSort | string | undefined>(
-    urlParams && urlParams.orderSort ? urlUtil.formatOrderSort(`${urlParams.orderSort}`) : undefined,
-  );
-  const [orderBy, setOrderBy] = useState<string | undefined>(
-    urlParams && urlParams.orderBy ? `${urlParams.orderBy}` : undefined,
-  );
 
   const resetUrlParams = () => {
     setPage(urlPagination.page);
@@ -49,13 +45,13 @@ export default (props: IPage) => {
     setQ(undefined);
   };
 
-  const getPermissionVariables = { page, pageSize, q, orderBy, orderSort };
-  const { loading, data, error } = useQuery<{ permissions: PermissionsObject }, PermissionArgs>(GET_PERMISSIONS, {
-    variables: getPermissionVariables,
+  const getPermissionsVariables = { page, pageSize, q, orderBy, orderSort };
+  const getPermissionsQuery = useQuery<{ permissions: PermissionsObject }, PermissionArgs>(GET_PERMISSIONS, {
+    variables: getPermissionsVariables,
   });
 
-  if (error) {
-    return <ErrorCard message={error.message} />;
+  if (getPermissionsQuery.error) {
+    return <ErrorCard message={getPermissionsQuery.error.message} />;
   }
 
   useEffect(() => {
@@ -71,7 +67,7 @@ export default (props: IPage) => {
     onCompleted() {
       message.success(t('_lang:deletedSuccessfully'));
     },
-    refetchQueries: () => [{ query: GET_PERMISSIONS, variables: getPermissionVariables }],
+    refetchQueries: () => [{ query: GET_PERMISSIONS, variables: getPermissionsVariables }],
   });
 
   const rowSelection = {
@@ -145,20 +141,20 @@ export default (props: IPage) => {
         />
       }
       className={style['page-wapper']}
-      loading={loading}
+      loading={getPermissionsQuery.loading}
     >
-      {data && data.permissions && data.permissions.items && (
+      {getPermissionsQuery.data && getPermissionsQuery.data.permissions && getPermissionsQuery.data.permissions.items && (
         <TableCard selectedRowKeys={selectedRowKeys}>
           <Table
             rowKey="id"
             size="small"
             rowSelection={rowSelection}
             columns={columns}
-            dataSource={data.permissions.items}
+            dataSource={getPermissionsQuery.data.permissions.items}
             pagination={{
               defaultCurrent: page,
               defaultPageSize: pageSize,
-              total: data.permissions.total,
+              total: getPermissionsQuery.data.permissions.total,
               current: page,
               pageSize,
               //

@@ -28,24 +28,21 @@ export default (props: IPage) => {
   let rolePermissionsFormRef: any;
 
   const getRoleVariables = { id: Number(id) };
-  const { loading, data: roleData, error: roleError } = useQuery<{ role: Role }, RoleArgs>(GET_ROLE, {
+  const getRoleQuery = useQuery<{ role: Role }, RoleArgs>(GET_ROLE, {
     variables: getRoleVariables,
   });
 
-  if (roleError) {
-    return <ErrorCard message={roleError.message} />;
+  if (getRoleQuery.error) {
+    return <ErrorCard message={getRoleQuery.error.message} />;
   }
 
   const getPermissionsVariables = { pageSize: 9999 };
-  const { data: permissionsData, error: rolesError } = useQuery<{ permissions: PermissionsObject }, PermissionsArgs>(
-    GET_PERMISSIONS,
-    {
-      variables: getPermissionsVariables,
-    },
-  );
+  const getPermissionsQuery = useQuery<{ permissions: PermissionsObject }, PermissionsArgs>(GET_PERMISSIONS, {
+    variables: getPermissionsVariables,
+  });
 
-  if (rolesError) {
-    return <ErrorCard message={rolesError.message} />;
+  if (getPermissionsQuery.error) {
+    return <ErrorCard message={getPermissionsQuery.error.message} />;
   }
 
   const [submitVariables, setSubmitVariables] = useState<{ id: number; role: UpdateRoleInput }>({
@@ -113,17 +110,19 @@ export default (props: IPage) => {
   return (
     <PageCard title={t(`${props.route.namei18n}`)} className={style['page-wapper']} loading={false}>
       <RoleInfoForm
-        item={roleData && roleData.role}
-        loading={loading}
+        item={getRoleQuery.data && getRoleQuery.data.role}
+        loading={getRoleQuery.loading}
         wrappedComponentRef={(inst: unknown) => {
           roleInfoFormRef = inst;
         }}
       />
 
       <RolePermissionsForm
-        item={roleData && roleData.role}
-        loading={loading}
-        permissions={permissionsData && permissionsData.permissions && permissionsData.permissions.items}
+        item={getRoleQuery.data && getRoleQuery.data.role}
+        loading={getRoleQuery.loading}
+        permissions={
+          getPermissionsQuery.data && getPermissionsQuery.data.permissions && getPermissionsQuery.data.permissions.items
+        }
         wrappedComponentRef={(inst: unknown) => {
           rolePermissionsFormRef = inst;
         }}

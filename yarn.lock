@@ -25,10 +25,10 @@
     "@ant-design/colors" "^3.1.0"
     babel-runtime "^6.26.0"
 
-"@ant-design/icons@~2.1.0":
-  version "2.1.0"
-  resolved "https://registry.npm.taobao.org/@ant-design/icons/download/@ant-design/icons-2.1.0.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40ant-design%2Ficons%2Fdownload%2F%40ant-design%2Ficons-2.1.0.tgz#06b8ea9a02cbe331d523a20453fa5ee224328b11"
-  integrity sha1-BrjqmgLL4zHVI6IEU/pe4iQyixE=
+"@ant-design/icons@~2.1.1":
+  version "2.1.1"
+  resolved "https://registry.npm.taobao.org/@ant-design/icons/download/@ant-design/icons-2.1.1.tgz#7b9c08dffd4f5d41db667d9dbe5e0107d0bd9a4a"
+  integrity sha1-e5wI3/1PXUHbZn2dvl4BB9C9mko=
 
 "@apollo/react-common@^0.1.0-beta.8":
   version "0.1.0-beta.8"
@@ -420,7 +420,15 @@
     "@babel/helper-plugin-utils" "^7.0.0"
     "@babel/plugin-syntax-json-strings" "^7.2.0"
 
-"@babel/plugin-proposal-object-rest-spread@7.5.0", "@babel/plugin-proposal-object-rest-spread@^7.5.0":
+"@babel/plugin-proposal-object-rest-spread@7.5.1":
+  version "7.5.1"
+  resolved "https://registry.npm.taobao.org/@babel/plugin-proposal-object-rest-spread/download/@babel/plugin-proposal-object-rest-spread-7.5.1.tgz#5788ab097c63135e4236548b4f112bfce09dd394"
+  integrity sha1-V4irCXxjE15CNlSLTxEr/OCd05Q=
+  dependencies:
+    "@babel/helper-plugin-utils" "^7.0.0"
+    "@babel/plugin-syntax-object-rest-spread" "^7.2.0"
+
+"@babel/plugin-proposal-object-rest-spread@^7.5.0":
   version "7.5.0"
   resolved "https://registry.npm.taobao.org/@babel/plugin-proposal-object-rest-spread/download/@babel/plugin-proposal-object-rest-spread-7.5.0.tgz#4838ce3cbc9a84dd00bce7a17e9e9c36119f83a0"
   integrity sha1-SDjOPLyahN0AvOehfp6cNhGfg6A=
@@ -1902,11 +1910,6 @@ accepts@^1.3.5, accepts@~1.3.4, accepts@~1.3.5, accepts@~1.3.7:
     mime-types "~2.1.24"
     negotiator "0.6.2"
 
-acorn-dynamic-import@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.npm.taobao.org/acorn-dynamic-import/download/acorn-dynamic-import-4.0.0.tgz#482210140582a36b83c3e342e1cfebcaa9240948"
-  integrity sha1-SCIQFAWCo2uDw+NC4c/ryqkkCUg=
-
 acorn-globals@^4.1.0:
   version "4.3.2"
   resolved "https://registry.npm.taobao.org/acorn-globals/download/acorn-globals-4.3.2.tgz#4e2c2313a597fd589720395f6354b41cd5ec8006"
@@ -1930,10 +1933,15 @@ acorn@^5.5.3:
   resolved "https://registry.npm.taobao.org/acorn/download/acorn-5.7.3.tgz#67aa231bf8812974b85235a96771eb6bd07ea279"
   integrity sha1-Z6ojG/iBKXS4UjWpZ3Hra9B+onk=
 
-acorn@^6.0.1, acorn@^6.0.5, acorn@^6.0.7:
+acorn@^6.0.1, acorn@^6.0.7:
   version "6.1.1"
   resolved "https://registry.npm.taobao.org/acorn/download/acorn-6.1.1.tgz#7d25ae05bb8ad1f9b699108e1094ecd7884adc1f"
   integrity sha1-fSWuBbuK0fm2mRCOEJTs14hK3B8=
+
+acorn@^6.2.0:
+  version "6.2.0"
+  resolved "https://registry.npm.taobao.org/acorn/download/acorn-6.2.0.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Facorn%2Fdownload%2Facorn-6.2.0.tgz#67f0da2fc339d6cfb5d6fb244fd449f33cd8bbe3"
+  integrity sha1-Z/DaL8M51s+11vskT9RJ8zzYu+M=
 
 add-dom-event-listener@^1.1.0:
   version "1.1.0"
@@ -2021,13 +2029,13 @@ ansi-styles@^3.2.0, ansi-styles@^3.2.1:
   dependencies:
     color-convert "^1.9.0"
 
-antd@^3.20.0:
-  version "3.20.0"
-  resolved "https://registry.npm.taobao.org/antd/download/antd-3.20.0.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fantd%2Fdownload%2Fantd-3.20.0.tgz#da8b9b537dd27d2b8bea6b0b1518ed602e58783e"
-  integrity sha1-2oubU33SfSuL6msLFRjtYC5YeD4=
+antd@^3.20.1:
+  version "3.20.1"
+  resolved "https://registry.npm.taobao.org/antd/download/antd-3.20.1.tgz#b6274517bab290754a10907a87a23b2fd8e39417"
+  integrity sha1-tidFF7qykHVKEJB6h6I7L9jjlBc=
   dependencies:
     "@ant-design/create-react-context" "^0.2.4"
-    "@ant-design/icons" "~2.1.0"
+    "@ant-design/icons" "~2.1.1"
     "@ant-design/icons-react" "~2.0.1"
     "@types/react-slick" "^0.23.4"
     array-tree-filter "^2.1.0"
@@ -2537,7 +2545,20 @@ atob@^2.1.1:
   resolved "https://registry.npm.taobao.org/atob/download/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
   integrity sha1-bZUX654DDSQ2ZmZR6GvZ9vE1M8k=
 
-autoprefixer@9.6.0, autoprefixer@^9.5.1:
+autoprefixer@9.6.1:
+  version "9.6.1"
+  resolved "https://registry.npm.taobao.org/autoprefixer/download/autoprefixer-9.6.1.tgz#51967a02d2d2300bb01866c1611ec8348d355a47"
+  integrity sha1-UZZ6AtLSMAuwGGbBYR7INI01Wkc=
+  dependencies:
+    browserslist "^4.6.3"
+    caniuse-lite "^1.0.30000980"
+    chalk "^2.4.2"
+    normalize-range "^0.1.2"
+    num2fraction "^1.2.2"
+    postcss "^7.0.17"
+    postcss-value-parser "^4.0.0"
+
+autoprefixer@^9.5.1:
   version "9.6.0"
   resolved "https://registry.npm.taobao.org/autoprefixer/download/autoprefixer-9.6.0.tgz#0111c6bde2ad20c6f17995a33fad7cf6854b4c87"
   integrity sha1-ARHGveKtIMbxeZWjP6189oVLTIc=
@@ -2924,6 +2945,15 @@ browserslist@^4.0.0, browserslist@^4.6.0, browserslist@^4.6.1, browserslist@^4.6
     electron-to-chromium "^1.3.150"
     node-releases "^1.1.23"
 
+browserslist@^4.6.3:
+  version "4.6.3"
+  resolved "https://registry.npm.taobao.org/browserslist/download/browserslist-4.6.3.tgz#0530cbc6ab0c1f3fc8c819c72377ba55cf647f05"
+  integrity sha1-BTDLxqsMHz/IyBnHI3e6Vc9kfwU=
+  dependencies:
+    caniuse-lite "^1.0.30000975"
+    electron-to-chromium "^1.3.164"
+    node-releases "^1.1.23"
+
 bs-logger@0.x:
   version "0.2.6"
   resolved "https://registry.npm.taobao.org/bs-logger/download/bs-logger-0.2.6.tgz#eb7d365307a72cf974cc6cda76b68354ad336bd8"
@@ -3123,6 +3153,11 @@ caniuse-lite@^1.0.0, caniuse-lite@^1.0.30000971, caniuse-lite@^1.0.30000974:
   version "1.0.30000974"
   resolved "https://registry.npm.taobao.org/caniuse-lite/download/caniuse-lite-1.0.30000974.tgz#b7afe14ee004e97ce6dc73e3f878290a12928ad8"
   integrity sha1-t6/hTuAE6Xzm3HPj+HgpChKSitg=
+
+caniuse-lite@^1.0.30000975, caniuse-lite@^1.0.30000980:
+  version "1.0.30000981"
+  resolved "https://registry.npm.taobao.org/caniuse-lite/download/caniuse-lite-1.0.30000981.tgz#5b6828803362363e5a1deba2eb550185cf6cec8f"
+  integrity sha1-W2gogDNiNj5aHeui61UBhc9s7I8=
 
 capture-exit@^2.0.0:
   version "2.0.0"
@@ -4545,6 +4580,11 @@ electron-to-chromium@^1.3.150:
   version "1.3.164"
   resolved "https://registry.npm.taobao.org/electron-to-chromium/download/electron-to-chromium-1.3.164.tgz#8680b875577882c1572c42218d53fa9ba5f71d5d"
   integrity sha1-hoC4dVd4gsFXLEIhjVP6m6X3HV0=
+
+electron-to-chromium@^1.3.164:
+  version "1.3.188"
+  resolved "https://registry.npm.taobao.org/electron-to-chromium/download/electron-to-chromium-1.3.188.tgz#e28e1afe4bb229989e280bfd3b395c7ec03c8b7a"
+  integrity sha1-4o4a/kuyKZieKAv9OzlcfsA8i3o=
 
 elegant-spinner@^1.0.1:
   version "1.0.1"
@@ -7719,10 +7759,10 @@ lightercollective@^0.3.0:
   resolved "https://registry.npm.taobao.org/lightercollective/download/lightercollective-0.3.0.tgz#1f07638642ec645d70bdb69ab2777676f35a28f0"
   integrity sha1-HwdjhkLsZF1wvbaasnd2dvNaKPA=
 
-lint-staged@9.0.2:
-  version "9.0.2"
-  resolved "https://registry.npm.taobao.org/lint-staged/download/lint-staged-9.0.2.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Flint-staged%2Fdownload%2Flint-staged-9.0.2.tgz#238e1ed7cba2d422faaf4499e6a5686f0f5c1331"
-  integrity sha1-I44e18ui1CL6r0SZ5qVobw9cEzE=
+lint-staged@9.1.0:
+  version "9.1.0"
+  resolved "https://registry.npm.taobao.org/lint-staged/download/lint-staged-9.1.0.tgz#24564128c9208bf5d8001a66afe7156dfbe9da30"
+  integrity sha1-JFZBKMkgi/XYABpmr+cVbfvp2jA=
   dependencies:
     chalk "^2.4.2"
     commander "^2.20.0"
@@ -13333,17 +13373,16 @@ webpack-sources@^1.1.0, webpack-sources@^1.3.0:
     source-list-map "^2.0.0"
     source-map "~0.6.1"
 
-webpack@^4.35.2:
-  version "4.35.2"
-  resolved "https://registry.npm.taobao.org/webpack/download/webpack-4.35.2.tgz#5c8b8a66602cbbd6ec65c6e6747914a61c1449b1"
-  integrity sha1-XIuKZmAsu9bsZcbmdHkUphwUSbE=
+webpack@^4.35.3:
+  version "4.35.3"
+  resolved "https://registry.npm.taobao.org/webpack/download/webpack-4.35.3.tgz?cache=0&sync_timestamp=1562594084292&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fwebpack%2Fdownload%2Fwebpack-4.35.3.tgz#66bc35ef215a7b75e8790f84d560013ffecf0ca3"
+  integrity sha1-Zrw17yFae3XoeQ+E1WABP/7PDKM=
   dependencies:
     "@webassemblyjs/ast" "1.8.5"
     "@webassemblyjs/helper-module-context" "1.8.5"
     "@webassemblyjs/wasm-edit" "1.8.5"
     "@webassemblyjs/wasm-parser" "1.8.5"
-    acorn "^6.0.5"
-    acorn-dynamic-import "^4.0.0"
+    acorn "^6.2.0"
     ajv "^6.1.0"
     ajv-keywords "^3.1.0"
     chrome-trace-event "^1.0.0"

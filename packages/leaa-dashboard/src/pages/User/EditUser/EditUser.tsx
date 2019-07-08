@@ -20,28 +20,27 @@ import style from './style.less';
 
 export default (props: IPage) => {
   const { t } = useTranslation();
-
   const { id } = props.match.params as { id: string };
 
   let userInfoFormRef: any;
   let userRoleFormRef: any;
 
   const getUserVariables = { id: Number(id) };
-  const { loading, data: userData, error: userError } = useQuery<{ user: User }, UserArgs>(GET_USER, {
+  const getUserQuery = useQuery<{ user: User }, UserArgs>(GET_USER, {
     variables: getUserVariables,
   });
 
-  if (userError) {
-    return <ErrorCard message={userError.message} />;
+  if (getUserQuery.error) {
+    return <ErrorCard message={getUserQuery.error.message} />;
   }
 
   const getRolesVariables = { pageSize: 9999 };
-  const { data: rolesData, error: rolesError } = useQuery<{ roles: RolesObject }, RolesArgs>(GET_ROLES, {
+  const getRolesQuery = useQuery<{ roles: RolesObject }, RolesArgs>(GET_ROLES, {
     variables: getRolesVariables,
   });
 
-  if (rolesError) {
-    return <ErrorCard message={rolesError.message} />;
+  if (getRolesQuery.error) {
+    return <ErrorCard message={getRolesQuery.error.message} />;
   }
 
   const [submitVariables, setSubmitVariables] = useState<{ id: number; user: UpdateUserInput }>({
@@ -107,17 +106,17 @@ export default (props: IPage) => {
   return (
     <PageCard title={t(`${props.route.namei18n}`)} className={style['page-wapper']} loading={false}>
       <UserInfoForm
-        item={userData && userData.user}
-        loading={loading}
+        item={getUserQuery.data && getUserQuery.data.user}
+        loading={getUserQuery.loading}
         wrappedComponentRef={(inst: unknown) => {
           userInfoFormRef = inst;
         }}
       />
 
       <UserRolesForm
-        item={userData && userData.user}
-        loading={loading}
-        roles={(rolesData && rolesData.roles && rolesData.roles.items) || []}
+        item={getUserQuery.data && getUserQuery.data.user}
+        loading={getUserQuery.loading}
+        roles={(getRolesQuery.data && getRolesQuery.data.roles && getRolesQuery.data.roles.items) || []}
         wrappedComponentRef={(inst: unknown) => {
           userRoleFormRef = inst;
         }}

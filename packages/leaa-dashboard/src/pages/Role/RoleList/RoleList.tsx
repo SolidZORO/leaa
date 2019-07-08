@@ -30,16 +30,12 @@ export default (props: IPage) => {
   const urlParams = queryString.parse(window.location.search);
   const urlPagination = urlUtil.getPagination(urlParams);
 
+  const [q, setQ] = useState<string | undefined>(urlParams && urlParams.q ? `${urlParams.q}` : undefined);
   const [page, setPage] = useState<number | undefined>(urlPagination.page);
   const [pageSize, setPageSize] = useState<number | undefined>(urlPagination.pageSize);
-  const [q, setQ] = useState<string | undefined>(urlParams && urlParams.q ? `${urlParams.q}` : undefined);
+  const [orderBy, setOrderBy] = useState<string | undefined>(urlParams && urlParams.orderBy ? `${urlParams.orderBy}` : undefined); // prettier-ignore
+  const [orderSort, setOrderSort] = useState<IOrderSort | string | undefined>(urlParams && urlParams.orderSort ? urlUtil.formatOrderSort(`${urlParams.orderSort}`) : undefined); // prettier-ignore
   const [selectedRowKeys, setSelectedRowKeys] = useState<number[] | string[]>([]);
-  const [orderSort, setOrderSort] = useState<IOrderSort | string | undefined>(
-    urlParams && urlParams.orderSort ? urlUtil.formatOrderSort(`${urlParams.orderSort}`) : undefined,
-  );
-  const [orderBy, setOrderBy] = useState<string | undefined>(
-    urlParams && urlParams.orderBy ? `${urlParams.orderBy}` : undefined,
-  );
 
   const resetUrlParams = () => {
     setPage(urlPagination.page);
@@ -56,12 +52,12 @@ export default (props: IPage) => {
   }, [urlParams]);
 
   const getRolesVariables = { page, pageSize, q, orderBy, orderSort };
-  const { loading, data, error } = useQuery<{ roles: RolesObject }, RolesArgs>(GET_ROLES, {
+  const getRolesQuery = useQuery<{ roles: RolesObject }, RolesArgs>(GET_ROLES, {
     variables: getRolesVariables,
   });
 
-  if (error) {
-    return <ErrorCard message={error.message} />;
+  if (getRolesQuery.error) {
+    return <ErrorCard message={getRolesQuery.error.message} />;
   }
 
   const [deleteRoleMutate, { loading: deleteItemLoading }] = useMutation<Role>(DELETE_ROLE, {
@@ -145,20 +141,20 @@ export default (props: IPage) => {
         />
       }
       className={style['page-wapper']}
-      loading={loading}
+      loading={getRolesQuery.loading}
     >
-      {data && data.roles && data.roles.items && (
+      {getRolesQuery.data && getRolesQuery.data.roles && getRolesQuery.data.roles.items && (
         <TableCard selectedRowKeys={selectedRowKeys}>
           <Table
             rowKey="id"
             size="small"
             rowSelection={rowSelection}
             columns={columns}
-            dataSource={data.roles.items}
+            dataSource={getRolesQuery.data.roles.items}
             pagination={{
               defaultCurrent: page,
               defaultPageSize: pageSize,
-              total: data.roles.total,
+              total: getRolesQuery.data.roles.total,
               current: page,
               pageSize,
               //

@@ -25,15 +25,12 @@ export default (props: IPage) => {
   let permissionInfoFormRef: any;
 
   const getPermissionVariables = { id: Number(id) };
-  const { loading, data: permissionData, error: permissionError } = useQuery<
-    { permission: Permission },
-    PermissionArgs
-  >(GET_PERMISSION, {
+  const getPermissionQuery = useQuery<{ permission: Permission }, PermissionArgs>(GET_PERMISSION, {
     variables: getPermissionVariables,
   });
 
-  if (permissionError) {
-    return <ErrorCard message={permissionError.message} />;
+  if (getPermissionQuery.error) {
+    return <ErrorCard message={getPermissionQuery.error.message} />;
   }
 
   const [submitVariables, setSubmitVariables] = useState<{ id: number; permission: UpdatePermissionInput }>({
@@ -80,8 +77,8 @@ export default (props: IPage) => {
   return (
     <PageCard title={t(`${props.route.namei18n}`)} className={style['page-wapper']} loading={false}>
       <PermissionInfoForm
-        item={permissionData && permissionData.permission}
-        loading={loading}
+        item={getPermissionQuery.data && getPermissionQuery.data.permission}
+        loading={getPermissionQuery.loading}
         wrappedComponentRef={(inst: unknown) => {
           permissionInfoFormRef = inst;
         }}

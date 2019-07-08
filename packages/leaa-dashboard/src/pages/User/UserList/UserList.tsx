@@ -30,16 +30,12 @@ export default (props: IPage) => {
   const urlParams = queryString.parse(window.location.search);
   const urlPagination = urlUtil.getPagination(urlParams);
 
+  const [q, setQ] = useState<string | undefined>(urlParams && urlParams.q ? `${urlParams.q}` : undefined);
   const [page, setPage] = useState<number | undefined>(urlPagination.page);
   const [pageSize, setPageSize] = useState<number | undefined>(urlPagination.pageSize);
-  const [q, setQ] = useState<string | undefined>(urlParams && urlParams.q ? `${urlParams.q}` : undefined);
+  const [orderBy, setOrderBy] = useState<string | undefined>(urlParams && urlParams.orderBy ? `${urlParams.orderBy}` : undefined); // prettier-ignore
+  const [orderSort, setOrderSort] = useState<IOrderSort | string | undefined>(urlParams && urlParams.orderSort ? urlUtil.formatOrderSort(`${urlParams.orderSort}`) : undefined); // prettier-ignore
   const [selectedRowKeys, setSelectedRowKeys] = useState<number[] | string[]>([]);
-  const [orderSort, setOrderSort] = useState<IOrderSort | string | undefined>(
-    urlParams && urlParams.orderSort ? urlUtil.formatOrderSort(`${urlParams.orderSort}`) : undefined,
-  );
-  const [orderBy, setOrderBy] = useState<string | undefined>(
-    urlParams && urlParams.orderBy ? `${urlParams.orderBy}` : undefined,
-  );
 
   const resetUrlParams = () => {
     setPage(urlPagination.page);
@@ -56,12 +52,12 @@ export default (props: IPage) => {
   }, [urlParams]);
 
   const getUsersVariables = { page, pageSize, q, orderBy, orderSort };
-  const { loading, data, error } = useQuery<{ users: UsersObject }, UsersArgs>(GET_USERS, {
+  const getUsersQuery = useQuery<{ users: UsersObject }, UsersArgs>(GET_USERS, {
     variables: getUsersVariables,
   });
 
-  if (error) {
-    return <ErrorCard message={error.message} />;
+  if (getUsersQuery.error) {
+    return <ErrorCard message={getUsersQuery.error.message} />;
   }
 
   const [deleteUserMutate, { loading: deleteItemLoading }] = useMutation<User>(DELETE_USER, {
@@ -146,9 +142,9 @@ export default (props: IPage) => {
         />
       }
       className={style['page-wapper']}
-      loading={loading}
+      loading={getUsersQuery.loading}
     >
-      {data && data.users && data.users.items && (
+      {getUsersQuery.data && getUsersQuery.data.users && getUsersQuery.data.users.items && (
         <TableCard
           selectedRowKeys={selectedRowKeys}
           selectedRowBar={
@@ -162,11 +158,11 @@ export default (props: IPage) => {
             size="small"
             rowSelection={rowSelection}
             columns={columns}
-            dataSource={data.users.items}
+            dataSource={getUsersQuery.data.users.items}
             pagination={{
               defaultCurrent: page,
               defaultPageSize: pageSize,
-              total: data.users.total,
+              total: getUsersQuery.data.users.total,
               current: page,
               pageSize,
               //
