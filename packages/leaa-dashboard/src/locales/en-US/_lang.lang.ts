@@ -1,7 +1,9 @@
 export default {
   test: '0x00EN',
-  langEn: 'English',
-  langCn: 'Chinese',
+  langen: 'English',
+  langcn: 'Chinese',
+  'langen-US': 'English',
+  'langzh-CN': 'Chinese',
   //
   // Form
   email: 'Email',

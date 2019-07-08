@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Skeleton, Icon, Avatar, Popover, Button, message } from 'antd';
 import { RouteComponentProps } from 'react-router-dom';
 
@@ -11,6 +12,8 @@ import style from './style.less';
 interface IProps extends RouteComponentProps {}
 
 export const UserMenu = (props: IProps): JSX.Element => {
+  const { t } = useTranslation();
+
   const onLogout = (): void => {
     if (authUtil.removeAuthToken()) {
       return props.history.push(LOGOUT_REDIRECT_URL);
@@ -24,7 +27,7 @@ export const UserMenu = (props: IProps): JSX.Element => {
 
   const menuDom = (
     <div className={style['usermenu-box']}>
-      <div className={style['header']}>Hi Tough Guy!</div>
+      <div className={style['header']}>Hi, {authUtil.getAuthInfo().name}</div>
 
       <div className={style['container']}>
         <Skeleton active />
@@ -32,7 +35,7 @@ export const UserMenu = (props: IProps): JSX.Element => {
 
       <div className={style['footer']}>
         <Button className={style['logout-button']} block type="ghost" onClick={onLogout}>
-          <Icon type="poweroff" /> Success Logout
+          <Icon type="poweroff" /> {t(`_comp:UserMenu.safelyLogout`)}
         </Button>
       </div>
     </div>

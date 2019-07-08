@@ -87,6 +87,10 @@ export default (props: IPage) => {
       };
     });
 
+    if (hasError) {
+      return;
+    }
+
     await setSubmitVariables({
       ...submitVariables,
       ...{ user: submitData },
@@ -117,7 +121,7 @@ export default (props: IPage) => {
         <Button
           type="primary"
           size="large"
-          icon="edit"
+          icon="save"
           className="submit-button"
           loading={submitLoading}
           onClick={onSubmit}

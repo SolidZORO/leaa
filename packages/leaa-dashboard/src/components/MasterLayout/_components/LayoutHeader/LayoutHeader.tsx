@@ -4,7 +4,6 @@ import { RouteComponentProps } from 'react-router-dom';
 
 import { Breadcrumb } from '../Breadcrumb/Breadcrumb';
 import { UserMenu } from '../UserMenu/UserMenu';
-import { SwitchLanguage } from '../../../SwitchLanguage/SwitchLanguage';
 
 import style from './style.less';
 

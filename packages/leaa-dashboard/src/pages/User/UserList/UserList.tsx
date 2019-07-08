@@ -13,12 +13,13 @@ import { DELETE_USER } from '@leaa/common/graphqls/user.mutation';
 import { User } from '@leaa/common/entrys';
 import { IOrderSort } from '@leaa/common/dtos/_common';
 import { UsersObject, UsersArgs } from '@leaa/common/dtos/user';
-import { urlUtil } from '@leaa/dashboard/utils';
+import { urlUtil, tableUtil } from '@leaa/dashboard/utils';
 import { IPage } from '@leaa/dashboard/interfaces';
 import { PageCard } from '@leaa/dashboard/components/PageCard';
 import { ErrorCard } from '@leaa/dashboard/components/ErrorCard';
 import { SearchInput } from '@leaa/dashboard/components/SearchInput';
 import { TableCard } from '@leaa/dashboard/components/TableCard';
+import { DateField } from '@leaa/dashboard/components/DateField';
 import { TableItemDeleteButton } from '@leaa/dashboard/components/TableItemDeleteButton';
 
 import style from './style.less';
@@ -67,27 +68,10 @@ export default (props: IPage) => {
       message.error(e.message);
     },
     onCompleted() {
-      message.success('Delete Successful');
+      message.success(t('_lang:deletedSuccessfully'));
     },
     refetchQueries: () => [{ query: GET_USERS, variables: getUsersVariables }],
   });
-
-  const calcDefaultSortOrder = (sort?: string, by?: string, field?: string): 'descend' | 'ascend' | boolean => {
-    if (!by || !sort || !field) {
-      return false;
-    }
-
-    if (by === field) {
-      if (sort === 'DESC') {
-        return 'descend';
-      }
-      if (sort === 'ASC') {
-        return 'ascend';
-      }
-    }
-
-    return false;
-  };
 
   const rowSelection = {
     columnWidth: 30,
@@ -113,21 +97,21 @@ export default (props: IPage) => {
       width: 300,
       dataIndex: 'email',
       sorter: true,
-      sortOrder: calcDefaultSortOrder(orderSort, orderBy, 'email'),
+      sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'email'),
       render: (text: string, record: User) => <Link to={`${props.route.path}/${record.id}`}>{record.email}</Link>,
     },
     {
       title: t('_lang:name'),
       dataIndex: 'name',
       sorter: true,
-      sortOrder: calcDefaultSortOrder(orderSort, orderBy, 'name'),
+      sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'name'),
     },
     {
       title: t('_lang:createdAt'),
       dataIndex: 'created_at',
       sorter: true,
-      sortOrder: calcDefaultSortOrder(orderSort, orderBy, 'created_at'),
-      render: (text: string) => <small>{moment(text).format('YYYY-MM-DD HH:mm:ss')}</small>,
+      sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'created_at'),
+      render: (text: string) => <DateField date={text} size="small" />,
     },
     {
       title: t('_lang:action'),

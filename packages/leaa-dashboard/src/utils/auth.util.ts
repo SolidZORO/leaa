@@ -1,4 +1,8 @@
-import { AUTH_TOKEN_NAME, AUTH_EXPIRES_IN_NAME } from '@leaa/dashboard/constants';
+import { AUTH_TOKEN_NAME, AUTH_EXPIRES_IN_NAME, AUTH_INFO } from '@leaa/dashboard/constants';
+
+interface IAuthInfo {
+  name: string;
+}
 
 const getAuthToken = (options = { onlyToken: false }) => {
   if (!process.browser) {
@@ -22,6 +26,22 @@ const setAuthToken = (token: string, expiresIn: number) => {
   localStorage.setItem(AUTH_EXPIRES_IN_NAME, expiresInTime);
 };
 
+const setAuthInfo = (info: IAuthInfo) => {
+  localStorage.setItem(AUTH_INFO, JSON.stringify(info));
+};
+
+const getAuthInfo = (): IAuthInfo => {
+  const authInfo = localStorage.getItem(AUTH_INFO);
+
+  if (authInfo) {
+    return JSON.parse(authInfo);
+  }
+
+  return {
+    name: '',
+  };
+};
+
 const removeAuthToken = (): boolean => {
   if (!getAuthToken) {
     console.log('Not found auth token.');
@@ -31,6 +51,7 @@ const removeAuthToken = (): boolean => {
 
   localStorage.removeItem(AUTH_TOKEN_NAME);
   localStorage.removeItem(AUTH_EXPIRES_IN_NAME);
+  localStorage.removeItem(AUTH_INFO);
 
   return true;
 };
@@ -50,6 +71,8 @@ const checkAuthIsAvailably = (): boolean => {
 
 export const authUtil = {
   setAuthToken,
+  setAuthInfo,
+  getAuthInfo,
   getAuthToken,
   removeAuthToken,
   checkAuthIsAvailably,

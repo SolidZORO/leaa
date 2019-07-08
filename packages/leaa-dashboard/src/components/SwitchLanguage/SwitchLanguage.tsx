@@ -1,7 +1,6 @@
-import _ from 'lodash';
 import React from 'react';
 import cx from 'classnames';
-import { Button, Popover, ConfigProvider } from 'antd';
+import { Button, Popover, ConfigProvider, Icon } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { TooltipPlacement } from 'antd/lib/tooltip';
 
@@ -13,7 +12,7 @@ interface IProps {
   dark?: boolean;
 }
 
-const langs = ['en', 'cn'];
+const langs = ['en-US', 'zh-CN'];
 
 export const SwitchLanguage = (props: IProps): JSX.Element => {
   const { i18n, t } = useTranslation();
@@ -43,7 +42,8 @@ export const SwitchLanguage = (props: IProps): JSX.Element => {
                   className={cx(style['lang-flag'], style[`lang-flag--${lang}`])}
                   onClick={() => changeLanguage(lang)}
                 >
-                  {t(`_lang:lang${_.upperFirst(lang)}`)}
+                  {t(`_lang:lang${lang}`)}
+                  {i18n.language === lang && <Icon type="check-circle" />}
                 </Button>
               ))}
             </>
@@ -53,7 +53,7 @@ export const SwitchLanguage = (props: IProps): JSX.Element => {
             type="link"
             className={cx(style['lang-flag'], style[`lang-flag--${i18n.language}`], style['lang-flag--current'])}
           >
-            {t(`_lang:lang${_.upperFirst(i18n.language)}`)}
+            {t(`_lang:lang${i18n.language}`)}
           </Button>
         </Popover>
       </ConfigProvider>

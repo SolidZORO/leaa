@@ -5,7 +5,6 @@
 }
 
 .switch-language-popover {
-  margin-left: 10px;
   min-width: 150px;
 }
 
@@ -30,34 +29,44 @@
 }
 
 .lang-flag--current {
+  @color: #3339;
+
   font-size: 12px;
+  color: @color;
+
+  &:focus {
+    color: @color;
+  }
 
   &:before {
-    transition: all 0.3s;
-    opacity: 0.2;
+    opacity: 0.4;
     vertical-align: -4px;
+    transition: all 0.3s;
   }
 
   span {
-    transition: all 0.3s;
     opacity: 0.35;
+    transition: all 0.3s;
   }
 
   &:hover {
+    color: @color;
+
     &:before,
     span {
+      color: @color;
       opacity: 1;
     }
   }
 }
 
-.lang-flag--en {
+.lang-flag--en-US {
   &:before {
     background-position: 0 0;
   }
 }
 
-.lang-flag--cn {
+.lang-flag--zh-CN {
   &:before {
     background-position: 0 -20px;
   }
@@ -65,7 +74,16 @@
 
 .wrapper--dark {
   .lang-flag--current {
+    @color: #fff9;
+
     font-weight: 200;
-    color: #fff9;
+    color: @color;
+
+    &:focus,
+    &:hover,
+    &:before,
+    span {
+      color: @color;
+    }
   }
 }

@@ -84,26 +84,32 @@ export class UserService extends BaseService<User, UsersArgs, UsersObject, UserA
     return this.addPermissionsTouser(user);
   }
 
+  private async craetePassword(password: string): Promise<string> {
+    const salt = bcryptjs.genSaltSync();
+    return bcryptjs.hashSync(password, salt);
+  }
+
   async craeteUser(args: CreateUserInput): Promise<User | undefined> {
     const nextArgs = args;
 
     if (args.password) {
-      const salt = bcryptjs.genSaltSync();
-      nextArgs.password = bcryptjs.hashSync(args.password, salt);
+      nextArgs.password = await this.craetePassword(args.password);
     }
 
     return this.userRepository.save({ ...nextArgs });
   }
 
-  async updateUser(id: number, args?: UpdateUserInput): Promise<User | undefined> {
+  async updateUser(id: number, args: UpdateUserInput): Promise<User | undefined> {
+    const nextArgs = args;
+
     const relationArgs: { roles?: Role[] } = {};
     let roleObjects;
 
-    if (args && args.roleIds) {
+    if (args.roleIds) {
       roleObjects = await this.roleRepository.findByIds(args.roleIds);
     }
 
-    if (args && args.roleSlugs) {
+    if (args.roleSlugs) {
       const roleIds = await this.roleService.roleSlugsToIds(args.roleSlugs);
       roleObjects = await this.roleRepository.findByIds(roleIds);
     }
@@ -114,7 +120,11 @@ export class UserService extends BaseService<User, UsersArgs, UsersObject, UserA
       relationArgs.roles = roleObjects;
     }
 
-    return this.update(id, args, relationArgs);
+    if (args && args.password) {
+      nextArgs.password = await this.craetePassword(args.password);
+    }
+
+    return this.update(id, nextArgs, relationArgs);
   }
 
   async deleteUser(id: number): Promise<User | undefined> {

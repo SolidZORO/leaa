@@ -28,6 +28,10 @@ const LoginFormInner = (props: IProps) => {
         message.error(e.message);
       },
       onCompleted({ login }) {
+        if (login && login.name) {
+          authUtil.setAuthInfo({ name: login.name });
+        }
+
         if (login && login.authToken && login.authExpiresIn) {
           authUtil.setAuthToken(login.authToken, login.authExpiresIn);
 
@@ -61,7 +65,7 @@ const LoginFormInner = (props: IProps) => {
   const onBack = async () => {
     message.info(t('_page:Auth.Login.backTips'));
 
-    authUtil.removeAuthToken();
+    // authUtil.removeAuthToken();
   };
 
   return (
