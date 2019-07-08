@@ -15,5 +15,9 @@ export default {
   createUser: 'Create User',
   editUser: 'Edit User',
   //
+  role: 'Role',
+  createRole: 'Create Role',
+  editRole: 'Edit Role',
+  //
   permission: 'Permission',
 };

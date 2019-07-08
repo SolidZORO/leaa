@@ -23,7 +23,7 @@ interface IFormProps extends FormComponentProps {
 type IProps = IFormProps & ITfn;
 
 @observer
-class UserRoleFormInner extends React.PureComponent<IProps> {
+class UserRolesFormInner extends React.PureComponent<IProps> {
   @observable checkAll: boolean = false;
   @observable indeterminate: boolean = false;
 
@@ -31,8 +31,12 @@ class UserRoleFormInner extends React.PureComponent<IProps> {
     super(props);
   }
 
+  componentDidMount(): void {
+    this.calcCheckStatus(this.props.form.getFieldValue('roleIds'));
+  }
+
   componentDidUpdate(prevProps: Readonly<IProps>): void {
-    if (this.props.form.getFieldValue('roleIds') && typeof this.props.roles.length !== 'undefined') {
+    if (this.props.form.getFieldValue('roleIds')) {
       this.calcCheckStatus(this.props.form.getFieldValue('roleIds'));
     }
   }
@@ -59,23 +63,30 @@ class UserRoleFormInner extends React.PureComponent<IProps> {
     this.calcCheckStatus(nextValue);
   };
 
-  calcCheckStatus = (nextValue: number[]) => {
-    if (nextValue.length === this.props.roles.length) {
+  getUserRoleIds = (userItem: User | undefined): number[] => {
+    const userRoles = userItem && userItem.roles;
+    return (userRoles && userRoles.map(r => r.id)) || [];
+  };
+
+  calcCheckStatus = (selected: number[]) => {
+    if (typeof selected === 'undefined' || typeof this.props.roles === 'undefined') {
+      return;
+    }
+
+    if (selected.length === this.props.roles.length) {
       this.setCheckAll(true);
       this.setIndeterminate(false);
       return;
     }
 
-    if (nextValue.length > 0) {
+    if (selected.length > 0) {
       this.setCheckAll(false);
       this.setIndeterminate(true);
       return;
     }
 
-    if (nextValue.length === 0) {
-      this.setCheckAll(false);
-      this.setIndeterminate(false);
-    }
+    this.setCheckAll(false);
+    this.setIndeterminate(false);
   };
 
   render() {
@@ -102,7 +113,7 @@ class UserRoleFormInner extends React.PureComponent<IProps> {
 
                 {getFieldDecorator('roleIds', {
                   validateTrigger: ['onBlur'],
-                  initialValue: this.props.item && this.props.item.roles && this.props.item.roles.map(r => r.id),
+                  initialValue: this.getUserRoleIds(this.props.item),
                 })(
                   <Checkbox.Group onChange={this.onChange}>
                     <Row gutter={16} type="flex">
@@ -124,4 +135,4 @@ class UserRoleFormInner extends React.PureComponent<IProps> {
 }
 
 // @ts-ignore
-export const UserRoleForm = withTranslation()(Form.create<IFormProps>()(UserRoleFormInner));
+export const UserRolesForm = withTranslation()(Form.create<IFormProps>()(UserRolesFormInner));

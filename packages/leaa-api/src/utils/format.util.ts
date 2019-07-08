@@ -5,6 +5,10 @@ import { ItemsArgs } from '@leaa/common/dtos/_common';
 type IFormatArgs = ItemsArgs & FindManyOptions;
 
 function formatArgs(args: IFormatArgs): IFormatArgs {
+  if (!args) {
+    throw Error('missing format args');
+  }
+
   const nextArgs = {
     ...args,
   };

@@ -14,6 +14,8 @@ import { loggerUtil } from '@leaa/api/utils';
 import { UserService } from '@leaa/api/modules/user/user.service';
 import { Request } from 'express';
 
+const CONSTRUCTOR_NAME = 'AuthService';
+
 @Injectable()
 export class AuthService {
   constructor(
@@ -98,14 +100,14 @@ export class AuthService {
     if (!user) {
       const message = `user ${args.email} does not exist`;
 
-      loggerUtil.warn(message, this.constructor.name);
+      loggerUtil.warn(message, CONSTRUCTOR_NAME);
       throw new Error(message);
     }
 
     if (user.status !== 1) {
       const message = `user ${args.email} is disabled`;
 
-      loggerUtil.warn(message, this.constructor.name);
+      loggerUtil.warn(message, CONSTRUCTOR_NAME);
       throw new Error(message);
     }
 
@@ -114,7 +116,7 @@ export class AuthService {
     if (!passwordIsMatch) {
       const message = `user ${args.email} info not match`;
 
-      loggerUtil.warn(message, this.constructor.name);
+      loggerUtil.warn(message, CONSTRUCTOR_NAME);
       throw new Error(message);
     }
 

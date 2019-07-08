@@ -4,12 +4,14 @@ import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm';
 import { User, Permission, Role } from '@leaa/common/entrys';
 import { ConfigService } from '@leaa/api/modules/config/config.service';
 
+const CONSTRUCTOR_NAME = 'TypeormService';
+
 @Injectable()
 export class TypeormService implements TypeOrmOptionsFactory {
   private logger: Logger;
 
   constructor(readonly config: ConfigService) {
-    this.logger = new Logger(this.constructor.name);
+    this.logger = new Logger(CONSTRUCTOR_NAME);
   }
 
   createTypeOrmOptions(): TypeOrmModuleOptions {

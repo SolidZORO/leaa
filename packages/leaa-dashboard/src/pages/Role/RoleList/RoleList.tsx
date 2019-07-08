@@ -4,14 +4,14 @@ import { useTranslation } from 'react-i18next';
 import queryString from 'query-string';
 import { Link } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { Table, Button, message } from 'antd';
+import { Table, message } from 'antd';
 
 import { DEFAULT_PAGE_SIZE_OPTIONS } from '@leaa/dashboard/constants';
-import { GET_USERS } from '@leaa/common/graphqls';
-import { DELETE_USER } from '@leaa/common/graphqls/user.mutation';
-import { User } from '@leaa/common/entrys';
+import { GET_ROLES } from '@leaa/common/graphqls';
+import { DELETE_ROLE } from '@leaa/common/graphqls/role.mutation';
+import { Role } from '@leaa/common/entrys';
 import { IOrderSort } from '@leaa/common/dtos/_common';
-import { UsersObject, UsersArgs } from '@leaa/common/dtos/user';
+import { RolesObject, RolesArgs } from '@leaa/common/dtos/role';
 import { urlUtil, tableUtil } from '@leaa/dashboard/utils';
 import { IPage } from '@leaa/dashboard/interfaces';
 import { PageCard } from '@leaa/dashboard/components/PageCard';
@@ -55,23 +55,23 @@ export default (props: IPage) => {
     }
   }, [urlParams]);
 
-  const getUsersVariables = { page, pageSize, q, orderBy, orderSort };
-  const { loading, data, error } = useQuery<{ users: UsersObject }, UsersArgs>(GET_USERS, {
-    variables: getUsersVariables,
+  const getRolesVariables = { page, pageSize, q, orderBy, orderSort };
+  const { loading, data, error } = useQuery<{ roles: RolesObject }, RolesArgs>(GET_ROLES, {
+    variables: getRolesVariables,
   });
 
   if (error) {
     return <ErrorCard message={error.message} />;
   }
 
-  const [deleteUserMutate, { loading: deleteItemLoading }] = useMutation<User>(DELETE_USER, {
+  const [deleteRoleMutate, { loading: deleteItemLoading }] = useMutation<Role>(DELETE_ROLE, {
     onError(e) {
       message.error(e.message);
     },
     onCompleted() {
       message.success(t('_lang:deletedSuccessfully'));
     },
-    refetchQueries: () => [{ query: GET_USERS, variables: getUsersVariables }],
+    refetchQueries: () => [{ query: GET_ROLES, variables: getRolesVariables }],
   });
 
   const rowSelection = {
@@ -90,18 +90,17 @@ export default (props: IPage) => {
       render: (text: string) => <TableColumnId id={text} />,
     },
     {
-      title: t('_lang:email'),
-      width: 300,
-      dataIndex: 'email',
-      sorter: true,
-      sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'email'),
-      render: (text: string, record: User) => <Link to={`${props.route.path}/${record.id}`}>{record.email}</Link>,
-    },
-    {
       title: t('_lang:name'),
       dataIndex: 'name',
       sorter: true,
       sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'name'),
+      render: (text: string, record: Role) => <Link to={`${props.route.path}/${record.id}`}>{record.name}</Link>,
+    },
+    {
+      title: t('_lang:slug'),
+      dataIndex: 'slug',
+      sorter: true,
+      sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'slug'),
     },
     {
       title: t('_lang:createdAt'),
@@ -114,11 +113,11 @@ export default (props: IPage) => {
       title: t('_lang:action'),
       dataIndex: 'operation',
       width: 50,
-      render: (text: string, record: User) => (
+      render: (text: string, record: Role) => (
         <TableColumnDeleteButton
           id={record.id}
           loading={deleteItemLoading}
-          onClick={async () => deleteUserMutate({ variables: { id: Number(record.id) } })}
+          onClick={async () => deleteRoleMutate({ variables: { id: Number(record.id) } })}
         />
       ),
     },
@@ -148,25 +147,18 @@ export default (props: IPage) => {
       className={style['page-wapper']}
       loading={loading}
     >
-      {data && data.users && data.users.items && (
-        <TableCard
-          selectedRowKeys={selectedRowKeys}
-          selectedRowBar={
-            <Button type="danger" size="small" icon="delete">
-              {t('_lang:delete')}
-            </Button>
-          }
-        >
+      {data && data.roles && data.roles.items && (
+        <TableCard selectedRowKeys={selectedRowKeys}>
           <Table
             rowKey="id"
             size="small"
             rowSelection={rowSelection}
             columns={columns}
-            dataSource={data.users.items}
+            dataSource={data.roles.items}
             pagination={{
               defaultCurrent: page,
               defaultPageSize: pageSize,
-              total: data.users.total,
+              total: data.roles.total,
               current: page,
               pageSize,
               //

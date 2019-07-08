@@ -3,18 +3,19 @@ import { useTranslation } from 'react-i18next';
 import { Button, message } from 'antd';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
-import { User } from '@leaa/common/entrys';
-import { GET_USER, GET_ROLES } from '@leaa/common/graphqls';
-import { RolesObject, RolesArgs } from '@leaa/common/dtos/role';
+import { Role } from '@leaa/common/entrys';
+import { GET_PERMISSIONS, GET_ROLE } from '@leaa/common/graphqls';
+import { UPDATE_ROLE } from '@leaa/common/graphqls/role.mutation';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/constants';
-import { UserArgs, UpdateUserInput } from '@leaa/common/dtos/user';
+import { RoleArgs, UpdateRoleInput } from '@leaa/common/dtos/role';
+import { PermissionsObject, PermissionsArgs } from '@leaa/common/dtos/permission';
 import { IPage } from '@leaa/dashboard/interfaces';
 import { PageCard } from '@leaa/dashboard/components/PageCard';
 import { ErrorCard } from '@leaa/dashboard/components/ErrorCard';
 import { SubmitBar } from '@leaa/dashboard/components/SubmitBar/SubmitBar';
-import { UPDATE_USER } from '@leaa/common/graphqls/user.mutation';
-import { UserInfoForm } from '../_components/UserInfoForm/UserInfoForm';
-import { UserRolesForm } from '../_components/UserRolesForm/UserRolesForm';
+
+import { RoleInfoForm } from '../_components/RoleInfoForm/RoleInfoForm';
+import { RolePermissionsForm } from '../_components/RolePermissionsForm/RolePermissionsForm';
 
 import style from './style.less';
 
@@ -23,33 +24,36 @@ export default (props: IPage) => {
 
   const { id } = props.match.params as { id: string };
 
-  let userInfoFormRef: any;
-  let userRoleFormRef: any;
+  let roleInfoFormRef: any;
+  let rolePermissionsFormRef: any;
 
-  const getUserVariables = { id: Number(id) };
-  const { loading, data: userData, error: userError } = useQuery<{ user: User }, UserArgs>(GET_USER, {
-    variables: getUserVariables,
+  const getRoleVariables = { id: Number(id) };
+  const { loading, data: roleData, error: roleError } = useQuery<{ role: Role }, RoleArgs>(GET_ROLE, {
+    variables: getRoleVariables,
   });
 
-  if (userError) {
-    return <ErrorCard message={userError.message} />;
+  if (roleError) {
+    return <ErrorCard message={roleError.message} />;
   }
 
-  const getRolesVariables = { pageSize: 9999 };
-  const { data: rolesData, error: rolesError } = useQuery<{ roles: RolesObject }, RolesArgs>(GET_ROLES, {
-    variables: getRolesVariables,
-  });
+  const getPermissionsVariables = { pageSize: 9999 };
+  const { data: permissionsData, error: rolesError } = useQuery<{ permissions: PermissionsObject }, PermissionsArgs>(
+    GET_PERMISSIONS,
+    {
+      variables: getPermissionsVariables,
+    },
+  );
 
   if (rolesError) {
     return <ErrorCard message={rolesError.message} />;
   }
 
-  const [submitVariables, setSubmitVariables] = useState<{ id: number; user: UpdateUserInput }>({
+  const [submitVariables, setSubmitVariables] = useState<{ id: number; role: UpdateRoleInput }>({
     id: Number(id),
-    user: {},
+    role: {},
   });
 
-  const [updateUserMutate, { loading: submitLoading }] = useMutation<User>(UPDATE_USER, {
+  const [updateRoleMutate, { loading: submitLoading }] = useMutation<Role>(UPDATE_ROLE, {
     variables: submitVariables,
     onError(e) {
       message.error(e.message);
@@ -57,27 +61,27 @@ export default (props: IPage) => {
     onCompleted() {
       message.success(t('_lang:updatedSuccessfully'));
     },
-    refetchQueries: () => [{ query: GET_USER, variables: getUserVariables }],
+    refetchQueries: () => [{ query: GET_ROLE, variables: getRoleVariables }],
   });
 
   const onSubmit = async () => {
     let hasError = false;
-    let submitData: UpdateUserInput = { roleIds: [] };
+    let submitData: UpdateRoleInput = { permissionIds: [] };
 
-    userRoleFormRef.props.form.validateFieldsAndScroll(async (err: any, formData: { roleIds: number[] }) => {
+    rolePermissionsFormRef.props.form.validateFieldsAndScroll((err: any, formData: { permissionIds: number[] }) => {
       if (err) {
         hasError = true;
         message.error(err[Object.keys(err)[0]].errors[0].message);
       }
 
-      submitData.roleIds = formData.roleIds;
+      submitData.permissionIds = formData.permissionIds;
     });
 
     if (hasError) {
       return;
     }
 
-    userInfoFormRef.props.form.validateFieldsAndScroll(async (err: any, formData: User) => {
+    roleInfoFormRef.props.form.validateFieldsAndScroll((err: any, formData: Role) => {
       if (err) {
         hasError = true;
         message.error(err[Object.keys(err)[0]].errors[0].message);
@@ -87,6 +91,8 @@ export default (props: IPage) => {
         ...submitData,
         ...formData,
       };
+
+      console.log('submitData', submitData);
     });
 
     if (hasError) {
@@ -95,31 +101,31 @@ export default (props: IPage) => {
 
     const nextSubmitData = {
       ...submitVariables,
-      ...{ user: submitData },
+      ...{ role: submitData },
     };
 
     console.log(nextSubmitData);
 
     await setSubmitVariables(nextSubmitData);
-    await updateUserMutate();
+    await updateRoleMutate();
   };
 
   return (
     <PageCard title={t(`${props.route.namei18n}`)} className={style['page-wapper']} loading={false}>
-      <UserInfoForm
-        item={userData && userData.user}
+      <RoleInfoForm
+        item={roleData && roleData.role}
         loading={loading}
         wrappedComponentRef={(inst: unknown) => {
-          userInfoFormRef = inst;
+          roleInfoFormRef = inst;
         }}
       />
 
-      <UserRolesForm
-        item={userData && userData.user}
+      <RolePermissionsForm
+        item={roleData && roleData.role}
         loading={loading}
-        roles={(rolesData && rolesData.roles && rolesData.roles.items) || []}
+        permissions={permissionsData && permissionsData.permissions && permissionsData.permissions.items}
         wrappedComponentRef={(inst: unknown) => {
-          userRoleFormRef = inst;
+          rolePermissionsFormRef = inst;
         }}
       />
 

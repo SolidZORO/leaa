@@ -7,7 +7,9 @@ import { User, Role, Permission } from '@leaa/common/entrys';
 import { UsersArgs, UsersObject, UserArgs, CreateUserInput, UpdateUserInput } from '@leaa/common/dtos/user';
 import { BaseService } from '@leaa/api/modules/base/base.service';
 import { RoleService } from '@leaa/api/modules/role/role.service';
-import { formatUtil } from '@leaa/api/utils';
+import { formatUtil, loggerUtil } from '@leaa/api/utils';
+
+const CONSTRUCTOR_NAME = 'UserService';
 
 @Injectable()
 export class UserService extends BaseService<User, UsersArgs, UsersObject, UserArgs, CreateUserInput, UpdateUserInput> {
@@ -58,10 +60,8 @@ export class UserService extends BaseService<User, UsersArgs, UsersObject, UserA
     return nextUser;
   }
 
-  async user(id: number, args?: UserArgs & FindOneOptions<User>): Promise<User | undefined> {
+  async user(id: number, args: UserArgs & FindOneOptions<User>): Promise<User | undefined> {
     let nextArgs: FindOneOptions<User> = {};
-
-    console.log(id);
 
     if (args) {
       nextArgs = args;
@@ -69,8 +69,6 @@ export class UserService extends BaseService<User, UsersArgs, UsersObject, UserA
     }
 
     const user = await this.findOne(id, nextArgs);
-
-    console.log(user);
 
     return this.addPermissionsTouser(user);
   }
@@ -101,8 +99,8 @@ export class UserService extends BaseService<User, UsersArgs, UsersObject, UserA
 
   async updateUser(id: number, args: UpdateUserInput): Promise<User | undefined> {
     const nextArgs = args;
-
     const relationArgs: { roles?: Role[] } = {};
+
     let roleObjects;
 
     if (args.roleIds) {
@@ -118,6 +116,11 @@ export class UserService extends BaseService<User, UsersArgs, UsersObject, UserA
 
     if (roleObjects && roleObjects.length && roleObjects.length > 0) {
       relationArgs.roles = roleObjects;
+    } else {
+      const message = `roles error`;
+
+      loggerUtil.warn(message, CONSTRUCTOR_NAME);
+      throw new Error(message);
     }
 
     if (args && args.password) {

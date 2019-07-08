@@ -61,6 +61,7 @@ type Permission {
   id: Int!
   name: String!
   slug: String!
+  slugGroup: String!
   roles: [Role!]
   created_at: DateTime!
   updated_at: DateTime

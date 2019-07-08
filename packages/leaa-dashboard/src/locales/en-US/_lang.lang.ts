@@ -8,6 +8,7 @@ export default {
   // Form
   email: 'Email',
   name: 'Name',
+  slug: 'Slug',
   password: 'Password',
   login: 'Login',
   register: 'Register',

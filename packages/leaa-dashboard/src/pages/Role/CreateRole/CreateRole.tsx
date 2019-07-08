@@ -5,12 +5,11 @@ import { useMutation } from '@apollo/react-hooks';
 
 import { User } from '@leaa/common/entrys';
 import { UpdateUserInput } from '@leaa/common/dtos/user';
-import { CREATE_BUTTON_ICON } from '@leaa/dashboard/constants';
 import { IPage } from '@leaa/dashboard/interfaces';
 import { PageCard } from '@leaa/dashboard/components/PageCard';
 import { SubmitBar } from '@leaa/dashboard/components/SubmitBar/SubmitBar';
 import { CREATE_USER } from '@leaa/common/graphqls/user.mutation';
-import { UserInfoForm } from '../_components/UserInfoForm/UserInfoForm';
+// import { UserInfoForm } from '../_components/UserInfoForm/UserInfoForm';
 
 import style from './style.less';
 
@@ -64,17 +63,17 @@ export default (props: IPage) => {
 
   return (
     <PageCard title={t(`${props.route.namei18n}`)} className={style['page-wapper']} loading={false}>
-      <UserInfoForm
-        wrappedComponentRef={(inst: unknown) => {
-          userInfoFormRef = inst;
-        }}
-      />
+      {/*<UserInfoForm*/}
+      {/*  wrappedComponentRef={(inst: unknown) => {*/}
+      {/*    userInfoFormRef = inst;*/}
+      {/*  }}*/}
+      {/*/>*/}
 
       <SubmitBar>
         <Button
           type="primary"
           size="large"
-          icon={CREATE_BUTTON_ICON}
+          icon="plus"
           className="submit-button"
           loading={submitLoading}
           onClick={onSubmit}

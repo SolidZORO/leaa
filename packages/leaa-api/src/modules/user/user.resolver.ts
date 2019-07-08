@@ -10,12 +10,12 @@ export class UserResolver {
   constructor(private readonly userService: UserService) {}
 
   @Query(() => UsersObject)
-  async users(@Args() args: UsersArgs): Promise<UsersObject> {
+  async users(@Args() args: UsersArgs): Promise<UsersObject | undefined> {
     return this.userService.users(args);
   }
 
   @Query(() => User)
-  async user(@Args({ name: 'id', type: () => Int }) id: number, @Args() args?: UserArgs): Promise<User | undefined> {
+  async user(@Args({ name: 'id', type: () => Int }) id: number, @Args() args: UserArgs): Promise<User | undefined> {
     return this.userService.user(id, args);
   }
 

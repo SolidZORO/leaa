@@ -3,6 +3,8 @@ import { Repository, ObjectLiteral, FindConditions, FindOneOptions } from 'typeo
 
 import { formatUtil, loggerUtil } from '@leaa/api/utils';
 
+const CONSTRUCTOR_NAME = 'BaseService';
+
 //
 // Base Service C U R D Class
 // --------------------------
@@ -35,7 +37,7 @@ export abstract class BaseService<Entity, ItemsArgs, ItemsObject, ItemArgs, Crea
     if (!item) {
       const message = `item ${id} does not exist`;
 
-      loggerUtil.warn(message, this.constructor.name);
+      loggerUtil.warn(message, CONSTRUCTOR_NAME);
       throw new Error(message);
     }
 
@@ -60,7 +62,7 @@ export abstract class BaseService<Entity, ItemsArgs, ItemsObject, ItemArgs, Crea
     if (!args) {
       const message = `update item ${id} args does not exist`;
 
-      loggerUtil.warn(message, this.constructor.name);
+      loggerUtil.warn(message, CONSTRUCTOR_NAME);
       throw new Error(message);
     }
 
@@ -69,7 +71,7 @@ export abstract class BaseService<Entity, ItemsArgs, ItemsObject, ItemArgs, Crea
     if (!prevItem) {
       const message = `update item ${id} does not exist`;
 
-      loggerUtil.warn(message, this.constructor.name);
+      loggerUtil.warn(message, CONSTRUCTOR_NAME);
       throw new Error(message);
     }
 
@@ -82,7 +84,7 @@ export abstract class BaseService<Entity, ItemsArgs, ItemsObject, ItemArgs, Crea
     // @ts-ignore
     const nextItem = await this.repository.save(prevItem);
 
-    loggerUtil.updateLog({ id, prevItem, nextItem, constructorName: this.constructor.name });
+    loggerUtil.updateLog({ id, prevItem, nextItem, constructorName: CONSTRUCTOR_NAME });
 
     return nextItem;
   }
@@ -97,7 +99,7 @@ export abstract class BaseService<Entity, ItemsArgs, ItemsObject, ItemArgs, Crea
     if (!prevItem) {
       const message = `delete item ${id} does not exist`;
 
-      loggerUtil.warn(message, this.constructor.name);
+      loggerUtil.warn(message, CONSTRUCTOR_NAME);
       throw new Error(message);
     }
 
@@ -106,11 +108,11 @@ export abstract class BaseService<Entity, ItemsArgs, ItemsObject, ItemArgs, Crea
     if (!nextItem) {
       const message = `delete item ${id} faild`;
 
-      loggerUtil.warn(message, this.constructor.name);
+      loggerUtil.warn(message, CONSTRUCTOR_NAME);
       throw new Error(message);
     }
 
-    loggerUtil.warn(`delete item ${id} successful: ${JSON.stringify(nextItem)}\n\n`, this.constructor.name);
+    loggerUtil.warn(`delete item ${id} successful: ${JSON.stringify(nextItem)}\n\n`, CONSTRUCTOR_NAME);
 
     return {
       ...nextItem,

@@ -15,5 +15,9 @@ export default {
   createUser: '新建用户',
   editUser: '编辑用户',
   //
+  role: '角色',
+  createRole: '新建角色',
+  editRole: '编辑角色',
+  //
   permission: '权限',
 };

@@ -8,6 +8,7 @@ export default {
   // Form
   email: 'Email',
   name: '名字',
+  slug: '标识',
   password: '密码',
   login: '登录',
   register: '注册',

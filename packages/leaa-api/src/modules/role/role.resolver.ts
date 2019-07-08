@@ -10,7 +10,7 @@ export class RoleResolver {
   constructor(private readonly roleService: RoleService) {}
 
   @Query(() => RolesObject)
-  async roles(@Args() args: RolesArgs): Promise<RolesObject> {
+  async roles(@Args() args?: RolesArgs): Promise<RolesObject | undefined> {
     return this.roleService.roles(args);
   }
 
@@ -27,7 +27,7 @@ export class RoleResolver {
   @Mutation(() => Role)
   async updateRole(
     @Args({ name: 'id', type: () => Int }) id: number,
-    @Args('role') args?: UpdateRoleInput,
+    @Args('role') args: UpdateRoleInput,
   ): Promise<Role | undefined> {
     return this.roleService.updateRole(id, args);
   }

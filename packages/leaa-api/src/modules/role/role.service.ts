@@ -1,13 +1,15 @@
+import _ from 'lodash';
 import { Injectable } from '@nestjs/common';
-import { Repository, FindOneOptions, In } from 'typeorm';
+import { Repository, FindOneOptions, In, Like } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { Role, Permission } from '@leaa/common/entrys';
 import { BaseService } from '@leaa/api/modules/base/base.service';
 import { RolesArgs, RolesObject, RoleArgs, CreateRoleInput, UpdateRoleInput } from '@leaa/common/dtos/role';
-import { formatUtil, loggerUtil } from '@leaa/api/utils';
-import { permissions } from '@leaa/api/configs/permission.config';
+import { formatUtil, loggerUtil, validatorUtil } from '@leaa/api/utils';
 import { PermissionService } from '@leaa/api/modules/permission/permission.service';
+
+const CONSTRUCTOR_NAME = 'RoleService';
 
 @Injectable()
 export class RoleService extends BaseService<Role, RolesArgs, RolesObject, RoleArgs, CreateRoleInput, UpdateRoleInput> {
@@ -19,11 +21,26 @@ export class RoleService extends BaseService<Role, RolesArgs, RolesObject, RoleA
     super(roleRepository);
   }
 
-  async roles(args: RolesArgs): Promise<RolesObject> {
-    const nextArgs = formatUtil.formatArgs(args);
+  async roles(args?: RolesArgs): Promise<RolesObject | undefined> {
+    const nextArgs = args ? formatUtil.formatArgs(args) : {};
+
+    let whereQuery = {};
+
+    if (nextArgs.q) {
+      whereQuery = { ...whereQuery, slug: Like(`%${nextArgs.q}%`) };
+    }
+
+    nextArgs.where = whereQuery;
     nextArgs.relations = ['permissions'];
 
-    return this.findAll(nextArgs);
+    const [items, total] = await this.roleRepository.findAndCount(nextArgs);
+
+    return {
+      items,
+      total,
+      page: nextArgs.page || 1,
+      pageSize: nextArgs.pageSize || 30,
+    };
   }
 
   async role(id: number, args?: FindOneOptions<Role>): Promise<Role | undefined> {
@@ -76,26 +93,26 @@ export class RoleService extends BaseService<Role, RolesArgs, RolesObject, RoleA
     return this.roleRepository.save({ ...args });
   }
 
-  async updateRole(id: number, args?: UpdateRoleInput): Promise<Role | undefined> {
+  async updateRole(id: number, args: UpdateRoleInput): Promise<Role | undefined> {
     const relationArgs: { permissions?: Permission[] } = {};
 
     let permissionObjects;
 
-    if (args && args.permissionIds) {
+    if (args.permissionIds) {
       permissionObjects = await this.permissionRepository.findByIds(args.permissionIds);
     }
 
-    if (args && args.permissionSlugs) {
+    if (args.permissionSlugs) {
       const permissionId = await this.permissionService.permissionSlugsToIds(args.permissionSlugs);
       permissionObjects = await this.permissionRepository.findByIds(permissionId);
     }
 
-    if (permissionObjects && permissionObjects.length && permissionObjects.length > 0) {
+    if (permissionObjects) {
       relationArgs.permissions = permissionObjects;
     } else {
       const message = `permissions error`;
 
-      loggerUtil.warn(message, this.constructor.name);
+      loggerUtil.warn(message, CONSTRUCTOR_NAME);
       throw new Error(message);
     }
 

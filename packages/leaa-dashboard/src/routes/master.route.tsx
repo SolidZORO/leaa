@@ -36,6 +36,10 @@ export const masterRoutes: IRouteItem[] = [
       },
     ],
   },
+  //
+  //
+  //
+  //
   {
     name: 'Create User',
     namei18n: '_route:createUser',
@@ -50,7 +54,7 @@ export const masterRoutes: IRouteItem[] = [
     namei18n: '_route:editUser',
     path: '/users/:id(\\d+)',
     icon: 'user',
-    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'UserEdit' */ '../pages/User/EditUser/EditUser')),
+    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'EditUser' */ '../pages/User/EditUser/EditUser')),
     exact: true,
   },
   {
@@ -62,6 +66,40 @@ export const masterRoutes: IRouteItem[] = [
     canCreate: true,
     exact: true,
   },
+  //
+  //
+  //
+  //
+  {
+    name: 'Create Role',
+    namei18n: '_route:createRole',
+    path: '/roles/create',
+    icon: 'crown',
+    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'CreateRole' */ '../pages/Role/CreateRole/CreateRole')),
+    exact: true,
+    isCreate: true,
+  },
+  {
+    name: 'Edit Role',
+    namei18n: '_route:editRole',
+    path: '/roles/:id(\\d+)',
+    icon: 'crown',
+    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'EditRole' */ '../pages/Role/EditRole/EditRole')),
+    exact: true,
+  },
+  {
+    name: 'Role',
+    namei18n: '_route:role',
+    path: '/roles',
+    icon: 'crown',
+    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'RoleList' */ '../pages/Role/RoleList/RoleList')),
+    canCreate: true,
+    exact: true,
+  },
+  //
+  //
+  //
+  //
   {
     name: 'Permission',
     namei18n: '_route:permission',

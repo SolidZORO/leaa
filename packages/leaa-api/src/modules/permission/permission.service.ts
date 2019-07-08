@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Repository, In } from 'typeorm';
+import { Repository, In, Like } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { Permission } from '@leaa/common/entrys';
@@ -11,6 +11,7 @@ import {
   CreatePermissionInput,
   UpdatePermissionInput,
 } from '@leaa/common/dtos/permission';
+import { formatUtil } from '@leaa/api/utils';
 
 @Injectable()
 export class PermissionService extends BaseService<
@@ -26,7 +27,27 @@ export class PermissionService extends BaseService<
   }
 
   async permissions(args: PermissionsArgs): Promise<PermissionsObject> {
-    return this.findAll(args);
+    const nextArgs = formatUtil.formatArgs(args);
+
+    let whereQuery = {};
+
+    if (nextArgs.q) {
+      whereQuery = { ...whereQuery, slug: Like(`%${nextArgs.q}%`) };
+    }
+
+    nextArgs.where = whereQuery;
+
+    const [items, total] = await this.permissionRepository.findAndCount(nextArgs);
+
+    return {
+      items: items.map(i => ({
+        ...i,
+        slugGroup: i.slug.split('.')[0],
+      })),
+      total,
+      page: nextArgs.page || 1,
+      pageSize: nextArgs.pageSize || 30,
+    };
   }
 
   async permission(id: number, args?: PermissionArgs): Promise<Permission | undefined> {

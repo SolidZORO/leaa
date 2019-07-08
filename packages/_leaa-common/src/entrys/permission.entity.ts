@@ -20,6 +20,9 @@ export class Permission {
   @Field()
   slug!: string;
 
+  @Field()
+  slugGroup!: string;
+
   @ManyToMany(() => Role, role => role.permissions)
   @Field(() => [Role], { nullable: true })
   roles?: Role[];
