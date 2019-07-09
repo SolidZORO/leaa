@@ -35,7 +35,7 @@ export default (props: IPage) => {
 
   const [updatePermissionMutate, updatePermissionMutation] = useMutation<Permission>(UPDATE_PERMISSION, {
     variables: submitVariables,
-    onCompleted: () => message.success(t('_lang:deletedSuccessfully')),
+    onCompleted: () => message.success(t('_lang:updatedSuccessfully')),
     refetchQueries: () => [{ query: GET_PERMISSION, variables: getPermissionVariables }],
   });
 

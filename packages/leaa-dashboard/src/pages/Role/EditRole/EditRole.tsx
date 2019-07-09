@@ -43,7 +43,7 @@ export default (props: IPage) => {
 
   const [updateRoleMutate, updateRoleMutation] = useMutation<Role>(UPDATE_ROLE, {
     variables: submitVariables,
-    onCompleted: () => message.success(t('_lang:deletedSuccessfully')),
+    onCompleted: () => message.success(t('_lang:updatedSuccessfully')),
     refetchQueries: () => [{ query: GET_ROLE, variables: getRoleVariables }],
   });
 

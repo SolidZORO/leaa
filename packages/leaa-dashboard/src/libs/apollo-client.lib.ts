@@ -23,9 +23,7 @@ const authLink = new ApolloLink((operation, forward) => {
 const terminatingLink = split(
   ({ query: { definitions } }) =>
     definitions.some(node => {
-      const { kind, operation } = node as OperationDefinitionNode;
-      // return kind === 'OperationDefinition' && operation === 'subscription';
-      console.log(kind, operation);
+      const { kind } = node as OperationDefinitionNode;
       return kind === 'OperationDefinition';
     }),
   httpLink,

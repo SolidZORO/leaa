@@ -80,8 +80,10 @@ type Query {
   role(id: Int!): Role!
   permissions(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): PermissionsObject!
   permission(id: Int!): Permission!
+  ram: Float!
   users(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): UsersObject!
   user(id: Int!): User!
+  userByToken(token: String!): User!
 }
 
 type Role {

@@ -8,6 +8,7 @@ import { UsersArgs, UsersObject, UserArgs, CreateUserInput, UpdateUserInput } fr
 import { BaseService } from '@leaa/api/modules/base/base.service';
 import { RoleService } from '@leaa/api/modules/role/role.service';
 import { formatUtil, loggerUtil } from '@leaa/api/utils';
+import { JwtService } from '@nestjs/jwt';
 
 const CONSTRUCTOR_NAME = 'UserService';
 
@@ -18,8 +19,38 @@ export class UserService extends BaseService<User, UsersArgs, UsersObject, UserA
     @InjectRepository(Role) private readonly roleRepository: Repository<Role>,
     @InjectRepository(Permission) private readonly permissionRepository: Repository<Permission>,
     @Inject(RoleService) private readonly roleService: RoleService,
+    private readonly jwtService: JwtService,
   ) {
     super(userRepository);
+  }
+
+  async getUserFlatPermissions(user: User | undefined): Promise<string[] | undefined> {
+    const nextUser = user;
+
+    if (!nextUser || !nextUser.roles) {
+      return undefined;
+    }
+
+    const roleIds = nextUser.roles.map(r => r.id);
+    nextUser.permissions = await this.roleService.rolePermissionsByRoleIds(roleIds);
+
+    if (!nextUser.permissions || (nextUser.permissions.length && nextUser.permissions.length === 0)) {
+      return undefined;
+    }
+
+    return [...new Set(nextUser.permissions.map(p => p.slug))];
+  }
+
+  async addPermissionsTouser(user: User | undefined): Promise<User | undefined> {
+    const nextUser = user;
+
+    if (!nextUser || !nextUser.roles) {
+      return nextUser;
+    }
+
+    nextUser.flatePermissions = await this.getUserFlatPermissions(user);
+
+    return nextUser;
   }
 
   async users(args: UsersArgs): Promise<UsersObject> {
@@ -45,22 +76,6 @@ export class UserService extends BaseService<User, UsersArgs, UsersObject, UserA
     };
   }
 
-  async addPermissionsTouser(user: User | undefined): Promise<User | undefined> {
-    const nextUser = user;
-
-    if (nextUser && nextUser.roles) {
-      const roleIds = nextUser.roles.map(r => r.id);
-
-      nextUser.permissions = await this.roleService.rolePermissionsByRoleIds(roleIds);
-
-      if (nextUser.permissions && nextUser.permissions.length && nextUser.permissions.length > 0) {
-        nextUser.flatePermissions = [...new Set(nextUser.permissions.map(p => p.slug))];
-      }
-    }
-
-    return nextUser;
-  }
-
   async user(id: number, args?: UserArgs & FindOneOptions<User>): Promise<User | undefined> {
     let nextArgs: FindOneOptions<User> = {};
 
@@ -74,13 +89,29 @@ export class UserService extends BaseService<User, UsersArgs, UsersObject, UserA
     return this.addPermissionsTouser(user);
   }
 
+  async userByToken(token: string, args?: UserArgs & FindOneOptions<User>): Promise<User | undefined> {
+    let nextArgs: FindOneOptions<User> = {};
+
+    if (args) {
+      nextArgs = args;
+      nextArgs.relations = ['roles'];
+    }
+
+    // @ts-ignore
+    const userDecode: { id: any } = this.jwtService.decode(token);
+
+    if (!userDecode || !userDecode.id) {
+      throw Error('Error Token');
+    }
+
+    return this.findOne(userDecode.id, nextArgs);
+  }
+
   async userByEmail(email: string): Promise<User | undefined> {
-    const user = await this.userRepository.findOne({
+    return this.userRepository.findOne({
       relations: ['roles'],
       where: { email },
     });
-
-    return this.addPermissionsTouser(user);
   }
 
   private async craetePassword(password: string): Promise<string> {

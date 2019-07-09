@@ -121,7 +121,6 @@ export class AuthService {
     }
 
     const userAuthInfo = await this.createToken(user);
-    await this.userService.addPermissionsTouser(user);
 
     user.authToken = userAuthInfo.authToken;
     user.authExpiresIn = userAuthInfo.authExpiresIn;

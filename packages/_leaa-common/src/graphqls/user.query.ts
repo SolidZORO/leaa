@@ -36,3 +36,19 @@ export const GET_USER = gql`
     }
   }
 `;
+
+export const GET_USER_BY_TOKEN = gql`
+  query($token: String!) {
+    userByToken(token: $token) {
+      id
+      name
+      flatePermissions
+    }
+  }
+`;
+
+export const GET_RAM = gql`
+  query {
+    ram
+  }
+`;

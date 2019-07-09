@@ -8,6 +8,7 @@ import enUS from 'antd/lib/locale-provider/en_US';
 
 import { apolloClient } from '@leaa/dashboard/libs';
 import { ErrorBoundary } from '@leaa/dashboard/components/ErrorBoundary';
+import { RefreshFlatePermissions } from '@leaa/dashboard/components/RefreshFlatePermissions';
 
 import { history } from './libs';
 import { masterRoute, authRoute, otherRoute } from './routes';
@@ -32,13 +33,15 @@ export const App = (): JSX.Element => {
         <ApolloProvider client={apolloClient}>
           <StoreProvider value={store}>
             <LocaleProvider locale={locale}>
-              <Router history={history}>
-                <Switch>
-                  {authRoute}
-                  {masterRoute}
-                  {otherRoute}
-                </Switch>
-              </Router>
+              <RefreshFlatePermissions>
+                <Router history={history}>
+                  <Switch>
+                    {authRoute}
+                    {masterRoute}
+                    {otherRoute}
+                  </Switch>
+                </Router>
+              </RefreshFlatePermissions>
             </LocaleProvider>
           </StoreProvider>
         </ApolloProvider>

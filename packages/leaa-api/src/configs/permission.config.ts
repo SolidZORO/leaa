@@ -3,6 +3,10 @@ import { envConfig } from '../modules/config/config.module';
 
 const checkPermission = (permissionSlug: string) => {
   return rule()(async (parent, args, ctx) => ctx.user.flatePermissions.includes(permissionSlug));
+  // return rule()(async (parent, args, ctx) => {
+  //   console.log(ctx.user);
+  //   return ctx.user.flatePermissions.includes(permissionSlug);
+  // });
 };
 
 // permissions names e.g.
