@@ -7,6 +7,7 @@ export const LOGIN = gql`
       id
       authToken
       authExpiresIn
+      flatePermissions
     }
   }
 `;

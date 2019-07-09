@@ -6,6 +6,7 @@ import { IPage } from '@leaa/dashboard/interfaces';
 export interface IRouteItem extends RouteProps {
   name: string;
   path: string;
+  permission: string;
   //
   namei18n?: string;
   icon?: string;

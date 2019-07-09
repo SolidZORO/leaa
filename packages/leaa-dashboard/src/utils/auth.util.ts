@@ -1,8 +1,13 @@
 import { AUTH_TOKEN_NAME, AUTH_EXPIRES_IN_NAME, AUTH_INFO } from '@leaa/dashboard/constants';
+import { IAuthInfo } from '@leaa/dashboard/interfaces';
 
-interface IAuthInfo {
-  name: string;
-}
+const setAuthToken = (token: string, expiresIn: number) => {
+  // sync API tims format
+  const expiresInTime = `${Math.floor(Date.now() / 1000) + expiresIn}`;
+
+  localStorage.setItem(AUTH_TOKEN_NAME, token);
+  localStorage.setItem(AUTH_EXPIRES_IN_NAME, expiresInTime);
+};
 
 const getAuthToken = (options = { onlyToken: false }) => {
   if (!process.browser) {
@@ -18,13 +23,8 @@ const getAuthToken = (options = { onlyToken: false }) => {
   return authToken;
 };
 
-const setAuthToken = (token: string, expiresIn: number) => {
-  // sync API tims format
-  const expiresInTime = `${Math.floor(Date.now() / 1000) + expiresIn}`;
-
-  localStorage.setItem(AUTH_TOKEN_NAME, token);
-  localStorage.setItem(AUTH_EXPIRES_IN_NAME, expiresInTime);
-};
+//
+//
 
 const setAuthInfo = (info: IAuthInfo) => {
   localStorage.setItem(AUTH_INFO, JSON.stringify(info));
@@ -39,8 +39,12 @@ const getAuthInfo = (): IAuthInfo => {
 
   return {
     name: '',
+    flatePermissions: [],
   };
 };
+
+//
+//
 
 const removeAuthToken = (): boolean => {
   if (!getAuthToken) {
@@ -51,17 +55,38 @@ const removeAuthToken = (): boolean => {
 
   localStorage.removeItem(AUTH_TOKEN_NAME);
   localStorage.removeItem(AUTH_EXPIRES_IN_NAME);
+
+  return true;
+};
+
+const removeAuthInfo = (): boolean => {
+  if (!getAuthInfo().name) {
+    console.log('Not found auth info.');
+
+    return false;
+  }
+
   localStorage.removeItem(AUTH_INFO);
 
   return true;
 };
+
+const removeAuth = (): boolean => {
+  const removedAuthToken = removeAuthToken();
+  const removedAuthInfo = removeAuthInfo();
+
+  return removedAuthToken && removedAuthInfo;
+};
+
+//
+//
 
 const checkAuthIsAvailably = (): boolean => {
   const authExpiresIn = localStorage.getItem(AUTH_EXPIRES_IN_NAME);
   const authToken = getAuthToken();
 
   if (!authToken || !authToken || !authExpiresIn || Math.floor(Date.now() / 1000) >= Number(authExpiresIn)) {
-    removeAuthToken();
+    removeAuth();
 
     return false;
   }
@@ -75,5 +100,7 @@ export const authUtil = {
   getAuthInfo,
   getAuthToken,
   removeAuthToken,
+  removeAuthInfo,
+  removeAuth,
   checkAuthIsAvailably,
 };

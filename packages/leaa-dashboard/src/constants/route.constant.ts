@@ -1,0 +1,1 @@
+export const ALLOW_PERMISSION = '__ALLOW_PERMISSION__';

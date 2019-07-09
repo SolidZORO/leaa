@@ -15,7 +15,7 @@ export const UserMenu = (props: IProps): JSX.Element => {
   const { t } = useTranslation();
 
   const onLogout = (): void => {
-    if (authUtil.removeAuthToken()) {
+    if (authUtil.removeAuth()) {
       return props.history.push(LOGOUT_REDIRECT_URL);
     }
 

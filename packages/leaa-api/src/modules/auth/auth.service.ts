@@ -34,8 +34,6 @@ export class AuthService {
     const jwtPayload: IJwtPayload = { id: user.id };
 
     // https://github.com/auth0/node-jsonwebtoken#jwtsignpayload-secretorprivatekey-options-callback
-    // const authExpiresIn = `${this.configService.SERVER_COOKIE_EXPIRES_DAY}d`;
-
     const authExpiresIn = this.configService.SERVER_COOKIE_EXPIRES_DAY * (60 * 60 * 24);
     const authToken = await this.jwtService.sign(jwtPayload, { expiresIn: authExpiresIn });
 
@@ -95,6 +93,8 @@ export class AuthService {
       where: {
         email: args.email,
       },
+      // for flatePermissions
+      relations: ['roles'],
     });
 
     if (!user) {
@@ -121,8 +121,7 @@ export class AuthService {
     }
 
     const userAuthInfo = await this.createToken(user);
-
-    console.log(userAuthInfo);
+    await this.userService.addPermissionsTouser(user);
 
     user.authToken = userAuthInfo.authToken;
     user.authExpiresIn = userAuthInfo.authExpiresIn;

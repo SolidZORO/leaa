@@ -2,6 +2,7 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 
 import { IRouteItem, IPage } from '@leaa/dashboard/interfaces';
+import { ALLOW_PERMISSION } from '@leaa/dashboard/constants';
 import { SuspenseFallback } from '@leaa/dashboard/components/SuspenseFallback';
 import { DefaultLayout } from '@leaa/dashboard/components/DefaultLayout';
 
@@ -9,6 +10,7 @@ const otherRoutes: IRouteItem[] = [
   {
     name: '*',
     path: '/*',
+    permission: ALLOW_PERMISSION,
     LazyComponent: React.lazy(() => import(/* webpackChunkName: 'NotFound' */ '../pages/NotFound/NotFound/NotFound')),
     canCreate: true,
     exact: true,

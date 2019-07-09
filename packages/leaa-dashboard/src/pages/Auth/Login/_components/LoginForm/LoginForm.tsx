@@ -9,6 +9,9 @@ import { User } from '@leaa/common/entrys';
 import { AuthLoginInput } from '@leaa/common/dtos/auth';
 import { LOGIN } from '@leaa/common/graphqls';
 import { authUtil } from '@leaa/dashboard/utils';
+import { useStore } from '@leaa/dashboard/stores';
+import { ErrorCard } from '@leaa/dashboard/components/ErrorCard';
+
 import style from './style.less';
 
 interface IProps extends FormComponentProps {
@@ -20,28 +23,27 @@ const LoginFormInner = (props: IProps) => {
   const { t } = useTranslation();
   const { className, form } = props;
   const { getFieldDecorator } = form;
+  const store = useStore();
 
-  const [submitLoginMutate, { loading }] = useMutation<{ login: Pick<User, 'authToken' | 'authExpiresIn' | 'name'> }>(
-    LOGIN,
-    {
-      onError(e) {
-        message.error(e.message);
-      },
-      onCompleted({ login }) {
-        if (login && login.name) {
-          authUtil.setAuthInfo({ name: login.name });
+  const [submitLoginMutate, submitLoginMutation] = useMutation<{
+    login: Pick<User, 'authToken' | 'authExpiresIn' | 'name' | 'flatePermissions'>;
+  }>(LOGIN, {
+    onCompleted({ login }) {
+      if (login && login.name && login.flatePermissions) {
+        const authInfo = { name: login.name, flatePermissions: login.flatePermissions };
+
+        authUtil.setAuthInfo(authInfo);
+      }
+
+      if (login && login.authToken && login.authExpiresIn) {
+        authUtil.setAuthToken(login.authToken, login.authExpiresIn);
+
+        if (props.onLoginedCallback) {
+          props.onLoginedCallback();
         }
-
-        if (login && login.authToken && login.authExpiresIn) {
-          authUtil.setAuthToken(login.authToken, login.authExpiresIn);
-
-          if (props.onLoginedCallback) {
-            props.onLoginedCallback();
-          }
-        }
-      },
+      }
     },
-  );
+  });
 
   const onSubmit = async () => {
     form.validateFieldsAndScroll(async (err: any, formData: AuthLoginInput) => {
@@ -64,12 +66,12 @@ const LoginFormInner = (props: IProps) => {
 
   const onBack = async () => {
     message.info(t('_page:Auth.Login.backTips'));
-
-    // authUtil.removeAuthToken();
   };
 
   return (
     <div className={cx(style['wrapper'], className)}>
+      {submitLoginMutation.error ? <ErrorCard message={submitLoginMutation.error.message} /> : null}
+
       <Form>
         <Row gutter={16} className={style['form-row']}>
           <Col xs={24} sm={12}>
@@ -107,7 +109,7 @@ const LoginFormInner = (props: IProps) => {
         <Row className={style['button-row']}>
           <Button
             className={style['button-login']}
-            loading={loading}
+            loading={submitLoginMutation.loading}
             size="large"
             type="primary"
             htmlType="submit"
