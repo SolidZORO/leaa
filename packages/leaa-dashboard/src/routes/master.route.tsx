@@ -14,24 +14,23 @@ export const masterRoutes: IRouteItem[] = [
     icon: 'folder',
     children: [
       {
-        name: 'Create Show',
-        namei18n: '_route:folder.createShow',
-        path: '/show/create',
+        name: 'Show Store',
+        namei18n: '_route:folder.showStore',
+        path: '/show-store',
+        icon: 'deployment-unit',
         LazyComponent: React.lazy(() =>
-          import(/* webpackChunkName: 'CreateShow' */ '../pages/Playground/ShowShow/ShowShow'),
+          import(/* webpackChunkName: 'ShowStore' */ '../pages/Playground/ShowStore/ShowStore'),
         ),
-        isCreate: true,
         exact: true,
       },
       {
-        name: 'Show',
-        namei18n: '_route:folder.show',
-        path: '/show',
-        icon: 'setting',
+        name: 'Test Apollo',
+        namei18n: '_route:folder.testApollo',
+        path: '/test-apollo',
+        icon: 'experiment',
         LazyComponent: React.lazy(() =>
-          import(/* webpackChunkName: 'Shows' */ '../pages/Playground/ShowShow/ShowShow'),
+          import(/* webpackChunkName: 'TestApollo' */ '../pages/Playground/TestApollo/TestApollo'),
         ),
-        canCreate: true,
         exact: true,
       },
     ],
@@ -140,7 +139,7 @@ export const masterRoutes: IRouteItem[] = [
     name: 'HOME',
     namei18n: '_route:home',
     path: '/',
-    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'Home' */ '../pages/Playground/ShowShow/ShowShow')),
+    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'Home' */ '../pages/Playground/ShowStore/ShowStore')),
     exact: true,
   },
 ];

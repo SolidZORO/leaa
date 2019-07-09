@@ -7,8 +7,8 @@ export default {
   //
   folder: {
     title: '文件夹',
-    createShow: '新建展示',
-    show: '展示',
+    showStore: '展示 Store',
+    testApollo: '测试 Apollo',
   },
   //
   user: '用户',

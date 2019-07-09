@@ -7,8 +7,8 @@ export default {
   //
   folder: {
     title: 'Folder',
-    createShow: 'create Show',
-    show: 'Show',
+    showStore: 'Show Store',
+    testApollo: 'Test Apollo',
   },
   //
   user: 'User',

@@ -24,6 +24,7 @@ export class ErrorBoundary extends React.Component<IProps, IState> {
   }
 
   componentDidCatch(error: Error, info: {}) {
+    console.log(error, info);
     this.setState({ errorInfo: info });
   }
 
