@@ -21,7 +21,7 @@ import { AuthService } from './auth.service';
     JwtModule.registerAsync({
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => ({
-        secretOrPrivateKey: configService.JWT_SECRET_KEY,
+        privateKey: configService.JWT_SECRET_KEY,
       }),
     }),
   ],

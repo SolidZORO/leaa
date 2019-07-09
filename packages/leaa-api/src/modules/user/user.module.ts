@@ -13,14 +13,14 @@ import { ConfigService } from '@leaa/api/modules/config/config.service';
 @Module({
   imports: [
     TypeOrmModule.forFeature([User, Role, Permission]),
-    RoleModule,
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.registerAsync({
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => ({
-        secretOrPrivateKey: configService.JWT_SECRET_KEY,
+        privateKey: configService.JWT_SECRET_KEY,
       }),
     }),
+    RoleModule,
   ],
   providers: [UserResolver, UserService],
   exports: [UserService],
