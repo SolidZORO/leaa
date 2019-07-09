@@ -50,10 +50,6 @@ export default (props: IPage) => {
     variables: getPermissionsVariables,
   });
 
-  if (getPermissionsQuery.error) {
-    return <ErrorCard message={getPermissionsQuery.error.message} />;
-  }
-
   useEffect(() => {
     if (_.isEmpty(urlParams)) {
       resetUrlParams();
@@ -64,13 +60,8 @@ export default (props: IPage) => {
     (async () => getPermissionsQuery.refetch())();
   }, [props.history.location.key]);
 
-  const [deletePermissionMutate, { loading: deleteItemLoading }] = useMutation<Permission>(DELETE_PERMISSION, {
-    onError(e) {
-      message.error(e.message);
-    },
-    onCompleted() {
-      message.success(t('_lang:deletedSuccessfully'));
-    },
+  const [deletePermissionMutate, deletePermissionMutation] = useMutation<Permission>(DELETE_PERMISSION, {
+    onCompleted: () => message.success(t('_lang:deletedSuccessfully')),
     refetchQueries: () => [{ query: GET_PERMISSIONS, variables: getPermissionsVariables }],
   });
 
@@ -116,7 +107,7 @@ export default (props: IPage) => {
       render: (text: string, record: Permission) => (
         <TableColumnDeleteButton
           id={record.id}
-          loading={deleteItemLoading}
+          loading={deletePermissionMutation.loading}
           onClick={async () => deletePermissionMutate({ variables: { id: Number(record.id) } })}
         />
       ),
@@ -147,6 +138,9 @@ export default (props: IPage) => {
       className={style['page-wapper']}
       loading={getPermissionsQuery.loading}
     >
+      {getPermissionsQuery.error ? <ErrorCard message={getPermissionsQuery.error.message} /> : null}
+      {deletePermissionMutation.error ? <ErrorCard message={deletePermissionMutation.error.message} /> : null}
+
       {getPermissionsQuery.data && getPermissionsQuery.data.permissions && getPermissionsQuery.data.permissions.items && (
         <TableCard selectedRowKeys={selectedRowKeys}>
           <Table

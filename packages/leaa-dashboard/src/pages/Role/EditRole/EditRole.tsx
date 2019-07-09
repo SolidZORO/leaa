@@ -21,7 +21,6 @@ import style from './style.less';
 
 export default (props: IPage) => {
   const { t } = useTranslation();
-
   const { id } = props.match.params as { id: string };
 
   let roleInfoFormRef: any;
@@ -32,32 +31,19 @@ export default (props: IPage) => {
     variables: getRoleVariables,
   });
 
-  if (getRoleQuery.error) {
-    return <ErrorCard message={getRoleQuery.error.message} />;
-  }
-
   const getPermissionsVariables = { pageSize: 9999 };
   const getPermissionsQuery = useQuery<{ permissions: PermissionsObject }, PermissionsArgs>(GET_PERMISSIONS, {
     variables: getPermissionsVariables,
   });
-
-  if (getPermissionsQuery.error) {
-    return <ErrorCard message={getPermissionsQuery.error.message} />;
-  }
 
   const [submitVariables, setSubmitVariables] = useState<{ id: number; role: UpdateRoleInput }>({
     id: Number(id),
     role: {},
   });
 
-  const [updateRoleMutate, { loading: submitLoading }] = useMutation<Role>(UPDATE_ROLE, {
+  const [updateRoleMutate, updateRoleMutation] = useMutation<Role>(UPDATE_ROLE, {
     variables: submitVariables,
-    onError(e) {
-      message.error(e.message);
-    },
-    onCompleted() {
-      message.success(t('_lang:updatedSuccessfully'));
-    },
+    onCompleted: () => message.success(t('_lang:deletedSuccessfully')),
     refetchQueries: () => [{ query: GET_ROLE, variables: getRoleVariables }],
   });
 
@@ -107,6 +93,10 @@ export default (props: IPage) => {
 
   return (
     <PageCard title={t(`${props.route.namei18n}`)} className={style['page-wapper']} loading={false}>
+      {getRoleQuery.error ? <ErrorCard message={getRoleQuery.error.message} /> : null}
+      {getPermissionsQuery.error ? <ErrorCard message={getPermissionsQuery.error.message} /> : null}
+      {updateRoleMutation.error ? <ErrorCard message={updateRoleMutation.error.message} /> : null}
+
       <RoleInfoForm
         item={getRoleQuery.data && getRoleQuery.data.role}
         loading={getRoleQuery.loading}
@@ -132,7 +122,7 @@ export default (props: IPage) => {
           size="large"
           icon={UPDATE_BUTTON_ICON}
           className="submit-button"
-          loading={submitLoading}
+          loading={updateRoleMutation.loading}
           onClick={onSubmit}
         >
           {t('_lang:update')}

@@ -6,11 +6,12 @@ import { useMutation } from '@apollo/react-hooks';
 import { Permission } from '@leaa/common/entrys';
 import { UpdatePermissionInput } from '@leaa/common/dtos/permission';
 import { IPage } from '@leaa/dashboard/interfaces';
-import { PageCard } from '@leaa/dashboard/components/PageCard';
-import { SubmitBar } from '@leaa/dashboard/components/SubmitBar/SubmitBar';
 import { PermissionInfoForm } from '@leaa/dashboard/pages/Permission/_components/PermissionInfoForm/PermissionInfoForm';
 import { CREATE_PERMISSION } from '@leaa/common/graphqls/permission.mutation';
 import { CREATE_BUTTON_ICON } from '@leaa/dashboard/constants';
+import { PageCard } from '@leaa/dashboard/components/PageCard';
+import { SubmitBar } from '@leaa/dashboard/components/SubmitBar/SubmitBar';
+import { ErrorCard } from '@leaa/dashboard/components/ErrorCard';
 
 import style from './style.less';
 
@@ -23,7 +24,7 @@ export default (props: IPage) => {
     permission: {},
   });
 
-  const [createPermissionMutate, { loading: submitLoading }] = useMutation<{ createPermission: Permission }>(
+  const [createPermissionMutate, createPermissionMutation] = useMutation<{ createPermission: Permission }>(
     CREATE_PERMISSION,
     {
       variables: submitVariables,
@@ -66,6 +67,8 @@ export default (props: IPage) => {
 
   return (
     <PageCard title={t(`${props.route.namei18n}`)} className={style['page-wapper']} loading={false}>
+      {createPermissionMutation.error ? <ErrorCard message={createPermissionMutation.error.message} /> : null}
+
       <PermissionInfoForm
         wrappedComponentRef={(inst: unknown) => {
           permissionInfoFormRef = inst;
@@ -78,7 +81,7 @@ export default (props: IPage) => {
           size="large"
           icon={CREATE_BUTTON_ICON}
           className="submit-button"
-          loading={submitLoading}
+          loading={createPermissionMutation.loading}
           onClick={onSubmit}
         >
           {t('_lang:create')}

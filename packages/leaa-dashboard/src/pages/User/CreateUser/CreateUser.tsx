@@ -7,9 +7,11 @@ import { User } from '@leaa/common/entrys';
 import { UpdateUserInput } from '@leaa/common/dtos/user';
 import { CREATE_BUTTON_ICON } from '@leaa/dashboard/constants';
 import { IPage } from '@leaa/dashboard/interfaces';
+import { CREATE_USER } from '@leaa/common/graphqls/user.mutation';
 import { PageCard } from '@leaa/dashboard/components/PageCard';
 import { SubmitBar } from '@leaa/dashboard/components/SubmitBar/SubmitBar';
-import { CREATE_USER } from '@leaa/common/graphqls/user.mutation';
+import { ErrorCard } from '@leaa/dashboard/components/ErrorCard';
+
 import { UserInfoForm } from '../_components/UserInfoForm/UserInfoForm';
 
 import style from './style.less';
@@ -23,11 +25,8 @@ export default (props: IPage) => {
     user: {},
   });
 
-  const [createUserMutate, { loading: submitLoading }] = useMutation<{ createUser: User }>(CREATE_USER, {
+  const [createUserMutate, createUserMutation] = useMutation<{ createUser: User }>(CREATE_USER, {
     variables: submitVariables,
-    onError(e) {
-      message.error(e.message);
-    },
     onCompleted({ createUser }) {
       message.success(t('_lang:createdSuccessfully'));
       props.history.push(`/users/${createUser.id}`);
@@ -63,6 +62,8 @@ export default (props: IPage) => {
 
   return (
     <PageCard title={t(`${props.route.namei18n}`)} className={style['page-wapper']} loading={false}>
+      {createUserMutation.error ? <ErrorCard message={createUserMutation.error.message} /> : null}
+
       <UserInfoForm
         wrappedComponentRef={(inst: unknown) => {
           userInfoFormRef = inst;
@@ -75,7 +76,7 @@ export default (props: IPage) => {
           size="large"
           icon={CREATE_BUTTON_ICON}
           className="submit-button"
-          loading={submitLoading}
+          loading={createUserMutation.loading}
           onClick={onSubmit}
         >
           {t('_lang:create')}

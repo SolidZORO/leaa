@@ -6,11 +6,12 @@ import { useMutation } from '@apollo/react-hooks';
 import { Role } from '@leaa/common/entrys';
 import { UpdateRoleInput } from '@leaa/common/dtos/role';
 import { IPage } from '@leaa/dashboard/interfaces';
-import { PageCard } from '@leaa/dashboard/components/PageCard';
-import { SubmitBar } from '@leaa/dashboard/components/SubmitBar/SubmitBar';
 import { RoleInfoForm } from '@leaa/dashboard/pages/Role/_components/RoleInfoForm/RoleInfoForm';
 import { CREATE_ROLE } from '@leaa/common/graphqls';
 import { CREATE_BUTTON_ICON } from '@leaa/dashboard/constants';
+import { PageCard } from '@leaa/dashboard/components/PageCard';
+import { SubmitBar } from '@leaa/dashboard/components/SubmitBar/SubmitBar';
+import { ErrorCard } from '@leaa/dashboard/components/ErrorCard';
 
 import style from './style.less';
 
@@ -23,14 +24,11 @@ export default (props: IPage) => {
     role: {},
   });
 
-  const [createRoleMutate, { loading: submitLoading }] = useMutation<{ createRole: Role }>(CREATE_ROLE, {
+  const [createRoleMutate, createRoleMutation] = useMutation<{ createRole: Role }>(CREATE_ROLE, {
     variables: submitVariables,
-    onError(e) {
-      message.error(e.message);
-    },
     onCompleted({ createRole }) {
       message.success(t('_lang:createdSuccessfully'));
-      props.history.push(`/roles/${createRole.id}`);
+      props.history.push(`/users/${createRole.id}`);
     },
   });
 
@@ -63,6 +61,8 @@ export default (props: IPage) => {
 
   return (
     <PageCard title={t(`${props.route.namei18n}`)} className={style['page-wapper']} loading={false}>
+      {createRoleMutation.error ? <ErrorCard message={createRoleMutation.error.message} /> : null}
+
       <RoleInfoForm
         wrappedComponentRef={(inst: unknown) => {
           roleInfoFormRef = inst;
@@ -75,7 +75,7 @@ export default (props: IPage) => {
           size="large"
           icon={CREATE_BUTTON_ICON}
           className="submit-button"
-          loading={submitLoading}
+          loading={createRoleMutation.loading}
           onClick={onSubmit}
         >
           {t('_lang:create')}

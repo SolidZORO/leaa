@@ -50,10 +50,6 @@ export default (props: IPage) => {
     variables: getRolesVariables,
   });
 
-  if (getRolesQuery.error) {
-    return <ErrorCard message={getRolesQuery.error.message} />;
-  }
-
   useEffect(() => {
     if (_.isEmpty(urlParams)) {
       resetUrlParams();
@@ -64,13 +60,8 @@ export default (props: IPage) => {
     (async () => getRolesQuery.refetch())();
   }, [props.history.location.key]);
 
-  const [deleteRoleMutate, { loading: deleteItemLoading }] = useMutation<Role>(DELETE_ROLE, {
-    onError(e) {
-      message.error(e.message);
-    },
-    onCompleted() {
-      message.success(t('_lang:deletedSuccessfully'));
-    },
+  const [deleteRoleMutate, deleteRoleMutation] = useMutation<Role>(DELETE_ROLE, {
+    onCompleted: () => message.success(t('_lang:deletedSuccessfully')),
     refetchQueries: () => [{ query: GET_ROLES, variables: getRolesVariables }],
   });
 
@@ -116,7 +107,7 @@ export default (props: IPage) => {
       render: (text: string, record: Role) => (
         <TableColumnDeleteButton
           id={record.id}
-          loading={deleteItemLoading}
+          loading={deleteRoleMutation.loading}
           onClick={async () => deleteRoleMutate({ variables: { id: Number(record.id) } })}
         />
       ),
@@ -147,6 +138,9 @@ export default (props: IPage) => {
       className={style['page-wapper']}
       loading={getRolesQuery.loading}
     >
+      {getRolesQuery.error ? <ErrorCard message={getRolesQuery.error.message} /> : null}
+      {deleteRoleMutation.error ? <ErrorCard message={deleteRoleMutation.error.message} /> : null}
+
       {getRolesQuery.data && getRolesQuery.data.roles && getRolesQuery.data.roles.items && (
         <TableCard selectedRowKeys={selectedRowKeys}>
           <Table

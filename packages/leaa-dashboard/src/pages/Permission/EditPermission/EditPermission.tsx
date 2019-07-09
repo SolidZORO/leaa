@@ -21,31 +21,21 @@ export default (props: IPage) => {
   const { t } = useTranslation();
 
   const { id } = props.match.params as { id: string };
-
   let permissionInfoFormRef: any;
-
-  const getPermissionVariables = { id: Number(id) };
-  const getPermissionQuery = useQuery<{ permission: Permission }, PermissionArgs>(GET_PERMISSION, {
-    variables: getPermissionVariables,
-  });
-
-  if (getPermissionQuery.error) {
-    return <ErrorCard message={getPermissionQuery.error.message} />;
-  }
 
   const [submitVariables, setSubmitVariables] = useState<{ id: number; permission: UpdatePermissionInput }>({
     id: Number(id),
     permission: {},
   });
 
-  const [updatePermissionMutate, { loading: submitLoading }] = useMutation<Permission>(UPDATE_PERMISSION, {
+  const getPermissionVariables = { id: Number(id) };
+  const getPermissionQuery = useQuery<{ permission: Permission }, PermissionArgs>(GET_PERMISSION, {
+    variables: getPermissionVariables,
+  });
+
+  const [updatePermissionMutate, updatePermissionMutation] = useMutation<Permission>(UPDATE_PERMISSION, {
     variables: submitVariables,
-    onError(e) {
-      message.error(e.message);
-    },
-    onCompleted() {
-      message.success(t('_lang:updatedSuccessfully'));
-    },
+    onCompleted: () => message.success(t('_lang:deletedSuccessfully')),
     refetchQueries: () => [{ query: GET_PERMISSION, variables: getPermissionVariables }],
   });
 
@@ -76,6 +66,9 @@ export default (props: IPage) => {
 
   return (
     <PageCard title={t(`${props.route.namei18n}`)} className={style['page-wapper']} loading={false}>
+      {getPermissionQuery.error ? <ErrorCard message={getPermissionQuery.error.message} /> : null}
+      {updatePermissionMutation.error ? <ErrorCard message={updatePermissionMutation.error.message} /> : null}
+
       <PermissionInfoForm
         item={getPermissionQuery.data && getPermissionQuery.data.permission}
         loading={getPermissionQuery.loading}
@@ -90,7 +83,7 @@ export default (props: IPage) => {
           size="large"
           icon={UPDATE_BUTTON_ICON}
           className="submit-button"
-          loading={submitLoading}
+          loading={updatePermissionMutation.loading}
           onClick={onSubmit}
         >
           {t('_lang:update')}

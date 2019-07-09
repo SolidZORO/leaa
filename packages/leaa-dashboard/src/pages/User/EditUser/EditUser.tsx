@@ -9,10 +9,11 @@ import { RolesObject, RolesArgs } from '@leaa/common/dtos/role';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/constants';
 import { UserArgs, UpdateUserInput } from '@leaa/common/dtos/user';
 import { IPage } from '@leaa/dashboard/interfaces';
+import { UPDATE_USER } from '@leaa/common/graphqls/user.mutation';
 import { PageCard } from '@leaa/dashboard/components/PageCard';
 import { ErrorCard } from '@leaa/dashboard/components/ErrorCard';
 import { SubmitBar } from '@leaa/dashboard/components/SubmitBar/SubmitBar';
-import { UPDATE_USER } from '@leaa/common/graphqls/user.mutation';
+
 import { UserInfoForm } from '../_components/UserInfoForm/UserInfoForm';
 import { UserRolesForm } from '../_components/UserRolesForm/UserRolesForm';
 
@@ -30,32 +31,19 @@ export default (props: IPage) => {
     variables: getUserVariables,
   });
 
-  if (getUserQuery.error) {
-    return <ErrorCard message={getUserQuery.error.message} />;
-  }
-
   const getRolesVariables = { pageSize: 9999 };
   const getRolesQuery = useQuery<{ roles: RolesObject }, RolesArgs>(GET_ROLES, {
     variables: getRolesVariables,
   });
-
-  if (getRolesQuery.error) {
-    return <ErrorCard message={getRolesQuery.error.message} />;
-  }
 
   const [submitVariables, setSubmitVariables] = useState<{ id: number; user: UpdateUserInput }>({
     id: Number(id),
     user: {},
   });
 
-  const [updateUserMutate, { loading: submitLoading }] = useMutation<User>(UPDATE_USER, {
+  const [updateUserMutate, updateUserMutation] = useMutation<User>(UPDATE_USER, {
     variables: submitVariables,
-    onError(e) {
-      message.error(e.message);
-    },
-    onCompleted() {
-      message.success(t('_lang:updatedSuccessfully'));
-    },
+    onCompleted: () => message.success(t('_lang:deletedSuccessfully')),
     refetchQueries: () => [{ query: GET_USER, variables: getUserVariables }],
   });
 
@@ -105,6 +93,10 @@ export default (props: IPage) => {
 
   return (
     <PageCard title={t(`${props.route.namei18n}`)} className={style['page-wapper']} loading={false}>
+      {getUserQuery.error ? <ErrorCard message={getUserQuery.error.message} /> : null}
+      {getRolesQuery.error ? <ErrorCard message={getRolesQuery.error.message} /> : null}
+      {updateUserMutation.error ? <ErrorCard message={updateUserMutation.error.message} /> : null}
+
       <UserInfoForm
         item={getUserQuery.data && getUserQuery.data.user}
         loading={getUserQuery.loading}
@@ -128,7 +120,7 @@ export default (props: IPage) => {
           size="large"
           icon={UPDATE_BUTTON_ICON}
           className="submit-button"
-          loading={submitLoading}
+          loading={updateUserMutation.loading}
           onClick={onSubmit}
         >
           {t('_lang:update')}

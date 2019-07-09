@@ -50,10 +50,6 @@ export default (props: IPage) => {
     variables: getUsersVariables,
   });
 
-  if (getUsersQuery.error) {
-    return <ErrorCard message={getUsersQuery.error.message} />;
-  }
-
   useEffect(() => {
     if (_.isEmpty(urlParams)) {
       resetUrlParams();
@@ -64,21 +60,14 @@ export default (props: IPage) => {
     (async () => getUsersQuery.refetch())();
   }, [props.history.location.key]);
 
-  const [deleteUserMutate, { loading: deleteItemLoading }] = useMutation<User>(DELETE_USER, {
-    onError(e) {
-      message.error(e.message);
-    },
-    onCompleted() {
-      message.success(t('_lang:deletedSuccessfully'));
-    },
+  const [getUsersMutate, getUsersMutation] = useMutation<User>(DELETE_USER, {
+    onCompleted: () => message.success(t('_lang:deletedSuccessfully')),
     refetchQueries: () => [{ query: GET_USERS, variables: getUsersVariables }],
   });
 
   const rowSelection = {
     columnWidth: 30,
-    onChange: (keys: number[] | string[]) => {
-      setSelectedRowKeys(keys);
-    },
+    onChange: (keys: number[] | string[]) => setSelectedRowKeys(keys),
     selectedRowKeys,
   };
 
@@ -117,8 +106,8 @@ export default (props: IPage) => {
       render: (text: string, record: User) => (
         <TableColumnDeleteButton
           id={record.id}
-          loading={deleteItemLoading}
-          onClick={async () => deleteUserMutate({ variables: { id: Number(record.id) } })}
+          loading={getUsersMutation.loading}
+          onClick={async () => getUsersMutate({ variables: { id: Number(record.id) } })}
         />
       ),
     },
@@ -148,6 +137,9 @@ export default (props: IPage) => {
       className={style['page-wapper']}
       loading={getUsersQuery.loading}
     >
+      {getUsersQuery.error ? <ErrorCard message={getUsersQuery.error.message} /> : null}
+      {getUsersMutation.error ? <ErrorCard message={getUsersMutation.error.message} /> : null}
+
       {getUsersQuery.data && getUsersQuery.data.users && getUsersQuery.data.users.items && (
         <TableCard
           selectedRowKeys={selectedRowKeys}

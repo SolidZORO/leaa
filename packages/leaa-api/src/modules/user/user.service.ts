@@ -32,7 +32,8 @@ export class UserService extends BaseService<User, UsersArgs, UsersObject, UserA
     }
 
     nextArgs.where = whereQuery;
-    nextArgs.relations = ['roles'];
+    // nextArgs.relations = ['roles'];
+    nextArgs.relations = [];
 
     const [items, total] = await this.userRepository.findAndCount(nextArgs);
 
@@ -104,7 +105,7 @@ export class UserService extends BaseService<User, UsersArgs, UsersObject, UserA
     let roleObjects;
 
     if (args.roleIds) {
-      roleObjects = await this.roleRepository.findByIds(args.roleIds);1
+      roleObjects = await this.roleRepository.findByIds(args.roleIds);
     }
 
     if (args.roleSlugs) {

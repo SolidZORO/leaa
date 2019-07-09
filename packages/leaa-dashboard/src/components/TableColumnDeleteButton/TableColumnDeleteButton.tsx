@@ -1,5 +1,5 @@
 import React from 'react';
-import { Popconfirm, Button } from 'antd';
+import { Popconfirm, Button, Icon } from 'antd';
 import { useTranslation } from 'react-i18next';
 import cx from 'classnames';
 
@@ -20,6 +20,7 @@ export const TableColumnDeleteButton = (props: IProps) => {
   return (
     <div className={cx(style['wrapper'], props.className)}>
       <Popconfirm
+        icon={<Icon type={props.loading ? 'loading' : 'question-circle'} style={{ color: '#ff003d' }} />}
         title={
           <span>
             {t('_comp:TableColumnDeleteButton.confirmDeleteItem')} #{props.id} ?
@@ -28,7 +29,7 @@ export const TableColumnDeleteButton = (props: IProps) => {
         placement="topRight"
         onConfirm={props.onClick}
       >
-        <Button icon="delete" size="small" loading={props.loading} />
+        <Button icon="delete" size="small" />
       </Popconfirm>
     </div>
   );

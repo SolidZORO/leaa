@@ -6,6 +6,17 @@
 }
 
 .container {
-  background: transparent;
-  padding: 5px 0;
+  background-image: linear-gradient(30deg, darken(@error-color, 1%), lighten(@error-color, 3%));
+  padding: 25px 30px;
+
+  i,
+  svg {
+    color: #fff;
+  }
+
+  :global {
+    .ant-notification-notice-message {
+      color: #fff;
+    }
+  }
 }
