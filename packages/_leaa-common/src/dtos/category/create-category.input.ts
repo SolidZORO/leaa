@@ -3,12 +3,12 @@ import { Field, InputType, Int } from 'type-graphql';
 
 @InputType()
 export class CreateCategoryInput {
-  @Field(() => String)
   @IsNotEmpty()
+  @Field(() => String)
   name!: string;
 
-  @Field(() => String)
   @IsNotEmpty()
+  @Field(() => String)
   slug!: string;
 
   @Field(() => Int, { nullable: true })

@@ -1,29 +1,39 @@
 import _lang from './_lang.lang';
 
+const home = 'Home';
+const playground = 'Playground';
+const user = 'User';
+const role = 'Role';
+const permission = 'Permission';
+const category = 'Category';
+const article = 'Article';
+
 export default {
-  home: 'Home',
+  home,
   login: _lang.login,
   regist: _lang.register,
   //
-  playground: 'Playground',
-  playgroundChildren: {
-    showStore: 'Show Store',
-    testApollo: 'Test Apollo',
-  },
+  playground,
+  showStore: 'Show Store',
+  testApollo: 'Test Apollo',
   //
-  user: 'User',
-  createUser: 'Create User',
-  editUser: 'Edit User',
+  user,
+  createUser: `${_lang.create} ${user}`,
+  editUser: `${_lang.edit} ${user}`,
   //
-  role: 'Role',
-  createRole: 'Create Role',
-  editRole: 'Edit Role',
+  role,
+  createRole: `${_lang.create} ${role}`,
+  editRole: `${_lang.edit} ${role}`,
   //
-  permission: 'Permission',
-  createPermission: 'Create Permission',
-  editPermission: 'Edit Permission',
+  permission,
+  createPermission: `${_lang.create} ${permission}`,
+  editPermission: `${_lang.edit} ${permission}`,
   //
-  category: 'Category',
-  createCategory: 'Create Category',
-  editCategory: 'Edit Category',
+  category,
+  createCategory: `${_lang.create} ${category}`,
+  editCategory: `${_lang.edit} ${category}`,
+  //
+  article,
+  createArticle: `${_lang.create} ${article}`,
+  editArticle: `${_lang.edit} ${article}`,
 };

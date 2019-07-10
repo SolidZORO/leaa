@@ -6,9 +6,11 @@ export default {
   'langzh-CN': '中文',
   //
   id: 'ID',
-  parentId: '父 ID',
+  category: '分类',
+  user: '用户',
   email: 'Email',
   name: '名字',
+  title: '标题',
   slug: '标识',
   password: '密码',
   login: '登录',
@@ -20,6 +22,7 @@ export default {
   description: '描述',
   //
   create: '新建',
+  edit: '编辑',
   update: '更新',
   delete: '删除',
   submit: '提交',

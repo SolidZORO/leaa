@@ -36,12 +36,12 @@ class CategoryInfoFormInner extends React.PureComponent<IProps> {
 
             <Row gutter={16} className={style['form-row']}>
               <Col xs={24} sm={6}>
-                <Form.Item label={t('_lang:parentId')}>
+                <Form.Item label={`${t('_lang:parent')} ID`}>
                   {getFieldDecorator('parentId', {
                     initialValue: props.item ? props.item.parentId : undefined,
                     rules: [{ required: true }],
                     normalize: e => Number(e),
-                  })(<Input type="number" placeholder={t('_lang:parentId')} />)}
+                  })(<Input type="number" placeholder={`${t('_lang:parent')} ID`} />)}
                 </Form.Item>
               </Col>
 

@@ -17,7 +17,7 @@ export const masterRoutes: IRouteItem[] = [
     children: [
       {
         name: 'Show Store',
-        namei18n: '_route:playgroundChildren.showStore',
+        namei18n: '_route:showStore',
         permission: ALLOW_PERMISSION,
         path: '/show-store',
         icon: 'deployment-unit',
@@ -28,7 +28,7 @@ export const masterRoutes: IRouteItem[] = [
       },
       {
         name: 'Test Apollo',
-        namei18n: '_route:playgroundChildren.testApollo',
+        namei18n: '_route:testApollo',
         permission: ALLOW_PERMISSION,
         path: '/test-apollo',
         icon: 'experiment',
@@ -179,6 +179,45 @@ export const masterRoutes: IRouteItem[] = [
     icon: 'apartment',
     LazyComponent: React.lazy(() =>
       import(/* webpackChunkName: 'CategoryList' */ '../pages/Category/CategoryList/CategoryList'),
+    ),
+    canCreate: true,
+    exact: true,
+  },
+  //
+  //
+  //
+  //
+  {
+    name: 'Create Article',
+    namei18n: '_route:createArticle',
+    permission: 'article.create',
+    path: '/articles/create',
+    icon: 'container',
+    LazyComponent: React.lazy(() =>
+      import(/* webpackChunkName: 'CreateArticle' */ '../pages/Article/CreateArticle/CreateArticle'),
+    ),
+    exact: true,
+    isCreate: true,
+  },
+  {
+    name: 'Edit Article',
+    namei18n: '_route:editArticle',
+    permission: 'article.item',
+    path: '/articles/:id(\\d+)',
+    icon: 'container',
+    LazyComponent: React.lazy(() =>
+      import(/* webpackChunkName: 'EditArticle' */ '../pages/Article/EditArticle/EditArticle'),
+    ),
+    exact: true,
+  },
+  {
+    name: 'Article',
+    namei18n: '_route:article',
+    permission: 'article.list',
+    path: '/articles',
+    icon: 'container',
+    LazyComponent: React.lazy(() =>
+      import(/* webpackChunkName: 'ArticleList' */ '../pages/Article/ArticleList/ArticleList'),
     ),
     canCreate: true,
     exact: true,

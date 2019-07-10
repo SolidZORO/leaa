@@ -1,15 +1,15 @@
-import { IsNotEmpty } from 'class-validator';
-import { Field, InputType, Int } from 'type-graphql';
+import { IsNotEmpty, IsOptional } from 'class-validator';
+import { Field, InputType, Int} from 'type-graphql';
 
 @InputType()
 export class UpdateCategoryInput {
+  @IsOptional()
   @Field(() => String)
-  @IsNotEmpty()
-  name!: string;
+  name?: string;
 
+  @IsOptional()
   @Field(() => String)
-  @IsNotEmpty()
-  slug!: string;
+  slug?: string;
 
   @Field(() => Int, { nullable: true })
   parentId?: number;

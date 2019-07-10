@@ -3,26 +3,26 @@ import { Field, InputType, Int } from 'type-graphql';
 
 @InputType()
 export class UpdateUserInput {
-  @Field({ nullable: true })
   @IsPhoneNumber('CN')
+  @Field({ nullable: true })
   phone?: string;
 
-  @Field({ nullable: true })
   @IsEmail()
   @MinLength(6)
+  @Field({ nullable: true })
   email?: string;
 
-  @Field({ nullable: true })
   @IsOptional()
   @Length(4, 64)
+  @Field({ nullable: true })
   name?: string;
 
-  @Field({ nullable: true })
   @Length(6, 64)
+  @Field({ nullable: true })
   password?: string;
 
-  @Field({ nullable: true })
   @Length(1)
+  @Field({ nullable: true })
   status?: number;
 
   @Field(() => [Int], { nullable: true })

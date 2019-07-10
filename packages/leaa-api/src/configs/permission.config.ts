@@ -32,8 +32,8 @@ export const permissions = shield(
       categories: checkPermission('category.list'),
       category: checkPermission('category.item'),
       //
-      // articles: checkPermission('article.list'),
-      // article: checkPermission('article.item'),
+      articles: checkPermission('article.list'),
+      article: checkPermission('article.item'),
     },
     Mutation: {
       login: allow,
@@ -55,9 +55,9 @@ export const permissions = shield(
       updateCategory: checkPermission('category.update'),
       deleteCategory: checkPermission('category.delete'),
       //
-      // createArticle: checkPermission('article.create'),
-      // updateArticle: checkPermission('article.update'),
-      // deleteArticle: checkPermission('article.delete'),
+      createArticle: checkPermission('article.create'),
+      updateArticle: checkPermission('article.update'),
+      deleteArticle: checkPermission('article.delete'),
     },
   },
   {

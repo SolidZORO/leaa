@@ -20,6 +20,6 @@ export class Category extends Base {
   parentId!: number;
 
   @Column({ type: 'text', nullable: true })
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   description?: string;
 }

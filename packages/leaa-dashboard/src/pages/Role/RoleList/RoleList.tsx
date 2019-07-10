@@ -66,9 +66,7 @@ export default (props: IPage) => {
 
   const rowSelection = {
     columnWidth: 30,
-    onChange: (keys: number[] | string[]) => {
-      setSelectedRowKeys(keys);
-    },
+    onChange: (keys: number[] | string[]) => setSelectedRowKeys(keys),
     selectedRowKeys,
   };
 

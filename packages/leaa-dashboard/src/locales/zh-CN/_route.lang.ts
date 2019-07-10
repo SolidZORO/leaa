@@ -1,30 +1,39 @@
 import _lang from './_lang.lang';
 
+const home = '主页';
+const playground = '游乐园';
+const user = '用户';
+const role = '角色';
+const permission = '权限';
+const category = '分类';
+const article = '文章';
+
 export default {
-  home: '主页',
+  home,
   login: _lang.login,
   regist: _lang.register,
   //
-  playground: '游乐园',
-  playgroundChildren: {
-    showStore: '展示 Store',
-    testApollo: '测试 Apollo',
-  },
+  playground,
+  showStore: '展示 Store',
+  testApollo: '测试 Apollo',
   //
-  user: '用户',
-  createUser: `新建用户`,
-  editUser: '编辑用户',
+  user,
+  createUser: `${_lang.create}${user}`,
+  editUser: `${_lang.edit}${user}`,
   //
-  role: '角色',
-  createRole: '新建角色',
-  editRole: '编辑角色',
+  role,
+  createRole: `${_lang.create}${role}`,
+  editRole: `${_lang.edit}${role}`,
   //
-  permission: '权限',
-  createPermission: '新建权限',
-  editPermission: '编辑权限',
+  permission,
+  createPermission: `${_lang.create}${permission}`,
+  editPermission: `${_lang.edit}${permission}`,
   //
-  category: '分类',
-  createCategory: '新建分类',
-  editCategory: '编辑分类',
+  category,
+  createCategory: `${_lang.create}${category}`,
+  editCategory: `${_lang.edit}${category}`,
   //
+  article,
+  createArticle: `${_lang.create}${article}`,
+  editArticle: `${_lang.edit}${article}`,
 };

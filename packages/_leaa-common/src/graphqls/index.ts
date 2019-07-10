@@ -11,3 +11,6 @@ export * from './permission.query';
 
 export * from './category.query';
 export * from './category.mutation';
+
+export * from './article.query';
+export * from './article.mutation';

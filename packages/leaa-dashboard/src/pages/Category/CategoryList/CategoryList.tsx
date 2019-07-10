@@ -66,9 +66,7 @@ export default (props: IPage) => {
 
   const rowSelection = {
     columnWidth: 30,
-    onChange: (keys: number[] | string[]) => {
-      setSelectedRowKeys(keys);
-    },
+    onChange: (keys: number[] | string[]) => setSelectedRowKeys(keys),
     selectedRowKeys,
   };
 
@@ -93,7 +91,7 @@ export default (props: IPage) => {
       sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'slug'),
     },
     {
-      title: t('_lang:parentId'),
+      title: `${t('_lang:parent')} ID`,
       dataIndex: 'parentId',
       sorter: true,
       sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'parentId'),

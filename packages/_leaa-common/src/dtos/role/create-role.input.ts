@@ -3,11 +3,11 @@ import { Field, InputType } from 'type-graphql';
 
 @InputType()
 export class CreateRoleInput {
-  @Field()
   @IsNotEmpty()
+  @Field()
   name!: string;
 
-  @Field()
   @IsNotEmpty()
+  @Field()
   slug!: string;
 }

@@ -6,9 +6,11 @@ export default {
   'langzh-CN': 'Chinese',
   //
   id: 'ID',
-  parentId: 'Paent ID',
+  category: 'Category',
+  user: 'User',
   email: 'Email',
   name: 'Name',
+  title: 'Title',
   slug: 'Slug',
   password: 'Password',
   login: 'Login',
@@ -20,6 +22,7 @@ export default {
   description: 'Description',
   //
   create: 'Create',
+  edit: 'Edit',
   update: 'Update',
   delete: 'Delete',
   submit: 'Submit',

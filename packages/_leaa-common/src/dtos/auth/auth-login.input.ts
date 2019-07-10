@@ -3,12 +3,12 @@ import { Field, InputType } from 'type-graphql';
 
 @InputType()
 export class AuthLoginInput {
-  @Field()
   @IsEmail()
   @MinLength(6)
+  @Field()
   email!: string;
 
-  @Field()
   @Length(6, 64)
+  @Field()
   password!: string;
 }

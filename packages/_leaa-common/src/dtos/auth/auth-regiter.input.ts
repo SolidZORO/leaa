@@ -3,16 +3,16 @@ import { Field, InputType } from 'type-graphql';
 
 @InputType()
 export class AuthRegisterInput {
-  @Field()
   @IsEmail()
   @MinLength(6)
+  @Field()
   email!: string;
 
-  @Field()
   @MinLength(4)
+  @Field()
   name!: string;
 
-  @Field()
   @Length(6, 64)
+  @Field()
   password!: string;
 }
