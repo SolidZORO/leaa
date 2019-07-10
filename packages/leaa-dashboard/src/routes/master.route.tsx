@@ -149,6 +149,45 @@ export const masterRoutes: IRouteItem[] = [
   //
   //
   {
+    name: 'Create Category',
+    namei18n: '_route:createCategory',
+    permission: 'category.create',
+    path: '/categories/create',
+    icon: 'apartment',
+    LazyComponent: React.lazy(() =>
+      import(/* webpackChunkName: 'CreateCategory' */ '../pages/Category/CreateCategory/CreateCategory'),
+    ),
+    exact: true,
+    isCreate: true,
+  },
+  {
+    name: 'Edit Category',
+    namei18n: '_route:editCategory',
+    permission: 'category.item',
+    path: '/categories/:id(\\d+)',
+    icon: 'apartment',
+    LazyComponent: React.lazy(() =>
+      import(/* webpackChunkName: 'EditCategory' */ '../pages/Category/EditCategory/EditCategory'),
+    ),
+    exact: true,
+  },
+  {
+    name: 'Category',
+    namei18n: '_route:category',
+    permission: 'category.list',
+    path: '/categories',
+    icon: 'apartment',
+    LazyComponent: React.lazy(() =>
+      import(/* webpackChunkName: 'CategoryList' */ '../pages/Category/CategoryList/CategoryList'),
+    ),
+    canCreate: true,
+    exact: true,
+  },
+  //
+  //
+  //
+  //
+  {
     name: 'HOME',
     namei18n: '_route:home',
     permission: ALLOW_PERMISSION,

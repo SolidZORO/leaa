@@ -21,9 +21,13 @@ export const TableColumnDate = (props: IProps) => {
         [style['wrapper--small']]: props.size === 'small',
       })}
     >
-      <Tooltip title={moment(props.date).format('YYYY-MM-DD HH:mm:ss')} mouseEnterDelay={0.01} mouseLeaveDelay={0.01}>
-        {moment(props.date).format(FORMAT)}
-      </Tooltip>
+      {props.date ? (
+        <Tooltip title={moment(props.date).format('YYYY-MM-DD HH:mm:ss')} mouseEnterDelay={0.01} mouseLeaveDelay={0.01}>
+          {moment(props.date).format(FORMAT)}
+        </Tooltip>
+      ) : (
+        <span>N/A</span>
+      )}
     </div>
   );
 };

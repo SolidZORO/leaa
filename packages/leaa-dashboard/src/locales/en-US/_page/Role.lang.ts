@@ -2,7 +2,7 @@
 
 export default {
   Component: {
-    roleInfo: 'role Info',
-    rolePermissions: 'role Permissions',
+    roleInfo: 'Role Info',
+    rolePermissions: 'Role Permissions',
   },
 };

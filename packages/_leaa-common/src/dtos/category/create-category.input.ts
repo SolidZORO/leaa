@@ -13,4 +13,7 @@ export class CreateCategoryInput {
 
   @Field(() => Int, { nullable: true })
   parentId?: number;
+
+  @Field(() => String, { nullable: true })
+  description?: string;
 }

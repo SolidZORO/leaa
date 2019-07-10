@@ -2,11 +2,11 @@
 export const permissionsSeed = [
   { name: 'Playground', slug: 'playground.root' },
   //
-  { name: 'Permission List', slug: 'permission.list' },
-  { name: 'Permission Item', slug: 'permission.item' },
-  { name: 'Permission Create', slug: 'permission.create' },
-  { name: 'Permission Update', slug: 'permission.update' },
-  { name: 'Permission Delete', slug: 'permission.delete' },
+  { name: 'User List', slug: 'user.list' },
+  { name: 'User Item', slug: 'user.item' },
+  { name: 'User Create', slug: 'user.create' },
+  { name: 'User Update', slug: 'user.update' },
+  { name: 'User Delete', slug: 'user.delete' },
   //
   { name: 'Role List', slug: 'role.list' },
   { name: 'Role Item', slug: 'role.item' },
@@ -14,11 +14,23 @@ export const permissionsSeed = [
   { name: 'Role Update', slug: 'role.update' },
   { name: 'Role Delete', slug: 'role.delete' },
   //
-  { name: 'User List', slug: 'user.list' },
-  { name: 'User Item', slug: 'user.item' },
-  { name: 'User Create', slug: 'user.create' },
-  { name: 'User Update', slug: 'user.update' },
-  { name: 'User Delete', slug: 'user.delete' },
+  { name: 'Permission List', slug: 'permission.list' },
+  { name: 'Permission Item', slug: 'permission.item' },
+  { name: 'Permission Create', slug: 'permission.create' },
+  { name: 'Permission Update', slug: 'permission.update' },
+  { name: 'Permission Delete', slug: 'permission.delete' },
+  //
+  { name: 'Category List', slug: 'category.list' },
+  { name: 'Category Item', slug: 'category.item' },
+  { name: 'Category Create', slug: 'category.create' },
+  { name: 'Category Update', slug: 'category.update' },
+  { name: 'Category Delete', slug: 'category.delete' },
+  //
+  { name: 'Article List', slug: 'article.list' },
+  { name: 'Article Item', slug: 'article.item' },
+  { name: 'Article Create', slug: 'article.create' },
+  { name: 'Article Update', slug: 'article.update' },
+  { name: 'Article Delete', slug: 'article.delete' },
 ];
 
 // prettier-ignore

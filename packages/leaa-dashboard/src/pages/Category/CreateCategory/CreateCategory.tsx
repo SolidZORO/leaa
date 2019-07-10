@@ -3,70 +3,56 @@ import { Button, message } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useMutation } from '@apollo/react-hooks';
 
-import { User } from '@leaa/common/entrys';
-import { UpdateUserInput } from '@leaa/common/dtos/user';
-import { CREATE_BUTTON_ICON } from '@leaa/dashboard/constants';
+import { Category } from '@leaa/common/entrys';
+import { UpdateCategoryInput } from '@leaa/common/dtos/category';
 import { IPage } from '@leaa/dashboard/interfaces';
-import { CREATE_USER } from '@leaa/common/graphqls';
+import { CREATE_CATEGORY } from '@leaa/common/graphqls';
+import { CREATE_BUTTON_ICON } from '@leaa/dashboard/constants';
 import { PageCard } from '@leaa/dashboard/components/PageCard';
 import { SubmitBar } from '@leaa/dashboard/components/SubmitBar/SubmitBar';
 import { ErrorCard } from '@leaa/dashboard/components/ErrorCard';
 
-import { UserInfoForm } from '../_components/UserInfoForm/UserInfoForm';
+import { CategoryInfoForm } from '../_components/CategoryInfoForm/CategoryInfoForm';
 
 import style from './style.less';
 
 export default (props: IPage) => {
   const { t } = useTranslation();
 
-  let userInfoFormRef: any;
+  let categoryInfoFormRef: any;
 
-  const [submitVariables, setSubmitVariables] = useState<{ user: UpdateUserInput }>({
-    user: {},
-  });
+  const [submitVariables, setSubmitVariables] = useState<{ category: UpdateCategoryInput }>();
 
-  const [createUserMutate, createUserMutation] = useMutation<{ createUser: User }>(CREATE_USER, {
+  const [createCategoryMutate, createCategoryMutation] = useMutation<{ createCategory: Category }>(CREATE_CATEGORY, {
     variables: submitVariables,
-    onCompleted({ createUser }) {
+    onError(e) {
+      message.error(e.message);
+    },
+    onCompleted({ createCategory }) {
       message.success(t('_lang:createdSuccessfully'));
-      props.history.push(`/users/${createUser.id}`);
+      props.history.push(`/categories/${createCategory.id}`);
     },
   });
 
   const onSubmit = async () => {
-    let hasError = false;
-    let submitData: UpdateUserInput = {};
-
-    userInfoFormRef.props.form.validateFieldsAndScroll(async (err: any, formData: User) => {
+    categoryInfoFormRef.props.form.validateFieldsAndScroll(async (err: any, formData: Category) => {
       if (err) {
-        hasError = true;
         message.error(err[Object.keys(err)[0]].errors[0].message);
+        return;
       }
 
-      submitData = {
-        ...submitData,
-        ...formData,
-      };
+      await setSubmitVariables({ category: formData });
+      await createCategoryMutate();
     });
-
-    if (hasError) {
-      return;
-    }
-
-    await setSubmitVariables({
-      ...submitVariables,
-      ...{ user: submitData },
-    });
-    await createUserMutate();
   };
 
   return (
     <PageCard title={t(`${props.route.namei18n}`)} className={style['wapper']} loading={false}>
-      {createUserMutation.error ? <ErrorCard error={createUserMutation.error} /> : null}
+      {createCategoryMutation.error ? <ErrorCard error={createCategoryMutation.error} /> : null}
 
-      <UserInfoForm
+      <CategoryInfoForm
         wrappedComponentRef={(inst: unknown) => {
-          userInfoFormRef = inst;
+          categoryInfoFormRef = inst;
         }}
       />
 
@@ -76,7 +62,7 @@ export default (props: IPage) => {
           size="large"
           icon={CREATE_BUTTON_ICON}
           className="submit-button"
-          loading={createUserMutation.loading}
+          loading={createCategoryMutation.loading}
           onClick={onSubmit}
         >
           {t('_lang:create')}

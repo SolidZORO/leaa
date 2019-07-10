@@ -15,7 +15,11 @@ export class Category extends Base {
   @Field()
   slug!: string;
 
-  @Column({ type: 'int' })
+  @Column({ type: 'int', default: 0 })
   @Field(() => Int)
   parentId!: number;
+
+  @Column({ type: 'text', nullable: true })
+  @Field(() => String)
+  description?: string;
 }

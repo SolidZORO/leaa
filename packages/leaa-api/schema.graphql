@@ -36,12 +36,14 @@ type Category {
   name: String!
   slug: String!
   parentId: Int!
+  description: String!
 }
 
 input CreateCategoryInput {
   name: String!
   slug: String!
   parentId: Int
+  description: String
 }
 
 input CreatePermissionInput {
@@ -143,6 +145,7 @@ input UpdateCategoryInput {
   name: String!
   slug: String!
   parentId: Int
+  description: String
 }
 
 input UpdatePermissionInput {

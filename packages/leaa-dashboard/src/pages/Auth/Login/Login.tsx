@@ -14,7 +14,8 @@ import style from './style.less';
 
 export default (props: RouteComponentProps) => {
   const { t } = useTranslation();
-  const query = queryString.parse(window.location.search);
+
+  const urlParams = queryString.parse(window.location.search);
 
   useEffect(() => {
     const authIsAvailably = authUtil.checkAuthIsAvailably();
@@ -25,8 +26,8 @@ export default (props: RouteComponentProps) => {
   });
 
   const onLoginedCallback = () => {
-    if (query.redirect) {
-      props.history.push(`${query.redirect}`);
+    if (urlParams.redirect) {
+      props.history.push(`${urlParams.redirect}`);
     } else {
       props.history.push(LOGIN_REDIRECT_URL);
     }

@@ -4,12 +4,11 @@ import { Button, message } from 'antd';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
 import { User } from '@leaa/common/entrys';
-import { GET_USER, GET_ROLES } from '@leaa/common/graphqls';
+import { GET_USER, GET_ROLES, UPDATE_USER } from '@leaa/common/graphqls';
 import { RolesObject, RolesArgs } from '@leaa/common/dtos/role';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/constants';
 import { UserArgs, UpdateUserInput } from '@leaa/common/dtos/user';
 import { IPage } from '@leaa/dashboard/interfaces';
-import { UPDATE_USER } from '@leaa/common/graphqls/user.mutation';
 import { PageCard } from '@leaa/dashboard/components/PageCard';
 import { ErrorCard } from '@leaa/dashboard/components/ErrorCard';
 import { SubmitBar } from '@leaa/dashboard/components/SubmitBar/SubmitBar';
@@ -92,10 +91,10 @@ export default (props: IPage) => {
   };
 
   return (
-    <PageCard title={t(`${props.route.namei18n}`)} className={style['page-wapper']} loading={false}>
-      {getUserQuery.error ? <ErrorCard message={getUserQuery.error.message} /> : null}
-      {getRolesQuery.error ? <ErrorCard message={getRolesQuery.error.message} /> : null}
-      {updateUserMutation.error ? <ErrorCard message={updateUserMutation.error.message} /> : null}
+    <PageCard title={t(`${props.route.namei18n}`)} className={style['wapper']} loading={false}>
+      {getUserQuery.error ? <ErrorCard error={getUserQuery.error} /> : null}
+      {getRolesQuery.error ? <ErrorCard error={getRolesQuery.error} /> : null}
+      {updateUserMutation.error ? <ErrorCard error={updateUserMutation.error} /> : null}
 
       <UserInfoForm
         item={getUserQuery.data && getUserQuery.data.user}

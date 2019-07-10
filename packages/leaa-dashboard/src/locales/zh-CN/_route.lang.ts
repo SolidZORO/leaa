@@ -12,7 +12,7 @@ export default {
   },
   //
   user: '用户',
-  createUser: '新建用户',
+  createUser: `新建用户`,
   editUser: '编辑用户',
   //
   role: '角色',
@@ -22,5 +22,9 @@ export default {
   permission: '权限',
   createPermission: '新建权限',
   editPermission: '编辑权限',
+  //
+  category: '分类',
+  createCategory: '新建分类',
+  editCategory: '编辑分类',
   //
 };

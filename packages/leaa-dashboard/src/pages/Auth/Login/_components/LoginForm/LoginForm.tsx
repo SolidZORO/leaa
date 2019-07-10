@@ -9,7 +9,6 @@ import { User } from '@leaa/common/entrys';
 import { AuthLoginInput } from '@leaa/common/dtos/auth';
 import { LOGIN } from '@leaa/common/graphqls';
 import { authUtil } from '@leaa/dashboard/utils';
-import { useStore } from '@leaa/dashboard/stores';
 import { ErrorCard } from '@leaa/dashboard/components/ErrorCard';
 
 import style from './style.less';
@@ -21,9 +20,9 @@ interface IProps extends FormComponentProps {
 
 const LoginFormInner = (props: IProps) => {
   const { t } = useTranslation();
+
   const { className, form } = props;
   const { getFieldDecorator } = form;
-  const store = useStore();
 
   const [submitLoginMutate, submitLoginMutation] = useMutation<{
     login: Pick<User, 'authToken' | 'authExpiresIn' | 'name' | 'flatePermissions'>;
@@ -70,7 +69,7 @@ const LoginFormInner = (props: IProps) => {
 
   return (
     <div className={cx(style['wrapper'], className)}>
-      {submitLoginMutation.error ? <ErrorCard message={submitLoginMutation.error.message} /> : null}
+      {submitLoginMutation.error ? <ErrorCard error={submitLoginMutation.error} /> : null}
 
       <Form>
         <Row gutter={16} className={style['form-row']}>

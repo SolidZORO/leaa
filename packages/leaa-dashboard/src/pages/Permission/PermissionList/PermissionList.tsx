@@ -7,8 +7,7 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import { Table, message } from 'antd';
 
 import { DEFAULT_PAGE_SIZE_OPTIONS } from '@leaa/dashboard/constants';
-import { GET_PERMISSIONS } from '@leaa/common/graphqls';
-import { DELETE_PERMISSION } from '@leaa/common/graphqls/permission.mutation';
+import { GET_PERMISSIONS, DELETE_PERMISSION } from '@leaa/common/graphqls';
 import { Permission } from '@leaa/common/entrys';
 import { IOrderSort } from '@leaa/common/dtos/_common';
 import { PermissionsObject, PermissionArgs } from '@leaa/common/dtos/permission';
@@ -135,11 +134,11 @@ export default (props: IPage) => {
           }}
         />
       }
-      className={style['page-wapper']}
+      className={style['wapper']}
       loading={getPermissionsQuery.loading}
     >
-      {getPermissionsQuery.error ? <ErrorCard message={getPermissionsQuery.error.message} /> : null}
-      {deletePermissionMutation.error ? <ErrorCard message={deletePermissionMutation.error.message} /> : null}
+      {getPermissionsQuery.error ? <ErrorCard error={getPermissionsQuery.error} /> : null}
+      {deletePermissionMutation.error ? <ErrorCard error={deletePermissionMutation.error} /> : null}
 
       {getPermissionsQuery.data && getPermissionsQuery.data.permissions && getPermissionsQuery.data.permissions.items && (
         <TableCard selectedRowKeys={selectedRowKeys}>

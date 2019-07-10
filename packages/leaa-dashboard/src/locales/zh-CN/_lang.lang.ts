@@ -5,6 +5,8 @@ export default {
   'langen-US': '英文',
   'langzh-CN': '中文',
   //
+  id: 'ID',
+  parentId: '父 ID',
   email: 'Email',
   name: '名字',
   slug: '标识',
@@ -15,6 +17,7 @@ export default {
   createdAt: '创建时间',
   updatedAt: '更新时间',
   action: '操作',
+  description: '描述',
   //
   create: '新建',
   update: '更新',

@@ -16,7 +16,7 @@ export default (props: IPage) => {
   return <p>: p</p>;
 
   // return getUsersQuery.error ? (
-  //   <ErrorCard message={getUsersQuery.error.message} />
+  //   <ErrorCard error={getUsersQuery.error} />
   // ) : (
   //   <PageCard loading={false}>TEST</PageCard>
   // );

@@ -7,8 +7,7 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import { Table, Button, message } from 'antd';
 
 import { DEFAULT_PAGE_SIZE_OPTIONS } from '@leaa/dashboard/constants';
-import { GET_USERS } from '@leaa/common/graphqls';
-import { DELETE_USER } from '@leaa/common/graphqls/user.mutation';
+import { GET_USERS, DELETE_USER } from '@leaa/common/graphqls';
 import { User } from '@leaa/common/entrys';
 import { IOrderSort } from '@leaa/common/dtos/_common';
 import { UsersObject, UsersArgs } from '@leaa/common/dtos/user';
@@ -134,11 +133,11 @@ export default (props: IPage) => {
           }}
         />
       }
-      className={style['page-wapper']}
+      className={style['wapper']}
       loading={getUsersQuery.loading}
     >
-      {getUsersQuery.error ? <ErrorCard message={getUsersQuery.error.message} /> : null}
-      {getUsersMutation.error ? <ErrorCard message={getUsersMutation.error.message} /> : null}
+      {getUsersQuery.error ? <ErrorCard error={getUsersQuery.error} /> : null}
+      {getUsersMutation.error ? <ErrorCard error={getUsersMutation.error} /> : null}
 
       {getUsersQuery.data && getUsersQuery.data.users && getUsersQuery.data.users.items && (
         <TableCard

@@ -7,10 +7,10 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import { Table, message } from 'antd';
 
 import { DEFAULT_PAGE_SIZE_OPTIONS } from '@leaa/dashboard/constants';
-import { GET_ROLES, DELETE_ROLE } from '@leaa/common/graphqls';
-import { Role } from '@leaa/common/entrys';
+import { GET_CATEGORIES, DELETE_CATEGORY } from '@leaa/common/graphqls';
+import { Category } from '@leaa/common/entrys';
 import { IOrderSort } from '@leaa/common/dtos/_common';
-import { RolesObject, RolesArgs } from '@leaa/common/dtos/role';
+import { CategoriesObject, CategoryArgs } from '@leaa/common/dtos/category';
 import { urlUtil, tableUtil } from '@leaa/dashboard/utils';
 import { IPage } from '@leaa/dashboard/interfaces';
 import { PageCard } from '@leaa/dashboard/components/PageCard';
@@ -44,9 +44,9 @@ export default (props: IPage) => {
     setQ(undefined);
   };
 
-  const getRolesVariables = { page, pageSize, q, orderBy, orderSort };
-  const getRolesQuery = useQuery<{ roles: RolesObject }, RolesArgs>(GET_ROLES, {
-    variables: getRolesVariables,
+  const getCategoriesVariables = { page, pageSize, q, orderBy, orderSort };
+  const getCategoriesQuery = useQuery<{ categories: CategoriesObject }, CategoryArgs>(GET_CATEGORIES, {
+    variables: getCategoriesVariables,
   });
 
   useEffect(() => {
@@ -56,12 +56,12 @@ export default (props: IPage) => {
   }, [urlParams]);
 
   useEffect(() => {
-    (async () => getRolesQuery.refetch())();
+    (async () => getCategoriesQuery.refetch())();
   }, [props.history.location.key]);
 
-  const [deleteRoleMutate, deleteRoleMutation] = useMutation<Role>(DELETE_ROLE, {
+  const [deleteCategoryMutate, deleteCategoryMutation] = useMutation<Category>(DELETE_CATEGORY, {
     onCompleted: () => message.success(t('_lang:deletedSuccessfully')),
-    refetchQueries: () => [{ query: GET_ROLES, variables: getRolesVariables }],
+    refetchQueries: () => [{ query: GET_CATEGORIES, variables: getCategoriesVariables }],
   });
 
   const rowSelection = {
@@ -84,13 +84,20 @@ export default (props: IPage) => {
       dataIndex: 'name',
       sorter: true,
       sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'name'),
-      render: (text: string, record: Role) => <Link to={`${props.route.path}/${record.id}`}>{record.name}</Link>,
+      render: (text: string, record: Category) => <Link to={`${props.route.path}/${record.id}`}>{record.name}</Link>,
     },
     {
       title: t('_lang:slug'),
       dataIndex: 'slug',
       sorter: true,
       sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'slug'),
+    },
+    {
+      title: t('_lang:parentId'),
+      dataIndex: 'parentId',
+      sorter: true,
+      sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'parentId'),
+      render: (text: string) => <TableColumnId id={text} />,
     },
     {
       title: t('_lang:createdAt'),
@@ -103,11 +110,11 @@ export default (props: IPage) => {
       title: t('_lang:action'),
       dataIndex: 'operation',
       width: 50,
-      render: (text: string, record: Role) => (
+      render: (text: string, record: Category) => (
         <TableColumnDeleteButton
           id={record.id}
-          loading={deleteRoleMutation.loading}
-          onClick={async () => deleteRoleMutate({ variables: { id: Number(record.id) } })}
+          loading={deleteCategoryMutation.loading}
+          onClick={async () => deleteCategoryMutate({ variables: { id: Number(record.id) } })}
         />
       ),
     },
@@ -135,23 +142,23 @@ export default (props: IPage) => {
         />
       }
       className={style['wapper']}
-      loading={getRolesQuery.loading}
+      loading={getCategoriesQuery.loading}
     >
-      {getRolesQuery.error ? <ErrorCard error={getRolesQuery.error} /> : null}
-      {deleteRoleMutation.error ? <ErrorCard error={deleteRoleMutation.error} /> : null}
+      {getCategoriesQuery.error ? <ErrorCard error={getCategoriesQuery.error} /> : null}
+      {deleteCategoryMutation.error ? <ErrorCard error={deleteCategoryMutation.error} /> : null}
 
-      {getRolesQuery.data && getRolesQuery.data.roles && getRolesQuery.data.roles.items && (
+      {getCategoriesQuery.data && getCategoriesQuery.data.categories && getCategoriesQuery.data.categories.items && (
         <TableCard selectedRowKeys={selectedRowKeys}>
           <Table
             rowKey="id"
             size="small"
             rowSelection={rowSelection}
             columns={columns}
-            dataSource={getRolesQuery.data.roles.items}
+            dataSource={getCategoriesQuery.data.categories.items}
             pagination={{
               defaultCurrent: page,
               defaultPageSize: pageSize,
-              total: getRolesQuery.data.roles.total,
+              total: getCategoriesQuery.data.categories.total,
               current: page,
               pageSize,
               //

@@ -60,8 +60,8 @@ export default (props: IPage) => {
   };
 
   return (
-    <PageCard title={t(`${props.route.namei18n}`)} className={style['page-wapper']} loading={false}>
-      {createRoleMutation.error ? <ErrorCard message={createRoleMutation.error.message} /> : null}
+    <PageCard title={t(`${props.route.namei18n}`)} className={style['wapper']} loading={false}>
+      {createRoleMutation.error ? <ErrorCard error={createRoleMutation.error} /> : null}
 
       <RoleInfoForm
         wrappedComponentRef={(inst: unknown) => {

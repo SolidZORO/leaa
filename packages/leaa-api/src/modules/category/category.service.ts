@@ -31,13 +31,11 @@ export class CategoryService extends BaseService<
   async categories(args: CategoriesArgs): Promise<CategoriesObject> {
     const nextArgs = formatUtil.formatArgs(args);
 
-    let whereQuery = {};
-
     if (nextArgs.q) {
-      whereQuery = { ...whereQuery, email: Like(`%${nextArgs.q}%`) };
-    }
+      const qLike = Like(`%${nextArgs.q}%`);
 
-    nextArgs.where = whereQuery;
+      nextArgs.where = [{ slug: qLike }, { name: qLike }];
+    }
 
     const [items, total] = await this.categoryRepository.findAndCount(nextArgs);
 

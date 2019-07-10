@@ -20,14 +20,20 @@ const checkPermission = (permissionSlug: string) => {
 export const permissions = shield(
   {
     Query: {
+      users: checkPermission('user.list'),
+      user: checkPermission('user.item'),
+      //
       roles: checkPermission('role.list'),
       role: checkPermission('role.item'),
       //
       permissions: checkPermission('permission.list'),
       permission: checkPermission('permission.item'),
       //
-      users: checkPermission('user.list'),
-      user: checkPermission('user.item'),
+      categories: checkPermission('category.list'),
+      category: checkPermission('category.item'),
+      //
+      // articles: checkPermission('article.list'),
+      // article: checkPermission('article.item'),
     },
     Mutation: {
       login: allow,
@@ -37,13 +43,21 @@ export const permissions = shield(
       updateUser: checkPermission('user.update'),
       deleteUser: checkPermission('user.delete'),
       //
+      createRole: checkPermission('role.create'),
+      updateRole: checkPermission('role.update'),
+      deleteRole: checkPermission('role.delete'),
+      //
       createPermission: checkPermission('permission.create'),
       updatePermission: checkPermission('permission.update'),
       deletePermission: checkPermission('permission.delete'),
       //
-      createRole: checkPermission('role.create'),
-      updateRole: checkPermission('role.update'),
-      deleteRole: checkPermission('role.delete'),
+      createCategory: checkPermission('category.create'),
+      updateCategory: checkPermission('category.update'),
+      deleteCategory: checkPermission('category.delete'),
+      //
+      // createArticle: checkPermission('article.create'),
+      // updateArticle: checkPermission('article.update'),
+      // deleteArticle: checkPermission('article.delete'),
     },
   },
   {

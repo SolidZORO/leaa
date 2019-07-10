@@ -23,4 +23,7 @@ export default {
   createPermission: 'Create Permission',
   editPermission: 'Edit Permission',
   //
+  category: 'Category',
+  createCategory: 'Create Category',
+  editCategory: 'Edit Category',
 };

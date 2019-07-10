@@ -5,6 +5,8 @@ export default {
   'langen-US': 'English',
   'langzh-CN': 'Chinese',
   //
+  id: 'ID',
+  parentId: 'Paent ID',
   email: 'Email',
   name: 'Name',
   slug: 'Slug',
@@ -15,6 +17,7 @@ export default {
   createdAt: 'Created At',
   updatedAt: 'Updated At',
   action: 'Action',
+  description: 'Description',
   //
   create: 'Create',
   update: 'Update',

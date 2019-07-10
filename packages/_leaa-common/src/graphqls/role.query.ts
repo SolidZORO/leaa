@@ -7,6 +7,7 @@ export const GET_ROLES = gql`
         id
         name
         slug
+        createdAt
       }
     }
   }

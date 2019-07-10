@@ -4,8 +4,7 @@ import { Button, message } from 'antd';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
 import { Permission } from '@leaa/common/entrys';
-import { GET_PERMISSION } from '@leaa/common/graphqls';
-import { UPDATE_PERMISSION } from '@leaa/common/graphqls/permission.mutation';
+import { GET_PERMISSION, UPDATE_PERMISSION } from '@leaa/common/graphqls';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/constants';
 import { PermissionArgs, UpdatePermissionInput } from '@leaa/common/dtos/permission';
 import { IPage } from '@leaa/dashboard/interfaces';
@@ -19,8 +18,8 @@ import style from './style.less';
 
 export default (props: IPage) => {
   const { t } = useTranslation();
-
   const { id } = props.match.params as { id: string };
+
   let permissionInfoFormRef: any;
 
   const [submitVariables, setSubmitVariables] = useState<{ id: number; permission: UpdatePermissionInput }>({
@@ -65,9 +64,9 @@ export default (props: IPage) => {
   };
 
   return (
-    <PageCard title={t(`${props.route.namei18n}`)} className={style['page-wapper']} loading={false}>
-      {getPermissionQuery.error ? <ErrorCard message={getPermissionQuery.error.message} /> : null}
-      {updatePermissionMutation.error ? <ErrorCard message={updatePermissionMutation.error.message} /> : null}
+    <PageCard title={t(`${props.route.namei18n}`)} className={style['wapper']} loading={false}>
+      {getPermissionQuery.error ? <ErrorCard error={getPermissionQuery.error} /> : null}
+      {updatePermissionMutation.error ? <ErrorCard error={updatePermissionMutation.error} /> : null}
 
       <PermissionInfoForm
         item={getPermissionQuery.data && getPermissionQuery.data.permission}

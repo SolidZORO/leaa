@@ -4,20 +4,20 @@ import { Col, Form, Input, Row, Descriptions, Card } from 'antd';
 import { withTranslation } from 'react-i18next';
 import { FormComponentProps } from 'antd/lib/form';
 
-import { Permission } from '@leaa/common/entrys';
+import { Category } from '@leaa/common/entrys';
 import { ITfn } from '@leaa/dashboard/interfaces';
 
 import style from './style.less';
 
 interface IFormProps extends FormComponentProps {
   className?: string;
-  item?: Permission;
+  item?: Category;
   loading?: boolean;
 }
 
 type IProps = IFormProps & ITfn;
 
-class PermissionInfoFormInner extends React.PureComponent<IProps> {
+class CategoryInfoFormInner extends React.PureComponent<IProps> {
   constructor(props: IProps) {
     super(props);
   }
@@ -32,9 +32,19 @@ class PermissionInfoFormInner extends React.PureComponent<IProps> {
       <div className={cx(style['wrapper'], props.className)}>
         <Form className={style['form-wrapper']}>
           <Card>
-            <Descriptions title={t('_page:Permission.Component.permissionInfo')} />
+            <Descriptions title={t('_page:Category.Component.categoryInfo')} />
 
             <Row gutter={16} className={style['form-row']}>
+              <Col xs={24} sm={6}>
+                <Form.Item label={t('_lang:parentId')}>
+                  {getFieldDecorator('parentId', {
+                    initialValue: props.item ? props.item.parentId : undefined,
+                    rules: [{ required: true }],
+                    normalize: e => Number(e),
+                  })(<Input type="number" placeholder={t('_lang:parentId')} />)}
+                </Form.Item>
+              </Col>
+
               <Col xs={24} sm={6}>
                 <Form.Item label={t('_lang:name')}>
                   {getFieldDecorator('name', {
@@ -79,6 +89,17 @@ class PermissionInfoFormInner extends React.PureComponent<IProps> {
                 </Col>
               </Row>
             )}
+
+            <Row gutter={16} className={style['form-row']}>
+              <Col xs={24}>
+                <Form.Item label={t('_lang:description')}>
+                  {getFieldDecorator('description', {
+                    initialValue: props.item ? props.item.description : undefined,
+                    rules: [],
+                  })(<Input.TextArea rows={3} placeholder={t('_lang:description')} />)}
+                </Form.Item>
+              </Col>
+            </Row>
           </Card>
         </Form>
       </div>
@@ -87,4 +108,4 @@ class PermissionInfoFormInner extends React.PureComponent<IProps> {
 }
 
 // @ts-ignore
-export const PermissionInfoForm = withTranslation()(Form.create<IFormProps>()(PermissionInfoFormInner));
+export const CategoryInfoForm = withTranslation()(Form.create<IFormProps>()(CategoryInfoFormInner));

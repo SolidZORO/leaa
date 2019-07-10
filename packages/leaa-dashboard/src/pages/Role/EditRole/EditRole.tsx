@@ -4,8 +4,7 @@ import { Button, message } from 'antd';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
 import { Role } from '@leaa/common/entrys';
-import { GET_PERMISSIONS, GET_ROLE } from '@leaa/common/graphqls';
-import { UPDATE_ROLE } from '@leaa/common/graphqls/role.mutation';
+import { GET_PERMISSIONS, GET_ROLE, UPDATE_ROLE } from '@leaa/common/graphqls';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/constants';
 import { RoleArgs, UpdateRoleInput } from '@leaa/common/dtos/role';
 import { PermissionsObject, PermissionsArgs } from '@leaa/common/dtos/permission';
@@ -92,10 +91,10 @@ export default (props: IPage) => {
   };
 
   return (
-    <PageCard title={t(`${props.route.namei18n}`)} className={style['page-wapper']} loading={false}>
-      {getRoleQuery.error ? <ErrorCard message={getRoleQuery.error.message} /> : null}
-      {getPermissionsQuery.error ? <ErrorCard message={getPermissionsQuery.error.message} /> : null}
-      {updateRoleMutation.error ? <ErrorCard message={updateRoleMutation.error.message} /> : null}
+    <PageCard title={t(`${props.route.namei18n}`)} className={style['wapper']} loading={false}>
+      {getRoleQuery.error ? <ErrorCard error={getRoleQuery.error} /> : null}
+      {getPermissionsQuery.error ? <ErrorCard error={getPermissionsQuery.error} /> : null}
+      {updateRoleMutation.error ? <ErrorCard error={updateRoleMutation.error} /> : null}
 
       <RoleInfoForm
         item={getRoleQuery.data && getRoleQuery.data.role}
