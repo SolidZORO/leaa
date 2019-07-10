@@ -20,5 +20,5 @@ export const RefreshFlatePermissions = (props: IProps) => {
     });
   }
 
-  return props.children;
+  return <>{props.children}</>;
 };

@@ -3,7 +3,7 @@ const webpackStats = require('./_webpack_stats');
 
 const webpackServerConfig = {
   contentBase: webpackConst.BUILD_PUBLIC_DIR,
-  https: Boolean(process.env.PROTOCOL.toString() === 'https'),
+  https: Boolean(`${process.env.PROTOCOL}` === 'https'),
   port: process.env.PORT,
   hot: true,
   // inline: true,

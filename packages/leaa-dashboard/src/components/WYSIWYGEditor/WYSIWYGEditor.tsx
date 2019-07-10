@@ -8,7 +8,7 @@ interface IProps {
 }
 
 export const WYSIWYGEditor = React.forwardRef((props: IProps, ref: React.Ref<any>) => {
-  const [content, setContent] = useState<string | undefined>(
+  const [content, setContent] = useState<EditorState>(
     BraftEditor.createEditorState(props.content) || BraftEditor.createEditorState(null),
   );
 

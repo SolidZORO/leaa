@@ -1359,6 +1359,14 @@
   dependencies:
     "@types/node" "*"
 
+"@types/draft-js@^0.10.34":
+  version "0.10.34"
+  resolved "https://registry.npm.taobao.org/@types/draft-js/download/@types/draft-js-0.10.34.tgz#1f1c26a2e28dea8d3567d331fcf5b178b12eba92"
+  integrity sha1-HxwmouKN6o01Z9Mx/PWxeLEuupI=
+  dependencies:
+    "@types/react" "*"
+    immutable "~3.7.4"
+
 "@types/eslint-visitor-keys@^1.0.0":
   version "1.0.0"
   resolved "https://registry.npm.taobao.org/@types/eslint-visitor-keys/download/@types/eslint-visitor-keys-1.0.0.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Feslint-visitor-keys%2Fdownload%2F%40types%2Feslint-visitor-keys-1.0.0.tgz#1ee30d79544ca84d68d4b3cdb0af4f205663dd2d"
