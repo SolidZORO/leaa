@@ -20,5 +20,7 @@ services:
     container_name: leaa-adminer
     image: adminer:4.7.1-standalone
     restart: always
+    depends_on:
+      - mysql
     ports:
       - ${ADMINER_PORT}:8080

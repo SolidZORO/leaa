@@ -1,18 +1,15 @@
-import { Index, Entity, PrimaryGeneratedColumn, Column, JoinTable, ManyToMany } from 'typeorm';
-import { ObjectType, Field, Int } from 'type-graphql';
+import { Index, Entity, Column, JoinTable, ManyToMany } from 'typeorm';
+import { ObjectType, Field } from 'type-graphql';
 
 import { Permission } from './permission.entity';
 import { User } from './user.entity';
+import { Base } from '@leaa/common/entrys/_base.entity';
 
 @Entity('roles')
 @Index('roles_name_unique', ['name'], { unique: true })
 @Index('roles_slug_unique', ['slug'], { unique: true })
 @ObjectType()
-export class Role {
-  @PrimaryGeneratedColumn()
-  @Field(() => Int)
-  id!: number;
-
+export class Role extends Base {
   @Column({ type: 'varchar', length: 32, unique: true })
   @Field()
   name!: string;
@@ -29,19 +26,4 @@ export class Role {
   @ManyToMany(() => User, user => user.roles)
   @Field(() => User, { nullable: true })
   user?: User;
-
-  //
-  //
-
-  @Column({ default: () => 'CURRENT_TIMESTAMP' })
-  @Field(() => Date)
-  createdAt!: Date;
-
-  @Column({ nullable: true, onUpdate: 'CURRENT_TIMESTAMP' })
-  @Field(() => Date, { nullable: true })
-  updatedAt?: Date;
-
-  @Column({ nullable: true })
-  @Field(() => Date, { nullable: true })
-  deletedAt?: Date;
 }

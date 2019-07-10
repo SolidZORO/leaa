@@ -1,15 +1,12 @@
-import { Index, Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Index, Entity, Column } from 'typeorm';
 import { ObjectType, Field, Int } from 'type-graphql';
+import { Base } from '@leaa/common/entrys/_base.entity';
 
 @Entity('categories')
 @Index('categories_name_unique', ['name'], { unique: true })
 @Index('categories_slug_unique', ['slug'], { unique: true })
 @ObjectType()
-export class Category {
-  @PrimaryGeneratedColumn()
-  @Field(() => Int)
-  id!: number;
-
+export class Category extends Base {
   @Column({ type: 'varchar', length: 32, unique: true })
   @Field()
   name!: string;
@@ -21,19 +18,4 @@ export class Category {
   @Column({ type: 'int' })
   @Field(() => Int)
   parentId!: number;
-
-  //
-  //
-
-  @Column({ default: () => 'CURRENT_TIMESTAMP' })
-  @Field(() => Date)
-  createdAt!: Date;
-
-  @Column({ nullable: true, onUpdate: 'CURRENT_TIMESTAMP' })
-  @Field(() => Date, { nullable: true })
-  updatedAt?: Date;
-
-  @Column({ nullable: true })
-  @Field(() => Date, { nullable: true })
-  deletedAt?: Date;
 }

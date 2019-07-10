@@ -1,6 +1,7 @@
-import { Index, Entity, PrimaryGeneratedColumn, Column, JoinTable, ManyToMany } from 'typeorm';
-import { ObjectType, Field, Int } from 'type-graphql';
+import { Index, Entity, Column, JoinTable, ManyToMany } from 'typeorm';
+import { ObjectType, Field } from 'type-graphql';
 
+import { Base } from './_base.entity';
 import { Role } from './role.entity';
 import { Permission } from './permission.entity';
 
@@ -8,11 +9,7 @@ import { Permission } from './permission.entity';
 // @Index('users_phone_unique', ['phone'], { unique: true })
 @Index('users_email_unique', ['email'], { unique: true })
 @ObjectType()
-export class User {
-  @PrimaryGeneratedColumn()
-  @Field(() => Int)
-  id!: number;
-
+export class User extends Base {
   @Column({ type: 'varchar', length: 64, nullable: true, default: '' })
   @Field({ nullable: true })
   name?: string;
@@ -59,19 +56,4 @@ export class User {
 
   @Field({ nullable: true })
   authExpiresIn?: number;
-
-  //
-  //
-
-  @Column({ default: () => 'CURRENT_TIMESTAMP' })
-  @Field(() => Date)
-  createdAt!: Date;
-
-  @Column({ nullable: true, onUpdate: 'CURRENT_TIMESTAMP' })
-  @Field(() => Date, { nullable: true })
-  updatedAt?: Date;
-
-  @Column({ nullable: true })
-  @Field(() => Date, { nullable: true })
-  deletedAt?: Date;
 }

@@ -14,6 +14,13 @@ input AuthRegisterInput {
   password: String!
 }
 
+type Base {
+  id: Int!
+  createdAt: DateTime!
+  updatedAt: DateTime
+  deletedAt: DateTime
+}
+
 type CategoriesObject {
   page: Int
   pageSize: Int!
@@ -23,12 +30,12 @@ type CategoriesObject {
 
 type Category {
   id: Int!
-  name: String!
-  slug: String!
-  parentId: Int!
   createdAt: DateTime!
   updatedAt: DateTime
   deletedAt: DateTime
+  name: String!
+  slug: String!
+  parentId: Int!
 }
 
 input CreateCategoryInput {
@@ -85,13 +92,13 @@ type PaginationObject {
 
 type Permission {
   id: Int!
+  createdAt: DateTime!
+  updatedAt: DateTime
+  deletedAt: DateTime
   name: String!
   slug: String!
   slugGroup: String!
   roles: [Role!]
-  createdAt: DateTime!
-  updatedAt: DateTime
-  deletedAt: DateTime
 }
 
 type PermissionsObject {
@@ -116,13 +123,13 @@ type Query {
 
 type Role {
   id: Int!
+  createdAt: DateTime!
+  updatedAt: DateTime
+  deletedAt: DateTime
   name: String!
   slug: String!
   permissions: [Permission!]
   user: User
-  createdAt: DateTime!
-  updatedAt: DateTime
-  deletedAt: DateTime
 }
 
 type RolesObject {
@@ -162,6 +169,9 @@ input UpdateUserInput {
 
 type User {
   id: Int!
+  createdAt: DateTime!
+  updatedAt: DateTime
+  deletedAt: DateTime
   name: String
   phone: String!
   email: String!
@@ -173,9 +183,6 @@ type User {
   flatePermissions: [String!]
   authToken: String
   authExpiresIn: Float
-  createdAt: DateTime!
-  updatedAt: DateTime
-  deletedAt: DateTime
 }
 
 type UsersObject {
