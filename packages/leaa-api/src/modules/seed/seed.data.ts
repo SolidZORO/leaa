@@ -1,5 +1,7 @@
 // prettier-ignore
 export const permissionsSeed = [
+  { name: 'Playground', slug: 'playground.root' },
+  //
   { name: 'Permission List', slug: 'permission.list' },
   { name: 'Permission Item', slug: 'permission.item' },
   { name: 'Permission Create', slug: 'permission.create' },

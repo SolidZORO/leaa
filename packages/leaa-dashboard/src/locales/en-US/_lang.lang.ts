@@ -5,7 +5,6 @@ export default {
   'langen-US': 'English',
   'langzh-CN': 'Chinese',
   //
-  // Form
   email: 'Email',
   name: 'Name',
   slug: 'Slug',

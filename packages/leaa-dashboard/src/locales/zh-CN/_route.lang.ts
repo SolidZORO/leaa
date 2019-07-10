@@ -5,8 +5,8 @@ export default {
   login: _lang.login,
   regist: _lang.register,
   //
-  folder: {
-    title: '文件夹',
+  playground: '游乐园',
+  playgroundChildren: {
     showStore: '展示 Store',
     testApollo: '测试 Apollo',
   },

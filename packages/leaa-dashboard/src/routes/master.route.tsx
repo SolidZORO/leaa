@@ -9,15 +9,15 @@ import { ALLOW_PERMISSION } from '@leaa/dashboard/constants';
 
 export const masterRoutes: IRouteItem[] = [
   {
-    name: 'Folder',
-    namei18n: '_route:folder.title',
-    permission: 'floder.root',
+    name: 'Playground',
+    namei18n: '_route:playground',
+    permission: 'playground.root',
     path: '_group',
     icon: 'folder',
     children: [
       {
         name: 'Show Store',
-        namei18n: '_route:folder.showStore',
+        namei18n: '_route:playgroundChildren.showStore',
         permission: ALLOW_PERMISSION,
         path: '/show-store',
         icon: 'deployment-unit',
@@ -28,7 +28,7 @@ export const masterRoutes: IRouteItem[] = [
       },
       {
         name: 'Test Apollo',
-        namei18n: '_route:folder.testApollo',
+        namei18n: '_route:playgroundChildren.testApollo',
         permission: ALLOW_PERMISSION,
         path: '/test-apollo',
         icon: 'experiment',

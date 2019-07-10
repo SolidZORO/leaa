@@ -5,8 +5,8 @@ export default {
   login: _lang.login,
   regist: _lang.register,
   //
-  folder: {
-    title: 'Folder',
+  playground: 'Playground',
+  playgroundChildren: {
     showStore: 'Show Store',
     testApollo: 'Test Apollo',
   },

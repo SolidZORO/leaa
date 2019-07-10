@@ -17,6 +17,8 @@ export class Base {
   @Field(() => Date, { nullable: true })
   updatedAt?: Date;
 
+  // SOFT DELETE
+  // https://github.com/typeorm/typeorm/issues/534
   @Column({ nullable: true })
   @Field(() => Date, { nullable: true })
   deletedAt?: Date;

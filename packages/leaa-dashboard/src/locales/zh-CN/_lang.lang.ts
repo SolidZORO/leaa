@@ -5,7 +5,6 @@ export default {
   'langen-US': '英文',
   'langzh-CN': '中文',
   //
-  // Form
   email: 'Email',
   name: '名字',
   slug: '标识',
