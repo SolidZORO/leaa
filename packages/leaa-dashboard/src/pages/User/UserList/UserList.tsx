@@ -94,9 +94,9 @@ export default (props: IPage) => {
     },
     {
       title: t('_lang:createdAt'),
-      dataIndex: 'created_at',
+      dataIndex: 'createdAt',
       sorter: true,
-      sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'created_at'),
+      sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'createdAt'),
       render: (text: string) => <TableColumnDate date={text} size="small" />,
     },
     {

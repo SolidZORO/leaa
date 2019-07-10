@@ -1,13 +1,11 @@
-import { Index, Entity, PrimaryGeneratedColumn, Column, ManyToMany } from 'typeorm';
+import { Index, Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 import { ObjectType, Field, Int } from 'type-graphql';
 
-import { Role } from './role.entity';
-
-@Entity('permissions')
-@Index('permissions_name_unique', ['name'], { unique: true })
-@Index('permissions_slug_unique', ['slug'], { unique: true })
+@Entity('categories')
+@Index('categories_name_unique', ['name'], { unique: true })
+@Index('categories_slug_unique', ['slug'], { unique: true })
 @ObjectType()
-export class Permission {
+export class Category {
   @PrimaryGeneratedColumn()
   @Field(() => Int)
   id!: number;
@@ -20,12 +18,9 @@ export class Permission {
   @Field()
   slug!: string;
 
-  @Field()
-  slugGroup!: string;
-
-  @ManyToMany(() => Role, role => role.permissions)
-  @Field(() => [Role], { nullable: true })
-  roles?: Role[];
+  @Column({ type: 'int' })
+  @Field(() => Int)
+  parentId!: number;
 
   //
   //

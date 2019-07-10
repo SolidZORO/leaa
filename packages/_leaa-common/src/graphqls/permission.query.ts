@@ -19,8 +19,8 @@ export const GET_PERMISSION = gql`
       id
       name
       slug
-      created_at
-      updated_at
+      createdAt
+      updatedAt
     }
   }
 `;

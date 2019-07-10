@@ -13,11 +13,11 @@ export class Role {
   @Field(() => Int)
   id!: number;
 
-  @Column({ type: 'varchar', length: 32 })
+  @Column({ type: 'varchar', length: 32, unique: true })
   @Field()
   name!: string;
 
-  @Column({ type: 'varchar', length: 32 })
+  @Column({ type: 'varchar', length: 32, unique: true })
   @Field()
   slug!: string;
 
@@ -35,13 +35,13 @@ export class Role {
 
   @Column({ default: () => 'CURRENT_TIMESTAMP' })
   @Field(() => Date)
-  created_at!: Date;
+  createdAt!: Date;
 
   @Column({ nullable: true, onUpdate: 'CURRENT_TIMESTAMP' })
   @Field(() => Date, { nullable: true })
-  updated_at?: Date;
+  updatedAt?: Date;
 
   @Column({ nullable: true })
   @Field(() => Date, { nullable: true })
-  deleted_at?: Date;
+  deletedAt?: Date;
 }

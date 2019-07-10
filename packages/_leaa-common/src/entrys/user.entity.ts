@@ -36,11 +36,11 @@ export class User {
 
   @Column({ type: 'varchar', length: 32, nullable: true })
   @Field()
-  last_login_ip?: string;
+  lastLoginIp?: string;
 
   @Column({ type: 'timestamp', nullable: true })
   @Field(() => Date)
-  last_login_at?: Date;
+  lastLoginAt?: Date;
 
   @ManyToMany(() => Role, role => role.user)
   @JoinTable()
@@ -65,13 +65,13 @@ export class User {
 
   @Column({ default: () => 'CURRENT_TIMESTAMP' })
   @Field(() => Date)
-  created_at!: Date;
+  createdAt!: Date;
 
   @Column({ nullable: true, onUpdate: 'CURRENT_TIMESTAMP' })
   @Field(() => Date, { nullable: true })
-  updated_at?: Date;
+  updatedAt?: Date;
 
   @Column({ nullable: true })
   @Field(() => Date, { nullable: true })
-  deleted_at?: Date;
+  deletedAt?: Date;
 }

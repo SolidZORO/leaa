@@ -14,6 +14,29 @@ input AuthRegisterInput {
   password: String!
 }
 
+type CategoriesObject {
+  page: Int
+  pageSize: Int!
+  total: Int!
+  items: [Category!]!
+}
+
+type Category {
+  id: Int!
+  name: String!
+  slug: String!
+  parentId: Int!
+  createdAt: DateTime!
+  updatedAt: DateTime
+  deletedAt: DateTime
+}
+
+input CreateCategoryInput {
+  name: String!
+  slug: String!
+  parentId: Int
+}
+
 input CreatePermissionInput {
   name: String!
   slug: String!
@@ -49,6 +72,9 @@ type Mutation {
   deleteUser(id: Int!): User!
   login(user: AuthLoginInput!): User!
   register(user: AuthRegisterInput!): User!
+  createCategory(category: CreateCategoryInput!): Category!
+  updateCategory(category: UpdateCategoryInput!, id: Int!): Category!
+  deleteCategory(id: Int!): Category!
 }
 
 type PaginationObject {
@@ -63,9 +89,9 @@ type Permission {
   slug: String!
   slugGroup: String!
   roles: [Role!]
-  created_at: DateTime!
-  updated_at: DateTime
-  deleted_at: DateTime
+  createdAt: DateTime!
+  updatedAt: DateTime
+  deletedAt: DateTime
 }
 
 type PermissionsObject {
@@ -84,6 +110,8 @@ type Query {
   users(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): UsersObject!
   user(id: Int!): User!
   userByToken(token: String!): User!
+  categories(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): CategoriesObject!
+  category(id: Int!): Category!
 }
 
 type Role {
@@ -92,9 +120,9 @@ type Role {
   slug: String!
   permissions: [Permission!]
   user: User
-  created_at: DateTime!
-  updated_at: DateTime
-  deleted_at: DateTime
+  createdAt: DateTime!
+  updatedAt: DateTime
+  deletedAt: DateTime
 }
 
 type RolesObject {
@@ -102,6 +130,12 @@ type RolesObject {
   pageSize: Int!
   total: Int!
   items: [Role!]!
+}
+
+input UpdateCategoryInput {
+  name: String!
+  slug: String!
+  parentId: Int
 }
 
 input UpdatePermissionInput {
@@ -132,16 +166,16 @@ type User {
   phone: String!
   email: String!
   status: Float!
-  last_login_ip: String!
-  last_login_at: DateTime!
+  lastLoginIp: String!
+  lastLoginAt: DateTime!
   roles: [Role!]
   permissions: [Permission!]
   flatePermissions: [String!]
   authToken: String
   authExpiresIn: Float
-  created_at: DateTime!
-  updated_at: DateTime
-  deleted_at: DateTime
+  createdAt: DateTime!
+  updatedAt: DateTime
+  deletedAt: DateTime
 }
 
 type UsersObject {
