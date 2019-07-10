@@ -1,20 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import { Input } from 'antd';
+import BraftEditor, { EditorState } from 'braft-editor';
+
+import 'braft-editor/dist/index.css';
 
 interface IProps {
   content?: string;
 }
 
 export const WYSIWYGEditor = React.forwardRef((props: IProps, ref: React.Ref<any>) => {
-  const [content, setContent] = useState<string | undefined>(props.content || undefined);
+  const [content, setContent] = useState<string | undefined>(
+    BraftEditor.createEditorState(props.content) || BraftEditor.createEditorState(null),
+  );
 
   useEffect(() => {
-    setContent(props.content);
+    setContent(BraftEditor.createEditorState(props.content));
   }, [props.content]);
 
-  const onChange = (event: React.FormEvent<HTMLTextAreaElement>) => {
-    setContent(event.currentTarget.value);
+  const onChange = (editorState: EditorState) => {
+    setContent(editorState);
   };
 
-  return <Input.TextArea ref={ref} rows={10} value={content} onChange={onChange} />;
+  const onSave = (editorState: EditorState) => {
+    console.log('xxxxxxx', editorState);
+  };
+
+  return <BraftEditor ref={ref} value={content} onChange={onChange} onSave={onSave} />;
 });

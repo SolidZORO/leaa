@@ -2,7 +2,8 @@ const webpackConst = require('./_webpack_const');
 
 // provide
 const provide = {
-  // $: 'jquery',
+  $: 'jquery',
+  jQuery: 'jquery',
 };
 
 // alias

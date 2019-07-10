@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import cx from 'classnames';
-import { Input, Form, Card, Descriptions, Row, Col } from 'antd';
+import { Card, Descriptions, Row, Col } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 import { WYSIWYGEditor } from '@leaa/dashboard/components/WYSIWYGEditor';

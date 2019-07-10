@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, message } from 'antd';
 import { useQuery, useMutation } from '@apollo/react-hooks';
+import { BraftEditorProps } from 'braft-editor';
 
 import { Article } from '@leaa/common/entrys';
 import { GET_ARTICLE, UPDATE_ARTICLE } from '@leaa/common/graphqls';
@@ -25,7 +26,7 @@ export default (props: IPage) => {
   let articleInfoFormRef: any;
   let articleExtFormRef: any;
 
-  const articleCententForm = React.createRef<{ props: { value: string } } | null>();
+  const articleCententForm = React.createRef<{ props: BraftEditorProps } | null>();
 
   const [submitVariables, setSubmitVariables] = useState<{ id: number; article: UpdateArticleInput }>();
 
@@ -77,9 +78,10 @@ export default (props: IPage) => {
       articleCententForm &&
       articleCententForm.current &&
       articleCententForm.current.props &&
-      typeof articleCententForm.current.props.value !== 'undefined'
+      articleCententForm.current.props.value &&
+      typeof articleCententForm.current.props.value.toHTML() !== 'undefined'
     ) {
-      submitData.content = articleCententForm.current.props.value;
+      submitData.content = articleCententForm.current.props.value.toHTML();
     }
 
     await setSubmitVariables({ id: Number(id), article: submitData });
