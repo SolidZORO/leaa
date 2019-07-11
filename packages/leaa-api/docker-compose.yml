@@ -13,6 +13,7 @@ services:
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - TZ=Asia/Shanghai
     volumes:
       - ${DOCKER_DATA_DIR}/mysql:/var/lib/mysql:rw,cached
 

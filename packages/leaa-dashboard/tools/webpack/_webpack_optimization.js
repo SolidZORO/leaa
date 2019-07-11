@@ -77,49 +77,49 @@ if (webpackConst.__DEV__) {
   // DEV PLUGIN
   //
 } else {
-  optimizationList.minimizer = [];
+  // optimizationList.minimizer = [];
   //
   // PROD PLUGIN
   //
-  // optimizationList.minimizer = [
-  //   new TerserPlugin({
-  //     parallel: true,
-  //     cache: true,
-  //     exclude: /\/monaco/,
-  //     terserOptions: {
-  //       ecma: 8,
-  //       warnings: false,
-  //       compress: {
-  //         unused: true,
-  //         warnings: false,
-  //         drop_debugger: true,
-  //       },
-  //       output: {
-  //         comments: false,
-  //       },
-  //       // toplevel: false,
-  //       // nameCache: null,
-  //       ie8: false,
-  //       safari10: true,
-  //       // keep_classnames: undefined,
-  //       // keep_fnames: false,
-  //       mangle: {
-  //         safari10: true,
-  //       },
-  //     },
-  //   }),
-  //   new OptimizeCSSAssetsPlugin({
-  //     assetNameRegExp: /\.css\.*(?!.*map)/g,
-  //     cssProcessorOptions: {
-  //       reduceIdents: false, // https://github.com/ben-eb/cssnano/issues/247
-  //       mergeLonghand: false,
-  //       discardComments: { removeAll: true },
-  //       safe: true,
-  //       autoprefixer: false,
-  //     },
-  //     canPrint: true,
-  //   }),
-  // ];
+  optimizationList.minimizer = [
+    new TerserPlugin({
+      parallel: true,
+      cache: true,
+      exclude: /\/monaco/,
+      terserOptions: {
+        ecma: 8,
+        warnings: false,
+        compress: {
+          unused: true,
+          warnings: false,
+          drop_debugger: true,
+        },
+        output: {
+          comments: false,
+        },
+        // toplevel: false,
+        // nameCache: null,
+        ie8: false,
+        safari10: true,
+        // keep_classnames: undefined,
+        // keep_fnames: false,
+        mangle: {
+          safari10: true,
+        },
+      },
+    }),
+    new OptimizeCSSAssetsPlugin({
+      assetNameRegExp: /\.css\.*(?!.*map)/g,
+      cssProcessorOptions: {
+        reduceIdents: false, // https://github.com/ben-eb/cssnano/issues/247
+        mergeLonghand: false,
+        discardComments: { removeAll: true },
+        safe: true,
+        autoprefixer: false,
+      },
+      canPrint: true,
+    }),
+  ];
 }
 
 module.exports = optimizationList;

@@ -50,7 +50,7 @@ class ArticleExtFormInner extends React.PureComponent<IProps> {
                 <Form.Item label={t('_lang:slug')}>
                   {getFieldDecorator('slug', {
                     initialValue: props.item ? props.item.slug : undefined,
-                    rules: [{ required: true }],
+                    rules: [],
                   })(<Input placeholder={t('_lang:slug')} />)}
                 </Form.Item>
               </Col>

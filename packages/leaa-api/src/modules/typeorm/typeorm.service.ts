@@ -27,6 +27,7 @@ export class TypeormService implements TypeOrmOptionsFactory {
       // synchronize: false,
       synchronize: true,
       logging: true,
+      charset: 'utf8mb4',
       entities: [
         // `${__dirname}/**/*.entity{.js,.ts}`,
         //
