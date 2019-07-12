@@ -12,10 +12,10 @@ import { IPage } from '@leaa/dashboard/interfaces';
 import { PageCard } from '@leaa/dashboard/components/PageCard';
 import { ErrorCard } from '@leaa/dashboard/components/ErrorCard';
 import { SubmitBar } from '@leaa/dashboard/components/SubmitBar/SubmitBar';
+import { WYSIWYGEditor } from '@leaa/dashboard/components/WYSIWYGEditor/WYSIWYGEditor';
 
 import { ArticleInfoForm } from '../_components/ArticleInfoForm/ArticleInfoForm';
 import { ArticleExtForm } from '../_components/ArticleExtForm/ArticleExtForm';
-import { ArticleContentForm } from '../_components/ArticleContentForm/ArticleContentForm';
 
 import style from './style.less';
 
@@ -101,9 +101,16 @@ export default (props: IPage) => {
         }}
       />
 
-      <ArticleContentForm
+      <WYSIWYGEditor
         ref={articleCententForm}
         content={getArticleQuery.data && getArticleQuery.data.article && getArticleQuery.data.article.content}
+        // TODO if onSave, DOM refresh and cursor will to 1st line
+        // onSave={onSubmit}
+        attachmentParams={{
+          moduleId: Number(id),
+          moduleName: 'MN',
+          moduleType: 'article',
+        }}
       />
 
       <ArticleExtForm

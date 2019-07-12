@@ -4,6 +4,9 @@ export interface IDotEnv {
   PORT: number;
 
   BASE_HOST: string;
+  PUBLIC_DIR: string;
+  ATTACHMENT_DIR: string;
+  ATTACHMENT_LIMIT_MB: number;
 
   MYSQL_HOST: string;
   MYSQL_PORT: number;

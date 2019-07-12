@@ -1,11 +1,12 @@
 import React from 'react';
 import cx from 'classnames';
-import { Col, Form, Input, Row, Descriptions, Card } from 'antd';
+import { Col, Form, Input, Row } from 'antd';
 import { withTranslation } from 'react-i18next';
 import { FormComponentProps } from 'antd/lib/form';
 
 import { Category } from '@leaa/common/entrys';
 import { ITfn } from '@leaa/dashboard/interfaces';
+import { FormCard } from '@leaa/dashboard/components/FormCard';
 
 import style from './style.less';
 
@@ -30,10 +31,8 @@ class CategoryInfoFormInner extends React.PureComponent<IProps> {
 
     return (
       <div className={cx(style['wrapper'], props.className)}>
-        <Form className={style['form-wrapper']}>
-          <Card>
-            <Descriptions title={t('_page:Category.Component.categoryInfo')} />
-
+        <FormCard title={t('_page:Category.Component.categoryInfo')}>
+          <Form className={style['form-wrapper']}>
             <Row gutter={16} className={style['form-row']}>
               <Col xs={24} sm={6}>
                 <Form.Item label={`${t('_lang:parent')} ID`}>
@@ -100,8 +99,8 @@ class CategoryInfoFormInner extends React.PureComponent<IProps> {
                 </Form.Item>
               </Col>
             </Row>
-          </Card>
-        </Form>
+          </Form>
+        </FormCard>
       </div>
     );
   }

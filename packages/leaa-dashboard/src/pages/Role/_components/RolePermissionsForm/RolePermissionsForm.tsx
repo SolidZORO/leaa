@@ -4,13 +4,14 @@ import cx from 'classnames';
 import { observable, action } from 'mobx';
 import { observer } from 'mobx-react';
 import { withTranslation } from 'react-i18next';
-import { Col, Form, Checkbox, Row, Descriptions, Card } from 'antd';
+import { Col, Form, Checkbox, Row } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import { CheckboxValueType } from 'antd/lib/checkbox/Group';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 
 import { Role, Permission } from '@leaa/common/entrys';
 import { ITfn } from '@leaa/dashboard/interfaces';
+import { FormCard } from '@leaa/dashboard/components/FormCard';
 
 import style from './style.less';
 
@@ -102,9 +103,8 @@ class RolePermissionsFormInner extends React.PureComponent<IProps> {
 
     return (
       <div className={cx(style['wrapper'], props.className)}>
-        <Form className={style['form-wrapper']}>
-          <Card>
-            <Descriptions title={t('_page:Role.Component.rolePermissions')} />
+        <FormCard title={t('_page:Role.Component.rolePermissions')}>
+          <Form className={style['form-wrapper']}>
             {permissionsGroup && (
               <div className={style['form-row']}>
                 <Checkbox
@@ -137,8 +137,8 @@ class RolePermissionsFormInner extends React.PureComponent<IProps> {
                 )}
               </div>
             )}
-          </Card>
-        </Form>
+          </Form>
+        </FormCard>
       </div>
     );
   }

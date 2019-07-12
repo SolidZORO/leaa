@@ -16,6 +16,7 @@ import { PermissionModule } from '@leaa/api/modules/permission/permission.module
 import { RoleModule } from '@leaa/api/modules/role/role.module';
 import { CategoryModule } from '@leaa/api/modules/category/category.module';
 import { ArticleModule } from '@leaa/api/modules/article/article.module';
+import { AttachmentModule } from '@leaa/api/modules/attachment/attachment.module';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { ArticleModule } from '@leaa/api/modules/article/article.module';
     RoleModule,
     CategoryModule,
     ArticleModule,
+    AttachmentModule,
   ],
   providers: [ConfigModule, AuthModule, UserModule],
   controllers: [],

@@ -31,6 +31,18 @@ export class ConfigService {
     return this.envConfig.BASE_HOST;
   }
 
+  get PUBLIC_DIR(): string {
+    return this.envConfig.PUBLIC_DIR;
+  }
+
+  get ATTACHMENT_DIR(): string {
+    return this.envConfig.ATTACHMENT_DIR;
+  }
+
+  get ATTACHMENT_LIMIT_SIZE_BY_MB(): number {
+    return Number(this.envConfig.ATTACHMENT_LIMIT_SIZE_BY_MB);
+  }
+
   //
 
   get MYSQL_HOST(): string {
@@ -78,6 +90,9 @@ export class ConfigService {
       PROTOCOL: Joi.string().valid(['http', 'https']),
       PORT: Joi.number().default(3000),
       BASE_HOST: Joi.string(),
+      PUBLIC_DIR: Joi.string().default('public'),
+      ATTACHMENT_DIR: Joi.string().default('attachments'),
+      ATTACHMENT_LIMIT_SIZE_BY_MB: Joi.number().default(5),
       //
       MYSQL_HOST: Joi.string(),
       MYSQL_PORT: Joi.number().default(3306),

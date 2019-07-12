@@ -11,6 +11,7 @@ export default {
   email: 'Email',
   name: '名字',
   title: '标题',
+  parent: '父',
   slug: '标识',
   password: '密码',
   login: '登录',

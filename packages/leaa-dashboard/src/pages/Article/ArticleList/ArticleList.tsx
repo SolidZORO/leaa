@@ -92,9 +92,9 @@ export default (props: IPage) => {
     },
     {
       title: `${t('_lang:parent')} ID`,
-      dataIndex: 'parentId',
+      dataIndex: 'categoryId',
       sorter: true,
-      sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'parentId'),
+      sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'categoryId'),
       render: (text: string) => <TableColumnId id={text} />,
     },
     {

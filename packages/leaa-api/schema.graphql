@@ -24,6 +24,41 @@ type ArticlesObject {
   items: [Article!]!
 }
 
+type Attachment {
+  id: Int!
+  createdAt: DateTime!
+  updatedAt: DateTime
+  deletedAt: DateTime
+  uuid: String!
+  title: String!
+  alt: String!
+  filename: String!
+  description: String
+  link: String
+  moduleName: String!
+  moduleId: String!
+  moduleType: String!
+  ext: String!
+  width: Int!
+  height: Int!
+  size: Int!
+  path: String!
+  at2x: Int!
+  inLocal: Int!
+  inCloud: Int!
+  categoryId: Int
+  userId: Int
+  sort: Int!
+  status: Int!
+}
+
+type AttachmentsObject {
+  page: Int
+  pageSize: Int!
+  total: Int!
+  items: [Attachment!]!
+}
+
 input AuthLoginInput {
   email: String!
   password: String!
@@ -67,6 +102,28 @@ input CreateArticleInput {
   userId: Int
   description: String
   content: String
+  status: Int!
+}
+
+input CreateAttachmentInput {
+  uuid: String!
+  title: String!
+  alt: String!
+  filename: String!
+  moduleName: String!
+  moduleId: String!
+  moduleType: String!
+  ext: String!
+  width: Int!
+  height: Int!
+  size: Int!
+  path: String!
+  at2x: Int!
+  inLocal: Int!
+  inCloud: Int!
+  categoryId: Int
+  userId: Int
+  sort: Int!
   status: Int!
 }
 
@@ -185,6 +242,14 @@ input UpdateArticleInput {
   description: String
   content: String
   status: Int
+}
+
+input UpdateAttachmentInput {
+  description: String
+  link: String
+  categoryId: Int
+  sort: Int!
+  status: Int!
 }
 
 input UpdateCategoryInput {

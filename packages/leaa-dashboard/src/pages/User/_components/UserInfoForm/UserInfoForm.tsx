@@ -7,6 +7,7 @@ import { FormComponentProps } from 'antd/lib/form';
 import { User } from '@leaa/common/entrys';
 import { SwitchNumber } from '@leaa/dashboard/components/SwitchNumber';
 import { ITfn } from '@leaa/dashboard/interfaces';
+import { FormCard } from '@leaa/dashboard/components/FormCard';
 
 import style from './style.less';
 
@@ -31,9 +32,7 @@ class UserInfoFormInner extends React.PureComponent<IProps> {
 
     return (
       <div className={cx(style['wrapper'], props.className)}>
-        <Card>
-          <Descriptions title={t('_page:User.Component.userInfo')} />
-
+        <FormCard title={t('_page:User.Component.userInfo')}>
           <Form className={style['form-wrapper']}>
             <Row gutter={16} className={style['form-row']}>
               <Col xs={24} sm={6}>
@@ -99,7 +98,7 @@ class UserInfoFormInner extends React.PureComponent<IProps> {
               </Row>
             )}
           </Form>
-        </Card>
+        </FormCard>
       </div>
     );
   }

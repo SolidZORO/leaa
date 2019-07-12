@@ -16,7 +16,9 @@ import { AppModule } from './app.module';
     logger: new LoggerService(),
   });
 
-  const publicPath = path.resolve('public');
+  const configService = await app.get(ConfigService);
+
+  const publicPath = path.resolve(configService.PUBLIC_DIR);
   app.useStaticAssets(publicPath);
 
   app.disable('x-powered-by');
@@ -31,7 +33,6 @@ import { AppModule } from './app.module';
     // preflightContinue: false;
   });
 
-  const configService = await app.get(ConfigService);
   await app.listen(configService.PORT);
 
   cliUtil.emoji({

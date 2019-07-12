@@ -43,7 +43,11 @@ export class AuthService {
     };
   }
 
-  public async validateUser(req: Request): Promise<User | undefined | boolean> {
+  public async validateUser(payload: IJwtPayload): Promise<User | undefined | boolean> {
+    return this.userService.user(payload.id, {});
+  }
+
+  public async validateUserByReq(req: Request): Promise<User | undefined | boolean> {
     if (req.body && ['IntrospectionQuery', 'login', 'register'].some(item => req.body.query.includes(item))) {
       return true;
     }
@@ -84,7 +88,7 @@ export class AuthService {
       throw Error('User payload error');
     }
 
-    return this.userService.user(userPayload.id, {});
+    return this.validateUser(userPayload);
   }
 
   async login(args: AuthLoginInput): Promise<User | undefined> {

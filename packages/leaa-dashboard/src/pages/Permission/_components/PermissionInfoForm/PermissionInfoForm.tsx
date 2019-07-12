@@ -6,6 +6,7 @@ import { FormComponentProps } from 'antd/lib/form';
 
 import { Permission } from '@leaa/common/entrys';
 import { ITfn } from '@leaa/dashboard/interfaces';
+import { FormCard } from '@leaa/dashboard/components/FormCard';
 
 import style from './style.less';
 
@@ -30,10 +31,8 @@ class PermissionInfoFormInner extends React.PureComponent<IProps> {
 
     return (
       <div className={cx(style['wrapper'], props.className)}>
-        <Form className={style['form-wrapper']}>
-          <Card>
-            <Descriptions title={t('_page:Permission.Component.permissionInfo')} />
-
+        <FormCard title={t('_page:Permission.Component.permissionInfo')}>
+          <Form className={style['form-wrapper']}>
             <Row gutter={16} className={style['form-row']}>
               <Col xs={24} sm={6}>
                 <Form.Item label={t('_lang:name')}>
@@ -79,8 +78,8 @@ class PermissionInfoFormInner extends React.PureComponent<IProps> {
                 </Col>
               </Row>
             )}
-          </Card>
-        </Form>
+          </Form>
+        </FormCard>
       </div>
     );
   }

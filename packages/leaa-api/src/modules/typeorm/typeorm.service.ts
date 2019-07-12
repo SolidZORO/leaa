@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm';
 
-import { User, Permission, Role, Category, Article } from '@leaa/common/entrys';
+import { User, Permission, Role, Category, Article, Attachment } from '@leaa/common/entrys';
 import { ConfigService } from '@leaa/api/modules/config/config.service';
 
 const CONSTRUCTOR_NAME = 'TypeormService';
@@ -10,7 +10,7 @@ const CONSTRUCTOR_NAME = 'TypeormService';
 export class TypeormService implements TypeOrmOptionsFactory {
   private logger: Logger;
 
-  constructor(readonly config: ConfigService) {
+  constructor(readonly configService: ConfigService) {
     this.logger = new Logger(CONSTRUCTOR_NAME);
   }
 
@@ -19,11 +19,11 @@ export class TypeormService implements TypeOrmOptionsFactory {
       type: 'mysql',
       connectTimeout: 10000,
       acquireTimeout: 10000,
-      host: this.config.MYSQL_HOST,
-      port: this.config.MYSQL_PORT,
-      username: this.config.MYSQL_USER,
-      password: this.config.MYSQL_PASSWORD,
-      database: this.config.MYSQL_DATABASE,
+      host: this.configService.MYSQL_HOST,
+      port: this.configService.MYSQL_PORT,
+      username: this.configService.MYSQL_USER,
+      password: this.configService.MYSQL_PASSWORD,
+      database: this.configService.MYSQL_DATABASE,
       // synchronize: false,
       synchronize: true,
       logging: true,
@@ -37,6 +37,7 @@ export class TypeormService implements TypeOrmOptionsFactory {
         Role,
         Category,
         Article,
+        Attachment,
       ],
     };
   }

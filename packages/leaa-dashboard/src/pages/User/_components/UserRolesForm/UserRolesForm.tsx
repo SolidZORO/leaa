@@ -3,13 +3,14 @@ import cx from 'classnames';
 import { observable, action } from 'mobx';
 import { observer } from 'mobx-react';
 import { withTranslation } from 'react-i18next';
-import { Col, Form, Checkbox, Row, Descriptions, Card } from 'antd';
+import { Col, Form, Checkbox, Row } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import { CheckboxValueType } from 'antd/lib/checkbox/Group';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 
 import { User, Role } from '@leaa/common/entrys';
 import { ITfn } from '@leaa/dashboard/interfaces';
+import { FormCard } from '@leaa/dashboard/components/FormCard';
 
 import style from './style.less';
 
@@ -97,9 +98,8 @@ class UserRolesFormInner extends React.PureComponent<IProps> {
 
     return (
       <div className={cx(style['wrapper'], props.className)}>
-        <Form className={style['form-wrapper']}>
-          <Card>
-            <Descriptions title={t('_page:User.Component.userRoles')} />
+        <FormCard title={t('_page:User.Component.userRoles')}>
+          <Form className={style['form-wrapper']}>
             {props.roles && (
               <Row gutter={0} className={style['form-row']}>
                 <Checkbox
@@ -127,8 +127,8 @@ class UserRolesFormInner extends React.PureComponent<IProps> {
                 )}
               </Row>
             )}
-          </Card>
-        </Form>
+          </Form>
+        </FormCard>
       </div>
     );
   }

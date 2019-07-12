@@ -9,6 +9,7 @@ import { ITfn } from '@leaa/dashboard/interfaces';
 import { SwitchNumber } from '@leaa/dashboard/components/SwitchNumber';
 
 import style from './style.less';
+import { FormCard } from '@leaa/dashboard/components/FormCard';
 
 interface IFormProps extends FormComponentProps {
   className?: string;
@@ -29,12 +30,11 @@ class ArticleInfoFormInner extends React.PureComponent<IProps> {
     const { props } = this;
     const { getFieldDecorator } = this.props.form;
 
+    // title={t('_page:Article.Component.articleInfo')}
     return (
       <div className={cx(style['wrapper'], props.className)}>
-        <Form className={style['form-wrapper']}>
-          <Card>
-            <Descriptions title={t('_page:Article.Component.articleInfo')} />
-
+        <FormCard>
+          <Form className={style['form-wrapper']}>
             <Row gutter={16} className={style['form-row']}>
               <Col xs={24} sm={14}>
                 <Form.Item label={t('_lang:title')}>
@@ -64,8 +64,8 @@ class ArticleInfoFormInner extends React.PureComponent<IProps> {
                 </Form.Item>
               </Col>
             </Row>
-          </Card>
-        </Form>
+          </Form>
+        </FormCard>
       </div>
     );
   }

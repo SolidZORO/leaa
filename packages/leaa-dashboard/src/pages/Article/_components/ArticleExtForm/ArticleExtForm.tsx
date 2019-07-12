@@ -6,6 +6,7 @@ import { FormComponentProps } from 'antd/lib/form';
 
 import { Article } from '@leaa/common/entrys';
 import { ITfn } from '@leaa/dashboard/interfaces';
+import { FormCard } from '@leaa/dashboard/components/FormCard';
 
 import style from './style.less';
 
@@ -30,21 +31,8 @@ class ArticleExtFormInner extends React.PureComponent<IProps> {
 
     return (
       <div className={cx(style['wrapper'], props.className)}>
-        <Form className={style['form-wrapper']}>
-          <Card>
-            <Descriptions title={t('_page:Article.Component.extendedInfo')} />
-
-            <Row gutter={16} className={style['form-row']}>
-              <Col xs={24}>
-                <Form.Item label={t('_lang:description')}>
-                  {getFieldDecorator('description', {
-                    initialValue: props.item ? props.item.description : undefined,
-                    rules: [],
-                  })(<Input.TextArea rows={3} placeholder={t('_lang:description')} />)}
-                </Form.Item>
-              </Col>
-            </Row>
-
+        <FormCard title={t('_page:Article.Component.extendedInfo')}>
+          <Form className={style['form-wrapper']}>
             <Row gutter={16} className={style['form-row']}>
               <Col xs={24} sm={8}>
                 <Form.Item label={t('_lang:slug')}>
@@ -87,8 +75,19 @@ class ArticleExtFormInner extends React.PureComponent<IProps> {
                 </Form.Item>
               </Col>
             </Row>
-          </Card>
-        </Form>
+
+            <Row gutter={16} className={style['form-row']}>
+              <Col xs={24}>
+                <Form.Item label={t('_lang:description')}>
+                  {getFieldDecorator('description', {
+                    initialValue: props.item ? props.item.description : undefined,
+                    rules: [],
+                  })(<Input.TextArea rows={3} placeholder={t('_lang:description')} />)}
+                </Form.Item>
+              </Col>
+            </Row>
+          </Form>
+        </FormCard>
       </div>
     );
   }

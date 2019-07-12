@@ -11,6 +11,7 @@ export default {
   email: 'Email',
   name: 'Name',
   title: 'Title',
+  parent: 'Parent',
   slug: 'Slug',
   password: 'Password',
   login: 'Login',

@@ -21,7 +21,7 @@ export default (props: RouteComponentProps) => {
     const authIsAvailably = authUtil.checkAuthIsAvailably();
 
     if (authIsAvailably) {
-      props.history.goBack();
+      props.history.push('/');
     }
   });
 
