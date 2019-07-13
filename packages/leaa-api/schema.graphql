@@ -159,6 +159,10 @@ The javascript `Date` as string. Type represents date and time as the ISO Date s
 """
 scalar DateTime
 
+type DeleteAttachmentsObject {
+  items: [String!]!
+}
+
 type Mutation {
   createRole(role: CreateRoleInput!): Role!
   updateRole(role: UpdateRoleInput!, id: Int!): Role!
@@ -178,7 +182,7 @@ type Mutation {
   updateArticle(article: UpdateArticleInput!, id: Int!): Article!
   deleteArticle(id: Int!): Article!
   updateAttachment(attachment: UpdateAttachmentInput!, uuid: String!): Attachment!
-  deleteAttachment(uuid: String!): Attachment!
+  deleteAttachments(uuid: [String!]!): DeleteAttachmentsObject!
 }
 
 type PaginationObject {
@@ -218,7 +222,7 @@ type Query {
   category(id: Int!): Category!
   articles(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): ArticlesObject!
   article(id: Int!): Article!
-  attachments(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String, type: String, moduleName: String, moduleId: Int, moduleType: String, categoryId: Int, userId: Int): AttachmentsObject!
+  attachments(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String, type: String, moduleName: String, moduleId: Int, moduleType: String, categoryId: Int, userId: Int, refreshHash: Int): AttachmentsObject!
   attachment(uuid: String!): Attachment!
 }
 

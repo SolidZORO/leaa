@@ -27,6 +27,8 @@ interface IProps {
   className?: string;
   onSave?: () => void;
   onRemoveMedias?: (attachments: IMediaItem[]) => void;
+  onUploadSuccess?: () => void;
+  onOpenBraftFinder?: () => void;
 }
 
 const controls: any[] = [
@@ -62,7 +64,7 @@ const codeHighlighterOptions = {
 
 const tableOptions = {
   defaultColumns: 3,
-  defaultRows: 3,
+  defaultRows: 5,
   withDropdown: true,
   exportAttrString: '',
 };
@@ -79,6 +81,8 @@ export const WYSIWYGEditor = React.forwardRef((props: IProps, ref: React.Ref<any
   useEffect(() => {
     setContent(BraftEditor.createEditorState(props.content));
   }, [props.content]);
+
+  //
 
   const attachmentToMedia = (attachment: Attachment): IMediaItem => ({
     id: attachment.uuid,
@@ -99,13 +103,13 @@ export const WYSIWYGEditor = React.forwardRef((props: IProps, ref: React.Ref<any
     setContent(editorState);
   };
 
-  const onSave = (editorState: EditorState) => {
-    setContent(editorState);
-
-    if (props.onSave) {
-      props.onSave();
-    }
-  };
+  // const onSave = (editorState: EditorState) => {
+  //   setContent(editorState);
+  //
+  //   if (props.onSave) {
+  //     props.onSave();
+  //   }
+  // };
 
   const uploadFn = (param: any) => {
     const xhr = new XMLHttpRequest();
@@ -113,13 +117,13 @@ export const WYSIWYGEditor = React.forwardRef((props: IProps, ref: React.Ref<any
     const token = authUtil.getAuthToken();
 
     const onSuccess = (event: ProgressEvent) => {
-      const response: { attachment: Attachment } = xhr.response ? JSON.parse(xhr.response) : { attachment: {} };
-      const url = `${process.env.API_HOST}${response.attachment.path}`;
+      console.log('Success >>>>', event);
 
-      console.log('Success >>>>', response, event);
-      setMediaItems([...mediaItems, attachmentToMedia(response.attachment)]);
-
-      param.success({ url });
+      if (xhr.response) {
+        const response: { attachment: Attachment } = JSON.parse(xhr.response);
+        const url = `${process.env.API_HOST}${response.attachment.path}`;
+        param.success({ url });
+      }
     };
 
     const onProgress = (event: ProgressEvent) => {
@@ -149,16 +153,22 @@ export const WYSIWYGEditor = React.forwardRef((props: IProps, ref: React.Ref<any
     }
   };
 
+  const onOpenBraftFinder = () => {
+    if (props.onOpenBraftFinder) {
+      props.onOpenBraftFinder();
+    }
+  };
+
   return (
     <BraftEditor
       ref={ref}
       value={content}
       className={cx(style['wrapper'], props.className)}
       onChange={onChange}
-      onSave={onSave}
+      // onSave={onSave}
       controls={controls}
       media={{ uploadFn, items: mediaItems }}
-      hooks={{ 'remove-medias': onRemoveMedias }}
+      hooks={{ 'remove-medias': onRemoveMedias, 'open-braft-finder': onOpenBraftFinder }}
       {...props.braftEditorProps}
     />
   );

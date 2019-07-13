@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import Jimp from 'jimp';
 import { Express, Request } from 'express';
-import { Repository, FindOneOptions, Like } from 'typeorm';
+import { Repository, FindOneOptions, Like, In } from 'typeorm';
 import ImageSize from 'image-size';
 import { Injectable, Inject } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -13,6 +13,7 @@ import {
   AttachmentsObject,
   AttachmentArgs,
   UpdateAttachmentInput,
+  DeleteAttachmentsObject,
 } from '@leaa/common/dtos/attachment';
 import { ConfigService } from '@leaa/api/modules/config/config.service';
 import { formatUtil, loggerUtil } from '@leaa/api/utils';
@@ -54,11 +55,6 @@ export class AttachmentService {
     const nextArgs = formatUtil.formatArgs(args);
 
     const queryWhere: any[] = [];
-
-    // default order ASC
-    if (!args.orderSort && !args.orderBy) {
-      nextArgs.order = { createdAt: 'ASC' };
-    }
 
     let qLike;
 
@@ -130,7 +126,7 @@ export class AttachmentService {
     }
 
     const attachmentData: CreateAttachmentInput = {
-      uuid: path.basename(file.filename, ext),
+      uuid: path.basename(file.filename, ext).replace('@2x', ''),
       title,
       alt: title,
       type: `${file.mimetype.split('/')[0]}`,
@@ -182,19 +178,17 @@ export class AttachmentService {
     return nextItem;
   }
 
-  async deleteAttachment(uuid: string): Promise<Attachment | undefined> {
-    const prevItem = await this.attachmentRepository.findOne({ uuid });
+  async deleteAttachments(uuid: string[]): Promise<DeleteAttachmentsObject | undefined> {
+    const prevItems = await this.attachmentRepository.find({ uuid: In(uuid) });
 
-    if (!prevItem) {
+    if (!prevItems) {
       const message = `delete item ${uuid} does not exist`;
 
       loggerUtil.warn(message, CONSTRUCTOR_NAME);
       throw new Error(message);
     }
 
-    const nextItem = await this.attachmentRepository.remove(prevItem);
-
-    console.log(nextItem);
+    const nextItem = await this.attachmentRepository.remove(prevItems);
 
     if (!nextItem) {
       const message = `delete item ${uuid} faild`;
@@ -205,6 +199,8 @@ export class AttachmentService {
 
     loggerUtil.warn(`delete item ${uuid} successful: ${JSON.stringify(nextItem)}\n\n`, CONSTRUCTOR_NAME);
 
-    return nextItem;
+    return {
+      items: nextItem.map(i => i.uuid),
+    };
   }
 }

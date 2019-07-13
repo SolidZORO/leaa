@@ -20,20 +20,9 @@ export const UPDATE_ATTACHMENT = gql`
 `;
 
 export const DELETE_ATTACHMENT = gql`
-  mutation($uuid: String!) {
-    deleteAttachment(uuid: $uuid) {
-      uuid
-      title
-      type
-      description
-      categoryId
-      userId
-      moduleName
-      moduleId
-      moduleType
-      path
-      status
-      createdAt
+  mutation($uuid: [String!]!) {
+    deleteAttachments(uuid: $uuid) {
+      items
     }
   }
 `;

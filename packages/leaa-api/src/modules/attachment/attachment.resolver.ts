@@ -6,6 +6,7 @@ import {
   AttachmentsObject,
   AttachmentArgs,
   UpdateAttachmentInput,
+  DeleteAttachmentsObject,
 } from '@leaa/common/dtos/attachment';
 import { AttachmentService } from './attachment.service';
 
@@ -34,8 +35,10 @@ export class AttachmentResolver {
     return this.attachmentService.updateAttachment(uuid, args);
   }
 
-  @Mutation(() => Attachment)
-  async deleteAttachment(@Args({ name: 'uuid', type: () => String }) uuid: string): Promise<Attachment | undefined> {
-    return this.attachmentService.deleteAttachment(uuid);
+  @Mutation(() => DeleteAttachmentsObject)
+  async deleteAttachments(
+    @Args({ name: 'uuid', type: () => [String] }) uuid: string[],
+  ): Promise<DeleteAttachmentsObject | undefined> {
+    return this.attachmentService.deleteAttachments(uuid);
   }
 }

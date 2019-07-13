@@ -4,7 +4,7 @@ import { Button, message } from 'antd';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { BraftEditorProps } from 'braft-editor';
 
-import { Article, Attachment } from '@leaa/common/entrys';
+import { Article } from '@leaa/common/entrys';
 import { IMediaItem } from '@leaa/common/interfaces';
 import { GET_ARTICLE, UPDATE_ARTICLE, GET_ATTACHMENTS, DELETE_ATTACHMENT } from '@leaa/common/graphqls';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/constants';
@@ -35,7 +35,13 @@ export default (props: IPage) => {
     variables: getArticleVariables,
   });
 
-  const getArticleEditorAttachmentsVariables = { moduleName: 'article', moduleType: 'editor', moduleId: Number(id) };
+  const [getArticleEditorAttachmentsVariables, setgetArticleEditorAttachmentsVariables] = useState<AttachmentsArgs>({
+    moduleName: 'article',
+    moduleType: 'editor',
+    moduleId: Number(id),
+    orderSort: 'ASC',
+    refreshHash: 0,
+  });
   const getArticleEditorAttachmentsQuery = useQuery<{ attachments: AttachmentsObject }, AttachmentsArgs>(
     GET_ATTACHMENTS,
     { variables: getArticleEditorAttachmentsVariables },
@@ -51,16 +57,25 @@ export default (props: IPage) => {
     ],
   });
 
-  const [deleteAttachmentVariables, setDeleteAttachmentVariables] = useState<{ uuid: string }>();
-  const [deleteAttachmentMutate, deleteAttachmentMutation] = useMutation<Attachment>(DELETE_ATTACHMENT, {
-    variables: deleteAttachmentVariables,
+  const [deleteAttachmentsVariables, setDeleteAttachmentsVariables] = useState<{ uuid: string[] }>();
+  const [deleteAttachmentsMutate, deleteAttachmentsMutation] = useMutation<{ uuid: string[] }>(DELETE_ATTACHMENT, {
+    variables: deleteAttachmentsVariables,
     onCompleted: () => message.success(t('_lang:deletedSuccessfully')),
     refetchQueries: () => [{ query: GET_ATTACHMENTS, variables: getArticleEditorAttachmentsVariables }],
   });
 
   const onRemoveMedias = async (attachments: IMediaItem[]) => {
-    await setDeleteAttachmentVariables({ uuid: attachments.map(a => a.id)[0] });
-    await deleteAttachmentMutate();
+    console.log(attachments.map(a => a.id));
+
+    await setDeleteAttachmentsVariables({ uuid: attachments.map(a => a.id) });
+    await deleteAttachmentsMutate();
+  };
+
+  const onOpenBraftFinder = async () => {
+    setgetArticleEditorAttachmentsVariables({
+      ...getArticleEditorAttachmentsVariables,
+      refreshHash: new Date().getMilliseconds(),
+    });
   };
 
   const onSubmit = async () => {
@@ -115,7 +130,7 @@ export default (props: IPage) => {
       {getArticleQuery.error ? <ErrorCard error={getArticleQuery.error} /> : null}
       {getArticleEditorAttachmentsQuery.error ? <ErrorCard error={getArticleEditorAttachmentsQuery.error} /> : null}
       {updateArticleMutation.error ? <ErrorCard error={updateArticleMutation.error} /> : null}
-      {deleteAttachmentMutation.error ? <ErrorCard error={deleteAttachmentMutation.error} /> : null}
+      {deleteAttachmentsMutation.error ? <ErrorCard error={deleteAttachmentsMutation.error} /> : null}
 
       <ArticleInfoForm
         item={getArticleQuery.data && getArticleQuery.data.article}
@@ -142,6 +157,7 @@ export default (props: IPage) => {
           getArticleEditorAttachmentsQuery.data.attachments.items
         }
         onRemoveMedias={onRemoveMedias}
+        onOpenBraftFinder={onOpenBraftFinder}
       />
 
       <ArticleExtForm

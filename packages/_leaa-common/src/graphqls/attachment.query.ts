@@ -13,6 +13,7 @@ export const GET_ATTACHMENTS = gql`
     $moduleType: String
     $categoryId: Int
     $userId: Int
+    $refreshHash: Int
   ) {
     attachments(
       page: $page
@@ -26,6 +27,7 @@ export const GET_ATTACHMENTS = gql`
       moduleType: $moduleType
       categoryId: $categoryId
       userId: $userId
+      refreshHash: $refreshHash
     ) {
       items {
         uuid

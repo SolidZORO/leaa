@@ -21,4 +21,7 @@ export class AttachmentsArgs extends ItemsArgs {
 
   @Field(() => Int, { nullable: true })
   readonly userId?: number;
+
+  @Field(() => Int, { nullable: true })
+  readonly refreshHash?: number;
 }

@@ -13,7 +13,7 @@ import {
 import { BaseService } from '@leaa/api/modules/base/base.service';
 import { formatUtil } from '@leaa/api/utils';
 
-const CONSTRUCTOR_NAME = 'CategoryService';
+// const CONSTRUCTOR_NAME = 'CategoryService';
 
 @Injectable()
 export class CategoryService extends BaseService<
