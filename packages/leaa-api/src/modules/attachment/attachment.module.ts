@@ -17,6 +17,6 @@ import { MulterService } from './multer.service';
     }),
   ],
   controllers: [AttachmentController],
-  providers: [AttachmentService],
+  providers: [AttachmentService, MulterService],
 })
 export class AttachmentModule {}

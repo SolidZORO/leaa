@@ -38,13 +38,13 @@
     "@leaa/common": "0.0.1",
     "@nestjs/common": "^6.5.2",
     "@nestjs/core": "^6.5.2",
-    "@nestjs/graphql": "^6.2.5",
+    "@nestjs/graphql": "^6.3.0",
     "@nestjs/jwt": "^6.1.1",
     "@nestjs/passport": "^6.1.0",
     "@nestjs/platform-express": "^6.5.2",
     "@nestjs/typeorm": "^6.1.2",
-    "apollo-server-core": "^2.6.8",
-    "apollo-server-express": "^2.6.8",
+    "apollo-server-core": "^2.6.9",
+    "apollo-server-express": "^2.6.9",
     "bcryptjs": "^2.4.3",
     "class-validator": "^0.9.1",
     "dotenv": "^8.0.0",
@@ -54,6 +54,7 @@
     "graphql-shield": "^6.0.3",
     "graphql-tools": "^4.0.5",
     "image-size": "^0.7.4",
+    "jimp": "^0.6.4",
     "joi": "^14.3.1",
     "jsondiffpatch": "^0.3.11",
     "jsonwebtoken": "^8.5.1",
@@ -72,7 +73,7 @@
     "typescript": "3.5.3",
     "uuid": "^3.3.2",
     "winston": "^3.2.1",
-    "winston-daily-rotate-file": "^3.9.0"
+    "winston-daily-rotate-file": "^3.10.0"
   },
   "devDependencies": {
     "@nestjs/testing": "^6.5.2",
@@ -90,13 +91,13 @@
     "@types/passport-jwt": "^3.0.1",
     "@types/supertest": "^2.0.8",
     "@types/uuid": "^3.4.5",
-    "@typescript-eslint/eslint-plugin": "1.11.0",
-    "@typescript-eslint/parser": "1.11.0",
+    "@typescript-eslint/eslint-plugin": "1.12.0",
+    "@typescript-eslint/parser": "1.12.0",
     "babel-plugin-module-resolver": "^3.2.0",
     "concurrently": "^4.1.1",
     "eslint": "6.0.1",
     "eslint-config-airbnb": "17.1.1",
-    "eslint-config-airbnb-typescript": "^4.0.0",
+    "eslint-config-airbnb-typescript": "^4.0.1",
     "eslint-config-prettier": "^6.0.0",
     "eslint-loader": "2.2.1",
     "eslint-plugin-css-modules": "2.11.0",
@@ -113,8 +114,7 @@
     "ts-node": "8.3.0",
     "ts-node-dev": "^1.0.0-pre.40",
     "tsconfig-paths": "3.8.0",
-    "typescript-eslint-parser": "^22.0.0",
-    "wait-on": "^3.2.0"
+    "typescript-eslint-parser": "^22.0.0"
   },
   "jest": {
     "moduleFileExtensions": [
