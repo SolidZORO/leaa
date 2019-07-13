@@ -4,7 +4,7 @@ import { ItemsArgs } from '@leaa/common/dtos/_common';
 
 type IFormatArgs = ItemsArgs & FindManyOptions;
 
-function formatArgs(args: IFormatArgs): IFormatArgs {
+function formatArgs<T>(args: IFormatArgs & T): IFormatArgs & T {
   if (!args) {
     throw Error('missing format args');
   }

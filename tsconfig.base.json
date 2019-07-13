@@ -2,8 +2,6 @@
   "compilerOptions": {
     "strict": true,
     "pretty": true,
-    "noEmit": true,
-    "skipLibCheck": true,
     "removeComments": true,
     "esModuleInterop": true,
     "noImplicitReturns": true,

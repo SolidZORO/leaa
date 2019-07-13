@@ -1,12 +1,13 @@
 import _ from 'lodash';
 import cx from 'classnames';
 import React, { useState, useEffect } from 'react';
-import { message } from 'antd';
-import BraftEditor, { EditorState, BraftEditorProps, MediaType } from 'braft-editor';
+import BraftEditor, { EditorState, BraftEditorProps } from 'braft-editor';
 import Table from 'braft-extensions/dist/table';
 import CodeHighlighter from 'braft-extensions/dist/code-highlighter';
 import HeaderId from 'braft-extensions/dist/header-id';
 import { authUtil } from '@leaa/dashboard/utils';
+import { IMediaItem } from '@leaa/common/interfaces';
+import { Attachment } from '@leaa/common/entrys';
 import { CreateAttachmentInput } from '@leaa/common/dtos/attachment';
 
 import 'braft-editor/dist/index.css';
@@ -16,47 +17,37 @@ import 'braft-extensions/dist/code-highlighter.css';
 import style from './style.less';
 
 interface IProps {
-  attachmentParams: Pick<CreateAttachmentInput, 'userId' | 'moduleId' | 'moduleName' | 'moduleType' | 'userId'>;
+  attachmentParams: Pick<
+    CreateAttachmentInput,
+    'type' | 'userId' | 'moduleId' | 'moduleName' | 'moduleType' | 'userId'
+  >;
+  attachmentItems?: Attachment[];
   content?: string;
   braftEditorProps?: BraftEditorProps;
   className?: string;
   onSave?: () => void;
+  onRemoveMedias?: (attachments: IMediaItem[]) => void;
 }
 
 const controls: any[] = [
-  // 'undo',
-  // 'redo',
-  // 'separator',
   'headings',
-  // 'font-size',
-  // 'line-height',
-  // 'letter-spacing',
   'separator',
+  //
   'text-color',
-  // 'bold',
-  // 'italic',
-  // 'underline',
   'strike-through',
-  // 'superscript',
-  // 'subscript',
   'list-ul',
   'list-ol',
   'blockquote',
   'table',
   'code',
   'remove-styles',
-  // 'emoji',
-  // 'separator',
-  // 'text-indent',
-  // 'text-align',
-  // 'separator',
   'separator',
+  //
   'link',
   'hr',
   'separator',
+  //
   'media',
-  // 'separator',
-  // 'clear',
 ];
 
 const codeHighlighterOptions = {
@@ -84,11 +75,25 @@ export const WYSIWYGEditor = React.forwardRef((props: IProps, ref: React.Ref<any
   const [content, setContent] = useState<EditorState>(
     BraftEditor.createEditorState(props.content) || BraftEditor.createEditorState(null),
   );
-  //
 
   useEffect(() => {
     setContent(BraftEditor.createEditorState(props.content));
   }, [props.content]);
+
+  const attachmentToMedia = (attachment: Attachment): IMediaItem => ({
+    id: attachment.uuid,
+    type: attachment.type.toUpperCase(),
+    url: `${process.env.API_HOST}${attachment.path}`,
+  });
+
+  const attachmentsToMedias = (attachmentItems?: Attachment[]): IMediaItem[] =>
+    (attachmentItems && attachmentItems.map(a => attachmentToMedia(a))) || [];
+
+  const [mediaItems, setMediaItems] = useState<IMediaItem[]>(attachmentsToMedias(props.attachmentItems));
+
+  useEffect(() => {
+    setMediaItems(attachmentsToMedias(props.attachmentItems));
+  }, [props.attachmentItems]);
 
   const onChange = (editorState: EditorState) => {
     setContent(editorState);
@@ -108,34 +113,21 @@ export const WYSIWYGEditor = React.forwardRef((props: IProps, ref: React.Ref<any
     const token = authUtil.getAuthToken();
 
     const onSuccess = (event: ProgressEvent) => {
-      console.log('onSuccess', event);
+      const response: { attachment: Attachment } = xhr.response ? JSON.parse(xhr.response) : { attachment: {} };
+      const url = `${process.env.API_HOST}${response.attachment.path}`;
 
-      param.success({
-        url: xhr.responseText,
-        meta: {
-          loop: true,
-        },
-      });
+      console.log('Success >>>>', response, event);
+      setMediaItems([...mediaItems, attachmentToMedia(response.attachment)]);
 
-      // param.success(res => {
-      //   console.log(res);
-      // });
+      param.success({ url });
     };
 
     const onProgress = (event: ProgressEvent) => {
-      console.log('onProgress', event);
-      // param.progress((event.loaded / event.total) * 100);
+      param.progress((event.loaded / event.total) * 100);
     };
 
     const onError = (event: ProgressEvent) => {
-      // console.log('onError', event);
-      //
-      // // message.destroy();
-      // message.error('上传失败');
-      //
-      // param.error({
-      //   msg: 'unable to upload.',
-      // });
+      console.log('Error >>>>', event);
     };
 
     xhr.upload.addEventListener('progress', onProgress, false);
@@ -143,14 +135,18 @@ export const WYSIWYGEditor = React.forwardRef((props: IProps, ref: React.Ref<any
     xhr.addEventListener('error', onError, false);
     xhr.addEventListener('abort', onError, false);
 
-    fd.append('file', param.file);
-
     _.map(props.attachmentParams, (v, k) => fd.append(`${k}`, `${v}`));
 
-    xhr.open('POST', `${process.env.UPLOAD_HOST}`, true);
-
+    fd.append('file', param.file);
+    xhr.open('POST', `${process.env.UPLOAD_ENDPOINT}`, true);
     xhr.setRequestHeader('Authorization', token ? `Bearer ${token}` : '');
     xhr.send(fd);
+  };
+
+  const onRemoveMedias = (attachments: IMediaItem[]) => {
+    if (props.onRemoveMedias) {
+      props.onRemoveMedias(attachments);
+    }
   };
 
   return (
@@ -161,7 +157,8 @@ export const WYSIWYGEditor = React.forwardRef((props: IProps, ref: React.Ref<any
       onChange={onChange}
       onSave={onSave}
       controls={controls}
-      media={{ uploadFn }}
+      media={{ uploadFn, items: mediaItems }}
+      hooks={{ 'remove-medias': onRemoveMedias }}
       {...props.braftEditorProps}
     />
   );

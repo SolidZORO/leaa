@@ -65,7 +65,7 @@ export const loggerUtil = {
     nextItem,
     constructorName,
   }: {
-    id: number;
+    id: number | string;
     prevItem: any;
     nextItem: any;
     constructorName: string;

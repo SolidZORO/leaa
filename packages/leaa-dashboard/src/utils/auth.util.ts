@@ -1,8 +1,5 @@
 import { AUTH_TOKEN_NAME, AUTH_EXPIRES_IN_NAME, AUTH_INFO } from '@leaa/dashboard/constants';
 import { IAuthInfo } from '@leaa/dashboard/interfaces';
-import { useQuery } from '@apollo/react-hooks';
-import { RolesObject, RolesArgs } from '@leaa/common/dtos/role';
-import { GET_ROLES, GET_USER_BY_TOKEN, GET_RAM } from '@leaa/common/graphqls';
 
 const setAuthToken = (token: string, expiresIn: number) => {
   // sync API tims format
@@ -97,27 +94,6 @@ const checkAuthIsAvailably = (): boolean => {
   return true;
 };
 
-const refreshAuthPermissions = (): void => {
-  console.log(333333333333);
-  const getRamQuery = useQuery<{ token: string | null }, RolesArgs>(GET_RAM);
-
-  // if (getAuthToken()) {
-  //
-  //   console.log(getRamQuery);
-  // }
-
-  // const authExpiresIn = localStorage.getItem(AUTH_EXPIRES_IN_NAME);
-  // const authToken = getAuthToken();
-  //
-  // if (!authToken || !authToken || !authExpiresIn || Math.floor(Date.now() / 1000) >= Number(authExpiresIn)) {
-  //   removeAuth();
-  //
-  //   return false;
-  // }
-  //
-  // return true;
-};
-
 export const authUtil = {
   setAuthToken,
   setAuthInfo,
@@ -127,5 +103,4 @@ export const authUtil = {
   removeAuthInfo,
   removeAuth,
   checkAuthIsAvailably,
-  refreshAuthPermissions,
 };

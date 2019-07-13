@@ -18,6 +18,10 @@ export class Attachment extends Base {
   @Field(() => String)
   alt!: string;
 
+  @Column({ type: 'varchar', length: 16 })
+  @Field(() => String)
+  type!: string;
+
   @Column({ type: 'varchar', length: 255 })
   @Field(() => String)
   filename!: string;
@@ -35,7 +39,7 @@ export class Attachment extends Base {
   moduleName!: string;
 
   @Column({ type: 'int' })
-  @Field(() => String)
+  @Field(() => Int)
   moduleId!: number;
 
   @Column({ type: 'varchar', length: 64 })

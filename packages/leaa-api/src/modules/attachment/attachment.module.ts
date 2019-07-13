@@ -5,6 +5,7 @@ import { MulterModule } from '@nestjs/platform-express';
 import { Attachment } from '@leaa/common/entrys';
 import { ConfigService } from '@leaa/api/modules/config/config.service';
 import { AttachmentController } from './attachment.controller';
+import { AttachmentResolver } from './attachment.resolver';
 import { AttachmentService } from './attachment.service';
 import { MulterService } from './multer.service';
 
@@ -17,6 +18,6 @@ import { MulterService } from './multer.service';
     }),
   ],
   controllers: [AttachmentController],
-  providers: [AttachmentService, MulterService],
+  providers: [AttachmentService, AttachmentResolver, MulterService],
 })
 export class AttachmentModule {}

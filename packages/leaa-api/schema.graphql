@@ -32,11 +32,12 @@ type Attachment {
   uuid: String!
   title: String!
   alt: String!
+  type: String!
   filename: String!
   description: String
   link: String
   moduleName: String!
-  moduleId: String!
+  moduleId: Int!
   moduleType: String!
   ext: String!
   width: Int!
@@ -109,6 +110,7 @@ input CreateAttachmentInput {
   uuid: String!
   title: String!
   alt: String!
+  type: String!
   filename: String!
   moduleName: String!
   moduleId: String!
@@ -175,6 +177,8 @@ type Mutation {
   createArticle(article: CreateArticleInput!): Article!
   updateArticle(article: UpdateArticleInput!, id: Int!): Article!
   deleteArticle(id: Int!): Article!
+  updateAttachment(attachment: UpdateAttachmentInput!, uuid: String!): Attachment!
+  deleteAttachment(uuid: String!): Attachment!
 }
 
 type PaginationObject {
@@ -214,6 +218,8 @@ type Query {
   category(id: Int!): Category!
   articles(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): ArticlesObject!
   article(id: Int!): Article!
+  attachments(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String, type: String, moduleName: String, moduleId: Int, moduleType: String, categoryId: Int, userId: Int): AttachmentsObject!
+  attachment(uuid: String!): Attachment!
 }
 
 type Role {

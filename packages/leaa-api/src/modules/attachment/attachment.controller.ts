@@ -23,6 +23,6 @@ export class AttachmentController {
     @Body() body: CreateAttachmentInput,
     @UploadedFile() file: Express.Multer.File,
   ) {
-    await this.attachmentService.saveAttachment(req, body, file);
+    return this.attachmentService.craeteAttachment(req, body, file);
   }
 }

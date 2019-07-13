@@ -12,6 +12,9 @@ export class CreateAttachmentInput {
   alt!: string;
 
   @Field(() => String)
+  type!: string;
+
+  @Field(() => String)
   filename!: string;
 
   // @Field(() => String, { nullable: true })

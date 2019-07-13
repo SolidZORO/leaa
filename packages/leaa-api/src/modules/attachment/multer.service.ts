@@ -44,7 +44,8 @@ export class MulterService implements MulterOptionsFactory {
         fileSize: this.configService.ATTACHMENT_LIMIT_SIZE_BY_MB * 1024 * 1024,
       },
       fileFilter: (req, file, cb) => {
-        const fileTypes = /image|jpeg|jpg|png|gif|webp|pdf|text/;
+        console.log('FFFF', file);
+        const fileTypes = /image|jpeg|jpg|png|gif|webp|pdf|text|mp4|mp3|video/;
         const mimetype = fileTypes.test(file.mimetype);
         const extname = fileTypes.test(path.extname(file.originalname).toLowerCase());
 

@@ -4,11 +4,13 @@ import { Button, message } from 'antd';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { BraftEditorProps } from 'braft-editor';
 
-import { Article } from '@leaa/common/entrys';
-import { GET_ARTICLE, UPDATE_ARTICLE } from '@leaa/common/graphqls';
+import { Article, Attachment } from '@leaa/common/entrys';
+import { IMediaItem } from '@leaa/common/interfaces';
+import { GET_ARTICLE, UPDATE_ARTICLE, GET_ATTACHMENTS, DELETE_ATTACHMENT } from '@leaa/common/graphqls';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/constants';
 import { ArticleArgs, UpdateArticleInput } from '@leaa/common/dtos/article';
 import { IPage } from '@leaa/dashboard/interfaces';
+import { AttachmentsObject, AttachmentsArgs } from '@leaa/common/dtos/attachment';
 import { PageCard } from '@leaa/dashboard/components/PageCard';
 import { ErrorCard } from '@leaa/dashboard/components/ErrorCard';
 import { SubmitBar } from '@leaa/dashboard/components/SubmitBar/SubmitBar';
@@ -28,18 +30,38 @@ export default (props: IPage) => {
 
   const articleCententForm = React.createRef<{ props: BraftEditorProps } | null>();
 
-  const [submitVariables, setSubmitVariables] = useState<{ id: number; article: UpdateArticleInput }>();
-
   const getArticleVariables = { id: Number(id) };
   const getArticleQuery = useQuery<{ article: Article }, ArticleArgs>(GET_ARTICLE, {
     variables: getArticleVariables,
   });
 
+  const getArticleEditorAttachmentsVariables = { moduleName: 'article', moduleType: 'editor', moduleId: Number(id) };
+  const getArticleEditorAttachmentsQuery = useQuery<{ attachments: AttachmentsObject }, AttachmentsArgs>(
+    GET_ATTACHMENTS,
+    { variables: getArticleEditorAttachmentsVariables },
+  );
+
+  const [submitVariables, setSubmitVariables] = useState<{ id: number; article: UpdateArticleInput }>();
   const [updateArticleMutate, updateArticleMutation] = useMutation<Article>(UPDATE_ARTICLE, {
     variables: submitVariables,
     onCompleted: () => message.success(t('_lang:updatedSuccessfully')),
-    refetchQueries: () => [{ query: GET_ARTICLE, variables: getArticleVariables }],
+    refetchQueries: () => [
+      { query: GET_ARTICLE, variables: getArticleVariables },
+      { query: GET_ATTACHMENTS, variables: getArticleEditorAttachmentsVariables },
+    ],
   });
+
+  const [deleteAttachmentVariables, setDeleteAttachmentVariables] = useState<{ uuid: string }>();
+  const [deleteAttachmentMutate, deleteAttachmentMutation] = useMutation<Attachment>(DELETE_ATTACHMENT, {
+    variables: deleteAttachmentVariables,
+    onCompleted: () => message.success(t('_lang:deletedSuccessfully')),
+    refetchQueries: () => [{ query: GET_ATTACHMENTS, variables: getArticleEditorAttachmentsVariables }],
+  });
+
+  const onRemoveMedias = async (attachments: IMediaItem[]) => {
+    await setDeleteAttachmentVariables({ uuid: attachments.map(a => a.id)[0] });
+    await deleteAttachmentMutate();
+  };
 
   const onSubmit = async () => {
     let hasError = false;
@@ -91,7 +113,9 @@ export default (props: IPage) => {
   return (
     <PageCard title={t(`${props.route.namei18n}`)} className={style['wapper']} loading={false}>
       {getArticleQuery.error ? <ErrorCard error={getArticleQuery.error} /> : null}
+      {getArticleEditorAttachmentsQuery.error ? <ErrorCard error={getArticleEditorAttachmentsQuery.error} /> : null}
       {updateArticleMutation.error ? <ErrorCard error={updateArticleMutation.error} /> : null}
+      {deleteAttachmentMutation.error ? <ErrorCard error={deleteAttachmentMutation.error} /> : null}
 
       <ArticleInfoForm
         item={getArticleQuery.data && getArticleQuery.data.article}
@@ -107,10 +131,17 @@ export default (props: IPage) => {
         // TODO if onSave, DOM refresh and cursor will to 1st line
         // onSave={onSubmit}
         attachmentParams={{
+          type: 'image',
           moduleId: Number(id),
-          moduleName: 'MN',
-          moduleType: 'article',
+          moduleName: 'article',
+          moduleType: 'editor',
         }}
+        attachmentItems={
+          getArticleEditorAttachmentsQuery.data &&
+          getArticleEditorAttachmentsQuery.data.attachments &&
+          getArticleEditorAttachmentsQuery.data.attachments.items
+        }
+        onRemoveMedias={onRemoveMedias}
       />
 
       <ArticleExtForm

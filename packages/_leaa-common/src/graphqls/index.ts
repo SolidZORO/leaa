@@ -14,3 +14,6 @@ export * from './category.mutation';
 
 export * from './article.query';
 export * from './article.mutation';
+
+export * from './attachment.query';
+export * from './attachment.mutation';

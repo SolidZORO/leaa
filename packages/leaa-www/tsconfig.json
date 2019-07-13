@@ -7,11 +7,13 @@
     "jsx": "preserve",
     "target": "es5",
     "module": "esnext",
+    "skipLibCheck": true,
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "sourceMap": false,
     "incremental": true,
     "isolatedModules": true,
+    "noEmit": true,
     "forceConsistentCasingInFileNames": true,
     "lib": [
       "dom",

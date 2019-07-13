@@ -5,7 +5,7 @@ import { authUtil } from '@leaa/dashboard/utils';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { OperationDefinitionNode } from 'graphql';
 
-const httpLink = new HttpLink({ uri: process.env.API_HOST });
+const httpLink = new HttpLink({ uri: process.env.GRAPHQL_ENDPOINT });
 
 const authLink = new ApolloLink((operation, forward) => {
   const token = authUtil.getAuthToken();
