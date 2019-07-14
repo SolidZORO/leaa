@@ -43,15 +43,15 @@ class ArticleExtFormInner extends React.PureComponent<IProps> {
                 </Form.Item>
               </Col>
 
-              <Col xs={24} sm={4}>
-                <Form.Item label={t('_lang:user')}>
-                  {getFieldDecorator('userId', {
-                    initialValue: props.item ? props.item.userId : undefined,
-                    rules: [{ required: true }],
-                    normalize: e => Number(e),
-                  })(<Input type="number" placeholder={t('_lang:user')} />)}
-                </Form.Item>
-              </Col>
+              {/*<Col xs={24} sm={4}>*/}
+              {/*  <Form.Item label={t('_lang:user')}>*/}
+              {/*    {getFieldDecorator('userId', {*/}
+              {/*      initialValue: props.item ? props.item.userId : undefined,*/}
+              {/*      rules: [{ required: true }],*/}
+              {/*      normalize: e => Number(e),*/}
+              {/*    })(<Input type="number" placeholder={t('_lang:user')} />)}*/}
+              {/*  </Form.Item>*/}
+              {/*</Col>*/}
 
               <Col xs={24} sm={6}>
                 <Form.Item label={t('_lang:createdAt')}>

@@ -1,0 +1,53 @@
+import React, { useState, useEffect } from 'react';
+import { Select } from 'antd';
+import { useTranslation } from 'react-i18next';
+import { useQuery } from '@apollo/react-hooks';
+
+import { GET_CATEGORIES } from '@leaa/common/graphqls';
+import { CategoriesObject, CategoriesArgs } from '@leaa/common/dtos/category';
+import { ErrorCard } from '@leaa/dashboard/components/ErrorCard';
+import cx from 'classnames';
+
+import style from './style.less';
+
+interface IProps {
+  value?: number | undefined;
+  className?: string;
+  onChange?: (value: number) => void;
+}
+
+export const SelectCategoryId = React.forwardRef((props: IProps, ref: React.Ref<any>) => {
+  const { t } = useTranslation();
+
+  const [value, setValue] = useState<number | undefined>(props.value);
+
+  useEffect(() => {
+    setValue(props.value);
+  }, [props.value]);
+
+  const getCategoriesQuery = useQuery<{ categories: CategoriesObject }, CategoriesArgs>(GET_CATEGORIES);
+
+  const onChange = (v: number) => {
+    setValue(v);
+
+    if (props.onChange) {
+      props.onChange(v);
+    }
+  };
+
+  return (
+    <div className={cx(style['wrapper'], props.className)}>
+      {getCategoriesQuery.error ? <ErrorCard error={getCategoriesQuery.error} /> : null}
+      <Select defaultValue={value} value={value} ref={ref} placeholder={t('_lang:category')} onChange={onChange}>
+        {getCategoriesQuery &&
+          getCategoriesQuery.data &&
+          getCategoriesQuery.data.categories &&
+          getCategoriesQuery.data.categories.items.map(category => (
+            <Select.Option key={category.id} value={category.id}>
+              {category.name}
+            </Select.Option>
+          ))}
+      </Select>
+    </div>
+  );
+});

@@ -1,12 +1,13 @@
 import React from 'react';
 import cx from 'classnames';
-import { Col, Form, Input, Row, Descriptions, Card } from 'antd';
+import { Col, Form, Input, Row } from 'antd';
 import { withTranslation } from 'react-i18next';
 import { FormComponentProps } from 'antd/lib/form';
 
 import { Article } from '@leaa/common/entrys';
 import { ITfn } from '@leaa/dashboard/interfaces';
 import { SwitchNumber } from '@leaa/dashboard/components/SwitchNumber';
+import { SelectCategoryId } from '@leaa/dashboard/components/SelectCategoryId';
 import { FormCard } from '@leaa/dashboard/components/FormCard';
 
 import style from './style.less';
@@ -50,8 +51,7 @@ class ArticleInfoFormInner extends React.PureComponent<IProps> {
                   {getFieldDecorator('categoryId', {
                     initialValue: props.item ? props.item.categoryId : undefined,
                     rules: [{ required: true }],
-                    normalize: e => Number(e),
-                  })(<Input type="number" placeholder={t('_lang:category')} />)}
+                  })(<SelectCategoryId />)}
                 </Form.Item>
               </Col>
 
