@@ -24,7 +24,7 @@ export class UserService extends BaseService<User, UsersArgs, UsersObject, UserA
     super(userRepository);
   }
 
-  async getUserFlatPermissions(user: User | undefined): Promise<string[] | undefined> {
+  async getFlatPermissions(user: User | undefined): Promise<string[] | undefined> {
     const nextUser = user;
 
     if (!nextUser || !nextUser.roles) {
@@ -48,7 +48,7 @@ export class UserService extends BaseService<User, UsersArgs, UsersObject, UserA
       return nextUser;
     }
 
-    nextUser.flatePermissions = await this.getUserFlatPermissions(user);
+    nextUser.flatePermissions = await this.getFlatPermissions(user);
 
     return nextUser;
   }

@@ -10,6 +10,10 @@ export const GET_ARTICLES = gql`
         content
         description
         categoryId
+        category {
+          name
+          slug
+        }
         userId
         status
         createdAt
@@ -27,6 +31,10 @@ export const GET_ARTICLE = gql`
       content
       description
       categoryId
+      category {
+        name
+        slug
+      }
       userId
       status
       createdAt

@@ -15,6 +15,7 @@ type Article {
   description: String
   content: String
   status: Float!
+  category: Category
 }
 
 type ArticlesObject {

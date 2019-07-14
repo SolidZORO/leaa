@@ -91,11 +91,9 @@ export default (props: IPage) => {
       sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'slug'),
     },
     {
-      title: `${t('_lang:parent')} ID`,
-      dataIndex: 'categoryId',
-      sorter: true,
-      sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'categoryId'),
-      render: (text: string) => <TableColumnId id={text} />,
+      title: t('_lang:category'),
+      dataIndex: 'category',
+      render: (text: string, record: Article) => <span>{record.category && record.category.name}</span>,
     },
     {
       title: t('_lang:createdAt'),

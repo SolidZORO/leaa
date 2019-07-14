@@ -30,7 +30,6 @@ export class RoleService extends BaseService<Role, RolesArgs, RolesObject, RoleA
     }
 
     nextArgs.where = whereQuery;
-    // nextArgs.relations = ['permissions'];
     nextArgs.relations = [];
 
     const [items, total] = await this.roleRepository.findAndCount(nextArgs);

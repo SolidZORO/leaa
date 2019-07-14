@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Repository, FindOneOptions, Like } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { Article } from '@leaa/common/entrys';
+import { Article, User, Category } from '@leaa/common/entrys';
 import {
   ArticlesArgs,
   ArticlesObject,
@@ -24,8 +24,21 @@ export class ArticleService extends BaseService<
   CreateArticleInput,
   UpdateArticleInput
 > {
-  constructor(@InjectRepository(Article) private readonly articleRepository: Repository<Article>) {
+  constructor(
+    @InjectRepository(Article) private readonly articleRepository: Repository<Article>,
+    @InjectRepository(Category) private readonly categoryRepository: Repository<Category>,
+  ) {
     super(articleRepository);
+  }
+
+  async getCategory(article: Article): Promise<Category | undefined> {
+    const nextArticle = article;
+
+    if (!nextArticle || !nextArticle.categoryId) {
+      return undefined;
+    }
+
+    return this.categoryRepository.findOne(article.id);
   }
 
   async articles(args: ArticlesArgs): Promise<ArticlesObject> {

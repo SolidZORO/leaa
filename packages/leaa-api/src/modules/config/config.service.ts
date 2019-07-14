@@ -2,7 +2,7 @@ import Joi from 'joi';
 import dotenv, { DotenvParseOutput } from 'dotenv';
 import fs from 'fs';
 
-import { IDotEnv } from '@leaa/common/interfaces';
+import { IDotEnv } from '@leaa/api/interfaces';
 
 type IEnvConfig = IDotEnv | DotenvParseOutput;
 

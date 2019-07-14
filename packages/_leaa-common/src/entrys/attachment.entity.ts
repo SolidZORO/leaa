@@ -1,6 +1,6 @@
 import { Index, Entity, Column } from 'typeorm';
 import { ObjectType, Field, Int } from 'type-graphql';
-import { Base } from '@leaa/common/entrys/_base.entity';
+import { Base } from './_base.entity';
 
 @Entity('attachments')
 @Index('attachments_uuid_unique', ['uuid'], { unique: true })

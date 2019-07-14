@@ -7,9 +7,9 @@ import { FormComponentProps } from 'antd/lib/form';
 import { Article } from '@leaa/common/entrys';
 import { ITfn } from '@leaa/dashboard/interfaces';
 import { SwitchNumber } from '@leaa/dashboard/components/SwitchNumber';
+import { FormCard } from '@leaa/dashboard/components/FormCard';
 
 import style from './style.less';
-import { FormCard } from '@leaa/dashboard/components/FormCard';
 
 interface IFormProps extends FormComponentProps {
   className?: string;

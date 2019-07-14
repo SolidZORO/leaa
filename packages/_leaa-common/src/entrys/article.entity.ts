@@ -1,6 +1,8 @@
 import { Index, Entity, Column } from 'typeorm';
 import { ObjectType, Field, Int } from 'type-graphql';
-import { Base } from '@leaa/common/entrys/_base.entity';
+
+import { Base } from './_base.entity';
+import { Category } from './category.entity';
 
 @Entity('articles')
 @Index('articles_title_unique', ['title'], { unique: true })
@@ -34,4 +36,7 @@ export class Article extends Base {
   @Column({ type: 'tinyint', default: -1 })
   @Field()
   status?: number;
+
+  @Field(() => Category, { nullable: true })
+  category?: Category;
 }

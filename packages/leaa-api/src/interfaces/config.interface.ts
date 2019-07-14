@@ -6,7 +6,9 @@ export interface IDotEnv {
   BASE_HOST: string;
   PUBLIC_DIR: string;
   ATTACHMENT_DIR: string;
-  ATTACHMENT_LIMIT_MB: number;
+  ATTACHMENT_LIMIT_SIZE_BY_MB: number;
+  ATTACHMENT_SAVED_IN_LOCAL: 0 | 1;
+  ATTACHMENT_SAVED_IN_CLOUD: 0 | 1;
 
   MYSQL_HOST: string;
   MYSQL_PORT: number;

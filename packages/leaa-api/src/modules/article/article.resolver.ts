@@ -1,7 +1,7 @@
-import { Args, Query, Mutation, Resolver } from '@nestjs/graphql';
+import { Args, Query, Mutation, Resolver, ResolveProperty, Parent } from '@nestjs/graphql';
 import { Int } from 'type-graphql';
 
-import { Article } from '@leaa/common/entrys';
+import { Article, Category } from '@leaa/common/entrys';
 import {
   ArticlesArgs,
   ArticlesObject,
@@ -14,6 +14,11 @@ import { ArticleService } from './article.service';
 @Resolver(() => Article)
 export class ArticleResolver {
   constructor(private readonly articleService: ArticleService) {}
+
+  @ResolveProperty(() => Category)
+  async category(@Parent() article: Article): Promise<Category | undefined> {
+    return this.articleService.getCategory(article);
+  }
 
   @Query(() => ArticlesObject)
   async articles(@Args() args: ArticlesArgs): Promise<ArticlesObject | undefined> {

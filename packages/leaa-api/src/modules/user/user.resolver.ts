@@ -2,17 +2,16 @@ import { Args, Query, Mutation, Resolver, Parent, ResolveProperty } from '@nestj
 import { Int, Float } from 'type-graphql';
 
 import { User } from '@leaa/common/entrys';
-import { RoleService } from '@leaa/api/modules/role/role.service';
 import { UsersArgs, UsersObject, UserArgs, CreateUserInput, UpdateUserInput } from '@leaa/common/dtos/user';
 import { UserService } from './user.service';
 
 @Resolver(() => User)
 export class UserResolver {
-  constructor(private readonly userService: UserService, private readonly roleService: RoleService) {}
+  constructor(private readonly userService: UserService) {}
 
-  @ResolveProperty()
+  @ResolveProperty(() => [String])
   async flatePermissions(@Parent() user: User | undefined): Promise<string[] | undefined> {
-    return this.userService.getUserFlatPermissions(user);
+    return this.userService.getFlatPermissions(user);
   }
 
   @Query(() => Float)
