@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Repository, FindOneOptions, Like } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { Article, User, Category } from '@leaa/common/entrys';
+import { Article, Category } from '@leaa/common/entrys';
 import {
   ArticlesArgs,
   ArticlesObject,

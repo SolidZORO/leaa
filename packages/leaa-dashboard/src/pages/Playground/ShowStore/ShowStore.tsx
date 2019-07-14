@@ -3,6 +3,7 @@ import { DatePicker } from 'antd';
 import { RouteComponentProps, Link } from 'react-router-dom';
 import { useStore } from '@leaa/dashboard/stores';
 import { authUtil } from '@leaa/dashboard/utils';
+import { AttachmentBox } from '@leaa/dashboard/components/AttachmentBox';
 
 export default (props: RouteComponentProps) => {
   const store = useStore();
@@ -11,7 +12,8 @@ export default (props: RouteComponentProps) => {
 
   return (
     <div>
-      <h1>SHOW SHOW</h1>
+      <h2>BOX</h2>
+      <AttachmentBox />
       <hr />
       <DatePicker />
       <Link to="/show/9">SHOW 9</Link>

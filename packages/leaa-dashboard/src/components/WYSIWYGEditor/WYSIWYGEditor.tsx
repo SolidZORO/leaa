@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import cx from 'classnames';
 import i18n from 'i18next';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, forwardRef } from 'react';
 import BraftEditor, { EditorState, BraftEditorProps } from 'braft-editor';
 import Table from 'braft-extensions/dist/table';
 import CodeHighlighter from 'braft-extensions/dist/code-highlighter';
@@ -74,7 +74,7 @@ BraftEditor.use(Table(tableOptions));
 BraftEditor.use(CodeHighlighter(codeHighlighterOptions));
 BraftEditor.use(HeaderId());
 
-export const WYSIWYGEditor = React.forwardRef((props: IProps, ref: React.Ref<any>) => {
+export const WYSIWYGEditor = forwardRef((props: IProps, ref: React.Ref<any>) => {
   const [content, setContent] = useState<EditorState>(
     BraftEditor.createEditorState(props.content) || BraftEditor.createEditorState(null),
   );

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, forwardRef } from 'react';
 import { Select } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/react-hooks';
@@ -16,7 +16,7 @@ interface IProps {
   onChange?: (value: number) => void;
 }
 
-export const SelectCategoryId = React.forwardRef((props: IProps, ref: React.Ref<any>) => {
+export const SelectCategoryId = forwardRef((props: IProps, ref: React.Ref<any>) => {
   const { t } = useTranslation();
 
   const [value, setValue] = useState<number | undefined>(props.value);
