@@ -1,7 +1,9 @@
 import _ from 'lodash';
+import axios from 'axios';
 import cx from 'classnames';
 import i18n from 'i18next';
 import React, { useState, useEffect, forwardRef } from 'react';
+import { message } from 'antd';
 import BraftEditor, { EditorState, BraftEditorProps } from 'braft-editor';
 import Table from 'braft-extensions/dist/table';
 import CodeHighlighter from 'braft-extensions/dist/code-highlighter';
@@ -102,40 +104,28 @@ export const WYSIWYGEditor = forwardRef((props: IProps, ref: React.Ref<any>) => 
     setContent(editorState);
   };
 
-  const uploadFn = (param: any) => {
-    const xhr = new XMLHttpRequest();
-    const fd = new FormData();
+  const uploadFn = async (param: any) => {
     const token = authUtil.getAuthToken();
+    const formData = new FormData();
+    formData.append('file', param.file);
+    _.map(props.attachmentParams, (v, k) => formData.append(`${k}`, `${v}`));
 
-    const onSuccess = (event: ProgressEvent) => {
-      console.log('Success >>>>', event);
-
-      if (xhr.response) {
-        const response: { attachment: Attachment } = JSON.parse(xhr.response);
-        const url = `${process.env.API_HOST}${response.attachment.path}`;
-        param.success({ url });
-      }
-    };
-
-    const onProgress = (event: ProgressEvent) => {
-      param.progress((event.loaded / event.total) * 100);
-    };
-
-    const onError = (event: ProgressEvent) => {
-      console.log('Error >>>>', event);
-    };
-
-    xhr.upload.addEventListener('progress', onProgress, false);
-    xhr.addEventListener('load', onSuccess, false);
-    xhr.addEventListener('error', onError, false);
-    xhr.addEventListener('abort', onError, false);
-
-    _.map(props.attachmentParams, (v, k) => fd.append(`${k}`, `${v}`));
-
-    fd.append('file', param.file);
-    xhr.open('POST', `${process.env.UPLOAD_ENDPOINT}`, true);
-    xhr.setRequestHeader('Authorization', token ? `Bearer ${token}` : '');
-    xhr.send(fd);
+    await axios
+      .post(`${process.env.UPLOAD_ENDPOINT}`, formData, {
+        headers: { Authorization: token ? `Bearer ${token}` : '' },
+        onUploadProgress: event => {
+          param.progress((event.loaded / event.total) * 100);
+        },
+      })
+      .then(e => {
+        if (e.data && e.data.attachment) {
+          const url = `${process.env.API_HOST}${e.data.attachment.path}`;
+          param.success({ url });
+        }
+      })
+      .catch((e: Error) => {
+        message.info(e.message);
+      });
   };
 
   const onRemoveMedias = (attachments: IMediaItem[]) => {

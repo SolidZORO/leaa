@@ -4,6 +4,7 @@ import { RouteComponentProps, Link } from 'react-router-dom';
 import { useStore } from '@leaa/dashboard/stores';
 import { authUtil } from '@leaa/dashboard/utils';
 import { AttachmentBox } from '@leaa/dashboard/components/AttachmentBox';
+import { WYSIWYGEditor } from '@leaa/dashboard/components/WYSIWYGEditor';
 
 export default (props: RouteComponentProps) => {
   const store = useStore();
@@ -13,7 +14,14 @@ export default (props: RouteComponentProps) => {
   return (
     <div>
       <h2>BOX</h2>
-      <AttachmentBox />
+      <AttachmentBox
+        attachmentParams={{
+          type: 'image',
+          moduleId: 2,
+          moduleName: 'article',
+          moduleType: 'box',
+        }}
+      />
       <hr />
       <DatePicker />
       <Link to="/show/9">SHOW 9</Link>

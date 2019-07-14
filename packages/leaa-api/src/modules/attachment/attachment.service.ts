@@ -106,7 +106,13 @@ export class AttachmentService {
   }
 
   async craeteAttachment(req: Request, body: CreateAttachmentInput, file: Express.Multer.File) {
-    const isImage = file.mimetype.includes(IAttachmentType.IMAGE);
+    if (!file) {
+      const message = 'not found attachment';
+
+      return loggerUtil.warn(message, CONSTRUCTOR_NAME);
+    }
+
+    const isImage = file.mimetype ? file.mimetype.includes(IAttachmentType.IMAGE) : false;
     const at2x = this.multerService.isAt2x(file.originalname) ? 1 : 0;
     let width = 0;
     let height = 0;
@@ -129,7 +135,7 @@ export class AttachmentService {
       uuid: path.basename(file.filename, ext).replace('@2x', ''),
       title,
       alt: title,
-      type: `${file.mimetype.split('/')[0]}`,
+      type: file.mimetype ? `${file.mimetype.split('/')[0]}` : '',
       filename: file.filename,
       moduleName: body.moduleName,
       moduleId: typeof body.moduleId !== 'undefined' ? Number(body.moduleId) : 0,
