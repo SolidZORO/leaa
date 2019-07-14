@@ -1,10 +1,10 @@
-import _ from 'lodash';
-import React, { forwardRef, useCallback } from 'react';
-import { useDropzone } from 'react-dropzone';
-import { authUtil } from '@leaa/dashboard/utils';
-import axios from 'axios';
-import { message } from 'antd';
-import { CreateAttachmentInput } from '@leaa/common/dtos/attachment';
+import React, { useState } from 'react';
+import { useQuery } from '@apollo/react-hooks';
+
+import { GET_ATTACHMENTS } from '@leaa/common/graphqls';
+import { IAttachmentParams } from '@leaa/common/interfaces';
+import { AttachmentsArgs, AttachmentsObject } from '@leaa/common/dtos/attachment';
+import { ErrorCard } from '@leaa/dashboard/components/ErrorCard';
 
 import { AttachmentDropzone } from './_components/AttachmentDropzone/AttachmentDropzone';
 import { AttachmentList } from './_components/AttachmentList/AttachmentList';
@@ -14,17 +14,38 @@ import style from './style.less';
 interface IProps {
   value?: number | undefined;
   onChange?: (checked: boolean) => void;
-  attachmentParams: Pick<
-    CreateAttachmentInput,
-    'type' | 'userId' | 'moduleId' | 'moduleName' | 'moduleType' | 'userId'
-  >;
+  attachmentParams: IAttachmentParams;
 }
 
 export const AttachmentBox = (props: IProps) => {
+  const [getAttachmentsVariables, setgetAttachmentsVariables] = useState<AttachmentsArgs>({
+    ...props.attachmentParams,
+  });
+
+  const getAttachmentsQuery = useQuery<{ attachments: AttachmentsObject }, AttachmentsArgs>(GET_ATTACHMENTS, {
+    variables: getAttachmentsVariables,
+  });
+
+  const refreshAttachments = () => {
+    setgetAttachmentsVariables({
+      ...props.attachmentParams,
+      refreshHash: new Date().getMilliseconds(),
+    });
+  };
+
   return (
-    <>
-      <AttachmentDropzone attachmentParams={{ ...props.attachmentParams }} />
-      <AttachmentList />
-    </>
+    <div className={style['wrapper']}>
+      {getAttachmentsQuery.error ? <ErrorCard error={getAttachmentsQuery.error} /> : null}
+      <AttachmentDropzone attachmentParams={{ ...props.attachmentParams }} onUploadedCallback={refreshAttachments} />
+      <AttachmentList
+        attachmentParams={{ ...props.attachmentParams }}
+        attachments={
+          getAttachmentsQuery &&
+          getAttachmentsQuery.data &&
+          getAttachmentsQuery.data.attachments &&
+          getAttachmentsQuery.data.attachments.items
+        }
+      />
+    </div>
   );
 };

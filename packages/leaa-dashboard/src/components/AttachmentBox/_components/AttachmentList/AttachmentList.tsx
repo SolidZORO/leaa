@@ -1,63 +1,61 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { DndProvider } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import update from 'immutability-helper';
 
+import { Attachment } from '@leaa/common/entrys';
+import { IAttachmentParams } from '@leaa/common/interfaces';
 import { AttachmentItem } from '../AttachmentItem/AttachmentItem';
 
 import style from './style.less';
 
 interface IProps {
   value?: number | string | undefined;
+  attachments?: Attachment[];
   onChange?: (checked: boolean) => void;
+  attachmentParams: IAttachmentParams;
 }
 
 export const AttachmentList = (props: IProps) => {
-  const [cards, setCards] = useState([
-    {
-      id: 1,
-      text: 'Write a cool JS library',
-    },
-    {
-      id: 2,
-      text: 'Make it generic enough',
-    },
-    {
-      id: 3,
-      text: 'Write README',
-    },
-  ]);
+  const [attachments, setAttachments] = useState(props.attachments);
+
+  useEffect(() => {
+    setAttachments(props.attachments);
+  }, [props.attachments]);
 
   const moveCard = (dragIndex: number, hoverIndex: number) => {
-    const dragCard = cards[dragIndex];
+    if (attachments) {
+      const dragCard = attachments[dragIndex];
 
-    setCards(
-      update(cards, {
-        $splice: [[dragIndex, 1], [hoverIndex, 0, dragCard]],
-      }),
-    );
+      setAttachments(
+        update(attachments, {
+          $splice: [[dragIndex, 1], [hoverIndex, 0, dragCard]],
+        }),
+      );
+    }
   };
 
   const stopMoveCard = (isStopMove: boolean) => {
     if (isStopMove) {
-      console.log('STOP', cards);
+      console.log('STOP', attachments);
     }
   };
 
   return (
     <div className={style['wrapper']}>
       <DndProvider backend={HTML5Backend}>
-        {cards.map((card, i) => (
-          <AttachmentItem
-            key={card.id}
-            index={i}
-            id={card.id}
-            text={`#${card.id} ${card.text}`}
-            value={`#${card.id} ${card.text}`}
-            moveCardCallback={moveCard}
-            stopMoveCardCallback={stopMoveCard}
-          />
-        ))}
+        {attachments &&
+          attachments.map((a, i) => (
+            <AttachmentItem
+              key={a.uuid}
+              index={i}
+              id={a.id}
+              text={`${a.title}`}
+              value={`${a.title}`}
+              moveCardCallback={moveCard}
+              stopMoveCardCallback={stopMoveCard}
+            />
+          ))}
       </DndProvider>
     </div>
   );

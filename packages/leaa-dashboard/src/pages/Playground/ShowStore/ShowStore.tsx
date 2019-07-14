@@ -17,9 +17,9 @@ export default (props: RouteComponentProps) => {
       <AttachmentBox
         attachmentParams={{
           type: 'image',
-          moduleId: 2,
-          moduleName: 'article',
-          moduleType: 'box',
+          moduleId: 9,
+          moduleName: 'playground',
+          moduleType: 'testbox',
         }}
       />
       <hr />

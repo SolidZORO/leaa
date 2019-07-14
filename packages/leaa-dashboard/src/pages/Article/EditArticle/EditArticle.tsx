@@ -35,7 +35,7 @@ export default (props: IPage) => {
     variables: getArticleVariables,
   });
 
-  const [getArticleEditorAttachmentsVariables, setgetArticleEditorAttachmentsVariables] = useState<AttachmentsArgs>({
+  const [getArticleEditorAttachmentsVariables, setGetArticleEditorAttachmentsVariables] = useState<AttachmentsArgs>({
     moduleName: 'article',
     moduleType: 'editor',
     moduleId: Number(id),
@@ -72,7 +72,7 @@ export default (props: IPage) => {
   };
 
   const onOpenBraftFinder = async () => {
-    setgetArticleEditorAttachmentsVariables({
+    setGetArticleEditorAttachmentsVariables({
       ...getArticleEditorAttachmentsVariables,
       refreshHash: new Date().getMilliseconds(),
     });

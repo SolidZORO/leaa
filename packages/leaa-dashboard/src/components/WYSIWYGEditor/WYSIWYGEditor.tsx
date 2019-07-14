@@ -9,9 +9,8 @@ import Table from 'braft-extensions/dist/table';
 import CodeHighlighter from 'braft-extensions/dist/code-highlighter';
 import HeaderId from 'braft-extensions/dist/header-id';
 import { authUtil } from '@leaa/dashboard/utils';
-import { IMediaItem } from '@leaa/common/interfaces';
+import { IMediaItem, IAttachmentParams } from '@leaa/common/interfaces';
 import { Attachment } from '@leaa/common/entrys';
-import { CreateAttachmentInput } from '@leaa/common/dtos/attachment';
 
 import 'braft-editor/dist/index.css';
 import 'braft-extensions/dist/table.css';
@@ -20,10 +19,7 @@ import 'braft-extensions/dist/code-highlighter.css';
 import style from './style.less';
 
 interface IProps {
-  attachmentParams: Pick<
-    CreateAttachmentInput,
-    'type' | 'userId' | 'moduleId' | 'moduleName' | 'moduleType' | 'userId'
-  >;
+  attachmentParams: IAttachmentParams;
   attachmentItems?: Attachment[];
   content?: string;
   braftEditorProps?: BraftEditorProps;
