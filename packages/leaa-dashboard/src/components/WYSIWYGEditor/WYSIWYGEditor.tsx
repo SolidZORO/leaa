@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import cx from 'classnames';
+import i18n from 'i18next';
 import React, { useState, useEffect } from 'react';
 import BraftEditor, { EditorState, BraftEditorProps } from 'braft-editor';
 import Table from 'braft-extensions/dist/table';
@@ -82,8 +83,6 @@ export const WYSIWYGEditor = React.forwardRef((props: IProps, ref: React.Ref<any
     setContent(BraftEditor.createEditorState(props.content));
   }, [props.content]);
 
-  //
-
   const attachmentToMedia = (attachment: Attachment): IMediaItem => ({
     id: attachment.uuid,
     type: attachment.type.toUpperCase(),
@@ -102,14 +101,6 @@ export const WYSIWYGEditor = React.forwardRef((props: IProps, ref: React.Ref<any
   const onChange = (editorState: EditorState) => {
     setContent(editorState);
   };
-
-  // const onSave = (editorState: EditorState) => {
-  //   setContent(editorState);
-  //
-  //   if (props.onSave) {
-  //     props.onSave();
-  //   }
-  // };
 
   const uploadFn = (param: any) => {
     const xhr = new XMLHttpRequest();
@@ -166,6 +157,7 @@ export const WYSIWYGEditor = React.forwardRef((props: IProps, ref: React.Ref<any
       className={cx(style['wrapper'], props.className)}
       onChange={onChange}
       // onSave={onSave}
+      language={i18n.language === 'zh-CN' ? 'zh' : 'en'}
       controls={controls}
       media={{ uploadFn, items: mediaItems }}
       hooks={{ 'remove-medias': onRemoveMedias, 'open-braft-finder': onOpenBraftFinder }}

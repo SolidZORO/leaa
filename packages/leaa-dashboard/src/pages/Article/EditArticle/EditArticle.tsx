@@ -143,8 +143,7 @@ export default (props: IPage) => {
       <WYSIWYGEditor
         ref={articleCententForm}
         content={getArticleQuery.data && getArticleQuery.data.article && getArticleQuery.data.article.content}
-        // TODO if onSave, DOM refresh and cursor will to 1st line
-        // onSave={onSubmit}
+        braftEditorProps={{ contentStyle: { height: 700 } }}
         attachmentParams={{
           type: 'image',
           moduleId: Number(id),
