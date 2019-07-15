@@ -42,6 +42,7 @@ const AttachmentItemInner = forwardRef((props: IProps, ref: React.Ref<any>) => {
   const cardRef = useRef(null);
   const opacity = props.isDragging ? 0.3 : 1;
 
+  // TODO just handles <image> sort
   props.connectDragSource(cardRef);
   props.connectDropTarget(cardRef);
 
@@ -74,7 +75,6 @@ const AttachmentItemInner = forwardRef((props: IProps, ref: React.Ref<any>) => {
   const [deleteAttachmentsMutate, deleteAttachmentsMutation] = useMutation<{ uuid: string[] }>(DELETE_ATTACHMENT, {
     variables: deleteAttachmentsVariables,
     onCompleted: () => message.success(t('_lang:deletedSuccessfully')),
-    // refetchQueries: () => [{ query: GET_ATTACHMENTS, variables: getAttachmentsVariables }],
   });
 
   const onDelete = async (uuid: string) => {
@@ -105,9 +105,28 @@ const AttachmentItemInner = forwardRef((props: IProps, ref: React.Ref<any>) => {
           />
         </div>
       </div>
-      <Input className={style['title']} value={attachment.title} onChange={e => onChangeAttachment('title', e)} />
-      <Input className={style['link']} value={attachment.link} onChange={e => onChangeAttachment('link', e)} />
-      <Input className={style['sort']} value={attachment.sort} onChange={e => onChangeAttachment('sort', e)} />
+
+      <Input
+        className={style['title']}
+        value={attachment.title}
+        onChange={e => onChangeAttachment('title', e)}
+        placeholder={t('_lang:title')}
+      />
+
+      <Input
+        className={style['link']}
+        value={attachment.link}
+        onChange={e => onChangeAttachment('link', e)}
+        placeholder={t('_lang:link')}
+      />
+
+      <Input
+        className={style['sort']}
+        value={attachment.sort}
+        onChange={e => onChangeAttachment('sort', e)}
+        placeholder={t('_lang:sort')}
+      />
+
       <SwitchNumber className={style['status']} value={props.attachment.status} onChange={onChangeStatus} />
     </div>
   );

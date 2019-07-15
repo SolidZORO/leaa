@@ -21,6 +21,8 @@ export default {
   updatedAt: 'Updated At',
   action: 'Action',
   description: 'Description',
+  link: 'Link',
+  sort: 'Sort',
   //
   create: 'Create',
   edit: 'Edit',

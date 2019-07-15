@@ -3,7 +3,7 @@ import React, { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { authUtil } from '@leaa/dashboard/utils';
 import axios from 'axios';
-import { message } from 'antd';
+import { Icon, message } from 'antd';
 
 import { IAttachmentParams } from '@leaa/common/interfaces';
 
@@ -28,8 +28,7 @@ export const AttachmentDropzone = (props: IProps) => {
         .post(`${process.env.UPLOAD_ENDPOINT}`, formData, {
           headers: { Authorization: token ? `Bearer ${token}` : '' },
         })
-        .then(e => {
-          console.log(e);
+        .then(() => {
           message.success('Upload Success');
 
           if (props.onUploadedCallback) {
@@ -43,11 +42,12 @@ export const AttachmentDropzone = (props: IProps) => {
   }, []);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop, accept: 'image/*' });
+  const dropTipsDom = <Icon type="plus" className={style['file-icon']} />;
 
   return (
     <div {...getRootProps()} className={style['wrapper']}>
       <input {...getInputProps()} className={style['file-input']} />
-      {isDragActive ? <p>Drop the files here ...</p> : <p>Drag drop some files here, or click to select files</p>}
+      {isDragActive ? dropTipsDom : dropTipsDom}
     </div>
   );
 };

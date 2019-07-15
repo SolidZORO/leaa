@@ -49,9 +49,7 @@ export const AttachmentList = forwardRef((props: IProps, ref: React.Ref<any>) =>
     if (isStopMove) {
       if (attachments && attachments.length > 0) {
         const nextAttachments = attachments.map((a, i) => ({ ...a, sort: i + 1 }));
-
         setAttachments(nextAttachments);
-        console.log('>>>> onStopMoveAttachment', nextAttachments);
 
         if (props.onChangeAttachmentsCallback) {
           props.onChangeAttachmentsCallback(nextAttachments);

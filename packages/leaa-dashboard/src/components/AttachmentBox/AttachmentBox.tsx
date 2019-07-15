@@ -63,7 +63,13 @@ export const AttachmentBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
   };
 
   const pickAttachments = (attachments: Attachment[]): UpdateAttachmentsInput[] =>
-    attachments.map(a => _.pick(a, ['uuid', 'title', 'link', 'sort', 'status']));
+    attachments.map(a => ({
+      uuid: a.uuid,
+      title: a.title,
+      link: a.link,
+      sort: Number(a.sort),
+      status: Number(a.status),
+    }));
 
   // from children onChangeAttachmentsCallback
   const onChangeAttachments = async (attachments: Attachment[]) => {

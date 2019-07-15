@@ -21,6 +21,8 @@ export default {
   updatedAt: '更新时间',
   action: '操作',
   description: '描述',
+  link: '链接',
+  sort: '排序',
   //
   create: '新建',
   edit: '编辑',
