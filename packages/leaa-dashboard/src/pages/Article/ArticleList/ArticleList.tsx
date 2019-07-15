@@ -18,6 +18,7 @@ import { ErrorCard } from '@leaa/dashboard/components/ErrorCard';
 import { SearchInput } from '@leaa/dashboard/components/SearchInput';
 import { TableCard } from '@leaa/dashboard/components/TableCard';
 import { TableColumnId } from '@leaa/dashboard/components/TableColumnId';
+import { SwitchNumber } from '@leaa/dashboard/components/SwitchNumber';
 import { TableColumnDate } from '@leaa/dashboard/components/TableColumnDate';
 import { TableColumnDeleteButton } from '@leaa/dashboard/components/TableColumnDeleteButton';
 
@@ -94,6 +95,11 @@ export default (props: IPage) => {
       title: t('_lang:category'),
       dataIndex: 'category',
       render: (text: string, record: Article) => <span>{record.category && record.category.name}</span>,
+    },
+    {
+      title: t('_lang:status'),
+      dataIndex: 'status',
+      render: (text: string, record: Article) => <SwitchNumber value={record.status} size="small" disabled />,
     },
     {
       title: t('_lang:createdAt'),

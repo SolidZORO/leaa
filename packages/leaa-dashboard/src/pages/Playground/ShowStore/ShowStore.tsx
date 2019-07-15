@@ -4,12 +4,11 @@ import { RouteComponentProps, Link } from 'react-router-dom';
 import { useStore } from '@leaa/dashboard/stores';
 import { authUtil } from '@leaa/dashboard/utils';
 import { AttachmentBox } from '@leaa/dashboard/components/AttachmentBox';
+import { IAttachmentBoxRef } from '@leaa/common/interfaces';
 
 export default (props: RouteComponentProps) => {
   const store = useStore();
-  const attachmentBoxRef = useRef<{
-    onUpdateAttachments: () => void;
-  }>(null);
+  const attachmentBoxRef = useRef<IAttachmentBoxRef>(null);
 
   store.mapping.abcMapping = ['aaaaaaa'];
 

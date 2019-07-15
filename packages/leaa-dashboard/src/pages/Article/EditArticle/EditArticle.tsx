@@ -1,20 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, message } from 'antd';
+import { Button, message, Row, Col } from 'antd';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { BraftEditorProps } from 'braft-editor';
 
 import { Article } from '@leaa/common/entrys';
-import { IMediaItem } from '@leaa/common/interfaces';
+import { IMediaItem, IAttachmentBoxRef } from '@leaa/common/interfaces';
 import { GET_ARTICLE, UPDATE_ARTICLE, GET_ATTACHMENTS, DELETE_ATTACHMENT } from '@leaa/common/graphqls';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/constants';
 import { ArticleArgs, UpdateArticleInput } from '@leaa/common/dtos/article';
 import { IPage } from '@leaa/dashboard/interfaces';
 import { AttachmentsWithPaginationObject, AttachmentsArgs } from '@leaa/common/dtos/attachment';
+import { WYSIWYGEditor } from '@leaa/dashboard/components/WYSIWYGEditor/WYSIWYGEditor';
+import { AttachmentBox } from '@leaa/dashboard/components/AttachmentBox';
+import { langUtil } from '@leaa/dashboard/utils';
 import { PageCard } from '@leaa/dashboard/components/PageCard';
 import { ErrorCard } from '@leaa/dashboard/components/ErrorCard';
 import { SubmitBar } from '@leaa/dashboard/components/SubmitBar/SubmitBar';
-import { WYSIWYGEditor } from '@leaa/dashboard/components/WYSIWYGEditor/WYSIWYGEditor';
+import { FormCard } from '@leaa/dashboard/components/FormCard';
 
 import { ArticleInfoForm } from '../_components/ArticleInfoForm/ArticleInfoForm';
 import { ArticleExtForm } from '../_components/ArticleExtForm/ArticleExtForm';
@@ -22,9 +25,10 @@ import { ArticleExtForm } from '../_components/ArticleExtForm/ArticleExtForm';
 import style from './style.less';
 
 export default (props: IPage) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { id } = props.match.params as { id: string };
 
+  const attachmentBoxRef = useRef<IAttachmentBoxRef>(null);
   let articleInfoFormRef: any;
   let articleExtFormRef: any;
 
@@ -123,6 +127,10 @@ export default (props: IPage) => {
 
     await setSubmitVariables({ id: Number(id), article: submitData });
     await updateArticleMutate();
+
+    if (attachmentBoxRef && attachmentBoxRef.current) {
+      attachmentBoxRef.current.onUpdateAttachments();
+    }
   };
 
   return (
@@ -166,6 +174,28 @@ export default (props: IPage) => {
           articleExtFormRef = inst;
         }}
       />
+
+      <FormCard
+        title={`
+        ${langUtil.removeSpace(`${t('_lang:upload')} ${t('_lang:attachment')}`, i18n.language)}
+        (${t('_lang:banner')})
+      `}
+      >
+        <Row gutter={16}>
+          <Col xs={24}>
+            <AttachmentBox
+              disableMessage
+              ref={attachmentBoxRef}
+              attachmentParams={{
+                type: 'image',
+                moduleId: Number(id),
+                moduleName: 'article',
+                moduleType: 'banner',
+              }}
+            />
+          </Col>
+        </Row>
+      </FormCard>
 
       <SubmitBar>
         <Button

@@ -43,7 +43,7 @@ export const rolesSeed = [
 export const usersSeed = [
   { email: 'admin@admin.com', name: 'admin', password: 'h8Hx9qvPKoHMLQgj', status: 1 },
   { email: 'staff@staff.com', name: 'staff', password: '7PkQGjvHMMkoo4RZ', status: 1 },
-  { email: 'disabled@disabled.com', name: 'disabled', password: 'uUB3YGrdL3gJZYij', status: -1 },
+  { email: 'disabled@disabled.com', name: 'disabled', password: 'uUB3YGrdL3gJZYij', status: 0 },
 ];
 
 const randomSersSeedData = [];

@@ -13,6 +13,7 @@ import { IOrderSort } from '@leaa/common/dtos/_common';
 import { UsersWithPaginationObject, UsersArgs } from '@leaa/common/dtos/user';
 import { urlUtil, tableUtil } from '@leaa/dashboard/utils';
 import { IPage } from '@leaa/dashboard/interfaces';
+import { SwitchNumber } from '@leaa/dashboard/components/SwitchNumber';
 import { PageCard } from '@leaa/dashboard/components/PageCard';
 import { ErrorCard } from '@leaa/dashboard/components/ErrorCard';
 import { SearchInput } from '@leaa/dashboard/components/SearchInput';
@@ -90,6 +91,11 @@ export default (props: IPage) => {
       dataIndex: 'name',
       sorter: true,
       sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'name'),
+    },
+    {
+      title: t('_lang:status'),
+      dataIndex: 'status',
+      render: (text: string, record: User) => <SwitchNumber value={record.status} size="small" disabled />,
     },
     {
       title: t('_lang:createdAt'),

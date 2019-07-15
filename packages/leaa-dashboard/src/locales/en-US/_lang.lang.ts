@@ -23,6 +23,12 @@ export default {
   description: 'Description',
   link: 'Link',
   sort: 'Sort',
+  upload: 'Upload',
+  attachment: 'Attachment',
+  mobile: 'Mobile',
+  desktop: 'Desktop',
+  banner: 'Banner',
+  cover: 'cover',
   //
   create: 'Create',
   edit: 'Edit',

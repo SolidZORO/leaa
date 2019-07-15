@@ -23,6 +23,12 @@ export default {
   description: '描述',
   link: '链接',
   sort: '排序',
+  upload: '上传',
+  attachment: '附件',
+  mobile: '手机',
+  desktop: '电脑',
+  banner: '题图',
+  cover: '封面',
   //
   create: '新建',
   edit: '编辑',

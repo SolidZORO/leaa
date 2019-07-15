@@ -8,6 +8,7 @@ import { GET_ATTACHMENTS, UPDATE_ATTACHMENTS } from '@leaa/common/graphqls';
 import { IAttachmentParams } from '@leaa/common/interfaces';
 
 import { Attachment } from '@leaa/common/entrys';
+import { langUtil } from '@leaa/dashboard/utils';
 import { AttachmentsArgs, AttachmentsWithPaginationObject, UpdateAttachmentsInput } from '@leaa/common/dtos/attachment';
 import { ErrorCard } from '@leaa/dashboard/components/ErrorCard';
 
@@ -21,10 +22,11 @@ interface IProps {
   onChange?: (checked: boolean) => void;
   attachmentParams: IAttachmentParams;
   onSubmitCallback?: (v: any) => void;
+  disableMessage?: boolean;
 }
 
 export const AttachmentBox = forwardRef((props: IProps, ref: React.Ref<any>) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const attachmentListRef = useRef<any>(null);
 
@@ -47,7 +49,11 @@ export const AttachmentBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
     {
       variables: submitVariables,
       onError: e => message.error(e.message),
-      onCompleted: () => message.success(t('_lang:updatedSuccessfully')),
+      onCompleted: () =>
+        !props.disableMessage &&
+        message.success(
+          `${langUtil.removeSpace(`${t('_lang:attachment')} ${t('_lang:updatedSuccessfully')}`, i18n.language)}`,
+        ),
       refetchQueries: () => [{ query: GET_ATTACHMENTS, variables: getAttachmentsVariables }],
     },
   );

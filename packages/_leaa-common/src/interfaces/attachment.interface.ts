@@ -1,4 +1,5 @@
 import { CreateAttachmentInput } from '@leaa/common/dtos/attachment';
+import { Attachment } from '@leaa/common/entrys';
 
 export enum IAttachmentType {
   IMAGE = 'image',
@@ -17,3 +18,8 @@ export type IAttachmentParams = Pick<
   CreateAttachmentInput,
   'type' | 'userId' | 'moduleId' | 'moduleName' | 'moduleType' | 'userId'
 >;
+
+export interface IAttachmentBoxRef {
+  onUpdateAttachments: () => void;
+  onChangeAttachments: (attachments: Attachment[]) => void;
+}

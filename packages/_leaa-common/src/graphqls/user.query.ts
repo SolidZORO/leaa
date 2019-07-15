@@ -8,6 +8,7 @@ export const GET_USERS = gql`
         id
         name
         email
+        status
         createdAt
       }
     }
