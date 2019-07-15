@@ -2,7 +2,7 @@ import { Args, Query, Mutation, Resolver, Parent, ResolveProperty } from '@nestj
 import { Int, Float } from 'type-graphql';
 
 import { User } from '@leaa/common/entrys';
-import { UsersArgs, UsersObject, UserArgs, CreateUserInput, UpdateUserInput } from '@leaa/common/dtos/user';
+import { UsersArgs, UsersWithPaginationObject, UserArgs, CreateUserInput, UpdateUserInput } from '@leaa/common/dtos/user';
 import { UserService } from './user.service';
 
 @Resolver(() => User)
@@ -19,8 +19,8 @@ export class UserResolver {
     return Math.random();
   }
 
-  @Query(() => UsersObject)
-  async users(@Args() args: UsersArgs): Promise<UsersObject | undefined> {
+  @Query(() => UsersWithPaginationObject)
+  async users(@Args() args: UsersArgs): Promise<UsersWithPaginationObject | undefined> {
     return this.userService.users(args);
   }
 

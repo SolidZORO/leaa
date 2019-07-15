@@ -10,7 +10,7 @@ import { DEFAULT_PAGE_SIZE_OPTIONS } from '@leaa/dashboard/constants';
 import { GET_ARTICLES, DELETE_ARTICLE } from '@leaa/common/graphqls';
 import { Article } from '@leaa/common/entrys';
 import { IOrderSort } from '@leaa/common/dtos/_common';
-import { ArticlesObject, ArticleArgs } from '@leaa/common/dtos/article';
+import { ArticlesWithPaginationObject, ArticleArgs } from '@leaa/common/dtos/article';
 import { urlUtil, tableUtil } from '@leaa/dashboard/utils';
 import { IPage } from '@leaa/dashboard/interfaces';
 import { PageCard } from '@leaa/dashboard/components/PageCard';
@@ -45,7 +45,7 @@ export default (props: IPage) => {
   };
 
   const getArticlesVariables = { page, pageSize, q, orderBy, orderSort };
-  const getArticlesQuery = useQuery<{ articles: ArticlesObject }, ArticleArgs>(GET_ARTICLES, {
+  const getArticlesQuery = useQuery<{ articles: ArticlesWithPaginationObject }, ArticleArgs>(GET_ARTICLES, {
     variables: getArticlesVariables,
   });
 

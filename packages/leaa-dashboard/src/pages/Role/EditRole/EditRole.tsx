@@ -7,7 +7,7 @@ import { Role } from '@leaa/common/entrys';
 import { GET_PERMISSIONS, GET_ROLE, UPDATE_ROLE } from '@leaa/common/graphqls';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/constants';
 import { RoleArgs, UpdateRoleInput } from '@leaa/common/dtos/role';
-import { PermissionsObject, PermissionsArgs } from '@leaa/common/dtos/permission';
+import { PermissionsWithPaginationObject, PermissionsArgs } from '@leaa/common/dtos/permission';
 import { IPage } from '@leaa/dashboard/interfaces';
 import { PageCard } from '@leaa/dashboard/components/PageCard';
 import { ErrorCard } from '@leaa/dashboard/components/ErrorCard';
@@ -31,7 +31,7 @@ export default (props: IPage) => {
   });
 
   const getPermissionsVariables = { pageSize: 9999 };
-  const getPermissionsQuery = useQuery<{ permissions: PermissionsObject }, PermissionsArgs>(GET_PERMISSIONS, {
+  const getPermissionsQuery = useQuery<{ permissions: PermissionsWithPaginationObject }, PermissionsArgs>(GET_PERMISSIONS, {
     variables: getPermissionsVariables,
   });
 

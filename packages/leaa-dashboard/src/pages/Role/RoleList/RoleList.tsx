@@ -10,7 +10,7 @@ import { DEFAULT_PAGE_SIZE_OPTIONS } from '@leaa/dashboard/constants';
 import { GET_ROLES, DELETE_ROLE } from '@leaa/common/graphqls';
 import { Role } from '@leaa/common/entrys';
 import { IOrderSort } from '@leaa/common/dtos/_common';
-import { RolesObject, RolesArgs } from '@leaa/common/dtos/role';
+import { RolesWithPaginationObject, RolesArgs } from '@leaa/common/dtos/role';
 import { urlUtil, tableUtil } from '@leaa/dashboard/utils';
 import { IPage } from '@leaa/dashboard/interfaces';
 import { PageCard } from '@leaa/dashboard/components/PageCard';
@@ -45,7 +45,7 @@ export default (props: IPage) => {
   };
 
   const getRolesVariables = { page, pageSize, q, orderBy, orderSort };
-  const getRolesQuery = useQuery<{ roles: RolesObject }, RolesArgs>(GET_ROLES, {
+  const getRolesQuery = useQuery<{ roles: RolesWithPaginationObject }, RolesArgs>(GET_ROLES, {
     variables: getRolesVariables,
   });
 

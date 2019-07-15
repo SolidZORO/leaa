@@ -4,7 +4,7 @@ import { Int } from 'type-graphql';
 import { Permission } from '@leaa/common/entrys';
 import {
   PermissionsArgs,
-  PermissionsObject,
+  PermissionsWithPaginationObject,
   PermissionArgs,
   CreatePermissionInput,
   UpdatePermissionInput,
@@ -15,8 +15,8 @@ import { PermissionService } from './permission.service';
 export class PermissionResolver {
   constructor(private readonly permissionService: PermissionService) {}
 
-  @Query(() => PermissionsObject)
-  async permissions(@Args() args: PermissionsArgs): Promise<PermissionsObject> {
+  @Query(() => PermissionsWithPaginationObject)
+  async permissions(@Args() args: PermissionsArgs): Promise<PermissionsWithPaginationObject> {
     return this.permissionService.permissions(args);
   }
 

@@ -4,7 +4,7 @@ import { User } from '@leaa/common/entrys';
 import { PaginationObject } from '@leaa/common/dtos/_common';
 
 @ObjectType()
-export class UsersObject extends PaginationObject {
+export class UsersWithPaginationObject extends PaginationObject {
   @Field(() => [User])
   readonly items: User[] = [];
 }

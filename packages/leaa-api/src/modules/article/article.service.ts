@@ -5,7 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Article, Category } from '@leaa/common/entrys';
 import {
   ArticlesArgs,
-  ArticlesObject,
+  ArticlesWithPaginationObject,
   ArticleArgs,
   CreateArticleInput,
   UpdateArticleInput,
@@ -19,7 +19,7 @@ import { formatUtil } from '@leaa/api/utils';
 export class ArticleService extends BaseService<
   Article,
   ArticlesArgs,
-  ArticlesObject,
+  ArticlesWithPaginationObject,
   ArticleArgs,
   CreateArticleInput,
   UpdateArticleInput
@@ -41,7 +41,7 @@ export class ArticleService extends BaseService<
     return this.categoryRepository.findOne(article.id);
   }
 
-  async articles(args: ArticlesArgs): Promise<ArticlesObject> {
+  async articles(args: ArticlesArgs): Promise<ArticlesWithPaginationObject> {
     const nextArgs = formatUtil.formatArgs(args);
 
     if (nextArgs.q) {

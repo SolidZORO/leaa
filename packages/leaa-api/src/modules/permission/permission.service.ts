@@ -6,7 +6,7 @@ import { Permission } from '@leaa/common/entrys';
 import { BaseService } from '@leaa/api/modules/base/base.service';
 import {
   PermissionsArgs,
-  PermissionsObject,
+  PermissionsWithPaginationObject,
   PermissionArgs,
   CreatePermissionInput,
   UpdatePermissionInput,
@@ -17,7 +17,7 @@ import { formatUtil } from '@leaa/api/utils';
 export class PermissionService extends BaseService<
   Permission,
   PermissionsArgs,
-  PermissionsObject,
+  PermissionsWithPaginationObject,
   PermissionArgs,
   CreatePermissionInput,
   UpdatePermissionInput
@@ -26,7 +26,7 @@ export class PermissionService extends BaseService<
     super(permissionRepository);
   }
 
-  async permissions(args: PermissionsArgs): Promise<PermissionsObject> {
+  async permissions(args: PermissionsArgs): Promise<PermissionsWithPaginationObject> {
     const nextArgs = formatUtil.formatArgs(args);
 
     let whereQuery = {};

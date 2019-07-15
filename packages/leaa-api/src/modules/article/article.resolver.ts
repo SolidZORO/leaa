@@ -4,7 +4,7 @@ import { Int } from 'type-graphql';
 import { Article, Category } from '@leaa/common/entrys';
 import {
   ArticlesArgs,
-  ArticlesObject,
+  ArticlesWithPaginationObject,
   ArticleArgs,
   CreateArticleInput,
   UpdateArticleInput,
@@ -20,8 +20,8 @@ export class ArticleResolver {
     return this.articleService.getCategory(article);
   }
 
-  @Query(() => ArticlesObject)
-  async articles(@Args() args: ArticlesArgs): Promise<ArticlesObject | undefined> {
+  @Query(() => ArticlesWithPaginationObject)
+  async articles(@Args() args: ArticlesArgs): Promise<ArticlesWithPaginationObject | undefined> {
     return this.articleService.articles(args);
   }
 

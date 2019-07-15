@@ -5,7 +5,7 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 
 import { User } from '@leaa/common/entrys';
 import { GET_USER, GET_ROLES, UPDATE_USER } from '@leaa/common/graphqls';
-import { RolesObject, RolesArgs } from '@leaa/common/dtos/role';
+import { RolesWithPaginationObject, RolesArgs } from '@leaa/common/dtos/role';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/constants';
 import { UserArgs, UpdateUserInput } from '@leaa/common/dtos/user';
 import { IPage } from '@leaa/dashboard/interfaces';
@@ -31,7 +31,7 @@ export default (props: IPage) => {
   });
 
   const getRolesVariables = { pageSize: 9999 };
-  const getRolesQuery = useQuery<{ roles: RolesObject }, RolesArgs>(GET_ROLES, {
+  const getRolesQuery = useQuery<{ roles: RolesWithPaginationObject }, RolesArgs>(GET_ROLES, {
     variables: getRolesVariables,
   });
 

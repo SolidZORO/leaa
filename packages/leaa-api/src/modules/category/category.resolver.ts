@@ -4,7 +4,7 @@ import { Int } from 'type-graphql';
 import { Category } from '@leaa/common/entrys';
 import {
   CategoriesArgs,
-  CategoriesObject,
+  CategoriesWithPaginationObject,
   CategoryArgs,
   CreateCategoryInput,
   UpdateCategoryInput,
@@ -15,8 +15,8 @@ import { CategoryService } from './category.service';
 export class CategoryResolver {
   constructor(private readonly categoryService: CategoryService) {}
 
-  @Query(() => CategoriesObject)
-  async categories(@Args() args: CategoriesArgs): Promise<CategoriesObject | undefined> {
+  @Query(() => CategoriesWithPaginationObject)
+  async categories(@Args() args: CategoriesArgs): Promise<CategoriesWithPaginationObject | undefined> {
     return this.categoryService.categories(args);
   }
 

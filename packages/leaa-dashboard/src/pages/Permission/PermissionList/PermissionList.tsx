@@ -10,7 +10,7 @@ import { DEFAULT_PAGE_SIZE_OPTIONS } from '@leaa/dashboard/constants';
 import { GET_PERMISSIONS, DELETE_PERMISSION } from '@leaa/common/graphqls';
 import { Permission } from '@leaa/common/entrys';
 import { IOrderSort } from '@leaa/common/dtos/_common';
-import { PermissionsObject, PermissionArgs } from '@leaa/common/dtos/permission';
+import { PermissionsWithPaginationObject, PermissionArgs } from '@leaa/common/dtos/permission';
 import { urlUtil, tableUtil } from '@leaa/dashboard/utils';
 import { IPage } from '@leaa/dashboard/interfaces';
 import { PageCard } from '@leaa/dashboard/components/PageCard';
@@ -45,7 +45,7 @@ export default (props: IPage) => {
   };
 
   const getPermissionsVariables = { page, pageSize, q, orderBy, orderSort };
-  const getPermissionsQuery = useQuery<{ permissions: PermissionsObject }, PermissionArgs>(GET_PERMISSIONS, {
+  const getPermissionsQuery = useQuery<{ permissions: PermissionsWithPaginationObject }, PermissionArgs>(GET_PERMISSIONS, {
     variables: getPermissionsVariables,
   });
 

@@ -10,7 +10,7 @@ import { DEFAULT_PAGE_SIZE_OPTIONS } from '@leaa/dashboard/constants';
 import { GET_CATEGORIES, DELETE_CATEGORY } from '@leaa/common/graphqls';
 import { Category } from '@leaa/common/entrys';
 import { IOrderSort } from '@leaa/common/dtos/_common';
-import { CategoriesObject, CategoryArgs } from '@leaa/common/dtos/category';
+import { CategoriesWithPaginationObject, CategoryArgs } from '@leaa/common/dtos/category';
 import { urlUtil, tableUtil } from '@leaa/dashboard/utils';
 import { IPage } from '@leaa/dashboard/interfaces';
 import { PageCard } from '@leaa/dashboard/components/PageCard';
@@ -45,7 +45,7 @@ export default (props: IPage) => {
   };
 
   const getCategoriesVariables = { page, pageSize, q, orderBy, orderSort };
-  const getCategoriesQuery = useQuery<{ categories: CategoriesObject }, CategoryArgs>(GET_CATEGORIES, {
+  const getCategoriesQuery = useQuery<{ categories: CategoriesWithPaginationObject }, CategoryArgs>(GET_CATEGORIES, {
     variables: getCategoriesVariables,
   });
 

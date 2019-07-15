@@ -10,7 +10,7 @@ import { DEFAULT_PAGE_SIZE_OPTIONS } from '@leaa/dashboard/constants';
 import { GET_USERS, DELETE_USER } from '@leaa/common/graphqls';
 import { User } from '@leaa/common/entrys';
 import { IOrderSort } from '@leaa/common/dtos/_common';
-import { UsersObject, UsersArgs } from '@leaa/common/dtos/user';
+import { UsersWithPaginationObject, UsersArgs } from '@leaa/common/dtos/user';
 import { urlUtil, tableUtil } from '@leaa/dashboard/utils';
 import { IPage } from '@leaa/dashboard/interfaces';
 import { PageCard } from '@leaa/dashboard/components/PageCard';
@@ -45,7 +45,7 @@ export default (props: IPage) => {
   };
 
   const getUsersVariables = { page, pageSize, q, orderBy, orderSort };
-  const getUsersQuery = useQuery<{ users: UsersObject }, UsersArgs>(GET_USERS, {
+  const getUsersQuery = useQuery<{ users: UsersWithPaginationObject }, UsersArgs>(GET_USERS, {
     variables: getUsersVariables,
   });
 

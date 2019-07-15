@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/react-hooks';
 
 import { GET_CATEGORIES } from '@leaa/common/graphqls';
-import { CategoriesObject, CategoriesArgs } from '@leaa/common/dtos/category';
+import { CategoriesWithPaginationObject, CategoriesArgs } from '@leaa/common/dtos/category';
 import { ErrorCard } from '@leaa/dashboard/components/ErrorCard';
 import cx from 'classnames';
 
@@ -25,7 +25,7 @@ export const SelectCategoryId = forwardRef((props: IProps, ref: React.Ref<any>) 
     setValue(props.value);
   }, [props.value]);
 
-  const getCategoriesQuery = useQuery<{ categories: CategoriesObject }, CategoriesArgs>(GET_CATEGORIES);
+  const getCategoriesQuery = useQuery<{ categories: CategoriesWithPaginationObject }, CategoriesArgs>(GET_CATEGORIES);
 
   const onChange = (v: number) => {
     setValue(v);

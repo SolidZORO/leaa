@@ -5,7 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Category } from '@leaa/common/entrys';
 import {
   CategoriesArgs,
-  CategoriesObject,
+  CategoriesWithPaginationObject,
   CategoryArgs,
   CreateCategoryInput,
   UpdateCategoryInput,
@@ -19,7 +19,7 @@ import { formatUtil } from '@leaa/api/utils';
 export class CategoryService extends BaseService<
   Category,
   CategoriesArgs,
-  CategoriesObject,
+  CategoriesWithPaginationObject,
   CategoryArgs,
   CreateCategoryInput,
   UpdateCategoryInput
@@ -28,7 +28,7 @@ export class CategoryService extends BaseService<
     super(categoryRepository);
   }
 
-  async categories(args: CategoriesArgs): Promise<CategoriesObject> {
+  async categories(args: CategoriesArgs): Promise<CategoriesWithPaginationObject> {
     const nextArgs = formatUtil.formatArgs(args);
 
     if (nextArgs.q) {
