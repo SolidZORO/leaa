@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, forwardRef, useImperativeHandle } from 'react';
 import { DndProvider } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import update from 'immutability-helper';
@@ -10,20 +10,29 @@ import { AttachmentItem } from '../AttachmentItem/AttachmentItem';
 import style from './style.less';
 
 interface IProps {
+  attachmentParams: IAttachmentParams;
   value?: number | string | undefined;
   attachments?: Attachment[];
   onChange?: (checked: boolean) => void;
-  attachmentParams: IAttachmentParams;
+  onChangeAttachmentsCallback?: (attachments: Attachment[]) => void;
 }
 
-export const AttachmentList = (props: IProps) => {
-  const [attachments, setAttachments] = useState(props.attachments);
+export const AttachmentList = forwardRef<HTMLDivElement, IProps>((props: IProps, ref: React.Ref<any>) => {
+  const [attachments, setAttachments] = useState<Attachment[] | undefined>(props.attachments);
+
+  useImperativeHandle<{}, any>(
+    ref,
+    () => ({
+      attachments,
+    }),
+    [attachments],
+  );
 
   useEffect(() => {
     setAttachments(props.attachments);
   }, [props.attachments]);
 
-  const moveCard = (dragIndex: number, hoverIndex: number) => {
+  const onMoveAttachment = (dragIndex: number, hoverIndex: number) => {
     if (attachments) {
       const dragCard = attachments[dragIndex];
 
@@ -35,14 +44,34 @@ export const AttachmentList = (props: IProps) => {
     }
   };
 
-  const stopMoveCard = (isStopMove: boolean) => {
+  const onStopMoveAttachment = (isStopMove: boolean) => {
     if (isStopMove) {
-      console.log('STOP', attachments);
+      if (attachments && attachments.length > 0) {
+        const nextAttachments = attachments.map((a, i) => ({ ...a, sort: i + 1 }));
+
+        setAttachments(nextAttachments);
+        console.log('>>>> onStopMoveAttachment', nextAttachments);
+
+        if (props.onChangeAttachmentsCallback) {
+          props.onChangeAttachmentsCallback(nextAttachments);
+        }
+      }
+    }
+  };
+
+  const onChangeAttachment = (newAttachment: any) => {
+    if (attachments && attachments.length > 0) {
+      const aIndex = attachments.findIndex(a => a.uuid === newAttachment.uuid);
+
+      if (typeof aIndex !== 'undefined') {
+        attachments[aIndex] = newAttachment;
+        setAttachments(attachments);
+      }
     }
   };
 
   return (
-    <div className={style['wrapper']}>
+    <div className={style['wrapper']} ref={ref}>
       <DndProvider backend={HTML5Backend}>
         {attachments &&
           attachments.map((a, i) => (
@@ -50,11 +79,12 @@ export const AttachmentList = (props: IProps) => {
               key={a.uuid}
               index={i}
               attachment={a}
-              moveCardCallback={moveCard}
-              stopMoveCardCallback={stopMoveCard}
+              onMoveAttachmentCallback={onMoveAttachment}
+              onStoponMoveAttachmentCallback={onStopMoveAttachment}
+              onChangeAttachmentCallback={onChangeAttachment}
             />
           ))}
       </DndProvider>
     </div>
   );
-};
+});

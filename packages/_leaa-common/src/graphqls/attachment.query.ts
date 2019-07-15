@@ -32,6 +32,7 @@ export const GET_ATTACHMENTS = gql`
       items {
         uuid
         title
+        link
         type
         description
         categoryId
@@ -41,6 +42,7 @@ export const GET_ATTACHMENTS = gql`
         moduleType
         path
         status
+        sort
         createdAt
       }
     }
@@ -52,6 +54,7 @@ export const GET_ATTACHMENT = gql`
     attachment(uuid: $uuid) {
       uuid
       title
+      link
       type
       description
       categoryId
@@ -61,6 +64,7 @@ export const GET_ATTACHMENT = gql`
       moduleType
       path
       status
+      sort
       createdAt
       updatedAt
     }

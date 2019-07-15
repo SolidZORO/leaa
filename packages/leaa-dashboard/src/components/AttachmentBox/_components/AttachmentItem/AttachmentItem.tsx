@@ -1,4 +1,4 @@
-import React, { forwardRef, useImperativeHandle, useRef } from 'react';
+import React, { forwardRef, useState, useEffect, useImperativeHandle, useRef } from 'react';
 import {
   DragSource,
   DropTarget,
@@ -10,11 +10,10 @@ import {
   DragSourceConnector,
 } from 'react-dnd';
 import { XYCoord } from 'dnd-core';
-import { Attachment, Article } from '@leaa/common/entrys';
+import { Input, Button } from 'antd';
 
-import { message } from 'antd';
+import { Attachment } from '@leaa/common/entrys';
 import { SwitchNumber } from '@leaa/dashboard/components/SwitchNumber';
-import { AttachmentForm } from '../AttachmentForm/AttachmentForm';
 
 import style from './style.less';
 
@@ -24,51 +23,68 @@ interface IProps {
   isDragging: boolean;
   connectDragSource: ConnectDragSource;
   connectDropTarget: ConnectDropTarget;
-  moveCardCallback: (dragIndex: number, hoverIndex: number) => void;
-  stopMoveCardCallback: (dragging: boolean) => void;
+  onMoveAttachmentCallback: (dragIndex: number, hoverIndex: number) => void;
+  onStoponMoveAttachmentCallback: (dragging: boolean) => void;
+  onChangeAttachmentCallback: (attachment: Attachment) => void;
 }
 
-interface CardInstance {
+interface IAttachmentInstance {
   getNode(): HTMLDivElement | null;
 }
 
 const AttachmentItemInner = forwardRef<HTMLDivElement, IProps>((props: IProps, ref: React.Ref<any>) => {
-  let attachmentFormRef: any;
-
+  const opacity = props.isDragging ? 0.3 : 1;
   const elementRef = useRef(null);
+
   props.connectDragSource(elementRef);
   props.connectDropTarget(elementRef);
 
-  const opacity = props.isDragging ? 0.3 : 1;
-
-  useImperativeHandle<{}, CardInstance>(ref, () => ({
+  useImperativeHandle<{}, IAttachmentInstance>(ref, () => ({
     getNode: () => elementRef.current,
   }));
 
-  // console.log(attachmentFormRef);
+  const [attachment, setAttachment] = useState<Attachment>(props.attachment);
+  useEffect(() => setAttachment(props.attachment), [props.attachment]);
 
-  // attachmentFormRef.props.form.validateFieldsAndScroll(async (err: any, formData: Article) => {
-  //   if (err) {
-  //     message.error(err[Object.keys(err)[0]].errors[0].message);
-  //   }
-  //
-  //   console.log(formData);
-  //
-  //   // submitData = formData;
-  // });
+  const onChangeAttachment = (field: string, event: React.FormEvent<HTMLInputElement>) => {
+    setAttachment({
+      ...attachment,
+      [field]: event.currentTarget.value,
+    });
+  };
+
+  const onChangeStatus = (v: number | boolean) => {
+    setAttachment({
+      ...attachment,
+      status: Number(v),
+    });
+  };
+
+  if (props.onChangeAttachmentCallback) {
+    props.onChangeAttachmentCallback(attachment);
+  }
 
   return (
     <div className={style['wrapper']} ref={elementRef} style={{ ...style, opacity }}>
-      {props.attachment.title}
-      <img width="40" src={`${process.env.API_HOST}${props.attachment.path}`} alt="" />
-      <SwitchNumber value={props.attachment.status} />
+      <div className={style['image']}>
+        <img src={`${process.env.API_HOST}${props.attachment.path}`} alt="" />
 
-      {/* <AttachmentForm */}
-      {/*  attachment={props.attachment} */}
-      {/*  wrappedComponentRef={(inst: unknown) => { */}
-      {/*    attachmentFormRef = inst; */}
-      {/*  }} */}
-      {/* /> */}
+        <div className={style['toolbar']}>
+          <Button
+            type="dashed"
+            size="small"
+            shape="circle"
+            icon="delete"
+            className={style['delete']}
+            // loading={createArticleMutation.loading}
+            // onClick={onSubmit}
+          />
+        </div>
+      </div>
+      <Input className={style['title']} value={attachment.title} onChange={e => onChangeAttachment('title', e)} />
+      <Input className={style['link']} value={attachment.link} onChange={e => onChangeAttachment('link', e)} />
+      <Input className={style['sort']} value={attachment.sort} onChange={e => onChangeAttachment('sort', e)} />
+      <SwitchNumber className={style['status']} value={props.attachment.status} onChange={onChangeStatus} />
     </div>
   );
 });
@@ -76,7 +92,7 @@ const AttachmentItemInner = forwardRef<HTMLDivElement, IProps>((props: IProps, r
 export const AttachmentItem = DropTarget(
   'card',
   {
-    hover(props: IProps, monitor: DropTargetMonitor, component: CardInstance) {
+    hover(props: IProps, monitor: DropTargetMonitor, component: IAttachmentInstance) {
       if (!component) {
         return;
       }
@@ -108,14 +124,14 @@ export const AttachmentItem = DropTarget(
         return;
       }
 
-      props.stopMoveCardCallback(false);
-      props.moveCardCallback(dragIndex, hoverIndex);
+      props.onStoponMoveAttachmentCallback(false);
+      props.onMoveAttachmentCallback(dragIndex, hoverIndex);
 
       // eslint-disable-next-line no-param-reassign
       monitor.getItem().index = hoverIndex;
     },
     drop(props: IProps) {
-      props.stopMoveCardCallback(true);
+      props.onStoponMoveAttachmentCallback(true);
     },
   },
   (connect: DropTargetConnector) => ({

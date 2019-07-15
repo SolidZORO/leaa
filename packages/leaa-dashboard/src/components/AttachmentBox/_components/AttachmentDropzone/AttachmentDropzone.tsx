@@ -30,7 +30,7 @@ export const AttachmentDropzone = (props: IProps) => {
         })
         .then(e => {
           console.log(e);
-          message.success('OK');
+          message.success('Upload Success');
 
           if (props.onUploadedCallback) {
             props.onUploadedCallback(new Date().getMilliseconds());

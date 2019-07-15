@@ -1,9 +1,11 @@
 import React, { useState, useEffect, forwardRef } from 'react';
 import { Switch } from 'antd';
+import { SwitchProps } from 'antd/lib/switch';
 
-interface IProps {
+interface IProps extends SwitchProps {
   value?: number | undefined;
   onChange?: (checked: boolean | number) => void;
+  className?: string;
 }
 
 export const SwitchNumber = forwardRef((props: IProps, ref: React.Ref<any>) => {

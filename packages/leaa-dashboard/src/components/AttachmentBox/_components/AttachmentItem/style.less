@@ -2,5 +2,75 @@
 
 .wrapper {
   position: relative;
-  display: block;
+  display: flex;
+  margin: 10px 0;
+  align-items: center;
+}
+
+@margin-right: 10px;
+@image-width: 36px;
+
+.image {
+  //display: inline-block;
+  display: flex;
+  width: @image-width + 2;
+  height: @image-width + 2;
+  border: 1px solid #aaa5;
+  border-radius: 3px;
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+  margin-right: @margin-right;
+
+  img {
+    width: @image-width;
+    border-radius: 3px;
+  }
+
+  &:hover {
+    .delete {
+      opacity: 1;
+    }
+  }
+}
+
+.toolbar {
+  position: absolute;
+  top: -7px;
+  left: -6px;
+  z-index: 9;
+}
+
+.delete {
+  @height: 16px;
+
+  opacity: 0.7;
+  font-size: 12px !important;
+  line-height: @height;
+  height: @height !important;
+  width: @height !important;
+  color: @error-color;
+  border: 1px dashed @error-color;
+
+  &:hover {
+    color: #fff;
+    background: @error-color;
+  }
+}
+
+.title,
+.link {
+  display: inline-block;
+  margin-right: @margin-right;
+}
+
+.sort {
+  display: inline-block;
+  width: 45px;
+  font-family: @code-family;
+  margin-right: @margin-right;
+}
+
+.status {
+  display: inline-block;
 }
