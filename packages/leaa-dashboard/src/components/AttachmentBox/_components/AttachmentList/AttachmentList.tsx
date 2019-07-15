@@ -49,9 +49,7 @@ export const AttachmentList = (props: IProps) => {
             <AttachmentItem
               key={a.uuid}
               index={i}
-              id={a.id}
-              text={`${a.title}`}
-              value={`${a.title}`}
+              attachment={a}
               moveCardCallback={moveCard}
               stopMoveCardCallback={stopMoveCard}
             />

@@ -66,7 +66,6 @@ class UserInfoFormInner extends React.PureComponent<IProps> {
                 <Form.Item label={t('_lang:status')}>
                   {getFieldDecorator('status', {
                     initialValue: props.item ? Number(props.item.status) : 0,
-                    getValueFromEvent: (v: boolean) => Number(v),
                   })(<SwitchNumber />)}
                 </Form.Item>
               </Col>

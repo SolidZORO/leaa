@@ -23,7 +23,7 @@ export class User extends Base {
   @Field()
   email!: string;
 
-  @Column({ type: 'tinyint', default: -1 })
+  @Column({ type: 'tinyint', default: 0 })
   @Field()
   status?: number;
 

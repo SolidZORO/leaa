@@ -1,12 +1,25 @@
-import React, { forwardRef } from 'react';
+import React, { useState, useEffect, forwardRef } from 'react';
 import { Switch } from 'antd';
-import { SwitchProps } from 'antd/lib/switch';
 
-interface IProps extends SwitchProps {
+interface IProps {
   value?: number | undefined;
-  onChange?: (checked: boolean) => void;
+  onChange?: (checked: boolean | number) => void;
 }
 
 export const SwitchNumber = forwardRef((props: IProps, ref: React.Ref<any>) => {
-  return <Switch checked={Boolean(props.value)} onChange={props.onChange} {...props} ref={ref} />;
+  const [value, setValue] = useState<number | undefined>(props.value || 0);
+
+  useEffect(() => {
+    setValue(props.value);
+  }, [props.value]);
+
+  const onChange = (checked: boolean): void => {
+    setValue(Number(checked));
+
+    if (props.onChange) {
+      props.onChange(Number(checked));
+    }
+  };
+
+  return <Switch {...props} checked={Boolean(value)} onChange={onChange} ref={ref} />;
 });

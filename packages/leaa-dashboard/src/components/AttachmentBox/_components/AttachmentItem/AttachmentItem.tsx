@@ -10,13 +10,16 @@ import {
   DragSourceConnector,
 } from 'react-dnd';
 import { XYCoord } from 'dnd-core';
+import { Attachment, Article } from '@leaa/common/entrys';
+
+import { message } from 'antd';
+import { SwitchNumber } from '@leaa/dashboard/components/SwitchNumber';
+import { AttachmentForm } from '../AttachmentForm/AttachmentForm';
 
 import style from './style.less';
 
 interface IProps {
-  value: string;
-  id: any;
-  text: string;
+  attachment: Attachment;
   index: number;
   isDragging: boolean;
   connectDragSource: ConnectDragSource;
@@ -30,17 +33,42 @@ interface CardInstance {
 }
 
 const AttachmentItemInner = forwardRef<HTMLDivElement, IProps>((props: IProps, ref: React.Ref<any>) => {
+  let attachmentFormRef: any;
+
   const elementRef = useRef(null);
   props.connectDragSource(elementRef);
   props.connectDropTarget(elementRef);
 
-  const opacity = props.isDragging ? 0 : 1;
+  const opacity = props.isDragging ? 0.3 : 1;
+
   useImperativeHandle<{}, CardInstance>(ref, () => ({
     getNode: () => elementRef.current,
   }));
+
+  // console.log(attachmentFormRef);
+
+  // attachmentFormRef.props.form.validateFieldsAndScroll(async (err: any, formData: Article) => {
+  //   if (err) {
+  //     message.error(err[Object.keys(err)[0]].errors[0].message);
+  //   }
+  //
+  //   console.log(formData);
+  //
+  //   // submitData = formData;
+  // });
+
   return (
     <div className={style['wrapper']} ref={elementRef} style={{ ...style, opacity }}>
-      {props.value}
+      {props.attachment.title}
+      <img width="40" src={`${process.env.API_HOST}${props.attachment.path}`} alt="" />
+      <SwitchNumber value={props.attachment.status} />
+
+      {/* <AttachmentForm */}
+      {/*  attachment={props.attachment} */}
+      {/*  wrappedComponentRef={(inst: unknown) => { */}
+      {/*    attachmentFormRef = inst; */}
+      {/*  }} */}
+      {/* /> */}
     </div>
   );
 });
@@ -98,7 +126,7 @@ export const AttachmentItem = DropTarget(
     'card',
     {
       beginDrag: (props: IProps) => ({
-        id: props.id,
+        id: props.attachment.id,
         index: props.index,
       }),
     },
