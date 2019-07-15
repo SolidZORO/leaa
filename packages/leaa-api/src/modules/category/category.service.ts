@@ -11,9 +11,9 @@ import {
   UpdateCategoryInput,
 } from '@leaa/common/dtos/category';
 import { BaseService } from '@leaa/api/modules/base/base.service';
-import { formatUtil } from '@leaa/api/utils';
+import { formatUtil, loggerUtil } from '@leaa/api/utils';
 
-// const CONSTRUCTOR_NAME = 'CategoryService';
+const CONSTRUCTOR_NAME = 'CategoryService';
 
 @Injectable()
 export class CategoryService extends BaseService<
@@ -28,7 +28,14 @@ export class CategoryService extends BaseService<
     super(categoryRepository);
   }
 
-  async categories(args: CategoriesArgs): Promise<CategoriesWithPaginationObject> {
+  async categories(args?: CategoriesArgs): Promise<CategoriesWithPaginationObject> {
+    if (!args) {
+      const message = `get categories args does not exist`;
+
+      loggerUtil.warn(message, CONSTRUCTOR_NAME);
+      throw new Error(message);
+    }
+
     const nextArgs = formatUtil.formatArgs(args);
 
     if (nextArgs.q) {

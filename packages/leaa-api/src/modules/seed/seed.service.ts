@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { PermissionService } from '@leaa/api/modules/permission/permission.service';
 import { RoleService } from '@leaa/api/modules/role/role.service';
 import { UserService } from '@leaa/api/modules/user/user.service';
+import { CategoryService } from '@leaa/api/modules/category/category.service';
+import { ArticleService } from '@leaa/api/modules/article/article.service';
 
 import {
   permissionsSeed,
@@ -10,6 +12,8 @@ import {
   randomSersSeed,
   roleAddPermissionsSeed,
   userAddRolesSeed,
+  categorySeed,
+  articleSeed,
 } from './seed.data';
 
 @Injectable()
@@ -18,6 +22,8 @@ export class SeedService {
     private readonly permissionService: PermissionService,
     private readonly roleService: RoleService,
     private readonly userService: UserService,
+    private readonly categoryService: CategoryService,
+    private readonly articleService: ArticleService,
   ) {}
 
   /* eslint-disable no-restricted-syntax */
@@ -78,6 +84,22 @@ export class SeedService {
 
         console.log(nextUser);
       }
+    }
+  }
+
+  public async insertCategory() {
+    for (const i of categorySeed) {
+      const item = await this.categoryService.craeteCategory(i);
+
+      console.log(item);
+    }
+  }
+
+  public async insertArticle() {
+    for (const i of articleSeed) {
+      const item = await this.articleService.craeteArticle(i);
+
+      console.log(item);
     }
   }
 }

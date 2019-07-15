@@ -178,14 +178,14 @@ type Mutation {
   createUser(user: CreateUserInput!): User!
   updateUser(user: UpdateUserInput!, id: Int!): User!
   deleteUser(id: Int!): User!
-  login(user: AuthLoginInput!): User!
-  register(user: AuthRegisterInput!): User!
-  createCategory(category: CreateCategoryInput!): Category!
-  updateCategory(category: UpdateCategoryInput!, id: Int!): Category!
-  deleteCategory(id: Int!): Category!
   createArticle(article: CreateArticleInput!): Article!
   updateArticle(article: UpdateArticleInput!, id: Int!): Article!
   deleteArticle(id: Int!): Article!
+  createCategory(category: CreateCategoryInput!): Category!
+  updateCategory(category: UpdateCategoryInput!, id: Int!): Category!
+  deleteCategory(id: Int!): Category!
+  login(user: AuthLoginInput!): User!
+  register(user: AuthRegisterInput!): User!
   updateAttachment(attachment: UpdateAttachmentInput!, uuid: String!): Attachment!
   updateAttachments(attachments: [UpdateAttachmentsInput!]!): AttachmentsObject!
   deleteAttachments(uuid: [String!]!): DeleteAttachmentsObject!
@@ -224,10 +224,10 @@ type Query {
   users(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): UsersWithPaginationObject!
   user(id: Int!): User!
   userByToken(token: String!): User!
-  categories(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): CategoriesWithPaginationObject!
-  category(id: Int!): Category!
   articles(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): ArticlesWithPaginationObject!
   article(id: Int!): Article!
+  categories(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): CategoriesWithPaginationObject!
+  category(id: Int!): Category!
   attachments(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String, type: String, moduleName: String, moduleId: Int, moduleType: String, categoryId: Int, userId: Int, refreshHash: Int): AttachmentsWithPaginationObject!
   attachment(uuid: String!): Attachment!
 }

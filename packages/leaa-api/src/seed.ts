@@ -1,6 +1,7 @@
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
+import { getConnection } from 'typeorm';
 
 import { AppModule } from '@leaa/api/app.module';
 import { SeedService } from './modules/seed/seed.service';
@@ -11,6 +12,12 @@ import { SeedService } from './modules/seed/seed.service';
 
   const app: NestExpressApplication = await NestFactory.create(AppModule);
 
+  if (process.argv.includes('--nuke')) {
+    console.log('\n\n\n\n>>>>>>>>>>>>>>>> ✴️✴️✴️✴️✴️✴️✴️✴️✴️✴️ NUKE NUKE NUKE NUKE\n\n\n\n');
+
+    await getConnection().synchronize(true);
+  }
+
   try {
     const seedService: SeedService = await app.get(SeedService);
     await seedService.insertPermissions();
@@ -19,6 +26,8 @@ import { SeedService } from './modules/seed/seed.service';
     await seedService.insertRandomUsers();
     await seedService.insertRoleAddPermissions();
     await seedService.insertUserAddRole();
+    await seedService.insertCategory();
+    await seedService.insertArticle();
   } catch (e) {
     await process.exit(0);
   }
