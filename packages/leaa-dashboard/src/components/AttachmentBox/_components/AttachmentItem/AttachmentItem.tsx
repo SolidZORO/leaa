@@ -10,11 +10,15 @@ import {
   DragSourceConnector,
 } from 'react-dnd';
 import { XYCoord } from 'dnd-core';
-import { Input, Button } from 'antd';
+import { Input, Button, message } from 'antd';
+import { useTranslation } from 'react-i18next';
 
+import { DELETE_ATTACHMENT } from '@leaa/common/graphqls';
 import { Attachment } from '@leaa/common/entrys';
 import { SwitchNumber } from '@leaa/dashboard/components/SwitchNumber';
 
+import { ErrorCard } from '@leaa/dashboard/components/ErrorCard';
+import { useMutation } from '@apollo/react-hooks';
 import style from './style.less';
 
 interface IProps {
@@ -26,6 +30,7 @@ interface IProps {
   onMoveAttachmentCallback: (dragIndex: number, hoverIndex: number) => void;
   onStoponMoveAttachmentCallback: (dragging: boolean) => void;
   onChangeAttachmentCallback: (attachment: Attachment) => void;
+  onDeleteAttachmentCallback?: (uuid: string) => void;
 }
 
 interface IAttachmentInstance {
@@ -33,14 +38,15 @@ interface IAttachmentInstance {
 }
 
 const AttachmentItemInner = forwardRef((props: IProps, ref: React.Ref<any>) => {
+  const { t } = useTranslation();
+  const cardRef = useRef(null);
   const opacity = props.isDragging ? 0.3 : 1;
-  const elementRef = useRef(null);
 
-  props.connectDragSource(elementRef);
-  props.connectDropTarget(elementRef);
+  props.connectDragSource(cardRef);
+  props.connectDropTarget(cardRef);
 
   useImperativeHandle<{}, IAttachmentInstance>(ref, () => ({
-    getNode: () => elementRef.current,
+    getNode: () => cardRef.current,
   }));
 
   const [attachment, setAttachment] = useState<Attachment>(props.attachment);
@@ -64,8 +70,26 @@ const AttachmentItemInner = forwardRef((props: IProps, ref: React.Ref<any>) => {
     props.onChangeAttachmentCallback(attachment);
   }
 
+  const [deleteAttachmentsVariables, setDeleteAttachmentsVariables] = useState<{ uuid: string[] }>();
+  const [deleteAttachmentsMutate, deleteAttachmentsMutation] = useMutation<{ uuid: string[] }>(DELETE_ATTACHMENT, {
+    variables: deleteAttachmentsVariables,
+    onCompleted: () => message.success(t('_lang:deletedSuccessfully')),
+    // refetchQueries: () => [{ query: GET_ATTACHMENTS, variables: getAttachmentsVariables }],
+  });
+
+  const onDelete = async (uuid: string) => {
+    await setDeleteAttachmentsVariables({ uuid: [uuid] });
+    await deleteAttachmentsMutate();
+
+    if (props.onDeleteAttachmentCallback) {
+      props.onDeleteAttachmentCallback(uuid);
+    }
+  };
+
   return (
-    <div className={style['wrapper']} ref={elementRef} style={{ ...style, opacity }}>
+    <div className={style['wrapper']} ref={cardRef} style={{ ...style, opacity }}>
+      {deleteAttachmentsMutation.error ? <ErrorCard error={deleteAttachmentsMutation.error} /> : null}
+
       <div className={style['image']}>
         <img src={`${process.env.API_HOST}${props.attachment.path}`} alt="" />
 
@@ -76,8 +100,8 @@ const AttachmentItemInner = forwardRef((props: IProps, ref: React.Ref<any>) => {
             shape="circle"
             icon="delete"
             className={style['delete']}
-            // loading={createArticleMutation.loading}
-            // onClick={onSubmit}
+            loading={deleteAttachmentsMutation.loading}
+            onClick={() => onDelete(attachment.uuid)}
           />
         </div>
       </div>

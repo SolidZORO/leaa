@@ -14,9 +14,7 @@ export default (props: RouteComponentProps) => {
   store.mapping.abcMapping = ['aaaaaaa'];
 
   const onSubmitAttachmentBox = () => {
-    // console.log(attachmentBoxRef);
     if (attachmentBoxRef && attachmentBoxRef.current) {
-      // console.log(attachmentBoxRef.current);
       attachmentBoxRef.current.onUpdateAttachments();
     }
   };

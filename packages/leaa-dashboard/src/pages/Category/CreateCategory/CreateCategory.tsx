@@ -25,9 +25,7 @@ export default (props: IPage) => {
 
   const [createCategoryMutate, createCategoryMutation] = useMutation<{ createCategory: Category }>(CREATE_CATEGORY, {
     variables: submitVariables,
-    onError(e) {
-      message.error(e.message);
-    },
+    onError: e => message.error(e.message),
     onCompleted({ createCategory }) {
       message.success(t('_lang:createdSuccessfully'));
       props.history.push(`/categories/${createCategory.id}`);

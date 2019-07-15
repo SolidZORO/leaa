@@ -19,7 +19,7 @@ import {
   AttachmentsObject,
 } from '@leaa/common/dtos/attachment';
 import { ConfigService } from '@leaa/api/modules/config/config.service';
-import { formatUtil, loggerUtil } from '@leaa/api/utils';
+import { formatUtil, loggerUtil, pathUtil } from '@leaa/api/utils';
 import { IAttachmentType } from '@leaa/common/interfaces';
 import { MulterService } from './multer.service';
 
@@ -127,26 +127,29 @@ export class AttachmentService {
       height = imageSize.height; // eslint-disable-line prefer-destructuring
     }
 
+    const filepath = file.path.replace(this.configService.PUBLIC_DIR, '').replace('@2x', '');
+    const filename = file.filename.replace('@2x', '');
     const ext = path.extname(file.filename);
-    const title = path.basename(file.originalname, ext);
+    const title = path.basename(file.originalname, ext).replace('@2x', '');
+    const uuid = path.basename(filename, ext).replace('@2x', '');
 
     if (isImage && at2x) {
       await this.saveAt2xToAt1x(file, width, height);
     }
 
     const attachmentData: CreateAttachmentInput = {
-      uuid: path.basename(file.filename, ext).replace('@2x', ''),
+      uuid,
       title,
       alt: title,
-      type: file.mimetype ? `${file.mimetype.split('/')[0]}` : '',
-      filename: file.filename,
+      type: file.mimetype ? `${file.mimetype.split('/')[0]}` : 'no-mime',
+      filename,
       moduleName: body.moduleName,
       moduleId: typeof body.moduleId !== 'undefined' ? Number(body.moduleId) : 0,
       moduleType: body.moduleType,
       ext,
       width,
       height,
-      path: file.path.replace(this.configService.PUBLIC_DIR, ''),
+      path: filepath,
       size: file.size,
       at2x,
       sort: 0,
@@ -235,7 +238,23 @@ export class AttachmentService {
       throw new Error(message);
     }
 
-    loggerUtil.warn(`delete item ${uuid} successful: ${JSON.stringify(nextItem)}\n\n`, CONSTRUCTOR_NAME);
+    prevItems.forEach(i => {
+      if (i.at2x) {
+        try {
+          fs.unlinkSync(`${this.configService.PUBLIC_DIR}${pathUtil.getAt2xPath(i.path)}`);
+        } catch (err) {
+          loggerUtil.error(`delete @2x item ${i.path} fail: ${JSON.stringify(i)}\n\n`, CONSTRUCTOR_NAME, err);
+        }
+      }
+
+      try {
+        fs.unlinkSync(`${this.configService.PUBLIC_DIR}${i.path}`);
+      } catch (err) {
+        loggerUtil.error(`delete item ${i.path} fail: ${JSON.stringify(i)}\n\n`, CONSTRUCTOR_NAME, err);
+      }
+    });
+
+    loggerUtil.log(`delete item ${uuid} successful: ${JSON.stringify(nextItem)}\n\n`, CONSTRUCTOR_NAME);
 
     return {
       items: nextItem.map(i => i.uuid),

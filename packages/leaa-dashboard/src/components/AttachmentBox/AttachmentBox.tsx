@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import { useTranslation } from 'react-i18next';
 import React, { useState, forwardRef, useImperativeHandle, useRef } from 'react';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { message } from 'antd';
@@ -23,6 +24,8 @@ interface IProps {
 }
 
 export const AttachmentBox = forwardRef((props: IProps, ref: React.Ref<any>) => {
+  const { t } = useTranslation();
+
   const attachmentListRef = useRef<any>(null);
 
   const [getAttachmentsVariables, setgetAttachmentsVariables] = useState<AttachmentsArgs>({
@@ -43,12 +46,8 @@ export const AttachmentBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
     UPDATE_ATTACHMENTS,
     {
       variables: submitVariables,
-      onError(e) {
-        message.error(e.message);
-      },
-      onCompleted(e) {
-        console.log(e);
-      },
+      onError: e => message.error(e.message),
+      onCompleted: () => message.success(t('_lang:updatedSuccessfully')),
       refetchQueries: () => [{ query: GET_ATTACHMENTS, variables: getAttachmentsVariables }],
     },
   );
@@ -68,14 +67,18 @@ export const AttachmentBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
 
   // from children onChangeAttachmentsCallback
   const onChangeAttachments = async (attachments: Attachment[]) => {
-    await setSubmitVariables({ attachments: pickAttachments(attachments) });
-    await updateAttachmentsMutate();
+    if (attachments && attachments.length > 0) {
+      await setSubmitVariables({ attachments: pickAttachments(attachments) });
+      await updateAttachmentsMutate();
+    }
   };
 
   // from parent
   const onUpdateAttachments = async () => {
-    await setSubmitVariables({ attachments: pickAttachments(attachmentListRef.current.attachments) });
-    await updateAttachmentsMutate();
+    if (attachmentListRef.current.attachments && attachmentListRef.current.attachments.length > 0) {
+      await setSubmitVariables({ attachments: pickAttachments(attachmentListRef.current.attachments) });
+      await updateAttachmentsMutate();
+    }
   };
 
   useImperativeHandle<{}, any>(
@@ -91,6 +94,8 @@ export const AttachmentBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
     <div className={style['wrapper']}>
       {getAttachmentsQuery.error ? <ErrorCard error={getAttachmentsQuery.error} /> : null}
       {updateAttachmentsMutation.error ? <ErrorCard error={updateAttachmentsMutation.error} /> : null}
+      {updateAttachmentsMutation.error ? <ErrorCard error={updateAttachmentsMutation.error} /> : null}
+
       <AttachmentDropzone attachmentParams={{ ...props.attachmentParams }} onUploadedCallback={refreshAttachments} />
       <AttachmentList
         ref={attachmentListRef}
@@ -102,6 +107,7 @@ export const AttachmentBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
           getAttachmentsQuery.data.attachments.items
         }
         onChangeAttachmentsCallback={onChangeAttachments}
+        onDeleteAttachmentCallback={refreshAttachments}
       />
     </div>
   );

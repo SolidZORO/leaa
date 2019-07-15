@@ -47,7 +47,7 @@ const log = (
   let result = context ? `[${context}] ${message}` : `[ / ] ${message}`;
 
   if (trace) {
-    result += ` / [ERROR-TRACE] ${trace}`;
+    result += `📍[ERROR-TRACE] ${trace}\n`;
   }
 
   return winstonLogger.log(type, result);
@@ -55,8 +55,8 @@ const log = (
 
 export const loggerUtil = {
   log: (message: string, context?: string) => log('info', message, context),
-  error: (message: string, trace?: string, context?: string) => log('error', message, context, trace),
-  warn: (message: string, context?: string) => log('warn', message, context),
+  error: (message: string, context?: string, trace?: string) => log('error', `❌ ${message}`, context, trace),
+  warn: (message: string, context?: string) => log('warn', `⚠️ ${message}`, context),
   debug: (message: string, context?: string) => log('debug', message, context),
   verbose: (message: string, context?: string) => log('verbose', message, context),
   updateLog: ({

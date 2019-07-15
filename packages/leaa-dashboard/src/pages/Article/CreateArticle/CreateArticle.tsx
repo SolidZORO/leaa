@@ -25,9 +25,7 @@ export default (props: IPage) => {
 
   const [createArticleMutate, createArticleMutation] = useMutation<{ createArticle: Article }>(CREATE_ARTICLE, {
     variables: submitVariables,
-    onError(e) {
-      message.error(e.message);
-    },
+    onError: e => message.error(e.message),
     onCompleted({ createArticle }) {
       message.success(t('_lang:createdSuccessfully'));
       props.history.push(`/articles/${createArticle.id}`);

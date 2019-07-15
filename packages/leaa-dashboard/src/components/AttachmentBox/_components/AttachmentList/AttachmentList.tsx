@@ -15,6 +15,7 @@ interface IProps {
   attachments?: Attachment[];
   onChange?: (checked: boolean) => void;
   onChangeAttachmentsCallback?: (attachments: Attachment[]) => void;
+  onDeleteAttachmentCallback?: (uuid: string) => void;
 }
 
 export const AttachmentList = forwardRef((props: IProps, ref: React.Ref<any>) => {
@@ -82,6 +83,7 @@ export const AttachmentList = forwardRef((props: IProps, ref: React.Ref<any>) =>
               onMoveAttachmentCallback={onMoveAttachment}
               onStoponMoveAttachmentCallback={onStopMoveAttachment}
               onChangeAttachmentCallback={onChangeAttachment}
+              onDeleteAttachmentCallback={props.onDeleteAttachmentCallback}
             />
           ))}
       </DndProvider>

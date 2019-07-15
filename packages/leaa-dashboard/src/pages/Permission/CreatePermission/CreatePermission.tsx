@@ -28,9 +28,7 @@ export default (props: IPage) => {
     CREATE_PERMISSION,
     {
       variables: submitVariables,
-      onError(e) {
-        message.error(e.message);
-      },
+      onError: e => message.error(e.message),
       onCompleted({ createPermission }) {
         message.success(t('_lang:createdSuccessfully'));
         props.history.push(`/permissions/${createPermission.id}`);
