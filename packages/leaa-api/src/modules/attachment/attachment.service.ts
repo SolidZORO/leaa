@@ -1,8 +1,9 @@
 import fs from 'fs';
+import _ from 'lodash';
 import path from 'path';
 import Jimp from 'jimp';
 import { Express, Request } from 'express';
-import { Repository, FindOneOptions, Like, In } from 'typeorm';
+import { Repository, FindOneOptions, Like, In, getConnection } from 'typeorm';
 import ImageSize from 'image-size';
 import { Injectable, Inject } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -10,10 +11,12 @@ import { Attachment } from '@leaa/common/entrys';
 import {
   CreateAttachmentInput,
   AttachmentsArgs,
-  AttachmentsObject,
+  AttachmentsWithPaginationObject,
   AttachmentArgs,
   UpdateAttachmentInput,
   DeleteAttachmentsObject,
+  UpdateAttachmentsInput,
+  AttachmentsObject,
 } from '@leaa/common/dtos/attachment';
 import { ConfigService } from '@leaa/api/modules/config/config.service';
 import { formatUtil, loggerUtil } from '@leaa/api/utils';
@@ -51,7 +54,7 @@ export class AttachmentService {
       });
   }
 
-  async attachments(args: AttachmentsArgs): Promise<AttachmentsObject> {
+  async attachments(args: AttachmentsArgs): Promise<AttachmentsWithPaginationObject> {
     const nextArgs = formatUtil.formatArgs(args);
 
     const queryWhere: any[] = [];
@@ -177,11 +180,40 @@ export class AttachmentService {
     };
 
     // @ts-ignore
-    const nextItem = await this.repository.save(prevItem);
+    const nextItem = await this.attachmentRepository.save(prevItem);
 
     loggerUtil.updateLog({ id: uuid, prevItem, nextItem, constructorName: CONSTRUCTOR_NAME });
 
     return nextItem;
+  }
+
+  async updateAttachments(attachments: UpdateAttachmentsInput[]): Promise<AttachmentsObject> {
+    if (!attachments) {
+      const message = `update attachments does not exist`;
+
+      loggerUtil.warn(message, CONSTRUCTOR_NAME);
+      throw new Error(message);
+    }
+
+    const batchUpdate = attachments.map(async attachment => {
+      await this.attachmentRepository.update({ uuid: attachment.uuid }, _.omit(attachment, ['uuid']));
+    });
+
+    let items: Attachment[] = [];
+
+    await Promise.all(batchUpdate)
+      .then(async () => {
+        loggerUtil.log(JSON.stringify(attachments), CONSTRUCTOR_NAME);
+
+        items = await this.attachmentRepository.find({ uuid: In(attachments.map(a => a.uuid)) });
+      })
+      .catch(() => {
+        loggerUtil.error(JSON.stringify(attachments), CONSTRUCTOR_NAME);
+      });
+
+    return {
+      items,
+    };
   }
 
   async deleteAttachments(uuid: string[]): Promise<DeleteAttachmentsObject | undefined> {

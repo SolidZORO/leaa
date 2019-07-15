@@ -19,7 +19,8 @@ i18n
     },
     fallbackLng: 'zh-CN',
     saveMissing: true,
-    debug: true,
+    // debug: true,
+    debug: false,
   });
 
 export default i18n;

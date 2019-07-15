@@ -3,13 +3,10 @@ import { Field, InputType, Int } from 'type-graphql';
 @InputType()
 export class UpdateAttachmentInput {
   @Field(() => String, { nullable: true })
-  description?: string;
+  title?: string;
 
   @Field(() => String, { nullable: true })
   link?: string;
-
-  @Field(() => Int, { nullable: true })
-  categoryId?: number;
 
   @Field(() => Int)
   sort!: number;

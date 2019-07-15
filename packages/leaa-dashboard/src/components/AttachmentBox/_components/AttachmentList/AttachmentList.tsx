@@ -17,7 +17,7 @@ interface IProps {
   onChangeAttachmentsCallback?: (attachments: Attachment[]) => void;
 }
 
-export const AttachmentList = forwardRef<HTMLDivElement, IProps>((props: IProps, ref: React.Ref<any>) => {
+export const AttachmentList = forwardRef((props: IProps, ref: React.Ref<any>) => {
   const [attachments, setAttachments] = useState<Attachment[] | undefined>(props.attachments);
 
   useImperativeHandle<{}, any>(

@@ -55,6 +55,10 @@ type Attachment {
 }
 
 type AttachmentsObject {
+  items: [Attachment!]!
+}
+
+type AttachmentsWithPaginationObject {
   page: Int
   pageSize: Int!
   total: Int!
@@ -183,6 +187,7 @@ type Mutation {
   updateArticle(article: UpdateArticleInput!, id: Int!): Article!
   deleteArticle(id: Int!): Article!
   updateAttachment(attachment: UpdateAttachmentInput!, uuid: String!): Attachment!
+  updateAttachments(attachments: [UpdateAttachmentsInput!]!): AttachmentsObject!
   deleteAttachments(uuid: [String!]!): DeleteAttachmentsObject!
 }
 
@@ -223,7 +228,7 @@ type Query {
   category(id: Int!): Category!
   articles(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): ArticlesObject!
   article(id: Int!): Article!
-  attachments(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String, type: String, moduleName: String, moduleId: Int, moduleType: String, categoryId: Int, userId: Int, refreshHash: Int): AttachmentsObject!
+  attachments(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String, type: String, moduleName: String, moduleId: Int, moduleType: String, categoryId: Int, userId: Int, refreshHash: Int): AttachmentsWithPaginationObject!
   attachment(uuid: String!): Attachment!
 }
 
@@ -256,11 +261,18 @@ input UpdateArticleInput {
 }
 
 input UpdateAttachmentInput {
-  description: String
+  title: String
   link: String
-  categoryId: Int
   sort: Int!
   status: Int!
+}
+
+input UpdateAttachmentsInput {
+  title: String
+  link: String
+  sort: Int!
+  status: Int!
+  uuid: String!
 }
 
 input UpdateCategoryInput {

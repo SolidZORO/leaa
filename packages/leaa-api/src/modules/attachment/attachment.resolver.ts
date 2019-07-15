@@ -3,10 +3,12 @@ import { Args, Query, Mutation, Resolver } from '@nestjs/graphql';
 import { Attachment } from '@leaa/common/entrys';
 import {
   AttachmentsArgs,
-  AttachmentsObject,
+  AttachmentsWithPaginationObject,
   AttachmentArgs,
   UpdateAttachmentInput,
+  UpdateAttachmentsInput,
   DeleteAttachmentsObject,
+  AttachmentsObject,
 } from '@leaa/common/dtos/attachment';
 import { AttachmentService } from './attachment.service';
 
@@ -14,8 +16,8 @@ import { AttachmentService } from './attachment.service';
 export class AttachmentResolver {
   constructor(private readonly attachmentService: AttachmentService) {}
 
-  @Query(() => AttachmentsObject)
-  async attachments(@Args() args: AttachmentsArgs): Promise<AttachmentsObject | undefined> {
+  @Query(() => AttachmentsWithPaginationObject)
+  async attachments(@Args() args: AttachmentsArgs): Promise<AttachmentsWithPaginationObject | undefined> {
     return this.attachmentService.attachments(args);
   }
 
@@ -33,6 +35,13 @@ export class AttachmentResolver {
     @Args('attachment') args: UpdateAttachmentInput,
   ): Promise<Attachment | undefined> {
     return this.attachmentService.updateAttachment(uuid, args);
+  }
+
+  @Mutation(() => AttachmentsObject)
+  async updateAttachments(
+    @Args({ name: 'attachments', type: () => [UpdateAttachmentsInput] }) attachments: UpdateAttachmentsInput[],
+  ): Promise<AttachmentsObject> {
+    return this.attachmentService.updateAttachments(attachments);
   }
 
   @Mutation(() => DeleteAttachmentsObject)

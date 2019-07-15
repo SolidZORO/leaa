@@ -7,12 +7,18 @@ import { AttachmentBox } from '@leaa/dashboard/components/AttachmentBox';
 
 export default (props: RouteComponentProps) => {
   const store = useStore();
-  const attachmentBoxRef = useRef(null);
+  const attachmentBoxRef = useRef<{
+    onUpdateAttachments: () => void;
+  }>(null);
 
   store.mapping.abcMapping = ['aaaaaaa'];
 
   const onSubmitAttachmentBox = () => {
-    console.log(attachmentBoxRef);
+    // console.log(attachmentBoxRef);
+    if (attachmentBoxRef && attachmentBoxRef.current) {
+      // console.log(attachmentBoxRef.current);
+      attachmentBoxRef.current.onUpdateAttachments();
+    }
   };
 
   return (

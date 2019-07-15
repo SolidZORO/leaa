@@ -10,7 +10,7 @@ import { GET_ARTICLE, UPDATE_ARTICLE, GET_ATTACHMENTS, DELETE_ATTACHMENT } from 
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/constants';
 import { ArticleArgs, UpdateArticleInput } from '@leaa/common/dtos/article';
 import { IPage } from '@leaa/dashboard/interfaces';
-import { AttachmentsObject, AttachmentsArgs } from '@leaa/common/dtos/attachment';
+import { AttachmentsWithPaginationObject, AttachmentsArgs } from '@leaa/common/dtos/attachment';
 import { PageCard } from '@leaa/dashboard/components/PageCard';
 import { ErrorCard } from '@leaa/dashboard/components/ErrorCard';
 import { SubmitBar } from '@leaa/dashboard/components/SubmitBar/SubmitBar';
@@ -42,7 +42,7 @@ export default (props: IPage) => {
     orderSort: 'ASC',
     refreshHash: 0,
   });
-  const getArticleEditorAttachmentsQuery = useQuery<{ attachments: AttachmentsObject }, AttachmentsArgs>(
+  const getArticleEditorAttachmentsQuery = useQuery<{ attachments: AttachmentsWithPaginationObject }, AttachmentsArgs>(
     GET_ATTACHMENTS,
     { variables: getArticleEditorAttachmentsVariables },
   );

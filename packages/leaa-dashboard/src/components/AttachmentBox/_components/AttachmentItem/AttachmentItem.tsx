@@ -32,7 +32,7 @@ interface IAttachmentInstance {
   getNode(): HTMLDivElement | null;
 }
 
-const AttachmentItemInner = forwardRef<HTMLDivElement, IProps>((props: IProps, ref: React.Ref<any>) => {
+const AttachmentItemInner = forwardRef((props: IProps, ref: React.Ref<any>) => {
   const opacity = props.isDragging ? 0.3 : 1;
   const elementRef = useRef(null);
 
