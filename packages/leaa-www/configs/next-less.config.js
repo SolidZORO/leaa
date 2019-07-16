@@ -13,8 +13,7 @@ module.exports = (nextConfig = {}) => ({
       const { dev, isServer } = options;
       const { cssModules, cssLoaderOptions, postcssLoaderOptions, lessLoaderOptions = {} } = nextConfig;
 
-      // eslint-disable-next-line no-param-reassign
-      options.defaultLoaders.less = cssLoaderConfig(config, {
+      const baseLessConfig = {
         extensions: ['less'],
         cssModules,
         cssLoaderOptions,
@@ -27,32 +26,27 @@ module.exports = (nextConfig = {}) => ({
             options: lessLoaderOptions,
           },
         ],
-      });
+      };
+
+      const libLessConfig = {
+        ...baseLessConfig,
+        ...{
+          cssModules: false,
+          cssLoaderOptions: {},
+          postcssLoaderOptions: {},
+        },
+      };
 
       config.module.rules.push({
         test: /\.less$/,
         exclude: /node_modules/,
-        use: options.defaultLoaders.less,
+        use: cssLoaderConfig(config, baseLessConfig),
       });
 
-      // DISABLED antd cssModules
       config.module.rules.push({
         test: /\.less$/,
         include: /node_modules/,
-        // include: /node_modules/,
-        use: cssLoaderConfig(config, {
-          extensions: ['less'],
-          cssModules: false,
-          cssLoaderOptions: {},
-          dev,
-          isServer,
-          loaders: [
-            {
-              loader: 'less-loader',
-              options: lessLoaderOptions,
-            },
-          ],
-        }),
+        use: cssLoaderConfig(config, libLessConfig),
       });
 
       if (typeof nextConfig.webpack === 'function') {

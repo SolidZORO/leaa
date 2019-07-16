@@ -34,34 +34,15 @@ module.exports = withDotenv(
   withImage(
     withLessExcludeAntd({
       cssModules: true,
-      // cssLoaderOptions: {
-      //   importLoaders: 1,
-      //   localIdentName: '[local]___[hash:6]',
-      // },
+      cssLoaderOptions: {
+        sourceMap: false,
+        importLoaders: 1,
+      },
       lessLoaderOptions: {
         javascriptEnabled: true,
-        // modifyVars: antdVariables,
+        modifyVars: antdVariables,
       },
-      // useFileSystemPublicRoutes: false,
-      webpack: function(config, { buildId, dev }) {
-        const originalEntry = config.entry;
-
-        // config.resolve = {
-        //   ...config.resolve,
-        //   ...{
-        //     alias: {
-        //       ...config.resolve.alias,
-        //       '@src': path.resolve(__dirname, 'src'),
-        //       '@components': path.resolve(__dirname, 'components'),
-        //       '@interfaces': path.resolve(__dirname, 'interfaces'),
-        //       '@stores': path.resolve(__dirname, 'stores'),
-        //       '@pages': path.resolve(__dirname, 'client'),
-        //       '@styles': path.resolve(__dirname, 'styles'),
-        //       '@graphqls': path.resolve(__dirname, 'graphqls'),
-        //     },
-        //   },
-        // };
-
+      webpack: function(config) {
         config.plugins.push(
           new FilterWarningsPlugin({
             // ignore ANTD chunk styles [mini-css-extract-plugin] warning
