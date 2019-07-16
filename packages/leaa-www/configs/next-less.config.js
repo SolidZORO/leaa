@@ -38,6 +38,7 @@ module.exports = (nextConfig = {}) => ({
       // DISABLED antd cssModules
       config.module.rules.push({
         test: /\.less$/,
+        include: /node_modules/,
         // include: /node_modules/,
         use: cssLoaderConfig(config, {
           extensions: ['less'],
