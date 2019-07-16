@@ -30,7 +30,7 @@
     "@apollo/react-hooks": "^0.1.0-beta.10",
     "@babel/polyfill": "7.4.4",
     "animated-scroll-to": "^1.2.2",
-    "antd": "^3.20.1",
+    "antd": "^3.20.3",
     "apollo-cache-inmemory": "^1.6.2",
     "apollo-client": "^2.6.3",
     "apollo-link": "^1.2.12",
@@ -130,7 +130,7 @@
     "url-loader": "^2.0.1",
     "webpack": "^4.35.3",
     "webpack-bundle-analyzer": "3.3.2",
-    "webpack-cli": "3.3.5",
+    "webpack-cli": "3.3.6",
     "webpack-dev-server": "3.7.2",
     "write-file-webpack-plugin": "^4.5.0"
   }

@@ -4,4 +4,4 @@ declare namespace NodeJS {
   }
 }
 
-declare module 'cowsay-browser';
+// declare module 'cowsay-browser';

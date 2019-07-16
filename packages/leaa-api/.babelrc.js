@@ -8,7 +8,7 @@ module.exports = {
         },
       },
     ],
-    ['@babel/preset-typescript'],
+    // ['@babel/preset-typescript'],
   ],
   plugins: [
     ['@babel/plugin-proposal-decorators', { legacy: true }],
@@ -27,6 +27,5 @@ module.exports = {
       },
     ],
   ],
-
-  ignore: ['node_modules'],
+  ignore: ['node_modules', 'logs', '_build', '_deploy', '_tsc', '.dist', '.deploy', '.docker', '.next'],
 };

@@ -14,6 +14,7 @@
     "incremental": true,
     "isolatedModules": true,
     "noEmit": true,
+    "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "lib": [
       "dom",

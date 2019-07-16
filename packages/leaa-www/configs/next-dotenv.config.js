@@ -4,7 +4,7 @@ const publicRuntimeConfig = {
   NAME: process.env.NAME || '',
   NODE_ENV: process.env.NODE_ENV || 'DEV',
   PROTOCOL: process.env.PROTOCOL || 'http',
-  PORT: Number(process.env.PORT) || 3001,
+  PORT: Number(process.env.PORT) || 3333,
   //
   BASE_HOST: process.env.BASE_HOST || 'localhost',
   API_HOST: process.env.API_HOST || 'http://localhost:5555/graphql',

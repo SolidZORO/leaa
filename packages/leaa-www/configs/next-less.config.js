@@ -11,31 +11,23 @@ module.exports = (nextConfig = {}) => ({
       }
 
       const { dev, isServer } = options;
-      const {
+      const { cssModules, cssLoaderOptions, postcssLoaderOptions, lessLoaderOptions = {} } = nextConfig;
+
+      // eslint-disable-next-line no-param-reassign
+      options.defaultLoaders.less = cssLoaderConfig(config, {
+        extensions: ['less'],
         cssModules,
         cssLoaderOptions,
         postcssLoaderOptions,
-        lessLoaderOptions = {},
-      } = nextConfig;
-
-      // eslint-disable-next-line no-param-reassign
-      options.defaultLoaders.less = cssLoaderConfig(
-        config,
-        {
-          extensions: ['less'],
-          cssModules,
-          cssLoaderOptions,
-          postcssLoaderOptions,
-          dev,
-          isServer,
-          loaders: [
-            {
-              loader: 'less-loader',
-              options: lessLoaderOptions,
-            },
-          ],
-        },
-      );
+        dev,
+        isServer,
+        loaders: [
+          {
+            loader: 'less-loader',
+            options: lessLoaderOptions,
+          },
+        ],
+      });
 
       config.module.rules.push({
         test: /\.less$/,
@@ -46,7 +38,7 @@ module.exports = (nextConfig = {}) => ({
       // DISABLED antd cssModules
       config.module.rules.push({
         test: /\.less$/,
-        include: /node_modules/,
+        // include: /node_modules/,
         use: cssLoaderConfig(config, {
           extensions: ['less'],
           cssModules: false,

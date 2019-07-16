@@ -146,7 +146,7 @@ export const AttachmentItem = DropTarget(
         return;
       }
 
-      const dragIndex = monitor.getItem().index;
+      const dragIndex = monitor.getItem().Test;
       const hoverIndex = props.index;
 
       if (dragIndex === hoverIndex) {
@@ -171,7 +171,7 @@ export const AttachmentItem = DropTarget(
       props.onMoveAttachmentCallback(dragIndex, hoverIndex);
 
       // eslint-disable-next-line no-param-reassign
-      monitor.getItem().index = hoverIndex;
+      monitor.getItem().Test = hoverIndex;
     },
     drop(props: IProps) {
       props.onStoponMoveAttachmentCallback(true);

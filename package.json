@@ -5,6 +5,7 @@
   "dependencies": {
   },
   "scripts": {
+    "nuke": "rm ./yarn.lock && rm -rf ./node_modules && yarn install",
     "u": "yarn upgrade-interactive --latest",
     "tsc": "yarn workspaces run tsc"
   }

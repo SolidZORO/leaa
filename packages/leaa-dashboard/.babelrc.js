@@ -24,7 +24,7 @@ module.exports = {
       'import',
       {
         libraryName: 'antd',
-        libraryDirectory: 'es',
+        libraryDirectory: 'lib',
         style: true,
       },
     ],
@@ -40,5 +40,5 @@ module.exports = {
       },
     ],
   ],
-  ignore: ['node_modules', '_build', '_deploy', '_tsc'],
+  ignore: ['node_modules', 'logs', '_build', '_deploy', '_tsc', '.dist', '.deploy', '.docker', '.next'],
 };
