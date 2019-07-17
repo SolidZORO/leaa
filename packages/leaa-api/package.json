@@ -35,6 +35,7 @@
     "s": "yarn dev"
   },
   "dependencies": {
+    "@hapi/joi": "^15.1.0",
     "@leaa/common": "0.0.1",
     "@nestjs/common": "^6.5.2",
     "@nestjs/core": "^6.5.2",
@@ -55,7 +56,6 @@
     "graphql-tools": "^4.0.5",
     "image-size": "^0.7.4",
     "jimp": "^0.6.4",
-    "joi": "^14.3.1",
     "jsondiffpatch": "^0.3.11",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.14",

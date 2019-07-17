@@ -1,4 +1,4 @@
-import Joi from 'joi';
+import Joi from '@hapi/joi';
 import dotenv, { DotenvParseOutput } from 'dotenv';
 import fs from 'fs';
 
