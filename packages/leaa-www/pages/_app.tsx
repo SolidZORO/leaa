@@ -1,17 +1,12 @@
 import React, { ErrorInfo } from 'react';
-import App, { Container } from 'next/app';
-import { ApolloClient } from 'apollo-client';
+import App from 'next/app';
 import { ApolloProvider } from '@apollo/react-hooks';
+
+import { IAppProps } from '@leaa/www/interfaces';
 import { withApolloClient } from '@leaa/www/libs';
+import { MasterLayout } from '@leaa/www/components/MasterLayout/MasterLayout';
 
-class Layout extends React.Component {
-  render() {
-    const { children } = this.props;
-    return <div className="layout">{children}</div>;
-  }
-}
-
-class CustomApp extends App<{ apolloClient: ApolloClient<any> }> {
+class CustomApp extends App<IAppProps> {
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     console.log('CUSTOM ERROR HANDLING', error);
     // This is needed to render errors correctly in development / production
@@ -19,15 +14,11 @@ class CustomApp extends App<{ apolloClient: ApolloClient<any> }> {
   }
 
   render() {
-    const { Component, pageProps, apolloClient } = this.props;
-
     return (
-      <ApolloProvider client={apolloClient}>
-        <Container>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-        </Container>
+      <ApolloProvider client={this.props.apolloClient}>
+        <MasterLayout {...this.props}>
+          <this.props.Component {...this.props} />
+        </MasterLayout>
       </ApolloProvider>
     );
   }

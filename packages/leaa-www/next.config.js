@@ -4,6 +4,7 @@ const path = require('path');
 const lessToJS = require('less-vars-to-js');
 const FilterWarningsPlugin = require('webpack-filter-warnings-plugin');
 
+const withCSS = require('@zeit/next-css');
 const withLessExcludeAntd = require('./configs/next-less.config');
 const withImage = require('./configs/next-image.config');
 const withDotenv = require('./configs/next-dotenv.config');
@@ -18,26 +19,28 @@ if (typeof require !== 'undefined') {
 
 module.exports = withDotenv(
   withImage(
-    withLessExcludeAntd({
-      cssModules: true,
-      cssLoaderOptions: {
-        sourceMap: false,
-        importLoaders: 1,
-      },
-      lessLoaderOptions: {
-        javascriptEnabled: true,
-        modifyVars: antdVariables,
-      },
-      webpack: function(config) {
-        config.plugins.push(
-          new FilterWarningsPlugin({
-            // ignore ANTD chunk styles [mini-css-extract-plugin] warning
-            exclude: /mini-css-extract-plugin[^]*Conflicting order between:/,
-          }),
-        );
+    withCSS(
+      withLessExcludeAntd({
+        cssModules: true,
+        cssLoaderOptions: {
+          sourceMap: false,
+          importLoaders: 1,
+        },
+        lessLoaderOptions: {
+          javascriptEnabled: true,
+          modifyVars: antdVariables,
+        },
+        webpack: function(config) {
+          config.plugins.push(
+            new FilterWarningsPlugin({
+              // ignore ANTD chunk styles [mini-css-extract-plugin] warning
+              exclude: /mini-css-extract-plugin[^]*Conflicting order between:/,
+            }),
+          );
 
-        return config;
-      },
-    }),
+          return config;
+        },
+      }),
+    ),
   ),
 );
