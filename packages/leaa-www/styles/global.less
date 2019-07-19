@@ -1,9 +1,42 @@
-@import '~antd/lib/style/themes/default.less';
-
 :global {
+  @import '~@leaa/www/styles/variables.less';
   @import './libs/nprogress/nprogress.less';
-}
 
-.g {
-  background: #000;
+  .g {
+    background: #000;
+  }
+
+  .g-full-container {
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 1rem;
+
+    //@media (min-width: @screen-sm) {
+    //  width: @screen-md;
+    //  background: #ff9c64;
+    //}
+
+    //@media (min-width: @screen-md) {
+    //  width: @screen-lg;
+    //  background: #ffe85f;
+    //}
+
+    @media (min-width: @screen-md) {
+      //width: 1000px;
+      //padding: 0 1rem;
+      max-width: 1024px;
+      //background: #d0ffa4;
+    }
+
+    //@media (min-width: @screen-xl) {
+    //  width: @screen-xxl;
+    //  background: #bdffe7;
+    //}
+    //
+    //@media (min-width: @screen-xxl) {
+    //  width: @screen-xxl;
+    //  background: #c1d9ff;
+    //}
+  }
 }

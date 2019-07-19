@@ -8,14 +8,6 @@ export const Test = () => {
     <div className={style['wrapper']}>
       <div className={style['biggg']}>TESTx</div>
       <Button type="primary">AA333Assss</Button>
-      <Button type="primary">AA333Assss</Button>
-      <Button type="primary">AA333Assss</Button>
-      <Button type="primary">AA333Assss</Button>
-      <Button type="primary">AA333Assss</Button>
-      <Button type="primary">AA333Assss</Button>
-      <Button type="primary">AA333Assss</Button>
-      <Button type="primary">AA333Assss</Button>
-      <Button type="primary">AA333Assss</Button>
       <Icon type="user" />
       <Switch />
     </div>

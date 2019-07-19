@@ -2,13 +2,13 @@ import React from 'react';
 import cx from 'classnames';
 import Router from 'next/router';
 import NProgress from 'nprogress';
-
 import { Layout } from 'antd';
 
 import { urlUtil } from '@leaa/www/utils';
 import { IAppProps } from '@leaa/www/interfaces';
 import { LayoutContent } from './_components/LayoutContent/LayoutContent';
 import { LayoutHeader } from './_components/LayoutHeader/LayoutHeader';
+import { LayoutFooter } from './_components/LayoutFooter/LayoutFooter';
 
 import '@leaa/www/styles/global.less';
 import style from './style.less';
@@ -22,6 +22,7 @@ interface IProps extends IAppProps {
   children: React.ReactNode;
   disableSidebar?: boolean;
   disableHeader?: boolean;
+  disableFooter?: boolean;
 }
 
 export const MasterLayout = (props: IProps) => {
@@ -36,6 +37,7 @@ export const MasterLayout = (props: IProps) => {
         <Layout>
           {!props.disableHeader && <LayoutHeader />}
           <LayoutContent>{props.children}</LayoutContent>
+          {!props.disableFooter && <LayoutFooter />}
         </Layout>
       </Layout>
     </div>

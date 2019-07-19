@@ -1,21 +1,128 @@
-@import '~@leaa/dashboard/src/styles/variables.less';
+@import '~@leaa/www/styles/variables.less';
 
 .full-layout-header {
+  position: relative;
   background: #fff;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.02);
   line-height: 1;
   height: auto;
-  padding: 8px @page-card-padding-x;
+  padding: 10px 0;
 }
 
-.header-nav {
+.full-container {
+  background-color: transparent;
 }
 
-.breadcrumb {
+.logo-image {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 1rem;
+  display: block;
+  width: 32px;
+
+  @media (min-width: @screen-md) {
+    padding: 10px 0;
+    width: 40px;
+  }
 }
 
-.toolsbar {
-  display: flex;
-  justify-content: right;
-  align-items: center;
+// ---- MB && PC UNION ----
+ul.menu-list {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  list-style: inside none;
+
+  @media (min-width: @screen-md) {
+    margin: 0 0 0 20px;
+  }
+}
+
+li.menu-item {
+  padding: 15px;
+  line-height: 2;
+  display: block;
+
+  @media (min-width: @screen-md) {
+    display: inline-block;
+  }
+}
+
+.auth-list {
+  display: block;
+  margin: 10px 0 0 15px;
+
+  @media (min-width: @screen-md) {
+    display: inline-block;
+    margin: 0;
+  }
+}
+
+.link {
+  font-size: 105%;
+  color: #777;
+}
+
+.menu-wrapper--pc,
+.menu-wrapper--mb {
+  position: relative;
+}
+
+.menu-wrapper--pc {
+  display: none;
+
+  @media (min-width: @screen-md) {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding-left: 40px;
+  }
+}
+
+.menu-wrapper--mb {
+  display: none;
+
+  @media (max-width: @screen-md) {
+    display: block;
+    height: 34px;
+    width: 100%;
+  }
+}
+
+.menu-mb-drawer-wrapper {
+  display: block;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.menu-mb-drawe-box {
+  font-size: 100%;
+  display: block;
+
+  @media (min-width: @screen-md) {
+    display: none;
+  }
+
+  :global {
+    .ant-drawer-content-wrapper {
+      background: #fe9;
+      width: 90% !important;
+    }
+  }
+}
+
+.menu-mb-drawer-botton {
+  color: #444;
+  font-size: 150%;
+}
+
+.menu-mb-drawer-close {
+  position: absolute;
+  font-size: 150%;
+  top: 10px;
+  right: 30px;
 }

@@ -56,7 +56,7 @@ export const masterRoutes: IRouteItem[] = [
   {
     name: 'Edit User',
     namei18n: '_route:editUser',
-    permission: 'user.item',
+    permission: 'user.footerMenu-item',
     path: '/users/:id(\\d+)',
     icon: 'user',
     LazyComponent: React.lazy(() => import(/* webpackChunkName: 'EditUser' */ '../pages/User/EditUser/EditUser')),
@@ -65,7 +65,7 @@ export const masterRoutes: IRouteItem[] = [
   {
     name: 'User',
     namei18n: '_route:user',
-    permission: 'user.list',
+    permission: 'user.footerMenu-list',
     path: '/users',
     icon: 'user',
     LazyComponent: React.lazy(() => import(/* webpackChunkName: 'UserList' */ '../pages/User/UserList/UserList')),
@@ -89,7 +89,7 @@ export const masterRoutes: IRouteItem[] = [
   {
     name: 'Edit Role',
     namei18n: '_route:editRole',
-    permission: 'role.item',
+    permission: 'role.footerMenu-item',
     path: '/roles/:id(\\d+)',
     icon: 'crown',
     LazyComponent: React.lazy(() => import(/* webpackChunkName: 'EditRole' */ '../pages/Role/EditRole/EditRole')),
@@ -98,7 +98,7 @@ export const masterRoutes: IRouteItem[] = [
   {
     name: 'Role',
     namei18n: '_route:role',
-    permission: 'role.list',
+    permission: 'role.footerMenu-list',
     path: '/roles',
     icon: 'crown',
     LazyComponent: React.lazy(() => import(/* webpackChunkName: 'RoleList' */ '../pages/Role/RoleList/RoleList')),
@@ -124,7 +124,7 @@ export const masterRoutes: IRouteItem[] = [
   {
     name: 'Edit Permission',
     namei18n: '_route:editPermission',
-    permission: 'permission.item',
+    permission: 'permission.footerMenu-item',
     path: '/permissions/:id(\\d+)',
     icon: 'key',
     LazyComponent: React.lazy(() =>
@@ -135,7 +135,7 @@ export const masterRoutes: IRouteItem[] = [
   {
     name: 'Permission',
     namei18n: '_route:permission',
-    permission: 'permission.list',
+    permission: 'permission.footerMenu-list',
     path: '/permissions',
     icon: 'key',
     LazyComponent: React.lazy(() =>
@@ -163,7 +163,7 @@ export const masterRoutes: IRouteItem[] = [
   {
     name: 'Edit Category',
     namei18n: '_route:editCategory',
-    permission: 'category.item',
+    permission: 'category.footerMenu-item',
     path: '/categories/:id(\\d+)',
     icon: 'apartment',
     LazyComponent: React.lazy(() =>
@@ -174,7 +174,7 @@ export const masterRoutes: IRouteItem[] = [
   {
     name: 'Category',
     namei18n: '_route:category',
-    permission: 'category.list',
+    permission: 'category.footerMenu-list',
     path: '/categories',
     icon: 'apartment',
     LazyComponent: React.lazy(() =>
@@ -202,7 +202,7 @@ export const masterRoutes: IRouteItem[] = [
   {
     name: 'Edit Article',
     namei18n: '_route:editArticle',
-    permission: 'article.item',
+    permission: 'article.footerMenu-item',
     path: '/articles/:id(\\d+)',
     icon: 'container',
     LazyComponent: React.lazy(() =>
@@ -213,7 +213,7 @@ export const masterRoutes: IRouteItem[] = [
   {
     name: 'Article',
     namei18n: '_route:article',
-    permission: 'article.list',
+    permission: 'article.footerMenu-list',
     path: '/articles',
     icon: 'container',
     LazyComponent: React.lazy(() =>

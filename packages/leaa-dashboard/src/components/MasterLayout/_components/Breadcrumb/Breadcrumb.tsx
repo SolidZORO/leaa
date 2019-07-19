@@ -37,7 +37,7 @@ export const Breadcrumb = (props: IProps) => {
     //       ^    ^^^^  ------------------> ['', 'news'] --> '/news'
     const currentPath = spaceToSlash(urlPathList.slice(0, i + 1).join('/'));
 
-    // find menu by flatMenuList
+    // find footerMenu by flatMenuList
     const currentMenu = flateMasterRoutes.find(m => m.path === currentPath);
 
     // not found name, use urlPathList[last]
