@@ -4,7 +4,13 @@ import { Repository, FindOneOptions, Like } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { User, Role, Permission } from '@leaa/common/entrys';
-import { UsersArgs, UsersWithPaginationObject, UserArgs, CreateUserInput, UpdateUserInput } from '@leaa/common/dtos/user';
+import {
+  UsersArgs,
+  UsersWithPaginationObject,
+  UserArgs,
+  CreateUserInput,
+  UpdateUserInput,
+} from '@leaa/common/dtos/user';
 import { BaseService } from '@leaa/api/modules/base/base.service';
 import { RoleService } from '@leaa/api/modules/role/role.service';
 import { formatUtil, loggerUtil } from '@leaa/api/utils';
@@ -13,7 +19,14 @@ import { JwtService } from '@nestjs/jwt';
 const CONSTRUCTOR_NAME = 'UserService';
 
 @Injectable()
-export class UserService extends BaseService<User, UsersArgs, UsersWithPaginationObject, UserArgs, CreateUserInput, UpdateUserInput> {
+export class UserService extends BaseService<
+  User,
+  UsersArgs,
+  UsersWithPaginationObject,
+  UserArgs,
+  CreateUserInput,
+  UpdateUserInput
+> {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
     @InjectRepository(Role) private readonly roleRepository: Repository<Role>,

@@ -85,6 +85,14 @@ type Ax {
   slug: String
   description: String
   status: Int
+  attachments: AxAttachmentsObject
+}
+
+type AxAttachmentsObject {
+  bannerMbList: [Attachment!]!
+  bannerPcList: [Attachment!]!
+  galleryMbList: [Attachment!]!
+  galleryPcList: [Attachment!]!
 }
 
 type AxsWithPaginationObject {
@@ -260,6 +268,7 @@ type Query {
   attachment(uuid: String!): Attachment!
   axs(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): AxsWithPaginationObject!
   ax(id: Int!): Ax!
+  axBySlug(slug: String!): Ax!
 }
 
 type Role {

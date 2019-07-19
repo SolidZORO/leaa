@@ -2,6 +2,7 @@ import { Index, Entity, Column } from 'typeorm';
 import { ObjectType, Field, Int } from 'type-graphql';
 
 import { Base } from './_base.entity';
+import { AxAttachmentsObject } from '@leaa/common/dtos/ax';
 
 @Entity('axs')
 @Index('axs_title_unique', ['title'], { unique: true })
@@ -23,4 +24,8 @@ export class Ax extends Base {
   @Column({ type: 'tinyint', default: 0 })
   @Field(() => Int, { nullable: true })
   status?: number;
+
+  // Virtual Field (not in DB)
+  @Field(() => AxAttachmentsObject, { nullable: true })
+  attachments?: AxAttachmentsObject;
 }

@@ -20,7 +20,7 @@ import { AxInfoForm } from '../_components/AxInfoForm/AxInfoForm';
 import style from './style.less';
 
 export default (props: IPage) => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const { id } = props.match.params as { id: string };
 
   let axInfoFormRef: any;
@@ -30,30 +30,40 @@ export default (props: IPage) => {
     variables: getAxVariables,
   });
 
-  const getAttachmentBoxBannerMbRef = useRef<IAttachmentBoxRef>(null);
-  const getAttachmentBoxBannerMbVariables = {
+  const baseAttachmentVariables = {
     moduleName: 'ax',
-    moduleType: 'banner_mb',
     moduleId: Number(id),
     orderSort: 'ASC',
-    refreshHash: 0,
   };
-  const getAttachmentBoxBannerMbQuery = useQuery<{ attachments: AttachmentsWithPaginationObject }, AttachmentsArgs>(
+
+  const getBannerMbRef = useRef<IAttachmentBoxRef>(null);
+  const getBannerMbVariables = { ...baseAttachmentVariables, moduleType: 'banner_mb', refreshHash: 0 };
+  const getBannerMbQuery = useQuery<{ attachments: AttachmentsWithPaginationObject }, AttachmentsArgs>(
     GET_ATTACHMENTS,
-    { variables: getAttachmentBoxBannerMbVariables },
+    { variables: getBannerMbVariables },
   );
 
-  const getAttachmentBoxBannerPcRef = useRef<IAttachmentBoxRef>(null);
-  const getAttachmentBoxBannerPcVariables = {
-    moduleName: 'ax',
-    moduleType: 'banner_pc',
-    moduleId: Number(id),
-    orderSort: 'ASC',
-    refreshHash: 0,
-  };
-  const getAttachmentBoxBannerPcQuery = useQuery<{ attachments: AttachmentsWithPaginationObject }, AttachmentsArgs>(
+  const getBannerPcRef = useRef<IAttachmentBoxRef>(null);
+  const getBannerPcVariables = { ...baseAttachmentVariables, moduleType: 'banner_pc', refreshHash: 0 };
+  const getBannerPcQuery = useQuery<{ attachments: AttachmentsWithPaginationObject }, AttachmentsArgs>(
     GET_ATTACHMENTS,
-    { variables: getAttachmentBoxBannerPcVariables },
+    { variables: getBannerPcVariables },
+  );
+
+  //
+
+  const getGalleryMbRef = useRef<IAttachmentBoxRef>(null);
+  const getGalleryMbVariables = { ...baseAttachmentVariables, moduleType: 'gallery_mb', refreshHash: 0 };
+  const getGalleryMbQuery = useQuery<{ attachments: AttachmentsWithPaginationObject }, AttachmentsArgs>(
+    GET_ATTACHMENTS,
+    { variables: getGalleryMbVariables },
+  );
+
+  const getGalleryPcRef = useRef<IAttachmentBoxRef>(null);
+  const getGalleryPcVariables = { ...baseAttachmentVariables, moduleType: 'gallery_pc', refreshHash: 0 };
+  const getGalleryPcQuery = useQuery<{ attachments: AttachmentsWithPaginationObject }, AttachmentsArgs>(
+    GET_ATTACHMENTS,
+    { variables: getGalleryPcVariables },
   );
 
   const [submitVariables, setSubmitVariables] = useState<{ id: number; ax: UpdateAxInput }>();
@@ -62,8 +72,8 @@ export default (props: IPage) => {
     onCompleted: () => message.success(t('_lang:updatedSuccessfully')),
     refetchQueries: () => [
       { query: GET_AX, variables: getAxVariables },
-      { query: GET_ATTACHMENTS, variables: getAttachmentBoxBannerMbVariables },
-      { query: GET_ATTACHMENTS, variables: getAttachmentBoxBannerPcVariables },
+      { query: GET_ATTACHMENTS, variables: getBannerMbVariables },
+      { query: GET_ATTACHMENTS, variables: getBannerPcVariables },
     ],
   });
 
@@ -82,12 +92,20 @@ export default (props: IPage) => {
       await setSubmitVariables({ id: Number(id), ax: submitData });
       await updateAxMutate();
 
-      if (getAttachmentBoxBannerMbRef && getAttachmentBoxBannerMbRef.current) {
-        getAttachmentBoxBannerMbRef.current.onUpdateAttachments();
+      if (getBannerMbRef && getBannerMbRef.current) {
+        getBannerMbRef.current.onUpdateAttachments();
       }
 
-      if (getAttachmentBoxBannerPcRef && getAttachmentBoxBannerPcRef.current) {
-        getAttachmentBoxBannerPcRef.current.onUpdateAttachments();
+      if (getBannerPcRef && getBannerPcRef.current) {
+        getBannerPcRef.current.onUpdateAttachments();
+      }
+
+      if (getGalleryMbRef && getGalleryMbRef.current) {
+        getGalleryMbRef.current.onUpdateAttachments();
+      }
+
+      if (getGalleryPcRef && getGalleryPcRef.current) {
+        getGalleryPcRef.current.onUpdateAttachments();
       }
     });
   };
@@ -95,8 +113,10 @@ export default (props: IPage) => {
   return (
     <PageCard title={t(`${props.route.namei18n}`)} className={style['wapper']} loading={false}>
       {getAxQuery.error ? <ErrorCard error={getAxQuery.error} /> : null}
-      {getAttachmentBoxBannerMbQuery.error ? <ErrorCard error={getAttachmentBoxBannerMbQuery.error} /> : null}
-      {getAttachmentBoxBannerPcQuery.error ? <ErrorCard error={getAttachmentBoxBannerPcQuery.error} /> : null}
+      {getBannerMbQuery.error ? <ErrorCard error={getBannerMbQuery.error} /> : null}
+      {getBannerPcQuery.error ? <ErrorCard error={getBannerPcQuery.error} /> : null}
+      {getGalleryMbQuery.error ? <ErrorCard error={getGalleryMbQuery.error} /> : null}
+      {getGalleryPcQuery.error ? <ErrorCard error={getGalleryPcQuery.error} /> : null}
       {updateAxMutation.error ? <ErrorCard error={updateAxMutation.error} /> : null}
 
       <AxInfoForm
@@ -111,26 +131,34 @@ export default (props: IPage) => {
         <Col xs={12}>
           <AttachmentBox
             disableMessage
-            ref={getAttachmentBoxBannerMbRef}
-            attachmentParams={{
-              type: 'image',
-              moduleId: Number(id),
-              moduleName: 'ax',
-              moduleType: 'banner_mb',
-            }}
+            ref={getBannerMbRef}
+            attachmentParams={{ type: 'image', moduleId: Number(id), moduleName: 'ax', moduleType: 'banner_mb' }}
           />
         </Col>
 
         <Col xs={12}>
           <AttachmentBox
             disableMessage
-            ref={getAttachmentBoxBannerPcRef}
-            attachmentParams={{
-              type: 'image',
-              moduleId: Number(id),
-              moduleName: 'ax',
-              moduleType: 'banner_pc',
-            }}
+            ref={getBannerPcRef}
+            attachmentParams={{ type: 'image', moduleId: Number(id), moduleName: 'ax', moduleType: 'banner_pc' }}
+          />
+        </Col>
+      </Row>
+
+      <Row gutter={16}>
+        <Col xs={12}>
+          <AttachmentBox
+            disableMessage
+            ref={getBannerMbRef}
+            attachmentParams={{ type: 'image', moduleId: Number(id), moduleName: 'ax', moduleType: 'gallery_mb' }}
+          />
+        </Col>
+
+        <Col xs={12}>
+          <AttachmentBox
+            disableMessage
+            ref={getBannerPcRef}
+            attachmentParams={{ type: 'image', moduleId: Number(id), moduleName: 'ax', moduleType: 'gallery_pc' }}
           />
         </Col>
       </Row>

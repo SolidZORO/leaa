@@ -2,7 +2,13 @@ import { Args, Query, Mutation, Resolver, Parent, ResolveProperty } from '@nestj
 import { Int, Float } from 'type-graphql';
 
 import { User } from '@leaa/common/entrys';
-import { UsersArgs, UsersWithPaginationObject, UserArgs, CreateUserInput, UpdateUserInput } from '@leaa/common/dtos/user';
+import {
+  UsersArgs,
+  UsersWithPaginationObject,
+  UserArgs,
+  CreateUserInput,
+  UpdateUserInput,
+} from '@leaa/common/dtos/user';
 import { UserService } from './user.service';
 
 @Resolver(() => User)

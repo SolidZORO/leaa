@@ -63,8 +63,6 @@ export class SeedService {
     for (const i of roleAddPermissionsSeed) {
       const role = await this.roleService.roleBySlug(i.roleSlug);
 
-      console.log(role);
-
       if (role) {
         const nextRole = await this.roleService.updateRole(role.id, { permissionSlugs: i.permissionSlugs });
 
