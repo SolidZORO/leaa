@@ -8,7 +8,7 @@ import { Request } from 'express';
 
 @Injectable()
 export class GraphqlService implements GqlOptionsFactory {
-  constructor(@Inject(AuthService) private readonly authService: AuthService) {}
+  constructor(private readonly authService: AuthService) {}
 
   createGqlOptions(): GqlModuleOptions {
     return {

@@ -3,9 +3,9 @@ import _ from 'lodash';
 import path from 'path';
 import Jimp from 'jimp';
 import { Express, Request } from 'express';
-import { Repository, FindOneOptions, Like, In, getConnection } from 'typeorm';
+import { Repository, FindOneOptions, Like, In } from 'typeorm';
 import ImageSize from 'image-size';
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Attachment } from '@leaa/common/entrys';
 import {

@@ -4,14 +4,27 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 import { Role, Permission } from '@leaa/common/entrys';
 import { BaseService } from '@leaa/api/modules/base/base.service';
-import { RolesArgs, RolesWithPaginationObject, RoleArgs, CreateRoleInput, UpdateRoleInput } from '@leaa/common/dtos/role';
+import {
+  RolesArgs,
+  RolesWithPaginationObject,
+  RoleArgs,
+  CreateRoleInput,
+  UpdateRoleInput,
+} from '@leaa/common/dtos/role';
 import { formatUtil, loggerUtil } from '@leaa/api/utils';
 import { PermissionService } from '@leaa/api/modules/permission/permission.service';
 
 const CONSTRUCTOR_NAME = 'RoleService';
 
 @Injectable()
-export class RoleService extends BaseService<Role, RolesArgs, RolesWithPaginationObject, RoleArgs, CreateRoleInput, UpdateRoleInput> {
+export class RoleService extends BaseService<
+  Role,
+  RolesArgs,
+  RolesWithPaginationObject,
+  RoleArgs,
+  CreateRoleInput,
+  UpdateRoleInput
+> {
   constructor(
     @InjectRepository(Role) private readonly roleRepository: Repository<Role>,
     @InjectRepository(Permission) private readonly permissionRepository: Repository<Permission>,
