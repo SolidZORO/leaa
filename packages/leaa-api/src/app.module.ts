@@ -17,6 +17,7 @@ import { RoleModule } from '@leaa/api/modules/role/role.module';
 import { CategoryModule } from '@leaa/api/modules/category/category.module';
 import { ArticleModule } from '@leaa/api/modules/article/article.module';
 import { AttachmentModule } from '@leaa/api/modules/attachment/attachment.module';
+import { AxModule } from '@leaa/api/modules/ax/ax.module';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { AttachmentModule } from '@leaa/api/modules/attachment/attachment.module
     CategoryModule,
     ArticleModule,
     AttachmentModule,
+    AxModule,
   ],
   providers: [ConfigModule, AuthModule, UserModule],
   controllers: [],

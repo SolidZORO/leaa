@@ -227,6 +227,39 @@ export const masterRoutes: IRouteItem[] = [
   //
   //
   {
+    name: 'Create Ax',
+    namei18n: '_route:createAx',
+    permission: 'ax.create',
+    path: '/axs/create',
+    icon: 'star',
+    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'CreateAx' */ '../pages/Ax/CreateAx/CreateAx')),
+    exact: true,
+    isCreate: true,
+  },
+  {
+    name: 'Edit Ax',
+    namei18n: '_route:editAx',
+    permission: 'ax.item',
+    path: '/axs/:id(\\d+)',
+    icon: 'star',
+    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'EditAx' */ '../pages/Ax/EditAx/EditAx')),
+    exact: true,
+  },
+  {
+    name: 'Ax',
+    namei18n: '_route:ax',
+    permission: 'ax.list',
+    path: '/axs',
+    icon: 'star',
+    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'AxList' */ '../pages/Ax/AxList/AxList')),
+    canCreate: true,
+    exact: true,
+  },
+  //
+  //
+  //
+  //
+  {
     name: 'HOME',
     namei18n: '_route:home',
     permission: ALLOW_PERMISSION,

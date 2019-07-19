@@ -1,5 +1,5 @@
 import { IsOptional, IsNotEmpty, Length, MinLength, IsEmail, IsPhoneNumber } from 'class-validator';
-import { Field, InputType } from 'type-graphql';
+import { Field, InputType, Int } from 'type-graphql';
 
 @InputType()
 export class CreateUserInput {
@@ -10,20 +10,20 @@ export class CreateUserInput {
   @IsNotEmpty()
   @IsEmail()
   @MinLength(6)
-  @Field()
+  @Field(() => String)
   email!: string;
 
   @IsOptional()
   @Length(4, 64)
-  @Field({ nullable: true })
+  @Field(() => String, { nullable: true })
   name?: string;
 
   @IsNotEmpty()
   @Length(6, 64)
-  @Field()
+  @Field(() => String)
   password!: string;
 
   @Length(1)
-  @Field({ nullable: true })
+  @Field(() => Int, { nullable: true })
   status?: number;
 }

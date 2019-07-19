@@ -35,6 +35,12 @@ export const permissionsSeed = [
   { name: 'Article Create', slug: 'article.create' },
   { name: 'Article Update', slug: 'article.update' },
   { name: 'Article Delete', slug: 'article.delete' },
+  //
+  { name: 'Ax List', slug: 'ax.list' },
+  { name: 'Ax Item', slug: 'ax.item' },
+  { name: 'Ax Create', slug: 'ax.create' },
+  { name: 'Ax Update', slug: 'ax.update' },
+  { name: 'Ax Delete', slug: 'ax.delete' },
 ];
 
 // prettier-ignore
@@ -52,7 +58,7 @@ export const usersSeed = [
 
 const randomSersSeedData = [];
 
-for (let i = 0; i < 100; i += 1) {
+for (let i = 0; i < 50; i += 1) {
   const name = `RANDOM_USER_${i.toString().padStart(4, '0')}`;
 
   randomSersSeedData.push({

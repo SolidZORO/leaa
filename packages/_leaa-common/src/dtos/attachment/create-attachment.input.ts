@@ -26,7 +26,7 @@ export class CreateAttachmentInput {
   @Field(() => String)
   moduleName!: string;
 
-  @Field(() => String)
+  @Field(() => Int)
   moduleId!: number;
 
   @Field(() => String)
@@ -53,7 +53,7 @@ export class CreateAttachmentInput {
   @Field(() => Int)
   inLocal?: number;
 
-  @Field(() => Int)
+  @Field(() => Int, { nullable: true })
   inCloud?: number;
 
   @Field(() => Int, { nullable: true })

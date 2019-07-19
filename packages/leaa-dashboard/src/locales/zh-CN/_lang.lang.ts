@@ -29,6 +29,8 @@ export default {
   desktop: '电脑',
   banner: '题图',
   cover: '封面',
+  ax: '广告',
+  ad: '广告',
   //
   create: '新建',
   edit: '编辑',

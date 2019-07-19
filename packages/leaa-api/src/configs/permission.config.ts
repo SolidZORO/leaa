@@ -34,6 +34,9 @@ export const permissions = shield(
       //
       articles: checkPermission('article.list'),
       article: checkPermission('article.item'),
+      //
+      axs: allow,
+      ax: allow,
     },
     Mutation: {
       login: allow,
@@ -58,6 +61,10 @@ export const permissions = shield(
       createArticle: checkPermission('article.create'),
       updateArticle: checkPermission('article.update'),
       deleteArticle: checkPermission('article.delete'),
+      //
+      createAx: checkPermission('ax.create'),
+      updateAx: checkPermission('ax.update'),
+      deleteAx: checkPermission('ax.delete'),
     },
   },
   {

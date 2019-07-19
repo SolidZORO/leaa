@@ -32,7 +32,7 @@ class ArticleExtFormInner extends React.PureComponent<IProps> {
     return (
       <div className={cx(style['wrapper'], props.className)}>
         <FormCard title={t('_page:Article.Component.extendedInfo')}>
-          <Form className={style['form-wrapper']}>
+          <Form className={cx('g-form--zero-margin-bottom', style['form-wrapper'])}>
             <Row gutter={16} className={style['form-row']}>
               <Col xs={24} sm={8}>
                 <Form.Item label={t('_lang:slug')}>

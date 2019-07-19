@@ -9,11 +9,11 @@ import { Base } from './_base.entity';
 @ObjectType()
 export class Category extends Base {
   @Column({ type: 'varchar', length: 32, unique: true })
-  @Field()
+  @Field(() => String)
   name!: string;
 
   @Column({ type: 'varchar', length: 32, unique: true })
-  @Field()
+  @Field(() => String)
   slug!: string;
 
   @Column({ type: 'int', default: 0 })

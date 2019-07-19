@@ -1,5 +1,5 @@
 import { Index, Entity, Column, JoinTable, ManyToMany } from 'typeorm';
-import { ObjectType, Field } from 'type-graphql';
+import { ObjectType, Field, Int } from 'type-graphql';
 
 import { Base } from './_base.entity';
 import { Role } from './role.entity';
@@ -16,15 +16,15 @@ export class User extends Base {
 
   // @Column({ type: 'varchar', length: 32, unique: true })
   @Column({ type: 'varchar', length: 32, default: '', nullable: true })
-  @Field()
+  @Field(() => String, { nullable: true })
   phone?: string;
 
   @Column({ type: 'varchar', length: 64, unique: true })
-  @Field()
+  @Field(() => String)
   email!: string;
 
   @Column({ type: 'tinyint', default: 0 })
-  @Field()
+  @Field(() => Int)
   status?: number;
 
   @Column({ type: 'varchar', length: 64, select: false })
@@ -32,11 +32,11 @@ export class User extends Base {
   password!: string;
 
   @Column({ type: 'varchar', length: 32, nullable: true })
-  @Field()
+  @Field(() => String, { nullable: true })
   lastLoginIp?: string;
 
   @Column({ type: 'timestamp', nullable: true })
-  @Field(() => Date)
+  @Field(() => Date, { nullable: true })
   lastLoginAt?: Date;
 
   @ManyToMany(() => Role, role => role.user)
@@ -51,9 +51,9 @@ export class User extends Base {
   @Field(() => [String], { nullable: true })
   flatePermissions?: string[];
 
-  @Field({ nullable: true })
+  @Field(() => String, { nullable: true })
   authToken?: string;
 
-  @Field({ nullable: true })
+  @Field(() => Int, { nullable: true })
   authExpiresIn?: number;
 }

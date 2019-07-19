@@ -11,11 +11,11 @@ import { Permission } from './permission.entity';
 @ObjectType()
 export class Role extends Base {
   @Column({ type: 'varchar', length: 32, unique: true })
-  @Field()
+  @Field(() => String)
   name!: string;
 
   @Column({ type: 'varchar', length: 32, unique: true })
-  @Field()
+  @Field(() => String)
   slug!: string;
 
   @ManyToMany(() => Permission, permission => permission.roles)

@@ -4,5 +4,6 @@ import Role from './Role.lang';
 import Permission from './Permission.lang';
 import Category from './Category.lang';
 import Article from './Article.lang';
+import Ax from './Ax.lang';
 
-export default { Auth, User, Role, Permission, Category, Article };
+export default { Auth, User, Role, Permission, Category, Article, Ax };

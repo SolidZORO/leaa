@@ -28,7 +28,9 @@ export default {
   mobile: 'Mobile',
   desktop: 'Desktop',
   banner: 'Banner',
-  cover: 'cover',
+  cover: 'Cover',
+  ax: 'Ad',
+  ad: 'Ad',
   //
   create: 'Create',
   edit: 'Edit',

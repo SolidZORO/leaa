@@ -1919,6 +1919,13 @@
   resolved "https://registry.npm.taobao.org/@types/graphql/download/@types/graphql-14.2.2.tgz#10f197e6f8559c11b16d630c5e9c10c3c8e61c5e"
   integrity sha1-EPGX5vhVnBGxbWMMXpwQw8jmHF4=
 
+"@types/hapi__joi@*", "@types/hapi__joi@^15.0.2":
+  version "15.0.2"
+  resolved "https://registry.npm.taobao.org/@types/hapi__joi/download/@types/hapi__joi-15.0.2.tgz#94f37e9afab4db6a03f3d9e80dc939eb1f7b9a4f"
+  integrity sha1-lPN+mvq022oD89noDck56x97mk8=
+  dependencies:
+    "@types/hapi__joi" "*"
+
 "@types/history@*", "@types/history@^4.7.2":
   version "4.7.2"
   resolved "https://registry.npm.taobao.org/@types/history/download/@types/history-4.7.2.tgz#0e670ea254d559241b6eeb3894f8754991e73220"

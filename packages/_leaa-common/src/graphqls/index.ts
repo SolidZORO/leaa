@@ -17,3 +17,6 @@ export * from './article.mutation';
 
 export * from './attachment.query';
 export * from './attachment.mutation';
+
+export * from './ax.query';
+export * from './ax.mutation';

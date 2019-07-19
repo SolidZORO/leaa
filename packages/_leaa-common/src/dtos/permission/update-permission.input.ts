@@ -1,10 +1,13 @@
+import { IsOptional } from 'class-validator';
 import { Field, InputType } from 'type-graphql';
 
 @InputType()
 export class UpdatePermissionInput {
-  @Field()
+  @IsOptional()
+  @Field(() => String, { nullable: true })
   name?: string;
 
-  @Field()
+  @IsOptional()
+  @Field(() => String, { nullable: true })
   slug?: string;
 }

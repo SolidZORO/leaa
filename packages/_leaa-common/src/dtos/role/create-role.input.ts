@@ -4,10 +4,10 @@ import { Field, InputType } from 'type-graphql';
 @InputType()
 export class CreateRoleInput {
   @IsNotEmpty()
-  @Field()
+  @Field(() => String)
   name!: string;
 
   @IsNotEmpty()
-  @Field()
+  @Field(() => String)
   slug!: string;
 }

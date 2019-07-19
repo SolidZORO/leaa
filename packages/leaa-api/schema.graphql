@@ -14,7 +14,7 @@ type Article {
   userId: Int
   description: String
   content: String
-  status: Float!
+  status: Int
   category: Category
 }
 
@@ -76,6 +76,24 @@ input AuthRegisterInput {
   password: String!
 }
 
+type Ax {
+  id: Int!
+  createdAt: DateTime!
+  updatedAt: DateTime
+  deletedAt: DateTime
+  title: String!
+  slug: String
+  description: String
+  status: Int
+}
+
+type AxsWithPaginationObject {
+  page: Int
+  pageSize: Int!
+  total: Int!
+  items: [Ax!]!
+}
+
 type Base {
   id: Int!
   createdAt: DateTime!
@@ -118,7 +136,7 @@ input CreateAttachmentInput {
   type: String!
   filename: String!
   moduleName: String!
-  moduleId: String!
+  moduleId: Int!
   moduleType: String!
   ext: String!
   width: Int!
@@ -127,11 +145,18 @@ input CreateAttachmentInput {
   path: String!
   at2x: Int!
   inLocal: Int!
-  inCloud: Int!
+  inCloud: Int
   categoryId: Int
   userId: Int
   sort: Int!
   status: Int!
+}
+
+input CreateAxInput {
+  title: String!
+  slug: String!
+  status: Int!
+  description: String
 }
 
 input CreateCategoryInput {
@@ -156,7 +181,7 @@ input CreateUserInput {
   email: String!
   name: String
   password: String!
-  status: Float
+  status: Int
 }
 
 """
@@ -189,6 +214,9 @@ type Mutation {
   updateAttachment(attachment: UpdateAttachmentInput!, uuid: String!): Attachment!
   updateAttachments(attachments: [UpdateAttachmentsInput!]!): AttachmentsObject!
   deleteAttachments(uuid: [String!]!): DeleteAttachmentsObject!
+  createAx(ax: CreateAxInput!): Ax!
+  updateAx(ax: UpdateAxInput!, id: Int!): Ax!
+  deleteAx(id: Int!): Ax!
 }
 
 type PaginationObject {
@@ -230,6 +258,8 @@ type Query {
   category(id: Int!): Category!
   attachments(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String, type: String, moduleName: String, moduleId: Int, moduleType: String, categoryId: Int, userId: Int, refreshHash: Int): AttachmentsWithPaginationObject!
   attachment(uuid: String!): Attachment!
+  axs(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): AxsWithPaginationObject!
+  ax(id: Int!): Ax!
 }
 
 type Role {
@@ -275,6 +305,13 @@ input UpdateAttachmentsInput {
   uuid: String!
 }
 
+input UpdateAxInput {
+  title: String
+  slug: String
+  status: Int
+  description: String
+}
+
 input UpdateCategoryInput {
   name: String!
   slug: String!
@@ -283,8 +320,8 @@ input UpdateCategoryInput {
 }
 
 input UpdatePermissionInput {
-  name: String!
-  slug: String!
+  name: String
+  slug: String
 }
 
 input UpdateRoleInput {
@@ -299,7 +336,7 @@ input UpdateUserInput {
   email: String
   name: String
   password: String
-  status: Float
+  status: Int
   roleIds: [Int!]
   roleSlugs: [String!]
 }
@@ -310,16 +347,16 @@ type User {
   updatedAt: DateTime
   deletedAt: DateTime
   name: String
-  phone: String!
+  phone: String
   email: String!
-  status: Float!
-  lastLoginIp: String!
-  lastLoginAt: DateTime!
+  status: Int!
+  lastLoginIp: String
+  lastLoginAt: DateTime
   roles: [Role!]
   permissions: [Permission!]
   flatePermissions: [String!]
   authToken: String
-  authExpiresIn: Float
+  authExpiresIn: Int
 }
 
 type UsersWithPaginationObject {

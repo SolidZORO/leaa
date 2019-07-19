@@ -7,6 +7,7 @@ const role = 'Role';
 const permission = 'Permission';
 const category = 'Category';
 const article = 'Article';
+const ax = 'Ad';
 
 export default {
   home,
@@ -36,4 +37,8 @@ export default {
   article,
   createArticle: `${_lang.create} ${article}`,
   editArticle: `${_lang.edit} ${article}`,
+  //
+  ax,
+  createAx: `${_lang.create}${ax}`,
+  editAx: `${_lang.edit}${ax}`,
 };

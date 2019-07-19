@@ -34,7 +34,7 @@ export class Article extends Base {
   content?: string;
 
   @Column({ type: 'tinyint', default: 0 })
-  @Field()
+  @Field(() => Int, { nullable: true })
   status?: number;
 
   @Field(() => Category, { nullable: true })

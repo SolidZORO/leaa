@@ -11,9 +11,11 @@ export class UpdateCategoryInput {
   @Field(() => String)
   slug?: string;
 
+  @IsOptional()
   @Field(() => Int, { nullable: true })
   parentId?: number;
 
+  @IsOptional()
   @Field(() => String, { nullable: true })
   description?: string;
 }
