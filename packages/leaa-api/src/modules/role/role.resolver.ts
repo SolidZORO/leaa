@@ -2,7 +2,13 @@ import { Args, Query, Mutation, Resolver } from '@nestjs/graphql';
 import { Int } from 'type-graphql';
 
 import { Role } from '@leaa/common/entrys';
-import { RolesArgs, RolesWithPaginationObject, RoleArgs, CreateRoleInput, UpdateRoleInput } from '@leaa/common/dtos/role';
+import {
+  RolesArgs,
+  RolesWithPaginationObject,
+  RoleArgs,
+  CreateRoleInput,
+  UpdateRoleInput,
+} from '@leaa/common/dtos/role';
 import { RoleService } from './role.service';
 
 @Resolver(() => Role)

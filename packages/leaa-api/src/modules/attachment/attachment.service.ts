@@ -28,9 +28,9 @@ const CONSTRUCTOR_NAME = 'AttachmentService';
 @Injectable()
 export class AttachmentService {
   constructor(
-    @Inject(MulterService) private readonly multerService: MulterService,
-    @Inject(ConfigService) private readonly configService: ConfigService,
     @InjectRepository(Attachment) private readonly attachmentRepository: Repository<Attachment>,
+    private readonly multerService: MulterService,
+    private readonly configService: ConfigService,
   ) {}
 
   async saveAt2xToAt1x(file: Express.Multer.File, rawWidth: number, rawHeight: number) {

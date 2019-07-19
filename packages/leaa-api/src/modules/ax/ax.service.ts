@@ -21,7 +21,7 @@ import { AttachmentService } from '@leaa/api/modules/attachment/attachment.servi
 export class AxService extends BaseService<Ax, AxsArgs, AxsWithPaginationObject, AxArgs, CreateAxInput, UpdateAxInput> {
   constructor(
     @InjectRepository(Ax) private readonly axRepository: Repository<Ax>,
-    @Inject(AttachmentService) private readonly attachmentService: AttachmentService,
+    private readonly attachmentService: AttachmentService,
   ) {
     super(axRepository);
   }
@@ -105,12 +105,10 @@ export class AxService extends BaseService<Ax, AxsArgs, AxsWithPaginationObject,
       nextArgs = args;
     }
 
-    const result = await this.axRepository.findOne({
+    return this.axRepository.findOne({
       ...nextArgs,
       where: { slug },
     });
-
-    return result;
   }
 
   async craeteAx(args: CreateAxInput): Promise<Ax | undefined> {
