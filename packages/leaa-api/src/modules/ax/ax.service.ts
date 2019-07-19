@@ -95,7 +95,10 @@ export class AxService extends BaseService<Ax, AxsArgs, AxsWithPaginationObject,
       nextArgs = args;
     }
 
-    return this.findOne(id, nextArgs);
+    return this.axRepository.findOne({
+      ...nextArgs,
+      where: { id, status: 1 },
+    });
   }
 
   async axBySlug(slug: string, args?: AxArgs & FindOneOptions<Ax>): Promise<Ax | undefined> {
@@ -107,7 +110,7 @@ export class AxService extends BaseService<Ax, AxsArgs, AxsWithPaginationObject,
 
     return this.axRepository.findOne({
       ...nextArgs,
-      where: { slug },
+      where: { slug, status: 1 },
     });
   }
 
