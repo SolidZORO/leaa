@@ -87,15 +87,15 @@ const AttachmentItemInner = forwardRef((props: IProps, ref: React.Ref<any>) => {
   };
 
   return (
-    <div className={style['wrapper']} ref={cardRef} style={{ ...style, opacity }}>
+    <div className={style['wrapper']} style={{ ...style, opacity }}>
       {deleteAttachmentsMutation.error ? <ErrorCard error={deleteAttachmentsMutation.error} /> : null}
 
-      <div className={style['image']}>
+      <div className={style['image']} ref={cardRef}>
         <img src={`${process.env.API_HOST}${props.attachment.path}`} alt="" />
 
         <div className={style['toolbar']}>
           <Button
-            type="dashed"
+            type="link"
             size="small"
             shape="circle"
             icon="delete"
@@ -147,7 +147,7 @@ export const AttachmentItem = DropTarget(
         return;
       }
 
-      const dragIndex = monitor.getItem().Test;
+      const dragIndex = monitor.getItem().index;
       const hoverIndex = props.index;
 
       if (dragIndex === hoverIndex) {
@@ -172,7 +172,7 @@ export const AttachmentItem = DropTarget(
       props.onMoveAttachmentCallback(dragIndex, hoverIndex);
 
       // eslint-disable-next-line no-param-reassign
-      monitor.getItem().Test = hoverIndex;
+      monitor.getItem().index = hoverIndex;
     },
     drop(props: IProps) {
       props.onStoponMoveAttachmentCallback(true);

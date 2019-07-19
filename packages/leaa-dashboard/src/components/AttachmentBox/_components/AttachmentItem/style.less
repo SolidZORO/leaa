@@ -3,7 +3,7 @@
 .wrapper {
   position: relative;
   display: flex;
-  margin: 7px 0;
+  margin: 3px 0;
   align-items: center;
 }
 
@@ -12,6 +12,7 @@
 
 .image {
   //display: inline-block;
+  position: relative;
   display: flex;
   width: @image-width + 2;
   height: @image-width + 2;
@@ -37,8 +38,9 @@
 
 .toolbar {
   position: absolute;
-  top: -7px;
-  left: -6px;
+  top: -10px;
+  //right: -9px;
+  left: -8px;
   z-index: 9;
 }
 
@@ -47,11 +49,12 @@
 
   opacity: 0.7;
   font-size: 12px !important;
-  line-height: @height;
+  //line-height: @height;
+  line-height: 1.2;
   height: @height !important;
   width: @height !important;
   color: @error-color;
-  border: 1px dashed @error-color;
+  //border: 1px dashed @error-color;
 
   &:hover {
     color: #fff;

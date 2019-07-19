@@ -1,6 +1,25 @@
 @import '~@leaa/dashboard/src/styles/variables.less';
 
+@wrapper-height: 230px;
+
 .wrapper {
   position: relative;
   display: block;
+  height: @wrapper-height;
+  margin: 0 -10px;
+  padding: 4px 0;
+  overflow-y: auto;
+}
+
+.wrapper-inner {
+  padding: 0 10px;
+}
+
+.wrapper--empty {
+  text-align: center;
+  padding-top: @wrapper-height / 2 - 10;
+}
+
+.empty-text {
+  color: #999;
 }

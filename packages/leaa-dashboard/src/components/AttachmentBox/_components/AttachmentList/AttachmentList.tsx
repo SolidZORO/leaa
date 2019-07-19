@@ -1,10 +1,13 @@
 import React, { useState, useEffect, forwardRef, useImperativeHandle } from 'react';
 import { DndProvider } from 'react-dnd';
+import cx from 'classnames';
 import HTML5Backend from 'react-dnd-html5-backend';
 import update from 'immutability-helper';
+import { useTranslation } from 'react-i18next';
 
 import { Attachment } from '@leaa/common/entrys';
 import { IAttachmentParams } from '@leaa/common/interfaces';
+import { langUtil } from '@leaa/dashboard/utils';
 import { AttachmentItem } from '../AttachmentItem/AttachmentItem';
 
 import style from './style.less';
@@ -19,6 +22,8 @@ interface IProps {
 }
 
 export const AttachmentList = forwardRef((props: IProps, ref: React.Ref<any>) => {
+  const { t, i18n } = useTranslation();
+
   const [attachments, setAttachments] = useState<Attachment[] | undefined>(props.attachments);
 
   useImperativeHandle<{}, any>(
@@ -69,22 +74,31 @@ export const AttachmentList = forwardRef((props: IProps, ref: React.Ref<any>) =>
     }
   };
 
+  const isEmpty = attachments && attachments.length === 0;
+
   return (
-    <div className={style['wrapper']} ref={ref}>
-      <DndProvider backend={HTML5Backend}>
-        {attachments &&
-          attachments.map((a, i) => (
-            <AttachmentItem
-              key={a.uuid}
-              index={i}
-              attachment={a}
-              onMoveAttachmentCallback={onMoveAttachment}
-              onStoponMoveAttachmentCallback={onStopMoveAttachment}
-              onChangeAttachmentCallback={onChangeAttachment}
-              onDeleteAttachmentCallback={props.onDeleteAttachmentCallback}
-            />
-          ))}
-      </DndProvider>
+    <div className={cx(style['wrapper'], { [style['wrapper--empty']]: isEmpty })} ref={ref}>
+      <div className={style['wrapper-inner']}>
+        <DndProvider backend={HTML5Backend}>
+          {attachments && !isEmpty ? (
+            attachments.map((a, i) => (
+              <AttachmentItem
+                key={a.uuid}
+                index={i}
+                attachment={a}
+                onMoveAttachmentCallback={onMoveAttachment}
+                onStoponMoveAttachmentCallback={onStopMoveAttachment}
+                onChangeAttachmentCallback={onChangeAttachment}
+                onDeleteAttachmentCallback={props.onDeleteAttachmentCallback}
+              />
+            ))
+          ) : (
+            <div className={style['empty-text']}>
+              {langUtil.removeSpace(`${t('_lang:empty')} ${t('_lang:attachment')}`, i18n.language)}
+            </div>
+          )}
+        </DndProvider>
+      </div>
     </div>
   );
 });
