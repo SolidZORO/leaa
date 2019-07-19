@@ -109,7 +109,7 @@ const AttachmentItemInner = forwardRef((props: IProps, ref: React.Ref<any>) => {
       <Input
         className={style['title']}
         value={attachment.title}
-        onChange={e => onChangeAttachment('menu-title', e)}
+        onChange={e => onChangeAttachment('title', e)}
         placeholder={t('_lang:title')}
       />
 

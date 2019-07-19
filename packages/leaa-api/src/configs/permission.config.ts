@@ -20,20 +20,20 @@ const checkPermission = (permissionSlug: string) => {
 export const permissions = shield(
   {
     Query: {
-      users: checkPermission('user.footerMenu-list'),
-      user: checkPermission('user.footerMenu-item'),
+      users: checkPermission('user.list'),
+      user: checkPermission('user.item'),
       //
-      roles: checkPermission('role.footerMenu-list'),
-      role: checkPermission('role.footerMenu-item'),
+      roles: checkPermission('role.list'),
+      role: checkPermission('role.item'),
       //
-      permissions: checkPermission('permission.footerMenu-list'),
-      permission: checkPermission('permission.footerMenu-item'),
+      permissions: checkPermission('permission.list'),
+      permission: checkPermission('permission.item'),
       //
-      categories: checkPermission('category.footerMenu-list'),
-      category: checkPermission('category.footerMenu-item'),
+      categories: checkPermission('category.list'),
+      category: checkPermission('category.item'),
       //
-      articles: checkPermission('article.footerMenu-list'),
-      article: checkPermission('article.footerMenu-item'),
+      articles: checkPermission('article.list'),
+      article: checkPermission('article.item'),
     },
     Mutation: {
       login: allow,

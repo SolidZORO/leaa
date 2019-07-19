@@ -80,9 +80,9 @@ export default (props: IPage) => {
     },
     {
       title: t('_lang:title'),
-      dataIndex: 'footerMenu-title',
+      dataIndex: 'title',
       sorter: true,
-      sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'footerMenu-title'),
+      sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'title'),
       render: (text: string, record: Article) => <Link to={`${props.route.path}/${record.id}`}>{record.title}</Link>,
     },
     {

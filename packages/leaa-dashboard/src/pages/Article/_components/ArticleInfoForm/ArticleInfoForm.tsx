@@ -39,7 +39,7 @@ class ArticleInfoFormInner extends React.PureComponent<IProps> {
             <Row gutter={16} className={style['form-row']}>
               <Col xs={24} sm={14}>
                 <Form.Item label={t('_lang:title')}>
-                  {getFieldDecorator('menu-title', {
+                  {getFieldDecorator('title', {
                     initialValue: props.item ? props.item.title : undefined,
                     rules: [{ required: true }],
                   })(<Input placeholder={t('_lang:title')} />)}

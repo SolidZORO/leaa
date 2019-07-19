@@ -47,7 +47,7 @@ export default (props: RouteComponentProps) => {
                 <img src={logo} alt="" />
               </div>
 
-              <div className={style['title']}>{t('_page:Auth.Login.menu-title')}</div>
+              <div className={style['title']}>{t('_page:Auth.Login.title')}</div>
               <div className={style['description']}>{t('_page:Auth.Login.subTitle')}</div>
 
               <div className={style['login-form']}>
