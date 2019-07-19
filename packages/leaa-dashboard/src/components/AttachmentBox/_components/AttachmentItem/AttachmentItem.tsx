@@ -103,6 +103,7 @@ const AttachmentItemInner = forwardRef((props: IProps, ref: React.Ref<any>) => {
             loading={deleteAttachmentsMutation.loading}
             onClick={() => onDelete(attachment.uuid)}
           />
+          {props.attachment.at2x === 1 && <strong title="image include @2x" className={style['at2xdot']} />}
         </div>
       </div>
 

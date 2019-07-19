@@ -6,7 +6,7 @@ import style from './style.less';
 
 interface IProps {
   children: React.ReactNode;
-  title?: string;
+  title?: string | React.ReactNode;
   // extra?: React.ReactNode;
   className?: string;
 }

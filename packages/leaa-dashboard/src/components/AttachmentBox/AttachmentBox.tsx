@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 import React, { useState, forwardRef, useImperativeHandle, useRef } from 'react';
 import { useQuery, useMutation } from '@apollo/react-hooks';
@@ -11,6 +10,7 @@ import { Attachment } from '@leaa/common/entrys';
 import { langUtil } from '@leaa/dashboard/utils';
 import { AttachmentsArgs, AttachmentsWithPaginationObject, UpdateAttachmentsInput } from '@leaa/common/dtos/attachment';
 import { ErrorCard } from '@leaa/dashboard/components/ErrorCard';
+import { FormCard } from '@leaa/dashboard/components/FormCard';
 
 import { AttachmentList } from './_components/AttachmentList/AttachmentList';
 import { AttachmentDropzone } from './_components/AttachmentDropzone/AttachmentDropzone';
@@ -108,19 +108,31 @@ export const AttachmentBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
       {updateAttachmentsMutation.error ? <ErrorCard error={updateAttachmentsMutation.error} /> : null}
       {updateAttachmentsMutation.error ? <ErrorCard error={updateAttachmentsMutation.error} /> : null}
 
-      <AttachmentDropzone attachmentParams={{ ...props.attachmentParams }} onUploadedCallback={refreshAttachments} />
-      <AttachmentList
-        ref={attachmentListRef}
-        attachmentParams={{ ...props.attachmentParams }}
-        attachments={
-          getAttachmentsQuery &&
-          getAttachmentsQuery.data &&
-          getAttachmentsQuery.data.attachments &&
-          getAttachmentsQuery.data.attachments.items
+      <FormCard
+        title={
+          <span>
+            {langUtil.removeSpace(`${t('_lang:attachment')} ${t('_lang:list')}`, i18n.language)}
+            <code className={style['title-code']}>
+              [{props.attachmentParams.type}] {props.attachmentParams.moduleName}, {props.attachmentParams.moduleId},{' '}
+              {props.attachmentParams.moduleType}
+            </code>
+          </span>
         }
-        onChangeAttachmentsCallback={onChangeAttachments}
-        onDeleteAttachmentCallback={refreshAttachments}
-      />
+      >
+        <AttachmentDropzone attachmentParams={{ ...props.attachmentParams }} onUploadedCallback={refreshAttachments} />
+        <AttachmentList
+          ref={attachmentListRef}
+          attachmentParams={{ ...props.attachmentParams }}
+          attachments={
+            getAttachmentsQuery &&
+            getAttachmentsQuery.data &&
+            getAttachmentsQuery.data.attachments &&
+            getAttachmentsQuery.data.attachments.items
+          }
+          onChangeAttachmentsCallback={onChangeAttachments}
+          onDeleteAttachmentCallback={refreshAttachments}
+        />
+      </FormCard>
     </div>
   );
 });

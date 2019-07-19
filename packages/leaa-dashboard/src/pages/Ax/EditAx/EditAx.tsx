@@ -5,17 +5,15 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 
 import { Ax } from '@leaa/common/entrys';
 import { IAttachmentBoxRef } from '@leaa/common/interfaces';
-import { GET_AX, UPDATE_AX, GET_ATTACHMENTS, DELETE_ATTACHMENT } from '@leaa/common/graphqls';
+import { GET_AX, UPDATE_AX, GET_ATTACHMENTS } from '@leaa/common/graphqls';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/constants';
 import { AxArgs, UpdateAxInput } from '@leaa/common/dtos/ax';
 import { IPage } from '@leaa/dashboard/interfaces';
 import { AttachmentsWithPaginationObject, AttachmentsArgs } from '@leaa/common/dtos/attachment';
 import { AttachmentBox } from '@leaa/dashboard/components/AttachmentBox';
-import { langUtil } from '@leaa/dashboard/utils';
 import { PageCard } from '@leaa/dashboard/components/PageCard';
 import { ErrorCard } from '@leaa/dashboard/components/ErrorCard';
 import { SubmitBar } from '@leaa/dashboard/components/SubmitBar/SubmitBar';
-import { FormCard } from '@leaa/dashboard/components/FormCard';
 
 import { AxInfoForm } from '../_components/AxInfoForm/AxInfoForm';
 
@@ -25,7 +23,6 @@ export default (props: IPage) => {
   const { t, i18n } = useTranslation();
   const { id } = props.match.params as { id: string };
 
-  const attachmentBoxRef = useRef<IAttachmentBoxRef>(null);
   let axInfoFormRef: any;
 
   const getAxVariables = { id: Number(id) };
@@ -33,16 +30,30 @@ export default (props: IPage) => {
     variables: getAxVariables,
   });
 
-  const [getAxEditorAttachmentsVariables, setGetAxEditorAttachmentsVariables] = useState<AttachmentsArgs>({
+  const getAttachmentBoxBannerMbRef = useRef<IAttachmentBoxRef>(null);
+  const getAttachmentBoxBannerMbVariables = {
     moduleName: 'ax',
-    moduleType: 'editor',
+    moduleType: 'banner_mb',
     moduleId: Number(id),
     orderSort: 'ASC',
     refreshHash: 0,
-  });
-  const getAxEditorAttachmentsQuery = useQuery<{ attachments: AttachmentsWithPaginationObject }, AttachmentsArgs>(
+  };
+  const getAttachmentBoxBannerMbQuery = useQuery<{ attachments: AttachmentsWithPaginationObject }, AttachmentsArgs>(
     GET_ATTACHMENTS,
-    { variables: getAxEditorAttachmentsVariables },
+    { variables: getAttachmentBoxBannerMbVariables },
+  );
+
+  const getAttachmentBoxBannerPcRef = useRef<IAttachmentBoxRef>(null);
+  const getAttachmentBoxBannerPcVariables = {
+    moduleName: 'ax',
+    moduleType: 'banner_pc',
+    moduleId: Number(id),
+    orderSort: 'ASC',
+    refreshHash: 0,
+  };
+  const getAttachmentBoxBannerPcQuery = useQuery<{ attachments: AttachmentsWithPaginationObject }, AttachmentsArgs>(
+    GET_ATTACHMENTS,
+    { variables: getAttachmentBoxBannerPcVariables },
   );
 
   const [submitVariables, setSubmitVariables] = useState<{ id: number; ax: UpdateAxInput }>();
@@ -51,15 +62,9 @@ export default (props: IPage) => {
     onCompleted: () => message.success(t('_lang:updatedSuccessfully')),
     refetchQueries: () => [
       { query: GET_AX, variables: getAxVariables },
-      { query: GET_ATTACHMENTS, variables: getAxEditorAttachmentsVariables },
+      { query: GET_ATTACHMENTS, variables: getAttachmentBoxBannerMbVariables },
+      { query: GET_ATTACHMENTS, variables: getAttachmentBoxBannerPcVariables },
     ],
-  });
-
-  const [deleteAttachmentsVariables, setDeleteAttachmentsVariables] = useState<{ uuid: string[] }>();
-  const [deleteAttachmentsMutate, deleteAttachmentsMutation] = useMutation<{ uuid: string[] }>(DELETE_ATTACHMENT, {
-    variables: deleteAttachmentsVariables,
-    onCompleted: () => message.success(t('_lang:deletedSuccessfully')),
-    refetchQueries: () => [{ query: GET_ATTACHMENTS, variables: getAxEditorAttachmentsVariables }],
   });
 
   const onSubmit = async () => {
@@ -77,8 +82,12 @@ export default (props: IPage) => {
       await setSubmitVariables({ id: Number(id), ax: submitData });
       await updateAxMutate();
 
-      if (attachmentBoxRef && attachmentBoxRef.current) {
-        attachmentBoxRef.current.onUpdateAttachments();
+      if (getAttachmentBoxBannerMbRef && getAttachmentBoxBannerMbRef.current) {
+        getAttachmentBoxBannerMbRef.current.onUpdateAttachments();
+      }
+
+      if (getAttachmentBoxBannerPcRef && getAttachmentBoxBannerPcRef.current) {
+        getAttachmentBoxBannerPcRef.current.onUpdateAttachments();
       }
     });
   };
@@ -86,9 +95,9 @@ export default (props: IPage) => {
   return (
     <PageCard title={t(`${props.route.namei18n}`)} className={style['wapper']} loading={false}>
       {getAxQuery.error ? <ErrorCard error={getAxQuery.error} /> : null}
-      {getAxEditorAttachmentsQuery.error ? <ErrorCard error={getAxEditorAttachmentsQuery.error} /> : null}
+      {getAttachmentBoxBannerMbQuery.error ? <ErrorCard error={getAttachmentBoxBannerMbQuery.error} /> : null}
+      {getAttachmentBoxBannerPcQuery.error ? <ErrorCard error={getAttachmentBoxBannerPcQuery.error} /> : null}
       {updateAxMutation.error ? <ErrorCard error={updateAxMutation.error} /> : null}
-      {deleteAttachmentsMutation.error ? <ErrorCard error={deleteAttachmentsMutation.error} /> : null}
 
       <AxInfoForm
         item={getAxQuery.data && getAxQuery.data.ax}
@@ -98,27 +107,33 @@ export default (props: IPage) => {
         }}
       />
 
-      <FormCard
-        title={`
-        ${langUtil.removeSpace(`${t('_lang:upload')} ${t('_lang:attachment')}`, i18n.language)}
-        (${t('_lang:banner')})
-      `}
-      >
-        <Row gutter={16}>
-          <Col xs={24}>
-            <AttachmentBox
-              disableMessage
-              ref={attachmentBoxRef}
-              attachmentParams={{
-                type: 'image',
-                moduleId: Number(id),
-                moduleName: 'ax',
-                moduleType: 'banner',
-              }}
-            />
-          </Col>
-        </Row>
-      </FormCard>
+      <Row gutter={16}>
+        <Col xs={12}>
+          <AttachmentBox
+            disableMessage
+            ref={getAttachmentBoxBannerMbRef}
+            attachmentParams={{
+              type: 'image',
+              moduleId: Number(id),
+              moduleName: 'ax',
+              moduleType: 'banner_mb',
+            }}
+          />
+        </Col>
+
+        <Col xs={12}>
+          <AttachmentBox
+            disableMessage
+            ref={getAttachmentBoxBannerPcRef}
+            attachmentParams={{
+              type: 'image',
+              moduleId: Number(id),
+              moduleName: 'ax',
+              moduleType: 'banner_pc',
+            }}
+          />
+        </Col>
+      </Row>
 
       <SubmitBar>
         <Button

@@ -25,6 +25,7 @@ export default {
   sort: 'Sort',
   upload: 'Upload',
   attachment: 'Attachment',
+  list: 'List',
   mobile: 'Mobile',
   desktop: 'Desktop',
   banner: 'Banner',

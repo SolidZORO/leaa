@@ -25,6 +25,7 @@ export default {
   sort: '排序',
   upload: '上传',
   attachment: '附件',
+  list: '列表',
   mobile: '手机',
   desktop: '电脑',
   banner: '题图',

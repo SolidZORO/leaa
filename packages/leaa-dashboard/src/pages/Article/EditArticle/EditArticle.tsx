@@ -175,27 +175,20 @@ export default (props: IPage) => {
         }}
       />
 
-      <FormCard
-        title={`
-        ${langUtil.removeSpace(`${t('_lang:upload')} ${t('_lang:attachment')}`, i18n.language)}
-        (${t('_lang:banner')})
-      `}
-      >
-        <Row gutter={16}>
-          <Col xs={24}>
-            <AttachmentBox
-              disableMessage
-              ref={attachmentBoxRef}
-              attachmentParams={{
-                type: 'image',
-                moduleId: Number(id),
-                moduleName: 'article',
-                moduleType: 'banner',
-              }}
-            />
-          </Col>
-        </Row>
-      </FormCard>
+      <Row gutter={16}>
+        <Col xs={24}>
+          <AttachmentBox
+            disableMessage
+            ref={attachmentBoxRef}
+            attachmentParams={{
+              type: 'image',
+              moduleId: Number(id),
+              moduleName: 'article',
+              moduleType: 'banner',
+            }}
+          />
+        </Col>
+      </Row>
 
       <SubmitBar>
         <Button

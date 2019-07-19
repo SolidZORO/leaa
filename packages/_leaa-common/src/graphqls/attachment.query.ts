@@ -43,6 +43,7 @@ export const GET_ATTACHMENTS = gql`
         path
         status
         sort
+        at2x
         createdAt
       }
     }
@@ -65,6 +66,7 @@ export const GET_ATTACHMENT = gql`
       path
       status
       sort
+      at2x
       createdAt
       updatedAt
     }
