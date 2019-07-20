@@ -8,13 +8,14 @@ import { RoleService } from '@leaa/api/modules/role/role.service';
 import { UserResolver } from '@leaa/api/modules/user/user.resolver';
 import { AuthTokenModule } from '@leaa/api/modules/auth-token/auth-token.module';
 import { PermissionService } from '@leaa/api/modules/permission/permission.service';
+import { JwtStrategy } from '@leaa/api/strategies';
 
 import { AuthResolver } from './auth.resolver';
 import { AuthService } from './auth.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User, Role, Permission]), AuthTokenModule],
-  providers: [AuthResolver, AuthService, UserResolver, UserService, RoleService, PermissionService],
+  providers: [AuthResolver, AuthService, UserResolver, UserService, RoleService, PermissionService, JwtStrategy],
   exports: [AuthService],
 })
 export class AuthModule {}
