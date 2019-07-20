@@ -28,6 +28,7 @@ import { SeedService } from './modules/seed/seed.service';
     await seedService.insertUserAddRole();
     await seedService.insertCategory();
     await seedService.insertArticle();
+    await seedService.insertAx();
   } catch (e) {
     await process.exit(0);
   }

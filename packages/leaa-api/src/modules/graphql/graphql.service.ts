@@ -1,6 +1,6 @@
 import { GraphQLSchema } from 'graphql';
 import { applyMiddleware } from 'graphql-middleware';
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { GqlOptionsFactory, GqlModuleOptions } from '@nestjs/graphql';
 import { AuthService } from '@leaa/api/modules/auth/auth.service';
 import { permissions } from '@leaa/api/configs/permission.config';
@@ -13,6 +13,7 @@ export class GraphqlService implements GqlOptionsFactory {
   createGqlOptions(): GqlModuleOptions {
     return {
       autoSchemaFile: 'schema.graphql',
+      // installSubscriptionHandlers: true,
       debug: true,
       tracing: true,
       playground: true,

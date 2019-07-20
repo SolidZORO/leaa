@@ -1,7 +1,7 @@
 import { Args, Query, Mutation, Resolver, ResolveProperty, Parent } from '@nestjs/graphql';
 import { Int } from 'type-graphql';
 
-import { Ax } from '@leaa/common/entrys';
+import { Ax, User } from '@leaa/common/entrys';
 import {
   AxsArgs,
   AxsWithPaginationObject,
@@ -10,6 +10,7 @@ import {
   UpdateAxInput,
   AxAttachmentsObject,
 } from '@leaa/common/dtos/ax';
+import { UserDecorator } from '@leaa/api/decorators';
 import { AxService } from './ax.service';
 
 @Resolver(() => Ax)
@@ -27,8 +28,12 @@ export class AxResolver {
   }
 
   @Query(() => Ax)
-  async ax(@Args({ name: 'id', type: () => Int }) id: number, @Args() args?: AxArgs): Promise<Ax | undefined> {
-    return this.axService.ax(id, args);
+  async ax(
+    @Args({ name: 'id', type: () => Int }) id: number,
+    @Args() args?: AxArgs,
+    @UserDecorator() user?: User,
+  ): Promise<Ax | undefined> {
+    return this.axService.ax(id, args, user);
   }
 
   @Query(() => Ax)

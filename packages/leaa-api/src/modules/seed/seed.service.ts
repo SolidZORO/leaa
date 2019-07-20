@@ -4,6 +4,7 @@ import { RoleService } from '@leaa/api/modules/role/role.service';
 import { UserService } from '@leaa/api/modules/user/user.service';
 import { CategoryService } from '@leaa/api/modules/category/category.service';
 import { ArticleService } from '@leaa/api/modules/article/article.service';
+import { AxService } from '@leaa/api/modules/ax/ax.service';
 
 import {
   permissionsSeed,
@@ -14,6 +15,7 @@ import {
   userAddRolesSeed,
   categorySeed,
   articleSeed,
+  axSeed,
 } from './seed.data';
 
 @Injectable()
@@ -24,6 +26,7 @@ export class SeedService {
     private readonly userService: UserService,
     private readonly categoryService: CategoryService,
     private readonly articleService: ArticleService,
+    private readonly axService: AxService,
   ) {}
 
   /* eslint-disable no-restricted-syntax */
@@ -96,6 +99,14 @@ export class SeedService {
   public async insertArticle() {
     for (const i of articleSeed) {
       const item = await this.articleService.craeteArticle(i);
+
+      console.log(item);
+    }
+  }
+
+  public async insertAx() {
+    for (const i of axSeed) {
+      const item = await this.axService.craeteAx(i);
 
       console.log(item);
     }

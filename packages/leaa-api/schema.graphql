@@ -217,14 +217,14 @@ type Mutation {
   createCategory(category: CreateCategoryInput!): Category!
   updateCategory(category: UpdateCategoryInput!, id: Int!): Category!
   deleteCategory(id: Int!): Category!
-  login(user: AuthLoginInput!): User!
-  register(user: AuthRegisterInput!): User!
-  updateAttachment(attachment: UpdateAttachmentInput!, uuid: String!): Attachment!
-  updateAttachments(attachments: [UpdateAttachmentsInput!]!): AttachmentsObject!
-  deleteAttachments(uuid: [String!]!): DeleteAttachmentsObject!
   createAx(ax: CreateAxInput!): Ax!
   updateAx(ax: UpdateAxInput!, id: Int!): Ax!
   deleteAx(id: Int!): Ax!
+  updateAttachment(attachment: UpdateAttachmentInput!, uuid: String!): Attachment!
+  updateAttachments(attachments: [UpdateAttachmentsInput!]!): AttachmentsObject!
+  deleteAttachments(uuid: [String!]!): DeleteAttachmentsObject!
+  login(user: AuthLoginInput!): User!
+  register(user: AuthRegisterInput!): User!
 }
 
 type PaginationObject {
@@ -264,11 +264,11 @@ type Query {
   article(id: Int!): Article!
   categories(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): CategoriesWithPaginationObject!
   category(id: Int!): Category!
-  attachments(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String, type: String, moduleName: String, moduleId: Int, moduleType: String, categoryId: Int, userId: Int, refreshHash: Int): AttachmentsWithPaginationObject!
-  attachment(uuid: String!): Attachment!
   axs(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): AxsWithPaginationObject!
   ax(id: Int!): Ax!
   axBySlug(slug: String!): Ax!
+  attachments(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String, type: String, moduleName: String, moduleId: Int, moduleType: String, categoryId: Int, userId: Int, refreshHash: Int): AttachmentsWithPaginationObject!
+  attachment(uuid: String!): Attachment!
 }
 
 type Role {

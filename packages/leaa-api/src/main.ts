@@ -1,5 +1,5 @@
 import path from 'path';
-import { Logger } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 
@@ -20,6 +20,7 @@ import { AppModule } from './app.module';
 
   const publicPath = path.resolve(configService.PUBLIC_DIR);
   app.useStaticAssets(publicPath);
+  app.useGlobalPipes(new ValidationPipe());
 
   app.disable('x-powered-by');
   app.enableCors({

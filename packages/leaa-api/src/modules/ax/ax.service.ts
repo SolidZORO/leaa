@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Repository, FindOneOptions, Like } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { Ax, Attachment } from '@leaa/common/entrys';
+import { Ax, Attachment, User } from '@leaa/common/entrys';
 import {
   AxsArgs,
   AxsWithPaginationObject,
@@ -88,16 +88,19 @@ export class AxService extends BaseService<Ax, AxsArgs, AxsWithPaginationObject,
     };
   }
 
-  async ax(id: number, args?: AxArgs & FindOneOptions<Ax>): Promise<Ax | undefined> {
+  async ax(id: number, args?: AxArgs & FindOneOptions<Ax>, user?: User): Promise<Ax | undefined> {
     let nextArgs: FindOneOptions<Ax> = {};
 
     if (args) {
       nextArgs = args;
     }
 
+    // console.log(333333333333333333333);
+    // console.log('QQQQQQQQ', user.flatePermissions);
+
     return this.axRepository.findOne({
       ...nextArgs,
-      where: { id, status: 1 },
+      where: { id },
     });
   }
 
