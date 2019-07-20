@@ -12,10 +12,10 @@ import {
   AxAttachmentsObject,
 } from '@leaa/common/dtos/ax';
 import { BaseService } from '@leaa/api/modules/base/base.service';
-import { formatUtil } from '@leaa/api/utils';
+import { formatUtil, loggerUtil } from '@leaa/api/utils';
 import { AttachmentService } from '@leaa/api/modules/attachment/attachment.service';
 
-// const CONSTRUCTOR_NAME = 'AxService';
+const CONSTRUCTOR_NAME = 'AxService';
 
 @Injectable()
 export class AxService extends BaseService<Ax, AxsArgs, AxsWithPaginationObject, AxArgs, CreateAxInput, UpdateAxInput> {
@@ -95,26 +95,33 @@ export class AxService extends BaseService<Ax, AxsArgs, AxsWithPaginationObject,
       nextArgs = args;
     }
 
-    // console.log(333333333333333333333);
-    // console.log('QQQQQQQQ', user.flatePermissions);
+    const whereQuery = {
+      id,
+      status: 1,
+    };
 
-    return this.axRepository.findOne({
-      ...nextArgs,
-      where: { id },
-    });
-  }
-
-  async axBySlug(slug: string, args?: AxArgs & FindOneOptions<Ax>): Promise<Ax | undefined> {
-    let nextArgs: FindOneOptions<Ax> = {};
-
-    if (args) {
-      nextArgs = args;
+    if (user && user.flatePermissions && user.flatePermissions.includes('article.item')) {
+      delete whereQuery.status;
     }
 
     return this.axRepository.findOne({
       ...nextArgs,
-      where: { slug, status: 1 },
+      where: whereQuery,
     });
+  }
+
+  async axBySlug(slug: string, args?: AxArgs & FindOneOptions<Ax>, user?: User): Promise<Ax | undefined> {
+    const ax = await this.axRepository.findOne({ where: { slug } });
+
+    if (!ax) {
+      const message = 'not found ax';
+
+      loggerUtil.warn(message, CONSTRUCTOR_NAME);
+
+      return undefined;
+    }
+
+    return this.ax(ax.id, args, user);
   }
 
   async craeteAx(args: CreateAxInput): Promise<Ax | undefined> {

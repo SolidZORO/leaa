@@ -40,8 +40,9 @@ export class AxResolver {
   async axBySlug(
     @Args({ name: 'slug', type: () => String }) slug: string,
     @Args() args?: AxArgs,
+    @UserDecorator() user?: User,
   ): Promise<Ax | undefined> {
-    return this.axService.axBySlug(slug, args);
+    return this.axService.axBySlug(slug, args, user);
   }
 
   @Mutation(() => Ax)
