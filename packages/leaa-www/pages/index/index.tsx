@@ -1,13 +1,13 @@
 import React from 'react';
 import Head from 'next/head';
 
-import { Swiper } from './_components/Swiper/Swiper';
+import { BannerSwiper } from './_components/BannerSwiper/BannerSwiper';
 
 export default () => (
   <>
     <Head>
       <title>Here Is Home</title>
     </Head>
-    <Swiper />
+    <BannerSwiper />
   </>
 );

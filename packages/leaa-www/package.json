@@ -53,6 +53,7 @@
     "react-css-modules": "4.7.11",
     "react-dom": "^16.8.6",
     "react-id-swiper": "^2.3.1",
+    "swiper": "^4.5.0",
     "typescript": "3.5.3"
   },
   "devDependencies": {
