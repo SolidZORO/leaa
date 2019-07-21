@@ -7,7 +7,7 @@ const publicRuntimeConfig = {
   PORT: Number(process.env.PORT) || 3333,
   //
   BASE_HOST: process.env.BASE_HOST || 'localhost',
-  API_HOST: process.env.API_HOST || 'http://localhost:5555/graphql',
+  API_HOST: process.env.API_HOST || 'http://localhost:5555',
   UPLOAD_HOST: process.env.CDN_HOST || 'http://localhost:5555/attachments',
 };
 

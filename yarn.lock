@@ -12144,6 +12144,13 @@ react-i18next@^10.11.4:
     "@babel/runtime" "^7.3.1"
     html-parse-stringify2 "2.0.1"
 
+react-id-swiper@^2.3.1:
+  version "2.3.1"
+  resolved "https://registry.npm.taobao.org/react-id-swiper/download/react-id-swiper-2.3.1.tgz#a5718c717f722868a2d18cf39a3db87878e48af3"
+  integrity sha1-pXGMcX9yKGii0Yzzmj24eHjkivM=
+  dependencies:
+    object-assign "^4.1.1"
+
 react-is@16.8.6, react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6:
   version "16.8.6"
   resolved "https://registry.npm.taobao.org/react-is/download/react-is-16.8.6.tgz#5bbc1e2d29141c9fbdfed456343fe2bc430a6a16"

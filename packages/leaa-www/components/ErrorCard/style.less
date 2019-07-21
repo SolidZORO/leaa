@@ -1,0 +1,22 @@
+@import '~@leaa/dashboard/src/styles/variables.less';
+
+.wrapper {
+  position: relative;
+  background: transparent;
+}
+
+.container {
+  background-image: linear-gradient(30deg, darken(@error-color, 1%), lighten(@error-color, 3%));
+  padding: 25px 30px;
+
+  i,
+  svg {
+    color: #fff;
+  }
+
+  :global {
+    .ant-notification-notice-message {
+      color: #fff;
+    }
+  }
+}

@@ -1,4 +1,5 @@
 import gql from 'graphql-tag';
+import { ATTACHMENT_FRAGMENT } from './attachment.fragment';
 
 export const GET_AXS = gql`
   query($page: Int, $pageSize: Int, $orderBy: String, $orderSort: String, $q: String) {
@@ -27,4 +28,33 @@ export const GET_AX = gql`
       updatedAt
     }
   }
+`;
+
+export const GET_AX_BY_SLUG = gql`
+  query($slug: String!) {
+    axBySlug(slug: $slug) {
+      id
+      title
+      slug
+      description
+      status
+      createdAt
+      updatedAt
+      attachments {
+        bannerMbList {
+          ...ATTACHMENT_FRAGMENT
+        }
+        bannerPcList {
+          ...ATTACHMENT_FRAGMENT
+        }
+        galleryMbList {
+          ...ATTACHMENT_FRAGMENT
+        }
+        galleryPcList {
+          ...ATTACHMENT_FRAGMENT
+        }
+      }
+    }
+  }
+  ${ATTACHMENT_FRAGMENT}
 `;
