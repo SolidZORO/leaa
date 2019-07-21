@@ -1,10 +1,9 @@
 import { FindManyOptions } from 'typeorm';
 import { ItemsArgs } from '@leaa/common/dtos/_common';
-// import { GetCommonItemsArgsDto } from '@leaa/common/dtos/_common';
 
-type IFormatArgs = ItemsArgs & FindManyOptions;
+type IFormatArgs = FindManyOptions & ItemsArgs;
 
-function formatArgs<T>(args: IFormatArgs & T): IFormatArgs & T {
+function formatArgs<T>(args: T & IFormatArgs): T & IFormatArgs {
   if (!args) {
     throw Error('missing format args');
   }

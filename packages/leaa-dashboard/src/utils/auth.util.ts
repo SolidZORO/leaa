@@ -26,18 +26,26 @@ const getAuthToken = (options = { onlyToken: false }): string | null => {
 //
 //
 
-const setAuthInfo = (info: IAuthInfo) => {
+const setAuthInfo = (info: Partial<IAuthInfo>) => {
   localStorage.setItem(AUTH_INFO, JSON.stringify(info));
 };
 
-const getAuthInfo = (): IAuthInfo | null => {
+const getAuthInfo = (): Required<IAuthInfo> => {
   const authInfo = localStorage.getItem(AUTH_INFO);
 
-  if (authInfo) {
-    return JSON.parse(authInfo);
-  }
+  const nextAuthInfo: IAuthInfo = {
+    id: 0,
+    email: '',
+    name: '',
+    flatePermissions: [],
+  };
 
-  return null;
+  return authInfo
+    ? {
+        ...nextAuthInfo,
+        ...JSON.parse(authInfo),
+      }
+    : nextAuthInfo;
 };
 
 //

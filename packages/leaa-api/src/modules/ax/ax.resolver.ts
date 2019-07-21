@@ -23,8 +23,8 @@ export class AxResolver {
   }
 
   @Query(() => AxsWithPaginationObject)
-  async axs(@Args() args: AxsArgs): Promise<AxsWithPaginationObject | undefined> {
-    return this.axService.axs(args);
+  async axs(@Args() args: AxsArgs, @UserDecorator() user?: User): Promise<AxsWithPaginationObject | undefined> {
+    return this.axService.axs(args, user);
   }
 
   @Query(() => Ax)

@@ -81,7 +81,7 @@ const LoginFormInner = (props: IProps) => {
             <Form.Item label={t('_page:Auth.Login.email')}>
               {getFieldDecorator('email', {
                 validateTrigger: ['onBlur'],
-                initialValue: 'admin@admin.com',
+                initialValue: 'admin@leaa.com',
                 rules: [{ required: true }],
               })(<Input size="large" placeholder={t('_page:Auth.Login.email')} />)}
             </Form.Item>

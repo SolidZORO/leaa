@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Repository, FindOneOptions, Like } from 'typeorm';
+import { Repository, FindOneOptions, getRepository, SelectQueryBuilder } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { Ax, Attachment, User } from '@leaa/common/entrys';
@@ -69,16 +69,25 @@ export class AxService extends BaseService<Ax, AxsArgs, AxsWithPaginationObject,
     };
   }
 
-  async axs(args: AxsArgs): Promise<AxsWithPaginationObject> {
+  async axs(args: AxsArgs, user?: User): Promise<AxsWithPaginationObject> {
     const nextArgs = formatUtil.formatArgs(args);
 
-    if (nextArgs.q) {
-      const qLike = Like(`%${nextArgs.q}%`);
+    const qb = getRepository(Ax).createQueryBuilder();
+    qb.select().orderBy(nextArgs.orderBy || 'createdAt', nextArgs.orderSort);
 
-      nextArgs.where = [{ slug: qLike }, { title: qLike }];
+    if (nextArgs.q) {
+      const aliasName = new SelectQueryBuilder(qb).alias;
+
+      ['title', 'slug'].forEach(q => {
+        qb.andWhere(`${aliasName}.${q} LIKE :${q}`, { [q]: `%${nextArgs.q}%` });
+      });
     }
 
-    const [items, total] = await this.axRepository.findAndCount(nextArgs);
+    if (user && user.flatePermissions && !user.flatePermissions.includes('attachment.list')) {
+      qb.where('status = :status', { status: 1 });
+    }
+
+    const [items, total] = await qb.getManyAndCount();
 
     return {
       items,
@@ -95,13 +104,10 @@ export class AxService extends BaseService<Ax, AxsArgs, AxsWithPaginationObject,
       nextArgs = args;
     }
 
-    const whereQuery = {
-      id,
-      status: 1,
-    };
+    let whereQuery;
 
-    if (user && user.flatePermissions && user.flatePermissions.includes('article.item')) {
-      delete whereQuery.status;
+    if (user && user.flatePermissions && !user.flatePermissions.includes('attachment.list')) {
+      whereQuery = { id, status: 1 };
     }
 
     return this.axRepository.findOne({

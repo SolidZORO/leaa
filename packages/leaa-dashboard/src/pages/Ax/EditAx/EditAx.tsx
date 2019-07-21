@@ -30,10 +30,11 @@ export default (props: IPage) => {
     variables: getAxVariables,
   });
 
-  const baseAttachmentVariables = {
+  const baseAttachmentVariables: AttachmentsArgs = {
     moduleName: 'ax',
     moduleId: Number(id),
     orderSort: 'ASC',
+    orderBy: 'createdAt',
   };
 
   const getBannerMbRef = useRef<IAttachmentBoxRef>(null);
