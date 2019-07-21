@@ -3,10 +3,6 @@ import { envConfig } from '../modules/config/config.module';
 
 const checkPermission = (permissionSlug: string) => {
   return rule()(async (parent, args, ctx) => ctx.user.flatePermissions.includes(permissionSlug));
-  // return rule()(async (parent, args, ctx) => {
-  //   console.log(ctx.user);
-  //   return ctx.user.flatePermissions.includes(permissionSlug);
-  // });
 };
 
 // permissions names e.g.
@@ -37,6 +33,9 @@ export const permissions = shield(
       //
       axs: allow,
       ax: allow,
+      //
+      attachments: allow,
+      attachment: allow,
     },
     Mutation: {
       login: allow,
@@ -65,6 +64,10 @@ export const permissions = shield(
       createAx: checkPermission('ax.create'),
       updateAx: checkPermission('ax.update'),
       deleteAx: checkPermission('ax.delete'),
+      //
+      updateAttachment: checkPermission('attachment.update'),
+      updateAttachments: checkPermission('attachment.update'),
+      deleteAttachments: checkPermission('attachment.delete'),
     },
   },
   {

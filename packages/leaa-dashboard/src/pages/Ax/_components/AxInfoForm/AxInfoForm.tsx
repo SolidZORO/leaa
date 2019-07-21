@@ -61,6 +61,15 @@ class AxInfoFormInner extends React.PureComponent<IProps> {
                   })(<SwitchNumber />)}
                 </Form.Item>
               </Col>
+
+              <Col xs={24}>
+                <Form.Item label={t('_lang:description')}>
+                  {getFieldDecorator('description', {
+                    initialValue: props.item ? props.item.description : undefined,
+                    rules: [],
+                  })(<Input.TextArea rows={1} placeholder={t('_lang:description')} />)}
+                </Form.Item>
+              </Col>
             </Row>
           </Form>
         </FormCard>

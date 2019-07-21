@@ -4,8 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Button, Col, Checkbox, Form, Input, Row, message } from 'antd';
 import { useMutation } from '@apollo/react-hooks';
 import { FormComponentProps } from 'antd/lib/form';
-
-import { User } from '@leaa/common/entrys';
+import { IAuthInfo } from '@leaa/dashboard/interfaces';
 import { AuthLoginInput } from '@leaa/common/dtos/auth';
 import { LOGIN } from '@leaa/common/graphqls';
 import { authUtil } from '@leaa/dashboard/utils';
@@ -25,11 +24,16 @@ const LoginFormInner = (props: IProps) => {
   const { getFieldDecorator } = form;
 
   const [submitLoginMutate, submitLoginMutation] = useMutation<{
-    login: Pick<User, 'authToken' | 'authExpiresIn' | 'name' | 'flatePermissions'>;
+    login: IAuthInfo;
   }>(LOGIN, {
     onCompleted({ login }) {
       if (login && login.name && login.flatePermissions) {
-        const authInfo = { name: login.name, flatePermissions: login.flatePermissions };
+        const authInfo = {
+          id: login.id,
+          email: login.email,
+          name: login.name,
+          flatePermissions: login.flatePermissions,
+        };
 
         authUtil.setAuthInfo(authInfo);
       }

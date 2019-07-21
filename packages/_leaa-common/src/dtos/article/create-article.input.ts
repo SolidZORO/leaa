@@ -28,7 +28,6 @@ export class CreateArticleInput {
   content?: string;
 
   @IsNotEmpty()
-  @Length(1)
   @Field(() => Int)
   status!: number;
 }

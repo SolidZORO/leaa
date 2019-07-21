@@ -28,7 +28,6 @@ export class UpdateArticleInput {
   content?: string;
 
   @IsOptional()
-  @Length(1)
   @Field(() => Int, { nullable: true })
   status?: number;
 }

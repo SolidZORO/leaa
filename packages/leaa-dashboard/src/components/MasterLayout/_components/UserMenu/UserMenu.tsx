@@ -26,7 +26,7 @@ export const UserMenu = (props: IProps): JSX.Element => {
 
   const menuDom = (
     <div className={style['usermenu-box']}>
-      <div className={style['header']}>Hi, {authUtil.getAuthInfo().name}</div>
+      <div className={style['header']}>Hi, {authUtil.getAuthInfo().email}</div>
 
       <div className={style['container']}>
         <Skeleton active />

@@ -148,24 +148,17 @@ export class UserService extends BaseService<
 
     let roleObjects;
 
-    if (args.roleIds) {
+    if (typeof args.roleIds !== 'undefined') {
       roleObjects = await this.roleRepository.findByIds(args.roleIds);
     }
 
-    if (args.roleSlugs) {
+    if (typeof args.roleSlugs !== 'undefined') {
       const roleIds = await this.roleService.roleSlugsToIds(args.roleSlugs);
       roleObjects = await this.roleRepository.findByIds(roleIds);
     }
 
-    relationArgs.roles = [];
-
     if (roleObjects) {
       relationArgs.roles = roleObjects;
-    } else {
-      const message = `roles error`;
-
-      loggerUtil.warn(message, CONSTRUCTOR_NAME);
-      throw new Error(message);
     }
 
     if (args && args.password) {

@@ -30,17 +30,14 @@ const setAuthInfo = (info: IAuthInfo) => {
   localStorage.setItem(AUTH_INFO, JSON.stringify(info));
 };
 
-const getAuthInfo = (): IAuthInfo => {
+const getAuthInfo = (): IAuthInfo | null => {
   const authInfo = localStorage.getItem(AUTH_INFO);
 
   if (authInfo) {
     return JSON.parse(authInfo);
   }
 
-  return {
-    name: '',
-    flatePermissions: [],
-  };
+  return null;
 };
 
 //
@@ -60,7 +57,7 @@ const removeAuthToken = (): boolean => {
 };
 
 const removeAuthInfo = (): boolean => {
-  if (!getAuthInfo().name) {
+  if (!getAuthInfo()) {
     console.log('Not found auth info.');
 
     return false;

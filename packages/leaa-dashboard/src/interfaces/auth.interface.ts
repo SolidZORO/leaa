@@ -1,4 +1,3 @@
-export interface IAuthInfo {
-  name: string;
-  flatePermissions: string[];
-}
+import { User } from '@leaa/common/entrys';
+
+export type IAuthInfo = Pick<User, 'id' | 'email' | 'authToken' | 'authExpiresIn' | 'name' | 'flatePermissions'>;

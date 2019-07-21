@@ -3,10 +3,12 @@ import { Field, InputType, Int } from 'type-graphql';
 
 @InputType()
 export class UpdateUserInput {
+  @IsOptional()
   @IsPhoneNumber('CN')
   @Field(() => String, { nullable: true })
   phone?: string;
 
+  @IsOptional()
   @IsEmail()
   @MinLength(6)
   @Field(() => String, { nullable: true })
@@ -23,7 +25,6 @@ export class UpdateUserInput {
   password?: string;
 
   @IsOptional()
-  @Length(1)
   @Field(() => Int, { nullable: true })
   status?: number;
 
