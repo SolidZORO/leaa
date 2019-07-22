@@ -3,6 +3,7 @@ import getConfig from 'next/config';
 import Swiper from 'react-id-swiper';
 import { useQuery } from '@apollo/react-hooks';
 import Link from 'next/link';
+import { Button } from 'antd';
 
 import { GET_AX_BY_SLUG } from '@leaa/common/graphqls';
 import { Ax } from '@leaa/common/entrys';
@@ -11,7 +12,7 @@ import { ErrorCard } from '@leaa/www/components/ErrorCard/ErrorCard';
 
 import style from './style.less';
 
-export const BannerSwiper = () => {
+export default () => {
   const { publicRuntimeConfig } = getConfig();
 
   const getAxBySlugVariables = { slug: 'index-swiper' };
@@ -30,6 +31,8 @@ export const BannerSwiper = () => {
   return (
     <div className={style['wrapper']}>
       {getAxBySlugQuery.error ? <ErrorCard error={getAxBySlugQuery.error} /> : null}
+
+      <Button type="primary">BB</Button>
 
       <Swiper
         {...{

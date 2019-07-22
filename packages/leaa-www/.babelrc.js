@@ -1,7 +1,5 @@
 module.exports = {
-  presets: [
-    ['next/babel'],
-  ],
+  presets: [['next/babel']],
   plugins: [
     ['lodash'],
     [
@@ -15,7 +13,7 @@ module.exports = {
     [
       'module-resolver',
       {
-        root: ['./src'],
+        root: ['./'],
         alias: {
           '@leaa/common': '../_leaa-common/src',
           '@leaa/www': './',

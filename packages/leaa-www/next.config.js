@@ -4,10 +4,9 @@ const path = require('path');
 const lessToJS = require('less-vars-to-js');
 const FilterWarningsPlugin = require('webpack-filter-warnings-plugin');
 
-const withCSS = require('@zeit/next-css');
-const withLessExcludeAntd = require('./configs/next-less.config');
 const withImage = require('./configs/next-image.config');
 const withDotenv = require('./configs/next-dotenv.config');
+const withLessExcludeAntd = require('./configs/next-less.config');
 
 // Where your antd-custom.less file lives
 const antdVariables = lessToJS(fs.readFileSync(path.resolve(__dirname, './styles/variables.less'), 'utf8'));
@@ -19,28 +18,26 @@ if (typeof require !== 'undefined') {
 
 module.exports = withDotenv(
   withImage(
-    withCSS(
-      withLessExcludeAntd({
-        cssModules: true,
-        cssLoaderOptions: {
-          sourceMap: false,
-          importLoaders: 1,
-        },
-        lessLoaderOptions: {
-          javascriptEnabled: true,
-          modifyVars: antdVariables,
-        },
-        webpack: function(config) {
-          config.plugins.push(
-            new FilterWarningsPlugin({
-              // ignore ANTD chunk styles [mini-css-extract-plugin] warning
-              exclude: /mini-css-extract-plugin[^]*Conflicting order between:/,
-            }),
-          );
+    withLessExcludeAntd({
+      cssModules: true,
+      cssLoaderOptions: {
+        sourceMap: false,
+        importLoaders: 1,
+      },
+      lessLoaderOptions: {
+        javascriptEnabled: true,
+        modifyVars: antdVariables,
+      },
+      webpack: config => {
+        config.plugins.push(
+          new FilterWarningsPlugin({
+            // ignore ANTD chunk styles [mini-css-extract-plugin] warning
+            exclude: /mini-css-extract-plugin[^]*Conflicting order between:/,
+          }),
+        );
 
-          return config;
-        },
-      }),
-    ),
+        return config;
+      },
+    }),
   ),
 );
