@@ -9,6 +9,7 @@ import { AxArgs } from '@leaa/common/dtos/ax';
 import { ErrorCard } from '@leaa/www/components/ErrorCard/ErrorCard';
 
 import style from './style.less';
+import Link from 'next/link';
 
 export const BannerSwiper = () => {
   const { publicRuntimeConfig } = getConfig();
@@ -45,7 +46,11 @@ export const BannerSwiper = () => {
         }}
       >
         {bannerMbList.map(a => (
-          <img key={a.uuid} width="100%" src={`${publicRuntimeConfig.API_HOST}${a.path}`} alt="" />
+          <Link href={a.link}>
+            <a className={style['link']}>
+              <img key={a.uuid} src={`${publicRuntimeConfig.API_HOST}${a.path}`} alt="" />
+            </a>
+          </Link>
         ))}
       </Swiper>
     </div>
