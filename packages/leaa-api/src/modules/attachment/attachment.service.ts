@@ -33,6 +33,14 @@ export class AttachmentService {
     private readonly configService: ConfigService,
   ) {}
 
+  pathAt2x(attachment: Attachment): string | null {
+    if (attachment.at2x) {
+      return pathUtil.getAt2xPath(attachment.path);
+    }
+
+    return null;
+  }
+
   async saveAt2xToAt1x(file: Express.Multer.File, rawWidth: number, rawHeight: number) {
     const width = Math.round(rawWidth / 2);
     const height = Math.round(rawHeight / 2);

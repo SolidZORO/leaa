@@ -41,6 +41,7 @@ export const GET_ATTACHMENTS = gql`
         moduleId
         moduleType
         path
+        pathAt2x
         status
         sort
         at2x
@@ -64,6 +65,7 @@ export const GET_ATTACHMENT = gql`
       moduleId
       moduleType
       path
+      pathAt2x
       status
       sort
       at2x

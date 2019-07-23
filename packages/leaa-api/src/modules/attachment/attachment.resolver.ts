@@ -1,6 +1,6 @@
-import { Args, Query, Mutation, Resolver } from '@nestjs/graphql';
+import { Args, Query, Mutation, Resolver, ResolveProperty, Parent } from '@nestjs/graphql';
 
-import { Attachment } from '@leaa/common/entrys';
+import { Attachment, Ax } from '@leaa/common/entrys';
 import {
   AttachmentsArgs,
   AttachmentsWithPaginationObject,
@@ -15,6 +15,11 @@ import { AttachmentService } from './attachment.service';
 @Resolver(() => Attachment)
 export class AttachmentResolver {
   constructor(private readonly attachmentService: AttachmentService) {}
+
+  @ResolveProperty(() => String, { nullable: true })
+  pathAt2x(@Parent() attachment: Attachment): string | null {
+    return this.attachmentService.pathAt2x(attachment);
+  }
 
   @Query(() => AttachmentsWithPaginationObject)
   async attachments(@Args() args: AttachmentsArgs): Promise<AttachmentsWithPaginationObject | undefined> {

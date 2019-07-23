@@ -21,6 +21,7 @@ export const ATTACHMENT_FRAGMENT = gql`
     height
     size
     path
+    pathAt2x
     at2x
     inLocal
     inCloud

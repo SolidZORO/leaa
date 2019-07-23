@@ -9,7 +9,7 @@ import { GET_AX_BY_SLUG } from '@leaa/common/graphqls';
 import { ErrorCard } from '../../components/ErrorCard/ErrorCard';
 
 export default () => {
-  const getAxBySlugVariables = { slug: 'index-swiper' };
+  const getAxBySlugVariables = { slug: 'ram-swiper' };
   const getAxBySlugQuery = useQuery<{ axBySlug: Ax }, AxArgs>(GET_AX_BY_SLUG, {
     variables: getAxBySlugVariables,
   });
@@ -27,7 +27,7 @@ export default () => {
       {getAxBySlugQuery.error ? <ErrorCard error={getAxBySlugQuery.error} /> : null}
 
       <Head>
-        <title>Here Is Home</title>
+        <title>Here Is Ram</title>
       </Head>
 
       <ImageSwiper attachmentList={bannerMbList} />

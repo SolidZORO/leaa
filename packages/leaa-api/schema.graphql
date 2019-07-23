@@ -45,6 +45,7 @@ type Attachment {
   height: Int!
   size: Int!
   path: String!
+  pathAt2x: String
   at2x: Int!
   inLocal: Int!
   inCloud: Int!

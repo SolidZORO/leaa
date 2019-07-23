@@ -66,6 +66,9 @@ export class Attachment extends Base {
   @Field(() => String)
   path!: string;
 
+  @Field(() => String, { nullable: true })
+  pathAt2x?: string;
+
   @Column({ type: 'tinyint', default: 0 })
   @Field(() => Int)
   at2x!: number;
