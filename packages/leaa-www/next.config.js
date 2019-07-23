@@ -22,6 +22,7 @@ module.exports = withDotenv(
       cssLoaderOptions: {
         sourceMap: false,
         importLoaders: 1,
+        localIdentName: '[local]--[hash:8]',
       },
       lessLoaderOptions: {
         javascriptEnabled: true,

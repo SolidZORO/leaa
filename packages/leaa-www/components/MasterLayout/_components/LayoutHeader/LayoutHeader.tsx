@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import cx from 'classnames';
-import { Button, Drawer } from 'antd';
+import { Button, Icon, Drawer } from 'antd';
 
 import { __MENU_MOCK__ } from '@leaa/www/__mock__';
 
@@ -10,29 +10,16 @@ import style from './style.less';
 interface IProps {}
 
 export const LayoutHeader = (props: IProps) => {
+  const headerMenu = [{ title: 'Home', link: '/' }].concat(__MENU_MOCK__.headerMenu);
   const [drawerVisible, setDrawerVisible] = useState<boolean>(false);
 
-  const onSetVisible = (value?: boolean) => {
-    if (typeof value !== 'undefined') {
-      setDrawerVisible(value);
-
-      return;
-    }
-
-    setDrawerVisible(!drawerVisible);
+  const onSetVisible = (value: boolean) => {
+    setDrawerVisible(value);
   };
 
   const menuListDom = (
     <ul className={style['menu-list']}>
-      <li key="home" className={style['menu-item']}>
-        <Link href="/">
-          <a className={style['link']} onClick={() => onSetVisible(false)}>
-            Home
-          </a>
-        </Link>
-      </li>
-
-      {__MENU_MOCK__.headerMenu.map(m => (
+      {headerMenu.map(m => (
         <li key={m.title} className={style['menu-item']}>
           <Link href={m.link}>
             <a className={style['link']} onClick={() => onSetVisible(false)}>
@@ -77,28 +64,34 @@ export const LayoutHeader = (props: IProps) => {
         </div>
 
         <div className={style['menu-wrapper--mb']}>
-          <div className={style['menu-mb-drawer-wrapper']}>
-            <Button type="link" onClick={() => onSetVisible()} icon="menu" className={style['menu-mb-drawer-botton']} />
-          </div>
-
-          <Drawer
-            placement="right"
-            onClose={() => onSetVisible(false)}
-            visible={drawerVisible}
-            // visible={true}
-            closable={false}
-            className={style['menu-mb-drawe-box']}
-          >
+          <div className={style['menu-mb-button-wrapper']}>
             <Button
               type="link"
-              onClick={() => onSetVisible(false)}
-              icon="close"
-              className={style['menu-mb-drawer-close']}
+              onClick={() => onSetVisible(true)}
+              icon="menu"
+              className={style['menu-mb-button']}
             />
+          </div>
 
-            {menuListDom}
-            {authListDom}
-          </Drawer>
+          <div className={style['menu-mb-drawer-wrapper']}>
+            <Drawer
+              placement="right"
+              visible={drawerVisible}
+              closable={false}
+              className={cx(style['menu-mb-drawer'], {
+                [style['menu-mb-drawer--action']]: drawerVisible,
+              })}
+            >
+              <Button
+                type="link"
+                icon="x-close"
+                onClick={() => onSetVisible(false)}
+                className={style['menu-mb-drawer-close']}
+              />
+              {menuListDom}
+              {authListDom}
+            </Drawer>
+          </div>
         </div>
       </div>
     </div>

@@ -13,11 +13,6 @@ import { LayoutFooter } from './_components/LayoutFooter/LayoutFooter';
 import '@leaa/www/styles/global.less';
 import style from './style.less';
 
-// Router NProgress
-Router.events.on('routeChangeStart', () => NProgress.start());
-Router.events.on('routeChangeComplete', () => NProgress.done());
-Router.events.on('routeChangeError', () => NProgress.done());
-
 interface IProps extends IAppProps {
   children: React.ReactNode;
   disableSidebar?: boolean;
@@ -26,8 +21,33 @@ interface IProps extends IAppProps {
 }
 
 export const MasterLayout = (props: IProps) => {
+  // Router NProgress
+  Router.events.on('routeChangeStart', () => {
+    NProgress.start();
+  });
+
+  Router.events.on('routeChangeComplete', () => {
+    NProgress.done();
+  });
+
+  Router.events.on('routeChangeError', () => {
+    NProgress.done();
+  });
+
   const pageClassName =
     props && props.router.pathname ? `page-${urlUtil.routerPathToClassName(props.router.pathname)}` : null;
+
+  if (typeof window !== 'undefined' && process.env.NODE_ENV === 'production') {
+    window.onload = () => {
+      console.log('check transitionWithoutSSR');
+
+      const transitionWithoutSSR = document.getElementById('transition-without-ssr');
+
+      if (transitionWithoutSSR) {
+        transitionWithoutSSR.remove();
+      }
+    };
+  }
 
   return (
     <div
@@ -40,6 +60,13 @@ export const MasterLayout = (props: IProps) => {
           {!props.disableFooter && <LayoutFooter />}
         </Layout>
       </Layout>
+
+      {process.env.NODE_ENV === 'production' && (
+        <style
+          id="transition-without-ssr"
+          dangerouslySetInnerHTML={{ __html: ` *, *::before, *::after { transition: none!important; }` }}
+        />
+      )}
     </div>
   );
 };

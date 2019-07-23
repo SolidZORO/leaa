@@ -13,28 +13,11 @@ class CustomApp extends App<IAppProps> {
     super.componentDidCatch(error, errorInfo);
   }
 
-  componentDidMount() {
-    if (typeof window !== 'undefined') {
-      window.addEventListener('DOMContentLoaded', () => {
-        const transitionWithoutSSR = document.getElementById('transition-without-ssr');
-
-        if (transitionWithoutSSR) {
-          transitionWithoutSSR.remove();
-        }
-      });
-    }
-  }
-
   render() {
     return (
       <ApolloProvider client={this.props.apolloClient}>
         <MasterLayout {...this.props}>
           <this.props.Component {...this.props} />
-
-          <style
-            id="transition-without-ssr"
-            dangerouslySetInnerHTML={{ __html: ` *, *::before, *::after { transition: none!important; }` }}
-          />
         </MasterLayout>
       </ApolloProvider>
     );

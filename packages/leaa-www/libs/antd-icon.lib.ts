@@ -6,7 +6,7 @@
 //
 //
 // OUTLINE
-export { default as AccountBookOutline } from '@ant-design/icons/lib/outline/AccountBookOutline';
+// export { default as AccountBookOutline } from '@ant-design/icons/lib/outline/AccountBookOutline';
 // export { default as AlertOutline } from '@ant-design/icons/lib/outline/AlertOutline';
 // export { default as YahooFill } from '@ant-design/icons/lib/fill/YahooFill';
 // export { default as AlipayCircleOutline } from '@ant-design/icons/lib/outline/AlipayCircleOutline';
@@ -360,7 +360,7 @@ export { default as MenuOutline } from '@ant-design/icons/lib/outline/MenuOutlin
 // export { default as UserAddOutline } from '@ant-design/icons/lib/outline/UserAddOutline';
 // export { default as UserDeleteOutline } from '@ant-design/icons/lib/outline/UserDeleteOutline';
 // export { default as UsergroupAddOutline } from '@ant-design/icons/lib/outline/UsergroupAddOutline';
-// export { default as UserOutline } from '@ant-design/icons/lib/outline/UserOutline';
+export { default as UserOutline } from '@ant-design/icons/lib/outline/UserOutline';
 // export { default as UploadOutline } from '@ant-design/icons/lib/outline/UploadOutline';
 // export { default as UsergroupDeleteOutline } from '@ant-design/icons/lib/outline/UsergroupDeleteOutline';
 // export { default as VerticalAlignMiddleOutline } from '@ant-design/icons/lib/outline/VerticalAlignMiddleOutline';

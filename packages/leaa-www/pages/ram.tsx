@@ -11,8 +11,24 @@ export default (props: any) => {
     <div>
       {getRamQuery.error ? <p>ERROR</p> : null}
 
-      <Button type="dashed" icon="up">
-        RAM
+      <Button icon="menu">MENU</Button>
+
+      <br />
+
+      <Button icon="x-close">CLOSE</Button>
+
+      <br />
+
+      <Button icon="x-cart">CART</Button>
+
+      <br />
+
+      <Button icon="x-menu">MENU</Button>
+
+      <br />
+
+      <Button type="dashed" icon="x-qrcode">
+        QR-CODE
       </Button>
       <Switch size="small" />
       <div>{JSON.stringify(getRamQuery.data)}</div>
