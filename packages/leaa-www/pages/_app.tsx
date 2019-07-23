@@ -4,7 +4,8 @@ import { ApolloProvider } from '@apollo/react-hooks';
 
 import { IAppProps } from '@leaa/www/interfaces';
 import { withApolloClient } from '@leaa/www/libs';
-import { MasterLayout } from '@leaa/www/components/MasterLayout/MasterLayout';
+import { MasterLayout } from '@leaa/www/components/MasterLayout';
+import { ProgressLoading } from '@leaa/www/components/ProgressLoading';
 
 class CustomApp extends App<IAppProps> {
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
@@ -16,6 +17,8 @@ class CustomApp extends App<IAppProps> {
   render() {
     return (
       <ApolloProvider client={this.props.apolloClient}>
+        <ProgressLoading showAfterMs={800} />
+
         <MasterLayout {...this.props}>
           <this.props.Component {...this.props} />
         </MasterLayout>

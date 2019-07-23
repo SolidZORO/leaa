@@ -6,6 +6,7 @@ import { Layout } from 'antd';
 
 import { urlUtil } from '@leaa/www/utils';
 import { IAppProps } from '@leaa/www/interfaces';
+import { ProgressLoading } from '@leaa/www/components/ProgressLoading';
 import { LayoutContent } from './_components/LayoutContent/LayoutContent';
 import { LayoutHeader } from './_components/LayoutHeader/LayoutHeader';
 import { LayoutFooter } from './_components/LayoutFooter/LayoutFooter';
@@ -21,19 +22,6 @@ interface IProps extends IAppProps {
 }
 
 export const MasterLayout = (props: IProps) => {
-  // Router NProgress
-  Router.events.on('routeChangeStart', () => {
-    NProgress.start();
-  });
-
-  Router.events.on('routeChangeComplete', () => {
-    NProgress.done();
-  });
-
-  Router.events.on('routeChangeError', () => {
-    NProgress.done();
-  });
-
   const pageClassName =
     props && props.router.pathname ? `page-${urlUtil.routerPathToClassName(props.router.pathname)}` : null;
 
