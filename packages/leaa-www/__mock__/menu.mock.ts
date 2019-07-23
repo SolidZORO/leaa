@@ -1,16 +1,16 @@
 const headerMenu = [
-  {
-    title: 'Article',
-    link: 'article',
-  },
+  // {
+  //   title: 'Article',
+  //   link: 'article',
+  // },
   {
     title: 'Ram',
     link: 'ram',
   },
-  {
-    title: 'About Leaa',
-    link: '',
-  },
+  // {
+  //   title: 'About Leaa',
+  //   link: 'ram',
+  // },
 ];
 
 const footerMenu = [
@@ -18,41 +18,41 @@ const footerMenu = [
     title: 'Product',
     link: 'ram',
     chlidren: [
-      { title: 'Product A', link: '' },
-      { title: 'Product B', link: '' },
-      { title: 'Product C', link: '' },
-      { title: 'Product D', link: '' },
+      { title: 'Product A', link: 'ram' },
+      { title: 'Product B', link: 'ram' },
+      { title: 'Product C', link: 'ram' },
+      { title: 'Product D', link: 'ram' },
     ],
   },
   {
     title: 'Feature',
-    link: '',
+    link: 'ram',
     chlidren: [
-      { title: 'Feature A', link: '' },
-      { title: 'Feature B', link: '' },
-      { title: 'Feature C', link: '' },
-      { title: 'Feature D', link: '' },
+      { title: 'Feature A', link: 'ram' },
+      { title: 'Feature B', link: 'ram' },
+      { title: 'Feature C', link: 'ram' },
+      { title: 'Feature D', link: 'ram' },
     ],
   },
   {
     title: 'Service',
-    link: '',
+    link: 'ram',
     chlidren: [
-      { title: 'Service A', link: '' },
-      { title: 'Service B', link: '' },
-      { title: 'Service C', link: '' },
-      { title: 'Service D', link: '' },
-      { title: 'Service E', link: '' },
+      { title: 'Service A', link: 'ram' },
+      { title: 'Service B', link: 'ram' },
+      { title: 'Service C', link: 'ram' },
+      { title: 'Service D', link: 'ram' },
+      { title: 'Service E', link: 'ram' },
     ],
   },
   {
     title: 'About Leaa',
-    link: '',
+    link: 'ram',
     chlidren: [
-      { title: 'Leaa A', link: '' },
-      { title: 'Leaa B', link: '' },
-      { title: 'Github', link: '' },
-      { title: 'Twitter', link: '' },
+      { title: 'Leaa A', link: 'ram' },
+      { title: 'Leaa B', link: 'ram' },
+      { title: 'Github', link: 'ram' },
+      { title: 'Twitter', link: 'ram' },
     ],
   },
 ];

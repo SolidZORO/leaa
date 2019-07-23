@@ -32,7 +32,9 @@ export default () => {
     <div className={style['wrapper']}>
       {getAxBySlugQuery.error ? <ErrorCard error={getAxBySlugQuery.error} /> : null}
 
-      <Button type="primary">BB</Button>
+      <Button type="primary" icon="user">
+        BB
+      </Button>
 
       <Swiper
         {...{

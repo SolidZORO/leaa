@@ -26,6 +26,7 @@
     "s": "yarn dev"
   },
   "dependencies": {
+    "@ant-design/icons": "^2.1.1",
     "@apollo/react-hooks": "0.1.0-beta.10",
     "antd": "^3.20.5",
     "apollo-cache-inmemory": "^1.6.2",

@@ -6,9 +6,8 @@ const FilterWarningsPlugin = require('webpack-filter-warnings-plugin');
 
 const withImage = require('./configs/next-image.config');
 const withDotenv = require('./configs/next-dotenv.config');
-const withLessExcludeAntd = require('./configs/next-less.config');
+const withAntd = require('./configs/next-antd.config');
 
-// Where your antd-custom.less file lives
 const antdVariables = lessToJS(fs.readFileSync(path.resolve(__dirname, './styles/variables.less'), 'utf8'));
 
 // fix: prevents error when .less files are required by node
@@ -18,7 +17,7 @@ if (typeof require !== 'undefined') {
 
 module.exports = withDotenv(
   withImage(
-    withLessExcludeAntd({
+    withAntd({
       cssModules: true,
       cssLoaderOptions: {
         sourceMap: false,
@@ -35,6 +34,9 @@ module.exports = withDotenv(
             exclude: /mini-css-extract-plugin[^]*Conflicting order between:/,
           }),
         );
+
+        // comstom antd icon
+        config.resolve.alias['@ant-design/icons/lib/dist$'] = path.resolve(__dirname, './libs/antd-icon.lib');
 
         return config;
       },

@@ -46,13 +46,13 @@ export const LayoutHeader = (props: IProps) => {
 
   const authListDom = (
     <div className={style['auth-list']}>
-      <Link href="/login">
+      <Link href="/ram">
         <a className={style['link']} onClick={() => onSetVisible(false)}>
           Login
         </a>
       </Link>
       {' · '}
-      <Link href="/register">
+      <Link href="/ram">
         <a className={style['link']} onClick={() => onSetVisible(false)}>
           Register
         </a>

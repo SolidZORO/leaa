@@ -13,6 +13,7 @@ module.exports = (nextConfig = {}) => ({
       const { dev, isServer } = options;
       const { cssModules, cssLoaderOptions, postcssLoaderOptions, lessLoaderOptions = {} } = nextConfig;
 
+      // for all less in clint
       const baseLessConfig = {
         extensions: ['less'],
         cssModules,
@@ -28,12 +29,6 @@ module.exports = (nextConfig = {}) => ({
         ],
       };
 
-      const libLessConfig = {
-        ...baseLessConfig,
-        ...{ cssModules: false, cssLoaderOptions: {}, postcssLoaderOptions: {} },
-      };
-
-      // for all less clint
       config.module.rules.push({
         test: /\.less$/,
         exclude: /node_modules/,
@@ -41,34 +36,39 @@ module.exports = (nextConfig = {}) => ({
       });
 
       // for antd less in client
+      const antdLessConfig = {
+        ...baseLessConfig,
+        ...{ cssModules: false, cssLoaderOptions: {}, postcssLoaderOptions: {} },
+      };
+
       config.module.rules.push({
         test: /\.less$/,
         include: /node_modules/,
-        use: cssLoaderConfig(config, libLessConfig),
+        use: cssLoaderConfig(config, antdLessConfig),
       });
 
-      // for antd less in build
+      // for antd less in server (yarn build)
       if (isServer) {
-        const antStyles = /antd\/.*?\/style.*?/;
-        const origExternals = [...config.externals];
+        const antdStyles = /antd\/.*?\/style.*?/;
+        const rawExternals = [...config.externals];
 
         config.externals = [
           (context, request, callback) => {
-            if (request.match(antStyles)) {
+            if (request.match(antdStyles)) {
               return callback();
             }
 
-            if (typeof origExternals[0] === 'function') {
-              origExternals[0](context, request, callback);
+            if (typeof rawExternals[0] === 'function') {
+              rawExternals[0](context, request, callback);
             } else {
               callback();
             }
           },
-          ...(typeof origExternals[0] === 'function' ? [] : origExternals),
+          ...(typeof rawExternals[0] === 'function' ? [] : rawExternals),
         ];
 
         config.module.rules.unshift({
-          test: antStyles,
+          test: antdStyles,
           use: 'null-loader',
         });
       }
