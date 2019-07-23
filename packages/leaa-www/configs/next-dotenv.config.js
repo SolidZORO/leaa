@@ -8,7 +8,8 @@ const publicRuntimeConfig = {
   //
   BASE_HOST: process.env.BASE_HOST || 'localhost',
   API_HOST: process.env.API_HOST || 'http://localhost:5555',
-  UPLOAD_HOST: process.env.CDN_HOST || 'http://localhost:5555/attachments',
+  GRAPHQL_ENDPOINT: process.env.GRAPHQL_ENDPOINT || 'http://localhost:5555/graphql',
+  UPLOAD_HOST: process.env.UPLOAD_HOST || 'http://localhost:5555/attachments',
 };
 
 const serverRuntimeConfig = {

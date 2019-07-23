@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import cx from 'classnames';
+import Headroom from 'react-headroom';
 import { Button, Icon, Drawer } from 'antd';
 
 import { __MENU_MOCK__ } from '@leaa/www/__mock__';
@@ -49,51 +50,48 @@ export const LayoutHeader = (props: IProps) => {
 
   return (
     <div className={style['full-layout-header']}>
-      <div className={cx('g-full-container', style['full-container'])}>
-        <div className={style['logo-image']}>
-          <Link href="/">
-            <a>
-              <img src="/static/images/logo/logo-black.svg" alt="" />
-            </a>
-          </Link>
-        </div>
-
-        <div className={style['menu-wrapper--pc']}>
-          {menuListDom}
-          {authListDom}
-        </div>
-
-        <div className={style['menu-wrapper--mb']}>
-          <div className={style['menu-mb-button-wrapper']}>
-            <Button
-              type="link"
-              onClick={() => onSetVisible(true)}
-              icon="menu"
-              className={style['menu-mb-button']}
-            />
+      <Headroom>
+        <div className={cx('g-full-container', style['full-container'])}>
+          <div className={style['logo-image']}>
+            <Link href="/">
+              <a>
+                <img src="/static/images/logo/logo-black.svg" alt="" />
+              </a>
+            </Link>
           </div>
 
-          <div className={style['menu-mb-drawer-wrapper']}>
-            <Drawer
-              placement="right"
-              visible={drawerVisible}
-              closable={false}
-              className={cx(style['menu-mb-drawer'], {
-                [style['menu-mb-drawer--action']]: drawerVisible,
-              })}
-            >
-              <Button
-                type="link"
-                icon="x-close"
-                onClick={() => onSetVisible(false)}
-                className={style['menu-mb-drawer-close']}
-              />
-              {menuListDom}
-              {authListDom}
-            </Drawer>
+          <div className={style['menu-wrapper--pc']}>
+            {menuListDom}
+            {authListDom}
+          </div>
+
+          <div className={style['menu-wrapper--mb']}>
+            <div className={style['menu-mb-button-wrapper']}>
+              <Button type="link" onClick={() => onSetVisible(true)} icon="menu" className={style['menu-mb-button']} />
+            </div>
+
+            <div className={style['menu-mb-drawer-wrapper']}>
+              <Drawer
+                // placement="right"
+                visible={drawerVisible}
+                closable={false}
+                className={cx(style['menu-mb-drawer'], {
+                  [style['menu-mb-drawer--action']]: drawerVisible,
+                })}
+              >
+                <Button
+                  type="link"
+                  icon="x-close"
+                  onClick={() => onSetVisible(false)}
+                  className={style['menu-mb-drawer-close']}
+                />
+                {menuListDom}
+                {authListDom}
+              </Drawer>
+            </div>
           </div>
         </div>
-      </div>
+      </Headroom>
     </div>
   );
 };

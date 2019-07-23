@@ -4,6 +4,7 @@ import { ApolloClient } from 'apollo-client';
 import { ApolloLink, split } from 'apollo-link';
 import { OperationDefinitionNode } from 'graphql';
 import { InMemoryCache, NormalizedCacheObject } from 'apollo-cache-inmemory';
+import getConfig from 'next/config';
 
 let apolloClient: ApolloClient<any> | null = null;
 
@@ -13,8 +14,10 @@ if (!process.browser) {
 }
 
 function createApolloClient(initialState: NormalizedCacheObject) {
+  const { publicRuntimeConfig } = getConfig();
+
   const httpLink = new HttpLink({
-    uri: 'http://localhost:5555/graphql',
+    uri: publicRuntimeConfig.GRAPHQL_ENDPOINT,
     // credentials: 'same-origin',
   });
 

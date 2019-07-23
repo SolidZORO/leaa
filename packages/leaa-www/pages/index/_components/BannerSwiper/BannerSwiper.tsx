@@ -54,7 +54,9 @@ export default () => {
           <div key={a.uuid}>
             <Link href={`/${a.link}`}>
               <a>
-                <img src={`${publicRuntimeConfig.API_HOST}${a.path}`} alt="" />
+                <img src={`${publicRuntimeConfig.API_HOST}${a.path}`} alt=""
+                     className={style['image']}
+                />
               </a>
             </Link>
           </div>
