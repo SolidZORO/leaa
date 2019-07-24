@@ -99,6 +99,12 @@ export class AttachmentService {
       qb.andWhere('status = :status', { status: 1 });
     }
 
+    if (nextArgs.orderBy && nextArgs.orderSort) {
+      qb.orderBy({ [nextArgs.orderBy]: nextArgs.orderSort });
+    } else {
+      qb.orderBy({ sort: 'ASC' });
+    }
+
     const [items, total] = await qb.getManyAndCount();
 
     return {
