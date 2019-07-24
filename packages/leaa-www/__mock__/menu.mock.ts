@@ -7,10 +7,14 @@ const headerMenu = [
     title: 'Ram',
     link: 'ram',
   },
-  // {
-  //   title: 'About Leaa',
-  //   link: 'ram',
-  // },
+  {
+    title: 'Blog',
+    link: 'blog',
+  },
+  {
+    title: 'Article',
+    link: 'article',
+  },
 ];
 
 const footerMenu = [
@@ -18,9 +22,9 @@ const footerMenu = [
     title: 'Product',
     link: 'ram',
     chlidren: [
-      { title: 'Product A', link: 'ram' },
-      { title: 'Product B', link: 'ram' },
-      { title: 'Product C', link: 'ram' },
+      { title: 'Product Ram', link: 'ram' },
+      { title: 'Product Blog', link: 'blog' },
+      { title: 'Product Article', link: 'article' },
       { title: 'Product D', link: 'ram' },
     ],
   },

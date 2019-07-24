@@ -458,7 +458,7 @@
     "@babel/helper-create-class-features-plugin" "^7.5.5"
     "@babel/helper-plugin-utils" "^7.0.0"
 
-"@babel/plugin-proposal-decorators@7.4.4":
+"@babel/plugin-proposal-decorators@7.4.4", "@babel/plugin-proposal-decorators@^7.4.4":
   version "7.4.4"
   resolved "https://registry.npm.taobao.org/@babel/plugin-proposal-decorators/download/@babel/plugin-proposal-decorators-7.4.4.tgz#de9b2a1a8ab0196f378e2a82f10b6e2a36f21cc0"
   integrity sha1-3psqGoqwGW83jiqC8QtuKjbyHMA=
@@ -931,7 +931,7 @@
     "@babel/helper-regex" "^7.4.4"
     regexpu-core "^4.5.4"
 
-"@babel/polyfill@7.4.4", "@babel/polyfill@^7.0.0":
+"@babel/polyfill@7.4.4", "@babel/polyfill@^7.0.0", "@babel/polyfill@^7.4.4":
   version "7.4.4"
   resolved "https://registry.npm.taobao.org/@babel/polyfill/download/@babel/polyfill-7.4.4.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40babel%2Fpolyfill%2Fdownload%2F%40babel%2Fpolyfill-7.4.4.tgz#78801cf3dbe657844eeabf31c1cae3828051e893"
   integrity sha1-eIAc89vmV4RO6r8xwcrjgoBR6JM=
@@ -5619,6 +5619,11 @@ error-ex@^1.2.0, error-ex@^1.3.1:
   integrity sha1-tKxAZIEH/c3PriQvQovqihTU8b8=
   dependencies:
     is-arrayish "^0.2.1"
+
+eruda@^1.5.7:
+  version "1.5.7"
+  resolved "https://registry.npm.taobao.org/eruda/download/eruda-1.5.7.tgz#c01b43923ed43d50fb9140f48ccb7ac1b57e8cf5"
+  integrity sha1-wBtDkj7UPVD7kUD0jMt6wbV+jPU=
 
 es-abstract@^1.11.0, es-abstract@^1.12.0, es-abstract@^1.5.0, es-abstract@^1.5.1, es-abstract@^1.7.0:
   version "1.13.0"
@@ -14759,6 +14764,11 @@ vary@^1, vary@~1.1.2:
   version "1.1.2"
   resolved "https://registry.npm.taobao.org/vary/download/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
   integrity sha1-IpnwLG3tMNSllhsLn3RSShj2NPw=
+
+vconsole@^3.3.2:
+  version "3.3.2"
+  resolved "https://registry.npm.taobao.org/vconsole/download/vconsole-3.3.2.tgz?cache=0&sync_timestamp=1562225269083&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fvconsole%2Fdownload%2Fvconsole-3.3.2.tgz#07424f8de2e5e2586c504042093948435ed2de06"
+  integrity sha1-B0JPjeLl4lhsUEBCCTlIQ17S3gY=
 
 vendors@^1.0.0:
   version "1.0.3"

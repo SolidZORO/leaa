@@ -55,7 +55,6 @@ export const SwiperImage = (props: IProps) => {
             lazy: props.lazy
               ? {
                   loadPrevNext: true,
-                  // loadPrevNextAmount: 2,
                 }
               : false,
             pagination: {

@@ -25,8 +25,6 @@ export default () => {
     getAxBySlugQuery.data.axBySlug.attachments &&
     getAxBySlugQuery.data.axBySlug.attachments.bannerMbList;
 
-  console.log(bannerMbList);
-
   return (
     <>
       {getAxBySlugQuery.error ? <ErrorCard error={getAxBySlugQuery.error} /> : null}

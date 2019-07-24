@@ -22,16 +22,10 @@ export const RetinaImage = (props: IProps) => {
         'data-srcset': `${at2x} 2x`,
         className: 'swiper-lazy',
       }
-    : {};
+    : {
+        srcSet: attachment.at2x ? `${at2x} 2x, ${at1x} 1x` : `${at1x} 1x`,
+        src: `${at1x}`,
+      };
 
-  return (
-    <img
-      alt={attachment.alt}
-      title={attachment.title}
-      className={props.className}
-      srcSet={attachment.at2x ? `${at2x} 2x, ${at1x} 1x` : `${at1x} 1x`}
-      src={`${at1x}`}
-      {...lazyProps}
-    />
-  );
+  return <img alt={attachment.alt} title={attachment.title} className={props.className} {...lazyProps} />;
 };

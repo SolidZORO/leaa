@@ -29,6 +29,19 @@ module.exports = withDotenv(
         modifyVars: antdVariables,
       },
       webpack: config => {
+        // const originalEntry = config.entry;
+        //
+        // config.entry = async () => {
+        //   const entries = await originalEntry();
+        //   const polyfills = './configs/next-polyfills.config.js';
+        //
+        //   if (entries['main.js'] && !entries['main.js'].includes(polyfills)) {
+        //     entries['main.js'].unshift(polyfills);
+        //   }
+        //
+        //   return entries;
+        // };
+
         config.plugins.push(
           new FilterWarningsPlugin({
             // ignore ANTD chunk styles [mini-css-extract-plugin] warning
@@ -38,6 +51,7 @@ module.exports = withDotenv(
 
         // comstom antd icon
         config.resolve.alias['@ant-design/icons/lib/dist$'] = path.resolve(__dirname, './libs/antd-icon.lib');
+        config.resolve.alias['swiper$'] = 'swiper/dist/js/swiper.js';
 
         return config;
       },

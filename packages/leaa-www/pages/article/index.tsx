@@ -12,6 +12,6 @@ export default () => (
       <a>- ARTICLE -</a>
     </Link>
     <br />
-    <h1>BLOG</h1>
+    <h1>ARTICLE</h1>
   </>
 );

@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "@apollo/react-hooks": "0.1.0-beta.10",
+    "@babel/polyfill": "^7.4.4",
     "antd": "^3.20.5",
     "apollo-cache-inmemory": "^1.6.2",
     "apollo-client": "^2.6.3",
@@ -38,6 +39,7 @@
     "axios": "^0.19.0",
     "classnames": "^2.2.6",
     "cookie": "^0.4.0",
+    "eruda": "^1.5.7",
     "graphql": "^14.4.2",
     "graphql-tag": "^2.10.1",
     "history": "^4.7.2",
@@ -55,9 +57,13 @@
     "react-headroom": "^2.2.8",
     "react-id-swiper": "^2.3.1",
     "swiper": "^4.5.0",
-    "typescript": "3.5.3"
+    "typescript": "3.5.3",
+    "vconsole": "^3.3.2"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-decorators": "^7.4.4",
+    "@babel/plugin-proposal-object-rest-spread": "^7.5.5",
+    "@babel/plugin-transform-destructuring": "^7.5.0",
     "@types/classnames": "2.2.9",
     "@types/cookie": "^0.3.3",
     "@types/history": "^4.7.2",

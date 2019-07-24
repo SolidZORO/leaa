@@ -14,6 +14,11 @@ class CustomApp extends App<IAppProps> {
     super.componentDidCatch(error, errorInfo);
   }
 
+  componentDidMount() {
+    const eruda = require('eruda');
+    eruda.init();
+  }
+
   render() {
     return (
       <ApolloProvider client={this.props.apolloClient}>
