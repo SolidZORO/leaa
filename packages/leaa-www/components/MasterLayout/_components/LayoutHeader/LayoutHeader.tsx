@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import cx from 'classnames';
 import Headroom from 'react-headroom';
-import { Button, Icon, Drawer } from 'antd';
+import { Button, Drawer } from 'antd';
 
 import { __MENU_MOCK__ } from '@leaa/www/__mock__';
 
@@ -50,7 +50,7 @@ export const LayoutHeader = (props: IProps) => {
 
   return (
     <div className={style['full-layout-header']}>
-      <Headroom>
+      <Headroom className={style['full-headroom']}>
         <div className={cx('g-full-container', style['full-container'])}>
           <div className={style['logo-image']}>
             <Link href="/">

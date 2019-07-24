@@ -19,7 +19,7 @@ const outputHtmlOption = {
   title: `${process.env.NAME}${webpackConst.IS_SERVER || webpackConst.__DEV__ ? ' - DEV' : ''}`,
   filename: `${webpackConst.BUILD_PUBLIC_DIR}/index.html`,
   template: `${webpackConst.VIEWS_DIR}/index.ejs`,
-  favicon: `${webpackConst.SRC_DIR}/assets/images/favicon/favicon.ico`,
+  favicon: `${webpackConst.SRC_DIR}/assets/favicons/favicon.ico`,
   inject: true,
   hash: true,
   minify: {

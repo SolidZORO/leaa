@@ -25,7 +25,7 @@
     "@ant-design/colors" "^3.1.0"
     babel-runtime "^6.26.0"
 
-"@ant-design/icons@^2.1.1", "@ant-design/icons@~2.1.1":
+"@ant-design/icons@~2.1.1":
   version "2.1.1"
   resolved "https://registry.npm.taobao.org/@ant-design/icons/download/@ant-design/icons-2.1.1.tgz#7b9c08dffd4f5d41db667d9dbe5e0107d0bd9a4a"
   integrity sha1-e5wI3/1PXUHbZn2dvl4BB9C9mko=
@@ -1919,10 +1919,17 @@
   resolved "https://registry.npm.taobao.org/@types/graphql/download/@types/graphql-14.2.2.tgz#10f197e6f8559c11b16d630c5e9c10c3c8e61c5e"
   integrity sha1-EPGX5vhVnBGxbWMMXpwQw8jmHF4=
 
-"@types/hapi__joi@*", "@types/hapi__joi@^15.0.2":
+"@types/hapi__joi@*":
   version "15.0.2"
   resolved "https://registry.npm.taobao.org/@types/hapi__joi/download/@types/hapi__joi-15.0.2.tgz#94f37e9afab4db6a03f3d9e80dc939eb1f7b9a4f"
   integrity sha1-lPN+mvq022oD89noDck56x97mk8=
+  dependencies:
+    "@types/hapi__joi" "*"
+
+"@types/hapi__joi@^15.0.3":
+  version "15.0.3"
+  resolved "https://registry.npm.taobao.org/@types/hapi__joi/download/@types/hapi__joi-15.0.3.tgz#eeeca99e3829636975bf39532d6e8279409c78f2"
+  integrity sha1-7uypnjgpY2l1vzlTLW6CeUCcePI=
   dependencies:
     "@types/hapi__joi" "*"
 
@@ -1987,6 +1994,11 @@
   version "14.3.3"
   resolved "https://registry.npm.taobao.org/@types/joi/download/@types/joi-14.3.3.tgz#f251aa8150fc0b6a7ce9feab21802a28473de335"
   integrity sha1-8lGqgVD8C2p86f6rIYAqKEc94zU=
+
+"@types/json-schema@^7.0.3":
+  version "7.0.3"
+  resolved "https://registry.npm.taobao.org/@types/json-schema/download/@types/json-schema-7.0.3.tgz#bdfd69d61e464dcc81b25159c270d75a73c1a636"
+  integrity sha1-vf1p1h5GTcyBslFZwnDXWnPBpjY=
 
 "@types/json5@^0.0.29":
   version "0.0.29"
@@ -2112,10 +2124,10 @@
   resolved "https://registry.npm.taobao.org/@types/range-parser/download/@types/range-parser-1.2.3.tgz#7ee330ba7caafb98090bece86a5ee44115904c2c"
   integrity sha1-fuMwunyq+5gJC+zoal7kQRWQTCw=
 
-"@types/react-dom@^16.8.4":
-  version "16.8.4"
-  resolved "https://registry.npm.taobao.org/@types/react-dom/download/@types/react-dom-16.8.4.tgz#7fb7ba368857c7aa0f4e4511c4710ca2c5a12a88"
-  integrity sha1-f7e6NohXx6oPTkURxHEMosWhKog=
+"@types/react-dom@^16.8.5":
+  version "16.8.5"
+  resolved "https://registry.npm.taobao.org/@types/react-dom/download/@types/react-dom-16.8.5.tgz#3e3f4d99199391a7fb40aa3a155c8dd99b899cbd"
+  integrity sha1-Pj9NmRmTkaf7QKo6FVyN2ZuJnL0=
   dependencies:
     "@types/react" "*"
 
@@ -2263,12 +2275,12 @@
   resolved "https://registry.npm.taobao.org/@types/zen-observable/download/@types/zen-observable-0.8.0.tgz#8b63ab7f1aa5321248aad5ac890a485656dcea4d"
   integrity sha1-i2OrfxqlMhJIqtWsiQpIVlbc6k0=
 
-"@typescript-eslint/eslint-plugin@1.12.0":
-  version "1.12.0"
-  resolved "https://registry.npm.taobao.org/@typescript-eslint/eslint-plugin/download/@typescript-eslint/eslint-plugin-1.12.0.tgz#96b4e08b5f998a198b8414508b1a289f9e8c549a"
-  integrity sha1-lrTgi1+ZihmLhBRQixoon56MVJo=
+"@typescript-eslint/eslint-plugin@1.13.0":
+  version "1.13.0"
+  resolved "https://registry.npm.taobao.org/@typescript-eslint/eslint-plugin/download/@typescript-eslint/eslint-plugin-1.13.0.tgz#22fed9b16ddfeb402fd7bcde56307820f6ebc49f"
+  integrity sha1-Iv7ZsW3f60Av17zeVjB4IPbrxJ8=
   dependencies:
-    "@typescript-eslint/experimental-utils" "1.12.0"
+    "@typescript-eslint/experimental-utils" "1.13.0"
     eslint-utils "^1.3.1"
     functional-red-black-tree "^1.0.1"
     regexpp "^2.0.1"
@@ -2282,7 +2294,26 @@
     "@typescript-eslint/typescript-estree" "1.12.0"
     eslint-scope "^4.0.0"
 
-"@typescript-eslint/parser@1.12.0", "@typescript-eslint/parser@^1.11.0":
+"@typescript-eslint/experimental-utils@1.13.0":
+  version "1.13.0"
+  resolved "https://registry.npm.taobao.org/@typescript-eslint/experimental-utils/download/@typescript-eslint/experimental-utils-1.13.0.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40typescript-eslint%2Fexperimental-utils%2Fdownload%2F%40typescript-eslint%2Fexperimental-utils-1.13.0.tgz#b08c60d780c0067de2fb44b04b432f540138301e"
+  integrity sha1-sIxg14DABn3i+0SwS0MvVAE4MB4=
+  dependencies:
+    "@types/json-schema" "^7.0.3"
+    "@typescript-eslint/typescript-estree" "1.13.0"
+    eslint-scope "^4.0.0"
+
+"@typescript-eslint/parser@1.13.0":
+  version "1.13.0"
+  resolved "https://registry.npm.taobao.org/@typescript-eslint/parser/download/@typescript-eslint/parser-1.13.0.tgz#61ac7811ea52791c47dc9fd4dd4a184fae9ac355"
+  integrity sha1-Yax4EepSeRxH3J/U3UoYT66aw1U=
+  dependencies:
+    "@types/eslint-visitor-keys" "^1.0.0"
+    "@typescript-eslint/experimental-utils" "1.13.0"
+    "@typescript-eslint/typescript-estree" "1.13.0"
+    eslint-visitor-keys "^1.0.0"
+
+"@typescript-eslint/parser@^1.11.0":
   version "1.12.0"
   resolved "https://registry.npm.taobao.org/@typescript-eslint/parser/download/@typescript-eslint/parser-1.12.0.tgz#9965895ec4745578185965d63f21510f93a3f35a"
   integrity sha1-mWWJXsR0VXgYWWXWPyFRD5Oj81o=
@@ -2296,6 +2327,14 @@
   version "1.12.0"
   resolved "https://registry.npm.taobao.org/@typescript-eslint/typescript-estree/download/@typescript-eslint/typescript-estree-1.12.0.tgz#d8dd0a7cffb5e3c0c3e98714042d83e316dfc9a9"
   integrity sha1-2N0KfP+148DD6YcUBC2D4xbfyak=
+  dependencies:
+    lodash.unescape "4.0.1"
+    semver "5.5.0"
+
+"@typescript-eslint/typescript-estree@1.13.0":
+  version "1.13.0"
+  resolved "https://registry.npm.taobao.org/@typescript-eslint/typescript-estree/download/@typescript-eslint/typescript-estree-1.13.0.tgz#8140f17d0f60c03619798f1d628b8434913dc32e"
+  integrity sha1-gUDxfQ9gwDYZeY8dYouENJE9wy4=
   dependencies:
     lodash.unescape "4.0.1"
     semver "5.5.0"
@@ -5773,10 +5812,10 @@ eslint-plugin-react-hooks@^1.6.1:
   resolved "https://registry.npm.taobao.org/eslint-plugin-react-hooks/download/eslint-plugin-react-hooks-1.6.1.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Feslint-plugin-react-hooks%2Fdownload%2Feslint-plugin-react-hooks-1.6.1.tgz#3c66a5515ea3e0a221ffc5d4e75c971c217b1a4c"
   integrity sha1-PGalUV6j4KIh/8XU51yXHCF7Gkw=
 
-eslint-plugin-react@^7.14.2:
-  version "7.14.2"
-  resolved "https://registry.npm.taobao.org/eslint-plugin-react/download/eslint-plugin-react-7.14.2.tgz#94c193cc77a899ac0ecbb2766fbef88685b7ecc1"
-  integrity sha1-lMGTzHeomawOy7J2b774hoW37ME=
+eslint-plugin-react@^7.14.3:
+  version "7.14.3"
+  resolved "https://registry.npm.taobao.org/eslint-plugin-react/download/eslint-plugin-react-7.14.3.tgz#911030dd7e98ba49e1b2208599571846a66bdf13"
+  integrity sha1-kRAw3X6YuknhsiCFmVcYRqZr3xM=
   dependencies:
     array-includes "^3.0.3"
     doctrine "^2.1.0"
@@ -11378,10 +11417,10 @@ pretty-format@^24.8.0:
     ansi-styles "^3.2.0"
     react-is "^16.8.4"
 
-prismjs@^1.16.0:
-  version "1.16.0"
-  resolved "https://registry.npm.taobao.org/prismjs/download/prismjs-1.16.0.tgz#406eb2c8aacb0f5f0f1167930cb83835d10a4308"
-  integrity sha1-QG6yyKrLD18PEWeTDLg4NdEKQwg=
+prismjs@^1.17.1:
+  version "1.17.1"
+  resolved "https://registry.npm.taobao.org/prismjs/download/prismjs-1.17.1.tgz#e669fcbd4cdd873c35102881c33b14d0d68519be"
+  integrity sha1-5mn8vUzdhzw1ECiBwzsU0NaFGb4=
   optionalDependencies:
     clipboard "^2.0.0"
 
@@ -12144,10 +12183,10 @@ react-dom@^16.8.6:
     prop-types "^15.6.2"
     scheduler "^0.13.6"
 
-react-dropzone@^10.1.5:
-  version "10.1.5"
-  resolved "https://registry.npm.taobao.org/react-dropzone/download/react-dropzone-10.1.5.tgz#5f2817ab924b270010c7034fe01f49b6240b9c91"
-  integrity sha1-XygXq5JLJwAQxwNP4B9JtiQLnJE=
+react-dropzone@^10.1.6:
+  version "10.1.6"
+  resolved "https://registry.npm.taobao.org/react-dropzone/download/react-dropzone-10.1.6.tgz#724cd9018d045689680579ab6874d54e05f5affa"
+  integrity sha1-ckzZAY0EVoloBXmraHTVTgX1r/o=
   dependencies:
     attr-accept "^1.1.3"
     file-selector "^0.1.11"
@@ -14975,10 +15014,10 @@ webpack@4.35.3:
     watchpack "^1.5.0"
     webpack-sources "^1.3.0"
 
-webpack@^4.36.1:
-  version "4.36.1"
-  resolved "https://registry.npm.taobao.org/webpack/download/webpack-4.36.1.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fwebpack%2Fdownload%2Fwebpack-4.36.1.tgz#f546fda7a403a76faeaaa7196c50d12370ed18a9"
-  integrity sha1-9Ub9p6QDp2+uqqcZbFDRI3DtGKk=
+webpack@^4.37.0:
+  version "4.37.0"
+  resolved "https://registry.npm.taobao.org/webpack/download/webpack-4.37.0.tgz#3508ef10f7996612c2be6026076d89760f776f54"
+  integrity sha1-NQjvEPeZZhLCvmAmB22Jdg93b1Q=
   dependencies:
     "@webassemblyjs/ast" "1.8.5"
     "@webassemblyjs/helper-module-context" "1.8.5"

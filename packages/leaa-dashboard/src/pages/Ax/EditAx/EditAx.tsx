@@ -150,7 +150,7 @@ export default (props: IPage) => {
         <Col xs={12}>
           <AttachmentBox
             disableMessage
-            ref={getBannerMbRef}
+            ref={getGalleryMbRef}
             attachmentParams={{ type: 'image', moduleId: Number(id), moduleName: 'ax', moduleType: 'gallery_mb' }}
           />
         </Col>
@@ -158,7 +158,7 @@ export default (props: IPage) => {
         <Col xs={12}>
           <AttachmentBox
             disableMessage
-            ref={getBannerPcRef}
+            ref={getGalleryPcRef}
             attachmentParams={{ type: 'image', moduleId: Number(id), moduleName: 'ax', moduleType: 'gallery_pc' }}
           />
         </Col>

@@ -20,7 +20,7 @@
     position: relative;
     width: 100%;
     margin: 0 auto;
-    padding: 0 1rem;
+    padding: 0 @page-card-padding-x;
 
     //@media (min-width: @screen-sm) {
     //  width: @screen-md;
@@ -33,10 +33,7 @@
     //}
 
     @media (min-width: @screen-md) {
-      //width: 1000px;
-      //padding: 0 1rem;
-      max-width: 1024px;
-      //background: #d0ffa4;
+      max-width: 1032px; // fit is 1000px (1000 + 16 * 2 = 1032)
     }
 
     //@media (min-width: @screen-xl) {

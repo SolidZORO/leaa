@@ -43,6 +43,9 @@ export const GET_USER_BY_TOKEN = gql`
     userByToken(token: $token) {
       id
       name
+      email
+      authToken
+      authExpiresIn
       flatePermissions
     }
   }

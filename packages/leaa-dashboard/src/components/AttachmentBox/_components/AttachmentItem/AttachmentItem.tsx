@@ -31,6 +31,7 @@ interface IProps {
   onStoponMoveAttachmentCallback: (dragging: boolean) => void;
   onChangeAttachmentCallback: (attachment: Attachment) => void;
   onDeleteAttachmentCallback?: (uuid: string) => void;
+  onChangeStatusCallback?: (attachment: Attachment) => void;
 }
 
 interface IAttachmentInstance {
@@ -65,6 +66,10 @@ const AttachmentItemInner = forwardRef((props: IProps, ref: React.Ref<any>) => {
       ...attachment,
       status: Number(v),
     });
+
+    if (props.onChangeStatusCallback) {
+      props.onChangeStatusCallback(attachment);
+    }
   };
 
   if (props.onChangeAttachmentCallback) {

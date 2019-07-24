@@ -1,3 +1,4 @@
+const path = require('path');
 const webpackConst = require('./_webpack_const');
 
 // provide
@@ -16,6 +17,7 @@ const resolve = {
     // '@assets': `${webpackConst.SRC_DIR}/assets`,
     // '@': webpackConst.SRC_DIR,
     // '@ant-design/icons/lib/dist$': `${webpackConst.SRC_DIR}/assets/fonts/font_antd/@ant-design/icons/lib/dist`,
+    '@ant-design/icons/lib/dist$': `${webpackConst.SRC_DIR}/libs/antd-icon.lib`,
   },
 };
 

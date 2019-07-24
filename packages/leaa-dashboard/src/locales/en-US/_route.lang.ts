@@ -8,6 +8,7 @@ const permission = 'Permission';
 const category = 'Category';
 const article = 'Article';
 const ax = 'Ad';
+const attachment = 'Attachment';
 
 export default {
   home,
@@ -41,4 +42,8 @@ export default {
   ax,
   createAx: `${_lang.create}${ax}`,
   editAx: `${_lang.edit}${ax}`,
+  //
+  attachment,
+  createAttachment: `${_lang.create}${attachment}`,
+  editAttachment: `${_lang.edit}${attachment}`,
 };

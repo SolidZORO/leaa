@@ -12,7 +12,7 @@ import {
   AxAttachmentsObject,
 } from '@leaa/common/dtos/ax';
 import { BaseService } from '@leaa/api/modules/base/base.service';
-import { formatUtil, loggerUtil } from '@leaa/api/utils';
+import { formatUtil, loggerUtil, permissionUtil } from '@leaa/api/utils';
 import { AttachmentService } from '@leaa/api/modules/attachment/attachment.service';
 
 const CONSTRUCTOR_NAME = 'AxService';
@@ -83,8 +83,8 @@ export class AxService extends BaseService<Ax, AxsArgs, AxsWithPaginationObject,
       });
     }
 
-    if (user && user.flatePermissions && !user.flatePermissions.includes('attachment.list')) {
-      qb.where('status = :status', { status: 1 });
+    if (!user || (user && !permissionUtil.hasPermission(user, 'attachment.list'))) {
+      qb.andWhere('status = :status', { status: 1 });
     }
 
     const [items, total] = await qb.getManyAndCount();
@@ -104,10 +104,10 @@ export class AxService extends BaseService<Ax, AxsArgs, AxsWithPaginationObject,
       nextArgs = args;
     }
 
-    let whereQuery;
+    const whereQuery: { id: number; status?: number } = { id };
 
-    if (user && user.flatePermissions && !user.flatePermissions.includes('attachment.list')) {
-      whereQuery = { id, status: 1 };
+    if (!user || (user && !permissionUtil.hasPermission(user, 'attachment.list'))) {
+      whereQuery.status = 1;
     }
 
     return this.axRepository.findOne({

@@ -8,6 +8,7 @@ const permission = '权限';
 const category = '分类';
 const article = '文章';
 const ax = '广告';
+const attachment = '附件';
 
 export default {
   home,
@@ -41,4 +42,8 @@ export default {
   ax,
   createAx: `${_lang.create}${ax}`,
   editAx: `${_lang.edit}${ax}`,
+  //
+  attachment,
+  createAttachment: `${_lang.create}${attachment}`,
+  editAttachment: `${_lang.edit}${attachment}`,
 };

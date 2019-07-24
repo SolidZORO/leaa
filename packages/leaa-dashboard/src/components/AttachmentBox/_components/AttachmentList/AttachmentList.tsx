@@ -74,6 +74,14 @@ export const AttachmentList = forwardRef((props: IProps, ref: React.Ref<any>) =>
     }
   };
 
+  const onChangeStatus = async (attachment: any) => {
+    await onChangeAttachment(attachment);
+
+    if (attachments && attachments.length > 0 && props.onChangeAttachmentsCallback) {
+      await props.onChangeAttachmentsCallback(attachments);
+    }
+  };
+
   const isEmpty = attachments && attachments.length === 0;
 
   return (
@@ -90,6 +98,7 @@ export const AttachmentList = forwardRef((props: IProps, ref: React.Ref<any>) =>
                 onStoponMoveAttachmentCallback={onStopMoveAttachment}
                 onChangeAttachmentCallback={onChangeAttachment}
                 onDeleteAttachmentCallback={props.onDeleteAttachmentCallback}
+                onChangeStatusCallback={onChangeStatus}
               />
             ))
           ) : (

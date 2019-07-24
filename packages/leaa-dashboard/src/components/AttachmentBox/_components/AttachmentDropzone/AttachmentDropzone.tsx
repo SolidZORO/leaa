@@ -2,6 +2,7 @@ import _ from 'lodash';
 import React, { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { authUtil } from '@leaa/dashboard/utils';
+import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import { Icon, message } from 'antd';
 
@@ -16,6 +17,8 @@ interface IProps {
 }
 
 export const AttachmentDropzone = (props: IProps) => {
+  const { t } = useTranslation();
+
   const onDrop = useCallback(acceptedFiles => {
     const token = authUtil.getAuthToken();
 
@@ -29,7 +32,7 @@ export const AttachmentDropzone = (props: IProps) => {
           headers: { Authorization: token ? `Bearer ${token}` : '' },
         })
         .then(() => {
-          message.success('Upload Success');
+          message.success(t('_lang:updatedSuccessfully'));
 
           if (props.onUploadedCallback) {
             props.onUploadedCallback(new Date().getMilliseconds());

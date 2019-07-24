@@ -1,7 +1,7 @@
 import React from 'react';
 import Head from 'next/head';
 
-import { ImageSwiper } from '@leaa/www/components/ImageSwiper';
+import { SwiperImage } from '@leaa/www/components/SwiperImage';
 import { useQuery } from '@apollo/react-hooks';
 import { Ax } from '@leaa/common/entrys';
 import { AxArgs } from '@leaa/common/dtos/ax';
@@ -15,12 +15,13 @@ export default () => {
   });
 
   const bannerMbList =
-    (getAxBySlugQuery &&
-      getAxBySlugQuery.data &&
-      getAxBySlugQuery.data.axBySlug &&
-      getAxBySlugQuery.data.axBySlug.attachments &&
-      getAxBySlugQuery.data.axBySlug.attachments.bannerMbList) ||
-    [];
+    getAxBySlugQuery &&
+    getAxBySlugQuery.data &&
+    getAxBySlugQuery.data.axBySlug &&
+    getAxBySlugQuery.data.axBySlug.attachments &&
+    getAxBySlugQuery.data.axBySlug.attachments.bannerMbList;
+
+  console.log(bannerMbList);
 
   return (
     <>
@@ -30,7 +31,7 @@ export default () => {
         <title>Here Is Ram</title>
       </Head>
 
-      <ImageSwiper attachmentList={bannerMbList} />
+      {bannerMbList && <SwiperImage attachmentList={bannerMbList} centerMode height={bannerMbList[0].height} />}
     </>
   );
 };

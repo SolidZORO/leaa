@@ -1,6 +1,6 @@
 import { Args, Query, Mutation, Resolver, ResolveProperty, Parent } from '@nestjs/graphql';
 
-import { Attachment, Ax } from '@leaa/common/entrys';
+import { Attachment, Ax, User } from '@leaa/common/entrys';
 import {
   AttachmentsArgs,
   AttachmentsWithPaginationObject,
@@ -11,6 +11,7 @@ import {
   AttachmentsObject,
 } from '@leaa/common/dtos/attachment';
 import { AttachmentService } from './attachment.service';
+import { UserDecorator } from '@leaa/api/decorators';
 
 @Resolver(() => Attachment)
 export class AttachmentResolver {
@@ -22,16 +23,20 @@ export class AttachmentResolver {
   }
 
   @Query(() => AttachmentsWithPaginationObject)
-  async attachments(@Args() args: AttachmentsArgs): Promise<AttachmentsWithPaginationObject | undefined> {
-    return this.attachmentService.attachments(args);
+  async attachments(
+    @Args() args: AttachmentsArgs,
+    @UserDecorator() user?: User,
+  ): Promise<AttachmentsWithPaginationObject | undefined> {
+    return this.attachmentService.attachments(args, user);
   }
 
   @Query(() => Attachment)
   async attachment(
     @Args({ name: 'uuid', type: () => String }) uuid: string,
     @Args() args?: AttachmentArgs,
+    @UserDecorator() user?: User,
   ): Promise<Attachment | undefined> {
-    return this.attachmentService.attachment(uuid, args);
+    return this.attachmentService.attachment(uuid, args, user);
   }
 
   @Mutation(() => Attachment)

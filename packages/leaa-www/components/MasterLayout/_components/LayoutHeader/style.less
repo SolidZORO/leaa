@@ -3,44 +3,58 @@
 .full-layout-header {
   position: relative;
   background: #fff;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.02);
   line-height: 1;
   height: auto;
   z-index: 999;
+}
 
+.full-headroom {
   :global {
     .headroom-wrapper {
-      background-color: #fff;
+      //background-color: #fff;
     }
 
     .headroom--scrolled {
+      z-index: 999;
       background-color: #fffd;
     }
   }
 }
 
 .full-container {
-  padding: 10px 1rem !important;
-  background-color: transparent;
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 0 1rem !important;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.02);
 }
 
-.logo-image {
-  @width--mobile: 32px;
+@logo-width--mb: 32px;
+@logo-width--pc: 40px;
 
-  position: absolute;
-  z-index: 1;
-  top: 1px;
-  display: block;
-  width: @width--mobile;
-  padding: 10px 0;
+.logo-image {
+  position: relative;
   left: 50%;
-  margin-left: -(@width--mobile / 2);
+  margin: -(@logo-width--mb / 2);
+  z-index: 1;
 
   @media (min-width: @screen-md) {
-    left: 1rem;
-    margin-left: 0;
-    top: 5px;
-    width: 40px;
+    left: initial;
+    margin: 0;
+  }
+
+  img {
+    display: inline-block;
+    width: @logo-width--mb;
+
+    @media (min-width: @screen-md) {
+      width: @logo-width--pc;
+    }
+  }
+
+  a {
+    display: inline-block;
+    padding: 5px 0;
   }
 }
 
@@ -52,7 +66,7 @@ ul.menu-list {
   list-style: inside none;
 
   @media (min-width: @screen-md) {
-    margin: 0 0 0 20px;
+    margin-left: 30px;
   }
 }
 
@@ -95,7 +109,6 @@ li.menu-item {
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    padding-left: 40px;
   }
 }
 
@@ -107,12 +120,13 @@ li.menu-item {
 //
 // MB
 
+@menu-wrapper--mb-padding: 7px;
 .menu-wrapper--mb {
   display: none;
 
   @media (max-width: @screen-md) {
     display: block;
-    height: 34px;
+    height: @logo-width--mb + (@menu-wrapper--mb-padding * 2);
     width: 100%;
   }
 }
@@ -121,7 +135,7 @@ li.menu-item {
   display: block;
   position: absolute;
   right: 0;
-  top: 0;
+  top: @menu-wrapper--mb-padding;
 
   .menu-mb-button {
     color: #444;

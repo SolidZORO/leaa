@@ -13,11 +13,9 @@ import { IPage } from '@leaa/dashboard/interfaces';
 import { AttachmentsWithPaginationObject, AttachmentsArgs } from '@leaa/common/dtos/attachment';
 import { WYSIWYGEditor } from '@leaa/dashboard/components/WYSIWYGEditor/WYSIWYGEditor';
 import { AttachmentBox } from '@leaa/dashboard/components/AttachmentBox';
-import { langUtil } from '@leaa/dashboard/utils';
 import { PageCard } from '@leaa/dashboard/components/PageCard';
 import { ErrorCard } from '@leaa/dashboard/components/ErrorCard';
 import { SubmitBar } from '@leaa/dashboard/components/SubmitBar/SubmitBar';
-import { FormCard } from '@leaa/dashboard/components/FormCard';
 
 import { ArticleInfoForm } from '../_components/ArticleInfoForm/ArticleInfoForm';
 import { ArticleExtForm } from '../_components/ArticleExtForm/ArticleExtForm';
@@ -25,7 +23,7 @@ import { ArticleExtForm } from '../_components/ArticleExtForm/ArticleExtForm';
 import style from './style.less';
 
 export default (props: IPage) => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const { id } = props.match.params as { id: string };
 
   const attachmentBoxRef = useRef<IAttachmentBoxRef>(null);

@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import { GET_USER_BY_TOKEN } from '@leaa/common/graphqls';
@@ -14,7 +15,7 @@ export const RefreshFlatePermissions = (props: IProps) => {
       variables: { token: authUtil.getAuthToken() || '' },
       onCompleted: data => {
         if (data && data.userByToken && data.userByToken.flatePermissions) {
-          authUtil.setAuthInfo({ name: data.userByToken.name, flatePermissions: data.userByToken.flatePermissions });
+          authUtil.setAuthInfo(_.pick(data.userByToken, ['id', 'name', 'email', 'flatePermissions']));
         }
       },
     });

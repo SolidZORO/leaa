@@ -3,11 +3,11 @@ import _ from 'lodash';
 import path from 'path';
 import Jimp from 'jimp';
 import { Express, Request } from 'express';
-import { Repository, FindOneOptions, Like, In } from 'typeorm';
+import { Repository, FindOneOptions, In, getRepository, SelectQueryBuilder } from 'typeorm';
 import ImageSize from 'image-size';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Attachment } from '@leaa/common/entrys';
+import { Attachment, User } from '@leaa/common/entrys';
 import {
   CreateAttachmentInput,
   AttachmentsArgs,
@@ -19,7 +19,7 @@ import {
   AttachmentsObject,
 } from '@leaa/common/dtos/attachment';
 import { ConfigService } from '@leaa/api/modules/config/config.service';
-import { formatUtil, loggerUtil, pathUtil } from '@leaa/api/utils';
+import { formatUtil, loggerUtil, pathUtil, permissionUtil } from '@leaa/api/utils';
 import { IAttachmentType } from '@leaa/common/interfaces';
 import { MulterService } from './multer.service';
 
@@ -62,18 +62,8 @@ export class AttachmentService {
       });
   }
 
-  async attachments(args: AttachmentsArgs): Promise<AttachmentsWithPaginationObject> {
+  async attachments(args: AttachmentsArgs, user?: User): Promise<AttachmentsWithPaginationObject> {
     const nextArgs = formatUtil.formatArgs(args);
-
-    const queryWhere: any[] = [];
-
-    let qLike;
-
-    if (nextArgs.q) {
-      qLike = Like(`%${nextArgs.q}%`);
-
-      queryWhere.push({ title: qLike });
-    }
 
     const moduleFilter: {
       moduleName?: string;
@@ -93,10 +83,23 @@ export class AttachmentService {
       moduleFilter.moduleType = nextArgs.moduleType;
     }
 
-    queryWhere.push(moduleFilter);
-    nextArgs.where = queryWhere;
+    const qb = getRepository(Attachment).createQueryBuilder();
+    qb.select().orderBy(nextArgs.orderBy || 'createdAt', nextArgs.orderSort);
+    qb.where(moduleFilter);
 
-    const [items, total] = await this.attachmentRepository.findAndCount(nextArgs);
+    if (nextArgs.q) {
+      const aliasName = new SelectQueryBuilder(qb).alias;
+
+      ['title', 'slug'].forEach(q => {
+        qb.andWhere(`${aliasName}.${q} LIKE :${q}`, { [q]: `%${nextArgs.q}%` });
+      });
+    }
+
+    if (!user || (user && !permissionUtil.hasPermission(user, 'attachment.list'))) {
+      qb.andWhere('status = :status', { status: 1 });
+    }
+
+    const [items, total] = await qb.getManyAndCount();
 
     return {
       items,
@@ -106,14 +109,27 @@ export class AttachmentService {
     };
   }
 
-  async attachment(uuid: string, args?: AttachmentArgs & FindOneOptions<Attachment>): Promise<Attachment | undefined> {
+  async attachment(
+    uuid: string,
+    args?: AttachmentArgs & FindOneOptions<Attachment>,
+    user?: User,
+  ): Promise<Attachment | undefined> {
     let nextArgs: FindOneOptions<Attachment> = {};
 
     if (args) {
       nextArgs = args;
     }
 
-    return this.attachmentRepository.findOne({ uuid }, nextArgs);
+    const whereQuery: { uuid: string; status?: number } = { uuid };
+
+    if (!user || (user && !permissionUtil.hasPermission(user, 'attachment.list'))) {
+      whereQuery.status = 1;
+    }
+
+    return this.attachmentRepository.findOne({
+      ...nextArgs,
+      where: whereQuery,
+    });
   }
 
   async craeteAttachment(req: Request, body: CreateAttachmentInput, file: Express.Multer.File) {

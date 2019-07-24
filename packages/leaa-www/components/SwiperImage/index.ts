@@ -1,0 +1,1 @@
+export { SwiperImage } from './SwiperImage';
