@@ -31,6 +31,7 @@ module.exports = {
     node: true,
   },
   rules: {
+    'max-len': [2, 120],
     'no-console': 0,
     'no-var-requires': 0,
     'no-underscore-dangle': ['error', { allow: ['__DEV__', '_insertCss'] }],

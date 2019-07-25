@@ -1,5 +1,4 @@
 import { ArgsType } from 'type-graphql';
 
 @ArgsType()
-export class ItemArgs {
-}
+export class ItemArgs {}

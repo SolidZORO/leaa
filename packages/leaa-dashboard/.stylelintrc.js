@@ -64,8 +64,7 @@ module.exports = {
     'string-quotes': 'single',
 
     // https://github.com/hudochenkov/stylelint-order/blob/master/rules/order/README.md
-    'order/order': [
-    ],
+    'order/order': [],
 
     // https://github.com/hudochenkov/stylelint-order/blob/master/rules/properties-order/README.md
     'order/properties-order': [],
