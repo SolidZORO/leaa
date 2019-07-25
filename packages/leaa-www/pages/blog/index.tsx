@@ -13,7 +13,7 @@ export default withTranslation()(({ t }) => (
       <a>- ARTICLE -</a>
     </Link>
     <br />
-    <h1>ARTICLE</h1>
-    <h2> {t('common:h1')}</h2>
+    <h1>BLOG</h1>
+    <h2> {t('common:to-second-page')}</h2>
   </>
 ));

@@ -10,6 +10,8 @@ const publicRuntimeConfig = {
   API_HOST: process.env.API_HOST || 'http://localhost:5555',
   GRAPHQL_ENDPOINT: process.env.GRAPHQL_ENDPOINT || 'http://localhost:5555/graphql',
   UPLOAD_HOST: process.env.UPLOAD_HOST || 'http://localhost:5555/attachments',
+  //
+  localeSubpaths: typeof process.env.LOCALE_SUBPATHS === 'string' ? process.env.LOCALE_SUBPATHS : 'none',
 };
 
 const serverRuntimeConfig = {

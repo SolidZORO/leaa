@@ -8,6 +8,8 @@ export interface IDotEnvClient {
   API_HOST: string;
   GRAPHQL_ENDPOINT: string;
   UPLOAD_HOST: string;
+
+  LOCALE_SUBPATHS?: 'none' | 'foreign' | 'all';
 }
 
 export interface IDotEnvServer {

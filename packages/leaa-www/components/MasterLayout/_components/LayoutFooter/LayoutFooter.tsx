@@ -3,11 +3,13 @@ import { Row, Col } from 'antd';
 import Link from 'next/link';
 
 import { __MENU_MOCK__ } from '@leaa/www/__mock__';
+// import { SwitchLanguage } from '@leaa/common/components/SwitchLanguage';
 
 import style from './style.less';
 
 export const LayoutFooter = () => (
   <div className={style['full-layout-footer']}>
+    {/*<SwitchLanguage />*/}
     <div className="g-full-container">
       <Row gutter={16} type="flex" className={style['menu-row']}>
         {__MENU_MOCK__.footerMenu.map(m => (

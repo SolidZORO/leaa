@@ -6,8 +6,15 @@ import { IAppProps } from '@leaa/www/interfaces';
 import { withApolloClient } from '@leaa/www/libs';
 import { MasterLayout } from '@leaa/www/components/MasterLayout';
 import { ProgressLoading } from '@leaa/www/components/ProgressLoading';
+import NextI18NextInstance, { appWithTranslation } from '../i18n';
 
 class CustomApp extends App<IAppProps> {
+  // @ts-ignore
+  constructor(props) {
+    super(props);
+    if (NextI18NextInstance.i18n.language === undefined) NextI18NextInstance.i18n.changeLanguage('en');
+  }
+
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     console.log('CUSTOM ERROR HANDLING', error);
     // This is needed to render errors correctly in development / production
@@ -33,4 +40,4 @@ class CustomApp extends App<IAppProps> {
   }
 }
 
-export default withApolloClient(CustomApp);
+export default withApolloClient(appWithTranslation(CustomApp));
