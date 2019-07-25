@@ -1,13 +1,13 @@
 import React from 'react';
 import cx from 'classnames';
 import Head from 'next/head';
-
-import { SwiperImage } from '@leaa/www/components/SwiperImage';
 import { useQuery } from '@apollo/react-hooks';
+
 import { Ax } from '@leaa/common/entrys';
 import { AxArgs } from '@leaa/common/dtos/ax';
 import { GET_AX_BY_SLUG } from '@leaa/common/graphqls';
-import { ErrorCard } from '../../components/ErrorCard/ErrorCard';
+import { SwiperImage } from '@leaa/www/components/SwiperImage';
+import { ErrorCard } from '@leaa/www/components/ErrorCard/ErrorCard';
 
 import style from './style.less';
 

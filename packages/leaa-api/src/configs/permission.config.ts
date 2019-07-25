@@ -13,6 +13,21 @@ const checkPermission = (permissionSlug: string) => {
 // updateUser  --> user.update
 // deleteUser  --> user.delete
 
+export const notValidateUserQuerys = [
+  'IntrospectionQuery',
+  //
+  'login',
+  'register',
+  //
+  'ax',
+  'axs',
+  'axBySlug',
+  'articles',
+  'article',
+  'attachments',
+  'attachment',
+];
+
 export const permissions = shield(
   {
     Query: {
@@ -28,11 +43,12 @@ export const permissions = shield(
       categories: checkPermission('category.list'),
       category: checkPermission('category.item'),
       //
-      articles: checkPermission('article.list'),
-      article: checkPermission('article.item'),
+      articles: allow,
+      article: allow,
       //
       axs: allow,
       ax: allow,
+      axBySlug: allow,
       //
       attachments: allow,
       attachment: allow,

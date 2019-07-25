@@ -14,16 +14,16 @@ class CustomApp extends App<IAppProps> {
     super.componentDidCatch(error, errorInfo);
   }
 
-  componentDidMount() {
-    // eslint-disable-next-line global-require
-    const eruda = require('eruda');
-    eruda.init();
-  }
+  // componentDidMount() {
+  //   // eslint-disable-next-line global-require
+  //   const eruda = require('eruda');
+  //   eruda.init();
+  // }
 
   render() {
     return (
       <ApolloProvider client={this.props.apolloClient}>
-        <ProgressLoading showAfterMs={800} />
+        <ProgressLoading showAfterMs={200} />
 
         <MasterLayout {...this.props}>
           <this.props.Component {...this.props} />

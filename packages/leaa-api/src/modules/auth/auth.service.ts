@@ -1,5 +1,6 @@
-import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import bcryptjs from 'bcryptjs';
+import { Request } from 'express';
 import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { JwtService } from '@nestjs/jwt';
@@ -12,7 +13,7 @@ import { IJwtPayload } from '@leaa/common/interfaces';
 import { ConfigService } from '@leaa/api/modules/config/config.service';
 import { loggerUtil } from '@leaa/api/utils';
 import { UserService } from '@leaa/api/modules/user/user.service';
-import { Request } from 'express';
+import { notValidateUserQuerys } from '@leaa/api/configs/permission.config';
 
 const CONSTRUCTOR_NAME = 'AuthService';
 
@@ -48,7 +49,7 @@ export class AuthService {
   }
 
   public async validateUserByReq(req: Request): Promise<User | undefined | boolean> {
-    if (req.body && ['IntrospectionQuery', 'login', 'register'].some(item => req.body.query.includes(item))) {
+    if (req.body && notValidateUserQuerys.some(item => req.body.query.includes(item))) {
       return true;
     }
 
