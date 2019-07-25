@@ -2,37 +2,32 @@
 
 C'est la vie.
 
+### **MONOREPO-PACKAGES**
 
-### __MONOREPO-PACKAGES__
-
-
-- [x] _leaa-common
-- [x] leaa-api       / backend       (graphql + nest.js + docker-compose)
+- [x] \_leaa-common
+- [x] leaa-api / backend (graphql + nest.js + docker-compose)
   - [x] auth
   - [x] user
   - [x] role
   - [x] permission
-  - [ ] category (infinity level)
-  - [ ] article
-- [ ] leaa-dashboard / dashboard    (graphql + react.js + antd + mobx)
+  - [x] category (infinity level)
+  - [x] article
+- [x] leaa-dashboard / dashboard (graphql + react.js + antd + mobx)
   - [x] auth
-  - [ ] user
-  - [ ] role
-  - [ ] permission
-  - [ ] category (infinity level)
-  - [ ] article
-- [ ] leaa-www       / website      (graphql + next.js)
-- [ ] leaa-weapp     / wechat-weapp (graphql + taro.js + taro-ui)
+  - [x] user
+  - [x] role
+  - [x] permission
+  - [x] category (infinity level)
+  - [x] article
+- [ ] leaa-www / website (graphql + next.js)
+- [ ] leaa-weapp / wechat-weapp (graphql + taro.js + taro-ui)
 
-
-<br>
-<br>
-
-### __REVIEW__
+### **REVIEW**
 
 #### login
+
 ![login](./designs/ui/login.png)
 
-
 #### user edit
+
 ![user-edit](./designs/ui/user-edit.png)
