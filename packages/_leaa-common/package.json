@@ -10,6 +10,12 @@
     "npm": ">=6.4.0"
   },
   "scripts": {},
-  "dependencies": {},
+  "dependencies": {
+    "@leaa/common": "0.0.1",
+    "class-validator": "^0.9.1",
+    "graphql-tag": "^2.10.1",
+    "type-graphql": "^0.17.4",
+    "typeorm": "^0.2.18"
+  },
   "devDependencies": {}
 }

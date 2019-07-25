@@ -6,5 +6,5 @@ import { PaginationObject } from '@leaa/common/dtos/_common';
 @ObjectType()
 export class ArticlesWithPaginationObject extends PaginationObject {
   @Field(() => [Article])
-  readonly items: Article[] = [];
+  public readonly items: Article[] = [];
 }

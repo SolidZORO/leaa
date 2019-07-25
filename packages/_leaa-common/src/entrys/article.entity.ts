@@ -11,32 +11,32 @@ import { Category } from './category.entity';
 export class Article extends Base {
   @Column({ type: 'varchar', length: 32, unique: true })
   @Field()
-  title!: string;
+  public title!: string;
 
   @Column({ type: 'varchar', length: 32, unique: true, default: null })
   @Field(() => String, { nullable: true })
-  slug?: string;
+  public slug?: string;
 
   @Column({ type: 'int', nullable: true })
   @Field(() => Int, { nullable: true })
-  categoryId?: number;
+  public categoryId?: number;
 
   @Column({ type: 'int', nullable: true })
   @Field(() => Int, { nullable: true })
-  userId?: number;
+  public userId?: number;
 
   @Column({ type: 'text', nullable: true })
   @Field(() => String, { nullable: true })
-  description?: string;
+  public description?: string;
 
   @Column({ type: 'text', nullable: true })
   @Field(() => String, { nullable: true })
-  content?: string;
+  public content?: string;
 
   @Column({ type: 'tinyint', default: 0 })
   @Field(() => Int, { nullable: true })
-  status?: number;
+  public status?: number;
 
   @Field(() => Category, { nullable: true })
-  category?: Category;
+  public category?: Category;
 }

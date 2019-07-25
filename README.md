@@ -2,6 +2,8 @@
 
 C'est la vie.
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/4443217249ea4bbe8e057c691de4b0cd)](https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=SolidZORO/leaa&amp;utm_campaign=Badge_Grade)
+
 ### **MONOREPO-PACKAGES**
 
 - [x] \_leaa-common
