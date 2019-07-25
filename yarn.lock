@@ -2709,10 +2709,10 @@ ansi-styles@^3.2.0, ansi-styles@^3.2.1:
   dependencies:
     color-convert "^1.9.0"
 
-antd@^3.20.5:
-  version "3.20.5"
-  resolved "https://registry.npm.taobao.org/antd/download/antd-3.20.5.tgz#4456a5cc216d52e7d831e2a91cc37c18b18ee242"
-  integrity sha1-RFalzCFtUufYMeKpHMN8GLGO4kI=
+antd@^3.20.6:
+  version "3.20.6"
+  resolved "https://registry.npm.taobao.org/antd/download/antd-3.20.6.tgz#d42f7f444ca7a57deb80759722b653732a3b94da"
+  integrity sha1-1C9/REynpX3rgHWXIrZTcyo7lNo=
   dependencies:
     "@ant-design/create-react-context" "^0.2.4"
     "@ant-design/icons" "~2.1.1"
@@ -5136,6 +5136,17 @@ del@^4.1.1:
     pify "^4.0.1"
     rimraf "^2.6.3"
 
+del@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.npm.taobao.org/del/download/del-5.0.0.tgz?cache=0&sync_timestamp=1562093521173&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fdel%2Fdownload%2Fdel-5.0.0.tgz#4fa698b7a1ffb4e2ab3e8929ed699799654d6720"
+  integrity sha1-T6aYt6H/tOKrPokp7WmXmWVNZyA=
+  dependencies:
+    globby "^10.0.0"
+    is-path-cwd "^2.0.0"
+    is-path-in-cwd "^2.0.0"
+    p-map "^2.0.0"
+    rimraf "^2.6.3"
+
 delayed-stream@~1.0.0:
   version "1.0.0"
   resolved "https://registry.npm.taobao.org/delayed-stream/download/delayed-stream-1.0.0.tgz#df3ae199acadfb7d440aaae0b29e2272b24ec619"
@@ -6027,9 +6038,9 @@ execa@^1.0.0:
     signal-exit "^3.0.0"
     strip-eof "^1.0.0"
 
-execa@^2.0.1:
+execa@^2.0.3:
   version "2.0.3"
-  resolved "https://registry.npm.taobao.org/execa/download/execa-2.0.3.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fexeca%2Fdownload%2Fexeca-2.0.3.tgz#4b84301b33042cfb622771e886ed0b10e5634642"
+  resolved "https://registry.npm.taobao.org/execa/download/execa-2.0.3.tgz?cache=0&sync_timestamp=1562315784630&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fexeca%2Fdownload%2Fexeca-2.0.3.tgz#4b84301b33042cfb622771e886ed0b10e5634642"
   integrity sha1-S4QwGzMELPtiJ3Hohu0LEOVjRkI=
   dependencies:
     cross-spawn "^6.0.5"
@@ -6823,7 +6834,7 @@ globals@^11.1.0, globals@^11.7.0:
   resolved "https://registry.npm.taobao.org/globals/download/globals-11.12.0.tgz#ab8795338868a0babd8525758018c2a7eb95c42e"
   integrity sha1-q4eVM4hooLq9hSV1gBjCp+uVxC4=
 
-globby@^10.0.1:
+globby@^10.0.0, globby@^10.0.1:
   version "10.0.1"
   resolved "https://registry.npm.taobao.org/globby/download/globby-10.0.1.tgz?cache=0&sync_timestamp=1562335642755&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fglobby%2Fdownload%2Fglobby-10.0.1.tgz#4782c34cb75dd683351335c5829cc3420e606b22"
   integrity sha1-R4LDTLdd1oM1EzXFgpzDQg5gayI=
@@ -8869,18 +8880,18 @@ lightercollective@^0.3.0:
   resolved "https://registry.npm.taobao.org/lightercollective/download/lightercollective-0.3.0.tgz#1f07638642ec645d70bdb69ab2777676f35a28f0"
   integrity sha1-HwdjhkLsZF1wvbaasnd2dvNaKPA=
 
-lint-staged@9.2.0:
-  version "9.2.0"
-  resolved "https://registry.npm.taobao.org/lint-staged/download/lint-staged-9.2.0.tgz#155e5723dffdaa55d252c47bab05a2962c1e9781"
-  integrity sha1-FV5XI9/9qlXSUsR7qwWiliwel4E=
+lint-staged@9.2.1:
+  version "9.2.1"
+  resolved "https://registry.npm.taobao.org/lint-staged/download/lint-staged-9.2.1.tgz#57fc5947611604d5a32e478734a13f3e4687f646"
+  integrity sha1-V/xZR2EWBNWjLkeHNKE/PkaH9kY=
   dependencies:
     chalk "^2.4.2"
     commander "^2.20.0"
     cosmiconfig "^5.2.1"
     debug "^4.1.1"
     dedent "^0.7.0"
-    del "^4.1.1"
-    execa "^2.0.1"
+    del "^5.0.0"
+    execa "^2.0.3"
     listr "^0.14.3"
     log-symbols "^3.0.0"
     micromatch "^4.0.2"
@@ -9845,10 +9856,10 @@ neo-async@^2.5.0, neo-async@^2.6.0:
   resolved "https://registry.npm.taobao.org/neo-async/download/neo-async-2.6.1.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fneo-async%2Fdownload%2Fneo-async-2.6.1.tgz#ac27ada66167fa8849a6addd837f6b189ad2081c"
   integrity sha1-rCetpmFn+ohJpq3dg39rGJrSCBw=
 
-next-server@9.0.2:
-  version "9.0.2"
-  resolved "https://registry.npm.taobao.org/next-server/download/next-server-9.0.2.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fnext-server%2Fdownload%2Fnext-server-9.0.2.tgz#8e119734c2492fd20faa7e487989b7d376d67d70"
-  integrity sha1-jhGXNMJJL9IPqn5IeYm303bWfXA=
+next-server@9.0.3-canary.2:
+  version "9.0.3-canary.2"
+  resolved "https://registry.npm.taobao.org/next-server/download/next-server-9.0.3-canary.2.tgz#2127a125cdcf8572ad05ccd56e44850a05f4466c"
+  integrity sha1-ISehJc3PhXKtBczVbkSFCgX0Rmw=
   dependencies:
     amp-toolbox-optimizer "1.2.0-alpha.1"
     content-type "1.0.4"
@@ -9869,10 +9880,10 @@ next-tick@1, next-tick@^1.0.0:
   resolved "https://registry.npm.taobao.org/next-tick/download/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
   integrity sha1-yobR/ogoFpsBICCOPchCS524NCw=
 
-next@^9.0.1:
-  version "9.0.2"
-  resolved "https://registry.npm.taobao.org/next/download/next-9.0.2.tgz#4de9da7ca64d89dd1759ad2b5d9d23a9dc3ca63b"
-  integrity sha1-TenafKZNid0XWa0rXZ0jqdw8pjs=
+next@^9.0.3-canary.2:
+  version "9.0.3-canary.2"
+  resolved "https://registry.npm.taobao.org/next/download/next-9.0.3-canary.2.tgz#3fbc671bd29246fc8fc39be29589b835c10390ac"
+  integrity sha1-P7xnG9KSRvyPw5vilYm4NcEDkKw=
   dependencies:
     "@babel/core" "7.4.5"
     "@babel/plugin-proposal-class-properties" "7.4.4"
@@ -9900,7 +9911,7 @@ next@^9.0.1:
     launch-editor "2.2.1"
     loader-utils "1.2.3"
     mkdirp "0.5.1"
-    next-server "9.0.2"
+    next-server "9.0.3-canary.2"
     prop-types "15.7.2"
     prop-types-exact "1.2.0"
     react-error-overlay "5.1.6"

@@ -1,5 +1,4 @@
 import React from 'react';
-import style from '../../components/MasterLayout/_components/LayoutFooter/style.less';
 import Link from 'next/link';
 
 // export default () => <p>Blog</p>;
