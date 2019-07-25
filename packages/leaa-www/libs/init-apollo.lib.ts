@@ -22,8 +22,8 @@ function createApolloClient(initialState: NormalizedCacheObject) {
   });
 
   const authLink = new ApolloLink((operation, forward) => {
-    const token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTYyNzI5MDI5LCJleHAiOjE1NzgyODEwMjl9.qydCcxmv51sXIZGqBOrDboBg2d-79kwzSHjBB2O5TOk';
+    // prettier-ignore
+    const token = '';
 
     operation.setContext({
       headers: {

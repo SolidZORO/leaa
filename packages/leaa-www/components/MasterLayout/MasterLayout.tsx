@@ -1,7 +1,5 @@
 import React from 'react';
 import cx from 'classnames';
-import Router from 'next/router';
-import NProgress from 'nprogress';
 import { Layout } from 'antd';
 
 import { urlUtil } from '@leaa/www/utils';
@@ -53,6 +51,7 @@ export const MasterLayout = (props: IProps) => {
       {process.env.NODE_ENV === 'production' && (
         <style
           id="transition-without-ssr"
+          // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{ __html: ` *, *::before, *::after { transition: none!important; }` }}
         />
       )}

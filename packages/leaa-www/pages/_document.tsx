@@ -3,7 +3,7 @@ import Document, { Head, Main, NextScript } from 'next/document';
 import { Spin, Icon } from 'antd';
 
 // Antd Component Indicator Reset
-Spin.setDefaultIndicator(<Icon type="loading" spin={true} />);
+Spin.setDefaultIndicator(<Icon type="loading" spin />);
 
 export default class CustomDocument extends Document {
   render() {

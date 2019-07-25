@@ -1,6 +1,7 @@
 .cache
 .idea
 .vscode/*
+/typings
 
 /_documents
 /public

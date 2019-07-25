@@ -1,3 +1,5 @@
+/* eslint-disable no-underscore-dangle */
+
 const headerMenu = [
   // {
   //   title: 'Article',

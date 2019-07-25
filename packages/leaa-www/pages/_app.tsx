@@ -15,6 +15,7 @@ class CustomApp extends App<IAppProps> {
   }
 
   componentDidMount() {
+    // eslint-disable-next-line global-require
     const eruda = require('eruda');
     eruda.init();
   }

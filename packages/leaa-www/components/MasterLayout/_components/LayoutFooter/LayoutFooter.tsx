@@ -1,14 +1,12 @@
 import React from 'react';
-import { Layout, Row, Col } from 'antd';
+import { Row, Col } from 'antd';
 import Link from 'next/link';
 
 import { __MENU_MOCK__ } from '@leaa/www/__mock__';
 
 import style from './style.less';
 
-interface IProps {}
-
-export const LayoutFooter = (props: IProps) => (
+export const LayoutFooter = () => (
   <div className={style['full-layout-footer']}>
     <div className="g-full-container">
       <Row gutter={16} type="flex" className={style['menu-row']}>

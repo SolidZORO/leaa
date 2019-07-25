@@ -1,8 +1,11 @@
 .cache
 .idea
 .vscode/*
+/typings
+/next-env.d.ts
 
 /_documents
 /public
+/__next__
 /tools/webpack
 /src/assets/fonts/**/*.js

@@ -4,7 +4,6 @@ const routerPathToClassName = (routerPath: string): string =>
     .replace(/\/\d+/g, '-item') // replace /444  ->  -item
     .replace(/\//g, '-'); // replace all /  ->  -
 
-
 export const urlUtil = {
   routerPathToClassName,
 };

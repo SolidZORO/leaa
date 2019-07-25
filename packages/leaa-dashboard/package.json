@@ -27,6 +27,8 @@
     "s": "yarn dev-server"
   },
   "dependencies": {
+    "@leaa/common": "0.0.1",
+    "@leaa/dashboard": "0.0.1",
     "@apollo/react-hooks": "^0.1.0-beta.11",
     "@babel/polyfill": "7.4.4",
     "animated-scroll-to": "^1.2.2",

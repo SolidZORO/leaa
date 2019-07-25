@@ -8,9 +8,7 @@ import { __MENU_MOCK__ } from '@leaa/www/__mock__';
 
 import style from './style.less';
 
-interface IProps {}
-
-export const LayoutHeader = (props: IProps) => {
+export const LayoutHeader = () => {
   const headerMenu = [{ title: 'Home', link: '/' }].concat(__MENU_MOCK__.headerMenu);
   const [drawerVisible, setDrawerVisible] = useState<boolean>(false);
 

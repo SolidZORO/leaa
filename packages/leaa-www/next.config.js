@@ -1,7 +1,7 @@
+/* eslint-disable */
 const fs = require('fs');
 const path = require('path');
 const webpack = require('webpack');
-
 const lessToJS = require('less-vars-to-js');
 // const FilterWarningsPlugin = require('webpack-filter-warnings-plugin');
 

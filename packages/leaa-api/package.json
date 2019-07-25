@@ -36,6 +36,7 @@
   },
   "dependencies": {
     "@hapi/joi": "^15.1.0",
+    "@leaa/api": "0.0.1",
     "@leaa/common": "0.0.1",
     "@nestjs/common": "^6.5.3",
     "@nestjs/core": "^6.5.3",
