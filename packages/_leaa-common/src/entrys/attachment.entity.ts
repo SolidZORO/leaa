@@ -8,92 +8,92 @@ import { Base } from './_base.entity';
 export class Attachment extends Base {
   @Column({ type: 'varchar', length: 48, unique: true })
   @Field(() => String)
-  uuid!: string;
+  public uuid!: string;
 
   @Column({ type: 'varchar', length: 255 })
   @Field(() => String)
-  title!: string;
+  public title!: string;
 
   @Column({ type: 'varchar', length: 255 })
   @Field(() => String)
-  alt!: string;
+  public alt!: string;
 
   @Column({ type: 'varchar', length: 16 })
   @Field(() => String)
-  type!: string;
+  public type!: string;
 
   @Column({ type: 'varchar', length: 255 })
   @Field(() => String)
-  filename!: string;
+  public filename!: string;
 
   @Column({ type: 'text', nullable: true })
   @Field(() => String, { nullable: true })
-  description?: string;
+  public description?: string;
 
   @Column({ type: 'varchar', length: 255, nullable: true })
   @Field(() => String, { nullable: true })
-  link?: string;
+  public link?: string;
 
   @Column({ type: 'varchar', length: 64 })
   @Field(() => String)
-  moduleName!: string;
+  public moduleName!: string;
 
   @Column({ type: 'int' })
   @Field(() => Int)
-  moduleId!: number;
+  public moduleId!: number;
 
   @Column({ type: 'varchar', length: 64 })
   @Field(() => String)
-  moduleType!: string;
+  public moduleType!: string;
 
   @Column({ type: 'varchar', length: 8 })
   @Field(() => String)
-  ext!: string;
+  public ext!: string;
 
   @Column({ type: 'int', default: 0 })
   @Field(() => Int)
-  width!: number;
+  public width!: number;
 
   @Column({ type: 'int', default: 0 })
   @Field(() => Int)
-  height!: number;
+  public height!: number;
 
   @Column({ type: 'int', default: 0 })
   @Field(() => Int)
-  size?: number;
+  public size?: number;
 
   @Column({ type: 'varchar', length: 512 })
   @Field(() => String)
-  path!: string;
+  public path!: string;
 
   @Field(() => String, { nullable: true })
-  pathAt2x?: string;
+  public pathAt2x?: string;
 
   @Column({ type: 'tinyint', default: 0 })
   @Field(() => Int)
-  at2x!: number;
+  public at2x!: number;
 
   @Column({ type: 'tinyint', default: 0 })
   @Field(() => Int)
-  inLocal!: number;
+  public inLocal!: number;
 
   @Column({ type: 'tinyint', default: 0 })
   @Field(() => Int)
-  inCloud!: number;
+  public inCloud!: number;
 
   @Column({ type: 'int', nullable: true })
   @Field(() => Int, { nullable: true })
-  categoryId?: number;
+  public categoryId?: number;
 
   @Column({ type: 'int', nullable: true })
   @Field(() => Int, { nullable: true })
-  userId?: number;
+  public userId?: number;
 
   @Column({ type: 'int', default: 0 })
   @Field(() => Int)
-  sort!: number;
+  public sort!: number;
 
   @Column({ type: 'tinyint', default: 1 })
   @Field(() => Int)
-  status!: number;
+  public status!: number;
 }

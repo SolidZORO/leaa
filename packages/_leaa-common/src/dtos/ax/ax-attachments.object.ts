@@ -4,14 +4,14 @@ import { Attachment } from '@leaa/common/entrys';
 @ObjectType()
 export class AxAttachmentsObject {
   @Field(() => [Attachment])
-  readonly bannerMbList: Attachment[] = [];
+  public readonly bannerMbList: Attachment[] = [];
 
   @Field(() => [Attachment])
-  readonly bannerPcList: Attachment[] = [];
+  public readonly bannerPcList: Attachment[] = [];
 
   @Field(() => [Attachment])
-  readonly galleryMbList: Attachment[] = [];
+  public readonly galleryMbList: Attachment[] = [];
 
   @Field(() => [Attachment])
-  readonly galleryPcList: Attachment[] = [];
+  public readonly galleryPcList: Attachment[] = [];
 }

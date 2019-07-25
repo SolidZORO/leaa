@@ -7,29 +7,29 @@ import { ItemsArgs } from '@leaa/common/dtos/_common';
 export class AttachmentsArgs extends ItemsArgs {
   @IsOptional()
   @Field(() => String, { nullable: true })
-  readonly type?: string;
+  public readonly type?: string;
 
   @IsOptional()
   @Field(() => String, { nullable: true })
-  readonly moduleName?: string;
+  public readonly moduleName?: string;
 
   @IsOptional()
   @Field(() => Int, { nullable: true })
-  readonly moduleId?: number;
+  public readonly moduleId?: number;
 
   @IsOptional()
   @Field(() => String, { nullable: true })
-  readonly moduleType?: string;
+  public readonly moduleType?: string;
 
   @IsOptional()
   @Field(() => Int, { nullable: true })
-  readonly categoryId?: number;
+  public readonly categoryId?: number;
 
   @IsOptional()
   @Field(() => Int, { nullable: true })
-  readonly userId?: number;
+  public readonly userId?: number;
 
   @IsOptional()
   @Field(() => Int, { nullable: true })
-  readonly refreshHash?: number;
+  public readonly refreshHash?: number;
 }

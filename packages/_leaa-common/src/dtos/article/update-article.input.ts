@@ -5,29 +5,29 @@ import { Field, InputType, Int } from 'type-graphql';
 export class UpdateArticleInput {
   @IsOptional()
   @Field(() => String)
-  title?: string;
+  public title?: string;
 
   @IsOptional()
   @Field(() => String, { nullable: true })
-  slug?: string;
+  public slug?: string;
 
   @IsOptional()
   @Field(() => Int, { nullable: true })
-  categoryId?: number;
+  public categoryId?: number;
 
   @IsOptional()
   @Field(() => Int, { nullable: true })
-  userId?: number;
+  public userId?: number;
 
   @IsOptional()
   @Field(() => String, { nullable: true })
-  description?: string;
+  public description?: string;
 
   @IsOptional()
   @Field(() => String, { nullable: true })
-  content?: string;
+  public content?: string;
 
   @IsOptional()
   @Field(() => Int, { nullable: true })
-  status?: number;
+  public status?: number;
 }

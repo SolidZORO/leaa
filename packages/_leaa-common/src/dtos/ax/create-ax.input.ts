@@ -5,17 +5,17 @@ import { Field, InputType, Int } from 'type-graphql';
 export class CreateAxInput {
   @IsNotEmpty()
   @Field(() => String)
-  title!: string;
+  public title!: string;
 
   @IsNotEmpty()
   @Field(() => String)
-  slug!: string;
+  public slug!: string;
 
   @IsNotEmpty()
   @Field(() => Int)
-  status!: number;
+  public status!: number;
 
   @IsOptional()
   @Field(() => String, { nullable: true })
-  description?: string;
+  public description?: string;
 }

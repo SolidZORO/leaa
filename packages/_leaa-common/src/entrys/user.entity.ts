@@ -12,48 +12,48 @@ import { Permission } from './permission.entity';
 export class User extends Base {
   @Column({ type: 'varchar', length: 64, nullable: true, default: '' })
   @Field({ nullable: true })
-  name?: string;
+  public name?: string;
 
   // @Column({ type: 'varchar', length: 32, unique: true })
   @Column({ type: 'varchar', length: 32, default: '', nullable: true })
   @Field(() => String, { nullable: true })
-  phone?: string;
+  public phone?: string;
 
   @Column({ type: 'varchar', length: 64, unique: true })
   @Field(() => String)
-  email!: string;
+  public email!: string;
 
   @Column({ type: 'tinyint', default: 0 })
   @Field(() => Int)
-  status?: number;
+  public status?: number;
 
   @Column({ type: 'varchar', length: 64, select: false })
   // @Field()
-  password!: string;
+  public password!: string;
 
   @Column({ type: 'varchar', length: 32, nullable: true })
   @Field(() => String, { nullable: true })
-  lastLoginIp?: string;
+  public lastLoginIp?: string;
 
   @Column({ type: 'timestamp', nullable: true })
   @Field(() => Date, { nullable: true })
-  lastLoginAt?: Date;
+  public lastLoginAt?: Date;
 
   @ManyToMany(() => Role, role => role.user)
   @JoinTable()
   @Field(() => [Role], { nullable: true })
-  roles?: Role[];
+  public roles?: Role[];
 
   // Virtual Field (not in DB)
   @Field(() => [Permission], { nullable: true })
-  permissions?: Permission[];
+  public permissions?: Permission[];
 
   @Field(() => [String], { nullable: true })
-  flatePermissions?: string[];
+  public flatePermissions?: string[];
 
   @Field(() => String, { nullable: true })
-  authToken?: string;
+  public authToken?: string;
 
   @Field(() => Int, { nullable: true })
-  authExpiresIn?: number;
+  public authExpiresIn?: number;
 }

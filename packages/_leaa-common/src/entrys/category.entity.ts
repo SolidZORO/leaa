@@ -10,17 +10,17 @@ import { Base } from './_base.entity';
 export class Category extends Base {
   @Column({ type: 'varchar', length: 32, unique: true })
   @Field(() => String)
-  name!: string;
+  public name!: string;
 
   @Column({ type: 'varchar', length: 32, unique: true })
   @Field(() => String)
-  slug!: string;
+  public slug!: string;
 
   @Column({ type: 'int', default: 0 })
   @Field(() => Int)
-  parentId!: number;
+  public parentId!: number;
 
   @Column({ type: 'text', nullable: true })
   @Field(() => String, { nullable: true })
-  description?: string;
+  public description?: string;
 }

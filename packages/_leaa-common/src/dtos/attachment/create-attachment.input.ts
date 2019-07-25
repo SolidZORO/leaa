@@ -3,68 +3,68 @@ import { Field, InputType, Int } from 'type-graphql';
 @InputType()
 export class CreateAttachmentInput {
   @Field(() => String)
-  uuid!: string;
+  public uuid!: string;
 
   @Field(() => String)
-  title!: string;
+  public title!: string;
 
   @Field(() => String)
-  alt!: string;
+  public alt!: string;
 
   @Field(() => String)
-  type!: string;
+  public type!: string;
 
   @Field(() => String)
-  filename!: string;
+  public filename!: string;
 
   // @Field(() => String, { nullable: true })
-  // description?: string;
+  // public description?: string;
 
   // @Field(() => String, { nullable: true })
-  // link?: string;
+  // public link?: string;
 
   @Field(() => String)
-  moduleName!: string;
+  public moduleName!: string;
 
   @Field(() => Int)
-  moduleId!: number;
+  public moduleId!: number;
 
   @Field(() => String)
-  moduleType!: string;
+  public moduleType!: string;
 
   @Field(() => String)
-  ext!: string;
+  public ext!: string;
 
   @Field(() => Int)
-  width!: number;
+  public width!: number;
 
   @Field(() => Int)
-  height!: number;
+  public height!: number;
 
   @Field(() => Int)
-  size?: number;
+  public size?: number;
 
   @Field(() => String)
-  path!: string;
+  public path!: string;
 
   @Field(() => Int)
-  at2x!: number;
+  public at2x!: number;
 
   @Field(() => Int)
-  inLocal?: number;
+  public inLocal?: number;
 
   @Field(() => Int, { nullable: true })
-  inCloud?: number;
+  public inCloud?: number;
 
   @Field(() => Int, { nullable: true })
-  categoryId?: number;
+  public categoryId?: number;
 
   @Field(() => Int, { nullable: true })
-  userId?: number;
+  public userId?: number;
 
   @Field(() => Int)
-  sort?: number;
+  public sort?: number;
 
   @Field(() => Int)
-  status?: number;
+  public status?: number;
 }

@@ -5,17 +5,17 @@ import { Field, InputType, Int } from 'type-graphql';
 export class UpdateAxInput {
   @IsOptional()
   @Field(() => String, { nullable: true })
-  title?: string;
+  public title?: string;
 
   @IsOptional()
   @Field(() => String, { nullable: true })
-  slug?: string;
+  public slug?: string;
 
   @IsOptional()
   @Field(() => Int, { nullable: true })
-  status?: number;
+  public status?: number;
 
   @IsOptional()
   @Field(() => String, { nullable: true })
-  description?: string;
+  public description?: string;
 }
