@@ -10,8 +10,14 @@ const nextI18next = require('./i18n');
 setConfig(nextConfig);
 
 const { PROTOCOL, PORT, BASE_HOST } = process.env;
-// const port = process.env.PORT || 3000;
-const app = next({ dev: process.env.NODE_ENV !== 'production' });
+const dev = process.env.NODE_ENV !== 'production';
+
+const app = next({
+  dev,
+  dir: __dirname,
+  // conf: dev ? undefined : { distDir: './', poweredByHeader: false },
+  conf: dev ? undefined : { poweredByHeader: false },
+});
 const handle = app.getRequestHandler();
 
 (async () => {
