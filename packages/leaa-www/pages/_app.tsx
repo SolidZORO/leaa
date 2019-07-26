@@ -6,13 +6,16 @@ import { IAppProps } from '@leaa/www/interfaces';
 import { withApolloClient } from '@leaa/www/libs';
 import { MasterLayout } from '@leaa/www/components/MasterLayout';
 import { ProgressLoading } from '@leaa/www/components/ProgressLoading';
-import NextI18NextInstance, { appWithTranslation } from '../i18n';
+import { appWithTranslation, i18n } from '../i18n';
 
 class CustomApp extends App<IAppProps> {
   // @ts-ignore
   constructor(props) {
     super(props);
-    if (NextI18NextInstance.i18n.language === undefined) NextI18NextInstance.i18n.changeLanguage('en');
+
+    if (i18n.language === undefined) {
+      i18n.changeLanguage('zh-CN');
+    }
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {

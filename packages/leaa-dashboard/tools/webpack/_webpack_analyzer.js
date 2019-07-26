@@ -1,6 +1,6 @@
 const webpackAnalyzerConfig = {
   // Can be `server`, `static` or `disabled`.
-  analyzerMode: 'server.js.js',
+  analyzerMode: 'server',
   // Host that will be used in `server` mode to start HTTP server.
   analyzerHost: 'localhost',
   // Port that will be used in `server` mode to start HTTP server.

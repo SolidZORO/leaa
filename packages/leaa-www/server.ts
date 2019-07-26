@@ -1,6 +1,7 @@
-const express = require('express');
-const next = require('next');
-const nextI18NextMiddleware = require('next-i18next/middleware').default;
+import express from 'express';
+import next from 'next';
+import nextI18NextMiddleware from 'next-i18next/middleware';
+
 const { setConfig } = require('next/config');
 
 const nextConfig = require('./next.config');
@@ -18,7 +19,6 @@ const handle = app.getRequestHandler();
   const server = express();
 
   server.use(nextI18NextMiddleware(nextI18next));
-
   server.get('*', (req, res) => handle(req, res));
 
   await server.listen(PORT);
