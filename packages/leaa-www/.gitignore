@@ -12,6 +12,7 @@ docker_data
 _docker_data
 .docker
 .next
+.deploy
 
 # Logs
 logs

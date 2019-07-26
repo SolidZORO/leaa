@@ -4,7 +4,8 @@ import { ApolloClient } from 'apollo-client';
 import { ApolloLink, split } from 'apollo-link';
 import { OperationDefinitionNode } from 'graphql';
 import { InMemoryCache, NormalizedCacheObject } from 'apollo-cache-inmemory';
-import getConfig from 'next/config';
+// import getConfig from 'next/config';
+import { envConfig } from '@leaa/www/configs';
 
 let apolloClient: ApolloClient<any> | null = null;
 
@@ -14,10 +15,8 @@ if (!process.browser) {
 }
 
 function createApolloClient(initialState: NormalizedCacheObject) {
-  const { publicRuntimeConfig } = getConfig();
-
   const httpLink = new HttpLink({
-    uri: publicRuntimeConfig.GRAPHQL_ENDPOINT,
+    uri: envConfig.GRAPHQL_ENDPOINT,
     // credentials: 'same-origin',
   });
 

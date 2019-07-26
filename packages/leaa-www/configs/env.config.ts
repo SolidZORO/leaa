@@ -1,12 +1,5 @@
 import getConfig from 'next/config';
-import { IDotEnvClient, IDotEnvServer } from '@leaa/www/interfaces';
+import { IDotEnvClient } from '@leaa/www/interfaces';
 
-const {
-  publicRuntimeConfig,
-  serverRuntimeConfig,
-}: {
-  publicRuntimeConfig: IDotEnvClient;
-  serverRuntimeConfig: IDotEnvServer;
-} = getConfig();
-
-export { publicRuntimeConfig, serverRuntimeConfig };
+// @ts-ignore
+export const envConfig: IDotEnvClient = typeof window === 'undefined' ? process.env : getConfig().publicRuntimeConfig;

@@ -4,6 +4,7 @@ import { Layout } from 'antd';
 
 import { urlUtil } from '@leaa/www/utils';
 import { IAppProps } from '@leaa/www/interfaces';
+import { envConfig } from '@leaa/www/configs';
 import { ProgressLoading } from '@leaa/www/components/ProgressLoading';
 import { LayoutContent } from './_components/LayoutContent/LayoutContent';
 import { LayoutHeader } from './_components/LayoutHeader/LayoutHeader';
@@ -23,7 +24,7 @@ export const MasterLayout = (props: IProps) => {
   const pageClassName =
     props && props.router.pathname ? `page-${urlUtil.routerPathToClassName(props.router.pathname)}` : null;
 
-  if (typeof window !== 'undefined' && process.env.NODE_ENV === 'production') {
+  if (typeof window !== 'undefined' && envConfig.NODE_ENV === 'production') {
     window.onload = () => {
       console.log('check transitionWithoutSSR');
 
@@ -48,7 +49,7 @@ export const MasterLayout = (props: IProps) => {
         </Layout>
       </Layout>
 
-      {process.env.NODE_ENV === 'production' && (
+      {envConfig.NODE_ENV === 'production' && (
         <style
           id="transition-without-ssr"
           // eslint-disable-next-line react/no-danger

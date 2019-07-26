@@ -20,7 +20,7 @@ export const LayoutHeader = () => {
     <ul className={style['menu-list']}>
       {headerMenu.map(m => (
         <li key={m.title} className={style['menu-item']}>
-          <Link href={m.link}>
+          <Link href={m.link} prefetch={false}>
             <a className={style['link']} onClick={() => onSetVisible(false)}>
               {m.title}
             </a>
@@ -32,13 +32,13 @@ export const LayoutHeader = () => {
 
   const authListDom = (
     <div className={style['auth-list']}>
-      <Link href="/ram">
+      <Link href="/ram" prefetch={false}>
         <a className={style['link']} onClick={() => onSetVisible(false)}>
           Login
         </a>
       </Link>
       {' · '}
-      <Link href="/ram">
+      <Link href="/ram" prefetch={false}>
         <a className={style['link']} onClick={() => onSetVisible(false)}>
           Register
         </a>
@@ -51,7 +51,7 @@ export const LayoutHeader = () => {
       <Headroom className={style['full-headroom']}>
         <div className={cx('g-full-container', style['full-container'])}>
           <div className={style['logo-image']}>
-            <Link href="/">
+            <Link href="/" prefetch={false}>
               <a>
                 <img src="/static/images/logo/logo-black.svg" alt="" />
               </a>

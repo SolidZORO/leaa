@@ -2,7 +2,7 @@ import React from 'react';
 import cx from 'classnames';
 
 import { Attachment } from '@leaa/common/entrys';
-import { publicRuntimeConfig } from '@leaa/www/configs';
+import { envConfig } from '@leaa/www/configs';
 
 import style from './style.less';
 
@@ -16,8 +16,8 @@ interface IProps {
 export const RetinaBg = (props: IProps) => {
   const { attachment } = props;
 
-  const at1x = `${publicRuntimeConfig.API_HOST}${attachment.path}`;
-  const at2x = `${publicRuntimeConfig.API_HOST}${attachment.pathAt2x}`;
+  const at1x = `${envConfig.API_HOST}${attachment.path}`;
+  const at2x = `${envConfig.API_HOST}${attachment.pathAt2x}`;
 
   let bgStyle;
 
