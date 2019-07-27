@@ -9,7 +9,6 @@ import style from './style.less';
 
 export const LayoutFooter = () => (
   <div className={style['full-layout-footer']}>
-    <SwitchLanguage />
     <div className="g-full-container">
       <Row gutter={16} type="flex" className={style['menu-row']}>
         {__MENU_MOCK__.footerMenu.map(m => (
@@ -34,6 +33,8 @@ export const LayoutFooter = () => (
         </div>
 
         <div className={style['copyright']}>Copyright © 2019 Leaa. All rights reserved.</div>
+
+        <SwitchLanguage />
       </div>
     </div>
   </div>

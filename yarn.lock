@@ -5701,6 +5701,16 @@ env-variable@0.0.x:
   resolved "https://registry.npm.taobao.org/env-variable/download/env-variable-0.0.5.tgz#913dd830bef11e96a039c038d4130604eba37f88"
   integrity sha1-kT3YML7xHpagOcA41BMGBOujf4g=
 
+envalid@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.npm.taobao.org/envalid/download/envalid-5.0.0.tgz#0dff9302c645977b8a620278620c67a939c9ee6f"
+  integrity sha1-Df+TAsZFl3uKYgJ4YgxnqTnJ7m8=
+  dependencies:
+    chalk "^2.4.1"
+    dotenv "^6.2.0"
+    meant "^1.0.1"
+    validator "^10.11.0"
+
 errno@^0.1.1, errno@^0.1.3, errno@~0.1.7:
   version "0.1.7"
   resolved "https://registry.npm.taobao.org/errno/download/errno-0.1.7.tgz#4684d71779ad39af177e3f007996f7c67c852618"
@@ -7473,6 +7483,13 @@ i18next-express-middleware@^1.5.0, i18next-express-middleware@^1.8.0:
   dependencies:
     cookies "0.7.1"
 
+i18next-icu@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.npm.taobao.org/i18next-icu/download/i18next-icu-1.1.2.tgz#543f8c6b0fe7bd5087e1eb8723acded04c88a936"
+  integrity sha1-VD+Maw/nvVCH4euHI6ze0EyIqTY=
+  dependencies:
+    intl-messageformat "2.2.0"
+
 i18next-node-fs-backend@^2.1.0, i18next-node-fs-backend@^2.1.3:
   version "2.1.3"
   resolved "https://registry.npm.taobao.org/i18next-node-fs-backend/download/i18next-node-fs-backend-2.1.3.tgz#483fa9eda4c152d62a3a55bcae2a5727ba887559"
@@ -7719,6 +7736,18 @@ interpret@1.2.0:
   version "1.2.0"
   resolved "https://registry.npm.taobao.org/interpret/download/interpret-1.2.0.tgz#d5061a6224be58e8083985f5014d844359576296"
   integrity sha1-1QYaYiS+WOgIOYX1AU2EQ1lXYpY=
+
+intl-messageformat-parser@1.4.0:
+  version "1.4.0"
+  resolved "https://registry.npm.taobao.org/intl-messageformat-parser/download/intl-messageformat-parser-1.4.0.tgz?cache=0&sync_timestamp=1564051992135&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fintl-messageformat-parser%2Fdownload%2Fintl-messageformat-parser-1.4.0.tgz#b43d45a97468cadbe44331d74bb1e8dea44fc075"
+  integrity sha1-tD1FqXRoytvkQzHXS7Ho3qRPwHU=
+
+intl-messageformat@2.2.0:
+  version "2.2.0"
+  resolved "https://registry.npm.taobao.org/intl-messageformat/download/intl-messageformat-2.2.0.tgz#345bcd46de630b7683330c2e52177ff5eab484fc"
+  integrity sha1-NFvNRt5jC3aDMwwuUhd/9eq0hPw=
+  dependencies:
+    intl-messageformat-parser "1.4.0"
 
 invariant@^2.2.1, invariant@^2.2.2, invariant@^2.2.4:
   version "2.2.4"
@@ -9516,6 +9545,11 @@ mdn-data@~1.1.0:
   resolved "https://registry.npm.taobao.org/mdn-data/download/mdn-data-1.1.4.tgz?cache=0&sync_timestamp=1562672674261&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fmdn-data%2Fdownload%2Fmdn-data-1.1.4.tgz#50b5d4ffc4575276573c4eedb8780812a8419f01"
   integrity sha1-ULXU/8RXUnZXPE7tuHgIEqhBnwE=
 
+meant@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.npm.taobao.org/meant/download/meant-1.0.1.tgz#66044fea2f23230ec806fb515efea29c44d2115d"
+  integrity sha1-ZgRP6i8jIw7IBvtRXv6inETSEV0=
+
 media-typer@0.3.0:
   version "0.3.0"
   resolved "https://registry.npm.taobao.org/media-typer/download/media-typer-0.3.0.tgz#8710d7af0aa626f8fffa1ce00168545263255748"
@@ -10017,10 +10051,10 @@ next-i18next@^0.52.0:
     react-i18next "^10.11.3"
     url "^0.11.0"
 
-next-server@9.0.3-canary.2:
-  version "9.0.3-canary.2"
-  resolved "https://registry.npm.taobao.org/next-server/download/next-server-9.0.3-canary.2.tgz#2127a125cdcf8572ad05ccd56e44850a05f4466c"
-  integrity sha1-ISehJc3PhXKtBczVbkSFCgX0Rmw=
+next-server@9.0.3-canary.3:
+  version "9.0.3-canary.3"
+  resolved "https://registry.npm.taobao.org/next-server/download/next-server-9.0.3-canary.3.tgz#69d7a56361ccca930858980fc2ac3f4e9111731b"
+  integrity sha1-adelY2HMypMIWJgPwqw/TpERcxs=
   dependencies:
     amp-toolbox-optimizer "1.2.0-alpha.1"
     content-type "1.0.4"
@@ -10041,10 +10075,10 @@ next-tick@1, next-tick@^1.0.0:
   resolved "https://registry.npm.taobao.org/next-tick/download/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
   integrity sha1-yobR/ogoFpsBICCOPchCS524NCw=
 
-next@^9.0.3-canary.2:
-  version "9.0.3-canary.2"
-  resolved "https://registry.npm.taobao.org/next/download/next-9.0.3-canary.2.tgz#3fbc671bd29246fc8fc39be29589b835c10390ac"
-  integrity sha1-P7xnG9KSRvyPw5vilYm4NcEDkKw=
+next@^9.0.3-canary.3:
+  version "9.0.3-canary.3"
+  resolved "https://registry.npm.taobao.org/next/download/next-9.0.3-canary.3.tgz#a05e3bea8336e3c7f5441b2809e702ba68fdda06"
+  integrity sha1-oF476oM248f1RBsoCecCumj92gY=
   dependencies:
     "@babel/core" "7.4.5"
     "@babel/plugin-proposal-class-properties" "7.4.4"
@@ -10072,7 +10106,7 @@ next@^9.0.3-canary.2:
     launch-editor "2.2.1"
     loader-utils "1.2.3"
     mkdirp "0.5.1"
-    next-server "9.0.3-canary.2"
+    next-server "9.0.3-canary.3"
     prop-types "15.7.2"
     prop-types-exact "1.2.0"
     react-error-overlay "5.1.6"
@@ -14939,6 +14973,11 @@ validator@10.4.0:
   version "10.4.0"
   resolved "https://registry.npm.taobao.org/validator/download/validator-10.4.0.tgz#ee99a44afb3bb5ed350a159f056ca72a204cfc3c"
   integrity sha1-7pmkSvs7te01ChWfBWynKiBM/Dw=
+
+validator@^10.11.0:
+  version "10.11.0"
+  resolved "https://registry.npm.taobao.org/validator/download/validator-10.11.0.tgz#003108ea6e9a9874d31ccc9e5006856ccd76b228"
+  integrity sha1-ADEI6m6amHTTHMyeUAaFbM12sig=
 
 value-equal@^0.4.0:
   version "0.4.0"

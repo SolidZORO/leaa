@@ -7,8 +7,9 @@ import { AxArgs } from '@leaa/common/dtos/ax';
 import { GET_AX_BY_SLUG } from '@leaa/common/graphqls';
 import { SwiperImage } from '@leaa/www/components/SwiperImage';
 import { ErrorCard } from '@leaa/www/components/ErrorCard/ErrorCard';
+import { withTranslation } from '../../i18n';
 
-export default () => {
+const nPage = () => {
   const getAxBySlugVariables = { slug: 'ram-swiper' };
   const getAxBySlugQuery = useQuery<{ axBySlug: Ax }, AxArgs>(GET_AX_BY_SLUG, {
     variables: getAxBySlugVariables,
@@ -33,3 +34,9 @@ export default () => {
     </>
   );
 };
+
+nPage.getInitialProps = async () => ({
+  namespacesRequired: ['common'],
+});
+
+export default withTranslation()(nPage);

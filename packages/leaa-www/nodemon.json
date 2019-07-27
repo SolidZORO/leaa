@@ -1,5 +1,6 @@
 {
   "watch": [".babelrc", ".env", "static", "next.config.js", "*.ts"],
+  "ignore": [".next/**/*"],
   "execMap": {
     "ts": "ts-node --transpile-only --compiler-options '{\"module\":\"commonjs\"}'"
   }
