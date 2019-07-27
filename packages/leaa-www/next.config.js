@@ -9,7 +9,7 @@ const withImage = require('./__next__/next-image');
 const withDotenv = require('./__next__/next-dotenv');
 const withAntd = require('./__next__/next-antd');
 
-const env = require('./__next__/next-dotenv-object');
+// const env = require('./__next__/next-dotenv-object');
 const antdVariables = lessToJS(fs.readFileSync(path.resolve(__dirname, './styles/variables.less'), 'utf8'));
 
 // fix: prevents error when .less files are required by node
@@ -48,7 +48,7 @@ module.exports = withDotenv(
       },
       // target: 'serverless',
       // distDir: process.env.NODE_ENV !== 'production' ? '.next' : '.deploy',
-      env,
+      // env,
       webpack: webpackConfig,
     }),
   ),

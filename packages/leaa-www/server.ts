@@ -8,14 +8,15 @@ import nextI18next from './i18n';
 
 const dev = process.env.NODE_ENV !== 'production';
 const rootPath = path.resolve(__dirname, './');
+const dotEnvPath = dev ? `${rootPath}/.env` : `${rootPath}/.env.production`;
 
 const { PROTOCOL, PORT, BASE_HOST, NAME } = envalid.cleanEnv(
   process.env,
-  { PORT: envalid.num({ devDefault: 3000 }) },
-  { dotEnvPath: process.env.NODE_ENV !== 'production' ? `${rootPath}/.env` : `${rootPath}/.env.production` },
+  { PORT: envalid.num({ devDefault: 3300 }) },
+  { dotEnvPath },
 );
 
-console.log(NAME, PROTOCOL, PORT, BASE_HOST);
+console.log(NAME, PROTOCOL, BASE_HOST, PORT);
 
 const app = next({
   dev,

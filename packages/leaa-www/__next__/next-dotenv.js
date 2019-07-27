@@ -4,6 +4,9 @@ module.exports = nextConfig => ({
   ...nextConfig,
   ...{
     publicRuntimeConfig: dotenvObject,
-    serverRuntimeConfig: dotenvObject,
+    serverRuntimeConfig: {
+      ...dotenvObject,
+      HERE____IS_____SERVER: true,
+    },
   },
 });

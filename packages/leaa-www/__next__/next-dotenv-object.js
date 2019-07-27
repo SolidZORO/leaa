@@ -1,7 +1,12 @@
-const _ = require('lodash');
-const envalid = require('envalid');
-
 if (typeof window === 'undefined') {
+  const path = require('path');
+  const _ = require('lodash');
+  const envalid = require('envalid');
+
+  const dev = process.env.NODE_ENV !== 'production';
+  const rootPath = path.resolve(__dirname, '../');
+  const dotEnvPath = dev ? `${rootPath}/.env` : `${rootPath}/.env.production`;
+
   const rule = {
     NAME: envalid.str(),
     PROTOCOL: envalid.str({ choices: ['http', 'https'], default: 'http' }),
@@ -12,7 +17,7 @@ if (typeof window === 'undefined') {
     UPLOAD_HOST: envalid.url(),
   };
 
-  const dotenvObject = envalid.cleanEnv(process.env, rule);
+  const dotenvObject = envalid.cleanEnv(process.env, rule, { dotEnvPath });
 
   module.exports = _.pick(dotenvObject, Object.keys(rule));
 }
