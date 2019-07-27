@@ -1,26 +1,21 @@
 import React from 'react';
-// import Link from 'next/link';
+import { Link, withTranslation } from '@leaa/www/i18n';
 
-import { IPage } from '@leaa/www/interfaces';
-import { i18n, Link, withTranslation } from '@leaa/www/i18n';
+const nPage = ({ t }: any) => (
+  <>
+    <Link href="/blog">
+      <a>- BLOG -</a>
+    </Link>
+    <Link href="/article">
+      <a>- ARTICLE -</a>
+    </Link>
+    <br />
+    <h1>BLOG</h1>
+  </>
+);
 
-// export default () => <p>Blog</p>;
-const nPage = (k: any) => {
-  return (
-    <>
-      <Link href="/blog">
-        <a>- BLOG -</a>
-      </Link>
-      <Link href="/article">
-        <a>- ARTICLExxxxxxxxxxxxxx -</a>
-      </Link>
-      <br />
-      <h1>BLOG</h1>
-      <h2> {k.t('common:to-second-page')}</h2>
-    </>
-  );
-};
-
-nPage.getInitialProps = async () => ({});
+nPage.getInitialProps = async () => ({
+  namespacesRequired: ['common'],
+});
 
 export default withTranslation()(nPage);

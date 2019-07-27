@@ -1,12 +1,5 @@
 import React from 'react';
-// import Link from 'next/link';
-import getConfig from 'next/config';
-
-import { IPage } from '@leaa/www/interfaces';
-import { i18n, Link, withTranslation } from '@leaa/www/i18n';
-
-// export default () => <p>Blog</p>;
-const { publicRuntimeConfig } = getConfig();
+import { Link, withTranslation } from '@leaa/www/i18n';
 
 const nPage = ({ t }: any) => (
   <>
@@ -19,7 +12,6 @@ const nPage = ({ t }: any) => (
     <br />
     <h1>ARTICLE</h1>
     <h2> {t('common:h1')}</h2>
-    {JSON.stringify(publicRuntimeConfig)}
   </>
 );
 

@@ -9,26 +9,20 @@ import { ProgressLoading } from '@leaa/www/components/ProgressLoading';
 import { appWithTranslation, i18n } from '../i18n';
 
 class CustomApp extends App<IAppProps> {
-  // @ts-ignore
-  constructor(props) {
+  constructor(props: IAppProps) {
     super(props);
 
     if (i18n.language === undefined) {
-      i18n.changeLanguage('zh-CN');
+      (async () => i18n.changeLanguage('zh-CN'))();
     }
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     console.log('CUSTOM ERROR HANDLING', error);
+
     // This is needed to render errors correctly in development / production
     super.componentDidCatch(error, errorInfo);
   }
-
-  // componentDidMount() {
-  //   // eslint-disable-next-line global-require
-  //   const eruda = require('eruda');
-  //   eruda.init();
-  // }
 
   render() {
     return (
