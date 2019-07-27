@@ -22,8 +22,10 @@
     "---------------------------------------------------------------------- PROD ----": "----",
     "build-next": "rimraf .deploy && next build",
     "build": "rimraf .deploy && rimraf .next && next build && tsc --project tsconfig.server.json",
+    "now-build": "next",
     "start-next": "next start",
     "start": "NODE_ENV=production node ./server.js",
+    "now-start": "NODE_ENV=production node ./server.js",
     "---------------------------------------------------------------------- ALIAS ----": "----",
     "u": "yarn upgrade-interactive --latest",
     "s": "yarn dev"
@@ -45,6 +47,7 @@
     "classnames": "^2.2.6",
     "cookie": "^0.4.0",
     "dotenv": "^8.0.0",
+    "dotenv-webpack": "^1.7.0",
     "envalid": "^5.0.0",
     "express": "^4.17.1",
     "graphql": "^14.4.2",
