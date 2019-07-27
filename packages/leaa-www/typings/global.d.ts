@@ -5,4 +5,3 @@ declare namespace NodeJS {
 }
 
 declare module 'next-nprogress/*';
-// declare module 'cowsay-browser';

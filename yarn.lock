@@ -1896,7 +1896,7 @@
     "@types/node" "*"
     "@types/range-parser" "*"
 
-"@types/express@*", "@types/express@4.17.0", "@types/express@^4.16.0":
+"@types/express@*", "@types/express@4.17.0", "@types/express@^4.16.0", "@types/express@^4.17.0":
   version "4.17.0"
   resolved "https://registry.npm.taobao.org/@types/express/download/@types/express-4.17.0.tgz#49eaedb209582a86f12ed9b725160f12d04ef287"
   integrity sha1-SertsglYKobxLtm3JRYPEtBO8oc=
@@ -1918,6 +1918,11 @@
   version "14.2.2"
   resolved "https://registry.npm.taobao.org/@types/graphql/download/@types/graphql-14.2.2.tgz#10f197e6f8559c11b16d630c5e9c10c3c8e61c5e"
   integrity sha1-EPGX5vhVnBGxbWMMXpwQw8jmHF4=
+
+"@types/graphql@^14.2.3":
+  version "14.2.3"
+  resolved "https://registry.npm.taobao.org/@types/graphql/download/@types/graphql-14.2.3.tgz#cfc6420a67eb20420786f90112357921974593b9"
+  integrity sha1-z8ZCCmfrIEIHhvkBEjV5IZdFk7k=
 
 "@types/hapi__joi@*":
   version "15.0.2"
@@ -1985,7 +1990,7 @@
 
 "@types/jest@^24.0.15":
   version "24.0.15"
-  resolved "https://registry.npm.taobao.org/@types/jest/download/@types/jest-24.0.15.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fjest%2Fdownload%2F%40types%2Fjest-24.0.15.tgz#6c42d5af7fe3b44ffff7cc65de7bf741e8fa427f"
+  resolved "https://registry.npm.taobao.org/@types/jest/download/@types/jest-24.0.15.tgz#6c42d5af7fe3b44ffff7cc65de7bf741e8fa427f"
   integrity sha1-bELVr3/jtE//98xl3nv3Qej6Qn8=
   dependencies:
     "@types/jest-diff" "*"
@@ -6351,7 +6356,7 @@ file-entry-cache@^5.0.1:
   dependencies:
     flat-cache "^2.0.1"
 
-file-loader@4.1.0:
+file-loader@4.1.0, file-loader@^4.1.0:
   version "4.1.0"
   resolved "https://registry.npm.taobao.org/file-loader/download/file-loader-4.1.0.tgz#3a763391bc9502da7c59612fe348e38fc1980336"
   integrity sha1-OnYzkbyVAtp8WWEv40jjj8GYAzY=

@@ -27,7 +27,7 @@ module.exports = {
   env: {
     es6: true,
     browser: true,
-    jest: true,
+    jest: false,
     node: true,
   },
   rules: {
