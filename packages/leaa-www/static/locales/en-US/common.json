@@ -1,4 +1,8 @@
 {
   "h1": "A Title, English",
-  "xxxxxxxxxxxxxxx": "EEEEEEEEEEEEEEEEEEEEEE"
+  "xxxxxxxxxxxxxxx": "EEEEEEEEEEEEEEEEEEEEEE",
+  "langen": "English",
+  "langcn": "Chinese",
+  "langen-US": "English",
+  "langzh-CN": "Chinese"
 }

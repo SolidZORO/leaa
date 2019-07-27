@@ -6,17 +6,8 @@ import { IAppProps } from '@leaa/www/interfaces';
 import { withApolloClient } from '@leaa/www/libs';
 import { MasterLayout } from '@leaa/www/components/MasterLayout';
 import { ProgressLoading } from '@leaa/www/components/ProgressLoading';
-import { appWithTranslation, i18n } from '../i18n';
 
 class CustomApp extends App<IAppProps> {
-  constructor(props: IAppProps) {
-    super(props);
-
-    if (i18n.language === undefined) {
-      (async () => i18n.changeLanguage('zh-CN'))();
-    }
-  }
-
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     console.log('CUSTOM ERROR HANDLING', error);
 
@@ -37,4 +28,4 @@ class CustomApp extends App<IAppProps> {
   }
 }
 
-export default withApolloClient(appWithTranslation(CustomApp));
+export default withApolloClient(CustomApp);

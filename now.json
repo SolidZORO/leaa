@@ -3,7 +3,7 @@
   "builds": [
     {
       "src": "packages/leaa-www/package.json",
-      "use": "@now/next"
+      "use": "@now/node"
     }
   ],
   "build": {

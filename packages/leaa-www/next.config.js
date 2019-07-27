@@ -46,7 +46,7 @@ module.exports = withDotenv(
         javascriptEnabled: true,
         modifyVars: antdVariables,
       },
-      target: 'serverless',
+      // target: 'serverless',
       // distDir: process.env.NODE_ENV !== 'production' ? '.next' : '.deploy',
       // env,
       webpack: webpackConfig,

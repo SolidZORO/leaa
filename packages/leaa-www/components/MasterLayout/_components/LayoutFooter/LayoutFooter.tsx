@@ -3,7 +3,6 @@ import { Row, Col } from 'antd';
 import Link from 'next/link';
 
 import { __MENU_MOCK__ } from '@leaa/www/__mock__';
-import { SwitchLanguage } from '@leaa/www/components/SwitchLanguage';
 
 import style from './style.less';
 
@@ -33,8 +32,6 @@ export const LayoutFooter = () => (
         </div>
 
         <div className={style['copyright']}>Copyright © 2019 Leaa. All rights reserved.</div>
-
-        <SwitchLanguage />
       </div>
     </div>
   </div>

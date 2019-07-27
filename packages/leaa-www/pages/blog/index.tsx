@@ -1,7 +1,7 @@
 import React from 'react';
-import { Link, withTranslation } from '@leaa/www/i18n';
+import Link from 'next/link';
 
-const nPage = ({ t }: any) => (
+export default () => (
   <>
     <Link href="/blog">
       <a>- BLOG -</a>
@@ -13,9 +13,3 @@ const nPage = ({ t }: any) => (
     <h1>BLOG</h1>
   </>
 );
-
-nPage.getInitialProps = async () => ({
-  namespacesRequired: ['common'],
-});
-
-export default withTranslation()(nPage);

@@ -10,9 +10,8 @@ import { SwiperImage } from '@leaa/www/components/SwiperImage';
 import { ErrorCard } from '@leaa/www/components/ErrorCard/ErrorCard';
 
 import style from './style.less';
-import { withTranslation } from '../../i18n';
 
-const nPage = () => {
+export default () => {
   // const getAxBySlugVariables = { slug: 'index-swiper' };
   const getAxBySlugVariables = { slug: 'mz-swiper' };
   const getAxBySlugQuery = useQuery<{ axBySlug: Ax }, AxArgs>(GET_AX_BY_SLUG, {
@@ -39,9 +38,3 @@ const nPage = () => {
     </>
   );
 };
-
-nPage.getInitialProps = async () => ({
-  namespacesRequired: ['common'],
-});
-
-export default withTranslation()(nPage);
