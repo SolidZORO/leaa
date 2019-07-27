@@ -3292,7 +3292,7 @@ autodll-webpack-plugin@0.4.2:
     webpack-merge "^4.1.0"
     webpack-sources "^1.0.1"
 
-autoprefixer@9.6.1, autoprefixer@^9.5.1:
+autoprefixer@9.6.1, autoprefixer@^9.5.1, autoprefixer@^9.6.1:
   version "9.6.1"
   resolved "https://registry.npm.taobao.org/autoprefixer/download/autoprefixer-9.6.1.tgz#51967a02d2d2300bb01866c1611ec8348d355a47"
   integrity sha1-UZZ6AtLSMAuwGGbBYR7INI01Wkc=

@@ -1,6 +1,6 @@
 if (typeof window === 'undefined') {
-  const path = require('path');
   const _ = require('lodash');
+  const path = require('path');
   const envalid = require('envalid');
 
   const dev = process.env.NODE_ENV !== 'production';
