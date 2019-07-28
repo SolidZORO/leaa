@@ -1,1 +1,0 @@
-export { SwitchLanguage } from './SwitchLanguage';

@@ -8,7 +8,6 @@
     "target": "es6",
     "declaration": true,
     "sourceMap": false,
-    "incremental": true,
     "paths": {
       "@leaa/common": ["../_leaa-common/src"],
       "@leaa/common/*": ["../_leaa-common/src/*"],

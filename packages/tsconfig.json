@@ -1,0 +1,11 @@
+{
+  "files": [],
+  "references": [
+    { "path": "_leaa-common" },
+    { "path": "leaa-api" },
+    { "path": "leaa-dashboard" },
+    { "path": "leaa-www" },
+    { "path": "leaa-weapp" }
+  ],
+  "exclude": []
+}

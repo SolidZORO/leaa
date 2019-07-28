@@ -1,10 +1,14 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "baseUrl": ".",
+    "baseUrl": "./",
+    "rootDir": "./",
+    "outDir": "./dist",
+    "composite": true,
     "paths": {
       "@leaa/common": ["./src"],
       "@leaa/common/*": ["./src/*"]
     }
-  }
+  },
+  "exclude": ["node_modules", "dist"]
 }

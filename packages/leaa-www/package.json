@@ -22,7 +22,7 @@
     "build": "rimraf .deploy && rimraf .next && next build && tsc --project tsconfig.server.json",
     "start": "NODE_ENV=production node ./server.js",
     "now-build": "pwd && ls && mv .env.example .env.production && yarn build",
-    "now-start": "NODE_ENV=production node ./server.js",
+    "now-start": "yarn start",
     "---------------------------------------------------------------------- ALIAS ----": "----",
     "u": "yarn upgrade-interactive --latest",
     "s": "yarn dev"

@@ -8,18 +8,8 @@ module.exports = {
       jsx: true,
     },
   },
-  plugins: [
-    '@typescript-eslint',
-    'react',
-    'typescript',
-    'import',
-  ],
-  extends: [
-    'airbnb',
-    'airbnb-typescript',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:prettier/recommended',
-  ],
+  plugins: ['@typescript-eslint', 'react', 'typescript', 'import'],
+  extends: ['airbnb', 'airbnb-typescript', 'plugin:@typescript-eslint/recommended', 'plugin:prettier/recommended'],
   globals: {
     __DEV__: true,
     status: false,
@@ -27,7 +17,7 @@ module.exports = {
   env: {
     es6: true,
     browser: true,
-    jest: false,
+    jest: true,
     node: true,
   },
   rules: {

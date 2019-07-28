@@ -17,7 +17,8 @@ export class GraphqlService implements GqlOptionsFactory {
       debug: true,
       tracing: true,
       playground: true,
-      transformSchema: (schema: GraphQLSchema) => {
+      transformSchema: (schema: any): any => {
+      // transformSchema: (schema: GraphQLSchema) => {
         return applyMiddleware(schema, permissions);
       },
       context: async ({ req }: { req: Request }) => {

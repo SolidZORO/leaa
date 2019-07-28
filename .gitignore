@@ -8,6 +8,7 @@ node_modules
 docker_data
 _docker_data
 .docker
+tsconfig.tsbuildinfo
 
 # Logs
 logs

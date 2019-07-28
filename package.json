@@ -1,9 +1,14 @@
 {
   "name": "@leaa/root",
   "private": true,
-  "workspaces": ["packages/*"],
-  "dependencies": {
-  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "nohoist": [
+    "**/@nestjs",
+    "**/@nestjs/**"
+  ],
+  "dependencies": {},
   "scripts": {
     "nuke": "rm ./yarn.lock && rm -rf ./node_modules && yarn install",
     "u": "yarn upgrade-interactive --latest",
