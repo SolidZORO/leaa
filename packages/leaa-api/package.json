@@ -31,7 +31,7 @@
     "server": "pm2-docker start ./pm2.json",
     "---------------------------------------------------------------------- PROD ----": "----",
     "build": "rimraf dist && tsc -b tsconfig.json",
-    "start": "NODE_ENV=production node -r tsconfig-paths/register ./dist/src/main.js",
+    "start": "NODE_ENV=production node ./dist/src/main.js",
     "startxx": "NODE_ENV=production node server.js",
     "now-build": "yarn build",
     "now-start": "yarn start",
@@ -41,8 +41,7 @@
   },
   "dependencies": {
     "@hapi/joi": "^15.1.0",
-    "@leaa/api": "0.0.1",
-    "@leaa/common": "0.0.1",
+    "@leaa/common": "^0.0.1",
     "@nestjs/common": "^6.5.3",
     "@nestjs/core": "^6.5.3",
     "@nestjs/graphql": "^6.4.2",

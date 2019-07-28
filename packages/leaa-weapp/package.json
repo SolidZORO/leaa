@@ -10,6 +10,7 @@
     "npm": ">=6.4.0"
   },
   "scripts": {},
-  "dependencies": {},
-  "devDependencies": {}
+  "dependencies": {
+    "@leaa/common": "^0.0.1"
+  }
 }

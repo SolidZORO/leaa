@@ -4,14 +4,12 @@
   "workspaces": [
     "packages/*"
   ],
-  "nohoist": [
-    "**/@nestjs",
-    "**/@nestjs/**"
-  ],
-  "dependencies": {},
   "scripts": {
     "nuke": "rm ./yarn.lock && rm -rf ./node_modules && yarn install",
     "u": "yarn upgrade-interactive --latest",
     "tsc": "yarn workspaces run tsc"
+  },
+  "devDependencies": {
+    "lerna": "^3.16.4"
   }
 }

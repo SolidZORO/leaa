@@ -36,8 +36,7 @@ if (webpackConst.IS_ANALYZER) {
 
 const webpackConfig = {
   entry: {
-    index: ['@babel/polyfill', './src/index.tsx'],
-    // index: './src/index.tsx',
+    index: './src/index.tsx',
     // index: './src/__webpack_test__/webpack_test.tsx',
   },
   mode: webpackConst.MODE,
