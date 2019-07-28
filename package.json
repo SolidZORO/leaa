@@ -1,15 +1,16 @@
 {
-  "name": "@leaa/root",
+  "name": "@leaa/monorepo",
   "private": true,
-  "workspaces": [
-    "packages/*"
-  ],
-  "scripts": {
-    "nuke": "rm ./yarn.lock && rm -rf ./node_modules && yarn install",
-    "u": "yarn upgrade-interactive --latest",
-    "tsc": "yarn workspaces run tsc"
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
   },
-  "devDependencies": {
-    "lerna": "^3.16.4"
-  }
+  "scripts": {
+    "nuke-node-moudles": "rm ./yarn.lock && rm -rf ./yarn-error.log && rm -rf ./node_modules",
+    "nuke": "nuke-node-moudles && yarn install --force",
+    "u": "yarn upgrade-interactive --latest",
+    "tsc-check": "yarn workspaces run tsc-check"
+  },
+  "devDependencies": {}
 }

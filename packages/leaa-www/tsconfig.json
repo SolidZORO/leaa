@@ -2,7 +2,7 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "baseUrl": ".",
-    "outDir": ".dist",
+    "outDir": "_dist",
     "allowJs": true,
     "jsx": "preserve",
     "target": "es5",
@@ -18,10 +18,10 @@
     "lib": ["dom", "dom.iterable", "esnext"],
     "types": ["node", "jest"],
     "paths": {
-      "@leaa/common": ["../_leaa-common/src"],
-      "@leaa/common/*": ["../_leaa-common/src/*"]
+      "@leaa/common/*": ["../_leaa-common/src/*"],
+      "@leaa/www/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules", "dist"]
+  "include": ["**/*", "typings/*"],
+  "exclude": ["node_modules", "_dist"]
 }

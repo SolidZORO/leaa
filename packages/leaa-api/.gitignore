@@ -8,7 +8,7 @@
 # Compiled
 /dist
 /.dist
-/.deploy
+/_dist
 node_modules
 docker_data
 _docker_data

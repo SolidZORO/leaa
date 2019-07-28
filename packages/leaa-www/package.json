@@ -19,7 +19,7 @@
     "tsc-check": "tsc --noEmit",
     "dev": "NODE_ENV=development nodemon server.ts",
     "---------------------------------------------------------------------- PROD ----": "----",
-    "build": "rimraf .deploy && rimraf .next && next build && tsc --project tsconfig.server.json",
+    "build": "rimraf .deploy && rimraf .next && next build && tsc --project tsconfig.build.json",
     "start": "NODE_ENV=production node ./server.js",
     "now-build": "pwd && ls && mv .env.example .env.production && yarn build",
     "now-start": "yarn start",

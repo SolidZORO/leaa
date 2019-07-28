@@ -9,6 +9,10 @@
     "node": ">=10.13.0",
     "npm": ">=6.4.0"
   },
+  "_moduleAliases": {
+    "@leaa/common": "_dist/_leaa-common/src",
+    "@leaa/api": "_dist/leaa-api/src"
+  },
   "scripts": {
     "---------------------------------------------------------------------- LINT ----": "----",
     "lint-js": "eslint \"src/**/*.{ts,tsx}\"",
@@ -26,13 +30,11 @@
     "dev": "NODE_ENV=development ts-node-dev --respawn --transpileOnly -r tsconfig-paths/register ./src/main.ts",
     "seed": "NODE_ENV=development ts-node -r tsconfig-paths/register ./src/seed.ts",
     "nodemon": "NODE_ENV=development nodemon",
-    "---------------------------------------------------------------------- SERVER ----": "----",
-    "prod": "NODE_ENV=production ts-node-dev --respawn --transpileOnly -r tsconfig-paths/register ./src/main.ts",
-    "server": "pm2-docker start ./pm2.json",
     "---------------------------------------------------------------------- PROD ----": "----",
-    "build": "rimraf dist && tsc -b tsconfig.json",
-    "start": "NODE_ENV=production node ./dist/src/main.js",
-    "startxx": "NODE_ENV=production node server.js",
+    "prod": "NODE_ENV=production ts-node-dev --respawn --transpileOnly -r tsconfig-paths/register ./src/main.ts",
+    "---------------------------------------------------------------------- SERVER ----": "----",
+    "build": "rimraf _dist && tsc -b tsconfig.json",
+    "start": "NODE_ENV=production node server.js",
     "now-build": "yarn build",
     "now-start": "yarn start",
     "---------------------------------------------------------------------- ALIAS ----": "----",
@@ -66,7 +68,6 @@
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.15",
     "mkdirp": "^0.5.1",
-    "module-alias": "^2.2.0",
     "moment": "^2.24.0",
     "multer": "^1.4.1",
     "mysql": "^2.17.1",
@@ -121,7 +122,6 @@
     "ts-jest": "24.0.2",
     "ts-node": "8.3.0",
     "ts-node-dev": "^1.0.0-pre.40",
-    "tsconfig-paths": "^3.8.0",
     "typescript-eslint-parser": "^22.0.0"
   },
   "jest": {
