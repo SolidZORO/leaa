@@ -48,7 +48,11 @@ export default (props: IPage) => {
   };
 
   return (
-    <PageCard title={t(`${props.route.namei18n}`)} className={style['wapper']} loading={false}>
+    <PageCard
+      title={t(`${props.route.namei18n}`)}
+      className={style['wapper']}
+      loading={getCategoryQuery.loading || updateCategoryMutation.loading}
+    >
       {getCategoryQuery.error ? <ErrorCard error={getCategoryQuery.error} /> : null}
       {updateCategoryMutation.error ? <ErrorCard error={updateCategoryMutation.error} /> : null}
 

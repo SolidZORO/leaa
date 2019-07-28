@@ -99,7 +99,7 @@ export class ConfigService {
       MYSQL_USER: Joi.string(),
       MYSQL_PASSWORD: Joi.string(),
       MYSQL_DATABASE: Joi.string(),
-
+      //
       TRUST_PROXY: Joi.string(),
       JWT_SECRET_KEY: Joi.string(),
       CLIENT_COOKIE_EXPIRES_DAY: Joi.number().default(180),

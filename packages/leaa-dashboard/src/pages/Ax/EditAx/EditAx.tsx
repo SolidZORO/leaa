@@ -112,7 +112,11 @@ export default (props: IPage) => {
   };
 
   return (
-    <PageCard title={t(`${props.route.namei18n}`)} className={style['wapper']} loading={false}>
+    <PageCard
+      title={t(`${props.route.namei18n}`)}
+      className={style['wapper']}
+      loading={getAxQuery.loading || updateAxMutation.loading}
+    >
       {getAxQuery.error ? <ErrorCard error={getAxQuery.error} /> : null}
       {getBannerMbQuery.error ? <ErrorCard error={getBannerMbQuery.error} /> : null}
       {getBannerPcQuery.error ? <ErrorCard error={getBannerPcQuery.error} /> : null}

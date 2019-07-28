@@ -91,7 +91,11 @@ export default (props: IPage) => {
   };
 
   return (
-    <PageCard title={t(`${props.route.namei18n}`)} className={style['wapper']} loading={false}>
+    <PageCard
+      title={t(`${props.route.namei18n}`)}
+      className={style['wapper']}
+      loading={getUserQuery.loading || updateUserMutation.loading}
+    >
       {getUserQuery.error ? <ErrorCard error={getUserQuery.error} /> : null}
       {getRolesQuery.error ? <ErrorCard error={getRolesQuery.error} /> : null}
       {updateUserMutation.error ? <ErrorCard error={updateUserMutation.error} /> : null}

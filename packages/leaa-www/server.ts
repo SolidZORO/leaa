@@ -30,6 +30,8 @@ const handle = app.getRequestHandler();
   const server = express();
 
   // server.use(nextI18NextMiddleware(nextI18next));
+  server.use('/static', express.static('static'));
+
   server.get('*', (req, res) => handle(req, res));
 
   await server.listen(PORT);

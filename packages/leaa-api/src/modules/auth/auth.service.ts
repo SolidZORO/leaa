@@ -49,7 +49,9 @@ export class AuthService {
   }
 
   public async validateUserByReq(req: Request): Promise<User | undefined | boolean> {
-    if (req.body && notValidateUserQuerys.some(item => req.body.query.includes(item))) {
+    const isGuest = req.headers && !req.headers.authorization;
+
+    if (req.body && isGuest && notValidateUserQuerys.some(item => req.body.query.includes(item))) {
       return true;
     }
 

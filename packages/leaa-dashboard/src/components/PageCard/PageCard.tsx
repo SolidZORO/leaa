@@ -14,13 +14,13 @@ interface IProps {
 
 export const PageCard = (props: IProps) => (
   <div className={cx(style['wrapper'], props.className)}>
+    <div className={style['header']}>
+      {props.title && <div className={style['title']}>{props.title}</div>}
+
+      {props.extra && <div className={style['extra']}>{props.extra}</div>}
+    </div>
+
     <Spin spinning={props.loading}>
-      <div className={style['header']}>
-        {props.title && <div className={style['title']}>{props.title}</div>}
-
-        {props.extra && <div className={style['extra']}>{props.extra}</div>}
-      </div>
-
       <div className={style['container']}>{props.children}</div>
     </Spin>
   </div>

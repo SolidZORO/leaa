@@ -64,7 +64,11 @@ export default (props: IPage) => {
   };
 
   return (
-    <PageCard title={t(`${props.route.namei18n}`)} className={style['wapper']} loading={false}>
+    <PageCard
+      title={t(`${props.route.namei18n}`)}
+      className={style['wapper']}
+      loading={getPermissionQuery.loading || updatePermissionMutation.loading}
+    >
       {getPermissionQuery.error ? <ErrorCard error={getPermissionQuery.error} /> : null}
       {updatePermissionMutation.error ? <ErrorCard error={updatePermissionMutation.error} /> : null}
 

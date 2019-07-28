@@ -1,9 +1,13 @@
 {
+  "name": "leaa-monorepo",
   "version": 2,
   "builds": [
+    { "src": "packages/leaa-www/package.json", "use": "@now/next" }
+  ],
+  "routes": [
     {
-      "src": "packages/leaa-www/package.json",
-      "use": "@now/node"
+      "src": "/(.*)",
+      "dest": "/packages/leaa-www/$1"
     }
   ],
   "build": {

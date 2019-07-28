@@ -31,9 +31,10 @@ export default (props: IPage) => {
   });
 
   const getPermissionsVariables = { pageSize: 9999 };
-  const getPermissionsQuery = useQuery<{ permissions: PermissionsWithPaginationObject }, PermissionsArgs>(GET_PERMISSIONS, {
-    variables: getPermissionsVariables,
-  });
+  const getPermissionsQuery = useQuery<{ permissions: PermissionsWithPaginationObject }, PermissionsArgs>(
+    GET_PERMISSIONS,
+    { variables: getPermissionsVariables },
+  );
 
   const [submitVariables, setSubmitVariables] = useState<{ id: number; role: UpdateRoleInput }>({
     id: Number(id),
@@ -91,7 +92,11 @@ export default (props: IPage) => {
   };
 
   return (
-    <PageCard title={t(`${props.route.namei18n}`)} className={style['wapper']} loading={false}>
+    <PageCard
+      title={t(`${props.route.namei18n}`)}
+      className={style['wapper']}
+      loading={getRoleQuery.loading || updateRoleMutation.loading}
+    >
       {getRoleQuery.error ? <ErrorCard error={getRoleQuery.error} /> : null}
       {getPermissionsQuery.error ? <ErrorCard error={getPermissionsQuery.error} /> : null}
       {updateRoleMutation.error ? <ErrorCard error={updateRoleMutation.error} /> : null}
