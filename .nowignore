@@ -33,5 +33,4 @@ logs
 !.vscode/launch.json
 !.vscode/extensions.json
 
-/packages/leaa-api
 /packages/leaa-dashboard

@@ -1,12 +1,11 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "./",
+    "outDir": "_dist",
     "module": "commonjs",
-    "target": "es2017",
+    "target": "es6",
     "isolatedModules": false,
     "noEmit": false
-  },
-  "include": ["./server.ts", "./i18n.ts"]
+  }
 }
 

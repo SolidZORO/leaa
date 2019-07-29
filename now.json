@@ -1,26 +1,39 @@
 {
   "name": "leaa-monorepo",
   "version": 2,
+  "env": {
+    "NODE_ENV": "production",
+    "PROTOCOL": "http",
+    "PORT": "5566",
+    "BASE_HOST": "localhost",
+    "PUBLIC_DIR": "public",
+    "ATTACHMENT_DIR": "attachments",
+    "ATTACHMENT_LIMIT_SIZE_BY_MB": "5",
+    "ATTACHMENT_SAVED_IN_LOCAL": "1",
+    "ATTACHMENT_SAVED_IN_CLOUD": "0",
+
+    "TRUST_PROXY": "loopback",
+    "JWT_SECRET_KEY": "mRNxseR7eXzur4Ug",
+    "CLIENT_COOKIE_EXPIRES_DAY": "180",
+    "SERVER_COOKIE_EXPIRES_DAY": "180",
+
+    "MYSQL_HOST": "leaa-db",
+    "MYSQL_PORT": "3308",
+    "MYSQL_USER": "tororo",
+    "MYSQL_PASSWORD": "mysql_user_YpgA2nVwDmgd3dkt",
+    "MYSQL_ROOT_PASSWORD": "mysql_root_YpgA2nVwDmgd3dkt",
+    "MYSQL_DATABASE": "test"
+  },
   "builds": [
-    { "src": "packages/leaa-www/package.json", "use": "@now/next" },
-    { "src": "packages/leaa-api/package.json", "use": "@now/node" },
-    { "src": "api/**/*.js", "use": "@now/node" }
+    {
+      "src": "packages/leaa-api/server.js",
+      "use": "@now/node-server"
+    }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "/packages/leaa-www/$1"
+      "dest": "packages/leaa-api/server.js"
     }
-  ],
-  "build": {
-    "env": {
-      "NAME": "WWW-PROD",
-      "PROTOCOL": "http",
-      "PORT": "3333",
-      "BASE_HOST": "192.168.169.99",
-      "API_HOST": "http://192.168.169.99:5555",
-      "GRAPHQL_ENDPOINT": "http://192.168.169.99:5555/graphql",
-      "UPLOAD_HOST": "http://192.168.169.99:5555/attachments"
-    }
-  }
+  ]
 }
