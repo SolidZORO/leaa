@@ -5,5 +5,7 @@
 
 /_documents
 /public
+/_build
+/.build
 /tools/webpack
 /src/assets/fonts/**/*.js

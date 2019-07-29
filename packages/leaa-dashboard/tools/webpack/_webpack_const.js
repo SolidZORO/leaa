@@ -30,7 +30,7 @@ webpackConst.NODEMODULES_DIR = path.resolve(`${webpackConst.ROOT_DIR}/node_modul
 webpackConst.VIEWS_DIR = path.resolve(`${webpackConst.SRC_DIR}/views`);
 
 // BUILD PATH
-webpackConst.BUILD_DIR_NAME = webpackConst.__DEV__ ? '.build' : '.deploy';
+webpackConst.BUILD_DIR_NAME = webpackConst.__DEV__ ? '.build' : '_dist';
 
 webpackConst.BUILD_DIR = path.resolve(`${webpackConst.ROOT_DIR}/${webpackConst.BUILD_DIR_NAME}`);
 webpackConst.BUILD_PUBLIC_DIR = path.resolve(`${webpackConst.BUILD_DIR}/public`);

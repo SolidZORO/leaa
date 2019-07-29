@@ -42,5 +42,5 @@ module.exports = {
       },
     ],
   ],
-  ignore: ['node_modules', 'logs', '_build', '_deploy', '_tsc', '.dist', '.deploy', '.docker', '.next'],
+  ignore: ['node_modules', 'logs', '_build'],
 };

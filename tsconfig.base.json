@@ -6,11 +6,7 @@
     "esModuleInterop": true,
     "noImplicitReturns": true,
     "resolveJsonModule": true,
-    "experimentalDecorators": true,
-    "extendedDiagnostics": true,
-    "emitDecoratorMetadata": true,
     "forceConsistentCasingInFileNames": true,
-    "diagnostics": true,
     "baseUrl": "."
   },
   "compileOnSave": false,

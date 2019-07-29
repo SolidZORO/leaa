@@ -5,11 +5,11 @@ const webpack = require('webpack');
 const lessToJS = require('less-vars-to-js');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
-const withImage = require('./__next__/next-image');
-const withDotenv = require('./__next__/next-dotenv');
-const withAntd = require('./__next__/next-antd');
+const withImage = require('./configs/next-image');
+const withDotenv = require('./configs/next-dotenv');
+const withAntd = require('./configs/next-antd');
 
-// const env = require('./__next__/next-dotenv-object');
+// const env = require('./configs/next-dotenv-object');
 const antdVariables = lessToJS(fs.readFileSync(path.resolve(__dirname, './styles/variables.less'), 'utf8'));
 
 // fix: prevents error when .less files are required by node
@@ -22,12 +22,12 @@ const webpackConfig = config => {
     new LodashModuleReplacementPlugin({ paths: true }),
     new webpack.NormalModuleReplacementPlugin(
       /\/eventsource$/,
-      path.resolve(__dirname, './__next__/next-eventsource.js'),
+      path.resolve(__dirname, './configs/next-eventsource.js'),
     ),
   );
 
   // comstom antd icon
-  config.resolve.alias['@ant-design/icons/lib/dist$'] = path.resolve(__dirname, './__next__/next-antd-icon');
+  config.resolve.alias['@ant-design/icons/lib/dist$'] = path.resolve(__dirname, './configs/next-antd-icon');
   config.resolve.alias['swiper$'] = 'swiper/dist/js/swiper.js';
 
   return config;
@@ -47,8 +47,8 @@ module.exports = withDotenv(
         modifyVars: antdVariables,
       },
       target: 'serverless',
+      distDir: process.env.NODE_ENV !== 'production' ? '.next' : '_dist',
       // assetPrefix: './',
-      // distDir: process.env.NODE_ENV !== 'production' ? '.next' : '.deploy',
       // env,
       webpack: webpackConfig,
     }),

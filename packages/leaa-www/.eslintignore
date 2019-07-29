@@ -5,6 +5,8 @@
 /next-env.d.ts
 
 /_documents
+/_build
+/.build
 /public
 /__next__
 /tools/webpack
