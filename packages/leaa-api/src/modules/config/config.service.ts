@@ -1,22 +1,12 @@
-import Joi from '@hapi/joi';
-import dotenv, { DotenvParseOutput } from 'dotenv';
-import fs from 'fs';
+import envalid from 'envalid';
 
 import { IDotEnv } from '@leaa/api/interfaces';
 
-type IEnvConfig = IDotEnv | DotenvParseOutput;
-
 export class ConfigService {
-  private readonly envConfig: IEnvConfig;
+  private readonly envConfig: IDotEnv;
 
-  constructor(path: string) {
-    const config: IEnvConfig = dotenv.parse(fs.readFileSync(path));
-
-    this.envConfig = this.validate(config);
-  }
-
-  get NODE_ENV(): string {
-    return this.envConfig.NODE_ENV;
+  constructor(dotEnvPath: string) {
+    this.envConfig = this.validate(dotEnvPath);
   }
 
   get PROTOCOL(): string {
@@ -81,37 +71,31 @@ export class ConfigService {
     return Number(this.envConfig.SERVER_COOKIE_EXPIRES_DAY);
   }
 
-  private validate(envConfig: IEnvConfig): IEnvConfig {
-    const envVarsSchema: Joi.ObjectSchema = Joi.object({
-      NODE_ENV: Joi.string()
-        .valid(['development', 'production', 'test', 'provision'])
-        .default('development'),
+  private validate(dotEnvPath: string): IDotEnv {
+    const rule = {
+      PROTOCOL: envalid.str({ choices: ['http', 'https'], default: 'http' }),
+      PORT: envalid.port({ default: 5555 }),
       //
-      PROTOCOL: Joi.string().valid(['http', 'https']),
-      PORT: Joi.number().default(3000),
-      BASE_HOST: Joi.string(),
-      PUBLIC_DIR: Joi.string().default('public'),
-      ATTACHMENT_DIR: Joi.string().default('attachments'),
-      ATTACHMENT_LIMIT_SIZE_BY_MB: Joi.number().default(5),
+      BASE_HOST: envalid.str(),
+      PUBLIC_DIR: envalid.str(),
+      ATTACHMENT_DIR: envalid.str(),
+      ATTACHMENT_LIMIT_SIZE_BY_MB: envalid.num(),
+      ATTACHMENT_SAVED_IN_LOCAL: envalid.num({ choices: [0, 1], default: 0 }),
+      ATTACHMENT_SAVED_IN_CLOUD: envalid.num({ choices: [0, 1], default: 0 }),
       //
-      MYSQL_HOST: Joi.string(),
-      MYSQL_PORT: Joi.number().default(3306),
-      MYSQL_USER: Joi.string(),
-      MYSQL_PASSWORD: Joi.string(),
-      MYSQL_DATABASE: Joi.string(),
+      MYSQL_HOST: envalid.str(),
+      MYSQL_PORT: envalid.num(),
+      MYSQL_USER: envalid.str(),
+      MYSQL_PASSWORD: envalid.str(),
+      MYSQL_DATABASE: envalid.str(),
       //
-      TRUST_PROXY: Joi.string(),
-      JWT_SECRET_KEY: Joi.string(),
-      CLIENT_COOKIE_EXPIRES_DAY: Joi.number().default(180),
-      SERVER_COOKIE_EXPIRES_DAY: Joi.number().default(180),
-    });
+      TRUST_PROXY: envalid.str(),
+      JWT_SECRET_KEY: envalid.str(),
+      CLIENT_COOKIE_EXPIRES_DAY: envalid.num(),
+      SERVER_COOKIE_EXPIRES_DAY: envalid.num(),
+    };
 
-    const { error, value: validatedEnvConfig } = Joi.validate(envConfig, envVarsSchema, { allowUnknown: true });
-
-    if (error) {
-      throw new Error(`Config validation error: ${error.message}`);
-    }
-
-    return validatedEnvConfig;
+    // @ts-ignore
+    return envalid.cleanEnv(process.env, rule, { dotEnvPath });
   }
 }

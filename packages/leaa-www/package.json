@@ -21,9 +21,6 @@
     "---------------------------------------------------------------------- PROD ----": "----",
     "build": "rimraf .deploy && rimraf .next && next build && tsc --project tsconfig.build.json",
     "start": "NODE_ENV=production node ./server.js",
-    "---------------------------------------------------------------------- NOW ----": "----",
-    "now-build": "pwd && ls && mv .env.example .env.production && yarn build",
-    "now-start": "yarn start",
     "---------------------------------------------------------------------- ALIAS ----": "----",
     "u": "yarn upgrade-interactive --latest",
     "s": "yarn dev"

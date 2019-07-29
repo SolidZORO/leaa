@@ -40,7 +40,7 @@ import { AppModule } from './app.module';
     PROTOCOL: configService.PROTOCOL,
     PORT: configService.PORT,
     BASE_HOST: configService.BASE_HOST,
-    NODE_ENV: configService.NODE_ENV,
+    NODE_ENV: process.env.NODE_ENV,
     showGraphql: true,
   });
 })();

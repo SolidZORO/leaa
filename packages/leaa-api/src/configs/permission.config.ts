@@ -91,6 +91,6 @@ export const permissions = shield(
     },
   },
   {
-    allowExternalErrors: envConfig.NODE_ENV !== 'production',
+    allowExternalErrors: process.env.NODE_ENV !== 'production',
   },
 );

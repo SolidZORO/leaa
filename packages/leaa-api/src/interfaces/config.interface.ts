@@ -1,5 +1,5 @@
 export interface IDotEnv {
-  NODE_ENV: 'development' | 'production' | 'test';
+  // NODE_ENV: 'development' | 'production' | 'test';
   PROTOCOL: 'http' | 'https';
   PORT: number;
 

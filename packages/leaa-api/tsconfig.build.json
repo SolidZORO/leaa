@@ -5,6 +5,8 @@
     "module": "commonjs",
     "target": "es6",
     "isolatedModules": false,
+    "sourceMap": false,
+    "declaration": false,
     "noEmit": false
   }
 }
