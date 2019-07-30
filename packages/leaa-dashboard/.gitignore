@@ -4,10 +4,14 @@
 
 # Compiled
 /.build
-/.deploy
+
 /.dist
 /dist
 /_dist
+/.deploy
+/deploy
+/_deploy
+
 node_modules
 docker_data
 _docker_data
