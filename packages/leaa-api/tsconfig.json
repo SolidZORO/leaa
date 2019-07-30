@@ -6,6 +6,8 @@
     "target": "es6",
     "moduleResolution": "node",
     "sourceMap": false,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "paths": {
       "@leaa/common/*": ["../_leaa-common/src/*"],
       "@leaa/api/*": ["./src/*"]
