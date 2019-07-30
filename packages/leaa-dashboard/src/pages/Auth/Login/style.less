@@ -22,7 +22,7 @@
   }
 
   .logo {
-    padding: 30px 0 20px 0;
+    padding: 20px 0 20px 0;
 
     @media (min-width: @screen-md) {
       padding: 50px 0 45px 0;
@@ -63,8 +63,14 @@
 
 .switch-language {
   position: absolute;
-  //right: 5px;
-  left: 5px;
-  bottom: 10px;
+  right: 5px;
+  top: 10px;
   z-index: 1;
+
+  @media (min-width: @screen-md) {
+    right: inherit;
+    top: inherit;
+    left: 5px;
+    bottom: 10px;
+  }
 }

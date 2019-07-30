@@ -36,10 +36,6 @@ export default (props: RouteComponentProps) => {
   return (
     <div className={style['wrapper']}>
       <div className={style['login-bg']}>
-        <div className={style['switch-language']}>
-          <SwitchLanguage placement="topRight" />
-        </div>
-
         <Row>
           <Col xs={24} lg={16} xl={12} xxl={10}>
             <div className={style['login-box']}>
@@ -56,6 +52,10 @@ export default (props: RouteComponentProps) => {
             </div>
           </Col>
         </Row>
+      </div>
+
+      <div className={style['switch-language']}>
+        <SwitchLanguage placement="topRight" />
       </div>
     </div>
   );

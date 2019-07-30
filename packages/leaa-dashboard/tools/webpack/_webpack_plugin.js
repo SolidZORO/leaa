@@ -18,8 +18,11 @@ class WebpackCallbackPlugin {
         // emoji for CLI
         const serverBaseByText = `${process.env.PROTOCOL}://${process.env.BASE_HOST}:${process.env.PORT}`;
         const serverBaseByEmoji = `✨✨ \x1b[00;45;9m${serverBaseByText}\x1b[0m ✨✨`;
+        const serverEnv = `${process.env.NODE_ENV !== 'production' ? '🚀' : '🔰'} ${(
+          process.env.NODE_ENV || 'NOT-ENV'
+        ).toUpperCase()}`;
 
-        console.log(`\n\n> ${process.env.NODE_ENV} URL ${serverBaseByEmoji}\n`);
+        console.log(`\n\n> ${serverEnv} / URL ${serverBaseByEmoji}\n`);
       }
     });
   }
@@ -44,12 +47,8 @@ if (webpackConst.__DEV__) {
   //
   pluginList.push(
     new webpack.NamedChunksPlugin(),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('development'),
-    }),
-    new Dotenv({
-      path: './.env.development',
-    }),
+    new webpack.DefinePlugin({ 'process.env.NODE_ENV': JSON.stringify('development') }),
+    new Dotenv({ path: './.env' }),
     new WebpackCallbackPlugin(),
   );
 } else {
@@ -62,12 +61,8 @@ if (webpackConst.__DEV__) {
       filename: webpackConst.OUTPUT_STYLE_FILENAME,
       chunkFilename: webpackConst.OUTPUT_STYLE_CHUNK_FILENAME,
     }),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('production'),
-    }),
-    new Dotenv({
-      path: './.env',
-    }),
+    new webpack.DefinePlugin({ 'process.env.NODE_ENV': JSON.stringify('production') }),
+    new Dotenv({ path: './.env.production' }),
   );
 }
 

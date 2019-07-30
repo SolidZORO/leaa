@@ -81,7 +81,7 @@ const LoginFormInner = (props: IProps) => {
             <Form.Item label={t('_page:Auth.Login.email')}>
               {getFieldDecorator('email', {
                 validateTrigger: ['onBlur'],
-                initialValue: 'admin@leaa.com',
+                initialValue: '',
                 rules: [{ required: true }],
               })(<Input size="large" placeholder={t('_page:Auth.Login.email')} />)}
             </Form.Item>
@@ -91,7 +91,7 @@ const LoginFormInner = (props: IProps) => {
             <Form.Item label={t('_page:Auth.Login.password')}>
               {getFieldDecorator('password', {
                 validateTrigger: ['onBlur'],
-                initialValue: 'h8Hx9qvPKoHMLQgj',
+                initialValue: '',
                 rules: [{ required: true }],
               })(<Input size="large" type="password" placeholder={t('_page:Auth.Login.password')} />)}
             </Form.Item>

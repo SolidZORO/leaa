@@ -33,7 +33,7 @@ webpackConst.VIEWS_DIR = path.resolve(`${webpackConst.SRC_DIR}/views`);
 webpackConst.BUILD_DIR_NAME = webpackConst.__DEV__ ? '.build' : '_dist';
 
 webpackConst.BUILD_DIR = path.resolve(`${webpackConst.ROOT_DIR}/${webpackConst.BUILD_DIR_NAME}`);
-webpackConst.BUILD_PUBLIC_DIR = path.resolve(`${webpackConst.BUILD_DIR}/public`);
+webpackConst.BUILD_PUBLIC_DIR = path.resolve(`${webpackConst.BUILD_DIR}`);
 webpackConst.BUILD_STATICS_DIR = path.resolve(`${webpackConst.BUILD_PUBLIC_DIR}/statics`);
 webpackConst.CDN_STATICS_DIR_URL = '/statics/';
 
