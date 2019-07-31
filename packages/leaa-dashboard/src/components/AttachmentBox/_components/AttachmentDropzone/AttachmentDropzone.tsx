@@ -7,6 +7,7 @@ import axios from 'axios';
 import { Icon, message } from 'antd';
 
 import { IAttachmentParams } from '@leaa/common/interfaces';
+import { envConfig } from '@leaa/dashboard/configs';
 
 import style from './style.less';
 
@@ -28,7 +29,7 @@ export const AttachmentDropzone = (props: IProps) => {
       _.map(props.attachmentParams, (v, k) => formData.append(`${k}`, `${v}`));
 
       axios
-        .post(`${process.env.UPLOAD_ENDPOINT}`, formData, {
+        .post(`${envConfig.UPLOAD_ENDPOINT}`, formData, {
           headers: { Authorization: token ? `Bearer ${token}` : '' },
         })
         .then(() => {

@@ -11,6 +11,7 @@ import HeaderId from 'braft-extensions/dist/header-id';
 import { authUtil } from '@leaa/dashboard/utils';
 import { IMediaItem, IAttachmentParams } from '@leaa/common/interfaces';
 import { Attachment } from '@leaa/common/entrys';
+import { envConfig } from '@leaa/dashboard/configs';
 
 import 'braft-editor/dist/index.css';
 import 'braft-extensions/dist/table.css';
@@ -84,7 +85,7 @@ export const WYSIWYGEditor = forwardRef((props: IProps, ref: React.Ref<any>) => 
   const attachmentToMedia = (attachment: Attachment): IMediaItem => ({
     id: attachment.uuid,
     type: attachment.type.toUpperCase(),
-    url: `${process.env.API_HOST}${attachment.path}`,
+    url: `${envConfig.API_HOST}${attachment.path}`,
   });
 
   const attachmentsToMedias = (attachmentItems?: Attachment[]): IMediaItem[] =>
@@ -107,7 +108,7 @@ export const WYSIWYGEditor = forwardRef((props: IProps, ref: React.Ref<any>) => 
     _.map(props.attachmentParams, (v, k) => formData.append(`${k}`, `${v}`));
 
     await axios
-      .post(`${process.env.UPLOAD_ENDPOINT}`, formData, {
+      .post(`${envConfig.UPLOAD_ENDPOINT}`, formData, {
         headers: { Authorization: token ? `Bearer ${token}` : '' },
         onUploadProgress: event => {
           param.progress((event.loaded / event.total) * 100);
@@ -115,7 +116,7 @@ export const WYSIWYGEditor = forwardRef((props: IProps, ref: React.Ref<any>) => 
       })
       .then(e => {
         if (e.data && e.data.attachment) {
-          const url = `${process.env.API_HOST}${e.data.attachment.path}`;
+          const url = `${envConfig.API_HOST}${e.data.attachment.path}`;
           param.success({ url });
         }
       })

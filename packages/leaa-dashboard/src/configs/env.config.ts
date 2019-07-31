@@ -1,13 +1,5 @@
-interface IEnvConfig {
-  NODE_ENV: 'production' | 'development';
-  SITE_NAME: string;
-}
+import { IDotEnv } from '@leaa/dashboard/interfaces';
 
 const envDataEl = document.getElementById('__ENV_DATA__');
 
-export const envConfig: IEnvConfig = envDataEl
-  ? JSON.parse(envDataEl.innerHTML)
-  : {
-      NODE_ENV: 'development',
-      SITE_NAME: '-',
-    };
+export const envConfig: IDotEnv = envDataEl ? JSON.parse(envDataEl.innerHTML) : {};

@@ -1,10 +1,18 @@
+const _ = require('lodash');
 const webpack = require('webpack');
+const dotenv = require('dotenv');
+// const Dotenv = require('dotenv-webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const Dotenv = require('dotenv-webpack');
 const WriteFilePlugin = require('write-file-webpack-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
+const webpackAnalyzerConfig = require('./_webpack_analyzer');
 const webpackConst = require('./_webpack_const');
 const webpackShimming = require('./_webpack_shimming');
+
+const envPath = `${webpackConst.ROOT_DIR}/${webpackConst.__DEV__ ? '.env' : '.env.production'}`;
+const env = dotenv.config({ path: envPath }).parsed;
 
 class WebpackCallbackPlugin {
   apply(compiler) {
@@ -26,38 +34,52 @@ class WebpackCallbackPlugin {
 // PLUGIN
 const pluginList = [];
 
+if (webpackConst.IS_ANALYZER) {
+  pluginList.push(new BundleAnalyzerPlugin(webpackAnalyzerConfig));
+}
+
+// OUTPUT HTML
+const outputHtmlOption = {
+  title: `${process.env.SITE_NAME || '-'}`,
+  env: JSON.stringify(_.pick(env, Object.keys(env))),
+  filename: `${webpackConst.BUILD_PUBLIC_DIR}/index.html`,
+  template: `${webpackConst.VIEWS_DIR}/index.ejs`,
+  favicon: `${webpackConst.SRC_DIR}/assets/favicons/favicon.ico`,
+  inject: true,
+  hash: true,
+  minify: {
+    removeComments: true,
+    collapseWhitespace: false,
+  },
+};
+
+console.log(Object.keys(env));
+
 pluginList.push(
   new WriteFilePlugin({
-    test: /(favicon\.ico$|index\.html$|env\.js$|\/assets\/)/,
+    test: /(favicon\.ico$|index\.html$|\/assets\/)/,
     useHashIndex: true,
   }),
   // new SizePlugin(),
   new webpack.ProvidePlugin(webpackShimming.provide),
   new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /zh-cn|zh-hk|en/),
+  new HtmlWebpackPlugin(outputHtmlOption),
 );
 
 if (webpackConst.__DEV__) {
-  //
-  // DEV PLUGIN
-  //
   pluginList.push(
-    new webpack.NamedChunksPlugin(),
     new webpack.DefinePlugin({ 'process.env.NODE_ENV': JSON.stringify('development') }),
-    new Dotenv({ path: `${webpackConst.ROOT_DIR}/.env` }),
+    new webpack.NamedChunksPlugin(),
     new WebpackCallbackPlugin(),
   );
 } else {
-  //
-  // PROD PLUGIN
-  //
   pluginList.push(
+    new webpack.DefinePlugin({ 'process.env.NODE_ENV': JSON.stringify('production') }),
     new webpack.HashedModuleIdsPlugin(),
     new MiniCssExtractPlugin({
       filename: webpackConst.OUTPUT_STYLE_FILENAME,
       chunkFilename: webpackConst.OUTPUT_STYLE_CHUNK_FILENAME,
     }),
-    new webpack.DefinePlugin({ 'process.env.NODE_ENV': JSON.stringify('production') }),
-    new Dotenv({ path: `${webpackConst.ROOT_DIR}/.env.production` }),
   );
 }
 

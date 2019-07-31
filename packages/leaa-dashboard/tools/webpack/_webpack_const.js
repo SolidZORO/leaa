@@ -17,9 +17,9 @@ webpackConst.CHUNK_HASH = webpackConst.__DEV__ ? '_devvvvvvvvvvvv' : '_[chunkhas
 webpackConst.STYLE_CHUNK_HASH = webpackConst.__DEV__ ? '_devvvvvvvvvvvv' : '_[contenthash:8]';
 webpackConst.MODE = webpackConst.__DEV__ ? 'development' : 'production';
 webpackConst.DEVTOOL = webpackConst.__DEV__
-    ? 'eval-source-map'
+  ? // ? 'eval-source-map'
     // ? 'source-map'
-    // false
+    false
   : false;
 
 // DIR PATH
@@ -73,14 +73,13 @@ webpackConst.TIPS_SPACE = 17;
 // eslint-disable-next-line import/no-dynamic-require
 const pkg = require(webpackConst.PACKAGE_FILE);
 
-console.log(`----------------- WEBPACK ${webpackConst.__DEV__ ? 'DEV  ' : 'PROD '}-----------------`);
-console.log(`${'NAME'.padStart(webpackConst.TIPS_SPACE)}: ${pkg.name}\n`);
+console.log(`---------------------------- WEBPACK ${process.env.NODE_ENV.toUpperCase()} ----------------------------`);
+console.log(`${'PKG_NAME'.padStart(webpackConst.TIPS_SPACE)}: ${pkg.name}\n`);
 console.log(`${'DEV_PREFIX'.padStart(webpackConst.TIPS_SPACE)}: ${webpackConst.DEV_PREFIX}`);
 console.log(`${'CHUNK_HASH'.padStart(webpackConst.TIPS_SPACE)}: ${webpackConst.CHUNK_HASH}`);
 console.log(`${'PUBLIC_DIR'.padStart(webpackConst.TIPS_SPACE)}: ${webpackConst.PUBLIC_DIR}`);
 console.log(`${'BUILD_DIR'.padStart(webpackConst.TIPS_SPACE)}: ${webpackConst.BUILD_DIR}`);
-console.log(`${'BUILD_PUBLIC_DIR'.padStart(webpackConst.TIPS_SPACE)}: ${webpackConst.BUILD_PUBLIC_DIR}`);
-console.log(''.padStart(48, '-'));
+// console.log(`${'BUILD_PUBLIC_DIR'.padStart(webpackConst.TIPS_SPACE)}: ${webpackConst.BUILD_PUBLIC_DIR}`);
 console.log('\n');
 
 module.exports = webpackConst;
