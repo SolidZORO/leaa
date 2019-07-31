@@ -16,7 +16,7 @@ yarn build
 
 cp -fr ./_dist ${DEPLOY_DIR}
 
-cp -fr ./serverless/now/* ${DEPLOY_DIR}
+#cp -fr ./serverless/now/* ${DEPLOY_DIR}
 
 cp -fr ./tools ${DEPLOY_DIR}
 cp -fr ./public/robots.txt ${DEPLOY_DIR}

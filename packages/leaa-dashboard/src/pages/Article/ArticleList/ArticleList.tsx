@@ -33,9 +33,15 @@ export default (props: IPage) => {
   const [q, setQ] = useState<string | undefined>(urlParams && urlParams.q ? `${urlParams.q}` : undefined);
   const [page, setPage] = useState<number | undefined>(urlPagination.page);
   const [pageSize, setPageSize] = useState<number | undefined>(urlPagination.pageSize);
-  const [orderBy, setOrderBy] = useState<string | undefined>(urlParams && urlParams.orderBy ? `${urlParams.orderBy}` : undefined); // prettier-ignore
-  const [orderSort, setOrderSort] = useState<IOrderSort  | undefined>(urlParams && urlParams.orderSort ? urlUtil.formatOrderSort(`${urlParams.orderSort}`) : undefined); // prettier-ignore
   const [selectedRowKeys, setSelectedRowKeys] = useState<number[] | string[]>([]);
+
+  const [orderBy, setOrderBy] = useState<string | undefined>(
+    urlParams && urlParams.orderBy ? `${urlParams.orderBy}` : undefined,
+  );
+
+  const [orderSort, setOrderSort] = useState<IOrderSort | undefined>(
+    urlParams && urlParams.orderSort ? urlUtil.formatOrderSort(`${urlParams.orderSort}`) : undefined,
+  );
 
   const resetUrlParams = () => {
     setPage(urlPagination.page);

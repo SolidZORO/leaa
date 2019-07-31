@@ -16,7 +16,7 @@ const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 // output HTML
 const outputHtmlOption = {
-  title: `${process.env.NAME}${webpackConst.IS_SERVER || webpackConst.__DEV__ ? ' - DEV' : ''}`,
+  title: `${process.env.NAME || 'Dashboard'}${webpackConst.IS_SERVER || webpackConst.__DEV__ ? ' - DEV' : ''}`,
   filename: `${webpackConst.BUILD_PUBLIC_DIR}/index.html`,
   template: `${webpackConst.VIEWS_DIR}/index.ejs`,
   favicon: `${webpackConst.SRC_DIR}/assets/favicons/favicon.ico`,
