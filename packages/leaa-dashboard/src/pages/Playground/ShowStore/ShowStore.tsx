@@ -21,9 +21,6 @@ export default (props: RouteComponentProps) => {
   return (
     <div>
       <h2>BOX</h2>
-      <Button type="primary" size="large" onClick={onSubmitAttachmentBox}>
-        Submit Attachments
-      </Button>
 
       <AttachmentBox
         ref={attachmentBoxRef}
@@ -35,11 +32,18 @@ export default (props: RouteComponentProps) => {
         }}
       />
 
+      <br />
+
+      <Button type="primary" size="large" onClick={onSubmitAttachmentBox}>
+        Submit Attachments
+      </Button>
+
+      <br />
+      <br />
+
       <hr />
+
       <DatePicker />
-      <Link to="/show/9">SHOW 9</Link>
-      <hr />
-      <Link to="/user-permissions/9">user-permissions 9</Link>
 
       <h2>STORE</h2>
       <hr />

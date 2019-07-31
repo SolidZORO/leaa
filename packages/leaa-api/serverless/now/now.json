@@ -1,0 +1,22 @@
+{
+  "name": "test-leaa-api",
+  "version": 2,
+  "dotenv": ".env.production",
+  "builds": [
+    {
+      "src": "server.js",
+      "use": "@now/node"
+    }
+  ],
+  "build": {
+    "env": {
+      "NODE_PATH": "_dist/"
+    }
+  },
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "server.js"
+    }
+  ]
+}

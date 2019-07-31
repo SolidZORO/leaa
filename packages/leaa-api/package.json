@@ -9,10 +9,6 @@
     "node": ">=10.13.0",
     "npm": ">=6.4.0"
   },
-  "_moduleAliases": {
-    "@leaa/common": "_dist/_leaa-common/src",
-    "@leaa/api": "_dist/leaa-api/src"
-  },
   "scripts": {
     "---------------------------------------------------------------------- LINT ----": "----",
     "lint-js": "eslint \"src/**/*.{ts,tsx}\"",

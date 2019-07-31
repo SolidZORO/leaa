@@ -2,23 +2,23 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GraphQLModule } from '@nestjs/graphql';
 
-import { GraphqlService } from '@leaa/api/modules/graphql/graphql.service';
-import { TypeormService } from '@leaa/api/modules/typeorm/typeorm.service';
+import { GraphqlService } from './modules/graphql/graphql.service';
+import { TypeormService } from './modules/typeorm/typeorm.service';
 
-import { ConfigModule } from '@leaa/api/modules/config/config.module';
-import { SeedModule } from '@leaa/api/modules/seed/seed.module';
-import { PlaygroundModule } from '@leaa/api/modules/playground/playground.module';
-import { IndexModule } from '@leaa/api/modules/index/index.module';
+import { ConfigModule } from './modules/config/config.module';
+import { SeedModule } from './modules/seed/seed.module';
+import { PlaygroundModule } from './modules/playground/playground.module';
+import { IndexModule } from './modules/index/index.module';
 //
-import { UserModule } from '@leaa/api/modules/user/user.module';
-import { AuthModule } from '@leaa/api/modules/auth/auth.module';
-import { PermissionModule } from '@leaa/api/modules/permission/permission.module';
-import { RoleModule } from '@leaa/api/modules/role/role.module';
-import { CategoryModule } from '@leaa/api/modules/category/category.module';
-import { ArticleModule } from '@leaa/api/modules/article/article.module';
-import { AttachmentModule } from '@leaa/api/modules/attachment/attachment.module';
-import { AxModule } from '@leaa/api/modules/ax/ax.module';
-import { AuthTokenModule } from '@leaa/api/modules/auth-token/auth-token.module';
+import { AxModule } from './modules/ax/ax.module';
+import { UserModule } from './modules/user/user.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { RoleModule } from './modules/role/role.module';
+import { CategoryModule } from './modules/category/category.module';
+import { ArticleModule } from './modules/article/article.module';
+import { AuthTokenModule } from './modules/auth-token/auth-token.module';
+import { AttachmentModule } from './modules/attachment/attachment.module';
+import { PermissionModule } from './modules/permission/permission.module';
 
 @Module({
   imports: [

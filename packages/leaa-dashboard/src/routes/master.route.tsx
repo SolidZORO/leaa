@@ -264,7 +264,7 @@ export const masterRoutes: IRouteItem[] = [
     namei18n: '_route:home',
     permission: ALLOW_PERMISSION,
     path: '/',
-    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'Home' */ '../pages/Playground/ShowStore/ShowStore')),
+    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'Home' */ '../pages/Home/Home/Home')),
     exact: true,
   },
 ];
