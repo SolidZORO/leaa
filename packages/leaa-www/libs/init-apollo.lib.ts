@@ -14,6 +14,8 @@ if (!process.browser) {
   global.fetch = fetch;
 }
 
+// console.log(envConfig);
+
 function createApolloClient(initialState: NormalizedCacheObject) {
   const httpLink = new HttpLink({
     uri: envConfig.GRAPHQL_ENDPOINT,

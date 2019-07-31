@@ -16,11 +16,11 @@ const { PROTOCOL, PORT, BASE_HOST, NAME } = envalid.cleanEnv(
   { dotEnvPath },
 );
 
-console.log(NAME, PROTOCOL, BASE_HOST, PORT);
+console.log(__dirname, NAME, PROTOCOL, BASE_HOST, PORT, rootPath);
 
 const app = next({
   dev,
-  dir: __dirname,
+  // dir: __dirname,
 });
 
 const handle = app.getRequestHandler();
