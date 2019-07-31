@@ -3,9 +3,9 @@ version: '3.6'
 services:
   mysql:
     container_name: ${DOCKER_MYSQL_HOST}
-    image: mysql:8.0.16
+    image: mysql:5.6.45
     restart: always
-    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     ports:
       - ${DOCKER_MYSQL_PORT}:3306
     environment:

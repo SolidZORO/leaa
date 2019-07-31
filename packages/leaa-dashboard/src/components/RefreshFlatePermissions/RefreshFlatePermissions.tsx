@@ -1,12 +1,16 @@
 import _ from 'lodash';
 import React from 'react';
+import { History } from 'history';
 import { useQuery } from '@apollo/react-hooks';
 import { GET_USER_BY_TOKEN } from '@leaa/common/graphqls';
 import { authUtil } from '@leaa/dashboard/utils';
 import { IAuthInfo } from '@leaa/dashboard/interfaces';
+import { message } from 'antd';
+import { LOGOUT_REDIRECT_URL } from '@leaa/dashboard/constants';
 
 interface IProps {
   children: React.ReactNode;
+  history: History;
 }
 
 export const RefreshFlatePermissions = (props: IProps) => {
@@ -17,6 +21,13 @@ export const RefreshFlatePermissions = (props: IProps) => {
         if (data && data.userByToken && data.userByToken.flatePermissions) {
           authUtil.setAuthInfo(_.pick(data.userByToken, ['id', 'name', 'email', 'flatePermissions']));
         }
+      },
+      onError: e => {
+        if (authUtil.removeAuth()) {
+          return props.history.push(LOGOUT_REDIRECT_URL);
+        }
+
+        return message.error(e.message);
       },
     });
   }

@@ -33,7 +33,7 @@ export const App = (): JSX.Element => {
         <ApolloProvider client={apolloClient}>
           <StoreProvider value={store}>
             <LocaleProvider locale={locale}>
-              <RefreshFlatePermissions>
+              <RefreshFlatePermissions history={history}>
                 <Router history={history}>
                   <Switch>
                     {authRoute}
