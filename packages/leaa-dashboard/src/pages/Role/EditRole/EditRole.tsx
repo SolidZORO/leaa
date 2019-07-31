@@ -10,6 +10,7 @@ import { RoleArgs, UpdateRoleInput } from '@leaa/common/dtos/role';
 import { PermissionsWithPaginationObject, PermissionsArgs } from '@leaa/common/dtos/permission';
 import { IPage } from '@leaa/dashboard/interfaces';
 import { PageCard } from '@leaa/dashboard/components/PageCard';
+import { HtmlTitle } from '@leaa/dashboard/components/HtmlTitle';
 import { ErrorCard } from '@leaa/dashboard/components/ErrorCard';
 import { SubmitBar } from '@leaa/dashboard/components/SubmitBar/SubmitBar';
 
@@ -97,6 +98,8 @@ export default (props: IPage) => {
       className={style['wapper']}
       loading={getRoleQuery.loading || updateRoleMutation.loading}
     >
+      <HtmlTitle title={t(`${props.route.namei18n}`)} />
+
       {getRoleQuery.error ? <ErrorCard error={getRoleQuery.error} /> : null}
       {getPermissionsQuery.error ? <ErrorCard error={getPermissionsQuery.error} /> : null}
       {updateRoleMutation.error ? <ErrorCard error={updateRoleMutation.error} /> : null}

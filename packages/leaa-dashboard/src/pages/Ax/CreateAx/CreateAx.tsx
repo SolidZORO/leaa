@@ -9,6 +9,7 @@ import { IPage } from '@leaa/dashboard/interfaces';
 import { CREATE_AX } from '@leaa/common/graphqls';
 import { CREATE_BUTTON_ICON } from '@leaa/dashboard/constants';
 import { PageCard } from '@leaa/dashboard/components/PageCard';
+import { HtmlTitle } from '@leaa/dashboard/components/HtmlTitle';
 import { SubmitBar } from '@leaa/dashboard/components/SubmitBar/SubmitBar';
 import { ErrorCard } from '@leaa/dashboard/components/ErrorCard';
 
@@ -46,6 +47,8 @@ export default (props: IPage) => {
 
   return (
     <PageCard title={t(`${props.route.namei18n}`)} className={style['wapper']} loading={createAxMutation.loading}>
+      <HtmlTitle title={t(`${props.route.namei18n}`)} />
+
       {createAxMutation.error ? <ErrorCard error={createAxMutation.error} /> : null}
 
       <AxInfoForm

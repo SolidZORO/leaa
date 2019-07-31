@@ -17,7 +17,7 @@ export const AuthLayout = (props: IProps) => {
       component={(matchProps: RouteComponentProps) => {
         return (
           <div className="g-full-layout-wrapper">
-            <props.component {...matchProps} />
+            <props.component {...matchProps} route={props.route} />
           </div>
         );
       }}

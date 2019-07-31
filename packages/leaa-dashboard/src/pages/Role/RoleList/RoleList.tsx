@@ -14,6 +14,7 @@ import { RolesWithPaginationObject, RolesArgs } from '@leaa/common/dtos/role';
 import { urlUtil, tableUtil } from '@leaa/dashboard/utils';
 import { IPage } from '@leaa/dashboard/interfaces';
 import { PageCard } from '@leaa/dashboard/components/PageCard';
+import { HtmlTitle } from '@leaa/dashboard/components/HtmlTitle';
 import { ErrorCard } from '@leaa/dashboard/components/ErrorCard';
 import { SearchInput } from '@leaa/dashboard/components/SearchInput';
 import { TableCard } from '@leaa/dashboard/components/TableCard';
@@ -141,6 +142,8 @@ export default (props: IPage) => {
       className={style['wapper']}
       loading={getRolesQuery.loading}
     >
+      <HtmlTitle title={t(`${props.route.namei18n}`)} />
+
       {getRolesQuery.error ? <ErrorCard error={getRolesQuery.error} /> : null}
       {deleteRoleMutation.error ? <ErrorCard error={deleteRoleMutation.error} /> : null}
 

@@ -27,7 +27,6 @@
   },
   "dependencies": {
     "@apollo/react-hooks": "0.1.0-beta.10",
-    "@leaa/common": "0.0.1",
     "antd": "^3.20.7",
     "apollo-cache-inmemory": "^1.6.2",
     "apollo-client": "^2.6.3",
@@ -71,6 +70,8 @@
     "vconsole": "^3.3.2"
   },
   "devDependencies": {
+    "@leaa/common": "0.0.1",
+    "@leaa/www": "0.0.1",
     "@types/classnames": "2.2.9",
     "@types/cookie": "^0.3.3",
     "@types/express": "^4.17.0",

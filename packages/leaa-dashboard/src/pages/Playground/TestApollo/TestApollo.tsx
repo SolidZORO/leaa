@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 
 import { IPage } from '@leaa/dashboard/interfaces';
+import { useTranslation } from 'react-i18next';
+import { HtmlTitle } from '@leaa/dashboard/components/HtmlTitle';
 // import { useQuery, useMutation } from '@apollo/react-hooks';
 // import { GET_USERS } from '@leaa/common/graphqls';
 // import { DELETE_USER } from '@leaa/common/graphqls/user.mutation';
@@ -11,9 +13,16 @@ import { IPage } from '@leaa/dashboard/interfaces';
 // import { message } from 'antd';
 
 export default (props: IPage) => {
+  const { t } = useTranslation();
+
   // const getUsersQuery = useQuery<{ users: UsersObject }, UsersArgs>(GET_USERS);
 
-  return <p>: p</p>;
+  return (
+    <>
+      <HtmlTitle title={t(`${props.route.namei18n}`)} />
+      <p>: p</p>
+    </>
+  );
 
   // return getUsersQuery.error ? (
   //   <ErrorCard error={getUsersQuery.error} />

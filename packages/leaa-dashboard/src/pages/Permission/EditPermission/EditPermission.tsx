@@ -9,6 +9,7 @@ import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/constants';
 import { PermissionArgs, UpdatePermissionInput } from '@leaa/common/dtos/permission';
 import { IPage } from '@leaa/dashboard/interfaces';
 import { PageCard } from '@leaa/dashboard/components/PageCard';
+import { HtmlTitle } from '@leaa/dashboard/components/HtmlTitle';
 import { ErrorCard } from '@leaa/dashboard/components/ErrorCard';
 import { SubmitBar } from '@leaa/dashboard/components/SubmitBar/SubmitBar';
 
@@ -69,6 +70,8 @@ export default (props: IPage) => {
       className={style['wapper']}
       loading={getPermissionQuery.loading || updatePermissionMutation.loading}
     >
+      <HtmlTitle title={t(`${props.route.namei18n}`)} />
+
       {getPermissionQuery.error ? <ErrorCard error={getPermissionQuery.error} /> : null}
       {updatePermissionMutation.error ? <ErrorCard error={updatePermissionMutation.error} /> : null}
 

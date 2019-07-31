@@ -1986,6 +1986,13 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-helmet@^5.0.8":
+  version "5.0.8"
+  resolved "https://registry.npm.taobao.org/@types/react-helmet/download/@types/react-helmet-5.0.8.tgz#f080eea6652e44f60b4574463d238f268d81d9af"
+  integrity sha1-8IDupmUuRPYLRXRGPSOPJo2B2a8=
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-router-dom@^4.3.4":
   version "4.3.4"
   resolved "https://registry.npm.taobao.org/@types/react-router-dom/download/@types/react-router-dom-4.3.4.tgz#63a7a8558129d2f4ff76e4bdd099bf4b98e25a0d"
@@ -5879,6 +5886,11 @@ execall@^2.0.0:
   integrity sha1-FqBrX+UJnffQC+XZwG7s3tFmO0U=
   dependencies:
     clone-regexp "^2.1.0"
+
+exenv@^1.2.1:
+  version "1.2.2"
+  resolved "https://registry.npm.taobao.org/exenv/download/exenv-1.2.2.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fexenv%2Fdownload%2Fexenv-1.2.2.tgz#2ae78e85d9894158670b03d47bec1f03bd91bb9d"
+  integrity sha1-KueOhdmJQVhnCwPUe+wfA72Ru50=
 
 exif-parser@^0.1.12:
   version "0.1.12"
@@ -12120,6 +12132,11 @@ react-error-overlay@5.1.6:
   resolved "https://registry.npm.taobao.org/react-error-overlay/download/react-error-overlay-5.1.6.tgz#0cd73407c5d141f9638ae1e0c63e7b2bf7e9929d"
   integrity sha1-DNc0B8XRQfljiuHgxj57K/fpkp0=
 
+react-fast-compare@^2.0.2:
+  version "2.0.4"
+  resolved "https://registry.npm.taobao.org/react-fast-compare/download/react-fast-compare-2.0.4.tgz#e84b4d455b0fec113e0402c329352715196f81f9"
+  integrity sha1-6EtNRVsP7BE+BALDKTUnFRlvgfk=
+
 react-headroom@^2.2.8:
   version "2.2.8"
   resolved "https://registry.npm.taobao.org/react-headroom/download/react-headroom-2.2.8.tgz#68c1233262efe028c591b9096c522207362ad133"
@@ -12128,6 +12145,16 @@ react-headroom@^2.2.8:
     prop-types "^15.5.8"
     raf "^3.3.0"
     shallowequal "^1.1.0"
+
+react-helmet@^5.2.1:
+  version "5.2.1"
+  resolved "https://registry.npm.taobao.org/react-helmet/download/react-helmet-5.2.1.tgz#16a7192fdd09951f8e0fe22ffccbf9bb3e591ffa"
+  integrity sha1-FqcZL90JlR+OD+Iv/Mv5uz5ZH/o=
+  dependencies:
+    object-assign "^4.1.1"
+    prop-types "^15.5.4"
+    react-fast-compare "^2.0.2"
+    react-side-effect "^1.1.0"
 
 react-i18next@^10.11.3, react-i18next@^10.11.4:
   version "10.11.4"
@@ -12192,6 +12219,14 @@ react-router@5.0.1:
     react-is "^16.6.0"
     tiny-invariant "^1.0.2"
     tiny-warning "^1.0.0"
+
+react-side-effect@^1.1.0:
+  version "1.1.5"
+  resolved "https://registry.npm.taobao.org/react-side-effect/download/react-side-effect-1.1.5.tgz#f26059e50ed9c626d91d661b9f3c8bb38cd0ff2d"
+  integrity sha1-8mBZ5Q7ZxibZHWYbnzyLs4zQ/y0=
+  dependencies:
+    exenv "^1.2.1"
+    shallowequal "^1.0.1"
 
 react-slick@~0.24.0:
   version "0.24.0"

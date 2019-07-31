@@ -9,6 +9,7 @@ import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/constants';
 import { CategoryArgs, UpdateCategoryInput } from '@leaa/common/dtos/category';
 import { IPage } from '@leaa/dashboard/interfaces';
 import { PageCard } from '@leaa/dashboard/components/PageCard';
+import { HtmlTitle } from '@leaa/dashboard/components/HtmlTitle';
 import { ErrorCard } from '@leaa/dashboard/components/ErrorCard';
 import { SubmitBar } from '@leaa/dashboard/components/SubmitBar/SubmitBar';
 
@@ -53,6 +54,8 @@ export default (props: IPage) => {
       className={style['wapper']}
       loading={getCategoryQuery.loading || updateCategoryMutation.loading}
     >
+      <HtmlTitle title={t(`${props.route.namei18n}`)} />
+
       {getCategoryQuery.error ? <ErrorCard error={getCategoryQuery.error} /> : null}
       {updateCategoryMutation.error ? <ErrorCard error={updateCategoryMutation.error} /> : null}
 

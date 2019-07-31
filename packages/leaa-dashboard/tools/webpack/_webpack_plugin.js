@@ -1,12 +1,7 @@
-// REQUIRE
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-// const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
-// const opn = require('opn');
-// const SizePlugin = require('size-plugin');
 const WriteFilePlugin = require('write-file-webpack-plugin');
-// const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const webpackConst = require('./_webpack_const');
 const webpackShimming = require('./_webpack_shimming');
@@ -48,7 +43,7 @@ if (webpackConst.__DEV__) {
   pluginList.push(
     new webpack.NamedChunksPlugin(),
     new webpack.DefinePlugin({ 'process.env.NODE_ENV': JSON.stringify('development') }),
-    new Dotenv({ path: './.env' }),
+    new Dotenv({ path: `${webpackConst.ROOT_DIR}/.env` }),
     new WebpackCallbackPlugin(),
   );
 } else {
@@ -62,7 +57,7 @@ if (webpackConst.__DEV__) {
       chunkFilename: webpackConst.OUTPUT_STYLE_CHUNK_FILENAME,
     }),
     new webpack.DefinePlugin({ 'process.env.NODE_ENV': JSON.stringify('production') }),
-    new Dotenv({ path: './.env.production' }),
+    new Dotenv({ path: `${webpackConst.ROOT_DIR}/.env.production` }),
   );
 }
 

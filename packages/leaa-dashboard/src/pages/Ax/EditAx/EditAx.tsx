@@ -13,6 +13,7 @@ import { AttachmentsWithPaginationObject, AttachmentsArgs } from '@leaa/common/d
 import { AttachmentBox } from '@leaa/dashboard/components/AttachmentBox';
 import { PageCard } from '@leaa/dashboard/components/PageCard';
 import { ErrorCard } from '@leaa/dashboard/components/ErrorCard';
+import { HtmlTitle } from '@leaa/dashboard/components/HtmlTitle';
 import { SubmitBar } from '@leaa/dashboard/components/SubmitBar/SubmitBar';
 
 import { AxInfoForm } from '../_components/AxInfoForm/AxInfoForm';
@@ -117,6 +118,8 @@ export default (props: IPage) => {
       className={style['wapper']}
       loading={getAxQuery.loading || updateAxMutation.loading}
     >
+      <HtmlTitle title={t(`${props.route.namei18n}`)} />
+
       {getAxQuery.error ? <ErrorCard error={getAxQuery.error} /> : null}
       {getBannerMbQuery.error ? <ErrorCard error={getBannerMbQuery.error} /> : null}
       {getBannerPcQuery.error ? <ErrorCard error={getBannerPcQuery.error} /> : null}

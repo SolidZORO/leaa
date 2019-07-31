@@ -1,6 +1,6 @@
 // REQUIRE
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-
+const _ = require('lodash');
 const webpackConst = require('./_webpack_const');
 const webpackAnalyzerConfig = require('./_webpack_analyzer');
 const webpackServerConfig = require('./_webpack_server');
@@ -16,7 +16,8 @@ const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 // output HTML
 const outputHtmlOption = {
-  title: `${process.env.NAME || 'Dashboard'}${webpackConst.IS_SERVER || webpackConst.__DEV__ ? ' - DEV' : ''}`,
+  title: `${process.env.SITE_NAME || '-'}`,
+  env: JSON.stringify(_.pick(process.env, ['NODE_ENV', 'SITE_NAME'])),
   filename: `${webpackConst.BUILD_PUBLIC_DIR}/index.html`,
   template: `${webpackConst.VIEWS_DIR}/index.ejs`,
   favicon: `${webpackConst.SRC_DIR}/assets/favicons/favicon.ico`,
