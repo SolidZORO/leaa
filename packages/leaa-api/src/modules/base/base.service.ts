@@ -38,7 +38,8 @@ export abstract class BaseService<Entity, ItemsArgs, ItemsObject, ItemArgs, Crea
       const message = `item ${id} does not exist`;
 
       loggerUtil.warn(message, CONSTRUCTOR_NAME);
-      throw new Error(message);
+
+      return undefined;
     }
 
     return item;
@@ -63,7 +64,8 @@ export abstract class BaseService<Entity, ItemsArgs, ItemsObject, ItemArgs, Crea
       const message = `update item ${id} args does not exist`;
 
       loggerUtil.warn(message, CONSTRUCTOR_NAME);
-      throw new Error(message);
+
+      return undefined;
     }
 
     let prevItem = await this.repository.findOne(id, args.relations ? { relations: args.relations } : undefined);
@@ -72,7 +74,8 @@ export abstract class BaseService<Entity, ItemsArgs, ItemsObject, ItemArgs, Crea
       const message = `update item ${id} does not exist`;
 
       loggerUtil.warn(message, CONSTRUCTOR_NAME);
-      throw new Error(message);
+
+      return undefined;
     }
 
     prevItem = {
@@ -100,7 +103,8 @@ export abstract class BaseService<Entity, ItemsArgs, ItemsObject, ItemArgs, Crea
       const message = `delete item ${id} does not exist`;
 
       loggerUtil.warn(message, CONSTRUCTOR_NAME);
-      throw new Error(message);
+
+      return undefined;
     }
 
     const nextItem = await this.repository.remove(prevItem);
@@ -109,7 +113,8 @@ export abstract class BaseService<Entity, ItemsArgs, ItemsObject, ItemArgs, Crea
       const message = `delete item ${id} faild`;
 
       loggerUtil.warn(message, CONSTRUCTOR_NAME);
-      throw new Error(message);
+
+      return undefined;
     }
 
     loggerUtil.warn(`delete item ${id} successful: ${JSON.stringify(nextItem)}\n\n`, CONSTRUCTOR_NAME);

@@ -1,0 +1,23 @@
+import { Test, TestingModule } from '@nestjs/testing';
+import { ArticleResolver } from '@leaa/api/modules/article/article.resolver';
+import { ArticleService } from '@leaa/api/modules/article/article.service';
+import { getRepositoryToken } from '@nestjs/typeorm';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Article, Category } from '@leaa/common/entrys';
+
+describe('ArticleResolver', () => {
+  let resolver: ArticleResolver;
+
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      // imports: [TypeOrmModule.forRoot(), TypeOrmModule.forFeature([Article, Category])],
+      providers: [ArticleResolver, ArticleService],
+    }).compile();
+
+    resolver = module.get<ArticleResolver>(ArticleResolver);
+  });
+
+  it('should be defined', () => {
+    expect(resolver).toBeDefined();
+  });
+});

@@ -1,5 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
-const { defaults: tsjPreset, pathsToModuleNameMapper } = require('ts-jest/presets');
+const { pathsToModuleNameMapper } = require('ts-jest/utils');
+const { defaults: tsjPreset } = require('ts-jest/presets');
 const { compilerOptions } = require('./tsconfig');
 
 module.exports = {
@@ -9,7 +10,7 @@ module.exports = {
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'json'],
   moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>/' }),
-  testRegex: '/test/.*\\.(test|spec).(ts|tsx|js)$',
+  testRegex: '/src/.*\\.(test|spec).(ts|tsx|js)$',
   collectCoverageFrom: ['src/**/*.{js,jsx,tsx,ts}', '!**/node_modules/**', '!**/vendor/**'],
   coverageReporters: ['json', 'lcov'],
   testEnvironment: 'node',

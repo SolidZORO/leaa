@@ -10,7 +10,7 @@ module.exports = {
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'json'],
   moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>/' }),
-  testRegex: '.e2e-test.ts$',
+  testRegex: '.e2e-(test|spec).ts$',
   collectCoverageFrom: ['src/**/*.{js,jsx,tsx,ts}', '!**/node_modules/**', '!**/vendor/**'],
   coverageReporters: ['json', 'lcov'],
   testEnvironment: 'node',
