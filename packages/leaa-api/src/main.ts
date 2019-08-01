@@ -6,7 +6,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { cliUtil } from '@leaa/common/utils';
 import { LoggerService } from '@leaa/api/modules/logger/logger.service';
 import { ConfigService } from '@leaa/api/modules/config/config.service';
-import { AppModule } from './app.module';
+import { AppModule } from '@leaa/api/app.module';
 
 (async function bootstrap() {
   const logger = new Logger('App-Log');

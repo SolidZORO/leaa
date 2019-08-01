@@ -6,6 +6,6 @@ export class IndexController {
 
   @Get('')
   async test() {
-    return '<code>-- 0x3F3F3F3F --</code>';
+    return '<code>-- EOF --</code>';
   }
 }

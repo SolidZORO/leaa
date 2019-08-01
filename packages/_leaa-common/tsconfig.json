@@ -3,11 +3,10 @@
   "compilerOptions": {
     "baseUrl": ".",
     "outDir": "_dist",
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
     "paths": {
       "@leaa/common/*": ["./src/*"]
     }
   },
+  "include": ["src/**/*", "typings/*"],
   "exclude": ["node_modules", "_dist"]
 }

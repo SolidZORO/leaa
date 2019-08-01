@@ -43,6 +43,7 @@ export class TypeormService implements TypeOrmOptionsFactory {
         ...{
           type: 'mysql',
           charset: 'utf8mb4',
+          keepConnectionAlive: true,
           // connectTimeout: 10000,
           // acquireTimeout: 10000,
         },

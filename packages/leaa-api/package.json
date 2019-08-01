@@ -16,11 +16,11 @@
     "fix-js": "yarn run lint-js --fix",
     "fix": "yarn run fix-js",
     "---------------------------------------------------------------------- TEST ----": "----",
-    "test": "NODE_ENV=development jest --watch --detectOpenHandles",
+    "test": "jest --verbose --coverage --config=jest.config.js",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "e2e": "jest --config=jest-e2e.config.js --forceExit",
     "tsc-check": "tsc --noEmit",
     "---------------------------------------------------------------------- DEV ----": "----",
     "dev": "NODE_ENV=development ts-node-dev --respawn --transpileOnly -r tsconfig-paths/register ./src/main.ts",
@@ -121,19 +121,5 @@
     "tsconfig-paths": "^3.8.0",
     "typescript": "3.5.3",
     "typescript-eslint-parser": "^22.0.0"
-  },
-  "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "ts"
-    ],
-    "rootDir": "src",
-    "testRegex": ".spec.ts$",
-    "transform": {
-      "^.+\\.(t|j)s$": "ts-jest"
-    },
-    "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
   }
 }
