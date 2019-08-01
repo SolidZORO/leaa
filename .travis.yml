@@ -4,8 +4,8 @@ node_js:
 
 cache: yarn
 
-install:
-  - yarn global add jest ts-jest
+#install:
+#  - yarn global add jest ts-jest
 
 matrix:
   include:

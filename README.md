@@ -2,6 +2,7 @@
 
 C'est la vie.
 
+[![Build Status](https://travis-ci.com/SolidZORO/leaa.svg?token=dp93c7BFxq7zs1iT4qaM&branch=master)](https://travis-ci.com/SolidZORO/leaa)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/4443217249ea4bbe8e057c691de4b0cd)](https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=SolidZORO/leaa&amp;utm_campaign=Badge_Grade)
 
 ### **MONOREPO-PACKAGES**
