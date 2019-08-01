@@ -69,15 +69,15 @@ export class Attachment extends Base {
   @Field(() => String, { nullable: true })
   public pathAt2x?: string;
 
-  @Column({ type: 'tinyint', default: 0 })
+  @Column({ type: 'int', default: 0 })
   @Field(() => Int)
   public at2x!: number;
 
-  @Column({ type: 'tinyint', default: 0 })
+  @Column({ type: 'int', default: 0 })
   @Field(() => Int)
   public inLocal!: number;
 
-  @Column({ type: 'tinyint', default: 0 })
+  @Column({ type: 'int', default: 0 })
   @Field(() => Int)
   public inCloud!: number;
 
@@ -93,7 +93,7 @@ export class Attachment extends Base {
   @Field(() => Int)
   public sort!: number;
 
-  @Column({ type: 'tinyint', default: 1 })
+  @Column({ type: 'int', default: 1 })
   @Field(() => Int)
   public status!: number;
 }

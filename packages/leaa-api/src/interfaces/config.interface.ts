@@ -1,3 +1,5 @@
+import { DatabaseType } from 'typeorm';
+
 export interface IDotEnv {
   // NODE_ENV: 'development' | 'production' | 'test';
   PROTOCOL: 'http' | 'https';
@@ -10,11 +12,12 @@ export interface IDotEnv {
   ATTACHMENT_SAVED_IN_LOCAL: 0 | 1;
   ATTACHMENT_SAVED_IN_CLOUD: 0 | 1;
 
-  MYSQL_HOST: string;
-  MYSQL_PORT: number;
-  MYSQL_USER: string;
-  MYSQL_PASSWORD: string;
-  MYSQL_DATABASE: string;
+  DB_TYPE: DatabaseType;
+  DB_HOST: string;
+  DB_PORT: number;
+  DB_USER: string;
+  DB_PASSWORD: string;
+  DB_DATABASE: string;
 
   TRUST_PROXY: string;
   JWT_SECRET_KEY: string;

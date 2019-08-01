@@ -21,7 +21,7 @@ export class Ax extends Base {
   @Field(() => String, { nullable: true })
   public description?: string;
 
-  @Column({ type: 'tinyint', default: 0 })
+  @Column({ type: 'int', default: 0 })
   @Field(() => Int, { nullable: true })
   public status?: number;
 

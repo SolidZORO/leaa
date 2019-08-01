@@ -53,8 +53,6 @@ const outputHtmlOption = {
   },
 };
 
-console.log(Object.keys(env));
-
 pluginList.push(
   new WriteFilePlugin({
     test: /(favicon\.ico$|index\.html$|\/assets\/)/,

@@ -1,4 +1,5 @@
 import envalid from 'envalid';
+import { DatabaseType } from 'typeorm';
 
 import { IDotEnv } from '@leaa/api/interfaces';
 
@@ -35,32 +36,36 @@ export class ConfigService {
 
   //
 
-  get MYSQL_HOST(): string {
-    return this.envConfig.MYSQL_HOST;
+  get DB_TYPE(): DatabaseType {
+    return this.envConfig.DB_TYPE;
   }
 
-  get MYSQL_PORT(): number {
-    return Number(this.envConfig.MYSQL_PORT);
+  get DB_HOST(): string {
+    return this.envConfig.DB_HOST;
   }
 
-  get MYSQL_USER(): string {
-    return this.envConfig.MYSQL_USER;
+  get DB_PORT(): number {
+    return Number(this.envConfig.DB_PORT);
   }
 
-  get MYSQL_PASSWORD(): string {
-    return this.envConfig.MYSQL_PASSWORD;
+  get DB_USER(): string {
+    return this.envConfig.DB_USER;
   }
 
-  get MYSQL_DATABASE(): string {
-    return this.envConfig.MYSQL_DATABASE;
+  get DB_PASSWORD(): string {
+    return this.envConfig.DB_PASSWORD;
+  }
+
+  get DB_DATABASE(): string {
+    return this.envConfig.DB_DATABASE;
   }
 
   get TRUST_PROXY(): string {
-    return this.envConfig.MYSQL_DATABASE;
+    return this.envConfig.DB_DATABASE;
   }
 
   get JWT_SECRET_KEY(): string {
-    return this.envConfig.MYSQL_DATABASE;
+    return this.envConfig.DB_DATABASE;
   }
 
   get CLIENT_COOKIE_EXPIRES_DAY(): number {
@@ -83,11 +88,12 @@ export class ConfigService {
       ATTACHMENT_SAVED_IN_LOCAL: envalid.num({ choices: [0, 1], default: 0 }),
       ATTACHMENT_SAVED_IN_CLOUD: envalid.num({ choices: [0, 1], default: 0 }),
       //
-      MYSQL_HOST: envalid.str(),
-      MYSQL_PORT: envalid.num(),
-      MYSQL_USER: envalid.str(),
-      MYSQL_PASSWORD: envalid.str(),
-      MYSQL_DATABASE: envalid.str(),
+      DB_TYPE: envalid.str({ choices: ['mysql', 'postgres'], default: 'mysql' }),
+      DB_HOST: envalid.str(),
+      DB_PORT: envalid.num(),
+      DB_USER: envalid.str(),
+      DB_PASSWORD: envalid.str(),
+      DB_DATABASE: envalid.str(),
       //
       TRUST_PROXY: envalid.str(),
       JWT_SECRET_KEY: envalid.str(),

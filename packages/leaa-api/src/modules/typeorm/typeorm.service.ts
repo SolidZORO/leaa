@@ -15,19 +15,14 @@ export class TypeormService implements TypeOrmOptionsFactory {
   }
 
   createTypeOrmOptions(): TypeOrmModuleOptions {
-    return {
-      type: 'mysql',
-      connectTimeout: 10000,
-      acquireTimeout: 10000,
-      host: this.configService.MYSQL_HOST,
-      port: this.configService.MYSQL_PORT,
-      username: this.configService.MYSQL_USER,
-      password: this.configService.MYSQL_PASSWORD,
-      database: this.configService.MYSQL_DATABASE,
-      // synchronize: false,
+    let options: TypeOrmModuleOptions = {
+      host: this.configService.DB_HOST,
+      port: this.configService.DB_PORT,
+      username: this.configService.DB_USER,
+      password: this.configService.DB_PASSWORD,
+      database: this.configService.DB_DATABASE,
       synchronize: true,
       logging: true,
-      charset: 'utf8mb4',
       entities: [
         // `${__dirname}/**/*.entity{.js,.ts}`,
         //
@@ -41,5 +36,31 @@ export class TypeormService implements TypeOrmOptionsFactory {
         Ax,
       ],
     };
+
+    if (this.configService.DB_TYPE === 'mysql') {
+      options = {
+        ...options,
+        ...{
+          type: 'mysql',
+          charset: 'utf8mb4',
+          // connectTimeout: 10000,
+          // acquireTimeout: 10000,
+        },
+      };
+    }
+
+    if (this.configService.DB_TYPE === 'postgres') {
+      options = {
+        ...options,
+        ...{
+          type: 'postgres',
+          // retryAttempts: 10,
+        },
+      };
+    }
+
+    console.log('>>>>>>>>>>>>>>>>>>>>', options);
+
+    return options;
   }
 }
