@@ -9,7 +9,7 @@ export class Base {
 
   //
 
-  @Column({ default: () => null })
+  @Column({ default: () => 'CURRENT_TIMESTAMP' })
   @Field(() => Date)
   created_at!: Date;
 
