@@ -1,4 +1,4 @@
-import { IsOptional, Length } from 'class-validator';
+import { IsOptional } from 'class-validator';
 import { Field, InputType, Int } from 'type-graphql';
 
 @InputType()
@@ -13,11 +13,11 @@ export class UpdateArticleInput {
 
   @IsOptional()
   @Field(() => Int, { nullable: true })
-  public categoryId?: number;
+  public category_id?: number;
 
   @IsOptional()
   @Field(() => Int, { nullable: true })
-  public userId?: number;
+  public user_id?: number;
 
   @IsOptional()
   @Field(() => String, { nullable: true })

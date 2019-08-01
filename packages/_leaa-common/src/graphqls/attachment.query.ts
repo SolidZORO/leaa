@@ -8,11 +8,11 @@ export const GET_ATTACHMENTS = gql`
     $orderSort: String
     $q: String
     $type: String
-    $moduleName: String
-    $moduleId: Int
-    $moduleType: String
-    $categoryId: Int
-    $userId: Int
+    $module_name: String
+    $module_id: Int
+    $module_type: String
+    $category_id: Int
+    $user_id: Int
     $refreshHash: Int
   ) {
     attachments(
@@ -22,11 +22,11 @@ export const GET_ATTACHMENTS = gql`
       orderSort: $orderSort
       q: $q
       type: $type
-      moduleName: $moduleName
-      moduleId: $moduleId
-      moduleType: $moduleType
-      categoryId: $categoryId
-      userId: $userId
+      module_name: $module_name
+      module_id: $module_id
+      module_type: $module_type
+      category_id: $category_id
+      user_id: $user_id
       refreshHash: $refreshHash
     ) {
       items {
@@ -35,17 +35,17 @@ export const GET_ATTACHMENTS = gql`
         link
         type
         description
-        categoryId
-        userId
-        moduleName
-        moduleId
-        moduleType
+        category_id
+        user_id
+        module_name
+        module_id
+        module_type
         path
         pathAt2x
         status
         sort
         at2x
-        createdAt
+        created_at
       }
     }
   }
@@ -59,18 +59,18 @@ export const GET_ATTACHMENT = gql`
       link
       type
       description
-      categoryId
-      userId
-      moduleName
-      moduleId
-      moduleType
+      category_id
+      user_id
+      module_name
+      module_id
+      module_type
       path
       pathAt2x
       status
       sort
       at2x
-      createdAt
-      updatedAt
+      created_at
+      updated_at
     }
   }
 `;

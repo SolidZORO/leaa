@@ -1456,7 +1456,7 @@
 
 "@nestjs/common@^6.5.3":
   version "6.5.3"
-  resolved "https://registry.npm.taobao.org/@nestjs/common/download/@nestjs/common-6.5.3.tgz#25a3916b53f1e681640641bdb96a40bb37a15515"
+  resolved "https://registry.npm.taobao.org/@nestjs/common/download/@nestjs/common-6.5.3.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40nestjs%2Fcommon%2Fdownload%2F%40nestjs%2Fcommon-6.5.3.tgz#25a3916b53f1e681640641bdb96a40bb37a15515"
   integrity sha1-JaORa1Px5oFkBkG9uWpAuzehVRU=
   dependencies:
     axios "0.19.0"

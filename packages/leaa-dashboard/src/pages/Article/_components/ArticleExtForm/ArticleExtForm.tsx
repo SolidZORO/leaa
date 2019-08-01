@@ -45,8 +45,8 @@ class ArticleExtFormInner extends React.PureComponent<IProps> {
 
               {/* <Col xs={24} sm={4}> */}
               {/*  <Form.Item label={t('_lang:user')}> */}
-              {/*    {getFieldDecorator('userId', { */}
-              {/*      initialValue: props.item ? props.item.userId : undefined, */}
+              {/*    {getFieldDecorator('user_id', { */}
+              {/*      initialValue: props.item ? props.item.user_id : undefined, */}
               {/*      rules: [{ required: true }], */}
               {/*      normalize: e => Number(e), */}
               {/*    })(<Input type="number" placeholder={t('_lang:user')} />)} */}
@@ -54,10 +54,10 @@ class ArticleExtFormInner extends React.PureComponent<IProps> {
               {/* </Col> */}
 
               <Col xs={24} sm={6}>
-                <Form.Item label={t('_lang:createdAt')}>
+                <Form.Item label={t('_lang:created_at')}>
                   <Input
-                    value={props.item ? `${props.item.createdAt}` : undefined}
-                    placeholder={t('_lang:createdAt')}
+                    value={props.item ? `${props.item.created_at}` : undefined}
+                    placeholder={t('_lang:created_at')}
                     readOnly
                     disabled
                   />
@@ -65,10 +65,10 @@ class ArticleExtFormInner extends React.PureComponent<IProps> {
               </Col>
 
               <Col xs={24} sm={6}>
-                <Form.Item label={t('_lang:updatedAt')}>
+                <Form.Item label={t('_lang:updated_at')}>
                   <Input
-                    value={props.item ? `${props.item.updatedAt}` : undefined}
-                    placeholder={t('_lang:updatedAt')}
+                    value={props.item ? `${props.item.updated_at}` : undefined}
+                    placeholder={t('_lang:updated_at')}
                     readOnly
                     disabled
                   />

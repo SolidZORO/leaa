@@ -104,10 +104,10 @@ export default (props: IPage) => {
       render: (text: string, record: Ax) => <SwitchNumber value={Number(record.status)} size="small" disabled />,
     },
     {
-      title: t('_lang:createdAt'),
-      dataIndex: 'createdAt',
+      title: t('_lang:created_at'),
+      dataIndex: 'created_at',
       sorter: true,
-      sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'createdAt'),
+      sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'created_at'),
       render: (text: string) => <TableColumnDate date={text} size="small" />,
     },
     {

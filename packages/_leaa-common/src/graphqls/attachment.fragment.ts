@@ -3,9 +3,9 @@ import gql from 'graphql-tag';
 export const ATTACHMENT_FRAGMENT = gql`
   fragment ATTACHMENT_FRAGMENT on Attachment {
     id
-    createdAt
-    updatedAt
-    deletedAt
+    created_at
+    updated_at
+    deleted_at
     uuid
     title
     alt
@@ -13,9 +13,9 @@ export const ATTACHMENT_FRAGMENT = gql`
     filename
     description
     link
-    moduleName
-    moduleId
-    moduleType
+    module_name
+    module_id
+    module_type
     ext
     width
     height
@@ -23,10 +23,10 @@ export const ATTACHMENT_FRAGMENT = gql`
     path
     pathAt2x
     at2x
-    inLocal
-    inCloud
-    categoryId
-    userId
+    in_local
+    in_cloud
+    category_id
+    user_id
     sort
     status
   }

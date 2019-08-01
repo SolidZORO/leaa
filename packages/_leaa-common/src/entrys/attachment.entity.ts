@@ -1,6 +1,7 @@
 import { Index, Entity, Column } from 'typeorm';
 import { ObjectType, Field, Int } from 'type-graphql';
-import { Base } from './_base.entity';
+
+import { Base } from '@leaa/common/entrys';
 
 @Entity('attachments')
 @Index('attachments_uuid_unique', ['uuid'], { unique: true })
@@ -36,15 +37,15 @@ export class Attachment extends Base {
 
   @Column({ type: 'varchar', length: 64 })
   @Field(() => String)
-  public moduleName!: string;
+  public module_name!: string;
 
   @Column({ type: 'int' })
   @Field(() => Int)
-  public moduleId!: number;
+  public module_id!: number;
 
   @Column({ type: 'varchar', length: 64 })
   @Field(() => String)
-  public moduleType!: string;
+  public module_type!: string;
 
   @Column({ type: 'varchar', length: 8 })
   @Field(() => String)
@@ -75,19 +76,19 @@ export class Attachment extends Base {
 
   @Column({ type: 'int', default: 0 })
   @Field(() => Int)
-  public inLocal!: number;
+  public in_local!: number;
 
   @Column({ type: 'int', default: 0 })
   @Field(() => Int)
-  public inCloud!: number;
+  public in_cloud!: number;
 
   @Column({ type: 'int', nullable: true })
   @Field(() => Int, { nullable: true })
-  public categoryId?: number;
+  public category_id?: number;
 
   @Column({ type: 'int', nullable: true })
   @Field(() => Int, { nullable: true })
-  public userId?: number;
+  public user_id?: number;
 
   @Column({ type: 'int', default: 0 })
   @Field(() => Int)

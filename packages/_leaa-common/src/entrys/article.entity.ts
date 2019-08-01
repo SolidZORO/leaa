@@ -1,8 +1,7 @@
 import { Index, Entity, Column } from 'typeorm';
 import { ObjectType, Field, Int } from 'type-graphql';
 
-import { Base } from './_base.entity';
-import { Category } from './category.entity';
+import { Base, Category } from '@leaa/common/entrys';
 
 @Entity('articles')
 @Index('articles_title_unique', ['title'], { unique: true })
@@ -19,11 +18,11 @@ export class Article extends Base {
 
   @Column({ type: 'int', nullable: true })
   @Field(() => Int, { nullable: true })
-  public categoryId?: number;
+  public category_id?: number;
 
   @Column({ type: 'int', nullable: true })
   @Field(() => Int, { nullable: true })
-  public userId?: number;
+  public user_id?: number;
 
   @Column({ type: 'text', nullable: true })
   @Field(() => String, { nullable: true })

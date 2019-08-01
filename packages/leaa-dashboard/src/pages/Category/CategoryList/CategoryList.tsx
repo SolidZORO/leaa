@@ -99,16 +99,16 @@ export default (props: IPage) => {
     },
     {
       title: `${t('_lang:parent')} ID`,
-      dataIndex: 'parentId',
+      dataIndex: 'parent_id',
       sorter: true,
-      sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'parentId'),
+      sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'parent_id'),
       render: (text: string) => <TableColumnId id={text} />,
     },
     {
-      title: t('_lang:createdAt'),
-      dataIndex: 'createdAt',
+      title: t('_lang:created_at'),
+      dataIndex: 'created_at',
       sorter: true,
-      sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'createdAt'),
+      sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'created_at'),
       render: (text: string) => <TableColumnDate date={text} size="small" />,
     },
     {

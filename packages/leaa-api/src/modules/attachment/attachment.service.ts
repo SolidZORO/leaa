@@ -66,25 +66,25 @@ export class AttachmentService {
     const nextArgs = formatUtil.formatArgs(args);
 
     const moduleFilter: {
-      moduleName?: string;
-      moduleId?: number;
-      moduleType?: string;
+      module_name?: string;
+      module_id?: number;
+      module_type?: string;
     } = {};
 
-    if (nextArgs.moduleName) {
-      moduleFilter.moduleName = nextArgs.moduleName;
+    if (nextArgs.module_name) {
+      moduleFilter.module_name = nextArgs.module_name;
     }
 
-    if (nextArgs.moduleId) {
-      moduleFilter.moduleId = nextArgs.moduleId;
+    if (nextArgs.module_id) {
+      moduleFilter.module_id = nextArgs.module_id;
     }
 
-    if (nextArgs.moduleType) {
-      moduleFilter.moduleType = nextArgs.moduleType;
+    if (nextArgs.module_type) {
+      moduleFilter.module_type = nextArgs.module_type;
     }
 
     const qb = getRepository(Attachment).createQueryBuilder();
-    qb.select().orderBy(nextArgs.orderBy || 'createdAt', nextArgs.orderSort);
+    qb.select().orderBy(nextArgs.orderBy || 'created_at', nextArgs.orderSort);
     qb.where(moduleFilter);
 
     if (nextArgs.q) {
@@ -173,9 +173,9 @@ export class AttachmentService {
       alt: title,
       type: file.mimetype ? `${file.mimetype.split('/')[0]}` : 'no-mime',
       filename,
-      moduleName: body.moduleName,
-      moduleId: typeof body.moduleId !== 'undefined' ? Number(body.moduleId) : 0,
-      moduleType: body.moduleType,
+      module_name: body.module_name,
+      module_id: typeof body.module_id !== 'undefined' ? Number(body.module_id) : 0,
+      module_type: body.module_type,
       ext,
       width,
       height,

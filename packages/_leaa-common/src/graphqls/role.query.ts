@@ -7,7 +7,7 @@ export const GET_ROLES = gql`
         id
         name
         slug
-        createdAt
+        created_at
       }
     }
   }
@@ -19,8 +19,8 @@ export const GET_ROLE = gql`
       id
       name
       slug
-      createdAt
-      updatedAt
+      created_at
+      updated_at
       permissions {
         id
         name

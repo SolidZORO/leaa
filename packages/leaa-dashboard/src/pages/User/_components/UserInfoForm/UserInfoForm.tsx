@@ -74,10 +74,10 @@ class UserInfoFormInner extends React.PureComponent<IProps> {
             {props.item && (
               <Row gutter={16} className={style['form-row']}>
                 <Col xs={24} sm={6}>
-                  <Form.Item label={t('_lang:createdAt')}>
+                  <Form.Item label={t('_lang:created_at')}>
                     <Input
-                      value={props.item ? `${props.item.createdAt}` : undefined}
-                      placeholder={t('_lang:createdAt')}
+                      value={props.item ? `${props.item.created_at}` : undefined}
+                      placeholder={t('_lang:created_at')}
                       readOnly
                       disabled
                     />
@@ -85,10 +85,10 @@ class UserInfoFormInner extends React.PureComponent<IProps> {
                 </Col>
 
                 <Col xs={24} sm={6}>
-                  <Form.Item label={t('_lang:updatedAt')}>
+                  <Form.Item label={t('_lang:updated_at')}>
                     <Input
-                      value={props.item ? `${props.item.updatedAt}` : undefined}
-                      placeholder={t('_lang:updatedAt')}
+                      value={props.item ? `${props.item.updated_at}` : undefined}
+                      placeholder={t('_lang:updated_at')}
                       readOnly
                       disabled
                     />

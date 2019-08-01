@@ -34,7 +34,7 @@ export class ArticleService extends BaseService<
   async getCategory(article: Article): Promise<Category | undefined> {
     const nextArticle = article;
 
-    if (!nextArticle || !nextArticle.categoryId) {
+    if (!nextArticle || !nextArticle.category_id) {
       return undefined;
     }
 

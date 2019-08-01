@@ -1,9 +1,7 @@
 import { Index, Entity, Column, JoinTable, ManyToMany } from 'typeorm';
 import { ObjectType, Field, Int } from 'type-graphql';
 
-import { Base } from './_base.entity';
-import { Role } from './role.entity';
-import { Permission } from './permission.entity';
+import { Base, Role, Permission } from '@leaa/common/entrys';
 
 @Entity('users')
 // @Index('users_phone_unique', ['phone'], { unique: true })
@@ -33,11 +31,11 @@ export class User extends Base {
 
   @Column({ type: 'varchar', length: 32, nullable: true })
   @Field(() => String, { nullable: true })
-  public lastLoginIp?: string;
+  public lastLogin_ip?: string;
 
   @Column({ type: 'timestamp', nullable: true })
   @Field(() => Date, { nullable: true })
-  public lastLoginAt?: Date;
+  public lastLogin_at?: Date;
 
   @ManyToMany(() => Role, role => role.user)
   @JoinTable()

@@ -9,7 +9,7 @@ export const GET_USERS = gql`
         name
         email
         status
-        createdAt
+        created_at
       }
     }
   }
@@ -21,8 +21,8 @@ export const GET_USER = gql`
       id
       name
       email
-      createdAt
-      updatedAt
+      created_at
+      updated_at
       status
       permissions {
         id

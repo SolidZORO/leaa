@@ -6,7 +6,7 @@ export const CREATE_ARTICLE = gql`
       id
       title
       slug
-      categoryId
+      category_id
       description
       content
       status
@@ -20,7 +20,7 @@ export const UPDATE_ARTICLE = gql`
       id
       title
       slug
-      categoryId
+      category_id
       description
       content
       status

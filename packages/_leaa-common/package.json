@@ -11,6 +11,9 @@
   },
   "scripts": {},
   "dependencies": {
+    "@nestjs/common": "^6.5.3",
+    "@nestjs/core": "^6.5.3",
+    "@nestjs/passport": "^6.1.0",
     "class-validator": "^0.9.1",
     "graphql-tag": "^2.10.1",
     "type-graphql": "^0.17.4",

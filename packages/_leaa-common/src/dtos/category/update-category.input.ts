@@ -13,7 +13,7 @@ export class UpdateCategoryInput {
 
   @IsOptional()
   @Field(() => Int, { nullable: true })
-  public parentId?: number;
+  public parent_id?: number;
 
   @IsOptional()
   @Field(() => String, { nullable: true })

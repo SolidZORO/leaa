@@ -48,8 +48,8 @@ class ArticleInfoFormInner extends React.PureComponent<IProps> {
 
               <Col xs={24} sm={6}>
                 <Form.Item label={t('_lang:category')}>
-                  {getFieldDecorator('categoryId', {
-                    initialValue: props.item ? props.item.categoryId : undefined,
+                  {getFieldDecorator('category_id', {
+                    initialValue: props.item ? props.item.category_id : undefined,
                     rules: [{ required: true }],
                   })(<SelectCategoryId />)}
                 </Form.Item>

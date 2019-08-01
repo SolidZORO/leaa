@@ -101,10 +101,10 @@ export default (props: IPage) => {
       sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'slug'),
     },
     {
-      title: t('_lang:createdAt'),
-      dataIndex: 'createdAt',
+      title: t('_lang:created_at'),
+      dataIndex: 'created_at',
       sorter: true,
-      sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'createdAt'),
+      sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'created_at'),
       render: (text: string) => <TableColumnDate date={text} size="small" />,
     },
     {

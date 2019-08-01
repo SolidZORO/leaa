@@ -6,7 +6,7 @@ export const CREATE_CATEGORY = gql`
       id
       name
       slug
-      parentId
+      parent_id
       description
     }
   }
@@ -18,7 +18,7 @@ export const UPDATE_CATEGORY = gql`
       id
       name
       slug
-      parentId
+      parent_id
       description
     }
   }

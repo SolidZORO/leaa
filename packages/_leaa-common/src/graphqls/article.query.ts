@@ -9,14 +9,14 @@ export const GET_ARTICLES = gql`
         slug
         content
         description
-        categoryId
+        category_id
         category {
           name
           slug
         }
-        userId
+        user_id
         status
-        createdAt
+        created_at
       }
     }
   }
@@ -30,15 +30,15 @@ export const GET_ARTICLE = gql`
       slug
       content
       description
-      categoryId
+      category_id
       category {
         name
         slug
       }
-      userId
+      user_id
       status
-      createdAt
-      updatedAt
+      created_at
+      updated_at
     }
   }
 `;

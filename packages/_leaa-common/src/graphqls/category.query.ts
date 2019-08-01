@@ -7,9 +7,9 @@ export const GET_CATEGORIES = gql`
         id
         name
         slug
-        parentId
+        parent_id
         description
-        createdAt
+        created_at
       }
     }
   }
@@ -21,10 +21,10 @@ export const GET_CATEGORY = gql`
       id
       name
       slug
-      parentId
+      parent_id
       description
-      createdAt
-      updatedAt
+      created_at
+      updated_at
     }
   }
 `;

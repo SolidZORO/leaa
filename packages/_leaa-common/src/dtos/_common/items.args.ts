@@ -10,8 +10,8 @@ export class ItemsArgs {
   @Field(() => Int, { nullable: true, defaultValue: 30 })
   public readonly pageSize?: number = 30;
 
-  @Field(() => String, { nullable: true, defaultValue: 'createdAt' })
-  public readonly orderBy?: string = 'createdAt';
+  @Field(() => String, { nullable: true, defaultValue: 'created_at' })
+  public readonly orderBy?: string = 'created_at';
 
   @Field(() => String, { nullable: true, defaultValue: 'DESC' })
   public readonly orderSort?: IOrderSort = 'DESC';

@@ -1,4 +1,6 @@
 import gql from 'graphql-tag';
+
+// import { ATTACHMENT_FRAGMENT } from '@leaa/common/graphqls';
 import { ATTACHMENT_FRAGMENT } from './attachment.fragment';
 
 export const GET_AXS = gql`
@@ -10,7 +12,7 @@ export const GET_AXS = gql`
         slug
         description
         status
-        createdAt
+        created_at
       }
     }
   }
@@ -24,8 +26,8 @@ export const GET_AX = gql`
       slug
       description
       status
-      createdAt
-      updatedAt
+      created_at
+      updated_at
     }
   }
 `;
@@ -38,8 +40,8 @@ export const GET_AX_BY_SLUG = gql`
       slug
       description
       status
-      createdAt
-      updatedAt
+      created_at
+      updated_at
       attachments {
         bannerMbList {
           ...ATTACHMENT_FRAGMENT

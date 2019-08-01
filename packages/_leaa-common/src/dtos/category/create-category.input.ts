@@ -12,7 +12,7 @@ export class CreateCategoryInput {
   slug!: string;
 
   @Field(() => Int, { nullable: true })
-  parentId?: number;
+  parent_id?: number;
 
   @Field(() => String, { nullable: true })
   description?: string;

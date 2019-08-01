@@ -7,14 +7,14 @@ export const UPDATE_ATTACHMENT = gql`
       title
       type
       description
-      categoryId
-      userId
-      moduleName
-      moduleId
-      moduleType
+      category_id
+      user_id
+      module_name
+      module_id
+      module_type
       path
       status
-      createdAt
+      created_at
     }
   }
 `;

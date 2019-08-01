@@ -5,13 +5,13 @@
 
 type Article {
   id: Int!
-  createdAt: DateTime!
-  updatedAt: DateTime
-  deletedAt: DateTime
+  created_at: DateTime!
+  updated_at: DateTime
+  deleted_at: DateTime
   title: String!
   slug: String
-  categoryId: Int
-  userId: Int
+  category_id: Int
+  user_id: Int
   description: String
   content: String
   status: Int
@@ -27,9 +27,9 @@ type ArticlesWithPaginationObject {
 
 type Attachment {
   id: Int!
-  createdAt: DateTime!
-  updatedAt: DateTime
-  deletedAt: DateTime
+  created_at: DateTime!
+  updated_at: DateTime
+  deleted_at: DateTime
   uuid: String!
   title: String!
   alt: String!
@@ -37,9 +37,9 @@ type Attachment {
   filename: String!
   description: String
   link: String
-  moduleName: String!
-  moduleId: Int!
-  moduleType: String!
+  module_name: String!
+  module_id: Int!
+  module_type: String!
   ext: String!
   width: Int!
   height: Int!
@@ -47,10 +47,10 @@ type Attachment {
   path: String!
   pathAt2x: String
   at2x: Int!
-  inLocal: Int!
-  inCloud: Int!
-  categoryId: Int
-  userId: Int
+  in_local: Int!
+  in_cloud: Int!
+  category_id: Int
+  user_id: Int
   sort: Int!
   status: Int!
 }
@@ -79,9 +79,9 @@ input AuthRegisterInput {
 
 type Ax {
   id: Int!
-  createdAt: DateTime!
-  updatedAt: DateTime
-  deletedAt: DateTime
+  created_at: DateTime!
+  updated_at: DateTime
+  deleted_at: DateTime
   title: String!
   slug: String
   description: String
@@ -105,9 +105,9 @@ type AxsWithPaginationObject {
 
 type Base {
   id: Int!
-  createdAt: DateTime!
-  updatedAt: DateTime
-  deletedAt: DateTime
+  created_at: DateTime!
+  updated_at: DateTime
+  deleted_at: DateTime
 }
 
 type CategoriesWithPaginationObject {
@@ -119,20 +119,20 @@ type CategoriesWithPaginationObject {
 
 type Category {
   id: Int!
-  createdAt: DateTime!
-  updatedAt: DateTime
-  deletedAt: DateTime
+  created_at: DateTime!
+  updated_at: DateTime
+  deleted_at: DateTime
   name: String!
   slug: String!
-  parentId: Int!
+  parent_id: Int!
   description: String
 }
 
 input CreateArticleInput {
   title: String!
   slug: String
-  categoryId: Int
-  userId: Int
+  category_id: Int
+  user_id: Int
   description: String
   content: String
   status: Int!
@@ -144,19 +144,19 @@ input CreateAttachmentInput {
   alt: String!
   type: String!
   filename: String!
-  moduleName: String!
-  moduleId: Int!
-  moduleType: String!
+  module_name: String!
+  module_id: Int!
+  module_type: String!
   ext: String!
   width: Int!
   height: Int!
   size: Int!
   path: String!
   at2x: Int!
-  inLocal: Int!
-  inCloud: Int
-  categoryId: Int
-  userId: Int
+  in_local: Int!
+  in_cloud: Int
+  category_id: Int
+  user_id: Int
   sort: Int!
   status: Int!
 }
@@ -171,7 +171,7 @@ input CreateAxInput {
 input CreateCategoryInput {
   name: String!
   slug: String!
-  parentId: Int
+  parent_id: Int
   description: String
 }
 
@@ -236,9 +236,9 @@ type PaginationObject {
 
 type Permission {
   id: Int!
-  createdAt: DateTime!
-  updatedAt: DateTime
-  deletedAt: DateTime
+  created_at: DateTime!
+  updated_at: DateTime
+  deleted_at: DateTime
   name: String!
   slug: String!
   slugGroup: String!
@@ -253,30 +253,30 @@ type PermissionsWithPaginationObject {
 }
 
 type Query {
-  roles(page: Int = 1, pageSize: Int = 30, orderBy: String = "createdAt", orderSort: String = "DESC", q: String): RolesWithPaginationObject!
+  roles(page: Int = 1, pageSize: Int = 30, orderBy: String = "created_at", orderSort: String = "DESC", q: String): RolesWithPaginationObject!
   role(id: Int!): Role!
-  permissions(page: Int = 1, pageSize: Int = 30, orderBy: String = "createdAt", orderSort: String = "DESC", q: String): PermissionsWithPaginationObject!
+  permissions(page: Int = 1, pageSize: Int = 30, orderBy: String = "created_at", orderSort: String = "DESC", q: String): PermissionsWithPaginationObject!
   permission(id: Int!): Permission!
   ram: Float!
-  users(page: Int = 1, pageSize: Int = 30, orderBy: String = "createdAt", orderSort: String = "DESC", q: String): UsersWithPaginationObject!
+  users(page: Int = 1, pageSize: Int = 30, orderBy: String = "created_at", orderSort: String = "DESC", q: String): UsersWithPaginationObject!
   user(id: Int!): User!
   userByToken(token: String!): User!
-  articles(page: Int = 1, pageSize: Int = 30, orderBy: String = "createdAt", orderSort: String = "DESC", q: String): ArticlesWithPaginationObject!
+  articles(page: Int = 1, pageSize: Int = 30, orderBy: String = "created_at", orderSort: String = "DESC", q: String): ArticlesWithPaginationObject!
   article(id: Int!): Article!
-  categories(page: Int = 1, pageSize: Int = 30, orderBy: String = "createdAt", orderSort: String = "DESC", q: String): CategoriesWithPaginationObject!
+  categories(page: Int = 1, pageSize: Int = 30, orderBy: String = "created_at", orderSort: String = "DESC", q: String): CategoriesWithPaginationObject!
   category(id: Int!): Category!
-  axs(page: Int = 1, pageSize: Int = 30, orderBy: String = "createdAt", orderSort: String = "DESC", q: String): AxsWithPaginationObject!
+  axs(page: Int = 1, pageSize: Int = 30, orderBy: String = "created_at", orderSort: String = "DESC", q: String): AxsWithPaginationObject!
   ax(id: Int!): Ax!
   axBySlug(slug: String!): Ax!
-  attachments(page: Int = 1, pageSize: Int = 30, orderBy: String = "createdAt", orderSort: String = "DESC", q: String, type: String, moduleName: String, moduleId: Int, moduleType: String, categoryId: Int, userId: Int, refreshHash: Int): AttachmentsWithPaginationObject!
+  attachments(page: Int = 1, pageSize: Int = 30, orderBy: String = "created_at", orderSort: String = "DESC", q: String, type: String, module_name: String, module_id: Int, module_type: String, category_id: Int, user_id: Int, refreshHash: Int): AttachmentsWithPaginationObject!
   attachment(uuid: String!): Attachment!
 }
 
 type Role {
   id: Int!
-  createdAt: DateTime!
-  updatedAt: DateTime
-  deletedAt: DateTime
+  created_at: DateTime!
+  updated_at: DateTime
+  deleted_at: DateTime
   name: String!
   slug: String!
   permissions: [Permission!]
@@ -293,8 +293,8 @@ type RolesWithPaginationObject {
 input UpdateArticleInput {
   title: String!
   slug: String
-  categoryId: Int
-  userId: Int
+  category_id: Int
+  user_id: Int
   description: String
   content: String
   status: Int
@@ -325,7 +325,7 @@ input UpdateAxInput {
 input UpdateCategoryInput {
   name: String!
   slug: String!
-  parentId: Int
+  parent_id: Int
   description: String
 }
 
@@ -353,15 +353,15 @@ input UpdateUserInput {
 
 type User {
   id: Int!
-  createdAt: DateTime!
-  updatedAt: DateTime
-  deletedAt: DateTime
+  created_at: DateTime!
+  updated_at: DateTime
+  deleted_at: DateTime
   name: String
   phone: String
   email: String!
   status: Int!
-  lastLoginIp: String
-  lastLoginAt: DateTime
+  lastLogin_ip: String
+  lastLogin_at: DateTime
   roles: [Role!]
   permissions: [Permission!]
   flatePermissions: [String!]

@@ -8,7 +8,7 @@ export const GET_PERMISSIONS = gql`
         name
         slug
         slugGroup
-        createdAt
+        created_at
       }
     }
   }
@@ -20,8 +20,8 @@ export const GET_PERMISSION = gql`
       id
       name
       slug
-      createdAt
-      updatedAt
+      created_at
+      updated_at
     }
   }
 `;
