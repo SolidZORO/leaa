@@ -17,5 +17,6 @@ matrix:
 script:
   - cd $PACKAGE_LOCATION
   - ls -l
+  - yarn install
   - yarn test
 #  - yarn build
