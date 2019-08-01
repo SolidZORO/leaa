@@ -37,11 +37,11 @@ describe('ArticleService', () => {
   describe('craeteArticle', () => {
     const createArticleInput: CreateArticleInput = {
       title: 'title',
-      slug: 'string',
+      slug: 'slug',
       category_id: 1,
-      user_id: 11,
-      description: 'dd',
-      content: '<p>test</p>',
+      user_id: 1,
+      description: 'description',
+      content: '<p>content</p>',
       status: 1,
     };
 
