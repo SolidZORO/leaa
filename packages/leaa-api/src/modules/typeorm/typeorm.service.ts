@@ -22,7 +22,7 @@ export class TypeormService implements TypeOrmOptionsFactory {
       password: this.configService.DB_PASSWORD,
       database: this.configService.DB_DATABASE,
       synchronize: true,
-      logging: true,
+      logging: process.env.NODE_ENV !== 'production',
       entities: [
         // `${__dirname}/**/*.entity{.js,.ts}`,
         //
@@ -58,8 +58,6 @@ export class TypeormService implements TypeOrmOptionsFactory {
         },
       };
     }
-
-    console.log('>>>>>>>>>>>>>>>>>>>>', options);
 
     return options;
   }

@@ -1,7 +1,6 @@
 import { DatabaseType } from 'typeorm';
 
 export interface IDotEnv {
-  // NODE_ENV: 'development' | 'production' | 'test';
   PROTOCOL: 'http' | 'https';
   PORT: number;
 
