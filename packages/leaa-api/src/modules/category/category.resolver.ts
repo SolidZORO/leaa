@@ -9,7 +9,7 @@ import {
   CreateCategoryInput,
   UpdateCategoryInput,
 } from '@leaa/common/dtos/category';
-import { CategoryService } from './category.service';
+import { CategoryService } from '@leaa/api/modules/category/category.service';
 
 @Resolver(() => Category)
 export class CategoryResolver {

@@ -9,7 +9,7 @@ import {
   CreateRoleInput,
   UpdateRoleInput,
 } from '@leaa/common/dtos/role';
-import { RoleService } from './role.service';
+import { RoleService } from '@leaa/api/modules/role/role.service';
 
 @Resolver(() => Role)
 export class RoleResolver {

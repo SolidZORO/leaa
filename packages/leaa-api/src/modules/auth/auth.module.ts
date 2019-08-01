@@ -10,8 +10,8 @@ import { AuthTokenModule } from '@leaa/api/modules/auth-token/auth-token.module'
 import { PermissionService } from '@leaa/api/modules/permission/permission.service';
 import { JwtStrategy } from '@leaa/api/strategies';
 
-import { AuthResolver } from './auth.resolver';
-import { AuthService } from './auth.service';
+import { AuthResolver } from '@leaa/api/modules/auth/auth.resolver';
+import { AuthService } from '@leaa/api/modules/auth/auth.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User, Role, Permission]), AuthTokenModule],

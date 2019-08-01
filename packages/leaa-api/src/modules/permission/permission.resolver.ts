@@ -9,7 +9,7 @@ import {
   CreatePermissionInput,
   UpdatePermissionInput,
 } from '@leaa/common/dtos/permission';
-import { PermissionService } from './permission.service';
+import { PermissionService } from '@leaa/api/modules/permission/permission.service';
 
 @Resolver(() => Permission)
 export class PermissionResolver {

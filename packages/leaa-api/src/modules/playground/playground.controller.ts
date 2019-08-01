@@ -1,6 +1,6 @@
-import { Controller, Get, UseInterceptors } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 
-import { PlaygroundService } from './playground.service';
+import { PlaygroundService } from '@leaa/api/modules/playground/playground.service';
 
 @Controller('/playground')
 export class PlaygroundController {

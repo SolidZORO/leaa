@@ -4,7 +4,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 
 import { CreateAttachmentInput } from '@leaa/common/dtos/attachment';
 import { JwtGuard } from '@leaa/api/guards/jwt.guard';
-import { AttachmentService } from './attachment.service';
+import { AttachmentService } from '@leaa/api/modules/attachment/attachment.service';
 
 @Controller('/attachments')
 @UseGuards(JwtGuard)

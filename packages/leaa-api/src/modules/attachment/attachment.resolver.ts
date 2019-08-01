@@ -1,6 +1,6 @@
 import { Args, Query, Mutation, Resolver, ResolveProperty, Parent } from '@nestjs/graphql';
 
-import { Attachment, Ax, User } from '@leaa/common/entrys';
+import { Attachment, User } from '@leaa/common/entrys';
 import {
   AttachmentsArgs,
   AttachmentsWithPaginationObject,
@@ -10,7 +10,7 @@ import {
   DeleteAttachmentsObject,
   AttachmentsObject,
 } from '@leaa/common/dtos/attachment';
-import { AttachmentService } from './attachment.service';
+import { AttachmentService } from '@leaa/api/modules/attachment/attachment.service';
 import { UserDecorator } from '@leaa/api/decorators';
 
 @Resolver(() => Attachment)

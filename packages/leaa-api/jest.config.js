@@ -9,7 +9,7 @@ module.exports = {
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'json'],
   moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>/' }),
-  testRegex: '/src/.*\\.(test|spec).(ts|tsx|js)$',
+  testRegex: '/test/.*\\.(test|spec).(ts|tsx|js)$',
   collectCoverageFrom: ['src/**/*.{js,jsx,tsx,ts}', '!**/node_modules/**', '!**/vendor/**'],
   coverageReporters: ['json', 'lcov'],
   testEnvironment: 'node',

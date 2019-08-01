@@ -4,7 +4,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { getConnection } from 'typeorm';
 
 import { AppModule } from '@leaa/api/app.module';
-import { SeedService } from './modules/seed/seed.service';
+import { SeedService } from '@leaa/api/modules/seed/seed.service';
 
 (async function seed() {
   const logger = new Logger('Seed-Log');

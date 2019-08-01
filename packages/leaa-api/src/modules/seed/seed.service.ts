@@ -16,7 +16,7 @@ import {
   categorySeed,
   articleSeed,
   axSeed,
-} from './seed.data';
+} from '@leaa/api/modules/seed/seed.data';
 
 @Injectable()
 export class SeedService {

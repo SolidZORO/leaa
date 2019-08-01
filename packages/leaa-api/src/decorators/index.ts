@@ -1,1 +1,1 @@
-export { UserDecorator } from './user.decorator';
+export { UserDecorator } from '@leaa/api/decorators/user.decorator';

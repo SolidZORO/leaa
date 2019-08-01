@@ -9,7 +9,7 @@ import {
   CreateArticleInput,
   UpdateArticleInput,
 } from '@leaa/common/dtos/article';
-import { ArticleService } from './article.service';
+import { ArticleService } from '@leaa/api/modules/article/article.service';
 
 @Resolver(() => Article)
 export class ArticleResolver {

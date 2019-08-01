@@ -9,7 +9,7 @@ import {
   CreateUserInput,
   UpdateUserInput,
 } from '@leaa/common/dtos/user';
-import { UserService } from './user.service';
+import { UserService } from '@leaa/api/modules/user/user.service';
 
 @Resolver(() => User)
 export class UserResolver {

@@ -1,1 +1,1 @@
-export * from './config.interface';
+export * from '@leaa/api/interfaces/config.interface';

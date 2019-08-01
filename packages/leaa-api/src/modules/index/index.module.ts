@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 
-import { IndexController } from './index.controller';
+import { IndexController } from '@leaa/api/modules/index/index.controller';
 
 @Module({
   imports: [],

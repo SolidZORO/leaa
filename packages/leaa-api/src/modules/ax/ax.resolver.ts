@@ -11,7 +11,7 @@ import {
   AxAttachmentsObject,
 } from '@leaa/common/dtos/ax';
 import { UserDecorator } from '@leaa/api/decorators';
-import { AxService } from './ax.service';
+import { AxService } from '@leaa/api/modules/ax/ax.service';
 
 @Resolver(() => Ax)
 export class AxResolver {

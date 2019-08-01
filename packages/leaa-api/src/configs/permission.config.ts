@@ -1,5 +1,4 @@
 import { shield, allow, rule } from 'graphql-shield';
-import { envConfig } from '../modules/config/config.module';
 
 const checkPermission = (permissionSlug: string) => {
   return rule()(async (parent, args, ctx) => ctx.user.flatePermissions.includes(permissionSlug));

@@ -21,7 +21,7 @@ import {
 import { ConfigService } from '@leaa/api/modules/config/config.service';
 import { formatUtil, loggerUtil, pathUtil, permissionUtil } from '@leaa/api/utils';
 import { IAttachmentType } from '@leaa/common/interfaces';
-import { MulterService } from './multer.service';
+import { MulterService } from '@leaa/api/modules/attachment/multer.service';
 
 const CONSTRUCTOR_NAME = 'AttachmentService';
 

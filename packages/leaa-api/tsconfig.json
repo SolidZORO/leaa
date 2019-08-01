@@ -13,6 +13,6 @@
       "@leaa/api/*": ["./src/*"]
     }
   },
-  "include": ["src/**/*", "test/**/*", "typings/*"],
+  "include": ["src/**/*", "test/**/*", "test-e2e/**/*", "typings/*"],
   "exclude": ["node_modules", "_dist"]
 }

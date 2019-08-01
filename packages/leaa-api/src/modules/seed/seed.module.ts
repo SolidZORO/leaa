@@ -7,7 +7,7 @@ import { ArticleModule } from '@leaa/api/modules/article/article.module';
 import { CategoryModule } from '@leaa/api/modules/category/category.module';
 import { AxModule } from '@leaa/api/modules/ax/ax.module';
 
-import { SeedService } from './seed.service';
+import { SeedService } from '@leaa/api/modules/seed/seed.service';
 
 @Module({
   imports: [PermissionModule, RoleModule, UserModule, ArticleModule, CategoryModule, AxModule],

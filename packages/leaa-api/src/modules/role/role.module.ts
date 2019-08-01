@@ -3,8 +3,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { Role, Permission } from '@leaa/common/entrys';
 import { PermissionService } from '@leaa/api/modules/permission/permission.service';
-import { RoleResolver } from './role.resolver';
-import { RoleService } from './role.service';
+import { RoleResolver } from '@leaa/api/modules/role/role.resolver';
+import { RoleService } from '@leaa/api/modules/role/role.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Role, Permission])],
