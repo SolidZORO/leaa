@@ -5,14 +5,14 @@ node_js:
 cache: yarn
 
 install:
-  - yarn global add jest
+  - yarn global add jest ts-jest
 
 matrix:
   include:
     - name: leaa-api
       env: PACKAGE_LOCATION=packages/leaa-api PACKAGE_NAME=@leaa/api
-    - name: leaa-dashboard
-      env: PACKAGE_LOCATION=packages/leaa-dashboard PACKAGE_NAME=@leaa/dashboard
+#    - name: leaa-dashboard
+#      env: PACKAGE_LOCATION=packages/leaa-dashboard PACKAGE_NAME=@leaa/dashboard
 
 script:
   - cd $PACKAGE_LOCATION
