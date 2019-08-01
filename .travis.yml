@@ -1,0 +1,20 @@
+language: node_js
+node_js:
+  - '10.13.0'
+
+cache: yarn
+
+install:
+  - yarn global add jest
+
+matrix:
+  include:
+    - name: leaa-api
+      env: PACKAGE_LOCATION=packages/leaa-api PACKAGE_NAME=@leaa/api
+    - name: leaa-dashboard
+      env: PACKAGE_LOCATION=packages/leaa-dashboard PACKAGE_NAME=@leaa/dashboard
+
+script:
+  - cd $PACKAGE_LOCATION
+  - yarn test
+  - yarn build
