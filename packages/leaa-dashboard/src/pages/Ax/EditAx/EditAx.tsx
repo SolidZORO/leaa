@@ -25,6 +25,7 @@ export default (props: IPage) => {
   const { id } = props.match.params as { id: string };
 
   let axInfoFormRef: any;
+  const listHeight = 600;
 
   const getAxVariables = { id: Number(id) };
   const getAxQuery = useQuery<{ ax: Ax }, AxArgs>(GET_AX, {
@@ -141,6 +142,7 @@ export default (props: IPage) => {
             disableMessage
             ref={getBannerMbRef}
             attachmentParams={{ type: 'image', moduleId: Number(id), moduleName: 'ax', moduleType: 'banner_mb' }}
+            listHeight={listHeight}
           />
         </Col>
 
@@ -149,6 +151,7 @@ export default (props: IPage) => {
             disableMessage
             ref={getBannerPcRef}
             attachmentParams={{ type: 'image', moduleId: Number(id), moduleName: 'ax', moduleType: 'banner_pc' }}
+            listHeight={listHeight}
           />
         </Col>
       </Row>
@@ -159,6 +162,7 @@ export default (props: IPage) => {
             disableMessage
             ref={getGalleryMbRef}
             attachmentParams={{ type: 'image', moduleId: Number(id), moduleName: 'ax', moduleType: 'gallery_mb' }}
+            listHeight={listHeight}
           />
         </Col>
 
@@ -167,6 +171,7 @@ export default (props: IPage) => {
             disableMessage
             ref={getGalleryPcRef}
             attachmentParams={{ type: 'image', moduleId: Number(id), moduleName: 'ax', moduleType: 'gallery_pc' }}
+            listHeight={listHeight}
           />
         </Col>
       </Row>

@@ -45,7 +45,7 @@ export class AttachmentService {
     const width = Math.round(rawWidth / 2);
     const height = Math.round(rawHeight / 2);
 
-    const pathAt1x = file.path.replace('@2x', '');
+    const pathAt1x = file.path.replace('_2x', '');
 
     // TODO jpg Error: marker was not found
     Jimp.read(file.path)
@@ -98,7 +98,7 @@ export class AttachmentService {
     if (nextArgs.orderBy && nextArgs.orderSort) {
       qb.orderBy({ [nextArgs.orderBy]: nextArgs.orderSort });
     } else {
-      qb.orderBy({ sort: 'ASC' });
+      qb.orderBy({ sort: 'ASC' }).addOrderBy('created_at', 'ASC');
     }
 
     const [items, total] = await qb.getManyAndCount();
@@ -158,11 +158,11 @@ export class AttachmentService {
       height = imageSize.height; // eslint-disable-line prefer-destructuring
     }
 
-    const filepath = file.path.replace(this.configService.PUBLIC_DIR, '').replace('@2x', '');
-    const filename = file.filename.replace('@2x', '');
+    const filepath = file.path.replace(this.configService.PUBLIC_DIR, '').replace('_2x', '');
+    const filename = file.filename.replace('_2x', '');
     const ext = path.extname(file.filename);
-    const title = path.basename(file.originalname, ext).replace('@2x', '');
-    const uuid = path.basename(filename, ext).replace('@2x', '');
+    const title = path.basename(file.originalname, ext).replace('_2x', '');
+    const uuid = path.basename(filename, ext).replace('_2x', '');
 
     if (isImage && at2x) {
       await this.saveAt2xToAt1x(file, width, height);
@@ -277,7 +277,7 @@ export class AttachmentService {
         try {
           fs.unlinkSync(`${this.configService.PUBLIC_DIR}${pathUtil.getAt2xPath(i.path)}`);
         } catch (err) {
-          loggerUtil.error(`delete @2x item ${i.path} fail: ${JSON.stringify(i)}\n\n`, CONSTRUCTOR_NAME, err);
+          loggerUtil.error(`delete _2x item ${i.path} fail: ${JSON.stringify(i)}\n\n`, CONSTRUCTOR_NAME, err);
         }
       }
 

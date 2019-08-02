@@ -39,7 +39,6 @@ describe('AttachmentService', () => {
 
   describe('uploadAttachment', () => {
     const createAttachmentBase = {
-      // uuid: '0427ba2e-c555-484a-89ba-dd5673787018',
       uuid: '0427ba2e-c555-484a-89ba-dd5673787018',
       title: 'images-3',
       alt: 'images-3',
@@ -111,11 +110,11 @@ describe('AttachmentService', () => {
       expect(result).toEqual({ attachment: attachment1xObject });
     });
 
-    it('should upload attachment @2x', async () => {
+    it('should upload attachment _2x', async () => {
       const file = {
         ...fileBase,
-        originalname: 'test@2x.png',
-        buffer: Buffer.from(fs.readFileSync(`${__dirname}/__mock__/test@2x.png`)),
+        originalname: 'test_2x.png',
+        buffer: Buffer.from(fs.readFileSync(`${__dirname}/__mock__/test_2x.png`)),
       };
 
       const attachment1xObject = {

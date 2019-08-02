@@ -19,6 +19,7 @@ interface IProps {
   onChange?: (checked: boolean) => void;
   onChangeAttachmentsCallback?: (attachments: Attachment[]) => void;
   onDeleteAttachmentCallback?: (uuid: string) => void;
+  listHeight?: number;
 }
 
 export const AttachmentList = forwardRef((props: IProps, ref: React.Ref<any>) => {
@@ -85,7 +86,14 @@ export const AttachmentList = forwardRef((props: IProps, ref: React.Ref<any>) =>
   const isEmpty = attachments && attachments.length === 0;
 
   return (
-    <div className={cx(style['wrapper'], { [style['wrapper--empty']]: isEmpty })} ref={ref}>
+    <div
+      className={cx(style['wrapper'], { [style['wrapper--empty']]: isEmpty })}
+      style={{
+        height: props.listHeight || 230,
+        paddingTop: isEmpty && props.listHeight ? props.listHeight / 2 - 10 : undefined,
+      }}
+      ref={ref}
+    >
       <div className={style['wrapper-inner']}>
         <DndProvider backend={HTML5Backend}>
           {attachments && !isEmpty ? (

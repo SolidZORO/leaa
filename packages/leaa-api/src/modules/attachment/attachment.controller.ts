@@ -1,5 +1,4 @@
-import { Controller, Get, Req, Body, UseInterceptors, Post, UploadedFile, UseGuards } from '@nestjs/common';
-import { Request } from 'express';
+import { Controller, Get, Body, UseInterceptors, Post, UploadedFile, UseGuards } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 
 import { CreateAttachmentInput } from '@leaa/common/dtos/attachment';

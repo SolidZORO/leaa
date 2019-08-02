@@ -14,7 +14,7 @@ export class MulterService implements MulterOptionsFactory {
 
   public subDir = moment().format('YYYY/MM');
   public saveDir = `./${this.configService.PUBLIC_DIR}/${this.configService.ATTACHMENT_DIR}/${this.subDir}`;
-  public isAt2x = (originalname: string): boolean => /[＠|@]2x/i.test(originalname);
+  public isAt2x = (originalname: string): boolean => /[＠@_]2x/i.test(originalname);
 
   public destination = (
     req: Express.Request,
@@ -29,7 +29,7 @@ export class MulterService implements MulterOptionsFactory {
     file: Express.Multer.File,
     cb: (error: Error | null, filename: string) => void,
   ): void => {
-    const at2x = this.isAt2x(file.originalname) ? '@2x' : '';
+    const at2x = this.isAt2x(file.originalname) ? '_2x' : '';
 
     cb(null, `${uuid.v4()}${at2x}${path.extname(file.originalname)}`);
   };

@@ -117,7 +117,7 @@ const AttachmentItemInner = forwardRef((props: IProps, ref: React.Ref<any>) => {
             loading={deleteAttachmentsMutation.loading}
             onClick={() => onDelete(attachment.uuid)}
           />
-          {props.attachment.at2x === 1 && <strong title="image include @2x" className={style['at2xdot']} />}
+          {props.attachment.at2x === 1 && <strong title="image include _2x" className={style['at2xdot']} />}
         </div>
       </div>
 
@@ -130,7 +130,7 @@ const AttachmentItemInner = forwardRef((props: IProps, ref: React.Ref<any>) => {
 
       <Input
         className={style['link']}
-        value={attachment.link}
+        value={attachment.link || undefined}
         onChange={e => onChangeAttachment('link', e)}
         placeholder={t('_lang:link')}
       />

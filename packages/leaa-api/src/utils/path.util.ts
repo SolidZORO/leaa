@@ -16,7 +16,7 @@ const getAt2xPath = (filepath: string): string => {
 
   // console.log(`${dir}/${filename}@2x${ext}`);
 
-  return `${dir}/${filename}@2x${ext}`;
+  return `${dir}/${filename}_2x${ext}`;
 };
 
 export const pathUtil = {

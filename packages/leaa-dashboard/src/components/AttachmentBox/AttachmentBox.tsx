@@ -23,6 +23,7 @@ interface IProps {
   attachmentParams: IAttachmentParams;
   onSubmitCallback?: (v: any) => void;
   disableMessage?: boolean;
+  listHeight?: number;
 }
 
 export const AttachmentBox = forwardRef((props: IProps, ref: React.Ref<any>) => {
@@ -64,6 +65,8 @@ export const AttachmentBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
 
     setgetAttachmentsVariables({
       ...props.attachmentParams,
+      orderBy: 'sort',
+      orderSort: 'ASC',
       refreshHash: new Date().getMilliseconds(),
     });
   };
@@ -72,7 +75,7 @@ export const AttachmentBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
     attachments.map(a => ({
       uuid: a.uuid,
       title: a.title,
-      link: a.link,
+      link: a.link || undefined,
       sort: Number(a.sort),
       status: Number(a.status),
     }));
@@ -113,8 +116,8 @@ export const AttachmentBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
           <span>
             {langUtil.removeSpace(`${t('_lang:attachment')} ${t('_lang:list')}`, i18n.language)}
             <code className={style['title-code']}>
-              {props.attachmentParams.type} / {props.attachmentParams.moduleName}, {props.attachmentParams.moduleId},{' '}
-              {props.attachmentParams.moduleType}
+              {props.attachmentParams.type} / {props.attachmentParams.moduleName}, {/* prettier-ignore */}
+              {props.attachmentParams.moduleId}, {props.attachmentParams.moduleType}
             </code>
           </span>
         }
@@ -131,6 +134,7 @@ export const AttachmentBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
           }
           onChangeAttachmentsCallback={onChangeAttachments}
           onDeleteAttachmentCallback={refreshAttachments}
+          listHeight={props.listHeight}
         />
       </FormCard>
     </div>
