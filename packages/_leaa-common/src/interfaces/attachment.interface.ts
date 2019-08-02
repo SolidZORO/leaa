@@ -16,7 +16,7 @@ export interface IMediaItem {
 
 export type IAttachmentParams = Pick<
   CreateAttachmentInput,
-  'type' | 'user_id' | 'module_id' | 'module_name' | 'module_type' | 'user_id'
+  'type' | 'user_id' | 'module_id' | 'module_name' | 'module_type'
 >;
 
 export interface IAttachmentBoxRef {
