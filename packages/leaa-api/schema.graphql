@@ -185,6 +185,14 @@ input CreateRoleInput {
   slug: String!
 }
 
+input CreateSettingInput {
+  name: String!
+  slug: String!
+  type: String
+  description: String
+  sort: Int = 0
+}
+
 input CreateUserInput {
   phone: String
   email: String!
@@ -224,6 +232,9 @@ type Mutation {
   updateAttachment(attachment: UpdateAttachmentInput!, uuid: String!): Attachment!
   updateAttachments(attachments: [UpdateAttachmentsInput!]!): AttachmentsObject!
   deleteAttachments(uuid: [String!]!): DeleteAttachmentsObject!
+  createSetting(setting: CreateSettingInput!): Setting!
+  updateSetting(setting: UpdateSettingInput!, id: Int!): Setting!
+  deleteSetting(id: Int!): Setting!
   login(user: AuthLoginInput!): User!
   register(user: AuthRegisterInput!): User!
 }
@@ -270,6 +281,8 @@ type Query {
   axBySlug(slug: String!): Ax!
   attachments(page: Int = 1, pageSize: Int = 30, orderBy: String = "created_at", orderSort: String = "DESC", q: String, type: String, moduleName: String, moduleId: Int, moduleType: String, category_id: Int, user_id: Int, refreshHash: Int): AttachmentsWithPaginationObject!
   attachment(uuid: String!): Attachment!
+  settings(page: Int = 1, pageSize: Int = 30, orderBy: String = "created_at", orderSort: String = "DESC", q: String): SettingsWithPaginationObject!
+  setting(id: Int!): Setting!
 }
 
 type Role {
@@ -288,6 +301,27 @@ type RolesWithPaginationObject {
   pageSize: Int!
   total: Int!
   items: [Role!]!
+}
+
+type Setting {
+  id: Int!
+  created_at: DateTime!
+  updated_at: DateTime
+  deleted_at: DateTime
+  name: String!
+  slug: String
+  type: String
+  description: String
+  options: String
+  value: String
+  sort: Int!
+}
+
+type SettingsWithPaginationObject {
+  page: Int
+  pageSize: Int!
+  total: Int!
+  items: [Setting!]!
 }
 
 input UpdateArticleInput {
@@ -339,6 +373,14 @@ input UpdateRoleInput {
   slug: String
   permissionIds: [Int!]
   permissionSlugs: [String!]
+}
+
+input UpdateSettingInput {
+  name: String
+  slug: String
+  type: String
+  description: String
+  sort: Int
 }
 
 input UpdateUserInput {

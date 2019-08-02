@@ -6,6 +6,7 @@ import { ATTACHMENT_FRAGMENT } from './attachment.fragment';
 export const GET_AXS = gql`
   query($page: Int, $pageSize: Int, $orderBy: String, $orderSort: String, $q: String) {
     axs(page: $page, pageSize: $pageSize, orderBy: $orderBy, orderSort: $orderSort, q: $q) {
+      total
       items {
         id
         title

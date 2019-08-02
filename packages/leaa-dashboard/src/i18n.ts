@@ -5,6 +5,7 @@ import enUs from './locales/en-US';
 import zhCn from './locales/zh-CN';
 
 i18n
+  // @ts-ignore
   .use(initReactI18next)
   .use(LanguageDetector)
   .init({

@@ -29,6 +29,7 @@ export const GET_ATTACHMENTS = gql`
       user_id: $user_id
       refreshHash: $refreshHash
     ) {
+      total
       items {
         uuid
         title

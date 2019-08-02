@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm';
 
-import { User, Permission, Role, Category, Article, Attachment, Ax } from '@leaa/common/entrys';
+import { User, Permission, Role, Category, Article, Attachment, Ax, Setting } from '@leaa/common/entrys';
 import { ConfigService } from '@leaa/api/modules/config/config.service';
 
 const CONSTRUCTOR_NAME = 'TypeormService';
@@ -34,6 +34,7 @@ export class TypeormService implements TypeOrmOptionsFactory {
         Article,
         Attachment,
         Ax,
+        Setting,
       ],
     };
 
@@ -44,8 +45,8 @@ export class TypeormService implements TypeOrmOptionsFactory {
           type: 'mysql',
           charset: 'utf8mb4',
           keepConnectionAlive: true,
-          // connectTimeout: 10000,
-          // acquireTimeout: 10000,
+          connectTimeout: 10000,
+          acquireTimeout: 10000,
         },
       };
     }

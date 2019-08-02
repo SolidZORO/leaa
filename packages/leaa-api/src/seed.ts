@@ -21,6 +21,7 @@ import { SeedService } from '@leaa/api/modules/seed/seed.service';
   try {
     const seedService: SeedService = await app.get(SeedService);
 
+    await seedService.insertSetting();
     await seedService.insertPermissions();
     await seedService.insertRoles();
     await seedService.insertUsers();

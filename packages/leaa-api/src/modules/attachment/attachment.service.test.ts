@@ -80,15 +80,15 @@ describe('AttachmentService', () => {
       mimetype: 'image/png',
       size: 7768,
       destination: '',
-      filename: 'test@1x.png',
-      path: 'test@1x.png',
+      filename: 'test_1x.png',
+      path: 'test_1x.png',
     };
 
-    it('should upload attachment @1x', async () => {
+    it('should upload attachment _1x', async () => {
       const file = {
         ...fileBase,
-        originalname: 'test@1x.png',
-        buffer: Buffer.from(fs.readFileSync(`${__dirname}/__mock__/test@1x.png`)),
+        originalname: 'test_1x.png',
+        buffer: Buffer.from(fs.readFileSync(`${__dirname}/__mock__/test_1x.png`)),
       };
 
       const attachment1xObject = {

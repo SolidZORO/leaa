@@ -19,6 +19,7 @@ import { ArticleModule } from '@leaa/api/modules/article/article.module';
 import { AuthTokenModule } from '@leaa/api/modules/auth-token/auth-token.module';
 import { AttachmentModule } from '@leaa/api/modules/attachment/attachment.module';
 import { PermissionModule } from '@leaa/api/modules/permission/permission.module';
+import { SettingModule } from '@leaa/api/modules/setting/setting.module';
 
 @Module({
   imports: [
@@ -43,6 +44,7 @@ import { PermissionModule } from '@leaa/api/modules/permission/permission.module
     AttachmentModule,
     AxModule,
     AuthTokenModule,
+    SettingModule,
   ],
   providers: [ConfigModule, AuthModule, UserModule],
   controllers: [],

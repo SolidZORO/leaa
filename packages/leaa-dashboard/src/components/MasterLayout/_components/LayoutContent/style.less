@@ -2,5 +2,10 @@
 
 .full-layout-content {
   position: relative;
-  padding: @page-card-padding-x;
+  min-height: 500px;
+  padding: @page-card-padding-x 10px;
+
+  @media (min-width: @screen-md) {
+    padding: @page-card-padding-x;
+  }
 }

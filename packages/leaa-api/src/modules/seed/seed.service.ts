@@ -5,6 +5,7 @@ import { UserService } from '@leaa/api/modules/user/user.service';
 import { CategoryService } from '@leaa/api/modules/category/category.service';
 import { ArticleService } from '@leaa/api/modules/article/article.service';
 import { AxService } from '@leaa/api/modules/ax/ax.service';
+import { SettingService } from '@leaa/api/modules/setting/setting.service';
 
 import {
   permissionsSeed,
@@ -16,6 +17,7 @@ import {
   categorySeed,
   articleSeed,
   axSeed,
+  settingSeed,
 } from '@leaa/api/modules/seed/seed.data';
 
 @Injectable()
@@ -27,6 +29,7 @@ export class SeedService {
     private readonly categoryService: CategoryService,
     private readonly articleService: ArticleService,
     private readonly axService: AxService,
+    private readonly settingService: SettingService,
   ) {}
 
   /* eslint-disable no-restricted-syntax */
@@ -107,6 +110,14 @@ export class SeedService {
   public async insertAx() {
     for (const i of axSeed) {
       const item = await this.axService.craeteAx(i);
+
+      console.log(item);
+    }
+  }
+
+  public async insertSetting() {
+    for (const i of settingSeed) {
+      const item = await this.settingService.craeteSetting(i);
 
       console.log(item);
     }

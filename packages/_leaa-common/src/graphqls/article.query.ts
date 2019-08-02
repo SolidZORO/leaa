@@ -3,6 +3,7 @@ import gql from 'graphql-tag';
 export const GET_ARTICLES = gql`
   query($page: Int, $pageSize: Int, $orderBy: String, $orderSort: String, $q: String) {
     articles(page: $page, pageSize: $pageSize, orderBy: $orderBy, orderSort: $orderSort, q: $q) {
+      total
       items {
         id
         title

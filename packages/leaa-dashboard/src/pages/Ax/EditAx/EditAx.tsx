@@ -113,6 +113,8 @@ export default (props: IPage) => {
     });
   };
 
+  const layoutCol = { xs: 24, md: 12 };
+
   return (
     <PageCard
       title={t(`${props.route.namei18n}`)}
@@ -137,7 +139,7 @@ export default (props: IPage) => {
       />
 
       <Row gutter={16}>
-        <Col xs={12}>
+        <Col {...layoutCol}>
           <AttachmentBox
             disableMessage
             ref={getBannerMbRef}
@@ -146,7 +148,7 @@ export default (props: IPage) => {
           />
         </Col>
 
-        <Col xs={12}>
+        <Col {...layoutCol}>
           <AttachmentBox
             disableMessage
             ref={getBannerPcRef}
@@ -157,7 +159,7 @@ export default (props: IPage) => {
       </Row>
 
       <Row gutter={16}>
-        <Col xs={12}>
+        <Col {...layoutCol}>
           <AttachmentBox
             disableMessage
             ref={getGalleryMbRef}
@@ -166,7 +168,7 @@ export default (props: IPage) => {
           />
         </Col>
 
-        <Col xs={12}>
+        <Col {...layoutCol}>
           <AttachmentBox
             disableMessage
             ref={getGalleryPcRef}

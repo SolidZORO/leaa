@@ -4,6 +4,7 @@ import { Article } from '@leaa/common/entrys';
 import { CreateArticleInput } from '@leaa/common/dtos/article';
 import { CreateCategoryInput } from '@leaa/common/dtos/category';
 import { CreateAxInput } from '@leaa/common/dtos/ax';
+import { CreateSettingInput } from '@leaa/common/dtos/setting';
 
 export const permissionsSeed = [
   { name: 'Playground', slug: 'playground.root' },
@@ -51,6 +52,12 @@ export const permissionsSeed = [
   { name: 'Attachment Create', slug: 'attachment.create' },
   { name: 'Attachment Update', slug: 'attachment.update' },
   { name: 'Attachment Delete', slug: 'attachment.delete' },
+  //
+  { name: 'Setting List', slug: 'setting.list' },
+  { name: 'Setting Item', slug: 'setting.item' },
+  { name: 'Setting Create', slug: 'setting.create' },
+  { name: 'Setting Update', slug: 'setting.update' },
+  { name: 'Setting Delete', slug: 'setting.delete' },
 ];
 
 // prettier-ignore
@@ -113,4 +120,11 @@ export const articleSeed: CreateArticleInput[] = [
 export const axSeed: CreateAxInput[] = [
   { title: 'Index Swiper', description: '首页滚动图', slug: 'index-swiper', status: 1 },
   { title: 'Index Grid', description: '首页方块图', slug: 'index-grid', status: 0 },
+];
+
+// prettier-ignore
+export const settingSeed: CreateSettingInput[] = [
+  { name: 'Site Name', slug: 'site_name', type: 'input', sort: 1, description: '站点名' },
+  { name: 'Site Description', slug: 'site_description', type: 'textarea', sort: 1, description: '站点描述' },
+  { name: 'Site Keywords', slug: 'site_keywords', type: 'input', sort: 1, description: '站点关键字' },
 ];
