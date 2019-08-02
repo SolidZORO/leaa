@@ -20,15 +20,19 @@ import { SeedService } from '@leaa/api/modules/seed/seed.service';
 
   try {
     const seedService: SeedService = await app.get(SeedService);
+
     await seedService.insertPermissions();
     await seedService.insertRoles();
     await seedService.insertUsers();
-    await seedService.insertRandomUsers();
     await seedService.insertRoleAddPermissions();
     await seedService.insertUserAddRole();
     await seedService.insertCategory();
     await seedService.insertArticle();
     await seedService.insertAx();
+
+    if (process.argv.includes('--debug')) {
+      await seedService.insertRandomUsers();
+    }
   } catch (e) {
     await process.exit(0);
   }

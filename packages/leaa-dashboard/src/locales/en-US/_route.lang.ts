@@ -2,6 +2,8 @@ import _lang from './_lang.lang';
 
 const home = 'Home';
 const playground = 'Playground';
+const test = 'Test';
+const lab = 'Lab';
 const user = 'User';
 const role = 'Role';
 const permission = 'Permission';
@@ -16,6 +18,8 @@ export default {
   regist: _lang.register,
   //
   playground,
+  test,
+  lab,
   showStore: 'Show Store',
   testApollo: 'Test Apollo',
   //

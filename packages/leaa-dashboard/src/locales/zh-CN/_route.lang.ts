@@ -2,6 +2,8 @@ import _lang from './_lang.lang';
 
 const home = '主页';
 const playground = '游乐园';
+const test = '测试';
+const lab = '实验室';
 const user = '用户';
 const role = '角色';
 const permission = '权限';
@@ -16,6 +18,8 @@ export default {
   regist: _lang.register,
   //
   playground,
+  test,
+  lab,
   showStore: '展示 Store',
   testApollo: '测试 Apollo',
   //

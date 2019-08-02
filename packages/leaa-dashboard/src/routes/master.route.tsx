@@ -9,41 +9,6 @@ import { ALLOW_PERMISSION } from '@leaa/dashboard/constants';
 
 export const masterRoutes: IRouteItem[] = [
   {
-    name: 'Playground',
-    namei18n: '_route:playground',
-    permission: 'playground.root',
-    path: '_group',
-    icon: 'folder',
-    children: [
-      {
-        name: 'Show Store',
-        namei18n: '_route:showStore',
-        permission: ALLOW_PERMISSION,
-        path: '/show-store',
-        icon: 'deployment-unit',
-        LazyComponent: React.lazy(() =>
-          import(/* webpackChunkName: 'ShowStore' */ '../pages/Playground/ShowStore/ShowStore'),
-        ),
-        exact: true,
-      },
-      {
-        name: 'Test Apollo',
-        namei18n: '_route:testApollo',
-        permission: ALLOW_PERMISSION,
-        path: '/test-apollo',
-        icon: 'experiment',
-        LazyComponent: React.lazy(() =>
-          import(/* webpackChunkName: 'TestApollo' */ '../pages/Playground/TestApollo/TestApollo'),
-        ),
-        exact: true,
-      },
-    ],
-  },
-  //
-  //
-  //
-  //
-  {
     name: 'Create User',
     namei18n: '_route:createUser',
     permission: 'user.create',
@@ -266,6 +231,41 @@ export const masterRoutes: IRouteItem[] = [
     path: '/',
     LazyComponent: React.lazy(() => import(/* webpackChunkName: 'Home' */ '../pages/Home/Home/Home')),
     exact: true,
+  },
+  //
+  //
+  //
+  //
+  {
+    name: 'Lab',
+    namei18n: '_route:lab',
+    permission: 'lab.root',
+    path: '_group',
+    icon: 'experiment',
+    children: [
+      {
+        name: 'Show Store',
+        namei18n: '_route:showStore',
+        permission: ALLOW_PERMISSION,
+        path: '/show-store',
+        icon: 'deployment-unit',
+        LazyComponent: React.lazy(() =>
+          import(/* webpackChunkName: 'ShowStore' */ '../pages/Playground/ShowStore/ShowStore'),
+        ),
+        exact: true,
+      },
+      {
+        name: 'Test Apollo',
+        namei18n: '_route:testApollo',
+        permission: ALLOW_PERMISSION,
+        path: '/test-apollo',
+        icon: 'deployment-unit',
+        LazyComponent: React.lazy(() =>
+          import(/* webpackChunkName: 'TestApollo' */ '../pages/Playground/TestApollo/TestApollo'),
+        ),
+        exact: true,
+      },
+    ],
   },
 ];
 
