@@ -11,15 +11,15 @@ export class AttachmentsArgs extends ItemsArgs {
 
   @IsOptional()
   @Field(() => String, { nullable: true })
-  public readonly module_name?: string;
+  public readonly moduleName?: string;
 
   @IsOptional()
   @Field(() => Int, { nullable: true })
-  public readonly module_id?: number;
+  public readonly moduleId?: number;
 
   @IsOptional()
   @Field(() => String, { nullable: true })
-  public readonly module_type?: string;
+  public readonly moduleType?: string;
 
   @IsOptional()
   @Field(() => Int, { nullable: true })

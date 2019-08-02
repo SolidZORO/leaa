@@ -29,11 +29,11 @@ export class Attachment extends Base {
 
   @Column({ type: 'text', nullable: true })
   @Field(() => String, { nullable: true })
-  public description?: string;
+  public description?: string | null;
 
   @Column({ type: 'varchar', length: 255, nullable: true })
   @Field(() => String, { nullable: true })
-  public link?: string;
+  public link?: string | null;
 
   @Column({ type: 'varchar', length: 64 })
   @Field(() => String)
@@ -68,7 +68,7 @@ export class Attachment extends Base {
   public path!: string;
 
   @Field(() => String, { nullable: true })
-  public pathAt2x?: string;
+  public pathAt2x?: string | null;
 
   @Column({ type: 'int', default: 0 })
   @Field(() => Int)
@@ -84,11 +84,11 @@ export class Attachment extends Base {
 
   @Column({ type: 'int', nullable: true })
   @Field(() => Int, { nullable: true })
-  public category_id?: number;
+  public category_id?: number | null;
 
   @Column({ type: 'int', nullable: true })
   @Field(() => Int, { nullable: true })
-  public user_id?: number;
+  public user_id?: number | null;
 
   @Column({ type: 'int', default: 0 })
   @Field(() => Int)

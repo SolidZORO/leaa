@@ -113,8 +113,8 @@ export const AttachmentBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
           <span>
             {langUtil.removeSpace(`${t('_lang:attachment')} ${t('_lang:list')}`, i18n.language)}
             <code className={style['title-code']}>
-              {props.attachmentParams.type} / {props.attachmentParams.module_name}, {props.attachmentParams.module_id},{' '}
-              {props.attachmentParams.module_type}
+              {props.attachmentParams.type} / {props.attachmentParams.moduleName}, {props.attachmentParams.moduleId},{' '}
+              {props.attachmentParams.moduleType}
             </code>
           </span>
         }

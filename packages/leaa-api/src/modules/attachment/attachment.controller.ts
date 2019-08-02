@@ -18,11 +18,7 @@ export class AttachmentController {
 
   @Post('')
   @UseInterceptors(FileInterceptor('file'))
-  async uploadFile(
-    @Req() req: Request,
-    @Body() body: CreateAttachmentInput,
-    @UploadedFile() file: Express.Multer.File,
-  ) {
-    return this.attachmentService.craeteAttachment(req, body, file);
+  async uploadFile(@Body() body: CreateAttachmentInput, @UploadedFile() file: Express.Multer.File) {
+    return this.attachmentService.craeteAttachment(body, file);
   }
 }

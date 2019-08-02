@@ -32,21 +32,21 @@ export default (props: IPage) => {
   });
 
   const baseAttachmentVariables: AttachmentsArgs = {
-    module_name: 'ax',
-    module_id: Number(id),
+    moduleName: 'ax',
+    moduleId: Number(id),
     orderSort: 'ASC',
     orderBy: 'created_at',
   };
 
   const getBannerMbRef = useRef<IAttachmentBoxRef>(null);
-  const getBannerMbVariables = { ...baseAttachmentVariables, module_type: 'banner_mb', refreshHash: 0 };
+  const getBannerMbVariables = { ...baseAttachmentVariables, moduleType: 'banner_mb', refreshHash: 0 };
   const getBannerMbQuery = useQuery<{ attachments: AttachmentsWithPaginationObject }, AttachmentsArgs>(
     GET_ATTACHMENTS,
     { variables: getBannerMbVariables },
   );
 
   const getBannerPcRef = useRef<IAttachmentBoxRef>(null);
-  const getBannerPcVariables = { ...baseAttachmentVariables, module_type: 'banner_pc', refreshHash: 0 };
+  const getBannerPcVariables = { ...baseAttachmentVariables, moduleType: 'banner_pc', refreshHash: 0 };
   const getBannerPcQuery = useQuery<{ attachments: AttachmentsWithPaginationObject }, AttachmentsArgs>(
     GET_ATTACHMENTS,
     { variables: getBannerPcVariables },
@@ -55,14 +55,14 @@ export default (props: IPage) => {
   //
 
   const getGalleryMbRef = useRef<IAttachmentBoxRef>(null);
-  const getGalleryMbVariables = { ...baseAttachmentVariables, module_type: 'gallery_mb', refreshHash: 0 };
+  const getGalleryMbVariables = { ...baseAttachmentVariables, moduleType: 'gallery_mb', refreshHash: 0 };
   const getGalleryMbQuery = useQuery<{ attachments: AttachmentsWithPaginationObject }, AttachmentsArgs>(
     GET_ATTACHMENTS,
     { variables: getGalleryMbVariables },
   );
 
   const getGalleryPcRef = useRef<IAttachmentBoxRef>(null);
-  const getGalleryPcVariables = { ...baseAttachmentVariables, module_type: 'gallery_pc', refreshHash: 0 };
+  const getGalleryPcVariables = { ...baseAttachmentVariables, moduleType: 'gallery_pc', refreshHash: 0 };
   const getGalleryPcQuery = useQuery<{ attachments: AttachmentsWithPaginationObject }, AttachmentsArgs>(
     GET_ATTACHMENTS,
     { variables: getGalleryPcVariables },
@@ -140,7 +140,7 @@ export default (props: IPage) => {
           <AttachmentBox
             disableMessage
             ref={getBannerMbRef}
-            attachmentParams={{ type: 'image', module_id: Number(id), module_name: 'ax', module_type: 'banner_mb' }}
+            attachmentParams={{ type: 'image', moduleId: Number(id), moduleName: 'ax', moduleType: 'banner_mb' }}
           />
         </Col>
 
@@ -148,7 +148,7 @@ export default (props: IPage) => {
           <AttachmentBox
             disableMessage
             ref={getBannerPcRef}
-            attachmentParams={{ type: 'image', module_id: Number(id), module_name: 'ax', module_type: 'banner_pc' }}
+            attachmentParams={{ type: 'image', moduleId: Number(id), moduleName: 'ax', moduleType: 'banner_pc' }}
           />
         </Col>
       </Row>
@@ -158,7 +158,7 @@ export default (props: IPage) => {
           <AttachmentBox
             disableMessage
             ref={getGalleryMbRef}
-            attachmentParams={{ type: 'image', module_id: Number(id), module_name: 'ax', module_type: 'gallery_mb' }}
+            attachmentParams={{ type: 'image', moduleId: Number(id), moduleName: 'ax', moduleType: 'gallery_mb' }}
           />
         </Col>
 
@@ -166,7 +166,7 @@ export default (props: IPage) => {
           <AttachmentBox
             disableMessage
             ref={getGalleryPcRef}
-            attachmentParams={{ type: 'image', module_id: Number(id), module_name: 'ax', module_type: 'gallery_pc' }}
+            attachmentParams={{ type: 'image', moduleId: Number(id), moduleName: 'ax', moduleType: 'gallery_pc' }}
           />
         </Col>
       </Row>

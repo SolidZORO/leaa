@@ -33,9 +33,9 @@ export default (props: IPage) => {
         ref={attachmentBoxRef}
         attachmentParams={{
           type: 'image',
-          module_id: 9,
-          module_name: 'playground',
-          module_type: 'testbox',
+          moduleId: 9,
+          moduleName: 'playground',
+          moduleType: 'testbox',
         }}
       />
 

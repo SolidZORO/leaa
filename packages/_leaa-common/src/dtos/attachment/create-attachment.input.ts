@@ -24,13 +24,13 @@ export class CreateAttachmentInput {
   // public link?: string;
 
   @Field(() => String)
-  public module_name!: string;
+  public moduleName!: string;
 
   @Field(() => Int)
-  public module_id!: number;
+  public moduleId!: number;
 
   @Field(() => String)
-  public module_type!: string;
+  public moduleType!: string;
 
   @Field(() => String)
   public ext!: string;
@@ -42,7 +42,7 @@ export class CreateAttachmentInput {
   public height!: number;
 
   @Field(() => Int)
-  public size?: number;
+  public size!: number;
 
   @Field(() => String)
   public path!: string;
@@ -51,20 +51,20 @@ export class CreateAttachmentInput {
   public at2x!: number;
 
   @Field(() => Int)
-  public in_local?: number;
-
-  @Field(() => Int, { nullable: true })
-  public in_cloud?: number;
-
-  @Field(() => Int, { nullable: true })
-  public category_id?: number;
-
-  @Field(() => Int, { nullable: true })
-  public user_id?: number;
+  public in_local!: number;
 
   @Field(() => Int)
-  public sort?: number;
+  public in_cloud!: number;
+
+  @Field(() => Int, { nullable: true })
+  public category_id?: number | null;
+
+  @Field(() => Int, { nullable: true })
+  public user_id?: number | null;
 
   @Field(() => Int)
-  public status?: number;
+  public sort!: number;
+
+  @Field(() => Int)
+  public status!: number;
 }

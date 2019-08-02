@@ -8,9 +8,9 @@ export const GET_ATTACHMENTS = gql`
     $orderSort: String
     $q: String
     $type: String
-    $module_name: String
-    $module_id: Int
-    $module_type: String
+    $moduleName: String
+    $moduleId: Int
+    $moduleType: String
     $category_id: Int
     $user_id: Int
     $refreshHash: Int
@@ -22,9 +22,9 @@ export const GET_ATTACHMENTS = gql`
       orderSort: $orderSort
       q: $q
       type: $type
-      module_name: $module_name
-      module_id: $module_id
-      module_type: $module_type
+      moduleName: $moduleName
+      moduleId: $moduleId
+      moduleType: $moduleType
       category_id: $category_id
       user_id: $user_id
       refreshHash: $refreshHash

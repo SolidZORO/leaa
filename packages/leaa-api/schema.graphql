@@ -144,9 +144,9 @@ input CreateAttachmentInput {
   alt: String!
   type: String!
   filename: String!
-  module_name: String!
-  module_id: Int!
-  module_type: String!
+  moduleName: String!
+  moduleId: Int!
+  moduleType: String!
   ext: String!
   width: Int!
   height: Int!
@@ -154,7 +154,7 @@ input CreateAttachmentInput {
   path: String!
   at2x: Int!
   in_local: Int!
-  in_cloud: Int
+  in_cloud: Int!
   category_id: Int
   user_id: Int
   sort: Int!
@@ -268,7 +268,7 @@ type Query {
   axs(page: Int = 1, pageSize: Int = 30, orderBy: String = "created_at", orderSort: String = "DESC", q: String): AxsWithPaginationObject!
   ax(id: Int!): Ax!
   axBySlug(slug: String!): Ax!
-  attachments(page: Int = 1, pageSize: Int = 30, orderBy: String = "created_at", orderSort: String = "DESC", q: String, type: String, module_name: String, module_id: Int, module_type: String, category_id: Int, user_id: Int, refreshHash: Int): AttachmentsWithPaginationObject!
+  attachments(page: Int = 1, pageSize: Int = 30, orderBy: String = "created_at", orderSort: String = "DESC", q: String, type: String, moduleName: String, moduleId: Int, moduleType: String, category_id: Int, user_id: Int, refreshHash: Int): AttachmentsWithPaginationObject!
   attachment(uuid: String!): Attachment!
 }
 

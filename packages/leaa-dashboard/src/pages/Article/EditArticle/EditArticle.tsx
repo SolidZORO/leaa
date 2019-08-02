@@ -39,9 +39,9 @@ export default (props: IPage) => {
   });
 
   const [getArticleEditorAttachmentsVariables, setGetArticleEditorAttachmentsVariables] = useState<AttachmentsArgs>({
-    module_name: 'article',
-    module_type: 'editor',
-    module_id: Number(id),
+    moduleName: 'article',
+    moduleType: 'editor',
+    moduleId: Number(id),
     orderSort: 'ASC',
     refreshHash: 0,
   });
@@ -159,9 +159,9 @@ export default (props: IPage) => {
         braftEditorProps={{ contentStyle: { height: 700 } }}
         attachmentParams={{
           type: 'image',
-          module_id: Number(id),
-          module_name: 'article',
-          module_type: 'editor',
+          moduleId: Number(id),
+          moduleName: 'article',
+          moduleType: 'editor',
         }}
         attachmentItems={
           getArticleEditorAttachmentsQuery.data &&
@@ -187,9 +187,9 @@ export default (props: IPage) => {
             ref={attachmentBoxRef}
             attachmentParams={{
               type: 'image',
-              module_id: Number(id),
-              module_name: 'article',
-              module_type: 'banner',
+              moduleId: Number(id),
+              moduleName: 'article',
+              moduleType: 'banner',
             }}
           />
         </Col>

@@ -1,9 +1,10 @@
-import { ArticleService } from '@leaa/api/modules/article/article.service';
-import { getRepositoryToken } from '@nestjs/typeorm';
-import { Article, Category } from '@leaa/common/entrys';
-import { Test, TestingModule } from '@nestjs/testing';
 import { Repository } from 'typeorm';
+import { Test, TestingModule } from '@nestjs/testing';
+import { getRepositoryToken } from '@nestjs/typeorm';
+
+import { Article, Category } from '@leaa/common/entrys';
 import { CreateArticleInput, UpdateArticleInput } from '@leaa/common/dtos/article';
+import { ArticleService } from '@leaa/api/modules/article/article.service';
 
 describe('ArticleService', () => {
   let articleService: ArticleService;

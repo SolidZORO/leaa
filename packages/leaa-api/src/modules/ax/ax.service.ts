@@ -34,15 +34,15 @@ export class AxService extends BaseService<Ax, AxsArgs, AxsWithPaginationObject,
 
     if (ax && ax.id) {
       const baseParam = {
-        module_name: 'ax',
-        module_id: ax.id,
-        module_type: 'banner_mb',
+        moduleName: 'ax',
+        moduleId: ax.id,
+        moduleType: 'banner_mb',
       };
 
-      const bannerMbResult = await this.attachmentService.attachments({ ...baseParam, module_type: 'banner_mb' });
-      const bannerPcResult = await this.attachmentService.attachments({ ...baseParam, module_type: 'banner_pc' });
-      const galleryMbResult = await this.attachmentService.attachments({ ...baseParam, module_type: 'gallery_mb' });
-      const galleryPcResult = await this.attachmentService.attachments({ ...baseParam, module_type: 'gallery_pc' });
+      const bannerMbResult = await this.attachmentService.attachments({ ...baseParam, moduleType: 'banner_mb' });
+      const bannerPcResult = await this.attachmentService.attachments({ ...baseParam, moduleType: 'banner_pc' });
+      const galleryMbResult = await this.attachmentService.attachments({ ...baseParam, moduleType: 'gallery_mb' });
+      const galleryPcResult = await this.attachmentService.attachments({ ...baseParam, moduleType: 'gallery_pc' });
 
       if (bannerMbResult && bannerMbResult.items) {
         bannerMbList = bannerMbResult.items;

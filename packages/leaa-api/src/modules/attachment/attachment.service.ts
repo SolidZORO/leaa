@@ -20,7 +20,7 @@ import {
 } from '@leaa/common/dtos/attachment';
 import { ConfigService } from '@leaa/api/modules/config/config.service';
 import { formatUtil, loggerUtil, pathUtil, permissionUtil } from '@leaa/api/utils';
-import { IAttachmentType } from '@leaa/common/interfaces';
+import { IAttachmentType, IAttachmentDbCreateField, IAttachmentDbFilterField } from '@leaa/common/interfaces';
 import { MulterService } from '@leaa/api/modules/attachment/multer.service';
 
 const CONSTRUCTOR_NAME = 'AttachmentService';
@@ -65,22 +65,18 @@ export class AttachmentService {
   async attachments(args: AttachmentsArgs, user?: User): Promise<AttachmentsWithPaginationObject> {
     const nextArgs = formatUtil.formatArgs(args);
 
-    const moduleFilter: {
-      module_name?: string;
-      module_id?: number;
-      module_type?: string;
-    } = {};
+    const moduleFilter: IAttachmentDbFilterField = {};
 
-    if (nextArgs.module_name) {
-      moduleFilter.module_name = nextArgs.module_name;
+    if (nextArgs.moduleName) {
+      moduleFilter.module_name = nextArgs.moduleName;
     }
 
-    if (nextArgs.module_id) {
-      moduleFilter.module_id = nextArgs.module_id;
+    if (nextArgs.moduleId) {
+      moduleFilter.module_id = nextArgs.moduleId;
     }
 
-    if (nextArgs.module_type) {
-      moduleFilter.module_type = nextArgs.module_type;
+    if (nextArgs.moduleType) {
+      moduleFilter.module_type = nextArgs.moduleType;
     }
 
     const qb = getRepository(Attachment).createQueryBuilder();
@@ -138,11 +134,16 @@ export class AttachmentService {
     });
   }
 
-  async craeteAttachment(req: Request, body: CreateAttachmentInput, file: Express.Multer.File) {
+  async craeteAttachment(
+    body: CreateAttachmentInput,
+    file: Express.Multer.File,
+  ): Promise<{ attachment: Attachment } | undefined> {
     if (!file) {
       const message = 'not found attachment';
 
-      return loggerUtil.warn(message, CONSTRUCTOR_NAME);
+      loggerUtil.warn(message, CONSTRUCTOR_NAME);
+
+      return;
     }
 
     const isImage = file.mimetype ? file.mimetype.includes(IAttachmentType.IMAGE) : false;
@@ -167,15 +168,17 @@ export class AttachmentService {
       await this.saveAt2xToAt1x(file, width, height);
     }
 
-    const attachmentData: CreateAttachmentInput = {
+    const attachmentData: IAttachmentDbCreateField = {
       uuid,
       title,
       alt: title,
       type: file.mimetype ? `${file.mimetype.split('/')[0]}` : 'no-mime',
       filename,
-      module_name: body.module_name,
-      module_id: typeof body.module_id !== 'undefined' ? Number(body.module_id) : 0,
-      module_type: body.module_type,
+      // module_abc --> moduleAbc
+      module_name: body.moduleName,
+      module_id: typeof body.moduleId !== 'undefined' ? Number(body.moduleId) : 0,
+      module_type: body.moduleType,
+      //
       ext,
       width,
       height,
@@ -187,6 +190,7 @@ export class AttachmentService {
 
     const attachment = await this.attachmentRepository.save({ ...attachmentData });
 
+    // eslint-disable-next-line consistent-return
     return { attachment };
   }
 
