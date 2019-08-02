@@ -1,9 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import cx from 'classnames';
 import { RouteProps, RouteComponentProps } from 'react-router-dom';
 import { Layout } from 'antd';
 import animateScrollTo from 'animated-scroll-to';
-
 import { urlUtil, authUtil } from '@leaa/dashboard/utils';
 import { IRouteItem } from '@leaa/dashboard/interfaces';
 import { DefaultLayout } from '@leaa/dashboard/components/DefaultLayout';
@@ -19,6 +18,7 @@ interface IProps extends RouteProps {
   route: IRouteItem;
   disableSidebar?: boolean;
   disableHeader?: boolean;
+  onCallbackSidebarTarget?: (status: boolean) => void;
 }
 
 export const MasterLayout = (props: IProps) => {

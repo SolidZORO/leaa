@@ -1,16 +1,20 @@
 @import '~@leaa/dashboard/src/styles/variables.less';
 
+.wrapper {
+  position: relative;
+}
+
 @sidebar-background-color: #001529;
 
 .full-layout-sidebar {
-  display: none;
+  //display: none;
   position: relative;
   background: shade(@primary-color, 95%);
   background: linear-gradient(shade(@primary-color, 85%), shade(@primary-color, 80%), shade(@primary-color, 75%));
   transition: all 0.3s;
 
   @media (min-width: @screen-md) {
-    display: block;
+    //display: block;
   }
 }
 
@@ -49,13 +53,19 @@
       }
 
       .ant-menu-item {
-        padding-left: 48px !important;
+        padding-left: 46px !important;
       }
     }
 
     .ant-menu-item-selected {
       background-color: shade(@primary-color, 50%) !important;
     }
+  }
+}
+
+.nav-text {
+  em {
+    font-style: normal;
   }
 }
 
@@ -82,5 +92,25 @@
   bottom: 10px;
 
   .switch-language {
+  }
+}
+
+.target-button-wrapper {
+  transition: all 0.2s;
+  z-index: 2;
+  position: absolute;
+  top: 8px;
+  left: 4px;
+}
+
+:global {
+  .ant-layout-sider-collapsed {
+    .switch-language-wrapper {
+      display: none;
+    }
+
+    .target-button-wrapper {
+      //left: 4px;
+    }
   }
 }

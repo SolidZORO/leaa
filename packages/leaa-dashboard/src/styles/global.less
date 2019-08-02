@@ -1,8 +1,15 @@
 @import '~antd/lib/style/themes/default.less';
 
 :global {
-  .g {
-    background: #000;
+  body {
+    &:after {
+      display: none;
+      content: 'xs';
+
+      @media (min-width: @screen-md) {
+        content: 'md';
+      }
+    }
   }
 
   .g-form--zero-margin-bottom {

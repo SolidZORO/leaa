@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import cx from 'classnames';
+import React, { useState, useEffect } from 'react';
 import { Layout, Menu, Icon } from 'antd';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -6,13 +7,17 @@ import { useTranslation } from 'react-i18next';
 import logo from '@leaa/dashboard/assets/images/logo/logo-white.svg';
 import { IRouteItem } from '@leaa/dashboard/interfaces';
 import { masterRoutes, flateMasterRoutes } from '@leaa/dashboard/routes/master.route';
-import { authUtil } from '@leaa/dashboard/utils';
-import { ALLOW_PERMISSION } from '@leaa/dashboard/constants';
+import { authUtil, deviceUtil } from '@leaa/dashboard/utils';
+import { ALLOW_PERMISSION, SIDERBAR_COLLAPSED_SL_KEY } from '@leaa/dashboard/constants';
 import { SwitchLanguage } from '@leaa/dashboard/components/SwitchLanguage';
+import { SidebarTarget } from '@leaa/dashboard/components/MasterLayout/_components/SidebarTarget/SidebarTarget';
 
 import style from './style.less';
 
-interface IProps extends RouteComponentProps {}
+interface IProps extends RouteComponentProps {
+  className?: string;
+  collapsedHash?: number;
+}
 
 const getMenuName = (menu: IRouteItem) => {
   const { t } = useTranslation();
@@ -47,9 +52,9 @@ const makeFlatMenu = (menu: IRouteItem): React.ReactNode => {
     dom = (
       <Menu.Item key={menu.path} className={`g-sidebar-menu-${menu.path}`}>
         <Link to={menu.path}>
-          <span className="nav-text">
+          <span className={style['nav-text']}>
             {menu.icon && <Icon type={menu.icon} />}
-            {getMenuName(menu)}
+            <em className="menu-name">{getMenuName(menu)}</em>
           </span>
         </Link>
 
@@ -78,9 +83,9 @@ const makeFlatMenus = (menus: IRouteItem[]): React.ReactNode => {
           className={`g-sidebar-group-menu-${menu.path}`}
           key={menu.path}
           title={
-            <span className="nav-text">
+            <span className={style['nav-text']}>
               {menu.icon && <Icon type={menu.icon} />}
-              {getMenuName(menu)}
+              <em className="menu-name">{getMenuName(menu)}</em>
             </span>
           }
         >
@@ -100,8 +105,44 @@ export const LayoutSidebar = (props: IProps) => {
   const curremtSelectedKey = flateMasterRoutes.find(r => r.path === props.match.path);
   const uiOpenKeys = curremtSelectedKey ? curremtSelectedKey.groupName || '' : '';
 
+  const collapsedLs = localStorage.getItem(SIDERBAR_COLLAPSED_SL_KEY);
+  let collapsedInit = collapsedLs !== null && collapsedLs === 'true';
+
+  if (deviceUtil.isMobile() && collapsedLs === null) {
+    collapsedInit = true;
+  }
+
+  const [collapsed, setCollapsed] = useState<boolean>(collapsedInit);
+
+  const onCollapse = (isCollapsed: boolean, type: 'responsive' | 'clickTrigger') => {
+    if (type === 'clickTrigger') {
+      const nextCollapsed = !collapsed;
+      localStorage.setItem(SIDERBAR_COLLAPSED_SL_KEY, `${nextCollapsed}`);
+
+      setCollapsed(nextCollapsed);
+    }
+  };
+
+  useEffect(() => {
+    if (collapsed) {
+      document.body.classList.add('siderbar-collapsed');
+    } else {
+      document.body.classList.remove('siderbar-collapsed');
+    }
+  }, [collapsed]);
+
   return (
-    <Layout.Sider collapsible={false} className={style['full-layout-sidebar']}>
+    <Layout.Sider
+      collapsed={collapsed}
+      defaultCollapsed={collapsed}
+      collapsible
+      collapsedWidth={0}
+      className={style['full-layout-sidebar']}
+      id="full-layout-sidebar"
+      breakpoint="md"
+      onCollapse={(isCollapsed, type) => onCollapse(isCollapsed, type)}
+      trigger={null}
+    >
       <div className={style['logo-wrapper']}>
         <Link to="/">
           <img src={logo} alt="" width={40} />
@@ -122,8 +163,12 @@ export const LayoutSidebar = (props: IProps) => {
         </Menu>
       )}
 
-      <div className={style['switch-language-wrapper']}>
+      <div className={cx(style['switch-language-wrapper'], 'switch-language-wrapper')}>
         <SwitchLanguage className={style['switch-language']} placement="topLeft" dark />
+      </div>
+
+      <div className={cx(style['target-button-wrapper'], 'target-button-wrapper')}>
+        <SidebarTarget onCallbackSidebarTarget={() => onCollapse(collapsed, 'clickTrigger')} collapsed={collapsed} />
       </div>
     </Layout.Sider>
   );

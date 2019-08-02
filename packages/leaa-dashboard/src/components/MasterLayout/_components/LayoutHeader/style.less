@@ -11,11 +11,20 @@
 .header-nav {
 }
 
-.breadcrumb {
-}
-
-.toolsbar {
+.full-layout-toolsbar {
   display: flex;
   justify-content: right;
   align-items: center;
+}
+
+.full-layout-breadcrumb {
+  transition: all 0.3s;
+}
+
+:global {
+  .siderbar-collapsed {
+    .g-full-layout-breadcrumb {
+      margin-left: 35px;
+    }
+  }
 }
