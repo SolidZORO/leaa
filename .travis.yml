@@ -17,6 +17,7 @@ matrix:
 script:
   - cd $PACKAGE_LOCATION
   - ls -l
+  - mv .env.production .env
   - yarn install
   - yarn test
 #  - yarn build
