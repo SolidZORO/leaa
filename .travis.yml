@@ -17,7 +17,10 @@ matrix:
 script:
   - cd $PACKAGE_LOCATION
   - ls -l
-  - mv .env.production .env
+  - mv .env.example .env
   - yarn install
   - yarn test
 #  - yarn build
+
+after_success:
+  - codecov
