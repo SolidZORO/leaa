@@ -21,7 +21,7 @@ script:
   - yarn install
 #  - yarn build
   - yarn test:codecov
-  - yarn cov
+  - yarn codecov
 
 #after_success:
 #  - codecov
