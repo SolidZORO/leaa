@@ -19,8 +19,9 @@ script:
   - ls -l
   - mv .env.example .env
   - yarn install
-  - yarn test
 #  - yarn build
+  - yarn test:codecov
+  - yarn codecov
 
-after_success:
-  - codecov
+#after_success:
+#  - codecov
