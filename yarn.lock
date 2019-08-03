@@ -955,7 +955,7 @@
   dependencies:
     regenerator-runtime "^0.13.2"
 
-"@babel/runtime@^7.0.0", "@babel/runtime@^7.1.2", "@babel/runtime@^7.3.1", "@babel/runtime@^7.4.0", "@babel/runtime@^7.4.5":
+"@babel/runtime@^7.0.0", "@babel/runtime@^7.1.2", "@babel/runtime@^7.3.1", "@babel/runtime@^7.4.0", "@babel/runtime@^7.4.5", "@babel/runtime@^7.5.5":
   version "7.5.5"
   resolved "https://registry.npm.taobao.org/@babel/runtime/download/@babel/runtime-7.5.5.tgz#74fba56d35efbeca444091c7850ccd494fd2f132"
   integrity sha1-dPulbTXvvspEQJHHhQzNSU/S8TI=
@@ -7282,10 +7282,15 @@ https-browserify@^1.0.0:
   resolved "https://registry.npm.taobao.org/https-browserify/download/https-browserify-1.0.0.tgz#ec06c10e0a34c0f2faf199f7fd7fc78fffd03c73"
   integrity sha1-7AbBDgo0wPL68Zn3/X/Hj//QPHM=
 
-i18next-browser-languagedetector@^3.0.0, i18next-browser-languagedetector@^3.0.1:
+i18next-browser-languagedetector@^3.0.0:
   version "3.0.1"
   resolved "https://registry.npm.taobao.org/i18next-browser-languagedetector/download/i18next-browser-languagedetector-3.0.1.tgz#a47c43176e8412c91e808afb7c6eb5367649aa8e"
   integrity sha1-pHxDF26EEskegIr7fG61NnZJqo4=
+
+i18next-browser-languagedetector@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.npm.taobao.org/i18next-browser-languagedetector/download/i18next-browser-languagedetector-3.0.2.tgz#dddfdfae8702d79aeae13682063b3d05c3614a03"
+  integrity sha1-3d/frocC15rq4TaCBjs9BcNhSgM=
 
 i18next-express-middleware@^1.5.0, i18next-express-middleware@^1.8.0:
   version "1.8.0"
@@ -7308,6 +7313,13 @@ i18next-xhr-backend@*, i18next-xhr-backend@^3.0.0:
   integrity sha1-dSNYcMkgKR2/0yBDUFt+3g3IfaM=
   dependencies:
     "@babel/runtime" "^7.4.5"
+
+i18next-xhr-backend@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.npm.taobao.org/i18next-xhr-backend/download/i18next-xhr-backend-3.0.1.tgz#0c8baf9f611c2cc9c357cda0284d38212eae6283"
+  integrity sha1-DIuvn2EcLMnDV82gKE04IS6uYoM=
+  dependencies:
+    "@babel/runtime" "^7.5.5"
 
 i18next@^17.0.4:
   version "17.0.6"
@@ -12323,10 +12335,18 @@ react-helmet@^5.2.1:
     react-fast-compare "^2.0.2"
     react-side-effect "^1.1.0"
 
-react-i18next@^10.11.3, react-i18next@^10.11.4:
+react-i18next@^10.11.3:
   version "10.11.4"
   resolved "https://registry.npm.taobao.org/react-i18next/download/react-i18next-10.11.4.tgz#9277a609ee640fac353087a91935ee9a9eb65f40"
   integrity sha1-knemCe5kD6w1MIepGTXump62X0A=
+  dependencies:
+    "@babel/runtime" "^7.3.1"
+    html-parse-stringify2 "2.0.1"
+
+react-i18next@^10.11.5:
+  version "10.11.5"
+  resolved "https://registry.npm.taobao.org/react-i18next/download/react-i18next-10.11.5.tgz#10d0726a6c63c2d928078a7e7ec3db708246be04"
+  integrity sha1-ENByamxjwtkoB4p+fsPbcIJGvgQ=
   dependencies:
     "@babel/runtime" "^7.3.1"
     html-parse-stringify2 "2.0.1"
