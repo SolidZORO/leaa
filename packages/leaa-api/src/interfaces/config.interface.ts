@@ -1,17 +1,15 @@
-import { DatabaseType } from 'typeorm';
-
 export interface IDotEnv {
-  PROTOCOL: 'http' | 'https';
+  PROTOCOL: string;
   PORT: number;
 
   BASE_HOST: string;
   PUBLIC_DIR: string;
   ATTACHMENT_DIR: string;
   ATTACHMENT_LIMIT_SIZE_BY_MB: number;
-  ATTACHMENT_SAVED_IN_LOCAL: 0 | 1;
-  ATTACHMENT_SAVED_IN_CLOUD: 0 | 1;
+  ATTACHMENT_SAVED_IN_LOCAL: number;
+  ATTACHMENT_SAVED_IN_CLOUD: number;
 
-  DB_TYPE: DatabaseType;
+  DB_TYPE: string;
   DB_HOST: string;
   DB_PORT: number;
   DB_USER: string;

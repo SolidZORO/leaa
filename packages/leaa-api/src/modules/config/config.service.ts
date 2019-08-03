@@ -1,5 +1,4 @@
 import envalid from 'envalid';
-import { DatabaseType } from 'typeorm';
 
 import { IDotEnv } from '@leaa/api/interfaces';
 
@@ -36,7 +35,7 @@ export class ConfigService {
 
   //
 
-  get DB_TYPE(): DatabaseType {
+  get DB_TYPE(): string {
     return this.envConfig.DB_TYPE;
   }
 
@@ -101,7 +100,6 @@ export class ConfigService {
       SERVER_COOKIE_EXPIRES_DAY: envalid.num(),
     };
 
-    // @ts-ignore
     return envalid.cleanEnv(process.env, rule, { dotEnvPath });
   }
 }
