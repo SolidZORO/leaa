@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'classnames';
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, Icon, Tooltip } from 'antd';
 import { withTranslation } from 'react-i18next';
 import { FormComponentProps } from 'antd/lib/form';
 
@@ -18,6 +18,22 @@ interface IFormProps extends FormComponentProps {
 }
 
 type IProps = IFormProps & ITfn;
+
+export const buildTypeDom = (setting: Setting) => {
+  let dom = <span>----</span>;
+
+  const { type, description, name } = setting;
+
+  if (type === 'input') {
+    dom = <Input placeholder={name} />;
+  }
+
+  if (['radio', 'checkbox', 'textarea'].includes(type)) {
+    dom = <Input.TextArea placeholder={name} rows={3} />;
+  }
+
+  return dom;
+};
 
 class SettingInfoFormInner extends React.PureComponent<IProps> {
   constructor(props: IProps) {
@@ -41,28 +57,27 @@ class SettingInfoFormInner extends React.PureComponent<IProps> {
       },
     };
 
-    const buildTypeDom = (setting: Setting) => {
-      let dom = <span>NOT-SUPPORT-TYPE</span>;
-      const { type } = setting;
-
-      if (type === 'input') {
-        dom = <Input placeholder={setting.name} />;
-      }
-
-      if (type === 'textarea') {
-        dom = <Input.TextArea placeholder={setting.name} />;
-      }
-
-      return dom;
-    };
-
     const buildLabelDom = (setting: Setting) => {
       return (
         <span>
-          <strong className={cx(style['label-text'])}>{setting.name}</strong>
-          <em className={cx(style['label-fn'])}>
-            <Button icon="edit" size="small" type="link" onClick={() => props.onClickLabelEditCallback(setting)} />
-          </em>
+          <Tooltip
+            title={
+              <>
+                <Icon type="question-circle" /> {setting.description}
+              </>
+            }
+            trigger="hover"
+          >
+            <Button
+              size="small"
+              type="link"
+              onClick={() => props.onClickLabelEditCallback(setting)}
+              className={cx(style['label-button'])}
+            >
+              <Icon type="edit" className={cx(style['label-icon'])} />
+              <strong className={cx(style['label-text'])}>{setting.name}</strong>
+            </Button>
+          </Tooltip>
         </span>
       );
     };
@@ -77,7 +92,7 @@ class SettingInfoFormInner extends React.PureComponent<IProps> {
           >
             {props.settings &&
               props.settings.map(setting => (
-                <Form.Item key={setting.slug} label={buildLabelDom(setting)}>
+                <Form.Item key={setting.id} label={buildLabelDom(setting)}>
                   {getFieldDecorator(`${setting.slug}`, {
                     initialValue: setting.value || null,
                     rules: [{ required: true }],

@@ -36,6 +36,7 @@ export default {
   type: '类型',
   value: '值',
   options: '可选项',
+  tips: '提示',
   //
   create: '新建',
   edit: '编辑',

@@ -36,6 +36,7 @@ export default {
   type: 'Type',
   value: 'Value',
   options: 'Options',
+  tips: 'Tips',
   //
   create: 'Create',
   edit: 'Edit',

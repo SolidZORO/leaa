@@ -1,5 +1,11 @@
 @import '~@leaa/dashboard/src/styles/variables.less';
 
+:global {
+  .ant-form-item {
+    margin-bottom: 10px !important;
+  }
+}
+
 .wrapper {
 }
 
@@ -8,17 +14,6 @@
 
 .form-wrapper {
   background-color: transparent;
-
-  //:global {
-  //  .ant-form-item-control-wrapper {
-  //    width: 100% !important;
-  //  }
-  //
-  //  .ant-form-item-label {
-  //    width: 140px;
-  //    margin-right: 20px;
-  //  }
-  //}
 }
 
 .form-item {
@@ -27,7 +22,37 @@
 
 .label-text,
 .label-fn {
+  transition: all 0.1s;
   font-style: normal;
+}
+
+.label-icon {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 2px;
+  margin-right: 3px;
+  opacity: 0;
+  transition: all 0.3s;
+  color: @primary-color;
+  font-size: 120%;
+}
+
+.label-button {
+  color: #000;
+
+  &:hover {
+    .label-icon {
+      transition: all 0.1s;
+      opacity: 1;
+    }
+
+    .label-text {
+      color: #000;
+      transition: all 0.1s;
+      opacity: 0.3;
+    }
+  }
 }
 
 .label-text {

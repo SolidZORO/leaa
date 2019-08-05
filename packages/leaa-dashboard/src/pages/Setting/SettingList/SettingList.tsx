@@ -40,23 +40,31 @@ export default (props: IPage) => {
   const [modalType, setModalType] = useState<'create' | 'update' | null>(null);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
 
-  const onCloseModalVisible = () => {
-    setModalType(null);
-    setModalVisible(false);
-    setModalData(null);
-
+  const onResetModalData = () => {
     if (settingInfoFormRef && settingInfoFormRef.props) {
       settingInfoFormRef.props.form.resetFields();
     }
   };
 
+  const onCloseModalVisible = () => {
+    onResetModalData();
+
+    setModalType(null);
+    setModalVisible(false);
+    setModalData(null);
+  };
+
   const onOpenCreateSetting = () => {
+    onResetModalData();
+
     setModalType('create');
     setModalVisible(true);
     setModalData(null);
   };
 
   const onOpenUpdateSetting = (setting: Setting) => {
+    onResetModalData();
+
     setModalType('update');
     setModalVisible(true);
     setModalData(setting);
