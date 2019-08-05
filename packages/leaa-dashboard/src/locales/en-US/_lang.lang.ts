@@ -33,6 +33,9 @@ export default {
   cover: 'Cover',
   ax: 'Ad',
   ad: 'Ad',
+  type: 'Type',
+  value: 'Value',
+  options: 'Options',
   //
   create: 'Create',
   edit: 'Edit',
@@ -44,6 +47,11 @@ export default {
   selected: 'Selected',
   selectAll: 'Select All',
   checkAll: 'Check all',
+  //
+  type_input: 'Text',
+  type_textarea: 'Multiple Text',
+  type_radio: 'Select',
+  type_checkbox: 'Multiple Select',
   //
   readSuccessfully: 'Read Successfully',
   createdSuccessfully: 'Created Successfully',

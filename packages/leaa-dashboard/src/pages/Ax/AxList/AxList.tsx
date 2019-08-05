@@ -55,6 +55,7 @@ export default (props: IPage) => {
   const getAxsVariables = { page, pageSize, q, orderBy, orderSort };
   const getAxsQuery = useQuery<{ axs: AxsWithPaginationObject }, AxArgs>(GET_AXS, {
     variables: getAxsVariables,
+    fetchPolicy: 'network-only',
   });
 
   useEffect(() => {
@@ -62,10 +63,6 @@ export default (props: IPage) => {
       resetUrlParams();
     }
   }, [urlParams]);
-
-  useEffect(() => {
-    (async () => getAxsQuery.refetch())();
-  }, [props.history.location.key]);
 
   const [deleteAxMutate, deleteAxMutation] = useMutation<Ax>(DELETE_AX, {
     onCompleted: () => message.success(t('_lang:deletedSuccessfully')),

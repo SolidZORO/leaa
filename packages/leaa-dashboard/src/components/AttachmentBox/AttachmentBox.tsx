@@ -41,6 +41,7 @@ export const AttachmentBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
     GET_ATTACHMENTS,
     {
       variables: getAttachmentsVariables,
+      fetchPolicy: 'network-only',
     },
   );
 

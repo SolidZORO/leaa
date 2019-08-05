@@ -56,6 +56,7 @@ export default (props: IPage) => {
     GET_PERMISSIONS,
     {
       variables: getPermissionsVariables,
+      fetchPolicy: 'network-only',
     },
   );
 
@@ -64,10 +65,6 @@ export default (props: IPage) => {
       resetUrlParams();
     }
   }, [urlParams]);
-
-  useEffect(() => {
-    (async () => getPermissionsQuery.refetch())();
-  }, [props.history.location.key]);
 
   const [deletePermissionMutate, deletePermissionMutation] = useMutation<Permission>(DELETE_PERMISSION, {
     onCompleted: () => message.success(t('_lang:deletedSuccessfully')),

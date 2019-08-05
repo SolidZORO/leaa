@@ -54,6 +54,7 @@ export default (props: IPage) => {
   const getRolesVariables = { page, pageSize, q, orderBy, orderSort };
   const getRolesQuery = useQuery<{ roles: RolesWithPaginationObject }, RolesArgs>(GET_ROLES, {
     variables: getRolesVariables,
+    fetchPolicy: 'network-only',
   });
 
   useEffect(() => {
@@ -61,10 +62,6 @@ export default (props: IPage) => {
       resetUrlParams();
     }
   }, [urlParams]);
-
-  useEffect(() => {
-    (async () => getRolesQuery.refetch())();
-  }, [props.history.location.key]);
 
   const [deleteRoleMutate, deleteRoleMutation] = useMutation<Role>(DELETE_ROLE, {
     onCompleted: () => message.success(t('_lang:deletedSuccessfully')),

@@ -29,11 +29,13 @@ export default (props: IPage) => {
   const getUserVariables = { id: Number(id) };
   const getUserQuery = useQuery<{ user: User }, UserArgs>(GET_USER, {
     variables: getUserVariables,
+    fetchPolicy: 'network-only',
   });
 
   const getRolesVariables = { pageSize: 9999 };
   const getRolesQuery = useQuery<{ roles: RolesWithPaginationObject }, RolesArgs>(GET_ROLES, {
     variables: getRolesVariables,
+    fetchPolicy: 'network-only',
   });
 
   const [submitVariables, setSubmitVariables] = useState<{ id: number; user: UpdateUserInput }>({

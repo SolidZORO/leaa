@@ -7,6 +7,7 @@ import zhCn from './locales/zh-CN';
 i18n
   // @ts-ignore
   .use(initReactI18next)
+  // @ts-ignore
   .use(LanguageDetector)
   .init({
     whitelist: ['en-US', 'zh-CN', 'zh', 'en'],

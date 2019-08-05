@@ -17,6 +17,7 @@ export const RefreshFlatePermissions = (props: IProps) => {
   if (authUtil.checkAuthIsAvailably()) {
     useQuery<{ userByToken: IAuthInfo }, { token: string }>(GET_USER_BY_TOKEN, {
       variables: { token: authUtil.getAuthToken() || '' },
+      fetchPolicy: 'network-only',
       onCompleted: data => {
         if (data && data.userByToken && data.userByToken.flatePermissions) {
           authUtil.setAuthInfo(_.pick(data.userByToken, ['id', 'name', 'email', 'flatePermissions']));

@@ -31,6 +31,7 @@ export default (props: IPage) => {
   const getPermissionVariables = { id: Number(id) };
   const getPermissionQuery = useQuery<{ permission: Permission }, PermissionArgs>(GET_PERMISSION, {
     variables: getPermissionVariables,
+    fetchPolicy: 'network-only',
   });
 
   const [updatePermissionMutate, updatePermissionMutation] = useMutation<Permission>(UPDATE_PERMISSION, {

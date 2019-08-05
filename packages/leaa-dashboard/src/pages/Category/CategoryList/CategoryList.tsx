@@ -54,6 +54,7 @@ export default (props: IPage) => {
   const getCategoriesVariables = { page, pageSize, q, orderBy, orderSort };
   const getCategoriesQuery = useQuery<{ categories: CategoriesWithPaginationObject }, CategoryArgs>(GET_CATEGORIES, {
     variables: getCategoriesVariables,
+    fetchPolicy: 'network-only',
   });
 
   useEffect(() => {
@@ -61,10 +62,6 @@ export default (props: IPage) => {
       resetUrlParams();
     }
   }, [urlParams]);
-
-  useEffect(() => {
-    (async () => getCategoriesQuery.refetch())();
-  }, [props.history.location.key]);
 
   const [deleteCategoryMutate, deleteCategoryMutation] = useMutation<Category>(DELETE_CATEGORY, {
     onCompleted: () => message.success(t('_lang:deletedSuccessfully')),

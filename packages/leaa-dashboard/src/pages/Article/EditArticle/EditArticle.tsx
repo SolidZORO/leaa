@@ -36,6 +36,7 @@ export default (props: IPage) => {
   const getArticleVariables = { id: Number(id) };
   const getArticleQuery = useQuery<{ article: Article }, ArticleArgs>(GET_ARTICLE, {
     variables: getArticleVariables,
+    fetchPolicy: 'network-only',
   });
 
   const [getArticleEditorAttachmentsVariables, setGetArticleEditorAttachmentsVariables] = useState<AttachmentsArgs>({
@@ -47,7 +48,7 @@ export default (props: IPage) => {
   });
   const getArticleEditorAttachmentsQuery = useQuery<{ attachments: AttachmentsWithPaginationObject }, AttachmentsArgs>(
     GET_ATTACHMENTS,
-    { variables: getArticleEditorAttachmentsVariables },
+    { variables: getArticleEditorAttachmentsVariables, fetchPolicy: 'network-only' },
   );
 
   const [submitVariables, setSubmitVariables] = useState<{ id: number; article: UpdateArticleInput }>();

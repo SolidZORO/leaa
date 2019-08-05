@@ -20,6 +20,14 @@ export class UpdateSettingInput {
   public description?: string;
 
   @IsOptional()
+  @Field(() => String, { nullable: true })
+  public value?: string;
+
+  @IsOptional()
+  @Field(() => String, { nullable: true })
+  public options?: string;
+
+  @IsOptional()
   @Field(() => Int, { nullable: true })
-  public sort?: string;
+  public sort?: number;
 }

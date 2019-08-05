@@ -5,11 +5,10 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 
 import { Ax } from '@leaa/common/entrys';
 import { IAttachmentBoxRef } from '@leaa/common/interfaces';
-import { GET_AX, UPDATE_AX, GET_ATTACHMENTS } from '@leaa/common/graphqls';
+import { GET_AX, UPDATE_AX } from '@leaa/common/graphqls';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/constants';
 import { AxArgs, UpdateAxInput } from '@leaa/common/dtos/ax';
 import { IPage } from '@leaa/dashboard/interfaces';
-import { AttachmentsWithPaginationObject, AttachmentsArgs } from '@leaa/common/dtos/attachment';
 import { AttachmentBox } from '@leaa/dashboard/components/AttachmentBox';
 import { PageCard } from '@leaa/dashboard/components/PageCard';
 import { ErrorCard } from '@leaa/dashboard/components/ErrorCard';
@@ -30,54 +29,19 @@ export default (props: IPage) => {
   const getAxVariables = { id: Number(id) };
   const getAxQuery = useQuery<{ ax: Ax }, AxArgs>(GET_AX, {
     variables: getAxVariables,
+    fetchPolicy: 'network-only',
   });
 
-  const baseAttachmentVariables: AttachmentsArgs = {
-    moduleName: 'ax',
-    moduleId: Number(id),
-    orderSort: 'ASC',
-    orderBy: 'created_at',
-  };
-
   const getBannerMbRef = useRef<IAttachmentBoxRef>(null);
-  const getBannerMbVariables = { ...baseAttachmentVariables, moduleType: 'banner_mb', refreshHash: 0 };
-  const getBannerMbQuery = useQuery<{ attachments: AttachmentsWithPaginationObject }, AttachmentsArgs>(
-    GET_ATTACHMENTS,
-    { variables: getBannerMbVariables },
-  );
-
   const getBannerPcRef = useRef<IAttachmentBoxRef>(null);
-  const getBannerPcVariables = { ...baseAttachmentVariables, moduleType: 'banner_pc', refreshHash: 0 };
-  const getBannerPcQuery = useQuery<{ attachments: AttachmentsWithPaginationObject }, AttachmentsArgs>(
-    GET_ATTACHMENTS,
-    { variables: getBannerPcVariables },
-  );
-
-  //
-
   const getGalleryMbRef = useRef<IAttachmentBoxRef>(null);
-  const getGalleryMbVariables = { ...baseAttachmentVariables, moduleType: 'gallery_mb', refreshHash: 0 };
-  const getGalleryMbQuery = useQuery<{ attachments: AttachmentsWithPaginationObject }, AttachmentsArgs>(
-    GET_ATTACHMENTS,
-    { variables: getGalleryMbVariables },
-  );
-
   const getGalleryPcRef = useRef<IAttachmentBoxRef>(null);
-  const getGalleryPcVariables = { ...baseAttachmentVariables, moduleType: 'gallery_pc', refreshHash: 0 };
-  const getGalleryPcQuery = useQuery<{ attachments: AttachmentsWithPaginationObject }, AttachmentsArgs>(
-    GET_ATTACHMENTS,
-    { variables: getGalleryPcVariables },
-  );
 
   const [submitVariables, setSubmitVariables] = useState<{ id: number; ax: UpdateAxInput }>();
   const [updateAxMutate, updateAxMutation] = useMutation<Ax>(UPDATE_AX, {
     variables: submitVariables,
     onCompleted: () => message.success(t('_lang:updatedSuccessfully')),
-    refetchQueries: () => [
-      { query: GET_AX, variables: getAxVariables },
-      { query: GET_ATTACHMENTS, variables: getBannerMbVariables },
-      { query: GET_ATTACHMENTS, variables: getBannerPcVariables },
-    ],
+    refetchQueries: () => [{ query: GET_AX, variables: getAxVariables }],
   });
 
   const onSubmit = async () => {
@@ -124,10 +88,6 @@ export default (props: IPage) => {
       <HtmlTitle title={t(`${props.route.namei18n}`)} />
 
       {getAxQuery.error ? <ErrorCard error={getAxQuery.error} /> : null}
-      {getBannerMbQuery.error ? <ErrorCard error={getBannerMbQuery.error} /> : null}
-      {getBannerPcQuery.error ? <ErrorCard error={getBannerPcQuery.error} /> : null}
-      {getGalleryMbQuery.error ? <ErrorCard error={getGalleryMbQuery.error} /> : null}
-      {getGalleryPcQuery.error ? <ErrorCard error={getGalleryPcQuery.error} /> : null}
       {updateAxMutation.error ? <ErrorCard error={updateAxMutation.error} /> : null}
 
       <AxInfoForm

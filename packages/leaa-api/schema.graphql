@@ -188,7 +188,8 @@ input CreateRoleInput {
 input CreateSettingInput {
   name: String!
   slug: String!
-  type: String
+  value: String!
+  type: String!
   description: String
   sort: Int = 0
 }
@@ -380,6 +381,8 @@ input UpdateSettingInput {
   slug: String
   type: String
   description: String
+  value: String
+  options: String
   sort: Int
 }
 

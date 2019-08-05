@@ -21,3 +21,7 @@ export * from './attachment.fragment';
 
 export * from './ax.query';
 export * from './ax.mutation';
+
+export * from './setting.query';
+export * from './setting.mutation';
+export * from './setting.fragment';

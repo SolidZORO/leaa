@@ -11,6 +11,7 @@ const category = 'Category';
 const article = 'Article';
 const ax = 'Ad';
 const attachment = 'Attachment';
+const setting = 'Setting';
 
 export default {
   home,
@@ -50,4 +51,6 @@ export default {
   attachment,
   createAttachment: `${_lang.create}${attachment}`,
   editAttachment: `${_lang.edit}${attachment}`,
+  //
+  setting,
 };

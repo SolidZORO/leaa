@@ -12,7 +12,11 @@ export class CreateSettingInput {
   public slug!: string;
 
   @IsNotEmpty()
-  @Field(() => String, { nullable: true })
+  @Field(() => String)
+  public value!: string;
+
+  @IsNotEmpty()
+  @Field(() => String)
   public type!: string;
 
   @IsOptional()

@@ -35,6 +35,27 @@
     margin: 0;
     padding: 0 0 0 3px;
     font-weight: 600;
+
+    span {
+      strong {
+        font-weight: 600;
+      }
+
+      a,
+      button {
+        margin-left: 5px;
+        color: #ccc;
+
+        &:hover {
+          color: @primary-color;
+        }
+      }
+
+      button {
+        padding: 0;
+        font-size: 95%;
+      }
+    }
   }
 
   .extra {

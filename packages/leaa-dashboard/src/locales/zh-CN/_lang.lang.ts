@@ -33,6 +33,9 @@ export default {
   cover: '封面',
   ax: '广告',
   ad: '广告',
+  type: '类型',
+  value: '值',
+  options: '可选项',
   //
   create: '新建',
   edit: '编辑',
@@ -44,6 +47,11 @@ export default {
   selected: '选中',
   selectAll: '全选',
   checkAll: '全选',
+  //
+  type_input: '文本',
+  type_textarea: '多行文本',
+  type_radio: '单选',
+  type_checkbox: '多选',
   //
   readSuccessfully: '读取成功',
   createdSuccessfully: '创建成功',

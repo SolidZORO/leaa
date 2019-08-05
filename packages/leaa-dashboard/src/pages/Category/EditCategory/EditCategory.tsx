@@ -28,6 +28,7 @@ export default (props: IPage) => {
   const getCategoryVariables = { id: Number(id) };
   const getCategoryQuery = useQuery<{ category: Category }, CategoryArgs>(GET_CATEGORY, {
     variables: getCategoryVariables,
+    fetchPolicy: 'network-only',
   });
 
   const [updateCategoryMutate, updateCategoryMutation] = useMutation<Category>(UPDATE_CATEGORY, {

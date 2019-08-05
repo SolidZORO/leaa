@@ -224,6 +224,21 @@ export const masterRoutes: IRouteItem[] = [
   //
   //
   //
+  //
+  {
+    name: 'Setting',
+    namei18n: '_route:setting',
+    permission: 'setting.list',
+    path: '/settings',
+    icon: 'setting',
+    LazyComponent: React.lazy(() =>
+      import(/* webpackChunkName: 'SettingList' */ '../pages/Setting/SettingList/SettingList'),
+    ),
+    exact: true,
+  },
+  //
+  //
+  //
   {
     name: 'HOME',
     namei18n: '_route:home',

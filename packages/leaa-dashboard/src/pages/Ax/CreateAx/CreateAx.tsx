@@ -13,7 +13,7 @@ import { HtmlTitle } from '@leaa/dashboard/components/HtmlTitle';
 import { SubmitBar } from '@leaa/dashboard/components/SubmitBar/SubmitBar';
 import { ErrorCard } from '@leaa/dashboard/components/ErrorCard';
 
-import { AxInfoForm } from '../_components/AxInfoForm/AxInfoForm';
+import { AxInfoForm } from '@leaa/dashboard/pages/Ax/_components/AxInfoForm/AxInfoForm';
 
 import style from './style.less';
 

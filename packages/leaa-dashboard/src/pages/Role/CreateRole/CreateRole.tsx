@@ -29,7 +29,7 @@ export default (props: IPage) => {
     variables: submitVariables,
     onCompleted({ createRole }) {
       message.success(t('_lang:createdSuccessfully'));
-      props.history.push(`/users/${createRole.id}`);
+      props.history.push(`/roles/${createRole.id}`);
     },
   });
 

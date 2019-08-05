@@ -33,7 +33,7 @@ module.exports = {
     [
       'module-resolver',
       {
-        root: ['./src'],
+        root: ['./'],
         alias: {
           '@leaa/common': '../_leaa-common/src',
           '@leaa/dashboard': './src',
