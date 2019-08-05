@@ -40,10 +40,12 @@ export default (props: IPage) => {
   };
 
   const onCloseModalVisible = () => {
-    onResetModalData();
-
-    setModalType(null);
     setModalVisible(false);
+  };
+
+  const onAfterCloseModalVisible = () => {
+    onResetModalData();
+    setModalType(null);
     setModalData(null);
   };
 
@@ -51,8 +53,8 @@ export default (props: IPage) => {
     onResetModalData();
 
     setModalType('create');
-    setModalVisible(true);
     setModalData(null);
+    setModalVisible(true);
   };
 
   const onOpenUpdateSetting = (setting: Setting) => {
@@ -221,8 +223,9 @@ export default (props: IPage) => {
         visible={modalVisible}
         // visible
         onOk={modalType === 'update' ? onUpdateSetting : onCreateSetting}
-        onCancel={onCloseModalVisible}
         className={style['setting-modal']}
+        onCancel={onCloseModalVisible}
+        afterClose={onAfterCloseModalVisible}
       >
         <div className={style['delete-button']}>
           <Button

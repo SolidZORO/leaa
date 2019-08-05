@@ -19,7 +19,7 @@ export const RetinaImage = (props: IProps) => {
   const lazyProps = props.lazy
     ? {
         'data-src': at1x,
-        'data-srcset': `${at2x} 2x`,
+        'data-srcset': attachment.at2x ? `${at2x} 2x` : undefined,
         className: 'swiper-lazy',
       }
     : {

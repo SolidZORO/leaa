@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "private": true,
   "sideEffect": false,
-  "license": "MIT",
+  "license": "GPL",
   "engines": {
     "node": ">=10.13.0",
     "npm": ">=6.4.0"
@@ -19,6 +19,7 @@
     "tsc-check": "tsc --noEmit",
     "dev": "NODE_ENV=development nodemon server.ts",
     "clear": "rimraf .next",
+    "dev2": "yarn clear && yarn build && yarn start",
     "---------------------------------------------------------------------- PROD ----": "----",
     "build": "yarn clear && NODE_ENV=production next build && tsc --project tsconfig.build.json",
     "start": "NODE_ENV=production node ./server.js",
@@ -27,6 +28,8 @@
     "s": "yarn dev"
   },
   "dependencies": {
+    "@leaa/common": "0.0.1",
+    "@leaa/www": "0.0.1",
     "@apollo/react-hooks": "0.1.0-beta.10",
     "antd": "^3.21.1",
     "apollo-cache-inmemory": "^1.6.2",
@@ -71,8 +74,6 @@
     "vconsole": "^3.3.2"
   },
   "devDependencies": {
-    "@leaa/common": "0.0.1",
-    "@leaa/www": "0.0.1",
     "@types/classnames": "2.2.9",
     "@types/cookie": "^0.3.3",
     "@types/express": "^4.17.0",

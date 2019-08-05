@@ -120,11 +120,12 @@ export const articleSeed: CreateArticleInput[] = [
 export const axSeed: CreateAxInput[] = [
   { title: 'Index Swiper', description: '首页滚动图', slug: 'index-swiper', status: 1 },
   { title: 'Index Grid', description: '首页方块图', slug: 'index-grid', status: 0 },
+  { title: 'Ram Swipter', description: 'Ram 滚动图', slug: 'ram-swiper', status: 1 },
 ];
 
 // prettier-ignore
 export const settingSeed: CreateSettingInput[] = [
-  { name: 'Site Name', slug: 'site_name', type: 'input', sort: 1, description: '站点名' },
-  { name: 'Site Description', slug: 'site_description', type: 'textarea', sort: 1, description: '站点描述' },
-  { name: 'Site Keywords', slug: 'site_keywords', type: 'input', sort: 1, description: '站点关键字' },
+  { name: 'Site Name', slug: 'site_name', type: 'input', sort: 1, value: 'Leaa', description: '站点名，最大 220 字' },
+  { name: 'Site Description', slug: 'site_description', type: 'textarea', sort: 1, value: 'Leaa - project 1h 4 1d',  description: '站点描述， 最大 220 字' },
+  { name: 'Site Keywords', slug: 'site_keywords', type: 'input', sort: 1, value: 'Leaa, Léaa, mono-repo, C\'est la vie. project 1h 4 1d', description: '站点关键字，使用英文 , 分隔' },
 ];
