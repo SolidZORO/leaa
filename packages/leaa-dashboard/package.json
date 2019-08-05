@@ -32,7 +32,7 @@
     "@leaa/common": "0.0.1",
     "@leaa/dashboard": "0.0.1",
     "animated-scroll-to": "^1.2.2",
-    "antd": "^3.20.7",
+    "antd": "^3.21.1",
     "apollo-cache-inmemory": "^1.6.2",
     "apollo-client": "^2.6.3",
     "apollo-link": "^1.2.12",

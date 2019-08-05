@@ -1,0 +1,16 @@
+{
+  "name": "@leaa/rn",
+  "author": "solidzoro@live.com",
+  "version": "0.0.1",
+  "private": true,
+  "sideEffect": false,
+  "license": "MIT",
+  "engines": {
+    "node": ">=10.13.0",
+    "npm": ">=6.4.0"
+  },
+  "scripts": {},
+  "dependencies": {
+    "@leaa/common": "^0.0.1"
+  }
+}

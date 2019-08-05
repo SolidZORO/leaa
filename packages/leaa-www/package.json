@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@apollo/react-hooks": "0.1.0-beta.10",
-    "antd": "^3.20.7",
+    "antd": "^3.21.1",
     "apollo-cache-inmemory": "^1.6.2",
     "apollo-client": "^2.6.3",
     "apollo-link": "^1.2.12",

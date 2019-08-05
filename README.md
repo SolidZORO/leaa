@@ -24,7 +24,7 @@ C'est la vie.
   - [x] category (infinity level)
   - [x] article
 - [ ] leaa-www / website (graphql + next.js)
-- [ ] leaa-weapp / wechat-weapp (graphql + taro.js + taro-ui)
+- [ ] leaa-miniprogram / wechat-miniprogram (graphql + taro.js + taro-ui)
 
 ### **REVIEW**
 
