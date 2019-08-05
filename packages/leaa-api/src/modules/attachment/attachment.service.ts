@@ -2,7 +2,7 @@ import fs from 'fs';
 import _ from 'lodash';
 import path from 'path';
 import Jimp from 'jimp';
-import { Express, Request } from 'express';
+import { Express } from 'express';
 import { Repository, FindOneOptions, In, getRepository, SelectQueryBuilder } from 'typeorm';
 import ImageSize from 'image-size';
 import { Injectable } from '@nestjs/common';

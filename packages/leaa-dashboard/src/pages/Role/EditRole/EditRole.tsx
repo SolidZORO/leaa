@@ -57,6 +57,8 @@ export default (props: IPage) => {
       if (err) {
         hasError = true;
         message.error(err[Object.keys(err)[0]].errors[0].message);
+
+        return;
       }
 
       submitData.permissionIds = formData.permissionIds;
@@ -70,6 +72,8 @@ export default (props: IPage) => {
       if (err) {
         hasError = true;
         message.error(err[Object.keys(err)[0]].errors[0].message);
+
+        return;
       }
 
       submitData = {

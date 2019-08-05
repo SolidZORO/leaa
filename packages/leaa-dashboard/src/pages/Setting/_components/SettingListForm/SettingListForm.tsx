@@ -19,10 +19,10 @@ interface IFormProps extends FormComponentProps {
 
 type IProps = IFormProps & ITfn;
 
-export const buildTypeDom = (setting: Setting) => {
+export const buildTypeDom = (setting: Pick<Setting, 'type' | 'name'>) => {
   let dom = <span>----</span>;
 
-  const { type, description, name } = setting;
+  const { type, name } = setting;
 
   if (type === 'input') {
     dom = <Input placeholder={name} />;
@@ -41,8 +41,6 @@ class SettingInfoFormInner extends React.PureComponent<IProps> {
   }
 
   render() {
-    const { t } = this.props;
-
     const { props } = this;
     const { getFieldDecorator } = this.props.form;
 
@@ -91,13 +89,20 @@ class SettingInfoFormInner extends React.PureComponent<IProps> {
             {...formItemLayout}
           >
             {props.settings &&
-              props.settings.map(setting => (
-                <Form.Item key={setting.id} label={buildLabelDom(setting)}>
-                  {getFieldDecorator(`${setting.slug}`, {
-                    initialValue: setting.value || null,
+              props.settings.map((setting, i) => (
+                <div key={setting.id}>
+                  {getFieldDecorator(`settings[${i}].id`, {
+                    initialValue: setting.id || null,
                     rules: [{ required: true }],
-                  })(buildTypeDom(setting))}
-                </Form.Item>
+                  })(<Input type="number" placeholder="ID" hidden />)}
+
+                  <Form.Item key={setting.id} label={buildLabelDom(setting)}>
+                    {getFieldDecorator(`settings[${i}].value`, {
+                      initialValue: setting.value || null,
+                      rules: [{ required: true }],
+                    })(buildTypeDom(setting))}
+                  </Form.Item>
+                </div>
               ))}
           </Form>
         </FormCard>

@@ -235,6 +235,7 @@ type Mutation {
   deleteAttachments(uuid: [String!]!): DeleteAttachmentsObject!
   createSetting(setting: CreateSettingInput!): Setting!
   updateSetting(setting: UpdateSettingInput!, id: Int!): Setting!
+  updateSettings(settings: [UpdateSettingsInput!]!): SettingsObject!
   deleteSetting(id: Int!): Setting!
   login(user: AuthLoginInput!): User!
   register(user: AuthRegisterInput!): User!
@@ -318,6 +319,10 @@ type Setting {
   sort: Int!
 }
 
+type SettingsObject {
+  items: [Setting!]!
+}
+
 type SettingsWithPaginationObject {
   page: Int
   pageSize: Int!
@@ -384,6 +389,11 @@ input UpdateSettingInput {
   value: String
   options: String
   sort: Int
+}
+
+input UpdateSettingsInput {
+  id: Int!
+  value: String!
 }
 
 input UpdateUserInput {

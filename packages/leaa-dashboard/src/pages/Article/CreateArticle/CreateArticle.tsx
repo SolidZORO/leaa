@@ -37,6 +37,7 @@ export default (props: IPage) => {
     articleInfoFormRef.props.form.validateFieldsAndScroll(async (err: any, formData: Article) => {
       if (err) {
         message.error(err[Object.keys(err)[0]].errors[0].message);
+
         return;
       }
 

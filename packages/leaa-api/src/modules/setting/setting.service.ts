@@ -1,17 +1,19 @@
 import { Injectable } from '@nestjs/common';
-import { Repository, FindOneOptions, getRepository, SelectQueryBuilder } from 'typeorm';
+import { Repository, FindOneOptions, getRepository, In, SelectQueryBuilder } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { Setting, User } from '@leaa/common/entrys';
+import { Setting, User, Attachment } from '@leaa/common/entrys';
 import {
   SettingsArgs,
   SettingsWithPaginationObject,
   SettingArgs,
   CreateSettingInput,
   UpdateSettingInput,
+  UpdateSettingsInput,
+  SettingsObject,
 } from '@leaa/common/dtos/setting';
 import { BaseService } from '@leaa/api/modules/base/base.service';
-import { formatUtil } from '@leaa/api/utils';
+import { formatUtil, loggerUtil } from '@leaa/api/utils';
 
 const CONSTRUCTOR_NAME = 'SettingService';
 
@@ -32,7 +34,8 @@ export class SettingService extends BaseService<
     const nextArgs = formatUtil.formatArgs(args);
 
     const qb = getRepository(Setting).createQueryBuilder();
-    qb.select().orderBy(nextArgs.orderBy || 'created_at', nextArgs.orderSort);
+    qb.select();
+    qb.orderBy({ sort: 'ASC' }).addOrderBy('created_at', 'ASC');
 
     if (nextArgs.q) {
       const aliasName = new SelectQueryBuilder(qb).alias;
@@ -67,12 +70,52 @@ export class SettingService extends BaseService<
     });
   }
 
+  async settingBySlug(
+    slug: string,
+    args?: SettingArgs & FindOneOptions<Setting>,
+    user?: User,
+  ): Promise<Setting | undefined> {
+    const setting = await this.settingRepository.findOne({ where: { slug } });
+
+    if (!setting) {
+      const message = 'not found setting';
+
+      loggerUtil.warn(message, CONSTRUCTOR_NAME);
+
+      return undefined;
+    }
+
+    return this.setting(setting.id, args, user);
+  }
+
   async craeteSetting(args: CreateSettingInput): Promise<Setting | undefined> {
     return this.settingRepository.save({ ...args });
   }
 
   async updateSetting(id: number, args: UpdateSettingInput): Promise<Setting | undefined> {
     return this.update(id, args);
+  }
+
+  async updateSettings(settings: UpdateSettingsInput[]): Promise<SettingsObject> {
+    const batchUpdate = settings.map(async setting => {
+      await this.settingRepository.update({ id: setting.id }, { value: setting.value });
+    });
+
+    let items: Setting[] = [];
+
+    await Promise.all(batchUpdate)
+      .then(async () => {
+        loggerUtil.log(JSON.stringify(settings), CONSTRUCTOR_NAME);
+
+        items = await this.settingRepository.find({ id: In(settings.map(s => s.id)) });
+      })
+      .catch(() => {
+        loggerUtil.error(JSON.stringify(settings), CONSTRUCTOR_NAME);
+      });
+
+    return {
+      items,
+    };
   }
 
   async deleteSetting(id: number): Promise<Setting | undefined> {

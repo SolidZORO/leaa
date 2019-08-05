@@ -37,6 +37,7 @@ export default (props: IPage) => {
     axInfoFormRef.props.form.validateFieldsAndScroll(async (err: any, formData: Ax) => {
       if (err) {
         message.error(err[Object.keys(err)[0]].errors[0].message);
+
         return;
       }
 

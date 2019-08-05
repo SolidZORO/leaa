@@ -41,6 +41,7 @@ export default (props: IPage) => {
     categoryInfoFormRef.props.form.validateFieldsAndScroll(async (err: any, formData: Category) => {
       if (err) {
         message.error(err[Object.keys(err)[0]].errors[0].message);
+
         return;
       }
 

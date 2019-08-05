@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { Icon, Button, Modal, message } from 'antd';
-import { Link, RouteComponentProps } from 'react-router-dom';
 
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/constants';
-import { GET_SETTINGS, UPDATE_SETTING, CREATE_SETTING } from '@leaa/common/graphqls';
+import { GET_SETTINGS, UPDATE_SETTING, UPDATE_SETTINGS, CREATE_SETTING, DELETE_SETTING } from '@leaa/common/graphqls';
 import { Setting } from '@leaa/common/entrys';
 import {
   SettingsWithPaginationObject,
   SettingArgs,
   UpdateSettingInput,
   CreateSettingInput,
+  UpdateSettingsInput,
 } from '@leaa/common/dtos/setting';
 import { IPage } from '@leaa/dashboard/interfaces';
 import { SettingListForm } from '@leaa/dashboard/pages/Setting/_components/SettingListForm/SettingListForm';
-import { SettingInfoForm } from '@leaa/dashboard/pages/Setting/_components/SettingInfoForm/SettingInfoForm';
+import { SettingModalForm } from '@leaa/dashboard/pages/Setting/_components/SettingModalForm/SettingModalForm';
 import { PageCard } from '@leaa/dashboard/components/PageCard';
 import { HtmlTitle } from '@leaa/dashboard/components/HtmlTitle';
 import { ErrorCard } from '@leaa/dashboard/components/ErrorCard';
@@ -23,18 +23,11 @@ import { SubmitBar } from '@leaa/dashboard/components/SubmitBar';
 
 import style from './style.less';
 
-// export interface ISettingUpdateForm extends UpdateSettingInput {
-//   id: string;
-// }
-
 export default (props: IPage) => {
   const { t } = useTranslation();
 
   let settingListFormRef: any;
   let settingInfoFormRef: any;
-
-  const [createVariables, setCreateVariables] = useState<{ setting: CreateSettingInput }>();
-  const [updateVariables, setUpdateVariables] = useState<{ id: number; setting: UpdateSettingInput }>();
 
   const [modalData, setModalData] = useState<Setting | null>(null);
   const [modalType, setModalType] = useState<'create' | 'update' | null>(null);
@@ -75,27 +68,9 @@ export default (props: IPage) => {
     SettingArgs
   >(GET_SETTINGS);
 
-  // useEffect(() => {
-  //   (async () => getSettingsQuery.refetch())();
-  // }, [props.history.location.key]);
-
-  // const [updateSettingMutate, updateSettingMutation] = useMutation<Setting>(UPDATE_SETTING, {
-  //   variables: createVariables,
-  //   onCompleted: () => message.success(t('_lang:updatedSuccessfully')),
-  //   refetchQueries: () => [{ query: GET_SETTINGS }],
-  // });
-
-  const [updateSettingMutate, updateSettingMutation] = useMutation<Setting>(UPDATE_SETTING, {
-    variables: updateVariables,
-    onCompleted: () => {
-      message.success(t('_lang:updatedSuccessfully'));
-      onCloseModalVisible();
-    },
-    refetchQueries: () => [{ query: GET_SETTINGS }],
-  });
-
+  const [createSettingVariables, setCreateSettingVariables] = useState<{ setting: CreateSettingInput }>();
   const [createSettingMutate, createSettingMutation] = useMutation<Setting>(CREATE_SETTING, {
-    variables: createVariables,
+    variables: createSettingVariables,
     onCompleted: () => {
       message.success(t('_lang:createdSuccessfully'));
       onCloseModalVisible();
@@ -103,32 +78,54 @@ export default (props: IPage) => {
     refetchQueries: () => [{ query: GET_SETTINGS }],
   });
 
-  const onCreate = async () => {
-    let hasError = false;
-    let submitData: CreateSettingInput;
+  const [updateSettingVariables, setUpdateSettingVariables] = useState<{ id: number; setting: UpdateSettingInput }>();
+  const [updateSettingMutate, updateSettingMutation] = useMutation<Setting>(UPDATE_SETTING, {
+    variables: updateSettingVariables,
+    onCompleted: () => {
+      message.success(t('_lang:updatedSuccessfully'));
+      onCloseModalVisible();
+    },
+    refetchQueries: () => [{ query: GET_SETTINGS }],
+  });
 
-    settingInfoFormRef.props.form.validateFieldsAndScroll(async (err: any, formData: Setting) => {
+  const [updateSettingsVariables, setUpdateSettingsVariables] = useState<{ settings: UpdateSettingsInput }>();
+  const [updateSettingsMutate, updateSettingsMutation] = useMutation<Setting[]>(UPDATE_SETTINGS, {
+    variables: updateSettingsVariables,
+    onCompleted: () => {
+      message.success(t('_lang:updatedSuccessfully'));
+      onCloseModalVisible();
+    },
+    refetchQueries: () => [{ query: GET_SETTINGS }],
+  });
+
+  const [deleteSettingVariables, setDeleteSettingVariables] = useState<{ id: number }>();
+  const [deleteSettingMutate, deleteSettingMutation] = useMutation<Setting[]>(DELETE_SETTING, {
+    variables: deleteSettingVariables,
+    onCompleted: () => {
+      message.success(t('_lang:deletedSuccessfully'));
+      onCloseModalVisible();
+    },
+    refetchQueries: () => [{ query: GET_SETTINGS }],
+  });
+
+  const onCreateSetting = async () => {
+    settingInfoFormRef.props.form.validateFieldsAndScroll(async (err: any, formData: CreateSettingInput) => {
       if (err) {
-        hasError = true;
         message.error(err[Object.keys(err)[0]].errors[0].message);
 
         return;
       }
 
-      submitData = formData;
-      //
-      await setCreateVariables({ setting: submitData });
+      await setCreateSettingVariables({ setting: formData });
       await createSettingMutate();
     });
   };
 
-  const onUpdate = async () => {
-    let hasError = false;
+  const onUpdateSetting = async () => {
     let submitData: UpdateSettingInput;
 
     settingInfoFormRef.props.form.validateFieldsAndScroll(async (err: any, formData: Setting) => {
       if (err) {
-        hasError = true;
         message.error(err[Object.keys(err)[0]].errors[0].message);
 
         return;
@@ -142,37 +139,38 @@ export default (props: IPage) => {
       submitData = {
         ...formData,
         sort: typeof formData.sort !== 'undefined' ? Number(formData.sort) : 0,
-        // sort: 0,
       };
 
-      await setUpdateVariables({ id, setting: submitData });
+      await setUpdateSettingVariables({ id, setting: submitData });
       await updateSettingMutate();
     });
   };
 
-  const onSubmit = async () => {
-    let hasError = false;
-    let submitData: CreateSettingInput;
+  const onUpdateSettings = async () => {
+    settingListFormRef.props.form.validateFieldsAndScroll(
+      async (err: any, formData: { settings: UpdateSettingsInput }) => {
+        if (err) {
+          message.error(err[Object.keys(err)[0]].errors[0].message);
 
-    settingListFormRef.props.form.validateFieldsAndScroll(async (err: any, formData: Setting) => {
-      if (err) {
-        hasError = true;
-        message.error(err[Object.keys(err)[0]].errors[0].message);
-      }
+          return;
+        }
 
-      // submitData = formData;
-      //
-      // console.log(submitData);
-      //
-      // // await setCreateVariables({ setting: submitData });
-      // await updateSettingMutate();
-    });
+        await setUpdateSettingsVariables({ settings: formData.settings });
+        await updateSettingsMutate();
+      },
+    );
   };
 
-  // const onOpenModalVisible = async () => {
-  //   setModalVisible(true);
-  // };
-  //
+  const onDeleteSettings = async (id: number | null) => {
+    if (!id) {
+      message.error('ERROR');
+
+      return;
+    }
+
+    await setDeleteSettingVariables({ id });
+    await deleteSettingMutate();
+  };
 
   return (
     <PageCard
@@ -192,6 +190,8 @@ export default (props: IPage) => {
       {getSettingsQuery.error ? <ErrorCard error={getSettingsQuery.error} /> : null}
       {updateSettingMutation.error ? <ErrorCard error={updateSettingMutation.error} /> : null}
       {createSettingMutation.error ? <ErrorCard error={createSettingMutation.error} /> : null}
+      {updateSettingsMutation.error ? <ErrorCard error={updateSettingsMutation.error} /> : null}
+      {deleteSettingMutation.error ? <ErrorCard error={deleteSettingMutation.error} /> : null}
 
       {getSettingsQuery.data && getSettingsQuery.data.settings && getSettingsQuery.data.settings.items && (
         <SettingListForm
@@ -209,8 +209,8 @@ export default (props: IPage) => {
           size="large"
           icon={UPDATE_BUTTON_ICON}
           className="submit-button"
-          // loading={deleteSettingMutation.loading}
-          onClick={onSubmit}
+          loading={updateSettingMutation.loading}
+          onClick={onUpdateSettings}
         >
           {t('_lang:update')}
         </Button>
@@ -219,12 +219,20 @@ export default (props: IPage) => {
       <Modal
         title={t(`_lang:${modalType}`)}
         visible={modalVisible}
-        onOk={modalType === 'update' ? onUpdate : onCreate}
+        // visible
+        onOk={modalType === 'update' ? onUpdateSetting : onCreateSetting}
         onCancel={onCloseModalVisible}
-        // confirmLoading={confirmLoading}
-        // confirmLoading={onCloseModalVisible}
+        className={style['setting-modal']}
       >
-        <SettingInfoForm
+        <div className={style['delete-button']}>
+          <Button
+            icon="delete"
+            loading={deleteSettingMutation.loading}
+            onClick={() => onDeleteSettings(modalData && modalData.id)}
+          />
+        </div>
+
+        <SettingModalForm
           item={modalData}
           wrappedComponentRef={(inst: unknown) => {
             settingInfoFormRef = inst;

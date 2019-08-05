@@ -6,6 +6,7 @@ import { FormComponentProps } from 'antd/lib/form';
 
 import { Setting } from '@leaa/common/entrys';
 import { ITfn } from '@leaa/dashboard/interfaces';
+import { buildTypeDom } from '@leaa/dashboard/pages/Setting/_components/SettingListForm/SettingListForm';
 
 import style from './style.less';
 
@@ -28,17 +29,6 @@ class SettingInfoFormInner extends React.PureComponent<IProps> {
     const { props } = this;
     const { getFieldDecorator } = this.props.form;
 
-    // const formItemLayout = {
-    //   labelCol: {
-    //     xs: { span: 24 },
-    //     sm: { span: 5 },
-    //   },
-    //   wrapperCol: {
-    //     xs: { span: 24 },
-    //     sm: { span: 16 },
-    //   },
-    // };
-
     const typeMapping: { [key: string]: string } = {
       input: t('_lang:type_input'),
       textarea: t('_lang:type_textarea'),
@@ -57,7 +47,7 @@ class SettingInfoFormInner extends React.PureComponent<IProps> {
             })(<Input type="number" placeholder="ID" hidden />)}
 
           <Row gutter={16} className={style['form-row']}>
-            <Col xs={24} sm={5}>
+            <Col xs={24} sm={6}>
               <Form.Item label={t('_lang:type')}>
                 {getFieldDecorator('type', {
                   initialValue: props.item ? props.item.type : undefined,
@@ -72,7 +62,7 @@ class SettingInfoFormInner extends React.PureComponent<IProps> {
               </Form.Item>
             </Col>
 
-            <Col xs={24} sm={8}>
+            <Col xs={24} sm={7}>
               <Form.Item label={t('_lang:name')}>
                 {getFieldDecorator('name', {
                   initialValue: props.item ? props.item.name : undefined,
@@ -81,7 +71,7 @@ class SettingInfoFormInner extends React.PureComponent<IProps> {
               </Form.Item>
             </Col>
 
-            <Col xs={24} sm={8}>
+            <Col xs={24} sm={7}>
               <Form.Item label={t('_lang:slug')}>
                 {getFieldDecorator('slug', {
                   initialValue: props.item ? props.item.slug : undefined,
@@ -90,13 +80,27 @@ class SettingInfoFormInner extends React.PureComponent<IProps> {
               </Form.Item>
             </Col>
 
-            <Col xs={24} sm={3}>
+            <Col xs={24} sm={4}>
               <Form.Item label={t('_lang:sort')}>
                 {getFieldDecorator('sort', {
                   initialValue: props.item ? props.item.sort : 0,
                   rules: [{ required: true }],
                   normalize: e => Number(e),
                 })(<Input placeholder={t('_lang:sort')} />)}
+              </Form.Item>
+            </Col>
+
+            <Col xs={24} sm={24}>
+              <Form.Item label={t('_lang:value')}>
+                {getFieldDecorator('value', {
+                  initialValue: props.item ? props.item.value : undefined,
+                  rules: [{ required: true }],
+                })(
+                  buildTypeDom({
+                    type: this.props.form.getFieldValue('type'),
+                    name: props.item ? props.item.name : '',
+                  }),
+                )}
               </Form.Item>
             </Col>
 
@@ -122,4 +126,4 @@ class SettingInfoFormInner extends React.PureComponent<IProps> {
 }
 
 // @ts-ignore
-export const SettingInfoForm = withTranslation()(Form.create<IFormProps>()(SettingInfoFormInner));
+export const SettingModalForm = withTranslation()(Form.create<IFormProps>()(SettingInfoFormInner));

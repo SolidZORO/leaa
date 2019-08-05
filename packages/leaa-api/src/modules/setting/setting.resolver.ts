@@ -8,6 +8,7 @@ import {
   SettingArgs,
   CreateSettingInput,
   UpdateSettingInput,
+  UpdateSettingsInput, SettingsObject,
 } from '@leaa/common/dtos/setting';
 import { UserDecorator } from '@leaa/api/decorators';
 import { SettingService } from '@leaa/api/modules/setting/setting.service';
@@ -44,6 +45,13 @@ export class SettingResolver {
     @Args('setting') args: UpdateSettingInput,
   ): Promise<Setting | undefined> {
     return this.settingService.updateSetting(id, args);
+  }
+
+  @Mutation(() => SettingsObject)
+  async updateSettings(
+    @Args({ name: 'settings', type: () => [UpdateSettingsInput] }) settings: UpdateSettingsInput[],
+  ): Promise<SettingsObject> {
+    return this.settingService.updateSettings(settings);
   }
 
   @Mutation(() => Setting)

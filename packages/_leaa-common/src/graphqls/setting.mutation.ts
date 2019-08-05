@@ -20,6 +20,17 @@ export const UPDATE_SETTING = gql`
   ${SETTING_FRAGMENT}
 `;
 
+export const UPDATE_SETTINGS = gql`
+  mutation($settings: [UpdateSettingsInput!]!) {
+    updateSettings(settings: $settings) {
+      items {
+        id
+        value
+      }
+    }
+  }
+`;
+
 export const DELETE_SETTING = gql`
   mutation($id: Int!) {
     deleteSetting(id: $id) {

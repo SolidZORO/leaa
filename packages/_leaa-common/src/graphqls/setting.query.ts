@@ -17,19 +17,3 @@ export const GET_SETTINGS = gql`
     }
   }
 `;
-
-// export const GET_SETTING_BY_SLUG = gql`
-//   query($token: String!) {
-//     settingBySlug(slug: $slug) {
-//       id
-//       name
-//       slug
-//       type
-//       description
-//       options
-//       value
-//       sort
-//       created_at
-//     }
-//   }
-// `;
