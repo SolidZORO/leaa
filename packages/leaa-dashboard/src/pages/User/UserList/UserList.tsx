@@ -118,6 +118,7 @@ export default (props: IPage) => {
       render: (text: string, record: User) => (
         <TableColumnDeleteButton
           id={record.id}
+          fieldName={record.name}
           loading={getUsersMutation.loading}
           onClick={async () => getUsersMutate({ variables: { id: Number(record.id) } })}
         />

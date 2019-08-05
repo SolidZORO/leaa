@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import queryString from 'query-string';
 import { Link } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { Table, message } from 'antd';
+import { Table, Icon, message } from 'antd';
 
 import { DEFAULT_PAGE_SIZE_OPTIONS } from '@leaa/dashboard/constants';
 import { GET_ARTICLES, DELETE_ARTICLE } from '@leaa/common/graphqls';
@@ -122,6 +122,7 @@ export default (props: IPage) => {
       render: (text: string, record: Article) => (
         <TableColumnDeleteButton
           id={record.id}
+          fieldName={record.title}
           loading={deleteArticleMutation.loading}
           onClick={async () => deleteArticleMutate({ variables: { id: Number(record.id) } })}
         />
@@ -131,7 +132,14 @@ export default (props: IPage) => {
 
   return (
     <PageCard
-      title={t(`${props.route.namei18n}`)}
+      title={
+        <span>
+          <strong>{t(`${props.route.namei18n}`)}</strong>
+          <Link to={`${props.route.path}/create`}>
+            <Icon type="plus" />
+          </Link>
+        </span>
+      }
       extra={
         <SearchInput
           value={q}

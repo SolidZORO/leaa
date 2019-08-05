@@ -1,12 +1,13 @@
 import React from 'react';
-import { Popconfirm, Button, Icon } from 'antd';
+import { Popconfirm, Button, Icon, Tag } from 'antd';
 import { useTranslation } from 'react-i18next';
 import cx from 'classnames';
 
 import style from './style.less';
 
 interface IProps {
-  id: number;
+  id: React.ReactNode;
+  fieldName?: React.ReactNode;
   title?: React.ReactNode;
   extra?: React.ReactNode;
   className?: string;
@@ -20,10 +21,17 @@ export const TableColumnDeleteButton = (props: IProps) => {
   return (
     <div className={cx(style['wrapper'], props.className)}>
       <Popconfirm
-        icon={<Icon type={props.loading ? 'loading' : 'question-circle'} style={{ color: '#ff003d' }} />}
+        icon={<Icon type={props.loading ? 'loading' : 'question-circle'} className={style['icon-question']} />}
         title={
           <span>
-            {t('_comp:TableColumnDeleteButton.confirmDeleteItem')} #{props.id} ?
+            {t('_comp:TableColumnDeleteButton.confirmDeleteItem')}{' '}
+            {props.id && (
+              <>
+                <sup>#</sup>
+                {props.id}
+              </>
+            )}{' '}
+            {props.fieldName && <Tag color="geekblue">{props.fieldName}</Tag>} ?
           </span>
         }
         placement="topRight"
