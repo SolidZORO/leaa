@@ -1,10 +1,14 @@
 import React from 'react';
 import cx from 'classnames';
-import { Layout } from 'antd';
+import { useQuery } from '@apollo/react-hooks';
+import { Layout, message } from 'antd';
 
 import { urlUtil } from '@leaa/www/utils';
 import { IAppProps } from '@leaa/www/interfaces';
 import { envConfig } from '@leaa/www/configs';
+import { SettingsWithPaginationObject, SettingArgs } from '@leaa/common/dtos/setting';
+import { GET_SETTINGS_FOR_WWW } from '@leaa/common/graphqls';
+import { useStore } from '@leaa/www/stores';
 import { ProgressLoading } from '@leaa/www/components/ProgressLoading';
 import { LayoutContent } from './_components/LayoutContent/LayoutContent';
 import { LayoutHeader } from './_components/LayoutHeader/LayoutHeader';
@@ -35,6 +39,30 @@ export const MasterLayout = (props: IProps) => {
       }
     };
   }
+
+  const store = useStore();
+
+  const getSettings = (): void => {
+    const getSettingsQuery = useQuery<
+      { settings: SettingsWithPaginationObject; fetchPolicy: 'network-only' },
+      SettingArgs
+    >(GET_SETTINGS_FOR_WWW);
+
+    if (getSettingsQuery.error) {
+      message.error(getSettingsQuery.error);
+    }
+
+    store.setting.globalSettings =
+      getSettingsQuery &&
+      getSettingsQuery.data &&
+      getSettingsQuery.data.settings &&
+      getSettingsQuery.data.settings.items
+        ? getSettingsQuery.data.settings.items
+        : [];
+  };
+
+  // just once query setting
+  getSettings();
 
   return (
     <div

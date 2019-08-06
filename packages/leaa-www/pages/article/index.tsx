@@ -1,22 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import cx from 'classnames';
 import Head from 'next/head';
 import { useQuery } from '@apollo/react-hooks';
-
-import { Article } from '@leaa/common/entrys';
 import { ArticleArgs, ArticlesWithPaginationObject } from '@leaa/common/dtos/article';
 import { GET_ARTICLES } from '@leaa/common/graphqls';
 import { seoUtil } from '@leaa/www/utils';
-import { SwiperImage } from '@leaa/www/components/SwiperImage';
 import { ErrorCard } from '@leaa/www/components/ErrorCard/ErrorCard';
 
 import style from './style.less';
 
 export default () => {
-  // const [page, setPage] = useState<number | undefined>(urlPagination.page);
-  // const [pageSize, setPageSize] = useState<number | undefined>(urlPagination.pageSize);
-  // const [selectedRowKeys, setSelectedRowKeys] = useState<number[] | string[]>([]);
-
   const getArticlesVariables = {};
   const getArticlesQuery = useQuery<{ articles: ArticlesWithPaginationObject }, ArticleArgs>(GET_ARTICLES, {
     variables: getArticlesVariables,

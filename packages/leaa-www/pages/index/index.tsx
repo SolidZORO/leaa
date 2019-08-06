@@ -6,6 +6,7 @@ import { useQuery } from '@apollo/react-hooks';
 import { Ax } from '@leaa/common/entrys';
 import { AxArgs } from '@leaa/common/dtos/ax';
 import { GET_AX_BY_SLUG } from '@leaa/common/graphqls';
+import { seoUtil } from '@leaa/www/utils';
 import { SwiperImage } from '@leaa/www/components/SwiperImage';
 import { ErrorCard } from '@leaa/www/components/ErrorCard/ErrorCard';
 
@@ -29,7 +30,7 @@ export default () => {
       {getAxBySlugQuery.error ? <ErrorCard error={getAxBySlugQuery.error} /> : null}
 
       <Head>
-        <title>Home - Leaa</title>
+        <title>{seoUtil.titleWichSiteName('Home')}</title>
       </Head>
 
       {bannerMbList && <SwiperImage lazy attachmentList={bannerMbList} centerMode height={bannerMbList[0].height} />}

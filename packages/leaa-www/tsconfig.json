@@ -17,6 +17,8 @@
     "forceConsistentCasingInFileNames": true,
     "lib": ["dom", "dom.iterable", "esnext"],
     "types": ["node", "jest"],
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "paths": {
       "@leaa/common/*": ["../_leaa-common/src/*"],
       "@leaa/www/*": ["./*"]

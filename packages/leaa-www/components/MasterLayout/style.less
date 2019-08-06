@@ -9,7 +9,13 @@
 .full-layout-inner {
   position: relative;
   min-height: 100vh;
-  background-color: #f5f6fa;
+  // background-color: #f5f6fa;
+
+  :global {
+    .ant-layout {
+      background: #fff;
+    }
+  }
 }
 
 .full-layout-container {

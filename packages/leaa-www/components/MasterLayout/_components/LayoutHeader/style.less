@@ -10,13 +10,17 @@
 
 .full-headroom {
   :global {
+    .headroom {
+      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+    }
+
     .headroom-wrapper {
       //background-color: #fff;
     }
 
     .headroom--scrolled {
       z-index: 999;
-      background-color: #fffd;
+      background-color: #fffe;
     }
   }
 }
@@ -26,11 +30,10 @@
   display: flex;
   align-items: center;
   padding: 0 1rem !important;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.02);
 }
 
-@logo-width--mb: 32px;
-@logo-width--pc: 40px;
+@logo-width--mb: 28px;
+@logo-width--pc: 34px;
 
 .logo-image {
   position: relative;
@@ -119,7 +122,6 @@ li.menu-item {
 //
 //
 // MB
-
 @menu-wrapper--mb-padding: 7px;
 
 .menu-wrapper--mb {
@@ -136,7 +138,7 @@ li.menu-item {
   display: block;
   position: absolute;
   right: 0;
-  top: @menu-wrapper--mb-padding;
+  top: 4px;
 
   .menu-mb-button {
     color: #444;

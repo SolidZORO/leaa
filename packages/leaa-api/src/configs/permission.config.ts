@@ -29,6 +29,8 @@ export const notValidateUserQuerys = [
   'article',
   'attachments',
   'attachment',
+  'settings',
+  'setting',
 ];
 
 export const permissions = shield(

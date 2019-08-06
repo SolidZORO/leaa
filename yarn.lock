@@ -1860,10 +1860,10 @@
   resolved "https://registry.npm.taobao.org/@types/jest-diff/download/@types/jest-diff-20.0.1.tgz#35cc15b9c4f30a18ef21852e255fdb02f6d59b89"
   integrity sha1-NcwVucTzChjvIYUuJV/bAvbVm4k=
 
-"@types/jest@^24.0.16":
-  version "24.0.16"
-  resolved "https://registry.npm.taobao.org/@types/jest/download/@types/jest-24.0.16.tgz#8d3e406ec0f0dc1688d6711af3062ff9bd428066"
-  integrity sha1-jT5AbsDw3BaI1nEa8wYv+b1CgGY=
+"@types/jest@^24.0.17":
+  version "24.0.17"
+  resolved "https://registry.npm.taobao.org/@types/jest/download/@types/jest-24.0.17.tgz#b66ea026efb746eb5db1356ee28518aaff7af416"
+  integrity sha1-tm6gJu+3RutdsTVu4oUYqv969BY=
   dependencies:
     "@types/jest-diff" "*"
 
@@ -2039,10 +2039,10 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-helmet@^5.0.8":
-  version "5.0.8"
-  resolved "https://registry.npm.taobao.org/@types/react-helmet/download/@types/react-helmet-5.0.8.tgz#f080eea6652e44f60b4574463d238f268d81d9af"
-  integrity sha1-8IDupmUuRPYLRXRGPSOPJo2B2a8=
+"@types/react-helmet@^5.0.9":
+  version "5.0.9"
+  resolved "https://registry.npm.taobao.org/@types/react-helmet/download/@types/react-helmet-5.0.9.tgz#60ab5accce74b168ca1d274671522f6b2cf2c98f"
+  integrity sha1-YKtazM50sWjKHSdGcVIvayzyyY8=
   dependencies:
     "@types/react" "*"
 
@@ -2598,10 +2598,10 @@ ansi-styles@^3.2.0, ansi-styles@^3.2.1:
   dependencies:
     color-convert "^1.9.0"
 
-antd@^3.21.1:
-  version "3.21.1"
-  resolved "https://registry.npm.taobao.org/antd/download/antd-3.21.1.tgz#6c315011ba8b8a9b942c481c0f8e0d2635d2fe99"
-  integrity sha1-bDFQEbqLipuULEgcD44NJjXS/pk=
+antd@^3.21.2:
+  version "3.21.2"
+  resolved "https://registry.npm.taobao.org/antd/download/antd-3.21.2.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fantd%2Fdownload%2Fantd-3.21.2.tgz#83232e12ea0257bc6103cf5a23a716290c863831"
+  integrity sha1-gyMuEuoCV7xhA89aI6cWKQyGODE=
   dependencies:
     "@ant-design/create-react-context" "^0.2.4"
     "@ant-design/icons" "~2.1.1"
@@ -5193,10 +5193,10 @@ dir-glob@^3.0.1:
   dependencies:
     path-type "^4.0.0"
 
-dnd-core@^9.3.2:
-  version "9.3.2"
-  resolved "https://registry.npm.taobao.org/dnd-core/download/dnd-core-9.3.2.tgz#d30f4a53fc296d6fedee05ed690db97974c7decc"
-  integrity sha1-0w9KU/wpbW/t7gXtaQ25eXTH3sw=
+dnd-core@^9.3.4:
+  version "9.3.4"
+  resolved "https://registry.npm.taobao.org/dnd-core/download/dnd-core-9.3.4.tgz#56b5fdc165aa7d102506d3d5a08ec1fa789e0775"
+  integrity sha1-VrX9wWWqfRAlBtPVoI7B+nieB3U=
   dependencies:
     "@types/asap" "^2.0.0"
     "@types/invariant" "^2.2.30"
@@ -7357,10 +7357,10 @@ i18next-xhr-backend@*, i18next-xhr-backend@^3.0.0:
   dependencies:
     "@babel/runtime" "^7.4.5"
 
-i18next-xhr-backend@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.npm.taobao.org/i18next-xhr-backend/download/i18next-xhr-backend-3.0.1.tgz#0c8baf9f611c2cc9c357cda0284d38212eae6283"
-  integrity sha1-DIuvn2EcLMnDV82gKE04IS6uYoM=
+i18next-xhr-backend@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.npm.taobao.org/i18next-xhr-backend/download/i18next-xhr-backend-3.1.1.tgz#9221ba6911d466c38693fd43eb8ff10b48d3438a"
+  integrity sha1-kiG6aRHUZsOGk/1D64/xC0jTQ4o=
   dependencies:
     "@babel/runtime" "^7.5.5"
 
@@ -7371,10 +7371,10 @@ i18next@^17.0.4:
   dependencies:
     "@babel/runtime" "^7.3.1"
 
-i18next@^17.0.8:
-  version "17.0.8"
-  resolved "https://registry.npm.taobao.org/i18next/download/i18next-17.0.8.tgz#0c7113a88ad156eb37b9025d83a7684e1bbc2e18"
-  integrity sha1-DHETqIrRVus3uQJdg6doThu8Lhg=
+i18next@^17.0.9:
+  version "17.0.9"
+  resolved "https://registry.npm.taobao.org/i18next/download/i18next-17.0.9.tgz#5f835e91a34fa5e7da1e5ae4c4586c81d7c4b17f"
+  integrity sha1-X4NekaNPpefaHlrkxFhsgdfEsX8=
   dependencies:
     "@babel/runtime" "^7.3.1"
 
@@ -9735,7 +9735,7 @@ mobx-react-lite@^1.4.1:
   resolved "https://registry.npm.taobao.org/mobx-react-lite/download/mobx-react-lite-1.4.1.tgz#7307a45901f97f9a07ebed32b654235507644e1a"
   integrity sha1-cwekWQH5f5oH6+0ytlQjVQdkTho=
 
-mobx-react@6.1.1:
+mobx-react@6.1.1, mobx-react@^6.1.1:
   version "6.1.1"
   resolved "https://registry.npm.taobao.org/mobx-react/download/mobx-react-6.1.1.tgz#24a2c8a3393890fa732b4efd34cc6dcccf6e0e7a"
   integrity sha1-JKLIozk4kPpzK079NMxtzM9uDno=
@@ -9897,10 +9897,10 @@ neo-async@^2.5.0, neo-async@^2.6.0, neo-async@^2.6.1:
   resolved "https://registry.npm.taobao.org/neo-async/download/neo-async-2.6.1.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fneo-async%2Fdownload%2Fneo-async-2.6.1.tgz#ac27ada66167fa8849a6addd837f6b189ad2081c"
   integrity sha1-rCetpmFn+ohJpq3dg39rGJrSCBw=
 
-next-i18next@^0.52.0:
-  version "0.52.1"
-  resolved "https://registry.npm.taobao.org/next-i18next/download/next-i18next-0.52.1.tgz#2b4d8a86deb151d51de7a0d5ac0126afe6ee03c6"
-  integrity sha1-K02Kht6xUdUd56DVrAEmr+buA8Y=
+next-i18next@^0.53.0:
+  version "0.53.0"
+  resolved "https://registry.npm.taobao.org/next-i18next/download/next-i18next-0.53.0.tgz#931986b6ceba1fe90f8474f62dd7e8cbf6cc17b3"
+  integrity sha1-kxmGts66H+kPhHT2Ldfoy/bMF7M=
   dependencies:
     core-js "^2"
     detect-node "^2.0.4"
@@ -12312,21 +12312,21 @@ react-css-modules@4.7.11:
     lodash "^4.16.6"
     object-unfreeze "^1.1.0"
 
-react-dnd-html5-backend@^9.3.2:
-  version "9.3.2"
-  resolved "https://registry.npm.taobao.org/react-dnd-html5-backend/download/react-dnd-html5-backend-9.3.2.tgz#4833043aec91e69dd968ac136deebf7535f5eb9d"
-  integrity sha1-SDMEOuyR5p3ZaKwTbe6/dTX1650=
+react-dnd-html5-backend@^9.3.4:
+  version "9.3.4"
+  resolved "https://registry.npm.taobao.org/react-dnd-html5-backend/download/react-dnd-html5-backend-9.3.4.tgz#5d1f5ac608206d7b294b7407b9e1a336589eedd7"
+  integrity sha1-XR9axgggbXspS3QHueGjNlie7dc=
   dependencies:
-    dnd-core "^9.3.2"
+    dnd-core "^9.3.4"
 
-react-dnd@^9.3.2:
-  version "9.3.2"
-  resolved "https://registry.npm.taobao.org/react-dnd/download/react-dnd-9.3.2.tgz#e06c0f566201fbd4617db6d023fcb45629874bbc"
-  integrity sha1-4GwPVmIB+9RhfbbQI/y0VimHS7w=
+react-dnd@^9.3.4:
+  version "9.3.4"
+  resolved "https://registry.npm.taobao.org/react-dnd/download/react-dnd-9.3.4.tgz#ebab4b5b430b72f3580c058a29298054e1f9d2b8"
+  integrity sha1-66tLW0MLcvNYDAWKKSmAVOH50rg=
   dependencies:
     "@types/hoist-non-react-statics" "^3.3.1"
     "@types/shallowequal" "^1.1.1"
-    dnd-core "^9.3.2"
+    dnd-core "^9.3.4"
     hoist-non-react-statics "^3.3.0"
     shallowequal "^1.1.0"
 
