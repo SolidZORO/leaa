@@ -156,6 +156,11 @@ export class AttachmentService {
 
       width = imageSize.width; // eslint-disable-line prefer-destructuring
       height = imageSize.height; // eslint-disable-line prefer-destructuring
+
+      if (at2x) {
+        width = Math.round(imageSize.width / 2);
+        height = Math.round(imageSize.height / 2);
+      }
     }
 
     const filepath = file.path.replace(this.configService.PUBLIC_DIR, '').replace('_2x', '');

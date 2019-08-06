@@ -6,14 +6,6 @@ const headerMenu = [
   //   link: 'article',
   // },
   {
-    title: 'Ram',
-    link: 'ram',
-  },
-  {
-    title: 'Blog',
-    link: 'blog',
-  },
-  {
     title: 'Article',
     link: 'article',
   },

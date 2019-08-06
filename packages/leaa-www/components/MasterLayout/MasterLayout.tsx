@@ -8,7 +8,7 @@ import { envConfig } from '@leaa/www/configs';
 import { ProgressLoading } from '@leaa/www/components/ProgressLoading';
 import { LayoutContent } from './_components/LayoutContent/LayoutContent';
 import { LayoutHeader } from './_components/LayoutHeader/LayoutHeader';
-import { LayoutFooter } from './_components/LayoutFooter/LayoutFooter';
+import { LayoutSimpleFooter } from './_components/LayoutSimpleFooter/LayoutSimpleFooter';
 
 import '@leaa/www/styles/global.less';
 import style from './style.less';
@@ -45,7 +45,7 @@ export const MasterLayout = (props: IProps) => {
         <Layout>
           {!props.disableHeader && <LayoutHeader />}
           <LayoutContent>{props.children}</LayoutContent>
-          {!props.disableFooter && <LayoutFooter />}
+          {!props.disableFooter && <LayoutSimpleFooter />}
         </Layout>
       </Layout>
 

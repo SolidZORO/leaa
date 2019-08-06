@@ -56,8 +56,8 @@ export const permissions = shield(
       attachments: allow,
       attachment: allow,
       //
-      settings: checkPermission('setting.list'),
-      setting: checkPermission('setting.item'),
+      settings: allow,
+      setting: allow,
     },
     Mutation: {
       login: allow,

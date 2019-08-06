@@ -92,7 +92,7 @@
 // export { default as FundOutline } from '@ant-design/icons/lib/outline/FundOutline';
 // export { default as GiftOutline } from '@ant-design/icons/lib/outline/GiftOutline';
 // export { default as FunnelPlotOutline } from '@ant-design/icons/lib/outline/FunnelPlotOutline';
-// export { default as GithubOutline } from '@ant-design/icons/lib/outline/GithubOutline';
+export { default as GithubOutline } from '@ant-design/icons/lib/outline/GithubOutline';
 // export { default as GitlabOutline } from '@ant-design/icons/lib/outline/GitlabOutline';
 // export { default as HddOutline } from '@ant-design/icons/lib/outline/HddOutline';
 // export { default as HeartOutline } from '@ant-design/icons/lib/outline/HeartOutline';
@@ -100,7 +100,7 @@
 // export { default as HighlightOutline } from '@ant-design/icons/lib/outline/HighlightOutline';
 // export { default as IdcardOutline } from '@ant-design/icons/lib/outline/IdcardOutline';
 // export { default as InfoCircleOutline } from '@ant-design/icons/lib/outline/InfoCircleOutline';
-// export { default as InstagramOutline } from '@ant-design/icons/lib/outline/InstagramOutline';
+export { default as InstagramOutline } from '@ant-design/icons/lib/outline/InstagramOutline';
 // export { default as Html5Outline } from '@ant-design/icons/lib/outline/Html5Outline';
 // export { default as HomeOutline } from '@ant-design/icons/lib/outline/HomeOutline';
 // export { default as InteractionOutline } from '@ant-design/icons/lib/outline/InteractionOutline';
@@ -174,7 +174,7 @@
 // export { default as UpSquareOutline } from '@ant-design/icons/lib/outline/UpSquareOutline';
 // export { default as VideoCameraOutline } from '@ant-design/icons/lib/outline/VideoCameraOutline';
 // export { default as UpCircleOutline } from '@ant-design/icons/lib/outline/UpCircleOutline';
-// export { default as WechatOutline } from '@ant-design/icons/lib/outline/WechatOutline';
+export { default as WechatOutline } from '@ant-design/icons/lib/outline/WechatOutline';
 // export { default as WalletOutline } from '@ant-design/icons/lib/outline/WalletOutline';
 // export { default as YahooOutline } from '@ant-design/icons/lib/outline/YahooOutline';
 // export { default as WarningOutline } from '@ant-design/icons/lib/outline/WarningOutline';
@@ -352,7 +352,7 @@ export { default as MenuOutline } from '@ant-design/icons/lib/outline/MenuOutlin
 // export { default as ToTopOutline } from '@ant-design/icons/lib/outline/ToTopOutline';
 // export { default as SwapOutline } from '@ant-design/icons/lib/outline/SwapOutline';
 // export { default as TrademarkOutline } from '@ant-design/icons/lib/outline/TrademarkOutline';
-// export { default as TwitterOutline } from '@ant-design/icons/lib/outline/TwitterOutline';
+export { default as TwitterOutline } from '@ant-design/icons/lib/outline/TwitterOutline';
 // export { default as TransactionOutline } from '@ant-design/icons/lib/outline/TransactionOutline';
 // export { default as UndoOutline } from '@ant-design/icons/lib/outline/UndoOutline';
 // export { default as UnorderedListOutline } from '@ant-design/icons/lib/outline/UnorderedListOutline';

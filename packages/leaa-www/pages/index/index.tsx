@@ -29,7 +29,7 @@ export default () => {
       {getAxBySlugQuery.error ? <ErrorCard error={getAxBySlugQuery.error} /> : null}
 
       <Head>
-        <title>Here Is Home</title>
+        <title>Home - Leaa</title>
       </Head>
 
       {bannerMbList && <SwiperImage lazy attachmentList={bannerMbList} centerMode height={bannerMbList[0].height} />}
