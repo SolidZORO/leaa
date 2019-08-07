@@ -6,7 +6,7 @@ import { AxArgs } from '@leaa/common/dtos/ax';
 import { GET_AX_BY_SLUG } from '@leaa/common/graphqls';
 import { HtmlMeta } from '@leaa/www/components/HtmlMeta';
 import { ErrorCard } from '@leaa/www/components/ErrorCard/ErrorCard';
-import { Home } from '@leaa/www/pages/index/_components/Home/Home';
+import { Login } from '@leaa/www/pages/login/_components/Login/Login';
 
 export default () => {
   const getAxBySlugVariables = { slug: 'index-swiper' };
@@ -20,8 +20,8 @@ export default () => {
 
       {getAxBySlugQuery.data && getAxBySlugQuery.data.axBySlug && (
         <>
-          <HtmlMeta title="Home" />
-          <Home ax={getAxBySlugQuery.data.axBySlug} />
+          <HtmlMeta title="Login" />
+          <Login />
         </>
       )}
     </>

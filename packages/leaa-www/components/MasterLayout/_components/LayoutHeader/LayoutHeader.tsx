@@ -32,13 +32,13 @@ export const LayoutHeader = () => {
 
   const authListDom = (
     <div className={style['auth-list']}>
-      <Link href="/ram" prefetch={false}>
+      <Link href="/login" prefetch={false}>
         <a className={style['link']} onClick={() => onSetVisible(false)}>
           Login
         </a>
       </Link>
       <span> · </span>
-      <Link href="/ram" prefetch={false}>
+      <Link href="/register" prefetch={false}>
         <a className={style['link']} onClick={() => onSetVisible(false)}>
           Register
         </a>
