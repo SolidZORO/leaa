@@ -8,7 +8,7 @@ interface IProps {
   disableSiteName?: boolean;
 }
 
-export const HtmlTitle = (props: IProps) => {
+export const HtmlMeta = (props: IProps) => {
   const siteName = props.disableSiteName ? '' : ` - ${envConfig.SITE_NAME}`;
 
   return (

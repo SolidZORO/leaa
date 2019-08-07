@@ -14,7 +14,7 @@ import { AttachmentsWithPaginationObject, AttachmentsArgs } from '@leaa/common/d
 import { WYSIWYGEditor } from '@leaa/dashboard/components/WYSIWYGEditor/WYSIWYGEditor';
 import { AttachmentBox } from '@leaa/dashboard/components/AttachmentBox';
 import { PageCard } from '@leaa/dashboard/components/PageCard';
-import { HtmlTitle } from '@leaa/dashboard/components/HtmlTitle';
+import { HtmlMeta } from '@leaa/dashboard/components/HtmlMeta';
 import { ErrorCard } from '@leaa/dashboard/components/ErrorCard';
 import { SubmitBar } from '@leaa/dashboard/components/SubmitBar/SubmitBar';
 
@@ -143,7 +143,7 @@ export default (props: IPage) => {
       className={style['wapper']}
       loading={getArticleQuery.loading || updateArticleMutation.loading}
     >
-      <HtmlTitle title={t(`${props.route.namei18n}`)} />
+      <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
       {getArticleQuery.error ? <ErrorCard error={getArticleQuery.error} /> : null}
       {getArticleEditorAttachmentsQuery.error ? <ErrorCard error={getArticleEditorAttachmentsQuery.error} /> : null}

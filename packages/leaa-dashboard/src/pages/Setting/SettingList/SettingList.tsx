@@ -17,7 +17,7 @@ import { IPage } from '@leaa/dashboard/interfaces';
 import { SettingListForm } from '@leaa/dashboard/pages/Setting/_components/SettingListForm/SettingListForm';
 import { SettingModalForm } from '@leaa/dashboard/pages/Setting/_components/SettingModalForm/SettingModalForm';
 import { PageCard } from '@leaa/dashboard/components/PageCard';
-import { HtmlTitle } from '@leaa/dashboard/components/HtmlTitle';
+import { HtmlMeta } from '@leaa/dashboard/components/HtmlMeta';
 import { ErrorCard } from '@leaa/dashboard/components/ErrorCard';
 import { SubmitBar } from '@leaa/dashboard/components/SubmitBar';
 
@@ -187,7 +187,7 @@ export default (props: IPage) => {
       className={style['wapper']}
       loading={getSettingsQuery.loading}
     >
-      <HtmlTitle title={t(`${props.route.namei18n}`)} />
+      <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
       {getSettingsQuery.error ? <ErrorCard error={getSettingsQuery.error} /> : null}
       {updateSettingMutation.error ? <ErrorCard error={updateSettingMutation.error} /> : null}

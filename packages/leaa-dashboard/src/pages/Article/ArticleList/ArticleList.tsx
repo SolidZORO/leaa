@@ -14,7 +14,7 @@ import { ArticlesWithPaginationObject, ArticleArgs } from '@leaa/common/dtos/art
 import { urlUtil, tableUtil } from '@leaa/dashboard/utils';
 import { IPage } from '@leaa/dashboard/interfaces';
 import { PageCard } from '@leaa/dashboard/components/PageCard';
-import { HtmlTitle } from '@leaa/dashboard/components/HtmlTitle';
+import { HtmlMeta } from '@leaa/dashboard/components/HtmlMeta';
 import { ErrorCard } from '@leaa/dashboard/components/ErrorCard';
 import { SearchInput } from '@leaa/dashboard/components/SearchInput';
 import { TableCard } from '@leaa/dashboard/components/TableCard';
@@ -161,7 +161,7 @@ export default (props: IPage) => {
       className={style['wapper']}
       loading={getArticlesQuery.loading}
     >
-      <HtmlTitle title={t(`${props.route.namei18n}`)} />
+      <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
       {getArticlesQuery.error ? <ErrorCard error={getArticlesQuery.error} /> : null}
       {deleteArticleMutation.error ? <ErrorCard error={deleteArticleMutation.error} /> : null}

@@ -12,7 +12,7 @@ import { IPage } from '@leaa/dashboard/interfaces';
 import { AttachmentBox } from '@leaa/dashboard/components/AttachmentBox';
 import { PageCard } from '@leaa/dashboard/components/PageCard';
 import { ErrorCard } from '@leaa/dashboard/components/ErrorCard';
-import { HtmlTitle } from '@leaa/dashboard/components/HtmlTitle';
+import { HtmlMeta } from '@leaa/dashboard/components/HtmlMeta';
 import { SubmitBar } from '@leaa/dashboard/components/SubmitBar/SubmitBar';
 
 import { AxInfoForm } from '../_components/AxInfoForm/AxInfoForm';
@@ -87,7 +87,7 @@ export default (props: IPage) => {
       className={style['wapper']}
       loading={getAxQuery.loading || updateAxMutation.loading}
     >
-      <HtmlTitle title={t(`${props.route.namei18n}`)} />
+      <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
       {getAxQuery.error ? <ErrorCard error={getAxQuery.error} /> : null}
       {updateAxMutation.error ? <ErrorCard error={updateAxMutation.error} /> : null}

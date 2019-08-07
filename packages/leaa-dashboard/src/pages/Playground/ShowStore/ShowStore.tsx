@@ -7,7 +7,7 @@ import { useStore } from '@leaa/dashboard/stores';
 import { authUtil } from '@leaa/dashboard/utils';
 import { AttachmentBox } from '@leaa/dashboard/components/AttachmentBox';
 import { IAttachmentBoxRef } from '@leaa/common/interfaces';
-import { HtmlTitle } from '@leaa/dashboard/components/HtmlTitle';
+import { HtmlMeta } from '@leaa/dashboard/components/HtmlMeta';
 
 export default (props: IPage) => {
   const { t } = useTranslation();
@@ -25,7 +25,7 @@ export default (props: IPage) => {
 
   return (
     <div>
-      <HtmlTitle title={t(`${props.route.namei18n}`)} />
+      <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
       <h2>BOX</h2>
 

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 
 import { IPage } from '@leaa/dashboard/interfaces';
 import { useTranslation } from 'react-i18next';
-import { HtmlTitle } from '@leaa/dashboard/components/HtmlTitle';
+import { HtmlMeta } from '@leaa/dashboard/components/HtmlMeta';
 // import { useQuery, useMutation } from '@apollo/react-hooks';
 // import { GET_USERS } from '@leaa/common/graphqls';
 // import { DELETE_USER } from '@leaa/common/graphqls/user.mutation';
@@ -19,7 +19,7 @@ export default (props: IPage) => {
 
   return (
     <>
-      <HtmlTitle title={t(`${props.route.namei18n}`)} />
+      <HtmlMeta title={t(`${props.route.namei18n}`)} />
       <p>: p</p>
     </>
   );

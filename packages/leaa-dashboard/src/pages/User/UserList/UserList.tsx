@@ -15,7 +15,7 @@ import { urlUtil, tableUtil } from '@leaa/dashboard/utils';
 import { IPage } from '@leaa/dashboard/interfaces';
 import { SwitchNumber } from '@leaa/dashboard/components/SwitchNumber';
 import { PageCard } from '@leaa/dashboard/components/PageCard';
-import { HtmlTitle } from '@leaa/dashboard/components/HtmlTitle';
+import { HtmlMeta } from '@leaa/dashboard/components/HtmlMeta';
 import { ErrorCard } from '@leaa/dashboard/components/ErrorCard';
 import { SearchInput } from '@leaa/dashboard/components/SearchInput';
 import { TableCard } from '@leaa/dashboard/components/TableCard';
@@ -157,7 +157,7 @@ export default (props: IPage) => {
       className={style['wapper']}
       loading={getUsersQuery.loading}
     >
-      <HtmlTitle title={t(`${props.route.namei18n}`)} />
+      <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
       {getUsersQuery.error ? <ErrorCard error={getUsersQuery.error} /> : null}
       {getUsersMutation.error ? <ErrorCard error={getUsersMutation.error} /> : null}

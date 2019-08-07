@@ -9,7 +9,7 @@ import { IPage } from '@leaa/dashboard/interfaces';
 import { CREATE_ARTICLE } from '@leaa/common/graphqls';
 import { CREATE_BUTTON_ICON } from '@leaa/dashboard/constants';
 import { PageCard } from '@leaa/dashboard/components/PageCard';
-import { HtmlTitle } from '@leaa/dashboard/components/HtmlTitle';
+import { HtmlMeta } from '@leaa/dashboard/components/HtmlMeta';
 import { SubmitBar } from '@leaa/dashboard/components/SubmitBar/SubmitBar';
 import { ErrorCard } from '@leaa/dashboard/components/ErrorCard';
 
@@ -48,7 +48,7 @@ export default (props: IPage) => {
 
   return (
     <PageCard title={t(`${props.route.namei18n}`)} className={style['wapper']} loading={createArticleMutation.loading}>
-      <HtmlTitle title={t(`${props.route.namei18n}`)} />
+      <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
       {createArticleMutation.error ? <ErrorCard error={createArticleMutation.error} /> : null}
 

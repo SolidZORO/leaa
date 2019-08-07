@@ -9,7 +9,7 @@ import { IPage } from '@leaa/dashboard/interfaces';
 import { authUtil } from '@leaa/dashboard/utils';
 import { LOGIN_REDIRECT_URL } from '@leaa/dashboard/constants';
 import { SwitchLanguage } from '@leaa/dashboard/components/SwitchLanguage';
-import { HtmlTitle } from '@leaa/dashboard/components/HtmlTitle';
+import { HtmlMeta } from '@leaa/dashboard/components/HtmlMeta';
 import { LoginForm } from './_components/LoginForm/LoginForm';
 
 import style from './style.less';
@@ -38,7 +38,7 @@ export default (props: IPage) => {
   return (
     <div className={style['wrapper']}>
       <div className={style['login-bg']}>
-        <HtmlTitle title={t(`${props.route.namei18n}`)} />
+        <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
         <Row>
           <Col xs={24} lg={16} xl={12} xxl={10}>

@@ -14,7 +14,7 @@ import { PermissionsWithPaginationObject, PermissionArgs } from '@leaa/common/dt
 import { urlUtil, tableUtil } from '@leaa/dashboard/utils';
 import { IPage } from '@leaa/dashboard/interfaces';
 import { PageCard } from '@leaa/dashboard/components/PageCard';
-import { HtmlTitle } from '@leaa/dashboard/components/HtmlTitle';
+import { HtmlMeta } from '@leaa/dashboard/components/HtmlMeta';
 import { ErrorCard } from '@leaa/dashboard/components/ErrorCard';
 import { SearchInput } from '@leaa/dashboard/components/SearchInput';
 import { TableCard } from '@leaa/dashboard/components/TableCard';
@@ -150,7 +150,7 @@ export default (props: IPage) => {
       className={style['wapper']}
       loading={getPermissionsQuery.loading}
     >
-      <HtmlTitle title={t(`${props.route.namei18n}`)} />
+      <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
       {getPermissionsQuery.error ? <ErrorCard error={getPermissionsQuery.error} /> : null}
       {deletePermissionMutation.error ? <ErrorCard error={deletePermissionMutation.error} /> : null}
