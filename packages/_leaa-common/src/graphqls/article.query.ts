@@ -8,7 +8,6 @@ export const GET_ARTICLES = gql`
         id
         title
         slug
-        content
         description
         category_id
         category {

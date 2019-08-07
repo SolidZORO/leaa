@@ -80,7 +80,7 @@ export const LayoutHeader = () => {
                 placement="top"
                 visible={drawerVisible}
                 closable={false}
-                mask={false}
+                maskStyle={{ opacity: 0 }}
                 zIndex={998}
                 onClose={() => onSetVisible(!drawerVisible)}
                 height="100%"
