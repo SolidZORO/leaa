@@ -37,7 +37,7 @@ export const LayoutHeader = () => {
           Login
         </a>
       </Link>
-      {' · '}
+      <span> · </span>
       <Link href="/ram" prefetch={false}>
         <a className={style['link']} onClick={() => onSetVisible(false)}>
           Register
@@ -64,25 +64,30 @@ export const LayoutHeader = () => {
           </div>
 
           <div className={style['menu-wrapper--mb']}>
-            <div className={style['menu-mb-button-wrapper']}>
-              <Button type="link" onClick={() => onSetVisible(true)} icon="menu" className={style['menu-mb-button']} />
+            <div
+              className={cx(style['menu-mb-button-wrapper'], {
+                [style['menu-mb-button-wrapper--action']]: drawerVisible,
+              })}
+            >
+              <Button type="link" onClick={() => onSetVisible(!drawerVisible)} className={style['menu-mb-button']}>
+                <div className={cx(style['menu-mb-button-line'], style['menu-mb-button-line--top'])} />
+                <div className={cx(style['menu-mb-button-line'], style['menu-mb-button-line--bottom'])} />
+              </Button>
             </div>
 
             <div className={style['menu-mb-drawer-wrapper']}>
               <Drawer
-                // placement="right"
+                placement="top"
                 visible={drawerVisible}
                 closable={false}
+                mask={false}
+                zIndex={998}
+                onClose={() => onSetVisible(!drawerVisible)}
+                height="100%"
                 className={cx(style['menu-mb-drawer'], {
                   [style['menu-mb-drawer--action']]: drawerVisible,
                 })}
               >
-                <Button
-                  type="link"
-                  icon="x-close"
-                  onClick={() => onSetVisible(false)}
-                  className={style['menu-mb-drawer-close']}
-                />
                 {menuListDom}
                 {authListDom}
               </Drawer>

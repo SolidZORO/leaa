@@ -76,7 +76,8 @@
     "react-i18next": "^10.11.5",
     "react-router-dom": "5.0.1",
     "rimraf": "^2.6.3",
-    "typescript": "3.5.3"
+    "typescript": "3.5.3",
+    "typo.css": "^2.1.2"
   },
   "devDependencies": {
     "@babel/cli": "7.5.5",

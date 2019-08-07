@@ -14635,6 +14635,11 @@ typescript@3.5.3, typescript@^3.0.1:
   resolved "https://registry.npm.taobao.org/typescript/download/typescript-3.5.3.tgz#c830f657f93f1ea846819e929092f5fe5983e977"
   integrity sha1-yDD2V/k/HqhGgZ6SkJL1/lmD6Xc=
 
+typo.css@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.npm.taobao.org/typo.css/download/typo.css-2.1.2.tgz#1b5abf3c01b7a34ec648e53168958d1e9f574b74"
+  integrity sha1-G1q/PAG3o07GSOUxaJWNHp9XS3Q=
+
 ua-parser-js@^0.7.18:
   version "0.7.20"
   resolved "https://registry.npm.taobao.org/ua-parser-js/download/ua-parser-js-0.7.20.tgz#7527178b82f6a62a0f243d1f94fd30e3e3c21098"

@@ -10,6 +10,23 @@ interface IProps {
   disableSiteName?: boolean;
 }
 
+const cutTextLength = (rawText: string, cutLength: number = 140): string => {
+  let result = rawText;
+
+  if (rawText) {
+    const resultMatchs = rawText.substring(0, cutLength).match(/.*[.|。]/);
+
+    if (resultMatchs === null) {
+      result = rawText.substring(0, cutLength);
+    } else if (resultMatchs) {
+      // eslint-disable-next-line prefer-destructuring
+      result = resultMatchs[0];
+    }
+  }
+
+  return result;
+};
+
 export const HtmlMeta = (props: IProps) => {
   const store = useStore();
 
@@ -21,7 +38,13 @@ export const HtmlMeta = (props: IProps) => {
     storeSiteName = settingSiteName.value;
   }
 
-  const siteName = props.disableSiteName ? '' : ` xxxxx- ${storeSiteName}`;
+  const siteName = props.disableSiteName ? '' : ` - ${storeSiteName}`;
+
+  let description = '';
+
+  if (props.description) {
+    description = cutTextLength(props.description);
+  }
 
   return (
     <Head>
@@ -31,7 +54,7 @@ export const HtmlMeta = (props: IProps) => {
           {siteName}
         </title>
 
-        {props.description && <meta name="description" content={props.description} />}
+        {description && <meta name="description" content={description} />}
         {props.keywords && <meta name="keywords" content={props.keywords} />}
       </>
     </Head>
