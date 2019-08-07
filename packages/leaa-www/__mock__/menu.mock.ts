@@ -7,7 +7,7 @@ const headerMenu = [
   // },
   {
     title: 'Article',
-    link: 'article',
+    link: '/article',
   },
 ];
 

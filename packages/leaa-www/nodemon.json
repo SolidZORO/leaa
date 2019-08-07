@@ -1,6 +1,6 @@
 {
-  "watch": [".babelrc", ".env", "static", "next.config.js", "*.ts"],
-  "ignore": [".next/**/*", "_deploy/**/*", "stores/**/*", "styles/**/*", "utils/**/*"],
+  "watch": [".babelrc", ".env", "static", "next.config.js", "server.ts", "configs/*.js", "libs/*"],
+  "ignore": [".next/**/*", "_deploy/**/*"],
   "execMap": {
     "ts": "ts-node --transpile-only --compiler-options '{\"module\":\"commonjs\"}'"
   }

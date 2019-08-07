@@ -3,7 +3,7 @@ import Head from 'next/head';
 import { ApolloClient } from 'apollo-client';
 import { renderToString } from 'react-dom/server';
 import { AppContext } from 'next/app';
-import { getMarkupFromTree } from '@apollo/react-hooks';
+import { getMarkupFromTree } from '@apollo/react-ssr';
 
 import { initApollo } from './init-apollo.lib';
 

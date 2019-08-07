@@ -30,32 +30,53 @@
   resolved "https://registry.npm.taobao.org/@ant-design/icons/download/@ant-design/icons-2.1.1.tgz#7b9c08dffd4f5d41db667d9dbe5e0107d0bd9a4a"
   integrity sha1-e5wI3/1PXUHbZn2dvl4BB9C9mko=
 
-"@apollo/react-common@^0.1.0-beta.8", "@apollo/react-common@^0.1.0-beta.9":
-  version "0.1.0-beta.9"
-  resolved "https://registry.npm.taobao.org/@apollo/react-common/download/@apollo/react-common-0.1.0-beta.9.tgz#33d0a46d049d15e97b2f9f1e9e012c338567c1de"
-  integrity sha1-M9CkbQSdFel7L58engEsM4Vnwd4=
+"@apollo/react-common@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.npm.taobao.org/@apollo/react-common/download/@apollo/react-common-3.0.0.tgz#2357518c4b3bf1fd680ee2ac114f565f527ec55d"
+  integrity sha1-I1dRjEs78f1oDuKsEU9WX1J+xV0=
   dependencies:
     ts-invariant "^0.4.4"
     tslib "^1.10.0"
 
-"@apollo/react-hooks@0.1.0-beta.10":
-  version "0.1.0-beta.10"
-  resolved "https://registry.npm.taobao.org/@apollo/react-hooks/download/@apollo/react-hooks-0.1.0-beta.10.tgz#4069fad454c0a77eb09d00242dcd96b3bac7791b"
-  integrity sha1-QGn61FTAp36wnQAkLc2Ws7rHeRs=
+"@apollo/react-components@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.npm.taobao.org/@apollo/react-components/download/@apollo/react-components-3.0.0.tgz#ca489ff8f70c6a7224f0c2a8a0baedda0448a815"
+  integrity sha1-ykif+PcManIk8MKooLrt2gRIqBU=
   dependencies:
-    "@apollo/react-common" "^0.1.0-beta.8"
-    apollo-utilities "^1.3.2"
+    "@apollo/react-common" "^3.0.0"
+    "@apollo/react-hooks" "^3.0.0"
+    prop-types "^15.7.2"
     ts-invariant "^0.4.4"
     tslib "^1.10.0"
 
-"@apollo/react-hooks@^0.1.0-beta.11":
-  version "0.1.0-beta.11"
-  resolved "https://registry.npm.taobao.org/@apollo/react-hooks/download/@apollo/react-hooks-0.1.0-beta.11.tgz#3b12836fb6fd944767757f5c7cb477ba880f6d52"
-  integrity sha1-OxKDb7b9lEdndX9cfLR3uogPbVI=
+"@apollo/react-hoc@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.npm.taobao.org/@apollo/react-hoc/download/@apollo/react-hoc-3.0.0.tgz#cdcb81f1f28246de1c15d601b9c0c075df18e0f9"
+  integrity sha1-zcuB8fKCRt4cFdYBucDAdd8Y4Pk=
   dependencies:
-    "@apollo/react-common" "^0.1.0-beta.9"
+    "@apollo/react-common" "^3.0.0"
+    "@apollo/react-components" "^3.0.0"
+    hoist-non-react-statics "^3.3.0"
+    ts-invariant "^0.4.4"
+    tslib "^1.10.0"
+
+"@apollo/react-hooks@3.0.0", "@apollo/react-hooks@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.npm.taobao.org/@apollo/react-hooks/download/@apollo/react-hooks-3.0.0.tgz#5fe4ff7812020f3e1b91b8628af8c03276496d78"
+  integrity sha1-X+T/eBICDz4bkbhiivjAMnZJbXg=
+  dependencies:
+    "@apollo/react-common" "^3.0.0"
     "@wry/equality" "^0.1.9"
     ts-invariant "^0.4.4"
+    tslib "^1.10.0"
+
+"@apollo/react-ssr@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.npm.taobao.org/@apollo/react-ssr/download/@apollo/react-ssr-3.0.0.tgz#a31455f90ec87af0b3b597a6468a9e2732ce738b"
+  integrity sha1-oxRV+Q7IevCztZemRoqeJzLOc4s=
+  dependencies:
+    "@apollo/react-common" "^3.0.0"
+    "@apollo/react-hooks" "^3.0.0"
     tslib "^1.10.0"
 
 "@apollographql/apollo-tools@^0.4.0":
@@ -9114,11 +9135,6 @@ lodash.isboolean@^3.0.3:
   resolved "https://registry.npm.taobao.org/lodash.isboolean/download/lodash.isboolean-3.0.3.tgz#6c2e171db2a257cd96802fd43b01b20d5f5870f6"
   integrity sha1-bC4XHbKiV82WgC/UOwGyDV9YcPY=
 
-lodash.isequal@^4.5.0:
-  version "4.5.0"
-  resolved "https://registry.npm.taobao.org/lodash.isequal/download/lodash.isequal-4.5.0.tgz#415c4478f2bcc30120c22ce10ed3226f7d3e18e0"
-  integrity sha1-QVxEePK8wwEgwizhDtMib30+GOA=
-
 lodash.isinteger@^4.0.4:
   version "4.0.4"
   resolved "https://registry.npm.taobao.org/lodash.isinteger/download/lodash.isinteger-4.0.4.tgz#619c0af3d03f8b04c31f5882840b77b11cd68343"
@@ -12290,18 +12306,16 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.2.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-apollo@^2.5.8:
-  version "2.5.8"
-  resolved "https://registry.npm.taobao.org/react-apollo/download/react-apollo-2.5.8.tgz#c7a593b027efeefdd8399885e0ac6bec3b32623c"
-  integrity sha1-x6WTsCfv7v3YOZiF4Kxr7DsyYjw=
+react-apollo@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.npm.taobao.org/react-apollo/download/react-apollo-3.0.0.tgz#2a0bccd32e11ce86b140d5d0284356972b7e8e11"
+  integrity sha1-KgvM0y4RzoaxQNXQKENWlyt+jhE=
   dependencies:
-    apollo-utilities "^1.3.0"
-    fast-json-stable-stringify "^2.0.0"
-    hoist-non-react-statics "^3.3.0"
-    lodash.isequal "^4.5.0"
-    prop-types "^15.7.2"
-    ts-invariant "^0.4.2"
-    tslib "^1.9.3"
+    "@apollo/react-common" "^3.0.0"
+    "@apollo/react-components" "^3.0.0"
+    "@apollo/react-hoc" "^3.0.0"
+    "@apollo/react-hooks" "^3.0.0"
+    "@apollo/react-ssr" "^3.0.0"
 
 react-css-modules@4.7.11:
   version "4.7.11"
@@ -14417,7 +14431,7 @@ tryer@^1.0.1:
   resolved "https://registry.npm.taobao.org/tryer/download/tryer-1.0.1.tgz#f2c85406800b9b0f74c9f7465b81eaad241252f8"
   integrity sha1-8shUBoALmw90yfdGW4HqrSQSUvg=
 
-ts-invariant@^0.4.0, ts-invariant@^0.4.2, ts-invariant@^0.4.4:
+ts-invariant@^0.4.0, ts-invariant@^0.4.4:
   version "0.4.4"
   resolved "https://registry.npm.taobao.org/ts-invariant/download/ts-invariant-0.4.4.tgz#97a523518688f93aafad01b0e80eb803eb2abd86"
   integrity sha1-l6UjUYaI+TqvrQGw6A64A+sqvYY=

@@ -1,12 +1,15 @@
 import { useStore } from '@leaa/www/stores';
 
-const titleWichSiteName = (title: string): string => {
+const titleWichSiteName = (title?: string): string => {
   const store = useStore();
 
-  const settingSiteName = store.setting.globalSettings.find(s => s.slug === 'site_name');
-  const siteName = (settingSiteName && settingSiteName.value) || 'NOT-SITE-NAME';
+  const settingSiteName = store && store.setting && store.setting.globalSettings.find(s => s.slug === 'site_name');
 
-  // console.log(settingSiteName && settingSiteName.value);
+  let siteName = 'NOT-SITE-NAME';
+
+  if (settingSiteName && settingSiteName.value) {
+    siteName = settingSiteName.value;
+  }
 
   return `${title} - ${siteName}`;
 };

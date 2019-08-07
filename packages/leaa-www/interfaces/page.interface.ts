@@ -4,7 +4,7 @@ import { IAppProps } from './app.interface';
 
 // export interface IPage extends IAppProps {
 interface ILang {
-  t: (s: string) => string;
+  // t: (s: string) => string;
 }
 
 export type IPage = IAppProps & ILang;

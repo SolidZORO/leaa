@@ -27,7 +27,8 @@
     "s": "yarn dev"
   },
   "dependencies": {
-    "@apollo/react-hooks": "0.1.0-beta.10",
+    "@apollo/react-hooks": "3.0.0",
+    "@apollo/react-ssr": "^3.0.0",
     "@leaa/common": "0.0.1",
     "@leaa/www": "0.0.1",
     "@zeit/next-css": "^1.0.2-canary.2",
@@ -73,7 +74,7 @@
     "prop-types": "^15.7.2",
     "query-string": "6.8.2",
     "react": "^16.8.6",
-    "react-apollo": "^2.5.8",
+    "react-apollo": "^3.0.0",
     "react-css-modules": "4.7.11",
     "react-dom": "^16.8.6",
     "react-headroom": "^2.2.8",
