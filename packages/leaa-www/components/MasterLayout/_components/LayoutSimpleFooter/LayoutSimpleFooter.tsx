@@ -20,7 +20,7 @@ export const LayoutSimpleFooter = () => (
 
         <div className={style['link-col']}>
           <div className={style['link-item']}>
-            <Link href="https://github.com/SolidZORO/leaa">
+            <Link href="https://github.com/SolidZORO/leaa" prefetch={false}>
               <a className={style['link']} target="_blank">
                 <Icon type="github" />
               </a>
@@ -28,7 +28,7 @@ export const LayoutSimpleFooter = () => (
           </div>
 
           <div className={style['link-item']}>
-            <Link href="https://twitter.com/SolidZORO">
+            <Link href="https://twitter.com/SolidZORO" prefetch={false}>
               <a className={style['link']} target="_blank">
                 <Icon type="twitter" />
               </a>
@@ -36,7 +36,7 @@ export const LayoutSimpleFooter = () => (
           </div>
 
           <div className={style['link-item']}>
-            <Link href="https://www.instagram.com/solidzoro/">
+            <Link href="https://www.instagram.com/solidzoro/" prefetch={false}>
               <a className={style['link']} target="_blank">
                 <Icon type="instagram" />
               </a>

@@ -5,8 +5,9 @@ import { Button, Col, Form, Input, Row, message } from 'antd';
 import { useMutation } from '@apollo/react-hooks';
 import { FormComponentProps } from 'antd/lib/form';
 import { AuthLoginInput } from '@leaa/common/dtos/auth';
-import { LOGIN } from '@leaa/common/graphqls';
+import { LOGIN_WWW } from '@leaa/common/graphqls';
 import { ErrorCard } from '@leaa/www/components/ErrorCard';
+import { authUtil } from '@leaa/www/utils';
 
 import style from './style.less';
 
@@ -21,24 +22,24 @@ const LoginFormInner = (props: IProps) => {
 
   const [submitLoginMutate, submitLoginMutation] = useMutation<{
     login: any;
-  }>(LOGIN, {
+  }>(LOGIN_WWW, {
     onCompleted({ login }) {
-      if (login && login.name && login.flatePermissions) {
-        // const authInfo = {
-        //   id: login.id,
-        //   email: login.email,
-        //   name: login.name,
-        //   flatePermissions: login.flatePermissions,
-        // };
-        // authUtil.setAuthInfo(authInfo);
+      if (login && login.name) {
+        const authInfo = {
+          id: login.id,
+          email: login.email,
+          name: login.name,
+        };
+
+        authUtil.setAuthInfo(authInfo);
       }
 
       if (login && login.authToken && login.authExpiresIn) {
-        // authUtil.setAuthToken(login.authToken, login.authExpiresIn);
-        //
-        // if (props.onLoginedCallback) {
-        //   props.onLoginedCallback();
-        // }
+        authUtil.setAuthToken(login.authToken, login.authExpiresIn);
+
+        if (props.onLoginedCallback) {
+          props.onLoginedCallback();
+        }
       }
     },
   });
@@ -121,4 +122,4 @@ const LoginFormInner = (props: IProps) => {
   );
 };
 
-export const LoginForm = Form.create<IProps>()(LoginFormInner);
+export default Form.create<IProps>()(LoginFormInner);

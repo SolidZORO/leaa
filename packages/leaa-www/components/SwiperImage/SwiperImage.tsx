@@ -72,7 +72,7 @@ export const SwiperImage = (props: IProps) => {
               style={{ height: props.height }}
             >
               {a.link ? (
-                <Link href={a.link}>
+                <Link href={a.link} prefetch={false}>
                   <a>{buildImgDom(a)}</a>
                 </Link>
               ) : (

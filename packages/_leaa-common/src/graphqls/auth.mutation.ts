@@ -12,3 +12,15 @@ export const LOGIN = gql`
     }
   }
 `;
+
+export const LOGIN_WWW = gql`
+  mutation($user: AuthLoginInput!) {
+    login(user: $user) {
+      id
+      name
+      email
+      authToken
+      authExpiresIn
+    }
+  }
+`;

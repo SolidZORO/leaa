@@ -5,8 +5,8 @@ import { Ax } from '@leaa/common/entrys';
 import { AxArgs } from '@leaa/common/dtos/ax';
 import { GET_AX_BY_SLUG } from '@leaa/common/graphqls';
 import { HtmlMeta } from '@leaa/www/components/HtmlMeta';
-import { ErrorCard } from '@leaa/www/components/ErrorCard/ErrorCard';
-import { Login } from '@leaa/www/pages/login/_components/Login/Login';
+import { ErrorCard } from '@leaa/www/components/ErrorCard';
+import Login from '@leaa/www/pages/login/_components/Login/Login';
 
 export default () => {
   const getAxBySlugVariables = { slug: 'index-swiper' };

@@ -1,13 +1,13 @@
 import React from 'react';
 import cx from 'classnames';
-import { LoginForm } from '@leaa/www/pages/login/_components/LoginForm/LoginForm';
+import LoginForm from '@leaa/www/pages/login/_components/LoginForm/LoginForm';
 
 import style from './style.less';
 
 // interface IProps {
 // }
 
-export const Login = () => {
+export default () => {
   return (
     <div className={style['wrapper']}>
       <div className={cx('g-full-container', style['full-container'])}>

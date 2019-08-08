@@ -8,17 +8,20 @@ interface IProps {
   ax: Ax;
 }
 
-export const Home = (props: IProps) => {
+export default (props: IProps) => {
   return (
     <div className={style['wrapper']}>
-      {props.ax && props.ax.attachments && props.ax.attachments.bannerMbList && (
-        <SwiperImage
-          lazy
-          attachmentList={props.ax.attachments.bannerMbList}
-          centerMode
-          height={props.ax.attachments.bannerMbList[0].height}
-        />
-      )}
+      {props.ax &&
+        props.ax.attachments &&
+        props.ax.attachments.bannerMbList &&
+        props.ax.attachments.bannerMbList.length !== 0 && (
+          <SwiperImage
+            lazy
+            attachmentList={props.ax.attachments.bannerMbList}
+            centerMode
+            height={props.ax.attachments.bannerMbList[0].height}
+          />
+        )}
     </div>
   );
 };

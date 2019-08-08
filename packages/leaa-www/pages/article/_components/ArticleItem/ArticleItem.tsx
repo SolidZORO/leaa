@@ -8,7 +8,7 @@ interface IProps {
   article: Article;
 }
 
-export const ArticleItem = (props: IProps) => {
+export default (props: IProps) => {
   return (
     <div className={style['wrapper']}>
       <div className={cx('g-full-container', style['full-container'])}>

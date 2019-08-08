@@ -16,7 +16,7 @@ export const LayoutFooter = () => (
             <ul className={style['menu-list']}>
               {m.chlidren.map(mc => (
                 <li key={mc.title} className={style['menu-item']}>
-                  <Link href={mc.link}>
+                  <Link href={mc.link} prefetch={false}>
                     <a className={style['link']}>{mc.title}</a>
                   </Link>
                 </li>
