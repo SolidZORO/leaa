@@ -2,6 +2,7 @@ import path from 'path';
 import express from 'express';
 import next from 'next';
 import envalid from 'envalid';
+import cookieParser from 'cookie-parser';
 
 const dev = process.env.NODE_ENV !== 'production';
 
@@ -21,6 +22,7 @@ const handle = app.getRequestHandler();
   await app.prepare();
   const server = express();
 
+  server.use(cookieParser());
   server.use('/static', express.static('static'));
   server.get('*', (req, res) => handle(req, res));
 

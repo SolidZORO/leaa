@@ -48,6 +48,7 @@
     "axios": "^0.19.0",
     "classnames": "^2.2.6",
     "cookie": "^0.4.0",
+    "cookie-parser": "^1.4.4",
     "dayjs": "^1.8.15",
     "dotenv": "^8.0.0",
     "dotenv-webpack": "^1.7.0",
@@ -94,6 +95,7 @@
   "devDependencies": {
     "@types/classnames": "2.2.9",
     "@types/cookie": "^0.3.3",
+    "@types/cookie-parser": "^1.4.1",
     "@types/express": "^4.17.0",
     "@types/graphql": "^14.2.3",
     "@types/history": "^4.7.2",

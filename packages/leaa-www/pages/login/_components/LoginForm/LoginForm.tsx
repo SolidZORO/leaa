@@ -8,6 +8,7 @@ import { AuthLoginInput } from '@leaa/common/dtos/auth';
 import { LOGIN_WWW } from '@leaa/common/graphqls';
 import { ErrorCard } from '@leaa/www/components/ErrorCard';
 import { authUtil } from '@leaa/www/utils';
+import Router from 'next/router';
 
 import style from './style.less';
 
@@ -41,6 +42,8 @@ const LoginFormInner = (props: IProps) => {
           props.onLoginedCallback();
         }
       }
+
+      return Router.push('/account');
     },
   });
 

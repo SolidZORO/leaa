@@ -4,7 +4,7 @@ import { useQuery } from '@apollo/react-hooks';
 import { Layout, message } from 'antd';
 
 import { urlUtil } from '@leaa/www/utils';
-import { IAppProps } from '@leaa/www/interfaces';
+import { IPageProps } from '@leaa/www/interfaces';
 import { envConfig } from '@leaa/www/configs';
 import { SettingsWithPaginationObject, SettingArgs } from '@leaa/common/dtos/setting';
 import { GET_SETTINGS_FOR_WWW } from '@leaa/common/graphqls';
@@ -17,7 +17,7 @@ import { LayoutSimpleFooter } from './_components/LayoutSimpleFooter/LayoutSimpl
 import '@leaa/www/styles/global.less';
 import style from './style.less';
 
-interface IProps extends IAppProps {
+interface IProps extends IPageProps {
   children: React.ReactNode;
   disableSidebar?: boolean;
   disableHeader?: boolean;

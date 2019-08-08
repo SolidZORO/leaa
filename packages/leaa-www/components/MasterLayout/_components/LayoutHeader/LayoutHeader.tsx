@@ -48,7 +48,7 @@ export const LayoutHeader = () => {
 
   const authButtonDom = (
     <Button type="link" className={style['account-button']}>
-      <Link href="/login" prefetch={false}>
+      <Link href="/account" prefetch={false}>
         <a onClick={() => onSetVisible(false)}>
           <Icon type="x-account" />
         </a>

@@ -2,7 +2,7 @@ import React, { ErrorInfo } from 'react';
 import App from 'next/app';
 import { ApolloProvider } from '@apollo/react-hooks';
 
-import { IAppProps } from '@leaa/www/interfaces';
+import { IPageProps } from '@leaa/www/interfaces';
 import { withApolloClient } from '@leaa/www/libs';
 import { MasterLayout } from '@leaa/www/components/MasterLayout';
 import { ProgressLoading } from '@leaa/www/components/ProgressLoading';
@@ -10,7 +10,7 @@ import { initStore, StoreProvider } from '@leaa/www/stores';
 
 const store = initStore();
 
-class CustomApp extends App<IAppProps> {
+class CustomApp extends App<IPageProps> {
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     console.log('CUSTOM ERROR HANDLING', error);
 

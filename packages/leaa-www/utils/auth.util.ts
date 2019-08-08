@@ -1,14 +1,24 @@
 import { AUTH_TOKEN_NAME, AUTH_INFO } from '@leaa/www/constants';
-import { IAuthInfo } from '@leaa/www/interfaces';
+import { IAuthInfo, IReqCookies } from '@leaa/www/interfaces';
 import Cookies from 'js-cookie';
+
+const isServer = typeof window === 'undefined';
 
 const setAuthToken = (token: string, expiresIn: number) => {
   // js-cookie expires get a `day`
   Cookies.set(AUTH_TOKEN_NAME, token, { expires: expiresIn / 60 / 60 / 24 });
 };
 
-const getAuthToken = (): string | undefined => {
-  return Cookies.get(AUTH_TOKEN_NAME);
+const getAuthToken = (req?: IReqCookies): string | undefined => {
+  let authToken;
+
+  if (isServer && req && req.cookies && req.cookies[AUTH_TOKEN_NAME]) {
+    authToken = req.cookies[AUTH_TOKEN_NAME];
+  } else {
+    authToken = Cookies.get(AUTH_TOKEN_NAME);
+  }
+
+  return authToken;
 };
 
 //

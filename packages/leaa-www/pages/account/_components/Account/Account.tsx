@@ -1,6 +1,7 @@
 import React from 'react';
 import cx from 'classnames';
-import LoginForm from '@leaa/www/pages/login/_components/LoginForm/LoginForm';
+
+import { LogoutButton } from '@leaa/www/components/LogoutButton';
 
 import style from './style.less';
 
@@ -8,11 +9,10 @@ export default () => {
   return (
     <div className={style['wrapper']}>
       <div className={cx('g-full-container', style['full-container'])}>
-        <div className={style['login-box']}>
-          <h2 className={style['title']}>Login</h2>
-          <div className={style['login-form']}>
-            <LoginForm />
-          </div>
+        <div>
+          <h1>Account</h1>
+          <br />
+          <LogoutButton />
         </div>
       </div>
     </div>

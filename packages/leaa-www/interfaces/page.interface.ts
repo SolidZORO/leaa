@@ -1,10 +1,12 @@
 import { NextPageContext } from 'next';
-// import { ITfn } from './i18n.interface';
-import { IAppProps } from './app.interface';
+import { ApolloClient } from 'apollo-client';
 
-// export interface IPage extends IAppProps {
-interface ILang {
-  // t: (s: string) => string;
+import { IReqCookies } from '@leaa/www/interfaces/auth.interface';
+
+// export type IPage = IPageProps & ILang;
+export interface IPageApollo extends NextPageContext {
+  apolloClient: ApolloClient<any>;
+  cookies: any;
 }
 
-export type IPage = IAppProps & ILang;
+export type IGetInitialProps = IPageApollo & { req: IReqCookies };
