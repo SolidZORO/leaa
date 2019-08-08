@@ -121,6 +121,15 @@ li.menu-item {
   }
 }
 
+.account-button {
+  color: #111;
+  font-size: 145%;
+
+  &:hover {
+    color: #000;
+  }
+}
+
 .menu-wrapper--pc,
 .menu-wrapper--mb {
   position: relative;
@@ -162,7 +171,7 @@ li.menu-item {
   position: absolute;
   top: 0;
   left: 0;
-  padding: @menu-wrapper--mb-padding - 2;
+  padding: (@menu-wrapper--mb-padding - 2) (@menu-wrapper--mb-padding - 4);
 
   .menu-mb-button {
     color: #444;
@@ -193,6 +202,14 @@ li.menu-item {
   .menu-mb-button-line--bottom {
     transform: translateY(0) rotate(-45deg);
   }
+}
+
+.account-mb-button-wrapper {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: (@menu-wrapper--mb-padding - 2) (@menu-wrapper--mb-padding - 4);
+  padding-right: @menu-wrapper--mb-padding - 6;
 }
 
 .menu-mb-drawer-wrapper {

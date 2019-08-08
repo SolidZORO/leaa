@@ -4,6 +4,7 @@ const path = require('path');
 const webpack = require('webpack');
 const lessToJS = require('less-vars-to-js');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
+const FilterWarningsPlugin = require('webpack-filter-warnings-plugin');
 
 const withImage = require('./configs/next-image');
 const withDotenv = require('./configs/next-dotenv');
@@ -26,6 +27,10 @@ const webpackConfig = (config, options) => {
       /\/eventsource$/,
       path.resolve(__dirname, './configs/next-eventsource.js'),
     ),
+    new FilterWarningsPlugin({
+      // ignore ANTD chunk styles [mini-css-extract-plugin] warning
+      exclude: /Conflicting order between:/,
+    }),
   );
 
   // comstom antd icon

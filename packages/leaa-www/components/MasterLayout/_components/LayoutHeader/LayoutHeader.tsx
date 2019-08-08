@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import cx from 'classnames';
 import Headroom from 'react-headroom';
-import { Button, Drawer } from 'antd';
+import { Button, Icon, Drawer } from 'antd';
 
 import { __MENU_MOCK__ } from '@leaa/www/__mock__';
 
@@ -30,20 +30,30 @@ export const LayoutHeader = () => {
     </ul>
   );
 
-  const authListDom = (
-    <div className={style['auth-list']}>
+  // const authListDom = (
+  //   <div className={style['auth-list']}>
+  //     <Link href="/login" prefetch={false}>
+  //       <a className={style['link']} onClick={() => onSetVisible(false)}>
+  //         Login
+  //       </a>
+  //     </Link>
+  //     <span> · </span>
+  //     <Link href="/register" prefetch={false}>
+  //       <a className={style['link']} onClick={() => onSetVisible(false)}>
+  //         Register
+  //       </a>
+  //     </Link>
+  //   </div>
+  // );
+
+  const authButtonDom = (
+    <Button type="link" className={style['account-button']}>
       <Link href="/login" prefetch={false}>
-        <a className={style['link']} onClick={() => onSetVisible(false)}>
-          Login
+        <a onClick={() => onSetVisible(false)}>
+          <Icon type="x-account" />
         </a>
       </Link>
-      <span> · </span>
-      <Link href="/register" prefetch={false}>
-        <a className={style['link']} onClick={() => onSetVisible(false)}>
-          Register
-        </a>
-      </Link>
-    </div>
+    </Button>
   );
 
   return (
@@ -52,7 +62,7 @@ export const LayoutHeader = () => {
         <div className={cx('g-full-container', style['full-container'])}>
           <div className={style['logo-image']}>
             <Link href="/" prefetch={false}>
-              <a>
+              <a onClick={() => onSetVisible(false)}>
                 <img src="/static/images/logo/logo-black.svg" alt="" />
               </a>
             </Link>
@@ -60,7 +70,7 @@ export const LayoutHeader = () => {
 
           <div className={style['menu-wrapper--pc']}>
             {menuListDom}
-            {authListDom}
+            {authButtonDom}
           </div>
 
           <div className={style['menu-wrapper--mb']}>
@@ -74,6 +84,8 @@ export const LayoutHeader = () => {
                 <div className={cx(style['menu-mb-button-line'], style['menu-mb-button-line--bottom'])} />
               </Button>
             </div>
+
+            <div className={style['account-mb-button-wrapper']}>{authButtonDom}</div>
 
             <div className={style['menu-mb-drawer-wrapper']}>
               <Drawer
@@ -89,7 +101,6 @@ export const LayoutHeader = () => {
                 })}
               >
                 {menuListDom}
-                {authListDom}
               </Drawer>
             </div>
           </div>
