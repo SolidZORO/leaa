@@ -2,7 +2,8 @@ import express from 'express';
 import next from 'next';
 import cookieParser from 'cookie-parser';
 
-import { serverDotenv } from '@leaa/www/server-dotenv';
+// import { serverDotenv } from '@leaa/www/server-dotenv';
+import serverDotenv from '@leaa/www/configs/next-dotenv-object';
 import { authMiddleware } from '@leaa/www/middlewares';
 
 // import pathToRegexp from 'path-to-regexp';
@@ -11,7 +12,7 @@ const dev = process.env.NODE_ENV !== 'production';
 
 const { PROTOCOL, PORT, BASE_HOST, NAME } = serverDotenv;
 
-const app = next({ dev });
+const app = next({ dev, dir: dev ? '.' : './_dist' });
 const handle = app.getRequestHandler();
 
 (async () => {

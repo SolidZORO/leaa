@@ -1,13 +1,13 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "./",
-    "target": "es5",
+    "outDir": "./_dist",
+    "target": "es6",
     "module": "commonjs",
     "moduleResolution": "node",
     "sourceMap": false,
     "declaration": false,
     "noEmit": false
   },
-  "include": ["./server.ts", "./i18n.ts"]
+  "include": ["server.ts", "server-dotenv.ts"]
 }

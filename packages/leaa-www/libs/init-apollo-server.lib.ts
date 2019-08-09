@@ -5,12 +5,10 @@ import { OperationDefinitionNode } from 'graphql';
 import fetch from 'isomorphic-unfetch';
 
 import { InMemoryCache } from 'apollo-cache-inmemory';
-import { serverDotenv } from '@leaa/www/server-dotenv';
+import serverDotenv from '@leaa/www/configs/next-dotenv-object';
 
-if (!process.browser) {
-  // @ts-ignore
-  global.fetch = fetch;
-}
+// @ts-ignore
+global.fetch = fetch;
 
 export const createApolloClientForServer = (token: string) => {
   const httpLink = new HttpLink({
