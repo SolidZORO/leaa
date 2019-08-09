@@ -2,10 +2,10 @@ const moduleAlias = require('./tools/module-alias');
 
 moduleAlias.addPath(__dirname);
 moduleAlias.addAliases({
-  '@leaa/common': '_leaa-common/src',
-  '@leaa/www': 'leaa-www',
+  '@leaa/common': '_dist/_leaa-common/src',
+  '@leaa/www': '_dist/leaa-www',
 });
 
 moduleAlias({});
 
-require('./server');
+require('./_dist/leaa-www/server');

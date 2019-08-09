@@ -17,13 +17,13 @@ yarn build
 
 cp -fr ./_dist ${DEPLOY_DIR}
 cp -fr ./tools ${DEPLOY_DIR}
-cp -fr ./.env.production ${DEPLOY_DIR}
 cp -fr ./package.json ${DEPLOY_DIR}
 cp -fr ./serverless/heroku/index.js ${DEPLOY_DIR}
 
 cp -fr ./.next ${DIST_DIR}
 cp -fr ./static ${DIST_DIR}
 
+cp -fr ./.env.production ${WWW_DIR}
 
 # DEPLOY DIR
 cd ${DEPLOY_DIR}

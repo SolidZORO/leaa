@@ -22,7 +22,7 @@
     "---------------------------------------------------------------------- PROD ----": "----",
     "build-ts": "tsc --project tsconfig.build.json",
     "build": "yarn clear && NODE_ENV=production next build && yarn build-ts",
-    "start": "NODE_ENV=production node ./server.js",
+    "start": "NODE_ENV=production node ./index.js",
     "---------------------------------------------------------------------- ALIAS ----": "----",
     "u": "yarn upgrade-interactive --latest",
     "s": "yarn dev"
