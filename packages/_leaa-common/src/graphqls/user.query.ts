@@ -51,6 +51,15 @@ export const GET_USER_BY_TOKEN = gql`
   }
 `;
 
+export const GET_USER_BY_TOKEN_FOR_WWW = gql`
+  query($token: String) {
+    userByToken(token: $token) {
+      name
+      email
+    }
+  }
+`;
+
 export const GET_RAM = gql`
   query {
     ram

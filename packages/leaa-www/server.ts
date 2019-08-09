@@ -1,19 +1,15 @@
-import path from 'path';
 import express from 'express';
 import next from 'next';
-import envalid from 'envalid';
 import cookieParser from 'cookie-parser';
+
+import { serverDotenv } from '@leaa/www/server-dotenv';
+import { authMiddleware } from '@leaa/www/middlewares';
+
+// import pathToRegexp from 'path-to-regexp';
 
 const dev = process.env.NODE_ENV !== 'production';
 
-// `next-dotenv-object.js` cannot be used here, because ts compilation will overwrite it
-const rootPath = path.resolve(__dirname, './');
-const dotEnvPath = dev ? `${rootPath}/.env` : `${rootPath}/.env.production`;
-const { PROTOCOL, PORT, BASE_HOST, NAME } = envalid.cleanEnv(
-  process.env,
-  { PORT: envalid.num({ devDefault: 3300 }) },
-  { dotEnvPath },
-);
+const { PROTOCOL, PORT, BASE_HOST, NAME } = serverDotenv;
 
 const app = next({ dev });
 const handle = app.getRequestHandler();
@@ -24,6 +20,7 @@ const handle = app.getRequestHandler();
 
   server.use(cookieParser());
   server.use('/static', express.static('static'));
+  server.get(/^\/(?!static|login|register|_next)/, authMiddleware);
   server.get('*', (req, res) => handle(req, res));
 
   await server.listen(PORT);

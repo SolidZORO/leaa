@@ -21,6 +21,7 @@ export const notValidateUserQuerys = [
   //
   'login',
   'register',
+  'userByToken',
   //
   'ax',
   'axs',
@@ -36,6 +37,7 @@ export const notValidateUserQuerys = [
 export const permissions = shield(
   {
     Query: {
+      userByToken: allow,
       users: checkPermission('user.list'),
       user: checkPermission('user.item'),
       //

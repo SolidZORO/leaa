@@ -37,7 +37,7 @@ export class UserResolver {
 
   @Query(() => User)
   async userByToken(
-    @Args({ name: 'token', type: () => String }) token: string,
+    @Args({ name: 'token', type: () => String, nullable: true }) token?: string,
     @Args() args?: UserArgs,
   ): Promise<User | undefined> {
     return this.userService.userByToken(token, args);

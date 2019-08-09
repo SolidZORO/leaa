@@ -1,5 +1,6 @@
 import { AUTH_TOKEN_NAME, AUTH_INFO } from '@leaa/www/constants';
 import { IAuthInfo, IReqCookies } from '@leaa/www/interfaces';
+import { Response } from 'express';
 import Cookies from 'js-cookie';
 
 const isServer = typeof window === 'undefined';
@@ -29,51 +30,58 @@ const setAuthInfo = (info: Partial<IAuthInfo>) => {
 };
 
 const getAuthInfo = (): Required<IAuthInfo> => {
-  const authInfo = localStorage.getItem(AUTH_INFO);
+  let authInfo;
 
-  const nextAuthInfo: IAuthInfo = {
-    id: 0,
-    email: '',
-    name: '',
-  };
+  if (!isServer) {
+    const lsAuthInfo = localStorage.getItem(AUTH_INFO);
 
-  return authInfo
-    ? {
-        ...nextAuthInfo,
-        ...JSON.parse(authInfo),
-      }
-    : nextAuthInfo;
+    const nextAuthInfo: IAuthInfo = {
+      email: '',
+      name: '',
+    };
+
+    authInfo = lsAuthInfo
+      ? {
+          ...nextAuthInfo,
+          ...JSON.parse(lsAuthInfo),
+        }
+      : nextAuthInfo;
+  }
+
+  return authInfo;
 };
 
 //
 //
 
-const removeAuthToken = (): boolean => {
+const removeAuthToken = (res?: Response): boolean => {
   if (!getAuthToken) {
     console.log('Not found auth token.');
 
     return false;
   }
 
-  Cookies.remove(AUTH_TOKEN_NAME);
+  if (isServer && res) {
+    res.clearCookie(AUTH_TOKEN_NAME);
+  } else {
+    Cookies.get(AUTH_TOKEN_NAME);
+  }
 
   return true;
 };
 
 const removeAuthInfo = (): boolean => {
-  if (!getAuthInfo()) {
-    console.log('Not found auth info.');
+  if (!isServer) {
+    localStorage.removeItem(AUTH_INFO);
 
-    return false;
+    return true;
   }
-
-  localStorage.removeItem(AUTH_INFO);
 
   return true;
 };
 
-const removeAuth = (): boolean => {
-  const removedAuthToken = removeAuthToken();
+const removeAuth = (res?: Response): boolean => {
+  const removedAuthToken = removeAuthToken(res);
   const removedAuthInfo = removeAuthInfo();
 
   return removedAuthToken && removedAuthInfo;

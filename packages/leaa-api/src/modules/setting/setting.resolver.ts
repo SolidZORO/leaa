@@ -8,7 +8,8 @@ import {
   SettingArgs,
   CreateSettingInput,
   UpdateSettingInput,
-  UpdateSettingsInput, SettingsObject,
+  UpdateSettingsInput,
+  SettingsObject,
 } from '@leaa/common/dtos/setting';
 import { UserDecorator } from '@leaa/api/decorators';
 import { SettingService } from '@leaa/api/modules/setting/setting.service';

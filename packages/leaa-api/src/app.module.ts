@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, CacheModule } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GraphQLModule } from '@nestjs/graphql';
 
@@ -23,6 +23,7 @@ import { SettingModule } from '@leaa/api/modules/setting/setting.module';
 
 @Module({
   imports: [
+    CacheModule.register(),
     TypeOrmModule.forRootAsync({
       useClass: TypeormService,
     }),

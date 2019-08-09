@@ -1,30 +1,26 @@
-import fetch from 'isomorphic-unfetch';
 import { HttpLink } from 'apollo-link-http';
 import { ApolloClient } from 'apollo-client';
 import { ApolloLink, split } from 'apollo-link';
 import { OperationDefinitionNode } from 'graphql';
-import { InMemoryCache, NormalizedCacheObject } from 'apollo-cache-inmemory';
-// import getConfig from 'next/config';
-import { envConfig } from '@leaa/www/configs';
+import fetch from 'isomorphic-unfetch';
 
-let apolloClient: ApolloClient<any> | null = null;
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { serverDotenv } from '@leaa/www/server-dotenv';
 
 if (!process.browser) {
   // @ts-ignore
   global.fetch = fetch;
 }
 
-// console.log(envConfig);
-
-function createApolloClient(initialState: NormalizedCacheObject) {
+export const createApolloClientForServer = (token: string) => {
   const httpLink = new HttpLink({
-    uri: envConfig.GRAPHQL_ENDPOINT,
+    uri: serverDotenv.GRAPHQL_ENDPOINT,
     // credentials: 'same-origin',
   });
 
   const authLink = new ApolloLink((operation, forward) => {
     // prettier-ignore
-    const token = '';
+    // const token = '';
 
     operation.setContext({
       headers: {
@@ -48,21 +44,9 @@ function createApolloClient(initialState: NormalizedCacheObject) {
   const link = authLink.concat(ApolloLink.from([terminatingLink]));
 
   return new ApolloClient({
-    connectToDevTools: process.browser,
-    ssrMode: !process.browser,
+    connectToDevTools: false,
+    ssrMode: false,
     link,
-    cache: new InMemoryCache().restore(initialState),
+    cache: new InMemoryCache(),
   });
-}
-
-export const initApollo = (initialState: any = {}) => {
-  if (!process.browser) {
-    return createApolloClient(initialState);
-  }
-
-  if (!apolloClient) {
-    apolloClient = createApolloClient(initialState);
-  }
-
-  return apolloClient;
 };

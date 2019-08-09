@@ -43,10 +43,7 @@ export const MasterLayout = (props: IProps) => {
   const store = useStore();
 
   const getSettings = (): void => {
-    const getSettingsQuery = useQuery<
-      { settings: SettingsWithPaginationObject; fetchPolicy: 'network-only' },
-      SettingArgs
-    >(GET_SETTINGS_FOR_WWW);
+    const getSettingsQuery = useQuery<{ settings: SettingsWithPaginationObject }, SettingArgs>(GET_SETTINGS_FOR_WWW);
 
     if (getSettingsQuery.error) {
       message.error(getSettingsQuery.error);

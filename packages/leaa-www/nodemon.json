@@ -1,7 +1,17 @@
 {
-  "watch": [".babelrc", ".env", "static", "next.config.js", "server.ts", "configs/*.js", "libs/*"],
+  "watch": [
+    ".babelrc",
+    ".env",
+    "static",
+    "next.config.js",
+    "server.ts",
+    "configs/*.js",
+    "libs/*",
+    "middlewares/*",
+    "constants/*"
+  ],
   "ignore": [".next/**/*", "_deploy/**/*"],
   "execMap": {
-    "ts": "ts-node --transpile-only --compiler-options '{\"module\":\"commonjs\"}'"
+    "ts": "ts-node --transpile-only --compiler-options '{\"module\":\"commonjs\"}' -r tsconfig-paths/register"
   }
 }

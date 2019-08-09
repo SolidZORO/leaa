@@ -3,7 +3,7 @@ import App from 'next/app';
 import { ApolloProvider } from '@apollo/react-hooks';
 
 import { IPageProps } from '@leaa/www/interfaces';
-import { withApolloClient } from '@leaa/www/libs';
+import { withApolloClient } from '@leaa/www/libs/with-apollo-client.lib';
 import { MasterLayout } from '@leaa/www/components/MasterLayout';
 import { ProgressLoading } from '@leaa/www/components/ProgressLoading';
 import { initStore, StoreProvider } from '@leaa/www/stores';

@@ -13,10 +13,9 @@ export const LOGIN = gql`
   }
 `;
 
-export const LOGIN_WWW = gql`
+export const LOGIN_FOR_WWW = gql`
   mutation($user: AuthLoginInput!) {
     login(user: $user) {
-      id
       name
       email
       authToken

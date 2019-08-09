@@ -1,6 +1,6 @@
 export interface IDotEnvClient {
   NAME: string;
-  NODE_ENV: 'development' | 'production' | 'test';
+  NODE_ENV: 'development' | 'production';
   PROTOCOL: 'http' | 'https';
   PORT: number;
 
@@ -12,6 +12,6 @@ export interface IDotEnvClient {
   LOCALE_SUBPATHS?: 'none' | 'foreign' | 'all';
 }
 
-export interface IDotEnvServer {
-  // JWT_KEY: string;
+export interface IDotEnvServer extends IDotEnvClient {
+  JWT_KEY?: string;
 }

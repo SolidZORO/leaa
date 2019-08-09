@@ -5,7 +5,7 @@ import { Button, Col, Form, Input, Row, message } from 'antd';
 import { useMutation } from '@apollo/react-hooks';
 import { FormComponentProps } from 'antd/lib/form';
 import { AuthLoginInput } from '@leaa/common/dtos/auth';
-import { LOGIN_WWW } from '@leaa/common/graphqls';
+import { LOGIN_FOR_WWW } from '@leaa/common/graphqls';
 import { ErrorCard } from '@leaa/www/components/ErrorCard';
 import { authUtil } from '@leaa/www/utils';
 import Router from 'next/router';
@@ -23,7 +23,7 @@ const LoginFormInner = (props: IProps) => {
 
   const [submitLoginMutate, submitLoginMutation] = useMutation<{
     login: any;
-  }>(LOGIN_WWW, {
+  }>(LOGIN_FOR_WWW, {
     onCompleted({ login }) {
       if (login && login.name) {
         const authInfo = {

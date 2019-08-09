@@ -13,7 +13,7 @@ import {
 } from '@leaa/common/dtos/user';
 import { BaseService } from '@leaa/api/modules/base/base.service';
 import { RoleService } from '@leaa/api/modules/role/role.service';
-import { formatUtil, loggerUtil } from '@leaa/api/utils';
+import { formatUtil } from '@leaa/api/utils';
 import { JwtService } from '@nestjs/jwt';
 
 const CONSTRUCTOR_NAME = 'UserService';
@@ -102,8 +102,12 @@ export class UserService extends BaseService<
     return this.addPermissionsTouser(user);
   }
 
-  async userByToken(token: string, args?: UserArgs & FindOneOptions<User>): Promise<User | undefined> {
+  async userByToken(token?: string, args?: UserArgs & FindOneOptions<User>): Promise<User | undefined> {
     let nextArgs: FindOneOptions<User> = {};
+
+    if (!token) {
+      throw Error('Not Token');
+    }
 
     if (args) {
       nextArgs = args;

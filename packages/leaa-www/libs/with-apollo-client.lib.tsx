@@ -5,11 +5,12 @@ import { renderToString } from 'react-dom/server';
 import { AppContext } from 'next/app';
 import { getMarkupFromTree } from '@apollo/react-ssr';
 
-import { initApollo } from './init-apollo.lib';
+import { initApollo } from '@leaa/www/libs/init-apollo-client.lib';
 
 export const withApolloClient = (App: React.ComponentType<any> & { getInitialProps?: Function }) => {
   return class Apollo extends React.Component {
     static displayName = 'withApollo(App)';
+
     static async getInitialProps(ctx: AppContext) {
       const { Component, router } = ctx;
 
@@ -18,9 +19,9 @@ export const withApolloClient = (App: React.ComponentType<any> & { getInitialPro
         appProps = await App.getInitialProps(ctx);
       }
 
-      // Run all GraphQL queries in the component tree
-      // and extract the resulting data
+      // Run all GraphQL queries in the component tree and extract the resulting data
       const apollo = initApollo();
+
       if (!process.browser) {
         try {
           await getMarkupFromTree({

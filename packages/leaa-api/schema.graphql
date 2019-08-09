@@ -273,7 +273,7 @@ type Query {
   ram: Float!
   users(page: Int = 1, pageSize: Int = 30, orderBy: String = "created_at", orderSort: String = "DESC", q: String): UsersWithPaginationObject!
   user(id: Int!): User!
-  userByToken(token: String!): User!
+  userByToken(token: String): User!
   articles(page: Int = 1, pageSize: Int = 30, orderBy: String = "created_at", orderSort: String = "DESC", q: String): ArticlesWithPaginationObject!
   article(id: Int!): Article!
   categories(page: Int = 1, pageSize: Int = 30, orderBy: String = "created_at", orderSort: String = "DESC", q: String): CategoriesWithPaginationObject!
