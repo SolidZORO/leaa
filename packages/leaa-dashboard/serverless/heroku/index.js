@@ -8,6 +8,10 @@ const app = express();
 app.use(compression());
 app.use(express.static('.'));
 
+app.get('/deploy.txt', (request, response) => {
+  response.sendFile(path.resolve(__dirname, 'deploy.txt'));
+});
+
 app.get('*', (request, response) => {
   response.sendFile(path.resolve(__dirname, 'index.html'));
 });

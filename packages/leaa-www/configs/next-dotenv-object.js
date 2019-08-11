@@ -2,7 +2,9 @@ const _ = require('lodash');
 const path = require('path');
 const envalid = require('envalid');
 
-if (typeof window === 'undefined') {
+const isServer = typeof window === 'undefined';
+
+if (isServer) {
   const dev = process.env.NODE_ENV !== 'production';
   const rootPath = path.resolve(__dirname, '../');
   const dotEnvPath = dev ? `${rootPath}/.env` : `${rootPath}/.env.production`;

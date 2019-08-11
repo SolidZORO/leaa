@@ -1,10 +1,11 @@
 /* eslint-disable max-len */
 // prettier-ignore
-import { Article } from '@leaa/common/entrys';
+import { Article, Attachment } from '@leaa/common/entrys';
 import { CreateArticleInput } from '@leaa/common/dtos/article';
 import { CreateCategoryInput } from '@leaa/common/dtos/category';
 import { CreateAxInput } from '@leaa/common/dtos/ax';
 import { CreateSettingInput } from '@leaa/common/dtos/setting';
+import { CreateAttachmentInput } from '@leaa/common/dtos/attachment';
 
 export const permissionsSeed = [
   { name: 'Playground', slug: 'playground.root' },
@@ -121,6 +122,50 @@ export const axSeed: CreateAxInput[] = [
   { title: 'Index Swiper', description: '首页滚动图', slug: 'index-swiper', status: 1 },
   { title: 'Index Grid', description: '首页方块图', slug: 'index-grid', status: 0 },
 ];
+
+// prettier-ignore
+// export const attachmentSeed: CreateAttachmentInput[] = [
+//   {
+//     uuid: '6db325c5-9c95-4952-94eb-eef33b2e08a7',
+//     title: 'IMG_2317@2x',
+//     alt: 'IMG_2317@2x',
+//     type: 'image',
+//     filename: '6db325c5-9c95-4952-94eb-eef33b2e08a7.jpg',
+//     moduleName: 'ax',
+//     moduleId: 1,
+//     moduleType: 'banner_mb',
+//     ext: '.jpg',
+//     width: 1200,
+//     height: 600,
+//     size: 151768,
+//     path: '/attachments/2019/08/6db325c5-9c95-4952-94eb-eef33b2e08a7.jpg',
+//     at2x: 1,
+//     in_local: 0,
+//     in_cloud: 0,
+//     sort: 0,
+//     status: 1,
+//   },
+//   {
+//     uuid: 'bb9acfdc-86a1-43ca-afeb-260161455b72',
+//     title: 'IMG_2317@2x',
+//     alt: 'IMG_2317@2x',
+//     type: 'image',
+//     filename: 'bb9acfdc-86a1-43ca-afeb-260161455b72.jpg',
+//     moduleName: 'ax',
+//     moduleId: 1,
+//     moduleType: 'banner_mb',
+//     ext: '.jpg',
+//     width: 1200,
+//     height: 600,
+//     size: 151768,
+//     path: '/attachments/2019/08/bb9acfdc-86a1-43ca-afeb-260161455b72.jpg',
+//     at2x: 1,
+//     in_local: 0,
+//     in_cloud: 0,
+//     sort: 0,
+//     status: 1,
+//   },
+// ];
 
 // prettier-ignore
 export const settingSeed: CreateSettingInput[] = [

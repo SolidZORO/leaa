@@ -6,6 +6,6 @@ export class IndexController {
 
   @Get('')
   async test() {
-    return '<code>-- EOF --</code>';
+    return '<code>-- API --</code>';
   }
 }

@@ -13,4 +13,7 @@ export class UpdateAttachmentInput {
 
   @Field(() => Int)
   public status!: number;
+
+  @Field(() => String)
+  public external_path?: string;
 }

@@ -45,6 +45,7 @@ type Attachment {
   height: Int!
   size: Int!
   path: String!
+  external_path: String!
   pathAt2x: String
   at2x: Int!
   in_local: Int!
@@ -152,6 +153,7 @@ input CreateAttachmentInput {
   height: Int!
   size: Int!
   path: String!
+  external_path: String!
   at2x: Int!
   in_local: Int!
   in_cloud: Int!
@@ -345,6 +347,7 @@ input UpdateAttachmentInput {
   link: String
   sort: Int!
   status: Int!
+  external_path: String!
 }
 
 input UpdateAttachmentsInput {
@@ -352,6 +355,7 @@ input UpdateAttachmentsInput {
   link: String
   sort: Int!
   status: Int!
+  external_path: String!
   uuid: String!
 }
 

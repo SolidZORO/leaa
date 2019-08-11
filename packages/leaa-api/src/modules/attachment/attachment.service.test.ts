@@ -2,6 +2,7 @@ import fs from 'fs';
 import { Repository } from 'typeorm';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Test, TestingModule } from '@nestjs/testing';
+import { Express } from 'express';
 
 import { Attachment } from '@leaa/common/entrys';
 import { CreateAttachmentInput, UpdateAttachmentInput } from '@leaa/common/dtos/attachment';
@@ -82,10 +83,11 @@ describe('AttachmentService', () => {
       destination: '',
       filename: 'test_1x.png',
       path: 'test_1x.png',
+      location: '',
     };
 
     it('should upload attachment _1x', async () => {
-      const file = {
+      const file: Express.Multer.File = {
         ...fileBase,
         originalname: 'test_1x.png',
         buffer: Buffer.from(fs.readFileSync(`${__dirname}/__mock__/test_1x.png`)),
@@ -111,7 +113,7 @@ describe('AttachmentService', () => {
     });
 
     it('should upload attachment _2x', async () => {
-      const file = {
+      const file: Express.Multer.File = {
         ...fileBase,
         originalname: 'test_2x.png',
         buffer: Buffer.from(fs.readFileSync(`${__dirname}/__mock__/test_2x.png`)),

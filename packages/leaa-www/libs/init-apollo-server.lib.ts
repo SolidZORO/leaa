@@ -5,7 +5,7 @@ import { OperationDefinitionNode } from 'graphql';
 import fetch from 'isomorphic-unfetch';
 
 import { InMemoryCache } from 'apollo-cache-inmemory';
-import serverDotenv from '@leaa/www/configs/next-dotenv-object';
+import { serverDotenv } from '@leaa/www/server-devenv';
 
 // @ts-ignore
 global.fetch = fetch;

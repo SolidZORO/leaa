@@ -1,0 +1,51 @@
+#! /bin/bash
+
+cd "$(dirname "$0")" || exit
+
+LOCAL_TIME=$(date "+%Y-%m-%d %H:%M:%S")
+
+DEPLOY_HEROKU_APP_NAME="test-leaa-dashboard"
+DEPLOY_COMMIT="update AUTO-DEPLOY ${DEPLOY_HEROKU_APP_NAME} @ ${LOCAL_TIME}"
+CONFIRM_MESSAGE=$(printf "\n<%s> \n\n🤖 DEPLOY --------> 👉 [%s] 👈 ? \n\n(Enter/Esc)" "$(pwd)" "$DEPLOY_HEROKU_APP_NAME")
+
+DEPLOY_DIR="./_deploy"
+
+read -p "${CONFIRM_MESSAGE}" -n 1 -r KEY
+
+if [[ $KEY = "" ]]; then
+ # ROOT DIR
+    rm -fr ${DEPLOY_DIR} && mkdir -p ${DEPLOY_DIR}
+
+    yarn build
+
+    cp -fr ./_dist/* ${DEPLOY_DIR}
+
+    cp -fr ./serverless/heroku/* ${DEPLOY_DIR}
+    # cp -fr ./serverless/netlify/* ${DEPLOY_DIR}
+    # cp -fr ./serverless/now/* ${DEPLOY_DIR}
+
+    cp -fr ./public/* ${DEPLOY_DIR}
+    echo "${DEPLOY_COMMIT}" > ${DEPLOY_DIR}/deploy.txt
+
+
+    # DEPLOY DIR
+    cd ${DEPLOY_DIR} || exit
+    mv robots.example.txt robots.txt
+
+    git init
+    git remote add heroku https://git.heroku.com/${DEPLOY_HEROKU_APP_NAME}.git
+    git add -A
+    git commit -m "${DEPLOY_COMMIT}"
+    git push -f heroku master
+else
+    echo "CANCEL"
+fi
+
+
+
+
+
+
+
+
+

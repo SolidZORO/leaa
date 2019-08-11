@@ -67,6 +67,10 @@ export class Attachment extends Base {
   @Field(() => String)
   public path!: string;
 
+  @Column({ type: 'varchar', length: 512 })
+  @Field(() => String)
+  public external_path?: string;
+
   @Field(() => String, { nullable: true })
   public pathAt2x?: string | null;
 
