@@ -4,9 +4,9 @@ import { Button, message } from 'antd';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
 import { Category } from '@leaa/common/entrys';
-import { GET_CATEGORY, UPDATE_CATEGORY } from '@leaa/common/graphqls';
+import { GET_CATEGORY, UPDATE_CATEGORY, GET_CATEGORIES } from '@leaa/common/graphqls';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/constants';
-import { CategoryArgs, UpdateCategoryInput } from '@leaa/common/dtos/category';
+import { CategoryArgs, UpdateCategoryInput, CategoriesWithPaginationObject } from '@leaa/common/dtos/category';
 import { IPage } from '@leaa/dashboard/interfaces';
 import { PageCard } from '@leaa/dashboard/components/PageCard';
 import { HtmlMeta } from '@leaa/dashboard/components/HtmlMeta';
@@ -28,6 +28,14 @@ export default (props: IPage) => {
   const getCategoryVariables = { id: Number(id) };
   const getCategoryQuery = useQuery<{ category: Category }, CategoryArgs>(GET_CATEGORY, {
     variables: getCategoryVariables,
+    fetchPolicy: 'network-only',
+  });
+
+
+
+  const getCategoriesVariables = { page: 1, pageSize: 9999 };
+  const getCategoriesQuery = useQuery<{ categories: CategoriesWithPaginationObject }, CategoryArgs>(GET_CATEGORIES, {
+    variables: getCategoriesVariables,
     fetchPolicy: 'network-only',
   });
 
@@ -59,10 +67,12 @@ export default (props: IPage) => {
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
       {getCategoryQuery.error ? <ErrorCard error={getCategoryQuery.error} /> : null}
+      {getCategoriesQuery.error ? <ErrorCard error={getCategoriesQuery.error} /> : null}
       {updateCategoryMutation.error ? <ErrorCard error={updateCategoryMutation.error} /> : null}
 
       <CategoryInfoForm
         item={getCategoryQuery.data && getCategoryQuery.data.category}
+        categorys={getCategoriesQuery.data && getCategoriesQuery.data.categories && getCategoriesQuery.data.categories.items}
         loading={getCategoryQuery.loading}
         wrappedComponentRef={(inst: unknown) => {
           categoryInfoFormRef = inst;

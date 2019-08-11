@@ -10,8 +10,14 @@
 }
 
 .swiper-slide {
-  min-height: 200px;
-  height: 100%;
+  @media (max-width: @screen-md) {
+    height: auto !important;
+  }
+
+  @media (min-width: @screen-md) {
+    height: 100%;
+    min-height: 200px;
+  }
 
   img {
     width: 100%;
@@ -24,10 +30,14 @@
   overflow: hidden;
 
   img {
-    width: initial;
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
+    width: 100%;
+
+    @media (min-width: @screen-md) {
+      width: initial;
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+    }
   }
 }

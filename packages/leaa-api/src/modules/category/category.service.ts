@@ -9,9 +9,11 @@ import {
   CategoryArgs,
   CreateCategoryInput,
   UpdateCategoryInput,
+  CategoriesWithTreeObject,
 } from '@leaa/common/dtos/category';
 import { BaseService } from '@leaa/api/modules/base/base.service';
 import { formatUtil, loggerUtil } from '@leaa/api/utils';
+import { ICategoryTreeWithKey } from '@leaa/api/interfaces';
 
 const CONSTRUCTOR_NAME = 'CategoryService';
 
@@ -51,6 +53,59 @@ export class CategoryService extends BaseService<
       total,
       page: nextArgs.page || 1,
       pageSize: nextArgs.pageSize || 30,
+    };
+  }
+
+  async categoriesByTree(): Promise<CategoriesWithTreeObject | undefined> {
+    const [items] = await this.categoryRepository.findAndCount();
+
+    const itemsWithKey: ICategoryTreeWithKey[] = items.map((item: Category, i) => ({
+      id: item.id,
+      parent_id: item.parent_id,
+      key: `${item.parent_id}-${item.id}-${i}-${item.slug}`,
+      title: item.name,
+      value: item.id,
+    }));
+
+    const buildTree = (data: ICategoryTreeWithKey[]) => {
+      let root: { [key: number]: ICategoryTreeWithKey } = {};
+      let result: ICategoryTreeWithKey[] = [];
+
+      data.forEach(item => {
+        root[item.id] = item;
+      });
+
+      data.forEach(item => {
+        // parent_id === 0 ----> undefined
+        const parent: ICategoryTreeWithKey = root[item.parent_id];
+
+        if (parent) {
+          if (!Array.isArray(parent.children)) {
+            parent.children = [];
+          }
+
+          parent.children.push(item);
+        } else {
+          result.push(item);
+        }
+      });
+
+      return result;
+    };
+
+    const tree = buildTree(itemsWithKey);
+
+    tree.unshift({
+      id: 0,
+      parent_id: 0,
+      key: `0-0-0-root`,
+      title: '----',
+      value: 0,
+    });
+
+    // TODO Is there any other better way for recurrence?
+    return {
+      treeByStringify: JSON.stringify(tree),
     };
   }
 

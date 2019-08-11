@@ -43,7 +43,7 @@ class SettingInfoFormInner extends React.PureComponent<IProps> {
             getFieldDecorator('id', {
               initialValue: props.item ? props.item.id : undefined,
               rules: [{ required: true }],
-              normalize: e => Number(e),
+              normalize: e => e && Number(e),
             })(<Input type="number" placeholder="ID" hidden />)}
 
           <Row gutter={16} className={style['form-row']}>
@@ -85,7 +85,7 @@ class SettingInfoFormInner extends React.PureComponent<IProps> {
                 {getFieldDecorator('sort', {
                   initialValue: props.item ? props.item.sort : 0,
                   rules: [{ required: true }],
-                  normalize: e => Number(e),
+                  normalize: e => e && Number(e),
                 })(<Input placeholder={t('_lang:sort')} />)}
               </Form.Item>
             </Col>

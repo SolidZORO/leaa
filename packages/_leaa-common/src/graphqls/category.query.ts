@@ -16,6 +16,14 @@ export const GET_CATEGORIES = gql`
   }
 `;
 
+export const GET_CATEGORIES_BY_TREE = gql`
+  query {
+    categoriesByTree {
+      treeByStringify
+    }
+  }
+`;
+
 export const GET_CATEGORY = gql`
   query($id: Int!) {
     category(id: $id) {

@@ -118,6 +118,10 @@ type CategoriesWithPaginationObject {
   items: [Category!]!
 }
 
+type CategoriesWithTreeObject {
+  treeByStringify: String!
+}
+
 type Category {
   id: Int!
   created_at: DateTime!
@@ -127,6 +131,8 @@ type Category {
   slug: String!
   parent_id: Int!
   description: String
+  children: [Category!]
+  key: String
 }
 
 input CreateArticleInput {
@@ -278,7 +284,8 @@ type Query {
   userByToken(token: String): User!
   articles(page: Int = 1, pageSize: Int = 30, orderBy: String = "created_at", orderSort: String = "DESC", q: String): ArticlesWithPaginationObject!
   article(id: Int!): Article!
-  categories(page: Int = 1, pageSize: Int = 30, orderBy: String = "created_at", orderSort: String = "DESC", q: String): CategoriesWithPaginationObject!
+  categories(page: Int = 1, pageSize: Int = 30, orderBy: String = "created_at", orderSort: String = "DESC", q: String, type: String = "list"): CategoriesWithPaginationObject!
+  categoriesByTree: CategoriesWithTreeObject!
   category(id: Int!): Category!
   axs(page: Int = 1, pageSize: Int = 30, orderBy: String = "created_at", orderSort: String = "DESC", q: String): AxsWithPaginationObject!
   ax(id: Int!): Ax!

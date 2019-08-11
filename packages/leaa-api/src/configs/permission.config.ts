@@ -48,6 +48,7 @@ export const permissions = shield(
       permission: checkPermission('permission.item'),
       //
       categories: checkPermission('category.list'),
+      categoriesByTree: checkPermission('category.list'),
       category: checkPermission('category.item'),
       //
       articles: allow,

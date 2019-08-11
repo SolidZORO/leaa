@@ -94,6 +94,8 @@ export default (props: IPage) => {
         return;
       }
 
+      console.log(formData);
+
       submitData = formData;
     });
 

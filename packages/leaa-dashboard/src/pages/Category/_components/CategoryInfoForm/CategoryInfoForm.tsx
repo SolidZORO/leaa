@@ -9,10 +9,12 @@ import { ITfn } from '@leaa/dashboard/interfaces';
 import { FormCard } from '@leaa/dashboard/components/FormCard';
 
 import style from './style.less';
+import { SelectCategoryIdByTree } from '@leaa/dashboard/components/SelectCategoryIdByTree';
 
 interface IFormProps extends FormComponentProps {
   className?: string;
   item?: Category;
+  categorys?: Category[];
   loading?: boolean;
 }
 
@@ -37,10 +39,10 @@ class CategoryInfoFormInner extends React.PureComponent<IProps> {
               <Col xs={24} sm={6}>
                 <Form.Item label={`${t('_lang:parent')} ID`}>
                   {getFieldDecorator('parent_id', {
-                    initialValue: props.item ? props.item.parent_id : undefined,
+                    initialValue: props.item ? props.item.parent_id : 0,
                     rules: [{ required: true }],
-                    normalize: e => Number(e),
-                  })(<Input type="number" placeholder={`${t('_lang:parent')} ID`} />)}
+                    normalize: e => e && Number(e),
+                  })(<SelectCategoryIdByTree />)}
                 </Form.Item>
               </Col>
 

@@ -7,7 +7,7 @@ import { FormComponentProps } from 'antd/lib/form';
 import { Article } from '@leaa/common/entrys';
 import { ITfn } from '@leaa/dashboard/interfaces';
 import { SwitchNumber } from '@leaa/dashboard/components/SwitchNumber';
-import { SelectCategoryId } from '@leaa/dashboard/components/SelectCategoryId';
+import { SelectCategoryIdByTree } from '@leaa/dashboard/components/SelectCategoryIdByTree';
 import { FormCard } from '@leaa/dashboard/components/FormCard';
 
 import style from './style.less';
@@ -51,7 +51,8 @@ class ArticleInfoFormInner extends React.PureComponent<IProps> {
                   {getFieldDecorator('category_id', {
                     initialValue: props.item ? props.item.category_id : undefined,
                     rules: [{ required: true }],
-                  })(<SelectCategoryId />)}
+                    normalize: e => e && Number(e),
+                  })(<SelectCategoryIdByTree />)}
                 </Form.Item>
               </Col>
 

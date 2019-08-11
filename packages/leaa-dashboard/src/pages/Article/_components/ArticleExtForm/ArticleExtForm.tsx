@@ -48,7 +48,7 @@ class ArticleExtFormInner extends React.PureComponent<IProps> {
               {/*    {getFieldDecorator('user_id', { */}
               {/*      initialValue: props.item ? props.item.user_id : undefined, */}
               {/*      rules: [{ required: true }], */}
-              {/*      normalize: e => Number(e), */}
+              {/*      normalize: e => e && Number(e), */}
               {/*    })(<Input type="number" placeholder={t('_lang:user')} />)} */}
               {/*  </Form.Item> */}
               {/* </Col> */}

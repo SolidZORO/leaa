@@ -25,7 +25,9 @@ export const SelectCategoryId = forwardRef((props: IProps, ref: React.Ref<any>) 
     setValue(props.value);
   }, [props.value]);
 
-  const getCategoriesQuery = useQuery<{ categories: CategoriesWithPaginationObject }, CategoriesArgs>(GET_CATEGORIES);
+  const getCategoriesQuery = useQuery<{ categories: CategoriesWithPaginationObject }, CategoriesArgs>(GET_CATEGORIES, {
+    fetchPolicy: 'network-only',
+  });
 
   const onChange = (v: number) => {
     setValue(v);
@@ -38,7 +40,18 @@ export const SelectCategoryId = forwardRef((props: IProps, ref: React.Ref<any>) 
   return (
     <div className={cx(style['wrapper'], props.className)}>
       {getCategoriesQuery.error ? <ErrorCard error={getCategoriesQuery.error} /> : null}
-      <Select defaultValue={value} value={value} ref={ref} placeholder={t('_lang:category')} onChange={onChange}>
+      <Select
+        defaultValue={value}
+        value={value}
+        ref={ref}
+        placeholder={t('_lang:category')}
+        onChange={onChange}
+        loading={getCategoriesQuery.loading}
+      >
+        <Select.Option key="0" value={0}>
+          ----
+        </Select.Option>
+
         {getCategoriesQuery &&
           getCategoriesQuery.data &&
           getCategoriesQuery.data.categories &&

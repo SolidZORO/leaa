@@ -7,7 +7,7 @@ import {
   CategoriesWithPaginationObject,
   CategoryArgs,
   CreateCategoryInput,
-  UpdateCategoryInput,
+  UpdateCategoryInput, CategoriesWithTreeObject,
 } from '@leaa/common/dtos/category';
 import { CategoryService } from '@leaa/api/modules/category/category.service';
 
@@ -18,6 +18,11 @@ export class CategoryResolver {
   @Query(() => CategoriesWithPaginationObject)
   async categories(@Args() args: CategoriesArgs): Promise<CategoriesWithPaginationObject | undefined> {
     return this.categoryService.categories(args);
+  }
+
+  @Query(() => CategoriesWithTreeObject)
+  async categoriesByTree(): Promise<CategoriesWithTreeObject | undefined> {
+    return this.categoryService.categoriesByTree();
   }
 
   @Query(() => Category)

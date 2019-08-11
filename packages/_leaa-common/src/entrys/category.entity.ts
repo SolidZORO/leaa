@@ -23,4 +23,10 @@ export class Category extends Base {
   @Column({ type: 'text', nullable: true })
   @Field(() => String, { nullable: true })
   public description?: string;
+
+  @Field(() => [Category], { nullable: true })
+  public children?: Category[];
+
+  @Field(() => String, { nullable: true })
+  public key?: string;
 }

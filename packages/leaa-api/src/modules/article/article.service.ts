@@ -38,7 +38,7 @@ export class ArticleService extends BaseService<
       return undefined;
     }
 
-    return this.categoryRepository.findOne(article.id);
+    return this.categoryRepository.findOne(article.category_id);
   }
 
   async articles(args: ArticlesArgs): Promise<ArticlesWithPaginationObject> {
