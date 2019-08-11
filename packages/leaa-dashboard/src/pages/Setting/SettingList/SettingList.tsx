@@ -185,7 +185,7 @@ export default (props: IPage) => {
         </span>
       }
       className={style['wapper']}
-      loading={getSettingsQuery.loading}
+      loading={getSettingsQuery.loading || updateSettingsMutation.loading}
     >
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
@@ -195,15 +195,13 @@ export default (props: IPage) => {
       {updateSettingsMutation.error ? <ErrorCard error={updateSettingsMutation.error} /> : null}
       {deleteSettingMutation.error ? <ErrorCard error={deleteSettingMutation.error} /> : null}
 
-      {getSettingsQuery.data && getSettingsQuery.data.settings && getSettingsQuery.data.settings.items && (
-        <SettingListForm
-          settings={getSettingsQuery.data.settings.items}
-          wrappedComponentRef={(inst: unknown) => {
-            settingListFormRef = inst;
-          }}
-          onClickLabelEditCallback={onOpenUpdateSetting}
-        />
-      )}
+      <SettingListForm
+        settings={getSettingsQuery.data && getSettingsQuery.data.settings && getSettingsQuery.data.settings.items}
+        wrappedComponentRef={(inst: unknown) => {
+          settingListFormRef = inst;
+        }}
+        onClickLabelEditCallback={onOpenUpdateSetting}
+      />
 
       <SubmitBar>
         <Button
@@ -211,7 +209,7 @@ export default (props: IPage) => {
           size="large"
           icon={UPDATE_BUTTON_ICON}
           className="submit-button"
-          loading={updateSettingMutation.loading}
+          loading={updateSettingsMutation.loading}
           onClick={onUpdateSettings}
         >
           {t('_lang:update')}
@@ -223,6 +221,7 @@ export default (props: IPage) => {
         visible={modalVisible}
         // visible
         onOk={modalType === 'update' ? onUpdateSetting : onCreateSetting}
+        confirmLoading={updateSettingMutation.loading}
         className={style['setting-modal']}
         onCancel={onCloseModalVisible}
         afterClose={onAfterCloseModalVisible}

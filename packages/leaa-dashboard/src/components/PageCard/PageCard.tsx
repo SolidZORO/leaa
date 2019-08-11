@@ -20,7 +20,7 @@ export const PageCard = (props: IProps) => (
       {props.extra && <div className={style['extra']}>{props.extra}</div>}
     </div>
 
-    <Spin spinning={props.loading}>
+    <Spin spinning={props.loading} className={style['spin']}>
       <div className={style['container']}>{props.children}</div>
     </Spin>
   </div>

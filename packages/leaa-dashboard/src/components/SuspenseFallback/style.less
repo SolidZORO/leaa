@@ -1,9 +1,17 @@
 @import '~@leaa/dashboard/src/styles/variables.less';
 
 .suspense-fallback-loader {
-  //background: #23241f;
-  z-index: 99;
+  z-index: 99999;
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: @page-card-padding-x;
+  //top: 0;
+  //bottom: 0;
+  left: @page-card-padding-x;
+  opacity: 0.2;
+  //right: 0;
+  //display: flex;
+  //align-items: center;
+  //justify-content: center;
+  //min-height: 300px;
+  //height: 100%;
 }

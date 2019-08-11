@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Spin, Icon, LocaleProvider } from 'antd';
+import { Spin, Icon, ConfigProvider } from 'antd';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { Router, Switch } from 'react-router-dom';
 import { I18nextProvider } from 'react-i18next';
@@ -17,7 +17,7 @@ import i18n from './i18n';
 
 const store = initStore();
 
-Spin.setDefaultIndicator(<Icon type="loading" spin />);
+Spin.setDefaultIndicator(<Icon type="loading" spin style={{ fontSize: '150%' }} />);
 
 export const App = (): JSX.Element => {
   const getLocale = () => (i18n.language === 'zh-CN' ? zhCN : enUS);
@@ -29,10 +29,10 @@ export const App = (): JSX.Element => {
 
   return (
     <ErrorBoundary>
-      <I18nextProvider i18n={i18n}>
+      <ConfigProvider locale={locale}>
         <ApolloProvider client={apolloClient}>
           <StoreProvider value={store}>
-            <LocaleProvider locale={locale}>
+            <I18nextProvider i18n={i18n}>
               <RefreshFlatePermissions history={history}>
                 <Router history={history}>
                   <Switch>
@@ -42,10 +42,10 @@ export const App = (): JSX.Element => {
                   </Switch>
                 </Router>
               </RefreshFlatePermissions>
-            </LocaleProvider>
+            </I18nextProvider>
           </StoreProvider>
         </ApolloProvider>
-      </I18nextProvider>
+      </ConfigProvider>
     </ErrorBoundary>
   );
 };
