@@ -23,6 +23,6 @@ import { SaveInLocalService } from '@leaa/api/modules/attachment/save-in-local.s
   ],
   controllers: [AttachmentController],
   providers: [AttachmentService, AttachmentResolver, MulterService, SaveInOssService, SaveInLocalService],
-  exports: [AttachmentService],
+  exports: [AttachmentService, AttachmentResolver, MulterService, SaveInOssService, SaveInLocalService],
 })
 export class AttachmentModule {}

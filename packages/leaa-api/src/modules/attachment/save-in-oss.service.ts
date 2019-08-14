@@ -1,17 +1,23 @@
+import fs from 'fs';
+import request from 'request';
+import axios from 'axios';
 import crypto from 'crypto';
 import moment from 'moment';
+import { Repository } from 'typeorm';
 import { Injectable, HttpCode } from '@nestjs/common';
-import { ConfigService } from '@leaa/api/modules/config/config.service';
+import OSS from 'ali-oss';
+
 import {
   ISaveInOssSignature,
   ICraeteAttachmentByOssCallback,
   IAttachmentType,
   IAttachmentCreateFieldByOss,
 } from '@leaa/common/interfaces';
+import { ConfigService } from '@leaa/api/modules/config/config.service';
+import { AttachmentService } from '@leaa/api/modules/attachment/attachment.service';
 import { Attachment } from '@leaa/common/entrys';
 import { attachmentUtil, loggerUtil } from '@leaa/api/utils';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 
 const CONSTRUCTOR_NAME = 'SaveInOssService';
 
@@ -20,6 +26,7 @@ export class SaveInOssService {
   constructor(
     @InjectRepository(Attachment) private readonly attachmentRepository: Repository<Attachment>,
     private readonly configService: ConfigService,
+    private readonly attachmentService: AttachmentService,
   ) {}
 
   // eslint-disable-next-line max-len
@@ -60,6 +67,7 @@ export class SaveInOssService {
       '"width": ${imageInfo.width},' +
       '"mimeType": ${mimeType},' +
       '"format": ${imageInfo.format},' +
+      //
       // self var, only use e.g. `var_id`, not `varId`
       '"originalname": ${x:originalname},' +
       '"type": ${x:type},' +
@@ -89,10 +97,40 @@ export class SaveInOssService {
     };
   }
 
-  async craeteAttachmentByOss(
-    request: ICraeteAttachmentByOssCallback,
-  ): Promise<{ attachment: Attachment } | undefined> {
-    const splitFilename = request.object.split('/').pop();
+  async saveAt2xToAt1x(filename: string): Promise<OSS.PutObjectResult | null> {
+    const client: OSS = new OSS({
+      accessKeyId: this.configService.OSS_ALIYUN_AK_ID,
+      accessKeySecret: this.configService.OSS_ALIYUN_AK_SECRET,
+      region: this.configService.OSS_ALIYUN_REGION,
+      bucket: this.configService.OSS_ALIYUN_BUCKET,
+    });
+
+    const tempFilePath = '/tmp/ali-oss-tmp-file';
+    const image1x = `${this.uploadEndPoint}/${filename}?x-oss-process=image/resize,p_50`;
+
+    let result = null;
+
+    await axios({ url: image1x, responseType: 'stream' }).then(
+      response =>
+        new Promise((resolve, reject) => {
+          response.data
+            .pipe(fs.createWriteStream(tempFilePath))
+            .on('finish', async () => {
+              const file = await fs.readFileSync(tempFilePath);
+
+              result = await client.put(filename.replace('_2x', ''), file);
+
+              return resolve();
+            })
+            .on('error', (e: Error) => reject(e));
+        }),
+    );
+
+    return result;
+  }
+
+  async craeteAttachmentByOss(req: ICraeteAttachmentByOssCallback): Promise<{ attachment: Attachment } | undefined> {
+    const splitFilename = req.object.split('/').pop();
 
     if (!splitFilename) {
       const message = 'not found filename';
@@ -104,16 +142,16 @@ export class SaveInOssService {
 
     const filename = splitFilename.replace('_2x', '');
 
-    const isImage = request.mimeType ? request.mimeType.includes(IAttachmentType.IMAGE) : false;
-    const at2x = attachmentUtil.isAt2x(request.object) ? 1 : 0;
+    const isImage = req.mimeType ? req.mimeType.includes(IAttachmentType.IMAGE) : false;
+    const at2x = attachmentUtil.isAt2x(req.object) ? 1 : 0;
     let width = 0;
     let height = 0;
 
     if (isImage) {
       // const imageSize = ImageSize(file.path);
 
-      const rawWidth = Number(request.width);
-      const rawHeight = Number(request.height);
+      const rawWidth = Number(req.width);
+      const rawHeight = Number(req.height);
 
       width = rawWidth; // eslint-disable-line prefer-destructuring
       height = rawHeight; // eslint-disable-line prefer-destructuring
@@ -124,35 +162,32 @@ export class SaveInOssService {
       }
     }
 
-    const filepath = `/${request.object.replace('_2x', '')}`;
+    const filepath = `/${req.object.replace('_2x', '')}`;
 
-    const ext = `.${request.format}`;
+    const ext = `.${req.format}`;
     const uuid = filename.replace(ext, '');
-    const title = request.originalname.replace(ext, '');
-    // const uuid = title;
+    const title = req.originalname.replace(ext, '');
 
-    // return undefined;
-    //
-    // if (isImage && at2x) {
-    //   await this.saveAt2xToAt1x(file, width, height);
-    // }
+    if (isImage && at2x) {
+      await this.saveAt2xToAt1x(req.object);
+    }
 
     const attachmentData: IAttachmentCreateFieldByOss = {
       uuid,
       title,
       alt: title,
-      type: request.mimeType ? `${request.mimeType.split('/')[0]}` : 'no-mime',
+      type: req.mimeType ? `${req.mimeType.split('/')[0]}` : 'no-mime',
       filename,
       // DB use snakeCase, e.g. module_abc --> moduleAbc
-      module_name: request.moduleName,
-      module_id: typeof request.moduleId !== 'undefined' ? Number(request.moduleId) : 0,
-      module_type: request.moduleType,
+      module_name: req.moduleName,
+      module_id: typeof req.moduleId !== 'undefined' ? Number(req.moduleId) : 0,
+      module_type: req.moduleType,
       //
       ext,
       width,
       height,
       path: filepath,
-      size: Number(request.size),
+      size: Number(req.size),
       at2x,
       sort: 0,
       in_oss: 1,
@@ -161,12 +196,18 @@ export class SaveInOssService {
     const attachment = await this.attachmentRepository.save({ ...attachmentData });
 
     // eslint-disable-next-line consistent-return
-    return { attachment };
+    return {
+      attachment: {
+        ...attachment,
+        // url: this.attachmentService.url(attachment),
+        // urlAt2x: this.attachmentService.urlAt2x(attachment),
+      },
+    };
   }
 
   @HttpCode(200)
-  async ossCallback(request: ICraeteAttachmentByOssCallback): Promise<any> {
-    const attachment = await this.craeteAttachmentByOss(request);
+  async ossCallback(req: ICraeteAttachmentByOssCallback): Promise<any> {
+    const attachment = await this.craeteAttachmentByOss(req);
 
     return {
       ...attachment,

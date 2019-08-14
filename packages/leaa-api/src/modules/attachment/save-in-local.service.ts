@@ -1,18 +1,18 @@
-import { Injectable } from '@nestjs/common';
-import { ConfigService } from '@leaa/api/modules/config/config.service';
-import { IAttachmentType, IAttachmentCreateFieldByLocal, ISaveInLocalSignature } from '@leaa/common/interfaces';
-import { Express } from 'express';
-import Jimp from 'jimp';
 import fs from 'fs';
+import path from 'path';
+import Jimp from 'jimp';
+import moment from 'moment';
+import ImageSize from 'image-size';
+import { Express } from 'express';
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+
+import { IAttachmentType, IAttachmentCreateFieldByLocal, ISaveInLocalSignature } from '@leaa/common/interfaces';
+import { ConfigService } from '@leaa/api/modules/config/config.service';
 import { CreateAttachmentInput } from '@leaa/common/dtos/attachment';
 import { Attachment } from '@leaa/common/entrys';
 import { loggerUtil, attachmentUtil } from '@leaa/api/utils';
-import ImageSize from 'image-size';
-import path from 'path';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { MulterService } from '@leaa/api/modules/attachment/multer.service';
-import moment from 'moment';
 
 const CONSTRUCTOR_NAME = 'SaveInLocalService';
 
@@ -20,7 +20,6 @@ const CONSTRUCTOR_NAME = 'SaveInLocalService';
 export class SaveInLocalService {
   constructor(
     @InjectRepository(Attachment) private readonly attachmentRepository: Repository<Attachment>,
-    private readonly multerService: MulterService,
     private readonly configService: ConfigService,
   ) {}
 

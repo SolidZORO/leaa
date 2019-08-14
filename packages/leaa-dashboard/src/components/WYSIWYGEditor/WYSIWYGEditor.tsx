@@ -8,7 +8,7 @@ import BraftEditor, { EditorState, BraftEditorProps } from 'braft-editor';
 import Table from 'braft-extensions/dist/table';
 import CodeHighlighter from 'braft-extensions/dist/code-highlighter';
 import HeaderId from 'braft-extensions/dist/header-id';
-import { authUtil } from '@leaa/dashboard/utils';
+import { authUtil, attachmentUtil } from '@leaa/dashboard/utils';
 import { IMediaItem, IAttachmentParams } from '@leaa/common/interfaces';
 import { Attachment } from '@leaa/common/entrys';
 import { envConfig } from '@leaa/dashboard/configs';
@@ -102,27 +102,49 @@ export const WYSIWYGEditor = forwardRef((props: IProps, ref: React.Ref<any>) => 
   };
 
   const uploadFn = async (param: any) => {
-    const token = authUtil.getAuthToken();
-    const formData = new FormData();
-    formData.append('file', param.file);
-    _.map(props.attachmentParams, (v, k) => formData.append(`${k}`, `${v}`));
+    const signature = await attachmentUtil.getSignature();
+    // const a = await attachmentUtil.batchUploadFiles([param.file], props);
 
-    await axios
-      .post(`${envConfig.UPLOAD_ENDPOINT}`, formData, {
-        headers: { Authorization: token ? `Bearer ${token}` : '' },
-        onUploadProgress: event => {
-          param.progress((event.loaded / event.total) * 100);
+    const a = await attachmentUtil.uploadFile(
+      param.file,
+      signature,
+      props.attachmentParams,
+      {
+        onUploadSuccess: e => {
+          console.log(e);
         },
-      })
-      .then(e => {
-        if (e.data && e.data.attachment) {
-          const url = `${envConfig.API_HOST}${e.data.attachment.path}`;
-          param.success({ url });
-        }
-      })
-      .catch((e: Error) => {
-        message.info(e.message);
-      });
+      },
+      // () => props.onUploadedCallback && props.onUploadedCallback(new Date().getMilliseconds()),
+      // (e) => param.success({ url }),
+      // e => {
+      //   console.log(e);
+      // },
+    );
+
+    console.log(a);
+    //
+    //
+    // const token = authUtil.getAuthToken();
+    // const formData = new FormData();
+    // formData.append('file', param.file);
+    // _.map(props.attachmentParams, (v, k) => formData.append(`${k}`, `${v}`));
+    //
+    // await axios
+    //   .post(`${envConfig.UPLOAD_ENDPOINT}`, formData, {
+    //     headers: { Authorization: token ? `Bearer ${token}` : '' },
+    //     onUploadProgress: event => {
+    //       param.progress((event.loaded / event.total) * 100);
+    //     },
+    //   })
+    //   .then(e => {
+    //     if (e.data && e.data.attachment) {
+    //       const url = `${envConfig.API_HOST}${e.data.attachment.path}`;
+    //       param.success({ url });
+    //     }
+    //   })
+    //   .catch((e: Error) => {
+    //     message.info(e.message);
+    //   });
   };
 
   const onRemoveMedias = (attachments: IMediaItem[]) => {

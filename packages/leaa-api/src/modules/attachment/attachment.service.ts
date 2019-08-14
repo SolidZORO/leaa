@@ -15,12 +15,11 @@ import {
   UpdateAttachmentsInput,
   AttachmentsObject,
 } from '@leaa/common/dtos/attachment';
-import { ConfigService } from '@leaa/api/modules/config/config.service';
-import { formatUtil, loggerUtil, pathUtil, permissionUtil } from '@leaa/api/utils';
 import { IAttachmentDbFilterField, ISaveInOssSignature, ISaveInLocalSignature } from '@leaa/common/interfaces';
-import { MulterService } from '@leaa/api/modules/attachment/multer.service';
-import { SaveInLocalService } from '@leaa/api/modules/attachment/save-in-local.service';
+import { formatUtil, loggerUtil, pathUtil, permissionUtil } from '@leaa/api/utils';
+import { ConfigService } from '@leaa/api/modules/config/config.service';
 import { SaveInOssService } from '@leaa/api/modules/attachment/save-in-oss.service';
+import { SaveInLocalService } from '@leaa/api/modules/attachment/save-in-local.service';
 
 const CONSTRUCTOR_NAME = 'AttachmentService';
 
@@ -28,7 +27,6 @@ const CONSTRUCTOR_NAME = 'AttachmentService';
 export class AttachmentService {
   constructor(
     @InjectRepository(Attachment) private readonly attachmentRepository: Repository<Attachment>,
-    private readonly multerService: MulterService,
     private readonly configService: ConfigService,
     private readonly saveInLocal: SaveInLocalService,
     private readonly saveInOss: SaveInOssService,
