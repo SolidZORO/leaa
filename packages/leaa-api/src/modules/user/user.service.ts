@@ -13,6 +13,7 @@ import {
 } from '@leaa/common/dtos/user';
 import { BaseService } from '@leaa/api/modules/base/base.service';
 import { RoleService } from '@leaa/api/modules/role/role.service';
+import { UserProperty } from '@leaa/api/modules/user/user.property';
 import { formatUtil } from '@leaa/api/utils';
 import { JwtService } from '@nestjs/jwt';
 
@@ -33,25 +34,9 @@ export class UserService extends BaseService<
     @InjectRepository(Permission) private readonly permissionRepository: Repository<Permission>,
     private readonly roleService: RoleService,
     private readonly jwtService: JwtService,
+    private readonly userProperty: UserProperty,
   ) {
     super(userRepository);
-  }
-
-  async getFlatPermissions(user: User | undefined): Promise<string[] | undefined> {
-    const nextUser = user;
-
-    if (!nextUser || !nextUser.roles) {
-      return undefined;
-    }
-
-    const roleIds = nextUser.roles.map(r => r.id);
-    nextUser.permissions = await this.roleService.rolePermissionsByRoleIds(roleIds);
-
-    if (!nextUser.permissions || (nextUser.permissions.length && nextUser.permissions.length === 0)) {
-      return undefined;
-    }
-
-    return [...new Set(nextUser.permissions.map(p => p.slug))];
   }
 
   async addPermissionsTouser(user: User | undefined): Promise<User | undefined> {
@@ -61,7 +46,7 @@ export class UserService extends BaseService<
       return nextUser;
     }
 
-    nextUser.flatePermissions = await this.getFlatPermissions(user);
+    nextUser.flatePermissions = await this.userProperty.resolvePropertyFlatPermissions(user);
 
     return nextUser;
   }

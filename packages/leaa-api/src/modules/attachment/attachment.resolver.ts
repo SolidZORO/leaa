@@ -11,21 +11,28 @@ import {
   AttachmentsObject,
 } from '@leaa/common/dtos/attachment';
 import { AttachmentService } from '@leaa/api/modules/attachment/attachment.service';
+import { AttachmentProperty } from '@leaa/api/modules/attachment/attachment.property';
 import { UserDecorator } from '@leaa/api/decorators';
 
 @Resolver(() => Attachment)
 export class AttachmentResolver {
-  constructor(private readonly attachmentService: AttachmentService) {}
+  constructor(
+    private readonly attachmentService: AttachmentService,
+    private readonly attachmentProperty: AttachmentProperty,
+  ) {}
 
   @ResolveProperty(() => String, { nullable: true })
   url(@Parent() attachment: Attachment): string | null {
-    return this.attachmentService.url(attachment);
+    return this.attachmentProperty.resolvePropertyUrl(attachment);
   }
 
   @ResolveProperty(() => String, { nullable: true })
   urlAt2x(@Parent() attachment: Attachment): string | null {
-    return this.attachmentService.urlAt2x(attachment);
+    return this.attachmentProperty.resolvePropertyUrlAt2x(attachment);
   }
+
+  //
+  //
 
   @Query(() => AttachmentsWithPaginationObject)
   async attachments(

@@ -10,15 +10,19 @@ import {
   UpdateUserInput,
 } from '@leaa/common/dtos/user';
 import { UserService } from '@leaa/api/modules/user/user.service';
+import { UserProperty } from '@leaa/api/modules/user/user.property';
 
 @Resolver(() => User)
 export class UserResolver {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService, private readonly userProperty: UserProperty) {}
 
   @ResolveProperty(() => [String])
   async flatePermissions(@Parent() user: User | undefined): Promise<string[] | undefined> {
-    return this.userService.getFlatPermissions(user);
+    return this.userProperty.resolvePropertyFlatPermissions(user);
   }
+
+  //
+  //
 
   @Query(() => Float)
   async ram(): Promise<number> {

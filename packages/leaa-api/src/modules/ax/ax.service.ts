@@ -2,71 +2,17 @@ import { Injectable } from '@nestjs/common';
 import { Repository, FindOneOptions, getRepository, SelectQueryBuilder } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { Ax, Attachment, User } from '@leaa/common/entrys';
-import {
-  AxsArgs,
-  AxsWithPaginationObject,
-  AxArgs,
-  CreateAxInput,
-  UpdateAxInput,
-  AxAttachmentsObject,
-} from '@leaa/common/dtos/ax';
+import { Ax, User } from '@leaa/common/entrys';
+import { AxsArgs, AxsWithPaginationObject, AxArgs, CreateAxInput, UpdateAxInput } from '@leaa/common/dtos/ax';
 import { BaseService } from '@leaa/api/modules/base/base.service';
 import { formatUtil, loggerUtil, permissionUtil } from '@leaa/api/utils';
-import { AttachmentService } from '@leaa/api/modules/attachment/attachment.service';
 
 const CONSTRUCTOR_NAME = 'AxService';
 
 @Injectable()
 export class AxService extends BaseService<Ax, AxsArgs, AxsWithPaginationObject, AxArgs, CreateAxInput, UpdateAxInput> {
-  constructor(
-    @InjectRepository(Ax) private readonly axRepository: Repository<Ax>,
-    private readonly attachmentService: AttachmentService,
-  ) {
+  constructor(@InjectRepository(Ax) private readonly axRepository: Repository<Ax>) {
     super(axRepository);
-  }
-
-  async getAttachments(ax: Ax | undefined): Promise<AxAttachmentsObject | undefined> {
-    let bannerMbList: Attachment[] = [];
-    let bannerPcList: Attachment[] = [];
-    let galleryMbList: Attachment[] = [];
-    let galleryPcList: Attachment[] = [];
-
-    if (ax && ax.id) {
-      const baseParam = {
-        moduleName: 'ax',
-        moduleId: ax.id,
-        moduleType: 'banner_mb',
-      };
-
-      const bannerMbResult = await this.attachmentService.attachments({ ...baseParam, moduleType: 'banner_mb' });
-      const bannerPcResult = await this.attachmentService.attachments({ ...baseParam, moduleType: 'banner_pc' });
-      const galleryMbResult = await this.attachmentService.attachments({ ...baseParam, moduleType: 'gallery_mb' });
-      const galleryPcResult = await this.attachmentService.attachments({ ...baseParam, moduleType: 'gallery_pc' });
-
-      if (bannerMbResult && bannerMbResult.items) {
-        bannerMbList = bannerMbResult.items;
-      }
-
-      if (bannerPcResult && bannerPcResult.items) {
-        bannerPcList = bannerPcResult.items;
-      }
-
-      if (galleryMbResult && galleryMbResult.items) {
-        galleryMbList = galleryMbResult.items;
-      }
-
-      if (galleryPcResult && galleryPcResult.items) {
-        galleryPcList = galleryPcResult.items;
-      }
-    }
-
-    return {
-      bannerMbList,
-      bannerPcList,
-      galleryMbList,
-      galleryPcList,
-    };
   }
 
   async axs(args: AxsArgs, user?: User): Promise<AxsWithPaginationObject> {

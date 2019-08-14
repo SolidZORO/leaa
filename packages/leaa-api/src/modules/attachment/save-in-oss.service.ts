@@ -1,10 +1,11 @@
 import fs from 'fs';
-import request from 'request';
+import { Repository } from 'typeorm';
+import { Injectable, HttpCode } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import axios from 'axios';
 import crypto from 'crypto';
 import moment from 'moment';
-import { Repository } from 'typeorm';
-import { Injectable, HttpCode } from '@nestjs/common';
+import request from 'request';
 import OSS from 'ali-oss';
 
 import {
@@ -14,10 +15,9 @@ import {
   IAttachmentCreateFieldByOss,
 } from '@leaa/common/interfaces';
 import { ConfigService } from '@leaa/api/modules/config/config.service';
-import { AttachmentService } from '@leaa/api/modules/attachment/attachment.service';
+import { AttachmentProperty } from '@leaa/api/modules/attachment/attachment.property';
 import { Attachment } from '@leaa/common/entrys';
 import { attachmentUtil, loggerUtil } from '@leaa/api/utils';
-import { InjectRepository } from '@nestjs/typeorm';
 
 const CONSTRUCTOR_NAME = 'SaveInOssService';
 
@@ -26,7 +26,7 @@ export class SaveInOssService {
   constructor(
     @InjectRepository(Attachment) private readonly attachmentRepository: Repository<Attachment>,
     private readonly configService: ConfigService,
-    private readonly attachmentService: AttachmentService,
+    private readonly attachmentShared: AttachmentProperty,
   ) {}
 
   // eslint-disable-next-line max-len
@@ -199,8 +199,8 @@ export class SaveInOssService {
     return {
       attachment: {
         ...attachment,
-        // url: this.attachmentService.url(attachment),
-        // urlAt2x: this.attachmentService.urlAt2x(attachment),
+        url: this.attachmentShared.url(attachment),
+        urlAt2x: this.attachmentShared.urlAt2x(attachment),
       },
     };
   }

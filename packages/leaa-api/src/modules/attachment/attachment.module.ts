@@ -11,18 +11,26 @@ import { AttachmentService } from '@leaa/api/modules/attachment/attachment.servi
 import { MulterService } from '@leaa/api/modules/attachment/multer.service';
 import { SaveInOssService } from '@leaa/api/modules/attachment/save-in-oss.service';
 import { SaveInLocalService } from '@leaa/api/modules/attachment/save-in-local.service';
+import { AttachmentProperty } from '@leaa/api/modules/attachment/attachment.property';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Attachment]),
-    AuthTokenModule,
     MulterModule.registerAsync({
       inject: [ConfigService],
       useClass: MulterService,
     }),
+    AuthTokenModule,
   ],
   controllers: [AttachmentController],
-  providers: [AttachmentService, AttachmentResolver, MulterService, SaveInOssService, SaveInLocalService],
-  exports: [AttachmentService, AttachmentResolver, MulterService, SaveInOssService, SaveInLocalService],
+  providers: [
+    AttachmentService,
+    AttachmentResolver,
+    MulterService,
+    SaveInOssService,
+    SaveInLocalService,
+    AttachmentProperty,
+  ],
+  exports: [AttachmentService],
 })
 export class AttachmentModule {}

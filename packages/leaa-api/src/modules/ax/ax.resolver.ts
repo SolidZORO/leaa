@@ -12,15 +12,19 @@ import {
 } from '@leaa/common/dtos/ax';
 import { UserDecorator } from '@leaa/api/decorators';
 import { AxService } from '@leaa/api/modules/ax/ax.service';
+import { AxProperty } from '@leaa/api/modules/ax/ax.property';
 
 @Resolver(() => Ax)
 export class AxResolver {
-  constructor(private readonly axService: AxService) {}
+  constructor(private readonly axService: AxService, private readonly axProperty: AxProperty) {}
 
   @ResolveProperty(() => AxAttachmentsObject)
   async attachments(@Parent() ax: Ax | undefined): Promise<AxAttachmentsObject | undefined> {
-    return this.axService.getAttachments(ax);
+    return this.axProperty.resolvePropertyAttachments(ax);
   }
+
+  //
+  //
 
   @Query(() => AxsWithPaginationObject)
   async axs(@Args() args: AxsArgs, @UserDecorator() user?: User): Promise<AxsWithPaginationObject | undefined> {

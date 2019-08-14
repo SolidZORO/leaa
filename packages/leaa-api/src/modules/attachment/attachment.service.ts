@@ -44,32 +44,6 @@ export class AttachmentService {
     return this.saveInLocal.getSignature();
   }
 
-  url(attachment: Attachment): string | null {
-    if (attachment.in_oss) {
-      // eslint-disable-next-line max-len
-      const ossUrlPrefix = `${this.configService.PROTOCOL}://${this.configService.OSS_ALIYUN_BUCKET}.${this.configService.OSS_ALIYUN_REGION}.aliyuncs.com`;
-
-      return `${ossUrlPrefix}${attachment.path}`;
-    }
-
-    if (attachment.in_local) {
-      // eslint-disable-next-line max-len
-      const localUrlPrefix = `${this.configService.PROTOCOL}://${this.configService.BASE_HOST}:${this.configService.PORT}`;
-
-      return `${localUrlPrefix}${attachment.path}`;
-    }
-
-    return null;
-  }
-
-  urlAt2x(attachment: Attachment): string | null {
-    if (attachment.at2x) {
-      return pathUtil.getAt2xPath(this.url(attachment));
-    }
-
-    return null;
-  }
-
   async attachments(args: AttachmentsArgs, user?: User): Promise<AttachmentsWithPaginationObject> {
     const nextArgs = formatUtil.formatArgs(args);
 

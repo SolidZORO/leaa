@@ -10,15 +10,19 @@ import {
   UpdateArticleInput,
 } from '@leaa/common/dtos/article';
 import { ArticleService } from '@leaa/api/modules/article/article.service';
+import { ArticleProperty } from '@leaa/api/modules/article/article.property';
 
 @Resolver(() => Article)
 export class ArticleResolver {
-  constructor(private readonly articleService: ArticleService) {}
+  constructor(private readonly articleService: ArticleService, private readonly articleProperty: ArticleProperty) {}
 
   @ResolveProperty(() => Category)
   async category(@Parent() article: Article): Promise<Category | undefined> {
-    return this.articleService.getCategory(article);
+    return this.articleProperty.resolvePropertyCategory(article);
   }
+
+  //
+  //
 
   @Query(() => ArticlesWithPaginationObject)
   async articles(@Args() args: ArticlesArgs): Promise<ArticlesWithPaginationObject | undefined> {

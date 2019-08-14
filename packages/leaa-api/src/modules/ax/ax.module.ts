@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Ax, Attachment } from '@leaa/common/entrys';
 import { AxResolver } from '@leaa/api/modules/ax/ax.resolver';
 import { AxService } from '@leaa/api/modules/ax/ax.service';
+import { AxProperty } from '@leaa/api/modules/ax/ax.property';
 import { AttachmentModule } from '@leaa/api/modules/attachment/attachment.module';
 import { AuthTokenModule } from '@leaa/api/modules/auth-token/auth-token.module';
 
@@ -12,7 +13,7 @@ import { AuthTokenModule } from '@leaa/api/modules/auth-token/auth-token.module'
 
 @Module({
   imports: [TypeOrmModule.forFeature([Ax, Attachment]), AuthTokenModule, AttachmentModule],
-  providers: [AxResolver, AxService],
+  providers: [AxResolver, AxService, AxProperty],
   exports: [AxService],
 })
 export class AxModule {}
