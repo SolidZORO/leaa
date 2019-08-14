@@ -19,7 +19,6 @@ import { SwitchNumber } from '@leaa/dashboard/components/SwitchNumber';
 
 import { ErrorCard } from '@leaa/dashboard/components/ErrorCard';
 import { useMutation } from '@apollo/react-hooks';
-import { envConfig } from '@leaa/dashboard/configs';
 
 import style from './style.less';
 
@@ -105,7 +104,7 @@ const AttachmentItemInner = forwardRef((props: IProps, ref: React.Ref<any>) => {
       {deleteAttachmentsMutation.error ? <ErrorCard error={deleteAttachmentsMutation.error} /> : null}
 
       <div className={style['image']} ref={cardRef}>
-        <img src={`${envConfig.API_HOST}${props.attachment.path}`} alt="" />
+        <img src={`${props.attachment.url}`} alt="" />
 
         <div className={style['toolbar']}>
           <Button

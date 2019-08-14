@@ -1,6 +1,10 @@
 import path from 'path';
 
-const getAt2xPath = (filepath: string): string => {
+const getAt2xPath = (filepath: string | null): string | null => {
+  if (!filepath) {
+    return null;
+  }
+
   /*
    /attachments/2019/07/19744632-558c-483d-b3db-71b0af66fe05.png
    ------ v ----

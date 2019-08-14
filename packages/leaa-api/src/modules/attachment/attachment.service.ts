@@ -1,10 +1,7 @@
 import fs from 'fs';
 import _ from 'lodash';
-import path from 'path';
-import Jimp from 'jimp';
 import { Express } from 'express';
 import { Repository, FindOneOptions, In, getRepository, SelectQueryBuilder } from 'typeorm';
-import ImageSize from 'image-size';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Attachment, User } from '@leaa/common/entrys';
@@ -20,8 +17,10 @@ import {
 } from '@leaa/common/dtos/attachment';
 import { ConfigService } from '@leaa/api/modules/config/config.service';
 import { formatUtil, loggerUtil, pathUtil, permissionUtil } from '@leaa/api/utils';
-import { IAttachmentType, IAttachmentDbCreateField, IAttachmentDbFilterField } from '@leaa/common/interfaces';
+import { IAttachmentDbFilterField, ISaveInOssSignature, ISaveInLocalSignature } from '@leaa/common/interfaces';
 import { MulterService } from '@leaa/api/modules/attachment/multer.service';
+import { SaveInLocalService } from '@leaa/api/modules/attachment/save-in-local.service';
+import { SaveInOssService } from '@leaa/api/modules/attachment/save-in-oss.service';
 
 const CONSTRUCTOR_NAME = 'AttachmentService';
 
@@ -31,35 +30,46 @@ export class AttachmentService {
     @InjectRepository(Attachment) private readonly attachmentRepository: Repository<Attachment>,
     private readonly multerService: MulterService,
     private readonly configService: ConfigService,
+    private readonly saveInLocal: SaveInLocalService,
+    private readonly saveInOss: SaveInOssService,
   ) {}
 
-  pathAt2x(attachment: Attachment): string | null {
-    if (attachment.at2x) {
-      return pathUtil.getAt2xPath(attachment.path);
+  getSignature(): Promise<ISaveInOssSignature | ISaveInLocalSignature> {
+    if (!this.configService.ATTACHMENT_SAVE_IN_OSS && !this.configService.ATTACHMENT_SAVE_IN_LOCAL) {
+      throw Error('Missing save param');
+    }
+
+    if (this.configService.ATTACHMENT_SAVE_IN_OSS) {
+      return this.saveInOss.getSignature();
+    }
+
+    return this.saveInLocal.getSignature();
+  }
+
+  url(attachment: Attachment): string | null {
+    if (attachment.in_oss) {
+      // eslint-disable-next-line max-len
+      const ossUrlPrefix = `${this.configService.PROTOCOL}://${this.configService.OSS_ALIYUN_BUCKET}.${this.configService.OSS_ALIYUN_REGION}.aliyuncs.com`;
+
+      return `${ossUrlPrefix}${attachment.path}`;
+    }
+
+    if (attachment.in_local) {
+      // eslint-disable-next-line max-len
+      const localUrlPrefix = `${this.configService.PROTOCOL}://${this.configService.BASE_HOST}:${this.configService.PORT}`;
+
+      return `${localUrlPrefix}${attachment.path}`;
     }
 
     return null;
   }
 
-  async saveAt2xToAt1x(file: Express.Multer.File, rawWidth: number, rawHeight: number) {
-    const width = Math.round(rawWidth / 2);
-    const height = Math.round(rawHeight / 2);
+  urlAt2x(attachment: Attachment): string | null {
+    if (attachment.at2x) {
+      return pathUtil.getAt2xPath(this.url(attachment));
+    }
 
-    const pathAt1x = file.path.replace('_2x', '');
-
-    // TODO jpg Error: marker was not found
-    Jimp.read(file.path)
-      .then(image => {
-        image
-          .resize(width, height)
-          .quality(95)
-          .write(pathAt1x);
-      })
-      .catch(err => {
-        console.error('SAVE 2X --> 1X ERROR', err);
-
-        fs.copyFileSync(file.path, pathAt1x);
-      });
+    return null;
   }
 
   async attachments(args: AttachmentsArgs, user?: User): Promise<AttachmentsWithPaginationObject> {
@@ -124,7 +134,7 @@ export class AttachmentService {
 
     const whereQuery: { uuid: string; status?: number } = { uuid };
 
-    if (!user || (user && !permissionUtil.hasPermission(user, 'attachment.list'))) {
+    if (!user || (user && !permissionUtil.hasPermission(user, 'attachment.item'))) {
       whereQuery.status = 1;
     }
 
@@ -134,69 +144,11 @@ export class AttachmentService {
     });
   }
 
-  async craeteAttachment(
+  async craeteAttachmentByLocal(
     body: CreateAttachmentInput,
     file: Express.Multer.File,
   ): Promise<{ attachment: Attachment } | undefined> {
-    if (!file) {
-      const message = 'not found attachment';
-
-      loggerUtil.warn(message, CONSTRUCTOR_NAME);
-
-      return;
-    }
-
-    const isImage = file.mimetype ? file.mimetype.includes(IAttachmentType.IMAGE) : false;
-    const at2x = this.multerService.isAt2x(file.originalname) ? 1 : 0;
-    let width = 0;
-    let height = 0;
-
-    if (isImage) {
-      const imageSize = ImageSize(file.path);
-
-      width = imageSize.width; // eslint-disable-line prefer-destructuring
-      height = imageSize.height; // eslint-disable-line prefer-destructuring
-
-      if (at2x) {
-        width = Math.round(imageSize.width / 2);
-        height = Math.round(imageSize.height / 2);
-      }
-    }
-
-    const filepath = file.path.replace(this.configService.PUBLIC_DIR, '').replace('_2x', '');
-    const filename = file.filename.replace('_2x', '');
-    const ext = path.extname(file.filename);
-    const title = path.basename(file.originalname, ext).replace('_2x', '');
-    const uuid = path.basename(filename, ext).replace('_2x', '');
-
-    if (isImage && at2x) {
-      await this.saveAt2xToAt1x(file, width, height);
-    }
-
-    const attachmentData: IAttachmentDbCreateField = {
-      uuid,
-      title,
-      alt: title,
-      type: file.mimetype ? `${file.mimetype.split('/')[0]}` : 'no-mime',
-      filename,
-      // module_abc --> moduleAbc
-      module_name: body.moduleName,
-      module_id: typeof body.moduleId !== 'undefined' ? Number(body.moduleId) : 0,
-      module_type: body.moduleType,
-      //
-      ext,
-      width,
-      height,
-      path: filepath,
-      size: file.size,
-      at2x,
-      sort: 0,
-    };
-
-    const attachment = await this.attachmentRepository.save({ ...attachmentData });
-
-    // eslint-disable-next-line consistent-return
-    return { attachment };
+    return this.saveInLocal.craeteAttachmentByLocal(body, file);
   }
 
   async updateAttachment(uuid: string, args: UpdateAttachmentInput): Promise<Attachment | undefined> {

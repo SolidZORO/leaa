@@ -5,9 +5,9 @@ export interface IDotEnv {
   BASE_HOST: string;
   PUBLIC_DIR: string;
   ATTACHMENT_DIR: string;
-  ATTACHMENT_LIMIT_SIZE_BY_MB: number;
-  ATTACHMENT_SAVED_IN_LOCAL: number;
-  ATTACHMENT_SAVED_IN_CLOUD: number;
+  ATTACHMENT_LIMIT_SIZE_MB: number;
+  ATTACHMENT_SAVE_IN_LOCAL: string;
+  ATTACHMENT_SAVE_IN_OSS: string;
 
   DB_TYPE: string;
   DB_HOST: string;
@@ -20,4 +20,10 @@ export interface IDotEnv {
   JWT_SECRET_KEY: string;
   CLIENT_COOKIE_EXPIRES_DAY: number;
   SERVER_COOKIE_EXPIRES_DAY: number;
+
+  OSS_ALIYUN_BUCKET?: string;
+  OSS_ALIYUN_AK_SECRET?: string;
+  OSS_ALIYUN_AK_ID?: string;
+  OSS_ALIYUN_REGION?: string;
+  OSS_ALIYUN_CALLBACK_URL?: string;
 }

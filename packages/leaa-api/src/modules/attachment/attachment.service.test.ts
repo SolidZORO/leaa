@@ -52,7 +52,7 @@ describe('AttachmentService', () => {
       path: '/attachments/2019/08/0427ba2e-c555-484a-89ba-dd5673787018.jpg',
       at2x: 0,
       in_local: 0,
-      in_cloud: 0,
+      in_oss: 0,
       category_id: null,
       user_id: null,
       sort: 0,
@@ -107,7 +107,7 @@ describe('AttachmentService', () => {
         attachment: attachmentObject,
       }));
 
-      const result = await attachmentService.craeteAttachment(createAttachment1xInput, file);
+      const result = await attachmentService.craeteAttachmentByLocal(createAttachment1xInput, file);
 
       expect(result).toEqual({ attachment: attachment1xObject });
     });
@@ -133,7 +133,7 @@ describe('AttachmentService', () => {
         attachment: attachmentObject,
       }));
 
-      const result = await attachmentService.craeteAttachment(createAttachment1xInput, file);
+      const result = await attachmentService.craeteAttachmentByLocal(createAttachment1xInput, file);
 
       expect(result).toEqual({ attachment: attachment1xObject });
     });

@@ -54,6 +54,8 @@ export default {
   type_radio: '单选',
   type_checkbox: '多选',
   //
+  uploadSuccessfully: '上传成功',
+  uploadError: '上传出错',
   readSuccessfully: '读取成功',
   createdSuccessfully: '创建成功',
   updatedSuccessfully: '更新成功',

@@ -42,7 +42,8 @@ export const GET_ATTACHMENTS = gql`
         module_id
         module_type
         path
-        pathAt2x
+        url
+        urlAt2x
         status
         sort
         at2x
@@ -66,7 +67,8 @@ export const GET_ATTACHMENT = gql`
       module_id
       module_type
       path
-      pathAt2x
+      url
+      urlAt2x
       status
       sort
       at2x

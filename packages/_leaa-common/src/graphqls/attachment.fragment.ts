@@ -20,11 +20,12 @@ export const ATTACHMENT_FRAGMENT = gql`
     width
     height
     size
+    url
+    urlAt2x
     path
-    pathAt2x
     at2x
     in_local
-    in_cloud
+    in_oss
     category_id
     user_id
     sort

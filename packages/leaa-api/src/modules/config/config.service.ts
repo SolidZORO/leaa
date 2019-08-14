@@ -29,8 +29,16 @@ export class ConfigService {
     return this.envConfig.ATTACHMENT_DIR;
   }
 
-  get ATTACHMENT_LIMIT_SIZE_BY_MB(): number {
-    return Number(this.envConfig.ATTACHMENT_LIMIT_SIZE_BY_MB);
+  get ATTACHMENT_LIMIT_SIZE_MB(): number {
+    return Number(this.envConfig.ATTACHMENT_LIMIT_SIZE_MB);
+  }
+
+  get ATTACHMENT_SAVE_IN_LOCAL(): boolean {
+    return Boolean(this.envConfig.ATTACHMENT_SAVE_IN_LOCAL === 'true');
+  }
+
+  get ATTACHMENT_SAVE_IN_OSS(): boolean {
+    return Boolean(this.envConfig.ATTACHMENT_SAVE_IN_OSS === 'true');
   }
 
   //
@@ -59,6 +67,8 @@ export class ConfigService {
     return this.envConfig.DB_DATABASE;
   }
 
+  //
+
   get TRUST_PROXY(): string {
     return this.envConfig.DB_DATABASE;
   }
@@ -75,6 +85,28 @@ export class ConfigService {
     return Number(this.envConfig.SERVER_COOKIE_EXPIRES_DAY);
   }
 
+  //
+
+  get OSS_ALIYUN_BUCKET(): string {
+    return this.envConfig.OSS_ALIYUN_BUCKET || '';
+  }
+
+  get OSS_ALIYUN_AK_SECRET(): string {
+    return this.envConfig.OSS_ALIYUN_AK_SECRET || '';
+  }
+
+  get OSS_ALIYUN_AK_ID(): string {
+    return this.envConfig.OSS_ALIYUN_AK_ID || '';
+  }
+
+  get OSS_ALIYUN_REGION(): string {
+    return this.envConfig.OSS_ALIYUN_REGION || '';
+  }
+
+  get OSS_ALIYUN_CALLBACK_URL(): string {
+    return this.envConfig.OSS_ALIYUN_CALLBACK_URL || '';
+  }
+
   private validate(dotEnvPath: string): IDotEnv {
     const rule = {
       PROTOCOL: envalid.str({ choices: ['http', 'https'], default: 'http' }),
@@ -83,9 +115,9 @@ export class ConfigService {
       BASE_HOST: envalid.str(),
       PUBLIC_DIR: envalid.str(),
       ATTACHMENT_DIR: envalid.str(),
-      ATTACHMENT_LIMIT_SIZE_BY_MB: envalid.num(),
-      ATTACHMENT_SAVED_IN_LOCAL: envalid.num({ choices: [0, 1], default: 0 }),
-      ATTACHMENT_SAVED_IN_CLOUD: envalid.num({ choices: [0, 1], default: 0 }),
+      ATTACHMENT_LIMIT_SIZE_MB: envalid.num(),
+      ATTACHMENT_SAVE_IN_LOCAL: envalid.str({ choices: ['true', 'false'], default: 'false' }),
+      ATTACHMENT_SAVE_IN_OSS: envalid.str({ choices: ['true', 'false'], default: 'false' }),
       //
       DB_TYPE: envalid.str({ choices: ['mysql', 'postgres'], default: 'mysql' }),
       DB_HOST: envalid.str(),
@@ -98,6 +130,12 @@ export class ConfigService {
       JWT_SECRET_KEY: envalid.str(),
       CLIENT_COOKIE_EXPIRES_DAY: envalid.num(),
       SERVER_COOKIE_EXPIRES_DAY: envalid.num(),
+      //
+      // OSS_ALIYUN_BUCKET: envalid.str(),
+      // OSS_ALIYUN_AK_SECRET: envalid.str(),
+      // OSS_ALIYUN_AK_ID: envalid.str(),
+      // OSS_ALIYUN_REGION: envalid.str(),
+      // OSS_ALIYUN_ASSUME_ROLE: envalid.str(),
     };
 
     return envalid.cleanEnv(process.env, rule, { dotEnvPath });

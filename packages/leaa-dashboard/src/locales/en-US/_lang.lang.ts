@@ -54,6 +54,8 @@ export default {
   type_radio: 'Select',
   type_checkbox: 'Multiple Select',
   //
+  uploadSuccessfully: 'Upload Successfully',
+  uploadError: 'Upload Error',
   readSuccessfully: 'Read Successfully',
   createdSuccessfully: 'Created Successfully',
   updatedSuccessfully: 'Updated Successfully',

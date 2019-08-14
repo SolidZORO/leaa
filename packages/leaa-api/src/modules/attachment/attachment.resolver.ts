@@ -18,8 +18,13 @@ export class AttachmentResolver {
   constructor(private readonly attachmentService: AttachmentService) {}
 
   @ResolveProperty(() => String, { nullable: true })
-  pathAt2x(@Parent() attachment: Attachment): string | null {
-    return this.attachmentService.pathAt2x(attachment);
+  url(@Parent() attachment: Attachment): string | null {
+    return this.attachmentService.url(attachment);
+  }
+
+  @ResolveProperty(() => String, { nullable: true })
+  urlAt2x(@Parent() attachment: Attachment): string | null {
+    return this.attachmentService.urlAt2x(attachment);
   }
 
   @Query(() => AttachmentsWithPaginationObject)

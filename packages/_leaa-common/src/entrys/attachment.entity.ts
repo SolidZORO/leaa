@@ -72,7 +72,10 @@ export class Attachment extends Base {
   public external_path?: string;
 
   @Field(() => String, { nullable: true })
-  public pathAt2x?: string | null;
+  public url?: string | null;
+
+  @Field(() => String, { nullable: true })
+  public urlAt2x?: string | null;
 
   @Column({ type: 'int', default: 0 })
   @Field(() => Int)
@@ -84,7 +87,7 @@ export class Attachment extends Base {
 
   @Column({ type: 'int', default: 0 })
   @Field(() => Int)
-  public in_cloud!: number;
+  public in_oss!: number;
 
   @Column({ type: 'int', nullable: true })
   @Field(() => Int, { nullable: true })

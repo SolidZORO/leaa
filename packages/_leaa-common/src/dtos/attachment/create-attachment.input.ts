@@ -47,7 +47,7 @@ export class CreateAttachmentInput {
   @Field(() => String)
   public path!: string;
 
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   public external_path?: string;
 
   @Field(() => Int)
@@ -57,7 +57,7 @@ export class CreateAttachmentInput {
   public in_local!: number;
 
   @Field(() => Int)
-  public in_cloud!: number;
+  public in_oss!: number;
 
   @Field(() => Int, { nullable: true })
   public category_id?: number | null;

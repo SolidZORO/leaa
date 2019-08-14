@@ -28,7 +28,7 @@ export interface IAttachmentParams {
 
 export type IAttachmentDbFilterField = Partial<Pick<Attachment, 'module_name' | 'module_id' | 'module_type'>>;
 
-export type IAttachmentDbCreateField = Pick<
+export type IAttachmentCreateFieldByLocal = Pick<
   Attachment,
   | 'uuid'
   | 'title'
@@ -45,11 +45,50 @@ export type IAttachmentDbCreateField = Pick<
   | 'size'
   | 'at2x'
   | 'sort'
+  | 'in_local'
 >;
+
+export interface IAttachmentCreateFieldByOss extends Omit<IAttachmentCreateFieldByLocal, 'in_local'> {
+  in_oss: number;
+}
 
 export type IAttachmentDbUpdateField = Pick<Attachment, 'title' | 'alt' | 'link' | 'sort' | 'status'>;
 
 export interface IAttachmentBoxRef {
   onUpdateAttachments: () => void;
   onChangeAttachments: (attachments: Attachment[]) => void;
+}
+
+//
+
+export interface ISaveInOssSignature {
+  OSSAccessKeyId: string;
+  expiration: string;
+  policy: string;
+  saveDirPath: string;
+  signature: string;
+  uploadEndPoint: string;
+  // callback: string;
+  callback: any;
+  saveIn: 'oss';
+}
+
+export interface ISaveInLocalSignature extends Pick<ISaveInOssSignature, 'uploadEndPoint' | 'saveDirPath'> {
+  saveIn: 'local';
+}
+
+export interface ICraeteAttachmentByOssCallback {
+  object: string;
+  bucket: string;
+  size: string;
+  etag: string;
+  height: string;
+  width: string;
+  mimeType: string;
+  format: string;
+  originalname: string;
+  type: string;
+  moduleId: string;
+  moduleName: string;
+  moduleType: string;
 }

@@ -7,6 +7,7 @@ import { Express } from 'express';
 import { Injectable } from '@nestjs/common';
 import { MulterModuleOptions, MulterOptionsFactory } from '@nestjs/platform-express';
 import { ConfigService } from '@leaa/api/modules/config/config.service';
+import { attachmentUtil } from '@leaa/api/utils';
 
 @Injectable()
 export class MulterService implements MulterOptionsFactory {
@@ -14,9 +15,8 @@ export class MulterService implements MulterOptionsFactory {
 
   public subDir = moment().format('YYYY/MM');
   public saveDir = `./${this.configService.PUBLIC_DIR}/${this.configService.ATTACHMENT_DIR}/${this.subDir}`;
-  public isAt2x = (originalname: string): boolean => /[＠@_]2x/i.test(originalname);
 
-  public destination = (
+  destination = (
     req: Express.Request,
     file: Express.Multer.File,
     cb: (error: Error | null, destination: string) => void,
@@ -24,12 +24,12 @@ export class MulterService implements MulterOptionsFactory {
     mkdirp(this.saveDir, err => cb(err, this.saveDir));
   };
 
-  public filename = (
+  filename = (
     req: Express.Request,
     file: Express.Multer.File,
     cb: (error: Error | null, filename: string) => void,
   ): void => {
-    const at2x = this.isAt2x(file.originalname) ? '_2x' : '';
+    const at2x = attachmentUtil.isAt2x(file.originalname) ? '_2x' : '';
 
     cb(null, `${uuid.v4()}${at2x}${path.extname(file.originalname)}`);
   };
@@ -41,7 +41,7 @@ export class MulterService implements MulterOptionsFactory {
         filename: (req, file, cb) => this.filename(req, file, cb),
       }),
       limits: {
-        fileSize: this.configService.ATTACHMENT_LIMIT_SIZE_BY_MB * 1024 * 1024,
+        fileSize: this.configService.ATTACHMENT_LIMIT_SIZE_MB * 1024 * 1024,
       },
       fileFilter: (req, file, cb) => {
         const fileTypes = /image|jpeg|jpg|png|gif|webp|pdf|text|mp4|mp3/;

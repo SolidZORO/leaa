@@ -9,6 +9,8 @@ import { AttachmentController } from '@leaa/api/modules/attachment/attachment.co
 import { AttachmentResolver } from '@leaa/api/modules/attachment/attachment.resolver';
 import { AttachmentService } from '@leaa/api/modules/attachment/attachment.service';
 import { MulterService } from '@leaa/api/modules/attachment/multer.service';
+import { SaveInOssService } from '@leaa/api/modules/attachment/save-in-oss.service';
+import { SaveInLocalService } from '@leaa/api/modules/attachment/save-in-local.service';
 
 @Module({
   imports: [
@@ -20,7 +22,7 @@ import { MulterService } from '@leaa/api/modules/attachment/multer.service';
     }),
   ],
   controllers: [AttachmentController],
-  providers: [AttachmentService, AttachmentResolver, MulterService],
+  providers: [AttachmentService, AttachmentResolver, MulterService, SaveInOssService, SaveInLocalService],
   exports: [AttachmentService],
 })
 export class AttachmentModule {}

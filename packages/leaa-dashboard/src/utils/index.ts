@@ -3,3 +3,4 @@ export { authUtil } from './auth.util';
 export { tableUtil } from './table.util';
 export { langUtil } from './lang.util';
 export { deviceUtil } from './device.util';
+export { attachmentUtil } from './attachment.util';
