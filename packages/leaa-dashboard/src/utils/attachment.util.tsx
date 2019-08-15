@@ -5,15 +5,9 @@ import uuid from 'uuid';
 import { message } from 'antd';
 import { Translation } from 'react-i18next';
 
-import { ISaveInOssSignature, ISaveInLocalSignature, IAttachmentParams } from '@leaa/common/interfaces';
+import { ISaveInOssSignature, ISaveInLocalSignature } from '@leaa/common/interfaces';
 import { authUtil } from '@leaa/dashboard/utils/auth.util';
 import { envConfig } from '@leaa/dashboard/configs';
-
-// interface IProps {
-//   value?: number | undefined;
-//   attachmentParams: IAttachmentParams;
-//   onUploadedCallback?: (uploaded: number) => void;
-// }
 
 interface ISignatureResult {
   data: ISaveInOssSignature | ISaveInLocalSignature;
@@ -44,15 +38,16 @@ const uploadFile = (
   attachmentParams: any,
   onCallback?: {
     onUploadSuccess?: (event: any) => void;
-    onUploadFail?: (event: any) => void;
     onUploadProgress?: (event: any) => void;
+    onUploadFail?: (event: any) => void;
+    onUploadCatch?: (event: any) => void;
   },
 ) => {
   const token = authUtil.getAuthToken();
   const formData = new FormData();
 
   //
-  // -------- LOCAL --------
+  // -------- OSS --------
   if (signatureResult.data.saveIn === 'oss') {
     const saveFilename = getSaveFilename(file.name);
     const attachmentParamsSnakeCase: {} = {};
@@ -87,15 +82,19 @@ const uploadFile = (
         }
       },
     })
-    .then(e => {
-      if (e.status === 203) {
+    .then(response => {
+      if (response.status === 203) {
         message.error('Callback Failed');
+
+        if (onCallback && onCallback.onUploadFail) {
+          onCallback.onUploadFail(response);
+        }
 
         return;
       }
 
-      if (e.status !== 200) {
-        message.error(e.statusText);
+      if (response.status !== 200) {
+        message.error(response.statusText);
 
         return;
       }
@@ -103,102 +102,17 @@ const uploadFile = (
       message.success(<Translation>{t => t('_lang:uploadSuccessfully')}</Translation>);
 
       if (onCallback && onCallback.onUploadSuccess) {
-        // onCallback.onUploadSuccess(new Date().getMilliseconds());
-        onCallback.onUploadSuccess(e);
+        onCallback.onUploadSuccess(response);
       }
     })
-    .catch((e: Error) => {
-      message.info(e.message);
+    .catch((error: Error) => {
+      message.info(error.message);
 
-      if (onCallback && onCallback.onUploadFail) {
-        onCallback.onUploadFail(e);
+      if (onCallback && onCallback.onUploadCatch) {
+        onCallback.onUploadCatch(error);
       }
     });
 };
-
-// const batchUploadFiles = async (fileList: File[] | File, props: IProps) => {
-//   const signatureResult: {
-//     data: ISaveInOssSignature | ISaveInLocalSignature;
-//   } = await axios.get(`${envConfig.API_HOST}/attachments/signature`);
-//
-//   if (!signatureResult || !signatureResult.data || !signatureResult.data || !signatureResult.data.uploadEndPoint) {
-//     message.error(<Translation>{t => t('_lang:uploadError')}</Translation>);
-//
-//     return;
-//   }
-//
-//   const { uploadEndPoint, saveIn } = signatureResult.data;
-//
-//   //
-//   //
-//
-//   // const uploadFile = (file: File) => {
-//   //   const token = authUtil.getAuthToken();
-//   //   const formData = new FormData();
-//   //
-//   //   //
-//   //   // -------- LOCAL --------
-//   //   if (saveIn === 'oss') {
-//   //     const saveFilename = getSaveFilename(file.name);
-//   //     const attachmentParamsSnakeCase: {} = {};
-//   //
-//   //     _.forEach(props.attachmentParams, (v, k) => {
-//   //       // @ts-ignore https://help.aliyun.com/document_detail/31989.html
-//   //       attachmentParamsSnakeCase[`x:${_.snakeCase(k)}`] = v;
-//   //     });
-//   //
-//   //     _.map({ ...signatureResult.data, ...attachmentParamsSnakeCase }, (v, k) => formData.append(k, `${v}`));
-//   //
-//   //     // eslint-disable-next-line no-template-curly-in-string
-//   //     formData.append('x:originalname', file.name);
-//   //     formData.append('success_action_status', '200');
-//   //     formData.append('key', `${signatureResult.data.saveDirPath}${saveFilename}`);
-//   //   }
-//   //
-//   //   //
-//   //   // -------- LOCAL --------
-//   //   if (saveIn === 'local') {
-//   //     _.map({ ...signatureResult.data, ...props.attachmentParams }, (v, k) => formData.append(k, `${v}`));
-//   //   }
-//   //
-//   //   formData.append('file', file);
-//   //
-//   //   return axios
-//   //     .post(uploadEndPoint, formData, {
-//   //       headers: { Authorization: token ? `Bearer ${token}` : '' },
-//   //     })
-//   //     .then(e => {
-//   //       if (e.status === 203) {
-//   //         message.error('Callback Failed');
-//   //
-//   //         return;
-//   //       }
-//   //
-//   //       if (e.status !== 200) {
-//   //         message.error(e.statusText);
-//   //
-//   //         return;
-//   //       }
-//   //
-//   //       message.success(<Translation>{t => t('_lang:uploadSuccessfully')}</Translation>);
-//   //
-//   //       if (props.onUploadedCallback) {
-//   //         props.onUploadedCallback(new Date().getMilliseconds());
-//   //       }
-//   //     })
-//   //     .catch((e: Error) => {
-//   //       message.info(e.message);
-//   //     });
-//   // };
-//
-//   if (Array.isArray(fileList) && fileList.length > 0) {
-//     fileList.forEach((file: File) => uploadFile(file));
-//   }
-//
-//   if (!Array.isArray(fileList)) {
-//     await uploadFile(fileList);
-//   }
-// };
 
 export const attachmentUtil = {
   isAt2x,

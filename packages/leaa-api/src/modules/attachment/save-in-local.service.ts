@@ -1,18 +1,23 @@
 import fs from 'fs';
 import path from 'path';
 import Jimp from 'jimp';
-import moment from 'moment';
 import ImageSize from 'image-size';
 import { Express } from 'express';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { IAttachmentType, IAttachmentCreateFieldByLocal, ISaveInLocalSignature } from '@leaa/common/interfaces';
+import {
+  IAttachmentType,
+  IAttachmentCreateFieldByLocal,
+  ISaveInLocalSignature,
+  IAttachmentParams,
+} from '@leaa/common/interfaces';
 import { ConfigService } from '@leaa/api/modules/config/config.service';
-import { CreateAttachmentInput } from '@leaa/common/dtos/attachment';
+import { AttachmentProperty } from '@leaa/api/modules/attachment/attachment.property';
 import { Attachment } from '@leaa/common/entrys';
 import { loggerUtil, attachmentUtil } from '@leaa/api/utils';
+import { attachmentConfig } from '@leaa/api/configs';
 
 const CONSTRUCTOR_NAME = 'SaveInLocalService';
 
@@ -21,18 +26,18 @@ export class SaveInLocalService {
   constructor(
     @InjectRepository(Attachment) private readonly attachmentRepository: Repository<Attachment>,
     private readonly configService: ConfigService,
+    private readonly attachmentProperty: AttachmentProperty,
   ) {}
 
   async getSignature(): Promise<ISaveInLocalSignature> {
     return {
       saveIn: 'local',
-      saveDirPath: `attachments/${moment().format('YYYY/MM')}/`,
-      // eslint-disable-next-line max-len
-      uploadEndPoint: `${this.configService.PROTOCOL}://${this.configService.BASE_HOST}:${this.configService.PORT}/attachments/upload`,
+      saveDirPath: attachmentConfig.SAVE_DIR_BY_DB,
+      uploadEndPoint: attachmentConfig.UPLOAD_ENDPOINT_BY_LOCAL,
     };
   }
 
-  async saveAt2xToAt1x(file: Express.Multer.File, rawWidth: number, rawHeight: number) {
+  async saveAt2xToAt1xByLocal(file: Express.Multer.File, rawWidth: number, rawHeight: number) {
     const width = Math.round(rawWidth / 2);
     const height = Math.round(rawHeight / 2);
 
@@ -54,8 +59,11 @@ export class SaveInLocalService {
   }
 
   async craeteAttachmentByLocal(
-    body: CreateAttachmentInput,
+    body: IAttachmentParams,
     file: Express.Multer.File,
+    options?: {
+      onlySaveFile?: boolean;
+    },
   ): Promise<{ attachment: Attachment } | undefined> {
     if (!file) {
       const message = 'not found attachment';
@@ -89,7 +97,11 @@ export class SaveInLocalService {
     const uuid = path.basename(filename, ext).replace('_2x', '');
 
     if (isImage && at2x) {
-      await this.saveAt2xToAt1x(file, width, height);
+      await this.saveAt2xToAt1xByLocal(file, width, height);
+    }
+
+    if (options && options.onlySaveFile) {
+      return;
     }
 
     const attachmentData: IAttachmentCreateFieldByLocal = {
@@ -116,6 +128,12 @@ export class SaveInLocalService {
     const attachment = await this.attachmentRepository.save({ ...attachmentData });
 
     // eslint-disable-next-line consistent-return
-    return { attachment };
+    return {
+      attachment: {
+        ...attachment,
+        url: this.attachmentProperty.resolvePropertyUrl(attachment),
+        urlAt2x: this.attachmentProperty.resolvePropertyUrlAt2x(attachment),
+      },
+    };
   }
 }

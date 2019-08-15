@@ -18,6 +18,7 @@ import { ConfigService } from '@leaa/api/modules/config/config.service';
 import { AttachmentProperty } from '@leaa/api/modules/attachment/attachment.property';
 import { Attachment } from '@leaa/common/entrys';
 import { attachmentUtil, loggerUtil } from '@leaa/api/utils';
+import { attachmentConfig } from '@leaa/api/configs';
 
 const CONSTRUCTOR_NAME = 'SaveInOssService';
 
@@ -26,12 +27,19 @@ export class SaveInOssService {
   constructor(
     @InjectRepository(Attachment) private readonly attachmentRepository: Repository<Attachment>,
     private readonly configService: ConfigService,
-    private readonly attachmentShared: AttachmentProperty,
+    private readonly attachmentProperty: AttachmentProperty,
   ) {}
 
   // eslint-disable-next-line max-len
-  private uploadEndPoint = `${this.configService.PROTOCOL}://${this.configService.OSS_ALIYUN_BUCKET}.${this.configService.OSS_ALIYUN_REGION}.aliyuncs.com`;
+  private uploadEndPoint = attachmentConfig.UPLOAD_ENDPOINT_BY_OSS;
   private EXPIRED_TIME_MINUTES = 10;
+
+  private client: OSS = new OSS({
+    accessKeyId: this.configService.OSS_ALIYUN_AK_ID,
+    accessKeySecret: this.configService.OSS_ALIYUN_AK_SECRET,
+    region: this.configService.OSS_ALIYUN_REGION,
+    bucket: this.configService.OSS_ALIYUN_BUCKET,
+  });
 
   async getSignature(): Promise<ISaveInOssSignature> {
     // prettier-ignore
@@ -39,7 +47,7 @@ export class SaveInOssService {
 
     const OSSAccessKeyId = this.configService.OSS_ALIYUN_AK_ID;
     const OSSAccessKeySecret = this.configService.OSS_ALIYUN_AK_SECRET;
-    const saveDirPath = `attachments/${moment().format('YYYY/MM')}/`;
+    const saveDirPath = attachmentConfig.SAVE_DIR_BY_DB;
 
     const policyJson = JSON.stringify({
       expiration,
@@ -97,28 +105,19 @@ export class SaveInOssService {
     };
   }
 
-  async saveAt2xToAt1x(filename: string): Promise<OSS.PutObjectResult | null> {
-    const client: OSS = new OSS({
-      accessKeyId: this.configService.OSS_ALIYUN_AK_ID,
-      accessKeySecret: this.configService.OSS_ALIYUN_AK_SECRET,
-      region: this.configService.OSS_ALIYUN_REGION,
-      bucket: this.configService.OSS_ALIYUN_BUCKET,
-    });
-
-    const tempFilePath = '/tmp/ali-oss-tmp-file';
-    const image1x = `${this.uploadEndPoint}/${filename}?x-oss-process=image/resize,p_50`;
-
+  async downloadFile(fileUrl: string, cb: (file: Buffer) => void) {
+    const tempFile = `/tmp/${new Date().getTime()}`;
     let result = null;
 
-    await axios({ url: image1x, responseType: 'stream' }).then(
+    await axios({ url: fileUrl, responseType: 'stream' }).then(
       response =>
         new Promise((resolve, reject) => {
           response.data
-            .pipe(fs.createWriteStream(tempFilePath))
+            .pipe(fs.createWriteStream(tempFile))
             .on('finish', async () => {
-              const file = await fs.readFileSync(tempFilePath);
+              const file: Buffer = fs.readFileSync(tempFile);
 
-              result = await client.put(filename.replace('_2x', ''), file);
+              result = await cb(file);
 
               return resolve();
             })
@@ -127,6 +126,39 @@ export class SaveInOssService {
     );
 
     return result;
+  }
+
+  async saveAt2xToAt1xByOss(filename: string): Promise<OSS.PutObjectResult | null> {
+    const at1xUrl = `${this.uploadEndPoint}/${filename}?x-oss-process=image/resize,p_50`;
+
+    return this.downloadFile(at1xUrl, file => this.client.put(filename.replace('_2x', ''), file));
+  }
+
+  async saveOssToLocal(
+    attachment: Pick<Attachment, 'filename' | 'url' | 'urlAt2x' | 'at2x'>,
+  ): Promise<'success' | Error> {
+    await this.downloadFile(attachment.url || '', file => {
+      try {
+        fs.writeFileSync(`${attachmentConfig.SAVE_DIR_BY_DISK}/${attachment.filename}`, file);
+      } catch (e) {
+        throw Error(e.message);
+      }
+    });
+
+    if (attachment.at2x) {
+      await this.downloadFile(attachment.urlAt2x || '', file => {
+        try {
+          fs.writeFileSync(
+            `${attachmentConfig.SAVE_DIR_BY_DISK}/${attachmentUtil.filenameAt1xToAt2x(attachment.filename)}`,
+            file,
+          );
+        } catch (e) {
+          throw Error(e.message);
+        }
+      });
+    }
+
+    return 'success';
   }
 
   async craeteAttachmentByOss(req: ICraeteAttachmentByOssCallback): Promise<{ attachment: Attachment } | undefined> {
@@ -148,8 +180,6 @@ export class SaveInOssService {
     let height = 0;
 
     if (isImage) {
-      // const imageSize = ImageSize(file.path);
-
       const rawWidth = Number(req.width);
       const rawHeight = Number(req.height);
 
@@ -169,7 +199,15 @@ export class SaveInOssService {
     const title = req.originalname.replace(ext, '');
 
     if (isImage && at2x) {
-      await this.saveAt2xToAt1x(req.object);
+      const at1x = await this.saveAt2xToAt1xByOss(req.object);
+
+      if (!at1x) {
+        const message = `save @2x to @1x failed, ${JSON.stringify(req.object)}`;
+
+        loggerUtil.warn(message, CONSTRUCTOR_NAME);
+
+        return;
+      }
     }
 
     const attachmentData: IAttachmentCreateFieldByOss = {
@@ -191,7 +229,27 @@ export class SaveInOssService {
       at2x,
       sort: 0,
       in_oss: 1,
+      in_local: 0,
     };
+
+    const url = this.attachmentProperty.resolvePropertyUrl(attachmentData as Attachment);
+    const urlAt2x = this.attachmentProperty.resolvePropertyUrlAt2x(attachmentData as Attachment);
+
+    // if SAVE_IN_LOCAL failed, don't write DB
+    if (this.configService.ATTACHMENT_SAVE_IN_LOCAL) {
+      const status = await this.saveOssToLocal({
+        filename: attachmentData.filename,
+        at2x: attachmentData.at2x,
+        url,
+        urlAt2x,
+      });
+
+      if (status !== 'success') {
+        throw Error('Save Oss To Local Error');
+      }
+
+      attachmentData.in_local = 1;
+    }
 
     const attachment = await this.attachmentRepository.save({ ...attachmentData });
 
@@ -199,8 +257,8 @@ export class SaveInOssService {
     return {
       attachment: {
         ...attachment,
-        url: this.attachmentShared.url(attachment),
-        urlAt2x: this.attachmentShared.urlAt2x(attachment),
+        url,
+        urlAt2x,
       },
     };
   }

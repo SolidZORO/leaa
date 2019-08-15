@@ -1,6 +1,5 @@
 import uuid from 'uuid';
 import path from 'path';
-import moment from 'moment';
 import mkdirp from 'mkdirp';
 import multer from 'multer';
 import { Express } from 'express';
@@ -8,20 +7,18 @@ import { Injectable } from '@nestjs/common';
 import { MulterModuleOptions, MulterOptionsFactory } from '@nestjs/platform-express';
 import { ConfigService } from '@leaa/api/modules/config/config.service';
 import { attachmentUtil } from '@leaa/api/utils';
+import { attachmentConfig } from '@leaa/api/configs';
 
 @Injectable()
 export class MulterService implements MulterOptionsFactory {
   constructor(private readonly configService: ConfigService) {}
-
-  public subDir = moment().format('YYYY/MM');
-  public saveDir = `./${this.configService.PUBLIC_DIR}/${this.configService.ATTACHMENT_DIR}/${this.subDir}`;
 
   destination = (
     req: Express.Request,
     file: Express.Multer.File,
     cb: (error: Error | null, destination: string) => void,
   ): void => {
-    mkdirp(this.saveDir, err => cb(err, this.saveDir));
+    mkdirp(attachmentConfig.SAVE_DIR_BY_DISK, err => cb(err, attachmentConfig.SAVE_DIR_BY_DISK));
   };
 
   filename = (
@@ -44,7 +41,7 @@ export class MulterService implements MulterOptionsFactory {
         fileSize: this.configService.ATTACHMENT_LIMIT_SIZE_MB * 1024 * 1024,
       },
       fileFilter: (req, file, cb) => {
-        const fileTypes = /image|jpeg|jpg|png|gif|webp|pdf|text|mp4|mp3/;
+        const fileTypes = attachmentConfig.ALLOW_FILE_TYPES;
         const mimetype = fileTypes.test(file.mimetype);
         const extname = fileTypes.test(path.extname(file.originalname).toLowerCase());
 

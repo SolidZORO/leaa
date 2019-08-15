@@ -6,7 +6,6 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Attachment, User } from '@leaa/common/entrys';
 import {
-  CreateAttachmentInput,
   AttachmentsArgs,
   AttachmentsWithPaginationObject,
   AttachmentArgs,
@@ -15,7 +14,12 @@ import {
   UpdateAttachmentsInput,
   AttachmentsObject,
 } from '@leaa/common/dtos/attachment';
-import { IAttachmentDbFilterField, ISaveInOssSignature, ISaveInLocalSignature } from '@leaa/common/interfaces';
+import {
+  IAttachmentDbFilterField,
+  ISaveInOssSignature,
+  ISaveInLocalSignature,
+  IAttachmentParams,
+} from '@leaa/common/interfaces';
 import { formatUtil, loggerUtil, pathUtil, permissionUtil } from '@leaa/api/utils';
 import { ConfigService } from '@leaa/api/modules/config/config.service';
 import { SaveInOssService } from '@leaa/api/modules/attachment/save-in-oss.service';
@@ -32,16 +36,20 @@ export class AttachmentService {
     private readonly saveInOss: SaveInOssService,
   ) {}
 
-  getSignature(): Promise<ISaveInOssSignature | ISaveInLocalSignature> {
-    if (!this.configService.ATTACHMENT_SAVE_IN_OSS && !this.configService.ATTACHMENT_SAVE_IN_LOCAL) {
-      throw Error('Missing save param');
-    }
-
+  getSignature(): Promise<ISaveInOssSignature | ISaveInLocalSignature> | null {
     if (this.configService.ATTACHMENT_SAVE_IN_OSS) {
+      console.log('ATTACHMENT_SAVE_IN_OSS');
       return this.saveInOss.getSignature();
     }
 
-    return this.saveInLocal.getSignature();
+    if (this.configService.ATTACHMENT_SAVE_IN_LOCAL) {
+      console.log('ATTACHMENT_SAVE_IN_LOCAL');
+      return this.saveInLocal.getSignature();
+    }
+
+    loggerUtil.warn('Signature Missing SAVE_IN... Params', CONSTRUCTOR_NAME);
+
+    return null;
   }
 
   async attachments(args: AttachmentsArgs, user?: User): Promise<AttachmentsWithPaginationObject> {
@@ -117,7 +125,7 @@ export class AttachmentService {
   }
 
   async craeteAttachmentByLocal(
-    body: CreateAttachmentInput,
+    body: IAttachmentParams,
     file: Express.Multer.File,
   ): Promise<{ attachment: Attachment } | undefined> {
     return this.saveInLocal.craeteAttachmentByLocal(body, file);

@@ -3,30 +3,21 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Attachment } from '@leaa/common/entrys';
 import { pathUtil } from '@leaa/api/utils';
-import { ConfigService } from '@leaa/api/modules/config/config.service';
+import { attachmentConfig } from '@leaa/api/configs';
 
 // const CONSTRUCTOR_NAME = 'AttachmentProperty';
 
 @Injectable()
 export class AttachmentProperty {
-  constructor(
-    @InjectRepository(Attachment) private readonly attachmentRepository: Repository<Attachment>,
-    private readonly configService: ConfigService,
-  ) {}
+  constructor(@InjectRepository(Attachment) private readonly attachmentRepository: Repository<Attachment>) {}
 
-  resolvePropertyUrl(attachment: Attachment): string | null {
+  resolvePropertyUrl(attachment: Pick<Attachment, 'in_oss' | 'in_local' | 'path'>): string | null {
     if (attachment.in_oss) {
-      // eslint-disable-next-line max-len
-      const ossUrlPrefix = `${this.configService.PROTOCOL}://${this.configService.OSS_ALIYUN_BUCKET}.${this.configService.OSS_ALIYUN_REGION}.aliyuncs.com`;
-
-      return `${ossUrlPrefix}${attachment.path}`;
+      return `${attachmentConfig.URL_PREFIX_BY_OSS}${attachment.path}`;
     }
 
     if (attachment.in_local) {
-      // eslint-disable-next-line max-len
-      const localUrlPrefix = `${this.configService.PROTOCOL}://${this.configService.BASE_HOST}:${this.configService.PORT}`;
-
-      return `${localUrlPrefix}${attachment.path}`;
+      return `${attachmentConfig.URL_PREFIX_BY_LOCAL}${attachment.path}`;
     }
 
     return null;

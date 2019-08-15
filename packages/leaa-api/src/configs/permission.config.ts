@@ -105,3 +105,8 @@ export const permissions = shield(
     allowExternalErrors: process.env.NODE_ENV !== 'production',
   },
 );
+
+export const permissionConfig = {
+  permissions,
+  notValidateUserQuerys,
+};

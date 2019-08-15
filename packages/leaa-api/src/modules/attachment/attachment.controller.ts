@@ -1,11 +1,10 @@
-import { Controller, Get, Query, Body, UseInterceptors, Post, UploadedFile, UseGuards } from '@nestjs/common';
+import { Controller, Get, HttpCode, Body, UseInterceptors, Post, UploadedFile, UseGuards } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 
-import { CreateAttachmentInput } from '@leaa/common/dtos/attachment';
 import { JwtGuard } from '@leaa/api/guards/jwt.guard';
 import { AttachmentService } from '@leaa/api/modules/attachment/attachment.service';
 import { SaveInOssService } from '@leaa/api/modules/attachment/save-in-oss.service';
-import { ICraeteAttachmentByOssCallback } from '@leaa/common/interfaces';
+import { ICraeteAttachmentByOssCallback, IAttachmentParams } from '@leaa/common/interfaces';
 
 @Controller('/attachments')
 export class AttachmentController {
@@ -30,9 +29,10 @@ export class AttachmentController {
   }
 
   @Post('/upload')
+  @HttpCode(200)
   @UseGuards(JwtGuard)
   @UseInterceptors(FileInterceptor('file'))
-  async uploadFile(@Body() body: CreateAttachmentInput, @UploadedFile() file: Express.Multer.File) {
+  async uploadFile(@Body() body: IAttachmentParams, @UploadedFile() file: Express.Multer.File) {
     return this.attachmentService.craeteAttachmentByLocal(body, file);
   }
 }

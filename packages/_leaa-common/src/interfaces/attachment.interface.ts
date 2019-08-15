@@ -48,7 +48,7 @@ export type IAttachmentCreateFieldByLocal = Pick<
   | 'in_local'
 >;
 
-export interface IAttachmentCreateFieldByOss extends Omit<IAttachmentCreateFieldByLocal, 'in_local'> {
+export interface IAttachmentCreateFieldByOss extends IAttachmentCreateFieldByLocal {
   in_oss: number;
 }
 

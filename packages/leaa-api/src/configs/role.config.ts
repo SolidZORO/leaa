@@ -17,3 +17,7 @@ export const hasRole = (allowedRoles: string) =>
       return false;
     }
   });
+
+export const roleConfig = {
+  hasRole,
+};

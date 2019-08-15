@@ -1,17 +1,13 @@
-import _ from 'lodash';
-import axios from 'axios';
 import cx from 'classnames';
 import i18n from 'i18next';
 import React, { useState, useEffect, forwardRef } from 'react';
-import { message } from 'antd';
 import BraftEditor, { EditorState, BraftEditorProps } from 'braft-editor';
 import Table from 'braft-extensions/dist/table';
 import CodeHighlighter from 'braft-extensions/dist/code-highlighter';
 import HeaderId from 'braft-extensions/dist/header-id';
-import { authUtil, attachmentUtil } from '@leaa/dashboard/utils';
+import { attachmentUtil } from '@leaa/dashboard/utils';
 import { IMediaItem, IAttachmentParams } from '@leaa/common/interfaces';
 import { Attachment } from '@leaa/common/entrys';
-import { envConfig } from '@leaa/dashboard/configs';
 
 import 'braft-editor/dist/index.css';
 import 'braft-extensions/dist/table.css';
@@ -85,7 +81,7 @@ export const WYSIWYGEditor = forwardRef((props: IProps, ref: React.Ref<any>) => 
   const attachmentToMedia = (attachment: Attachment): IMediaItem => ({
     id: attachment.uuid,
     type: attachment.type.toUpperCase(),
-    url: `${envConfig.API_HOST}${attachment.path}`,
+    url: attachment.url || '',
   });
 
   const attachmentsToMedias = (attachmentItems?: Attachment[]): IMediaItem[] =>
@@ -103,48 +99,21 @@ export const WYSIWYGEditor = forwardRef((props: IProps, ref: React.Ref<any>) => 
 
   const uploadFn = async (param: any) => {
     const signature = await attachmentUtil.getSignature();
-    // const a = await attachmentUtil.batchUploadFiles([param.file], props);
 
-    const a = await attachmentUtil.uploadFile(
-      param.file,
-      signature,
-      props.attachmentParams,
-      {
-        onUploadSuccess: e => {
-          console.log(e);
-        },
+    await attachmentUtil.uploadFile(param.file, signature, props.attachmentParams, {
+      onUploadSuccess: event => {
+        if (event && event.data && event.data.attachment && event.data.attachment.url) {
+          param.success({ url: event.data.attachment.url });
+        }
       },
-      // () => props.onUploadedCallback && props.onUploadedCallback(new Date().getMilliseconds()),
-      // (e) => param.success({ url }),
-      // e => {
-      //   console.log(e);
+      onUploadProgress: event => {
+        param.progress((event.loaded / event.total) * 100);
+      },
+      // onUploadFail: event => {
       // },
-    );
-
-    console.log(a);
-    //
-    //
-    // const token = authUtil.getAuthToken();
-    // const formData = new FormData();
-    // formData.append('file', param.file);
-    // _.map(props.attachmentParams, (v, k) => formData.append(`${k}`, `${v}`));
-    //
-    // await axios
-    //   .post(`${envConfig.UPLOAD_ENDPOINT}`, formData, {
-    //     headers: { Authorization: token ? `Bearer ${token}` : '' },
-    //     onUploadProgress: event => {
-    //       param.progress((event.loaded / event.total) * 100);
-    //     },
-    //   })
-    //   .then(e => {
-    //     if (e.data && e.data.attachment) {
-    //       const url = `${envConfig.API_HOST}${e.data.attachment.path}`;
-    //       param.success({ url });
-    //     }
-    //   })
-    //   .catch((e: Error) => {
-    //     message.info(e.message);
-    //   });
+      // onUploadCatch: event => {
+      // },
+    });
   };
 
   const onRemoveMedias = (attachments: IMediaItem[]) => {

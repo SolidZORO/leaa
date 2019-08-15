@@ -13,7 +13,7 @@ import { IJwtPayload } from '@leaa/common/interfaces';
 import { ConfigService } from '@leaa/api/modules/config/config.service';
 import { loggerUtil } from '@leaa/api/utils';
 import { UserService } from '@leaa/api/modules/user/user.service';
-import { notValidateUserQuerys } from '@leaa/api/configs/permission.config';
+import { permissionConfig } from '@leaa/api/configs';
 
 const CONSTRUCTOR_NAME = 'AuthService';
 
@@ -51,7 +51,7 @@ export class AuthService {
   public async validateUserByReq(req: Request): Promise<User | undefined | boolean> {
     const isGuest = req.headers && !req.headers.authorization;
 
-    if (req.body && isGuest && notValidateUserQuerys.some(item => req.body.query.includes(item))) {
+    if (req.body && isGuest && permissionConfig.notValidateUserQuerys.some(item => req.body.query.includes(item))) {
       return true;
     }
 
