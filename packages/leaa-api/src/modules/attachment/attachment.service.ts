@@ -20,10 +20,11 @@ import {
   ISaveInLocalSignature,
   IAttachmentParams,
 } from '@leaa/common/interfaces';
-import { formatUtil, loggerUtil, pathUtil, permissionUtil } from '@leaa/api/utils';
+import { formatUtil, loggerUtil, pathUtil, permissionUtil, attachmentUtil } from '@leaa/api/utils';
 import { ConfigService } from '@leaa/api/modules/config/config.service';
 import { SaveInOssService } from '@leaa/api/modules/attachment/save-in-oss.service';
 import { SaveInLocalService } from '@leaa/api/modules/attachment/save-in-local.service';
+import { AttachmentProperty } from '@leaa/api/modules/attachment/attachment.property';
 
 const CONSTRUCTOR_NAME = 'AttachmentService';
 
@@ -32,19 +33,18 @@ export class AttachmentService {
   constructor(
     @InjectRepository(Attachment) private readonly attachmentRepository: Repository<Attachment>,
     private readonly configService: ConfigService,
-    private readonly saveInLocal: SaveInLocalService,
-    private readonly saveInOss: SaveInOssService,
+    private readonly saveInLocalServer: SaveInLocalService,
+    private readonly saveInOssServer: SaveInOssService,
+    private readonly attachmentProperty: AttachmentProperty,
   ) {}
 
   getSignature(): Promise<ISaveInOssSignature | ISaveInLocalSignature> | null {
     if (this.configService.ATTACHMENT_SAVE_IN_OSS) {
-      console.log('ATTACHMENT_SAVE_IN_OSS');
-      return this.saveInOss.getSignature();
+      return this.saveInOssServer.getSignature();
     }
 
     if (this.configService.ATTACHMENT_SAVE_IN_LOCAL) {
-      console.log('ATTACHMENT_SAVE_IN_LOCAL');
-      return this.saveInLocal.getSignature();
+      return this.saveInLocalServer.getSignature();
     }
 
     loggerUtil.warn('Signature Missing SAVE_IN... Params', CONSTRUCTOR_NAME);
@@ -128,7 +128,7 @@ export class AttachmentService {
     body: IAttachmentParams,
     file: Express.Multer.File,
   ): Promise<{ attachment: Attachment } | undefined> {
-    return this.saveInLocal.craeteAttachmentByLocal(body, file);
+    return this.saveInLocalServer.craeteAttachmentByLocal(body, file);
   }
 
   async updateAttachment(uuid: string, args: UpdateAttachmentInput): Promise<Attachment | undefined> {
@@ -212,20 +212,39 @@ export class AttachmentService {
     prevItems.forEach(i => {
       if (i.at2x) {
         try {
+          // delete local
           fs.unlinkSync(`${this.configService.PUBLIC_DIR}${pathUtil.getAt2xPath(i.path)}`);
+
+          // delete oss
+          loggerUtil.log(`delete local 2x file ${i.path}\n\n`, CONSTRUCTOR_NAME);
+
+          if (i.in_oss) {
+            this.saveInOssServer.client.delete(attachmentUtil.filenameAt1xToAt2x(i.path.substr(1)));
+
+            loggerUtil.log(`delete oss 2x file ${i.path}\n\n`, CONSTRUCTOR_NAME);
+          }
         } catch (err) {
           loggerUtil.error(`delete _2x item ${i.path} fail: ${JSON.stringify(i)}\n\n`, CONSTRUCTOR_NAME, err);
         }
       }
 
       try {
+        // delete local
         fs.unlinkSync(`${this.configService.PUBLIC_DIR}${i.path}`);
+        loggerUtil.log(`delete local 1x file ${i.path}\n\n`, CONSTRUCTOR_NAME);
+
+        // delete oss
+        if (i.in_oss) {
+          this.saveInOssServer.client.delete(i.path.substr(1));
+
+          loggerUtil.log(`delete oss 1x file ${i.path}\n\n`, CONSTRUCTOR_NAME);
+        }
       } catch (err) {
-        loggerUtil.error(`delete item ${i.path} fail: ${JSON.stringify(i)}\n\n`, CONSTRUCTOR_NAME, err);
+        loggerUtil.error(`delete file ${i.path} fail: ${JSON.stringify(i)}\n\n`, CONSTRUCTOR_NAME, err);
       }
     });
 
-    loggerUtil.log(`delete item ${uuid} successful: ${JSON.stringify(nextItem)}\n\n`, CONSTRUCTOR_NAME);
+    loggerUtil.log(`delete all-file ${uuid} successful: ${JSON.stringify(nextItem)}\n\n`, CONSTRUCTOR_NAME);
 
     return {
       items: nextItem.map(i => i.uuid),
