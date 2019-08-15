@@ -10,7 +10,6 @@ const dev = process.env.NODE_ENV !== 'production';
 const { PROTOCOL, PORT, BASE_HOST, NAME } = serverDotenv;
 
 const app = next({ dev, dir: dev ? '.' : './_dist/leaa-www' });
-// const app = next({ dev });
 const handle = app.getRequestHandler();
 
 (async () => {
@@ -21,8 +20,8 @@ const handle = app.getRequestHandler();
   server.use('/static', express.static('static'));
   server.get(/^\/(?!static|login|register|_next)/, authMiddleware);
 
-  const plainFileOptions = { root: __dirname + '/static/', headers: { 'Content-Type': 'text/plain;charset=UTF-8' } };
-  const iconFileOptions = { root: __dirname + '/static/favicons' };
+  const plainFileOptions = { root: `${__dirname}/static/`, headers: { 'Content-Type': 'text/plain;charset=UTF-8' } };
+  const iconFileOptions = { root: `${__dirname}/static/favicons` };
   // const xmlFileOptions = { root: __dirname + '/static/', headers: { 'Content-Type': 'text/xml;charset=UTF-8' } };
 
   server.get('/robots.txt', (req, res) => res.status(200).sendFile('robots.txt', plainFileOptions));

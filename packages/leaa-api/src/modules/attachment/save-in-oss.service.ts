@@ -268,6 +268,8 @@ export class SaveInOssService {
 
   @HttpCode(200)
   async ossCallback(req: ICraeteAttachmentByOssCallback): Promise<any> {
+    console.log('-------- ATTACHMENT OSS CALLBACK --------\n', req);
+
     const attachment = await this.craeteAttachmentByOss(req);
 
     return {

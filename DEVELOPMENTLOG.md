@@ -1,3 +1,21 @@
+### 2019-08-15 20:45
+时间过得好快，转眼半个月，最近没给 leaa 写什么新东西。重点放在了阿里云 OSS 整合这块。想要实现这样一个功能：
+
+- Local 上传
+- OSS 上传
+- OSS 上传后备份到 Local
+- OSS 上传 @2x 图片后，生成 @1x 上传回 OSS
+- OSS 上传 @2x 图片后，生成 @1x 上传回 OSS 并备份到 Local
+- 删除 OSS 需要触发删除 @1x 和 @2x 文件，并删除 Local 中的 @1x 和 @2x
+- Local 和 OSS 是否开启均可配置
+- 如 OSS 开启，为保证用户上传速度，所有上传直接走 OSS
+
+其中过程还蛮艰辛的，涉及到 Local 和 OSS 之间的一些交互，而且因为直接走 OSS，所有请求不经 API，变成了等待 OSS 的 Callback，必须保证任何一步没做完都不能动 DB，勉强达到了密等 hhh。
+其实如果上传都走 API，然后由 API 统一处理再 put 到 OSS 会简单非常常常常常常多，我这么做主要是担心做某些活动的时候，如果涉及到上传文件，并发就会很大，服务器缓不过来。所以拿 OSS 先挡一下还是很有必要的。
+
+基本上 www 和 api 以及 dashboard 就告一段落了。明天开始 miniprogram。
+
+
 ### 2019-08-01 23:39
 
 从 git commit 可以看出，这篇 DEVELOPMENTLOG（开发日志）是现在才开始写的，项目本来叫做 1d1h，也就是一天一小时的意思，想着业余时间把之前写前后端的经验汇集起来，做个 Blog --> CMS --> Sohp 的开源项目，包括 API / Dashboard / Website / Wechat Weapp / ReactNative(iOS / Android)，因为是一套 monorepo，类似 interface / entry 这些都是共用的所以感觉做成全平台也是一件很顺手的事情。

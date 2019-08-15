@@ -16,7 +16,6 @@ if (isServer) {
     BASE_HOST: envalid.str(),
     API_HOST: envalid.url(),
     GRAPHQL_ENDPOINT: envalid.url(),
-    UPLOAD_HOST: envalid.url(),
   };
 
   const dotenvObject = envalid.cleanEnv(process.env, rule, { dotEnvPath });
