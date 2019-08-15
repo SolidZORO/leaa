@@ -6,7 +6,7 @@ C'est la vie.
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/4443217249ea4bbe8e057c691de4b0cd)](https://www.codacy.com?utm_source=github.com&utm_medium=referral&utm_content=SolidZORO/leaa&utm_campaign=Badge_Grade)
 [![codecov](https://codecov.io/gh/SolidZORO/leaa/branch/master/graph/badge.svg?token=gdOhbSjkRy)](https://codecov.io/gh/SolidZORO/leaa)
 
-## **MONOREPO-PACKAGES**
+## **🔰 MONOREPO-PACKAGES**
 
 - [x] \_leaa-common
 - [x] leaa-api / backend (Nest.js + TypeGraphQL + Docker Compose)
@@ -33,13 +33,13 @@ C'est la vie.
   - [x] swiper retina@2x / lazyload
 - [ ] leaa-miniprogram / wechat-miniprogram (GraphQL + taro.js + taro-ui)
 
-## **ONLINE DEMO**
+## **📍 ONLINE DEMO**
 
-- [📍 leaa-api-demo](https://test-leaa-api.herokuapp.com)
-- [📍 leaa-dashboard-demo](https://test-leaa-dashboard.herokuapp.com)
-- [📍 leaa-www-demo](https://test-leaa-www.herokuapp.com)
+- [leaa-api-demo](https://test-leaa-api.herokuapp.com)
+- [leaa-dashboard-demo](https://test-leaa-dashboard.herokuapp.com)
+- [leaa-www-demo](https://test-leaa-www.herokuapp.com)
 
-## **UI REVIEW**
+## **🌈 UI REVIEW**
 
 ### DASHBOARD
 
@@ -69,7 +69,7 @@ C'est la vie.
 
 ![www-mobile](./designs/ui/www-mobile.png)
 
-## **DEV LOG**
+## **📮 DEV LOG**
 
 ### 2019-08-01 23:39
 
