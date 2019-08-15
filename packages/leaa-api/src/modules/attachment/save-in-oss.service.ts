@@ -19,6 +19,7 @@ import { AttachmentProperty } from '@leaa/api/modules/attachment/attachment.prop
 import { Attachment } from '@leaa/common/entrys';
 import { attachmentUtil, loggerUtil } from '@leaa/api/utils';
 import { attachmentConfig } from '@leaa/api/configs';
+import mkdirp from 'mkdirp';
 
 const CONSTRUCTOR_NAME = 'SaveInOssService';
 
@@ -139,6 +140,8 @@ export class SaveInOssService {
   ): Promise<'success' | Error> {
     await this.downloadFile(attachment.url || '', file => {
       try {
+        mkdirp(attachmentConfig.SAVE_DIR_BY_DISK, err => loggerUtil.error(JSON.stringify(err), CONSTRUCTOR_NAME));
+
         fs.writeFileSync(`${attachmentConfig.SAVE_DIR_BY_DISK}/${attachment.filename}`, file);
       } catch (e) {
         throw Error(e.message);
