@@ -9,7 +9,7 @@ C'est la vie.
 ## **MONOREPO-PACKAGES**
 
 - [x] \_leaa-common
-- [x] leaa-api / backend (Nest.js + TypeGraphQL + Docker Compose)
+- [x] leaa-api ([demo](https://test-leaa-api.herokuapp.com)) / backend (Nest.js + TypeGraphQL + Docker Compose)
   - [x] auth
   - [x] user
   - [x] role
@@ -17,7 +17,7 @@ C'est la vie.
   - [x] category (infinity level)
   - [x] article
   - [x] attachment local / oss
-- [x] leaa-dashboard / dashboard (React + Antd + MobX + Apollo / GraphQL)
+- [x] leaa-dashboard ([demo](https://test-leaa-dashboard.herokuapp.com)) / dashboard (React + Antd + MobX + Apollo / GraphQL)
   - [x] auth
   - [x] user
   - [x] role
@@ -25,19 +25,13 @@ C'est la vie.
   - [x] category (infinity level)
   - [x] article
   - [x] attachment
-- [x] leaa-www / website (Next.js + GraphQL)
+- [x] leaa-www ([demo](https://test-leaa-www.herokuapp.com)) / website (Next.js + GraphQL)
   - [x] index
   - [x] article list
   - [x] article item
   - [x] login/logout
   - [x] swiper retina@2x / lazyload
 - [ ] leaa-miniprogram / wechat-miniprogram (GraphQL + taro.js + taro-ui)
-
-## **ONLINE DEMO**
-
-[leaa-api-demo](https://test-leaa-api.herokuapp.com)
-[leaa-dashboard-demo](https://test-leaa-dashboard.herokuapp.com)
-[leaa-www-demo](https://test-leaa-www.herokuapp.com)
 
 ## **UI REVIEW**
 
