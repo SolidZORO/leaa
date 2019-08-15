@@ -46,7 +46,7 @@ class ArticleInfoFormInner extends React.PureComponent<IProps> {
                 </Form.Item>
               </Col>
 
-              <Col xs={24} sm={6}>
+              <Col xs={19} sm={6}>
                 <Form.Item label={t('_lang:category')}>
                   {getFieldDecorator('category_id', {
                     initialValue: props.item ? props.item.category_id : undefined,
@@ -56,7 +56,7 @@ class ArticleInfoFormInner extends React.PureComponent<IProps> {
                 </Form.Item>
               </Col>
 
-              <Col xs={24} sm={4}>
+              <Col xs={5} sm={4}>
                 <Form.Item label={t('_lang:status')}>
                   {getFieldDecorator('status', {
                     initialValue: props.item ? Number(props.item.status) : 0,
