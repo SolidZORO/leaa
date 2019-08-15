@@ -26,9 +26,9 @@ C'est la vie.
   - [x] article
   - [x] attachment
 - [x] leaa-www / website (Next.js + GraphQL)
-
   - [x] index
-  - [x] article
+  - [x] article list
+  - [x] article item
   - [x] login/logout
   - [x] swiper retina@2x / lazyload
 
