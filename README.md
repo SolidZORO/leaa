@@ -6,7 +6,7 @@ C'est la vie.
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/4443217249ea4bbe8e057c691de4b0cd)](https://www.codacy.com?utm_source=github.com&utm_medium=referral&utm_content=SolidZORO/leaa&utm_campaign=Badge_Grade)
 [![codecov](https://codecov.io/gh/SolidZORO/leaa/branch/master/graph/badge.svg?token=gdOhbSjkRy)](https://codecov.io/gh/SolidZORO/leaa)
 
-## **🔰 MONOREPO-PACKAGES**
+### **🔰 MONOREPO-PACKAGES**
 
 - [x] \_leaa-common
 - [x] leaa-api / backend (Nest.js + TypeGraphQL + Docker Compose)
@@ -33,45 +33,45 @@ C'est la vie.
   - [x] swiper retina@2x / lazyload
 - [ ] leaa-miniprogram / wechat-miniprogram (GraphQL + taro.js + taro-ui)
 
-## **📍 ONLINE DEMO**
+### **📍 ONLINE DEMO**
 
 - [leaa-api-demo](https://test-leaa-api.herokuapp.com)
 - [leaa-dashboard-demo](https://test-leaa-dashboard.herokuapp.com)
 - [leaa-www-demo](https://test-leaa-www.herokuapp.com)
 
-## **🌈 UI REVIEW**
+### **🌈 UI REVIEW**
 
-### DASHBOARD
+#### DASHBOARD
 
-#### dashboard-login
+##### dashboard-login
 
 ![dashboard-login](./designs/ui/dashboard-login.png)
 
-#### dashboard-user-edit
+##### dashboard-user-edit
 
 ![dashboard-user-edit](./designs/ui/dashboard-user-edit.png)
 
-#### dashboard-mobile
+##### dashboard-mobile
 
 ![dashboard-mobile](./designs/ui/dashboard-mobile.png)
 
-### WWW
+#### WWW
 
-#### www-index
+##### www-index
 
 ![www-index](./designs/ui/www-index.png)
 
-#### www-login
+##### www-login
 
 ![www-login](./designs/ui/www-login.png)
 
-#### www-mobile
+##### www-mobile
 
 ![www-mobile](./designs/ui/www-mobile.png)
 
-## **📮 DEV LOG**
+### **📮 DEV LOG**
 
-### 2019-08-01 23:39
+#### 2019-08-01 23:39
 
 从 git commit 可以看出，这篇 DEVELOPMENTLOG（开发日志）是现在才开始写的，项目本来叫做 1d1h，也就是一天一小时的意思，想着业余时间把之前写前后端的经验汇集起来，做个 Blog --> CMS --> Sohp 的开源项目，包括 API / Dashboard / Website / Wechat Weapp / ReactNative(iOS / Android)，因为是一套 monorepo，类似 interface / entry 这些都是共用的所以感觉做成全平台也是一件很顺手的事情。
 
@@ -100,7 +100,7 @@ C'est la vie.
 
 但，我想说一个框架在项目初期给你几倍便利，那么它便会在项目后期给你带来几倍麻烦。CRA 如此，expo 如此，Next.js 也不例外，都是黑盒。那么我必须在两个小时内写一个 100% 符合我预期的 withPlugin 来，不然项目就卡了。翻了翻 Github 想看看有没有解决方案，但很不幸， v9 刚出根本找不到相关代码，看起来，只能 fuckingself 了。我虽对 webpack 很熟，但这 Next.js 在 webpack 上加了薄薄一层黑盒，写 withPlugin 有种被淹没在未知的 context 海洋中，是种非常憋屈的赶脚，不过还好，最终半小时搞定。提了个自带 resolve 的 [issue](https://github.com/zeit/next.js/issues/8054) 趁没被人发现赶紧 close 掉。希望给碰到同样问题的伙计在搜 issue 的时候带点帮助，毕竟需要 Next.js + antd withLess 的人还是很多的，特别是国内。
 
-### 2019-08-15 20:45
+#### 2019-08-15 20:45
 
 时间过得好快，转眼半个月，最近没给 leaa 写什么新东西。重点放在了阿里云 OSS 整合这块。想要实现这样一个功能：
 
