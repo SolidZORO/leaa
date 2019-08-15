@@ -9,7 +9,7 @@ C'est la vie.
 ## **MONOREPO-PACKAGES**
 
 - [x] \_leaa-common
-- [x] leaa-api / backend (Nest.js + TypeGraphQL + Docker Compose)
+- [x] leaa-api / backend (Nest.js + TypeGraphQL + Docker Compose) [📍 api-demo](https://test-leaa-api.herokuapp.com)
   - [x] auth
   - [x] user
   - [x] role
@@ -17,7 +17,7 @@ C'est la vie.
   - [x] category (infinity level)
   - [x] article
   - [x] attachment local / oss
-- [x] leaa-dashboard / dashboard (React + Antd + MobX + Apollo / GraphQL)
+- [x] leaa-dashboard / dashboard (React + Antd + MobX + Apollo / GraphQL) [📍 dashboard-demo](https://test-leaa-dashboard.herokuapp.com)
   - [x] auth
   - [x] user
   - [x] role
@@ -25,7 +25,7 @@ C'est la vie.
   - [x] category (infinity level)
   - [x] article
   - [x] attachment
-- [x] leaa-www / website (Next.js + GraphQL)
+- [x] leaa-www / website (Next.js + GraphQL) [📍 www-demo](https://test-leaa-www.herokuapp.com)
   - [x] index
   - [x] article list
   - [x] article item
