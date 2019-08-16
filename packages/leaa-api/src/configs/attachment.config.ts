@@ -2,6 +2,8 @@ import moment from 'moment';
 
 import { envConfig } from '@leaa/api/modules/config/config.module';
 
+const dev = process.env.NODE_ENV !== 'production';
+
 const SAVE_SUB_DIR = moment().format('YYYY/MM');
 const SAVE_DIR_BY_DISK = `./${envConfig.PUBLIC_DIR}/${envConfig.ATTACHMENT_DIR}/${SAVE_SUB_DIR}`;
 const SAVE_DIR_BY_DB = `attachments/${SAVE_SUB_DIR}/`;
@@ -11,7 +13,12 @@ const ALLOW_FILE_TYPES = /image|jpeg|jpg|png|gif|webp|pdf|text|mp4|mp3/;
 const URL_PREFIX_BY_LOCAL = `${envConfig.PROTOCOL}://${envConfig.BASE_HOST}:${envConfig.PORT}`;
 const URL_PREFIX_BY_OSS = `${envConfig.PROTOCOL}://${envConfig.OSS_ALIYUN_BUCKET}.${envConfig.OSS_ALIYUN_REGION}.aliyuncs.com`; // eslint-disable-line max-len
 
-const UPLOAD_ENDPOINT_BY_LOCAL = `${envConfig.PROTOCOL}://${envConfig.BASE_HOST}:${envConfig.PORT}/attachments/upload`;
+const UPLOAD_ENDPOINT_BY_LOCAL = `${envConfig.PROTOCOL}://${envConfig.BASE_HOST}${
+  dev
+    ? `:${envConfig.PORT}` // dev have PROTOCOL, e.g. http://localhost:8888/attachments/upload
+    : '' //                   prod not PROTOCOL, e.g. http://test-leaa.com/attachments/upload
+}/attachments/upload`;
+
 const UPLOAD_ENDPOINT_BY_OSS = `${envConfig.PROTOCOL}://${envConfig.OSS_ALIYUN_BUCKET}.${envConfig.OSS_ALIYUN_REGION}.aliyuncs.com`; // eslint-disable-line max-len
 
 export const attachmentConfig = {

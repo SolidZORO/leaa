@@ -24,7 +24,6 @@ import { formatUtil, loggerUtil, pathUtil, permissionUtil, attachmentUtil } from
 import { ConfigService } from '@leaa/api/modules/config/config.service';
 import { SaveInOssService } from '@leaa/api/modules/attachment/save-in-oss.service';
 import { SaveInLocalService } from '@leaa/api/modules/attachment/save-in-local.service';
-import { AttachmentProperty } from '@leaa/api/modules/attachment/attachment.property';
 
 const CONSTRUCTOR_NAME = 'AttachmentService';
 
@@ -35,7 +34,6 @@ export class AttachmentService {
     private readonly configService: ConfigService,
     private readonly saveInLocalServer: SaveInLocalService,
     private readonly saveInOssServer: SaveInOssService,
-    private readonly attachmentProperty: AttachmentProperty,
   ) {}
 
   getSignature(): Promise<ISaveInOssSignature | ISaveInLocalSignature> | null {
@@ -153,7 +151,6 @@ export class AttachmentService {
       ...args,
     };
 
-    // @ts-ignore
     const nextItem = await this.attachmentRepository.save(prevItem);
 
     loggerUtil.updateLog({ id: uuid, prevItem, nextItem, constructorName: CONSTRUCTOR_NAME });
