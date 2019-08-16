@@ -30,6 +30,9 @@ export class SaveInLocalService {
   ) {}
 
   async getSignature(): Promise<ISaveInLocalSignature> {
+    console.log(attachmentConfig.UPLOAD_ENDPOINT_BY_LOCAL);
+
+
     return {
       saveIn: 'local',
       saveDirPath: attachmentConfig.SAVE_DIR_BY_DB,

@@ -42,10 +42,10 @@ Leaa is a CMS (Content Management System) built on the Nest.js and Next.js frame
 
 ## **INSTALLATION**
 
-View the `README.md` of each sub-directory in `packages`.
+View the `README.md` of each sub-directory in `packages`. You can also click `demo` link online preview, all demos are deployed in `heroku`, but the response is very very **SLOOOOOOOOOOOOOW**, please be patient.
 
 
-## **REVIEW**
+## **PREVIEW**
 
 ### DASHBOARD ([demo](https://test-leaa-dashboard.herokuapp.com))
 
