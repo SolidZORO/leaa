@@ -21,8 +21,10 @@ export default {
   playground,
   test,
   lab,
-  showStore: 'Show Store',
-  testApollo: 'Test Apollo',
+  testAny: 'Test Any',
+  testAttachment: 'Test Attachment',
+  testI18n: 'Test I18n',
+  testStore: 'Test Store',
   //
   user,
   createUser: `${_lang.create} ${user}`,

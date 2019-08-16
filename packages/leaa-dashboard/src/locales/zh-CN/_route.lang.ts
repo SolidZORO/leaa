@@ -21,8 +21,10 @@ export default {
   playground,
   test,
   lab,
-  showStore: '展示 Store',
-  testApollo: '测试 Apollo',
+  testAny: '测试 Any',
+  testAttachment: '测试 Attachment',
+  testI18n: '测试 I18n',
+  testStore: '测试 Store',
   //
   user,
   createUser: `${_lang.create}${user}`,
