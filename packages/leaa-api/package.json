@@ -54,7 +54,6 @@
     "cache-manager": "^2.10.0",
     "class-transformer": "^0.2.3",
     "class-validator": "^0.10.0",
-    "crypto": "^1.0.1",
     "dotenv": "^8.0.0",
     "envalid": "^5.0.0",
     "express": "^4.17.1",

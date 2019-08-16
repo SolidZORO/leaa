@@ -111,3 +111,7 @@ C'est la vie.
 其实如果上传都走 API，然后由 API 统一处理再 put 到 OSS 会简单非常常常常常常多，我这么做主要是担心做某些活动的时候，如果涉及到上传文件，并发就会很大，服务器缓不过来。所以拿 OSS 先挡一下还是很有必要的。
 
 基本上 www 和 api 以及 dashboard 就告一段落了。明天开始 miniprogram。
+
+### 2019-08-16 12:04
+
+刚整理 package 的时候发现 React 升级到了 16.9.0，console 下一堆类似的 `Warning: componentWillMount...`，看了一下 React [CHANGELOG](https://github.com/facebook/react/blob/master/CHANGELOG.md#1690-august-8-2019) 发现的确是大改，未来版本要废弃几个 `lifecycle`。由于 leaa-dashboard 依赖 `antd`，所以还是等 `antd` 发版消除了这些 warning，再升上去。目前 React 是锁在 `"react": "16.8.6"`。

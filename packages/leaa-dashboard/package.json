@@ -65,7 +65,7 @@
     "prismjs": "^1.17.1",
     "prop-types": "15.7.2",
     "query-string": "6.8.2",
-    "react": "16.9.0",
+    "react": "16.8.6",
     "react-apollo": "^3.0.1",
     "react-css-modules": "4.7.11",
     "react-dnd": "^9.3.4",

@@ -287,17 +287,6 @@ export const masterRoutes: IRouteItem[] = [
         LazyComponent: React.lazy(() => import(/* webpackChunkName: 'TestI18n' */ '../pages/Test/TestI18n/TestI18n')),
         exact: true,
       },
-      {
-        name: 'Test Store',
-        namei18n: '_route:testStore',
-        permission: ALLOW_PERMISSION,
-        path: '/test-store',
-        icon: 'deployment-unit',
-        LazyComponent: React.lazy(() =>
-          import(/* webpackChunkName: 'TestStore' */ '../pages/Test/TestStore/TestStore'),
-        ),
-        exact: true,
-      },
     ],
   },
 ];
