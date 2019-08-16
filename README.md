@@ -1,14 +1,12 @@
 # Leaa (project 1d1h)
 
-C'est la vie.
+C'est la vie. 
 
 [![Build Status](https://travis-ci.com/SolidZORO/leaa.svg?token=dp93c7BFxq7zs1iT4qaM&branch=master)](https://travis-ci.com/SolidZORO/leaa)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/4443217249ea4bbe8e057c691de4b0cd)](https://www.codacy.com?utm_source=github.com&utm_medium=referral&utm_content=SolidZORO/leaa&utm_campaign=Badge_Grade)
 [![codecov](https://codecov.io/gh/SolidZORO/leaa/branch/master/graph/badge.svg?token=gdOhbSjkRy)](https://codecov.io/gh/SolidZORO/leaa)
 
 ![leaa-banner](./designs/ui/leaa-banner-github.png)
-
-## **ABOUT**
 
 Leaa is a CMS (Content Management System) built on the Nest.js and Next.js framework. The next major version of the plan will be added to the Online Store.
 
