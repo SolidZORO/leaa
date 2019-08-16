@@ -17,14 +17,14 @@ services:
     volumes:
       - ${DOCKER_DATA_DIR}/mysql:/var/lib/mysql:rw,cached
 
-  adminer:
-    container_name: leaa-adminer
-    image: adminer:4.7.1-standalone
-    restart: always
-    depends_on:
-      - mysql
-    ports:
-      - ${ADMINER_PORT}:8080
+#  adminer:
+#    container_name: leaa-adminer
+#    image: adminer:4.7.1-standalone
+#    restart: always
+#    depends_on:
+#      - mysql
+#    ports:
+#      - ${ADMINER_PORT}:8080
 #
 #  postgres:
 #    container_name: ${DOCKER_POSTGRES_HOST}
