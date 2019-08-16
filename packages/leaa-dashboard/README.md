@@ -1,15 +1,12 @@
-# Leaa Api
+# Leaa Dashboard
 
 ## **ABOUT**
 
-leaa-api base [Nest.js](https://github.com/nestjs/nest) framework.
-
+leaa-dashboard compiled by webpack.
 
 ## **INSTALLATION**
 
 ```
-docker-compose down && docker-compose up -d
-
 # .env for development
 cp .env.example .env
 

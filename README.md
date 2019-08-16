@@ -39,6 +39,12 @@ Leaa is a CMS (Content Management System) built on the Nest.js and Next.js frame
   - [x] swiper retina@2x / lazyload
 - [ ] leaa-miniprogram / wechat-miniprogram (taro.js + taro-ui + GraphQL)
 
+
+## **INSTALLATION**
+
+View the `README.md` of each sub-directory in `packages`.
+
+
 ## **REVIEW**
 
 ### DASHBOARD ([demo](https://test-leaa-dashboard.herokuapp.com))
