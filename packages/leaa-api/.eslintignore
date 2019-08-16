@@ -7,5 +7,5 @@
 /public
 /_build
 /.build
-/tools/webpack
+/tools/module-alias
 /src/assets/fonts/**/*.js

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon, Popover } from 'antd';
+import { Icon } from 'antd';
 import Link from 'next/link';
 
 import style from './style.less';

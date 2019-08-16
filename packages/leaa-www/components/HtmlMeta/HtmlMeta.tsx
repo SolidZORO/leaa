@@ -10,7 +10,7 @@ interface IProps {
   disableSiteName?: boolean;
 }
 
-const cutTextLength = (rawText: string, cutLength: number = 140): string => {
+const cutTextLength = (rawText: string, cutLength = 140): string => {
   let result = rawText;
 
   if (rawText) {

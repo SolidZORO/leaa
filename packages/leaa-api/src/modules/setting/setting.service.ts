@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Repository, FindOneOptions, getRepository, In, SelectQueryBuilder } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { Setting, User, Attachment } from '@leaa/common/entrys';
+import { Setting, User } from '@leaa/common/entrys';
 import {
   SettingsArgs,
   SettingsWithPaginationObject,

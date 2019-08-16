@@ -27,6 +27,7 @@
     "s": "yarn dev"
   },
   "dependencies": {
+    "@ant-design/icons": "^2.1.1",
     "@apollo/react-hooks": "3.0.1",
     "@apollo/react-ssr": "^3.0.1",
     "@babel/plugin-proposal-class-properties": "^7.5.5",

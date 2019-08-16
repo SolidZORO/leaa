@@ -7,7 +7,8 @@ import {
   CategoriesWithPaginationObject,
   CategoryArgs,
   CreateCategoryInput,
-  UpdateCategoryInput, CategoriesWithTreeObject,
+  UpdateCategoryInput,
+  CategoriesWithTreeObject,
 } from '@leaa/common/dtos/category';
 import { CategoryService } from '@leaa/api/modules/category/category.service';
 

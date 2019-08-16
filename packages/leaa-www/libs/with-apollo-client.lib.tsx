@@ -9,6 +9,7 @@ import { initApollo } from '@leaa/www/libs/init-apollo-client.lib';
 
 export const withApolloClient = (App: React.ComponentType<any> & { getInitialProps?: Function }) => {
   return class Apollo extends React.Component {
+    // eslint-disable-next-line react/static-property-placement
     static displayName = 'withApollo(App)';
 
     static async getInitialProps(ctx: AppContext) {

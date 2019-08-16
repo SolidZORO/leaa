@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Row, Col } from 'antd';
-import { RouteComponentProps } from 'react-router-dom';
 import queryString from 'query-string';
 
 import logo from '@leaa/dashboard/assets/images/logo/logo-black.svg';

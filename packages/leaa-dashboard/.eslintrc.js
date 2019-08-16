@@ -45,6 +45,7 @@ module.exports = {
     'react/jsx-one-expression-per-line': 0,
     'react/jsx-wrap-multilines': 0,
     'react/sort-comp': 0,
+    'react/jsx-props-no-spreading': 0,
     //
     // CSS
     'css-modules/no-unused-class': 0,
@@ -59,6 +60,8 @@ module.exports = {
     '@typescript-eslint/no-empty-interface': 0,
     '@typescript-eslint/explicit-function-return-type': 0,
     '@typescript-eslint/no-explicit-any': 0,
+    '@typescript-eslint/ban-ts-ignore': 0,
+
     //
     // NESTJS
     'no-useless-constructor': 0,

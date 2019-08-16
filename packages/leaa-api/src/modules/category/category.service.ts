@@ -68,8 +68,8 @@ export class CategoryService extends BaseService<
     }));
 
     const buildTree = (data: ICategoryTreeWithKey[]) => {
-      let root: { [key: number]: ICategoryTreeWithKey } = {};
-      let result: ICategoryTreeWithKey[] = [];
+      const root: { [key: number]: ICategoryTreeWithKey } = {};
+      const result: ICategoryTreeWithKey[] = [];
 
       data.forEach(item => {
         root[item.id] = item;

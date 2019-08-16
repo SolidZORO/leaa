@@ -65,6 +65,8 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': 0,
     '@typescript-eslint/camelcase': ['error', { properties: 'never' }],
     '@typescript-eslint/no-empty-interface': 0,
+    '@typescript-eslint/ban-ts-ignore': 0,
+    '@typescript-eslint/no-empty-function': 0,
     //
     // FOR NESTJS
     '@typescript-eslint/no-parameter-properties': 0,

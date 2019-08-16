@@ -25,8 +25,8 @@ type IProps = IFormProps & ITfn;
 
 @observer
 class UserRolesFormInner extends React.PureComponent<IProps> {
-  @observable checkAll: boolean = false;
-  @observable indeterminate: boolean = false;
+  @observable checkAll = false;
+  @observable indeterminate = false;
 
   constructor(props: IProps) {
     super(props);
