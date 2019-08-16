@@ -11,8 +11,8 @@ Leaa is a monorepo CMS (Content Management System) built on the Nest.js and Next
 
 ## **MONOREPO-PACKAGES**
 
-- [x] \_leaa-common
-- [x] leaa-api ([demo](https://test-leaa-api.herokuapp.com)) / backend (Nest.js + TypeGraphQL + MySQL + Docker Compose)
+- [x] **\_leaa-common**
+- [x] **leaa-api** ([demo](https://test-leaa-api.herokuapp.com)) / backend (Nest.js + TypeGraphQL + MySQL + Docker Compose)
   - [x] auth
   - [x] user
   - [x] role
@@ -20,7 +20,7 @@ Leaa is a monorepo CMS (Content Management System) built on the Nest.js and Next
   - [x] category (infinity level)
   - [x] article
   - [x] attachment local / oss
-- [x] leaa-dashboard ([demo](https://test-leaa-dashboard.herokuapp.com)) / dashboard (React.js + Antd + MobX + Apollo / GraphQL)
+- [x] **leaa-dashboard** ([demo](https://test-leaa-dashboard.herokuapp.com)) / dashboard (React.js + Antd + MobX + Apollo / GraphQL)
   - [x] auth
   - [x] user
   - [x] role
@@ -28,13 +28,18 @@ Leaa is a monorepo CMS (Content Management System) built on the Nest.js and Next
   - [x] category (infinity level)
   - [x] article
   - [x] attachment
-- [x] leaa-www ([demo](https://test-leaa-www.herokuapp.com)) / website (Next.js + GraphQL)
+- [x] **leaa-www** ([demo](https://test-leaa-www.herokuapp.com)) / website (Next.js + GraphQL)
   - [x] index
   - [x] article list
   - [x] article item
   - [x] login/logout
   - [x] swiper retina@2x / lazyload
-- [ ] leaa-miniprogram / wechat-miniprogram (taro.js + taro-ui + GraphQL)
+- [ ] **leaa-miniprogram** / wechat-miniprogram (Taro.js + Taro-ui + GraphQL)
+  - [ ] index
+  - [ ] login/logout
+- [ ] leaa-app / iOS and Android (expo + GraphQL)
+  - [ ] index
+  - [ ] login/logout
 
 
 ## **INSTALLATION**
