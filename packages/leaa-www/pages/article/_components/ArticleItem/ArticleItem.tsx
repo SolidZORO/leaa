@@ -12,7 +12,7 @@ export default (props: IProps) => {
   return (
     <div className={style['wrapper']}>
       <div className={cx('g-full-container', style['full-container'])}>
-        <h2 className={style['title']}>{props.article.title}</h2>
+        <h1 className={style['title']}>{props.article.title}</h1>
         <div className={style['content']}>
           <div
             // eslint-disable-next-line react/no-danger
