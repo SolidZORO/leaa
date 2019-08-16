@@ -39,7 +39,6 @@
     "s": "yarn dev"
   },
   "dependencies": {
-    "@hapi/joi": "^15.1.0",
     "@nestjs/common": "^6.5.3",
     "@nestjs/core": "^6.5.3",
     "@nestjs/graphql": "^6.4.2",
@@ -47,7 +46,6 @@
     "@nestjs/passport": "^6.1.0",
     "@nestjs/platform-express": "^6.5.3",
     "@nestjs/typeorm": "^6.1.3",
-    "@types/ali-oss": "^6.0.4",
     "ali-oss": "^6.1.1",
     "apollo-server-core": "^2.8.1",
     "apollo-server-express": "^2.8.1",
@@ -90,13 +88,12 @@
   "devDependencies": {
     "@leaa/common": "^0.0.1",
     "@nestjs/testing": "^6.5.3",
+    "@types/ali-oss": "^6.0.4",
     "@types/bcryptjs": "^2.4.2",
     "@types/dotenv": "^6.1.1",
     "@types/express": "^4.16.0",
-    "@types/hapi__joi": "^15.0.3",
     "@types/image-size": "^0.7.0",
     "@types/jest": "^24.0.17",
-    "@types/joi": "^14.3.3",
     "@types/jsonwebtoken": "^8.3.3",
     "@types/lodash": "^4.14.136",
     "@types/mkdirp": "^0.5.2",
@@ -128,7 +125,6 @@
     "supertest": "^4.0.2",
     "ts-jest": "24.0.2",
     "ts-node": "8.3.0",
-    "ts-node-dev": "^1.0.0-pre.40",
     "tsconfig-paths": "^3.8.0",
     "typescript": "3.5.3",
     "typescript-eslint-parser": "^22.0.0"

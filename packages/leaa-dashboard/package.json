@@ -77,7 +77,6 @@
     "react-router-dom": "5.0.1",
     "rimraf": "^2.6.3",
     "typescript": "3.5.3",
-    "typo.css": "^2.1.2",
     "uuid": "^3.3.2"
   },
   "devDependencies": {
