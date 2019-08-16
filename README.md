@@ -37,7 +37,7 @@ Leaa is a monorepo CMS (Content Management System) built on the Nest.js and Next
 - [ ] **leaa-miniprogram** / wechat-miniprogram (Taro.js + Taro-ui + GraphQL)
   - [ ] index
   - [ ] login/logout
-- [ ] leaa-app / iOS and Android (expo + GraphQL)
+- [ ] **leaa-app** / iOS and Android (expo + GraphQL)
   - [ ] index
   - [ ] login/logout
 
