@@ -1,4 +1,4 @@
-# Léaa (project 1d1h)
+# Leaa (project 1d1h)
 
 C'est la vie.
 
@@ -6,10 +6,12 @@ C'est la vie.
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/4443217249ea4bbe8e057c691de4b0cd)](https://www.codacy.com?utm_source=github.com&utm_medium=referral&utm_content=SolidZORO/leaa&utm_campaign=Badge_Grade)
 [![codecov](https://codecov.io/gh/SolidZORO/leaa/branch/master/graph/badge.svg?token=gdOhbSjkRy)](https://codecov.io/gh/SolidZORO/leaa)
 
+![leaa-banner](./designs/ui/leaa-banner-github.png)
+
 ## **MONOREPO-PACKAGES**
 
 - [x] \_leaa-common
-- [x] leaa-api ([demo](https://test-leaa-api.herokuapp.com)) / backend (Nest.js + TypeGraphQL + Docker Compose)
+- [x] leaa-api ([demo](https://test-leaa-api.herokuapp.com)) / backend (Nest.js + TypeGraphQL + MySQL + Docker Compose)
   - [x] auth
   - [x] user
   - [x] role
@@ -17,7 +19,7 @@ C'est la vie.
   - [x] category (infinity level)
   - [x] article
   - [x] attachment local / oss
-- [x] leaa-dashboard ([demo](https://test-leaa-dashboard.herokuapp.com)) / dashboard (React + Antd + MobX + Apollo / GraphQL)
+- [x] leaa-dashboard ([demo](https://test-leaa-dashboard.herokuapp.com)) / dashboard (React.js + Antd + MobX + Apollo / GraphQL)
   - [x] auth
   - [x] user
   - [x] role
@@ -31,7 +33,7 @@ C'est la vie.
   - [x] article item
   - [x] login/logout
   - [x] swiper retina@2x / lazyload
-- [ ] leaa-miniprogram / wechat-miniprogram (GraphQL + taro.js + taro-ui)
+- [ ] leaa-miniprogram / wechat-miniprogram (taro.js + taro-ui + GraphQL)
 
 ## **UI REVIEW**
 
@@ -114,4 +116,8 @@ C'est la vie.
 
 ### 2019-08-16 12:04
 
-刚整理 package 的时候发现 React 升级到了 16.9.0，console 下一堆类似的 `Warning: componentWillMount...`，看了一下 React [CHANGELOG](https://github.com/facebook/react/blob/master/CHANGELOG.md#1690-august-8-2019) 发现的确是大改，未来版本要废弃几个 `lifecycle`。由于 leaa-dashboard 依赖 `antd`，所以还是等 `antd` 发版消除了这些 warning，再升上去。目前 React 是锁在 `"react": "16.8.6"`。
+刚整理 package 的时候发现 React 升级到了 16.9.0，console 下一堆类似的 `Warning: componentWillMount...`，看了一下 React [CHANGELOG](https://github.com/facebook/react/blob/master/CHANGELOG.md#1690-august-8-2019) 发现的确是大改，未来版本要废弃几个 `lifecycle`。由于 leaa-dashboard 依赖 `antd`，所以还是等 `antd` 发版消除了这些 warning，再升上去。目前 React 是锁在 `"react": "16.8.6", "react-dom": "16.8.6"`。
+
+### 2019-08-16 15:07
+
+做了一个 Leaa Stack 的 Banner 放到 README 顶部，用图片描述使用的技术比文字好不少。另外提一下 `Leaa` 这个名字，这其实是我喜欢的一个法国女演员 [Léa Seydoux](https://zh.wikipedia.org/zh/%E8%95%BE%E9%9B%85%C2%B7%E7%91%9F%E6%9D%9C) 的名字，避免重名率过高，我在 Lea 后面多加了个 a。不过 `LEAA` 在 Google 最多的指向是 `Law Enforcement Assistance Administration` 美国一司法机构（笑）。 

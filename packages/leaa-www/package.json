@@ -82,7 +82,7 @@
     "react": "16.8.6",
     "react-apollo": "^3.0.1",
     "react-css-modules": "4.7.11",
-    "react-dom": "^16.9.0",
+    "react-dom": "16.8.6",
     "react-headroom": "^2.2.8",
     "react-i18next": "^10.12.2",
     "react-id-swiper": "^2.3.1",

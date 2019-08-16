@@ -12,8 +12,6 @@ export default (props: IPage) => {
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
       <h2>{t('_route:home')}</h2>
-
-      <p>: &gt;</p>
     </div>
   );
 };
