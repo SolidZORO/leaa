@@ -8,6 +8,10 @@ C'est la vie.
 
 ![leaa-banner](./designs/ui/leaa-banner-github.png)
 
+## **ABOUT**
+
+Leaa is a CMS (Content Management System) built on the Nest.js and Next.js framework. The next major version of the plan will be added to the Online Store.
+
 ## **MONOREPO-PACKAGES**
 
 - [x] \_leaa-common
@@ -35,7 +39,7 @@ C'est la vie.
   - [x] swiper retina@2x / lazyload
 - [ ] leaa-miniprogram / wechat-miniprogram (taro.js + taro-ui + GraphQL)
 
-## **UI REVIEW**
+## **REVIEW**
 
 ### DASHBOARD ([demo](https://test-leaa-dashboard.herokuapp.com))
 
@@ -120,4 +124,4 @@ C'est la vie.
 
 ### 2019-08-16 15:07
 
-做了一个 Leaa Stack 的 Banner 放到 README 顶部，用图片描述使用的技术比文字好不少。另外提一下 `Leaa` 这个名字，这其实是我喜欢的一个法国女演员 [Léa Seydoux](https://zh.wikipedia.org/zh/%E8%95%BE%E9%9B%85%C2%B7%E7%91%9F%E6%9D%9C) 的名字，避免重名率过高，我在 Lea 后面多加了个 a。不过 `LEAA` 在 Google 最多的指向是 `Law Enforcement Assistance Administration` 美国一司法机构（笑）。 
+做了一个 Leaa Stack 的 Banner 放到 README 顶部，用图片描述使用的技术比文字好不少。另外提一下 `Leaa` 这个名字，这其实是我喜欢的一个法国女演员 [Léa Seydoux](https://zh.wikipedia.org/zh/%E8%95%BE%E9%9B%85%C2%B7%E7%91%9F%E6%9D%9C) 的名字，避免重名率过高，我在 Lea 后面多加了个 a。不过 `LEAA` 在 Google 最多的指向是 `Law Enforcement Assistance Administration` 美国一司法机构（笑）。
