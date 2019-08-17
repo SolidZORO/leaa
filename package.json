@@ -14,7 +14,8 @@
       "packages/*"
     ],
     "nohoist": [
-      "**/module-alias"
+      "**/module-alias",
+      "**/module-alias/**"
     ]
   },
   "scripts": {
