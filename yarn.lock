@@ -14235,7 +14235,7 @@ stylelint-order@3.0.1:
     postcss "^7.0.17"
     postcss-sorting "^5.0.1"
 
-stylelint@10.1.0:
+stylelint@^10.1.0:
   version "10.1.0"
   resolved "https://registry.npm.taobao.org/stylelint/download/stylelint-10.1.0.tgz#1bc4c4ce878107e7c396b19226d91ba28268911a"
   integrity sha1-G8TEzoeBB+fDlrGSJtkbooJokRo=

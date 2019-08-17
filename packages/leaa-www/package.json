@@ -12,9 +12,11 @@
   "scripts": {
     "---------------------------------------------------------------------- LINT ----": "----",
     "lint-js": "eslint \"**/*.{ts,tsx}\"",
-    "lint": "yarn run lint-js",
     "fix-js": "yarn run lint-js --fix",
-    "fix": "yarn run fix-js",
+    "lint-css": "stylelint \"**/*.{css,less,styl,scss,sass,sss}\"",
+    "fix-css": "yarn run lint-css --fix",
+    "lint": "yarn run lint-js && yarn run lint-css",
+    "fix": "yarn run fix-js && yarn run lint-css",
     "---------------------------------------------------------------------- DEV ----": "----",
     "tsc-check": "tsc --noEmit",
     "dev": "NODE_ENV=development nodemon server.ts",
@@ -121,6 +123,7 @@
     "eslint-plugin-react-hooks": "^1.7.0",
     "eslint-plugin-typescript": "0.14.0",
     "nodemon": "^1.19.1",
+    "stylelint": "^10.1.0",
     "ts-node": "^8.3.0",
     "typescript": "3.5.3"
   }

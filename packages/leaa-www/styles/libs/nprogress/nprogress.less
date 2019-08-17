@@ -25,7 +25,7 @@
   height: 100%;
   box-shadow: 0 0 10px @primary-color, 0 0 5px @primary-color;
   opacity: 1;
-  transform: rotate(3deg) translate(0px, -4px);
+  transform: rotate(3deg) translate(0, -4px);
 }
 
 #nprogress .spinner-icon {
@@ -49,20 +49,12 @@
   position: absolute;
 }
 
-@-webkit-keyframes nprogress-spinner {
+@keyframes nprogress-spinner {
   0% {
-    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
   }
+
   100% {
-    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
   }
 }
-
-/*@keyframes nprogress-spinner {*/
-/*  0% {*/
-/*    transform: rotate(0deg);*/
-/*  }*/
-/*  100% {*/
-/*    transform: rotate(360deg);*/
-/*  }*/
-/*}*/
