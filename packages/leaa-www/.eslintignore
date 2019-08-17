@@ -2,12 +2,23 @@
 .idea
 .vscode/*
 /typings
-/next-env.d.ts
+
+/.build
+/.dist
+/.deploy
+
+/_build
+/_dist
+/_deploy
 
 /_documents
-/_build
-/.build
 /public
-/__next__
+/static
+
+/_next
+/.next
+/next-env.d.ts
+
+/tools/module-alias
 /tools/webpack
 /src/assets/fonts/**/*.js

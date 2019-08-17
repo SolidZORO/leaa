@@ -155,10 +155,8 @@ export default (props: IPage) => {
       {getPermissionsQuery.error ? <ErrorCard error={getPermissionsQuery.error} /> : null}
       {deletePermissionMutation.error ? <ErrorCard error={deletePermissionMutation.error} /> : null}
 
-      {// prettier-ignore
-      getPermissionsQuery.data &&
-      getPermissionsQuery.data.permissions &&
-      getPermissionsQuery.data.permissions.items && (
+      {/* eslint-disable-next-line max-len */}
+      {getPermissionsQuery.data && getPermissionsQuery.data.permissions && getPermissionsQuery.data.permissions.items && (
         <TableCard selectedRowKeys={selectedRowKeys}>
           <Table
             rowKey="id"

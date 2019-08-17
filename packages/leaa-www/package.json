@@ -11,7 +11,7 @@
   },
   "scripts": {
     "---------------------------------------------------------------------- LINT ----": "----",
-    "lint-js": "eslint \"src/**/*.{ts,tsx}\"",
+    "lint-js": "eslint \"**/*.{ts,tsx}\"",
     "lint": "yarn run lint-js",
     "fix-js": "yarn run lint-js --fix",
     "fix": "yarn run fix-js",

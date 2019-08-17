@@ -3,9 +3,18 @@
 .vscode/*
 /typings
 
+/.build
+/.dist
+/.deploy
+
+/_build
+/_dist
+/_deploy
+
 /_documents
 /public
-/_build
-/.build
+/static
+
 /tools/module-alias
+/tools/webpack
 /src/assets/fonts/**/*.js

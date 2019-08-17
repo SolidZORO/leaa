@@ -31,8 +31,6 @@ export default (props: IPage) => {
     fetchPolicy: 'network-only',
   });
 
-
-
   const getCategoriesVariables = { page: 1, pageSize: 9999 };
   const getCategoriesQuery = useQuery<{ categories: CategoriesWithPaginationObject }, CategoryArgs>(GET_CATEGORIES, {
     variables: getCategoriesVariables,
@@ -72,7 +70,9 @@ export default (props: IPage) => {
 
       <CategoryInfoForm
         item={getCategoryQuery.data && getCategoryQuery.data.category}
-        categorys={getCategoriesQuery.data && getCategoriesQuery.data.categories && getCategoriesQuery.data.categories.items}
+        categorys={
+          getCategoriesQuery.data && getCategoriesQuery.data.categories && getCategoriesQuery.data.categories.items
+        }
         loading={getCategoryQuery.loading}
         wrappedComponentRef={(inst: unknown) => {
           categoryInfoFormRef = inst;
