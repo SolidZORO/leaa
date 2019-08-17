@@ -1,6 +1,7 @@
 {
   "name": "@leaa/monorepo",
   "private": true,
+  "license": "BSD 3-Clause",
   "workspaces": {
     "packages": [
       "packages/*"
