@@ -11,6 +11,6 @@
   },
   "scripts": {},
   "dependencies": {
-    "@leaa/common": "^0.0.1"
+    "@leaa/common": "^0.0.2"
   }
 }

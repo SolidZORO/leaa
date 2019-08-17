@@ -22,7 +22,8 @@
     "clear-node-moudles": "rm ./yarn.lock && rm -rf ./yarn-error.log && rm -rf ./node_modules",
     "nuke": "clear-node-moudles && yarn install --force",
     "u": "yarn upgrade-interactive --latest",
-    "tsc-check": "yarn workspaces run tsc-check"
+    "tsc-check": "yarn workspaces run tsc-check",
+    "install-all": "yarn workspaces run install"
   },
   "husky": {
     "hooks": {

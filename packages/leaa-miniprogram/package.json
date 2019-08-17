@@ -29,7 +29,7 @@
     "u": "yarn upgrade-interactive --latest"
   },
   "dependencies": {
-    "@leaa/common": "^0.0.1",
+    "@leaa/common": "^0.0.2",
     "@tarojs/components": "1.3.13",
     "@tarojs/mobx": "1.3.13",
     "@tarojs/mobx-h5": "1.3.13",

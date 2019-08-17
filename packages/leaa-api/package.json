@@ -86,7 +86,7 @@
     "winston-daily-rotate-file": "^3.10.0"
   },
   "devDependencies": {
-    "@leaa/common": "^0.0.1",
+    "@leaa/common": "^0.0.2",
     "@nestjs/testing": "^6.5.3",
     "@types/ali-oss": "^6.0.4",
     "@types/bcryptjs": "^2.4.2",
