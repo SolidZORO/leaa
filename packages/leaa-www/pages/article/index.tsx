@@ -21,7 +21,7 @@ export default () => {
 
       {getArticlesQuery.data && getArticlesQuery.data.articles && (
         <>
-          <HtmlMeta title="Home" />
+          <HtmlMeta title="Article" />
           <ArticleList articles={getArticlesQuery.data.articles} />
         </>
       )}
