@@ -1,0 +1,45 @@
+# OS
+*~
+.DS_Store
+
+# Compiled
+/.build
+
+/.temp
+/.dist
+/dist
+/_dist
+/.deploy
+/deploy
+/_deploy
+
+node_modules
+docker_data
+_docker_data
+
+# Logs
+logs
+*.log
+
+# Env
+.env*
+!.env.example
+robots.txt
+
+# Test
+/coverage
+.nyc_output
+
+# IDEs
+.idea
+.project
+.classpath
+.c9
+*.launch
+.settings
+*.sublime-workspace
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json

@@ -1,0 +1,4 @@
+src/assets/fonts/**/*
+public/assets/fonts/**/*
+**/*.tsx
+**/*.ts
