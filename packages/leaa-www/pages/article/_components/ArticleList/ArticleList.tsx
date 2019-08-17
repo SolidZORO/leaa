@@ -19,7 +19,7 @@ export default (props: IProps) => {
           props.articles.items.map(item => (
             <div key={item.id} className={style['item']}>
               <h2 className={style['title']}>
-                <Link href={`/article/${item.id}`} prefetch={false}>
+                <Link href="/article/[id]" as={`/article/${item.id}`} prefetch={false}>
                   <a className={style['link']}>{item.title}</a>
                 </Link>
               </h2>

@@ -1,4 +1,5 @@
 import React from 'react';
+import dynamic from 'next/dynamic';
 import { useQuery } from '@apollo/react-hooks';
 
 import { Ax } from '@leaa/common/entrys';
@@ -6,7 +7,8 @@ import { AxArgs } from '@leaa/common/dtos/ax';
 import { GET_AX_BY_SLUG } from '@leaa/common/graphqls';
 import { HtmlMeta } from '@leaa/www/components/HtmlMeta';
 import { ErrorCard } from '@leaa/www/components/ErrorCard';
-import Home from '@leaa/www/pages/index/_components/Home/Home';
+
+const Home = dynamic(() => import('@leaa/www/pages/index/_components/Home/Home'));
 
 export default () => {
   const getAxBySlugVariables = { slug: 'index-swiper' };
