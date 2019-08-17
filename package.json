@@ -12,6 +12,9 @@
   "workspaces": {
     "packages": [
       "packages/*"
+    ],
+    "nohoist": [
+      "**/module-alias"
     ]
   },
   "scripts": {
@@ -20,6 +23,14 @@
     "u": "yarn upgrade-interactive --latest",
     "tsc-check": "yarn workspaces run tsc-check"
   },
-  "dependencies": {},
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "dependencies": {
+    "husky": "^3.0.3",
+    "lint-staged": "^9.2.1"
+  },
   "devDependencies": {}
 }

@@ -9,7 +9,15 @@
     "node": ">=10.13.0",
     "npm": ">=6.4.0"
   },
-  "scripts": {},
+  "scripts": {
+    "---------------------------------------------------------------------- LINT ----": "----",
+    "lint-js": "eslint \"src/**/*.{ts,tsx}\"",
+    "fix-js": "yarn run lint-js --fix",
+    "lint-css": "stylelint \"src/**/*.{css,less,styl,scss,sass,sss}\"",
+    "fix-css": "yarn run lint-css --fix",
+    "lint": "yarn run lint-js && yarn run lint-css",
+    "fix": "yarn run fix-js && yarn run fix-css"
+  },
   "dependencies": {
     "@nestjs/common": "^6.5.3",
     "@nestjs/core": "^6.5.3",
