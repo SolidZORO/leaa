@@ -1,4 +1,4 @@
-![leaa-banner](./designs/ui/leaa-banner-github.png)
+![leaa-banner](https://raw.githubusercontent.com/SolidZORO/leaa/master/designs/ui/leaa-banner-github.png)
 
 # Leaa (project 1d1h)
 
@@ -126,29 +126,29 @@ View the `README.md` of each sub-directory in `packages`. You can also click `de
 
 #### dashboard-login
 
-![dashboard-login](./designs/ui/dashboard-login.png)
+![dashboard-login](https://raw.githubusercontent.com/SolidZORO/leaa/master/designs/ui/dashboard-login.png)
 
 #### dashboard-user-edit
 
-![dashboard-user-edit](./designs/ui/dashboard-user-edit.png)
+![dashboard-user-edit](https://raw.githubusercontent.com/SolidZORO/leaa/master/designs/ui/dashboard-user-edit.png)
 
 #### dashboard-mobile
 
-![dashboard-mobile](./designs/ui/dashboard-mobile.png)
+![dashboard-mobile](https://raw.githubusercontent.com/SolidZORO/leaa/master/designs/ui/dashboard-mobile.png)
 
 ### WWW ([demo](https://test-leaa-www.herokuapp.com))
 
 #### www-index
 
-![www-index](./designs/ui/www-index.png)
+![www-index](https://raw.githubusercontent.com/SolidZORO/leaa/master/designs/ui/www-index.png)
 
 #### www-login
 
-![www-login](./designs/ui/www-login.png)
+![www-login](https://raw.githubusercontent.com/SolidZORO/leaa/master/designs/ui/www-login.png)
 
 #### www-mobile
 
-![www-mobile](./designs/ui/www-mobile.png)
+![www-mobile](https://raw.githubusercontent.com/SolidZORO/leaa/master/designs/ui/www-mobile.png)
 
 ## **DEV LOG**
 

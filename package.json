@@ -1,8 +1,8 @@
 {
   "name": "@leaa/monorepo",
   "author": "solidzoro@live.com",
-  "version": "0.0.1",
-  "private": true,
+  "version": "0.0.2",
+  "private": false,
   "sideEffect": false,
   "license": "BSD 3-Clause",
   "engines": {
