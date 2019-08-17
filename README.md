@@ -220,3 +220,22 @@ View the `README.md` of each sub-directory in `packages`. You can also click `de
 刚在用 lint 在给项目做全面检测发现了几个 error，比较有趣的是 `packages/leaa-dashboard/src/pages/Permission/PermissionList/PermissionList.tsx` L159 这里，项目 `.prettierrc` 的 `printWidth` 和 `.eslintrc.js` 的 `max-len` 都设置成了 `120`，但这里 prettier 不报错，也不自动格式化，但是 eslint 和我说这里超 120 了。
 
 我只好加了个 `eslint-disable-next-line max-len`，感觉很有可能他们其中一个是用了 `>` 一个是 `>=`，但是我去修改了两者的属性后发现不是这个问题，算了，先加个 max-len，目前只有一处是只有，标本不够就先不处理了。待日后这个问题多了再统一处理。
+
+<br />
+
+### 2019-08-17 14:16
+
+虽然自己很注意 style code，也会用 IDE 配合 keymap 写 marco 套用 `prettier` 和 `eslint` 规则做 format。但项目 public 之后可能会有 contributors 进来（不，不会的 hhh），觉得还是在 `git commit` 卡一下 code style 会比较好。
+
+通常项目上一个 [`husky`](https://github.com/typicode/husky) 就够了，但是 monorepo 文件那么多，每次 `git commit` 都全 packages 所有文件都 `eslint` 必然会卡到爆，所以肯定是要配合 [`lint-staged`](https://github.com/okonet/lint-staged) 做最小化 eslint 处理的，只让此次 git stage 中文件去跑 eslint。
+
+可是貌似官方没有给出太多针对 monorepo 的建议和范例。摸索了一番，发现其实也不麻烦，只是和 non-monirepo 不大一样而已。为了和 `pacakge.json` 解耦我还特意写成配置文件，大致长这样：
+
+```
+module.exports = {
+  'packages/**/*.ts?(x)': ['prettier --write', 'eslint', 'git add'],
+  'packages/**/*.(css|less)': ['prettier --write', 'stylelint', 'git add'],
+};
+```
+
+试了一下，速度还是蛮快的。要有更好的最佳实践可能还得用一段时间才知道效果了。
