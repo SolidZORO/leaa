@@ -16,7 +16,7 @@
     "lint-css": "stylelint \"src/**/*.{css,less,styl,scss,sass,sss}\"",
     "fix-css": "yarn run lint-css --fix",
     "lint": "yarn run lint-js && yarn run lint-css",
-    "fix": "yarn run fix-js && yarn run lint-css",
+    "fix": "yarn run fix-js && yarn run fix-css",
     "---------------------------------------------------------------------- DEV ----": "----",
     "dev-server": "NODE_ENV=development cross-env webpack-dev-server -r dotenv/config --progress --config ./tools/webpack/webpack.config.js --hot --inline --hide-modules --server --host 0.0.0.0",
     "dev": "NODE_ENV=development yarn dev-server",
