@@ -1,6 +1,5 @@
 ![leaa-banner](./designs/ui/leaa-banner-github.png)
 
-
 # Leaa (project 1d1h)
 
 [![Build Status](https://travis-ci.com/SolidZORO/leaa.svg?token=dp93c7BFxq7zs1iT4qaM&branch=master)](https://travis-ci.com/SolidZORO/leaa)
@@ -9,43 +8,117 @@
 
 Leaa is a monorepo CMS (Content Management System) built on the Nest.js and Next.js framework. The next major version of the plan will be added to the Online Store.
 
-## **MONOREPO-PACKAGES**
+## **MONOREPO-PACKAGES / TODOS**
 
 - [x] **\_leaa-common**
 - [x] **leaa-api** ([demo](https://test-leaa-api.herokuapp.com)) / backend (Nest.js + TypeGraphQL + MySQL + Docker Compose)
-  - [x] auth
-  - [x] user
-  - [x] role
-  - [x] permission
-  - [x] category (infinity level)
-  - [x] article
-  - [x] attachment local / oss
+  - [x] Auth
+    - [x] JWT
+  - [x] User
+  - [x] Role
+  - [x] Permission
+  - [x] Article
+  - [x] Attachment
+    - [x] Local
+    - [x] OSS
+    - [x] OSS sync to Local
+    - [x] @2x to @1x
+  - [x] Ax (Ad)
+  - [x] Category (infinity level)
+  - [x] Logger
+  - [x] Seed
+  - [x] Setting
+  - [ ] Order
+  - [ ] Product
+    - [ ] Specs (universal property)
+  - [ ] Warehouses
+  - [ ] Stocktaking
+  - [ ] Statistics
+  - [ ] Booking
+  - [ ] Coupon
+  - [ ] Promo
+  - [ ] Payment
+    - [ ] Alipay
+    - [ ] Wechat
 - [x] **leaa-dashboard** ([demo](https://test-leaa-dashboard.herokuapp.com)) / dashboard (React.js + Antd + MobX + Apollo / GraphQL)
-  - [x] auth
-  - [x] user
-  - [x] role
-  - [x] permission
-  - [x] category (infinity level)
-  - [x] article
-  - [x] attachment
+  - [x] Auth
+  - [x] User
+  - [x] Role
+  - [x] Permission
+  - [x] Home
+  - [x] Ax (Ad)
+  - [x] Category (infinity level)
+  - [x] Article
+    - [x] WYSIWYGEditor
+  - [x] Attachment
+    - [x] Drop to Upload
+    - [x] Drop to Sort
+  - [x] Setting
+  - [x] Error Boundary
+  - [x] Responsive Design
+  - [x] i18n
+  - [ ] Order
+  - [ ] Product
+    - [ ] Specs (universal property)
+  - [ ] Warehouses
+  - [ ] Stocktaking
+  - [ ] Statistics
+  - [ ] Booking
+  - [ ] Coupon
+  - [ ] Promo
 - [x] **leaa-www** ([demo](https://test-leaa-www.herokuapp.com)) / website (Next.js + GraphQL)
-  - [x] index
-  - [x] article list
-  - [x] article item
-  - [x] login/logout
-  - [x] swiper retina@2x / lazyload
+  - [x] Home
+  - [x] Account
+    - [ ] Login
+      - [x] Email
+      - [ ] Phone
+      - [ ] Wechat
+    - [ ] Register
+      - [x] Email
+      - [ ] Phone
+      - [ ] Wechat
+    - [ ] Forget Password
+    - [ ] Profile
+      - [ ] Upload Avatar
+      - [ ] Bind / Unbind OAuth Account
+    - [x] Logout
+  - [x] Article
+    - [x] List
+    - [x] Item
+  - [x] Banner Swiper
+    - [x] Support Retina @2x
+    - [x] Image Lazyload
+  - [x] SEO (HtmlMeta)
+  - [ ] Cart
+  - [ ] Checkout
+  - [ ] Payment
+    - [ ] Alipay
+    - [ ] Wechat
+  - [ ] Order
+  - [ ] Product
+  - [ ] Booking
+  - [ ] Coupon
+  - [ ] Promo
 - [ ] **leaa-miniprogram** / wechat-miniprogram (Taro.js + Taro-ui + GraphQL)
-  - [ ] index
-  - [ ] login/logout
+  - [ ] Home
+  - [ ] Account
+    - [ ] Login
+    - [ ] Logout
+  - [ ] Article
+    - [ ] List
+    - [ ] Item
 - [ ] **leaa-app** / iOS and Android (expo + GraphQL)
-  - [ ] index
-  - [ ] login/logout
-
+  - [ ] Home
+  - [ ] Account
+    - [ ] Login
+    - [ ] Logout
+  - [ ] Article
+    - [ ] List
+    - [ ] Item
 
 ## **INSTALLATION**
 
 View the `README.md` of each sub-directory in `packages`. You can also click `demo` link online preview, all demos are deployed in `heroku`, but the response is very **SLOW**, please be patient.
-
 
 ## **PREVIEW**
 
@@ -81,9 +154,9 @@ View the `README.md` of each sub-directory in `packages`. You can also click `de
 
 ### 2019-08-01 23:39
 
-从 git commit 可以看出，这篇 DEVELOPMENTLOG（开发日志）是现在才开始写的，项目本来叫做 1d1h，也就是一天一小时的意思，想着业余时间把之前写前后端的经验汇集起来，做个 Blog --> CMS --> Sohp 的开源项目，包括 API / Dashboard / Website / Wechat Weapp / ReactNative(iOS / Android)，因为是一套 monorepo，类似 interface / entry 这些都是共用的所以感觉做成全平台也是一件很顺手的事情。
+从 git commit 可以看出，这篇 DEV LOG（开发日志）是现在才开始写的，项目本来叫做 1d1h，也就是一天一小时的意思，想着业余时间把之前写前后端的经验汇集起来，做个 Blog -> CMS -> Sohp 的开源项目，包括 API / Dashboard / Website / Wechat Weapp / React Native (iOS / Android)，因为是一套 monorepo，类似 interface / entry 这些都是共用的所以感觉做成全平台也是一件很顺手的事情。
 
-这个开发日志其实本来想早点写，但早期一大堆需要解决的问题，时间都用在开发上了，实在抽不出时间写记录，现在想想还真不应该这样，毕竟之前的一大堆问题如果记录下来了，其实就是隐形财富，虽然再次遇到了自己肯定懂如何解决，但就没办法 share 给其他人了。不过接下来的日志我会慢慢回顾就对了。
+其实本来想早点写这个开发日志，但早期一大堆需要解决的问题，时间都用在开发上了，实在抽不出时间写记录，现在想想还真不应该这样，毕竟之前的一大堆问题如果记录下来了，其实就是隐形财富，虽然再次遇到了自己肯定懂如何解决，但就没办法 share 给其他人了。不过接下来的日志我会慢慢回顾就对了。
 
 这里说一下我对 Dashboard 的理解吧，我觉得一个最小可用的的 Dashboard 应该包括。
 
@@ -96,9 +169,9 @@ View the `README.md` of each sub-directory in `packages`. You can also click `de
 - 文章
 - 设置
 
-这几个模块写完基本上就可以拿来当 Blog 用了，特别是角色权限这块，如果有业务需求，基于这样的最小化的 Dashboard 开发基本上可以说也很简单了。我在以往的项目里处理权限权限已经很多次了，不过这次因为是 graphql，和之前的 restful 稍有区别，还是花了一些时间折腾的。
+这几个模块写完基本上就可以拿来当 Blog 用了，特别是角色权限这块，如果有业务需求，基于这样的最小化的 Dashboard 开发基本上可以说也很简单了。我在以往的项目里处理权限已经很多次了，不过这次因为是 graphql，和之前的 restful 稍有区别，还是花了一些时间折腾的。
 
-用 Nest.js 写了那么多的代码，其实算不上舒服，选用的原因其实还是看中了他的一整套范式以及武装到牙齿的 Typescript 支持。作者 @kamilmysliwiec 还是非常厉害的，nest.js 的一些封装实现非常精妙，最重要的还与各种技术相结合，落地了很多业务场景，这点真的非常赞的。
+用 Nest.js 写了那么多的代码，其实算不上舒服，选用的原因其实还是看中了他的一整套范式以及武装到牙齿的 Typescript 支持。作者 @kamilmysliwiec 还是非常厉害的，Nest.js 的一些封装实现非常精妙，最重要的还与各种技术相结合，落地了很多业务场景，这点真的非常赞的。
 
 **`dashboard`** 上技术选型时常见的 React + Antd，不过这次因为全面上了 `hooks`，包括 Apollo 都是最新的 hooks beta 版本，整个项目几乎见不到 Class，但在大规模使用 hooks 后，感觉代码长得实在难看，如果以前 Class 代码清晰度打 10 分的话，hooks 只能打 5 分。当然，最明显的应该是赚了一个代码 Fn 共享，换做是 Class，想要 share Class 的 Fn，还是挺麻烦的。
 
@@ -122,9 +195,9 @@ View the `README.md` of each sub-directory in `packages`. You can also click `de
 - 如 OSS 开启，为保证用户上传速度，所有上传直接走 OSS
 
 其中过程还蛮艰辛的，涉及到 Local 和 OSS 之间的一些交互，而且因为直接走 OSS，所有请求不经 API，变成了等待 OSS 的 Callback，必须保证任何一步没做完都不能动 DB，勉强达到了幂等。
-其实如果上传都走 API，然后由 API 统一处理再 put 到 OSS 会简单非常常常常常常多，我这么做主要是担心做某些活动的时候，如果涉及到上传文件，并发就会很大，服务器缓不过来。所以拿 OSS 先挡一下还是很有必要的。
+其实如果上传都走 API，然后由 API 统一处理再 put 到 OSS 会简单非非非非非非非常多，我这么做主要是担心做某些活动的时候，如果涉及到上传文件，并发就会很大，服务器缓不过来。所以拿 OSS 先挡一下还是很有必要的。
 
-基本上 www 和 api 以及 dashboard 就告一段落了。明天开始 miniprogram。
+基本上 www 和 api 以及 dashboard 就告一段落了。明天开始 `miniprogram`。
 
 ### 2019-08-16 12:04
 
