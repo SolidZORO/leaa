@@ -1,4 +1,4 @@
-const moduleAlias = require('./tools/module-alias');
+const moduleAlias = require('module-alias');
 
 moduleAlias.addPath(__dirname);
 moduleAlias.addAliases({

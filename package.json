@@ -15,16 +15,15 @@
     ],
     "nohoist": [
       "**/module-alias",
-      "**/module-alias/**",
       "**/@tarojs/**"
     ]
   },
   "scripts": {
-    "clear-node-moudles": "rm ./yarn.lock && rm -rf ./yarn-error.log && rm -rf ./node_modules",
-    "nuke": "yarn clear-node-moudles && yarn install --force & yarn workspaces run install",
-    "u": "yarn upgrade-interactive --latest",
+    "clear-node-moudles": "rimraf ./yarn.lock && rimraf ./yarn-error.log && rimraf ./node_modules",
+    "install-all": "yarn workspaces run install --force",
+    "nuke": "yarn clear-node-moudles && yarn install --force & yarn install-all",
     "tsc-check": "yarn workspaces run tsc-check",
-    "install-all": "yarn workspaces run install"
+    "u": "yarn upgrade-interactive --latest"
   },
   "husky": {
     "hooks": {
@@ -34,7 +33,8 @@
   "dependencies": {
     "@tarojs/taro-weapp": "^1.3.13",
     "husky": "^3.0.3",
-    "lint-staged": "^9.2.1"
+    "lint-staged": "^9.2.1",
+    "rimraf": "^3.0.0"
   },
   "devDependencies": {}
 }
