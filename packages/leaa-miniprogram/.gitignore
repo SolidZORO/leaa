@@ -12,6 +12,12 @@
 /.deploy
 /deploy
 /_deploy
+dist/
+deploy_versions/
+.temp/
+.rn_temp/
+rn_temp/
+node_modules/
 
 node_modules
 docker_data

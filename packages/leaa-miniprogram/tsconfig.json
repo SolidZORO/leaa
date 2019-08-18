@@ -2,31 +2,33 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "baseUrl": ".",
-    "module": "commonjs",
-    "target": "es2017",
-    "moduleResolution": "node",
-    "sourceMap": false,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
+    "outDir": "lib",
+    "allowJs": true,
     "jsx": "preserve",
     "jsxFactory": "Taro.createElement",
-    "allowJs": true,
-    "noImplicitAny": false,
-    "outDir": "lib",
+    "target": "es2017",
+    "module": "commonjs",
+    "skipLibCheck": true,
+    "moduleResolution": "node",
     "resolveJsonModule": true,
-    "allowSyntheticDefaultImports": true,
-    "preserveConstEnums": true,
-    "strict": true,
-    "pretty": true,
-    "removeComments": true,
+    "sourceMap": false,
+    "isolatedModules": true,
+    "noEmit": true,
     "esModuleInterop": true,
-    "noImplicitReturns": true,
     "forceConsistentCasingInFileNames": true,
-    "typeRoots": ["node_modules/@types", "global.d.ts"],
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "types": ["node", "jest"],
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "preserveConstEnums": true,
+    "noImplicitAny": false,
+    "allowSyntheticDefaultImports": true,
     "paths": {
-      "@leaa/common/*": ["../_leaa-common/src/*"]
-    }
+      "@leaa/common/*": ["../_leaa-common/src/*"],
+      "@leaa/miniprogram/*": ["./*"]
+    },
+    "typeRoots": ["node_modules/@types", "global.d.ts", "src/**/*", "config/**/*", "typings/*"]
   },
-  "include": ["src/**/*", "typings/*"],
-  "exclude": ["node_modules", "_dist", "dist"]
+  "include": ["**/*", "typings/*", "global.d.ts"],
+  "exclude": ["node_modules", "dist", "_dist"]
 }

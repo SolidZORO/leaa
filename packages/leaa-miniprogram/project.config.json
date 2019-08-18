@@ -1,8 +1,8 @@
 {
-  "miniprogramRoot": "_dist/",
+  "miniprogramRoot": "dist/",
   "projectname": "leaa-miniprogram",
   "description": "desction",
-  "appid": "touristappid",
+  "appid": "wxea1be2de3d7c7168",
   "setting": {
     "urlCheck": true,
     "es6": false,

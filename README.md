@@ -6,9 +6,56 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/4443217249ea4bbe8e057c691de4b0cd)](https://www.codacy.com?utm_source=github.com&utm_medium=referral&utm_content=SolidZORO/leaa&utm_campaign=Badge_Grade)
 [![codecov](https://codecov.io/gh/SolidZORO/leaa/branch/master/graph/badge.svg?token=gdOhbSjkRy)](https://codecov.io/gh/SolidZORO/leaa)
 
-Leaa is a monorepo CMS (Content Management System) built on the Nest.js and Next.js framework. The next major version of the plan will be added to the Online Store.
+Leaa is a monorepo CMS (Content Management System) built on the Nest.js + Next.js + GraphQL + Ant Design. The next major version of the plan will be added to the Online Store.
 
-## **MONOREPO-PACKAGES / TODOS**
+## **Monorepo-Packages**
+
+- [x] **\_leaa-common**
+- [x] **leaa-api** ([demo](https://test-leaa-api.herokuapp.com)) / backend (Nest.js + TypeGraphQL + MySQL + Docker Compose)
+- [x] **leaa-dashboard** ([demo](https://test-leaa-dashboard.herokuapp.com)) / dashboard (React.js + Antd + MobX + Apollo / GraphQL)
+- [x] **leaa-www** ([demo](https://test-leaa-www.herokuapp.com)) / website (Next.js + GraphQL)
+- [ ] **leaa-miniprogram** / wechat-miniprogram (Taro.js + Taro-ui + GraphQL)
+- [ ] **leaa-app** / iOS and Android (expo + GraphQL)
+
+[# read more TODOS](#TODOS)
+
+## **Install**
+
+View the `README.md` of each sub-directory in `packages`. You may need to look at yarn [workspaces](https://yarnpkg.com/lang/en/docs/workspaces/) first.
+
+## **Preview**
+
+You can click `demo` link online preview, all demos are deployed in `heroku`, but the response is very SLOW, please be patient.
+
+### Dashboard ([demo](https://test-leaa-dashboard.herokuapp.com))
+
+##### dashboard-login
+
+![dashboard-login](https://raw.githubusercontent.com/SolidZORO/leaa/master/designs/ui/dashboard-login.png)
+
+##### dashboard-user-edit
+
+![dashboard-user-edit](https://raw.githubusercontent.com/SolidZORO/leaa/master/designs/ui/dashboard-user-edit.png)
+
+##### dashboard-mobile
+
+![dashboard-mobile](https://raw.githubusercontent.com/SolidZORO/leaa/master/designs/ui/dashboard-mobile.png)
+
+### WWW ([demo](https://test-leaa-www.herokuapp.com))
+
+##### www-index
+
+![www-index](https://raw.githubusercontent.com/SolidZORO/leaa/master/designs/ui/www-index.png)
+
+##### www-login
+
+![www-login](https://raw.githubusercontent.com/SolidZORO/leaa/master/designs/ui/www-login.png)
+
+##### www-mobile
+
+![www-mobile](https://raw.githubusercontent.com/SolidZORO/leaa/master/designs/ui/www-mobile.png)
+
+## **TODOS**
 
 - [x] **\_leaa-common**
 - [x] **leaa-api** ([demo](https://test-leaa-api.herokuapp.com)) / backend (Nest.js + TypeGraphQL + MySQL + Docker Compose)
@@ -116,39 +163,8 @@ Leaa is a monorepo CMS (Content Management System) built on the Nest.js and Next
     - [ ] List
     - [ ] Item
 
-## **INSTALLATION**
-
-View the `README.md` of each sub-directory in `packages`. You can also click `demo` link online preview, all demos are deployed in `heroku`, but the response is very **SLOW**, please be patient.
-
-## **PREVIEW**
-
-### DASHBOARD ([demo](https://test-leaa-dashboard.herokuapp.com))
-
-#### dashboard-login
-
-![dashboard-login](https://raw.githubusercontent.com/SolidZORO/leaa/master/designs/ui/dashboard-login.png)
-
-#### dashboard-user-edit
-
-![dashboard-user-edit](https://raw.githubusercontent.com/SolidZORO/leaa/master/designs/ui/dashboard-user-edit.png)
-
-#### dashboard-mobile
-
-![dashboard-mobile](https://raw.githubusercontent.com/SolidZORO/leaa/master/designs/ui/dashboard-mobile.png)
-
-### WWW ([demo](https://test-leaa-www.herokuapp.com))
-
-#### www-index
-
-![www-index](https://raw.githubusercontent.com/SolidZORO/leaa/master/designs/ui/www-index.png)
-
-#### www-login
-
-![www-login](https://raw.githubusercontent.com/SolidZORO/leaa/master/designs/ui/www-login.png)
-
-#### www-mobile
-
-![www-mobile](https://raw.githubusercontent.com/SolidZORO/leaa/master/designs/ui/www-mobile.png)
+<br />
+<br />
 
 ## **DEV LOG**
 
@@ -231,7 +247,7 @@ View the `README.md` of each sub-directory in `packages`. You can also click `de
 
 可是貌似官方没有给出太多针对 monorepo 的建议和范例。摸索了一番，发现其实也不麻烦，只是和 non-monorepo 不大一样而已。为了和 `pacakge.json` 解耦我还特意写成配置文件，大致长这样：
 
-```
+```javascript
 module.exports = {
   'packages/**/*.ts?(x)': ['prettier --write', 'eslint', 'git add'],
   'packages/**/*.(css|less)': ['prettier --write', 'stylelint', 'git add'],
@@ -239,3 +255,44 @@ module.exports = {
 ```
 
 试了一下，速度还是蛮快的。要有更好的最佳实践可能还得用一段时间才知道效果了。
+
+<br />
+
+### 2019-08-18 11:42
+
+试了大概一个晚上的 `Taro`，感觉不是特别理想，为什么呢？首先我需要的是一个 `React` to `小程序` 的框架，而且想要的是 `ONLY` 小程序，至于为什么是 ONLY，后面我会展开详细说明。
+
+初步使用下来，感觉 `Taro` 感觉是一个集大成者，他身上的责任还蛮重的，需要兼容太多的 `类小程序` 环境，比如 `支付宝小程序`，`今日头条小程序` 等…… 而且还要考虑兼容 `RN` 那不友好的 `yoga` CSS 引擎，团队还是非常不容易的，能做到这这个程度，我还是非常佩服的，这里必须先给个赞。接下来我讲一下我几小时下来大概的感触。
+
+##### H5 端
+
+完美！正常 Web 开发一样，没什么好说的。支持 HRM，支持 css module。不用关心 `webpack`，上来就能 run。不过有一点值得注意，就是如果想要兼容 `RN`，那就不能用 [`taro-ui`](https://github.com/NervJS/taro-ui) 或是别的什么第三方 UI lib，只能使用内置的 `@tarojs/component`，这个限制感觉卡得比较厉害，期待 `taro-ui` 早日支持 `RN`。
+
+##### 小程序端
+
+也非常完美，说不上没什么不好的地方，run 起来后，打开官方微信 debug tools 顺利走起。唯一坑点是对 `monorepo` 支持不友好，当然这点也无可厚非，国内本来用 `monorepo` 的就少，用了肯定要自定义为「自己有能力解决 `monorepo` 上的任问题」的态度。我在 `monorepo` 下 run，遇到的是这个问题：
+
+```
+can't find module : ../../../node_modules/@tarojs/taro-weapp/
+```
+
+社区上也有一些人在提 issues 比如 [需要 monorepo 支持](https://github.com/NervJS/taro/issues/3116)，我的做法和他差不多，都是用 yarn wokespaces 的 [nohoist](https://yarnpkg.com/blog/2018/02/15/nohoist/) 去做处理，只不过我的方案是只让 `Taro` 相关的模块保留在 sub-package 下，别的该提升还是提升，最大化 share 了 modules：
+
+```json
+{
+  "nohoist": ["**/@tarojs/**"]
+}
+```
+
+##### React Native 端
+
+看 `package.json` 里的 有 `dev:rn`，我就 run 了，结果是好的，看到提示编译成功，但就没有下文了…… 然后去官方 [docs](https://nervjs.github.io/taro/docs/react-native.html) 看了下，感觉略复杂，那这和单独折腾一套原生 RN 开发有什么区别？而且依赖 `Taro` 的话，`RN` 版本锁在 `0.55.4`,天啊！这和官方目前 `0.60.x` 的版本号相距甚远，要知道 `RN` 每一个版本迭代都是质的飞跃，如果用上 `0.60.x` 还能在 Android 上赚一个 [Hermes](https://github.com/facebook/hermes)，效率也是大幅提升。另外还有一个让我顾虑的是，用上`RN@Taro`，意味着只能使用 `@tarojs/component`  这个 UI lib，也就是意味着要放弃掉 [`NativeBase`](https://docs.nativebase.io/) 和 [`Shoutem`](https://shoutem.github.io/docs/extensions/tutorials/getting-started) 这两个在 `RN` 上相对优质的 UI lib。
+
+嗯…… 综上考虑，如不是一心想为了节约成本和时间，想着 `一套代码多处运行 ` ，目前还是建议放弃 `RN@Taro` ，如果要说一个最佳的切入时机，我认为是至少 [`taro-ui`](https://github.com/NervJS/taro-ui) 支持了 `RN` ，当然，这个代价实在太高，官方永远不去做支持也是非常有可能的。
+
+
+
+好啦回到正题，我使用 `Taro` 的初衷一开始就是用来 ONLY for 小程序的，所以对于目前的情形我觉得「一切 OK」。`leaa-app` 那边还是 `RN` 或者 `expo` 处理就好，毕竟坑基本上在以往项目踩完了（笑）。
+
+
+

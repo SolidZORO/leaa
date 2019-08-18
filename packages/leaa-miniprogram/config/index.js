@@ -8,7 +8,7 @@ const config = {
     '828': 1.81 / 2,
   },
   sourceRoot: 'src',
-  outputRoot: '_dist',
+  outputRoot: 'dist',
   plugins: {
     babel: {
       sourceMap: true,
@@ -48,11 +48,14 @@ const config = {
           },
         },
         cssModules: {
-          enable: false, // 默认为 false，如需使用 css modules 功能，则设为 true
+          enable: true,
           config: {
-            namingPattern: 'module', // 转换模式，取值为 global/module
-            generateScopedName: '[name]__[local]___[hash:base64:5]',
+            // namingPattern: 'module', // 转换模式，取值为 global/module
+            generateScopedName: '[local]--[hash:8]',
           },
+        },
+        npm: {
+          dir: './',
         },
       },
     },
@@ -69,20 +72,27 @@ const config = {
           },
         },
         cssModules: {
-          enable: false, // 默认为 false，如需使用 css modules 功能，则设为 true
+          enable: true,
           config: {
-            namingPattern: 'module', // 转换模式，取值为 global/module
-            generateScopedName: '[name]__[local]___[hash:base64:5]',
+            // namingPattern: 'module', // 转换模式，取值为 global/module
+            generateScopedName: '[local]--[hash:8]',
           },
+        },
+        router: {
+          mode: 'browser', // hash | browser
         },
       },
     },
   },
 };
 
+// eslint-disable-next-line func-names
 module.exports = function(merge) {
   if (process.env.NODE_ENV === 'development') {
+    // eslint-disable-next-line global-require
     return merge({}, config, require('./dev'));
   }
+
+  // eslint-disable-next-line global-require
   return merge({}, config, require('./prod'));
 };

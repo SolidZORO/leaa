@@ -4,7 +4,7 @@ import Index from './pages/index';
 
 import counterStore from './stores/counter.store';
 
-import './app.less';
+// import './app.less';
 
 // 如果需要在 h5 环境中开启 React Devtools
 // 取消以下注释：
@@ -25,11 +25,11 @@ class App extends Component {
    * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
    */
   config: Config = {
-    pages: ['pages/index/index'],
+    pages: ['pages/index/index', 'pages/test/test'],
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
-      navigationBarTitleText: 'WeChat',
+      navigationBarTitleText: 'Leaa',
       navigationBarTextStyle: 'black',
     },
   };

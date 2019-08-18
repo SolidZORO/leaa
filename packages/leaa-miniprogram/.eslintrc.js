@@ -23,7 +23,7 @@ module.exports = {
   env: {
     es6: true,
     browser: true,
-    jest: true,
+    jest: false,
     node: true,
   },
   rules: {
@@ -62,10 +62,11 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 0,
     '@typescript-eslint/no-explicit-any': 0,
     '@typescript-eslint/ban-ts-ignore': 0,
-
     //
-    // NESTJS
-    'no-useless-constructor': 0,
+    // NEXTJS
+    'jsx-a11y/anchor-is-valid': 0,
+    'jsx-a11y/no-static-element-interactions': 0,
+    'jsx-a11y/click-events-have-key-events': 0,
     //
     // MONOREPO
     'prettier/prettier': 'error',
