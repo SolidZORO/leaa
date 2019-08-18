@@ -1,19 +1,19 @@
-import Taro from '@tarojs/taro';
-import { View, Button, Text, Navigator } from '@tarojs/components';
+import Taro, { useState } from '@tarojs/taro';
+import { View, Button, Text } from '@tarojs/components';
 
 import style from './style.less';
 
-interface IProps {}
+export default () => {
+  const [n, setN] = useState(1);
 
-export default (props: IProps) => {
+  const addN = () => setN(n + 1);
+  const subN = () => setN(n - 1);
+
   return (
     <View>
-      <Text className={style['title']}>Hello</Text>
-      <Button>OK</Button>
-
-      <Navigator className="tag" url="/pages/test/test">
-        <Text>TEST PAGE</Text>
-      </Navigator>
+      <Text className={style['title']}>Numbers + - {n}</Text>
+      <Button onClick={addN}>+</Button>
+      <Button onClick={subN}>-</Button>
     </View>
   );
 };

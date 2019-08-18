@@ -25,7 +25,7 @@
     "allowSyntheticDefaultImports": true,
     "paths": {
       "@leaa/common/*": ["../_leaa-common/src/*"],
-      "@leaa/miniprogram/*": ["./*"]
+      "@leaa/miniprogram/*": ["./src/*"]
     },
     "typeRoots": ["node_modules/@types", "global.d.ts", "src/**/*", "config/**/*", "typings/*"]
   },

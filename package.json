@@ -15,13 +15,13 @@
     ],
     "nohoist": [
       "**/module-alias",
-      "**/@tarojs/**"
+      "@leaa/miniprogram/**"
     ]
   },
   "scripts": {
     "clear-node-moudles": "rimraf ./yarn.lock && rimraf ./yarn-error.log && rimraf ./node_modules",
-    "install-all": "yarn workspaces run install --force",
-    "nuke": "yarn clear-node-moudles && yarn install --force & yarn install-all",
+    "install-all": "yarn workspaces run install",
+    "nuke": "yarn clear-node-moudles && yarn install & yarn install-all",
     "tsc-check": "yarn workspaces run tsc-check",
     "u": "yarn upgrade-interactive --latest"
   },

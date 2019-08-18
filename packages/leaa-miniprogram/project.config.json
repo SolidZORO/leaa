@@ -1,16 +1,16 @@
 {
-  "miniprogramRoot": "dist/",
-  "projectname": "leaa-miniprogram",
-  "description": "desction",
-  "appid": "wxea1be2de3d7c7168",
-  "setting": {
-    "urlCheck": true,
-    "es6": false,
-    "postcss": false,
-    "minified": false
-  },
-  "compileType": "miniprogram",
-  "simulatorType": "wechat",
-  "simulatorPluginLibVersion": {},
-  "condition": {}
+	"miniprogramRoot": "dist/",
+	"projectname": "leaa-miniprogram",
+	"description": "desction",
+	"appid": "wxea1be2de3d7c7168",
+	"setting": {
+		"urlCheck": true,
+		"es6": false,
+		"postcss": false,
+		"minified": false
+	},
+	"compileType": "miniprogram",
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
+	"condition": {}
 }

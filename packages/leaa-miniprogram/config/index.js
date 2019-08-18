@@ -20,7 +20,23 @@ const config = {
           },
         ],
       ],
-      plugins: ['transform-decorators-legacy', 'transform-class-properties', 'transform-object-rest-spread'],
+      plugins: [
+        'transform-decorators-legacy',
+        'transform-class-properties',
+        'transform-object-rest-spread',
+
+        [
+          'module-resolver',
+          {
+            root: ['./'],
+            alias: {
+              '@leaa/common': '../_leaa-common/src',
+              '@leaa/miniprogram': './src',
+            },
+            extensions: ['.ts', '.tsx'],
+          },
+        ],
+      ],
     },
   },
   defineConstants: {},
