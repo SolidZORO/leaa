@@ -19,6 +19,9 @@ deploy_versions/
 rn_temp/
 node_modules/
 
+config/dev.js
+config/prod.js
+
 node_modules
 docker_data
 _docker_data

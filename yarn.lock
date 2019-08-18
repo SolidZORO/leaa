@@ -1610,6 +1610,14 @@
   dependencies:
     any-observable "^0.3.0"
 
+"@tarojs/async-await@^1.3.13":
+  version "1.3.13"
+  resolved "https://registry.npm.taobao.org/@tarojs/async-await/download/@tarojs/async-await-1.3.13.tgz#a1b50a5ae1bebc8ebf86e487ba8c6b94c26beff8"
+  integrity sha1-obUKWuG+vI6/huSHuoxrlMJr7/g=
+  dependencies:
+    promise-polyfill "^7.1.2"
+    regenerator-runtime "^0.11.1"
+
 "@tarojs/components@1.3.13":
   version "1.3.13"
   resolved "https://registry.npm.taobao.org/@tarojs/components/download/@tarojs/components-1.3.13.tgz#1c25d5656b6a6c6ed16c3e75f192bc0067fec5b8"
@@ -13454,6 +13462,11 @@ promise-inflight@^1.0.1:
   resolved "https://registry.npm.taobao.org/promise-inflight/download/promise-inflight-1.0.1.tgz#98472870bf228132fcbdd868129bad12c3c029e3"
   integrity sha1-mEcocL8igTL8vdhoEputEsPAKeM=
 
+promise-polyfill@^7.1.2:
+  version "7.1.2"
+  resolved "https://registry.npm.taobao.org/promise-polyfill/download/promise-polyfill-7.1.2.tgz#ab05301d8c28536301622d69227632269a70ca3b"
+  integrity sha1-qwUwHYwoU2MBYi1pInYyJppwyjs=
+
 promise@7.1.1:
   version "7.1.1"
   resolved "https://registry.npm.taobao.org/promise/download/promise-7.1.1.tgz#489654c692616b8aa55b0724fa809bb7db49c5bf"
@@ -14507,7 +14520,7 @@ regenerate@^1.2.1, regenerate@^1.4.0:
   resolved "https://registry.npm.taobao.org/regenerate/download/regenerate-1.4.0.tgz#4a856ec4b56e4077c557589cae85e7a4c8869a11"
   integrity sha1-SoVuxLVuQHfFV1icroXnpMiGmhE=
 
-regenerator-runtime@^0.11.0:
+regenerator-runtime@^0.11.0, regenerator-runtime@^0.11.1:
   version "0.11.1"
   resolved "https://registry.npm.taobao.org/regenerator-runtime/download/regenerator-runtime-0.11.1.tgz#be05ad7f9bf7d22e056f9726cee5017fbf19e2e9"
   integrity sha1-vgWtf5v30i4Fb5cmzuUBf78Z4uk=
@@ -17785,6 +17798,11 @@ ws@^6.0.0, ws@^6.2.1:
   integrity sha1-RC/fCkftZPWbal2P8TD0dI7VJPs=
   dependencies:
     async-limiter "~1.0.0"
+
+wx-apollo-fetcher@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.npm.taobao.org/wx-apollo-fetcher/download/wx-apollo-fetcher-1.0.2.tgz#9f454fc0a77b2c0bd8ab083e286e52a7a5e0757d"
+  integrity sha1-n0VPwKd7LAvYqwg+KG5Sp6XgdX0=
 
 x-is-string@^0.1.0:
   version "0.1.0"

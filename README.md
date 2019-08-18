@@ -296,3 +296,26 @@ can't find module : ../../../node_modules/@tarojs/taro-weapp/
 
 
 
+<br />
+
+### 2019-08-18 22:18
+
+记录一下今天白天用 `Taro` 的心得，真是满满的心酸啊……
+
+- 首先，比较痛苦的是不支持 `apollo/react-hooks` 和 `react-apollo`！也就是说，任何 Apollo 官方的包都不可以用了！不能 `useQuery` 连 `<Query>` 都不让，用就给你报 hooks 那经典的错误 `Invariant Violation: Invalid hook call.` 结果是直接用写好 export `apolloClient` 后 `apolloClient.query()`，这真是一夜回到解放前啊！
+
+- 本来想着方便，在 `H5`模式下 debug，`apolloClient` 这种方式能跑起来已经很开心了，没想到…… `小程序` 模式弹 error 了，说 `fetch is not found globally and no fetcher passed, to fix pass....` 查了下资料说是 「微信小程序在某一次升级中， 移除了全局的fetch」这……，还好，马上找到了前辈写的 lib [wx-apollo-fetcher](https://github.com/kdong007/wx-apollo-fetcher)。整个库就几行：
+
+  ```javascript
+  return new Promise(resolve =>
+  wx.request({
+      ...
+      complete: ({ data, statusCode, errMsg }) => resolve({...})
+  }))
+  ```
+
+  然后在 `HttpLink` 那边替换一下变成 `fetch: wxApolloFetcher` 就好了。万万没想到微信还会做这种断崖式更新，真是骚操作。
+
+- 再就是路径 `alias` 的问题，热烈讨论的[官方 issues 这贴](https://github.com/NervJS/taro/issues/1598)，我看完后试了，依然无解。这里的无解是 `小程序` 端无解，`H5` 端是好的。这…… 我这好歹是 `monorepo`，要是不能 share `@leaa/common ` 包里的代码，那会变得很尴尬。行吧，我先不复用，忍忍。
+
+本以为尽力过 `RN` 的开发已是煎熬，但这次……哎，不说了，怪自己用的技术太新（啪啪打脸）。

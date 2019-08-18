@@ -1,6 +1,8 @@
 import Taro, { Component, Config } from '@tarojs/taro';
+import { ApolloProvider } from '@apollo/react-hooks';
 
 import Index from './pages/index';
+import { apolloClient } from './libs';
 
 class App extends Component {
   config: Config = {
@@ -17,7 +19,11 @@ class App extends Component {
   };
 
   render() {
-    return <Index />;
+    return (
+      <ApolloProvider client={apolloClient}>
+        <Index />
+      </ApolloProvider>
+    );
   }
 }
 
