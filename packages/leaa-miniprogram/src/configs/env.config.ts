@@ -1,7 +1,7 @@
 /* eslint-disable */
-// import { IDotEnv } from '../interfaces/config.interface';
+import { IDotEnv } from '../interfaces';
 
-export const envConfig = {
+export const envConfig: IDotEnv = {
   // @ts-ignore
   GRAPHQL_ENDPOINT: GRAPHQL_ENDPOINT_VALUE,
 };

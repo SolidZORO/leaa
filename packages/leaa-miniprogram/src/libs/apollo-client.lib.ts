@@ -1,3 +1,4 @@
+import Taro from '@tarojs/taro';
 import { HttpLink } from 'apollo-link-http';
 import { ApolloLink, split } from 'apollo-link';
 import { ApolloClient } from 'apollo-client';
@@ -6,7 +7,9 @@ import wxApolloFetcher from 'wx-apollo-fetcher';
 
 import { envConfig } from '../configs';
 
-const httpLink = new HttpLink({ uri: envConfig.GRAPHQL_ENDPOINT, fetch: wxApolloFetcher });
+const apolloFetch = Taro.getEnv() === 'WEAPP' ? { fetch: wxApolloFetcher } : {};
+
+const httpLink = new HttpLink({ uri: envConfig.GRAPHQL_ENDPOINT, ...apolloFetch });
 
 const authLink = new ApolloLink((operation, forward) => {
   const token = null;
