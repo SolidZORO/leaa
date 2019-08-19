@@ -8,7 +8,11 @@
     "declaration": true,
     "sourceMap": false,
     "jsx": "react",
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "paths": {
+      "@leaa/common/*": ["../_leaa-common/*"],
+      "@leaa/dashboard/*": ["./*"]
+    }
   },
   "include": ["src/**/*", "typings/*"],
   "exclude": ["node_modules", "_dist"]

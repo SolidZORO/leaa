@@ -23,7 +23,11 @@
     "preserveConstEnums": true,
     "noImplicitAny": false,
     "allowSyntheticDefaultImports": true,
-    "typeRoots": ["node_modules/@types", "global.d.ts", "src/**/*", "config/**/*", "typings/*"]
+    "typeRoots": ["node_modules/@types", "global.d.ts", "src/**/*", "config/**/*", "typings/*"],
+    "paths": {
+      "@leaa/common/*": ["../_leaa-common/*"],
+      "@leaa/miniprogram/*": ["./*"]
+    }
   },
   "include": ["**/*", "typings/*", "global.d.ts"],
   "exclude": ["node_modules", "dist", "_dist"]

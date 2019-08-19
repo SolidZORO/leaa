@@ -2,11 +2,21 @@
 
 cd "$(dirname "$0")" || exit
 
+echo "\x1B[95m
+
+   ___  ___   ______ _____  ____  ___   ___  ___
+  / _ \/ _ | / __/ // / _ )/ __ \/ _ | / _ \/ _ \\
+ / // / __ |_\ \/ _  / _  / /_/ / __ |/ , _/ // /
+/____/_/ |_/___/_//_/____/\____/_/ |_/_/|_/____/
+
+
+\x1B[0m"
+
 LOCAL_TIME=$(date "+%Y-%m-%d %H:%M:%S")
 
 DEPLOY_HEROKU_APP_NAME="test-leaa-dashboard"
 DEPLOY_COMMIT="update AUTO-DEPLOY ${DEPLOY_HEROKU_APP_NAME} @ ${LOCAL_TIME}"
-CONFIRM_MESSAGE=$(printf "\n<%s> \n\n🤖 DEPLOY --------> 👉 [%s] 👈 ? \n\n(Enter/Esc)" "$(pwd)" "$DEPLOY_HEROKU_APP_NAME")
+CONFIRM_MESSAGE=$(printf "<%s> \n\n🤖 DEPLOY %s? \n\n(Enter/Esc)" "$(pwd)" "$DEPLOY_HEROKU_APP_NAME")
 
 DEPLOY_DIR="./_deploy"
 

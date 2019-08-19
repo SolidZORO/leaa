@@ -2,8 +2,8 @@
 const { defaults: tsjPreset } = require('ts-jest/presets');
 
 // 🔰 Tips, if `tsconfig.json`, here will be open
-// const { pathsToModuleNameMapper } = require('ts-jest/utils');
-// const { compilerOptions } = require('./tsconfig');
+const { pathsToModuleNameMapper } = require('ts-jest/utils');
+const { compilerOptions } = require('./tsconfig');
 
 module.exports = {
   transform: {
@@ -13,7 +13,7 @@ module.exports = {
   moduleFileExtensions: ['ts', 'js'],
   //
   // 🔰 Tips, if `tsconfig.json`, here will be open
-  // moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>/' }),
+  moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>/' }),
   //
   modulePathIgnorePatterns: ['<rootDir>/_dist/', '<rootDir>/_deploy/'],
   testRegex: 'src.*\\.(test|spec).(ts|tsx|js)$',

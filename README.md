@@ -319,3 +319,88 @@ can't find module : ../../../node_modules/@tarojs/taro-weapp/
 - 再就是路径 `alias` 的问题，[官方 issues 这贴](https://github.com/NervJS/taro/issues/1598)讨论得最激烈，我看完后试了，依然无解。这里的无解是 `小程序` 端无解，`H5` 端是好的。这…… 我这好歹是 `monorepo`，要是不能 share `@leaa/common ` 包里的代码，那会变得很尴尬。行吧，我先不复用，忍忍。
 
 本以为经历过 `RN` 的开发已是煎熬，但这次…… 哎，不说了，怪自己用的技术太新（啪）。
+
+
+
+<br />
+
+### 2019-08-19 15:26
+
+托 `Taro` 的福。折腾了半天 `alias` 的问题在 `小程序` 模式下是彻底无解了。不过在解这个问题的同时有一个新发现。就是 `monorepo` 其实不应该在 `tsconfig.json` 写 `alias paths` 的。之前我的做法是这样。
+
+```
+// tsconfig.json
+
+{
+  "compilerOptions": {
+    "paths": {
+      "@leaa/common/*": ["../_leaa-common/src/*"],
+      "@leaa/api/*": ["./src/*"]
+    }
+  }
+}
+```
+
+
+```
+// .babelrc.js
+
+plugins: [
+	...
+  alias: {
+    '@leaa/common': '../_leaa-common/src',
+    '@leaa/api': './src',
+  },
+  ...
+],
+
+```
+
+
+```
+// package.json
+
+"dependencies": {
+  "@leaa/common": "^0.0.2",
+  "@leaa/api": "^0.0.2",
+}
+```
+
+一共有三个地方要写 `alias`，如果加入了 `jest`，还需要在 `jest.js` 写上:
+
+```
+// jest.js
+
+const { pathsToModuleNameMapper } = require('ts-jest/utils');
+const { compilerOptions } = require('./tsconfig');
+...
+moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>/' }),
+...
+```
+
+这是图什么呢? 就图个在 import 的时候可以这样：
+
+```
+import { JwtStrategy } from '@leaa/api/strategies';
+```
+
+而不是： 
+
+```
+import { JwtStrategy } from '@leaa/api/src/strategies';
+```
+
+天啊，就为了少些一个 `/src` 做了那么多工作，感觉不合理 ! 非常不合理！必须统统改掉。只在 `package.json` 加入 `dependencies` 就好，别的都删掉。
+
+
+
+1， 2， 3，好，改完了。
+
+
+
+之前我就发现 IntelliJ IDEA 在索引的时候老是一片一片的红，等很久才消失，看来就是在等 typescript 读 `tsconfig.json`，然后再次检查语法。现在去掉了 `paths` 感觉速度上来了一些，毕竟都是读 `package.json` 就能知道具体路径。
+
+
+
+那回过头。`tsconfig.json` 的 `paths` 或者说 `.babelrc.js` 的 `module-resolver` 有没有用呢? 当然也是有的咯，我觉得如果不是 `monorepo` 的时候用来以 `@utils` `@graphqls` 这种代替真实目录就很好啊。不用写一堆 `../../../../../` 但是如果是 `monorepo`，觉得直接 `package.json` 直接依赖就好，简单明了。
+
