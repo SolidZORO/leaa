@@ -399,3 +399,45 @@ import { JwtStrategy } from '@leaa/api/src/strategies';
 
 
 那回过头， `.babelrc.js` 的 `module-resolver` 有没有用呢? 当然也是有的咯，我觉得如果不是 `monorepo` 的时候用来以 `@utils` `@graphqls` 这种代替真实目录就很好啊。不用写一堆 `../../../../../` 但是如果是 `monorepo`，觉得直接 `package.json` 直接依赖就好，简单明了。
+
+
+
+<br />
+
+### 2019-08-20 01:23
+
+今天 coding 的时间不多，大部分时间都在忙别的，基本上 `Taro` 前期的坑已踩得差不多了，唯独 `alias` 的问题还在卡着。研究半天，感觉实在无解了，比较迷。
+
+`Taro` 有个机制还蛮智能的，就是会在 `dist` 下建一个 `npm` 目录，发现代码里 `import` 了什么就 copy 什么进这个目录，而且是按文件引入并不是整个 lib 都给你拷过来，很赞！和 `@zeit/ncc` 很像。
+
+但因为我是 `monorepo`，这个功能好像不能识别私有包，一旦发现私有包就不 `copy` 了，我也试过手动把私有包放进去，结果无效，我猜也有可能是发现文件不是 `.js` 就不 copy 了。
+
+所以情急之下我动了 `软链接` 的念头。其实我一直不想在 `Code` 层面动 `OS` 的东西。但现在实在没办法，来吧！考虑到各 OS 兼容性问题，我没敢直接用 `ln -s`，而是用了 node 自带的 `symlink`，当然，在 windows 下的兼容性我也不敢打包票，因为看手册发现 `symlink` 在各系统下的行为也是不一样的……
+
+好，上代码片段：
+
+```javascript
+// symlink.js
+
+const sourceDirPath = path.resolve(__dirname, '../_leaa-common/src');
+const distDirPath = './src';
+
+const symlinkPaths = ['graphqls'];
+
+symlinkPaths.forEach(path => {
+  const sourcePath = `${sourceDirPath}/${path}`;
+  const distPath = `${distDirPath}/${path}`;
+
+  if (fs.existsSync(distPath)) {
+    fs.unlinkSync(distPath);
+  }
+
+  console.log(`SYMLINK: ${sourcePath} --> ${distPath}`);
+
+  fs.symlinkSync(sourcePath, distPath);
+});
+```
+
+总体来说代码还是非常简单的，在 `package.json` 里，每次 `dev:weapp` 前都会执行 `symlink.js` 删软链 --> 建软链，其实就相当于删几个文件而已，对硬盘寿命的影响可忽略不计。
+
+真的没想到一个小小 `alias` 问题我能折腾那么久，而最后方案又是如此简单明了。真是想哭啊……（哭）。

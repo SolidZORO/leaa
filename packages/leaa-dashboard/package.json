@@ -78,7 +78,7 @@
     "react-router-dom": "5.0.1",
     "rimraf": "^3.0.0",
     "typescript": "3.5.3",
-    "uuid": "^3.3.2"
+    "uuid": "^3.3.3"
   },
   "devDependencies": {
     "@babel/cli": "7.5.5",
