@@ -390,7 +390,7 @@ import { JwtStrategy } from '@leaa/api/strategies';
 import { JwtStrategy } from '@leaa/api/src/strategies';
 ```
 
-天啊，就为了少些一个 `/src` 做了那么多工作，感觉不合理 ! 非常不合理！必须统统改掉。只在 `package.json` 加入 `dependencies` 就好，别的都删掉。
+天啊，就为了少些一个 `/src` 做了那么多工作，感觉不合理 ! 非常不合理！必须统统改掉。~~只在 `package.json` 加入 `dependencies` 就好~~，只在 `package.json` 和 `tsconfig.json` 加入 `path mapping` 别的都删掉。
 
 
 
@@ -398,9 +398,4 @@ import { JwtStrategy } from '@leaa/api/src/strategies';
 
 
 
-之前我就发现 IntelliJ IDEA 在索引的时候老是一片一片的红，等很久才消失，看来就是在等 typescript 读 `tsconfig.json`，然后再次检查语法。现在去掉了 `paths` 感觉速度上来了一些，毕竟都是读 `package.json` 就能知道具体路径。
-
-
-
-那回过头。`tsconfig.json` 的 `paths` 或者说 `.babelrc.js` 的 `module-resolver` 有没有用呢? 当然也是有的咯，我觉得如果不是 `monorepo` 的时候用来以 `@utils` `@graphqls` 这种代替真实目录就很好啊。不用写一堆 `../../../../../` 但是如果是 `monorepo`，觉得直接 `package.json` 直接依赖就好，简单明了。
-
+那回过头， `.babelrc.js` 的 `module-resolver` 有没有用呢? 当然也是有的咯，我觉得如果不是 `monorepo` 的时候用来以 `@utils` `@graphqls` 这种代替真实目录就很好啊。不用写一堆 `../../../../../` 但是如果是 `monorepo`，觉得直接 `package.json` 直接依赖就好，简单明了。
