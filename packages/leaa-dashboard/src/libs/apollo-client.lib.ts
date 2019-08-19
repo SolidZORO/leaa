@@ -1,11 +1,11 @@
 import { HttpLink } from 'apollo-link-http';
 import { ApolloLink, split } from 'apollo-link';
 import { ApolloClient } from 'apollo-client';
-import { authUtil } from '@leaa/dashboard/utils';
+import { authUtil } from '@leaa/dashboard/src/utils';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { OperationDefinitionNode } from 'graphql';
 
-import { envConfig } from '@leaa/dashboard/configs';
+import { envConfig } from '@leaa/dashboard/src/configs';
 
 const httpLink = new HttpLink({ uri: envConfig.GRAPHQL_ENDPOINT });
 

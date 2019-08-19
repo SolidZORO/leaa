@@ -1,16 +1,16 @@
 import { Args, Query, Mutation, Resolver, ResolveProperty, Parent } from '@nestjs/graphql';
 import { Int } from 'type-graphql';
 
-import { Article, Category } from '@leaa/common/entrys';
+import { Article, Category } from '@leaa/common/src/entrys';
 import {
   ArticlesArgs,
   ArticlesWithPaginationObject,
   ArticleArgs,
   CreateArticleInput,
   UpdateArticleInput,
-} from '@leaa/common/dtos/article';
-import { ArticleService } from '@leaa/api/modules/article/article.service';
-import { ArticleProperty } from '@leaa/api/modules/article/article.property';
+} from '@leaa/common/src/dtos/article';
+import { ArticleService } from '@leaa/api/src/modules/article/article.service';
+import { ArticleProperty } from '@leaa/api/src/modules/article/article.property';
 
 @Resolver(() => Article)
 export class ArticleResolver {

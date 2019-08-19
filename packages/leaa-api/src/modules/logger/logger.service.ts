@@ -1,5 +1,5 @@
 import { Logger as NestLogger, LoggerService as NestLoggerService } from '@nestjs/common';
-import { loggerUtil } from '@leaa/api/utils';
+import { loggerUtil } from '@leaa/api/src/utils';
 
 export class LoggerService extends NestLogger implements NestLoggerService {
   log(message: string, context?: string) {

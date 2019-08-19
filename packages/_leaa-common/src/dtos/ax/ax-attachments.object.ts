@@ -1,5 +1,5 @@
 import { ObjectType, Field } from 'type-graphql';
-import { Attachment } from '@leaa/common/entrys';
+import { Attachment } from '@leaa/common/src/entrys';
 
 @ObjectType()
 export class AxAttachmentsObject {

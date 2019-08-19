@@ -3,9 +3,9 @@ import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { JwtService } from '@nestjs/jwt';
 
-import { IJwtPayload } from '@leaa/common/interfaces';
-import { ConfigService } from '@leaa/api/modules/config/config.service';
-import { AuthService } from '@leaa/api/modules/auth/auth.service';
+import { IJwtPayload } from '@leaa/common/src/interfaces';
+import { ConfigService } from '@leaa/api/src/modules/config/config.service';
+import { AuthService } from '@leaa/api/src/modules/auth/auth.service';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {

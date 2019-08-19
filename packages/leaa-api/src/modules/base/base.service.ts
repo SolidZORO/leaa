@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Repository, ObjectLiteral, FindConditions, FindOneOptions } from 'typeorm';
 
-import { formatUtil, loggerUtil } from '@leaa/api/utils';
+import { formatUtil, loggerUtil } from '@leaa/api/src/utils';
 
 const CONSTRUCTOR_NAME = 'BaseService';
 

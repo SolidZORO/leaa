@@ -1,5 +1,5 @@
-import { AUTH_TOKEN_NAME, AUTH_EXPIRES_IN_NAME, AUTH_INFO } from '@leaa/dashboard/constants';
-import { IAuthInfo } from '@leaa/dashboard/interfaces';
+import { AUTH_TOKEN_NAME, AUTH_EXPIRES_IN_NAME, AUTH_INFO } from '@leaa/dashboard/src/constants';
+import { IAuthInfo } from '@leaa/dashboard/src/interfaces';
 
 const setAuthToken = (token: string, expiresIn: number) => {
   // sync API tims format

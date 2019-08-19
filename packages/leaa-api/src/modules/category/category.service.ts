@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Repository, FindOneOptions, Like } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { Category } from '@leaa/common/entrys';
+import { Category } from '@leaa/common/src/entrys';
 import {
   CategoriesArgs,
   CategoriesWithPaginationObject,
@@ -10,10 +10,10 @@ import {
   CreateCategoryInput,
   UpdateCategoryInput,
   CategoriesWithTreeObject,
-} from '@leaa/common/dtos/category';
-import { BaseService } from '@leaa/api/modules/base/base.service';
-import { formatUtil, loggerUtil } from '@leaa/api/utils';
-import { ICategoryTreeWithKey } from '@leaa/api/interfaces';
+} from '@leaa/common/src/dtos/category';
+import { BaseService } from '@leaa/api/src/modules/base/base.service';
+import { formatUtil, loggerUtil } from '@leaa/api/src/utils';
+import { ICategoryTreeWithKey } from '@leaa/api/src/interfaces';
 
 const CONSTRUCTOR_NAME = 'CategoryService';
 

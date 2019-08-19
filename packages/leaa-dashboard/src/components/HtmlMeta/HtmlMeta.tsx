@@ -1,6 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
-import { envConfig } from '@leaa/dashboard/configs';
+import { envConfig } from '@leaa/dashboard/src/configs';
 // import { useTranslation } from 'react-i18next';
 
 interface IProps {

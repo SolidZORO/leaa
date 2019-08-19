@@ -1,15 +1,15 @@
 import { Args, Query, Mutation, Resolver } from '@nestjs/graphql';
 import { Int } from 'type-graphql';
 
-import { Permission } from '@leaa/common/entrys';
+import { Permission } from '@leaa/common/src/entrys';
 import {
   PermissionsArgs,
   PermissionsWithPaginationObject,
   PermissionArgs,
   CreatePermissionInput,
   UpdatePermissionInput,
-} from '@leaa/common/dtos/permission';
-import { PermissionService } from '@leaa/api/modules/permission/permission.service';
+} from '@leaa/common/src/dtos/permission';
+import { PermissionService } from '@leaa/api/src/modules/permission/permission.service';
 
 @Resolver(() => Permission)
 export class PermissionResolver {

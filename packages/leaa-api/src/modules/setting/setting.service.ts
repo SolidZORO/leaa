@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Repository, FindOneOptions, getRepository, In, SelectQueryBuilder } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { Setting, User } from '@leaa/common/entrys';
+import { Setting, User } from '@leaa/common/src/entrys';
 import {
   SettingsArgs,
   SettingsWithPaginationObject,
@@ -11,9 +11,9 @@ import {
   UpdateSettingInput,
   UpdateSettingsInput,
   SettingsObject,
-} from '@leaa/common/dtos/setting';
-import { BaseService } from '@leaa/api/modules/base/base.service';
-import { formatUtil, loggerUtil } from '@leaa/api/utils';
+} from '@leaa/common/src/dtos/setting';
+import { BaseService } from '@leaa/api/src/modules/base/base.service';
+import { formatUtil, loggerUtil } from '@leaa/api/src/utils';
 
 const CONSTRUCTOR_NAME = 'SettingService';
 

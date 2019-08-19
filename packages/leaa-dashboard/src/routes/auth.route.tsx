@@ -1,9 +1,9 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import { IRouteItem, IPage } from '@leaa/dashboard/interfaces';
-import { ALLOW_PERMISSION } from '@leaa/dashboard/constants';
-import { AuthLayout } from '@leaa/dashboard/components/AuthLayout';
-import { SuspenseFallback } from '@leaa/dashboard/components/SuspenseFallback';
+import { IRouteItem, IPage } from '@leaa/dashboard/src/interfaces';
+import { ALLOW_PERMISSION } from '@leaa/dashboard/src/constants';
+import { AuthLayout } from '@leaa/dashboard/src/components/AuthLayout';
+import { SuspenseFallback } from '@leaa/dashboard/src/components/SuspenseFallback';
 
 export const authRoutes: IRouteItem[] = [
   {

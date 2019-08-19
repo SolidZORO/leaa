@@ -1,9 +1,9 @@
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 
-import { User } from '@leaa/common/entrys';
-import { AuthLoginInput, AuthRegisterInput } from '@leaa/common/dtos/auth';
-import { UserService } from '@leaa/api/modules/user/user.service';
-import { AuthService } from '@leaa/api/modules/auth/auth.service';
+import { User } from '@leaa/common/src/entrys';
+import { AuthLoginInput, AuthRegisterInput } from '@leaa/common/src/dtos/auth';
+import { UserService } from '@leaa/api/src/modules/user/user.service';
+import { AuthService } from '@leaa/api/src/modules/auth/auth.service';
 
 @Resolver(() => User)
 export class AuthResolver {

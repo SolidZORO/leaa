@@ -2,10 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { Repository, FindOneOptions, getRepository, SelectQueryBuilder } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { Ax, User } from '@leaa/common/entrys';
-import { AxsArgs, AxsWithPaginationObject, AxArgs, CreateAxInput, UpdateAxInput } from '@leaa/common/dtos/ax';
-import { BaseService } from '@leaa/api/modules/base/base.service';
-import { formatUtil, loggerUtil, permissionUtil } from '@leaa/api/utils';
+import { Ax, User } from '@leaa/common/src/entrys';
+import { AxsArgs, AxsWithPaginationObject, AxArgs, CreateAxInput, UpdateAxInput } from '@leaa/common/src/dtos/ax';
+import { BaseService } from '@leaa/api/src/modules/base/base.service';
+import { formatUtil, loggerUtil, permissionUtil } from '@leaa/api/src/utils';
 
 const CONSTRUCTOR_NAME = 'AxService';
 

@@ -3,10 +3,10 @@ import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 
-import { cliUtil } from '@leaa/common/utils';
-import { LoggerService } from '@leaa/api/modules/logger/logger.service';
-import { ConfigService } from '@leaa/api/modules/config/config.service';
-import { AppModule } from '@leaa/api/app.module';
+import { cliUtil } from '@leaa/common/src/utils';
+import { LoggerService } from '@leaa/api/src/modules/logger/logger.service';
+import { ConfigService } from '@leaa/api/src/modules/config/config.service';
+import { AppModule } from '@leaa/api/src/app.module';
 
 (async function bootstrap() {
   const logger = new Logger('App-Log');

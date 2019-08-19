@@ -6,9 +6,9 @@ import { I18nextProvider } from 'react-i18next';
 import zhCN from 'antd/lib/locale-provider/zh_CN';
 import enUS from 'antd/lib/locale-provider/en_US';
 
-import { apolloClient } from '@leaa/dashboard/libs';
-import { ErrorBoundary } from '@leaa/dashboard/components/ErrorBoundary';
-import { RefreshFlatePermissions } from '@leaa/dashboard/components/RefreshFlatePermissions';
+import { apolloClient } from '@leaa/dashboard/src/libs';
+import { ErrorBoundary } from '@leaa/dashboard/src/components/ErrorBoundary';
+import { RefreshFlatePermissions } from '@leaa/dashboard/src/components/RefreshFlatePermissions';
 
 import { history } from './libs';
 import { masterRoute, authRoute, otherRoute } from './routes';

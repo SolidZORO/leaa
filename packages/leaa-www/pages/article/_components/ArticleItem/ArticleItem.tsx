@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'classnames';
 
-import { Article } from '@leaa/common/entrys';
+import { Article } from '@leaa/common/src/entrys';
 import style from './style.less';
 
 interface IProps {

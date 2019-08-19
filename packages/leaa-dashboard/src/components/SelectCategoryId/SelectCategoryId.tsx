@@ -3,9 +3,9 @@ import { Select } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/react-hooks';
 
-import { GET_CATEGORIES } from '@leaa/common/graphqls';
-import { CategoriesWithPaginationObject, CategoriesArgs } from '@leaa/common/dtos/category';
-import { ErrorCard } from '@leaa/dashboard/components/ErrorCard';
+import { GET_CATEGORIES } from '@leaa/common/src/graphqls';
+import { CategoriesWithPaginationObject, CategoriesArgs } from '@leaa/common/src/dtos/category';
+import { ErrorCard } from '@leaa/dashboard/src/components/ErrorCard';
 import cx from 'classnames';
 
 import style from './style.less';

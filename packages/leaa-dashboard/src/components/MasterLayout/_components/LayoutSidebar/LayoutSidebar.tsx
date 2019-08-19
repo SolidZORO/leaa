@@ -4,13 +4,13 @@ import { Layout, Menu, Icon } from 'antd';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
-import logo from '@leaa/dashboard/assets/images/logo/logo-white.svg';
-import { IRouteItem } from '@leaa/dashboard/interfaces';
-import { masterRoutes, flateMasterRoutes } from '@leaa/dashboard/routes/master.route';
-import { authUtil, deviceUtil } from '@leaa/dashboard/utils';
-import { ALLOW_PERMISSION, SIDERBAR_COLLAPSED_SL_KEY } from '@leaa/dashboard/constants';
-import { SwitchLanguage } from '@leaa/dashboard/components/SwitchLanguage';
-import { SidebarTarget } from '@leaa/dashboard/components/MasterLayout/_components/SidebarTarget/SidebarTarget';
+import logo from '@leaa/dashboard/src/assets/images/logo/logo-white.svg';
+import { IRouteItem } from '@leaa/dashboard/src/interfaces';
+import { masterRoutes, flateMasterRoutes } from '@leaa/dashboard/src/routes/master.route';
+import { authUtil, deviceUtil } from '@leaa/dashboard/src/utils';
+import { ALLOW_PERMISSION, SIDERBAR_COLLAPSED_SL_KEY } from '@leaa/dashboard/src/constants';
+import { SwitchLanguage } from '@leaa/dashboard/src/components/SwitchLanguage';
+import { SidebarTarget } from '@leaa/dashboard/src/components/MasterLayout/_components/SidebarTarget/SidebarTarget';
 
 import style from './style.less';
 

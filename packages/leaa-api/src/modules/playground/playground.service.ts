@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { PermissionService } from '@leaa/api/modules/permission/permission.service';
-import { RoleService } from '@leaa/api/modules/role/role.service';
-import { UserService } from '@leaa/api/modules/user/user.service';
+import { PermissionService } from '@leaa/api/src/modules/permission/permission.service';
+import { RoleService } from '@leaa/api/src/modules/role/role.service';
+import { UserService } from '@leaa/api/src/modules/user/user.service';
 
 @Injectable()
 export class PlaygroundService {

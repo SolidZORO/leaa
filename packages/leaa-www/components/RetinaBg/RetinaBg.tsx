@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'classnames';
 
-import { Attachment } from '@leaa/common/entrys';
+import { Attachment } from '@leaa/common/src/entrys';
 
 import style from './style.less';
 

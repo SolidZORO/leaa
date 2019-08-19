@@ -3,12 +3,12 @@ import { useTranslation } from 'react-i18next';
 import { Row, Col } from 'antd';
 import queryString from 'query-string';
 
-import logo from '@leaa/dashboard/assets/images/logo/logo-black.svg';
-import { IPage } from '@leaa/dashboard/interfaces';
-import { authUtil } from '@leaa/dashboard/utils';
-import { LOGIN_REDIRECT_URL } from '@leaa/dashboard/constants';
-import { SwitchLanguage } from '@leaa/dashboard/components/SwitchLanguage';
-import { HtmlMeta } from '@leaa/dashboard/components/HtmlMeta';
+import logo from '@leaa/dashboard/src/assets/images/logo/logo-black.svg';
+import { IPage } from '@leaa/dashboard/src/interfaces';
+import { authUtil } from '@leaa/dashboard/src/utils';
+import { LOGIN_REDIRECT_URL } from '@leaa/dashboard/src/constants';
+import { SwitchLanguage } from '@leaa/dashboard/src/components/SwitchLanguage';
+import { HtmlMeta } from '@leaa/dashboard/src/components/HtmlMeta';
 import { LoginForm } from './_components/LoginForm/LoginForm';
 
 import style from './style.less';

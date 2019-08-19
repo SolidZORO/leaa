@@ -3,18 +3,18 @@ import { Injectable } from '@nestjs/common';
 import { Repository, FindOneOptions, Like } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { User, Role, Permission } from '@leaa/common/entrys';
+import { User, Role, Permission } from '@leaa/common/src/entrys';
 import {
   UsersArgs,
   UsersWithPaginationObject,
   UserArgs,
   CreateUserInput,
   UpdateUserInput,
-} from '@leaa/common/dtos/user';
-import { BaseService } from '@leaa/api/modules/base/base.service';
-import { RoleService } from '@leaa/api/modules/role/role.service';
-import { UserProperty } from '@leaa/api/modules/user/user.property';
-import { formatUtil } from '@leaa/api/utils';
+} from '@leaa/common/src/dtos/user';
+import { BaseService } from '@leaa/api/src/modules/base/base.service';
+import { RoleService } from '@leaa/api/src/modules/role/role.service';
+import { UserProperty } from '@leaa/api/src/modules/user/user.property';
+import { formatUtil } from '@leaa/api/src/utils';
 import { JwtService } from '@nestjs/jwt';
 
 const CONSTRUCTOR_NAME = 'UserService';

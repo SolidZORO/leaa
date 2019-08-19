@@ -1,9 +1,9 @@
 import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Attachment } from '@leaa/common/entrys';
-import { pathUtil } from '@leaa/api/utils';
-import { attachmentConfig } from '@leaa/api/configs';
+import { Attachment } from '@leaa/common/src/entrys';
+import { pathUtil } from '@leaa/api/src/utils';
+import { attachmentConfig } from '@leaa/api/src/configs';
 
 // const CONSTRUCTOR_NAME = 'AttachmentProperty';
 

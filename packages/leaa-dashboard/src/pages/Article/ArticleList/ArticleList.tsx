@@ -6,22 +6,22 @@ import { Link } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { Table, Icon, message } from 'antd';
 
-import { DEFAULT_PAGE_SIZE_OPTIONS } from '@leaa/dashboard/constants';
-import { GET_ARTICLES, DELETE_ARTICLE } from '@leaa/common/graphqls';
-import { Article } from '@leaa/common/entrys';
-import { IOrderSort } from '@leaa/common/dtos/_common';
-import { ArticlesWithPaginationObject, ArticleArgs } from '@leaa/common/dtos/article';
-import { urlUtil, tableUtil } from '@leaa/dashboard/utils';
-import { IPage } from '@leaa/dashboard/interfaces';
-import { PageCard } from '@leaa/dashboard/components/PageCard';
-import { HtmlMeta } from '@leaa/dashboard/components/HtmlMeta';
-import { ErrorCard } from '@leaa/dashboard/components/ErrorCard';
-import { SearchInput } from '@leaa/dashboard/components/SearchInput';
-import { TableCard } from '@leaa/dashboard/components/TableCard';
-import { TableColumnId } from '@leaa/dashboard/components/TableColumnId';
-import { SwitchNumber } from '@leaa/dashboard/components/SwitchNumber';
-import { TableColumnDate } from '@leaa/dashboard/components/TableColumnDate';
-import { TableColumnDeleteButton } from '@leaa/dashboard/components/TableColumnDeleteButton';
+import { DEFAULT_PAGE_SIZE_OPTIONS } from '@leaa/dashboard/src/constants';
+import { GET_ARTICLES, DELETE_ARTICLE } from '@leaa/common/src/graphqls';
+import { Article } from '@leaa/common/src/entrys';
+import { IOrderSort } from '@leaa/common/src/dtos/_common';
+import { ArticlesWithPaginationObject, ArticleArgs } from '@leaa/common/src/dtos/article';
+import { urlUtil, tableUtil } from '@leaa/dashboard/src/utils';
+import { IPage } from '@leaa/dashboard/src/interfaces';
+import { PageCard } from '@leaa/dashboard/src/components/PageCard';
+import { HtmlMeta } from '@leaa/dashboard/src/components/HtmlMeta';
+import { ErrorCard } from '@leaa/dashboard/src/components/ErrorCard';
+import { SearchInput } from '@leaa/dashboard/src/components/SearchInput';
+import { TableCard } from '@leaa/dashboard/src/components/TableCard';
+import { TableColumnId } from '@leaa/dashboard/src/components/TableColumnId';
+import { SwitchNumber } from '@leaa/dashboard/src/components/SwitchNumber';
+import { TableColumnDate } from '@leaa/dashboard/src/components/TableColumnDate';
+import { TableColumnDeleteButton } from '@leaa/dashboard/src/components/TableColumnDeleteButton';
 
 import style from './style.less';
 

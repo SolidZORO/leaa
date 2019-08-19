@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
-import { User } from '@leaa/common/entrys';
-import { RoleService } from '@leaa/api/modules/role/role.service';
+import { User } from '@leaa/common/src/entrys';
+import { RoleService } from '@leaa/api/src/modules/role/role.service';
 
 // const CONSTRUCTOR_NAME = 'UserProperty';
 

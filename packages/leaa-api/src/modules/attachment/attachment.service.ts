@@ -4,7 +4,7 @@ import { Express } from 'express';
 import { Repository, FindOneOptions, In, getRepository, SelectQueryBuilder } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Attachment, User } from '@leaa/common/entrys';
+import { Attachment, User } from '@leaa/common/src/entrys';
 import {
   AttachmentsArgs,
   AttachmentsWithPaginationObject,
@@ -13,17 +13,17 @@ import {
   DeleteAttachmentsObject,
   UpdateAttachmentsInput,
   AttachmentsObject,
-} from '@leaa/common/dtos/attachment';
+} from '@leaa/common/src/dtos/attachment';
 import {
   IAttachmentDbFilterField,
   ISaveInOssSignature,
   ISaveInLocalSignature,
   IAttachmentParams,
-} from '@leaa/common/interfaces';
-import { formatUtil, loggerUtil, pathUtil, permissionUtil, attachmentUtil } from '@leaa/api/utils';
-import { ConfigService } from '@leaa/api/modules/config/config.service';
-import { SaveInOssService } from '@leaa/api/modules/attachment/save-in-oss.service';
-import { SaveInLocalService } from '@leaa/api/modules/attachment/save-in-local.service';
+} from '@leaa/common/src/interfaces';
+import { formatUtil, loggerUtil, pathUtil, permissionUtil, attachmentUtil } from '@leaa/api/src/utils';
+import { ConfigService } from '@leaa/api/src/modules/config/config.service';
+import { SaveInOssService } from '@leaa/api/src/modules/attachment/save-in-oss.service';
+import { SaveInLocalService } from '@leaa/api/src/modules/attachment/save-in-local.service';
 
 const CONSTRUCTOR_NAME = 'AttachmentService';
 

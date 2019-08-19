@@ -3,16 +3,16 @@ import { Button, message } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useMutation } from '@apollo/react-hooks';
 
-import { Role } from '@leaa/common/entrys';
-import { UpdateRoleInput } from '@leaa/common/dtos/role';
-import { IPage } from '@leaa/dashboard/interfaces';
-import { RoleInfoForm } from '@leaa/dashboard/pages/Role/_components/RoleInfoForm/RoleInfoForm';
-import { CREATE_ROLE } from '@leaa/common/graphqls';
-import { CREATE_BUTTON_ICON } from '@leaa/dashboard/constants';
-import { PageCard } from '@leaa/dashboard/components/PageCard';
-import { HtmlMeta } from '@leaa/dashboard/components/HtmlMeta';
-import { SubmitBar } from '@leaa/dashboard/components/SubmitBar/SubmitBar';
-import { ErrorCard } from '@leaa/dashboard/components/ErrorCard';
+import { Role } from '@leaa/common/src/entrys';
+import { UpdateRoleInput } from '@leaa/common/src/dtos/role';
+import { IPage } from '@leaa/dashboard/src/interfaces';
+import { RoleInfoForm } from '@leaa/dashboard/src/pages/Role/_components/RoleInfoForm/RoleInfoForm';
+import { CREATE_ROLE } from '@leaa/common/src/graphqls';
+import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
+import { PageCard } from '@leaa/dashboard/src/components/PageCard';
+import { HtmlMeta } from '@leaa/dashboard/src/components/HtmlMeta';
+import { SubmitBar } from '@leaa/dashboard/src/components/SubmitBar/SubmitBar';
+import { ErrorCard } from '@leaa/dashboard/src/components/ErrorCard';
 
 import style from './style.less';
 

@@ -1,1 +1,1 @@
-export { JwtStrategy } from '@leaa/api/strategies/jwt.strategy';
+export { JwtStrategy } from '@leaa/api/src/strategies/jwt.strategy';

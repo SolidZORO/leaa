@@ -1,8 +1,8 @@
 import { Index, Entity, Column } from 'typeorm';
 import { ObjectType, Field, Int } from 'type-graphql';
-import { AxAttachmentsObject } from '@leaa/common/dtos/ax';
+import { AxAttachmentsObject } from '@leaa/common/src/dtos/ax';
 
-import { Base } from '@leaa/common/entrys';
+import { Base } from '@leaa/common/src/entrys';
 
 @Entity('axs')
 @Index('axs_title_unique', ['title'], { unique: true })

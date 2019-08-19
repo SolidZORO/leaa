@@ -13,12 +13,12 @@ import {
   ICraeteAttachmentByOssCallback,
   IAttachmentType,
   IAttachmentCreateFieldByOss,
-} from '@leaa/common/interfaces';
-import { ConfigService } from '@leaa/api/modules/config/config.service';
-import { AttachmentProperty } from '@leaa/api/modules/attachment/attachment.property';
-import { Attachment } from '@leaa/common/entrys';
-import { attachmentUtil, loggerUtil } from '@leaa/api/utils';
-import { attachmentConfig } from '@leaa/api/configs';
+} from '@leaa/common/src/interfaces';
+import { ConfigService } from '@leaa/api/src/modules/config/config.service';
+import { AttachmentProperty } from '@leaa/api/src/modules/attachment/attachment.property';
+import { Attachment } from '@leaa/common/src/entrys';
+import { attachmentUtil, loggerUtil } from '@leaa/api/src/utils';
+import { attachmentConfig } from '@leaa/api/src/configs';
 import mkdirp from 'mkdirp';
 
 const CONSTRUCTOR_NAME = 'SaveInOssService';

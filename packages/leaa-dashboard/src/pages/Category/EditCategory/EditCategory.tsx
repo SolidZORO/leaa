@@ -3,15 +3,15 @@ import { useTranslation } from 'react-i18next';
 import { Button, message } from 'antd';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
-import { Category } from '@leaa/common/entrys';
-import { GET_CATEGORY, UPDATE_CATEGORY, GET_CATEGORIES } from '@leaa/common/graphqls';
-import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/constants';
-import { CategoryArgs, UpdateCategoryInput, CategoriesWithPaginationObject } from '@leaa/common/dtos/category';
-import { IPage } from '@leaa/dashboard/interfaces';
-import { PageCard } from '@leaa/dashboard/components/PageCard';
-import { HtmlMeta } from '@leaa/dashboard/components/HtmlMeta';
-import { ErrorCard } from '@leaa/dashboard/components/ErrorCard';
-import { SubmitBar } from '@leaa/dashboard/components/SubmitBar/SubmitBar';
+import { Category } from '@leaa/common/src/entrys';
+import { GET_CATEGORY, UPDATE_CATEGORY, GET_CATEGORIES } from '@leaa/common/src/graphqls';
+import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
+import { CategoryArgs, UpdateCategoryInput, CategoriesWithPaginationObject } from '@leaa/common/src/dtos/category';
+import { IPage } from '@leaa/dashboard/src/interfaces';
+import { PageCard } from '@leaa/dashboard/src/components/PageCard';
+import { HtmlMeta } from '@leaa/dashboard/src/components/HtmlMeta';
+import { ErrorCard } from '@leaa/dashboard/src/components/ErrorCard';
+import { SubmitBar } from '@leaa/dashboard/src/components/SubmitBar/SubmitBar';
 
 import { CategoryInfoForm } from '../_components/CategoryInfoForm/CategoryInfoForm';
 

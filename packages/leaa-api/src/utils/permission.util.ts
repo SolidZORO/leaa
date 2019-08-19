@@ -1,4 +1,4 @@
-import { User } from '@leaa/common/entrys';
+import { User } from '@leaa/common/src/entrys';
 
 const hasPermission = (user: User, permissionName: string): boolean => {
   if (!user || !permissionName || !user.flatePermissions) {

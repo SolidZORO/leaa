@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { IDotEnv } from '@leaa/miniprogram/interfaces';
+import { IDotEnv } from '../interfaces';
 
 export const envConfig: IDotEnv = {
   // @ts-ignore

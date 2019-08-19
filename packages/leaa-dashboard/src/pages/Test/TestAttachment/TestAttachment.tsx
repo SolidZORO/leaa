@@ -2,10 +2,10 @@ import React, { useRef } from 'react';
 import { Button } from 'antd';
 import { useTranslation } from 'react-i18next';
 
-import { IPage } from '@leaa/dashboard/interfaces';
-import { AttachmentBox } from '@leaa/dashboard/components/AttachmentBox';
-import { IAttachmentBoxRef } from '@leaa/common/interfaces';
-import { HtmlMeta } from '@leaa/dashboard/components/HtmlMeta';
+import { IPage } from '@leaa/dashboard/src/interfaces';
+import { AttachmentBox } from '@leaa/dashboard/src/components/AttachmentBox';
+import { IAttachmentBoxRef } from '@leaa/common/src/interfaces';
+import { HtmlMeta } from '@leaa/dashboard/src/components/HtmlMeta';
 
 export default (props: IPage) => {
   const { t } = useTranslation();

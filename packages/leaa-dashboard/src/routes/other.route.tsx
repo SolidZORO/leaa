@@ -1,10 +1,10 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 
-import { IRouteItem, IPage } from '@leaa/dashboard/interfaces';
-import { ALLOW_PERMISSION } from '@leaa/dashboard/constants';
-import { SuspenseFallback } from '@leaa/dashboard/components/SuspenseFallback';
-import { DefaultLayout } from '@leaa/dashboard/components/DefaultLayout';
+import { IRouteItem, IPage } from '@leaa/dashboard/src/interfaces';
+import { ALLOW_PERMISSION } from '@leaa/dashboard/src/constants';
+import { SuspenseFallback } from '@leaa/dashboard/src/components/SuspenseFallback';
+import { DefaultLayout } from '@leaa/dashboard/src/components/DefaultLayout';
 
 const otherRoutes: IRouteItem[] = [
   {

@@ -4,9 +4,9 @@ import { Col, Select, Form, Input, Row, Icon } from 'antd';
 import { withTranslation } from 'react-i18next';
 import { FormComponentProps } from 'antd/lib/form';
 
-import { Setting } from '@leaa/common/entrys';
-import { ITfn } from '@leaa/dashboard/interfaces';
-import { buildTypeDom } from '@leaa/dashboard/pages/Setting/_components/SettingListForm/SettingListForm';
+import { Setting } from '@leaa/common/src/entrys';
+import { ITfn } from '@leaa/dashboard/src/interfaces';
+import { buildTypeDom } from '@leaa/dashboard/src/pages/Setting/_components/SettingListForm/SettingListForm';
 
 import style from './style.less';
 

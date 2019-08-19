@@ -1,10 +1,10 @@
 /* eslint-disable max-len */
 // prettier-ignore
-import { Article } from '@leaa/common/entrys';
-import { CreateArticleInput } from '@leaa/common/dtos/article';
-import { CreateCategoryInput } from '@leaa/common/dtos/category';
-import { CreateAxInput } from '@leaa/common/dtos/ax';
-import { CreateSettingInput } from '@leaa/common/dtos/setting';
+import { Article } from '@leaa/common/src/entrys';
+import { CreateArticleInput } from '@leaa/common/src/dtos/article';
+import { CreateCategoryInput } from '@leaa/common/src/dtos/category';
+import { CreateAxInput } from '@leaa/common/src/dtos/ax';
+import { CreateSettingInput } from '@leaa/common/src/dtos/setting';
 
 export const permissionsSeed = [
   { name: 'Playground', slug: 'playground.root' },

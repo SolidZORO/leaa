@@ -1,4 +1,4 @@
-import { Category } from '@leaa/common/entrys';
+import { Category } from '@leaa/common/src/entrys';
 
 type ICategoryBase = Pick<Category, 'id' | 'parent_id'>;
 

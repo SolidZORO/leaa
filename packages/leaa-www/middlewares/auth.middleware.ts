@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 
 import { createApolloClientForServer } from '@leaa/www/libs/init-apollo-server.lib';
-import { GET_USER_BY_TOKEN } from '@leaa/common/graphqls/user.query';
+import { GET_USER_BY_TOKEN } from '@leaa/common/src/graphqls/user.query';
 import { IAuthInfo } from '@leaa/www/interfaces';
 import { authUtil } from '@leaa/www/utils';
 

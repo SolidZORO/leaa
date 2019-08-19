@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Attachment } from '@leaa/common/entrys';
+import { Attachment } from '@leaa/common/src/entrys';
 
 interface IProps {
   // attachment: Attachment;

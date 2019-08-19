@@ -1,1 +1,1 @@
-export { JwtGuard } from '@leaa/api/guards/jwt.guard';
+export { JwtGuard } from '@leaa/api/src/guards/jwt.guard';

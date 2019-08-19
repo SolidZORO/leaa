@@ -30,17 +30,6 @@ module.exports = {
         style: true,
       },
     ],
-    [
-      'module-resolver',
-      {
-        root: ['./'],
-        alias: {
-          '@leaa/common': '../_leaa-common/src',
-          '@leaa/dashboard': './src',
-        },
-        extensions: ['.ts', '.tsx'],
-      },
-    ],
   ],
   ignore: ['node_modules', 'logs', '_build'],
 };

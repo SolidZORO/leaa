@@ -13,11 +13,11 @@ import { XYCoord } from 'dnd-core';
 import { Input, Button, message } from 'antd';
 import { useTranslation } from 'react-i18next';
 
-import { DELETE_ATTACHMENT } from '@leaa/common/graphqls';
-import { Attachment } from '@leaa/common/entrys';
-import { SwitchNumber } from '@leaa/dashboard/components/SwitchNumber';
+import { DELETE_ATTACHMENT } from '@leaa/common/src/graphqls';
+import { Attachment } from '@leaa/common/src/entrys';
+import { SwitchNumber } from '@leaa/dashboard/src/components/SwitchNumber';
 
-import { ErrorCard } from '@leaa/dashboard/components/ErrorCard';
+import { ErrorCard } from '@leaa/dashboard/src/components/ErrorCard';
 import { useMutation } from '@apollo/react-hooks';
 
 import style from './style.less';

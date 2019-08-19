@@ -1,6 +1,6 @@
 import { Module, Global } from '@nestjs/common';
 
-import { ConfigService } from '@leaa/api/modules/config/config.service';
+import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 
 const dev = process.env.NODE_ENV !== 'production';
 const envFieldName = dev ? '.env' : '.env.production';

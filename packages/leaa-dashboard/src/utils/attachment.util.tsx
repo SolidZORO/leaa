@@ -5,9 +5,9 @@ import uuid from 'uuid';
 import { message } from 'antd';
 import { Translation } from 'react-i18next';
 
-import { ISaveInOssSignature, ISaveInLocalSignature } from '@leaa/common/interfaces';
-import { authUtil } from '@leaa/dashboard/utils/auth.util';
-import { envConfig } from '@leaa/dashboard/configs';
+import { ISaveInOssSignature, ISaveInLocalSignature } from '@leaa/common/src/interfaces';
+import { authUtil } from '@leaa/dashboard/src/utils/auth.util';
+import { envConfig } from '@leaa/dashboard/src/configs';
 
 interface ISignatureResult {
   data: ISaveInOssSignature | ISaveInLocalSignature;

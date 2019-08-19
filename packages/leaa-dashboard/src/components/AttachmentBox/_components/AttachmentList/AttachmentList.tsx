@@ -5,9 +5,9 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import update from 'immutability-helper';
 import { useTranslation } from 'react-i18next';
 
-import { Attachment } from '@leaa/common/entrys';
-import { IAttachmentParams } from '@leaa/common/interfaces';
-import { langUtil } from '@leaa/dashboard/utils';
+import { Attachment } from '@leaa/common/src/entrys';
+import { IAttachmentParams } from '@leaa/common/src/interfaces';
+import { langUtil } from '@leaa/dashboard/src/utils';
 
 import { AttachmentItem } from '../AttachmentItem/AttachmentItem';
 

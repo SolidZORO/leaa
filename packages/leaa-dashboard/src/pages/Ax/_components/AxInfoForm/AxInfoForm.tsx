@@ -4,10 +4,10 @@ import { Col, Form, Input, Row } from 'antd';
 import { withTranslation } from 'react-i18next';
 import { FormComponentProps } from 'antd/lib/form';
 
-import { Ax } from '@leaa/common/entrys';
-import { ITfn } from '@leaa/dashboard/interfaces';
-import { SwitchNumber } from '@leaa/dashboard/components/SwitchNumber';
-import { FormCard } from '@leaa/dashboard/components/FormCard';
+import { Ax } from '@leaa/common/src/entrys';
+import { ITfn } from '@leaa/dashboard/src/interfaces';
+import { SwitchNumber } from '@leaa/dashboard/src/components/SwitchNumber';
+import { FormCard } from '@leaa/dashboard/src/components/FormCard';
 
 import style from './style.less';
 

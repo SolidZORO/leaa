@@ -1,6 +1,6 @@
 import { ArgsType } from 'type-graphql';
 
-import { ItemsArgs } from '@leaa/common/dtos/_common';
+import { ItemsArgs } from '@leaa/common/src/dtos/_common';
 
 @ArgsType()
 export class ArticlesArgs extends ItemsArgs {}

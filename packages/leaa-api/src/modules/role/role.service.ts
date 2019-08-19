@@ -2,17 +2,17 @@ import { Injectable } from '@nestjs/common';
 import { Repository, FindOneOptions, In, Like } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { Role, Permission } from '@leaa/common/entrys';
-import { BaseService } from '@leaa/api/modules/base/base.service';
+import { Role, Permission } from '@leaa/common/src/entrys';
+import { BaseService } from '@leaa/api/src/modules/base/base.service';
 import {
   RolesArgs,
   RolesWithPaginationObject,
   RoleArgs,
   CreateRoleInput,
   UpdateRoleInput,
-} from '@leaa/common/dtos/role';
-import { formatUtil, loggerUtil } from '@leaa/api/utils';
-import { PermissionService } from '@leaa/api/modules/permission/permission.service';
+} from '@leaa/common/src/dtos/role';
+import { formatUtil, loggerUtil } from '@leaa/api/src/utils';
+import { PermissionService } from '@leaa/api/src/modules/permission/permission.service';
 
 const CONSTRUCTOR_NAME = 'RoleService';
 

@@ -1,7 +1,7 @@
 import { IsOptional } from 'class-validator';
 import { ArgsType, Field, Int } from 'type-graphql';
 
-import { ItemsArgs } from '@leaa/common/dtos/_common';
+import { ItemsArgs } from '@leaa/common/src/dtos/_common';
 
 @ArgsType()
 export class AttachmentsArgs extends ItemsArgs {

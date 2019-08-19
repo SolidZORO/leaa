@@ -5,9 +5,9 @@ import BraftEditor, { EditorState, BraftEditorProps } from 'braft-editor';
 import Table from 'braft-extensions/dist/table';
 import CodeHighlighter from 'braft-extensions/dist/code-highlighter';
 import HeaderId from 'braft-extensions/dist/header-id';
-import { attachmentUtil } from '@leaa/dashboard/utils';
-import { IMediaItem, IAttachmentParams } from '@leaa/common/interfaces';
-import { Attachment } from '@leaa/common/entrys';
+import { attachmentUtil } from '@leaa/dashboard/src/utils';
+import { IMediaItem, IAttachmentParams } from '@leaa/common/src/interfaces';
+import { Attachment } from '@leaa/common/src/entrys';
 
 import 'braft-editor/dist/index.css';
 import 'braft-extensions/dist/table.css';

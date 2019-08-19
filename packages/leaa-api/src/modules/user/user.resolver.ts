@@ -1,16 +1,16 @@
 import { Args, Query, Mutation, Resolver, Parent, ResolveProperty } from '@nestjs/graphql';
 import { Int, Float } from 'type-graphql';
 
-import { User } from '@leaa/common/entrys';
+import { User } from '@leaa/common/src/entrys';
 import {
   UsersArgs,
   UsersWithPaginationObject,
   UserArgs,
   CreateUserInput,
   UpdateUserInput,
-} from '@leaa/common/dtos/user';
-import { UserService } from '@leaa/api/modules/user/user.service';
-import { UserProperty } from '@leaa/api/modules/user/user.property';
+} from '@leaa/common/src/dtos/user';
+import { UserService } from '@leaa/api/src/modules/user/user.service';
+import { UserProperty } from '@leaa/api/src/modules/user/user.property';
 
 @Resolver(() => User)
 export class UserResolver {

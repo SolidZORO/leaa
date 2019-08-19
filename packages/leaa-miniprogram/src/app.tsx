@@ -1,8 +1,8 @@
 import Taro, { Component, Config } from '@tarojs/taro';
 import { ApolloProvider } from '@apollo/react-hooks';
 
-import { apolloClient } from '@leaa/miniprogram/libs';
-import Index from '@leaa/miniprogram/pages/index';
+import { apolloClient } from '@leaa/miniprogram/src/libs';
+import Index from '@leaa/miniprogram/src/pages/index';
 
 class App extends Component {
   config: Config = {

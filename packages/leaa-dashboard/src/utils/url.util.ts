@@ -4,7 +4,7 @@ import queryString, { ParsedQuery } from 'query-string';
 import { PaginationProps } from 'antd/lib/pagination';
 import { SortOrder } from 'antd/lib/table';
 
-import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from '@leaa/dashboard/constants';
+import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from '@leaa/dashboard/src/constants';
 
 interface IMergeParamToUrlQuery {
   window: Window;

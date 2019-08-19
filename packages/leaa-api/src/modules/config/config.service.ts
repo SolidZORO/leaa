@@ -1,6 +1,6 @@
 import envalid from 'envalid';
 
-import { IDotEnv } from '@leaa/api/interfaces';
+import { IDotEnv } from '@leaa/api/src/interfaces';
 
 export class ConfigService {
   private readonly envConfig: IDotEnv;

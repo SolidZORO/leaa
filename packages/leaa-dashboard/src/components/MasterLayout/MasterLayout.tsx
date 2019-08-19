@@ -3,14 +3,14 @@ import cx from 'classnames';
 import { RouteProps, RouteComponentProps } from 'react-router-dom';
 import { Layout } from 'antd';
 import animateScrollTo from 'animated-scroll-to';
-import { urlUtil, authUtil } from '@leaa/dashboard/utils';
-import { IRouteItem } from '@leaa/dashboard/interfaces';
-import { DefaultLayout } from '@leaa/dashboard/components/DefaultLayout';
+import { urlUtil, authUtil } from '@leaa/dashboard/src/utils';
+import { IRouteItem } from '@leaa/dashboard/src/interfaces';
+import { DefaultLayout } from '@leaa/dashboard/src/components/DefaultLayout';
 import { LayoutHeader } from './_components/LayoutHeader/LayoutHeader';
 import { LayoutSidebar } from './_components/LayoutSidebar/LayoutSidebar';
 import { LayoutContent } from './_components/LayoutContent/LayoutContent';
 
-import '@leaa/dashboard/styles/global.less';
+import '@leaa/dashboard/src/styles/global.less';
 import style from './style.less';
 
 interface IProps extends RouteProps {

@@ -1,5 +1,5 @@
-// import { CreateAttachmentInput } from '@leaa/common/dtos/attachment';
-import { Attachment } from '@leaa/common/entrys';
+// import { CreateAttachmentInput } from '@leaa/common/src/dtos/attachment';
+import { Attachment } from '@leaa/common/src/entrys';
 
 export enum IAttachmentType {
   IMAGE = 'image',

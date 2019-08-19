@@ -2,9 +2,9 @@ import React from 'react';
 import { Divider, Input } from 'antd';
 import { useTranslation } from 'react-i18next';
 
-import { IPage } from '@leaa/dashboard/interfaces';
-import { useStore } from '@leaa/dashboard/stores';
-import { HtmlMeta } from '@leaa/dashboard/components/HtmlMeta';
+import { IPage } from '@leaa/dashboard/src/interfaces';
+import { useStore } from '@leaa/dashboard/src/stores';
+import { HtmlMeta } from '@leaa/dashboard/src/components/HtmlMeta';
 
 export default (props: IPage) => {
   const { t } = useTranslation();

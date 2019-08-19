@@ -1,5 +1,10 @@
 const path = require('path');
 
+const alias = {
+  '@leaa/common/src': path.resolve(__dirname, '../../_leaa-common', 'src'),
+  '@leaa/miniprogram/src': path.resolve(__dirname, '..', 'src'),
+};
+
 const config = {
   projectName: '@leaa/miniprogram',
   date: '2019-8-16',
@@ -15,28 +20,12 @@ const config = {
     babel: {
       sourceMap: true,
       presets: [['env', { modules: false }]],
-      plugins: [
-        'transform-decorators-legacy',
-        'transform-class-properties',
-        'transform-object-rest-spread',
-        [
-          'module-resolver',
-          {
-            root: ['./'],
-            alias: {
-              '@leaa/common': '../_leaa-common/src',
-              '@leaa/miniprogram': './src',
-            },
-            extensions: ['.ts', '.tsx'],
-          },
-        ],
-      ],
+      plugins: ['transform-decorators-legacy', 'transform-class-properties', 'transform-object-rest-spread'],
     },
   },
   defineConstants: {},
-  alias: {
-    '@leaa/miniprogram': path.resolve(__dirname, '..', 'src'),
-  },
+  symlinks: true,
+  alias,
   copy: {
     patterns: [],
     options: {},
@@ -66,9 +55,6 @@ const config = {
             // namingPattern: 'module', // 转换模式，取值为 global/module
             generateScopedName: '[local]--[hash:8]',
           },
-        },
-        npm: {
-          dir: './',
         },
       },
     },

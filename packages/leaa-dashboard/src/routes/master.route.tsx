@@ -2,10 +2,10 @@ import _ from 'lodash';
 import React, { ReactNode } from 'react';
 import { Route } from 'react-router-dom';
 
-import { IRouteItem, IPage } from '@leaa/dashboard/interfaces';
-import { MasterLayout } from '@leaa/dashboard/components/MasterLayout';
-import { SuspenseFallback } from '@leaa/dashboard/components/SuspenseFallback';
-import { ALLOW_PERMISSION } from '@leaa/dashboard/constants';
+import { IRouteItem, IPage } from '@leaa/dashboard/src/interfaces';
+import { MasterLayout } from '@leaa/dashboard/src/components/MasterLayout';
+import { SuspenseFallback } from '@leaa/dashboard/src/components/SuspenseFallback';
+import { ALLOW_PERMISSION } from '@leaa/dashboard/src/constants';
 
 export const masterRoutes: IRouteItem[] = [
   {

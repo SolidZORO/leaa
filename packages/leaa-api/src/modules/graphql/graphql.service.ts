@@ -1,8 +1,8 @@
 import { applyMiddleware } from 'graphql-middleware';
 import { Injectable } from '@nestjs/common';
 import { GqlOptionsFactory, GqlModuleOptions } from '@nestjs/graphql';
-import { AuthService } from '@leaa/api/modules/auth/auth.service';
-import { permissionConfig } from '@leaa/api/configs';
+import { AuthService } from '@leaa/api/src/modules/auth/auth.service';
+import { permissionConfig } from '@leaa/api/src/configs';
 import { Request } from 'express';
 
 @Injectable()

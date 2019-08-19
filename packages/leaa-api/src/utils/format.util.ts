@@ -1,5 +1,5 @@
 import { FindManyOptions } from 'typeorm';
-import { ItemsArgs } from '@leaa/common/dtos/_common';
+import { ItemsArgs } from '@leaa/common/src/dtos/_common';
 
 type IFormatArgs = FindManyOptions & ItemsArgs;
 

@@ -1,4 +1,4 @@
-import { Attachment } from '@leaa/common/entrys';
+import { Attachment } from '@leaa/common/src/entrys';
 
 export interface IAxAttachments {
   bannerMbList: Attachment[];

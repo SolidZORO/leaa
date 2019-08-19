@@ -3,15 +3,15 @@ import { Button, message } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useMutation } from '@apollo/react-hooks';
 
-import { User } from '@leaa/common/entrys';
-import { UpdateUserInput } from '@leaa/common/dtos/user';
-import { CREATE_BUTTON_ICON } from '@leaa/dashboard/constants';
-import { IPage } from '@leaa/dashboard/interfaces';
-import { CREATE_USER } from '@leaa/common/graphqls';
-import { PageCard } from '@leaa/dashboard/components/PageCard';
-import { HtmlMeta } from '@leaa/dashboard/components/HtmlMeta';
-import { SubmitBar } from '@leaa/dashboard/components/SubmitBar/SubmitBar';
-import { ErrorCard } from '@leaa/dashboard/components/ErrorCard';
+import { User } from '@leaa/common/src/entrys';
+import { UpdateUserInput } from '@leaa/common/src/dtos/user';
+import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
+import { IPage } from '@leaa/dashboard/src/interfaces';
+import { CREATE_USER } from '@leaa/common/src/graphqls';
+import { PageCard } from '@leaa/dashboard/src/components/PageCard';
+import { HtmlMeta } from '@leaa/dashboard/src/components/HtmlMeta';
+import { SubmitBar } from '@leaa/dashboard/src/components/SubmitBar/SubmitBar';
+import { ErrorCard } from '@leaa/dashboard/src/components/ErrorCard';
 
 import { UserInfoForm } from '../_components/UserInfoForm/UserInfoForm';
 

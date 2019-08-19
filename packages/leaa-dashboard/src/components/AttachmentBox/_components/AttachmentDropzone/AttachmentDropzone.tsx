@@ -1,9 +1,9 @@
 import React, { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { attachmentUtil } from '@leaa/dashboard/utils';
+import { attachmentUtil } from '@leaa/dashboard/src/utils';
 import { Icon } from 'antd';
 
-import { IAttachmentParams } from '@leaa/common/interfaces';
+import { IAttachmentParams } from '@leaa/common/src/interfaces';
 
 import style from './style.less';
 

@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-import { envConfig } from '@leaa/api/modules/config/config.module';
+import { envConfig } from '@leaa/api/src/modules/config/config.module';
 
 const dev = process.env.NODE_ENV !== 'production';
 

@@ -1,4 +1,4 @@
-import { User } from '@leaa/common/entrys';
+import { User } from '@leaa/common/src/entrys';
 
 const getFlatPermissions = (user: User): string[] => {
   let nextFlatPermissions: string[] = [];

@@ -3,16 +3,16 @@ import { useTranslation } from 'react-i18next';
 import { Button, message } from 'antd';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
-import { User } from '@leaa/common/entrys';
-import { GET_USER, GET_ROLES, UPDATE_USER } from '@leaa/common/graphqls';
-import { RolesWithPaginationObject, RolesArgs } from '@leaa/common/dtos/role';
-import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/constants';
-import { UserArgs, UpdateUserInput } from '@leaa/common/dtos/user';
-import { IPage } from '@leaa/dashboard/interfaces';
-import { PageCard } from '@leaa/dashboard/components/PageCard';
-import { HtmlMeta } from '@leaa/dashboard/components/HtmlMeta';
-import { ErrorCard } from '@leaa/dashboard/components/ErrorCard';
-import { SubmitBar } from '@leaa/dashboard/components/SubmitBar/SubmitBar';
+import { User } from '@leaa/common/src/entrys';
+import { GET_USER, GET_ROLES, UPDATE_USER } from '@leaa/common/src/graphqls';
+import { RolesWithPaginationObject, RolesArgs } from '@leaa/common/src/dtos/role';
+import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
+import { UserArgs, UpdateUserInput } from '@leaa/common/src/dtos/user';
+import { IPage } from '@leaa/dashboard/src/interfaces';
+import { PageCard } from '@leaa/dashboard/src/components/PageCard';
+import { HtmlMeta } from '@leaa/dashboard/src/components/HtmlMeta';
+import { ErrorCard } from '@leaa/dashboard/src/components/ErrorCard';
+import { SubmitBar } from '@leaa/dashboard/src/components/SubmitBar/SubmitBar';
 
 import { UserInfoForm } from '../_components/UserInfoForm/UserInfoForm';
 import { UserRolesForm } from '../_components/UserRolesForm/UserRolesForm';

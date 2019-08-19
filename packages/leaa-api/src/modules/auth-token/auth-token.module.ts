@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 
-import { ConfigService } from '@leaa/api/modules/config/config.service';
+import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 
 @Module({
   imports: [

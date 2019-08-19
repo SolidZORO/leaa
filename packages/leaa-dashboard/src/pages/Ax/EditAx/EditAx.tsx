@@ -3,17 +3,17 @@ import { useTranslation } from 'react-i18next';
 import { Button, message, Row, Col } from 'antd';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
-import { Ax } from '@leaa/common/entrys';
-import { IAttachmentBoxRef } from '@leaa/common/interfaces';
-import { GET_AX, UPDATE_AX } from '@leaa/common/graphqls';
-import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/constants';
-import { AxArgs, UpdateAxInput } from '@leaa/common/dtos/ax';
-import { IPage } from '@leaa/dashboard/interfaces';
-import { AttachmentBox } from '@leaa/dashboard/components/AttachmentBox';
-import { PageCard } from '@leaa/dashboard/components/PageCard';
-import { ErrorCard } from '@leaa/dashboard/components/ErrorCard';
-import { HtmlMeta } from '@leaa/dashboard/components/HtmlMeta';
-import { SubmitBar } from '@leaa/dashboard/components/SubmitBar/SubmitBar';
+import { Ax } from '@leaa/common/src/entrys';
+import { IAttachmentBoxRef } from '@leaa/common/src/interfaces';
+import { GET_AX, UPDATE_AX } from '@leaa/common/src/graphqls';
+import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
+import { AxArgs, UpdateAxInput } from '@leaa/common/src/dtos/ax';
+import { IPage } from '@leaa/dashboard/src/interfaces';
+import { AttachmentBox } from '@leaa/dashboard/src/components/AttachmentBox';
+import { PageCard } from '@leaa/dashboard/src/components/PageCard';
+import { ErrorCard } from '@leaa/dashboard/src/components/ErrorCard';
+import { HtmlMeta } from '@leaa/dashboard/src/components/HtmlMeta';
+import { SubmitBar } from '@leaa/dashboard/src/components/SubmitBar/SubmitBar';
 
 import { AxInfoForm } from '../_components/AxInfoForm/AxInfoForm';
 

@@ -1,8 +1,8 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { IPage } from '@leaa/dashboard/interfaces';
-import { HtmlMeta } from '@leaa/dashboard/components/HtmlMeta';
+import { IPage } from '@leaa/dashboard/src/interfaces';
+import { HtmlMeta } from '@leaa/dashboard/src/components/HtmlMeta';
 
 export default (props: IPage) => {
   const { t } = useTranslation();

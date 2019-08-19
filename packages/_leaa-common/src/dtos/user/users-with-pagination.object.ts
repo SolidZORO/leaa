@@ -1,7 +1,7 @@
 import { ObjectType, Field } from 'type-graphql';
 
-import { User } from '@leaa/common/entrys';
-import { PaginationObject } from '@leaa/common/dtos/_common';
+import { User } from '@leaa/common/src/entrys';
+import { PaginationObject } from '@leaa/common/src/dtos/_common';
 
 @ObjectType()
 export class UsersWithPaginationObject extends PaginationObject {

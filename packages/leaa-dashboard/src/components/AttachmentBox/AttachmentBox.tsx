@@ -3,14 +3,18 @@ import React, { useState, forwardRef, useImperativeHandle, useRef } from 'react'
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { message } from 'antd';
 
-import { GET_ATTACHMENTS, UPDATE_ATTACHMENTS } from '@leaa/common/graphqls';
-import { IAttachmentParams } from '@leaa/common/interfaces';
+import { GET_ATTACHMENTS, UPDATE_ATTACHMENTS } from '@leaa/common/src/graphqls';
+import { IAttachmentParams } from '@leaa/common/src/interfaces';
 
-import { Attachment } from '@leaa/common/entrys';
-import { langUtil } from '@leaa/dashboard/utils';
-import { AttachmentsArgs, AttachmentsWithPaginationObject, UpdateAttachmentsInput } from '@leaa/common/dtos/attachment';
-import { ErrorCard } from '@leaa/dashboard/components/ErrorCard';
-import { FormCard } from '@leaa/dashboard/components/FormCard';
+import { Attachment } from '@leaa/common/src/entrys';
+import { langUtil } from '@leaa/dashboard/src/utils';
+import {
+  AttachmentsArgs,
+  AttachmentsWithPaginationObject,
+  UpdateAttachmentsInput,
+} from '@leaa/common/src/dtos/attachment';
+import { ErrorCard } from '@leaa/dashboard/src/components/ErrorCard';
+import { FormCard } from '@leaa/dashboard/src/components/FormCard';
 
 import { AttachmentList } from './_components/AttachmentList/AttachmentList';
 import { AttachmentDropzone } from './_components/AttachmentDropzone/AttachmentDropzone';

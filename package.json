@@ -31,7 +31,6 @@
     }
   },
   "dependencies": {
-    "@tarojs/taro-weapp": "^1.3.13",
     "husky": "^3.0.3",
     "lint-staged": "^9.2.1",
     "rimraf": "^3.0.0"

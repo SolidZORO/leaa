@@ -1,7 +1,7 @@
 import { Index, Entity, Column, JoinTable, ManyToMany } from 'typeorm';
 import { ObjectType, Field, Int } from 'type-graphql';
 
-import { Base, Role, Permission } from '@leaa/common/entrys';
+import { Base, Role, Permission } from '@leaa/common/src/entrys';
 
 @Entity('users')
 // @Index('users_phone_unique', ['phone'], { unique: true })

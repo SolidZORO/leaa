@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 
-import { Ax, Attachment } from '@leaa/common/entrys';
-import { AxAttachmentsObject } from '@leaa/common/dtos/ax';
-import { AttachmentService } from '@leaa/api/modules/attachment/attachment.service';
+import { Ax, Attachment } from '@leaa/common/src/entrys';
+import { AxAttachmentsObject } from '@leaa/common/src/dtos/ax';
+import { AttachmentService } from '@leaa/api/src/modules/attachment/attachment.service';
 
 // const CONSTRUCTOR_NAME = 'AxProperty';
 

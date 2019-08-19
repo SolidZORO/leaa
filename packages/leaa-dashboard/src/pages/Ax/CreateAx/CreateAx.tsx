@@ -3,17 +3,17 @@ import { Button, message } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useMutation } from '@apollo/react-hooks';
 
-import { Ax } from '@leaa/common/entrys';
-import { UpdateAxInput } from '@leaa/common/dtos/ax';
-import { IPage } from '@leaa/dashboard/interfaces';
-import { CREATE_AX } from '@leaa/common/graphqls';
-import { CREATE_BUTTON_ICON } from '@leaa/dashboard/constants';
-import { PageCard } from '@leaa/dashboard/components/PageCard';
-import { HtmlMeta } from '@leaa/dashboard/components/HtmlMeta';
-import { SubmitBar } from '@leaa/dashboard/components/SubmitBar/SubmitBar';
-import { ErrorCard } from '@leaa/dashboard/components/ErrorCard';
+import { Ax } from '@leaa/common/src/entrys';
+import { UpdateAxInput } from '@leaa/common/src/dtos/ax';
+import { IPage } from '@leaa/dashboard/src/interfaces';
+import { CREATE_AX } from '@leaa/common/src/graphqls';
+import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
+import { PageCard } from '@leaa/dashboard/src/components/PageCard';
+import { HtmlMeta } from '@leaa/dashboard/src/components/HtmlMeta';
+import { SubmitBar } from '@leaa/dashboard/src/components/SubmitBar/SubmitBar';
+import { ErrorCard } from '@leaa/dashboard/src/components/ErrorCard';
 
-import { AxInfoForm } from '@leaa/dashboard/pages/Ax/_components/AxInfoForm/AxInfoForm';
+import { AxInfoForm } from '@leaa/dashboard/src/pages/Ax/_components/AxInfoForm/AxInfoForm';
 
 import style from './style.less';
 

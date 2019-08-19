@@ -3,15 +3,15 @@ import { Button, message } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useMutation } from '@apollo/react-hooks';
 
-import { Category } from '@leaa/common/entrys';
-import { UpdateCategoryInput } from '@leaa/common/dtos/category';
-import { IPage } from '@leaa/dashboard/interfaces';
-import { CREATE_CATEGORY } from '@leaa/common/graphqls';
-import { CREATE_BUTTON_ICON } from '@leaa/dashboard/constants';
-import { PageCard } from '@leaa/dashboard/components/PageCard';
-import { HtmlMeta } from '@leaa/dashboard/components/HtmlMeta';
-import { SubmitBar } from '@leaa/dashboard/components/SubmitBar/SubmitBar';
-import { ErrorCard } from '@leaa/dashboard/components/ErrorCard';
+import { Category } from '@leaa/common/src/entrys';
+import { UpdateCategoryInput } from '@leaa/common/src/dtos/category';
+import { IPage } from '@leaa/dashboard/src/interfaces';
+import { CREATE_CATEGORY } from '@leaa/common/src/graphqls';
+import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
+import { PageCard } from '@leaa/dashboard/src/components/PageCard';
+import { HtmlMeta } from '@leaa/dashboard/src/components/HtmlMeta';
+import { SubmitBar } from '@leaa/dashboard/src/components/SubmitBar/SubmitBar';
+import { ErrorCard } from '@leaa/dashboard/src/components/ErrorCard';
 
 import { CategoryInfoForm } from '../_components/CategoryInfoForm/CategoryInfoForm';
 

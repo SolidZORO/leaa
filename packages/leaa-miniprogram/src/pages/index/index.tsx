@@ -3,7 +3,7 @@ import { View, Button, Text } from '@tarojs/components';
 import gql from 'graphql-tag';
 import '@tarojs/async-await';
 
-import { apolloClient } from '@leaa/miniprogram/libs';
+import { apolloClient } from '@leaa/miniprogram/src/libs';
 
 import style from './style.less';
 

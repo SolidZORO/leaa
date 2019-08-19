@@ -2,9 +2,9 @@ import React from 'react';
 import { DatePicker } from 'antd';
 import { useTranslation } from 'react-i18next';
 
-import { IPage } from '@leaa/dashboard/interfaces';
-import { HtmlMeta } from '@leaa/dashboard/components/HtmlMeta';
-import { SuspenseFallback } from '@leaa/dashboard/components/SuspenseFallback';
+import { IPage } from '@leaa/dashboard/src/interfaces';
+import { HtmlMeta } from '@leaa/dashboard/src/components/HtmlMeta';
+import { SuspenseFallback } from '@leaa/dashboard/src/components/SuspenseFallback';
 
 export default (props: IPage) => {
   const { t } = useTranslation();

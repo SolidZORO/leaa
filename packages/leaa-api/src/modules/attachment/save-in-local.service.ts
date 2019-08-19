@@ -12,12 +12,12 @@ import {
   IAttachmentCreateFieldByLocal,
   ISaveInLocalSignature,
   IAttachmentParams,
-} from '@leaa/common/interfaces';
-import { ConfigService } from '@leaa/api/modules/config/config.service';
-import { AttachmentProperty } from '@leaa/api/modules/attachment/attachment.property';
-import { Attachment } from '@leaa/common/entrys';
-import { loggerUtil, attachmentUtil } from '@leaa/api/utils';
-import { attachmentConfig } from '@leaa/api/configs';
+} from '@leaa/common/src/interfaces';
+import { ConfigService } from '@leaa/api/src/modules/config/config.service';
+import { AttachmentProperty } from '@leaa/api/src/modules/attachment/attachment.property';
+import { Attachment } from '@leaa/common/src/entrys';
+import { loggerUtil, attachmentUtil } from '@leaa/api/src/utils';
+import { attachmentConfig } from '@leaa/api/src/configs';
 
 const CONSTRUCTOR_NAME = 'SaveInLocalService';
 

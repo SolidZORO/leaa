@@ -1,4 +1,4 @@
-import { IDotEnv } from '@leaa/dashboard/interfaces';
+import { IDotEnv } from '@leaa/dashboard/src/interfaces';
 
 const envDataEl = document.getElementById('__ENV_DATA__');
 

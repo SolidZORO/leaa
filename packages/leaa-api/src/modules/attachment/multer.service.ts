@@ -5,9 +5,9 @@ import multer from 'multer';
 import { Express } from 'express';
 import { Injectable } from '@nestjs/common';
 import { MulterModuleOptions, MulterOptionsFactory } from '@nestjs/platform-express';
-import { ConfigService } from '@leaa/api/modules/config/config.service';
-import { attachmentUtil } from '@leaa/api/utils';
-import { attachmentConfig } from '@leaa/api/configs';
+import { ConfigService } from '@leaa/api/src/modules/config/config.service';
+import { attachmentUtil } from '@leaa/api/src/utils';
+import { attachmentConfig } from '@leaa/api/src/configs';
 
 @Injectable()
 export class MulterService implements MulterOptionsFactory {

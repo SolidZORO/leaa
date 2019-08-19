@@ -12,17 +12,6 @@ module.exports = {
         style: true,
       },
     ],
-    [
-      'module-resolver',
-      {
-        root: ['./'],
-        alias: {
-          '@leaa/common': '../_leaa-common/src',
-          '@leaa/www': './',
-        },
-        extensions: ['.ts', '.tsx'],
-      },
-    ],
   ],
   ignore: ['node_modules', 'logs', '_build', '_deploy', '_tsc', '_dist', '.docker'],
 };

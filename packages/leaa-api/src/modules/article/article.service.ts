@@ -2,16 +2,16 @@ import { Injectable } from '@nestjs/common';
 import { Repository, FindOneOptions, Like } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { Article, Category } from '@leaa/common/entrys';
+import { Article, Category } from '@leaa/common/src/entrys';
 import {
   ArticlesArgs,
   ArticlesWithPaginationObject,
   ArticleArgs,
   CreateArticleInput,
   UpdateArticleInput,
-} from '@leaa/common/dtos/article';
-import { BaseService } from '@leaa/api/modules/base/base.service';
-import { formatUtil } from '@leaa/api/utils';
+} from '@leaa/common/src/dtos/article';
+import { BaseService } from '@leaa/api/src/modules/base/base.service';
+import { formatUtil } from '@leaa/api/src/utils';
 
 // const CONSTRUCTOR_NAME = 'ArticleService';
 

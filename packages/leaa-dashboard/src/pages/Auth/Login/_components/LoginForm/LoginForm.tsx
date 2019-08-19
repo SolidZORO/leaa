@@ -4,11 +4,11 @@ import { useTranslation } from 'react-i18next';
 import { Button, Col, Checkbox, Form, Input, Row, message } from 'antd';
 import { useMutation } from '@apollo/react-hooks';
 import { FormComponentProps } from 'antd/lib/form';
-import { IAuthInfo } from '@leaa/dashboard/interfaces';
-import { AuthLoginInput } from '@leaa/common/dtos/auth';
-import { LOGIN } from '@leaa/common/graphqls';
-import { authUtil } from '@leaa/dashboard/utils';
-import { ErrorCard } from '@leaa/dashboard/components/ErrorCard';
+import { IAuthInfo } from '@leaa/dashboard/src/interfaces';
+import { AuthLoginInput } from '@leaa/common/src/dtos/auth';
+import { LOGIN } from '@leaa/common/src/graphqls';
+import { authUtil } from '@leaa/dashboard/src/utils';
+import { ErrorCard } from '@leaa/dashboard/src/components/ErrorCard';
 
 import style from './style.less';
 

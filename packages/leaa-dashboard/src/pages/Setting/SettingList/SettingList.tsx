@@ -3,23 +3,29 @@ import { useTranslation } from 'react-i18next';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { Icon, Button, Modal, message } from 'antd';
 
-import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/constants';
-import { GET_SETTINGS, UPDATE_SETTING, UPDATE_SETTINGS, CREATE_SETTING, DELETE_SETTING } from '@leaa/common/graphqls';
-import { Setting } from '@leaa/common/entrys';
+import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
+import {
+  GET_SETTINGS,
+  UPDATE_SETTING,
+  UPDATE_SETTINGS,
+  CREATE_SETTING,
+  DELETE_SETTING,
+} from '@leaa/common/src/graphqls';
+import { Setting } from '@leaa/common/src/entrys';
 import {
   SettingsWithPaginationObject,
   SettingArgs,
   UpdateSettingInput,
   CreateSettingInput,
   UpdateSettingsInput,
-} from '@leaa/common/dtos/setting';
-import { IPage } from '@leaa/dashboard/interfaces';
-import { SettingListForm } from '@leaa/dashboard/pages/Setting/_components/SettingListForm/SettingListForm';
-import { SettingModalForm } from '@leaa/dashboard/pages/Setting/_components/SettingModalForm/SettingModalForm';
-import { PageCard } from '@leaa/dashboard/components/PageCard';
-import { HtmlMeta } from '@leaa/dashboard/components/HtmlMeta';
-import { ErrorCard } from '@leaa/dashboard/components/ErrorCard';
-import { SubmitBar } from '@leaa/dashboard/components/SubmitBar';
+} from '@leaa/common/src/dtos/setting';
+import { IPage } from '@leaa/dashboard/src/interfaces';
+import { SettingListForm } from '@leaa/dashboard/src/pages/Setting/_components/SettingListForm/SettingListForm';
+import { SettingModalForm } from '@leaa/dashboard/src/pages/Setting/_components/SettingModalForm/SettingModalForm';
+import { PageCard } from '@leaa/dashboard/src/components/PageCard';
+import { HtmlMeta } from '@leaa/dashboard/src/components/HtmlMeta';
+import { ErrorCard } from '@leaa/dashboard/src/components/ErrorCard';
+import { SubmitBar } from '@leaa/dashboard/src/components/SubmitBar';
 
 import style from './style.less';
 

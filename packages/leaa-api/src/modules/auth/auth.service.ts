@@ -7,13 +7,13 @@ import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AuthenticationError } from 'apollo-server-core';
 
-import { User } from '@leaa/common/entrys';
-import { AuthLoginInput } from '@leaa/common/dtos/auth';
-import { IJwtPayload } from '@leaa/common/interfaces';
-import { ConfigService } from '@leaa/api/modules/config/config.service';
-import { loggerUtil } from '@leaa/api/utils';
-import { UserService } from '@leaa/api/modules/user/user.service';
-import { permissionConfig } from '@leaa/api/configs';
+import { User } from '@leaa/common/src/entrys';
+import { AuthLoginInput } from '@leaa/common/src/dtos/auth';
+import { IJwtPayload } from '@leaa/common/src/interfaces';
+import { ConfigService } from '@leaa/api/src/modules/config/config.service';
+import { loggerUtil } from '@leaa/api/src/utils';
+import { UserService } from '@leaa/api/src/modules/user/user.service';
+import { permissionConfig } from '@leaa/api/src/configs';
 
 const CONSTRUCTOR_NAME = 'AuthService';
 

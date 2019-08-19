@@ -1,7 +1,7 @@
 import { Args, Query, Mutation, Resolver } from '@nestjs/graphql';
 import { Int } from 'type-graphql';
 
-import { Setting, User } from '@leaa/common/entrys';
+import { Setting, User } from '@leaa/common/src/entrys';
 import {
   SettingsArgs,
   SettingsWithPaginationObject,
@@ -10,9 +10,9 @@ import {
   UpdateSettingInput,
   UpdateSettingsInput,
   SettingsObject,
-} from '@leaa/common/dtos/setting';
-import { UserDecorator } from '@leaa/api/decorators';
-import { SettingService } from '@leaa/api/modules/setting/setting.service';
+} from '@leaa/common/src/dtos/setting';
+import { UserDecorator } from '@leaa/api/src/decorators';
+import { SettingService } from '@leaa/api/src/modules/setting/setting.service';
 
 @Resolver(() => Setting)
 export class SettingResolver {

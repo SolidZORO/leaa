@@ -4,7 +4,7 @@ import { Breadcrumb as AntdBreadcrumb, Icon } from 'antd';
 import { Route } from 'antd/lib/breadcrumb/Breadcrumb';
 
 import { Link, RouteComponentProps } from 'react-router-dom';
-import { flateMasterRoutes } from '@leaa/dashboard/routes/master.route';
+import { flateMasterRoutes } from '@leaa/dashboard/src/routes/master.route';
 
 import style from './style.less';
 

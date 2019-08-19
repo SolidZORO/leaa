@@ -1,7 +1,7 @@
 import { Args, Query, Mutation, Resolver } from '@nestjs/graphql';
 import { Int } from 'type-graphql';
 
-import { Category } from '@leaa/common/entrys';
+import { Category } from '@leaa/common/src/entrys';
 import {
   CategoriesArgs,
   CategoriesWithPaginationObject,
@@ -9,8 +9,8 @@ import {
   CreateCategoryInput,
   UpdateCategoryInput,
   CategoriesWithTreeObject,
-} from '@leaa/common/dtos/category';
-import { CategoryService } from '@leaa/api/modules/category/category.service';
+} from '@leaa/common/src/dtos/category';
+import { CategoryService } from '@leaa/api/src/modules/category/category.service';
 
 @Resolver(() => Category)
 export class CategoryResolver {

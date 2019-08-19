@@ -9,9 +9,9 @@ import { FormComponentProps } from 'antd/lib/form';
 import { CheckboxValueType } from 'antd/lib/checkbox/Group';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 
-import { Role, Permission } from '@leaa/common/entrys';
-import { ITfn } from '@leaa/dashboard/interfaces';
-import { FormCard } from '@leaa/dashboard/components/FormCard';
+import { Role, Permission } from '@leaa/common/src/entrys';
+import { ITfn } from '@leaa/dashboard/src/interfaces';
+import { FormCard } from '@leaa/dashboard/src/components/FormCard';
 
 import style from './style.less';
 

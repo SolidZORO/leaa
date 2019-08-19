@@ -3,15 +3,15 @@ import { useTranslation } from 'react-i18next';
 import { Button, message } from 'antd';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
-import { Permission } from '@leaa/common/entrys';
-import { GET_PERMISSION, UPDATE_PERMISSION } from '@leaa/common/graphqls';
-import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/constants';
-import { PermissionArgs, UpdatePermissionInput } from '@leaa/common/dtos/permission';
-import { IPage } from '@leaa/dashboard/interfaces';
-import { PageCard } from '@leaa/dashboard/components/PageCard';
-import { HtmlMeta } from '@leaa/dashboard/components/HtmlMeta';
-import { ErrorCard } from '@leaa/dashboard/components/ErrorCard';
-import { SubmitBar } from '@leaa/dashboard/components/SubmitBar/SubmitBar';
+import { Permission } from '@leaa/common/src/entrys';
+import { GET_PERMISSION, UPDATE_PERMISSION } from '@leaa/common/src/graphqls';
+import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
+import { PermissionArgs, UpdatePermissionInput } from '@leaa/common/src/dtos/permission';
+import { IPage } from '@leaa/dashboard/src/interfaces';
+import { PageCard } from '@leaa/dashboard/src/components/PageCard';
+import { HtmlMeta } from '@leaa/dashboard/src/components/HtmlMeta';
+import { ErrorCard } from '@leaa/dashboard/src/components/ErrorCard';
+import { SubmitBar } from '@leaa/dashboard/src/components/SubmitBar/SubmitBar';
 
 import { PermissionInfoForm } from '../_components/PermissionInfoForm/PermissionInfoForm';
 

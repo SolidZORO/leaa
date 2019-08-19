@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { SwiperImage } from '@leaa/www/components/SwiperImage';
-import { Ax } from '@leaa/common/entrys';
+import { Ax } from '@leaa/common/src/entrys';
 
 import style from './style.less';
 

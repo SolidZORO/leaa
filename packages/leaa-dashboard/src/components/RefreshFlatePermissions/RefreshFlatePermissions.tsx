@@ -2,11 +2,11 @@ import _ from 'lodash';
 import React from 'react';
 import { History } from 'history';
 import { useQuery } from '@apollo/react-hooks';
-import { GET_USER_BY_TOKEN } from '@leaa/common/graphqls';
-import { authUtil } from '@leaa/dashboard/utils';
-import { IAuthInfo } from '@leaa/dashboard/interfaces';
+import { GET_USER_BY_TOKEN } from '@leaa/common/src/graphqls';
+import { authUtil } from '@leaa/dashboard/src/utils';
+import { IAuthInfo } from '@leaa/dashboard/src/interfaces';
 import { message } from 'antd';
-import { LOGOUT_REDIRECT_URL } from '@leaa/dashboard/constants';
+import { LOGOUT_REDIRECT_URL } from '@leaa/dashboard/src/constants';
 
 interface IProps {
   children: React.ReactNode;

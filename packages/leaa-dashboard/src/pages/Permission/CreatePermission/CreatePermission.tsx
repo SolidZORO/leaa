@@ -3,15 +3,16 @@ import { Button, message } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useMutation } from '@apollo/react-hooks';
 
-import { Permission } from '@leaa/common/entrys';
-import { UpdatePermissionInput } from '@leaa/common/dtos/permission';
-import { IPage } from '@leaa/dashboard/interfaces';
-import { PermissionInfoForm } from '@leaa/dashboard/pages/Permission/_components/PermissionInfoForm/PermissionInfoForm';
-import { CREATE_PERMISSION } from '@leaa/common/graphqls';
-import { CREATE_BUTTON_ICON } from '@leaa/dashboard/constants';
-import { PageCard } from '@leaa/dashboard/components/PageCard';
-import { SubmitBar } from '@leaa/dashboard/components/SubmitBar/SubmitBar';
-import { ErrorCard } from '@leaa/dashboard/components/ErrorCard';
+import { Permission } from '@leaa/common/src/entrys';
+import { UpdatePermissionInput } from '@leaa/common/src/dtos/permission';
+import { IPage } from '@leaa/dashboard/src/interfaces';
+// eslint-disable-next-line max-len
+import { PermissionInfoForm } from '@leaa/dashboard/src/pages/Permission/_components/PermissionInfoForm/PermissionInfoForm';
+import { CREATE_PERMISSION } from '@leaa/common/src/graphqls';
+import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
+import { PageCard } from '@leaa/dashboard/src/components/PageCard';
+import { SubmitBar } from '@leaa/dashboard/src/components/SubmitBar/SubmitBar';
+import { ErrorCard } from '@leaa/dashboard/src/components/ErrorCard';
 
 import style from './style.less';
 

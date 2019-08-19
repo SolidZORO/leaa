@@ -2,8 +2,8 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 import { useQuery } from '@apollo/react-hooks';
 
-import { GET_ARTICLES } from '@leaa/common/graphqls';
-import { ArticleArgs, ArticlesWithPaginationObject } from '@leaa/common/dtos/article';
+import { GET_ARTICLES } from '@leaa/common/src/graphqls';
+import { ArticleArgs, ArticlesWithPaginationObject } from '@leaa/common/src/dtos/article';
 import { ErrorCard } from '@leaa/www/components/ErrorCard';
 import { HtmlMeta } from '@leaa/www/components/HtmlMeta';
 

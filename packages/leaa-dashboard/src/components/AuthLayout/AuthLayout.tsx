@@ -1,10 +1,10 @@
 import React from 'react';
 import { RouteProps, RouteComponentProps } from 'react-router-dom';
 
-import { IRouteItem } from '@leaa/dashboard/interfaces';
-import { DefaultLayout } from '@leaa/dashboard/components/DefaultLayout';
+import { IRouteItem } from '@leaa/dashboard/src/interfaces';
+import { DefaultLayout } from '@leaa/dashboard/src/components/DefaultLayout';
 
-import '@leaa/dashboard/styles/global.less';
+import '@leaa/dashboard/src/styles/global.less';
 
 interface IProps extends RouteProps {
   component: any;

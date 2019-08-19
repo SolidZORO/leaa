@@ -1,7 +1,7 @@
 import { Args, Query, Mutation, Resolver, ResolveProperty, Parent } from '@nestjs/graphql';
 import { Int } from 'type-graphql';
 
-import { Ax, User } from '@leaa/common/entrys';
+import { Ax, User } from '@leaa/common/src/entrys';
 import {
   AxsArgs,
   AxsWithPaginationObject,
@@ -9,10 +9,10 @@ import {
   CreateAxInput,
   UpdateAxInput,
   AxAttachmentsObject,
-} from '@leaa/common/dtos/ax';
-import { UserDecorator } from '@leaa/api/decorators';
-import { AxService } from '@leaa/api/modules/ax/ax.service';
-import { AxProperty } from '@leaa/api/modules/ax/ax.property';
+} from '@leaa/common/src/dtos/ax';
+import { UserDecorator } from '@leaa/api/src/decorators';
+import { AxService } from '@leaa/api/src/modules/ax/ax.service';
+import { AxProperty } from '@leaa/api/src/modules/ax/ax.property';
 
 @Resolver(() => Ax)
 export class AxResolver {

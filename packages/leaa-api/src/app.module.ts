@@ -2,24 +2,24 @@ import { Module, CacheModule } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GraphQLModule } from '@nestjs/graphql';
 
-import { GraphqlService } from '@leaa/api/modules/graphql/graphql.service';
-import { TypeormService } from '@leaa/api/modules/typeorm/typeorm.service';
+import { GraphqlService } from '@leaa/api/src/modules/graphql/graphql.service';
+import { TypeormService } from '@leaa/api/src/modules/typeorm/typeorm.service';
 
-import { ConfigModule } from '@leaa/api/modules/config/config.module';
-import { SeedModule } from '@leaa/api/modules/seed/seed.module';
-import { PlaygroundModule } from '@leaa/api/modules/playground/playground.module';
-import { IndexModule } from '@leaa/api/modules/index/index.module';
+import { ConfigModule } from '@leaa/api/src/modules/config/config.module';
+import { SeedModule } from '@leaa/api/src/modules/seed/seed.module';
+import { PlaygroundModule } from '@leaa/api/src/modules/playground/playground.module';
+import { IndexModule } from '@leaa/api/src/modules/index/index.module';
 //
-import { AxModule } from '@leaa/api/modules/ax/ax.module';
-import { UserModule } from '@leaa/api/modules/user/user.module';
-import { AuthModule } from '@leaa/api/modules/auth/auth.module';
-import { RoleModule } from '@leaa/api/modules/role/role.module';
-import { CategoryModule } from '@leaa/api/modules/category/category.module';
-import { ArticleModule } from '@leaa/api/modules/article/article.module';
-import { AuthTokenModule } from '@leaa/api/modules/auth-token/auth-token.module';
-import { AttachmentModule } from '@leaa/api/modules/attachment/attachment.module';
-import { PermissionModule } from '@leaa/api/modules/permission/permission.module';
-import { SettingModule } from '@leaa/api/modules/setting/setting.module';
+import { AxModule } from '@leaa/api/src/modules/ax/ax.module';
+import { UserModule } from '@leaa/api/src/modules/user/user.module';
+import { AuthModule } from '@leaa/api/src/modules/auth/auth.module';
+import { RoleModule } from '@leaa/api/src/modules/role/role.module';
+import { CategoryModule } from '@leaa/api/src/modules/category/category.module';
+import { ArticleModule } from '@leaa/api/src/modules/article/article.module';
+import { AuthTokenModule } from '@leaa/api/src/modules/auth-token/auth-token.module';
+import { AttachmentModule } from '@leaa/api/src/modules/attachment/attachment.module';
+import { PermissionModule } from '@leaa/api/src/modules/permission/permission.module';
+import { SettingModule } from '@leaa/api/src/modules/setting/setting.module';
 
 @Module({
   imports: [

@@ -3,8 +3,8 @@ import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { getConnection } from 'typeorm';
 
-import { AppModule } from '@leaa/api/app.module';
-import { SeedService } from '@leaa/api/modules/seed/seed.service';
+import { AppModule } from '@leaa/api/src/app.module';
+import { SeedService } from '@leaa/api/src/modules/seed/seed.service';
 
 (async function seed() {
   const logger = new Logger('Seed-Log');

@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { Article, Category } from '@leaa/common/entrys';
+import { Article, Category } from '@leaa/common/src/entrys';
 
 // const CONSTRUCTOR_NAME = 'ArticleProperty';
 

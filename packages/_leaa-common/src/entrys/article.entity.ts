@@ -1,7 +1,7 @@
 import { Index, Entity, Column } from 'typeorm';
 import { ObjectType, Field, Int } from 'type-graphql';
 
-import { Base, Category } from '@leaa/common/entrys';
+import { Base, Category } from '@leaa/common/src/entrys';
 
 @Entity('articles')
 @Index('articles_title_unique', ['title'], { unique: true })

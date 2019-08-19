@@ -3,7 +3,7 @@ import Swiper from 'react-id-swiper';
 import Link from 'next/link';
 import cx from 'classnames';
 
-import { Attachment } from '@leaa/common/entrys';
+import { Attachment } from '@leaa/common/src/entrys';
 import { RetinaImage } from '@leaa/www/components/RetinaImage';
 
 import style from './style.less';

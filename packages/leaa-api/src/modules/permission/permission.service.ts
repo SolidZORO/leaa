@@ -2,16 +2,16 @@ import { Injectable } from '@nestjs/common';
 import { Repository, In, Like } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { Permission } from '@leaa/common/entrys';
-import { BaseService } from '@leaa/api/modules/base/base.service';
+import { Permission } from '@leaa/common/src/entrys';
+import { BaseService } from '@leaa/api/src/modules/base/base.service';
 import {
   PermissionsArgs,
   PermissionsWithPaginationObject,
   PermissionArgs,
   CreatePermissionInput,
   UpdatePermissionInput,
-} from '@leaa/common/dtos/permission';
-import { formatUtil } from '@leaa/api/utils';
+} from '@leaa/common/src/dtos/permission';
+import { formatUtil } from '@leaa/api/src/utils';
 
 @Injectable()
 export class PermissionService extends BaseService<

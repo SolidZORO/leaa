@@ -3,7 +3,7 @@ import cx from 'classnames';
 import Link from 'next/link';
 import dayjs from 'dayjs';
 
-import { ArticlesWithPaginationObject } from '@leaa/common/dtos/article';
+import { ArticlesWithPaginationObject } from '@leaa/common/src/dtos/article';
 
 import style from './style.less';
 

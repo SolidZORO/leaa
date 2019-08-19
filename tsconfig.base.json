@@ -10,12 +10,5 @@
     "baseUrl": "."
   },
   "compileOnSave": false,
-  "exclude": [
-    "node_modules",
-    "jest",
-    "__mocks__",
-    "__webpack_test__",
-    "**/*.spec.ts",
-    "**/*.test.ts"
-  ]
+  "exclude": ["node_modules", "__mocks__"]
 }

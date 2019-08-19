@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { PermissionService } from '@leaa/api/modules/permission/permission.service';
-import { RoleService } from '@leaa/api/modules/role/role.service';
-import { UserService } from '@leaa/api/modules/user/user.service';
-import { CategoryService } from '@leaa/api/modules/category/category.service';
-import { ArticleService } from '@leaa/api/modules/article/article.service';
-import { AxService } from '@leaa/api/modules/ax/ax.service';
-import { SettingService } from '@leaa/api/modules/setting/setting.service';
+import { PermissionService } from '@leaa/api/src/modules/permission/permission.service';
+import { RoleService } from '@leaa/api/src/modules/role/role.service';
+import { UserService } from '@leaa/api/src/modules/user/user.service';
+import { CategoryService } from '@leaa/api/src/modules/category/category.service';
+import { ArticleService } from '@leaa/api/src/modules/article/article.service';
+import { AxService } from '@leaa/api/src/modules/ax/ax.service';
+import { SettingService } from '@leaa/api/src/modules/setting/setting.service';
 
 import {
   permissionsSeed,
@@ -18,7 +18,7 @@ import {
   articleSeed,
   axSeed,
   settingSeed,
-} from '@leaa/api/modules/seed/seed.data';
+} from '@leaa/api/src/modules/seed/seed.data';
 
 @Injectable()
 export class SeedService {

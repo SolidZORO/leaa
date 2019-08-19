@@ -2,9 +2,9 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 import { useQuery } from '@apollo/react-hooks';
 
-import { Ax } from '@leaa/common/entrys';
-import { AxArgs } from '@leaa/common/dtos/ax';
-import { GET_AX_BY_SLUG } from '@leaa/common/graphqls';
+import { Ax } from '@leaa/common/src/entrys';
+import { AxArgs } from '@leaa/common/src/dtos/ax';
+import { GET_AX_BY_SLUG } from '@leaa/common/src/graphqls';
 import { HtmlMeta } from '@leaa/www/components/HtmlMeta';
 import { ErrorCard } from '@leaa/www/components/ErrorCard';
 
