@@ -3,7 +3,6 @@
   "compilerOptions": {
     "baseUrl": ".",
     "outDir": "lib",
-    "allowJs": true,
     "jsx": "preserve",
     "jsxFactory": "Taro.createElement",
     "target": "es2017",
@@ -29,6 +28,6 @@
       "@leaa/miniprogram/*": ["./*"]
     }
   },
-  "include": ["**/*", "typings/*", "global.d.ts"],
+  "include": ["src/**/*", "config/**/*", "typings/*", "global.d.ts"],
   "exclude": ["node_modules", "dist", "_dist"]
 }

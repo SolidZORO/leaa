@@ -1610,14 +1610,6 @@
   dependencies:
     any-observable "^0.3.0"
 
-"@tarojs/async-await@^1.3.13":
-  version "1.3.13"
-  resolved "https://registry.npm.taobao.org/@tarojs/async-await/download/@tarojs/async-await-1.3.13.tgz#a1b50a5ae1bebc8ebf86e487ba8c6b94c26beff8"
-  integrity sha1-obUKWuG+vI6/huSHuoxrlMJr7/g=
-  dependencies:
-    promise-polyfill "^7.1.2"
-    regenerator-runtime "^0.11.1"
-
 "@tarojs/components@1.3.13":
   version "1.3.13"
   resolved "https://registry.npm.taobao.org/@tarojs/components/download/@tarojs/components-1.3.13.tgz#1c25d5656b6a6c6ed16c3e75f192bc0067fec5b8"
@@ -11589,14 +11581,14 @@ neo-async@^2.5.0, neo-async@^2.6.0, neo-async@^2.6.1:
   resolved "https://registry.npm.taobao.org/neo-async/download/neo-async-2.6.1.tgz#ac27ada66167fa8849a6addd837f6b189ad2081c"
   integrity sha1-rCetpmFn+ohJpq3dg39rGJrSCBw=
 
-nerv-devtools@^1.4.0:
-  version "1.4.3"
-  resolved "https://registry.npm.taobao.org/nerv-devtools/download/nerv-devtools-1.4.3.tgz?cache=0&sync_timestamp=1561430310231&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fnerv-devtools%2Fdownload%2Fnerv-devtools-1.4.3.tgz#b05cf54a9d9313c0831b10cf9db04254d60d9c3b"
-  integrity sha1-sFz1Sp2TE8CDGxDPnbBCVNYNnDs=
+nerv-devtools@^1.4.4:
+  version "1.4.4"
+  resolved "https://registry.npm.taobao.org/nerv-devtools/download/nerv-devtools-1.4.4.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fnerv-devtools%2Fdownload%2Fnerv-devtools-1.4.4.tgz#e558dd7b8049ae2292da437d25d8e8f570b784fb"
+  integrity sha1-5Vjde4BJriKS2kN9Jdjo9XC3hPs=
   dependencies:
     nerv-shared "1.4.0"
     nerv-utils "1.4.3"
-    nervjs "1.4.3"
+    nervjs "1.4.4"
 
 nerv-shared@1.4.0:
   version "1.4.0"
@@ -11608,10 +11600,10 @@ nerv-utils@1.4.3:
   resolved "https://registry.npm.taobao.org/nerv-utils/download/nerv-utils-1.4.3.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fnerv-utils%2Fdownload%2Fnerv-utils-1.4.3.tgz#5a23d109147f56f478beed24794ff942fe4e4927"
   integrity sha1-WiPRCRR/VvR4vu0keU/5Qv5OSSc=
 
-nervjs@1.4.3, nervjs@^1.4.0:
-  version "1.4.3"
-  resolved "https://registry.npm.taobao.org/nervjs/download/nervjs-1.4.3.tgz#8ef7d610f6400fb81e7ca41f880612a62416a20b"
-  integrity sha1-jvfWEPZAD7gefKQfiAYSpiQWogs=
+nervjs@1.4.4, nervjs@^1.4.4:
+  version "1.4.4"
+  resolved "https://registry.npm.taobao.org/nervjs/download/nervjs-1.4.4.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fnervjs%2Fdownload%2Fnervjs-1.4.4.tgz#a843f0a5b846707021a44490c361c8440e99027f"
+  integrity sha1-qEPwpbhGcHAhpESQw2HIRA6ZAn8=
   dependencies:
     nerv-shared "1.4.0"
     nerv-utils "1.4.3"
@@ -13477,11 +13469,6 @@ promise-inflight@^1.0.1:
   resolved "https://registry.npm.taobao.org/promise-inflight/download/promise-inflight-1.0.1.tgz#98472870bf228132fcbdd868129bad12c3c029e3"
   integrity sha1-mEcocL8igTL8vdhoEputEsPAKeM=
 
-promise-polyfill@^7.1.2:
-  version "7.1.2"
-  resolved "https://registry.npm.taobao.org/promise-polyfill/download/promise-polyfill-7.1.2.tgz#ab05301d8c28536301622d69227632269a70ca3b"
-  integrity sha1-qwUwHYwoU2MBYi1pInYyJppwyjs=
-
 promise@7.1.1:
   version "7.1.1"
   resolved "https://registry.npm.taobao.org/promise/download/promise-7.1.1.tgz#489654c692616b8aa55b0724fa809bb7db49c5bf"
@@ -14536,7 +14523,7 @@ regenerate@^1.2.1, regenerate@^1.4.0:
   resolved "https://registry.npm.taobao.org/regenerate/download/regenerate-1.4.0.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fregenerate%2Fdownload%2Fregenerate-1.4.0.tgz#4a856ec4b56e4077c557589cae85e7a4c8869a11"
   integrity sha1-SoVuxLVuQHfFV1icroXnpMiGmhE=
 
-regenerator-runtime@^0.11.0, regenerator-runtime@^0.11.1:
+regenerator-runtime@^0.11.0:
   version "0.11.1"
   resolved "https://registry.npm.taobao.org/regenerator-runtime/download/regenerator-runtime-0.11.1.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fregenerator-runtime%2Fdownload%2Fregenerator-runtime-0.11.1.tgz#be05ad7f9bf7d22e056f9726cee5017fbf19e2e9"
   integrity sha1-vgWtf5v30i4Fb5cmzuUBf78Z4uk=
@@ -17107,10 +17094,10 @@ vary@^1, vary@~1.1.2:
   resolved "https://registry.npm.taobao.org/vary/download/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
   integrity sha1-IpnwLG3tMNSllhsLn3RSShj2NPw=
 
-vconsole@^3.3.2:
-  version "3.3.3"
-  resolved "https://registry.npm.taobao.org/vconsole/download/vconsole-3.3.3.tgz#023e69113c3066f3cd01f5d8a9ab3368c07900c5"
-  integrity sha1-Aj5pETwwZvPNAfXYqaszaMB5AMU=
+vconsole@^3.3.4:
+  version "3.3.4"
+  resolved "https://registry.npm.taobao.org/vconsole/download/vconsole-3.3.4.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fvconsole%2Fdownload%2Fvconsole-3.3.4.tgz#a7dacd8887b3d3e902e8d18425cda56c34e77f51"
+  integrity sha1-p9rNiIez0+kC6NGEJc2lbDTnf1E=
 
 vendors@^1.0.0:
   version "1.0.3"

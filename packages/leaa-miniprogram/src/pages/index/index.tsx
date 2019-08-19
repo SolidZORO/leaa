@@ -1,33 +1,10 @@
 import Taro, { useState } from '@tarojs/taro';
 import { View, Button, Text } from '@tarojs/components';
-import gql from 'graphql-tag';
-import '@tarojs/async-await';
 
 import { apolloClient } from '@leaa/miniprogram/src/libs';
+import { GET_ARTICLES } from '@leaa/miniprogram/src/graphqls';
 
 import style from './style.less';
-
-export const GET_ARTICLES = gql`
-  query($page: Int, $pageSize: Int, $orderBy: String, $orderSort: String, $q: String) {
-    articles(page: $page, pageSize: $pageSize, orderBy: $orderBy, orderSort: $orderSort, q: $q) {
-      total
-      items {
-        id
-        title
-        slug
-        description
-        category_id
-        category {
-          name
-          slug
-        }
-        user_id
-        status
-        created_at
-      }
-    }
-  }
-`;
 
 export default (props: any) => {
   const [n, setN] = useState(1);
@@ -50,6 +27,8 @@ export default (props: any) => {
     .catch(error => {
       console.error(error);
     });
+
+  // console.log(env);
 
   return (
     <View>

@@ -92,7 +92,7 @@
     "rimraf": "^3.0.0",
     "swiper": "^4.5.0",
     "url-loader": "^2.1.0",
-    "vconsole": "^3.3.2",
+    "vconsole": "^3.3.4",
     "webpack-filter-warnings-plugin": "^1.2.1"
   },
   "devDependencies": {

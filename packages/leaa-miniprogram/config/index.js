@@ -1,8 +1,8 @@
 const path = require('path');
 
 const alias = {
-  '@leaa/common/src': path.resolve(__dirname, '../../_leaa-common', 'src'),
-  '@leaa/miniprogram/src': path.resolve(__dirname, '..', 'src'),
+  // '@leaa/common': path.resolve(__dirname, '../../_leaa-common'),
+  '@leaa/miniprogram': path.resolve(__dirname, '..'),
 };
 
 const config = {
