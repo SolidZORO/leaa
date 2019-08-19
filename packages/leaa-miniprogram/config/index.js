@@ -1,5 +1,7 @@
+const path = require('path');
+
 const config = {
-  projectName: 'leaa-miniprogram',
+  projectName: '@leaa/miniprogram',
   date: '2019-8-16',
   designWidth: 750,
   deviceRatio: {
@@ -12,14 +14,7 @@ const config = {
   plugins: {
     babel: {
       sourceMap: true,
-      presets: [
-        [
-          'env',
-          {
-            modules: false,
-          },
-        ],
-      ],
+      presets: [['env', { modules: false }]],
       plugins: [
         'transform-decorators-legacy',
         'transform-class-properties',
@@ -39,6 +34,9 @@ const config = {
     },
   },
   defineConstants: {},
+  alias: {
+    '@leaa/miniprogram': path.resolve(__dirname, '..', 'src'),
+  },
   copy: {
     patterns: [],
     options: {},

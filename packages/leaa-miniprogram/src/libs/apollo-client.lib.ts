@@ -5,7 +5,7 @@ import { ApolloClient } from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import wxApolloFetcher from 'wx-apollo-fetcher';
 
-import { envConfig } from '../configs';
+import { envConfig } from '@leaa/miniprogram/configs';
 
 const apolloFetch = Taro.getEnv() === 'WEAPP' ? { fetch: wxApolloFetcher } : {};
 
