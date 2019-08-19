@@ -24,7 +24,7 @@
     "@nestjs/passport": "^6.1.0",
     "class-validator": "^0.10.0",
     "graphql-tag": "^2.10.1",
-    "type-graphql": "^0.17.4",
+    "type-graphql": "^0.17.5",
     "typeorm": "^0.2.18"
   },
   "devDependencies": {}
