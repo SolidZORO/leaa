@@ -21,7 +21,7 @@ class App extends Component {
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
-      navigationBarTitleText: 'Leaa',
+      navigationBarTitleText: 'Leaa Miniprogram',
       navigationBarTextStyle: 'black',
     },
     tabBar: {

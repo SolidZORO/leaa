@@ -1,98 +1,22 @@
 import Taro from '@tarojs/taro';
-import { View, Text } from '@tarojs/components';
+import { View } from '@tarojs/components';
 
-import style from './style.less';
+import { Account } from './_components/Account/Account';
 
-export default (props: any) => {
-  return (
-    <View>
+export default class extends Taro.Component {
+  componentDidShow() {
+    if (typeof this.$scope.getTabBar === 'function' && this.$scope.getTabBar()) {
+      this.$scope.getTabBar().$component.setState({
+        selected: 2,
+      });
+    }
+  }
+
+  public render() {
+    return (
       <View>
-        <Text className={style['title']}>ACCOUNT</Text>
+        <Account />
       </View>
-      <View>
-        <Text className={style['title']}>ACCOUNT</Text>
-      </View>
-      <View>
-        <Text className={style['title']}>ACCOUNT</Text>
-      </View>
-      <View>
-        <Text className={style['title']}>ACCOUNT</Text>
-      </View>
-      <View>
-        <Text className={style['title']}>ACCOUNT</Text>
-      </View>
-      <View>
-        <Text className={style['title']}>ACCOUNT</Text>
-      </View>
-      <View>
-        <Text className={style['title']}>ACCOUNT</Text>
-      </View>
-      <View>
-        <Text className={style['title']}>ACCOUNT</Text>
-      </View>
-      <View>
-        <Text className={style['title']}>ACCOUNT</Text>
-      </View>
-      <View>
-        <Text className={style['title']}>ACCOUNT</Text>
-      </View>
-      <View>
-        <Text className={style['title']}>ACCOUNT</Text>
-      </View>
-      <View>
-        <Text className={style['title']}>ACCOUNT</Text>
-      </View>
-      <View>
-        <Text className={style['title']}>ACCOUNT</Text>
-      </View>
-      <View>
-        <Text className={style['title']}>ACCOUNT</Text>
-      </View>
-      <View>
-        <Text className={style['title']}>ACCOUNT</Text>
-      </View>
-      <View>
-        <Text className={style['title']}>ACCOUNT</Text>
-      </View>
-      <View>
-        <Text className={style['title']}>ACCOUNT</Text>
-      </View>
-      <View>
-        <Text className={style['title']}>ACCOUNT</Text>
-      </View>
-      <View>
-        <Text className={style['title']}>------------</Text>
-      </View>
-      <View>
-        <Text className={style['title']}>ACCOUNT</Text>
-      </View>
-      <View>
-        <Text className={style['title']}>ACCOUNT</Text>
-      </View>
-      <View>
-        <Text className={style['title']}>ACCOUNT</Text>
-      </View>
-      <View>
-        <Text className={style['title']}>ACCOUNT</Text>
-      </View>
-      <View>
-        <Text className={style['title']}>ACCOUNT</Text>
-      </View>
-      <View>
-        <Text className={style['title']}>ACCOUNT</Text>
-      </View>
-      <View>
-        <Text className={style['title']}>ACCOUNT</Text>
-      </View>
-      <View>
-        <Text className={style['title']}>ACCOUNT</Text>
-      </View>
-      <View>
-        <Text className={style['title']}>ACCOUNT</Text>
-      </View>
-      <View>
-        <Text className={style['title']}>ACCOUNT</Text>
-      </View>
-    </View>
-  );
-};
+    );
+  }
+}

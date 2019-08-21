@@ -1,1 +1,0 @@
-export { CustomTabBar } from './CustomTabBar';

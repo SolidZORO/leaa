@@ -450,7 +450,7 @@ try {
 
 但这毕竟要 async，在 hooks 里，能不 async 还是不要，主要是在 `Taro` pages 下使用 async 会有奇奇怪怪的问题，暂时不考虑这种方案。
 
-所以最终方案还是 `fucking-self`，其实写一个  `Promise.finally()` 不难：
+所以最终方案还是 `fucking-self`，其实写一个 `Promise.finally()` 不难：
 
 ```
 Promise.prototype.finally = Promise.prototype.finally || {
@@ -475,3 +475,40 @@ promiseFinally.shim();
 ```
 
 好了，又 polyfill 一个坑。
+
+<br />
+
+### 2019-08-21 11:43
+
+今天在 Taro 上做 `CustomTabBar` 有点恼火了…… 本来官方一个简简单单的 demo，要是用小程序的 demo 代码，几分钟就能搞定，无奈 Taro 官方并没有这样的 `example`，需要自研，唯一一个官方线索可能只有这篇 issues [大神，微信小程序支持自定义 tabbar 了，Taro 支持吗现在 #2240](https://github.com/NervJS/taro/issues/2240) 了。
+
+其实这个要说怪，是不能够怪谁的，因为我的想法是自定义 `CustomTabBar`，自定义肯定要付出代价的，微信前端时间说支持了 svg，我今天试了一下，果然支持了！开心了一会，但这个问题和之前 `Promise.finally()` 一样，模拟器支持真机不支持，这！气得想掀桌，一次两次感觉被模拟器耍了莫名其妙的感觉。难道微信官方都基于 `Blink` 二开了，在 console 里面 Tips 一下模拟器与真机的区别就有那么难吗？
+
+算了，别抱怨了，感觉还是自己能力有限。那怎么办？填坑，一定要磨平掉这个问题！
+
+本质上其实我是用不到 `CustomTabBar` 的，费那么大力气去搞他干嘛？ 但是想着以后业务总有可能会用到的，先开荒一下，而且我个人也实在不是特别喜欢用图片去做 icon，放着好好的 svg 或 iconfont 不用干嘛呢？结果一搞就是一个晚上。
+
+先贴一下关键代码：
+
+```
+// custom-tab-bar/index.tsx 这里好像没什么可看的
+className={cx(style['item'], { [style['item--action']]: selected === index })}
+```
+
+```
+// home.tsx
+
+componentDidShow() {
+if (typeof this.$scope.getTabBar === 'function' && this.$scope.getTabBar()) {
+                             |------- 这里是关键
+                             v
+  this.$scope.getTabBar().$component.setState({
+    selected: 0,
+  });
+}
+}
+```
+
+老实说，如果没有 issues，我真不知道 Taro 还有 `this.$scope` 这个用法，虽然 Taro 看着和 React 差不多，其实也还是有很多私有扩展的，我甚至至今都没有搞清楚 Taro 到底依赖了那个版本的 React，按理说应该是 `16.8` 以上吧，因为支持了 `Hooks`，但又不确定，官方也没在明显的场合露出过这个信息，恐怕也不大想让开发者知道吧，用就行了。
+
+不过这里说个小小的缺点，为了用上 `CustomTabBar`，所有在 `CustomTabBar` 中的 TabPage，是需要用 `Class` 方式写的，因为官方目前还没有提供 `Hooks` 版本的 `this.$scope`，但愿后续官方能支持。
