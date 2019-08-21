@@ -21,7 +21,6 @@ jobs:
       - name: npm install, build and test
         env:
           PACKAGE_LOCATION: packages/leaa-api
-          PACKAGE_NAME: @leaa/api
         run: |
           pwd
           ls -l
