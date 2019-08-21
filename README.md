@@ -480,18 +480,18 @@ promiseFinally.shim();
 
 ### 2019-08-21 11:43
 
-今天在 Taro 上做 `CustomTabBar` 有点恼火了…… 本来官方一个简简单单的 demo，要是用小程序的 demo 代码，几分钟就能搞定，无奈 Taro 官方并没有这样的 `example`，需要自研，唯一一个官方线索可能只有这篇 issues [大神，微信小程序支持自定义 tabbar 了，Taro 支持吗现在 #2240](https://github.com/NervJS/taro/issues/2240) 了。
+今天在 Taro 上做 `CustomTabBar`，说实话有点窝火…… 本来官方一个简简单单的 [demo](https://developers.weixin.qq.com/s/jiSARvmF7i55)，用小程序原生代码，几分钟就能搞定。无奈 Taro 官方并没有这样的 `example`，doc 上也没提，需要自研。还好找到唯一一个官方线索，就是这篇 issues [大神，微信小程序支持自定义 tabbar 了，Taro 支持吗现在 #2240](https://github.com/NervJS/taro/issues/2240) 。
 
-其实这个要说怪，是不能够怪谁的，因为我的想法是自定义 `CustomTabBar`，自定义肯定要付出代价的，微信前端时间说支持了 svg，我今天试了一下，果然支持了！开心了一会，但这个问题和之前 `Promise.finally()` 一样，模拟器支持真机不支持，这！气得想掀桌，一次两次感觉被模拟器耍了莫名其妙的感觉。难道微信官方都基于 `Blink` 二开了，在 console 里面 Tips 一下模拟器与真机的区别就有那么难吗？
+我的想法是自定义 `CustomTabBar`，用 svg 去代替 png 做 icon。前段时间看到微信官方 push 了消息说支持 svg，刚试了一下，果然支持了！但是…… 这个问题和之前 `Promise.finally()` 问题一样，就是模拟器支持真机不支持，靠北喔！想掀桌！感觉一次两次被小程序模拟器耍，难道微信官方都基于 `Blink` 二开了，在 console 里面 Tips 一下模拟器与真机的区别就有那么难吗？算了，别抱怨了，感觉还是自己能力有限。那怎么办？还能怎么办！填坑！一定要把这个问题 BAN 了！
 
-算了，别抱怨了，感觉还是自己能力有限。那怎么办？填坑，一定要磨平掉这个问题！
+其实我是用不到 `CustomTabBar` 的，费那么大力气去搞他干嘛？ 但是想着以后业务总有可能会用到的，先开荒一下，而且我个人也实在不是特别喜欢用图片去做 icon，因为个 icon，两个 status。要改大小还得改图，图 size 不对还有毛刺…… 放着好好的 svg 或 iconfont 不用干嘛呢？结果一搞就是一个晚上。
 
-本质上其实我是用不到 `CustomTabBar` 的，费那么大力气去搞他干嘛？ 但是想着以后业务总有可能会用到的，先开荒一下，而且我个人也实在不是特别喜欢用图片去做 icon，放着好好的 svg 或 iconfont 不用干嘛呢？结果一搞就是一个晚上。
-
-先贴一下关键代码：
+来，先贴一下关键代码：
 
 ```
-// custom-tab-bar/index.tsx 这里好像没什么可看的
+// custom-tab-bar/index.tsx 
+
+// 控制 action class 样式
 className={cx(style['item'], { [style['item--action']]: selected === index })}
 ```
 
@@ -500,8 +500,8 @@ className={cx(style['item'], { [style['item--action']]: selected === index })}
 
 componentDidShow() {
 if (typeof this.$scope.getTabBar === 'function' && this.$scope.getTabBar()) {
-                             |------- 这里是关键
-                             v
+             这里是关键 -------|
+                              v
   this.$scope.getTabBar().$component.setState({
     selected: 0,
   });
@@ -509,6 +509,13 @@ if (typeof this.$scope.getTabBar === 'function' && this.$scope.getTabBar()) {
 }
 ```
 
-老实说，如果没有 issues，我真不知道 Taro 还有 `this.$scope` 这个用法，虽然 Taro 看着和 React 差不多，其实也还是有很多私有扩展的，我甚至至今都没有搞清楚 Taro 到底依赖了那个版本的 React，按理说应该是 `16.8` 以上吧，因为支持了 `Hooks`，但又不确定，官方也没在明显的场合露出过这个信息，恐怕也不大想让开发者知道吧，用就行了。
+老实说如果没有那个 issues，我真不知道 Taro 还有 `this.$scope` 这个用法，虽然 Taro 看着和 React 差不多，其实也还是有很多私有扩展的，我甚至至今都没有搞清楚 Taro 到底依赖了那个版本的 React，按理说应该是 `16.8` 以上吧，因为支持了 `Hooks`，但又不确定，官方也没在明显的场合露出过这个信息，恐怕也不大想让开发者知道吧，用就行了。
 
-不过这里说个小小的缺点，为了用上 `CustomTabBar`，所有在 `CustomTabBar` 中的 TabPage，是需要用 `Class` 方式写的，因为官方目前还没有提供 `Hooks` 版本的 `this.$scope`，但愿后续官方能支持。
+
+
+BTW-0，这里说个小缺点，就是为了用上 `CustomTabBar`，所有在 `CustomTabBar` 中的 TabPage，是需要用 `Class` 方式写的，因为官方目前还没有提供 `Hooks` 版本的 `this.$scope`，但愿后续官方能支持。
+
+BTW-1，据网友纠正，Taro 的内核是 [NervJS](https://github.com/NervJS/nerv)，一个 React-Like。其实 Nerv 在 Taro Doc 上经常见，没想到 Taro 是真的完完全全依赖了这个自研的 lib。佩服，不过想来如果要兼容多端，扩展 React 肯定是不够的，必须要掺一些私货才能满足需求。
+
+
+

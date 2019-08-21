@@ -1,7 +1,8 @@
 import Taro from '@tarojs/taro';
 import { View } from '@tarojs/components';
 
-import { Home } from './_components/Home/Home';
+import { Numbers } from './_components/Numbers/Numbers';
+import { Banner } from './_components/Banner/Banner';
 
 export default class extends Taro.Component {
   componentDidShow() {
@@ -15,7 +16,8 @@ export default class extends Taro.Component {
   public render() {
     return (
       <View>
-        <Home />
+        <Banner />
+        <Numbers />
       </View>
     );
   }
