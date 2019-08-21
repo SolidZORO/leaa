@@ -1,0 +1,50 @@
+.wrapper {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background: #fff;
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid #ddd;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 auto;
+  padding: 10px;
+}
+
+.icon,
+.label {
+  color: #aaa;
+}
+
+.icon {
+  @size: 40px;
+
+  width: @size;
+  height: @size;
+  font-weight: 400;
+  font-size: 110%;
+  text-align: center;
+  line-height: 1;
+  margin: 0 auto;
+  padding-top: 2px;
+}
+
+.label {
+  display: inline-block;
+  text-align: center;
+  font-size: 60%;
+}
+
+.item--action {
+  .icon,
+  .label {
+    color: #111;
+  }
+}

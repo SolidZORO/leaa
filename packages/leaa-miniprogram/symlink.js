@@ -7,7 +7,8 @@ const distDirPath = './src';
 // prettier-ignore
 const symlinkPaths = [
   'graphqls',
-  // 'entrys',
+  'dtos',
+  'entrys',
 ];
 
 symlinkPaths.forEach(path => {

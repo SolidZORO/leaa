@@ -286,15 +286,11 @@ can't find module : ../../../node_modules/@tarojs/taro-weapp/
 
 ##### React Native 端
 
-看 `package.json` 里的 有 `dev:rn`，我就 run 了，结果是好的，看到提示编译成功，但就没有下文了…… 然后去官方 [docs](https://nervjs.github.io/taro/docs/react-native.html) 看了下，感觉略复杂，那这和单独折腾一套原生 RN 开发有什么区别？而且依赖 `Taro` 的话，`RN` 版本锁在 `0.55.4`,天啊！这和官方目前 `0.60.x` 的版本号相距甚远，要知道 `RN` 每一个版本迭代都是质的飞跃，如果用上 `0.60.x` 还能在 Android 上赚一个 [Hermes](https://github.com/facebook/hermes)，效率也是大幅提升。另外还有一个让我顾虑的是，用上`RN@Taro`，意味着只能使用 `@tarojs/component`  这个 UI lib，也就是意味着要放弃掉 [`NativeBase`](https://docs.nativebase.io/) 和 [`Shoutem`](https://shoutem.github.io/docs/extensions/tutorials/getting-started) 这两个在 `RN` 上相对优质的 UI lib。
+看 `package.json` 里的 有 `dev:rn`，我就 run 了，结果是好的，看到提示编译成功，但就没有下文了…… 然后去官方 [docs](https://nervjs.github.io/taro/docs/react-native.html) 看了下，感觉略复杂，那这和单独折腾一套原生 RN 开发有什么区别？而且依赖 `Taro` 的话，`RN` 版本锁在 `0.55.4`,天啊！这和官方目前 `0.60.x` 的版本号相距甚远，要知道 `RN` 每一个版本迭代都是质的飞跃，如果用上 `0.60.x` 还能在 Android 上赚一个 [Hermes](https://github.com/facebook/hermes)，效率也是大幅提升。另外还有一个让我顾虑的是，用上`RN@Taro`，意味着只能使用 `@tarojs/component` 这个 UI lib，也就是意味着要放弃掉 [`NativeBase`](https://docs.nativebase.io/) 和 [`Shoutem`](https://shoutem.github.io/docs/extensions/tutorials/getting-started) 这两个在 `RN` 上相对优质的 UI lib。
 
-嗯…… 综上考虑，如不是一心想为了节约成本和时间，想着 `一套代码多处运行 ` ，目前还是建议放弃 `RN@Taro` ，如果要说一个最佳的切入时机，我认为是至少 [`taro-ui`](https://github.com/NervJS/taro-ui) 支持了 `RN` ，当然，这个代价实在太高，官方永远不去做支持也是非常有可能的。
-
-
+嗯…… 综上考虑，如不是一心想为了节约成本和时间，想着 `一套代码多处运行` ，目前还是建议放弃 `RN@Taro` ，如果要说一个最佳的切入时机，我认为是至少 [`taro-ui`](https://github.com/NervJS/taro-ui) 支持了 `RN` ，当然，这个代价实在太高，官方永远不去做支持也是非常有可能的。
 
 好啦回到正题，我使用 `Taro` 的初衷一开始就是用来 ONLY for 小程序的，所以对于目前的情形我觉得「一切 OK」。`leaa-app` 那边还是 `RN` 或者 `expo` 处理就好，毕竟坑基本上在以往项目踩完了（笑）。
-
-
 
 <br />
 
@@ -304,7 +300,7 @@ can't find module : ../../../node_modules/@tarojs/taro-weapp/
 
 - 首先，比较痛苦的是不支持 `@apollo/react-hooks` 和 `react-apollo`！也就是说，任何 Apollo 官方的包都不可以用了！不能 `useQuery` 连 `<Query>` 都不让，用就给你报 hooks 那经典的错误 `Invariant Violation: Invalid hook call.` 结果是直接用写好 export `apolloClient` 后 `apolloClient.query()`，这真是一夜回到解放前啊！
 
-- 本来想着方便，在 `H5`模式下 debug，`apolloClient` 这种方式能跑起来已经很开心了，没想到…… `小程序` 模式弹 error 了，说 `fetch is not found globally and no fetcher passed, to fix pass....` 查了下资料说是 「微信小程序在某一次升级中， 移除了全局的fetch」这……，还好，马上找到了前辈写的 lib [wx-apollo-fetcher](https://github.com/kdong007/wx-apollo-fetcher)。整个库就几行：
+- 本来想着方便，在 `H5`模式下 debug，`apolloClient` 这种方式能跑起来已经很开心了，没想到…… `小程序` 模式弹 error 了，说 `fetch is not found globally and no fetcher passed, to fix pass....` 查了下资料说是 「微信小程序在某一次升级中， 移除了全局的 fetch」这……，还好，马上找到了前辈写的 lib [wx-apollo-fetcher](https://github.com/kdong007/wx-apollo-fetcher)。整个库就几行：
 
   ```
   return new Promise(resolve =>
@@ -316,11 +312,9 @@ can't find module : ../../../node_modules/@tarojs/taro-weapp/
 
   然后在 `HttpLink` 那边替换一下变成 `fetch: wxApolloFetcher` 就好了。万万没想到微信还会做这种断崖式更新，真是骚操作。
 
-- 再就是路径 `alias` 的问题，[官方 issues 这贴](https://github.com/NervJS/taro/issues/1598)讨论得最激烈，我看完后试了，依然无解。这里的无解是 `小程序` 端无解，`H5` 端是好的。这…… 我这好歹是 `monorepo`，要是不能 share `@leaa/common ` 包里的代码，那会变得很尴尬。行吧，我先不复用，忍忍。
+- 再就是路径 `alias` 的问题，[官方 issues 这贴](https://github.com/NervJS/taro/issues/1598)讨论得最激烈，我看完后试了，依然无解。这里的无解是 `小程序` 端无解，`H5` 端是好的。这…… 我这好歹是 `monorepo`，要是不能 share `@leaa/common` 包里的代码，那会变得很尴尬。行吧，我先不复用，忍忍。
 
 本以为经历过 `RN` 的开发已是煎熬，但这次…… 哎，不说了，怪自己用的技术太新（啪）。
-
-
 
 <br />
 
@@ -341,7 +335,6 @@ can't find module : ../../../node_modules/@tarojs/taro-weapp/
 }
 ```
 
-
 ```
 // .babelrc.js
 
@@ -355,7 +348,6 @@ plugins: [
 ],
 
 ```
-
 
 ```
 // package.json
@@ -384,7 +376,7 @@ moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<roo
 import { JwtStrategy } from '@leaa/api/strategies';
 ```
 
-而不是： 
+而不是：
 
 ```
 import { JwtStrategy } from '@leaa/api/src/strategies';
@@ -392,15 +384,9 @@ import { JwtStrategy } from '@leaa/api/src/strategies';
 
 天啊，就为了少些一个 `/src` 做了那么多工作，感觉不合理 ! 非常不合理！必须统统改掉。~~只在 `package.json` 加入 `dependencies` 就好~~，只在 `package.json` 和 `tsconfig.json` 加入 `path mapping` 别的都删掉。
 
-
-
 1， 2， 3，好，改完了。
 
-
-
 那回过头， `.babelrc.js` 的 `module-resolver` 有没有用呢? 当然也是有的咯，我觉得如果不是 `monorepo` 的时候用来以 `@utils` `@graphqls` 这种代替真实目录就很好啊。不用写一堆 `../../../../../` 但是如果是 `monorepo`，觉得直接 `package.json` 直接依赖就好，简单明了。
-
-
 
 <br />
 
@@ -441,3 +427,51 @@ symlinkPaths.forEach(path => {
 总体来说代码还是非常简单的，在 `package.json` 里，每次 `dev:weapp` 前都会执行 `symlink.js` 删软链 --> 建软链，其实就相当于删几个文件而已，对硬盘寿命的影响可忽略不计。
 
 真的没想到一个小小 `alias` 问题我能折腾那么久，而最后方案又是如此简单明了。真是想哭啊……（哭）。
+
+<br />
+
+### 2019-08-20 13:47
+
+发现小程序有个坑，就是支持了 `Promise` 了，但是不支持其中的 `Promise.finally()`。理论上讲标准 Promise 只有 `resolve`、`reject`、`all`、`race` 四个方法。没有 `finally` 也是合情合理的，但由于小程序模拟器用的是高版本的 Chrome，默认支持支持 `finally`，但到了真机上就不支持了，乖乖～ 好迷。
+
+我写代码的时候会习惯性的在发请求的时候加个 Loading UI，等数据拿到（或没拿到）的时候再把 Loading UI 去掉。
+
+如果有 finally 的加持，只需要在 finally 里写一次去掉 Loading 即可，但如果不支持，then 和 catch 都要写，略显麻烦。不过也有曲线救国的解决办法：
+
+```
+try {
+  ...
+} catch(e){
+  ...
+} finally{
+ ...
+}
+```
+
+但这毕竟要 async，在 hooks 里，能不 async 还是不要，主要是在 `Taro` pages 下使用 async 会有奇奇怪怪的问题，暂时不考虑这种方案。
+
+所以最终方案还是 `fucking-self`，其实写一个  `Promise.finally()` 不难：
+
+```
+Promise.prototype.finally = Promise.prototype.finally || {
+  finally (fn) {
+    const onFinally = cb => Promise.resolve(fn()).then(cb);
+
+    return this.then(
+      result => onFinally(() => result),
+      reason => onFinally(() => Promise.reject(reason))
+    );
+  }
+}.finally;
+```
+
+但是写好非常难，为了避免手写代码的可靠性，还是用 lib 吧，网上找了很多相关的 lib，发现还是 [promise.prototype.finally](https://www.npmjs.com/package/promise.prototype.finally) 最好，同等体积下实现最好。
+
+使用的时候直接在 `app.tsx` 下调一下即可，简简单单。
+
+```
+import promiseFinally from 'promise.prototype.finally';
+promiseFinally.shim();
+```
+
+好了，又 polyfill 一个坑。

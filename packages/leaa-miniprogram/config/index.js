@@ -23,7 +23,6 @@ const config = {
     },
   },
   defineConstants: {},
-  symlinks: true,
   alias,
   copy: {
     patterns: [],
@@ -75,9 +74,6 @@ const config = {
             // namingPattern: 'module', // 转换模式，取值为 global/module
             generateScopedName: '[local]--[hash:8]',
           },
-        },
-        router: {
-          mode: 'browser', // hash | browser
         },
       },
     },

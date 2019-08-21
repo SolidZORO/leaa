@@ -1,0 +1,1 @@
+export { IconFont } from './IconFont';

@@ -1,0 +1,13 @@
+const API_HOST = 'http://192.168.169.99:5555';
+
+module.exports = {
+  env: {
+    NODE_ENV: '"production"',
+  },
+  defineConstants: {
+    // call it use `envConfig.GRAPHQL_ENDPOINT`
+    GRAPHQL_ENDPOINT_VALUE: `${API_HOST}/graphql`,
+  },
+  weapp: {},
+  h5: {},
+};

@@ -5,7 +5,7 @@
     "outDir": "lib",
     "jsx": "preserve",
     "jsxFactory": "Taro.createElement",
-    "target": "es2017",
+    "target": "es2018",
     "module": "commonjs",
     "skipLibCheck": true,
     "moduleResolution": "node",
