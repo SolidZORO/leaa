@@ -19,9 +19,21 @@ export const Numbers = (props: any) => {
 
         <Icon size="60" type="success" />
 
-        <Navigator className="tag" url="/pages/article/article">
-          <Button>Article</Button>
+        <Navigator url="/pages/about/about">
+          <Button>1- 关于</Button>
         </Navigator>
+
+        <Navigator url="/pages/account/account">
+          <Button>2 - 我的</Button>
+        </Navigator>
+
+        <Button
+          onClick={() => {
+            Taro.switchTab({ url: '/pages/account/account' }).then();
+          }}
+        >
+          2 - 我的
+        </Button>
       </View>
     </View>
   );
