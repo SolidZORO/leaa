@@ -564,7 +564,9 @@ BTW-1，据网友纠正，Taro 的内核是 [NervJS](https://github.com/NervJS/n
 }
 ```
 
-4，Show Time 结束，hhhhhhhhhhhh。
+4，Show Time 结束。
+
+不过后来发现，其实这个 IP 打开 [whoer.net](https://whoer.net) 就能发现，然后如果需要调试微信认证相关的，还是一样得开 `ngrop`，hhhhhhhhhhhh（秀哭了）。
 
 <br />
 
