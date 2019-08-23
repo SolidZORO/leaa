@@ -16,7 +16,8 @@ symlinkPaths.forEach(path => {
   const distPath = `${distDirPath}/${path}`;
 
   if (fs.existsSync(distPath)) {
-    fs.unlinkSync(distPath);
+    // fs.unlinkSync(distPath);
+    return;
   }
 
   console.log(`SYMLINK: ${sourcePath} --> ${distPath}`);

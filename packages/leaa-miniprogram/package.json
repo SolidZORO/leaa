@@ -60,6 +60,7 @@
     "nervjs": "^1.4.4",
     "promise.prototype.finally": "^3.1.0",
     "react-apollo": "^3.0.1",
+    "type-graphql": "^0.17.5",
     "wx-apollo-fetcher": "^1.0.2"
   },
   "devDependencies": {

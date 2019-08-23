@@ -8,7 +8,7 @@ import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 import { AuthService } from '@leaa/api/src/modules/auth/auth.service';
 
 @Injectable()
-export class JwtStrategy extends PassportStrategy(Strategy) {
+export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
   constructor(
     private readonly authService: AuthService,
     private readonly jwtService: JwtService,

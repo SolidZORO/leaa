@@ -26,4 +26,11 @@ export interface IDotEnv {
   OSS_ALIYUN_AK_ID?: string;
   OSS_ALIYUN_REGION?: string;
   OSS_ALIYUN_CALLBACK_URL?: string;
+
+  OAUTH_WECHAT_APP_ID?: string;
+  OAUTH_WECHAT_APP_SECRET?: string;
+  OAUTH_WECHAT_MINIPROGRAM_APP_ID?: string;
+  OAUTH_WECHAT_MINIPROGRAM_APP_SECRET?: string;
+  OAUTH_WECHAT_TOKEN?: string;
+  OAUTH_WECHAT_REDIRECT_URL?: string;
 }

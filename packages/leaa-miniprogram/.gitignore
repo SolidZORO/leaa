@@ -14,6 +14,7 @@
 /_deploy
 dist/
 deploy_versions/
+/.project.config.json
 .temp/
 .rn_temp/
 rn_temp/

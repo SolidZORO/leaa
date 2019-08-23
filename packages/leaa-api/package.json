@@ -24,8 +24,9 @@
     "codecov": "codecov",
     "tsc-check": "tsc --noEmit",
     "---------------------------------------------------------------------- DEV ----": "----",
-    "tsnodedev": "NODE_ENV=development ts-node-dev --respawn --transpileOnly -r tsconfig-paths/register ./src/main.ts",
-    "dev": "NODE_ENV=development nodemon",
+    "dev-tsnodedev": "NODE_ENV=development ts-node-dev --respawn --transpileOnly -r tsconfig-paths/register ./src/main.ts",
+    "dev-nodemon": "NODE_ENV=development nodemon",
+    "dev": "NODE_ENV=development yarn dev-tsnodedev",
     "seed": "NODE_ENV=development ts-node -r tsconfig-paths/register ./src/seed.ts",
     "nodemon": "NODE_ENV=development nodemon",
     "clear": "rimraf _dist",
@@ -85,6 +86,7 @@
     "type-graphql": "^0.17.5",
     "typeorm": "^0.2.18",
     "uuid": "^3.3.3",
+    "wechat-jssdk": "^5.0.2",
     "winston": "^3.2.1",
     "winston-daily-rotate-file": "^3.10.0"
   },
@@ -123,6 +125,7 @@
     "prettier": "^1.18.1",
     "ts-jest": "24.0.2",
     "ts-node": "8.3.0",
+    "ts-node-dev": "^1.0.0-pre.41",
     "tsconfig-paths": "^3.8.0",
     "typescript": "3.5.3"
   }

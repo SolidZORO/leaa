@@ -107,6 +107,27 @@ export class ConfigService {
     return this.envConfig.OSS_ALIYUN_CALLBACK_URL || '';
   }
 
+  //
+
+  get OAUTH_WECHAT_APP_ID(): string {
+    return this.envConfig.OAUTH_WECHAT_APP_ID || '';
+  }
+  get OAUTH_WECHAT_APP_SECRET(): string {
+    return this.envConfig.OAUTH_WECHAT_APP_SECRET || '';
+  }
+  get OAUTH_WECHAT_MINIPROGRAM_APP_ID(): string {
+    return this.envConfig.OAUTH_WECHAT_MINIPROGRAM_APP_ID || '';
+  }
+  get OAUTH_WECHAT_MINIPROGRAM_APP_SECRET(): string {
+    return this.envConfig.OAUTH_WECHAT_MINIPROGRAM_APP_SECRET || '';
+  }
+  get OAUTH_WECHAT_TOKEN(): string {
+    return this.envConfig.OAUTH_WECHAT_TOKEN || '';
+  }
+  get OAUTH_WECHAT_REDIRECT_URL(): string {
+    return this.envConfig.OAUTH_WECHAT_REDIRECT_URL || '';
+  }
+
   private validate(dotEnvPath: string): IDotEnv {
     const rule = {
       PROTOCOL: envalid.str({ choices: ['http', 'https'], default: 'http' }),
@@ -136,6 +157,13 @@ export class ConfigService {
       // OSS_ALIYUN_AK_ID: envalid.str(),
       // OSS_ALIYUN_REGION: envalid.str(),
       // OSS_ALIYUN_ASSUME_ROLE: envalid.str(),
+      //
+      // OAUTH_WECHAT_APP_ID: envalid.str(),
+      // OAUTH_WECHAT_APP_SECRET: envalid.str(),
+      // OAUTH_WECHAT_MINIPROGRAM_APP_ID: envalid.str(),
+      // OAUTH_WECHAT_MINIPROGRAM_APP_SECRET: envalid.str(),
+      // OAUTH_WECHAT_TOKEN: envalid.str(),
+      // OAUTH_WECHAT_REDIRECT_URL: envalid.str(),
     };
 
     return envalid.cleanEnv(process.env, rule, { dotEnvPath });

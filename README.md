@@ -6,7 +6,7 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/4443217249ea4bbe8e057c691de4b0cd)](https://www.codacy.com?utm_source=github.com&utm_medium=referral&utm_content=SolidZORO/leaa&utm_campaign=Badge_Grade)
 [![codecov](https://codecov.io/gh/SolidZORO/leaa/branch/master/graph/badge.svg?token=gdOhbSjkRy)](https://codecov.io/gh/SolidZORO/leaa)
 
-Leaa is a monorepo CMS (Content Management System) built on the Nest.js + Next.js + GraphQL + Ant Design. The next major version of the plan will be added to the Online Store.
+Leaa is a monorepo CMS (Content Management System) built with Nest.js, Next.js, GraphQL, and Ant Design. The next major version of the plan will be added to the Online Store.
 
 ## **Monorepo-Packages**
 
@@ -489,7 +489,7 @@ promiseFinally.shim();
 来，先贴一下关键代码：
 
 ```
-// custom-tab-bar/index.tsx 
+// custom-tab-bar/index.tsx
 
 // 控制 action class 样式
 className={cx(style['item'], { [style['item--action']]: selected === index })}
@@ -511,11 +511,63 @@ if (typeof this.$scope.getTabBar === 'function' && this.$scope.getTabBar()) {
 
 老实说如果没有那个 issues，我真不知道 Taro 还有 `this.$scope` 这个用法，虽然 Taro 看着和 React 差不多，其实也还是有很多私有扩展的，我甚至至今都没有搞清楚 Taro 到底依赖了那个版本的 React，按理说应该是 `16.8` 以上吧，因为支持了 `Hooks`，但又不确定，官方也没在明显的场合露出过这个信息，恐怕也不大想让开发者知道吧，用就行了。
 
-
-
 BTW-0，这里说个小缺点，就是为了用上 `CustomTabBar`，所有在 `CustomTabBar` 中的 TabPage，是需要用 `Class` 方式写的，因为官方目前还没有提供 `Hooks` 版本的 `this.$scope`，但愿后续官方能支持。
 
 BTW-1，据网友纠正，Taro 的内核是 [NervJS](https://github.com/NervJS/nerv)，一个 React-Like。其实 Nerv 在 Taro Doc 上经常见，没想到 Taro 是真的完完全全依赖了这个自研的 lib。佩服，不过想来如果要兼容多端，扩展 React 肯定是不够的，必须要掺一些私货才能满足需求。
 
+<br />
 
+### 2019-08-22 11:55
 
+插一条 Ops 相关的记录，今早收到了 heroku 发来的邮件，说我每月 1000 的 dyno 额度以消耗 80%。之前为了 leaa demo 能有更好的可用性，为不让在 heroku 上的 App 在 30 分钟无访问后自动休眠，到 [uptimerobot](https://uptimerobot.com/) 开了一个监控服务，设置成每 29 分访问一下那几个 demo。
+
+然后知道今天收到邮件我才明白，原来这个 dyno 额度账户内所有 App 实例共享的，也就是我 3 个 App，如果以 30 \* 24 小时跑 30 天那就是 2160，hhhhh 那必然会超。
+
+当然啦，这也不是什么大问题，之前为了免费部署的事，对市面上所有自带 `git hook` 且有免费可用额度的 serverless 都轻车熟路。按现在这种状况，我也只好在 heroku 上只挂 `leaa-api`，而 `leaa-www` 和 `leaa-dashboard` 就先部署到 [now.sh](https://zeit.co/) 吧。
+
+之前有朋友说为什么不弄一个 VPS 去部署这些 demo？我其实也不是懒，更不是为了省钱。只是觉得用 heroku 这类服务，可以省心不少，比如 `https SSL`, `git hook deploy`, `server maintain` 这些服务商都自带了。我都不需要去考虑，想想看还真是 `server` + `less`！我只管专心写代码，然后一条命就把项目部署了。
+
+<br />
+
+### 2019-08-22 16:21
+
+刚在测试小程序的登陆功能，感觉噩梦又要来了。是的，虽然之前开发过多次微信 Oauth 相关的业务，但是每次做微信的调试都感觉累觉不爱。不是要测试服务器就是要 `ngrok`，`natapp` 什么的去做穿透，特别特别烦人。
+
+不过今天研究出一个方案，可以摆脱这些代理工具，那就是用 [微信公众平台接口调试工具](https://mp.weixin.qq.com/debug) 去发现你的 IP。
+
+好，Show Time 开始：
+
+1，注册公众号，最后一步弹出 IP 白名单你可以随便先填写一个，比如 `127.0.0.1`，这是为了避免待会用调试工具报：
+
+```
+{
+    "errcode": -1000,
+    "errmsg": "system error"
+}
+```
+
+2，接着去调试工具里填好，`appid` 和 `secret`，发请求，这时会返回。
+
+```
+{
+    "errcode": 40164,
+    "errmsg": "invalid ip xxx.xxx.xxx.xxx, not in whitelist"
+}
+```
+
+3，把那个 invalid IP 复制到白名单，再发请求，就会看到已经成功。
+
+```
+{
+    "access_token": "24_2A_6FbzJH...JOO",
+    "expires_in": 7200
+}
+```
+
+4，Show Time 结束，hhhhhhhhhhhh。
+
+<br />
+
+### 2019-08-23 14:39
+
+要吐血了，今天早上在 debug `ts-node-dev`，我怎么还调起了工具链了？哎，不说了，看 [Issue](https://github.com/whitecolor/ts-node-dev/issues/87)。我最后追都追到 [filewatcher](https://www.npmjs.com/package/filewatcher) 这种级别的 lib 里去了。

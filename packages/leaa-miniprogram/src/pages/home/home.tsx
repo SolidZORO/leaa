@@ -13,6 +13,10 @@ export default class extends Taro.Component {
     }
   }
 
+  componentDidMount() {
+    Taro.switchTab({ url: '/pages/account/account' }).then();
+  }
+
   public render() {
     return (
       <View>
