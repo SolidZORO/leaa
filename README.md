@@ -525,7 +525,7 @@ BTW-1，据网友纠正，Taro 的内核是 [NervJS](https://github.com/NervJS/n
 
 当然啦，这也不是什么大问题，之前为了免费部署的事，对市面上所有自带 `git hook` 且有免费可用额度的 serverless 都轻车熟路。按现在这种状况，我也只好在 heroku 上只挂 `leaa-api`，而 `leaa-www` 和 `leaa-dashboard` 就先部署到 [now.sh](https://zeit.co/) 吧。
 
-之前有朋友说为什么不弄一个 VPS 去部署这些 demo？我其实也不是懒，更不是为了省钱。只是觉得用 heroku 这类服务，可以省心不少，比如 `https SSL`, `git hook deploy`, `server maintain` 这些服务商都自带了。我都不需要去考虑，想想看还真是 `server` + `less`！我只管专心写代码，然后一条命就把项目部署了。
+之前有朋友说为什么不弄一个 VPS 去部署这些 demo？我其实也不是懒，更不是为了省钱。只是觉得用 heroku 这类服务，可以省心不少，比如 `https SSL`, `git hook deploy`, `server maintain` 这些服务商都自带了。我都不需要去考虑，想想看还真是 `server` + `less`！我只管专心写代码，然后一个命令就把项目部署了。
 
 <br />
 
