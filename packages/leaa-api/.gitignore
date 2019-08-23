@@ -21,8 +21,11 @@ _docker_data
 # Logs
 logs
 *.log
+
+# ENV
 .env*
 !.env.example
+wechat-info*.json
 
 # Test
 /coverage

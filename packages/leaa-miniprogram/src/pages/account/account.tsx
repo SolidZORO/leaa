@@ -13,10 +13,6 @@ export default class extends Taro.Component {
   }
 
   public render() {
-    return (
-      <View>
-        <Account />
-      </View>
-    );
+    return <Account />;
   }
 }
