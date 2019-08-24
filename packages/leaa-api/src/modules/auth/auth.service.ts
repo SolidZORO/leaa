@@ -1,3 +1,5 @@
+import _ from 'lodash';
+import xss from 'xss';
 import jwt from 'jsonwebtoken';
 import bcryptjs from 'bcryptjs';
 import { Request } from 'express';
@@ -8,7 +10,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { AuthenticationError } from 'apollo-server-core';
 
 import { User } from '@leaa/common/src/entrys';
-import { AuthLoginInput } from '@leaa/common/src/dtos/auth';
+import { AuthLoginInput, AuthSignupInput } from '@leaa/common/src/dtos/auth';
 import { IJwtPayload } from '@leaa/common/src/interfaces';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 import { loggerUtil } from '@leaa/api/src/utils';
@@ -98,7 +100,7 @@ export class AuthService {
     const user = await this.userRepository.findOne({
       select: ['id', 'email', 'name', 'status', 'password'],
       where: {
-        email: args.email,
+        email: xss.filterXSS(args.email.trim()),
       },
       // for flatePermissions
       relations: ['roles'],
@@ -133,5 +135,35 @@ export class AuthService {
     user.authExpiresIn = userAuthInfo.authExpiresIn;
 
     return user;
+  }
+
+  async signup(args: AuthSignupInput): Promise<User | undefined> {
+    const nextArgs: AuthSignupInput = { name: '', password: '', email: '' };
+
+    _.forEach(args, (v, i) => {
+      nextArgs[i as 'name' | 'password' | 'email'] = xss.filterXSS(v);
+    });
+
+    if (args.password) {
+      nextArgs.password = await this.userService.craetePassword(args.password);
+    }
+
+    let newUser: User;
+
+    try {
+      newUser = await this.userRepository.save({ ...nextArgs });
+    } catch (error) {
+      const message = 'Sign Up Fail...';
+
+      loggerUtil.warn(message, CONSTRUCTOR_NAME);
+      throw new Error(message);
+    }
+
+    const userAuthInfo = await this.createToken(newUser);
+
+    newUser.authToken = userAuthInfo.authToken;
+    newUser.authExpiresIn = userAuthInfo.authExpiresIn;
+
+    return newUser;
   }
 }

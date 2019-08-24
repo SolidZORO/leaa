@@ -23,3 +23,15 @@ export const LOGIN_FOR_WWW = gql`
     }
   }
 `;
+
+export const SIGNUP_FOR_WWW = gql`
+  mutation($user: AuthSignupInput!) {
+    signup(user: $user) {
+      id
+      name
+      email
+      authToken
+      authExpiresIn
+    }
+  }
+`;

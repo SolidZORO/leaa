@@ -11,6 +11,7 @@ import {
 } from '@leaa/common/src/dtos/user';
 import { UserService } from '@leaa/api/src/modules/user/user.service';
 import { UserProperty } from '@leaa/api/src/modules/user/user.property';
+import { UserDecorator } from '@leaa/api/src/decorators';
 
 @Resolver(() => User)
 export class UserResolver {
@@ -30,8 +31,8 @@ export class UserResolver {
   }
 
   @Query(() => UsersWithPaginationObject)
-  async users(@Args() args: UsersArgs): Promise<UsersWithPaginationObject | undefined> {
-    return this.userService.users(args);
+  async users(@Args() args: UsersArgs, @UserDecorator() user?: User): Promise<UsersWithPaginationObject | undefined> {
+    return this.userService.users(args, user);
   }
 
   @Query(() => User)

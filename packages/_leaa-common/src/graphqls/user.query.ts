@@ -9,6 +9,9 @@ export const GET_USERS = gql`
         name
         email
         status
+        roles {
+          name
+        }
         created_at
       }
     }

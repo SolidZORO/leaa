@@ -223,7 +223,7 @@ export { default as WechatOutline } from '@ant-design/icons/lib/outline/WechatOu
 // export { default as CloudServerOutline } from '@ant-design/icons/lib/outline/CloudServerOutline';
 // export { default as CloudUploadOutline } from '@ant-design/icons/lib/outline/CloudUploadOutline';
 // export { default as ClusterOutline } from '@ant-design/icons/lib/outline/ClusterOutline';
-// export { default as CheckOutline } from '@ant-design/icons/lib/outline/CheckOutline';
+export { default as CheckOutline } from '@ant-design/icons/lib/outline/CheckOutline';
 // export { default as CodepenOutline } from '@ant-design/icons/lib/outline/CodepenOutline';
 // export { default as CodeSandboxOutline } from '@ant-design/icons/lib/outline/CodeSandboxOutline';
 // export { default as ColumHeightOutline } from '@ant-design/icons/lib/outline/ColumHeightOutline';

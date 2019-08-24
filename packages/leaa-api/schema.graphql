@@ -73,7 +73,7 @@ input AuthLoginInput {
   password: String!
 }
 
-input AuthRegisterInput {
+input AuthSignupInput {
   email: String!
   name: String!
   password: String!
@@ -247,7 +247,7 @@ type Mutation {
   updateSettings(settings: [UpdateSettingsInput!]!): SettingsObject!
   deleteSetting(id: Int!): Setting!
   login(user: AuthLoginInput!): User!
-  register(user: AuthRegisterInput!): User!
+  signup(user: AuthSignupInput!): User!
 }
 
 type PaginationObject {

@@ -8,6 +8,7 @@ export default {
   id: 'ID',
   category: '分类',
   user: '用户',
+  role: '角色',
   email: 'Email',
   name: '名字',
   title: '标题',

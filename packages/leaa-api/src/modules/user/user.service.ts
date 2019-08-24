@@ -14,7 +14,7 @@ import {
 import { BaseService } from '@leaa/api/src/modules/base/base.service';
 import { RoleService } from '@leaa/api/src/modules/role/role.service';
 import { UserProperty } from '@leaa/api/src/modules/user/user.property';
-import { formatUtil } from '@leaa/api/src/utils';
+import { formatUtil, permissionUtil } from '@leaa/api/src/utils';
 import { JwtService } from '@nestjs/jwt';
 
 const CONSTRUCTOR_NAME = 'UserService';
@@ -51,7 +51,7 @@ export class UserService extends BaseService<
     return nextUser;
   }
 
-  async users(args: UsersArgs): Promise<UsersWithPaginationObject> {
+  async users(args: UsersArgs, user?: User): Promise<UsersWithPaginationObject> {
     const nextArgs = formatUtil.formatArgs(args);
 
     let whereQuery = {};
@@ -61,8 +61,10 @@ export class UserService extends BaseService<
     }
 
     nextArgs.where = whereQuery;
-    // nextArgs.relations = ['roles'];
-    nextArgs.relations = [];
+
+    if (user && permissionUtil.hasPermission(user, 'role.list')) {
+      nextArgs.relations = ['roles'];
+    }
 
     const [items, total] = await this.userRepository.findAndCount(nextArgs);
 
@@ -116,7 +118,7 @@ export class UserService extends BaseService<
     });
   }
 
-  private async craetePassword(password: string): Promise<string> {
+  async craetePassword(password: string): Promise<string> {
     const salt = bcryptjs.genSaltSync();
     return bcryptjs.hashSync(password, salt);
   }

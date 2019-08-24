@@ -4,8 +4,8 @@ import Link from 'next/link';
 import { Button, Col, Form, Input, Row, message } from 'antd';
 import { useMutation } from '@apollo/react-hooks';
 import { FormComponentProps } from 'antd/lib/form';
-import { AuthLoginInput } from '@leaa/common/src/dtos/auth';
-import { LOGIN_FOR_WWW } from '@leaa/common/src/graphqls';
+import { AuthSignupInput } from '@leaa/common/src/dtos/auth';
+import { SIGNUP_FOR_WWW } from '@leaa/common/src/graphqls';
 import { ErrorCard } from '@leaa/www/components/ErrorCard';
 import { User } from '@leaa/common/src/entrys';
 import { authUtil } from '@leaa/www/utils';
@@ -15,32 +15,31 @@ import style from './style.less';
 
 interface IProps extends FormComponentProps {
   className?: string;
-  onLoginedCallback?: () => void;
+  onSignupedCallback?: () => void;
 }
 
-const LoginFormInner = (props: IProps) => {
+const SignupFormInner = (props: IProps) => {
   const { className, form } = props;
   const { getFieldDecorator } = form;
 
-  const [submitLoginMutate, submitLoginMutation] = useMutation<{
-    login: User;
-  }>(LOGIN_FOR_WWW, {
-    onCompleted({ login }) {
-      if (login && login.name) {
+  const [submitSignupMutate, submitSignupMutation] = useMutation<{
+    signup: User;
+  }>(SIGNUP_FOR_WWW, {
+    onCompleted({ signup }) {
+      if (signup && signup.name) {
         const authInfo = {
-          id: login.id,
-          email: login.email,
-          name: login.name,
+          email: signup.email,
+          name: signup.name,
         };
 
         authUtil.setAuthInfo(authInfo);
       }
 
-      if (login && login.authToken && login.authExpiresIn) {
-        authUtil.setAuthToken(login.authToken, login.authExpiresIn);
+      if (signup && signup.authToken && signup.authExpiresIn) {
+        authUtil.setAuthToken(signup.authToken, signup.authExpiresIn);
 
-        if (props.onLoginedCallback) {
-          props.onLoginedCallback();
+        if (props.onSignupedCallback) {
+          props.onSignupedCallback();
         }
       }
 
@@ -49,36 +48,47 @@ const LoginFormInner = (props: IProps) => {
   });
 
   const onSubmit = async () => {
-    form.validateFieldsAndScroll(async (err: any, formData: AuthLoginInput) => {
+    form.validateFieldsAndScroll(async (err: any, formData: AuthSignupInput) => {
       if (err) {
         message.error(err[Object.keys(err)[0]].errors[0].message);
 
         return;
       }
 
-      const variables: { user: AuthLoginInput } = {
+      const variables: { user: AuthSignupInput } = {
         user: {
+          name: formData.name,
           email: formData.email,
           password: formData.password,
         },
       };
 
-      await submitLoginMutate({ variables });
+      await submitSignupMutate({ variables });
     });
   };
 
   return (
     <div className={cx(style['wrapper'], className)}>
-      {submitLoginMutation.error ? <ErrorCard error={submitLoginMutation.error} /> : null}
+      {submitSignupMutation.error ? <ErrorCard error={submitSignupMutation.error} /> : null}
 
       <Form labelAlign="left" hideRequiredMark>
         <Row gutter={16} className={style['form-row']}>
           <Col xs={24} sm={24}>
+            <Form.Item label="Name">
+              {getFieldDecorator('name', {
+                validateTrigger: ['onBlur'],
+                initialValue: `random-${new Date().getTime()}`,
+                rules: [{ required: true }],
+              })(<Input size="large" placeholder="Name" />)}
+            </Form.Item>
+          </Col>
+
+          <Col xs={24} sm={24}>
             <Form.Item label="Email">
               {getFieldDecorator('email', {
                 validateTrigger: ['onBlur'],
-                initialValue: 'admin@leaa.com',
-                rules: [{ required: true }],
+                initialValue: `random-${new Date().getTime()}@leaa.com`,
+                rules: [{ required: true }, { type: 'email' }],
               })(<Input size="large" placeholder="Email" />)}
             </Form.Item>
           </Col>
@@ -87,7 +97,7 @@ const LoginFormInner = (props: IProps) => {
             <Form.Item label="Password">
               {getFieldDecorator('password', {
                 validateTrigger: ['onBlur'],
-                initialValue: 'h8Hx9qvPKoHMLQgj',
+                initialValue: `random-${new Date().getTime()}`,
                 rules: [{ required: true }],
               })(<Input size="large" type="password" placeholder="Password" />)}
             </Form.Item>
@@ -98,27 +108,21 @@ const LoginFormInner = (props: IProps) => {
           <Col xs={24}>
             <Button
               className={style['button-login']}
-              loading={submitLoginMutation.loading}
+              loading={submitSignupMutation.loading}
               size="large"
               type="primary"
               htmlType="submit"
               block
               onClick={onSubmit}
             >
-              Login
+              Signup
             </Button>
           </Col>
         </Row>
 
-        <Row className={style['forget-row']}>
-          <Link href="/forget" prefetch={false}>
-            <a>Forget password?</a>
-          </Link>
-        </Row>
-
-        <Row className={style['signup-row']}>
-          <Link href="/signup" prefetch={false}>
-            <a>Don’t have an account? Sign Up?</a>
+        <Row className={style['register-row']}>
+          <Link href="/login" prefetch={false}>
+            <a>Already have an account? Log In</a>
           </Link>
         </Row>
       </Form>
@@ -126,4 +130,4 @@ const LoginFormInner = (props: IProps) => {
   );
 };
 
-export default Form.create<IProps>()(LoginFormInner);
+export default Form.create<IProps>()(SignupFormInner);

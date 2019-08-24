@@ -21,6 +21,7 @@ export const notValidateUserQuerys = [
   //
   'login',
   'register',
+  'signup',
   'userByToken',
   //
   'ax',
@@ -66,7 +67,7 @@ export const permissions = shield(
     },
     Mutation: {
       login: allow,
-      register: allow,
+      signup: allow,
       //
       createUser: checkPermission('user.create'),
       updateUser: checkPermission('user.update'),

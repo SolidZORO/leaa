@@ -8,6 +8,7 @@ export default {
   id: 'ID',
   category: 'Category',
   user: 'User',
+  role: 'Role',
   email: 'Email',
   name: 'Name',
   title: 'Title',

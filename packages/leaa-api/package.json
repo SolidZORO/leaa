@@ -88,7 +88,8 @@
     "uuid": "^3.3.3",
     "wechat-jssdk": "^5.0.2",
     "winston": "^3.2.1",
-    "winston-daily-rotate-file": "^3.10.0"
+    "winston-daily-rotate-file": "^3.10.0",
+    "xss": "^1.0.6"
   },
   "devDependencies": {
     "@types/ali-oss": "^6.0.4",

@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import queryString from 'query-string';
 import { Link } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { Icon, Table, Button, message } from 'antd';
+import { Icon, Table, Button, Tag, message } from 'antd';
 
 import { DEFAULT_PAGE_SIZE_OPTIONS } from '@leaa/dashboard/src/constants';
 import { GET_USERS, DELETE_USER } from '@leaa/common/src/graphqls';
@@ -98,6 +98,11 @@ export default (props: IPage) => {
       dataIndex: 'name',
       sorter: true,
       sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'name'),
+    },
+    {
+      title: t('_lang:role'),
+      dataIndex: 'role',
+      render: (text: string, record: User) => <div>{record.roles && record.roles.map(r => <Tag>{r.name}</Tag>)}</div>,
     },
     {
       title: t('_lang:status'),
