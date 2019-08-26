@@ -247,7 +247,31 @@ type Mutation {
   updateSettings(settings: [UpdateSettingsInput!]!): SettingsObject!
   deleteSetting(id: Int!): Setting!
   login(user: AuthLoginInput!): User!
-  signup(user: AuthSignupInput!): User!
+  loginByTicket(ticket: String!): User!
+  signup(oid: Int, user: AuthSignupInput!): User!
+}
+
+type Oauth {
+  id: Int!
+  created_at: DateTime!
+  updated_at: DateTime
+  deleted_at: DateTime
+  open_id: String!
+  union_id: String
+  app_id: String!
+  user_id: Int!
+  platform: String!
+  ticket: String
+  ticket_at: DateTime
+  access_token: String
+  refresh_token: String
+  nickname: String!
+  sex: Int!
+  city: String!
+  province: String!
+  country: String!
+  avatar_url: String!
+  last_oauth_at: DateTime
 }
 
 type PaginationObject {

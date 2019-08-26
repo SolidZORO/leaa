@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import { createApolloClientForServer } from '@leaa/www/libs/init-apollo-server.lib';
+import { initApollo } from '@leaa/www/libs/init-apollo-client.lib';
 import { GET_USER_BY_TOKEN } from '@leaa/common/src/graphqls/user.query';
 import { IAuthInfo } from '@leaa/www/interfaces';
 import { authUtil } from '@leaa/www/utils';
@@ -14,7 +14,7 @@ export const authMiddleware = async (req: Request, res: Response, next: Function
 
   let user;
 
-  const apolloClient = createApolloClientForServer(authToken);
+  const apolloClient = initApollo({}, authToken);
 
   const removeAuth = () => {
     authUtil.removeAuth(res);

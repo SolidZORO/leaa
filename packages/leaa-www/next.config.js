@@ -3,15 +3,14 @@ const fs = require('fs');
 const path = require('path');
 const webpack = require('webpack');
 const lessToJS = require('less-vars-to-js');
+const withDotenv = require('./configs/next-dotenv');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const FilterWarningsPlugin = require('webpack-filter-warnings-plugin');
 
 const withImage = require('./configs/next-image');
-const withDotenv = require('./configs/next-dotenv');
 const withAntd = require('./configs/next-antd');
 const withAnalyzer = require('./configs/next-analyzer');
 
-const env = require('./configs/next-dotenv-object');
 const antdVariables = lessToJS(fs.readFileSync(path.resolve(__dirname, './styles/variables.less'), 'utf8'));
 
 // fix: prevents error when .less files are required by node
@@ -24,6 +23,7 @@ const webpackConfig = (config, options) => {
     new LodashModuleReplacementPlugin({ paths: true }),
     new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /zh-cn|en/),
     new webpack.NormalModuleReplacementPlugin(
+      // fixed wechat HMR
       /\/eventsource$/,
       path.resolve(__dirname, './configs/next-eventsource.js'),
     ),
@@ -54,11 +54,9 @@ module.exports = withDotenv(
           javascriptEnabled: true,
           modifyVars: antdVariables,
         },
-        // target: 'serverless',
-        // distDir: process.env.NODE_ENV !== 'production' ? '.next' : '_dist',
-        // assetPrefix: './',
-        env,
         webpack: webpackConfig,
+        // target: 'serverless',
+        // env,
       }),
     ),
   ),

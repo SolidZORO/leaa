@@ -5,14 +5,14 @@ import { Field, InputType } from 'type-graphql';
 export class AuthSignupInput {
   @IsEmail()
   @MinLength(6)
-  @Field()
+  @Field(() => String)
   email!: string;
 
   @MinLength(4)
-  @Field()
+  @Field(() => String)
   name!: string;
 
   @Length(6, 64)
-  @Field()
+  @Field(() => String)
   password!: string;
 }

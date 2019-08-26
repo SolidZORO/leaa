@@ -7,6 +7,8 @@ import { getMarkupFromTree } from '@apollo/react-ssr';
 
 import { initApollo } from '@leaa/www/libs/init-apollo-client.lib';
 
+const isServer = typeof window === 'undefined';
+
 export const withApolloClient = (App: React.ComponentType<any> & { getInitialProps?: Function }) => {
   return class Apollo extends React.Component {
     // eslint-disable-next-line react/static-property-placement
@@ -23,7 +25,11 @@ export const withApolloClient = (App: React.ComponentType<any> & { getInitialPro
       // Run all GraphQL queries in the component tree and extract the resulting data
       const apollo = initApollo();
 
-      if (!process.browser) {
+      if (isServer && router.route.includes('/logout')) {
+        return Head.rewind();
+      }
+
+      if (isServer) {
         try {
           await getMarkupFromTree({
             renderFunction: renderToString,

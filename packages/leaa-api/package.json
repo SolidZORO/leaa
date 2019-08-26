@@ -78,6 +78,7 @@
     "passport-jwt": "^4.0.0",
     "path-to-regexp": "^3.0.0",
     "pg": "^7.12.1",
+    "query-string": "^6.8.2",
     "reflect-metadata": "^0.1.12",
     "request": "^2.88.0",
     "rimraf": "^3.0.0",

@@ -5,21 +5,21 @@ import { ObjectType, Field, Int } from 'type-graphql';
 export class Base {
   @PrimaryGeneratedColumn()
   @Field(() => Int)
-  id!: number;
+  public id!: number;
 
   //
 
   @Column({ default: () => 'CURRENT_TIMESTAMP' })
   @Field(() => Date)
-  created_at!: Date;
+  public created_at!: Date;
 
   @Column({ nullable: true, onUpdate: 'CURRENT_TIMESTAMP' })
   @Field(() => Date, { nullable: true })
-  updated_at?: Date;
+  public updated_at?: Date;
 
   // SOFT DELETE
   // https://github.com/typeorm/typeorm/issues/534
   @Column({ nullable: true })
   @Field(() => Date, { nullable: true })
-  deleted_at?: Date;
+  public deleted_at?: Date;
 }

@@ -12,15 +12,12 @@ const Account = dynamic(() => import('@leaa/www/pages/account/_components/Accoun
 
 interface IGetInitialReturnProps {
   authToken: string | undefined;
+  authInfo: { name?: string; email?: string };
 }
 
 const NOT_TOKEN_REDIRECT_TO_URL = '/login';
 
 const nextPage = (ctx: { pageProps: IGetInitialReturnProps }) => {
-  if (!ctx.pageProps.authToken) {
-    urlUtil.redirect(NOT_TOKEN_REDIRECT_TO_URL);
-  }
-
   const getUserByTokenQuery = useQuery<{ userByToken: IAuthInfo }, { token?: string }>(GET_USER_BY_TOKEN_FOR_WWW, {
     variables: { token: ctx.pageProps.authToken },
   });
@@ -41,12 +38,13 @@ const nextPage = (ctx: { pageProps: IGetInitialReturnProps }) => {
 
 nextPage.getInitialProps = async ({ req, res }: IGetInitialProps): Promise<IGetInitialReturnProps> => {
   const authToken = authUtil.getAuthToken(req);
+  const authInfo = authUtil.getAuthInfo(req);
 
   if (!authToken) {
     urlUtil.redirect(NOT_TOKEN_REDIRECT_TO_URL, res);
   }
 
-  return { authToken };
+  return { authToken, authInfo };
 };
 
 export default nextPage;

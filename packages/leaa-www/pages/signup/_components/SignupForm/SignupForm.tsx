@@ -14,6 +14,7 @@ import Router from 'next/router';
 import style from './style.less';
 
 interface IProps extends FormComponentProps {
+  urlQuery?: { [key: string]: string | string[] };
   className?: string;
   onSignupedCallback?: () => void;
 }
@@ -55,12 +56,13 @@ const SignupFormInner = (props: IProps) => {
         return;
       }
 
-      const variables: { user: AuthSignupInput } = {
+      const variables: { user: AuthSignupInput; oid?: number } = {
         user: {
           name: formData.name,
           email: formData.email,
           password: formData.password,
         },
+        oid: (props.urlQuery && props.urlQuery.oid && Number(props.urlQuery.oid)) || undefined,
       };
 
       await submitSignupMutate({ variables });
@@ -115,7 +117,7 @@ const SignupFormInner = (props: IProps) => {
               block
               onClick={onSubmit}
             >
-              Signup
+              Sign Up
             </Button>
           </Col>
         </Row>

@@ -4,9 +4,11 @@ import { Response } from 'express';
 import Cookies from 'js-cookie';
 
 const isServer = typeof window === 'undefined';
+const isClient = typeof window !== 'undefined';
+
+// Tips: js-cookie expires unit is `day`, e.g. { expires: 365 * 10 } === 10 years
 
 const setAuthToken = (token: string, expiresIn: number) => {
-  // js-cookie expires get a `day`
   Cookies.set(AUTH_TOKEN_NAME, token, { expires: expiresIn / 60 / 60 / 24 });
 };
 
@@ -15,44 +17,41 @@ const getAuthToken = (req?: IReqCookies): string | undefined => {
 
   if (isServer && req && req.cookies && req.cookies[AUTH_TOKEN_NAME]) {
     authToken = req.cookies[AUTH_TOKEN_NAME];
-  } else {
+  }
+
+  if (isClient) {
     authToken = Cookies.get(AUTH_TOKEN_NAME);
   }
 
   return authToken;
 };
 
-//
-//
-
 const setAuthInfo = (info: Partial<IAuthInfo>) => {
-  localStorage.setItem(AUTH_INFO, JSON.stringify(info));
+  Cookies.set(AUTH_INFO, `${JSON.stringify(info)}`, { expires: 365 * 10 });
 };
 
-const getAuthInfo = (): Required<IAuthInfo> => {
-  let authInfo;
+const getAuthInfo = (req?: IReqCookies): Pick<IAuthInfo, 'email' | 'name'> => {
+  const defaultAuthInfo: IAuthInfo = {
+    email: '',
+    name: '',
+  };
 
-  if (!isServer) {
-    const lsAuthInfo = localStorage.getItem(AUTH_INFO);
+  let authInfo: string | undefined;
 
-    const nextAuthInfo: IAuthInfo = {
-      email: '',
-      name: '',
-    };
-
-    authInfo = lsAuthInfo
-      ? {
-          ...nextAuthInfo,
-          ...JSON.parse(lsAuthInfo),
-        }
-      : nextAuthInfo;
+  if (isServer && req && req.cookies && req.cookies[AUTH_INFO]) {
+    authInfo = req.cookies[AUTH_INFO];
   }
 
-  return authInfo;
-};
+  if (isClient) {
+    authInfo = Cookies.get(AUTH_INFO);
+  }
 
-//
-//
+  try {
+    return authInfo && JSON.parse(decodeURIComponent(authInfo));
+  } catch (e) {
+    return defaultAuthInfo;
+  }
+};
 
 const removeAuthToken = (res?: Response): boolean => {
   if (!getAuthToken) {
@@ -63,18 +62,28 @@ const removeAuthToken = (res?: Response): boolean => {
 
   if (isServer && res) {
     res.clearCookie(AUTH_TOKEN_NAME);
-  } else {
+  }
+
+  if (isClient) {
     Cookies.get(AUTH_TOKEN_NAME);
   }
 
   return true;
 };
 
-const removeAuthInfo = (): boolean => {
-  if (!isServer) {
-    localStorage.removeItem(AUTH_INFO);
+const removeAuthInfo = (res?: Response): boolean => {
+  if (!getAuthInfo()) {
+    console.log('Not found auth info.');
 
-    return true;
+    return false;
+  }
+
+  if (isServer && res) {
+    res.clearCookie(AUTH_INFO);
+  }
+
+  if (isClient) {
+    Cookies.remove(AUTH_INFO);
   }
 
   return true;
@@ -82,16 +91,12 @@ const removeAuthInfo = (): boolean => {
 
 const removeAuth = (res?: Response): boolean => {
   const removedAuthToken = removeAuthToken(res);
-  const removedAuthInfo = removeAuthInfo();
+  const removedAuthInfo = removeAuthInfo(res);
 
   return removedAuthToken && removedAuthInfo;
 };
 
-//
-//
-
 const checkAuthIsAvailably = (): boolean => {
-  // const authExpiresIn = localStorage.getItem(AUTH_EXPIRES_IN_NAME);
   const authToken = getAuthToken();
 
   if (!authToken) {

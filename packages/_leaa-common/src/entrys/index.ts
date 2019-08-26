@@ -7,3 +7,4 @@ export { Article } from './article.entity';
 export { Attachment } from './attachment.entity';
 export { Ax } from './ax.entity';
 export { Setting } from './setting.entity';
+export { Oauth, OauthPlatform } from './oauth.entity';

@@ -112,18 +112,23 @@ export class ConfigService {
   get OAUTH_WECHAT_APP_ID(): string {
     return this.envConfig.OAUTH_WECHAT_APP_ID || '';
   }
+
   get OAUTH_WECHAT_APP_SECRET(): string {
     return this.envConfig.OAUTH_WECHAT_APP_SECRET || '';
   }
+
   get OAUTH_WECHAT_MINIPROGRAM_APP_ID(): string {
     return this.envConfig.OAUTH_WECHAT_MINIPROGRAM_APP_ID || '';
   }
+
   get OAUTH_WECHAT_MINIPROGRAM_APP_SECRET(): string {
     return this.envConfig.OAUTH_WECHAT_MINIPROGRAM_APP_SECRET || '';
   }
+
   get OAUTH_WECHAT_TOKEN(): string {
     return this.envConfig.OAUTH_WECHAT_TOKEN || '';
   }
+
   get OAUTH_WECHAT_REDIRECT_URL(): string {
     return this.envConfig.OAUTH_WECHAT_REDIRECT_URL || '';
   }

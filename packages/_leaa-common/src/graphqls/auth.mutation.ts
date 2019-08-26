@@ -24,9 +24,20 @@ export const LOGIN_FOR_WWW = gql`
   }
 `;
 
+export const LOGIN_BY_TICKET_FOR_WWW = gql`
+  mutation($ticket: String!) {
+    loginByTicket(ticket: $ticket) {
+      name
+      email
+      authToken
+      authExpiresIn
+    }
+  }
+`;
+
 export const SIGNUP_FOR_WWW = gql`
-  mutation($user: AuthSignupInput!) {
-    signup(user: $user) {
+  mutation($user: AuthSignupInput!, $oid: Int) {
+    signup(user: $user, oid: $oid) {
       id
       name
       email

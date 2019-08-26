@@ -5,23 +5,26 @@ import { ApolloLink, split } from 'apollo-link';
 import { onError } from 'apollo-link-error';
 import { OperationDefinitionNode } from 'graphql';
 import { InMemoryCache, NormalizedCacheObject } from 'apollo-cache-inmemory';
+import { authUtil } from '@leaa/www/utils';
 import { envConfig } from '@leaa/www/configs';
+
+const isServer = typeof window === 'undefined';
 
 let apolloClient: ApolloClient<any> | null = null;
 
-if (!process.browser) {
+if (isServer) {
   // @ts-ignore
   global.fetch = fetch;
 }
 
-function createApolloClient(initialState: NormalizedCacheObject) {
+function createApolloClient(initialState: NormalizedCacheObject, authToken?: string) {
   const httpLink = new HttpLink({
     uri: envConfig.GRAPHQL_ENDPOINT,
     // credentials: 'same-origin',
   });
 
   const authLink = new ApolloLink((operation, forward) => {
-    const token = '';
+    const token = isServer ? authToken : authUtil.getAuthToken();
 
     operation.setContext({
       headers: {
@@ -57,20 +60,20 @@ function createApolloClient(initialState: NormalizedCacheObject) {
   const link = authLink.concat(ApolloLink.from([terminatingLink, errorLink]));
 
   return new ApolloClient({
-    connectToDevTools: process.browser,
-    ssrMode: !process.browser,
+    connectToDevTools: !isServer,
+    ssrMode: isServer,
     link,
     cache: new InMemoryCache().restore(initialState),
   });
 }
 
-export const initApollo = (initialState: any = {}) => {
-  if (!process.browser) {
-    return createApolloClient(initialState);
+export const initApollo = (initialState: any = {}, authToken?: string) => {
+  if (isServer) {
+    return createApolloClient(initialState, authToken);
   }
 
   if (!apolloClient) {
-    apolloClient = createApolloClient(initialState);
+    apolloClient = createApolloClient(initialState, authToken);
   }
 
   return apolloClient;

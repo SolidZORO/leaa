@@ -20,6 +20,7 @@ export const notValidateUserQuerys = [
   'IntrospectionQuery',
   //
   'login',
+  'loginByTicket',
   'register',
   'signup',
   'userByToken',
@@ -67,6 +68,7 @@ export const permissions = shield(
     },
     Mutation: {
       login: allow,
+      loginByTicket: allow,
       signup: allow,
       //
       createUser: checkPermission('user.create'),

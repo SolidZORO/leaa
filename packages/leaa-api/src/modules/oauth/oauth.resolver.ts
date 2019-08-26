@@ -1,4 +1,4 @@
-import { Args, Mutation, Resolver } from '@nestjs/graphql';
+import { Resolver } from '@nestjs/graphql';
 
 import { User } from '@leaa/common/src/entrys';
 import { OauthService } from '@leaa/api/src/modules/oauth/oauth.service';

@@ -16,6 +16,7 @@ import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 import { loggerUtil } from '@leaa/api/src/utils';
 import { UserService } from '@leaa/api/src/modules/user/user.service';
 import { permissionConfig } from '@leaa/api/src/configs';
+import { OauthService } from '@leaa/api/src/modules/oauth/oauth.service';
 
 const CONSTRUCTOR_NAME = 'AuthService';
 
@@ -26,6 +27,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
     private readonly userService: UserService,
+    private readonly oauthService: OauthService,
   ) {}
 
   async createToken(
@@ -96,6 +98,17 @@ export class AuthService {
     return this.validateUser(userPayload);
   }
 
+  async addTokenTouser(user: User): Promise<User> {
+    const nextUser = user;
+
+    const userAuthInfo = await this.createToken(user);
+
+    nextUser.authToken = userAuthInfo.authToken;
+    nextUser.authExpiresIn = userAuthInfo.authExpiresIn;
+
+    return nextUser;
+  }
+
   async login(args: AuthLoginInput): Promise<User | undefined> {
     const user = await this.userRepository.findOne({
       select: ['id', 'email', 'name', 'status', 'password'],
@@ -129,19 +142,20 @@ export class AuthService {
       throw new Error(message);
     }
 
-    const userAuthInfo = await this.createToken(user);
-
-    user.authToken = userAuthInfo.authToken;
-    user.authExpiresIn = userAuthInfo.authExpiresIn;
-
-    return user;
+    return this.addTokenTouser(user);
   }
 
-  async signup(args: AuthSignupInput): Promise<User | undefined> {
+  async loginByTicket(ticket: string): Promise<User | undefined> {
+    const user = await this.oauthService.getUserByTicket(ticket);
+
+    return this.addTokenTouser(user);
+  }
+
+  async signup(args: AuthSignupInput, oid?: number): Promise<User | undefined> {
     const nextArgs: AuthSignupInput = { name: '', password: '', email: '' };
 
     _.forEach(args, (v, i) => {
-      nextArgs[i as 'name' | 'password' | 'email'] = xss.filterXSS(v);
+      nextArgs[i as 'name' | 'password' | 'email'] = xss.filterXSS(v || '');
     });
 
     if (args.password) {
@@ -152,6 +166,11 @@ export class AuthService {
 
     try {
       newUser = await this.userRepository.save({ ...nextArgs });
+
+      if (oid) {
+        await this.oauthService.bindUserIdToOauth(newUser, oid);
+        await this.oauthService.clearTicket(oid);
+      }
     } catch (error) {
       const message = 'Sign Up Fail...';
 
@@ -159,11 +178,6 @@ export class AuthService {
       throw new Error(message);
     }
 
-    const userAuthInfo = await this.createToken(newUser);
-
-    newUser.authToken = userAuthInfo.authToken;
-    newUser.authExpiresIn = userAuthInfo.authExpiresIn;
-
-    return newUser;
+    return this.addTokenTouser(newUser);
   }
 }

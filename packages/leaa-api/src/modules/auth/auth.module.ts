@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { User, Role, Permission } from '@leaa/common/src/entrys';
+import { User, Role, Permission, Oauth } from '@leaa/common/src/entrys';
 
 import { UserService } from '@leaa/api/src/modules/user/user.service';
 import { UserProperty } from '@leaa/api/src/modules/user/user.property';
@@ -13,9 +13,10 @@ import { JwtStrategy } from '@leaa/api/src/strategies';
 
 import { AuthResolver } from '@leaa/api/src/modules/auth/auth.resolver';
 import { AuthService } from '@leaa/api/src/modules/auth/auth.service';
+import { OauthService } from '@leaa/api/src/modules/oauth/oauth.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User, Role, Permission]), AuthTokenModule],
+  imports: [TypeOrmModule.forFeature([User, Role, Permission, Oauth]), AuthTokenModule],
   providers: [
     AuthResolver,
     AuthService,
@@ -25,6 +26,7 @@ import { AuthService } from '@leaa/api/src/modules/auth/auth.service';
     PermissionService,
     JwtStrategy,
     UserProperty,
+    OauthService,
   ],
   exports: [AuthService],
 })

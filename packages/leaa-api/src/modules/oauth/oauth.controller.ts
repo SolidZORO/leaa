@@ -1,5 +1,6 @@
-import { Request } from 'express';
-import { Controller, Get, Req } from '@nestjs/common';
+import queryString from 'query-string';
+import { Request, Response } from 'express';
+import { Controller, Get, Req, Res } from '@nestjs/common';
 import { OauthService } from '@leaa/api/src/modules/oauth/oauth.service';
 
 @Controller('/oauth')
@@ -16,8 +17,27 @@ export class OauthController {
     return this.oauthService.getMiniProgramSession(req);
   }
 
+  @Get('/wechat/login')
+  async wechatLogin(@Req() req: Request, @Res() res: Response): Promise<any> {
+    return this.oauthService.wechatLogin(req, res);
+  }
+
   @Get('/wechat/callback')
-  async wechatCallback() {
-    return 'wechatCallback';
+  async wechatCallback(@Req() req: Request, @Res() res: Response): Promise<any> {
+    return this.oauthService.wechatCallback(req, res);
+  }
+
+  @Get('/wechat/test')
+  test() {
+    const object = {
+      a: 1,
+      b: 'xxxx',
+      c: 'CCCC',
+      d: { d1: 1, d2: 'KKKK' },
+    };
+
+    console.log(queryString.stringify(object));
+
+    return 'ICU';
   }
 }
