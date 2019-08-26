@@ -1,22 +1,31 @@
+import { NextPageContext } from 'next';
 import { AUTH_TOKEN_NAME, AUTH_INFO } from '@leaa/www/constants';
-import { IAuthInfo, IReqCookies } from '@leaa/www/interfaces';
-import { Response } from 'express';
+import { IAuthInfo } from '@leaa/www/interfaces';
 import Cookies from 'js-cookie';
+import nookies from 'nookies';
 
 const isServer = typeof window === 'undefined';
 const isClient = typeof window !== 'undefined';
 
 // Tips: js-cookie expires unit is `day`, e.g. { expires: 365 * 10 } === 10 years
 
-const setAuthToken = (token: string, expiresIn: number) => {
-  Cookies.set(AUTH_TOKEN_NAME, token, { expires: expiresIn / 60 / 60 / 24 });
+const setAuthToken = (token: string, expiresIn: number, ctx?: NextPageContext) => {
+  const expires = expiresIn / 60 / 60 / 24;
+
+  if (isServer) {
+    nookies.set(ctx, AUTH_TOKEN_NAME, token, { maxAge: expires });
+  }
+
+  if (isClient) {
+    Cookies.set(AUTH_TOKEN_NAME, token, { expires });
+  }
 };
 
-const getAuthToken = (req?: IReqCookies): string | undefined => {
+const getAuthToken = (ctx?: NextPageContext): string | undefined => {
   let authToken;
 
-  if (isServer && req && req.cookies && req.cookies[AUTH_TOKEN_NAME]) {
-    authToken = req.cookies[AUTH_TOKEN_NAME];
+  if (isServer) {
+    authToken = nookies.get(ctx)[AUTH_TOKEN_NAME];
   }
 
   if (isClient) {
@@ -26,11 +35,20 @@ const getAuthToken = (req?: IReqCookies): string | undefined => {
   return authToken;
 };
 
-const setAuthInfo = (info: Partial<IAuthInfo>) => {
-  Cookies.set(AUTH_INFO, `${JSON.stringify(info)}`, { expires: 365 * 10 });
+const setAuthInfo = (info: Partial<IAuthInfo>, ctx?: NextPageContext) => {
+  const expires = 365 * 10;
+  const authInfo = `${JSON.stringify(info)}`;
+
+  if (isServer) {
+    nookies.set(ctx, AUTH_INFO, authInfo, { maxAge: expires });
+  }
+
+  if (isClient) {
+    Cookies.set(AUTH_INFO, authInfo, { expires });
+  }
 };
 
-const getAuthInfo = (req?: IReqCookies): Pick<IAuthInfo, 'email' | 'name'> => {
+const getAuthInfo = (ctx?: NextPageContext): Pick<IAuthInfo, 'email' | 'name'> => {
   const defaultAuthInfo: IAuthInfo = {
     email: '',
     name: '',
@@ -38,8 +56,8 @@ const getAuthInfo = (req?: IReqCookies): Pick<IAuthInfo, 'email' | 'name'> => {
 
   let authInfo: string | undefined;
 
-  if (isServer && req && req.cookies && req.cookies[AUTH_INFO]) {
-    authInfo = req.cookies[AUTH_INFO];
+  if (isServer) {
+    authInfo = nookies.get(ctx)[AUTH_INFO];
   }
 
   if (isClient) {
@@ -53,33 +71,33 @@ const getAuthInfo = (req?: IReqCookies): Pick<IAuthInfo, 'email' | 'name'> => {
   }
 };
 
-const removeAuthToken = (res?: Response): boolean => {
+const removeAuthToken = (ctx?: NextPageContext): boolean => {
   if (!getAuthToken) {
     console.log('Not found auth token.');
 
     return false;
   }
 
-  if (isServer && res) {
-    res.clearCookie(AUTH_TOKEN_NAME);
+  if (isServer) {
+    nookies.destroy(ctx, AUTH_TOKEN_NAME);
   }
 
   if (isClient) {
-    Cookies.get(AUTH_TOKEN_NAME);
+    Cookies.remove(AUTH_TOKEN_NAME);
   }
 
   return true;
 };
 
-const removeAuthInfo = (res?: Response): boolean => {
+const removeAuthInfo = (ctx?: NextPageContext): boolean => {
   if (!getAuthInfo()) {
     console.log('Not found auth info.');
 
     return false;
   }
 
-  if (isServer && res) {
-    res.clearCookie(AUTH_INFO);
+  if (isServer) {
+    nookies.destroy(ctx, AUTH_INFO);
   }
 
   if (isClient) {
@@ -89,9 +107,9 @@ const removeAuthInfo = (res?: Response): boolean => {
   return true;
 };
 
-const removeAuth = (res?: Response): boolean => {
-  const removedAuthToken = removeAuthToken(res);
-  const removedAuthInfo = removeAuthInfo(res);
+const removeAuth = (ctx?: NextPageContext): boolean => {
+  const removedAuthToken = removeAuthToken(ctx);
+  const removedAuthInfo = removeAuthInfo(ctx);
 
   return removedAuthToken && removedAuthInfo;
 };

@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
 
-import { initApollo } from '@leaa/www/libs/init-apollo-client.lib';
 import { GET_USER_BY_TOKEN } from '@leaa/common/src/graphqls/user.query';
+import { AUTH_INFO, AUTH_TOKEN_NAME } from '@leaa/www/constants';
 import { IAuthInfo } from '@leaa/www/interfaces';
-import { authUtil } from '@leaa/www/utils';
+import { initApollo } from '@leaa/www/libs/init-apollo-client.lib';
 
 export const authMiddleware = async (req: Request, res: Response, next: Function) => {
   const { authToken } = req.cookies;
@@ -17,7 +17,9 @@ export const authMiddleware = async (req: Request, res: Response, next: Function
   const apolloClient = initApollo({}, authToken);
 
   const removeAuth = () => {
-    authUtil.removeAuth(res);
+    res.clearCookie(AUTH_INFO);
+    res.clearCookie(AUTH_TOKEN_NAME);
+
     res.writeHead(302, { Location: '/login' });
     res.end();
   };

@@ -11,9 +11,9 @@ const nextPage = () => {
   return null;
 };
 
-nextPage.getInitialProps = async ({ res }: IGetInitialProps) => {
-  authUtil.removeAuth(res);
-  urlUtil.redirect(LOGOUTED_REDIRECT_TO_URL, res);
+nextPage.getInitialProps = async (ctx: IGetInitialProps) => {
+  authUtil.removeAuth(ctx);
+  urlUtil.redirect(LOGOUTED_REDIRECT_TO_URL, ctx.res);
 
   return {};
 };

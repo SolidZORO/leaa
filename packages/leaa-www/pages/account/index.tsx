@@ -7,6 +7,7 @@ import { IAuthInfo, IGetInitialProps } from '@leaa/www/interfaces';
 import { authUtil, urlUtil } from '@leaa/www/utils';
 import { HtmlMeta } from '@leaa/www/components/HtmlMeta';
 import { ErrorCard } from '@leaa/www/components/ErrorCard';
+import nookies from 'nookies';
 
 const Account = dynamic(() => import('@leaa/www/pages/account/_components/Account/Account'));
 
@@ -36,12 +37,12 @@ const nextPage = (ctx: { pageProps: IGetInitialReturnProps }) => {
   );
 };
 
-nextPage.getInitialProps = async ({ req, res }: IGetInitialProps): Promise<IGetInitialReturnProps> => {
-  const authToken = authUtil.getAuthToken(req);
-  const authInfo = authUtil.getAuthInfo(req);
+nextPage.getInitialProps = async (ctx: IGetInitialProps): Promise<IGetInitialReturnProps> => {
+  const authToken = authUtil.getAuthToken(ctx);
+  const authInfo = authUtil.getAuthInfo(ctx);
 
   if (!authToken) {
-    urlUtil.redirect(NOT_TOKEN_REDIRECT_TO_URL, res);
+    urlUtil.redirect(NOT_TOKEN_REDIRECT_TO_URL, ctx.res);
   }
 
   return { authToken, authInfo };
