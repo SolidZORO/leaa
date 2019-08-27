@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "name": "test-leaa-www",
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@now/next"
+    }
+  ]
+}

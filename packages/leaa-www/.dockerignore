@@ -1,0 +1,6 @@
+.next/
+_deploy/
+dist/
+_dist/
+node_modules/
+Dockerfile
