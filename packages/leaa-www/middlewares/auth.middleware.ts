@@ -6,15 +6,9 @@ import { IAuthInfo } from '@leaa/www/interfaces';
 import { initApollo } from '@leaa/www/libs/init-apollo-client.lib';
 
 export const authMiddleware = async (req: Request, res: Response, next: Function) => {
-  const { authToken } = req.cookies;
+  const { authToken, authInfo } = req.cookies;
 
-  if (!authToken) {
-    return next();
-  }
-
-  let user;
-
-  const apolloClient = initApollo({}, authToken);
+  console.log(authToken, authInfo);
 
   const removeAuth = () => {
     res.clearCookie(AUTH_INFO);
@@ -23,6 +17,19 @@ export const authMiddleware = async (req: Request, res: Response, next: Function
     res.writeHead(302, { Location: '/login' });
     res.end();
   };
+
+  // Avoid Hack
+  if ((authInfo && !authToken) || (!authInfo && authToken)) {
+    removeAuth();
+  }
+
+  if (!authToken) {
+    return next();
+  }
+
+  let user;
+
+  const apolloClient = initApollo({}, authToken);
 
   try {
     user = await apolloClient.query<{ userByToken: IAuthInfo }, { token: string }>({

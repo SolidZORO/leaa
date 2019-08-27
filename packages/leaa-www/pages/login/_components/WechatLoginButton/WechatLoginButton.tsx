@@ -32,9 +32,13 @@ export default (props: IProps) => {
 
   return (
     <div className={style['wrapper']}>
-      <Button size="large" type="primary" className={style['wechat-login-button']} onClick={onSubmitWechat}>
-        Wechat Login
-      </Button>
+      <Button
+        type="primary"
+        shape="circle"
+        className={style['wechat-login-button']}
+        onClick={onSubmitWechat}
+        icon="wechat"
+      />
     </div>
   );
 };

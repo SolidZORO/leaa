@@ -23,8 +23,8 @@
     "clear": "rimraf .next && rimraf _dist",
     "---------------------------------------------------------------------- PROD ----": "----",
     "build": "yarn clear && NODE_ENV=production next build && tsc --project tsconfig.build.json",
-    "start-node": "NODE_ENV=production node ./index.js",
-    "start": "NODE_ENV=production next start",
+    "next-start": "NODE_ENV=production next start",
+    "start": "NODE_ENV=production node ./index.js",
     "---------------------------------------------------------------------- ALIAS ----": "----",
     "u": "yarn upgrade-interactive --latest"
   },

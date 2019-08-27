@@ -2,7 +2,7 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 
 import { LOGIN_BY_TICKET_FOR_WWW } from '@leaa/common/src/graphqls';
-import { IGetInitialProps, IPageProps } from '@leaa/www/interfaces';
+import { IGetInitialProps } from '@leaa/www/interfaces';
 import { User } from '@leaa/common/src/entrys';
 import { authUtil, urlUtil } from '@leaa/www/utils';
 import { initApollo } from '@leaa/www/libs/init-apollo-client.lib';
@@ -11,7 +11,7 @@ import { FetchResult } from 'apollo-link';
 
 const Login = dynamic(() => import('@leaa/www/pages/login/_components/Login/Login'));
 
-const nextPage = ({ router }: IPageProps) => {
+const nextPage = () => {
   return (
     <>
       <HtmlMeta title="Login" />
@@ -22,8 +22,8 @@ const nextPage = ({ router }: IPageProps) => {
 
 // for Sign Up Redirect
 nextPage.getInitialProps = async (ctx: IGetInitialProps) => {
-  const otk = ctx.req && ctx.req.query && ctx.req.query.otk;
-  const oid = ctx.req && ctx.req.query && ctx.req.query.oid;
+  const otk = ctx.query && ctx.query.otk;
+  const oid = ctx.query && ctx.query.oid;
 
   if (otk) {
     const apolloClient = initApollo({});

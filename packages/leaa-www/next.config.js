@@ -59,7 +59,7 @@ module.exports = withDotenv(
         modifyVars: antdVariables,
       },
       webpack: webpackConfig,
-      // target: 'serverless',
+      target: 'serverless',
       env,
     }),
   ),

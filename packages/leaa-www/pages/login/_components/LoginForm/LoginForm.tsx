@@ -1,6 +1,8 @@
-import React from 'react';
 import cx from 'classnames';
+import React from 'react';
 import Link from 'next/link';
+import Router from 'next/router';
+
 import { Button, Col, Form, Input, Row, message } from 'antd';
 import { useMutation } from '@apollo/react-hooks';
 import { FormComponentProps } from 'antd/lib/form';
@@ -9,7 +11,9 @@ import { LOGIN_FOR_WWW } from '@leaa/common/src/graphqls';
 import { ErrorCard } from '@leaa/www/components/ErrorCard';
 import { User } from '@leaa/common/src/entrys';
 import { authUtil } from '@leaa/www/utils';
-import Router from 'next/router';
+
+import WechatLoginButton from '@leaa/www/pages/login/_components/WechatLoginButton/WechatLoginButton';
+import PhoneLoginButton from '@leaa/www/pages/login/_components/PhoneLoginButton/PhoneLoginButton';
 
 import style from './style.less';
 
@@ -114,6 +118,15 @@ const LoginFormInner = (props: IProps) => {
           <Link href="/forget" prefetch={false}>
             <a>Forget password?</a>
           </Link>
+        </Row>
+
+        <Row className={style['oauth-row']}>
+          <Col className={cx(style['oauth-item'], style['oauth-item--wechat'])}>
+            <WechatLoginButton />
+          </Col>
+          <Col className={cx(style['oauth-item'], style['oauth-item--phone'])}>
+            <PhoneLoginButton />
+          </Col>
         </Row>
 
         <Row className={style['signup-row']}>
