@@ -72,12 +72,6 @@ const getAuthInfo = (ctx?: NextPageContext): Pick<IAuthInfo, 'email' | 'name'> =
 };
 
 const removeAuthToken = (ctx?: NextPageContext): boolean => {
-  if (!getAuthToken) {
-    console.log('Not found auth token.');
-
-    return false;
-  }
-
   if (isServer) {
     nookies.destroy(ctx, AUTH_TOKEN_NAME);
   }
@@ -90,12 +84,6 @@ const removeAuthToken = (ctx?: NextPageContext): boolean => {
 };
 
 const removeAuthInfo = (ctx?: NextPageContext): boolean => {
-  if (!getAuthInfo()) {
-    console.log('Not found auth info.');
-
-    return false;
-  }
-
   if (isServer) {
     nookies.destroy(ctx, AUTH_INFO);
   }

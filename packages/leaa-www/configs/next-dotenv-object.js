@@ -1,23 +1,22 @@
 const _ = require('lodash');
 const path = require('path');
-const envalid = require('envalid');
-
-const isServer = typeof window === 'undefined';
+const dotenv = require('dotenv');
 
 const dev = process.env.NODE_ENV !== 'production';
 const rootPath = path.resolve(__dirname, '../');
 const dotEnvPath = dev ? `${rootPath}/.env` : `${rootPath}/.env.production`;
 
-const rule = {
-  NAME: envalid.str(),
-  PROTOCOL: envalid.str({ choices: ['http', 'https'], default: 'http' }),
-  PORT: envalid.port({ default: 3333 }),
-  BASE_HOST: envalid.str(),
-  API_HOST: envalid.url(),
-  GRAPHQL_ENDPOINT: envalid.url(),
-  OAUTH_WECHAT_BASE_URL: envalid.url(),
+dotenv.config({ path: dotEnvPath });
+
+module.exports = {
+  NAME: process.env.NAME,
+  NODE_ENV: process.env.NODE_ENV,
+  PROTOCOL: process.env.PROTOCOL,
+  PORT: process.env.PORT,
+  BASE_HOST: process.env.BASE_HOST,
+  //
+  API_HOST: process.env.API_HOST,
+  GRAPHQL_ENDPOINT: process.env.GRAPHQL_ENDPOINT,
+  //
+  OAUTH_WECHAT_BASE_URL: process.env.OAUTH_WECHAT_BASE_URL,
 };
-
-const dotenvObject = envalid.cleanEnv(process.env, rule, { dotEnvPath });
-
-module.exports = _.pick(dotenvObject, Object.keys(rule));

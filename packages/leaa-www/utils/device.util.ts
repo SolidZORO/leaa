@@ -1,13 +1,4 @@
 import UAParser from 'ua-parser-js';
-// import UniversalUserAgent from 'universal-user-agent';
-// import useragent from 'useragent';
-
-// const userAgent = UniversalUserAgent();
-
-// console.log(userAgent);
-
-// import { Response } from 'express';
-// import Router from 'next/router';
 
 const isServer = () => typeof window === 'undefined';
 const isClient = () => typeof window !== 'undefined';
@@ -20,6 +11,7 @@ const getUserAgent = () => {
   const debug = false;
 
   if (isServer()) {
+    // @ts-ignore
     // eslint-disable-next-line no-undef
     uaParser.setUA(__SERVER_USER_AGENT__ || '');
   } else {

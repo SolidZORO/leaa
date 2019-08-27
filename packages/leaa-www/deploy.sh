@@ -36,7 +36,7 @@ if [[ $KEY = "" ]]; then
 
     cp -fr ./styles ${WWW_DIR}
     cp -fr ./next.config.js ${WWW_DIR}
-    cp -fr ./configs ${WWW_DIR}/configs
+    cp -fr ./configs/*.js ${WWW_DIR}/configs
 
     cp -fr ./.next ${WWW_DIR}
     cp -fr ./static ${WWW_DIR}

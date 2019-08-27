@@ -17,7 +17,7 @@ cp -fr ./index.js ${DEPLOY_DIR}
 
 cp -fr ./styles ${WWW_DIR}
 cp -fr ./next.config.js ${WWW_DIR}
-cp -fr ./configs ${WWW_DIR}/configs
+cp -fr ./configs/*.js ${WWW_DIR}/configs
 
 cp -fr ./.next ${WWW_DIR}
 cp -fr ./static ${WWW_DIR}
@@ -31,12 +31,3 @@ sed -i '' '/@leaa\/.*[0-9]\./d' ./package.json
 sed -i '' '/build.*tsconfig\.build\.json/d' ./package.json
 
 yarn start
-
-
-
-
-
-
-
-
-
