@@ -218,12 +218,22 @@ li.menu-item {
 
 .menu-mb-drawer {
   font-size: 100%;
+  height: 0;
 
   @media (min-width: @screen-md) {
     display: none;
   }
 
   :global {
+    //.ant-drawer-mask {
+    //  opacity: 0;
+    //  background-color: transparent;
+    //}
+
+    //.ant-drawer-content-wrapper {
+    //  height: auto !important;
+    //}
+
     .ant-drawer-body {
       padding: 0;
       margin: 0;
@@ -233,4 +243,10 @@ li.menu-item {
 
 .menu-mb-drawer--action {
   background-color: transparent;
+
+  :global {
+    .ant-drawer-content-wrapper {
+      height: 100% !important;
+    }
+  }
 }

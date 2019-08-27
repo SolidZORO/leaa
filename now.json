@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "name": "test-leaa-monorepo",
+  "name": "test-leaa-www",
   "builds": [
     {
       "src": "packages/leaa-www/package.json",

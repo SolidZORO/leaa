@@ -30,22 +30,6 @@ export const LayoutHeader = () => {
     </ul>
   );
 
-  // const authListDom = (
-  //   <div className={style['auth-list']}>
-  //     <Link href="/login" prefetch={false}>
-  //       <a className={style['link']} onClick={() => onSetVisible(false)}>
-  //         Login
-  //       </a>
-  //     </Link>
-  //     <span> · </span>
-  //     <Link href="/register" prefetch={false}>
-  //       <a className={style['link']} onClick={() => onSetVisible(false)}>
-  //         Register
-  //       </a>
-  //     </Link>
-  //   </div>
-  // );
-
   const authButtonDom = (
     <Button type="link" className={style['account-button']}>
       <Link href="/account" prefetch={false}>
@@ -92,10 +76,9 @@ export const LayoutHeader = () => {
                 placement="top"
                 visible={drawerVisible}
                 closable={false}
-                maskStyle={{ opacity: 0 }}
+                maskStyle={{ opacity: 0, backgroundColor: 'transparent' }}
                 zIndex={998}
                 onClose={() => onSetVisible(!drawerVisible)}
-                height="100%"
                 className={cx(style['menu-mb-drawer'], {
                   [style['menu-mb-drawer--action']]: drawerVisible,
                 })}
