@@ -11,7 +11,7 @@ export const ProgressLoading = (props: IProps) => {
 
   Router.events.on('routeChangeStart', () => {
     clearTimeout(timer);
-    timer = setTimeout(NProgress.start, props.showAfterMs || 200);
+    timer = setTimeout(NProgress.start, props.showAfterMs || 100);
   });
 
   Router.events.on('routeChangeComplete', () => {

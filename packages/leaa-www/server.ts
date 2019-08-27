@@ -13,8 +13,6 @@ const handle = app.getRequestHandler();
 (async () => {
   const { PROTOCOL, PORT, BASE_HOST, NAME } = envConfig;
 
-  console.log(envConfig.GRAPHQL_ENDPOINT);
-
   await app.prepare();
   const server = express();
 

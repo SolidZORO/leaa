@@ -10,7 +10,6 @@ dotenv.config({ path: dotEnvPath });
 
 module.exports = {
   NAME: process.env.NAME,
-  NODE_ENV: process.env.NODE_ENV,
   PROTOCOL: process.env.PROTOCOL,
   PORT: process.env.PORT,
   BASE_HOST: process.env.BASE_HOST,

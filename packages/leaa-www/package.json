@@ -23,7 +23,8 @@
     "clear": "rimraf .next && rimraf _dist",
     "---------------------------------------------------------------------- PROD ----": "----",
     "build": "yarn clear && NODE_ENV=production next build && tsc --project tsconfig.build.json",
-    "start": "NODE_ENV=production node ./index.js",
+    "start-node": "NODE_ENV=production node ./index.js",
+    "start": "NODE_ENV=production next start",
     "---------------------------------------------------------------------- ALIAS ----": "----",
     "u": "yarn upgrade-interactive --latest"
   },
@@ -35,7 +36,6 @@
     "@babel/plugin-proposal-decorators": "^7.4.4",
     "@leaa/common": "^0.0.2",
     "@leaa/www": "^0.0.2",
-    "@zeit/next-bundle-analyzer": "^0.1.2",
     "@zeit/next-css": "^1.0.2-canary.2",
     "@zeit/next-less": "^1.0.1",
     "antd": "^3.22.1",

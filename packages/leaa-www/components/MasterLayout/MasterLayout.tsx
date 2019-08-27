@@ -65,7 +65,7 @@ export const MasterLayout = (props: IProps) => {
     <div
       className={cx(style['full-layout-wrapper'], 'g-full-layout-wrapper', `g-full-layout-wrapper--${pageClassName}`)}
     >
-      <ProgressLoading showAfterMs={800} />
+      <ProgressLoading showAfterMs={120} />
       <Layout className={style['full-layout-inner']} hasSider>
         <Layout>
           {!props.disableHeader && <LayoutHeader />}

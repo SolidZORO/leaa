@@ -10,7 +10,13 @@ import { initStore, StoreProvider } from '@leaa/www/stores';
 
 const store = initStore();
 
+// @ts-ignore
 class CustomApp extends App<IPageProps> {
+  // static async getInitialProps(ctx: any) {
+  //   return { ENV_CONFIG: process.env };
+  //   // const initialProps = await Document.getInitialProps(ctx);
+  // }
+
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     console.log('CUSTOM ERROR HANDLING', error);
 
@@ -22,7 +28,7 @@ class CustomApp extends App<IPageProps> {
     return (
       <ApolloProvider client={this.props.apolloClient}>
         <StoreProvider value={store}>
-          <ProgressLoading showAfterMs={200} />
+          <ProgressLoading showAfterMs={120} />
 
           <MasterLayout {...this.props}>
             <this.props.Component {...this.props} />

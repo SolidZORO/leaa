@@ -1,0 +1,10 @@
+/.idea
+/.docker
+/.vscode
+/designs
+/node_modules
+
+/packages/leaa-api
+/packages/leaa-app
+/packages/leaa-dashboard
+/packages/leaa-miniprogram

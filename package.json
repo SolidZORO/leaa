@@ -15,6 +15,7 @@
     ],
     "nohoist": [
       "**/module-alias",
+      "**/next-bundle-analyzer",
       "@leaa/miniprogram/**"
     ]
   },

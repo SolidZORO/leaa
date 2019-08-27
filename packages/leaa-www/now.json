@@ -3,7 +3,7 @@
   "name": "test-leaa-www",
   "builds": [
     {
-      "src": "package.json",
+      "src": "package.json.",
       "use": "@now/next"
     }
   ]

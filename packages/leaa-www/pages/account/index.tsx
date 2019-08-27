@@ -7,7 +7,6 @@ import { IAuthInfo, IGetInitialProps } from '@leaa/www/interfaces';
 import { authUtil, urlUtil } from '@leaa/www/utils';
 import { HtmlMeta } from '@leaa/www/components/HtmlMeta';
 import { ErrorCard } from '@leaa/www/components/ErrorCard';
-import nookies from 'nookies';
 
 const Account = dynamic(() => import('@leaa/www/pages/account/_components/Account/Account'));
 
@@ -20,7 +19,7 @@ const NOT_TOKEN_REDIRECT_TO_URL = '/login';
 
 const nextPage = (ctx: { pageProps: IGetInitialReturnProps }) => {
   const getUserByTokenQuery = useQuery<{ userByToken: IAuthInfo }, { token?: string }>(GET_USER_BY_TOKEN_FOR_WWW, {
-    variables: { token: ctx.pageProps.authToken },
+    variables: { token: ctx.pageProps && ctx.pageProps.authToken },
   });
 
   return (

@@ -6,10 +6,11 @@ const lessToJS = require('less-vars-to-js');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const FilterWarningsPlugin = require('webpack-filter-warnings-plugin');
 
+const env = require('@leaa/www/configs/next-dotenv-object');
+
 const withDotenv = require('@leaa/www/configs/next-dotenv');
 const withImage = require('@leaa/www/configs/next-image');
 const withAntd = require('@leaa/www/configs/next-antd');
-const withAnalyzer = require('@leaa/www/configs/next-analyzer');
 
 const antdVariables = lessToJS(fs.readFileSync(path.resolve(__dirname, './styles/variables.less'), 'utf8'));
 
@@ -46,22 +47,20 @@ const webpackConfig = (config, options) => {
 
 module.exports = withDotenv(
   withImage(
-    withAnalyzer(
-      withAntd({
-        cssModules: true,
-        cssLoaderOptions: {
-          sourceMap: false,
-          importLoaders: 1,
-          localIdentName: '[local]--[hash:8]',
-        },
-        lessLoaderOptions: {
-          javascriptEnabled: true,
-          modifyVars: antdVariables,
-        },
-        webpack: webpackConfig,
-        // target: 'serverless',
-        // env,
-      }),
-    ),
+    withAntd({
+      cssModules: true,
+      cssLoaderOptions: {
+        sourceMap: false,
+        importLoaders: 1,
+        localIdentName: '[local]--[hash:8]',
+      },
+      lessLoaderOptions: {
+        javascriptEnabled: true,
+        modifyVars: antdVariables,
+      },
+      webpack: webpackConfig,
+      // target: 'serverless',
+      env,
+    }),
   ),
 );
