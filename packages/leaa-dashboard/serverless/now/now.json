@@ -1,14 +1,11 @@
 {
   "name": "test-leaa-dashboard",
   "version": 2,
-  "builds": [
-    {
-      "src": "**",
-      "use": "@now/static"
-    }
-  ],
-  "routes": [
-    { "src": "^/statics/(.*)", "dest": "/statics/$1" },
-    { "src": "^/(.*)", "dest": "/index.html" }
-  ]
+  "env": { "NODE_ENV": "production" },
+  "github": {
+    "enabled": false,
+    "autoAlias": false
+  },
+  "builds": [{ "src": "**", "use": "@now/static" }],
+  "routes": [{ "src": "^/statics/(.*)", "dest": "/statics/$1" }, { "src": "^/(.*)", "dest": "/index.html" }]
 }

@@ -4,6 +4,7 @@
 
 #Accests
 /public/attachments
+/public/robots.txt
 
 # Compiled
 /.dist
