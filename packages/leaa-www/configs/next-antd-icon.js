@@ -38,9 +38,9 @@
 // export { default as CheckCircleOutline } from '@ant-design/icons/lib/outline/CheckCircleOutline';
 // export { default as ChromeOutline } from '@ant-design/icons/lib/outline/ChromeOutline';
 // export { default as CloudOutline } from '@ant-design/icons/lib/outline/CloudOutline';
-// export { default as CloseCircleOutline } from '@ant-design/icons/lib/outline/CloseCircleOutline';
+export { default as CloseCircleOutline } from '@ant-design/icons/lib/outline/CloseCircleOutline';
 // export { default as CaretUpOutline } from '@ant-design/icons/lib/outline/CaretUpOutline';
-// export { default as CloseSquareOutline } from '@ant-design/icons/lib/outline/CloseSquareOutline';
+export { default as CloseSquareOutline } from '@ant-design/icons/lib/outline/CloseSquareOutline';
 // export { default as CodeOutline } from '@ant-design/icons/lib/outline/CodeOutline';
 // export { default as ContainerOutline } from '@ant-design/icons/lib/outline/ContainerOutline';
 // export { default as ClockCircleOutline } from '@ant-design/icons/lib/outline/ClockCircleOutline';
@@ -415,8 +415,8 @@ export { default as CheckCircleFill } from '@ant-design/icons/lib/fill/CheckCirc
 // export { default as ChromeFill } from '@ant-design/icons/lib/fill/ChromeFill';
 // export { default as ClockCircleFill } from '@ant-design/icons/lib/fill/ClockCircleFill';
 // export { default as CiCircleFill } from '@ant-design/icons/lib/fill/CiCircleFill';
-// export { default as CloseSquareFill } from '@ant-design/icons/lib/fill/CloseSquareFill';
-// export { default as CloseCircleFill } from '@ant-design/icons/lib/fill/CloseCircleFill';
+export { default as CloseSquareFill } from '@ant-design/icons/lib/fill/CloseSquareFill';
+export { default as CloseCircleFill } from '@ant-design/icons/lib/fill/CloseCircleFill';
 // export { default as CloudFill } from '@ant-design/icons/lib/fill/CloudFill';
 // export { default as CodeSandboxSquareFill } from '@ant-design/icons/lib/fill/CodeSandboxSquareFill';
 // export { default as CodeFill } from '@ant-design/icons/lib/fill/CodeFill';

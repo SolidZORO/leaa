@@ -48,7 +48,7 @@ export class CreateAttachmentInput {
   public path!: string;
 
   @Field(() => String, { nullable: true })
-  public external_path?: string;
+  public external_url?: string;
 
   @Field(() => Int)
   public at2x!: number;

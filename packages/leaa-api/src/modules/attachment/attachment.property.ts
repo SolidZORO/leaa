@@ -11,7 +11,13 @@ import { attachmentConfig } from '@leaa/api/src/configs';
 export class AttachmentProperty {
   constructor(@InjectRepository(Attachment) private readonly attachmentRepository: Repository<Attachment>) {}
 
-  resolvePropertyUrl(attachment: Pick<Attachment, 'in_oss' | 'in_local' | 'path'>): string | null {
+  resolvePropertyUrl(attachment: Pick<Attachment, 'in_oss' | 'in_local' | 'path' | 'external_url'>): string | null {
+    if (attachment.external_url) {
+      const externalUrls = attachment.external_url.split('|');
+
+      return externalUrls[0];
+    }
+
     if (attachment.in_oss) {
       return `${attachmentConfig.URL_PREFIX_BY_OSS}${attachment.path}`;
     }
@@ -24,6 +30,12 @@ export class AttachmentProperty {
   }
 
   resolvePropertyUrlAt2x(attachment: Attachment): string | null {
+    if (attachment.external_url) {
+      const externalUrls = attachment.external_url.split('|');
+
+      return externalUrls[1] || externalUrls[0];
+    }
+
     if (attachment.at2x) {
       return pathUtil.getAt2xPath(this.resolvePropertyUrl(attachment));
     }

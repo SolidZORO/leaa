@@ -22,7 +22,7 @@ export default () => {
 
       {getAxBySlugQuery.data && getAxBySlugQuery.data.axBySlug && (
         <>
-          <HtmlMeta title="Home" />
+          <HtmlMeta title="Leaa" disableSiteName />
           <Home ax={getAxBySlugQuery.data.axBySlug} />
         </>
       )}

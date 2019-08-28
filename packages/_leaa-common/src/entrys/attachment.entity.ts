@@ -67,9 +67,13 @@ export class Attachment extends Base {
   @Field(() => String)
   public path!: string;
 
-  @Column({ type: 'varchar', length: 512 })
+  @Column({
+    type: 'varchar',
+    length: 512,
+    comment: 'support multi-urls, e.g.: https://a.com/a.jpg|https://a.com/a_2x.jpg',
+  })
   @Field(() => String)
-  public external_path?: string;
+  public external_url?: string;
 
   @Field(() => String, { nullable: true })
   public url?: string | null;
