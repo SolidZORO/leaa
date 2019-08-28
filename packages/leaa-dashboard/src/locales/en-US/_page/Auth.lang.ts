@@ -9,6 +9,7 @@ export default {
     login: _lang.login,
     rememberMe: 'Remember me',
     back: 'Back',
+    notPermissions: 'Not Premissions',
     backTips: 'here is not back now ; >',
   },
 };

@@ -9,6 +9,7 @@ export default {
     login: _lang.login,
     rememberMe: '记住我',
     back: '返回',
+    notPermissions: '无权限',
     backTips: '目前还没有返回 ; >',
   },
 };

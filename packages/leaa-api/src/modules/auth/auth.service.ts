@@ -165,7 +165,10 @@ export class AuthService {
     let newUser: User;
 
     try {
-      newUser = await this.userRepository.save({ ...nextArgs });
+      newUser = await this.userRepository.save({
+        ...nextArgs,
+        status: 1,
+      });
 
       if (oid) {
         await this.oauthService.bindUserIdToOauth(newUser, oid);

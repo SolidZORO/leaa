@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Button, Col, Checkbox, Form, Input, Row, message } from 'antd';
 import { useMutation } from '@apollo/react-hooks';
 import { FormComponentProps } from 'antd/lib/form';
+
 import { IAuthInfo } from '@leaa/dashboard/src/interfaces';
 import { AuthLoginInput } from '@leaa/common/src/dtos/auth';
 import { LOGIN } from '@leaa/common/src/graphqls';
@@ -27,6 +28,12 @@ const LoginFormInner = (props: IProps) => {
     login: IAuthInfo;
   }>(LOGIN, {
     onCompleted({ login }) {
+      if (login && login.name && login.flatePermissions && login.flatePermissions.length === 0) {
+        message.error(t('_page:Auth.Login.notPermissions'));
+
+        return;
+      }
+
       if (login && login.name && login.flatePermissions) {
         const authInfo = {
           id: login.id,

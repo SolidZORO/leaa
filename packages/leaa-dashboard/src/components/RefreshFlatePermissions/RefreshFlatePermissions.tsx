@@ -19,6 +19,10 @@ export const RefreshFlatePermissions = (props: IProps) => {
       variables: { token: authUtil.getAuthToken() || '' },
       fetchPolicy: 'network-only',
       onCompleted: data => {
+        if (data && data.userByToken.flatePermissions && data.userByToken.flatePermissions.length === 0) {
+          authUtil.removeAuth();
+        }
+
         if (data && data.userByToken && data.userByToken.flatePermissions) {
           authUtil.setAuthInfo(_.pick(data.userByToken, ['id', 'name', 'email', 'flatePermissions']));
         }
