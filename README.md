@@ -12,8 +12,8 @@ Leaa is a monorepo CMS (Content Management System) built with Nest.js, Next.js, 
 
 - [x] **\_leaa-common**
 - [x] **leaa-api** ([demo](https://test-leaa-api.herokuapp.com)) / backend (Nest.js + TypeGraphQL + MySQL + Docker Compose)
-- [x] **leaa-dashboard** ([demo](https://test-leaa-dashboard.herokuapp.com)) / dashboard (React.js + Antd + MobX + Apollo / GraphQL)
-- [x] **leaa-www** ([demo](https://test-leaa-www.herokuapp.com)) / website (Next.js + GraphQL)
+- [x] **leaa-dashboard** ([demo](https://test-leaa-dashboard.solidzoro.now.sh)) / dashboard (React.js + Antd + MobX + Apollo / GraphQL)
+- [x] **leaa-www** ([demo](https://test-leaa-www.solidzoro.now.sh)) / website (Next.js + GraphQL)
 - [ ] **leaa-miniprogram** / wechat-miniprogram (Taro.js + Taro-ui + GraphQL)
 - [ ] **leaa-app** / iOS and Android (expo + GraphQL)
 
@@ -25,9 +25,9 @@ View the `README.md` of each sub-directory in `packages`. You may need to look a
 
 ## **Preview**
 
-You can click `demo` link online preview, all demos are deployed in `heroku`, but the response is very SLOW, please be patient.
+You can click `demo` link online preview, all demos are deployed in `heroku` and `now.sh`, but the response is very SLOW, please be patient.
 
-### Dashboard ([demo](https://test-leaa-dashboard.herokuapp.com))
+### Dashboard ([demo](https://test-leaa-dashboard.solidzoro.now.sh))
 
 ##### dashboard-login
 
@@ -41,7 +41,7 @@ You can click `demo` link online preview, all demos are deployed in `heroku`, bu
 
 ![dashboard-mobile](https://raw.githubusercontent.com/SolidZORO/leaa/master/designs/ui/dashboard-mobile.png)
 
-### WWW ([demo](https://test-leaa-www.herokuapp.com))
+### WWW ([demo](https://test-leaa-www.solidzoro.now.sh))
 
 ##### www-index
 
@@ -60,7 +60,9 @@ You can click `demo` link online preview, all demos are deployed in `heroku`, bu
 - [x] **\_leaa-common**
 - [x] **leaa-api** ([demo](https://test-leaa-api.herokuapp.com)) / backend (Nest.js + TypeGraphQL + MySQL + Docker Compose)
   - [x] Auth
-    - [x] JWT
+    - [x] Email
+    - [x] Wechat
+    - [ ] Wechat MiniProgram
   - [x] User
   - [x] Role
   - [x] Permission
@@ -87,7 +89,7 @@ You can click `demo` link online preview, all demos are deployed in `heroku`, bu
   - [ ] Payment
     - [ ] Alipay
     - [ ] Wechat
-- [x] **leaa-dashboard** ([demo](https://test-leaa-dashboard.herokuapp.com)) / dashboard (React.js + Antd + MobX + Apollo / GraphQL)
+- [x] **leaa-dashboard** ([demo](https://test-leaa-dashboard.solidzoro.now.sh)) / dashboard (React.js + Antd + MobX + Apollo / GraphQL)
   - [x] Auth
   - [x] User
   - [x] Role
@@ -113,17 +115,17 @@ You can click `demo` link online preview, all demos are deployed in `heroku`, bu
   - [ ] Booking
   - [ ] Coupon
   - [ ] Promo
-- [x] **leaa-www** ([demo](https://test-leaa-www.herokuapp.com)) / website (Next.js + GraphQL)
+- [x] **leaa-www** ([demo](https://test-leaa-www.solidzoro.now.sh)) / website (Next.js + GraphQL)
   - [x] Home
   - [x] Account
     - [ ] Login
       - [x] Email
       - [ ] Phone
-      - [ ] Wechat
+      - [x] Wechat
     - [ ] Register
       - [x] Email
       - [ ] Phone
-      - [ ] Wechat
+      - [x] Wechat
     - [ ] Forget Password
     - [ ] Profile
       - [ ] Upload Avatar
@@ -146,9 +148,9 @@ You can click `demo` link online preview, all demos are deployed in `heroku`, bu
   - [ ] Booking
   - [ ] Coupon
   - [ ] Promo
-- [ ] **leaa-miniprogram** / wechat-miniprogram (Taro.js + Taro-ui + GraphQL)
-  - [ ] Home
-  - [ ] Account
+- [ ] **leaa-miniprogram** / wechat-miniprogram (Taro.js + GraphQL)
+  - [x] Home
+  - [x] Account
     - [ ] Login
     - [ ] Logout
   - [ ] Article
@@ -582,4 +584,8 @@ ZEIT 大哥！`Next.js` 这可是你自家的服务啊，有必要限得那么�
 
 又继续折腾若干小时，无果…… 怀疑人生了。容我再想想吧，感觉还是去改 code 好了，改成 `non-serverless` 和 `serverless` 都兼容，毕竟现在除了 OAuth 那边，需要 `query` 的地方还不是特别多。
 
+### 2019-08-28 19:30
 
+写了个两个脚本，把 `leaa-www` 和 `leaa-dashboard` 部署到了 `now.sh`，之前也想过把 `leaa-api` 也部署过去，但到目前为止，用了 `TypeGraphQL` 这个库的 App 是无法部署到 `now.sh` 的，具体可以看下我提的这个 [Issues](https://github.com/zeit/now/issues/2680)。
+
+好了！绕一大圈回来回来，终于可以继续写小程序登陆了（摊手）。
