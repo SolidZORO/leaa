@@ -28,8 +28,8 @@ export class AttachmentController {
     return this.saveInOssService.ossCallback(request);
   }
 
-  @Post('/upload')
   @HttpCode(200)
+  @Post('/upload')
   @UseGuards(JwtGuard)
   @UseInterceptors(FileInterceptor('file'))
   async uploadFile(@Body() body: IAttachmentParams, @UploadedFile() file: Express.Multer.File) {

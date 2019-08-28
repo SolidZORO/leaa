@@ -1,5 +1,4 @@
 import Taro from '@tarojs/taro';
-import { View } from '@tarojs/components';
 
 import { Account } from './_components/Account/Account';
 

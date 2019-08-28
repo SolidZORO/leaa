@@ -1,13 +1,19 @@
 import Taro from '@tarojs/taro';
-import { View, Text, Button } from '@tarojs/components';
+import { Oauth } from '@leaa/common/src/entrys';
+import { View, Text, Image, Button } from '@tarojs/components';
 
 import { envConfig } from '@leaa/miniprogram/src/configs';
 
 import style from './style.less';
 
 export const Account = (props: any) => {
+  const getUserInfo: Oauth = Taro.getStorageSync('userInfo');
+
   const onLogin = async () => {
-    let loginResponse;
+    let loginResponse: {
+      errMsg: string;
+      code: string;
+    };
 
     try {
       loginResponse = await Taro.login();
@@ -17,17 +23,25 @@ export const Account = (props: any) => {
       return;
     }
 
-    let sessionResponse;
+    //
+    // ------------------------------------
+    let sessionResponse: {
+      data: {
+        openid: string;
+        session_key: string;
+      };
+    };
 
     try {
       sessionResponse = await Taro.request({
+        method: 'POST',
         url: `${envConfig.WECHAT_HOST}/oauth/wechat/session`,
         data: loginResponse,
       });
 
       if (sessionResponse && sessionResponse.data) {
-        Taro.setStorageSync('openid', sessionResponse.data.openid);
-        Taro.setStorageSync('session_key', sessionResponse.data.session_key);
+        Taro.setStorageSync('openId', sessionResponse.data.openid);
+        Taro.setStorageSync('sessionKey', sessionResponse.data.session_key);
       }
     } catch (e) {
       await Taro.showToast({ title: '获取 Session 失败' });
@@ -35,9 +49,61 @@ export const Account = (props: any) => {
       return;
     }
 
-    const setting = await Taro.getSetting();
+    //
+    // ------------------------------------
+    let userInfoResponse: {
+      encryptedData: string;
+      iv: string;
+      rawData: string; // JSON string
+      signature: string;
+      userInfo: {
+        avatarUrl: string;
+        city: string;
+        country: string;
+        gender: number;
+        language: string;
+        nickName: string;
+        province: string;
+      };
+    };
 
-    console.log(setting, Taro.getStorageSync('session_key'));
+    try {
+      userInfoResponse = await Taro.getUserInfo({
+        lang: 'zh_CN',
+        withCredentials: true,
+      });
+    } catch (e) {
+      await Taro.showToast({ title: '获取 UserInfo 失败' });
+
+      return;
+    }
+
+    console.log('userInfoResponse', userInfoResponse);
+
+    //
+    // ------------------------------------
+    let decryptDataResponse;
+
+    try {
+      const sendData = {
+        encryptedData: userInfoResponse.encryptedData,
+        iv: userInfoResponse.iv,
+        sessionKey: Taro.getStorageSync('sessionKey'),
+        platform: 'wechatminiprogram',
+      };
+
+      decryptDataResponse = await Taro.request({
+        method: 'POST',
+        url: `${envConfig.WECHAT_HOST}/oauth/wechat/decrypt-data`,
+        data: sendData,
+      });
+
+      Taro.setStorageSync('userInfo', decryptDataResponse.data);
+    } catch (e) {
+      await Taro.showToast({ title: '获取 Decrypt Data 失败' });
+    }
+
+    console.log('decryptDataResponse', decryptDataResponse);
   };
 
   const onLogout = async () => {
@@ -73,17 +139,41 @@ export const Account = (props: any) => {
     console.log(s);
   };
 
-  const onGetUserInfo = async (e: any) => {
-    console.log(e);
+  const onGetUserInfo = async () => {
+    console.log('onGetUserInfo');
+
+    await Taro.getUserInfo({
+      lang: 'zh_CN',
+      withCredentials: true,
+      success(res) {
+        console.log(res);
+      },
+      fail(e) {
+        console.log(e);
+      },
+    });
   };
+
   const onCheckSession = async (e: any) => {
-    await Taro.checkSession({});
+    await Taro.checkSession({
+      success(res) {
+        console.log('checkSession - success');
+        console.log(res);
+      },
+      fail() {
+        console.log('checkSession - fail');
+        onLogin();
+      },
+    });
   };
 
   return (
     <View>
       <View>
-        <Text className={style['title']}>ACCOUNT</Text>
+        <Text>USER INFO</Text>
+        <Image src={getUserInfo.avatar_url} mode="aspectFit" style={{ width: '40px', height: '40px' }} />
+
+        <Text>{JSON.stringify(getUserInfo.nickname)}</Text>
 
         <Button onClick={onLogin}>Login</Button>
         <hr />
@@ -106,8 +196,12 @@ export const Account = (props: any) => {
         <Button onClick={onCheckSession}>CheckSession</Button>
         <hr />
 
+        <Button type="primary" onClick={onGetUserInfo}>
+          微信授权登录 T
+        </Button>
+
         <Button openType="getUserInfo" type="primary" onGetUserInfo={onGetUserInfo}>
-          微信授权登录
+          微信授权登录 M
         </Button>
         <hr />
       </View>

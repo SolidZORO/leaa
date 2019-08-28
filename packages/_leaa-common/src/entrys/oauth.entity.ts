@@ -6,6 +6,7 @@ import { Base } from '@leaa/common/src/entrys';
 export enum OauthPlatform {
   wechat = 'wechat',
   weibo = 'weibo',
+  wechatminiprogram = 'wechatminiprogram',
 }
 
 @Entity('oauths')

@@ -1,18 +1,18 @@
+import uuid from 'uuid';
 import moment from 'moment';
 import queryString from 'query-string';
 import { Request, Response } from 'express';
 import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-
 // @ts-ignore
 import { Wechat, MiniProgram, OAuth } from 'wechat-jssdk';
 
 import { User, Oauth } from '@leaa/common/src/entrys';
 import { oauthConfig } from '@leaa/api/src/configs';
+import { IWechatDecryptUserInfo } from '@leaa/api/src/interfaces';
 import { CreateOauthInput } from '@leaa/common/src/dtos/oauth';
 import { loggerUtil } from '@leaa/api/src/utils';
-import uuid from 'uuid';
 
 const CONSTRUCTOR_NAME = 'OauthService';
 
@@ -106,12 +106,26 @@ export class OauthService {
     return 'NOT-SIGNATURE-ECHOSTR';
   }
 
-  async getMiniProgramSession(req: Request): Promise<string | null> {
-    if (req.query.code) {
-      return this.miniProgram.getSession(req.query.code);
+  async getMiniProgramSession(req: Request, body: { code: string }): Promise<string | null> {
+    if (body.code) {
+      return this.miniProgram.getSession(body.code);
     }
 
     return 'NOT-SESSION';
+  }
+
+  async wechatDecryptData(
+    req: Request,
+    body: { encryptedData: string; iv: string; sessionKey: string; platform: string },
+  ): Promise<any | string> {
+    if (body.encryptedData && body.iv && body.sessionKey) {
+      const decryptData = await this.miniProgram.decryptData(body.encryptedData, body.iv, body.sessionKey);
+
+      return this.getOrCreateOauth(body.platform, decryptData);
+      // return decryptData;
+    }
+
+    return 'DECRYPT-ERROR';
   }
 
   async wechatLogin(req: Request, res: Response): Promise<void> {
@@ -128,6 +142,39 @@ export class OauthService {
     const url = `/get-weixin-code.html?appid=${oauthConfig.wechat.appId}&scope=${nextScope}&state=${nextStateParams}&redirect_uri=${oauthConfig.wechat.wechatRedirectUrl}`;
 
     res.redirect(url);
+  }
+
+  async getOauthByOpenId(openId: string): Promise<Oauth | undefined> {
+    return this.oauthRepository.findOne({ open_id: openId });
+  }
+
+  async getOrCreateOauth(platform: string, oauthInput: IWechatDecryptUserInfo): Promise<Oauth | undefined> {
+    const oauth = await this.getOauthByOpenId(oauthInput.openId);
+
+    if (oauth) {
+      return oauth;
+    }
+
+    const nextOauthInput = {
+      app_id: oauthInput.watermark.appid,
+      open_id: oauthInput.openId,
+      platform,
+      nickname: oauthInput.nickName,
+      sex: oauthInput.gender,
+      city: oauthInput.city,
+      province: oauthInput.province,
+      country: oauthInput.country,
+      avatar_url: oauthInput.avatarUrl,
+      last_oauth_at: new Date(),
+      // ticket: uuid.v4(),
+      // ticket_at: new Date(),
+      ticket: '',
+      ticket_at: '',
+    };
+
+    console.log('nextOauthInput', nextOauthInput);
+
+    return this.oauthRepository.save(nextOauthInput);
   }
 
   async wechatCallback(req: Request, res: Response): Promise<void | string> {
@@ -165,10 +212,10 @@ export class OauthService {
       ticket_at: new Date(),
     };
 
+    const oauth = await this.oauthRepository.findOne({ open_id: wechatInfo.openid });
+
     let oid = '';
     let otk = ''; // Tips: `otk` Avoid wechat keyword `ticket` conflicts
-
-    const oauth = await this.oauthRepository.findOne({ open_id: wechatInfo.openid });
 
     // find OAuth
     //  |
