@@ -23,9 +23,14 @@ export class OauthService {
     @InjectRepository(Oauth) private readonly oauthRepository: Repository<Oauth>,
   ) {}
 
-  private miniProgram = new MiniProgram(oauthConfig.wechat);
-  private wechat = new Wechat(oauthConfig.wechat);
-  private wechatOAuth = new OAuth(oauthConfig.wechat);
+  // prettier-ignore
+  // eslint-disable-next-line max-len
+  private checkMiniProgramConfig = () => oauthConfig.wechat.miniProgram && oauthConfig.wechat.miniProgram.appId && oauthConfig.wechat.miniProgram.appSecret;
+  private checkWechatConfig = () => oauthConfig.wechat.appId && oauthConfig.wechat.appSecret;
+
+  private wechat = this.checkWechatConfig() && new Wechat(oauthConfig.wechat);
+  private wechatOAuth = this.checkWechatConfig() && new OAuth(oauthConfig.wechat);
+  private miniProgram = this.checkMiniProgramConfig() && new MiniProgram(oauthConfig.wechat);
 
   async bindUserIdToOauth(user: User, oid: number): Promise<any> {
     if (!oid || typeof Number(oid) !== 'number') {

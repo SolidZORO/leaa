@@ -1,6 +1,10 @@
 {
   "version": 2,
   "name": "test-leaa-www",
+  "github": {
+    "enabled": false,
+    "autoAlias": false
+  },
   "builds": [
     {
       "src": "packages/leaa-www/package.json",
