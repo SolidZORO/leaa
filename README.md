@@ -580,6 +580,6 @@ BTW-1，据网友纠正，Taro 的内核是 [NervJS](https://github.com/NervJS/n
 
 ZEIT 大哥！`Next.js` 这可是你自家的服务啊，有必要限得那么死吗？ `target: 'serverless'` 就不能作为 Option？网上找了下，看到作者说是故意这样设计的（估计也是无奈）[Intercepting popstate](https://github.com/zeit/next.js#intercepting-popstate)，网上还有若干方法比如在 `now.json` 写正则路由匹配拿到 `query`，我干，这可是 code 啊！code 不应该和 deploy 绑死吧！这是基本的底线。我不可能为了这个需求去 hack 我的 code 啊！
 
-容我再想想，还是去改 code 好了，改成 `non-serverless` 和 `serverless` 都兼容，毕竟现在除了 OAuth 那边，需要 `query` 的地方还不是特别多。
+又继续折腾若干小时，无果…… 怀疑人生了。容我再想想吧，感觉还是去改 code 好了，改成 `non-serverless` 和 `serverless` 都兼容，毕竟现在除了 OAuth 那边，需要 `query` 的地方还不是特别多。
 
 

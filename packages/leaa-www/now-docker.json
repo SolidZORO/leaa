@@ -1,7 +1,0 @@
-{
-  "name": "test-leaa-www",
-  "type": "docker",
-  "features": {
-    "cloud": "v2"
-  }
-}

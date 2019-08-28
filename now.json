@@ -10,7 +10,8 @@
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "/packages/leaa-www/$1"
+      "dest": "/packages/leaa-www/$1",
+      "continue": true
     }
   ]
 }
