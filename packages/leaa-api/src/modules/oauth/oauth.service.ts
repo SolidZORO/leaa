@@ -4,6 +4,8 @@ import { Request, Response } from 'express';
 import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+
+// @ts-ignore
 import { Wechat, MiniProgram, OAuth } from 'wechat-jssdk';
 
 import { User, Oauth } from '@leaa/common/src/entrys';

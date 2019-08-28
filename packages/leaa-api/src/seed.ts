@@ -30,6 +30,7 @@ import { SeedService } from '@leaa/api/src/modules/seed/seed.service';
     await seedService.insertCategory();
     await seedService.insertArticle();
     await seedService.insertAx();
+    await seedService.insertAttachment();
 
     if (process.argv.includes('--debug')) {
       await seedService.insertRandomUsers();

@@ -6,6 +6,7 @@ import { CategoryService } from '@leaa/api/src/modules/category/category.service
 import { ArticleService } from '@leaa/api/src/modules/article/article.service';
 import { AxService } from '@leaa/api/src/modules/ax/ax.service';
 import { SettingService } from '@leaa/api/src/modules/setting/setting.service';
+import { AttachmentService } from '@leaa/api/src/modules/attachment/attachment.service';
 
 import {
   permissionsSeed,
@@ -18,11 +19,16 @@ import {
   articleSeed,
   axSeed,
   settingSeed,
+  attachmentSeed,
 } from '@leaa/api/src/modules/seed/seed.data';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Attachment } from '@leaa/common/src/entrys';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class SeedService {
   constructor(
+    @InjectRepository(Attachment) private readonly attachmentRepository: Repository<Attachment>,
     private readonly permissionService: PermissionService,
     private readonly roleService: RoleService,
     private readonly userService: UserService,
@@ -110,6 +116,14 @@ export class SeedService {
   public async insertAx() {
     for (const i of axSeed) {
       const item = await this.axService.craeteAx(i);
+
+      console.log(item);
+    }
+  }
+
+  public async insertAttachment() {
+    for (const i of attachmentSeed) {
+      const item = await this.attachmentRepository.save(i);
 
       console.log(item);
     }

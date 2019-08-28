@@ -9,9 +9,20 @@ import { AxModule } from '@leaa/api/src/modules/ax/ax.module';
 import { SettingModule } from '@leaa/api/src/modules/setting/setting.module';
 
 import { SeedService } from '@leaa/api/src/modules/seed/seed.service';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Attachment } from '@leaa/common/src/entrys';
 
 @Module({
-  imports: [PermissionModule, RoleModule, UserModule, ArticleModule, CategoryModule, AxModule, SettingModule],
+  imports: [
+    TypeOrmModule.forFeature([Attachment]),
+    PermissionModule,
+    RoleModule,
+    UserModule,
+    ArticleModule,
+    CategoryModule,
+    AxModule,
+    SettingModule,
+  ],
   providers: [SeedService],
   exports: [SeedService],
 })
