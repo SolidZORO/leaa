@@ -1,0 +1,12 @@
+node_modules
+dist/
+deploy/
+_dist/
+_deploy/
+.next/
+designs/
+
+/.*
+/packages/*
+!/packages/_leaa-common
+!/packages/leaa-www

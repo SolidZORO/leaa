@@ -4,7 +4,7 @@ cd "$(dirname "$0")" || exit
 
 echo "\x1B[93m
 
- _      ___      ___      __ DOCKER
+ _      ___      ___      __ HEROKU
 | | /| / / | /| / / | /| / /
 | |/ |/ /| |/ |/ /| |/ |/ /
 |__/|__/ |__/|__/ |__/|__/
@@ -49,11 +49,11 @@ if [[ $KEY = "" ]]; then
     sed -i '' '/@leaa\/.*[0-9]\./d' ./package.json
     sed -i '' '/build.*tsconfig\.build\.json/d' ./package.json
 
-#    git init
-#    git remote add heroku https://git.heroku.com/${DEPLOY_HEROKU_APP_NAME}.git
-#    git add -A
-#    git commit -m "${DEPLOY_COMMIT}"
-#    git push -f heroku master
+    git init
+    git remote add heroku https://git.heroku.com/${DEPLOY_HEROKU_APP_NAME}.git
+    git add -A
+    git commit -m "${DEPLOY_COMMIT}"
+    git push -f heroku master
 else
     echo "CANCEL"
 fi

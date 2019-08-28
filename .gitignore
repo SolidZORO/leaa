@@ -12,6 +12,8 @@ _docker_data
 .docker
 tsconfig.tsbuildinfo
 
+/.nowignore
+
 # Logs
 logs
 *.log

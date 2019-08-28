@@ -7,7 +7,7 @@
   },
   "builds": [
     {
-      "src": "packages/leaa-www/package.json",
+      "src": "/packages/leaa-www/package.json",
       "use": "@now/next"
     }
   ],
