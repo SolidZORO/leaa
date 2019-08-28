@@ -574,18 +574,18 @@ BTW-1，据网友纠正，Taro 的内核是 [NervJS](https://github.com/NervJS/n
 
 ### 2019-08-23 14:39
 
-要吐血了，今天早上在 debug `ts-node-dev`，我怎么还调起了工具链了？哎，不说了，看 [Issue](https://github.com/whitecolor/ts-node-dev/issues/87)。我最后追都追到 [filewatcher](https://www.npmjs.com/package/filewatcher) 这种级别的 lib 里去了。
+要吐血了，今天早上在 debug `ts-node-dev`，我怎么还调起了工具链了？哎，不说了，看这个 [Issue](https://github.com/whitecolor/ts-node-dev/issues/87)。我 TM 最后追都追到 [filewatcher](https://www.npmjs.com/package/filewatcher) 这种级别的 lib 里去了，但问题依旧。
 
 ### 2019-08-27 23:35
 
 好几天没写开发记录了，最近因为小程序需要登陆，为方便 debug，先过来 `leaa-www` 这边写了微信 `OAuth` 登陆。然后想说既然做了，就把 `leaa-www` 从 `heroku` 迁到 `now.sh` 吧。但…… 没想到的是，就这个事情真是让我操碎了心，妈的！（对，我这里爆粗口了），为了把 `Next.js` 部署到 `now.sh` 居然需要在 `next.config.js` 开启 `target: 'serverless'`，然后我测试的时候发现开了 `target: 'serverless'` 后居然取不到 URL 的 query（?后面的部分）。
 
-ZEIT 大哥！`Next.js` 这可是你自家的服务啊，有必要限得那么死吗？ `target: 'serverless'` 就不能作为 Option？网上找了下，看到作者说是故意这样设计的（估计也是无奈）[Intercepting popstate](https://github.com/zeit/next.js#intercepting-popstate)，网上还有若干方法比如在 `now.json` 写正则路由匹配拿到 `query`，我干，这可是 code 啊！code 不应该和 deploy 绑死吧！这是基本的底线。我不可能为了这个需求去 hack 我的 code 啊！
+ZEIT 大哥！`Next.js` 这可是你自家的服务啊，有必要限得那么死吗？ `target: 'serverless'` 就不能作为 Option？网上找了下，看到这个 [Intercepting popstate](https://github.com/zeit/next.js#intercepting-popstate)，作者说是故意这样设计的（估计也是无奈），当然，除此之外网上还有若干方法比如在 `now.json` 写正则路由匹配拿到 `query`，我干，这可是 code 啊！code 不应该和 deploy 绑死吧！这是基本的底线。我不可能为了这个需求去 hack 我的 code 啊！
 
 又继续折腾若干小时，无果…… 怀疑人生了。容我再想想吧，感觉还是去改 code 好了，改成 `non-serverless` 和 `serverless` 都兼容，毕竟现在除了 OAuth 那边，需要 `query` 的地方还不是特别多。
 
 ### 2019-08-28 19:30
 
-写了个两个脚本，把 `leaa-www` 和 `leaa-dashboard` 部署到了 `now.sh`，之前也想过把 `leaa-api` 也部署过去，但到目前为止，用了 `TypeGraphQL` 这个库的 App 是无法部署到 `now.sh` 的，具体可以看下我提的这个 [Issues](https://github.com/zeit/now/issues/2680)。
+写了个两个脚本，把 `leaa-www` 和 `leaa-dashboard` 部署到了 `now.sh`，之前也想过把 `leaa-api` 也部署过去，但到目前为止，凡调用了 `TypeGraphQL` 这个库的 App 均无法部署到 `now.sh`，整个 Github 都没有成功部署的案例。原因很简单，即 `ncc` 不支持 `Typescrpit` 的部分方法，具体可以看我提的这个 [Issues](https://github.com/zeit/now/issues/2680)。
 
 好了！绕一大圈回来回来，终于可以继续写小程序登陆了（摊手）。
