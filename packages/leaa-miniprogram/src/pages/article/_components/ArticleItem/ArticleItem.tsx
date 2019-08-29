@@ -28,6 +28,8 @@ export const ArticleItem = (props: IProps) => {
         console.log('THEN', loading);
 
         setGetArticleQuery(data);
+
+        Taro.setNavigationBarTitle({ title: '文章列表' }).then();
       })
       .catch(error => {
         console.log('CATCH');
@@ -47,7 +49,16 @@ export const ArticleItem = (props: IProps) => {
         <View>
           <Text className={style['title']}>{getArticleQuery.article.title}</Text>
 
-          <HtmlParse html={getArticleQuery.article.content} />
+          <View className={style['typo']}>
+            {Taro.getEnv() === 'WEAPP' ? (
+              <HtmlParse html={getArticleQuery.article.content} />
+            ) : (
+              <div
+                // eslint-disable-next-line react/no-danger
+                dangerouslySetInnerHTML={{ __html: getArticleQuery.article.content || '' }}
+              />
+            )}
+          </View>
         </View>
       )}
     </View>

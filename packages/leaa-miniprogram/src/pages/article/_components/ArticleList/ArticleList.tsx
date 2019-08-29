@@ -1,5 +1,7 @@
+import dayjs from 'dayjs';
 import Taro, { useState, useEffect } from '@tarojs/taro';
 import { View, Button, Text, Navigator } from '@tarojs/components';
+
 import { apolloClient } from '@leaa/miniprogram/src/libs';
 import { GET_ARTICLES } from '@leaa/miniprogram/src/graphqls';
 import { ArticlesWithPaginationObject, ArticleArgs } from '@leaa/miniprogram/src/dtos/article';
@@ -38,27 +40,31 @@ export const ArticleList = (props: any) => {
   }, [getArticlesVariables]);
 
   const onChangePage = () => {
-    setGetArticlesVariables({ page: 1, pageSize: 1 });
+    setGetArticlesVariables({ page: 1, pageSize: 30 });
   };
 
   return (
-    <View>
-      <View>
-        {getArticlesQuery &&
-          getArticlesQuery.articles &&
-          getArticlesQuery.articles.items &&
-          getArticlesQuery.articles.items.map(article => (
+    <View className={style['wrapper']}>
+      {getArticlesQuery &&
+        getArticlesQuery.articles &&
+        getArticlesQuery.articles.items &&
+        getArticlesQuery.articles.items.map(article => (
+          <View className={style['item']}>
             <Navigator key={article.id} url={`/pages/article/article-item?id=${article.id}`}>
-              <Text className={style['title']}>{article.title}</Text>
-            </Navigator>
-          ))}
-      </View>
+              <View>
+                <Text className={style['title']}>{article.title}</Text>
+              </View>
 
-      <View>
-        <Button onClick={onChangePage} loading={getArticlesLoading}>
-          P2
-        </Button>
-      </View>
+              <View>
+                <Text className={style['data']}>{dayjs(article.created_at).format('YYYY-MM-DD HH:mm:ss')}</Text>
+              </View>
+            </Navigator>
+          </View>
+        ))}
+
+      <Button onClick={onChangePage} loading={getArticlesLoading}>
+        加载更多
+      </Button>
     </View>
   );
 };

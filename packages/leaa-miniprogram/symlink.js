@@ -22,5 +22,5 @@ symlinkPaths.forEach(path => {
 
   console.log(`SYMLINK: ${sourcePath} --> ${distPath}`);
 
-  fs.symlinkSync(sourcePath, distPath);
+  fs.symlinkSync(sourcePath, distPath, 'dir');
 });

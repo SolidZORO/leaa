@@ -5,7 +5,7 @@ import { GET_AX_BY_SLUG } from '@leaa/miniprogram/src/graphqls';
 import { apolloClient } from '@leaa/miniprogram/src/libs';
 import { AxArgs } from '@leaa/miniprogram/src/dtos/ax';
 import { imageUtil } from '@leaa/miniprogram/src/utils';
-import { Ax } from '@leaa/common/src/entrys';
+import { Ax } from '@leaa/miniprogram/src/entrys';
 
 import style from './style.less';
 

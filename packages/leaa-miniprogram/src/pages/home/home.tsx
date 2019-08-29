@@ -1,10 +1,16 @@
 import Taro from '@tarojs/taro';
 import { View } from '@tarojs/components';
-
-import { Numbers } from './_components/Numbers/Numbers';
 import { Banner } from './_components/Banner/Banner';
 
 export default class extends Taro.Component {
+  componentDidMount() {
+    Taro.setNavigationBarTitle({ title: 'leaa-demo' }).then();
+
+    // Taro.switchTab({ url: '/pages/article/article-list' }).then();
+    // Taro.navigateTo({ url: '/pages/article/article-item?id=1' }).then();
+    // Taro.switchTab({ url: '/pages/account/account' }).then();
+  }
+
   componentDidShow() {
     if (typeof this.$scope.getTabBar === 'function' && this.$scope.getTabBar()) {
       this.$scope.getTabBar().$component.setState({
@@ -13,16 +19,10 @@ export default class extends Taro.Component {
     }
   }
 
-  // componentDidMount() {
-  //   // Taro.switchTab({ url: '/pages/article/article-list' }).then();
-  //   Taro.navigateTo({ url: '/pages/article/article-item' }).then();
-  // }
-
   public render() {
     return (
       <View>
         <Banner />
-        <Numbers />
       </View>
     );
   }
