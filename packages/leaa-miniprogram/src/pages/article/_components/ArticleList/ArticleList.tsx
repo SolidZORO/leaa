@@ -62,9 +62,11 @@ export const ArticleList = (props: any) => {
           </View>
         ))}
 
-      <Button onClick={onChangePage} loading={getArticlesLoading}>
-        加载更多
-      </Button>
+      {getArticlesQuery && getArticlesQuery.articles && (
+        <Button onClick={onChangePage} loading={getArticlesLoading}>
+          加载更多
+        </Button>
+      )}
     </View>
   );
 };
