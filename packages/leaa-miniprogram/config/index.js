@@ -50,7 +50,10 @@ const config = {
         cssModules: {
           enable: true,
           config: {
-            // namingPattern: 'module', // 转换模式，取值为 global/module
+            // namingPattern 配置取值分别如下：
+            // global，表示全局转换，所有样式文件都会经过 CSS Modules 转换处理，除了文件名中包含 .global. 的样式文件
+            // module，表示自定义转换，只有文件名中包含 .module. 的样式文件会经过 CSS Modules 转换处理
+            namingPattern: 'global',
             generateScopedName: '[local]--[hash:8]',
           },
         },
@@ -71,7 +74,10 @@ const config = {
         cssModules: {
           enable: true,
           config: {
-            // namingPattern: 'module', // 转换模式，取值为 global/module
+            // namingPattern 配置取值分别如下：
+            // global，表示全局转换，所有样式文件都会经过 CSS Modules 转换处理，除了文件名中包含 .global. 的样式文件
+            // module，表示自定义转换，只有文件名中包含 .module. 的样式文件会经过 CSS Modules 转换处理
+            namingPattern: 'global',
             generateScopedName: '[local]--[hash:8]',
           },
         },

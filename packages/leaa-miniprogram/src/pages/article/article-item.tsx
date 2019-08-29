@@ -1,7 +1,6 @@
 import Taro from '@tarojs/taro';
-import { View } from '@tarojs/components';
 
-import { ArticleList } from './_components/ArticleList/ArticleList';
+import { ArticleItem } from './_components/ArticleItem/ArticleItem';
 
 export default class extends Taro.Component {
   componentDidShow() {
@@ -12,11 +11,7 @@ export default class extends Taro.Component {
     }
   }
 
-  public render() {
-    return (
-      <View>
-        <ArticleList />
-      </View>
-    );
+  render() {
+    return <ArticleItem articleId={this.$router.params.id} />;
   }
 }

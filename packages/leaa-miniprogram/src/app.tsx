@@ -15,14 +15,15 @@ class App extends Component {
     // prettier-ignore
     pages: [
       'pages/home/home',
-      'pages/article/article',
+      'pages/article/article-list',
+      'pages/article/article-item',
       'pages/account/account',
       'pages/about/about',
     ],
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
-      navigationBarTitleText: 'Leaa Miniprogram',
+      navigationBarTitleText: 'leaa-demo',
       navigationBarTextStyle: 'black',
     },
     tabBar: {
@@ -35,20 +36,14 @@ class App extends Component {
         {
           text: 'Home',
           pagePath: 'pages/home/home',
-          // iconPath: './assets/icons/tabbar/home.png',
-          // selectedIconPath: './assets/icons/tabbar/home.png',
         },
         {
           text: 'Article',
-          pagePath: 'pages/article/article',
-          // iconPath: './assets/icons/tabbar/article.png',
-          // selectedIconPath: './assets/icons/tabbar/article.png',
+          pagePath: 'pages/article/article-list',
         },
         {
           text: 'Account',
           pagePath: 'pages/account/account',
-          // iconPath: './assets/icons/tabbar/account.png',
-          // selectedIconPath: './assets/icons/tabbar/account.png',
         },
       ],
     },

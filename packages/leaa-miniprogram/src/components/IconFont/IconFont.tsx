@@ -1,7 +1,7 @@
 import Taro from '@tarojs/taro';
 import { Text } from '@tarojs/components';
 
-import '@leaa/miniprogram/src/assets/fonts/fi/iconfont.less';
+import '@leaa/miniprogram/src/assets/fonts/fi/iconfont.global.less';
 
 interface IProps {
   type: string;

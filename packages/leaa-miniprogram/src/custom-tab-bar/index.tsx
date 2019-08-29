@@ -8,7 +8,7 @@ import style from './style.less';
 
 const tabbars = [
   { icon: 'home', label: '首页', pagePath: '/pages/home/home' },
-  { icon: 'article', label: '文章', pagePath: '/pages/article/article' },
+  { icon: 'article', label: '文章', pagePath: '/pages/article/article-list' },
   { icon: 'account', label: '我的', pagePath: '/pages/account/account' },
 ];
 

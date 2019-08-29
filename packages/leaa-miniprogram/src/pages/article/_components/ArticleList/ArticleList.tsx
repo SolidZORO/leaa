@@ -1,5 +1,5 @@
 import Taro, { useState, useEffect } from '@tarojs/taro';
-import { View, Button, Text } from '@tarojs/components';
+import { View, Button, Text, Navigator } from '@tarojs/components';
 import { apolloClient } from '@leaa/miniprogram/src/libs';
 import { GET_ARTICLES } from '@leaa/miniprogram/src/graphqls';
 import { ArticlesWithPaginationObject, ArticleArgs } from '@leaa/miniprogram/src/dtos/article';
@@ -48,9 +48,9 @@ export const ArticleList = (props: any) => {
           getArticlesQuery.articles &&
           getArticlesQuery.articles.items &&
           getArticlesQuery.articles.items.map(article => (
-            <Text key={article.id} className={style['title']}>
-              {article.title}
-            </Text>
+            <Navigator key={article.id} url={`/pages/article/article-item?id=${article.id}`}>
+              <Text className={style['title']}>{article.title}</Text>
+            </Navigator>
           ))}
       </View>
 

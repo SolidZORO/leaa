@@ -13,9 +13,10 @@ export default class extends Taro.Component {
     }
   }
 
-  componentDidMount() {
-    Taro.switchTab({ url: '/pages/account/account' }).then();
-  }
+  // componentDidMount() {
+  //   // Taro.switchTab({ url: '/pages/article/article-list' }).then();
+  //   Taro.navigateTo({ url: '/pages/article/article-item' }).then();
+  // }
 
   public render() {
     return (
