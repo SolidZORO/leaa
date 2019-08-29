@@ -589,3 +589,16 @@ ZEIT 大哥！`Next.js` 这可是你自家的服务啊，有必要限得那么�
 写了个两个脚本，把 `leaa-www` 和 `leaa-dashboard` 部署到了 `now.sh`，之前也想过把 `leaa-api` 也部署过去，但到目前为止，凡调用了 `TypeGraphQL` 这个库的 App 均无法部署到 `now.sh`，整个 Github 都没有成功部署的案例。原因很简单，即 `ncc` 不支持 `Typescrpit` 的部分方法，具体可以看我提的这个 [Issues](https://github.com/zeit/now/issues/2680)。
 
 好了！绕一大圈回来回来，终于可以继续写小程序登陆了（摊手）。
+
+### 2019-08-29 19:37
+
+小程序目前实现的功能较少基本上只有，首页，文章列表，我的账户这三大页面，项目的难点我觉得其实是没有的，如果实在要说有什么折腾到我的，可能就是 `custom-tab-bar` 和 `HtmlParse`，这两个官方文档没怎么支援，都靠摸索而来。另一个就是调试小程序的登陆。大致流程是：
+
+- `wx.login` 拿 `code`
+- 拿 `code` 经服务器换来 `sessionkey` 和 `code`
+- 拿 `sessionkey` 经 `wx.getUserInfo` 换 `userInfo`（需 withCredentials: true，以及用户点选授权）
+- 授权成功，得到 `encryptedData`，`sessionkey`，`iv`，经服务器 `encryptedData()` 换 `用户信息` 和 `unionID`（需要开放平台关联小程序和公众号）
+- `用户信息` 和 `unionID` 拿到后就可以对比是否注册，做一些 DB 操作，返回 `用户信息`
+- 用 wx.setStorage 把拿到的 `用户信息` 存起来
+
+心好累，走了那么久终于走完小程序了，接下来是 RN，啊！！！ 看了下 `expo` 目前 `sdk.34` 还不支持 `Hermes`，但是 [Blog](https://blog.expo.io/expo-sdk-34-is-now-available-4f7825239319) 有提到就要支持了，我觉得应该 `sdk.35` 应该就可以用上。或者这次用用看原生 `RN`，anyway，看开坑把。
