@@ -592,13 +592,30 @@ ZEIT 大哥！`Next.js` 这可是你自家的服务啊，有必要限得那么�
 
 ### 2019-08-29 19:37
 
-小程序目前实现的功能较少基本上只有，首页，文章列表，我的账户这三大页面，项目的难点我觉得其实是没有的，如果实在要说有什么折腾到我的，可能就是 `custom-tab-bar` 和 `HtmlParse`，这两个官方文档没怎么支援，都靠摸索而来。另一个就是调试小程序的登陆。大致流程是：
+小程序目前实现的功能较少基本上只有，`首页`，`文章列表`，`我的账户` 这三大页面，然后项目的难点我觉得其实是没有的，如果实在要说有什么折腾到我的，可能就是 `custom-tab-bar` 和 `HtmlParse`，这两个官方文档没怎么支援，都靠摸索而来。
 
-- `wx.login` 拿 `code`
+再就是小程序的登陆还曼绕的，因为不是正式环境，每次 `natapp` 的域名前缀过期了都要把好几个 `.env` 重配一下，非常考验耐心……
+
+趁现在还记得，写个小程序授权流程流程：
+
+- 用小程序自带的 `wx.login()` 拿 `code`
 - 拿 `code` 经服务器换来 `sessionkey` 和 `code`
 - 拿 `sessionkey` 经 `wx.getUserInfo` 换 `userInfo`（需 withCredentials: true，以及用户点选授权）
-- 授权成功，得到 `encryptedData`，`sessionkey`，`iv`，经服务器 `encryptedData()` 换 `用户信息` 和 `unionID`（需要开放平台关联小程序和公众号）
+- 授权成功，得到 `encryptedData`，`sessionkey`，`iv`，经服务器 `encryptedData()` 换 `用户信息` 和 `openId`（如需要 `unionID`， 请先在开放平台关联小程序和公众号）
 - `用户信息` 和 `unionID` 拿到后就可以对比是否注册，做一些 DB 操作，返回 `用户信息`
-- 用 wx.setStorage 把拿到的 `用户信息` 存起来
+- 用 `wx.setStorage()` 把拿到的 `用户信息` 存起来
 
-心好累，走了那么久终于走完小程序了，接下来是 RN，啊！！！ 看了下 `expo` 目前 `sdk.34` 还不支持 `Hermes`，但是 [Blog](https://blog.expo.io/expo-sdk-34-is-now-available-4f7825239319) 有提到就要支持了，我觉得应该 `sdk.35` 应该就可以用上。或者这次用用看原生 `RN`，anyway，看开坑把。
+啊！！！心好累，走了那么久终于走完小程序了，接下来是 RN，看了下 `expo` 目前 `sdk.34` 还不支持 `Hermes`，但是 [Blog](https://blog.expo.io/expo-sdk-34-is-now-available-4f7825239319) 有提到就要支持了，我觉得应该在 `sdk.35` 就可以用了。或者这次用用看原生 `RN`，anyway，看开坑把。
+
+### 2019-08-30 16:13
+
+插个不相关的 LOG，因为 `leaa` 告一段落了嘛，昨晚一口气把「怪奇物语」看完了，看得比较爽（大半夜的），然后睡觉的时候忽然想到一个比较靠谱的个人 blog 部署方案。
+
+大概思路是用上：
+
+- `Github Issues API`（自带完美的编辑器，Ctrl + V 即可贴图）
+- `Github CI`（自动构建）
+- `Github Page`（静态页面，真· Github 全栈）
+- `now.sh`（用户留言 POST 到 `now.sh` 触发 `Github Webhook`，生成 `.js` 的留言文件）
+
+不过`需要部署`本身其实就是一个大问题，写个日志都要搞一堆编译也是烦人，我之前有个 [blog](https://solidzoro.com/)，但我不是特别爱在上面写东西，因为光想到后面那一堆部署工作就累。虽然已实现了自动化的 `write iessue, building log`，但总之需要有个「前期工作」就觉得是麻烦事。所以快荒了两年，现在反而是在 `DayOne` 上写得比较多，因为方便嘛。当然 `DayOne` 也可以做到 `building log` 这一步，但还是之前说的……「麻烦」，呼，看来作为一个开发者，折腾点写东西的工具都那么多讲究，不是件好事（笑），难怪那么多开发者都入微信公众号的坑，hhhhhh 想想，这才是最佳之选啊！
