@@ -11,6 +11,7 @@
   },
   "scripts": {},
   "dependencies": {
-    "@leaa/common": "^0.0.2"
+    "@leaa/common": "^0.0.2",
+    "lint-staged": "^9.2.5"
   }
 }
