@@ -65,7 +65,7 @@
     "normalize.css": "^8.0.1",
     "prismjs": "^1.17.1",
     "prop-types": "15.7.2",
-    "query-string": "6.8.2",
+    "query-string": "6.8.3",
     "react": "16.8.6",
     "react-apollo": "^3.0.1",
     "react-css-modules": "4.7.11",
@@ -132,12 +132,12 @@
     "stylelint-config-standard": "^18.3.0",
     "stylelint-order": "3.0.1",
     "terser-webpack-plugin": "1.4.1",
+    "typescript": "3.6.2",
     "url-loader": "^2.1.0",
     "webpack": "^4.39.3",
     "webpack-bundle-analyzer": "3.4.1",
     "webpack-cli": "3.3.7",
     "webpack-dev-server": "3.8.0",
-    "write-file-webpack-plugin": "^4.5.1",
-    "typescript": "3.6.2"
+    "write-file-webpack-plugin": "^4.5.1"
   }
 }
