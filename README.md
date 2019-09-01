@@ -619,3 +619,24 @@ ZEIT 大哥！`Next.js` 这可是你自家的服务啊，有必要限得那么�
 - `now.sh`（用户留言 POST 到 `now.sh` 触发 `Github Webhook`，生成 `.js` 的留言文件）
 
 不过`需要部署`本身其实就是一个大问题，写个日志都要搞一堆编译也是烦人，我之前有个 [blog](https://solidzoro.com/)，但我不是特别爱在上面写东西，因为光想到后面那一堆部署工作就累。虽然已实现了自动化的 `write iessue, building log`，但总之需要有个「前期工作」就觉得是麻烦事。所以快荒了两年，现在反而是在 `DayOne` 上写得比较多，因为方便嘛。当然 `DayOne` 也可以做到 `building log` 这一步，但还是之前说的……「麻烦」，呼，看来作为一个开发者，折腾点写东西的工具都那么多讲究，不是件好事（笑），难怪那么多开发者都入微信公众号的坑，hhhhhh 想想，这才是最佳之选啊！
+
+### 2019-08-31 22:13
+
+好啦，这回终于 init 了 RN，最终选型依旧是 `expo`，因为前期如果没涉及到「自定义推送」和「过于原生」的调用的话，还是 `expo` 方便一些，未来如果有需求再 `eject` 也没问题。
+
+不过因为 `expo` 默认不支持 monorepo，需要上 [expo-monorepo](https://github.com/Fried-Chicken/expo-monorepo) 去解决。但我个人觉得这个方法有点 dafthack 就没用，和 `leaa-miniprogram` 一样采用了 `nohoist` 方案。
+
+不得不说 `nohoist` 真是个效率大杀器，但同时也是硬盘大杀器，项目里不用 `nohoist` 的几个 package 加起来不到 20MB！因为到提升到了 `root-dir` 共享了。
+
+但 `leaa-app` 一个 pacakage 在初期就达到了 200MB，`leaa-miniprogram` 更是达到了 370MB，也就是说 `leaa` 整个项目在完全安装的情况下差不多有 `1GB` OMG！虽说这个硬盘不值钱的年代开发环境体积不是问题，但我相信每个开发者都不喜欢占硬盘的大家伙吧，比如 `electron` App（哈哈）。
+
+#####BTW1
+因为 monorepo 的关系，无论 `yarn workspaces` 还是 `lerna`，其本质都是 `workspaces` 扩展。我实际用下来发现 `workspaces` 还是非常多奇奇怪怪的 bug 的，比如版本依赖不正确，有时候 `yarn add` 提示完成但实际却没有装上等…… 也可能我这里已经有 5 个 package 了，每个 package 又有比较复杂的依赖，导致了这些不稳定。对比之下，[babel](https://github.com/babel/babel) 就显得很稳定，自家 packages 多达百个，但也没见出什么问题，当然这个稳定可能和他们每个 package 依赖都不超过 10 个有关。
+
+#####BTW2
+如果我在 monorepo 的 `yarn install` 上遇到问题怎么办？最佳答案是 `rm -rf yarn.lock node_modules/`，基本上这个跑一次可解 99% 的 error，省时省心（笑）。
+
+#####BTW3
+最近使用 `Github CI` 发现有一些莫名其妙的问题，比如 `Travis CI` 过了但 `Github CI` 卡在 `package install`，我开始以为是我用 `taobao` npm repo 的关系，但是换回 `npm` 自家 repo 问题依旧，而且 `Travis CI` 1m 能跑好出结果的 TEST `Github CI` 需要 8m，这个差距还是有点大。
+
+我之前开了 `Github CI` 多系统多版本交叉测试，每次 TEST 需要 10m+ 的等待，后来干脆只留一个但也还是慢。另外就是新建了 Action 项目还会有删不掉的 bug，看来目前 `Github Action` 处在 beta 还是有原因的，希望明年正式版上这些问题能够得到充分优化。

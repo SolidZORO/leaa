@@ -8,6 +8,11 @@
     "sdkVersion": "34.0.0",
     "version": "1.0.0",
     "entryPoint": "node_modules/expo/AppEntry.js",
-    "platforms": ["ios", "android"]
+    "platforms": ["ios", "android"],
+    "packagerOpts": {
+      "projectRoots": "",
+      "config": "metro.config.js",
+      "sourceExts": ["ts", "tsx", "js", "jsx", "less"]
+    }
   }
 }
