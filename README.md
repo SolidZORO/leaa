@@ -630,13 +630,13 @@ ZEIT 大哥！`Next.js` 这可是你自家的服务啊，有必要限得那么�
 
 但 `leaa-app` 一个 pacakage 在初期就达到了 200MB，`leaa-miniprogram` 更是达到了 370MB，也就是说 `leaa` 整个项目在完全安装的情况下差不多有 `1GB` OMG！虽说这个硬盘不值钱的年代开发环境体积不是问题，但我相信每个开发者都不喜欢占硬盘的大家伙吧，比如 `electron` App（哈哈）。
 
-#####BTW1
+##### BTW1
 因为 monorepo 的关系，无论 `yarn workspaces` 还是 `lerna`，其本质都是 `workspaces` 扩展。我实际用下来发现 `workspaces` 还是非常多奇奇怪怪的 bug 的，比如版本依赖不正确，有时候 `yarn add` 提示完成但实际却没有装上等…… 也可能我这里已经有 5 个 package 了，每个 package 又有比较复杂的依赖，导致了这些不稳定。对比之下，[babel](https://github.com/babel/babel) 就显得很稳定，自家 packages 多达百个，但也没见出什么问题，当然这个稳定可能和他们每个 package 依赖都不超过 10 个有关。
 
-#####BTW2
+##### BTW2
 如果我在 monorepo 的 `yarn install` 上遇到问题怎么办？最佳答案是 `rm -rf yarn.lock node_modules/`，基本上这个跑一次可解 99% 的 error，省时省心（笑）。
 
-#####BTW3
+##### BTW3
 最近使用 `Github CI` 发现有一些莫名其妙的问题，比如 `Travis CI` 过了但 `Github CI` 卡在 `package install`，我开始以为是我用 `taobao` npm repo 的关系，但是换回 `npm` 自家 repo 问题依旧，而且 `Travis CI` 1m 能跑好出结果的 TEST `Github CI` 需要 8m，这个差距还是有点大。
 
 我之前开了 `Github CI` 多系统多版本交叉测试，每次 TEST 需要 10m+ 的等待，后来干脆只留一个但也还是慢。另外就是新建了 Action 项目还会有删不掉的 bug，看来目前 `Github Action` 处在 beta 还是有原因的，希望明年正式版上这些问题能够得到充分优化。
