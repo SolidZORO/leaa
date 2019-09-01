@@ -5,7 +5,7 @@ import { IconFont } from '@leaa/app/src/components/IconFont';
 
 import style from './style.less';
 
-export const HomeScreen = () => {
+export const Home = () => {
   return (
     <View style={style['container']}>
       <View style={style['textwrapper']}>
@@ -15,4 +15,8 @@ export const HomeScreen = () => {
       </View>
     </View>
   );
+};
+
+Home.navigationOptions = {
+  title: 'Home',
 };

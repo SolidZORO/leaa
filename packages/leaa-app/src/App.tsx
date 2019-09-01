@@ -1,6 +1,10 @@
 import React from 'react';
-import { HomeScreen } from '@leaa/app/src/screens/HomeScreen/HomeScreen';
+// eslint-disable-next-line import/no-unresolved
+import { useScreens } from 'react-native-screens';
 
-export default function App() {
-  return <HomeScreen />;
-}
+import { AppBottomTabbar } from '@leaa/app/src/components/AppBottomTabbar';
+
+// https://reactnavigation.org/docs/en/react-native-screens.html
+useScreens();
+
+export default () => <AppBottomTabbar />;

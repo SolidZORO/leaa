@@ -15,6 +15,6 @@
       "@leaa/app/*": ["./*"]
     }
   },
-  "include": ["src/**/*", "config/**/*", "typings/*", "global.d.ts"],
+  "include": ["src/**/*", "config/**/*", "typings/*", "App.tsx", "global.d.ts"],
   "exclude": ["node_modules", "dist", "_dist"]
 }
