@@ -3989,7 +3989,7 @@ array-filter@~0.0.0:
   resolved "https://registry.npm.taobao.org/array-filter/download/array-filter-0.0.1.tgz#7da8cf2e26628ed732803581fd21f67cacd2eeec"
   integrity sha1-fajPLiZijtcygDWB/SH2fKzS7uw=
 
-array-find-index@^1.0.1, array-find-index@^1.0.2:
+array-find-index@^1.0.1:
   version "1.0.2"
   resolved "https://registry.npm.taobao.org/array-find-index/download/array-find-index-1.0.2.tgz#df010aa1287e164bbda6f9723b0a96a1ec4187a1"
   integrity sha1-3wEKoSh+Fku9pvlyOwqWoexBh6E=
@@ -4668,7 +4668,7 @@ babel-plugin-minify-dead-code@^0.5.2:
     babel-helper-remove-or-void "^0.3.0"
     lodash.some "^4.6.0"
 
-babel-plugin-module-resolver@^3.1.1, babel-plugin-module-resolver@^3.2.0:
+babel-plugin-module-resolver@^3.1.1:
   version "3.2.0"
   resolved "https://registry.npmjs.org/babel-plugin-module-resolver/-/babel-plugin-module-resolver-3.2.0.tgz#ddfa5e301e3b9aa12d852a9979f18b37881ff5a7"
   integrity sha512-tjR0GvSndzPew/Iayf4uICWZqjBwnlMWjSx6brryfQ81F9rxBVqwDJtFCV8oOs0+vJeefK9TmdZtkIFdFe1UnA==
@@ -6843,7 +6843,7 @@ create-hmac@^1.1.0, create-hmac@^1.1.2, create-hmac@^1.1.4:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
-create-react-class@^15.5.3, create-react-class@^15.6.2, create-react-class@^15.6.3:
+create-react-class@^15.5.3, create-react-class@^15.6.3:
   version "15.6.3"
   resolved "https://registry.npm.taobao.org/create-react-class/download/create-react-class-15.6.3.tgz#2d73237fb3f970ae6ebe011a9e66f46dbca80036"
   integrity sha1-LXMjf7P5cK5uvgEanmb0bbyoADY=
@@ -6948,14 +6948,6 @@ css-declaration-sorter@^4.0.1:
   dependencies:
     postcss "^7.0.1"
     timsort "^0.3.0"
-
-css-in-js-utils@^2.0.0:
-  version "2.0.1"
-  resolved "https://registry.npm.taobao.org/css-in-js-utils/download/css-in-js-utils-2.0.1.tgz#3b472b398787291b47cfe3e44fecfdd9e914ba99"
-  integrity sha1-O0crOYeHKRtHz+PkT+z92ekUupk=
-  dependencies:
-    hyphenate-style-name "^1.0.2"
-    isobject "^3.0.1"
 
 css-loader@1.0.0:
   version "1.0.0"
@@ -7306,7 +7298,7 @@ dayjs@^1.8.16:
   resolved "https://registry.npm.taobao.org/dayjs/download/dayjs-1.8.16.tgz#2a3771de537255191b947957af2fd90012e71e64"
   integrity sha1-Kjdx3lNyVRkblHlXry/ZABLnHmQ=
 
-debounce@^1.0.0, debounce@^1.2.0:
+debounce@^1.0.0:
   version "1.2.0"
   resolved "https://registry.npm.taobao.org/debounce/download/debounce-1.2.0.tgz#44a540abc0ea9943018dc0eaa95cce87f65cd131"
   integrity sha1-RKVAq8DqmUMBjcDqqVzOh/Zc0TE=
@@ -7428,13 +7420,6 @@ dedent@^0.7.0:
   version "0.7.0"
   resolved "https://registry.npm.taobao.org/dedent/download/dedent-0.7.0.tgz#2495ddbaf6eb874abb0e1be9df22d2e5a544326c"
   integrity sha1-JJXduvbrh0q7Dhvp3yLS5aVEMmw=
-
-deep-assign@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.npm.taobao.org/deep-assign/download/deep-assign-3.0.0.tgz#c8e4c4d401cba25550a2f0f486a2e75bc5f219a2"
-  integrity sha1-yOTE1AHLolVQovD0hqLnW8XyGaI=
-  dependencies:
-    is-obj "^1.0.0"
 
 deep-equal@^1.0.1:
   version "1.1.0"
@@ -10857,11 +10842,6 @@ husky@^3.0.3:
     run-node "^1.0.0"
     slash "^3.0.0"
 
-hyphenate-style-name@^1.0.2:
-  version "1.0.3"
-  resolved "https://registry.npm.taobao.org/hyphenate-style-name/download/hyphenate-style-name-1.0.3.tgz#097bb7fa0b8f1a9cf0bd5c734cf95899981a9b48"
-  integrity sha1-CXu3+guPGpzwvVxzTPlYmZgam0g=
-
 i18next-browser-languagedetector@^3.0.2:
   version "3.0.3"
   resolved "https://registry.npm.taobao.org/i18next-browser-languagedetector/download/i18next-browser-languagedetector-3.0.3.tgz#879ebe421685c70cc5cfa96191364a35ea7da742"
@@ -11100,13 +11080,6 @@ ini@^1.3.4, ini@^1.3.5, ini@~1.3.0:
   version "1.3.5"
   resolved "https://registry.npm.taobao.org/ini/download/ini-1.3.5.tgz#eee25f56db1c9ec6085e0c22778083f596abf927"
   integrity sha1-7uJfVtscnsYIXgwid4CD9Zar+Sc=
-
-inline-style-prefixer@^5.0.3:
-  version "5.1.0"
-  resolved "https://registry.npm.taobao.org/inline-style-prefixer/download/inline-style-prefixer-5.1.0.tgz#cb63195f9456dcda25cf59743e45c4d9815b0811"
-  integrity sha1-y2MZX5RW3Nolz1l0PkXE2YFbCBE=
-  dependencies:
-    css-in-js-utils "^2.0.0"
 
 inquirer@^0.12.0:
   version "0.12.0"
@@ -14941,11 +14914,6 @@ nopt@~1.0.10:
   dependencies:
     abbrev "1"
 
-normalize-css-color@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.npm.taobao.org/normalize-css-color/download/normalize-css-color-1.0.2.tgz#02991e97cccec6623fe573afbbf0de6a1f3e9f8d"
-  integrity sha1-Apkel8zOxmI/5XOvu/Deah8+n40=
-
 normalize-package-data@^2.3.2, normalize-package-data@^2.3.4, normalize-package-data@^2.5.0:
   version "2.5.0"
   resolved "https://registry.npm.taobao.org/normalize-package-data/download/normalize-package-data-2.5.0.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fnormalize-package-data%2Fdownload%2Fnormalize-package-data-2.5.0.tgz#e66db1838b200c1dfc233225d12cb36520e234a8"
@@ -17903,22 +17871,6 @@ react-native-view-shot@2.6.0:
   resolved "https://registry.npm.taobao.org/react-native-view-shot/download/react-native-view-shot-2.6.0.tgz#3b23675826f67658366352c4b97b59a6aded2f43"
   integrity sha1-OyNnWCb2dlg2Y1LEuXtZpq3tL0M=
 
-react-native-web@^0.11.4:
-  version "0.11.7"
-  resolved "https://registry.npm.taobao.org/react-native-web/download/react-native-web-0.11.7.tgz#d173d5a9b58db23b6d442c4bc4c81e9939adac23"
-  integrity sha1-0XPVqbWNsjttRCxLxMgemTmtrCM=
-  dependencies:
-    array-find-index "^1.0.2"
-    create-react-class "^15.6.2"
-    debounce "^1.2.0"
-    deep-assign "^3.0.0"
-    fbjs "^1.0.0"
-    hyphenate-style-name "^1.0.2"
-    inline-style-prefixer "^5.0.3"
-    normalize-css-color "^1.0.2"
-    prop-types "^15.6.0"
-    react-timer-mixin "^0.13.4"
-
 react-native@0.59.10:
   version "0.59.10"
   resolved "https://registry.npm.taobao.org/react-native/download/react-native-0.59.10.tgz?cache=0&sync_timestamp=1566917136077&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Freact-native%2Fdownload%2Freact-native-0.59.10.tgz#352f381e382f93a0403be499c9e384bf51c2591c"
@@ -18054,11 +18006,6 @@ react-test-renderer@~16.8.3:
     prop-types "^15.6.2"
     react-is "^16.8.6"
     scheduler "^0.13.6"
-
-react-timer-mixin@^0.13.4:
-  version "0.13.4"
-  resolved "https://registry.npm.taobao.org/react-timer-mixin/download/react-timer-mixin-0.13.4.tgz#75a00c3c94c13abe29b43d63b4c65a88fc8264d3"
-  integrity sha1-daAMPJTBOr4ptD1jtMZaiPyCZNM=
 
 react-transform-hmr@^1.0.4:
   version "1.0.4"

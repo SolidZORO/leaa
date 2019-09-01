@@ -5,16 +5,6 @@ module.exports = function(api) {
     plugins: [
       'react-native-classname-to-style',
       ['react-native-platform-specific-extensions', { extensions: ['less'] }],
-      [
-        'module-resolver',
-        {
-          root: ['.'],
-          alias: {
-            '@leaa/app': './',
-            '@styles': './src/styles',
-          },
-        },
-      ],
     ],
   };
 };
