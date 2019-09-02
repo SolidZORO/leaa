@@ -32,7 +32,6 @@
     "@ant-design/icons": "^2.1.1",
     "@apollo/react-hooks": "3.0.1",
     "@apollo/react-ssr": "^3.0.1",
-    "@leaa/common": "^0.0.2",
     "@zeit/next-css": "^1.0.2-canary.2",
     "@zeit/next-less": "^1.0.1",
     "antd": "^3.22.2",
