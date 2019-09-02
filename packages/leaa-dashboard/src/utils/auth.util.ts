@@ -10,10 +10,6 @@ const setAuthToken = (token: string, expiresIn: number) => {
 };
 
 const getAuthToken = (options = { onlyToken: false }): string | null => {
-  if (!process.browser) {
-    return null;
-  }
-
   const authToken = localStorage.getItem(AUTH_TOKEN_NAME) || null;
 
   if (authToken && options.onlyToken) {
