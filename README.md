@@ -14,7 +14,7 @@ Leaa is a monorepo CMS (Content Management System) built with Nest.js, Next.js, 
 - [x] **leaa-api** ([demo](https://test-leaa-api.herokuapp.com)) / backend (Nest.js + TypeGraphQL + MySQL + Docker Compose)
 - [x] **leaa-dashboard** ([demo](https://test-leaa-dashboard.solidzoro.now.sh)) / dashboard (React.js + Antd + MobX + Apollo / GraphQL)
 - [x] **leaa-www** ([demo](https://test-leaa-www.solidzoro.now.sh)) / website (Next.js + GraphQL)
-- [ ] **leaa-miniprogram** / wechat-miniprogram (Taro.js + Taro-ui + GraphQL)
+- [x] **leaa-miniprogram** / wechat-miniprogram (Taro.js + Taro-ui + GraphQL)
 - [ ] **leaa-app** / iOS and Android (expo + GraphQL)
 
 [# read more TODOS](#TODOS)
@@ -62,7 +62,7 @@ You can click `demo` link online preview, all demos are deployed in `heroku` and
   - [x] Auth
     - [x] Email
     - [x] Wechat
-    - [ ] Wechat MiniProgram
+    - [x] Wechat MiniProgram
   - [x] User
   - [x] Role
   - [x] Permission
@@ -127,7 +127,7 @@ You can click `demo` link online preview, all demos are deployed in `heroku` and
       - [ ] Phone
       - [x] Wechat
     - [ ] Forget Password
-    - [ ] Profile
+    - [x] Profile
       - [ ] Upload Avatar
       - [ ] Bind / Unbind OAuth Account
     - [x] Logout
@@ -151,18 +151,18 @@ You can click `demo` link online preview, all demos are deployed in `heroku` and
 - [ ] **leaa-miniprogram** / wechat-miniprogram (Taro.js + GraphQL)
   - [x] Home
   - [x] Account
-    - [ ] Login
-    - [ ] Logout
-  - [ ] Article
-    - [ ] List
-    - [ ] Item
+    - [x] Login
+    - [x] Logout
+  - [x] Article
+    - [x] List
+    - [x] Item (Rich Text)
 - [ ] **leaa-app** / iOS and Android (expo + GraphQL)
   - [ ] Home
   - [ ] Account
     - [ ] Login
     - [ ] Logout
-  - [ ] Article
-    - [ ] List
+  - [x] Article
+    - [x] List
     - [ ] Item
 
 <br />
@@ -631,12 +631,27 @@ ZEIT 大哥！`Next.js` 这可是你自家的服务啊，有必要限得那么�
 但 `leaa-app` 一个 pacakage 在初期就达到了 200MB，`leaa-miniprogram` 更是达到了 370MB，也就是说 `leaa` 整个项目在完全安装的情况下差不多有 `1GB` OMG！虽说这个硬盘不值钱的年代开发环境体积不是问题，但我相信每个开发者都不喜欢占硬盘的大家伙吧，比如 `electron` App（哈哈）。
 
 ##### BTW1
+
 因为 monorepo 的关系，无论 `yarn workspaces` 还是 `lerna`，其本质都是 `workspaces` 扩展。我实际用下来发现 `workspaces` 还是非常多奇奇怪怪的 bug 的，比如版本依赖不正确，有时候 `yarn add` 提示完成但实际却没有装上等…… 也可能我这里已经有 5 个 package 了，每个 package 又有比较复杂的依赖，导致了这些不稳定。对比之下，[babel](https://github.com/babel/babel) 就显得很稳定，自家 packages 多达百个，但也没见出什么问题，当然这个稳定可能和他们每个 package 依赖都不超过 10 个有关。
 
 ##### BTW2
+
 如果我在 monorepo 的 `yarn install` 上遇到问题怎么办？最佳答案是 `rm -rf yarn.lock node_modules/`，基本上这个跑一次可解 99% 的 error，省时省心（笑）。
 
 ##### BTW3
+
 最近使用 `Github CI` 发现有一些莫名其妙的问题，比如 `Travis CI` 过了但 `Github CI` 卡在 `package install`，我开始以为是我用 `taobao` npm repo 的关系，但是换回 `npm` 自家 repo 问题依旧，而且 `Travis CI` 1m 能跑好出结果的 TEST `Github CI` 需要 8m，这个差距还是有点大。
 
 我之前开了 `Github CI` 多系统多版本交叉测试，每次 TEST 需要 10m+ 的等待，后来干脆只留一个但也还是慢。另外就是新建了 Action 项目还会有删不掉的 bug，看来目前 `Github Action` 处在 beta 还是有原因的，希望明年正式版上这些问题能够得到充分优化。
+
+### 2019-09-03 00:40
+
+进入九月啦！时间过得好快，不知不觉写这个开发日志已一个月，今天只说一件事，那就是 App 终于开坑并调好 `less` 和 `GraphQL` 啦。为什么 RN 可以用 less 哈哈哈哈，当然是加了点私货啦。
+
+今天其实也很累，累在 `monorepo`，在 RN 上终于提示 `type-graphql` 这个库不能在非 `Node.js` 的平台上用，对的，RN 最后会翻译成 C++，也就是不符合 `Node standard library APIs` 的 lib 统统不认。
+
+哎，这个实在是个麻烦事，因为我一大票 `DTO` 都是依赖 `type-graphql` 的，这下直接无法使用了，哭了…… 还好 App 这边不会调用太多的 Query，我只好手动转几个过来了。
+
+其实我因为 `type-graphql` 这个 lib 卡了很多地方，比如不能 `ncc` 导致不能部署 `now.sh` 等，但目前类似的 lib 只有他一家，先等等看后续会有什么替代品再说了。
+
+另外就是小程序那边已经做得差不多，我都没来得及截图和发布 demo，等 App 这边写了个大概再一并截图好了。
