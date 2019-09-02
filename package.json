@@ -25,6 +25,7 @@
   },
   "scripts": {
     "bootstrap": "lerna bootstrap",
+    "clean": "lerna clean",
     "clear-node-moudles": "rimraf ./yarn.lock && rimraf ./yarn-error.log && rimraf ./node_modules",
     "install-all": "yarn workspaces run install",
     "nuke": "yarn add rimraf -W && yarn clear-node-moudles && yarn install & yarn install-all",

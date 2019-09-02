@@ -19,7 +19,6 @@
     "fix": "yarn run fix-js && yarn run fix-css"
   },
   "dependencies": {
-    "@leaa/common": "^0.0.2",
     "@nestjs/common": "^6.6.3",
     "@nestjs/core": "^6.6.3",
     "@nestjs/passport": "^6.1.0",

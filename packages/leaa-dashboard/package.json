@@ -31,7 +31,6 @@
     "@apollo/react-hooks": "^3.0.1",
     "@babel/polyfill": "7.4.4",
     "@leaa/common": "^0.0.2",
-    "@leaa/dashboard": "^0.0.2",
     "animated-scroll-to": "^1.2.2",
     "antd": "^3.22.2",
     "apollo-cache-inmemory": "^1.6.3",
