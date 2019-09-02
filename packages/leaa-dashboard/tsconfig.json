@@ -2,18 +2,15 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "baseUrl": ".",
+    "jsx": "react",
+    "lib": ["dom", "esnext"],
     "outDir": "_dist",
     "module": "commonjs",
     "target": "es6",
     "declaration": true,
     "sourceMap": false,
-    "jsx": "react",
-    "experimentalDecorators": true,
-    "paths": {
-      "@leaa/common/*": ["../_leaa-common/*"],
-      "@leaa/dashboard/*": ["./*"]
-    }
+    "experimentalDecorators": true
   },
   "include": ["src/**/*", "typings/*"],
-  "exclude": ["node_modules", "_dist"]
+  "exclude": ["node_modules", "dist", "_dist"]
 }

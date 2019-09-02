@@ -2812,10 +2812,10 @@
     xxhashjs "^0.2.2"
     yauzl "2.10.0"
 
-"@tarojs/components@1.3.15":
-  version "1.3.15"
-  resolved "https://registry.npmjs.org/@tarojs/components/-/components-1.3.15.tgz#9c27823f562e87c9700c594e63b931097ff5abfc"
-  integrity sha512-9quZwHCOCjzqmjsQEaWAMFX+343d3kjUrgQt6Mj7pT33vbdWp3Ug9bBqZudd819OGJC+equLDPkEjBHNRY8lxQ==
+"@tarojs/components@1.3.16":
+  version "1.3.16"
+  resolved "https://registry.npmjs.org/@tarojs/components/-/components-1.3.16.tgz#d2a9079f22b9634953f93402e2e8c056a47f2b78"
+  integrity sha512-j+igP9xetHoxmXC6uO2HGDsAICthP/Cvw3IbVsarLD7kO+nf2hJNG1YW+CNhtNfUsmvkSlWFnJnu9kHSyGVQHA==
   dependencies:
     better-scroll "^1.14.1"
     classnames "^2.2.5"
@@ -2824,44 +2824,44 @@
     swiper "^4.4.2"
     weui "^1.1.2"
 
-"@tarojs/mobx-common@1.3.15":
-  version "1.3.15"
-  resolved "https://registry.npmjs.org/@tarojs/mobx-common/-/mobx-common-1.3.15.tgz#eac37cf70b37e0001f33a308b00a918f6a8756aa"
-  integrity sha512-CIXl3/JUhBx1fGPvaSA54oAO0UxQAwh+6GJfwybxE8Fe1DEZD8MKaUcRMYNx9WGeXz2zF4OS62zv3Nu0bL50wg==
+"@tarojs/mobx-common@1.3.16":
+  version "1.3.16"
+  resolved "https://registry.npmjs.org/@tarojs/mobx-common/-/mobx-common-1.3.16.tgz#0bcc9f8ef5b48affe70220d226713d9779ff9c05"
+  integrity sha512-QpzqGdwNGEw3y0J3FpoCP+YX9A+eJP4WHpkq6WSzVdeoGTVBLWkm9lejT/XMpsvUnncc5XcOvEqi/Bnzf73EBQ==
 
-"@tarojs/mobx@1.3.15":
-  version "1.3.15"
-  resolved "https://registry.npmjs.org/@tarojs/mobx/-/mobx-1.3.15.tgz#7d8b97a32d6db2889432279bd3e686bd3ffd5143"
-  integrity sha512-SAl/QGNsasQ44VAT67YKXhIlm2iaSzP+nCBPSwiNqjyhXKQdz89LF1j6Nxf73kUdGwZ6894j/NvPKs0D5GiyUw==
+"@tarojs/mobx@1.3.16":
+  version "1.3.16"
+  resolved "https://registry.npmjs.org/@tarojs/mobx/-/mobx-1.3.16.tgz#eb4e5374fc3a6ebd82418233c005f078064e8443"
+  integrity sha512-vFUJWvmVDT3a5g+GjwQ03LCPzpAWPgJ32ET8XMxgatP7GuntG5xQ4di0wCDvlidn3FoYrr739KG10K+7s1yCnQ==
   dependencies:
-    "@tarojs/mobx-common" "1.3.15"
-    "@tarojs/taro" "1.3.15"
+    "@tarojs/mobx-common" "1.3.16"
+    "@tarojs/taro" "1.3.16"
 
-"@tarojs/plugin-babel@1.3.15":
-  version "1.3.15"
-  resolved "https://registry.npmjs.org/@tarojs/plugin-babel/-/plugin-babel-1.3.15.tgz#6fd5f085f705f385e2bb9f11300aaa03d7f01488"
-  integrity sha512-ETUmyP+CXvrKPMm1EuFzw0U/PRyklq4syaHXfFrPL/iEhxy78fPao9FkPbdm1ECTGVZJsLa5q0qgCgHMRELEEg==
+"@tarojs/plugin-babel@1.3.16":
+  version "1.3.16"
+  resolved "https://registry.npmjs.org/@tarojs/plugin-babel/-/plugin-babel-1.3.16.tgz#52c0d496309a71587b915dc663b4d86602fcc1f7"
+  integrity sha512-aF15NAWabHa6CdqwHJDof/TmHUnCoNa+oTU8eYlIlYc/SKiVCRoRaDuvq9KQsfy/O49MNU+g/THpvvzCIfSlEQ==
   dependencies:
     babel-core "^6.26.0"
 
-"@tarojs/plugin-csso@1.3.15":
-  version "1.3.15"
-  resolved "https://registry.npmjs.org/@tarojs/plugin-csso/-/plugin-csso-1.3.15.tgz#971ce44d02086ca68e17c2185a1c90491633c968"
-  integrity sha512-eNBngkFYUH4NqOjqUyeAXhBPiV6j9uMssfyqmHH5/8J6+qg3ymDNwV1HiSze53FP/nbOlMywEXF5dkUzaUm/2w==
+"@tarojs/plugin-csso@1.3.16":
+  version "1.3.16"
+  resolved "https://registry.npmjs.org/@tarojs/plugin-csso/-/plugin-csso-1.3.16.tgz#797cf0bd44126f5637693ea6a730ebaeb1cde121"
+  integrity sha512-oVZx6bLac+Ccw+hXQlCAinoeW2jTodgbltCbK3TRWGJyJPnomhGE35evduPlz6R+uL71fuje5SF6atZR3DDrmg==
   dependencies:
     csso "^3.5.0"
 
-"@tarojs/plugin-less@1.3.15":
-  version "1.3.15"
-  resolved "https://registry.npmjs.org/@tarojs/plugin-less/-/plugin-less-1.3.15.tgz#f98a9bf184cdaacdac24943d8ae51b77f774b673"
-  integrity sha512-Fe3kR0Y6gYDIe9HMcYGgtLT8zcpSrQ5BpSkluwlFfezYZCiCs1PggmC4o3LuX8fu7G3Omv4mBzIPFJZweIcGtQ==
+"@tarojs/plugin-less@1.3.16":
+  version "1.3.16"
+  resolved "https://registry.npmjs.org/@tarojs/plugin-less/-/plugin-less-1.3.16.tgz#b5c864d4645deb8b16305688ea54dd39b6378d17"
+  integrity sha512-X6VvQctBZPv2lK9yS0ttUP954ptgdy0a6w77fV6KLYhhs/E02coUAl9xMGERLVvgjf1YRAZEtPqX7sh//f6alA==
   dependencies:
     less "^3.0.4"
 
-"@tarojs/plugin-uglifyjs@1.3.15":
-  version "1.3.15"
-  resolved "https://registry.npmjs.org/@tarojs/plugin-uglifyjs/-/plugin-uglifyjs-1.3.15.tgz#3c26e7c548e0fd06295411fe276d5195a7551290"
-  integrity sha512-gf6cfdW+1WnVhjb9x8y+icOgh0Go8uQ5g5fFelY3QXNbHq6y3FXur+uoJBO1JPLioZsW3e7qbP5MfHd4d0KqSw==
+"@tarojs/plugin-uglifyjs@1.3.16":
+  version "1.3.16"
+  resolved "https://registry.npmjs.org/@tarojs/plugin-uglifyjs/-/plugin-uglifyjs-1.3.16.tgz#2b93c7d29d71267286788c4ff4f615423bc3d6a9"
+  integrity sha512-l97hi1BSXLZHY74pKp5Py4jLUu6yViZexhPnKQvFAJTiz4xinkN4zjyuVP+D8GNXYFnWF/z0qw8JZ1mdPYwVKA==
   dependencies:
     uglify-js "^3.3.24"
 
@@ -2897,13 +2897,6 @@
     "@tarojs/utils" "1.3.16"
     lodash "^4.17.10"
     prop-types "^15.6.1"
-
-"@tarojs/taro@1.3.15":
-  version "1.3.15"
-  resolved "https://registry.npmjs.org/@tarojs/taro/-/taro-1.3.15.tgz#925ff7f4e9c06b78c9719cd9d75591952199fe07"
-  integrity sha512-ZdogU69fAFSVVb/ferfqDrx8QqbysI3uBHJ8n61SnYBqn9gGoEr45wWv/86ThW789u4EOzw6UnzzkdYpwfxdpw==
-  dependencies:
-    "@tarojs/utils" "1.3.15"
 
 "@tarojs/taro@1.3.16":
   version "1.3.16"
@@ -2959,11 +2952,6 @@
     lodash "^4.17.5"
     prettier "^1.14.2"
     typescript "^3.2.2"
-
-"@tarojs/utils@1.3.15":
-  version "1.3.15"
-  resolved "https://registry.npmjs.org/@tarojs/utils/-/utils-1.3.15.tgz#0b869e8e0e9e34402cc59ed371588e857443a6a5"
-  integrity sha512-Md13QskLyrJy2ylnew/u87J129CItpVa8sa9g403uJ4NhonPhYm28wWPlRZu30V5gwl6MLnNHKyLugpjlQeInQ==
 
 "@tarojs/utils@1.3.16":
   version "1.3.16"
@@ -21594,15 +21582,6 @@ stylelint-config-taro-rn@1.3.16:
   version "1.3.16"
   resolved "https://registry.npmjs.org/stylelint-config-taro-rn/-/stylelint-config-taro-rn-1.3.16.tgz#d1f148490c9274953f9210167c6e55cb0e9e0210"
   integrity sha512-d/91GG9mgGvnIQ/6qZW/BnhrxUJaJyGakibzaGd2eYqORNj7/xWdQHjIGPKrEHjmOv351/TZeX35Jk6vcP9YEA==
-
-stylelint-order@3.0.1:
-  version "3.0.1"
-  resolved "https://registry.npmjs.org/stylelint-order/-/stylelint-order-3.0.1.tgz#f1dd5e39345d04b684a6f04f1133cafa28606175"
-  integrity sha512-isVEJ1oUoVB7bb5pYop96KYOac4c+tLOqa5dPtAEwAwQUVSbi7OPFbfaCclcTjOlXicymasLpwhRirhFWh93yw==
-  dependencies:
-    lodash "^4.17.14"
-    postcss "^7.0.17"
-    postcss-sorting "^5.0.1"
 
 stylelint-order@3.1.0:
   version "3.1.0"

@@ -4,16 +4,12 @@
     "baseUrl": ".",
     "jsx": "react-native",
     "lib": ["dom", "esnext"],
-    "moduleResolution": "node",
-    "noEmit": true,
-    "skipLibCheck": true,
-    "resolveJsonModule": true,
-    "allowSyntheticDefaultImports": true,
-    "typeRoots": ["node_modules/@types", "global.d.ts", "src/**/*", "config/**/*", "typings/*"],
-    "paths": {
-      "@leaa/common/*": ["../_leaa-common/*"],
-      "@leaa/app/*": ["./*"]
-    }
+    "outDir": "_dist",
+    "module": "commonjs",
+    "target": "es6",
+    "declaration": true,
+    "sourceMap": false,
+    "experimentalDecorators": true
   },
   "include": ["src/**/*", "config/**/*", "typings/*", "App.tsx", "index.tsx", "global.d.ts"],
   "exclude": ["node_modules", "dist", "_dist"]

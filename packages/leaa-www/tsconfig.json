@@ -18,11 +18,7 @@
     "lib": ["dom", "dom.iterable", "esnext"],
     "types": ["node", "jest"],
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "paths": {
-      "@leaa/common/*": ["../_leaa-common/*"],
-      "@leaa/www/*": ["./*"]
-    }
+    "emitDecoratorMetadata": true
   },
   "include": ["**/*", "typings/*"],
   "exclude": ["node_modules", "_dist"]

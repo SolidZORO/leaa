@@ -19,12 +19,11 @@
     "nohoist": [
       "**/module-alias",
       "**/next-bundle-analyzer",
-      "@leaa/miniprogram/**",
-      "@leaa/app/**"
+      "@leaa/miniprogram/**"
     ]
   },
   "scripts": {
-    "bootstrap": "lerna bootstrap",
+    "bootstrap": "npx lerna bootstrap",
     "clean": "lerna clean",
     "clear-node-moudles": "rimraf ./yarn.lock && rimraf ./yarn-error.log && rimraf ./node_modules",
     "install-all": "yarn workspaces run install",

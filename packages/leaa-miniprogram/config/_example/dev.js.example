@@ -1,4 +1,5 @@
 const API_HOST = 'http://192.168.169.99:5555';
+const WECHAT_HOST = 'http://xxxx.natappfree.cc';
 
 module.exports = {
   env: {
@@ -7,6 +8,7 @@ module.exports = {
   defineConstants: {
     // call it use `envConfig.GRAPHQL_ENDPOINT`
     GRAPHQL_ENDPOINT_VALUE: `${API_HOST}/graphql`,
+    WECHAT_HOST_VALUE: WECHAT_HOST,
   },
   weapp: {},
   h5: {},
