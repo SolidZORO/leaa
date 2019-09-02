@@ -1,6 +1,5 @@
 import gql from 'graphql-tag';
 
-// import { ATTACHMENT_FRAGMENT } from '@leaa/common/src/graphqls';
 import { ATTACHMENT_FRAGMENT } from './attachment.fragment';
 
 export const GET_AXS = gql`

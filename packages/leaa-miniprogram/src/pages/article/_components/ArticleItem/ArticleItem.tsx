@@ -2,8 +2,8 @@ import Taro, { useState, useEffect } from '@tarojs/taro';
 import { View, Text } from '@tarojs/components';
 
 import { Article } from '@leaa/common/src/entrys';
-import { GET_ARTICLE } from '@leaa/miniprogram/src/graphqls';
 
+import { GET_ARTICLE } from '@leaa/miniprogram/src/graphqls';
 import { apolloClient } from '@leaa/miniprogram/src/libs';
 import { HtmlParse } from '@leaa/miniprogram/src/components/HtmlParse';
 

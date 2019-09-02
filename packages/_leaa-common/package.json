@@ -19,26 +19,6 @@
     "fix": "yarn run fix-js && yarn run fix-css"
   },
   "dependencies": {
-    "@nestjs/common": "^6.6.3",
-    "@nestjs/core": "^6.6.3",
-    "@nestjs/passport": "^6.1.0",
-    "class-validator": "^0.10.0",
-    "graphql-tag": "^2.10.1",
-    "type-graphql": "^0.17.5",
-    "typeorm": "^0.2.18"
   },
-  "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^2.0.0",
-    "@typescript-eslint/parser": "2.0.0",
-    "eslint": "6.3.0",
-    "eslint-config-airbnb": "18.0.1",
-    "eslint-config-airbnb-typescript": "^4.0.1",
-    "eslint-config-prettier": "^6.1.0",
-    "eslint-loader": "3.0.0",
-    "eslint-plugin-css-modules": "2.11.0",
-    "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-prettier": "^3.1.0",
-    "eslint-plugin-react": "^7.14.3"
-  }
+  "devDependencies": {}
 }

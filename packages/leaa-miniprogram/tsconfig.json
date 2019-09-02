@@ -23,6 +23,6 @@
     "noImplicitAny": false,
     "allowSyntheticDefaultImports": true
   },
-  "include": ["src/**/*", "config/**/*", "typings/*", "global.d.ts"],
+  "include": ["src/**/*", "config/*", "typings/*", "global.d.ts"],
   "exclude": ["node_modules", "dist", "_dist"]
 }

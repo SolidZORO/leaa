@@ -3,8 +3,8 @@ import Taro, { useState, useEffect } from '@tarojs/taro';
 import { View, Button, Text, Navigator } from '@tarojs/components';
 
 import { ArticlesWithPaginationObject, ArticleArgs } from '@leaa/common/src/dtos/article';
-import { GET_ARTICLES } from '@leaa/miniprogram/src/graphqls';
 
+import { GET_ARTICLES } from '@leaa/miniprogram/src/graphqls';
 import { apolloClient } from '@leaa/miniprogram/src/libs';
 
 import style from './style.less';

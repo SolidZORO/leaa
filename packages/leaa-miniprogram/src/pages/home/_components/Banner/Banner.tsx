@@ -1,10 +1,10 @@
 import Taro, { useState, useEffect } from '@tarojs/taro';
 import { View, Image, Swiper, SwiperItem } from '@tarojs/components';
 
-import { GET_AX_BY_SLUG } from '@leaa/miniprogram/src/graphqls';
 import { AxArgs } from '@leaa/common/src/dtos/ax';
 import { Ax } from '@leaa/common/src/entrys';
 
+import { GET_AX_BY_SLUG } from '@leaa/miniprogram/src/graphqls';
 import { apolloClient } from '@leaa/miniprogram/src/libs';
 import { imageUtil } from '@leaa/miniprogram/src/utils';
 

@@ -110,11 +110,22 @@
     "codecov": "^3.5.0",
     "jest": "^24.9.0",
     "nodemon": "^1.18.9",
-    "prettier": "^1.18.1",
     "ts-jest": "24.0.2",
     "ts-node": "8.3.0",
     "ts-node-dev": "^1.0.0-pre.41",
     "tsconfig-paths": "^3.8.0",
-    "typescript": "3.5.3"
+    "babel-eslint": "^10.0.2",
+    "@typescript-eslint/eslint-plugin": "^2.0.0",
+    "@typescript-eslint/parser": "^2.0.0",
+    "eslint": "6.3.0",
+    "eslint-config-airbnb": "18.0.1",
+    "eslint-config-airbnb-typescript": "^4.0.1",
+    "eslint-loader": "3.0.0",
+    "eslint-plugin-css-modules": "2.11.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.14.3",
+    "eslint-plugin-react-hooks": "^2.0.1"
   }
 }

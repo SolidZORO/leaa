@@ -29,6 +29,9 @@ const config = {
     options: {},
   },
   weapp: {
+    npm: {
+      dir: '../dist',
+    },
     module: {
       postcss: {
         autoprefixer: {
