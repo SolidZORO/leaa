@@ -62,7 +62,8 @@ module.exports = {
     'no-empty-function': 0,
     'class-methods-use-this': 0,
     //
-    // FOR MONO
+    // MONOREPO
+    'import/no-extraneous-dependencies': 0,
     'prettier/prettier': 'error',
     'import/no-unresolved': ['error', { ignore: ['@leaa'] }],
     //

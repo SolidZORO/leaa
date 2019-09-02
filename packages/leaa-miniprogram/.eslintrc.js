@@ -69,9 +69,9 @@ module.exports = {
     'jsx-a11y/click-events-have-key-events': 0,
     //
     // MONOREPO
+    'import/no-extraneous-dependencies': 0,
     'prettier/prettier': 'error',
     'import/no-unresolved': ['error', { ignore: ['@leaa'] }],
-    'import/no-extraneous-dependencies': 0,
   },
   settings: {
     'import/resolver': {

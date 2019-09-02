@@ -67,6 +67,7 @@ module.exports = {
     'no-useless-constructor': 0,
     //
     // MONOREPO
+    'import/no-extraneous-dependencies': 0,
     'prettier/prettier': 'error',
     'import/no-unresolved': ['error', { ignore: ['@leaa'] }],
   },
