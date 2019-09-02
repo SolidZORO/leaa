@@ -10002,6 +10002,15 @@ expo-web-browser@~6.0.0:
   resolved "https://registry.npmjs.org/expo-web-browser/-/expo-web-browser-6.0.0.tgz#63a59d4c02cd7ba47faa6a2eb04decb1a1ab2a32"
   integrity sha512-7XkFPd4PRlVP6FscTnn78c0tY6+yLzb2Eai/ed+l+LB+hZWuhyY3ONzYM7/IKAiPmfhZr4Qs80vIa7iiavti8A==
 
+expo-yarn-workspaces@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.npmjs.org/expo-yarn-workspaces/-/expo-yarn-workspaces-1.2.0.tgz#0c85ca501d6e5bd701285d0ade9cde807e794617"
+  integrity sha512-QfNyGIHgDb7YIzhu36sLcomOBLq5qyYPmN6HnQONJMLHRcko61XutYPhkcDDeILZ4S4WU5TY9YxsjW9rb1zoYw==
+  dependencies:
+    debug "^4.1.1"
+    find-yarn-workspace-root "^1.2.0"
+    mkdirp "^0.5.1"
+
 expo@^34.0.1:
   version "34.0.4"
   resolved "https://registry.npmjs.org/expo/-/expo-34.0.4.tgz#af6ef0da40c98981b5f3323c86fd815dfa417fff"
@@ -10603,6 +10612,14 @@ find-up@^4.0.0:
     locate-path "^5.0.0"
     path-exists "^4.0.0"
 
+find-yarn-workspace-root@^1.2.0:
+  version "1.2.1"
+  resolved "https://registry.npmjs.org/find-yarn-workspace-root/-/find-yarn-workspace-root-1.2.1.tgz#40eb8e6e7c2502ddfaa2577c176f221422f860db"
+  integrity sha512-dVtfb0WuQG+8Ag2uWkbG79hOUzEsRrhBzgfn86g2sJPkzmcpGdghbNTfUKGTxymFrY/tLIodDzLoW9nOJ4FY8Q==
+  dependencies:
+    fs-extra "^4.0.3"
+    micromatch "^3.1.4"
+
 findup-sync@3.0.0:
   version "3.0.0"
   resolved "https://registry.npmjs.org/findup-sync/-/findup-sync-3.0.0.tgz#17b108f9ee512dfb7a5c7f3c8b27ea9e1a9c08d1"
@@ -10801,6 +10818,15 @@ fs-extra@^1.0.0:
     graceful-fs "^4.1.2"
     jsonfile "^2.1.0"
     klaw "^1.0.0"
+
+fs-extra@^4.0.3:
+  version "4.0.3"
+  resolved "https://registry.npmjs.org/fs-extra/-/fs-extra-4.0.3.tgz#0d852122e5bc5beb453fb028e9c0c9bf36340c94"
+  integrity sha512-q6rbdDd1o2mAnQreO7YADIxf/Whx4AHBiRf6d+/cVT8h44ss+lHgxf1FemcqDnQt9X3ct4McHr+JMGlYSsK7Cg==
+  dependencies:
+    graceful-fs "^4.1.2"
+    jsonfile "^4.0.0"
+    universalify "^0.1.0"
 
 fs-extra@^5.0.0:
   version "5.0.0"
@@ -18429,7 +18455,7 @@ prop-types-exact@1.2.0:
     object.assign "^4.1.0"
     reflect.ownkeys "^0.2.0"
 
-prop-types@15.7.2, prop-types@15.x, prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.6, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@^15.5.9, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@15.7.2, prop-types@15.x, prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.6, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@^15.5.9, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2, prop-types@latest:
   version "15.7.2"
   resolved "https://registry.npmjs.org/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -19313,6 +19339,11 @@ react-native-gesture-handler@~1.3.0:
     invariant "^2.2.2"
     prop-types "^15.5.10"
 
+react-native-iphone-x-helper@latest:
+  version "1.2.1"
+  resolved "https://registry.npmjs.org/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.2.1.tgz#645e2ffbbb49e80844bb4cbbe34a126fda1e6772"
+  integrity sha512-/VbpIEp8tSNNHIvstuA3Swx610whci1Zpc9mqNkqn14DkMbw+ORviln2u0XyHG1kPvvwTNGZY6QpeFwxYaSdbQ==
+
 react-native-known-styling-properties@^1.0.4:
   version "1.0.5"
   resolved "https://registry.npmjs.org/react-native-known-styling-properties/-/react-native-known-styling-properties-1.0.5.tgz#dd99690d579c5136541e1df836e75088af6e7356"
@@ -19331,6 +19362,14 @@ react-native-reanimated@~1.1.0:
   version "1.1.0"
   resolved "https://registry.npmjs.org/react-native-reanimated/-/react-native-reanimated-1.1.0.tgz#ba6864055ec3a206cdd5209a293fe653ce276206"
   integrity sha512-UGDVNfvuIkMqYUx6aytSzihuzv6sWubn0MQi8dRcw7BjgezhjJnVnJ/NSOcpL3cO+Ld7lFcRX6GKcskwkHdPkw==
+
+react-native-root-siblings@latest:
+  version "3.2.2"
+  resolved "https://registry.npmjs.org/react-native-root-siblings/-/react-native-root-siblings-3.2.2.tgz#2b5105d4bb236041148248b94c6dc04601205eb8"
+  integrity sha512-J74JmwwEpv22Q3g91mdTW0ZuMsuexFmuH/wUuY50ZyvOX/yfDY76htXjtra8bcUwCfkGOjbW5/do2Ob9cGSAnA==
+  dependencies:
+    prop-types "^15.6.2"
+    static-container "^1.0.0"
 
 react-native-safe-area-view@^0.14.1:
   version "0.14.7"
@@ -19355,6 +19394,15 @@ react-native-tab-view@^2.9.0:
   version "2.10.0"
   resolved "https://registry.npmjs.org/react-native-tab-view/-/react-native-tab-view-2.10.0.tgz#5e249e5650502010013449ffd4e5edc18a95364b"
   integrity sha512-qgexVz5eO4yaFjdkmn/sURXgVvaBo6pZD/q1eoca96SbPVbaH3WzVhF3bRUfeTHwZkXwznFTpS3JURqIFU8vQA==
+
+react-native-tiny-toast@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.npmjs.org/react-native-tiny-toast/-/react-native-tiny-toast-1.0.3.tgz#6ac4e64d2afd1c6ca814e3b55be03401e7240651"
+  integrity sha512-WwzXv3vNu9rieo62Z5bc5vVFHW7XGvSrVtHqU9fgEmQyTNgTO04wqr7gVGIYaNbWH1kiLkt4hv1Fiknl65PkDg==
+  dependencies:
+    prop-types latest
+    react-native-iphone-x-helper latest
+    react-native-root-siblings latest
 
 react-native-unimodules@~0.5.2:
   version "0.5.4"
@@ -21241,6 +21289,11 @@ state-toggle@^1.0.0:
   version "1.0.2"
   resolved "https://registry.npmjs.org/state-toggle/-/state-toggle-1.0.2.tgz#75e93a61944116b4959d665c8db2d243631d6ddc"
   integrity sha512-8LpelPGR0qQM4PnfLiplOQNJcIN1/r2Gy0xKB2zKnIW2YzPMt2sR4I/+gtPjhN7Svh9kw+zqEg2SFwpBO9iNiw==
+
+static-container@^1.0.0:
+  version "1.3.0"
+  resolved "https://registry.npmjs.org/static-container/-/static-container-1.3.0.tgz#e4f7b4be4e42954e3d1955ab7b3974a78b7bad87"
+  integrity sha512-OJnvgv6tq9T5QbFUMioEK4WP48pMn/X4qdcrWAhop6boMMz6pMmWPWXgjimn1wKqcClZ6Ff0iSKViRXzwx111w==
 
 static-extend@^0.1.1:
   version "0.1.2"

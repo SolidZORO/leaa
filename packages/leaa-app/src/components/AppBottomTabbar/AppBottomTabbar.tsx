@@ -1,5 +1,4 @@
 import React from 'react';
-import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 
@@ -11,20 +10,23 @@ const AppBottomTabbar = createBottomTabNavigator(
   {
     Home: {
       screen: Home,
+      title: 'Home',
       params: {
         icon: 'x-home',
       },
     },
     ArticleList: {
       screen: ArticleList,
+      title: 'Article',
       params: {
         icon: 'x-article',
       },
     },
   },
   {
-    // initialRouteName: 'ArticleList',
-    initialRouteName: 'Home',
+    initialRouteName: 'ArticleList',
+    headerMode: 'none',
+    // initialRouteName: 'Home',
     defaultNavigationOptions: ({ navigation }: any) => ({
       tabBarIcon: ({ focused, horizontal, tintColor }: any) => {
         return <IconFont name={navigation.state.params.icon} size={18} style={{ color: tintColor, paddingTop: 5 }} />;
