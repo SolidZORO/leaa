@@ -10,7 +10,7 @@ import { LayoutHeader } from './_components/LayoutHeader/LayoutHeader';
 import { LayoutSidebar } from './_components/LayoutSidebar/LayoutSidebar';
 import { LayoutContent } from './_components/LayoutContent/LayoutContent';
 
-import '@leaa/dashboard/src/styles/global.less';
+import '@leaa/dashboard/src/styles/style.global.less';
 import style from './style.less';
 
 interface IProps extends RouteProps {

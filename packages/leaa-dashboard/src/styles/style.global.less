@@ -1,0 +1,22 @@
+@import './variables.less';
+
+body {
+  &:after {
+    display: none;
+    content: 'xs';
+
+    @media (min-width: @screen-md) {
+      content: 'md';
+    }
+  }
+}
+
+.g-form--zero-margin-bottom {
+  & > :global(.ant-row):last-child {
+    :global {
+      .ant-form-item {
+        margin-bottom: 0;
+      }
+    }
+  }
+}

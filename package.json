@@ -19,15 +19,14 @@
     "nohoist": [
       "**/module-alias",
       "**/next-bundle-analyzer",
-      "@leaa/miniprogram/**"
+      "@leaa/miniprogram/**",
+      "@leaa/app/**"
     ]
   },
   "scripts": {
     "bootstrap": "npx lerna bootstrap",
-    "clean": "lerna clean",
-    "clear-node-moudles": "rimraf ./yarn.lock && rimraf ./yarn-error.log && rimraf ./node_modules",
-    "install-all": "yarn workspaces run install",
-    "nuke": "yarn add rimraf -W && yarn clear-node-moudles && yarn install & yarn install-all",
+    "clean": "npx lerna clean",
+    "nuke": "yarn clean && yarn install",
     "tsc-check": "yarn workspaces run tsc-check",
     "u": "yarn upgrade-interactive --latest"
   },
@@ -38,8 +37,7 @@
   },
   "dependencies": {
     "react": "16.8.6",
-    "react-dom": "16.8.6",
-    "rimraf": "^3.0.0"
+    "react-dom": "16.8.6"
   },
   "devDependencies": {
     "@babel/cli": "7.5.5",

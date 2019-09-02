@@ -102,7 +102,9 @@ export default (props: IPage) => {
     {
       title: t('_lang:role'),
       dataIndex: 'role',
-      render: (text: string, record: User) => <div>{record.roles && record.roles.map(r => <Tag>{r.name}</Tag>)}</div>,
+      render: (text: string, record: User) => (
+        <div>{record.roles && record.roles.map(r => <Tag key={r.name}>{r.name}</Tag>)}</div>
+      ),
     },
     {
       title: t('_lang:status'),

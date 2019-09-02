@@ -14,7 +14,7 @@ import { LayoutContent } from './_components/LayoutContent/LayoutContent';
 import { LayoutHeader } from './_components/LayoutHeader/LayoutHeader';
 import { LayoutSimpleFooter } from './_components/LayoutSimpleFooter/LayoutSimpleFooter';
 
-import '@leaa/www/styles/global.less';
+import '@leaa/www/styles/style.global.less';
 import style from './style.less';
 
 interface IProps extends IPageProps {
