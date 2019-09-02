@@ -1,7 +1,7 @@
 import Taro from '@tarojs/taro';
 import { View, Text, Image } from '@tarojs/components';
 
-import { Oauth } from '@leaa/miniprogram/src/entrys';
+import { Oauth } from '@leaa/common/src/entrys';
 
 import style from './style.less';
 

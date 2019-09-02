@@ -1,8 +1,10 @@
 import Taro, { useState, useEffect } from '@tarojs/taro';
 import { View, Text } from '@tarojs/components';
-import { apolloClient } from '@leaa/miniprogram/src/libs';
+
+import { Article } from '@leaa/common/src/entrys';
 import { GET_ARTICLE } from '@leaa/miniprogram/src/graphqls';
-import { Article } from '@leaa/miniprogram/src/entrys';
+
+import { apolloClient } from '@leaa/miniprogram/src/libs';
 import { HtmlParse } from '@leaa/miniprogram/src/components/HtmlParse';
 
 import style from './style.less';

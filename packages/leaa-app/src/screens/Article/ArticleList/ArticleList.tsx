@@ -10,7 +10,7 @@ export const ArticleList = () => {
     <View style={style['container']}>
       <View style={style['textwrapper']}>
         <Text style={style['label']}>
-          <IconFont name="x-article" size={18} /> ARTICLE
+          <IconFont name="x-article" size={18} /> Article
         </Text>
       </View>
     </View>
