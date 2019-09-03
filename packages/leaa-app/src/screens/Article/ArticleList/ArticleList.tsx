@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Text, View, FlatList, SafeAreaView } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
 
@@ -6,19 +6,79 @@ import { GET_ARTICLES } from '@leaa/common/src/graphqls/article.query';
 
 import { ErrorCard } from '@leaa/app/src/components/ErrorCard';
 import { ArticlesWithPaginationObject } from '@leaa/app/src/dtos/article/articles-with-pagination.object';
-import { ArticleArgs } from '@leaa/app/src/dtos/article/article.args';
+import { ArticlesArgs } from '@leaa/app/src/dtos/article/articles.args';
 
 import style from './style.less';
 
 export const ArticleList = () => {
-  const getArticlesVariables = {};
-  const getArticlesQuery = useQuery<{ articles: ArticlesWithPaginationObject }, ArticleArgs>(GET_ARTICLES, {
+  const getArticlesVariables: ArticlesArgs = {
+    page: 1,
+    pageSize: 30,
+    orderSort: 'DESC',
+    orderBy: 'id',
+  };
+
+  const getArticlesQuery = useQuery<{ articles: ArticlesWithPaginationObject }, ArticlesArgs>(GET_ARTICLES, {
     variables: getArticlesVariables,
   });
 
-  const refetchArticles = () => {
-    console.log('REFETCH-ARTICLES');
+  const [getArticlesPage, setGetArticlesPage] = useState<number>(1);
+
+  const onRefreshArticles = () => {
+    console.log('ON-REFRESH-ARTICLES~~~~~~');
+
+    (async () => getArticlesQuery.refetch())();
+
+    setGetArticlesPage(1);
   };
+
+  const onEndReachedArticles = async () => {
+    console.log('ON-REACHED-ARTICLES!!!!!!!!!');
+    if (getArticlesQuery.loading || !getArticlesQuery.data || getArticlesQuery.data.articles.nextPage === null) {
+      return;
+    }
+
+    const nextPage = getArticlesPage + 1;
+    const nextArticlesPage = {
+      ...getArticlesVariables,
+      page: nextPage,
+    };
+
+    await getArticlesQuery.fetchMore({
+      updateQuery: (previousResults, { fetchMoreResult }) => {
+        console.log('>>>>>>>>>>>>', previousResults.articles.nextPage);
+
+        if (!fetchMoreResult) {
+          return previousResults;
+        }
+
+        const nextResult = {
+          ...getArticlesQuery,
+          articles: {
+            ...fetchMoreResult.articles,
+            items: [...previousResults.articles.items, ...fetchMoreResult.articles.items],
+          },
+        };
+
+        // nextResult.articles.items.map(a => console.log(a.id));
+
+        return nextResult;
+      },
+      variables: nextArticlesPage,
+    });
+
+    setGetArticlesPage(nextPage);
+  };
+
+  const separatorDom = () => (
+    <View
+      style={{
+        height: 1,
+        width: '100%',
+        backgroundColor: '#eee',
+      }}
+    />
+  );
 
   return (
     <SafeAreaView style={style['wrapper']}>
@@ -31,24 +91,24 @@ export const ArticleList = () => {
 
         <FlatList
           style={style['list']}
-          onRefresh={() => refetchArticles()}
           refreshing={getArticlesQuery.loading}
           data={
-            (getArticlesQuery.data &&
-              getArticlesQuery.data.articles &&
-              getArticlesQuery.data.articles.items &&
-              getArticlesQuery.data.articles.items.length > 0 &&
-              getArticlesQuery.data.articles.items) ||
-            null
+            (getArticlesQuery.data && getArticlesQuery.data.articles && getArticlesQuery.data.articles.items) || null
           }
-          keyExtractor={({ title }) => title}
-          renderItem={({ item }) => (
+          keyExtractor={({ id }) => `${id}`}
+          renderItem={({ item, index }) => (
             <View style={style['item']}>
               <Text key={item.title} style={style['item-text']}>
-                {item.title}
+                {index}. [#{item.id}] - {item.title}
               </Text>
             </View>
           )}
+          ListFooterComponent={getArticlesQuery.loading ? <Text>正在加载更多数据...</Text> : <Text />}
+          ItemSeparatorComponent={separatorDom}
+          ListEmptyComponent={<Text>EMPTY-DATA</Text>}
+          onRefresh={onRefreshArticles}
+          onEndReached={onEndReachedArticles}
+          onEndReachedThreshold={0.1}
         />
       </View>
     </SafeAreaView>

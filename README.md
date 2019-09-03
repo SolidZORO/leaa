@@ -655,3 +655,9 @@ ZEIT 大哥！`Next.js` 这可是你自家的服务啊，有必要限得那么�
 其实我因为 `type-graphql` 这个 lib 卡了很多地方，比如不能 `ncc` 导致不能部署 `now.sh` 等，但目前类似的 lib 只有他一家，先等等看后续会有什么替代品再说了。
 
 另外就是小程序那边已经做得差不多，我都没来得及截图和发布 demo，等 App 这边写了个大概再一并截图好了。
+
+### 2019-09-03 21:57
+
+发现 RN 上 `<FlatList>` 自带的 `onEndReached` 的上拉加载是个坑，嗯，天坑。比如这篇 [ReactNative 之 FlatList 踩坑封装总结](https://juejin.im/post/5aa66ae5f265da23826da0fc)，这篇 [onEndReached triggered 2 times](https://github.com/facebook/react-native/issues/14015)，这篇 [FlatList onEndReached triggered before reach onEndReachedThreshold](https://github.com/facebook/react-native/issues/12827)，这些文章都指向了一个问题，就是上拉后会多次调用 `onEndReached`，导致无限循环加载的问题。
+
+我的解决办法比较粗暴，因为 API 可控，直接写了个方法返回文章 `nextPage`，如果没有就返回 `null`，其实类似 `items` `itemsCount` `total` `pageSize` `page` `nextPage` 这几个字段早应该包含在 `pageInfo` 里面的，因为写得匆忙，没有加上 `nextPage` 和 `itemsCount`，回头得统一加一下，或者干脆就统一使用 `paginationUtil.calcPageInfo()` 好了方便快捷。

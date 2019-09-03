@@ -21,6 +21,8 @@ type Article {
 type ArticlesWithPaginationObject {
   page: Int
   pageSize: Int!
+  nextPage: Int
+  itemsCount: Int!
   total: Int!
   items: [Article!]!
 }
@@ -64,6 +66,8 @@ type AttachmentsObject {
 type AttachmentsWithPaginationObject {
   page: Int
   pageSize: Int!
+  nextPage: Int
+  itemsCount: Int!
   total: Int!
   items: [Attachment!]!
 }
@@ -101,6 +105,8 @@ type AxAttachmentsObject {
 type AxsWithPaginationObject {
   page: Int
   pageSize: Int!
+  nextPage: Int
+  itemsCount: Int!
   total: Int!
   items: [Ax!]!
 }
@@ -115,6 +121,8 @@ type Base {
 type CategoriesWithPaginationObject {
   page: Int
   pageSize: Int!
+  nextPage: Int
+  itemsCount: Int!
   total: Int!
   items: [Category!]!
 }
@@ -277,6 +285,8 @@ type Oauth {
 type PaginationObject {
   page: Int
   pageSize: Int!
+  nextPage: Int
+  itemsCount: Int!
   total: Int!
 }
 
@@ -294,6 +304,8 @@ type Permission {
 type PermissionsWithPaginationObject {
   page: Int
   pageSize: Int!
+  nextPage: Int
+  itemsCount: Int!
   total: Int!
   items: [Permission!]!
 }
@@ -335,6 +347,8 @@ type Role {
 type RolesWithPaginationObject {
   page: Int
   pageSize: Int!
+  nextPage: Int
+  itemsCount: Int!
   total: Int!
   items: [Role!]!
 }
@@ -360,6 +374,8 @@ type SettingsObject {
 type SettingsWithPaginationObject {
   page: Int
   pageSize: Int!
+  nextPage: Int
+  itemsCount: Int!
   total: Int!
   items: [Setting!]!
 }
@@ -463,6 +479,8 @@ type User {
 type UsersWithPaginationObject {
   page: Int
   pageSize: Int!
+  nextPage: Int
+  itemsCount: Int!
   total: Int!
   items: [User!]!
 }

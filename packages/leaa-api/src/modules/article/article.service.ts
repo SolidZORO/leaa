@@ -11,7 +11,7 @@ import {
   UpdateArticleInput,
 } from '@leaa/common/src/dtos/article';
 import { BaseService } from '@leaa/api/src/modules/base/base.service';
-import { formatUtil } from '@leaa/api/src/utils';
+import { formatUtil, paginationUtil } from '@leaa/api/src/utils';
 
 // const CONSTRUCTOR_NAME = 'ArticleService';
 
@@ -52,12 +52,7 @@ export class ArticleService extends BaseService<
 
     const [items, total] = await this.articleRepository.findAndCount(nextArgs);
 
-    return {
-      items,
-      total,
-      page: nextArgs.page || 1,
-      pageSize: nextArgs.pageSize || 30,
-    };
+    return paginationUtil.calcPageInfo({ items, total, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
   async article(id: number, args?: ArticleArgs & FindOneOptions<Article>): Promise<Article | undefined> {

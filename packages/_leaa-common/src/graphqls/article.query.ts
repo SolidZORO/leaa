@@ -4,16 +4,19 @@ export const GET_ARTICLES = gql`
   query($page: Int, $pageSize: Int, $orderBy: String, $orderSort: String, $q: String) {
     articles(page: $page, pageSize: $pageSize, orderBy: $orderBy, orderSort: $orderSort, q: $q) {
       total
+      page
+      nextPage
+      pageSize
       items {
         id
         title
         slug
         description
         category_id
-        category {
-          name
-          slug
-        }
+        #        category {
+        #          name
+        #          slug
+        #        }
         user_id
         status
         created_at

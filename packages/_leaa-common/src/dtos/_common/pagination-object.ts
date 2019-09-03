@@ -8,6 +8,12 @@ export class PaginationObject {
   @Field(() => Int)
   public readonly pageSize!: number;
 
+  @Field(() => Int, { nullable: true })
+  public readonly nextPage?: number | null;
+
+  @Field(() => Int)
+  public readonly itemsCount?: number;
+
   @Field(() => Int)
   public readonly total!: number;
 }
