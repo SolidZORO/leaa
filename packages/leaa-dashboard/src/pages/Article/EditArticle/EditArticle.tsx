@@ -46,6 +46,7 @@ export default (props: IPage) => {
     orderSort: 'ASC',
     refreshHash: 0,
   });
+
   const getArticleEditorAttachmentsQuery = useQuery<{ attachments: AttachmentsWithPaginationObject }, AttachmentsArgs>(
     GET_ATTACHMENTS,
     { variables: getArticleEditorAttachmentsVariables, fetchPolicy: 'network-only' },

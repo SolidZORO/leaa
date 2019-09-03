@@ -23,6 +23,15 @@ class ArticleExtFormInner extends React.PureComponent<IProps> {
     super(props);
   }
 
+  componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<{}>, snapshot?: any): void {
+    if (prevProps.item && this.props.item && prevProps.item.updated_at !== this.props.item.updated_at) {
+      this.props.form.setFieldsValue({
+        slug: this.props.item.slug,
+        description: this.props.item.description,
+      });
+    }
+  }
+
   render() {
     const { t } = this.props;
 

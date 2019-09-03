@@ -75,7 +75,18 @@ export class ArticleService extends BaseService<
   }
 
   async updateArticle(id: number, args: UpdateArticleInput): Promise<Article | undefined> {
-    return this.update(id, args);
+    const nextArgs = {
+      ...args,
+      slug:
+        !args.slug && args.title
+          ? args.title
+              .trim()
+              .replace(/\s/g, '-')
+              .toLowerCase()
+          : args.slug,
+    };
+
+    return this.update(id, nextArgs);
   }
 
   async deleteArticle(id: number): Promise<Article | undefined> {
