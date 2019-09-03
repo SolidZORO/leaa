@@ -75,15 +75,20 @@ export class ArticleService extends BaseService<
   }
 
   async updateArticle(id: number, args: UpdateArticleInput): Promise<Article | undefined> {
+    const trimSlug = args.slug ? args.slug.trim().toLowerCase() : args.slug;
+    const trimDescription = args.description ? args.description.trim() : args.description;
+
     const nextArgs = {
       ...args,
       slug:
-        !args.slug && args.title
+        !args.slug && args.title && /^[\w]/.test(args.title)
           ? args.title
               .trim()
+              .replace(/[^\w\-\s]/g, '')
               .replace(/\s/g, '-')
               .toLowerCase()
-          : args.slug,
+          : trimSlug,
+      description: trimDescription,
     };
 
     return this.update(id, nextArgs);

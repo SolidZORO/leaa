@@ -53,16 +53,6 @@ export class TypeormService implements TypeOrmOptionsFactory {
       };
     }
 
-    if (this.configService.DB_TYPE === 'postgres') {
-      options = {
-        ...options,
-        ...{
-          type: 'postgres',
-          // retryAttempts: 10,
-        },
-      };
-    }
-
     return options;
   }
 }

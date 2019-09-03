@@ -145,7 +145,7 @@ export class ConfigService {
       ATTACHMENT_SAVE_IN_LOCAL: envalid.str({ choices: ['true', 'false'], default: 'false' }),
       ATTACHMENT_SAVE_IN_OSS: envalid.str({ choices: ['true', 'false'], default: 'false' }),
       //
-      DB_TYPE: envalid.str({ choices: ['mysql', 'postgres'], default: 'mysql' }),
+      DB_TYPE: envalid.str({ choices: ['mysql'], default: 'mysql' }),
       DB_HOST: envalid.str(),
       DB_PORT: envalid.num(),
       DB_USER: envalid.str(),

@@ -25,17 +25,3 @@ services:
 #      - mysql
 #    ports:
 #      - ${ADMINER_PORT}:8080
-#
-#  postgres:
-#    container_name: ${DOCKER_POSTGRES_HOST}
-#    image: postgres:11.4
-#    restart: always
-#    ports:
-#      - ${DOCKER_POSTGRES_PORT}:5432
-#    environment:
-#      - POSTGRES_USER=${DOCKER_POSTGRES_USER}
-#      - POSTGRES_PASSWORD=${DOCKER_POSTGRES_PASSWORD}
-#      - POSTGRES_DB=${DOCKER_POSTGRES_DATABASE}
-#      - TZ=Asia/Shanghai
-#    volumes:
-#      - ${DOCKER_DATA_DIR}/postgres:/var/lib/postgresql/data:rw,cached
