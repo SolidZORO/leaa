@@ -32,7 +32,7 @@
     "@ant-design/icons": "^2.1.1",
     "@zeit/next-css": "^1.0.2-canary.2",
     "@zeit/next-less": "^1.0.1",
-    "antd": "^3.22.2",
+    "antd": "^3.23.1",
     "autoprefixer": "^9.6.1",
     "axios": "^0.19.0",
     "classnames": "^2.2.6",
@@ -86,19 +86,19 @@
     "@types/react-dom": "^16.9.0",
     "@types/react-headroom": "^2.2.1",
     "@types/ua-parser-js": "^0.7.33",
-    "nodemon": "^1.19.1",
+    "@typescript-eslint/eslint-plugin": "^2.1.0",
+    "@typescript-eslint/parser": "^2.1.0",
     "babel-eslint": "^10.0.2",
-    "@typescript-eslint/eslint-plugin": "^2.0.0",
-    "@typescript-eslint/parser": "^2.0.0",
     "eslint": "6.3.0",
     "eslint-config-airbnb": "18.0.1",
     "eslint-config-airbnb-typescript": "^4.0.1",
     "eslint-loader": "3.0.0",
     "eslint-plugin-css-modules": "2.11.0",
     "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-react": "^7.14.3",
-    "eslint-plugin-react-hooks": "^2.0.1"
+    "eslint-plugin-react-hooks": "^2.0.1",
+    "nodemon": "^1.19.2"
   }
 }
