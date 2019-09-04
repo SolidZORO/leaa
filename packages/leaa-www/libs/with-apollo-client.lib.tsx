@@ -18,6 +18,7 @@ export const withApolloClient = (App: React.ComponentType<any> & { getInitialPro
       const { Component, router } = ctx;
 
       let appProps = {};
+
       if (App.getInitialProps) {
         appProps = await App.getInitialProps(ctx);
       }
@@ -33,7 +34,7 @@ export const withApolloClient = (App: React.ComponentType<any> & { getInitialPro
         try {
           await getMarkupFromTree({
             renderFunction: renderToString,
-            tree: <App {...appProps} Component={Component} router={router} apolloClient={apollo} />,
+            tree: <App {...appProps} Component={Component} router={router} apolloClient={apollo} isServer={isServer} />,
           });
         } catch (error) {
           // https://www.apollographql.com/docs/react/api/react-apollo.html#graphql-query-data-error
@@ -60,7 +61,7 @@ export const withApolloClient = (App: React.ComponentType<any> & { getInitialPro
     }
 
     render() {
-      return <App {...this.props} apolloClient={this.apolloClient} />;
+      return <App {...this.props} apolloClient={this.apolloClient} isServer={isServer} />;
     }
   };
 };

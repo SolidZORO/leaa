@@ -8,9 +8,7 @@ import { IPageProps } from '@leaa/www/interfaces';
 
 const Signup = dynamic(() => import('@leaa/www/pages/signup/_components/Signup/Signup'));
 
-const nextPage = ({ router, pageProps }: IPageProps) => {
-  console.log(pageProps.query);
-
+const nextPage = ({ router }: IPageProps) => {
   return (
     <PageCard>
       <HtmlMeta title="Sign Up" />

@@ -8,8 +8,6 @@ import { initApollo } from '@leaa/www/libs/init-apollo-client.lib';
 export const authMiddleware = async (req: Request, res: Response, next: Function) => {
   const { authToken, authInfo } = req.cookies;
 
-  console.log(authToken, authInfo);
-
   const removeAuth = () => {
     res.clearCookie(AUTH_INFO);
     res.clearCookie(AUTH_TOKEN_NAME);

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Router from 'next/router';
 import NProgress from 'nprogress';
 import _ from 'lodash';
