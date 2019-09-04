@@ -85,10 +85,17 @@
     "husky": "^3.0.3",
     "nodemon": "^1.19.2",
     "lerna": "^3.16.4",
-    "lint-staged": "^9.2.1",
+    "lint-staged": "^9.2.5",
     "prettier": "^1.18.1",
-    "stylelint": "^10.1.0",
     "ts-node": "^8.3.0",
+    "codecov": "^3.5.0",
+    "jest": "^24.9.0",
+    "ts-jest": "24.0.2",
+    "ts-node-dev": "^1.0.0-pre.41",
+    "tsconfig-paths": "^3.8.0",
+    "stylelint": "^10.1.0",
+    "stylelint-config-standard": "^18.3.0",
+    "stylelint-order": "3.1.0",
     "typescript": "3.5.3"
   }
 }
