@@ -9,7 +9,11 @@
     "target": "es6",
     "declaration": true,
     "sourceMap": false,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "paths": {
+      "@leaa/common/*": ["../_leaa-common/*"],
+      "@leaa/dashboard/*": ["./*"]
+    }
   },
   "include": ["src/**/*", "typings/*"],
   "exclude": ["node_modules", "dist", "_dist"]

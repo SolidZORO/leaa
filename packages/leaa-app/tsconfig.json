@@ -9,7 +9,11 @@
     "target": "es6",
     "declaration": true,
     "sourceMap": false,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "paths": {
+      "@leaa/common/*": ["../_leaa-common/*"],
+      "@leaa/app/*": ["./*"]
+    }
   },
   "include": ["src/**/*", "config/**/*", "typings/*", "App.tsx", "index.tsx", "global.d.ts"],
   "exclude": ["node_modules", "dist", "_dist"]

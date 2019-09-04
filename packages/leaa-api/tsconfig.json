@@ -7,7 +7,11 @@
     "moduleResolution": "node",
     "sourceMap": false,
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "emitDecoratorMetadata": true,
+    "paths": {
+      "@leaa/common/*": ["../_leaa-common/*"],
+      "@leaa/api/*": ["./*"]
+    }
   },
   "include": ["src/**/*", "test/**/*", "test/*", "typings/*", "index.js"],
   "exclude": ["node_modules", "_dist"]

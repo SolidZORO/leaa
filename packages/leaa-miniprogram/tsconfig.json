@@ -21,7 +21,11 @@
     "emitDecoratorMetadata": true,
     "preserveConstEnums": true,
     "noImplicitAny": false,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "paths": {
+      "@leaa/common/*": ["../_leaa-common/*"],
+      "@leaa/leaa-miniprogram/*": ["./*"]
+    }
   },
   "include": ["src/**/*", "config/*", "typings/*", "global.d.ts"],
   "exclude": ["node_modules", "dist", "_dist"]
