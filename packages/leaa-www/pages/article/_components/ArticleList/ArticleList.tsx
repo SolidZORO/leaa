@@ -3,6 +3,7 @@ import cx from 'classnames';
 import Link from 'next/link';
 import dayjs from 'dayjs';
 
+import { HtmlMeta } from '@leaa/www/components/HtmlMeta';
 import { ArticlesWithPaginationObject } from '@leaa/common/src/dtos/article';
 
 import style from './style.less';
@@ -15,6 +16,8 @@ export default (props: IProps) => {
   return (
     <div className={style['wrapper']}>
       <div className={cx('g-full-container', style['full-container'])}>
+        <HtmlMeta title="Article" />
+
         {props.articles.items &&
           props.articles.items.map(item => (
             <div key={item.id} className={style['item']}>

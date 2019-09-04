@@ -1,22 +1,25 @@
 import React from 'react';
-import dynamic from 'next/dynamic';
+// import dynamic from 'next/dynamic';
+import { FetchResult } from 'apollo-link';
 
 import { LOGIN_BY_TICKET_FOR_WWW } from '@leaa/common/src/graphqls';
 import { IGetInitialProps } from '@leaa/www/interfaces';
 import { User } from '@leaa/common/src/entrys';
 import { authUtil, urlUtil } from '@leaa/www/utils';
 import { initApollo } from '@leaa/www/libs/init-apollo-client.lib';
+import { PageCard } from '@leaa/www/components/PageCard';
 import { HtmlMeta } from '@leaa/www/components/HtmlMeta';
-import { FetchResult } from 'apollo-link';
 
-const Login = dynamic(() => import('@leaa/www/pages/login/_components/Login/Login'));
+import Login from '@leaa/www/pages/login/_components/Login/Login';
+// const Login = dynamic(() => import('@leaa/www/pages/login/_components/Login/Login'));
 
 const nextPage = () => {
   return (
-    <>
+    <PageCard>
       <HtmlMeta title="Login" />
+
       <Login />
-    </>
+    </PageCard>
   );
 };
 

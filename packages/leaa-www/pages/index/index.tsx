@@ -6,6 +6,7 @@ import { Ax } from '@leaa/common/src/entrys';
 import { AxArgs } from '@leaa/common/src/dtos/ax';
 import { GET_AX_BY_SLUG } from '@leaa/common/src/graphqls';
 import { HtmlMeta } from '@leaa/www/components/HtmlMeta';
+import { PageCard } from '@leaa/www/components/PageCard';
 import { ErrorCard } from '@leaa/www/components/ErrorCard';
 
 const Home = dynamic(() => import('@leaa/www/pages/index/_components/Home/Home'));
@@ -17,15 +18,11 @@ export default () => {
   });
 
   return (
-    <>
-      {getAxBySlugQuery.error ? <ErrorCard error={getAxBySlugQuery.error} /> : null}
+    <PageCard loading={getAxBySlugQuery.loading}>
+      <HtmlMeta title="Leaa" disableSiteName />
 
-      {getAxBySlugQuery.data && getAxBySlugQuery.data.axBySlug && (
-        <>
-          <HtmlMeta title="Leaa" disableSiteName />
-          <Home ax={getAxBySlugQuery.data.axBySlug} />
-        </>
-      )}
-    </>
+      {getAxBySlugQuery.error ? <ErrorCard error={getAxBySlugQuery.error} /> : null}
+      {getAxBySlugQuery.data && getAxBySlugQuery.data.axBySlug && <Home ax={getAxBySlugQuery.data.axBySlug} />}
+    </PageCard>
   );
 };

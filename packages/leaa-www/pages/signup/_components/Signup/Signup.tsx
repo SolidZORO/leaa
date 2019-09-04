@@ -1,5 +1,6 @@
 import React from 'react';
 import cx from 'classnames';
+
 import SignupForm from '@leaa/www/pages/signup/_components/SignupForm/SignupForm';
 
 import style from './style.less';

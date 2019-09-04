@@ -9,6 +9,14 @@
     "version": "1.0.0",
     "entryPoint": "index.js",
     "platforms": ["ios", "android"],
+    "orientation": "portrait",
+    "ios": {
+      "bundleIdentifier": "com.solidzoro.leaa",
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "com.solidzoro.leaa"
+    },
     "packagerOpts": {
       "projectRoots": "",
       "config": "metro.config.js",

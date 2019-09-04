@@ -20,8 +20,7 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "paths": {
-      "@leaa/common/*": ["../_leaa-common/*"],
-      "@leaa/www/*": ["./*"]
+      "@leaa/common/*": ["../_leaa-common/*"]
     }
   },
   "include": ["**/*", "typings/*"],

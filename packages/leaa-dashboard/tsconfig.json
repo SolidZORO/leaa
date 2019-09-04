@@ -11,8 +11,7 @@
     "sourceMap": false,
     "experimentalDecorators": true,
     "paths": {
-      "@leaa/common/*": ["../_leaa-common/*"],
-      "@leaa/dashboard/*": ["./*"]
+      "@leaa/common/*": ["../_leaa-common/*"]
     }
   },
   "include": ["src/**/*", "typings/*"],

@@ -282,7 +282,7 @@ export { default as CheckOutline } from '@ant-design/icons/lib/outline/CheckOutl
 // export { default as LinkOutline } from '@ant-design/icons/lib/outline/LinkOutline';
 // export { default as LineHeightOutline } from '@ant-design/icons/lib/outline/LineHeightOutline';
 // export { default as LineChartOutline } from '@ant-design/icons/lib/outline/LineChartOutline';
-// export { default as LoadingOutline } from '@ant-design/icons/lib/outline/LoadingOutline';
+export { default as LoadingOutline } from '@ant-design/icons/lib/outline/LoadingOutline';
 // export { default as LoginOutline } from '@ant-design/icons/lib/outline/LoginOutline';
 // export { default as LogoutOutline } from '@ant-design/icons/lib/outline/LogoutOutline';
 // export { default as Loading3QuartersOutline } from '@ant-design/icons/lib/outline/Loading3QuartersOutline';

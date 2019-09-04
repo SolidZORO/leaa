@@ -661,3 +661,40 @@ ZEIT 大哥！`Next.js` 这可是你自家的服务啊，有必要限得那么�
 发现 RN 上 `<FlatList>` 自带的 `onEndReached` 的上拉加载是个坑，嗯，天坑。比如这篇 [ReactNative 之 FlatList 踩坑封装总结](https://juejin.im/post/5aa66ae5f265da23826da0fc)，这篇 [onEndReached triggered 2 times](https://github.com/facebook/react-native/issues/14015)，这篇 [FlatList onEndReached triggered before reach onEndReachedThreshold](https://github.com/facebook/react-native/issues/12827)，这些文章都指向了一个问题，就是上拉后会多次调用 `onEndReached`，导致无限循环加载的问题。
 
 我的解决办法比较粗暴，因为 API 可控，直接写了个方法返回文章 `nextPage`，如果没有就返回 `null`，其实类似 `items` `itemsCount` `total` `pageSize` `page` `nextPage` 这几个字段早应该包含在 `pageInfo` 里面的，因为写得匆忙，没有加上 `nextPage` 和 `itemsCount`，回头得统一加一下，或者干脆就统一使用 `paginationUtil.calcPageInfo()` 好了方便快捷。
+
+### 2019-09-04 15:04
+
+刚 RN(expo) 在跑 `dev` 的时候弹出：
+
+```
+(node:10461) UnhandledPromiseRejectionWarning: Error: jest-haste-map: Haste module naming collision:
+  Duplicate module name: @leaa/api
+  Paths: /Users/SolidZORO/Sites/leaa/packages/leaa-api/_deploy/package.json collides with /Users/SolidZORO/Sites/leaa/packages/leaa-api/package.json
+```
+
+天！RN 居然跑去遍历 `leaa-api/_deploy` 那边的目录？我已经在顶层 `package.json` 的 `nohoist` 加了 `leaa-app` 为什么还要跨界？没错，`leaa-api/_deploy` 是我今早上部署 api 时留下的文件，然后我去把这个目录删掉，app 这边马上又可以愉快的 `dev` 了。
+
+不过既然是个问题，我自然要解决。Google 一番发现要从 `rn-cli.config.js` 入手，但 expo 一般没有这个文件，因为 `app.json` 里 `packagerOpts.config` 一般会设定成 `metro.config.js`。
+
+然后改 `blacklistRE` 限制搜寻范围，不多说，上代码：
+
+```
+// metro.config.js
+
+const blacklist = require('metro-config/src/defaults/blacklist');
+
+here ------------------|
+                       v
+const blacklistRE = blacklist([/packages\/(?!leaa-app|_leaa-common).*/]);
+
+module.exports = (async () => {
+  ...
+
+  return {
+    resolver: {
+      blacklistRE,
+      sourceExts: [...sourceExts, 'less'],
+    },
+  };
+})();
+```

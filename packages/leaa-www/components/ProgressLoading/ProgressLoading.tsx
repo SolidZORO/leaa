@@ -1,33 +1,25 @@
 import React, { useEffect } from 'react';
 import Router from 'next/router';
 import NProgress from 'nprogress';
+import _ from 'lodash';
 
 interface IProps {
   showAfterMs?: number;
 }
 
 export const ProgressLoading = (props: IProps) => {
-  let timer: any = null;
+  const nStart = _.debounce(NProgress.start, props.showAfterMs || 100);
 
-  Router.events.on('routeChangeStart', () => {
-    clearTimeout(timer);
-    timer = setTimeout(NProgress.start, props.showAfterMs || 100);
-  });
+  Router.events.on('routeChangeStart', nStart);
 
   Router.events.on('routeChangeComplete', () => {
-    clearTimeout(timer);
+    nStart.cancel();
     NProgress.done();
   });
 
   Router.events.on('routeChangeError', () => {
-    clearTimeout(timer);
+    nStart.cancel();
     NProgress.done();
-  });
-
-  useEffect(() => {
-    return () => {
-      clearTimeout(timer);
-    };
   });
 
   return null;

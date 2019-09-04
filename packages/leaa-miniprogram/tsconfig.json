@@ -23,8 +23,7 @@
     "noImplicitAny": false,
     "allowSyntheticDefaultImports": true,
     "paths": {
-      "@leaa/common/*": ["../_leaa-common/*"],
-      "@leaa/leaa-miniprogram/*": ["./*"]
+      "@leaa/common/*": ["../_leaa-common/*"]
     }
   },
   "include": ["src/**/*", "config/*", "typings/*", "global.d.ts"],

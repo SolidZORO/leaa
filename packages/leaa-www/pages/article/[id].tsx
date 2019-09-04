@@ -8,6 +8,7 @@ import { ArticleArgs } from '@leaa/common/src/dtos/article';
 import { GET_ARTICLE } from '@leaa/common/src/graphqls';
 import { ErrorCard } from '@leaa/www/components/ErrorCard';
 import { HtmlMeta } from '@leaa/www/components/HtmlMeta';
+import { PageCard } from '@leaa/www/components/PageCard';
 
 const ArticleItem = dynamic(() => import('@leaa/www/pages/article/_components/ArticleItem/ArticleItem'));
 
@@ -17,16 +18,17 @@ const nextPage = ({ pageProps }: IPageProps) => {
   });
 
   return (
-    <>
+    <PageCard loading={getArticleQuery.loading}>
       {getArticleQuery.error ? <ErrorCard error={getArticleQuery.error} /> : null}
 
       {getArticleQuery && getArticleQuery.data && getArticleQuery.data.article && (
         <>
           <HtmlMeta title={getArticleQuery.data.article.title} description={getArticleQuery.data.article.description} />
+
           <ArticleItem article={getArticleQuery.data.article} />
         </>
       )}
-    </>
+    </PageCard>
   );
 };
 

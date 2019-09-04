@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'classnames';
 import { useQuery } from '@apollo/react-hooks';
-import { Layout, message } from 'antd';
+import { Layout, message, Spin, Icon } from 'antd';
 
 import { urlUtil } from '@leaa/www/utils';
 import { IPageProps } from '@leaa/www/interfaces';
@@ -16,6 +16,8 @@ import { LayoutSimpleFooter } from './_components/LayoutSimpleFooter/LayoutSimpl
 
 import '@leaa/www/styles/style.global.less';
 import style from './style.less';
+
+Spin.setDefaultIndicator(<Icon type="loading" spin style={{ fontSize: '200%' }} />);
 
 interface IProps extends IPageProps {
   children: React.ReactNode;

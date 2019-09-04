@@ -9,8 +9,7 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "paths": {
-      "@leaa/common/*": ["../_leaa-common/*"],
-      "@leaa/api/*": ["./*"]
+      "@leaa/common/*": ["../_leaa-common/*"]
     }
   },
   "include": ["src/**/*", "test/**/*", "test/*", "typings/*", "index.js"],

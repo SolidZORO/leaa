@@ -11,8 +11,7 @@
     "sourceMap": false,
     "experimentalDecorators": true,
     "paths": {
-      "@leaa/common/*": ["../_leaa-common/*"],
-      "@leaa/app/*": ["./*"]
+      "@leaa/common/*": ["../_leaa-common/*"]
     }
   },
   "include": ["src/**/*", "config/**/*", "typings/*", "App.tsx", "index.tsx", "global.d.ts"],
