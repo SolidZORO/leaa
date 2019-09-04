@@ -18,7 +18,7 @@ export const PageCard = (props: IProps) => (
       spinning={typeof props.loading !== 'undefined' ? props.loading : false}
       className={style['spin']}
       size="large"
-      delay={200}
+      delay={100}
     >
       <div className={style['container']}>{props.children}</div>
     </Spin>
