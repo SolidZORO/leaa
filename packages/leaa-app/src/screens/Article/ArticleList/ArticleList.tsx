@@ -1,9 +1,10 @@
 import dayjs from 'dayjs';
 import React, { useState } from 'react';
-import { Text, View, FlatList, SafeAreaView } from 'react-native';
+import { Text, View, FlatList, SafeAreaView, TouchableOpacity } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
 
 import { GET_ARTICLES } from '@leaa/common/src/graphqls/article.query';
+import { IScreenProps } from '@leaa/app/src/interfaces/screen.interface';
 
 import { ErrorCard } from '@leaa/app/src/components/ErrorCard';
 import { ArticlesWithPaginationObject } from '@leaa/app/src/dtos/article/articles-with-pagination.object';
@@ -11,7 +12,7 @@ import { ArticlesArgs } from '@leaa/app/src/dtos/article/articles.args';
 
 import style from './style.less';
 
-export const ArticleList = () => {
+export const ArticleList = (props: IScreenProps) => {
   const getArticlesVariables: ArticlesArgs = {
     page: 1,
     pageSize: 30,
@@ -26,15 +27,12 @@ export const ArticleList = () => {
   const [getArticlesPage, setGetArticlesPage] = useState<number>(1);
 
   const onRefreshArticles = () => {
-    console.log('ON-REFRESH-ARTICLES~~~~~~');
-
     (async () => getArticlesQuery.refetch())();
 
     setGetArticlesPage(1);
   };
 
   const onEndReachedArticles = async () => {
-    console.log('ON-REACHED-ARTICLES!!!!!!!!!');
     if (getArticlesQuery.loading || !getArticlesQuery.data || getArticlesQuery.data.articles.nextPage === null) {
       return;
     }
@@ -47,8 +45,6 @@ export const ArticleList = () => {
 
     await getArticlesQuery.fetchMore({
       updateQuery: (previousResults, { fetchMoreResult }) => {
-        console.log('>>>>>>>>>>>>', previousResults.articles.nextPage);
-
         if (!fetchMoreResult) {
           return previousResults;
         }
@@ -84,26 +80,28 @@ export const ArticleList = () => {
           }
           keyExtractor={({ id }) => `${id}`}
           renderItem={({ item }) => (
-            <View style={style['item']}>
-              <View style={style['item-title']}>
-                <Text key={item.title} style={style['item-title-text']}>
-                  {item.title}
-                </Text>
-              </View>
+            <TouchableOpacity onPress={() => props.navigation.navigate('ArticleItem', { id: item.id })}>
+              <View style={style['item']}>
+                <View style={style['item-title']}>
+                  <Text key={item.title} style={style['item-title-text']}>
+                    {item.title}
+                  </Text>
+                </View>
 
-              <View style={style['item-date']}>
-                <Text key={item.title} style={style['item-date-text']}>
-                  {dayjs(item.created_at).format('YYYY-MM-DD HH:mm:ss')}
-                </Text>
+                <View style={style['item-date']}>
+                  <Text key={item.title} style={style['item-date-text']}>
+                    {dayjs(item.created_at).format('YYYY-MM-DD HH:mm:ss')}
+                  </Text>
+                </View>
               </View>
-            </View>
+            </TouchableOpacity>
           )}
           ListFooterComponent={getArticlesQuery.loading ? <Text>正在加载更多数据...</Text> : <Text />}
           ItemSeparatorComponent={() => <View style={style['item-separator']} />}
           ListEmptyComponent={<Text style={style['item-list-empty']}>EMPTY-DATA</Text>}
           onRefresh={onRefreshArticles}
           onEndReached={onEndReachedArticles}
-          onEndReachedThreshold={0.1}
+          onEndReachedThreshold={0.2}
         />
       </View>
     </SafeAreaView>
@@ -112,4 +110,7 @@ export const ArticleList = () => {
 
 ArticleList.navigationOptions = {
   title: 'Article',
+  navigationOptions: {
+    header: null,
+  },
 };
