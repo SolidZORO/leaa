@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "@apollo/react-hooks": "^3.0.1",
+    "dayjs": "^1.8.16",
     "expo": "^34.0.1",
     "react-native": "0.59.10",
     "react-native-dotenv": "^0.2.0",

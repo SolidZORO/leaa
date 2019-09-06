@@ -9,7 +9,7 @@ import { apolloClient } from '@leaa/miniprogram/src/libs';
 
 import style from './style.less';
 
-export const ArticleList = (props: any) => {
+export const ArticleList = () => {
   const [getArticlesVariables, setGetArticlesVariables] = useState<ArticleArgs>({ page: 1, pageSize: 30 });
   const [getArticlesQuery, setGetArticlesQuery] = useState<{ articles: ArticlesWithPaginationObject }>();
   const [getArticlesLoading, setGetArticlesLoading] = useState<boolean>(false);
@@ -25,8 +25,6 @@ export const ArticleList = (props: any) => {
       })
       .then(({ data, loading }) => {
         console.log('THEN', loading);
-
-        // console.log(data);
 
         setGetArticlesQuery(data);
       })
@@ -50,19 +48,23 @@ export const ArticleList = (props: any) => {
         getArticlesQuery.articles &&
         getArticlesQuery.articles.items &&
         getArticlesQuery.articles.items.map(article => (
-          <View className={style['item']}>
-            <Navigator key={article.id} url={`/pages/article/article-item?id=${article.id}`}>
-              <View className={style['title']}>
-                <Text className={style['title-text']}>{article.title}</Text>
+          <Navigator
+            key={article.id}
+            url={`/pages/article/article-item?id=${article.id}`}
+            className={style['item-link']}
+          >
+            <View className={style['item']}>
+              <View className={style['item-title']}>
+                <Text className={style['item-title-text']}>{article.title}</Text>
               </View>
 
-              <View className={style['created-at']}>
-                <Text className={style['created-at-text']}>
+              <View className={style['item-date']}>
+                <Text className={style['item-date-text']}>
                   {dayjs(article.created_at).format('YYYY-MM-DD HH:mm:ss')}
                 </Text>
               </View>
-            </Navigator>
-          </View>
+            </View>
+          </Navigator>
         ))}
 
       {getArticlesQuery && getArticlesQuery.articles && (

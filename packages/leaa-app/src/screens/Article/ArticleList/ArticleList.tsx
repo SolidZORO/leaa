@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import React, { useState } from 'react';
 import { Text, View, FlatList, SafeAreaView } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
@@ -52,17 +53,13 @@ export const ArticleList = () => {
           return previousResults;
         }
 
-        const nextResult = {
+        return {
           ...getArticlesQuery,
           articles: {
             ...fetchMoreResult.articles,
             items: [...previousResults.articles.items, ...fetchMoreResult.articles.items],
           },
         };
-
-        // nextResult.articles.items.map(a => console.log(a.id));
-
-        return nextResult;
       },
       variables: nextArticlesPage,
     });
@@ -70,23 +67,13 @@ export const ArticleList = () => {
     setGetArticlesPage(nextPage);
   };
 
-  const separatorDom = () => (
-    <View
-      style={{
-        height: 1,
-        width: '100%',
-        backgroundColor: '#eee',
-      }}
-    />
-  );
-
   return (
     <SafeAreaView style={style['wrapper']}>
       <View>
         {getArticlesQuery.error ? <ErrorCard error={getArticlesQuery.error} /> : null}
 
-        <View style={style['title']}>
-          <Text style={style['title-text']}>文章列表</Text>
+        <View style={style['header-title']}>
+          <Text style={style['header-title-text']}>文章列表</Text>
         </View>
 
         <FlatList
@@ -96,16 +83,24 @@ export const ArticleList = () => {
             (getArticlesQuery.data && getArticlesQuery.data.articles && getArticlesQuery.data.articles.items) || null
           }
           keyExtractor={({ id }) => `${id}`}
-          renderItem={({ item, index }) => (
+          renderItem={({ item }) => (
             <View style={style['item']}>
-              <Text key={item.title} style={style['item-text']}>
-                {index}. [#{item.id}] - {item.title}
-              </Text>
+              <View style={style['item-title']}>
+                <Text key={item.title} style={style['item-title-text']}>
+                  {item.title}
+                </Text>
+              </View>
+
+              <View style={style['item-date']}>
+                <Text key={item.title} style={style['item-date-text']}>
+                  {dayjs(item.created_at).format('YYYY-MM-DD HH:mm:ss')}
+                </Text>
+              </View>
             </View>
           )}
           ListFooterComponent={getArticlesQuery.loading ? <Text>正在加载更多数据...</Text> : <Text />}
-          ItemSeparatorComponent={separatorDom}
-          ListEmptyComponent={<Text>EMPTY-DATA</Text>}
+          ItemSeparatorComponent={() => <View style={style['item-separator']} />}
+          ListEmptyComponent={<Text style={style['item-list-empty']}>EMPTY-DATA</Text>}
           onRefresh={onRefreshArticles}
           onEndReached={onEndReachedArticles}
           onEndReachedThreshold={0.1}
