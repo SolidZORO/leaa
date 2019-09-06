@@ -12,6 +12,7 @@ export class OauthController {
     return this.oauthService.verifySignature(req);
   }
 
+  @HttpCode(200)
   @Post('/wechat/session')
   async wechatSession(@Req() req: Request, @Body() body: { code: string }): Promise<any> {
     return this.oauthService.getMiniProgramSession(req, body);

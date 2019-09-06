@@ -11,16 +11,16 @@ export const LogoutButton = (props: IProps) => {
   const onLogout = async () => {
     await Taro.clearStorageSync();
 
-    await Taro.showToast({ title: '登出成功' });
-
     if (props.onLogoutCallback) {
       props.onLogoutCallback(new Date().getTime());
     }
+
+    await Taro.showToast({ title: '已安全退出' });
   };
 
   return (
     <Button className={style['logout-button']} onClick={onLogout}>
-      登出
+      安全退出
     </Button>
   );
 };

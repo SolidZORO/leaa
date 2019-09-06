@@ -2440,10 +2440,10 @@
     optional "0.1.4"
     uuid "3.3.3"
 
-"@nestjs/graphql@^6.5.0":
-  version "6.5.0"
-  resolved "https://registry.npmjs.org/@nestjs/graphql/-/graphql-6.5.0.tgz#fbe1594c82b7c22aea01784bbf06f5b4da01e0cf"
-  integrity sha512-7zNMR48u64gKQV9VNubLsk5r8IY8XN4e1WOabo3WF+CY8PqwOBHOoZdTFPlF2W0KNa+GHBWce3tp3OYbF0O/qw==
+"@nestjs/graphql@^6.5.1":
+  version "6.5.1"
+  resolved "https://registry.npmjs.org/@nestjs/graphql/-/graphql-6.5.1.tgz#c595bac4b963b7fdae5fc85e9e9245eb57253a03"
+  integrity sha512-xH1BKDhjXaikIurWakiYrrM3QpcvS93Pmp+mKCAKhsI5rL0+ELmp/FQ89bEOqRGhmgFn7Mj5QtqsGT6W1EYRiA==
   dependencies:
     "@types/graphql" "14.2.3"
     chokidar "3.0.2"
@@ -3479,10 +3479,10 @@
     "@types/prop-types" "*"
     "@types/react" "*"
 
-"@types/react-native@^0.57.65":
-  version "0.57.65"
-  resolved "https://registry.npmjs.org/@types/react-native/-/react-native-0.57.65.tgz#9da4773aaa95924bce42a54a5c19cfd8ffd5022b"
-  integrity sha512-7P5ulTb+/cnwbABWaAjzKmSYkRWeK7UCTfUwHhDpnwxdiL2X/KbdN1sPgo0B2E4zxfYE3MEoHv7FhB8Acfvf8A==
+"@types/react-native@^0.60.11":
+  version "0.60.11"
+  resolved "https://registry.npmjs.org/@types/react-native/-/react-native-0.60.11.tgz#c797f89180291c3a1d6f573f1e89644c8c17f60e"
+  integrity sha512-JAe7/UCGhnXxTwHCix1Gs6EbbCTeqU8TxxKHKNrsVtECZ9cPYp1UmJoDIDaNTz8o1/9nTFOtPj7CvHp2hWpEIQ==
   dependencies:
     "@types/prop-types" "*"
     "@types/react" "*"
@@ -3664,17 +3664,6 @@
   version "0.8.0"
   resolved "https://registry.npmjs.org/@types/zen-observable/-/zen-observable-0.8.0.tgz#8b63ab7f1aa5321248aad5ac890a485656dcea4d"
   integrity sha512-te5lMAWii1uEJ4FwLjzdlbw3+n0FZNOvFXHxQDKeT0dilh7HOzdMzV2TrJVUzq8ep7J4Na8OUYPRLSQkJHAlrg==
-
-"@typescript-eslint/eslint-plugin@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.npmjs.org/@typescript-eslint/eslint-plugin/-/eslint-plugin-2.0.0.tgz#609a5d7b00ce21a6f94d7ef282eba9da57ca1e42"
-  integrity sha512-Mo45nxTTELODdl7CgpZKJISvLb+Fu64OOO2ZFc2x8sYSnUpFrBUW3H+H/ZGYmEkfnL6VkdtOSxgdt+Av79j0sA==
-  dependencies:
-    "@typescript-eslint/experimental-utils" "2.0.0"
-    eslint-utils "^1.4.0"
-    functional-red-black-tree "^1.0.1"
-    regexpp "^2.0.1"
-    tsutils "^3.14.0"
 
 "@typescript-eslint/eslint-plugin@^2.1.0":
   version "2.1.0"
@@ -9454,13 +9443,6 @@ eslint-config-airbnb@^17.1.0:
     eslint-config-airbnb-base "^13.2.0"
     object.assign "^4.1.0"
     object.entries "^1.1.0"
-
-eslint-config-prettier@^6.1.0:
-  version "6.1.0"
-  resolved "https://registry.npmjs.org/eslint-config-prettier/-/eslint-config-prettier-6.1.0.tgz#e6f678ba367fbd1273998d5510f76f004e9dce7b"
-  integrity sha512-k9fny9sPjIBQ2ftFTesJV21Rg4R/7a7t7LCtZVrYQiHEp8Nnuk3EGaDmsKSAnsPj0BYcgB2zxzHa2NTkIxcOLg==
-  dependencies:
-    get-stdin "^6.0.0"
 
 eslint-config-prettier@^6.2.0:
   version "6.2.0"

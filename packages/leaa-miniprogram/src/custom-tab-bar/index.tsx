@@ -39,7 +39,7 @@ export class CustomTabBar extends Taro.Component<IProps, IState> {
             onClick={() => this.onSwitchTab(t.pagePath)}
           >
             <View className={style['icon']}>
-              <Text className={`icon fi anticon-x-${t.icon}`} />
+              <Text className={`fi anticon-x-${t.icon}`} />
             </View>
 
             <Text className={style['label']}>{t.text}</Text>

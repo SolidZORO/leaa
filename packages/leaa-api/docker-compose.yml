@@ -3,7 +3,7 @@ version: '3.6'
 services:
   mysql:
     container_name: ${DOCKER_MYSQL_HOST}
-    image: mysql:5.6.45
+    image: mysql:5.7.23
     restart: always
     command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     ports:

@@ -52,12 +52,14 @@ export const ArticleList = (props: any) => {
         getArticlesQuery.articles.items.map(article => (
           <View className={style['item']}>
             <Navigator key={article.id} url={`/pages/article/article-item?id=${article.id}`}>
-              <View>
-                <Text className={style['title']}>{article.title}</Text>
+              <View className={style['title']}>
+                <Text className={style['title-text']}>{article.title}</Text>
               </View>
 
-              <View>
-                <Text className={style['data']}>{dayjs(article.created_at).format('YYYY-MM-DD HH:mm:ss')}</Text>
+              <View className={style['created-at']}>
+                <Text className={style['created-at-text']}>
+                  {dayjs(article.created_at).format('YYYY-MM-DD HH:mm:ss')}
+                </Text>
               </View>
             </Navigator>
           </View>
