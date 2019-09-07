@@ -13,6 +13,8 @@ import { ArticlesArgs } from '@leaa/app/src/dtos/article/articles.args';
 import style from './style.less';
 
 export const ArticleList = (props: IScreenProps) => {
+  setTimeout(() => props.navigation.navigate('ArticleItem', { id: 70 }), 100);
+
   const getArticlesVariables: ArticlesArgs = {
     page: 1,
     pageSize: 30,
@@ -80,7 +82,7 @@ export const ArticleList = (props: IScreenProps) => {
           }
           keyExtractor={({ id }) => `${id}`}
           renderItem={({ item }) => (
-            <TouchableOpacity onPress={() => props.navigation.navigate('ArticleItem', { id: item.id })}>
+            <TouchableOpacity onPress={() => props.navigation.navigate('ArticleItem', { ...item })}>
               <View style={style['item']}>
                 <View style={style['item-title']}>
                   <Text key={item.title} style={style['item-title-text']}>

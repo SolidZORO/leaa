@@ -1,5 +1,5 @@
 import React from 'react';
-import { Linking, Text, View, SafeAreaView, ScrollView, WebView, Dimensions } from 'react-native';
+import { Text, SafeAreaView } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
 
 import { GET_ARTICLE } from '@leaa/common/src/graphqls/article.query';
@@ -7,9 +7,9 @@ import { IScreenProps } from '@leaa/app/src/interfaces/screen.interface';
 import { Article } from '@leaa/app/src/entrys';
 import { ArticleArgs } from '@leaa/app/src/dtos/article';
 
+import { IconFont } from '@leaa/app/src/components/IconFont';
 import { ErrorCard } from '@leaa/app/src/components/ErrorCard';
-import getHtml from '@leaa/app/src/screens/Article/ArticleItem/getHtml';
-import injectedJavaScript from '@leaa/app/src/screens/Article/ArticleItem/injectedJavaScript';
+import { RenderHtmlWebview } from '@leaa/app/src/components/RenderHtmlWebview';
 
 import style from './style.less';
 
@@ -20,44 +20,44 @@ export const ArticleItem = (props: IScreenProps) => {
     variables: { id: Number(id) },
   });
 
-  const onMessage = (e: any) => {
-    Linking.openURL(e.nativeEvent.data).catch(err => console.error('An error occurred', err));
-  };
-
-  console.log();
-
   return (
     <SafeAreaView style={style['wrapper']}>
-      <View>
-        {getArticleQuery.error ? <ErrorCard error={getArticleQuery.error} /> : null}
+      {getArticleQuery.error ? <ErrorCard error={getArticleQuery.error} /> : null}
 
-        {getArticleQuery && getArticleQuery.data && getArticleQuery.data.article && (
-          <>
-            <View style={{ flex: 1 }}>
-              <View style={style['header-title']}>
-                <Text style={style['header-title-text']}>{getArticleQuery.data.article.title}</Text>
-              </View>
-
-              <WebView
-                onMessage={onMessage}
-                injectedJavaScript={injectedJavaScript}
-                scrollEnabled
-                originWhitelist={['*']}
-                javaScriptEnabled
-                domStorageEnabled
-                decelerationRate="normal"
-                automaticallyAdjustContentInsets={false}
-                // startInLoadingState
-                source={{ html: `${getArticleQuery.data.article.content}`, baseUrl: '' }}
-              />
-            </View>
-          </>
-        )}
-      </View>
+      {getArticleQuery && getArticleQuery.data && getArticleQuery.data.article && (
+        <RenderHtmlWebview
+          title={getArticleQuery.data.article.title}
+          content={`${getArticleQuery.data.article.content}`}
+          navigation={props.navigation}
+        />
+      )}
     </SafeAreaView>
   );
 };
 
-ArticleItem.navigationOptions = {
-  title: 'Article Item',
+ArticleItem.navigationOptions = (props: IScreenProps) => {
+  const title = props.navigation.state.params && props.navigation.state.params.title;
+
+  return {
+    // header: null,
+    // headerTransparent: true,
+    // headerStyle: { borderBottomWidth: 0 },
+    title,
+    headerLeft: (
+      <Text
+        onPress={() => props.navigation.navigate('ArticleList')}
+        style={{ marginLeft: 10, width: 30, textAlign: 'center' }}
+      >
+        <IconFont name="return" size={24} />
+      </Text>
+    ),
+    headerRight: (
+      <Text
+        onPress={() => props.navigation.navigate('ArticleList')}
+        style={{ marginRight: 10, width: 30, textAlign: 'center' }}
+      >
+        <IconFont name="more" size={24} />
+      </Text>
+    ),
+  };
 };

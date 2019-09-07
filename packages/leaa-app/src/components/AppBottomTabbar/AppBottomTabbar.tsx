@@ -9,9 +9,9 @@ import { IconFont } from '@leaa/app/src/components/IconFont';
 
 const AppBottomTabbar = createBottomTabNavigator(
   {
-    Home: { screen: Home, title: 'Home', params: { icon: 'x-home' } },
-    ArticleList: { screen: ArticleList, title: 'Article', params: { icon: 'x-article' } },
-    Account: { screen: Account, title: 'Account', params: { icon: 'x-account' } },
+    Home: { screen: Home, title: 'Home', params: { icon: 'shouye' } },
+    ArticleList: { screen: ArticleList, title: 'Article', params: { icon: 'wenzhang' } },
+    Account: { screen: Account, title: 'Account', params: { icon: 'shequ' } },
     // ArticleItem: { screen: ArticleItem, title: 'ArticleItem', params: { icon: 'x-article' } },
   },
   {

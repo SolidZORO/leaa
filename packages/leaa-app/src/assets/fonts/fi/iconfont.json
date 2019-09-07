@@ -1,17 +1,102 @@
 {
-  "x-qrcode": 59265,
-
-  "x-menu": 59256,
-
-  "x-close": 59269,
-
-  "x-cart": 59257,
-
-  "x-article": 59511,
-
-  "x-account": 59514,
-
-  "x-home": 59515,
-
-  "untitled-": 58880
+"add":59103, 
+"close":59113, 
+"enter":59128, 
+"flag":59131, 
+"flashlight":59132, 
+"like":59143, 
+"more":59152, 
+"order":59155, 
+"other":59156, 
+"refresh":59166, 
+"remind":59167, 
+"return":59168, 
+"right":59169, 
+"send":59174, 
+"setup":59176, 
+"share":59177, 
+"switch":59182, 
+"undo":59193, 
+"warning":59197, 
+"search":59201, 
+"packup":59209, 
+"unfold":59210, 
+"anquan":59506, 
+"caidan":59507, 
+"aixin":59508, 
+"bianji":59509, 
+"chenggong":59510, 
+"aliyu":59511, 
+"dianhua":59512, 
+"buganxingqu":59513, 
+"bangzhu":59514, 
+"bofangjilu":59515, 
+"fenxiang":59516, 
+"dianzan":59517, 
+"dianyingpiao":59518, 
+"huati":59519, 
+"fuzhi":59520, 
+"dianying":59521, 
+"hongbao":59522, 
+"dingdan":59523, 
+"kabao":59524, 
+"dingwei":59525, 
+"gongyi":59526, 
+"ditu":59527, 
+"jianshao":59528, 
+"nan":59529, 
+"nv":59530, 
+"lihe":59531, 
+"mima":59532, 
+"paihangbang":59533, 
+"rili":59534, 
+"pengyouquan":59535, 
+"shanchu":59536, 
+"qupiao":59537, 
+"pinglun":59538, 
+"shaixuan":59539, 
+"lipinka":59540, 
+"shangquan":59541, 
+"shengyin":59542, 
+"shequ":59543, 
+"shandian":59544, 
+"shezhi":59545, 
+"shijian":59546, 
+"shouye":59547, 
+"shengyinguanbi":59548, 
+"shibai":59549, 
+"shangchuan":59550, 
+"saoyisao":59551, 
+"shuju":59552, 
+"sousuo":59553, 
+"taolunqu":59554, 
+"weixin":59555, 
+"tupian":59556, 
+"shouji":59557, 
+"tuipiao":59558, 
+"tishi":59559, 
+"weibo":59560, 
+"shuaxin":59561, 
+"xiangji":59562, 
+"wode":59563, 
+"xiaoxizhongxin":59564, 
+"xiangkan":59565, 
+"xiazai":59566, 
+"xiaoshi":59567, 
+"shoucang":59568, 
+"xiaoxi":59569, 
+"xiaojuchang":59570, 
+"xiaomi":59571, 
+"yingchengka":59572, 
+"yuyin":59573, 
+"zengjia":59574, 
+"yixiangkan":59575, 
+"yinhangka":59576, 
+"yanchu":59577, 
+"wifi":59578, 
+"youhuiquan":59579, 
+"zhibo":59580, 
+"yulebao":59581, 
+"zhiwen":59582, 
+"wenzhang":58880, 
 }

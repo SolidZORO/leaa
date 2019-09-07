@@ -7,7 +7,12 @@
 .full-layout-inner {
   position: relative;
   min-height: 100vh;
-  background-color: #f5f6fa;
+
+  :global {
+    .ant-layout {
+      background-color: #f3f6f8;
+    }
+  }
 }
 
 .full-layout-container {

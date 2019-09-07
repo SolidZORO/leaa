@@ -11,7 +11,7 @@ export const Account = () => {
     <View style={style['container']}>
       <View style={style['textwrapper']}>
         <Text style={style['home-label']}>
-          <IconFont name="x-account" size={18} /> Account {envConfig.APP_NAME}
+          <IconFont name="shequ" size={18} /> Account {envConfig.APP_NAME}
         </Text>
       </View>
     </View>

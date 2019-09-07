@@ -1,4 +1,6 @@
-#!/bin/sh
+#! /bin/sh
+
+cd "$(dirname "$0")" || exit
 
 #if [ $# != 1 ] ; then
 #    echo "usage: $0 iconfont.svg(your svg file name)"
@@ -7,6 +9,8 @@
 
 #OutputFile path,you can customize your path
 InputFileName="iconfont.svg"
+# shellcheck disable=SC2116
+# shellcheck disable=SC2006
 OutputFileName=`echo iconfont.json`
 
 # shellcheck disable=SC2006
