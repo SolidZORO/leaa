@@ -10039,7 +10039,7 @@ expo-sqlite@~6.0.0:
     "@types/websql" "^0.0.27"
     lodash "^4.17.11"
 
-expo-web-browser@~6.0.0:
+expo-web-browser@^6.0.0, expo-web-browser@~6.0.0:
   version "6.0.0"
   resolved "https://registry.npmjs.org/expo-web-browser/-/expo-web-browser-6.0.0.tgz#63a59d4c02cd7ba47faa6a2eb04decb1a1ab2a32"
   integrity sha512-7XkFPd4PRlVP6FscTnn78c0tY6+yLzb2Eai/ed+l+LB+hZWuhyY3ONzYM7/IKAiPmfhZr4Qs80vIa7iiavti8A==
@@ -19299,19 +19299,6 @@ react-lifecycles-compat@^3.0.2, react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.npmjs.org/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
-
-react-native-android-image-polyfill@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.npmjs.org/react-native-android-image-polyfill/-/react-native-android-image-polyfill-1.0.0.tgz#f0b61bac0c6a91b8f8f81233ab1998613adf64ac"
-  integrity sha1-8LYbrAxqkbj4+BIzqxmYYTrfZKw=
-
-react-native-auto-height-image@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.npmjs.org/react-native-auto-height-image/-/react-native-auto-height-image-1.1.1.tgz#945fadafc033fbc58504bd8e5ff7ab0b6d094bc0"
-  integrity sha512-biRPROZY7MFX/lnkcikGPlyw3hpkl4sb9aT3hKIJEL8kxySka3y83k2rWyBNvoIMbja1HMHSyRAxbvZJUG9gHA==
-  dependencies:
-    prop-types "^15.5.8"
-    react-native-android-image-polyfill "^1.0.0"
 
 react-native-branch@~3.0.1:
   version "3.0.1"

@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
-import { SafeAreaView, WebView } from 'react-native';
+import { SafeAreaView, WebView, NavState } from 'react-native';
 import { NavigationScreenProp, NavigationRoute } from 'react-navigation';
+import { openBrowserAsync } from 'expo-web-browser';
 
 import { htmlContent } from '@leaa/app/src/components/RenderHtmlWebview/htmlContent';
 import { htmlScript } from '@leaa/app/src/components/RenderHtmlWebview/htmlScript';
@@ -14,6 +15,7 @@ interface IProps {
 }
 
 export const RenderHtmlWebview = (props: IProps) => {
+  // let webViewRef: WebView | null = null;
   const webViewRef = useRef<WebView>(null);
 
   const onMessage = (e: any) => {
@@ -21,15 +23,16 @@ export const RenderHtmlWebview = (props: IProps) => {
     // setHeight(parseInt(e.nativeEvent.data, 10));
   };
 
-  const onNavigationStateChange = (e: any) => {
-    if (e.navigationType === 'click') {
+  const onNavigationStateChange = (navState: NavState) => {
+    if (navState.navigationType === 'click') {
       if (webViewRef.current) {
         webViewRef.current.stopLoading();
       }
 
-      console.log(e.url);
-      props.navigation.navigate('LinkWebview', { uri: e.url });
-      // Linking.openURL(e.url).catch(err => console.error('An error occurred', err));
+      if (navState.url) {
+        openBrowserAsync(navState.url, { enableBarCollapsing: true }).then();
+      }
+      // Linking.openURL(navState.url);
     }
   };
 
