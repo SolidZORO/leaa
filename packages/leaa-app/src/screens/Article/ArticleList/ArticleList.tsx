@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
-import React, { useState, useEffect } from 'react';
-import { Text, View, FlatList, SafeAreaView, TouchableOpacity, Animated, Easing } from 'react-native';
+import React, { useState } from 'react';
+import { Text, View, FlatList, SafeAreaView, TouchableOpacity, Animated } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
 
 import { GET_ARTICLES } from '@leaa/common/src/graphqls/article.query';
@@ -13,9 +13,6 @@ import { ArticlesArgs } from '@leaa/app/src/dtos/article/articles.args';
 import style from './style.less';
 
 export const ArticleList = (props: IScreenProps) => {
-  const [smallTitle, setSmallTitle] = useState<boolean>(false);
-  const [titleFontSize] = useState(new Animated.Value(32));
-
   const getArticlesVariables: ArticlesArgs = {
     page: 1,
     pageSize: 30,
@@ -23,15 +20,12 @@ export const ArticleList = (props: IScreenProps) => {
     orderBy: 'id',
   };
 
-  useEffect(() => {
-    Animated.spring(titleFontSize, { toValue: smallTitle ? 18 : 32 }).start();
-  }, [smallTitle]);
-
   const getArticlesQuery = useQuery<{ articles: ArticlesWithPaginationObject }, ArticlesArgs>(GET_ARTICLES, {
     variables: getArticlesVariables,
   });
 
   const [getArticlesPage, setGetArticlesPage] = useState<number>(1);
+  const [scrollOffset] = useState(new Animated.Value(0));
 
   const onRefreshArticles = () => {
     (async () => getArticlesQuery.refetch())();
@@ -40,11 +34,7 @@ export const ArticleList = (props: IScreenProps) => {
   };
 
   const onScrollArticles = (e: any) => {
-    if (e.nativeEvent.contentOffset.y > 0) {
-      setSmallTitle(true);
-    } else {
-      setSmallTitle(false);
-    }
+    scrollOffset.setValue(e.nativeEvent.contentOffset.y);
   };
 
   const onEndReachedArticles = async () => {
@@ -84,7 +74,18 @@ export const ArticleList = (props: IScreenProps) => {
         {getArticlesQuery.error ? <ErrorCard error={getArticlesQuery.error} /> : null}
 
         <View style={style['header-title']}>
-          <Animated.Text style={{ ...style['header-title-text'], fontSize: titleFontSize }}>文章列表</Animated.Text>
+          <Animated.Text
+            style={{
+              ...style['header-title-text'],
+              fontSize: scrollOffset.interpolate({
+                inputRange: [0, 150],
+                outputRange: [32, 16],
+                extrapolate: 'clamp',
+              }),
+            }}
+          >
+            文章列表
+          </Animated.Text>
         </View>
 
         <FlatList
