@@ -36,14 +36,14 @@ export const ArticleItemScreen = (props: IScreenProps) => {
   );
 };
 
-ArticleItemScreen.navigationOptions = (props: NavigationScreenProps) => {
-  const title = props.navigation.state.params && props.navigation.state.params.title;
+ArticleItemScreen.navigationOptions = ({ navigation, navigationOptions }: NavigationScreenProps) => {
+  const title = navigation.state.params && navigation.state.params.title;
 
   return {
     title,
     headerLeft: (
       <Text
-        onPress={() => props.navigation.navigate('ArticleList')}
+        onPress={() => navigation.navigate('ArticleList')}
         style={{ marginLeft: 10, width: 30, textAlign: 'center' }}
       >
         <IconFont name="return" size={24} />

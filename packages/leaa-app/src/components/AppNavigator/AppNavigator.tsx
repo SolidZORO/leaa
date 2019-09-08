@@ -11,29 +11,19 @@ import { LinkWebviewScreen } from '@leaa/app/src/screens/Misc/LinkWebviewScreen/
 
 const routeConfigs = {
   Tabs: { screen: AppBottomTabs },
-  // Home: {
-  //   screen: HomeScreen,
-  //   // headerMode: 'none',
-  //   navigationOptions: {
-  //     header: null,
-  //   },
-  // },
+};
+
+const AppNavigator = createStackNavigator({
+  Tabs: {
+    ...routeConfigs.Tabs,
+    navigationOptions: {
+      header: null,
+    },
+  },
+  Home: { screen: HomeScreen },
   ArticleList: { screen: ArticleListScreen },
   ArticleItem: { screen: ArticleItemScreen },
   LinkWebview: { screen: LinkWebviewScreen },
-};
+});
 
-// const AppNavigator = createStackNavigator(routeConfigs, {
-//   // headerMode: 'none',
-//   // navigationOptions: {
-//   //   header: null,
-//   // },
-// });
-
-export default createAppContainer(
-  createStackNavigator(routeConfigs, {
-    // initialRouteName: 'Home',
-    // headerMode: 'none',
-    // mode: Platform.OS === 'ios' ? 'modal' : 'card',
-  }),
-);
+export default createAppContainer(AppNavigator);

@@ -20,7 +20,4 @@ export const HomeScreen = (props: IScreenProps) => {
   );
 };
 
-// HomeScreen.navigationOptions = ({ navigation, navigationOptions }: NavigationScreenProps) => ({
-//   header: null,
-//   // headerMode: 'none',
-// });
+HomeScreen.navigationOptions = ({ navigation, navigationOptions }: NavigationScreenProps) => {};

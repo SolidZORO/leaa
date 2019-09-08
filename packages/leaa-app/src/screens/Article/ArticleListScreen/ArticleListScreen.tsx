@@ -7,6 +7,7 @@ import { useQuery } from '@apollo/react-hooks';
 import { IScreenProps } from '@leaa/app/src/interfaces';
 import { GET_ARTICLES } from '@leaa/common/src/graphqls/article.query';
 
+import { AnimatedTitle } from '@leaa/app/src/components/AnimatedTitle';
 import { ErrorCard } from '@leaa/app/src/components/ErrorCard';
 import { ArticlesWithPaginationObject } from '@leaa/app/src/dtos/article/articles-with-pagination.object';
 import { ArticlesArgs } from '@leaa/app/src/dtos/article/articles.args';
@@ -75,18 +76,7 @@ export const ArticleListScreen = (props: IScreenProps) => {
         {getArticlesQuery.error ? <ErrorCard error={getArticlesQuery.error} /> : null}
 
         <View style={style['header-title']}>
-          <Animated.Text
-            style={{
-              ...style['header-title-text'],
-              fontSize: scrollOffset.interpolate({
-                inputRange: [0, 150],
-                outputRange: [32, 16],
-                extrapolate: 'clamp',
-              }),
-            }}
-          >
-            文章列表
-          </Animated.Text>
+          <AnimatedTitle title="文章列表" scrollOffset={scrollOffset} />
         </View>
 
         <FlatList
@@ -126,4 +116,4 @@ export const ArticleListScreen = (props: IScreenProps) => {
   );
 };
 
-ArticleListScreen.navigationOptions = (props: NavigationScreenProps) => {};
+ArticleListScreen.navigationOptions = ({ navigation, navigationOptions }: NavigationScreenProps) => ({});
