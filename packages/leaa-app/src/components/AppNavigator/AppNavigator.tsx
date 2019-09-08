@@ -2,28 +2,38 @@ import React from 'react';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer } from 'react-navigation';
 
-import AppBottomTabbar from '@leaa/app/src/components/AppBottomTabbar/AppBottomTabbar';
+import AppBottomTabs from '@leaa/app/src/components/AppBottomTabs/AppBottomTabs';
 
-import { Home } from '@leaa/app/src/screens/Home/Home/Home';
-import { ArticleList } from '@leaa/app/src/screens/Article/ArticleList/ArticleList';
-import { ArticleItem } from '@leaa/app/src/screens/Article/ArticleItem/ArticleItem';
-import { LinkWebview } from '@leaa/app/src/screens/Misc/LinkWebview/LinkWebview';
+import { HomeScreen } from '@leaa/app/src/screens/Home/HomeScreen/HomeScreen';
+import { ArticleListScreen } from '@leaa/app/src/screens/Article/ArticleListScreen/ArticleListScreen';
+import { ArticleItemScreen } from '@leaa/app/src/screens/Article/ArticleItemScreen/ArticleItemScreen';
+import { LinkWebviewScreen } from '@leaa/app/src/screens/Misc/LinkWebviewScreen/LinkWebviewScreen';
 
-const navConfig = {
-  Tabs: { screen: AppBottomTabbar, path: 'Tabs' },
+const routeConfigs = {
+  Tabs: { screen: AppBottomTabs },
+  // Home: {
+  //   screen: HomeScreen,
+  //   // headerMode: 'none',
+  //   navigationOptions: {
+  //     header: null,
+  //   },
+  // },
+  ArticleList: { screen: ArticleListScreen },
+  ArticleItem: { screen: ArticleItemScreen },
+  LinkWebview: { screen: LinkWebviewScreen },
 };
 
-const AppNavigator = createStackNavigator({
-  Tabs: {
-    ...navConfig.Tabs,
-    navigationOptions: {
-      header: null,
-    },
-  },
-  Home,
-  ArticleList,
-  ArticleItem,
-  LinkWebview,
-});
+// const AppNavigator = createStackNavigator(routeConfigs, {
+//   // headerMode: 'none',
+//   // navigationOptions: {
+//   //   header: null,
+//   // },
+// });
 
-export default createAppContainer(AppNavigator);
+export default createAppContainer(
+  createStackNavigator(routeConfigs, {
+    // initialRouteName: 'Home',
+    // headerMode: 'none',
+    // mode: Platform.OS === 'ios' ? 'modal' : 'card',
+  }),
+);

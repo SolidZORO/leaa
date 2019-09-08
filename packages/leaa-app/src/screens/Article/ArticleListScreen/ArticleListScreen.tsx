@@ -1,10 +1,11 @@
 import dayjs from 'dayjs';
 import React, { useState } from 'react';
 import { Text, View, FlatList, SafeAreaView, TouchableOpacity, Animated } from 'react-native';
+import { NavigationScreenProps } from 'react-navigation';
 import { useQuery } from '@apollo/react-hooks';
 
+import { IScreenProps } from '@leaa/app/src/interfaces';
 import { GET_ARTICLES } from '@leaa/common/src/graphqls/article.query';
-import { IScreenProps } from '@leaa/app/src/interfaces/screen.interface';
 
 import { ErrorCard } from '@leaa/app/src/components/ErrorCard';
 import { ArticlesWithPaginationObject } from '@leaa/app/src/dtos/article/articles-with-pagination.object';
@@ -12,7 +13,7 @@ import { ArticlesArgs } from '@leaa/app/src/dtos/article/articles.args';
 
 import style from './style.less';
 
-export const ArticleList = (props: IScreenProps) => {
+export const ArticleListScreen = (props: IScreenProps) => {
   const getArticlesVariables: ArticlesArgs = {
     page: 1,
     pageSize: 30,
@@ -125,9 +126,4 @@ export const ArticleList = (props: IScreenProps) => {
   );
 };
 
-ArticleList.navigationOptions = {
-  title: 'Article',
-  navigationOptions: {
-    header: null,
-  },
-};
+ArticleListScreen.navigationOptions = (props: NavigationScreenProps) => {};

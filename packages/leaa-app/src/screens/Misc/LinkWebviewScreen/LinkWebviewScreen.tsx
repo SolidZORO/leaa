@@ -7,7 +7,7 @@ import style from './style.less';
 
 interface IProps extends IScreenProps {}
 
-export const LinkWebview = (props: IProps) => {
+export const LinkWebviewScreen = (props: IProps) => {
   const uri = props.navigation.state.params && props.navigation.state.params.uri;
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -40,25 +40,3 @@ export const LinkWebview = (props: IProps) => {
     </SafeAreaView>
   );
 };
-
-// LinkWebview.navigationOptions = (props: IScreenProps) => {
-//   const title = props.navigation.state.params && props.navigation.state.params.title;
-//   const gobackKey = props.navigation.state.params && props.navigation.state.params.gobackKey;
-//
-//   console.log('gobackKey', gobackKey);
-//
-//   return {
-//     // header: null,
-//     headerTransparent: true,
-//     headerStyle: { borderBottomWidth: 0 },
-//     title,
-//     headerLeft: (
-//       <Text
-//         onPress={() => props.navigation.goBack(gobackKey)}
-//         style={{ marginLeft: 10, width: 30, textAlign: 'center' }}
-//       >
-//         <IconFont name="return" size={24} />
-//       </Text>
-//     ),
-//   };
-// };

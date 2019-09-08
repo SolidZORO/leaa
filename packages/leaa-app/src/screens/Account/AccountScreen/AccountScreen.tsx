@@ -1,12 +1,13 @@
 import React from 'react';
 import { Text, View } from 'react-native';
+import { NavigationScreenProps } from 'react-navigation';
 
 import { envConfig } from '@leaa/app/src/configs';
 import { IconFont } from '@leaa/app/src/components/IconFont';
 
 import style from './style.less';
 
-export const Account = () => {
+export const AccountScreen = () => {
   return (
     <View style={style['container']}>
       <View style={style['textwrapper']}>
@@ -18,6 +19,4 @@ export const Account = () => {
   );
 };
 
-Account.navigationOptions = {
-  title: 'Home',
-};
+AccountScreen.navigationOptions = (props: NavigationScreenProps) => {};

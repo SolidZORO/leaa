@@ -1,3 +1,3 @@
-import { SceneViewProps } from 'react-navigation';
+import { NavigationScreenProps } from 'react-navigation';
 
-export interface IScreenProps extends SceneViewProps {}
+export interface IScreenProps extends NavigationScreenProps {}
