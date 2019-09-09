@@ -49,6 +49,7 @@ export class SaveInLocalService {
     Jimp.read(file.path)
       .then(image => {
         image
+          // @ts-ignore
           .resize(width, height)
           .quality(95)
           .write(pathAt1x);

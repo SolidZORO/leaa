@@ -70,6 +70,7 @@ export class Attachment extends Base {
   @Column({
     type: 'varchar',
     length: 512,
+    nullable: true,
     comment: 'support multi-urls, e.g.: https://a.com/a.jpg|https://a.com/a_2x.jpg',
   })
   @Field(() => String)
