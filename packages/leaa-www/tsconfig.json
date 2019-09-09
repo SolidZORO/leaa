@@ -8,7 +8,6 @@
     "target": "esnext",
     "module": "esnext",
     "skipLibCheck": true,
-    "declaration": true,
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "sourceMap": false,
