@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { SafeAreaView, WebView, RefreshControl, ScrollView } from 'react-native';
+import { SafeAreaView, RefreshControl, ScrollView } from 'react-native';
+import { WebView } from 'react-native-webview';
 
 import { IScreenProps } from '@leaa/app/src/interfaces';
 

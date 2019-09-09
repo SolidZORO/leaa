@@ -15,6 +15,8 @@ import { ArticlesArgs } from '@leaa/app/src/dtos/article/articles.args';
 import style from './style.less';
 
 export const ArticleListScreen = (props: IScreenProps) => {
+  // setTimeout(() => props.navigation.navigate('ArticleItem', { id: 69 }), 100);
+
   const getArticlesVariables: ArticlesArgs = {
     page: 1,
     pageSize: 30,
