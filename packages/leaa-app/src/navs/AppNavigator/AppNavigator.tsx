@@ -34,6 +34,7 @@ export const AppContainer = createAppContainer(
       Auth: AuthNavigator,
     },
     {
+      initialRouteName: 'Auth',
       mode: 'modal',
       headerMode: 'none',
     },

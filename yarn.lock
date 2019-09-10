@@ -19632,6 +19632,11 @@ react-helmet@^5.2.1:
     react-fast-compare "^2.0.2"
     react-side-effect "^1.1.0"
 
+react-hook-form@^3.23.5:
+  version "3.23.5"
+  resolved "https://registry.npmjs.org/react-hook-form/-/react-hook-form-3.23.5.tgz#92239fe62381794bd1065e60a241ab84ed9c6c91"
+  integrity sha512-EJ0RT/Mh/jWmXYIr75K68aY4lLrM4mt4vTfTcU2ZaVctN5FE6G3VsfDKZ8j9T1yax8snN+saXyGG08braafjyQ==
+
 react-i18next@^10.12.3:
   version "10.12.3"
   resolved "https://registry.npmjs.org/react-i18next/-/react-i18next-10.12.3.tgz#50a537a0892a818f643bc1154d568a9f8fbb1aa2"
@@ -19768,6 +19773,11 @@ react-native-screens@1.0.0-alpha.22:
   integrity sha512-tOxHGQUN83MTmQB4ghoQkibqOdGiX4JQEmeyEv96MKWO/x8T2PJv84ECUos9hD3blPRQwVwSpAid1PPPhrVEaw==
   dependencies:
     debounce "^1.2.0"
+
+react-native-svg@~9.5.1:
+  version "9.5.3"
+  resolved "https://registry.npmjs.org/react-native-svg/-/react-native-svg-9.5.3.tgz#2389f3ffd700c6441166496a1aeade31ead89c59"
+  integrity sha512-VUOe4TLz7RFdmm/XT9EH87VSwlRykx49qbwJMA+dh9eFM7KPY1qH3kEyN7uRCqJD2eE8toxt9NpjR6ByvtPNlA==
 
 react-native-tab-view@^2.9.0:
   version "2.10.0"
