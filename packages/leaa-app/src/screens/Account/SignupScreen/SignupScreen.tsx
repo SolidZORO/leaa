@@ -22,7 +22,6 @@ SignupScreen.navigationOptions = (props: IProps): INavigationStackOptions => {
   return {
     // title: 'Signup',
     headerTransparent: true,
-    headerStyle: { marginTop: 30, backgroundColor: 'red' },
     headerLeft: () => (
       <Text
         onPress={() => props.navigation.navigate('Login')}
