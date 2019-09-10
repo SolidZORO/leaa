@@ -2,7 +2,7 @@ import React from 'react';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer } from 'react-navigation';
 
-import AppBottomTabs from '@leaa/app/src/components/AppBottomTabs/AppBottomTabs';
+import AppBottomTabs from '@leaa/app/src/navs/AppBottomTabs/AppBottomTabs';
 
 import { HomeScreen } from '@leaa/app/src/screens/Home/HomeScreen/HomeScreen';
 import { ArticleListScreen } from '@leaa/app/src/screens/Article/ArticleListScreen/ArticleListScreen';
