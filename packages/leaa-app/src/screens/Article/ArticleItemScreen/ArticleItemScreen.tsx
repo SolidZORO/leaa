@@ -1,7 +1,6 @@
 import React from 'react';
 import { Text, SafeAreaView } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
-import { NavigationScreenProps } from 'react-navigation';
 
 import { GET_ARTICLE } from '@leaa/common/src/graphqls/article.query';
 import { IScreenProps } from '@leaa/app/src/interfaces/screen.interface';
@@ -14,7 +13,9 @@ import { RenderHtmlWebview } from '@leaa/app/src/components/RenderHtmlWebview';
 
 import style from './style.less';
 
-export const ArticleItemScreen = (props: IScreenProps) => {
+interface IProps extends IScreenProps {}
+
+export const ArticleItemScreen = (props: IProps) => {
   const id = props.navigation.state.params && props.navigation.state.params.id;
 
   const getArticleQuery = useQuery<{ article: Article }, ArticleArgs>(GET_ARTICLE, {
@@ -36,14 +37,14 @@ export const ArticleItemScreen = (props: IScreenProps) => {
   );
 };
 
-ArticleItemScreen.navigationOptions = ({ navigation, navigationOptions }: NavigationScreenProps) => {
-  const title = navigation.state.params && navigation.state.params.title;
+ArticleItemScreen.navigationOptions = (props: IProps) => {
+  const title = props.navigation.state.params && props.navigation.state.params.title;
 
   return {
     title,
     headerLeft: (
       <Text
-        onPress={() => navigation.navigate('ArticleList')}
+        onPress={() => props.navigation.navigate('ArticleList')}
         style={{ marginLeft: 10, width: 30, textAlign: 'center' }}
       >
         <IconFont name="return" size={24} />

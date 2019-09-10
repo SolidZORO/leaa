@@ -46,7 +46,7 @@
     "react-native-image-zoom-viewer": "^2.2.26",
     "react-native-reanimated": "~1.1.0",
     "react-native-scalable-image": "^1.0.0",
-    "react-native-screens": "2.0.0-alpha.3",
+    "react-native-screens": "1.0.0-alpha.22",
     "react-native-tiny-toast": "^1.0.3",
     "react-native-unimodules": "~0.5.2",
     "react-native-vector-icons": "^6.6.0",

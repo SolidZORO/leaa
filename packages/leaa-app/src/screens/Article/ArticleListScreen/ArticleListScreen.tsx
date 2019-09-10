@@ -1,7 +1,6 @@
 import dayjs from 'dayjs';
 import React, { useState } from 'react';
 import { Text, View, FlatList, SafeAreaView, TouchableOpacity, Animated } from 'react-native';
-import { NavigationScreenProps } from 'react-navigation';
 import { useQuery } from '@apollo/react-hooks';
 
 import { IScreenProps } from '@leaa/app/src/interfaces';
@@ -14,7 +13,9 @@ import { ArticlesArgs } from '@leaa/app/src/dtos/article/articles.args';
 
 import style from './style.less';
 
-export const ArticleListScreen = (props: IScreenProps) => {
+interface IProps extends IScreenProps {}
+
+export const ArticleListScreen = (props: IProps) => {
   // setTimeout(() => props.navigation.navigate('ArticleItem', { id: 69 }), 100);
 
   const getArticlesVariables: ArticlesArgs = {
@@ -118,4 +119,4 @@ export const ArticleListScreen = (props: IScreenProps) => {
   );
 };
 
-ArticleListScreen.navigationOptions = ({ navigation, navigationOptions }: NavigationScreenProps) => ({});
+ArticleListScreen.navigationOptions = (props: IProps) => ({});

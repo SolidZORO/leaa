@@ -1,6 +1,5 @@
 import React from 'react';
 import { Text, View, SafeAreaView } from 'react-native';
-import { NavigationScreenProps } from 'react-navigation';
 
 import { IScreenProps } from '@leaa/app/src/interfaces';
 import { envConfig } from '@leaa/app/src/configs';
@@ -8,7 +7,9 @@ import { IconFont } from '@leaa/app/src/components/IconFont';
 
 import style from './style.less';
 
-export const HomeScreen = (props: IScreenProps) => {
+interface IProps extends IScreenProps {}
+
+export const HomeScreen = (props: IProps) => {
   return (
     <SafeAreaView style={style['wrapper']}>
       <View style={style['textwrapper']}>
@@ -20,4 +21,4 @@ export const HomeScreen = (props: IScreenProps) => {
   );
 };
 
-HomeScreen.navigationOptions = ({ navigation, navigationOptions }: NavigationScreenProps) => {};
+HomeScreen.navigationOptions = (props: IProps) => {};

@@ -1,3 +1,3 @@
-import { NavigationScreenProps } from 'react-navigation';
+import { Navigationunknown } from 'react-navigation';
 
-export interface IScreenProps extends NavigationScreenProps {}
+export interface IScreenProps extends Navigationunknown {}

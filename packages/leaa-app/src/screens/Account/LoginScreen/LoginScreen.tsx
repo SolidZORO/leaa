@@ -9,7 +9,7 @@ import style from './style.less';
 
 interface IProps extends IScreenProps {}
 
-export const AccountScreen = (props: IProps) => {
+export const LoginScreen = (props: IProps) => {
   return (
     <SafeAreaView style={style['wrapper']}>
       <View style={style['textwrapper']}>
@@ -21,4 +21,4 @@ export const AccountScreen = (props: IProps) => {
   );
 };
 
-AccountScreen.navigationOptions = (props: IProps) => {};
+LoginScreen.navigationOptions = (props: IProps) => {};
