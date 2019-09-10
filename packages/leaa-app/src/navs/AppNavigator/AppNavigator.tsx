@@ -2,28 +2,40 @@ import React from 'react';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer } from 'react-navigation';
 
-import AppBottomTabs from '@leaa/app/src/navs/AppBottomTabs/AppBottomTabs';
+import { AppBottomTabNavigator } from '@leaa/app/src/navs/AppBottomTabNavigator/AppBottomTabNavigator';
 
-import { HomeScreen } from '@leaa/app/src/screens/Home/HomeScreen/HomeScreen';
-import { ArticleListScreen } from '@leaa/app/src/screens/Article/ArticleListScreen/ArticleListScreen';
 import { ArticleItemScreen } from '@leaa/app/src/screens/Article/ArticleItemScreen/ArticleItemScreen';
-import { LinkWebviewScreen } from '@leaa/app/src/screens/Misc/LinkWebviewScreen/LinkWebviewScreen';
+import { LoginScreen } from '@leaa/app/src/screens/Account/LoginScreen/LoginScreen';
+import { SignupScreen } from '@leaa/app/src/screens/Account/SignupScreen/SignupScreen';
 
-const routeConfigs = {
-  Tabs: { screen: AppBottomTabs },
-};
-
-const AppNavigator = createStackNavigator({
-  Tabs: {
-    ...routeConfigs.Tabs,
-    navigationOptions: {
-      header: null,
-    },
-  },
-  Home: { screen: HomeScreen },
-  ArticleList: { screen: ArticleListScreen },
-  ArticleItem: { screen: ArticleItemScreen },
-  LinkWebview: { screen: LinkWebviewScreen },
+export const AuthNavigator = createStackNavigator({
+  Login: { screen: LoginScreen },
+  Signup: { screen: SignupScreen },
 });
 
-export default createAppContainer(AppNavigator);
+export const AppNavigator = createStackNavigator(
+  {
+    AppBottomTabNavigator: {
+      screen: AppBottomTabNavigator,
+    },
+    ArticleItem: {
+      screen: ArticleItemScreen,
+    },
+  },
+  {
+    mode: 'card',
+  },
+);
+
+export const AppContainer = createAppContainer(
+  createStackNavigator(
+    {
+      App: AppNavigator,
+      Auth: AuthNavigator,
+    },
+    {
+      mode: 'modal',
+      headerMode: 'none',
+    },
+  ),
+);

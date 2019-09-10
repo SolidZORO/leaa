@@ -3,7 +3,7 @@ import { Text, SafeAreaView } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
 
 import { GET_ARTICLE } from '@leaa/common/src/graphqls/article.query';
-import { IScreenProps } from '@leaa/app/src/interfaces/screen.interface';
+import { IScreenProps, INavigationStackOptions } from '@leaa/app/src/interfaces/screen.interface';
 import { Article } from '@leaa/app/src/entrys';
 import { ArticleArgs } from '@leaa/app/src/dtos/article';
 
@@ -37,12 +37,12 @@ export const ArticleItemScreen = (props: IProps) => {
   );
 };
 
-ArticleItemScreen.navigationOptions = (props: IProps) => {
+ArticleItemScreen.navigationOptions = (props: IProps): INavigationStackOptions => {
   const title = props.navigation.state.params && props.navigation.state.params.title;
 
   return {
     title,
-    headerLeft: (
+    headerLeft: () => (
       <Text
         onPress={() => props.navigation.navigate('ArticleList')}
         style={{ marginLeft: 10, width: 30, textAlign: 'center' }}

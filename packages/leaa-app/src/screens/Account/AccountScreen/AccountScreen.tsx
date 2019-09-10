@@ -3,7 +3,7 @@ import { Text, View, SafeAreaView } from 'react-native';
 
 import { envConfig } from '@leaa/app/src/configs';
 import { IconFont } from '@leaa/app/src/components/IconFont';
-import { IScreenProps } from '@leaa/app/src/interfaces';
+import { IScreenProps, INavigationStackOptions } from '@leaa/app/src/interfaces';
 
 import style from './style.less';
 
@@ -13,7 +13,7 @@ export const AccountScreen = (props: IProps) => {
   return (
     <SafeAreaView style={style['wrapper']}>
       <View style={style['textwrapper']}>
-        <Text style={style['home-label']}>
+        <Text style={style['home-label']} onPress={() => props.navigation.navigate('Login', { mode: 'module' })}>
           <IconFont name="shequ" size={18} /> Account {envConfig.APP_NAME}
         </Text>
       </View>
@@ -21,4 +21,8 @@ export const AccountScreen = (props: IProps) => {
   );
 };
 
-AccountScreen.navigationOptions = (props: IProps) => {};
+AccountScreen.navigationOptions = (props: IProps): INavigationStackOptions => {
+  return {
+    header: null,
+  };
+};

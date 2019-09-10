@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Text, View, FlatList, SafeAreaView, TouchableOpacity, Animated } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
 
-import { IScreenProps } from '@leaa/app/src/interfaces';
+import { IScreenProps, INavigationStackOptions } from '@leaa/app/src/interfaces';
 import { GET_ARTICLES } from '@leaa/common/src/graphqls/article.query';
 
 import { AnimatedTitle } from '@leaa/app/src/components/AnimatedTitle';
@@ -119,4 +119,8 @@ export const ArticleListScreen = (props: IProps) => {
   );
 };
 
-ArticleListScreen.navigationOptions = (props: IProps) => ({});
+ArticleListScreen.navigationOptions = (props: IProps): INavigationStackOptions => {
+  return {
+    header: null,
+  };
+};
