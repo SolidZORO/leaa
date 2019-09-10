@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import React, { useState } from 'react';
-import { Text, View, FlatList, SafeAreaView, TouchableOpacity, Animated } from 'react-native';
+import { Text, View, FlatList, SafeAreaView, TouchableOpacity, Animated, ActivityIndicator } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
 
 import { IScreenProps, INavigationStackOptions } from '@leaa/app/src/interfaces';
@@ -30,6 +30,7 @@ export const ArticleListScreen = (props: IProps) => {
   });
 
   const [getArticlesPage, setGetArticlesPage] = useState<number>(1);
+  const [getArticlesLoading, setGetArticlesLoading] = useState<boolean>(false);
   const [scrollOffset] = useState(new Animated.Value(0));
 
   const onRefreshArticles = () => {
@@ -47,6 +48,8 @@ export const ArticleListScreen = (props: IProps) => {
       return;
     }
 
+    setGetArticlesLoading(true);
+
     const nextPage = getArticlesPage + 1;
     const nextArticlesPage = {
       ...getArticlesVariables,
@@ -56,6 +59,7 @@ export const ArticleListScreen = (props: IProps) => {
     await getArticlesQuery.fetchMore({
       updateQuery: (previousResults, { fetchMoreResult }) => {
         if (!fetchMoreResult) {
+          setGetArticlesLoading(false);
           return previousResults;
         }
 
@@ -71,7 +75,11 @@ export const ArticleListScreen = (props: IProps) => {
     });
 
     setGetArticlesPage(nextPage);
+    setGetArticlesLoading(false);
   };
+
+  const ListFooterComponent = (loading: boolean) =>
+    loading ? <ActivityIndicator /> : <Text style={style['item-list-footer']}>已经没有更多啦...</Text>;
 
   return (
     <SafeAreaView style={style['wrapper']}>
@@ -107,7 +115,7 @@ export const ArticleListScreen = (props: IProps) => {
               </View>
             </TouchableOpacity>
           )}
-          ListFooterComponent={getArticlesQuery.loading ? <Text>正在加载更多数据...</Text> : <Text />}
+          ListFooterComponent={() => ListFooterComponent(getArticlesLoading)}
           ItemSeparatorComponent={() => <View style={style['item-separator']} />}
           ListEmptyComponent={<Text style={style['item-list-empty']}>EMPTY-DATA</Text>}
           onRefresh={onRefreshArticles}

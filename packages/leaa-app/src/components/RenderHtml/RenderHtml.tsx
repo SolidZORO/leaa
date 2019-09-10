@@ -7,8 +7,8 @@ import { openBrowserAsync } from 'expo-web-browser';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import { IImageInfo } from 'react-native-image-zoom-viewer/src/image-viewer.type';
 
-import { htmlContent } from '@leaa/app/src/components/RenderHtmlWebview/htmlContent';
-import { htmlScript } from '@leaa/app/src/components/RenderHtmlWebview/htmlScript';
+import { htmlContent } from '@leaa/app/src/components/RenderHtml/htmlContent';
+import { htmlScript } from '@leaa/app/src/components/RenderHtml/htmlScript';
 
 import style from './style.less';
 
@@ -18,7 +18,7 @@ interface IProps {
   navigation: NavigationScreenProp<NavigationRoute>;
 }
 
-export const RenderHtmlWebview = (props: IProps) => {
+export const RenderHtml = (props: IProps) => {
   const webViewRef = useRef<WebView>(null);
 
   const [imageUrls, setImageUrls] = useState<IImageInfo[]>([]);

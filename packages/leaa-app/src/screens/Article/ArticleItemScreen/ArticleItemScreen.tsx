@@ -9,7 +9,7 @@ import { ArticleArgs } from '@leaa/app/src/dtos/article';
 
 import { IconFont } from '@leaa/app/src/components/IconFont';
 import { ErrorCard } from '@leaa/app/src/components/ErrorCard';
-import { RenderHtmlWebview } from '@leaa/app/src/components/RenderHtmlWebview';
+import { RenderHtml } from '@leaa/app/src/components/RenderHtml';
 
 import style from './style.less';
 
@@ -27,7 +27,7 @@ export const ArticleItemScreen = (props: IProps) => {
       {getArticleQuery.error ? <ErrorCard error={getArticleQuery.error} /> : null}
 
       {getArticleQuery && getArticleQuery.data && getArticleQuery.data.article && (
-        <RenderHtmlWebview
+        <RenderHtml
           title={getArticleQuery.data.article.title}
           content={`${getArticleQuery.data.article.content}`}
           navigation={props.navigation}
