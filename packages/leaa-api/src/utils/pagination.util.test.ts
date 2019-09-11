@@ -3,7 +3,7 @@ import { IPageInfo, IPageInfoResult } from '@leaa/api/src/utils/pagination.util'
 
 describe('paginationUtil', () => {
   describe('calcPageInfo', () => {
-    it('should get page info', async () => {
+    it('should get page info', () => {
       const items = [];
 
       for (let i = 0; i < 100; i += 1) {
@@ -25,7 +25,7 @@ describe('paginationUtil', () => {
       expect(result).toEqual(output);
     });
 
-    it('should get page info (not next page)', async () => {
+    it('should get page info (not next page)', () => {
       const items = [];
 
       for (let i = 0; i < 1; i += 1) {
