@@ -12,7 +12,8 @@ interface IProps extends IScreenProps {}
 
 export const LoginScreen = (props: IProps) => {
   const { register, setValue, watch, errors, triggerValidation, handleSubmit } = useForm({
-    mode: 'onBlur',
+    // mode: 'onBlur',
+    // mode: 'onChange',
   });
 
   const [inputHash, setInputHash] = useState<number>(0);
@@ -20,6 +21,7 @@ export const LoginScreen = (props: IProps) => {
 
   useEffect(() => {
     if (watch('email') && watch('password')) {
+      triggerValidation().then();
       setActionSubmitButton(true);
     } else {
       setActionSubmitButton(false);
@@ -27,9 +29,9 @@ export const LoginScreen = (props: IProps) => {
   }, [inputHash]);
 
   const onSubmit = async (data: any) => {
-    // if (!actionSubmitButton) {
-    //   return;
-    // }
+    if (!actionSubmitButton) {
+      return;
+    }
 
     const result = await triggerValidation();
     console.log(result, data);
@@ -44,7 +46,7 @@ export const LoginScreen = (props: IProps) => {
           <View style={style['form-item']}>
             <TextInput
               placeholder="输入邮箱"
-              ref={() => register({ name: 'email' }, { required: true, pattern: /.*@.*/ })}
+              ref={() => register({ name: 'email' }, { required: true, min: 6, pattern: /.*@.*/ })}
               clearButtonMode="while-editing"
               style={style['form-input']}
               autoCompleteType="email"
@@ -57,7 +59,7 @@ export const LoginScreen = (props: IProps) => {
           <View style={style['form-item']}>
             <TextInput
               placeholder="输入密码"
-              ref={() => register({ name: 'password' }, { required: true })}
+              ref={() => register({ name: 'password' }, { required: true, min: 6 })}
               clearButtonMode="while-editing"
               style={style['form-input']}
               autoCompleteType="password"

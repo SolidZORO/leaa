@@ -108,7 +108,7 @@ export class AuthService {
     const user = await this.userRepository.findOne({
       select: ['id', 'email', 'name', 'status', 'password'],
       where: {
-        email: xss.filterXSS(args.email.trim()),
+        email: xss.filterXSS(args.email.trim().toLowerCase()),
       },
       // for flatePermissions
       relations: ['roles'],
@@ -150,12 +150,14 @@ export class AuthService {
     const nextArgs: AuthSignupInput = { name: '', password: '', email: '' };
 
     _.forEach(args, (v, i) => {
-      nextArgs[i as 'name' | 'password' | 'email'] = xss.filterXSS(v || '');
+      nextArgs[i as 'name' | 'email'] = xss.filterXSS(v || '');
     });
 
     if (args.password) {
       nextArgs.password = await this.userService.craetePassword(args.password);
     }
+
+    nextArgs.email = nextArgs.email.toLowerCase();
 
     let newUser: User;
 
