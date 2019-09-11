@@ -24,7 +24,7 @@ describe('AuthService', () => {
   const ROLE_REPOSITORY_MOCK: Repository<Role> = new Repository<Role>();
   const PERMISSION_REPOSITORY_MOCK: Repository<Permission> = new Repository<Permission>();
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [AuthTokenModule],
       providers: [
