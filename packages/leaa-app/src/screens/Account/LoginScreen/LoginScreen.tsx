@@ -1,83 +1,60 @@
-import React, { useEffect, useState } from 'react';
-import { Text, View, SafeAreaView, TextInput } from 'react-native';
-import useForm from 'react-hook-form';
-import { Button, Toast } from '@ant-design/react-native';
+import React from 'react';
+import { Text, View, SafeAreaView } from 'react-native';
+import { useMutation } from '@apollo/react-hooks';
 
+import { LOGIN_FOR_WWW } from '@leaa/common/src/graphqls';
+import { User } from '@leaa/app/src/entrys';
 import { IconFont } from '@leaa/app/src/components/IconFont';
-import { IScreenProps, INavigationStackOptions } from '@leaa/app/src/interfaces';
+import { IScreenProps, INavigationStackOptions, ILogin } from '@leaa/app/src/interfaces';
+import { authUtil } from '@leaa/app/src/utils';
+import { ErrorCard } from '@leaa/app/src/components/ErrorCard';
+
+import { LoginForm } from './_compponents/LoginForm/LoginForm';
 
 import style from './style.less';
 
 interface IProps extends IScreenProps {}
 
 export const LoginScreen = (props: IProps) => {
-  const { register, setValue, watch, errors, triggerValidation, handleSubmit } = useForm({
-    // mode: 'onBlur',
-    // mode: 'onChange',
+  const [submitLoginMutate, submitLoginMutation] = useMutation<{ login: User }>(LOGIN_FOR_WWW, {
+    async onCompleted({ login }) {
+      console.log(login);
+      if (login && login.name) {
+        const authInfo = {
+          id: login.id,
+          email: login.email,
+          name: login.name,
+        };
+
+        await authUtil.setAuthInfo(authInfo);
+      }
+
+      if (login && login.authToken && login.authExpiresIn) {
+        await authUtil.setAuthToken(login.authToken, login.authExpiresIn);
+        await authUtil.setAuthToken(login.authToken, login.authExpiresIn);
+
+        // if (props.onLoginedCallback) {
+        //   props.onLoginedCallback();
+        // }
+      }
+
+      // return Router.push('/account');
+    },
   });
 
-  const [inputHash, setInputHash] = useState<number>(0);
-  const [actionSubmitButton, setActionSubmitButton] = useState<boolean>(false);
+  const onSubmit = async (userInfo: ILogin) => {
+    const variables: { user: ILogin } = {
+      user: userInfo,
+    };
 
-  useEffect(() => {
-    if (watch('email') && watch('password')) {
-      triggerValidation().then();
-      setActionSubmitButton(true);
-    } else {
-      setActionSubmitButton(false);
-    }
-  }, [inputHash]);
-
-  const onSubmit = async (data: any) => {
-    if (!actionSubmitButton) {
-      return;
-    }
-
-    const result = await triggerValidation();
-    console.log(result, data);
+    await submitLoginMutate({ variables });
   };
 
   return (
     <SafeAreaView style={style['wrapper']}>
+      {submitLoginMutation.error ? <ErrorCard error={submitLoginMutation.error} message="登录信息有误" /> : null}
       <View style={style['header-title']}>
-        <View style={style['form-wrapper']}>
-          <IconFont name="leaa-logo" size={64} style={style['form-logo']} />
-
-          <View style={style['form-item']}>
-            <TextInput
-              placeholder="输入邮箱"
-              ref={() => register({ name: 'email' }, { required: true, min: 6, pattern: /.*@.*/ })}
-              clearButtonMode="while-editing"
-              style={style['form-input']}
-              autoCompleteType="email"
-              onChangeText={text => setValue('email', text)}
-              onChange={() => setInputHash(inputHash + 1)}
-            />
-            <Text style={style['form-input-tips-text']}>{errors.email ? '请输入正确的邮箱' : ' '}</Text>
-          </View>
-
-          <View style={style['form-item']}>
-            <TextInput
-              placeholder="输入密码"
-              ref={() => register({ name: 'password' }, { required: true, min: 6 })}
-              clearButtonMode="while-editing"
-              style={style['form-input']}
-              autoCompleteType="password"
-              secureTextEntry
-              onChangeText={text => setValue('password', text)}
-              onChange={() => setInputHash(inputHash + 1)}
-            />
-            <Text style={style['form-input-tips-text']}>{errors.password ? '请输入密码' : ' '} </Text>
-          </View>
-
-          <Button
-            type="primary"
-            onPress={actionSubmitButton ? (handleSubmit(onSubmit) as any) : () => Toast.info('请输入账号密码')}
-            style={[style['form-submit-button'], actionSubmitButton && style['form-submit-button--action']]}
-          >
-            <Text style={[style['form-submit-button-text'], style['form-submit-button-text--action']]}>登录</Text>
-          </Button>
-        </View>
+        <LoginForm onSubmitCallback={onSubmit} />
       </View>
     </SafeAreaView>
   );

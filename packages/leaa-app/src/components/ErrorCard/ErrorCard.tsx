@@ -20,7 +20,7 @@ export const ErrorCard = (props: IProps) => {
 
   useEffect(() => {
     if (message) {
-      Toast.fail(message);
+      Toast.show(message);
     }
   }, [message]);
 
