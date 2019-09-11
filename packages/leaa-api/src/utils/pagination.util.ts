@@ -1,11 +1,11 @@
-interface IPageInfo {
+export interface IPageInfo {
   items: any[];
   total: number;
   pageSize?: number;
   page?: number;
 }
 
-interface IPageInfoResult {
+export interface IPageInfoResult {
   items: any[];
   itemsCount: number;
   total: number;

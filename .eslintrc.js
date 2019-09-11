@@ -23,7 +23,7 @@ module.exports = {
   env: {
     es6: true,
     browser: true,
-    jest: false,
+    jest: true,
     node: true,
   },
   rules: {

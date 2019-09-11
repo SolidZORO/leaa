@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { JwtModule } from '@nestjs/jwt';
 
 import { User, Role, Permission, Oauth } from '@leaa/common/src/entrys';
 
@@ -28,6 +29,6 @@ import { OauthService } from '@leaa/api/src/modules/oauth/oauth.service';
     UserProperty,
     OauthService,
   ],
-  exports: [AuthService],
+  exports: [AuthService, JwtModule, AuthTokenModule],
 })
 export class AuthModule {}

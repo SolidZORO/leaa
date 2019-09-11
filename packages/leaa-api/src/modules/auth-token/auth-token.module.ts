@@ -3,12 +3,14 @@ import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
+import { ConfigModule } from '@leaa/api/src/modules/config/config.module';
 
 @Module({
   imports: [
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.registerAsync({
       inject: [ConfigService],
+      imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
         privateKey: configService.JWT_SECRET_KEY,
       }),

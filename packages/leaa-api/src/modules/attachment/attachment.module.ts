@@ -24,12 +24,12 @@ import { AttachmentProperty } from '@leaa/api/src/modules/attachment/attachment.
   ],
   controllers: [AttachmentController],
   providers: [
-    AttachmentService,
     AttachmentResolver,
+    AttachmentService,
+    AttachmentProperty,
     MulterService,
     SaveInOssService,
     SaveInLocalService,
-    AttachmentProperty,
   ],
   exports: [AttachmentService],
 })

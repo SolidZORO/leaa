@@ -22,15 +22,14 @@ describe('AttachmentService', () => {
   beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        AttachmentService,
-        MulterService,
-        ConfigService,
-        AttachmentService,
         AttachmentResolver,
-        MulterService,
-        SaveInOssService,
-        SaveInLocalService,
+        AttachmentService,
         AttachmentProperty,
+        MulterService,
+        SaveInLocalService,
+        SaveInOssService,
+        ConfigService,
+        MulterService,
         {
           provide: getRepositoryToken(Attachment),
           useValue: ATTACHMENT_REPOSITORY_MOCK,

@@ -30,12 +30,7 @@ export class AuthService {
     private readonly oauthService: OauthService,
   ) {}
 
-  async createToken(
-    user: User,
-  ): Promise<{
-    authExpiresIn: number;
-    authToken: string;
-  }> {
+  async createToken(user: User): Promise<{ authExpiresIn: number; authToken: string }> {
     const jwtPayload: IJwtPayload = { id: user.id };
 
     // https://github.com/auth0/node-jsonwebtoken#jwtsignpayload-secretorprivatekey-options-callback
