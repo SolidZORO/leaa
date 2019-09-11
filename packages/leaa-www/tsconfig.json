@@ -7,7 +7,6 @@
     "jsx": "preserve",
     "target": "esnext",
     "module": "esnext",
-    "skipLibCheck": true,
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "sourceMap": false,
@@ -19,8 +18,10 @@
     "types": ["node", "jest"],
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
+    "skipLibCheck": true,
     "paths": {
-      "@leaa/common/*": ["../_leaa-common/*"]
+      "@leaa/common/*": ["../_leaa-common/*"],
+      "@leaa/www/*": ["./*"]
     }
   },
   "include": ["**/*", "typings/*"],

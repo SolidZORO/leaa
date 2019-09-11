@@ -4,7 +4,11 @@
     "baseUrl": ".",
     "outDir": "_dist",
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "emitDecoratorMetadata": true,
+    "skipLibCheck": true,
+    "paths": {
+      "@leaa/common/*": ["./*"]
+    }
   },
   "include": ["src/**/*", "typings/*"],
   "exclude": ["node_modules", "_dist"]

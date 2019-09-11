@@ -4,12 +4,14 @@
     "baseUrl": ".",
     "module": "commonjs",
     "target": "esnext",
+    "skipLibCheck": true,
     "moduleResolution": "node",
     "sourceMap": false,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "paths": {
-      "@leaa/common/*": ["../_leaa-common/*"]
+      "@leaa/common/*": ["../_leaa-common/*"],
+      "@leaa/api/*": ["./*"]
     }
   },
   "include": ["src/**/*", "test/**/*", "test/*", "typings/*", "index.js"],

@@ -7,7 +7,6 @@
     "jsxFactory": "Taro.createElement",
     "target": "es2018",
     "module": "commonjs",
-    "skipLibCheck": true,
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "sourceMap": false,
@@ -22,8 +21,10 @@
     "preserveConstEnums": true,
     "noImplicitAny": false,
     "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
     "paths": {
-      "@leaa/common/*": ["../_leaa-common/*"]
+      "@leaa/common/*": ["../_leaa-common/*"],
+      "@leaa/miniprogram/*": ["./*"]
     }
   },
   "include": ["src/**/*", "config/*", "typings/*", "global.d.ts"],
