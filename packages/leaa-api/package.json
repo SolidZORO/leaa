@@ -17,7 +17,7 @@
     "fix": "yarn run fix-js",
     "---------------------------------------------------------------------- TEST ----": "----",
     "test": "jest --verbose --config=jest.config.js",
-    "test:codecov": "jest --verbose --coverage --config=jest.config.js",
+    "test:codecov": "jest --coverage --detectOpenHandles --config=jest.config.js",
     "test:watch": "jest --watch --verbose --config=jest.config.js",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "e2e": "jest --config=jest-e2e.config.js --forceExit",
