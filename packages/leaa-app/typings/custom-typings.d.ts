@@ -12,3 +12,8 @@ declare module '*.jpeg';
 declare module '*.svg';
 declare module '*.gif';
 declare module '*.ico';
+
+declare module '*.ttf';
+declare module '*.ttc';
+declare module '*.woff';
+declare module '*.woff2';

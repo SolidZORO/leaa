@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { ApolloError } from 'apollo-client';
-import Toast from 'react-native-tiny-toast';
+import { Toast } from '@ant-design/react-native';
 
 interface IProps {
   error: ApolloError;
@@ -20,7 +20,7 @@ export const ErrorCard = (props: IProps) => {
 
   useEffect(() => {
     if (message) {
-      Toast.show(message);
+      Toast.fail(message);
     }
   }, [message]);
 

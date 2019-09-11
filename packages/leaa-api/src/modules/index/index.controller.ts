@@ -6,6 +6,6 @@ export class IndexController {
 
   @Get('')
   async test() {
-    return '<code>-- API --</code>';
+    return '<code>hi, leaa-api.</code>';
   }
 }

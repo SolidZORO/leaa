@@ -30,14 +30,18 @@
     "dev": "expo start --ios"
   },
   "dependencies": {
+    "@ant-design/react-native": "^3.1.15",
     "@apollo/react-hooks": "^3.1.0",
     "@apollo/react-ssr": "^3.1.0",
+    "add": "^2.0.6",
     "apollo-link": "^1.2.13",
     "apollo-link-context": "^1.0.19",
     "apollo-link-error": "^1.1.12",
     "apollo-link-http": "^1.5.16",
     "dayjs": "^1.8.16",
     "expo": "^34.0.1",
+    "expo-font": "~6.0.1",
+    "expo-keep-awake": "^6.0.0",
     "expo-web-browser": "^6.0.0",
     "react-apollo": "^3.1.0",
     "react-hook-form": "^3.23.5",
@@ -50,13 +54,13 @@
     "react-native-scalable-image": "^1.0.0",
     "react-native-screens": "1.0.0-alpha.22",
     "react-native-svg": "~9.5.1",
-    "react-native-tiny-toast": "^1.0.3",
     "react-native-unimodules": "~0.5.2",
     "react-native-vector-icons": "^6.6.0",
     "react-native-webview": "~5.12.0",
     "react-navigation": "^4.0.2",
     "react-navigation-stack": "^1.5.4",
-    "react-navigation-tabs": "^2.4.1"
+    "react-navigation-tabs": "^2.4.1",
+    "yarn": "^1.17.3"
   },
   "devDependencies": {
     "@babel/cli": "7.6.0",
@@ -70,6 +74,7 @@
     "@types/react-native-dotenv": "^0.2.0",
     "@types/react-native-htmlview": "^0.12.2",
     "@types/react-native-vector-icons": "^6.4.1",
+    "babel-plugin-import": "^1.12.1",
     "babel-plugin-react-native-classname-to-style": "^1.2.2",
     "babel-plugin-react-native-platform-specific-extensions": "^1.1.1",
     "babel-preset-expo": "^6.0.0",

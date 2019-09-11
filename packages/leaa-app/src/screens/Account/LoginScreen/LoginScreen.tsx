@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Text, View, SafeAreaView, TextInput, TouchableOpacity } from 'react-native';
+import { Text, View, SafeAreaView, TextInput } from 'react-native';
 import useForm from 'react-hook-form';
+import { Button, Toast } from '@ant-design/react-native';
 
 import { IconFont } from '@leaa/app/src/components/IconFont';
 import { IScreenProps, INavigationStackOptions } from '@leaa/app/src/interfaces';
@@ -10,12 +11,9 @@ import style from './style.less';
 interface IProps extends IScreenProps {}
 
 export const LoginScreen = (props: IProps) => {
-  const { register, setValue, watch, errors, triggerValidation, handleSubmit } = useForm();
-
-  const onSubmit = async (data: any) => {
-    const result = await triggerValidation();
-    console.log(result, data);
-  };
+  const { register, setValue, watch, errors, triggerValidation, handleSubmit } = useForm({
+    mode: 'onBlur',
+  });
 
   const [inputHash, setInputHash] = useState<number>(0);
   const [actionSubmitButton, setActionSubmitButton] = useState<boolean>(false);
@@ -28,41 +26,55 @@ export const LoginScreen = (props: IProps) => {
     }
   }, [inputHash]);
 
+  const onSubmit = async (data: any) => {
+    // if (!actionSubmitButton) {
+    //   return;
+    // }
+
+    const result = await triggerValidation();
+    console.log(result, data);
+  };
+
   return (
     <SafeAreaView style={style['wrapper']}>
       <View style={style['header-title']}>
         <View style={style['form-wrapper']}>
           <IconFont name="leaa-logo" size={64} style={style['form-logo']} />
 
-          <TextInput
-            ref={() => register({ name: 'email', required: true })}
-            clearButtonMode="while-editing"
-            placeholder="输入邮箱"
-            style={style['form-input']}
-            autoCompleteType="email"
-            onChangeText={text => setValue('email', text)}
-            onChange={() => setInputHash(inputHash + 1)}
-          />
-          {errors.email && <Text>请输入正确的邮箱</Text>}
+          <View style={style['form-item']}>
+            <TextInput
+              placeholder="输入邮箱"
+              ref={() => register({ name: 'email' }, { required: true, pattern: /.*@.*/ })}
+              clearButtonMode="while-editing"
+              style={style['form-input']}
+              autoCompleteType="email"
+              onChangeText={text => setValue('email', text)}
+              onChange={() => setInputHash(inputHash + 1)}
+            />
+            <Text style={style['form-input-tips-text']}>{errors.email ? '请输入正确的邮箱' : ' '}</Text>
+          </View>
 
-          <TextInput
-            ref={() => register({ name: 'password', required: true })}
-            clearButtonMode="while-editing"
-            placeholder="输入密码"
-            style={style['form-input']}
-            autoCompleteType="password"
-            secureTextEntry
-            onChangeText={text => setValue('password', text)}
-            onChange={() => setInputHash(inputHash + 1)}
-          />
-          {errors.password && <Text>邮箱或密码有误</Text>}
+          <View style={style['form-item']}>
+            <TextInput
+              placeholder="输入密码"
+              ref={() => register({ name: 'password' }, { required: true })}
+              clearButtonMode="while-editing"
+              style={style['form-input']}
+              autoCompleteType="password"
+              secureTextEntry
+              onChangeText={text => setValue('password', text)}
+              onChange={() => setInputHash(inputHash + 1)}
+            />
+            <Text style={style['form-input-tips-text']}>{errors.password ? '请输入密码' : ' '} </Text>
+          </View>
 
-          <TouchableOpacity
+          <Button
+            type="primary"
+            onPress={actionSubmitButton ? (handleSubmit(onSubmit) as any) : () => Toast.info('请输入账号密码')}
             style={[style['form-submit-button'], actionSubmitButton && style['form-submit-button--action']]}
-            onPress={handleSubmit(onSubmit) as any}
           >
-            <Text style={[style['form-submit-button-text'], style['form-submit-button-text--action']]}>登 录</Text>
-          </TouchableOpacity>
+            <Text style={[style['form-submit-button-text'], style['form-submit-button-text--action']]}>登录</Text>
+          </Button>
         </View>
       </View>
     </SafeAreaView>

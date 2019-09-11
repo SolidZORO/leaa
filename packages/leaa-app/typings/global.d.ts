@@ -49,3 +49,4 @@ declare module 'react-navigation-tabs' {
 
 // declare module 'react-navigation-tabs';
 declare module 'react-native-tiny-toast';
+declare module 'teaset';
