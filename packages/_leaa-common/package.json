@@ -16,9 +16,9 @@
     "lint-css": "stylelint \"src/**/*.{css,less,styl,scss,sass,sss}\"",
     "fix-css": "yarn run lint-css --fix",
     "lint": "yarn run lint-js && yarn run lint-css",
-    "fix": "yarn run fix-js && yarn run fix-css"
+    "fix": "yarn run fix-js && yarn run fix-css",
+    "tsc-check": "tsc --noEmit"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {}
 }

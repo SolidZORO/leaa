@@ -16,6 +16,7 @@
     "lint": "yarn run lint-js",
     "fix-js": "yarn run lint-js --fix",
     "fix": "yarn run fix-js",
+    "tsc-check": "tsc --noEmit",
     "---------------------------------------------------------------------- TOOOLS ----": "----",
     "clean-cache": "watchman watch-del-all && rm -rf $TMPDIR/react-* && rm -rf $TMPDIR/metro-* && rm -rf $TMPDIR/haste-map-*",
     "postinstall": "expo-yarn-workspaces postinstall",

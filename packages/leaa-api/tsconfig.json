@@ -4,11 +4,11 @@
     "baseUrl": ".",
     "module": "commonjs",
     "target": "esnext",
-    "skipLibCheck": true,
     "moduleResolution": "node",
     "sourceMap": false,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
+    "skipLibCheck": true,
     "paths": {
       "@leaa/common/*": ["../_leaa-common/*"],
       "@leaa/api/*": ["./*"]

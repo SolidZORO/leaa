@@ -10,6 +10,7 @@
     "declaration": true,
     "sourceMap": false,
     "experimentalDecorators": true,
+    "skipLibCheck": true,
     "paths": {
       "@leaa/common/*": ["../_leaa-common/*"],
       "@leaa/app/*": ["./*"]
