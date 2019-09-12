@@ -7,6 +7,7 @@ import { AppBottomTabNavigator } from '@leaa/app/src/navs/AppBottomTabNavigator/
 import { ArticleItemScreen } from '@leaa/app/src/screens/Article/ArticleItemScreen/ArticleItemScreen';
 import { LoginScreen } from '@leaa/app/src/screens/Account/LoginScreen/LoginScreen';
 import { SignupScreen } from '@leaa/app/src/screens/Account/SignupScreen/SignupScreen';
+import { KeepScreen } from '@leaa/app/src/screens/Playground/KeepScreen/KeepScreen';
 
 export const AuthNavigator = createStackNavigator({
   Login: { screen: LoginScreen },
@@ -20,6 +21,9 @@ export const AppNavigator = createStackNavigator(
     },
     ArticleItem: {
       screen: ArticleItemScreen,
+    },
+    Keep: {
+      screen: KeepScreen,
     },
   },
   {

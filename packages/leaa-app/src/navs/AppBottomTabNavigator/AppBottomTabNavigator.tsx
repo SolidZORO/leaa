@@ -6,6 +6,7 @@ import { IconFont } from '@leaa/app/src/components/IconFont';
 import { HomeScreen } from '@leaa/app/src/screens/Home/HomeScreen/HomeScreen';
 import { ArticleListScreen } from '@leaa/app/src/screens/Article/ArticleListScreen/ArticleListScreen';
 import { AccountScreen } from '@leaa/app/src/screens/Account/AccountScreen/AccountScreen';
+import { KeepScreen } from '@leaa/app/src/screens/Playground/KeepScreen/KeepScreen';
 
 const buildTabBarIcon = (iconName: string, props: any) => (
   <IconFont name={iconName} size={18} style={{ color: props.tintColor }} />
@@ -25,6 +26,13 @@ export const AppBottomTabNavigator = createBottomTabNavigator(
       navigationOptions: {
         tabBarLabel: '文章',
         tabBarIcon: (props: any) => buildTabBarIcon('wenzhang', props),
+      },
+    },
+    Keep: {
+      screen: KeepScreen,
+      navigationOptions: {
+        tabBarLabel: 'Keep',
+        tabBarIcon: (props: any) => buildTabBarIcon('xiaoshi', props),
       },
     },
     Account: {
@@ -49,6 +57,9 @@ export const AppBottomTabNavigator = createBottomTabNavigator(
     safeAreaInset: true,
     tabBarOptions: {
       // showLabel: false,
+      labelStyle: {
+        fontSize: 10,
+      },
       tabStyle: {
         paddingVertical: 4,
       },

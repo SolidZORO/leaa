@@ -13,8 +13,8 @@ export const HomeScreen = (props: IProps) => {
   // console.log('PPP >>>>>>>>', props);
   return (
     <SafeAreaView style={style['wrapper']}>
-      <View style={style['textwrapper']}>
-        <Text style={style['home-label']}>
+      <View style={style['label-wrapper']}>
+        <Text style={style['label-wrapper-text']}>
           <IconFont name="shouye" size={18} /> hello-leaa-app {envConfig.APP_NAME}
         </Text>
       </View>

@@ -36,11 +36,15 @@ export const AccountScreen = (props: IProps) => {
           <Text style={style['user-name']}>{userInfo ? userInfo.name.toUpperCase() : '登录'}</Text>
         </TouchableOpacity>
 
-        <View style={style['userinfo-wrapper']}>
-          <Text style={style['userinfo-content']}>{JSON.stringify(userInfo)}</Text>
-        </View>
+        {userInfo && (
+          <>
+            <View style={style['userinfo-wrapper']}>
+              <Text style={style['userinfo-content']}>{JSON.stringify(userInfo)}</Text>
+            </View>
 
-        {userInfo && <LogoutButton onLogoutCallback={() => setUserInfo(undefined)} />}
+            <LogoutButton onLogoutCallback={() => setUserInfo(undefined)} />
+          </>
+        )}
       </View>
     </SafeAreaView>
   );
