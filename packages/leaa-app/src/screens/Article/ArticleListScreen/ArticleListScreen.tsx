@@ -97,20 +97,16 @@ export const ArticleListScreen = (props: IProps) => {
           data={
             (getArticlesQuery.data && getArticlesQuery.data.articles && getArticlesQuery.data.articles.items) || null
           }
-          keyExtractor={({ id }) => `${id}`}
+          keyExtractor={({ id }, index) => `${id}-${index}`}
           renderItem={({ item }) => (
             <TouchableOpacity onPress={() => props.navigation.navigate('ArticleItem', { ...item })}>
               <View style={style['item']}>
                 <View style={style['item-title']}>
-                  <Text key={item.title} style={style['item-title-text']}>
-                    {item.title}
-                  </Text>
+                  <Text style={style['item-title-text']}>{item.title}</Text>
                 </View>
 
                 <View style={style['item-date']}>
-                  <Text key={item.title} style={style['item-date-text']}>
-                    {dayjs(item.created_at).format('YYYY-MM-DD HH:mm:ss')}
-                  </Text>
+                  <Text style={style['item-date-text']}>{dayjs(item.created_at).format('YYYY-MM-DD HH:mm:ss')}</Text>
                 </View>
               </View>
             </TouchableOpacity>

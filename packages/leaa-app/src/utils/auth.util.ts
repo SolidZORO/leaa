@@ -36,23 +36,20 @@ const getAuthInfo = async (): Promise<IAuthBaseInfo | null> => {
 };
 
 const removeAuthToken = async (): Promise<boolean> => {
-  if (!getAuthToken) {
-    console.log('Not found auth token.');
-
-    return false;
-  }
-
-  await AsyncStorage.removeItem(AUTH_TOKEN_NAME);
-  await AsyncStorage.removeItem(AUTH_EXPIRES_IN_NAME);
+  await AsyncStorage.multiRemove([AUTH_TOKEN_NAME, AUTH_EXPIRES_IN_NAME]);
 
   return true;
 };
 
-const removeAuthInfo = async (): Promise<boolean> => Boolean(AsyncStorage.removeItem(AUTH_TOKEN_NAME));
+const removeAuthInfo = async (): Promise<boolean> => {
+  await AsyncStorage.removeItem(AUTH_INFO);
+
+  return true;
+};
 
 const removeAuth = async (): Promise<boolean> => {
-  const removedAuthToken = removeAuthToken();
-  const removedAuthInfo = removeAuthInfo();
+  const removedAuthToken = await removeAuthToken();
+  const removedAuthInfo = await removeAuthInfo();
 
   return removedAuthToken && removedAuthInfo;
 };

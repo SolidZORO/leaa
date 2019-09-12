@@ -16,7 +16,7 @@ useScreens(); // @see https://reactnavigation.org/docs/en/react-native-screens.h
 export default () => {
   const [fontIsReady, setFontIsReady] = useState<boolean>(false);
 
-  const componentDidMount = async () => {
+  const loadFont = async () => {
     await Font.loadAsync({
       antoutline: require('@leaa/app/src/assets/fonts/antd/antoutline.ttf'),
       antfill: require('@leaa/app/src/assets/fonts/antd/antfill.ttf'),
@@ -26,7 +26,7 @@ export default () => {
   };
 
   useEffect(() => {
-    componentDidMount().then();
+    loadFont().then();
   }, []);
 
   if (!fontIsReady) {

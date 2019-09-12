@@ -1,15 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, SafeAreaView } from 'react-native';
+import { Text, View, SafeAreaView, TouchableOpacity } from 'react-native';
 import { IconFont } from '@leaa/app/src/components/IconFont';
+import { Button } from '@ant-design/react-native';
+
 import { IScreenProps, INavigationStackOptions, IAuthBaseInfo } from '@leaa/app/src/interfaces';
 import { authUtil } from '@leaa/app/src/utils';
+import { LogoutButton } from './_compponents/LogoutButton/LogoutButton';
 
 import style from './style.less';
 
 interface IProps extends IScreenProps {}
 
 export const AccountScreen = (props: IProps) => {
+  const paramsUserInfo = props.navigation.state.params && props.navigation.state.params.userInfo;
+
   const [userInfo, setUserInfo] = useState<IAuthBaseInfo>();
+
+  useEffect(() => {
+    setUserInfo(paramsUserInfo);
+  }, [paramsUserInfo]);
 
   useEffect(() => {
     authUtil.getAuthInfo().then(info => info && setUserInfo(info));
@@ -17,10 +26,21 @@ export const AccountScreen = (props: IProps) => {
 
   return (
     <SafeAreaView style={style['wrapper']}>
-      <View style={style['textwrapper']}>
-        <Text style={style['home-label']} onPress={() => props.navigation.navigate('Login', { mode: 'module' })}>
-          <IconFont name="shequ" size={18} /> {JSON.stringify(userInfo)}
-        </Text>
+      <View style={style['container-wrapper']}>
+        <TouchableOpacity
+          activeOpacity={0.5}
+          style={style['user-text-wrapper']}
+          onPress={() => !userInfo && props.navigation.navigate('Login', { mode: 'module' })}
+        >
+          <IconFont name="shequ" size={20} style={style['user-icon']} />
+          <Text style={style['user-name']}>{userInfo ? userInfo.name.toUpperCase() : '登录'}</Text>
+        </TouchableOpacity>
+
+        <View style={style['userinfo-wrapper']}>
+          <Text style={style['userinfo-content']}>{JSON.stringify(userInfo)}</Text>
+        </View>
+
+        {userInfo && <LogoutButton onLogoutCallback={() => setUserInfo(undefined)} />}
       </View>
     </SafeAreaView>
   );

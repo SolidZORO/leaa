@@ -5,11 +5,7 @@ const iconSet = createIconSet(glyphMap, 'iconfont', require('@leaa/app/src/asset
 
 export default iconSet;
 
-export const { Button } = iconSet;
-export const { TabBarItem } = iconSet;
-export const { TabBarItemIOS } = iconSet;
-export const { ToolbarAndroid } = iconSet;
-export const { getImageSource } = iconSet;
+export const { Button, TabBarItem, TabBarItemIOS, ToolbarAndroid, getImageSource } = iconSet;
 
 // usage:
 //                  |---- `name` see iconfont.json
