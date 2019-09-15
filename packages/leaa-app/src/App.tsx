@@ -10,6 +10,7 @@ import { Provider } from '@ant-design/react-native';
 import { apolloClient } from '@leaa/app/src/libs/apollo-client.lib';
 import { AppContainer } from '@leaa/app/src/navs/AppNavigator/AppNavigator';
 import { themeConfig } from '@leaa/app/src/configs';
+import { StoreProvider, initStore } from '@leaa/app/src/stores';
 
 useScreens(); // @see https://reactnavigation.org/docs/en/react-native-screens.html
 
@@ -34,10 +35,12 @@ export default () => {
   }
 
   return (
-    <Provider theme={themeConfig}>
-      <ApolloProvider client={apolloClient}>
-        <AppContainer theme="light" />
-      </ApolloProvider>
-    </Provider>
+    <StoreProvider value={initStore()}>
+      <Provider theme={themeConfig}>
+        <ApolloProvider client={apolloClient}>
+          <AppContainer theme="light" />
+        </ApolloProvider>
+      </Provider>
+    </StoreProvider>
   );
 };

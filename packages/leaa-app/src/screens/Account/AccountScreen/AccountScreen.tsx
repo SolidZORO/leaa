@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, SafeAreaView, TouchableOpacity } from 'react-native';
 import { IconFont } from '@leaa/app/src/components/IconFont';
-import { Button } from '@ant-design/react-native';
 
 import { IScreenProps, INavigationStackOptions, IAuthBaseInfo } from '@leaa/app/src/interfaces';
 import { authUtil } from '@leaa/app/src/utils';
+import { useStore } from '@leaa/app/src/stores';
 import { LogoutButton } from './_compponents/LogoutButton/LogoutButton';
 
 import style from './style.less';
@@ -12,6 +12,8 @@ import style from './style.less';
 interface IProps extends IScreenProps {}
 
 export const AccountScreen = (props: IProps) => {
+  const store = useStore();
+
   const paramsUserInfo = props.navigation.state.params && props.navigation.state.params.userInfo;
 
   const [userInfo, setUserInfo] = useState<IAuthBaseInfo>();

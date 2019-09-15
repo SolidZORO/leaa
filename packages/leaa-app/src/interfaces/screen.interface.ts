@@ -1,5 +1,5 @@
-import { NavigationScreenConfigProps } from 'react-navigation';
+import { NavigationScreenProps } from 'react-navigation';
 import { NavigationStackOptions } from 'react-navigation-stack/src/types';
 
-export interface IScreenProps extends NavigationScreenConfigProps {}
+export interface IScreenProps extends NavigationScreenProps {}
 export type INavigationStackOptions = NavigationStackOptions;

@@ -5,8 +5,8 @@ import { createAppContainer } from 'react-navigation';
 import { AppBottomTabNavigator } from '@leaa/app/src/navs/AppBottomTabNavigator/AppBottomTabNavigator';
 
 import { ArticleItemScreen } from '@leaa/app/src/screens/Article/ArticleItemScreen/ArticleItemScreen';
-import { LoginScreen } from '@leaa/app/src/screens/Account/LoginScreen/LoginScreen';
-import { SignupScreen } from '@leaa/app/src/screens/Account/SignupScreen/SignupScreen';
+import { LoginScreen } from '@leaa/app/src/screens/Auth/LoginScreen/LoginScreen';
+import { SignupScreen } from '@leaa/app/src/screens/Auth/SignupScreen/SignupScreen';
 import { KeepScreen } from '@leaa/app/src/screens/Playground/KeepScreen/KeepScreen';
 
 export const AuthNavigator = createStackNavigator({

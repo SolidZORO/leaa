@@ -13,7 +13,14 @@ export const LoginScreen = (props: IProps) => {
   return (
     <SafeAreaView style={style['wrapper']}>
       <View style={style['header-title']}>
-        <LoginForm onSubmitCallback={userInfo => props.navigation.navigate('Account', { userInfo })} />
+        <LoginForm
+          onSubmitCallback={userInfo => {
+            const navigateScreen =
+              (props.navigation.state.params && props.navigation.state.params.navigateToScreen) || 'Account';
+
+            props.navigation.navigate(navigateScreen, { userInfo });
+          }}
+        />
       </View>
     </SafeAreaView>
   );

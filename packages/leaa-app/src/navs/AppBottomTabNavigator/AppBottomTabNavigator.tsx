@@ -6,7 +6,6 @@ import { IconFont } from '@leaa/app/src/components/IconFont';
 import { HomeScreen } from '@leaa/app/src/screens/Home/HomeScreen/HomeScreen';
 import { ArticleListScreen } from '@leaa/app/src/screens/Article/ArticleListScreen/ArticleListScreen';
 import { AccountScreen } from '@leaa/app/src/screens/Account/AccountScreen/AccountScreen';
-import { KeepScreen } from '@leaa/app/src/screens/Playground/KeepScreen/KeepScreen';
 
 const buildTabBarIcon = (iconName: string, props: any) => (
   <IconFont name={iconName} size={18} style={{ color: props.tintColor }} />
@@ -28,13 +27,6 @@ export const AppBottomTabNavigator = createBottomTabNavigator(
         tabBarIcon: (props: any) => buildTabBarIcon('wenzhang', props),
       },
     },
-    Keep: {
-      screen: KeepScreen,
-      navigationOptions: {
-        tabBarLabel: 'Keep',
-        tabBarIcon: (props: any) => buildTabBarIcon('xiaoshi', props),
-      },
-    },
     Account: {
       screen: AccountScreen,
       navigationOptions: {
@@ -45,7 +37,8 @@ export const AppBottomTabNavigator = createBottomTabNavigator(
   },
   {
     // mode: 'modal',
-    initialRouteName: 'Account',
+    initialRouteName: 'Home',
+    // initialRouteName: 'Account',
     tabBarPosition: 'bottom',
     swipeEnabled: false,
     animationEnabled: false,

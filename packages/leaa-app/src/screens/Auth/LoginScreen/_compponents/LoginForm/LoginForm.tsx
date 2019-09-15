@@ -38,7 +38,6 @@ export const LoginForm = (props: IProps) => {
 
       if (login && login.authToken && login.authExpiresIn) {
         await authUtil.setAuthToken(login.authToken, login.authExpiresIn);
-        await authUtil.setAuthToken(login.authToken, login.authExpiresIn);
       }
     },
   });

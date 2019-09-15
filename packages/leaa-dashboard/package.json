@@ -69,7 +69,6 @@
     "@types/draft-js": "^0.10.35",
     "@types/history": "^4.7.3",
     "@types/lodash": "4.14.138",
-    "@types/query-string": "6.3.0",
     "@types/react-dom": "^16.9.0",
     "@types/react-helmet": "^5.0.10",
     "@types/react-router-dom": "^4.3.5",
