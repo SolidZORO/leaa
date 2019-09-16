@@ -6,9 +6,11 @@ leaa-miniprogram base [Taro](https://nervjs.github.io/taro/) framework.
 
 ## **INSTALLATION**
 
-```
-N/A
+```shell script
+yarn install
+yarn dev
 ```
 
 ## **MEMO**
-`dev:weapp` 
+
+`dev:weapp`

@@ -6,7 +6,7 @@ leaa-www base [Next.js](https://nextjs.org/) framework.
 
 ## **INSTALLATION**
 
-```
+```shell script
 # .env for development
 cp .env.example .env
 

@@ -324,24 +324,24 @@ can't find module : ../../../node_modules/@tarojs/taro-weapp/
 
 托 `Taro` 的福。折腾了半天 `alias` 的问题在 `小程序` 模式下是彻底无解了。不过在解这个问题的同时有一个新发现。就是 `monorepo` 其实不应该在 `tsconfig.json` 写 `alias paths` 的。之前我的做法是这样。
 
-```
+```json5
 // tsconfig.json
 
 {
-  "compilerOptions": {
-    "paths": {
-      "@leaa/common/*": ["../_leaa-common/src/*"],
-      "@leaa/api/*": ["./src/*"]
-    }
-  }
+  compilerOptions: {
+    paths: {
+      '@leaa/common/*': ['../_leaa-common/src/*'],
+      '@leaa/api/*': ['./src/*'],
+    },
+  },
 }
 ```
 
-```
+```text
 // .babelrc.js
 
 plugins: [
-	...
+  ...
   alias: {
     '@leaa/common': '../_leaa-common/src',
     '@leaa/api': './src',
@@ -351,7 +351,7 @@ plugins: [
 
 ```
 
-```
+```json5
 // package.json
 
 "dependencies": {
@@ -362,7 +362,7 @@ plugins: [
 
 一共有三个地方要写 `alias`，如果加入了 `jest`，还需要在 `jest.js` 写上:
 
-```
+```text
 // jest.js
 
 const { pathsToModuleNameMapper } = require('ts-jest/utils');
@@ -374,13 +374,13 @@ moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<roo
 
 这是图什么呢? 就图个在 import 的时候可以这样：
 
-```
+```text
 import { JwtStrategy } from '@leaa/api/strategies';
 ```
 
 而不是：
 
-```
+```text
 import { JwtStrategy } from '@leaa/api/src/strategies';
 ```
 
@@ -440,7 +440,7 @@ symlinkPaths.forEach(path => {
 
 如果有 finally 的加持，只需要在 finally 里写一次去掉 Loading 即可，但如果不支持，then 和 catch 都要写，略显麻烦。不过也有曲线救国的解决办法：
 
-```
+```text
 try {
   ...
 } catch(e){
@@ -454,24 +454,23 @@ try {
 
 所以最终方案还是 `fucking-self`，其实写一个 `Promise.finally()` 不难：
 
-```
-Promise.prototype.finally = Promise.prototype.finally || {
-  finally (fn) {
-    const onFinally = cb => Promise.resolve(fn()).then(cb);
+```javascript
+Promise.prototype.finally =
+  Promise.prototype.finally ||
+  {
+    finally(fn) {
+      const onFinally = cb => Promise.resolve(fn()).then(cb);
 
-    return this.then(
-      result => onFinally(() => result),
-      reason => onFinally(() => Promise.reject(reason))
-    );
-  }
-}.finally;
+      return this.then(result => onFinally(() => result), reason => onFinally(() => Promise.reject(reason)));
+    },
+  }.finally;
 ```
 
 但是写好非常难，为了避免手写代码的可靠性，还是用 lib 吧，网上找了很多相关的 lib，发现还是 [promise.prototype.finally](https://www.npmjs.com/package/promise.prototype.finally) 最好，同等体积下实现最好。
 
 使用的时候直接在 `app.tsx` 下调一下即可，简简单单。
 
-```
+```javascript
 import promiseFinally from 'promise.prototype.finally';
 promiseFinally.shim();
 ```
@@ -490,14 +489,14 @@ promiseFinally.shim();
 
 来，先贴一下关键代码：
 
-```
+```text
 // custom-tab-bar/index.tsx
 
 // 控制 action class 样式
 className={cx(style['item'], { [style['item--action']]: selected === index })}
 ```
 
-```
+```text
 // home.tsx
 
 componentDidShow() {
@@ -541,7 +540,7 @@ BTW-1，据网友纠正，Taro 的内核是 [NervJS](https://github.com/NervJS/n
 
 1，注册公众号，最后一步弹出 IP 白名单你可以随便先填写一个，比如 `127.0.0.1`，这是为了避免待会用调试工具报：
 
-```
+```text
 {
     "errcode": -1000,
     "errmsg": "system error"
@@ -550,7 +549,7 @@ BTW-1，据网友纠正，Taro 的内核是 [NervJS](https://github.com/NervJS/n
 
 2，接着去调试工具里填好，`appid` 和 `secret`，发请求，这时会返回。
 
-```
+```text
 {
     "errcode": 40164,
     "errmsg": "invalid ip xxx.xxx.xxx.xxx, not in whitelist"
@@ -559,7 +558,7 @@ BTW-1，据网友纠正，Taro 的内核是 [NervJS](https://github.com/NervJS/n
 
 3，把那个 invalid IP 复制到白名单，再发请求，就会看到已经成功。
 
-```
+```text
 {
     "access_token": "24_2A_6FbzJH...JOO",
     "expires_in": 7200
@@ -666,7 +665,7 @@ ZEIT 大哥！`Next.js` 这可是你自家的服务啊，有必要限得那么�
 
 刚 RN(expo) 在跑 `dev` 的时候弹出：
 
-```
+```text
 (node:10461) UnhandledPromiseRejectionWarning: Error: jest-haste-map: Haste module naming collision:
   Duplicate module name: @leaa/api
   Paths: /Users/SolidZORO/Sites/leaa/packages/leaa-api/_deploy/package.json collides with /Users/SolidZORO/Sites/leaa/packages/leaa-api/package.json
@@ -678,7 +677,7 @@ ZEIT 大哥！`Next.js` 这可是你自家的服务啊，有必要限得那么�
 
 然后改 `blacklistRE` 限制搜寻范围，不多说，上代码：
 
-```
+```text
 // metro.config.js
 
 const blacklist = require('metro-config/src/defaults/blacklist');

@@ -6,7 +6,7 @@ leaa-dashboard compiled by webpack.
 
 ## **INSTALLATION**
 
-```
+```shell script
 # .env for development
 cp .env.example .env
 
