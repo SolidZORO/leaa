@@ -49,9 +49,9 @@ You can click `demo` link online preview, all demos are deployed in `heroku` and
 
 ### APP and MINI-PROGRAM
 
-##### app-article-list
+##### gif (3.7MB)
 
-![app-article-list](https://raw.githubusercontent.com/SolidZORO/leaa/master/designs/ui/leaa-app-and-mini-program.png)
+![app-article-list](https://raw.githubusercontent.com/SolidZORO/leaa/master/designs/ui/leaa-app-and-mini-program.gif)
 
 ## **TODOS**
 
