@@ -11,7 +11,12 @@ import { PageCard } from '../../components/PageCard/PageCard';
 const ArticleList = dynamic(() => import('@leaa/www/pages/article/_components/ArticleList/ArticleList'));
 
 export default () => {
-  const getArticlesVariables = {};
+  const getArticlesVariables = {
+    page: 1,
+    pageSize: 100,
+    orderSort: 'DESC',
+    orderBy: 'id',
+  };
   const getArticlesQuery = useQuery<{ articles: ArticlesWithPaginationObject }, ArticleArgs>(GET_ARTICLES, {
     variables: getArticlesVariables,
   });

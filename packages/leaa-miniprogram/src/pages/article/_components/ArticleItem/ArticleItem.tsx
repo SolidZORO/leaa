@@ -31,7 +31,9 @@ export const ArticleItem = (props: IProps) => {
 
         setGetArticleQuery(data);
 
-        const title = (data && data.article && data.article.title) || '文章详情';
+        let title = (data && data.article && data.article.title) || '文章详情';
+
+        title = title.length > 15 ? `${title.substr(0, 15)}...` : title;
 
         Taro.setNavigationBarTitle({ title }).then();
       })

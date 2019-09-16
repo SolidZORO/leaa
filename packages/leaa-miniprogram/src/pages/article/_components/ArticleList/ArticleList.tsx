@@ -10,7 +10,12 @@ import { apolloClient } from '@leaa/miniprogram/src/libs';
 import style from './style.less';
 
 export const ArticleList = () => {
-  const [getArticlesVariables, setGetArticlesVariables] = useState<ArticleArgs>({ page: 1, pageSize: 30 });
+  const [getArticlesVariables, setGetArticlesVariables] = useState<ArticleArgs>({
+    page: 1,
+    pageSize: 100,
+    orderSort: 'DESC',
+    orderBy: 'id',
+  });
   const [getArticlesQuery, setGetArticlesQuery] = useState<{ articles: ArticlesWithPaginationObject }>();
   const [getArticlesLoading, setGetArticlesLoading] = useState<boolean>(false);
 
