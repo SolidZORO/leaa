@@ -1,4 +1,5 @@
 // prettier-ignore
+// eslint-disable-next-line no-extend-native
 Promise.prototype.finally = Promise.prototype.finally || {
   finally (fn) {
     const onFinally = cb => Promise.resolve(fn()).then(cb);

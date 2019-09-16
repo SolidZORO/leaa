@@ -1,14 +1,12 @@
 import '@tarojs/async-await';
 import Taro, { Component, Config } from '@tarojs/taro';
 import { ApolloProvider } from '@apollo/react-hooks';
-import promiseFinally from 'promise.prototype.finally';
+import '@leaa/miniprogram/src/libs/promise-finally.lib';
 
 import { apolloClient } from '@leaa/miniprogram/src/libs';
 import Home from '@leaa/miniprogram/src/pages/home/home';
 
 import '@leaa/miniprogram/src/styles/global.less';
-
-promiseFinally.shim();
 
 class App extends Component {
   config: Config = {

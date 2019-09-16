@@ -15,7 +15,7 @@ Leaa is a monorepo CMS (Content Management System) built with Nest.js, Next.js, 
 - [x] **leaa-dashboard** ([demo](https://test-leaa-dashboard.solidzoro.now.sh)) / dashboard (React.js + Antd + MobX + Apollo / GraphQL)
 - [x] **leaa-www** ([demo](https://test-leaa-www.solidzoro.now.sh)) / website (Next.js + GraphQL)
 - [x] **leaa-miniprogram** / wechat-miniprogram (Taro.js + Taro-ui + GraphQL)
-- [ ] **leaa-app** / iOS and Android (expo + GraphQL)
+- [x] **leaa-app** / iOS and Android (expo + GraphQL)
 
 [# read more TODOS](#TODOS)
 
@@ -25,7 +25,7 @@ View the `README.md` of each sub-directory in `packages`. You may need to look a
 
 ## **Preview**
 
-You can click `demo` link online preview, all demos are deployed in `heroku` and `now.sh`, but the response is very SLOW, please be patient.
+You can click `demo` link online preview, all demos are deployed in `heroku` and `now.sh`, but the response is very SLOW, please be patient. all demo support responsive web design.
 
 ### Dashboard ([demo](https://test-leaa-dashboard.solidzoro.now.sh))
 
@@ -34,10 +34,6 @@ You can click `demo` link online preview, all demos are deployed in `heroku` and
 ![dashboard-login](https://raw.githubusercontent.com/SolidZORO/leaa/master/designs/ui/dashboard-login.png)
 
 ##### dashboard-user-edit
-
-![dashboard-user-edit](https://raw.githubusercontent.com/SolidZORO/leaa/master/designs/ui/dashboard-user-edit.png)
-
-##### dashboard-mobile
 
 ![dashboard-mobile](https://raw.githubusercontent.com/SolidZORO/leaa/master/designs/ui/dashboard-mobile.png)
 
@@ -50,10 +46,6 @@ You can click `demo` link online preview, all demos are deployed in `heroku` and
 ##### www-login
 
 ![www-login](https://raw.githubusercontent.com/SolidZORO/leaa/master/designs/ui/www-login.png)
-
-##### www-mobile
-
-![www-mobile](https://raw.githubusercontent.com/SolidZORO/leaa/master/designs/ui/www-mobile.png)
 
 ## **TODOS**
 
@@ -148,7 +140,7 @@ You can click `demo` link online preview, all demos are deployed in `heroku` and
   - [ ] Booking
   - [ ] Coupon
   - [ ] Promo
-- [ ] **leaa-miniprogram** / wechat-miniprogram (Taro.js + GraphQL)
+- [x] **leaa-miniprogram** / wechat-miniprogram (Taro.js + GraphQL)
   - [x] Home
   - [x] Account
     - [x] Login
@@ -156,14 +148,14 @@ You can click `demo` link online preview, all demos are deployed in `heroku` and
   - [x] Article
     - [x] List
     - [x] Item (Rich Text)
-- [ ] **leaa-app** / iOS and Android (expo + GraphQL)
-  - [ ] Home
-  - [ ] Account
-    - [ ] Login
-    - [ ] Logout
+- [x] **leaa-app** / iOS and Android (expo + GraphQL)
+  - [x] Home
+  - [x] Account
+    - [x] Login
+    - [x] Logout
   - [x] Article
     - [x] List
-    - [ ] Item
+    - [x] Item (Webview)
 
 <br />
 <br />
@@ -351,7 +343,7 @@ plugins: [
 
 ```
 
-```json5
+```text
 // package.json
 
 "dependencies": {
@@ -698,7 +690,7 @@ module.exports = (async () => {
 })();
 ```
 
-### 2019-09-12 15:04
+### 2019-09-12 12:09
 
 都说 RN 坑，我现在是体会到了。写 RN 的这些天里，开发日志是不想写了，而且我发现 App 的交互和 Mobile Web 有较大的不同，为了写一个 Login，我特地下载了 10 多个 App 来研究交互。
 
@@ -709,3 +701,11 @@ module.exports = (async () => {
 RN 的生态是真不好，也没人交流。国内外几大 RN 社区人气也是低迷。反正体验比较难受，以后用栈还真的要慎重考虑这种小众技术，不然碰到问题连找人问的机会都没有。
 
 那开发 App 到底要选什么技术栈才好啊？嗯…… 标准答案「放弃 App 开发」。
+
+### 2019-09-16 14:57
+
+刚在整理代码发现小程序跑不起来了，报 `module "util" is not defined`，几经折腾才发现是之前引入 `promise.prototype.finally` 的问题，注释掉就好，看 git log 发现这个有升级过版本，还原后未果，还好，之前的 `Promise Finally` 有手写过一个版本，拿出来用就好了。
+
+这让我不经感叹，对于 legacy 的项目，npm package 还是有锁版本的必要的，早些年我好几个 webpack2 的项目在 webpack3 时代重新拿出来跑结果怎么弄都跑不起来，最后只能 package 一个个锁版本后才解决问题。
+
+总之，版本控制也是天坑，有些没必要花的时间还真就是给花了，这个时候有人会说上 CI，但是如果是 legacy 的项目上 CI 貌似用处也不大，因为没人会触发 CI 去跑，除非是每日定时跑…… 但项目都 legacy 了，恐怕也没人会去这样做了吧。哎…… 真是个伤脑筋的问题。

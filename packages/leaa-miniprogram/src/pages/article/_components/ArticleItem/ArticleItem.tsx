@@ -31,7 +31,9 @@ export const ArticleItem = (props: IProps) => {
 
         setGetArticleQuery(data);
 
-        Taro.setNavigationBarTitle({ title: '文章列表' }).then();
+        const title = (data && data.article && data.article.title) || '文章详情';
+
+        Taro.setNavigationBarTitle({ title }).then();
       })
       .catch(error => {
         console.log('CATCH');

@@ -25,6 +25,7 @@
     "fix": "yarn run fix-js && yarn run fix-css",
     "tsc-check": "tsc --noEmit",
     "---------------------------------------------------------------------- DEV ----": "----",
+    "symlink": "node ./symlink.js",
     "dev:weapp": "npm run build:weapp -- --watch",
     "dev:h5": "npm run build:h5 -- --watch",
     "---------------------------------------------------------------------- PROD ----": "----",
@@ -58,7 +59,6 @@
     "mobx": "4.8.0",
     "nerv-devtools": "^1.4.4",
     "nervjs": "^1.4.4",
-    "promise.prototype.finally": "^3.1.1",
     "react-apollo": "^3.1.0",
     "type-graphql": "^0.17.5",
     "wx-apollo-fetcher": "^1.0.2"

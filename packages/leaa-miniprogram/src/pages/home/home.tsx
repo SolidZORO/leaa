@@ -6,7 +6,7 @@ export default class extends Taro.Component {
   componentDidMount() {
     Taro.setNavigationBarTitle({ title: 'leaa-demo' }).then();
 
-    Taro.switchTab({ url: '/pages/article/article-list' }).then();
+    // Taro.switchTab({ url: '/pages/article/article-list' }).then();
     // Taro.navigateTo({ url: '/pages/article/article-item?id=28' }).then();
     // Taro.switchTab({ url: '/pages/account/account' }).then();
   }

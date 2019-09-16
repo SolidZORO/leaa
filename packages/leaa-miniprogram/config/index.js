@@ -63,30 +63,30 @@ const config = {
       },
     },
   },
-  h5: {
-    publicPath: '/',
-    staticDirectory: 'static',
-    module: {
-      postcss: {
-        autoprefixer: {
-          enable: true,
-          config: {
-            browsers: ['last 3 versions', 'Android >= 4.1', 'ios >= 8'],
-          },
-        },
-        cssModules: {
-          enable: true,
-          config: {
-            // namingPattern 配置取值分别如下：
-            // global，表示全局转换，所有样式文件都会经过 CSS Modules 转换处理，除了文件名中包含 .global. 的样式文件
-            // module，表示自定义转换，只有文件名中包含 .module. 的样式文件会经过 CSS Modules 转换处理
-            namingPattern: 'global',
-            generateScopedName: '[local]--[hash:8]',
-          },
-        },
-      },
-    },
-  },
+  // h5: {
+  //   publicPath: '/',
+  //   staticDirectory: 'static',
+  //   module: {
+  //     postcss: {
+  //       autoprefixer: {
+  //         enable: true,
+  //         config: {
+  //           browsers: ['last 3 versions', 'Android >= 4.1', 'ios >= 8'],
+  //         },
+  //       },
+  //       cssModules: {
+  //         enable: true,
+  //         config: {
+  //           // namingPattern 配置取值分别如下：
+  //           // global，表示全局转换，所有样式文件都会经过 CSS Modules 转换处理，除了文件名中包含 .global. 的样式文件
+  //           // module，表示自定义转换，只有文件名中包含 .module. 的样式文件会经过 CSS Modules 转换处理
+  //           namingPattern: 'global',
+  //           generateScopedName: '[local]--[hash:8]',
+  //         },
+  //       },
+  //     },
+  //   },
+  // },
 };
 
 // eslint-disable-next-line func-names
