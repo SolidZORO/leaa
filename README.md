@@ -35,7 +35,7 @@ You can click `demo` link online preview, all demos are deployed in `heroku` and
 
 ##### dashboard-user-edit
 
-![dashboard-mobile](https://raw.githubusercontent.com/SolidZORO/leaa/master/designs/ui/dashboard-mobile.png)
+![dashboard-user-edit](https://raw.githubusercontent.com/SolidZORO/leaa/master/designs/ui/dashboard-user-edit.png)
 
 ### WWW ([demo](https://test-leaa-www.solidzoro.now.sh))
 
