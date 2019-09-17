@@ -25,7 +25,7 @@ View the `README.md` of each sub-directory in `packages`. You may need to look a
 
 ## **Preview**
 
-You can click `demo` link online preview, all demos are deployed in `heroku` and `now.sh`, but the response is very SLOW, please be patient. all demo support responsive web design.
+You can click `demo` link online preview, all demos are deployed in `heroku` and `now.sh`, but the response is very SLOW, please be patient. all demos support responsive web design.
 
 ### Dashboard ([demo](https://test-leaa-dashboard.solidzoro.now.sh))
 
