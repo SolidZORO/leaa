@@ -17,7 +17,7 @@ Leaa is a monorepo CMS (Content Management System) built with Nest.js, Next.js, 
 - [x] **leaa-miniprogram** / wechat-miniprogram (Taro.js + Taro-ui + GraphQL)
 - [x] **leaa-app** / iOS and Android (expo + GraphQL)
 
-[# read more TODOS v0](#TODOS v0)
+[# read more TODOS v0](#TODOS-v0)
 
 ## **Install**
 
@@ -53,7 +53,7 @@ You can click `demo` link online preview, all demos are deployed in `heroku` and
 
 ![app-article-list](https://raw.githubusercontent.com/SolidZORO/leaa/master/designs/ui/leaa-app-and-mini-program.gif)
 
-## **TODOS v0**
+## **TODOS-v0**
 
 - [x] **\_leaa-common**
 - [x] **leaa-api** ([demo](https://test-leaa-api.herokuapp.com)) / backend (Nest.js + TypeGraphQL + MySQL + Docker Compose)
@@ -129,7 +129,7 @@ You can click `demo` link online preview, all demos are deployed in `heroku` and
 <br />
 <br />
 
-## **TODOS v1**
+## **TODOS-v1**
 
 - [ ] **leaa-api**
   - [ ] Order
