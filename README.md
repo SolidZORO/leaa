@@ -190,7 +190,7 @@ You can click `demo` link online preview, all demos are deployed in `heroku` and
 
 说到坑，我觉得我这一手坑挖技能真是了得。`RN` 以坑多而红想必已人尽皆知，好，我选了。`monorepo` 的坑大家可能不了解，但的确也是能把人坑得死去活来的，好，我选了。用 `TS` 开发 `RN` 的坑不多，但也不少，好，我也选了。然后就变成了选择了这个 `RN` + `monorepo` + `TS` 超级大坑（哭），不过后面我还是一点点的躺了过来，实在佩服自己的耐心（摊手）。
 
-为什么会选 `monorepo` 这种方式开发呢？我的初衷是 5 端共享 TS 的 `interface` 和一些可复用的配置，但是后来写 `mp` 和 `app` 的时候发现，由于他们的一些特殊机制，我没办法给他们共享。实际上 `mp` 和 `app` 算是和 `monorepo` 完全隔离的，如果后面我重构代码，我会把这些 「`非标准 web 应用`」单独放一个 repo，因为他们真的很难伺候，`node_modules` 也是自有一份无法共享，每份体积都很大。大到不是关键，关键是每次 `yarn install` 的时候非常非常满，CPU 狂飙感觉电脑都要起飞了。本来我是倾向于能用 `yarn workspaces` 解决的 `mono` 就不用 `lerna` ，但因为这个问题我尝试着上了 `lerna`，可问题似乎没得到好转，只好作罢。这一次用 `monorepo` 真真切切的给到了经验，算得上是拳拳到肉的疼，也让我知道如何取舍 `mono` 和 `multi`。
+为什么会选 `monorepo` 这种方式开发呢？我的初衷是 5 端共享 TS 的 `interface` 和一些可复用的配置，但是后来写 `mp` 和 `app` 的时候发现，由于他们的一些特殊机制，我没办法给他们共享。实际上 `mp` 和 `app` 算是和 `monorepo` 完全隔离的，如果后面我重构代码，我会把这些 「`非标准 web 应用`」单独放一个 repo，因为他们真的很难伺候，`node_modules` 也是自有一份无法共享，每份体积都很大。大到不是关键，关键是每次 `yarn install` 的时候非常非常满，CPU 狂飙感觉电脑都要起飞了。本来我是倾向于能用 `yarn workspaces` 解决的 `mono` 就不用 `lerna`，但因为这个问题我尝试着上了 `lerna`，可问题似乎没得到好转，只好作罢。这一次用 `monorepo` 真真切切的给到了经验，算得上是拳拳到肉的疼，也让我知道如何取舍 `mono` 和 `multi`。
 
 好，如果现在让我写一个 5 端难度排行，我认为会是这样 `mp` > `app` > `www` > `api` > `dashboard`。
 
@@ -202,7 +202,7 @@ You can click `demo` link online preview, all demos are deployed in `heroku` and
 
 本来说好写总结就不要不抱怨了，但现在看来多多少少还是有一些吐槽，Anywhere，从 `Docker` 到 `Api` 再到 `UI/UX`，写 `leaa` 过程的确让我学到很多，对软件架构、开闭原则有了更深的了解，以前写项目觉得「编码」与「建筑」其实是做着同一件事情， 这次算是更深刻的体会到了。
 
-目前 `leaa` 还有很多很多很多 bug， 但这似乎不妨碍有需要的人通过 Github 上检索到 `leaa` 中对他们有用的代码，这也是我写 `leaa` 的东西，以上。 2019-09-17 17:01@广西贺州
+目前 `leaa` 还有很多很多很多 bug，但这似乎不妨碍有需要的人通过 Github 上检索到 `leaa` 中对他们有用的代码，这也是我写 `leaa` 的东西，以上。 2019-09-17 17:01 @ Guangxi Hezhou
 
 ## **DEV LOG**
 
