@@ -6,7 +6,7 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/4443217249ea4bbe8e057c691de4b0cd)](https://www.codacy.com?utm_source=github.com&utm_medium=referral&utm_content=SolidZORO/leaa&utm_campaign=Badge_Grade)
 [![codecov](https://codecov.io/gh/SolidZORO/leaa/branch/master/graph/badge.svg?token=gdOhbSjkRy)](https://codecov.io/gh/SolidZORO/leaa)
 
-Leaa is a monorepo CMS (Content Management System) built with Nest.js, Next.js, GraphQL, and Ant Design. The next major version of the plan will be added to the Online Store.
+Leaa is a monorepo CMS (Content Management System) built with Nest.js, Next.js, GraphQL, and Ant Design. The next major version (v1) of the plan will be added to the Online Store.
 
 ## **Monorepo-Packages**
 
@@ -17,7 +17,7 @@ Leaa is a monorepo CMS (Content Management System) built with Nest.js, Next.js, 
 - [x] **leaa-miniprogram** / wechat-miniprogram (Taro.js + Taro-ui + GraphQL)
 - [x] **leaa-app** / iOS and Android (expo + GraphQL)
 
-[# read more TODOS](#TODOS)
+[# read more TODOS v0](#TODOS v0)
 
 ## **Install**
 
@@ -53,7 +53,7 @@ You can click `demo` link online preview, all demos are deployed in `heroku` and
 
 ![app-article-list](https://raw.githubusercontent.com/SolidZORO/leaa/master/designs/ui/leaa-app-and-mini-program.gif)
 
-## **TODOS**
+## **TODOS v0**
 
 - [x] **\_leaa-common**
 - [x] **leaa-api** ([demo](https://test-leaa-api.herokuapp.com)) / backend (Nest.js + TypeGraphQL + MySQL + Docker Compose)
@@ -75,18 +75,6 @@ You can click `demo` link online preview, all demos are deployed in `heroku` and
   - [x] Logger
   - [x] Seed
   - [x] Setting
-  - [ ] Order
-  - [ ] Product
-    - [ ] Specs (universal property)
-  - [ ] Warehouses
-  - [ ] Stocktaking
-  - [ ] Statistics
-  - [ ] Booking
-  - [ ] Coupon
-  - [ ] Promo
-  - [ ] Payment
-    - [ ] Alipay
-    - [ ] Wechat
 - [x] **leaa-dashboard** ([demo](https://test-leaa-dashboard.solidzoro.now.sh)) / dashboard (React.js + Antd + MobX + Apollo / GraphQL)
   - [x] Auth
   - [x] User
@@ -104,30 +92,15 @@ You can click `demo` link online preview, all demos are deployed in `heroku` and
   - [x] Error Boundary
   - [x] Responsive Design
   - [x] i18n
-  - [ ] Order
-  - [ ] Product
-    - [ ] Specs (universal property)
-  - [ ] Warehouses
-  - [ ] Stocktaking
-  - [ ] Statistics
-  - [ ] Booking
-  - [ ] Coupon
-  - [ ] Promo
 - [x] **leaa-www** ([demo](https://test-leaa-www.solidzoro.now.sh)) / website (Next.js + GraphQL)
   - [x] Home
   - [x] Account
-    - [ ] Login
+    - [x] Login
       - [x] Email
-      - [ ] Phone
       - [x] Wechat
-    - [ ] Register
+    - [x] Register
       - [x] Email
-      - [ ] Phone
       - [x] Wechat
-    - [ ] Forget Password
-    - [x] Profile
-      - [ ] Upload Avatar
-      - [ ] Bind / Unbind OAuth Account
     - [x] Logout
   - [x] Article
     - [x] List
@@ -136,16 +109,6 @@ You can click `demo` link online preview, all demos are deployed in `heroku` and
     - [x] Support Retina @2x
     - [x] Image Lazyload
   - [x] SEO (HtmlMeta)
-  - [ ] Cart
-  - [ ] Checkout
-  - [ ] Payment
-    - [ ] Alipay
-    - [ ] Wechat
-  - [ ] Order
-  - [ ] Product
-  - [ ] Booking
-  - [ ] Coupon
-  - [ ] Promo
 - [x] **leaa-miniprogram** / wechat-miniprogram (Taro.js + GraphQL)
   - [x] Home
   - [x] Account
@@ -165,6 +128,56 @@ You can click `demo` link online preview, all demos are deployed in `heroku` and
 
 <br />
 <br />
+
+## **TODOS v1**
+
+- [ ] **leaa-api**
+  - [ ] Order
+  - [ ] Product
+    - [ ] Specs (universal property)
+  - [ ] Warehouses
+  - [ ] Stocktaking
+  - [ ] Statistics
+  - [ ] Booking
+  - [ ] Coupon
+  - [ ] Promo
+  - [ ] Payment
+    - [ ] Alipay
+    - [ ] Wechat
+- [ ] **leaa-dashboard**
+  - [ ] Order
+  - [ ] Product
+    - [ ] Specs (universal property)
+  - [ ] Warehouses
+  - [ ] Stocktaking
+  - [ ] Statistics
+  - [ ] Booking
+  - [ ] Coupon
+  - [ ] Promo
+- [ ] **leaa-www**
+  - [ ] Account
+    - [ ] Login
+      - [ ] Phone
+    - [ ] Register
+      - [ ] Phone
+    - [ ] Forget Password
+    - [ ] Profile
+      - [ ] Upload Avatar
+      - [ ] Bind / Unbind OAuth Account
+  - [ ] Cart
+  - [ ] Checkout
+  - [ ] Payment
+    - [ ] Alipay
+    - [ ] Wechat
+  - [ ] Order
+  - [ ] Product
+  - [ ] Booking
+  - [ ] Coupon
+  - [ ] Promo
+
+<br />
+<br />
+
 
 ## **DEV LOG**
 

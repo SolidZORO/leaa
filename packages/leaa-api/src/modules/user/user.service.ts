@@ -160,6 +160,10 @@ export class UserService extends BaseService<
   }
 
   async deleteUser(id: number): Promise<User | undefined> {
+    if (id === 1) {
+      throw Error('PLEASE DONT');
+    }
+
     return this.delete(id);
   }
 }

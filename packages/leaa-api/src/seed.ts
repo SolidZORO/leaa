@@ -35,6 +35,8 @@ import { SeedService } from '@leaa/api/src/modules/seed/seed.service';
     if (process.argv.includes('--debug')) {
       await seedService.insertRandomUsers();
     }
+
+    await process.exit(0);
   } catch (e) {
     await process.exit(0);
   }

@@ -132,6 +132,10 @@ export class RoleService extends BaseService<
   }
 
   async deleteRole(id: number): Promise<Role | undefined> {
+    if (id === 1) {
+      throw Error('PLEASE DONT');
+    }
+
     return this.delete(id);
   }
 }
