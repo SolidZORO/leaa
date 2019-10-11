@@ -1,1 +1,0 @@
-export { AnimatedTitle } from './AnimatedTitle';

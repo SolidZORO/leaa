@@ -36,7 +36,7 @@ const webpackConfig = (config, options) => {
 
   // comstom antd icon
   config.resolve.alias['@ant-design/icons/lib/dist$'] = path.resolve(__dirname, './configs/next-antd-icon');
-  config.resolve.alias['swiper$'] = 'swiper/dist/js/swiper.js';
+  config.resolve.alias['swiper$'] = 'swiper/js/swiper.js';
 
   config.node = {
     fs: 'empty',
@@ -52,7 +52,7 @@ module.exports = withDotenv(
       cssLoaderOptions: {
         sourceMap: false,
         importLoaders: 1,
-        localIdentName: '[local]--[hash:8]',
+        // localIdentName: '[local]--[hash:8]',
       },
       lessLoaderOptions: {
         javascriptEnabled: true,
