@@ -61,8 +61,7 @@
     "react": "16.8.6",
     "react-apollo": "^3.0.1",
     "react-test-renderer": "16.8.6",
-    "react-dom": "16.8.6",
-    "@leaa/www": "latest"
+    "react-dom": "16.8.6"
   },
   "devDependencies": {
     "@babel/cli": "7.6.4",
