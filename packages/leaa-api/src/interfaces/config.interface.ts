@@ -15,6 +15,7 @@ export interface IDotEnv {
   DB_USER: string;
   DB_PASSWORD: string;
   DB_DATABASE: string;
+  DB_SYNCHRONIZE: string;
 
   TRUST_PROXY: string;
   JWT_SECRET_KEY: string;

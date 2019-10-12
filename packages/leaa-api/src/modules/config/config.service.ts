@@ -67,6 +67,12 @@ export class ConfigService {
     return this.envConfig.DB_DATABASE;
   }
 
+  get DB_SYNCHRONIZE(): boolean {
+    return typeof this.envConfig.DB_SYNCHRONIZE !== 'undefined'
+      ? Boolean(this.envConfig.DB_SYNCHRONIZE === 'true')
+      : true;
+  }
+
   //
 
   get TRUST_PROXY(): string {
@@ -151,6 +157,7 @@ export class ConfigService {
       DB_USER: envalid.str(),
       DB_PASSWORD: envalid.str(),
       DB_DATABASE: envalid.str(),
+      DB_SYNCHRONIZE: envalid.str(),
       //
       TRUST_PROXY: envalid.str(),
       JWT_SECRET_KEY: envalid.str(),
