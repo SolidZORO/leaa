@@ -2,36 +2,30 @@
 # yarn lockfile v1
 
 
-"@ampproject/toolbox-core@^1.1.1":
+"@ampproject/toolbox-core@^1.0.1", "@ampproject/toolbox-core@^1.1.1":
   version "1.1.1"
   resolved "https://registry.npm.taobao.org/@ampproject/toolbox-core/download/@ampproject/toolbox-core-1.1.1.tgz#540c8f3ab0f5d1faa1ba35282cd5f5f3f0e16a76"
   integrity sha1-VAyPOrD10fqhujUoLNX18/DhanY=
   dependencies:
     node-fetch "2.6.0"
 
-"@ampproject/toolbox-optimizer@1.1.1":
-  version "1.1.1"
-  resolved "https://registry.npm.taobao.org/@ampproject/toolbox-optimizer/download/@ampproject/toolbox-optimizer-1.1.1.tgz#be66245c966ba9b0f5e3020109f87fea90ea377d"
-  integrity sha1-vmYkXJZrqbD14wIBCfh/6pDqN30=
+"@ampproject/toolbox-optimizer@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.npm.taobao.org/@ampproject/toolbox-optimizer/download/@ampproject/toolbox-optimizer-1.0.1.tgz#5eeda7bc84c23237479c35442d4696c4bdbeb1d3"
+  integrity sha1-Xu2nvITCMjdHnDVELUaWxL2+sdM=
   dependencies:
-    "@ampproject/toolbox-core" "^1.1.1"
-    "@ampproject/toolbox-runtime-version" "^1.1.1"
-    "@ampproject/toolbox-script-csp" "^1.1.1"
+    "@ampproject/toolbox-core" "^1.0.1"
+    "@ampproject/toolbox-runtime-version" "^1.0.1"
     css "2.2.4"
     parse5 "5.1.0"
     parse5-htmlparser2-tree-adapter "5.1.0"
 
-"@ampproject/toolbox-runtime-version@^1.1.1":
+"@ampproject/toolbox-runtime-version@^1.0.1":
   version "1.1.1"
   resolved "https://registry.npm.taobao.org/@ampproject/toolbox-runtime-version/download/@ampproject/toolbox-runtime-version-1.1.1.tgz#628fe5091db4f90b68960620e22ad64f9f2563bd"
   integrity sha1-Yo/lCR20+QtolgYg4irWT58lY70=
   dependencies:
     "@ampproject/toolbox-core" "^1.1.1"
-
-"@ampproject/toolbox-script-csp@^1.1.1":
-  version "1.1.1"
-  resolved "https://registry.npm.taobao.org/@ampproject/toolbox-script-csp/download/@ampproject/toolbox-script-csp-1.1.1.tgz#0b049a1c86c99f300162a10e1b9ce83c6e354a45"
-  integrity sha1-CwSaHIbJnzABYqEOG5zoPG41SkU=
 
 "@ant-design/colors@^3.1.0":
   version "3.2.1"
@@ -2810,13 +2804,6 @@
   version "1.5.1"
   resolved "https://registry.npmjs.org/@types/http-assert/-/http-assert-1.5.1.tgz#d775e93630c2469c2f980fc27e3143240335db3b"
   integrity sha512-PGAK759pxyfXE78NbKxyfRcWYA/KwW17X290cNev/qAsn9eQIxkH4shoNBafH37wewhDG/0p1cHPbK6+SzZjWQ==
-
-"@types/image-size@^0.7.0":
-  version "0.7.0"
-  resolved "https://registry.npmjs.org/@types/image-size/-/image-size-0.7.0.tgz#a785302cdaedad7dfd985c5f2f6f721467b95de9"
-  integrity sha512-WkmNFWsC7NggeNC+2LxFJc6we3PiPf72NJUpezGNPbSe5zZ9sBcscQnSqQjYAyax3QNCyT42kNdAeT2tTvQMcQ==
-  dependencies:
-    "@types/node" "*"
 
 "@types/invariant@^2.2.30":
   version "2.2.30"
@@ -9512,10 +9499,10 @@ i18next-xhr-backend@^3.2.0:
   dependencies:
     "@babel/runtime" "^7.5.5"
 
-i18next@^17.1.0:
-  version "17.1.0"
-  resolved "https://registry.npm.taobao.org/i18next/download/i18next-17.1.0.tgz#7f9fd49becf0c5634750d8af657ff311e9db5639"
-  integrity sha1-f5/Um+zwxWNHUNivZX/zEenbVjk=
+i18next@^17.2.0:
+  version "17.2.0"
+  resolved "https://registry.npm.taobao.org/i18next/download/i18next-17.2.0.tgz#d1ac5a817b7e2aaf4bd0374ef689a7e64f5bcef1"
+  integrity sha1-0axagXt+Kq9L0DdO9omn5k9bzvE=
   dependencies:
     "@babel/runtime" "^7.3.1"
 
@@ -9584,7 +9571,7 @@ ignore@^5.0.6, ignore@^5.1.1:
 
 image-size@^0.8.3:
   version "0.8.3"
-  resolved "https://registry.npm.taobao.org/image-size/download/image-size-0.8.3.tgz?cache=0&sync_timestamp=1569840695898&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fimage-size%2Fdownload%2Fimage-size-0.8.3.tgz#f0b568857e034f29baffd37013587f2c0cad8b46"
+  resolved "https://registry.npm.taobao.org/image-size/download/image-size-0.8.3.tgz?cache=0&sync_timestamp=1569841504754&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fimage-size%2Fdownload%2Fimage-size-0.8.3.tgz#f0b568857e034f29baffd37013587f2c0cad8b46"
   integrity sha1-8LVohX4DTym6/9NwE1h/LAyti0Y=
   dependencies:
     queue "6.0.1"
@@ -12434,12 +12421,12 @@ next-tick@1, next-tick@^1.0.0:
   resolved "https://registry.npmjs.org/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
   integrity sha1-yobR/ogoFpsBICCOPchCS524NCw=
 
-next@^9.1.2-canary.1:
-  version "9.1.2-canary.1"
-  resolved "https://registry.npm.taobao.org/next/download/next-9.1.2-canary.1.tgz#683c8fe33453a90a2002328cc11a2a3b8ffc07f7"
-  integrity sha1-aDyP4zRTqQogAjKMwRoqO4/8B/c=
+next@^9.1.1:
+  version "9.1.1"
+  resolved "https://registry.npm.taobao.org/next/download/next-9.1.1.tgz#bede2e834548020bc4d3be0c46e3ed7edaac6d14"
+  integrity sha1-vt4ug0VIAgvE074MRuPtftqsbRQ=
   dependencies:
-    "@ampproject/toolbox-optimizer" "1.1.1"
+    "@ampproject/toolbox-optimizer" "1.0.1"
     "@babel/core" "7.4.5"
     "@babel/plugin-proposal-class-properties" "7.4.4"
     "@babel/plugin-proposal-object-rest-spread" "7.4.4"
@@ -18746,10 +18733,10 @@ webpack@4.39.0:
     watchpack "^1.6.0"
     webpack-sources "^1.4.1"
 
-webpack@^4.41.0:
-  version "4.41.0"
-  resolved "https://registry.npm.taobao.org/webpack/download/webpack-4.41.0.tgz#db6a254bde671769f7c14e90a1a55e73602fc70b"
-  integrity sha1-22olS95nF2n3wU6QoaVec2Avxws=
+webpack@^4.41.1:
+  version "4.41.1"
+  resolved "https://registry.npm.taobao.org/webpack/download/webpack-4.41.1.tgz?cache=0&sync_timestamp=1570799698959&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fwebpack%2Fdownload%2Fwebpack-4.41.1.tgz#5388dd3047d680d5d382a84249fd4750e87372fd"
+  integrity sha1-U4jdMEfWgNXTgqhCSf1HUOhzcv0=
   dependencies:
     "@webassemblyjs/ast" "1.8.5"
     "@webassemblyjs/helper-module-context" "1.8.5"

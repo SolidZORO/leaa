@@ -81,6 +81,7 @@ export class SaveInLocalService {
     let height = 0;
 
     if (isImage) {
+      // @ts-ignore
       const imageSize = ImageSize(file.path);
 
       width = imageSize.width; // eslint-disable-line prefer-destructuring
