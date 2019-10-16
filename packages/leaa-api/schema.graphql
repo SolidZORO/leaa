@@ -331,6 +331,7 @@ type Query {
   attachment(uuid: String!): Attachment!
   settings(page: Int = 1, pageSize: Int = 30, orderBy: String = "created_at", orderSort: String = "DESC", q: String): SettingsWithPaginationObject!
   setting(id: Int!): Setting!
+  settingBySlug(slug: String!): Setting!
 }
 
 type Role {

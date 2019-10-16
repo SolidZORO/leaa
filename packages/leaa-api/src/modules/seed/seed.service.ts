@@ -131,7 +131,7 @@ export class SeedService {
 
   public async insertSetting() {
     for (const i of settingSeed) {
-      const item = await this.settingService.craeteSetting(i);
+      const item = await this.settingService.createSetting(i);
 
       console.log(item);
     }

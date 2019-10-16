@@ -1,7 +1,7 @@
 import { Args, Query, Mutation, Resolver } from '@nestjs/graphql';
 import { Int } from 'type-graphql';
 
-import { Setting, User } from '@leaa/common/src/entrys';
+import { Setting } from '@leaa/common/src/entrys';
 import {
   SettingsArgs,
   SettingsWithPaginationObject,
@@ -11,7 +11,6 @@ import {
   UpdateSettingsInput,
   SettingsObject,
 } from '@leaa/common/src/dtos/setting';
-import { UserDecorator } from '@leaa/api/src/decorators';
 import { SettingService } from '@leaa/api/src/modules/setting/setting.service';
 
 @Resolver(() => Setting)
@@ -19,25 +18,29 @@ export class SettingResolver {
   constructor(private readonly settingService: SettingService) {}
 
   @Query(() => SettingsWithPaginationObject)
-  async settings(
-    @Args() args: SettingsArgs,
-    @UserDecorator() user?: User,
-  ): Promise<SettingsWithPaginationObject | undefined> {
-    return this.settingService.settings(args, user);
+  async settings(@Args() args: SettingsArgs): Promise<SettingsWithPaginationObject | undefined> {
+    return this.settingService.settings(args);
   }
 
   @Query(() => Setting)
   async setting(
     @Args({ name: 'id', type: () => Int }) id: number,
     @Args() args?: SettingArgs,
-    @UserDecorator() user?: User,
   ): Promise<Setting | undefined> {
-    return this.settingService.setting(id, args, user);
+    return this.settingService.setting(id, args);
+  }
+
+  @Query(() => Setting)
+  async settingBySlug(
+    @Args({ name: 'slug', type: () => String }) slug: string,
+    @Args() args?: SettingArgs,
+  ): Promise<Setting | undefined> {
+    return this.settingService.settingBySlug(slug, args);
   }
 
   @Mutation(() => Setting)
   async createSetting(@Args('setting') args: CreateSettingInput): Promise<Setting | undefined> {
-    return this.settingService.craeteSetting(args);
+    return this.settingService.createSetting(args);
   }
 
   @Mutation(() => Setting)
