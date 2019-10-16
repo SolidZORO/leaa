@@ -69,7 +69,7 @@ const commonDelete = async (
   };
 };
 
-export const crudUtil = {
+export const curdUtil = {
   commonUpdate,
   commonDelete,
 };

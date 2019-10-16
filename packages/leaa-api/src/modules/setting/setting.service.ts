@@ -12,7 +12,7 @@ import {
   UpdateSettingsInput,
   SettingsObject,
 } from '@leaa/common/src/dtos/setting';
-import { formatUtil, loggerUtil, crudUtil } from '@leaa/api/src/utils';
+import { formatUtil, loggerUtil, curdUtil } from '@leaa/api/src/utils';
 
 const CONSTRUCTOR_NAME = 'SettingService';
 
@@ -89,7 +89,7 @@ export class SettingService {
   }
 
   async updateSetting(id: number, args: UpdateSettingInput & FindOneOptions): Promise<Setting | undefined> {
-    return crudUtil.commonUpdate(this.settingRepository, id, args, CONSTRUCTOR_NAME);
+    return curdUtil.commonUpdate(this.settingRepository, id, args, CONSTRUCTOR_NAME);
   }
 
   async updateSettings(settings: UpdateSettingsInput[]): Promise<SettingsObject> {
@@ -113,6 +113,6 @@ export class SettingService {
   }
 
   async deleteSetting(id: number): Promise<Setting | undefined> {
-    return crudUtil.commonDelete(this.settingRepository, id, CONSTRUCTOR_NAME);
+    return curdUtil.commonDelete(this.settingRepository, id, CONSTRUCTOR_NAME);
   }
 }
