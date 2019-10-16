@@ -3,35 +3,19 @@ import { Repository, FindOneOptions, In, Like } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { Role, Permission } from '@leaa/common/src/entrys';
-import { BaseService } from '@leaa/api/src/modules/base/base.service';
-import {
-  RolesArgs,
-  RolesWithPaginationObject,
-  RoleArgs,
-  CreateRoleInput,
-  UpdateRoleInput,
-} from '@leaa/common/src/dtos/role';
-import { formatUtil, loggerUtil } from '@leaa/api/src/utils';
+import { RolesArgs, RolesWithPaginationObject, CreateRoleInput, UpdateRoleInput } from '@leaa/common/src/dtos/role';
+import { formatUtil, loggerUtil, curdUtil } from '@leaa/api/src/utils';
 import { PermissionService } from '@leaa/api/src/modules/permission/permission.service';
 
 const CONSTRUCTOR_NAME = 'RoleService';
 
 @Injectable()
-export class RoleService extends BaseService<
-  Role,
-  RolesArgs,
-  RolesWithPaginationObject,
-  RoleArgs,
-  CreateRoleInput,
-  UpdateRoleInput
-> {
+export class RoleService {
   constructor(
     @InjectRepository(Role) private readonly roleRepository: Repository<Role>,
     @InjectRepository(Permission) private readonly permissionRepository: Repository<Permission>,
     private readonly permissionService: PermissionService,
-  ) {
-    super(roleRepository);
-  }
+  ) {}
 
   async roles(args?: RolesArgs): Promise<RolesWithPaginationObject | undefined> {
     const nextArgs = args ? formatUtil.formatArgs(args) : {};
@@ -63,7 +47,7 @@ export class RoleService extends BaseService<
       nextArgs.relations = ['permissions'];
     }
 
-    return this.findOne(id, nextArgs);
+    return this.roleRepository.findOne(id, nextArgs);
   }
 
   async roleBySlug(slug: string): Promise<Role | undefined> {
@@ -128,7 +112,7 @@ export class RoleService extends BaseService<
       throw new Error(message);
     }
 
-    return this.update(id, args, relationArgs);
+    return curdUtil.commonUpdate(this.permissionRepository, CONSTRUCTOR_NAME, id, args);
   }
 
   async deleteRole(id: number): Promise<Role | undefined> {
@@ -136,6 +120,6 @@ export class RoleService extends BaseService<
       throw Error('PLEASE DONT');
     }
 
-    return this.delete(id);
+    return curdUtil.commonDelete(this.permissionRepository, CONSTRUCTOR_NAME, id);
   }
 }

@@ -3,7 +3,6 @@ import { Repository, In, Like } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { Permission } from '@leaa/common/src/entrys';
-import { BaseService } from '@leaa/api/src/modules/base/base.service';
 import {
   PermissionsArgs,
   PermissionsWithPaginationObject,
@@ -11,20 +10,13 @@ import {
   CreatePermissionInput,
   UpdatePermissionInput,
 } from '@leaa/common/src/dtos/permission';
-import { formatUtil } from '@leaa/api/src/utils';
+import { formatUtil, curdUtil } from '@leaa/api/src/utils';
+
+const CONSTRUCTOR_NAME = 'PermissionService';
 
 @Injectable()
-export class PermissionService extends BaseService<
-  Permission,
-  PermissionsArgs,
-  PermissionsWithPaginationObject,
-  PermissionArgs,
-  CreatePermissionInput,
-  UpdatePermissionInput
-> {
-  constructor(@InjectRepository(Permission) private readonly permissionRepository: Repository<Permission>) {
-    super(permissionRepository);
-  }
+export class PermissionService {
+  constructor(@InjectRepository(Permission) private readonly permissionRepository: Repository<Permission>) {}
 
   async permissions(args: PermissionsArgs): Promise<PermissionsWithPaginationObject> {
     const nextArgs = formatUtil.formatArgs(args);
@@ -51,7 +43,7 @@ export class PermissionService extends BaseService<
   }
 
   async permission(id: number, args?: PermissionArgs): Promise<Permission | undefined> {
-    return this.findOne(id, args);
+    return this.permissionRepository.findOne(id, args);
   }
 
   async permissionSlugsToIds(slugs: string[]): Promise<number[]> {
@@ -73,10 +65,10 @@ export class PermissionService extends BaseService<
   }
 
   async updatePermission(id: number, args: UpdatePermissionInput): Promise<Permission | undefined> {
-    return this.update(id, args);
+    return curdUtil.commonUpdate(this.permissionRepository, CONSTRUCTOR_NAME, id, args);
   }
 
   async deletePermission(id: number): Promise<Permission | undefined> {
-    return this.delete(id);
+    return curdUtil.commonDelete(this.permissionRepository, CONSTRUCTOR_NAME, id);
   }
 }

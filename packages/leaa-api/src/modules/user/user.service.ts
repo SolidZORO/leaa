@@ -11,23 +11,15 @@ import {
   CreateUserInput,
   UpdateUserInput,
 } from '@leaa/common/src/dtos/user';
-import { BaseService } from '@leaa/api/src/modules/base/base.service';
 import { RoleService } from '@leaa/api/src/modules/role/role.service';
 import { UserProperty } from '@leaa/api/src/modules/user/user.property';
-import { formatUtil, permissionUtil } from '@leaa/api/src/utils';
+import { formatUtil, permissionUtil, curdUtil } from '@leaa/api/src/utils';
 import { JwtService } from '@nestjs/jwt';
 
 const CONSTRUCTOR_NAME = 'UserService';
 
 @Injectable()
-export class UserService extends BaseService<
-  User,
-  UsersArgs,
-  UsersWithPaginationObject,
-  UserArgs,
-  CreateUserInput,
-  UpdateUserInput
-> {
+export class UserService {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
     @InjectRepository(Role) private readonly roleRepository: Repository<Role>,
@@ -35,9 +27,7 @@ export class UserService extends BaseService<
     private readonly roleService: RoleService,
     private readonly jwtService: JwtService,
     private readonly userProperty: UserProperty,
-  ) {
-    super(userRepository);
-  }
+  ) {}
 
   async addPermissionsTouser(user: User | undefined): Promise<User | undefined> {
     const nextUser = user;
@@ -84,7 +74,7 @@ export class UserService extends BaseService<
       nextArgs.relations = ['roles'];
     }
 
-    const user = await this.findOne(id, nextArgs);
+    const user = await this.userRepository.findOne(id, nextArgs);
 
     return this.addPermissionsTouser(user);
   }
@@ -108,7 +98,7 @@ export class UserService extends BaseService<
       throw Error('Error Token');
     }
 
-    return this.findOne(userDecode.id, nextArgs);
+    return this.userRepository.findOne(userDecode.id, nextArgs);
   }
 
   async userByEmail(email: string): Promise<User | undefined> {
@@ -156,7 +146,7 @@ export class UserService extends BaseService<
       nextArgs.password = await this.createPassword(args.password);
     }
 
-    return this.update(id, nextArgs, relationArgs);
+    return curdUtil.commonUpdate(this.userRepository, CONSTRUCTOR_NAME, id, nextArgs, relationArgs);
   }
 
   async deleteUser(id: number): Promise<User | undefined> {
@@ -164,6 +154,6 @@ export class UserService extends BaseService<
       throw Error('PLEASE DONT');
     }
 
-    return this.delete(id);
+    return curdUtil.commonDelete(this.userRepository, CONSTRUCTOR_NAME, id);
   }
 }

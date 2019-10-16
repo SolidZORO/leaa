@@ -72,6 +72,7 @@ export const loggerUtil = {
   }) => {
     const diffObject = diff(prevItem, nextItem);
 
+    // TIPS: if update no change, no write log.
     if (diffObject) {
       // log('info', `update item #${id} successful PREV-ITEM: \n${JSON.stringify(prevItem)}\n\n`, constructorName);
       // log('info', `update item #${id} successful NEXT-ITEM: \n${JSON.stringify(nextItem)}\n\n`, constructorName);

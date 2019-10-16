@@ -10,26 +10,16 @@ import {
   CreateArticleInput,
   UpdateArticleInput,
 } from '@leaa/common/src/dtos/article';
-import { BaseService } from '@leaa/api/src/modules/base/base.service';
-import { formatUtil, paginationUtil } from '@leaa/api/src/utils';
+import { formatUtil, paginationUtil, curdUtil } from '@leaa/api/src/utils';
 
-// const CONSTRUCTOR_NAME = 'ArticleService';
+const CONSTRUCTOR_NAME = 'ArticleService';
 
 @Injectable()
-export class ArticleService extends BaseService<
-  Article,
-  ArticlesArgs,
-  ArticlesWithPaginationObject,
-  ArticleArgs,
-  CreateArticleInput,
-  UpdateArticleInput
-> {
+export class ArticleService {
   constructor(
     @InjectRepository(Article) private readonly articleRepository: Repository<Article>,
     @InjectRepository(Category) private readonly categoryRepository: Repository<Category>,
-  ) {
-    super(articleRepository);
-  }
+  ) {}
 
   async getCategory(article: Article): Promise<Category | undefined> {
     const nextArticle = article;
@@ -62,7 +52,7 @@ export class ArticleService extends BaseService<
       nextArgs = args;
     }
 
-    return this.findOne(id, nextArgs);
+    return this.articleRepository.findOne(id, nextArgs);
   }
 
   async createArticle(args: CreateArticleInput): Promise<Article | undefined> {
@@ -86,10 +76,10 @@ export class ArticleService extends BaseService<
       description: trimDescription,
     };
 
-    return this.update(id, nextArgs);
+    return curdUtil.commonUpdate(this.articleRepository, CONSTRUCTOR_NAME, id, nextArgs);
   }
 
   async deleteArticle(id: number): Promise<Article | undefined> {
-    return this.delete(id);
+    return curdUtil.commonDelete(this.articleRepository, CONSTRUCTOR_NAME, id);
   }
 }

@@ -11,24 +11,14 @@ import {
   UpdateCategoryInput,
   CategoriesWithTreeObject,
 } from '@leaa/common/src/dtos/category';
-import { BaseService } from '@leaa/api/src/modules/base/base.service';
-import { formatUtil, loggerUtil } from '@leaa/api/src/utils';
+import { formatUtil, loggerUtil, curdUtil } from '@leaa/api/src/utils';
 import { ICategoryTreeWithKey } from '@leaa/api/src/interfaces';
 
 const CONSTRUCTOR_NAME = 'CategoryService';
 
 @Injectable()
-export class CategoryService extends BaseService<
-  Category,
-  CategoriesArgs,
-  CategoriesWithPaginationObject,
-  CategoryArgs,
-  CreateCategoryInput,
-  UpdateCategoryInput
-> {
-  constructor(@InjectRepository(Category) private readonly categoryRepository: Repository<Category>) {
-    super(categoryRepository);
-  }
+export class CategoryService {
+  constructor(@InjectRepository(Category) private readonly categoryRepository: Repository<Category>) {}
 
   async categories(args?: CategoriesArgs): Promise<CategoriesWithPaginationObject> {
     if (!args) {
@@ -103,7 +93,7 @@ export class CategoryService extends BaseService<
       value: 0,
     });
 
-    // TODO Is there any other better way for recurrence?
+    // TODO Is there any other better way for recurrence (GraphQL)?
     return {
       treeByStringify: JSON.stringify(tree),
     };
@@ -116,7 +106,7 @@ export class CategoryService extends BaseService<
       nextArgs = args;
     }
 
-    return this.findOne(id, nextArgs);
+    return this.categoryRepository.findOne(id, nextArgs);
   }
 
   async createCategory(args: CreateCategoryInput): Promise<Category | undefined> {
@@ -124,10 +114,10 @@ export class CategoryService extends BaseService<
   }
 
   async updateCategory(id: number, args: UpdateCategoryInput): Promise<Category | undefined> {
-    return this.update(id, args);
+    return curdUtil.commonUpdate(this.categoryRepository, CONSTRUCTOR_NAME, id, args);
   }
 
   async deleteCategory(id: number): Promise<Category | undefined> {
-    return this.delete(id);
+    return curdUtil.commonDelete(this.categoryRepository, CONSTRUCTOR_NAME, id);
   }
 }

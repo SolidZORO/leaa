@@ -4,16 +4,13 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 import { Ax, User } from '@leaa/common/src/entrys';
 import { AxsArgs, AxsWithPaginationObject, AxArgs, CreateAxInput, UpdateAxInput } from '@leaa/common/src/dtos/ax';
-import { BaseService } from '@leaa/api/src/modules/base/base.service';
-import { formatUtil, loggerUtil, permissionUtil } from '@leaa/api/src/utils';
+import { formatUtil, loggerUtil, permissionUtil, curdUtil } from '@leaa/api/src/utils';
 
 const CONSTRUCTOR_NAME = 'AxService';
 
 @Injectable()
-export class AxService extends BaseService<Ax, AxsArgs, AxsWithPaginationObject, AxArgs, CreateAxInput, UpdateAxInput> {
-  constructor(@InjectRepository(Ax) private readonly axRepository: Repository<Ax>) {
-    super(axRepository);
-  }
+export class AxService {
+  constructor(@InjectRepository(Ax) private readonly axRepository: Repository<Ax>) {}
 
   async axs(args: AxsArgs, user?: User): Promise<AxsWithPaginationObject> {
     const nextArgs = formatUtil.formatArgs(args);
@@ -81,10 +78,10 @@ export class AxService extends BaseService<Ax, AxsArgs, AxsWithPaginationObject,
   }
 
   async updateAx(id: number, args: UpdateAxInput): Promise<Ax | undefined> {
-    return this.update(id, args);
+    return curdUtil.commonUpdate(this.axRepository, CONSTRUCTOR_NAME, id, args);
   }
 
   async deleteAx(id: number): Promise<Ax | undefined> {
-    return this.delete(id);
+    return curdUtil.commonDelete(this.axRepository, CONSTRUCTOR_NAME, id);
   }
 }

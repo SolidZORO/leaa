@@ -3,9 +3,10 @@ import { loggerUtil } from '@leaa/api/src/utils';
 
 const commonUpdate = async (
   repository: Repository<any>,
+  CONSTRUCTOR_NAME: string,
   id: any,
   args: any,
-  CONSTRUCTOR_NAME: string,
+  relationArgs: any = {},
 ): Promise<any | undefined> => {
   if (!args) {
     const message = `update item ${id} args does not exist`;
@@ -28,6 +29,7 @@ const commonUpdate = async (
   const nextItem = await repository.save({
     ...prevItem,
     ...args,
+    ...relationArgs,
   });
 
   await loggerUtil.updateLog({ id, prevItem, nextItem, constructorName: CONSTRUCTOR_NAME });
@@ -37,8 +39,8 @@ const commonUpdate = async (
 
 const commonDelete = async (
   repository: Repository<any>,
-  id: number,
   CONSTRUCTOR_NAME: string,
+  id: number,
 ): Promise<any | undefined> => {
   const prevId = id;
   const prevItem = await repository.findOne(id);
