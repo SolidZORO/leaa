@@ -50,7 +50,7 @@ export class UserResolver {
 
   @Mutation(() => User)
   async createUser(@Args('user') args: CreateUserInput): Promise<User | undefined> {
-    return this.userService.craeteUser(args);
+    return this.userService.createUser(args);
   }
 
   @Mutation(() => User)

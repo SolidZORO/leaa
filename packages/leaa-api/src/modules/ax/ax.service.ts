@@ -76,7 +76,7 @@ export class AxService extends BaseService<Ax, AxsArgs, AxsWithPaginationObject,
     return this.ax(ax.id, args, user);
   }
 
-  async craeteAx(args: CreateAxInput): Promise<Ax | undefined> {
+  async createAx(args: CreateAxInput): Promise<Ax | undefined> {
     return this.axRepository.save({ ...args });
   }
 

@@ -112,11 +112,11 @@ describe('AttachmentService', () => {
         at2x: 0,
       };
 
-      jest.spyOn(attachmentService, 'craeteAttachmentByLocal').mockImplementation(async () => ({
+      jest.spyOn(attachmentService, 'createAttachmentByLocal').mockImplementation(async () => ({
         attachment: attachmentObject,
       }));
 
-      const result = await attachmentService.craeteAttachmentByLocal(createAttachment1xInput, file);
+      const result = await attachmentService.createAttachmentByLocal(createAttachment1xInput, file);
 
       expect(result).toEqual({ attachment: attachment1xObject });
     });
@@ -138,11 +138,11 @@ describe('AttachmentService', () => {
         at2x: 0,
       };
 
-      jest.spyOn(attachmentService, 'craeteAttachmentByLocal').mockImplementation(async () => ({
+      jest.spyOn(attachmentService, 'createAttachmentByLocal').mockImplementation(async () => ({
         attachment: attachmentObject,
       }));
 
-      const result = await attachmentService.craeteAttachmentByLocal(createAttachment1xInput, file);
+      const result = await attachmentService.createAttachmentByLocal(createAttachment1xInput, file);
 
       expect(result).toEqual({ attachment: attachment1xObject });
     });

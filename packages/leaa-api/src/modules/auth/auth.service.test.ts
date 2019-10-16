@@ -63,7 +63,7 @@ describe('AuthService', () => {
     created_at: new Date(),
   };
 
-  describe('craeteToken', () => {
+  describe('createToken', () => {
     const createTokenResult = {
       authExpiresIn: 999999999,
       authToken: 'TOKEN',

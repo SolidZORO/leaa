@@ -119,7 +119,7 @@ export class CategoryService extends BaseService<
     return this.findOne(id, nextArgs);
   }
 
-  async craeteCategory(args: CreateCategoryInput): Promise<Category | undefined> {
+  async createCategory(args: CreateCategoryInput): Promise<Category | undefined> {
     return this.categoryRepository.save({ ...args });
   }
 

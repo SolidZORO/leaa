@@ -36,7 +36,7 @@ export class CategoryResolver {
 
   @Mutation(() => Category)
   async createCategory(@Args('category') args: CreateCategoryInput): Promise<Category | undefined> {
-    return this.categoryService.craeteCategory(args);
+    return this.categoryService.createCategory(args);
   }
 
   @Mutation(() => Category)

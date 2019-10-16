@@ -35,7 +35,7 @@ describe('CategoryService', () => {
 
   let categoryObject = new Category();
 
-  describe('craeteCategory', () => {
+  describe('createCategory', () => {
     const createCategoryInput: CreateCategoryInput = {
       name: 'name',
       slug: 'slug',
@@ -50,8 +50,8 @@ describe('CategoryService', () => {
     };
 
     it('should create category', async () => {
-      jest.spyOn(categoryService, 'craeteCategory').mockImplementation(async () => categoryObject);
-      const result = await categoryService.craeteCategory(createCategoryInput);
+      jest.spyOn(categoryService, 'createCategory').mockImplementation(async () => categoryObject);
+      const result = await categoryService.createCategory(createCategoryInput);
 
       expect(result).toBe(categoryObject);
     });

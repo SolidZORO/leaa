@@ -164,7 +164,7 @@ export class SaveInOssService {
     return 'success';
   }
 
-  async craeteAttachmentByOss(req: ICraeteAttachmentByOssCallback): Promise<{ attachment: Attachment } | undefined> {
+  async createAttachmentByOss(req: ICraeteAttachmentByOssCallback): Promise<{ attachment: Attachment } | undefined> {
     const splitFilename = req.object.split('/').pop();
 
     if (!splitFilename) {
@@ -270,7 +270,7 @@ export class SaveInOssService {
   async ossCallback(req: ICraeteAttachmentByOssCallback): Promise<any> {
     console.log('-------- ATTACHMENT OSS CALLBACK --------\n', req);
 
-    const attachment = await this.craeteAttachmentByOss(req);
+    const attachment = await this.createAttachmentByOss(req);
 
     return {
       ...attachment,

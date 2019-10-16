@@ -68,7 +68,7 @@ export class PermissionService extends BaseService<
     return permissionIds;
   }
 
-  async craetePermission(args: CreatePermissionInput): Promise<Permission | undefined> {
+  async createPermission(args: CreatePermissionInput): Promise<Permission | undefined> {
     return this.permissionRepository.save({ ...args });
   }
 

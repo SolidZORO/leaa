@@ -35,7 +35,7 @@ describe('AxService', () => {
 
   let axObject = new Ax();
 
-  describe('craeteAx', () => {
+  describe('createAx', () => {
     const createAxInput: CreateAxInput = {
       title: 'title',
       slug: 'slug',
@@ -50,8 +50,8 @@ describe('AxService', () => {
     };
 
     it('should create ax', async () => {
-      jest.spyOn(axService, 'craeteAx').mockImplementation(async () => axObject);
-      const result = await axService.craeteAx(createAxInput);
+      jest.spyOn(axService, 'createAx').mockImplementation(async () => axObject);
+      const result = await axService.createAx(createAxInput);
 
       expect(result).toBe(axObject);
     });

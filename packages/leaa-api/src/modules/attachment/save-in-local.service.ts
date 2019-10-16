@@ -60,7 +60,7 @@ export class SaveInLocalService {
       });
   }
 
-  async craeteAttachmentByLocal(
+  async createAttachmentByLocal(
     body: IAttachmentParams,
     file: Express.Multer.File,
     options?: {

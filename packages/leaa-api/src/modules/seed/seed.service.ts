@@ -43,7 +43,7 @@ export class SeedService {
 
   public async insertPermissions() {
     for (const i of permissionsSeed) {
-      const item = await this.permissionService.craetePermission(i);
+      const item = await this.permissionService.createPermission(i);
 
       console.log(item);
     }
@@ -51,7 +51,7 @@ export class SeedService {
 
   public async insertRoles() {
     for (const i of rolesSeed) {
-      const item = await this.roleService.craeteRole(i);
+      const item = await this.roleService.createRole(i);
 
       console.log(item);
     }
@@ -59,7 +59,7 @@ export class SeedService {
 
   public async insertUsers() {
     for (const i of usersSeed) {
-      const item = await this.userService.craeteUser(i);
+      const item = await this.userService.createUser(i);
 
       console.log(item);
     }
@@ -67,7 +67,7 @@ export class SeedService {
 
   public async insertRandomUsers() {
     for (const i of randomSersSeed) {
-      await this.userService.craeteUser(i);
+      await this.userService.createUser(i);
     }
   }
 
@@ -99,7 +99,7 @@ export class SeedService {
 
   public async insertCategory() {
     for (const i of categorySeed) {
-      const item = await this.categoryService.craeteCategory(i);
+      const item = await this.categoryService.createCategory(i);
 
       console.log(item);
     }
@@ -107,7 +107,7 @@ export class SeedService {
 
   public async insertArticle() {
     for (const i of articleSeed) {
-      const item = await this.articleService.craeteArticle(i);
+      const item = await this.articleService.createArticle(i);
 
       console.log(item);
     }
@@ -115,7 +115,7 @@ export class SeedService {
 
   public async insertAx() {
     for (const i of axSeed) {
-      const item = await this.axService.craeteAx(i);
+      const item = await this.axService.createAx(i);
 
       console.log(item);
     }

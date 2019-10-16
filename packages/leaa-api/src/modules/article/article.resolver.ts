@@ -39,7 +39,7 @@ export class ArticleResolver {
 
   @Mutation(() => Article)
   async createArticle(@Args('article') args: CreateArticleInput): Promise<Article | undefined> {
-    return this.articleService.craeteArticle(args);
+    return this.articleService.createArticle(args);
   }
 
   @Mutation(() => Article)

@@ -101,7 +101,7 @@ export class RoleService extends BaseService<
     return roleIds;
   }
 
-  async craeteRole(args: CreateRoleInput): Promise<Role | undefined> {
+  async createRole(args: CreateRoleInput): Promise<Role | undefined> {
     return this.roleRepository.save({ ...args });
   }
 

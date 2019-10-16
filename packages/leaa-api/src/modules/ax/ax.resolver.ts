@@ -51,7 +51,7 @@ export class AxResolver {
 
   @Mutation(() => Ax)
   async createAx(@Args('ax') args: CreateAxInput): Promise<Ax | undefined> {
-    return this.axService.craeteAx(args);
+    return this.axService.createAx(args);
   }
 
   @Mutation(() => Ax)

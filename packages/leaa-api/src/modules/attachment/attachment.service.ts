@@ -122,11 +122,11 @@ export class AttachmentService {
     });
   }
 
-  async craeteAttachmentByLocal(
+  async createAttachmentByLocal(
     body: IAttachmentParams,
     file: Express.Multer.File,
   ): Promise<{ attachment: Attachment } | undefined> {
-    return this.saveInLocalServer.craeteAttachmentByLocal(body, file);
+    return this.saveInLocalServer.createAttachmentByLocal(body, file);
   }
 
   async updateAttachment(uuid: string, args: UpdateAttachmentInput): Promise<Attachment | undefined> {

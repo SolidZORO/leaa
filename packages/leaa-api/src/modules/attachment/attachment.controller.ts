@@ -33,6 +33,6 @@ export class AttachmentController {
   @UseGuards(JwtGuard)
   @UseInterceptors(FileInterceptor('file'))
   async uploadFile(@Body() body: IAttachmentParams, @UploadedFile() file: Express.Multer.File) {
-    return this.attachmentService.craeteAttachmentByLocal(body, file);
+    return this.attachmentService.createAttachmentByLocal(body, file);
   }
 }

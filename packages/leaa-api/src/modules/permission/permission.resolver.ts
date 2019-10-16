@@ -30,7 +30,7 @@ export class PermissionResolver {
 
   @Mutation(() => Permission)
   async createPermission(@Args('permission') args: CreatePermissionInput): Promise<Permission | undefined> {
-    return this.permissionService.craetePermission(args);
+    return this.permissionService.createPermission(args);
   }
 
   @Mutation(() => Permission)

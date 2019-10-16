@@ -65,7 +65,7 @@ export class ArticleService extends BaseService<
     return this.findOne(id, nextArgs);
   }
 
-  async craeteArticle(args: CreateArticleInput): Promise<Article | undefined> {
+  async createArticle(args: CreateArticleInput): Promise<Article | undefined> {
     return this.articleRepository.save({ ...args });
   }
 

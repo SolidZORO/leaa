@@ -118,16 +118,16 @@ export class UserService extends BaseService<
     });
   }
 
-  async craetePassword(password: string): Promise<string> {
+  async createPassword(password: string): Promise<string> {
     const salt = bcryptjs.genSaltSync();
     return bcryptjs.hashSync(password, salt);
   }
 
-  async craeteUser(args: CreateUserInput): Promise<User | undefined> {
+  async createUser(args: CreateUserInput): Promise<User | undefined> {
     const nextArgs = args;
 
     if (args.password) {
-      nextArgs.password = await this.craetePassword(args.password);
+      nextArgs.password = await this.createPassword(args.password);
     }
 
     return this.userRepository.save({ ...nextArgs });
@@ -153,7 +153,7 @@ export class UserService extends BaseService<
     }
 
     if (args && args.password) {
-      nextArgs.password = await this.craetePassword(args.password);
+      nextArgs.password = await this.createPassword(args.password);
     }
 
     return this.update(id, nextArgs, relationArgs);

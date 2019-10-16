@@ -154,7 +154,7 @@ export class AuthService {
     });
 
     if (args.password) {
-      nextArgs.password = await this.userService.craetePassword(args.password);
+      nextArgs.password = await this.userService.createPassword(args.password);
     }
 
     nextArgs.email = nextArgs.email.toLowerCase();

@@ -27,7 +27,7 @@ export class RoleResolver {
 
   @Mutation(() => Role)
   async createRole(@Args('role') args: CreateRoleInput): Promise<Role | undefined> {
-    return this.roleService.craeteRole(args);
+    return this.roleService.createRole(args);
   }
 
   @Mutation(() => Role)

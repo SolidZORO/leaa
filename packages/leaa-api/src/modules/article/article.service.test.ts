@@ -35,7 +35,7 @@ describe('ArticleService', () => {
 
   let articleObject = new Article();
 
-  describe('craeteArticle', () => {
+  describe('createArticle', () => {
     const createArticleInput: CreateArticleInput = {
       title: 'title',
       slug: 'slug',
@@ -53,8 +53,8 @@ describe('ArticleService', () => {
     };
 
     it('should create article', async () => {
-      jest.spyOn(articleService, 'craeteArticle').mockImplementation(async () => articleObject);
-      const result = await articleService.craeteArticle(createArticleInput);
+      jest.spyOn(articleService, 'createArticle').mockImplementation(async () => articleObject);
+      const result = await articleService.createArticle(createArticleInput);
 
       expect(result).toBe(articleObject);
     });
