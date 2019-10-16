@@ -356,4 +356,4 @@ can't find module : ../../../node_modules/@tarojs/taro-weapp/
 
 <br />
 
-[🔰 READING ALL DEVLOG](https://github.com/SolidZORO/leaa/blob/master/DEVLOG.md)
+[🔰 READING ALL DEVLOG](https://github.com/SolidZORO/leaa/blob/master/DEVLOG.md#2019-08-19-1526)
