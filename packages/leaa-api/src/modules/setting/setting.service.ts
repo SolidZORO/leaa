@@ -12,7 +12,7 @@ import {
   UpdateSettingsInput,
   SettingsObject,
 } from '@leaa/common/src/dtos/setting';
-import { formatUtil, loggerUtil } from '@leaa/api/src/utils';
+import { formatUtil, loggerUtil, crudUtil } from '@leaa/api/src/utils';
 
 const CONSTRUCTOR_NAME = 'SettingService';
 
@@ -89,34 +89,7 @@ export class SettingService {
   }
 
   async updateSetting(id: number, args: UpdateSettingInput & FindOneOptions): Promise<Setting | undefined> {
-    if (!args) {
-      const message = `update item ${id} args does not exist`;
-
-      loggerUtil.warn(message, CONSTRUCTOR_NAME);
-
-      return undefined;
-    }
-
-    let prevItem = await this.settingRepository.findOne(id);
-
-    if (!prevItem) {
-      const message = `update item ${id} does not exist`;
-
-      loggerUtil.warn(message, CONSTRUCTOR_NAME);
-
-      return undefined;
-    }
-
-    prevItem = {
-      ...prevItem,
-      ...args,
-    };
-
-    const nextItem = await this.settingRepository.save(prevItem);
-
-    loggerUtil.updateLog({ id, prevItem, nextItem, constructorName: CONSTRUCTOR_NAME });
-
-    return nextItem;
+    return crudUtil.commonUpdate(this.settingRepository, id, args, CONSTRUCTOR_NAME);
   }
 
   async updateSettings(settings: UpdateSettingsInput[]): Promise<SettingsObject> {
@@ -140,32 +113,6 @@ export class SettingService {
   }
 
   async deleteSetting(id: number): Promise<Setting | undefined> {
-    const prevId = id;
-    const prevItem = await this.settingRepository.findOne(id);
-
-    if (!prevItem) {
-      const message = `delete item ${id} does not exist`;
-
-      loggerUtil.warn(message, CONSTRUCTOR_NAME);
-
-      return undefined;
-    }
-
-    const nextItem = await this.settingRepository.remove(prevItem);
-
-    if (!nextItem) {
-      const message = `delete item ${id} faild`;
-
-      loggerUtil.warn(message, CONSTRUCTOR_NAME);
-
-      return undefined;
-    }
-
-    loggerUtil.warn(`delete item ${id} successful: ${JSON.stringify(nextItem)}\n\n`, CONSTRUCTOR_NAME);
-
-    return {
-      ...nextItem,
-      id: prevId,
-    };
+    return crudUtil.commonDelete(this.settingRepository, id, CONSTRUCTOR_NAME);
   }
 }

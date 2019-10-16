@@ -4,3 +4,4 @@ export { pathUtil } from '@leaa/api/src/utils/path.util';
 export { permissionUtil } from '@leaa/api/src/utils/permission.util';
 export { attachmentUtil } from '@leaa/api/src/utils/attachment.util';
 export { paginationUtil } from '@leaa/api/src/utils/pagination.util';
+export { crudUtil } from '@leaa/api/src/utils/crud.util';

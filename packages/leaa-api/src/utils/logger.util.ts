@@ -73,13 +73,9 @@ export const loggerUtil = {
     const diffObject = diff(prevItem, nextItem);
 
     if (diffObject) {
-      log('info', `update item #${id} successful PREV-ITEM: \n${JSON.stringify(prevItem)}\n\n`, constructorName);
-      log('info', `update item #${id} successful NEXT-ITEM: \n${JSON.stringify(nextItem)}\n\n`, constructorName);
+      // log('info', `update item #${id} successful PREV-ITEM: \n${JSON.stringify(prevItem)}\n\n`, constructorName);
+      // log('info', `update item #${id} successful NEXT-ITEM: \n${JSON.stringify(nextItem)}\n\n`, constructorName);
       log('info', `↔️ update item #${id} DIFF: ${JSON.stringify(diff(prevItem, nextItem))}`, constructorName);
-
-      return;
     }
-
-    log('info', `update item #${id} successful CURRENT-ITEM: \n${JSON.stringify(prevItem)}\n\n`, constructorName);
   },
 };
