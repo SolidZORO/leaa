@@ -2,15 +2,13 @@ import React, { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, message, Row, Col } from 'antd';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { BraftEditorProps } from 'braft-editor';
 
 import { Article } from '@leaa/common/src/entrys';
-import { IMediaItem, IAttachmentBoxRef } from '@leaa/common/src/interfaces';
-import { GET_ARTICLE, UPDATE_ARTICLE, GET_ATTACHMENTS, DELETE_ATTACHMENT } from '@leaa/common/src/graphqls';
+import { IAttachmentBoxRef } from '@leaa/common/src/interfaces';
+import { GET_ARTICLE, UPDATE_ARTICLE } from '@leaa/common/src/graphqls';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { ArticleArgs, UpdateArticleInput } from '@leaa/common/src/dtos/article';
 import { IPage } from '@leaa/dashboard/src/interfaces';
-import { AttachmentsWithPaginationObject, AttachmentsArgs } from '@leaa/common/src/dtos/attachment';
 import { WYSIWYGEditor } from '@leaa/dashboard/src/components/WYSIWYGEditor/WYSIWYGEditor';
 import { AttachmentBox } from '@leaa/dashboard/src/components/AttachmentBox';
 import { PageCard } from '@leaa/dashboard/src/components/PageCard';
@@ -31,7 +29,7 @@ export default (props: IPage) => {
   let articleInfoFormRef: any;
   let articleExtFormRef: any;
 
-  const articleCententForm = React.createRef<{ props: BraftEditorProps } | null>();
+  const articleCententForm = React.createRef<any | null>();
 
   const getArticleVariables = { id: Number(id) };
   const getArticleQuery = useQuery<{ article: Article }, ArticleArgs>(GET_ARTICLE, {
@@ -39,49 +37,12 @@ export default (props: IPage) => {
     fetchPolicy: 'network-only',
   });
 
-  const [getArticleEditorAttachmentsVariables, setGetArticleEditorAttachmentsVariables] = useState<AttachmentsArgs>({
-    moduleName: 'article',
-    moduleType: 'editor',
-    moduleId: Number(id),
-    orderSort: 'ASC',
-    refreshHash: 0,
-  });
-
-  const getArticleEditorAttachmentsQuery = useQuery<{ attachments: AttachmentsWithPaginationObject }, AttachmentsArgs>(
-    GET_ATTACHMENTS,
-    { variables: getArticleEditorAttachmentsVariables, fetchPolicy: 'network-only' },
-  );
-
   const [submitVariables, setSubmitVariables] = useState<{ id: number; article: UpdateArticleInput }>();
   const [updateArticleMutate, updateArticleMutation] = useMutation<Article>(UPDATE_ARTICLE, {
     variables: submitVariables,
     onCompleted: () => message.success(t('_lang:updatedSuccessfully')),
-    refetchQueries: () => [
-      { query: GET_ARTICLE, variables: getArticleVariables },
-      { query: GET_ATTACHMENTS, variables: getArticleEditorAttachmentsVariables },
-    ],
+    refetchQueries: () => [{ query: GET_ARTICLE, variables: getArticleVariables }],
   });
-
-  const [deleteAttachmentsVariables, setDeleteAttachmentsVariables] = useState<{ uuid: string[] }>();
-  const [deleteAttachmentsMutate, deleteAttachmentsMutation] = useMutation<{ uuid: string[] }>(DELETE_ATTACHMENT, {
-    variables: deleteAttachmentsVariables,
-    onCompleted: () => message.success(t('_lang:deletedSuccessfully')),
-    refetchQueries: () => [{ query: GET_ATTACHMENTS, variables: getArticleEditorAttachmentsVariables }],
-  });
-
-  const onRemoveMedias = async (attachments: IMediaItem[]) => {
-    console.log(attachments.map(a => a.id));
-
-    await setDeleteAttachmentsVariables({ uuid: attachments.map(a => a.id) });
-    await deleteAttachmentsMutate();
-  };
-
-  const onOpenBraftFinder = async () => {
-    setGetArticleEditorAttachmentsVariables({
-      ...getArticleEditorAttachmentsVariables,
-      refreshHash: new Date().getMilliseconds(),
-    });
-  };
 
   const onSubmit = async () => {
     let hasError = false;
@@ -123,11 +84,11 @@ export default (props: IPage) => {
     if (
       articleCententForm &&
       articleCententForm.current &&
-      articleCententForm.current.props &&
-      articleCententForm.current.props.value &&
-      typeof articleCententForm.current.props.value.toHTML() !== 'undefined'
+      articleCententForm.current.getInstance() &&
+      articleCententForm.current.getInstance().getHtml() &&
+      typeof articleCententForm.current.getInstance().getHtml() !== 'undefined'
     ) {
-      submitData.content = articleCententForm.current.props.value.toHTML();
+      submitData.content = articleCententForm.current.getInstance().getHtml();
     }
 
     await setSubmitVariables({ id: Number(id), article: submitData });
@@ -147,47 +108,52 @@ export default (props: IPage) => {
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
       {getArticleQuery.error ? <ErrorCard error={getArticleQuery.error} /> : null}
-      {getArticleEditorAttachmentsQuery.error ? <ErrorCard error={getArticleEditorAttachmentsQuery.error} /> : null}
       {updateArticleMutation.error ? <ErrorCard error={updateArticleMutation.error} /> : null}
-      {deleteAttachmentsMutation.error ? <ErrorCard error={deleteAttachmentsMutation.error} /> : null}
 
-      <ArticleInfoForm
-        item={getArticleQuery.data && getArticleQuery.data.article}
-        loading={getArticleQuery.loading}
-        wrappedComponentRef={(inst: unknown) => {
-          articleInfoFormRef = inst;
-        }}
-      />
+      <div className={style['container-wrapper']}>
+        <div className={style['container-main']}>
+          <ArticleInfoForm
+            item={getArticleQuery.data && getArticleQuery.data.article}
+            loading={getArticleQuery.loading}
+            wrappedComponentRef={(inst: unknown) => {
+              articleInfoFormRef = inst;
+            }}
+          />
 
-      <WYSIWYGEditor
-        ref={articleCententForm}
-        content={getArticleQuery.data && getArticleQuery.data.article && getArticleQuery.data.article.content}
-        braftEditorProps={{ contentStyle: { height: 700 } }}
-        attachmentParams={{
-          type: 'image',
-          moduleId: Number(id),
-          moduleName: 'article',
-          moduleType: 'editor',
-        }}
-        attachmentItems={
-          getArticleEditorAttachmentsQuery.data &&
-          getArticleEditorAttachmentsQuery.data.attachments &&
-          getArticleEditorAttachmentsQuery.data.attachments.items
-        }
-        onRemoveMedias={onRemoveMedias}
-        onOpenBraftFinder={onOpenBraftFinder}
-      />
+          <WYSIWYGEditor
+            ref={articleCententForm}
+            content={getArticleQuery.data && getArticleQuery.data.article && getArticleQuery.data.article.content}
+            attachmentParams={{
+              type: 'image',
+              moduleId: Number(id),
+              moduleName: 'article',
+              moduleType: 'editor',
+            }}
+          />
+        </div>
 
-      <ArticleExtForm
-        item={getArticleQuery.data && getArticleQuery.data.article}
-        loading={getArticleQuery.loading}
-        wrappedComponentRef={(inst: unknown) => {
-          articleExtFormRef = inst;
-        }}
-      />
+        <div className={style['container-ext']}>
+          <div className={style['submit-bar']}>
+            <Button
+              type="primary"
+              size="large"
+              icon={UPDATE_BUTTON_ICON}
+              className="submit-button"
+              loading={updateArticleMutation.loading}
+              onClick={onSubmit}
+            >
+              {t('_lang:update')}
+            </Button>
+          </div>
 
-      <Row gutter={16}>
-        <Col xs={24}>
+          <ArticleExtForm
+            item={getArticleQuery.data && getArticleQuery.data.article}
+            loading={getArticleQuery.loading}
+            wrappedComponentRef={(inst: unknown) => {
+              articleExtFormRef = inst;
+            }}
+          />
+
           <AttachmentBox
             disableMessage
             ref={attachmentBoxRef}
@@ -198,21 +164,8 @@ export default (props: IPage) => {
               moduleType: 'banner',
             }}
           />
-        </Col>
-      </Row>
-
-      <SubmitBar>
-        <Button
-          type="primary"
-          size="large"
-          icon={UPDATE_BUTTON_ICON}
-          className="submit-button"
-          loading={updateArticleMutation.loading}
-          onClick={onSubmit}
-        >
-          {t('_lang:update')}
-        </Button>
-      </SubmitBar>
+        </div>
+      </div>
     </PageCard>
   );
 };

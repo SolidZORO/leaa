@@ -7,6 +7,8 @@ import { FormComponentProps } from 'antd/lib/form';
 import { Article } from '@leaa/common/src/entrys';
 import { ITfn } from '@leaa/dashboard/src/interfaces';
 import { FormCard } from '@leaa/dashboard/src/components/FormCard';
+import { SwitchNumber } from '@leaa/dashboard/src/components/SwitchNumber';
+import { SelectCategoryIdByTree } from '@leaa/dashboard/src/components/SelectCategoryIdByTree';
 
 import style from './style.less';
 
@@ -40,11 +42,31 @@ class ArticleExtFormInner extends React.PureComponent<IProps> {
 
     return (
       <div className={cx(style['wrapper'], props.className)}>
-        <FormCard title={t('_page:Article.Component.extendedInfo')}>
+        <FormCard>
           <Form className={cx('g-form--zero-margin-bottom', style['form-wrapper'])}>
             <Row gutter={16} className={style['form-row']}>
-              <Col xs={24} sm={8}>
-                <Form.Item label={t('_lang:slug')}>
+              <Col xs={19} sm={16}>
+                <Form.Item label={t('_lang:category')}>
+                  {getFieldDecorator('category_id', {
+                    initialValue: props.item ? props.item.category_id : undefined,
+                    rules: [{ required: true }],
+                    normalize: e => e && Number(e),
+                  })(<SelectCategoryIdByTree />)}
+                </Form.Item>
+              </Col>
+
+              <Col xs={5} sm={8}>
+                <Form.Item label={t('_lang:status')}>
+                  {getFieldDecorator('status', {
+                    initialValue: props.item ? Number(props.item.status) : 0,
+                  })(<SwitchNumber />)}
+                </Form.Item>
+              </Col>
+            </Row>
+
+            <Row gutter={16} className={style['form-row']}>
+              <Col xs={24}>
+                <Form.Item label={false}>
                   {getFieldDecorator('slug', {
                     initialValue: props.item ? props.item.slug : undefined,
                     rules: [],
@@ -52,18 +74,17 @@ class ArticleExtFormInner extends React.PureComponent<IProps> {
                 </Form.Item>
               </Col>
 
-              {/* <Col xs={24} sm={4}> */}
-              {/*  <Form.Item label={t('_lang:user')}> */}
-              {/*    {getFieldDecorator('user_id', { */}
-              {/*      initialValue: props.item ? props.item.user_id : undefined, */}
-              {/*      rules: [{ required: true }], */}
-              {/*      normalize: e => e && Number(e), */}
-              {/*    })(<Input type="number" placeholder={t('_lang:user')} />)} */}
-              {/*  </Form.Item> */}
-              {/* </Col> */}
+              <Col xs={24}>
+                <Form.Item label={false}>
+                  {getFieldDecorator('description', {
+                    initialValue: props.item ? props.item.description : undefined,
+                    rules: [],
+                  })(<Input.TextArea rows={5} placeholder={t('_lang:description')} />)}
+                </Form.Item>
+              </Col>
 
-              <Col xs={24} sm={6}>
-                <Form.Item label={t('_lang:created_at')}>
+              <Col xs={24}>
+                <Form.Item label={false}>
                   <Input
                     value={props.item ? `${props.item.created_at}` : undefined}
                     placeholder={t('_lang:created_at')}
@@ -73,25 +94,14 @@ class ArticleExtFormInner extends React.PureComponent<IProps> {
                 </Form.Item>
               </Col>
 
-              <Col xs={24} sm={6}>
-                <Form.Item label={t('_lang:updated_at')}>
+              <Col xs={24}>
+                <Form.Item label={false} style={{ marginBottom: 0 }}>
                   <Input
                     value={props.item ? `${props.item.updated_at}` : undefined}
                     placeholder={t('_lang:updated_at')}
                     readOnly
                     disabled
                   />
-                </Form.Item>
-              </Col>
-            </Row>
-
-            <Row gutter={16} className={style['form-row']}>
-              <Col xs={24}>
-                <Form.Item label={t('_lang:description')}>
-                  {getFieldDecorator('description', {
-                    initialValue: props.item ? props.item.description : undefined,
-                    rules: [],
-                  })(<Input.TextArea rows={3} placeholder={t('_lang:description')} />)}
                 </Form.Item>
               </Col>
             </Row>

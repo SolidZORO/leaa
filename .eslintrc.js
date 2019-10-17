@@ -64,6 +64,7 @@ module.exports = {
     '@typescript-eslint/ban-ts-ignore': 0,
     '@typescript-eslint/no-parameter-properties': 0,
     '@typescript-eslint/no-empty-function': 0,
+    '@typescript-eslint/no-useless-constructor': 0,
     //
     // NEST.JS
     'no-useless-constructor': 0,

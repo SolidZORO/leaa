@@ -1,14 +1,11 @@
 import React from 'react';
 import cx from 'classnames';
-import { Col, Form, Input, Row } from 'antd';
+import { Form, Input } from 'antd';
 import { withTranslation } from 'react-i18next';
 import { FormComponentProps } from 'antd/lib/form';
 
 import { Article } from '@leaa/common/src/entrys';
 import { ITfn } from '@leaa/dashboard/src/interfaces';
-import { SwitchNumber } from '@leaa/dashboard/src/components/SwitchNumber';
-import { SelectCategoryIdByTree } from '@leaa/dashboard/src/components/SelectCategoryIdByTree';
-import { FormCard } from '@leaa/dashboard/src/components/FormCard';
 
 import style from './style.less';
 
@@ -31,41 +28,16 @@ class ArticleInfoFormInner extends React.PureComponent<IProps> {
     const { props } = this;
     const { getFieldDecorator } = this.props.form;
 
-    // title={t('_page:Article.Component.articleInfo')}
     return (
       <div className={cx(style['wrapper'], props.className)}>
-        <FormCard>
-          <Form className={cx('g-form--zero-margin-bottom', style['form-wrapper'])}>
-            <Row gutter={16} className={style['form-row']}>
-              <Col xs={24} sm={14}>
-                <Form.Item label={t('_lang:title')}>
-                  {getFieldDecorator('title', {
-                    initialValue: props.item ? props.item.title : undefined,
-                    rules: [{ required: true }],
-                  })(<Input placeholder={t('_lang:title')} />)}
-                </Form.Item>
-              </Col>
-
-              <Col xs={19} sm={6}>
-                <Form.Item label={t('_lang:category')}>
-                  {getFieldDecorator('category_id', {
-                    initialValue: props.item ? props.item.category_id : undefined,
-                    rules: [{ required: true }],
-                    normalize: e => e && Number(e),
-                  })(<SelectCategoryIdByTree />)}
-                </Form.Item>
-              </Col>
-
-              <Col xs={5} sm={4}>
-                <Form.Item label={t('_lang:status')}>
-                  {getFieldDecorator('status', {
-                    initialValue: props.item ? Number(props.item.status) : 0,
-                  })(<SwitchNumber />)}
-                </Form.Item>
-              </Col>
-            </Row>
-          </Form>
-        </FormCard>
+        <Form className={cx(style['form-wrapper'])}>
+          <Form.Item label={false} className={style['form-label']}>
+            {getFieldDecorator('title', {
+              initialValue: props.item ? props.item.title : undefined,
+              rules: [{ required: true }],
+            })(<Input placeholder={t('_lang:title')} size="large" />)}
+          </Form.Item>
+        </Form>
       </div>
     );
   }

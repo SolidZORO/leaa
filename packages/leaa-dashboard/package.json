@@ -28,9 +28,12 @@
     "u": "yarn upgrade-interactive --latest"
   },
   "dependencies": {
+    "@tinymce/tinymce-react": "^3.3.2",
+    "@toast-ui/react-editor": "^1.0.1",
     "animated-scroll-to": "^2.0.3",
     "braft-editor": "^2.3.8",
     "braft-extensions": "^0.0.19",
+    "codemirror": "^5.49.0",
     "dnd-core": "^9.4.0",
     "dotenv-webpack": "^1.7.0",
     "draft-js-prism": "^1.0.6",
@@ -49,6 +52,7 @@
     "react-helmet": "^5.2.1",
     "react-i18next": "^10.13.1",
     "react-router-dom": "5.1.2",
+    "tui-editor": "^1.4.7",
     "uuid": "^3.3.3"
   },
   "devDependencies": {

@@ -3,3 +3,32 @@
 .wapper {
   background-color: transparent;
 }
+
+.container-wrapper {
+  display: block;
+
+  @media (min-width: @screen-md) {
+    display: flex;
+  }
+}
+
+.container-main {
+  display: block;
+
+  @media (min-width: @screen-md) {
+    flex: auto;
+    margin-right: 16px;
+  }
+}
+
+.container-ext {
+  width: 100%;
+
+  @media (min-width: @screen-md) {
+    width: 340px;
+  }
+
+  .submit-bar {
+    margin-bottom: 16px;
+  }
+}
