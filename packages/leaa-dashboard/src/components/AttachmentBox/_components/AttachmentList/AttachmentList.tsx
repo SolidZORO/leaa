@@ -90,7 +90,7 @@ export const AttachmentList = forwardRef((props: IProps, ref: React.Ref<any>) =>
     <div
       className={cx(style['wrapper'], { [style['wrapper--empty']]: isEmpty })}
       style={{
-        height: props.listHeight || 230,
+        height: props.listHeight || 150,
         paddingTop: isEmpty && props.listHeight ? props.listHeight / 2 - 10 : undefined,
       }}
       ref={ref}

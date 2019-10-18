@@ -1,16 +1,17 @@
+import cx from 'classnames';
 import React, { useState, useEffect, forwardRef } from 'react';
 import { TreeSelect } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/react-hooks';
+import { TreeSelectProps } from 'antd/lib/tree-select';
 
 import { GET_CATEGORIES_BY_TREE } from '@leaa/common/src/graphqls';
 import { CategoriesWithTreeObject } from '@leaa/common/src/dtos/category';
 import { ErrorCard } from '@leaa/dashboard/src/components/ErrorCard';
-import cx from 'classnames';
 
 import style from './style.less';
 
-interface IProps {
+interface IProps extends TreeSelectProps<any> {
   value?: number | undefined;
   className?: string;
   onChange?: (value: number) => void;
@@ -44,6 +45,7 @@ export const SelectCategoryIdByTree = forwardRef((props: IProps, ref: React.Ref<
       <TreeSelect
         loading={getCategoriesByTreeQuery.loading}
         value={value}
+        size={props.size}
         dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
         treeData={
           getCategoriesByTreeQuery &&

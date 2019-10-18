@@ -12,7 +12,7 @@
   .tui-editor-icon {
     font-family: 'tui-editor-icon', serif !important;
     font-size: 16px !important;
-    padding: 1px !important;
+    padding: 0 !important;
     line-height: 0;
     font-style: normal;
     -webkit-font-smoothing: antialiased;
@@ -51,18 +51,31 @@
     bottom: 0;
     left: 0;
     right: 0;
-    z-index: 99;
-    background: #fff;
+    z-index: 999;
+    background: @page-layout-bg-color;
   }
 
   .tui-fn-preview,
   .tui-fn-fullscreen {
     position: absolute;
     top: 0;
-    right: 15px;
+    right: 20px;
   }
 
   .tui-fn-preview {
-    right: 45px;
+    right: 50px;
+  }
+
+  .tui-editor-defaultUI,
+  .tui-editor-defaultUI-toolbar {
+    border-radius: 3px;
+  }
+
+  .tui-show {
+    display: block !important;
+  }
+
+  .tui-hide {
+    display: none !important;
   }
 }

@@ -10,7 +10,7 @@ import {
   CreateArticleInput,
   UpdateArticleInput,
 } from '@leaa/common/src/dtos/article';
-import { formatUtil, paginationUtil, curdUtil } from '@leaa/api/src/utils';
+import { formatUtil, paginationUtil, curdUtil, stringUtil } from '@leaa/api/src/utils';
 
 const CONSTRUCTOR_NAME = 'ArticleService';
 
@@ -65,14 +65,7 @@ export class ArticleService {
 
     const nextArgs = {
       ...args,
-      slug:
-        !args.slug && args.title && /^[\w]/.test(args.title)
-          ? args.title
-              .trim()
-              .replace(/[^\w\-\s]/g, '')
-              .replace(/\s/g, '-')
-              .toLowerCase()
-          : trimSlug,
+      slug: !args.slug && args.title ? stringUtil.getSlug(args.title) : trimSlug,
       description: trimDescription,
     };
 

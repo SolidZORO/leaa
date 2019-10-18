@@ -5,3 +5,4 @@ export { permissionUtil } from '@leaa/api/src/utils/permission.util';
 export { attachmentUtil } from '@leaa/api/src/utils/attachment.util';
 export { paginationUtil } from '@leaa/api/src/utils/pagination.util';
 export { curdUtil } from '@leaa/api/src/utils/curd.util';
+export { stringUtil } from '@leaa/api/src/utils/string.util';

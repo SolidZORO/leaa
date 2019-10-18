@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-
 import i18n from 'i18next';
 import React, { useState, useEffect, forwardRef } from 'react';
 
@@ -189,7 +188,7 @@ export const WYSIWYGEditor = forwardRef((props: IProps, ref: React.Ref<any>) => 
       <Editor
         ref={ref}
         previewStyle="vertical"
-        height={props.height || 600}
+        height={props.height || 640}
         initialEditType="markdown"
         useCommandShortcut
         toolbarItems={toolbarItems}

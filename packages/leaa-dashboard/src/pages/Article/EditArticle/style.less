@@ -14,10 +14,11 @@
 
 .container-main {
   display: block;
+  position: relative;
 
   @media (min-width: @screen-md) {
     flex: auto;
-    margin-right: 16px;
+    margin-right: @page-card-padding-x;
   }
 }
 
@@ -25,10 +26,19 @@
   width: 100%;
 
   @media (min-width: @screen-md) {
-    width: 340px;
+    width: @container-ext-width;
   }
+}
 
-  .submit-bar {
-    margin-bottom: 16px;
+.submit-bar {
+  //margin-bottom: @page-card-padding-x;
+  margin-bottom: 47px;
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  .submit-bar-button {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
   }
 }

@@ -389,6 +389,7 @@ input UpdateArticleInput {
   description: String
   content: String
   status: Int
+  created_at: DateTime
 }
 
 input UpdateAttachmentInput {

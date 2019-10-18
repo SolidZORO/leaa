@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, message, Row, Col } from 'antd';
+import { Button, message } from 'antd';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
 import { Article } from '@leaa/common/src/entrys';
@@ -14,7 +14,6 @@ import { AttachmentBox } from '@leaa/dashboard/src/components/AttachmentBox';
 import { PageCard } from '@leaa/dashboard/src/components/PageCard';
 import { HtmlMeta } from '@leaa/dashboard/src/components/HtmlMeta';
 import { ErrorCard } from '@leaa/dashboard/src/components/ErrorCard';
-import { SubmitBar } from '@leaa/dashboard/src/components/SubmitBar/SubmitBar';
 
 import { ArticleInfoForm } from '../_components/ArticleInfoForm/ArticleInfoForm';
 import { ArticleExtForm } from '../_components/ArticleExtForm/ArticleExtForm';
@@ -29,7 +28,7 @@ export default (props: IPage) => {
   let articleInfoFormRef: any;
   let articleExtFormRef: any;
 
-  const articleCententForm = React.createRef<any | null>();
+  const articleContentForm = React.createRef<any | null>();
 
   const getArticleVariables = { id: Number(id) };
   const getArticleQuery = useQuery<{ article: Article }, ArticleArgs>(GET_ARTICLE, {
@@ -43,6 +42,14 @@ export default (props: IPage) => {
     onCompleted: () => message.success(t('_lang:updatedSuccessfully')),
     refetchQueries: () => [{ query: GET_ARTICLE, variables: getArticleVariables }],
   });
+
+  // const onRx = (a) => {
+  //   console.log('on', a);
+  //   if (a && a.props && a.props.form) {
+  //     console.log('rx');
+  //     a.props.form.resetFields();
+  //   }
+  // };
 
   const onSubmit = async () => {
     let hasError = false;
@@ -82,13 +89,13 @@ export default (props: IPage) => {
     }
 
     if (
-      articleCententForm &&
-      articleCententForm.current &&
-      articleCententForm.current.getInstance() &&
-      articleCententForm.current.getInstance().getHtml() &&
-      typeof articleCententForm.current.getInstance().getHtml() !== 'undefined'
+      articleContentForm &&
+      articleContentForm.current &&
+      articleContentForm.current.getInstance() &&
+      articleContentForm.current.getInstance().getHtml() &&
+      typeof articleContentForm.current.getInstance().getHtml() !== 'undefined'
     ) {
-      submitData.content = articleCententForm.current.getInstance().getHtml();
+      submitData.content = articleContentForm.current.getInstance().getHtml();
     }
 
     await setSubmitVariables({ id: Number(id), article: submitData });
@@ -110,58 +117,59 @@ export default (props: IPage) => {
       {getArticleQuery.error ? <ErrorCard error={getArticleQuery.error} /> : null}
       {updateArticleMutation.error ? <ErrorCard error={updateArticleMutation.error} /> : null}
 
+      <ArticleInfoForm
+        item={getArticleQuery.data && getArticleQuery.data.article}
+        loading={getArticleQuery.loading}
+        wrappedComponentRef={(inst: unknown) => {
+          articleInfoFormRef = inst;
+        }}
+      />
+
+      <div className={style['submit-bar']}>
+        <Button
+          type="primary"
+          size="large"
+          icon={UPDATE_BUTTON_ICON}
+          className={style['submit-bar-button']}
+          loading={updateArticleMutation.loading}
+          onClick={onSubmit}
+        >
+          {t('_lang:update')}
+        </Button>
+      </div>
+
+      <WYSIWYGEditor
+        ref={articleContentForm}
+        content={getArticleQuery.data && getArticleQuery.data.article && getArticleQuery.data.article.content}
+        attachmentParams={{
+          type: 'image',
+          moduleId: Number(id),
+          moduleName: 'article',
+          moduleType: 'editor',
+        }}
+      />
+
       <div className={style['container-wrapper']}>
         <div className={style['container-main']}>
-          <ArticleInfoForm
-            item={getArticleQuery.data && getArticleQuery.data.article}
-            loading={getArticleQuery.loading}
-            wrappedComponentRef={(inst: unknown) => {
-              articleInfoFormRef = inst;
-            }}
-          />
-
-          <WYSIWYGEditor
-            ref={articleCententForm}
-            content={getArticleQuery.data && getArticleQuery.data.article && getArticleQuery.data.article.content}
-            attachmentParams={{
-              type: 'image',
-              moduleId: Number(id),
-              moduleName: 'article',
-              moduleType: 'editor',
-            }}
-          />
-        </div>
-
-        <div className={style['container-ext']}>
-          <div className={style['submit-bar']}>
-            <Button
-              type="primary"
-              size="large"
-              icon={UPDATE_BUTTON_ICON}
-              className="submit-button"
-              loading={updateArticleMutation.loading}
-              onClick={onSubmit}
-            >
-              {t('_lang:update')}
-            </Button>
-          </div>
-
-          <ArticleExtForm
-            item={getArticleQuery.data && getArticleQuery.data.article}
-            loading={getArticleQuery.loading}
-            wrappedComponentRef={(inst: unknown) => {
-              articleExtFormRef = inst;
-            }}
-          />
-
           <AttachmentBox
             disableMessage
             ref={attachmentBoxRef}
+            listHeight={217}
             attachmentParams={{
               type: 'image',
               moduleId: Number(id),
               moduleName: 'article',
               moduleType: 'banner',
+            }}
+          />
+        </div>
+
+        <div className={style['container-ext']}>
+          <ArticleExtForm
+            item={getArticleQuery.data && getArticleQuery.data.article}
+            loading={getArticleQuery.loading}
+            wrappedComponentRef={(inst: unknown) => {
+              articleExtFormRef = inst;
             }}
           />
         </div>

@@ -6,9 +6,72 @@
 .form-wrapper {
 }
 
+.form-wrapper-title,
+.form-wrapper-slug {
+  margin-bottom: 3px;
+}
+
+.form-wrapper-slug {
+  :global {
+    .ant-form-item-label {
+      label {
+        color: #aaa;
+        font-size: 80%;
+      }
+    }
+  }
+}
+
 .form-row {
 }
 
-.form-label {
-  margin-bottom: 16px;
+.form-item-title {
+  margin-bottom: 3px;
+
+  .form-item-title-input {
+    padding-right: 120px;
+  }
+}
+
+.form-item-slug {
+  .form-item-slug-input {
+    width: 100%;
+
+    @media (min-width: @screen-md) {
+      width: 500px;
+    }
+
+    input {
+      background-color: transparent;
+      border: none;
+      padding-left: 0;
+      padding-right: 0;
+      //margin-left: 3px;
+    }
+
+    span {
+      left: 4px !important;
+    }
+  }
+}
+
+.form-item-category {
+  .form-item-category-select {
+    width: 100%;
+
+    @media (min-width: @screen-md) {
+      width: 200px;
+    }
+
+    :global {
+      .ant-select-selection {
+        border-color: #e9e9e9;
+        background-color: transparent;
+      }
+    }
+  }
+}
+
+.form-item-status {
+  margin-right: 5px !important;
 }

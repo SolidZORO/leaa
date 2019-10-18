@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import React, { useState, forwardRef, useImperativeHandle, useRef } from 'react';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { message } from 'antd';
+import { message, Icon, Button, Tooltip } from 'antd';
 
 import { GET_ATTACHMENTS, UPDATE_ATTACHMENTS } from '@leaa/common/src/graphqls';
 import { IAttachmentParams } from '@leaa/common/src/interfaces';
@@ -118,13 +118,21 @@ export const AttachmentBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
 
       <FormCard
         title={
-          <span>
+          <>
             {langUtil.removeSpace(`${t('_lang:attachment')} ${t('_lang:list')}`, i18n.language)}
-            <code className={style['title-code']}>
-              {props.attachmentParams.type} / {props.attachmentParams.moduleName}, {/* prettier-ignore */}
-              {props.attachmentParams.moduleId}, {props.attachmentParams.moduleType}
-            </code>
-          </span>
+
+            <Tooltip
+              title={
+                <code className={style['title-code-tooltip']}>
+                  {props.attachmentParams.type}-{props.attachmentParams.moduleName}-{/* prettier-ignore */}
+                  {props.attachmentParams.moduleType}-{props.attachmentParams.moduleId}
+                </code>
+              }
+              trigger="hover"
+            >
+              <code className={style['title-code-text']}>{props.attachmentParams.moduleType}</code>
+            </Tooltip>
+          </>
         }
       >
         <AttachmentDropzone attachmentParams={{ ...props.attachmentParams }} onUploadedCallback={refreshAttachments} />

@@ -1,5 +1,6 @@
 import { IsOptional } from 'class-validator';
 import { Field, InputType, Int } from 'type-graphql';
+import { Column } from 'typeorm';
 
 @InputType()
 export class UpdateArticleInput {
@@ -30,4 +31,8 @@ export class UpdateArticleInput {
   @IsOptional()
   @Field(() => Int, { nullable: true })
   public status?: number;
+
+  @IsOptional()
+  @Field(() => Date, { nullable: true })
+  public created_at?: Date;
 }
