@@ -5726,6 +5726,15 @@ class-validator@^0.10.1:
     google-libphonenumber "^3.1.6"
     validator "11.1.0"
 
+class-validator@^0.10.2:
+  version "0.10.2"
+  resolved "https://registry.npm.taobao.org/class-validator/download/class-validator-0.10.2.tgz#361409d7f393df79f602b9a18ebd3e0e51abe320"
+  integrity sha1-NhQJ1/OT33n2Armhjr0+DlGr4yA=
+  dependencies:
+    "@types/validator" "10.11.3"
+    google-libphonenumber "^3.1.6"
+    validator "11.1.0"
+
 classnames@2.x, classnames@^2.2.0, classnames@^2.2.1, classnames@^2.2.3, classnames@^2.2.5, classnames@^2.2.6, classnames@~2.2.6:
   version "2.2.6"
   resolved "https://registry.npmjs.org/classnames/-/classnames-2.2.6.tgz#43935bffdd291f326dad0a205309b38d00f650ce"
@@ -18107,10 +18116,10 @@ type-fest@^0.6.0:
   resolved "https://registry.npmjs.org/type-fest/-/type-fest-0.6.0.tgz#8d2a2370d3df886eb5c90ada1c5bf6188acf838b"
   integrity sha512-q+MB8nYR1KDLrgr4G5yemftpMC7/QLqVndBmEEdqzmNj5dcFOO4Oo8qlwZE3ULT3+Zim1F8Kq4cBnikNhlCMlg==
 
-type-graphql@^0.17.3:
+type-graphql@^0.17.3, type-graphql@^0.17.5:
   version "0.17.5"
-  resolved "https://registry.npmjs.org/type-graphql/-/type-graphql-0.17.5.tgz#7f2f189ff7b9faef33537291ef333ff9adbee21c"
-  integrity sha512-wscr63K0j9UKcX/nBTySamLd7nMZeYKmADk8A9sVmcPh+clNJUAw96784dg2VZn/sUdmN1y2AeKzmTjCfVB5sA==
+  resolved "https://registry.npm.taobao.org/type-graphql/download/type-graphql-0.17.5.tgz#7f2f189ff7b9faef33537291ef333ff9adbee21c"
+  integrity sha1-fy8Yn/e5+u8zU3KR7zM/+a2+4hw=
   dependencies:
     "@types/glob" "^7.1.1"
     "@types/node" "^12.6.2"
@@ -18151,6 +18160,26 @@ typeorm@^0.2.19:
   version "0.2.19"
   resolved "https://registry.npmjs.org/typeorm/-/typeorm-0.2.19.tgz#a0cff0714180e5720df157df02c5759a1a646dc3"
   integrity sha512-xKVx/W41zckQ7v8WYcpRhSKpjXDKG/Jgjy0RWvYelR8ZnfyblNRL12jF4P8tIhwXv6l5t01s7HEc9lR+zb6Gtg==
+  dependencies:
+    app-root-path "^2.0.1"
+    buffer "^5.1.0"
+    chalk "^2.4.2"
+    cli-highlight "^2.0.0"
+    debug "^4.1.1"
+    dotenv "^6.2.0"
+    glob "^7.1.2"
+    js-yaml "^3.13.1"
+    mkdirp "^0.5.1"
+    reflect-metadata "^0.1.13"
+    tslib "^1.9.0"
+    xml2js "^0.4.17"
+    yargonaut "^1.1.2"
+    yargs "^13.2.1"
+
+typeorm@^0.2.20:
+  version "0.2.20"
+  resolved "https://registry.npm.taobao.org/typeorm/download/typeorm-0.2.20.tgz#efb60f2e55a7d08fc365f281ec2a71c87a9ebba5"
+  integrity sha1-77YPLlWn0I/DZfKB7CpxyHqeu6U=
   dependencies:
     app-root-path "^2.0.1"
     buffer "^5.1.0"

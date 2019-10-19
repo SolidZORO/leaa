@@ -42,7 +42,7 @@ if [[ $KEY = "" ]]; then
     cd ${DEPLOY_DIR} || exit
     mv robots.example.txt robots.txt
 
-    now -d
+    now --prod
 else
     echo "CANCEL"
 fi

@@ -31,6 +31,7 @@
   "dependencies": {
     "@zeit/next-css": "1.0.1",
     "@zeit/next-less": "1.0.1",
+    "class-validator": "^0.10.2",
     "cookie": "^0.4.0",
     "cookie-parser": "^1.4.4",
     "css-loader": "3.2.0",
@@ -54,6 +55,8 @@
     "react-id-swiper": "^2.3.2",
     "rimraf": "^3.0.0",
     "swiper": "^5.0.4",
+    "type-graphql": "^0.17.5",
+    "typeorm": "^0.2.20",
     "ua-parser-js": "^0.7.20",
     "url-loader": "^2.2.0",
     "vconsole": "^3.3.4",
