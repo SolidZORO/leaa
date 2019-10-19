@@ -35,6 +35,7 @@ export default (props: IPage) => {
   const [pageSize, setPageSize] = useState<number | undefined>(urlPagination.pageSize);
   const [selectedRowKeys, setSelectedRowKeys] = useState<number[] | string[]>([]);
 
+  // sort
   const [orderBy, setOrderBy] = useState<string | undefined>(
     urlParams && urlParams.orderBy ? `${urlParams.orderBy}` : undefined,
   );
@@ -43,14 +44,7 @@ export default (props: IPage) => {
     urlParams && urlParams.orderSort ? urlUtil.formatOrderSort(`${urlParams.orderSort}`) : undefined,
   );
 
-  const resetUrlParams = () => {
-    setPage(urlPagination.page);
-    setPageSize(urlPagination.pageSize);
-    setOrderBy(undefined);
-    setOrderSort(undefined);
-    setQ(undefined);
-  };
-
+  // query
   const getPermissionsVariables = { page, pageSize, q, orderBy, orderSort };
   const getPermissionsQuery = useQuery<{ permissions: PermissionsWithPaginationObject }, PermissionArgs>(
     GET_PERMISSIONS,
@@ -60,16 +54,25 @@ export default (props: IPage) => {
     },
   );
 
+  // mutation
+  const [deletePermissionMutate, deletePermissionMutation] = useMutation<Permission>(DELETE_PERMISSION, {
+    onCompleted: () => message.success(t('_lang:deletedSuccessfully')),
+    refetchQueries: () => [{ query: GET_PERMISSIONS, variables: getPermissionsVariables }],
+  });
+
+  const resetUrlParams = () => {
+    setPage(urlPagination.page);
+    setPageSize(urlPagination.pageSize);
+    setOrderBy(undefined);
+    setOrderSort(undefined);
+    setQ(undefined);
+  };
+
   useEffect(() => {
     if (_.isEmpty(urlParams)) {
       resetUrlParams();
     }
   }, [urlParams]);
-
-  const [deletePermissionMutate, deletePermissionMutation] = useMutation<Permission>(DELETE_PERMISSION, {
-    onCompleted: () => message.success(t('_lang:deletedSuccessfully')),
-    refetchQueries: () => [{ query: GET_PERMISSIONS, variables: getPermissionsVariables }],
-  });
 
   const rowSelection = {
     columnWidth: 30,

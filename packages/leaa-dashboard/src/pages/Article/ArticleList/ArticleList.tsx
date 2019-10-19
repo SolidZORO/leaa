@@ -36,6 +36,7 @@ export default (props: IPage) => {
   const [pageSize, setPageSize] = useState<number | undefined>(urlPagination.pageSize);
   const [selectedRowKeys, setSelectedRowKeys] = useState<number[] | string[]>([]);
 
+  // sort
   const [orderBy, setOrderBy] = useState<string | undefined>(
     urlParams && urlParams.orderBy ? `${urlParams.orderBy}` : undefined,
   );
@@ -44,6 +45,18 @@ export default (props: IPage) => {
     urlParams && urlParams.orderSort ? urlUtil.formatOrderSort(`${urlParams.orderSort}`) : undefined,
   );
 
+  // query
+  const getArticlesVariables = { page, pageSize, q, orderBy, orderSort };
+  const getArticlesQuery = useQuery<{ articles: ArticlesWithPaginationObject }, ArticleArgs>(GET_ARTICLES, {
+    variables: getArticlesVariables,
+  });
+
+  // mutation
+  const [deleteArticleMutate, deleteArticleMutation] = useMutation<Article>(DELETE_ARTICLE, {
+    onCompleted: () => message.success(t('_lang:deletedSuccessfully')),
+    refetchQueries: () => [{ query: GET_ARTICLES, variables: getArticlesVariables }],
+  });
+
   const resetUrlParams = () => {
     setPage(urlPagination.page);
     setPageSize(urlPagination.pageSize);
@@ -51,11 +64,6 @@ export default (props: IPage) => {
     setOrderSort(undefined);
     setQ(undefined);
   };
-
-  const getArticlesVariables = { page, pageSize, q, orderBy, orderSort };
-  const getArticlesQuery = useQuery<{ articles: ArticlesWithPaginationObject }, ArticleArgs>(GET_ARTICLES, {
-    variables: getArticlesVariables,
-  });
 
   useEffect(() => {
     if (_.isEmpty(urlParams)) {
@@ -66,11 +74,6 @@ export default (props: IPage) => {
   useEffect(() => {
     (async () => getArticlesQuery.refetch())();
   }, [props.history.location.key]);
-
-  const [deleteArticleMutate, deleteArticleMutation] = useMutation<Article>(DELETE_ARTICLE, {
-    onCompleted: () => message.success(t('_lang:deletedSuccessfully')),
-    refetchQueries: () => [{ query: GET_ARTICLES, variables: getArticlesVariables }],
-  });
 
   const rowSelection = {
     columnWidth: 30,
@@ -90,18 +93,18 @@ export default (props: IPage) => {
       dataIndex: 'title',
       sorter: true,
       sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'title'),
-      render: (text: string, record: Article) => <Link to={`${props.route.path}/${record.id}`}>{record.title}</Link>,
-    },
-    {
-      title: t('_lang:slug'),
-      dataIndex: 'slug',
-      sorter: true,
-      sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'slug'),
+      render: (text: string, record: Article) => (
+        <>
+          <Link to={`${props.route.path}/${record.id}`}>{record.title}</Link>
+          <small className={style['col-slug']}>{record.slug}</small>
+        </>
+      ),
     },
     {
       title: t('_lang:category'),
       dataIndex: 'category',
-      render: (text: string, record: Article) => <span>{record.category && record.category.name}</span>,
+      width: 100,
+      render: (text: string, record: Article) => <span>{record.category ? record.category.name : '----'}</span>,
     },
     {
       title: t('_lang:status'),

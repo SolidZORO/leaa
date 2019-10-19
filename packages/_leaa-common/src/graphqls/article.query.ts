@@ -13,10 +13,10 @@ export const GET_ARTICLES = gql`
         slug
         description
         category_id
-        #        category {
-        #          name
-        #          slug
-        #        }
+        category {
+          name
+          slug
+        }
         user_id
         status
         created_at

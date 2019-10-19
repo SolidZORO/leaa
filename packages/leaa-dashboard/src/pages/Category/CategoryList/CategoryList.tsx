@@ -35,6 +35,7 @@ export default (props: IPage) => {
   const [pageSize, setPageSize] = useState<number | undefined>(urlPagination.pageSize);
   const [selectedRowKeys, setSelectedRowKeys] = useState<number[] | string[]>([]);
 
+  // sort
   const [orderBy, setOrderBy] = useState<string | undefined>(
     urlParams && urlParams.orderBy ? `${urlParams.orderBy}` : undefined,
   );
@@ -42,6 +43,19 @@ export default (props: IPage) => {
   const [orderSort, setOrderSort] = useState<IOrderSort | undefined>(
     urlParams && urlParams.orderSort ? urlUtil.formatOrderSort(`${urlParams.orderSort}`) : undefined,
   );
+
+  // query
+  const getCategoriesVariables = { page, pageSize, q, orderBy, orderSort };
+  const getCategoriesQuery = useQuery<{ categories: CategoriesWithPaginationObject }, CategoryArgs>(GET_CATEGORIES, {
+    variables: getCategoriesVariables,
+    fetchPolicy: 'network-only',
+  });
+
+  // mutation
+  const [deleteCategoryMutate, deleteCategoryMutation] = useMutation<Category>(DELETE_CATEGORY, {
+    onCompleted: () => message.success(t('_lang:deletedSuccessfully')),
+    refetchQueries: () => [{ query: GET_CATEGORIES, variables: getCategoriesVariables }],
+  });
 
   const resetUrlParams = () => {
     setPage(urlPagination.page);
@@ -51,22 +65,11 @@ export default (props: IPage) => {
     setQ(undefined);
   };
 
-  const getCategoriesVariables = { page, pageSize, q, orderBy, orderSort };
-  const getCategoriesQuery = useQuery<{ categories: CategoriesWithPaginationObject }, CategoryArgs>(GET_CATEGORIES, {
-    variables: getCategoriesVariables,
-    fetchPolicy: 'network-only',
-  });
-
   useEffect(() => {
     if (_.isEmpty(urlParams)) {
       resetUrlParams();
     }
   }, [urlParams]);
-
-  const [deleteCategoryMutate, deleteCategoryMutation] = useMutation<Category>(DELETE_CATEGORY, {
-    onCompleted: () => message.success(t('_lang:deletedSuccessfully')),
-    refetchQueries: () => [{ query: GET_CATEGORIES, variables: getCategoriesVariables }],
-  });
 
   const rowSelection = {
     columnWidth: 30,

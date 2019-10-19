@@ -36,6 +36,7 @@ export default (props: IPage) => {
   const [pageSize, setPageSize] = useState<number | undefined>(urlPagination.pageSize);
   const [selectedRowKeys, setSelectedRowKeys] = useState<number[] | string[]>([]);
 
+  // sort
   const [orderBy, setOrderBy] = useState<string | undefined>(
     urlParams && urlParams.orderBy ? `${urlParams.orderBy}` : undefined,
   );
@@ -43,6 +44,18 @@ export default (props: IPage) => {
   const [orderSort, setOrderSort] = useState<IOrderSort | undefined>(
     urlParams && urlParams.orderSort ? urlUtil.formatOrderSort(`${urlParams.orderSort}`) : undefined,
   );
+
+  // query
+  const getUsersVariables = { page, pageSize, q, orderBy, orderSort };
+  const getUsersQuery = useQuery<{ users: UsersWithPaginationObject }, UsersArgs>(GET_USERS, {
+    variables: getUsersVariables,
+  });
+
+  // mutation
+  const [getUsersMutate, getUsersMutation] = useMutation<User>(DELETE_USER, {
+    onCompleted: () => message.success(t('_lang:deletedSuccessfully')),
+    refetchQueries: () => [{ query: GET_USERS, variables: getUsersVariables }],
+  });
 
   const resetUrlParams = () => {
     setPage(urlPagination.page);
@@ -52,21 +65,11 @@ export default (props: IPage) => {
     setQ(undefined);
   };
 
-  const getUsersVariables = { page, pageSize, q, orderBy, orderSort };
-  const getUsersQuery = useQuery<{ users: UsersWithPaginationObject }, UsersArgs>(GET_USERS, {
-    variables: getUsersVariables,
-  });
-
   useEffect(() => {
     if (_.isEmpty(urlParams)) {
       resetUrlParams();
     }
   }, [urlParams]);
-
-  const [getUsersMutate, getUsersMutation] = useMutation<User>(DELETE_USER, {
-    onCompleted: () => message.success(t('_lang:deletedSuccessfully')),
-    refetchQueries: () => [{ query: GET_USERS, variables: getUsersVariables }],
-  });
 
   const rowSelection = {
     columnWidth: 30,

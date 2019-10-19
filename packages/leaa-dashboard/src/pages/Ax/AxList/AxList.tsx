@@ -36,6 +36,7 @@ export default (props: IPage) => {
   const [pageSize, setPageSize] = useState<number | undefined>(urlPagination.pageSize);
   const [selectedRowKeys, setSelectedRowKeys] = useState<number[] | string[]>([]);
 
+  // sort
   const [orderBy, setOrderBy] = useState<string | undefined>(
     urlParams && urlParams.orderBy ? `${urlParams.orderBy}` : undefined,
   );
@@ -43,6 +44,19 @@ export default (props: IPage) => {
   const [orderSort, setOrderSort] = useState<IOrderSort | undefined>(
     urlParams && urlParams.orderSort ? urlUtil.formatOrderSort(`${urlParams.orderSort}`) : undefined,
   );
+
+  // query
+  const getAxsVariables = { page, pageSize, q, orderBy, orderSort };
+  const getAxsQuery = useQuery<{ axs: AxsWithPaginationObject }, AxArgs>(GET_AXS, {
+    variables: getAxsVariables,
+    fetchPolicy: 'network-only',
+  });
+
+  // mutation
+  const [deleteAxMutate, deleteAxMutation] = useMutation<Ax>(DELETE_AX, {
+    onCompleted: () => message.success(t('_lang:deletedSuccessfully')),
+    refetchQueries: () => [{ query: GET_AXS, variables: getAxsVariables }],
+  });
 
   const resetUrlParams = () => {
     setPage(urlPagination.page);
@@ -52,22 +66,11 @@ export default (props: IPage) => {
     setQ(undefined);
   };
 
-  const getAxsVariables = { page, pageSize, q, orderBy, orderSort };
-  const getAxsQuery = useQuery<{ axs: AxsWithPaginationObject }, AxArgs>(GET_AXS, {
-    variables: getAxsVariables,
-    fetchPolicy: 'network-only',
-  });
-
   useEffect(() => {
     if (_.isEmpty(urlParams)) {
       resetUrlParams();
     }
   }, [urlParams]);
-
-  const [deleteAxMutate, deleteAxMutation] = useMutation<Ax>(DELETE_AX, {
-    onCompleted: () => message.success(t('_lang:deletedSuccessfully')),
-    refetchQueries: () => [{ query: GET_AXS, variables: getAxsVariables }],
-  });
 
   const rowSelection = {
     columnWidth: 30,
