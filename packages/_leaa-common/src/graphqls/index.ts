@@ -25,3 +25,6 @@ export * from './ax.mutation';
 export * from './setting.query';
 export * from './setting.mutation';
 export * from './setting.fragment';
+
+export * from './tag.query';
+export * from './tag.mutation';

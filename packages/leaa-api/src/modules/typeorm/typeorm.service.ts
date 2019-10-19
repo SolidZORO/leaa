@@ -1,7 +1,18 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm';
 
-import { User, Permission, Role, Category, Article, Attachment, Ax, Setting, Oauth } from '@leaa/common/src/entrys';
+import {
+  User,
+  Permission,
+  Role,
+  Category,
+  Article,
+  Attachment,
+  Ax,
+  Setting,
+  Oauth,
+  Tag,
+} from '@leaa/common/src/entrys';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 
 const CONSTRUCTOR_NAME = 'TypeormService';
@@ -36,6 +47,7 @@ export class TypeormService implements TypeOrmOptionsFactory {
         Attachment,
         Ax,
         Setting,
+        Tag,
       ],
     };
 

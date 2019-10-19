@@ -21,6 +21,7 @@ import { AttachmentModule } from '@leaa/api/src/modules/attachment/attachment.mo
 import { PermissionModule } from '@leaa/api/src/modules/permission/permission.module';
 import { SettingModule } from '@leaa/api/src/modules/setting/setting.module';
 import { OauthModule } from '@leaa/api/src/modules/oauth/oauth.module';
+import { TagModule } from '@leaa/api/src/modules/tag/tag.module';
 
 @Module({
   imports: [
@@ -48,6 +49,7 @@ import { OauthModule } from '@leaa/api/src/modules/oauth/oauth.module';
     AuthTokenModule,
     SettingModule,
     OauthModule,
+    TagModule,
   ],
   providers: [ConfigModule, AuthModule, UserModule],
   controllers: [],
