@@ -24,18 +24,20 @@ export default (props: IPage) => {
   const { t } = useTranslation();
   const { id } = props.match.params as { id: string };
 
+  // ref
   const attachmentBoxRef = useRef<IAttachmentBoxRef>(null);
-  let articleInfoFormRef: any;
-  let articleExtFormRef: any;
-
   const articleContentForm = React.createRef<any | null>();
+  const [articleInfoFormRef, setArticleInfoFormRef] = useState<any>();
+  const [articleExtFormRef, setArticleExtFormRef] = useState<any>();
 
+  // get
   const getArticleVariables = { id: Number(id) };
   const getArticleQuery = useQuery<{ article: Article }, ArticleArgs>(GET_ARTICLE, {
     variables: getArticleVariables,
     fetchPolicy: 'network-only',
   });
 
+  // set
   const [submitVariables, setSubmitVariables] = useState<{ id: number; article: UpdateArticleInput }>();
   const [updateArticleMutate, updateArticleMutation] = useMutation<Article>(UPDATE_ARTICLE, {
     variables: submitVariables,
@@ -43,10 +45,17 @@ export default (props: IPage) => {
     refetchQueries: () => [{ query: GET_ARTICLE, variables: getArticleVariables }],
   });
 
+  // TIPS: keep data consistent with API
+  const resetAllFormAfterSubmit = () => {
+    articleInfoFormRef.props.form.resetFields();
+    articleExtFormRef.props.form.resetFields();
+  };
+
   const onSubmit = async () => {
     let hasError = false;
     let submitData: UpdateArticleInput = {};
 
+    // info
     articleInfoFormRef.props.form.validateFieldsAndScroll(async (err: any, formData: Article) => {
       if (err) {
         hasError = true;
@@ -62,6 +71,7 @@ export default (props: IPage) => {
       return;
     }
 
+    // ext
     articleExtFormRef.props.form.validateFieldsAndScroll(async (err: any, formData: Article) => {
       if (err) {
         hasError = true;
@@ -93,9 +103,12 @@ export default (props: IPage) => {
     await setSubmitVariables({ id: Number(id), article: submitData });
     await updateArticleMutate();
 
+    // attachment box
     if (attachmentBoxRef && attachmentBoxRef.current) {
       attachmentBoxRef.current.onUpdateAttachments();
     }
+
+    resetAllFormAfterSubmit();
   };
 
   return (
@@ -112,9 +125,7 @@ export default (props: IPage) => {
       <ArticleInfoForm
         item={getArticleQuery.data && getArticleQuery.data.article}
         loading={getArticleQuery.loading}
-        wrappedComponentRef={(inst: unknown) => {
-          articleInfoFormRef = inst;
-        }}
+        wrappedComponentRef={(inst: unknown) => setArticleInfoFormRef(inst)}
       />
 
       <div className={style['submit-bar']}>
@@ -160,9 +171,7 @@ export default (props: IPage) => {
           <ArticleExtForm
             item={getArticleQuery.data && getArticleQuery.data.article}
             loading={getArticleQuery.loading}
-            wrappedComponentRef={(inst: unknown) => {
-              articleExtFormRef = inst;
-            }}
+            wrappedComponentRef={(inst: unknown) => setArticleExtFormRef(inst)}
           />
         </div>
       </div>
