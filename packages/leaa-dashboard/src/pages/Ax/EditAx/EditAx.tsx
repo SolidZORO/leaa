@@ -22,21 +22,23 @@ import style from './style.less';
 export default (props: IPage) => {
   const { t } = useTranslation();
   const { id } = props.match.params as { id: string };
-
-  let axInfoFormRef: any;
   const listHeight = 600;
 
+  // ref
+  let axInfoFormRef: any;
+  const getBannerMbRef = useRef<IAttachmentBoxRef>(null);
+  const getBannerPcRef = useRef<IAttachmentBoxRef>(null);
+  const getGalleryMbRef = useRef<IAttachmentBoxRef>(null);
+  const getGalleryPcRef = useRef<IAttachmentBoxRef>(null);
+
+  // get
   const getAxVariables = { id: Number(id) };
   const getAxQuery = useQuery<{ ax: Ax }, AxArgs>(GET_AX, {
     variables: getAxVariables,
     fetchPolicy: 'network-only',
   });
 
-  const getBannerMbRef = useRef<IAttachmentBoxRef>(null);
-  const getBannerPcRef = useRef<IAttachmentBoxRef>(null);
-  const getGalleryMbRef = useRef<IAttachmentBoxRef>(null);
-  const getGalleryPcRef = useRef<IAttachmentBoxRef>(null);
-
+  // set
   const [submitVariables, setSubmitVariables] = useState<{ id: number; ax: UpdateAxInput }>();
   const [updateAxMutate, updateAxMutation] = useMutation<Ax>(UPDATE_AX, {
     variables: submitVariables,

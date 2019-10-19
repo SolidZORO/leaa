@@ -45,12 +45,6 @@ export default (props: IPage) => {
     refetchQueries: () => [{ query: GET_ARTICLE, variables: getArticleVariables }],
   });
 
-  // TIPS: keep data consistent with API
-  const resetAllFormAfterSubmit = () => {
-    articleInfoFormRef.props.form.resetFields();
-    articleExtFormRef.props.form.resetFields();
-  };
-
   const onSubmit = async () => {
     let hasError = false;
     let submitData: UpdateArticleInput = {};
@@ -108,7 +102,9 @@ export default (props: IPage) => {
       attachmentBoxRef.current.onUpdateAttachments();
     }
 
-    resetAllFormAfterSubmit();
+    // keep form fields consistent with API
+    articleInfoFormRef.props.form.resetFields();
+    articleExtFormRef.props.form.resetFields();
   };
 
   return (
