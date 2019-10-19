@@ -118,6 +118,11 @@ export class CategoryService {
   }
 
   async deleteCategory(id: number): Promise<Category | undefined> {
+    // default category DONT
+    if (id <= 2) {
+      throw Error('PLEASE DONT');
+    }
+
     return curdUtil.commonDelete(this.categoryRepository, CONSTRUCTOR_NAME, id);
   }
 }

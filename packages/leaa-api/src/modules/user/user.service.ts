@@ -155,7 +155,8 @@ export class UserService {
   }
 
   async deleteUser(id: number): Promise<User | undefined> {
-    if (id === 1) {
+    // default user DONT
+    if (id <= 3) {
       throw Error('PLEASE DONT');
     }
 

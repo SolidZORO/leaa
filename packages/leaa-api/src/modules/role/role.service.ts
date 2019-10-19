@@ -116,7 +116,8 @@ export class RoleService {
   }
 
   async deleteRole(id: number): Promise<Role | undefined> {
-    if (id === 1) {
+    // default role DONT
+    if (id <= 3) {
       throw Error('PLEASE DONT');
     }
 

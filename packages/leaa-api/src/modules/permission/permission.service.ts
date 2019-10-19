@@ -69,6 +69,11 @@ export class PermissionService {
   }
 
   async deletePermission(id: number): Promise<Permission | undefined> {
+    // default role DONT
+    if (id <= 21) {
+      throw Error('PLEASE DONT');
+    }
+
     return curdUtil.commonDelete(this.permissionRepository, CONSTRUCTOR_NAME, id);
   }
 }

@@ -113,6 +113,11 @@ export class SettingService {
   }
 
   async deleteSetting(id: number): Promise<Setting | undefined> {
+    // default setting DONT
+    if (id <= 3) {
+      throw Error('PLEASE DONT');
+    }
+
     return curdUtil.commonDelete(this.settingRepository, CONSTRUCTOR_NAME, id);
   }
 }
