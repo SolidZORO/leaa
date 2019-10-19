@@ -25,20 +25,20 @@ export default (props: IPage) => {
   const listHeight = 600;
 
   // ref
-  let axInfoFormRef: any;
+  const [axInfoFormRef, setAxInfoFormRef] = useState<any>();
   const getBannerMbRef = useRef<IAttachmentBoxRef>(null);
   const getBannerPcRef = useRef<IAttachmentBoxRef>(null);
   const getGalleryMbRef = useRef<IAttachmentBoxRef>(null);
   const getGalleryPcRef = useRef<IAttachmentBoxRef>(null);
 
-  // get
+  // query
   const getAxVariables = { id: Number(id) };
   const getAxQuery = useQuery<{ ax: Ax }, AxArgs>(GET_AX, {
     variables: getAxVariables,
     fetchPolicy: 'network-only',
   });
 
-  // set
+  // mutation
   const [submitVariables, setSubmitVariables] = useState<{ id: number; ax: UpdateAxInput }>();
   const [updateAxMutate, updateAxMutation] = useMutation<Ax>(UPDATE_AX, {
     variables: submitVariables,
@@ -97,9 +97,7 @@ export default (props: IPage) => {
       <AxInfoForm
         item={getAxQuery.data && getAxQuery.data.ax}
         loading={getAxQuery.loading}
-        wrappedComponentRef={(inst: unknown) => {
-          axInfoFormRef = inst;
-        }}
+        wrappedComponentRef={(inst: unknown) => setAxInfoFormRef(inst)}
       />
 
       <Row gutter={16}>

@@ -19,12 +19,11 @@ import style from './style.less';
 export default (props: IPage) => {
   const { t } = useTranslation();
 
-  let permissionInfoFormRef: any;
+  // ref
+  const [permissionInfoFormRef, setPermissionInfoFormRef] = useState<any>();
 
-  const [submitVariables, setSubmitVariables] = useState<{ permission: UpdatePermissionInput }>({
-    permission: {},
-  });
-
+  // mutation
+  const [submitVariables, setSubmitVariables] = useState<{ permission: UpdatePermissionInput }>({ permission: {} });
   const [createPermissionMutate, createPermissionMutation] = useMutation<{ createPermission: Permission }>(
     CREATE_PERMISSION,
     {
@@ -74,11 +73,7 @@ export default (props: IPage) => {
     >
       {createPermissionMutation.error ? <ErrorCard error={createPermissionMutation.error} /> : null}
 
-      <PermissionInfoForm
-        wrappedComponentRef={(inst: unknown) => {
-          permissionInfoFormRef = inst;
-        }}
-      />
+      <PermissionInfoForm wrappedComponentRef={(inst: unknown) => setPermissionInfoFormRef(inst)} />
 
       <SubmitBar>
         <Button

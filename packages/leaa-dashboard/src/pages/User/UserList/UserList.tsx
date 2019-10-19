@@ -63,10 +63,6 @@ export default (props: IPage) => {
     }
   }, [urlParams]);
 
-  useEffect(() => {
-    (async () => getUsersQuery.refetch())();
-  }, [props.history.location.key]);
-
   const [getUsersMutate, getUsersMutation] = useMutation<User>(DELETE_USER, {
     onCompleted: () => message.success(t('_lang:deletedSuccessfully')),
     refetchQueries: () => [{ query: GET_USERS, variables: getUsersVariables }],

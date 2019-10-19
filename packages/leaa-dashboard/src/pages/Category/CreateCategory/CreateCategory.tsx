@@ -20,10 +20,11 @@ import style from './style.less';
 export default (props: IPage) => {
   const { t } = useTranslation();
 
-  let categoryInfoFormRef: any;
+  // ref
+  const [categoryInfoFormRef, setCategoryInfoFormRef] = useState<any>();
 
+  // mutation
   const [submitVariables, setSubmitVariables] = useState<{ category: UpdateCategoryInput }>();
-
   const [createCategoryMutate, createCategoryMutation] = useMutation<{ createCategory: Category }>(CREATE_CATEGORY, {
     variables: submitVariables,
     onError: e => message.error(e.message),
@@ -52,11 +53,7 @@ export default (props: IPage) => {
 
       {createCategoryMutation.error ? <ErrorCard error={createCategoryMutation.error} /> : null}
 
-      <CategoryInfoForm
-        wrappedComponentRef={(inst: unknown) => {
-          categoryInfoFormRef = inst;
-        }}
-      />
+      <CategoryInfoForm wrappedComponentRef={(inst: unknown) => setCategoryInfoFormRef(inst)} />
 
       <SubmitBar>
         <Button

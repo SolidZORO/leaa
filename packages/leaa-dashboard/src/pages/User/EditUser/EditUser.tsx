@@ -23,9 +23,11 @@ export default (props: IPage) => {
   const { t } = useTranslation();
   const { id } = props.match.params as { id: string };
 
-  let userInfoFormRef: any;
-  let userRoleFormRef: any;
+  // ref
+  const [userInfoFormRef, setUserInfoFormRef] = useState<any>();
+  const [userRoleFormRef, setUserRoleFormRef] = useState<any>();
 
+  // query
   const getUserVariables = { id: Number(id) };
   const getUserQuery = useQuery<{ user: User }, UserArgs>(GET_USER, {
     variables: getUserVariables,
@@ -38,11 +40,11 @@ export default (props: IPage) => {
     fetchPolicy: 'network-only',
   });
 
+  // mutation
   const [submitVariables, setSubmitVariables] = useState<{ id: number; user: UpdateUserInput }>({
     id: Number(id),
     user: {},
   });
-
   const [updateUserMutate, updateUserMutation] = useMutation<User>(UPDATE_USER, {
     variables: submitVariables,
     onCompleted: () => message.success(t('_lang:updatedSuccessfully')),
@@ -91,10 +93,12 @@ export default (props: IPage) => {
       ...{ user: submitData },
     };
 
-    console.log(nextSubmitData);
-
     await setSubmitVariables(nextSubmitData);
     await updateUserMutate();
+
+    // keep form fields consistent with API
+    userInfoFormRef.props.form.resetFields();
+    userRoleFormRef.props.form.resetFields();
   };
 
   return (
@@ -112,18 +116,14 @@ export default (props: IPage) => {
       <UserInfoForm
         item={getUserQuery.data && getUserQuery.data.user}
         loading={getUserQuery.loading}
-        wrappedComponentRef={(inst: unknown) => {
-          userInfoFormRef = inst;
-        }}
+        wrappedComponentRef={(inst: unknown) => setUserInfoFormRef(inst)}
       />
 
       <UserRolesForm
         item={getUserQuery.data && getUserQuery.data.user}
         loading={getUserQuery.loading}
         roles={(getRolesQuery.data && getRolesQuery.data.roles && getRolesQuery.data.roles.items) || []}
-        wrappedComponentRef={(inst: unknown) => {
-          userRoleFormRef = inst;
-        }}
+        wrappedComponentRef={(inst: unknown) => setUserRoleFormRef(inst)}
       />
 
       <SubmitBar>

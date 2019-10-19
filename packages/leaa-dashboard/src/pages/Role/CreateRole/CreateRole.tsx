@@ -19,12 +19,11 @@ import style from './style.less';
 export default (props: IPage) => {
   const { t } = useTranslation();
 
-  let roleInfoFormRef: any;
+  // ref
+  const [roleInfoFormRef, setRoleInfoFormRef] = useState<any>();
 
-  const [submitVariables, setSubmitVariables] = useState<{ role: UpdateRoleInput }>({
-    role: {},
-  });
-
+  // mutation
+  const [submitVariables, setSubmitVariables] = useState<{ role: UpdateRoleInput }>({ role: {} });
   const [createRoleMutate, createRoleMutation] = useMutation<{ createRole: Role }>(CREATE_ROLE, {
     variables: submitVariables,
     onCompleted({ createRole }) {
@@ -68,11 +67,7 @@ export default (props: IPage) => {
 
       {createRoleMutation.error ? <ErrorCard error={createRoleMutation.error} /> : null}
 
-      <RoleInfoForm
-        wrappedComponentRef={(inst: unknown) => {
-          roleInfoFormRef = inst;
-        }}
-      />
+      <RoleInfoForm wrappedComponentRef={(inst: unknown) => setRoleInfoFormRef(inst)} />
 
       <SubmitBar>
         <Button

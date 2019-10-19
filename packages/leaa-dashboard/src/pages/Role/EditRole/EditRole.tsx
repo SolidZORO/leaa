@@ -23,9 +23,11 @@ export default (props: IPage) => {
   const { t } = useTranslation();
   const { id } = props.match.params as { id: string };
 
-  let roleInfoFormRef: any;
-  let rolePermissionsFormRef: any;
+  // ref
+  const [roleInfoFormRef, setRoleInfoFormRef] = useState<any>();
+  const [rolePermissionsFormRef, setRolePermissionsFormRef] = useState<any>();
 
+  // query
   const getRoleVariables = { id: Number(id) };
   const getRoleQuery = useQuery<{ role: Role }, RoleArgs>(GET_ROLE, {
     variables: getRoleVariables,
@@ -38,6 +40,7 @@ export default (props: IPage) => {
     { variables: getPermissionsVariables, fetchPolicy: 'network-only' },
   );
 
+  // mutation
   const [submitVariables, setSubmitVariables] = useState<{ id: number; role: UpdateRoleInput }>({
     id: Number(id),
     role: {},
@@ -91,10 +94,12 @@ export default (props: IPage) => {
       ...{ role: submitData },
     };
 
-    console.log(nextSubmitData);
-
     await setSubmitVariables(nextSubmitData);
     await updateRoleMutate();
+
+    // keep form fields consistent with API
+    roleInfoFormRef.props.form.resetFields();
+    rolePermissionsFormRef.props.form.resetFields();
   };
 
   return (
@@ -112,9 +117,7 @@ export default (props: IPage) => {
       <RoleInfoForm
         item={getRoleQuery.data && getRoleQuery.data.role}
         loading={getRoleQuery.loading}
-        wrappedComponentRef={(inst: unknown) => {
-          roleInfoFormRef = inst;
-        }}
+        wrappedComponentRef={(inst: unknown) => setRoleInfoFormRef(inst)}
       />
 
       <RolePermissionsForm
@@ -123,9 +126,7 @@ export default (props: IPage) => {
         permissions={
           getPermissionsQuery.data && getPermissionsQuery.data.permissions && getPermissionsQuery.data.permissions.items
         }
-        wrappedComponentRef={(inst: unknown) => {
-          rolePermissionsFormRef = inst;
-        }}
+        wrappedComponentRef={(inst: unknown) => setRolePermissionsFormRef(inst)}
       />
 
       <SubmitBar>

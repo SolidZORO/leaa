@@ -21,10 +21,10 @@ export default (props: IPage) => {
   const { t } = useTranslation();
   const { id } = props.match.params as { id: string };
 
-  let categoryInfoFormRef: any;
+  // ref
+  const [categoryInfoFormRef, setCategoryInfoFormRef] = useState<any>();
 
-  const [submitVariables, setSubmitVariables] = useState<{ id: number; category: UpdateCategoryInput }>();
-
+  // query
   const getCategoryVariables = { id: Number(id) };
   const getCategoryQuery = useQuery<{ category: Category }, CategoryArgs>(GET_CATEGORY, {
     variables: getCategoryVariables,
@@ -37,6 +37,8 @@ export default (props: IPage) => {
     fetchPolicy: 'network-only',
   });
 
+  // mutation
+  const [submitVariables, setSubmitVariables] = useState<{ id: number; category: UpdateCategoryInput }>();
   const [updateCategoryMutate, updateCategoryMutation] = useMutation<Category>(UPDATE_CATEGORY, {
     variables: submitVariables,
     onCompleted: () => message.success(t('_lang:updatedSuccessfully')),
@@ -74,9 +76,7 @@ export default (props: IPage) => {
           getCategoriesQuery.data && getCategoriesQuery.data.categories && getCategoriesQuery.data.categories.items
         }
         loading={getCategoryQuery.loading}
-        wrappedComponentRef={(inst: unknown) => {
-          categoryInfoFormRef = inst;
-        }}
+        wrappedComponentRef={(inst: unknown) => setCategoryInfoFormRef(inst)}
       />
 
       <SubmitBar>

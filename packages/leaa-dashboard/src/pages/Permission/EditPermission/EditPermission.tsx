@@ -21,19 +21,21 @@ export default (props: IPage) => {
   const { t } = useTranslation();
   const { id } = props.match.params as { id: string };
 
-  let permissionInfoFormRef: any;
+  // ref
+  const [permissionInfoFormRef, setPermissionInfoFormRef] = useState<any>();
 
-  const [submitVariables, setSubmitVariables] = useState<{ id: number; permission: UpdatePermissionInput }>({
-    id: Number(id),
-    permission: {},
-  });
-
+  // query
   const getPermissionVariables = { id: Number(id) };
   const getPermissionQuery = useQuery<{ permission: Permission }, PermissionArgs>(GET_PERMISSION, {
     variables: getPermissionVariables,
     fetchPolicy: 'network-only',
   });
 
+  // mutation
+  const [submitVariables, setSubmitVariables] = useState<{ id: number; permission: UpdatePermissionInput }>({
+    id: Number(id),
+    permission: {},
+  });
   const [updatePermissionMutate, updatePermissionMutation] = useMutation<Permission>(UPDATE_PERMISSION, {
     variables: submitVariables,
     onCompleted: () => message.success(t('_lang:updatedSuccessfully')),
@@ -61,10 +63,11 @@ export default (props: IPage) => {
 
     const nextSubmitData = { id: Number(id), permission: submitData };
 
-    console.log(nextSubmitData);
-
     await setSubmitVariables(nextSubmitData);
     await updatePermissionMutate();
+
+    // keep form fields consistent with API
+    permissionInfoFormRef.props.form.resetFields();
   };
 
   return (
@@ -81,9 +84,7 @@ export default (props: IPage) => {
       <PermissionInfoForm
         item={getPermissionQuery.data && getPermissionQuery.data.permission}
         loading={getPermissionQuery.loading}
-        wrappedComponentRef={(inst: unknown) => {
-          permissionInfoFormRef = inst;
-        }}
+        wrappedComponentRef={(inst: unknown) => setPermissionInfoFormRef(inst)}
       />
 
       <SubmitBar>

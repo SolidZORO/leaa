@@ -25,8 +25,8 @@ import { SeedService } from '@leaa/api/src/modules/seed/seed.service';
     await seedService.insertPermissions();
     await seedService.insertRoles();
     await seedService.insertUsers();
-    await seedService.insertRoleAddPermissions();
     await seedService.insertUserAddRole();
+    await seedService.insertRoleAddPermissions();
     await seedService.insertCategory();
     await seedService.insertArticle();
     await seedService.insertAx();
@@ -36,9 +36,9 @@ import { SeedService } from '@leaa/api/src/modules/seed/seed.service';
       await seedService.insertRandomUsers();
     }
 
-    await process.exit(0);
+    process.exit(0);
   } catch (e) {
-    await process.exit(0);
+    process.exit(0);
   }
 
   await process.exit(0);

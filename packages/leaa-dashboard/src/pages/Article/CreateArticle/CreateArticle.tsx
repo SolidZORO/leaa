@@ -20,10 +20,11 @@ import style from './style.less';
 export default (props: IPage) => {
   const { t } = useTranslation();
 
-  let articleInfoFormRef: any;
+  // ref
+  const [articleInfoFormRef, setArticleInfoFormRef] = useState<any>();
 
+  // mutation
   const [submitVariables, setSubmitVariables] = useState<{ article: UpdateArticleInput }>();
-
   const [createArticleMutate, createArticleMutation] = useMutation<{ createArticle: Article }>(CREATE_ARTICLE, {
     variables: submitVariables,
     onError: e => message.error(e.message),
@@ -52,11 +53,7 @@ export default (props: IPage) => {
 
       {createArticleMutation.error ? <ErrorCard error={createArticleMutation.error} /> : null}
 
-      <ArticleInfoForm
-        wrappedComponentRef={(inst: unknown) => {
-          articleInfoFormRef = inst;
-        }}
-      />
+      <ArticleInfoForm wrappedComponentRef={(inst: unknown) => setArticleInfoFormRef(inst)} />
 
       <SubmitBar>
         <Button

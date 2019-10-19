@@ -32,8 +32,9 @@ import style from './style.less';
 export default (props: IPage) => {
   const { t } = useTranslation();
 
-  let settingListFormRef: any;
-  let settingInfoFormRef: any;
+  // ref
+  const [settingListFormRef, setSettingListFormRef] = useState<any>();
+  const [settingInfoFormRef, setSettingInfoFormRef] = useState<any>();
 
   const [modalData, setModalData] = useState<Setting | null>(null);
   const [modalType, setModalType] = useState<'create' | 'update' | null>(null);
@@ -71,11 +72,13 @@ export default (props: IPage) => {
     setModalData(setting);
   };
 
+  // query
   const getSettingsQuery = useQuery<
     { settings: SettingsWithPaginationObject; fetchPolicy: 'network-only' },
     SettingArgs
   >(GET_SETTINGS);
 
+  // mutation
   const [createSettingVariables, setCreateSettingVariables] = useState<{ setting: CreateSettingInput }>();
   const [createSettingMutate, createSettingMutation] = useMutation<Setting>(CREATE_SETTING, {
     variables: createSettingVariables,
@@ -165,6 +168,9 @@ export default (props: IPage) => {
 
         await setUpdateSettingsVariables({ settings: formData.settings });
         await updateSettingsMutate();
+
+        // keep form fields consistent with API
+        settingListFormRef.props.form.resetFields();
       },
     );
   };
@@ -203,9 +209,7 @@ export default (props: IPage) => {
 
       <SettingListForm
         settings={getSettingsQuery.data && getSettingsQuery.data.settings && getSettingsQuery.data.settings.items}
-        wrappedComponentRef={(inst: unknown) => {
-          settingListFormRef = inst;
-        }}
+        wrappedComponentRef={(inst: unknown) => setSettingListFormRef(inst)}
         onClickLabelEditCallback={onOpenUpdateSetting}
       />
 
@@ -240,12 +244,7 @@ export default (props: IPage) => {
           />
         </div>
 
-        <SettingModalForm
-          item={modalData}
-          wrappedComponentRef={(inst: unknown) => {
-            settingInfoFormRef = inst;
-          }}
-        />
+        <SettingModalForm item={modalData} wrappedComponentRef={(inst: unknown) => setSettingInfoFormRef(inst)} />
       </Modal>
     </PageCard>
   );

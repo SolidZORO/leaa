@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, createRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, message } from 'antd';
 import { useQuery, useMutation } from '@apollo/react-hooks';
@@ -26,18 +26,18 @@ export default (props: IPage) => {
 
   // ref
   const attachmentBoxRef = useRef<IAttachmentBoxRef>(null);
-  const articleContentForm = React.createRef<any | null>();
+  const articleContentRef = useRef<any>(null);
   const [articleInfoFormRef, setArticleInfoFormRef] = useState<any>();
   const [articleExtFormRef, setArticleExtFormRef] = useState<any>();
 
-  // get
+  // query
   const getArticleVariables = { id: Number(id) };
   const getArticleQuery = useQuery<{ article: Article }, ArticleArgs>(GET_ARTICLE, {
     variables: getArticleVariables,
     fetchPolicy: 'network-only',
   });
 
-  // set
+  // mutation
   const [submitVariables, setSubmitVariables] = useState<{ id: number; article: UpdateArticleInput }>();
   const [updateArticleMutate, updateArticleMutation] = useMutation<Article>(UPDATE_ARTICLE, {
     variables: submitVariables,
@@ -85,13 +85,13 @@ export default (props: IPage) => {
     }
 
     if (
-      articleContentForm &&
-      articleContentForm.current &&
-      articleContentForm.current.getInstance() &&
-      articleContentForm.current.getInstance().getHtml() &&
-      typeof articleContentForm.current.getInstance().getHtml() !== 'undefined'
+      articleContentRef &&
+      articleContentRef.current &&
+      articleContentRef.current.getInstance() &&
+      articleContentRef.current.getInstance().getHtml() &&
+      typeof articleContentRef.current.getInstance().getHtml() !== 'undefined'
     ) {
-      submitData.content = articleContentForm.current.getInstance().getHtml();
+      submitData.content = articleContentRef.current.getInstance().getHtml();
     }
 
     await setSubmitVariables({ id: Number(id), article: submitData });
@@ -138,7 +138,7 @@ export default (props: IPage) => {
       </div>
 
       <WYSIWYGEditor
-        ref={articleContentForm}
+        ref={articleContentRef}
         content={getArticleQuery.data && getArticleQuery.data.article && getArticleQuery.data.article.content}
         attachmentParams={{
           type: 'image',

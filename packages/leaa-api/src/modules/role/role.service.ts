@@ -112,7 +112,7 @@ export class RoleService {
       throw new Error(message);
     }
 
-    return curdUtil.commonUpdate(this.permissionRepository, CONSTRUCTOR_NAME, id, args);
+    return curdUtil.commonUpdate(this.permissionRepository, CONSTRUCTOR_NAME, id, args, relationArgs);
   }
 
   async deleteRole(id: number): Promise<Role | undefined> {

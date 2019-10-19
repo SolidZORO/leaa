@@ -20,12 +20,11 @@ import style from './style.less';
 export default (props: IPage) => {
   const { t } = useTranslation();
 
-  let userInfoFormRef: any;
+  // ref
+  const [userInfoFormRef, setUserInfoFormRef] = useState<any>();
 
-  const [submitVariables, setSubmitVariables] = useState<{ user: UpdateUserInput }>({
-    user: {},
-  });
-
+  // mutation
+  const [submitVariables, setSubmitVariables] = useState<{ user: UpdateUserInput }>({ user: {} });
   const [createUserMutate, createUserMutation] = useMutation<{ createUser: User }>(CREATE_USER, {
     variables: submitVariables,
     onCompleted({ createUser }) {
@@ -69,11 +68,7 @@ export default (props: IPage) => {
 
       {createUserMutation.error ? <ErrorCard error={createUserMutation.error} /> : null}
 
-      <UserInfoForm
-        wrappedComponentRef={(inst: unknown) => {
-          userInfoFormRef = inst;
-        }}
-      />
+      <UserInfoForm wrappedComponentRef={(inst: unknown) => setUserInfoFormRef(inst)} />
 
       <SubmitBar>
         <Button

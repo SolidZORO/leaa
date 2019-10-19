@@ -35,6 +35,7 @@ export default (props: IPage) => {
   const [pageSize, setPageSize] = useState<number | undefined>(urlPagination.pageSize);
   const [selectedRowKeys, setSelectedRowKeys] = useState<number[] | string[]>([]);
 
+  // sort
   const [orderBy, setOrderBy] = useState<string | undefined>(
     urlParams && urlParams.orderBy ? `${urlParams.orderBy}` : undefined,
   );
@@ -42,6 +43,19 @@ export default (props: IPage) => {
   const [orderSort, setOrderSort] = useState<IOrderSort | undefined>(
     urlParams && urlParams.orderSort ? urlUtil.formatOrderSort(`${urlParams.orderSort}`) : undefined,
   );
+
+  // query
+  const getRolesVariables = { page, pageSize, q, orderBy, orderSort };
+  const getRolesQuery = useQuery<{ roles: RolesWithPaginationObject }, RolesArgs>(GET_ROLES, {
+    variables: getRolesVariables,
+    fetchPolicy: 'network-only',
+  });
+
+  // mutation
+  const [deleteRoleMutate, deleteRoleMutation] = useMutation<Role>(DELETE_ROLE, {
+    onCompleted: () => message.success(t('_lang:deletedSuccessfully')),
+    refetchQueries: () => [{ query: GET_ROLES, variables: getRolesVariables }],
+  });
 
   const resetUrlParams = () => {
     setPage(urlPagination.page);
@@ -51,22 +65,11 @@ export default (props: IPage) => {
     setQ(undefined);
   };
 
-  const getRolesVariables = { page, pageSize, q, orderBy, orderSort };
-  const getRolesQuery = useQuery<{ roles: RolesWithPaginationObject }, RolesArgs>(GET_ROLES, {
-    variables: getRolesVariables,
-    fetchPolicy: 'network-only',
-  });
-
   useEffect(() => {
     if (_.isEmpty(urlParams)) {
       resetUrlParams();
     }
   }, [urlParams]);
-
-  const [deleteRoleMutate, deleteRoleMutation] = useMutation<Role>(DELETE_ROLE, {
-    onCompleted: () => message.success(t('_lang:deletedSuccessfully')),
-    refetchQueries: () => [{ query: GET_ROLES, variables: getRolesVariables }],
-  });
 
   const rowSelection = {
     columnWidth: 30,

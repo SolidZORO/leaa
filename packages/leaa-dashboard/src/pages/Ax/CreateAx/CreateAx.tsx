@@ -20,10 +20,11 @@ import style from './style.less';
 export default (props: IPage) => {
   const { t } = useTranslation();
 
-  let axInfoFormRef: any;
+  // ref
+  const [axInfoFormRef, setAxInfoFormRef] = useState<any>();
 
+  // mutation
   const [submitVariables, setSubmitVariables] = useState<{ ax: UpdateAxInput }>();
-
   const [createAxMutate, createAxMutation] = useMutation<{ createAx: Ax }>(CREATE_AX, {
     variables: submitVariables,
     onError: e => message.error(e.message),
@@ -52,11 +53,7 @@ export default (props: IPage) => {
 
       {createAxMutation.error ? <ErrorCard error={createAxMutation.error} /> : null}
 
-      <AxInfoForm
-        wrappedComponentRef={(inst: unknown) => {
-          axInfoFormRef = inst;
-        }}
-      />
+      <AxInfoForm wrappedComponentRef={(inst: unknown) => setAxInfoFormRef(inst)} />
 
       <SubmitBar>
         <Button

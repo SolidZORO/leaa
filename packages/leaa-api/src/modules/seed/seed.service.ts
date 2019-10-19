@@ -87,8 +87,6 @@ export class SeedService {
     for (const i of userAddRolesSeed) {
       const user = await this.userService.userByEmail(i.userEmail);
 
-      console.log(user);
-
       if (user) {
         const nextUser = await this.userService.updateUser(user.id, { roleSlugs: i.roleSlugs });
 
