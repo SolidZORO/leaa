@@ -43,14 +43,6 @@ export default (props: IPage) => {
     refetchQueries: () => [{ query: GET_ARTICLE, variables: getArticleVariables }],
   });
 
-  // const onRx = (a) => {
-  //   console.log('on', a);
-  //   if (a && a.props && a.props.form) {
-  //     console.log('rx');
-  //     a.props.form.resetFields();
-  //   }
-  // };
-
   const onSubmit = async () => {
     let hasError = false;
     let submitData: UpdateArticleInput = {};
