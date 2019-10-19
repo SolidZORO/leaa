@@ -94,11 +94,11 @@ export class RoleService {
 
     let permissionObjects;
 
-    if (args.permissionIds) {
+    if (typeof args.permissionIds !== 'undefined') {
       permissionObjects = await this.permissionRepository.findByIds(args.permissionIds);
     }
 
-    if (args.permissionSlugs) {
+    if (typeof args.permissionSlugs !== 'undefined') {
       const permissionId = await this.permissionService.permissionSlugsToIds(args.permissionSlugs);
       permissionObjects = await this.permissionRepository.findByIds(permissionId);
     }
@@ -112,7 +112,7 @@ export class RoleService {
       throw new Error(message);
     }
 
-    return curdUtil.commonUpdate(this.permissionRepository, CONSTRUCTOR_NAME, id, args, relationArgs);
+    return curdUtil.commonUpdate(this.roleRepository, CONSTRUCTOR_NAME, id, args, relationArgs);
   }
 
   async deleteRole(id: number): Promise<Role | undefined> {
@@ -120,6 +120,6 @@ export class RoleService {
       throw Error('PLEASE DONT');
     }
 
-    return curdUtil.commonDelete(this.permissionRepository, CONSTRUCTOR_NAME, id);
+    return curdUtil.commonDelete(this.roleRepository, CONSTRUCTOR_NAME, id);
   }
 }

@@ -13,7 +13,7 @@ import {
 } from '@leaa/common/src/dtos/user';
 import { RoleService } from '@leaa/api/src/modules/role/role.service';
 import { UserProperty } from '@leaa/api/src/modules/user/user.property';
-import { formatUtil, permissionUtil, curdUtil } from '@leaa/api/src/utils';
+import { formatUtil, permissionUtil, curdUtil, loggerUtil } from '@leaa/api/src/utils';
 import { JwtService } from '@nestjs/jwt';
 
 const CONSTRUCTOR_NAME = 'UserService';
@@ -140,6 +140,11 @@ export class UserService {
 
     if (roleObjects) {
       relationArgs.roles = roleObjects;
+    } else {
+      const message = `user error`;
+
+      loggerUtil.warn(message, CONSTRUCTOR_NAME);
+      throw new Error(message);
     }
 
     if (args && args.password) {
