@@ -22,7 +22,7 @@ export const ErrorCard = (props: IProps) => {
 
   useEffect(() => {
     if (message) {
-      notification.error({ message, className: style['container'] });
+      notification.error({ message: message.replace('GraphQL error: ', ''), className: style['container'] });
     }
   }, [message]);
 

@@ -1,9 +1,13 @@
 import { applyMiddleware } from 'graphql-middleware';
 import { Injectable } from '@nestjs/common';
+import { Request } from 'express';
 import { GqlOptionsFactory, GqlModuleOptions } from '@nestjs/graphql';
+
 import { AuthService } from '@leaa/api/src/modules/auth/auth.service';
 import { permissionConfig } from '@leaa/api/src/configs';
-import { Request } from 'express';
+import { loggerUtil } from '@leaa/api/src/utils';
+
+const CONSTRUCTOR_NAME = 'GraphqlService';
 
 @Injectable()
 export class GraphqlService implements GqlOptionsFactory {
@@ -23,6 +27,15 @@ export class GraphqlService implements GqlOptionsFactory {
         const user = await this.authService.validateUserByReq(req);
 
         return { req, user };
+      },
+      formatError(error) {
+        loggerUtil.error(JSON.stringify(error), CONSTRUCTOR_NAME);
+
+        if (error.message.startsWith('Database Error: ')) {
+          return new Error('Internal Server Error');
+        }
+
+        return error;
       },
     };
   }
