@@ -8,10 +8,10 @@ export class CreateTagInput {
   name!: string;
 
   @IsOptional()
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   icon?: string;
 
   @IsOptional()
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   description?: string;
 }

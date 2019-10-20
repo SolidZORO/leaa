@@ -34,6 +34,8 @@ export default {
   cover: '封面',
   ax: '广告',
   ad: '广告',
+  tag: '标签',
+  icon: '图标',
   type: '类型',
   value: '值',
   options: '可选项',

@@ -7,6 +7,8 @@ import { MasterLayout } from '@leaa/dashboard/src/components/MasterLayout';
 import { SuspenseFallback } from '@leaa/dashboard/src/components/SuspenseFallback';
 import { ALLOW_PERMISSION } from '@leaa/dashboard/src/constants';
 
+// TIPS: ALLOW_PERMISSION is always display
+
 export const masterRoutes: IRouteItem[] = [
   {
     name: 'Create User',
@@ -217,6 +219,40 @@ export const masterRoutes: IRouteItem[] = [
     path: '/axs',
     icon: 'star',
     LazyComponent: React.lazy(() => import(/* webpackChunkName: 'AxList' */ '../pages/Ax/AxList/AxList')),
+    canCreate: true,
+    exact: true,
+  },
+  //
+  //
+  //
+  //
+  //
+  {
+    name: 'Create Tag',
+    namei18n: '_route:createTag',
+    permission: 'tag.create',
+    path: '/tags/create',
+    icon: 'tag',
+    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'CreateTag' */ '../pages/Tag/CreateTag/CreateTag')),
+    exact: true,
+    isCreate: true,
+  },
+  {
+    name: 'Edit Tag',
+    namei18n: '_route:editTag',
+    permission: 'tag.item',
+    path: '/tags/:id(\\d+)',
+    icon: 'tag',
+    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'EditTag' */ '../pages/Tag/EditTag/EditTag')),
+    exact: true,
+  },
+  {
+    name: 'Tag',
+    namei18n: '_route:tag',
+    permission: 'tag.list',
+    path: '/tags',
+    icon: 'tag',
+    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'TagList' */ '../pages/Tag/TagList/TagList')),
     canCreate: true,
     exact: true,
   },

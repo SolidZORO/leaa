@@ -1,7 +1,7 @@
-import { Index, Entity, Column } from 'typeorm';
+import { Index, Entity, Column, ManyToMany, JoinTable } from 'typeorm';
 import { ObjectType, Field, Int } from 'type-graphql';
 
-import { Base, Category } from '@leaa/common/src/entrys';
+import { Base, Category, Tag } from '@leaa/common/src/entrys';
 
 @Entity('articles')
 @Index('articles_title_unique', ['title'], { unique: true })
@@ -38,4 +38,9 @@ export class Article extends Base {
 
   @Field(() => Category, { nullable: true })
   public category?: Category;
+
+  @ManyToMany(() => Tag)
+  @JoinTable()
+  @Field(() => [Tag], { nullable: true })
+  tags?: Tag[];
 }

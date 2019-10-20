@@ -36,12 +36,28 @@ export class TagService {
     return this.tagRepository.findOne(id, nextArgs);
   }
 
+  formatTag(str: string): string {
+    if (str) {
+      return str.trim().replace(/\s/g, '-');
+    }
+
+    return '';
+  }
+
   async createTag(args: CreateTagInput): Promise<Tag | undefined> {
-    return this.tagRepository.save({ ...args });
+    const nextArgs = { ...args, name: this.formatTag(args.name) };
+
+    return this.tagRepository.save({ ...nextArgs });
   }
 
   async updateTag(id: number, args: UpdateTagInput): Promise<Tag | undefined> {
-    return curdUtil.commonUpdate(this.tagRepository, CONSTRUCTOR_NAME, id, args);
+    let nextArgs = args;
+
+    if (args.name) {
+      nextArgs = { ...args, name: this.formatTag(args.name) };
+    }
+
+    return curdUtil.commonUpdate(this.tagRepository, CONSTRUCTOR_NAME, id, nextArgs);
   }
 
   async deleteTag(id: number): Promise<Tag | undefined> {

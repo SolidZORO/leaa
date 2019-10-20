@@ -12,6 +12,7 @@ export const GET_TAGS = gql`
         name
         icon
         description
+        created_at
       }
     }
   }
@@ -24,6 +25,7 @@ export const GET_TAG = gql`
       name
       icon
       description
+      created_at
     }
   }
 `;

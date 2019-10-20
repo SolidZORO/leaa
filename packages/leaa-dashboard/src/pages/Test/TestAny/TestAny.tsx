@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { IPage } from '@leaa/dashboard/src/interfaces';
 import { useStore } from '@leaa/dashboard/src/stores';
 import { HtmlMeta } from '@leaa/dashboard/src/components/HtmlMeta';
+import { SelectTagId } from '@leaa/dashboard/src/components/SelectTagId';
 
 export default (props: IPage) => {
   const { t } = useTranslation();
@@ -24,18 +25,22 @@ export default (props: IPage) => {
     <div>
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
-      <h2>STORE</h2>
+      <h2>TAG</h2>
 
-      <code>
-        <Input.TextArea rows={5} value={JSON.stringify(store)} />
-      </code>
+      <SelectTagId />
 
-      <Divider />
+      {/* <h2>STORE</h2> */}
 
-      <h2>LOCALSTORAGE</h2>
-      <code>
-        <Input.TextArea rows={10} value={JSON.stringify(ls)} />
-      </code>
+      {/* <code> */}
+      {/*  <Input.TextArea rows={5} value={JSON.stringify(store)} /> */}
+      {/* </code> */}
+
+      {/* <Divider /> */}
+
+      {/* <h2>LOCALSTORAGE</h2> */}
+      {/* <code> */}
+      {/*  <Input.TextArea rows={10} value={JSON.stringify(ls)} /> */}
+      {/* </code> */}
     </div>
   );
 };

@@ -47,6 +47,12 @@ export const permissionsSeed = [
   { name: 'Ax Update', slug: 'ax.update' },
   { name: 'Ax Delete', slug: 'ax.delete' },
   //
+  { name: 'Tag List', slug: 'tag.list' },
+  { name: 'Tag Item', slug: 'tag.item' },
+  { name: 'Tag Create', slug: 'tag.create' },
+  { name: 'Tag Update', slug: 'tag.update' },
+  { name: 'Tag Delete', slug: 'tag.delete' },
+  //
   { name: 'Attachment List', slug: 'attachment.list' },
   { name: 'Attachment Item', slug: 'attachment.item' },
   { name: 'Attachment Create', slug: 'attachment.create' },

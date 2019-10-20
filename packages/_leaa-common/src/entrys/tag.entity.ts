@@ -11,7 +11,7 @@ export class Tag extends Base {
   @Field(() => String)
   public name!: string;
 
-  @Column({ type: 'varchar', length: 256 })
+  @Column({ type: 'varchar', length: 256, nullable: true })
   @Field(() => String, { nullable: true })
   public icon?: string;
 

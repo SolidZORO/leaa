@@ -10,6 +10,7 @@ const permission = '权限';
 const category = '分类';
 const article = '文章';
 const ax = '广告';
+const tag = '标签';
 const attachment = '附件';
 const setting = '设置';
 
@@ -49,6 +50,10 @@ export default {
   ax,
   createAx: `${_lang.create}${ax}`,
   editAx: `${_lang.edit}${ax}`,
+  //
+  tag,
+  createTag: `${_lang.create}${tag}`,
+  editTag: `${_lang.edit}${tag}`,
   //
   attachment,
   createAttachment: `${_lang.create}${attachment}`,

@@ -34,6 +34,8 @@ export default {
   cover: 'Cover',
   ax: 'Ad',
   ad: 'Ad',
+  tag: 'Tag',
+  icon: 'Icon',
   type: 'Type',
   value: 'Value',
   options: 'Options',

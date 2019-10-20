@@ -16,6 +16,7 @@ type Article {
   content: String
   status: Int
   category: Category
+  tags: [Tag!]
 }
 
 type ArticlesWithPaginationObject {
@@ -213,8 +214,8 @@ input CreateSettingInput {
 
 input CreateTagInput {
   name: String!
-  icon: String!
-  description: String!
+  icon: String
+  description: String
 }
 
 input CreateUserInput {
@@ -482,8 +483,8 @@ input UpdateSettingsInput {
 
 input UpdateTagInput {
   name: String
-  icon: [String!]
-  description: [String!]
+  icon: String
+  description: String
 }
 
 input UpdateUserInput {

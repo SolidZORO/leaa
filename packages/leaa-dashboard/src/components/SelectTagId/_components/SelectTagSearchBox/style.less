@@ -1,0 +1,45 @@
+@import '~@leaa/dashboard/src/styles/variables.less';
+
+.wrapper {
+  position: relative;
+  background-color: #fff;
+  //padding: 10px;
+}
+
+.container {
+  position: relative;
+}
+
+.tag-optional-wrapper {
+  position: relative;
+  background-color: #fff;
+  min-height: 200px;
+  margin-top: 10px;
+
+  .tag-optional-item {
+    cursor: pointer;
+    padding: 5px 17px;
+    transition: all 0.1s;
+    margin: 0 -16px;
+
+    &:hover {
+      background-color: lighten(@primary-color, 35%);
+    }
+  }
+
+  .tag-optional-empty {
+    display: block;
+  }
+
+  .tag-quick-create-wrapper {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+
+    button {
+      font-size: 12px;
+      padding: 0;
+      opacity: 0.5;
+    }
+  }
+}
