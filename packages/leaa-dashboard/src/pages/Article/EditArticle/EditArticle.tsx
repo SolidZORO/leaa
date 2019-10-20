@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Button, message } from 'antd';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
-import { Article } from '@leaa/common/src/entrys';
+import { Article, Tag } from '@leaa/common/src/entrys';
 import { IAttachmentBoxRef } from '@leaa/common/src/interfaces';
 import { GET_ARTICLE, UPDATE_ARTICLE } from '@leaa/common/src/graphqls';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
@@ -14,6 +14,7 @@ import { AttachmentBox } from '@leaa/dashboard/src/components/AttachmentBox';
 import { PageCard } from '@leaa/dashboard/src/components/PageCard';
 import { HtmlMeta } from '@leaa/dashboard/src/components/HtmlMeta';
 import { ErrorCard } from '@leaa/dashboard/src/components/ErrorCard';
+import { SelectTagId } from '@leaa/dashboard/src/components/SelectTagId';
 
 import { ArticleInfoForm } from '../_components/ArticleInfoForm/ArticleInfoForm';
 import { ArticleExtForm } from '../_components/ArticleExtForm/ArticleExtForm';
@@ -25,10 +26,12 @@ export default (props: IPage) => {
   const { id } = props.match.params as { id: string };
 
   // ref
+  const selectTagIdRef = useRef<any>(null);
   const attachmentBoxRef = useRef<IAttachmentBoxRef>(null);
   const articleContentRef = useRef<any>(null);
   const [articleInfoFormRef, setArticleInfoFormRef] = useState<any>();
   const [articleExtFormRef, setArticleExtFormRef] = useState<any>();
+  const [articleTags, setArticleTags] = useState<Tag[]>();
 
   // query
   const getArticleVariables = { id: Number(id) };
@@ -94,6 +97,8 @@ export default (props: IPage) => {
       submitData.content = articleContentRef.current.getInstance().getHtml();
     }
 
+    submitData.tagIds = articleTags && articleTags.length > 0 ? articleTags.map(item => Number(item.id)) : undefined;
+
     await setSubmitVariables({ id: Number(id), article: submitData });
     await updateArticleMutate();
 
@@ -105,6 +110,10 @@ export default (props: IPage) => {
     // keep form fields consistent with API
     articleInfoFormRef.props.form.resetFields();
     articleExtFormRef.props.form.resetFields();
+  };
+
+  const onChangeSelectedTagsCallback = (tags: Tag[]) => {
+    setArticleTags(tags);
   };
 
   return (
@@ -147,6 +156,15 @@ export default (props: IPage) => {
           moduleType: 'editor',
         }}
       />
+
+      <div className={style['select-tag-id-wrapper']}>
+        <SelectTagId
+          ref={selectTagIdRef}
+          placement="right"
+          selectedTags={getArticleQuery.data && getArticleQuery.data.article && getArticleQuery.data.article.tags}
+          onChangeSelectedTagsCallback={onChangeSelectedTagsCallback}
+        />
+      </div>
 
       <div className={style['container-wrapper']}>
         <div className={style['container-main']}>

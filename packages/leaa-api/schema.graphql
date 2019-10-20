@@ -421,6 +421,7 @@ input UpdateArticleInput {
   content: String
   status: Int
   created_at: DateTime
+  tagIds: [Float!] = []
 }
 
 input UpdateAttachmentInput {

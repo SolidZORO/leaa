@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import queryString from 'query-string';
 import { Link } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { Table, Icon, message } from 'antd';
+import { Table, Icon, message, Tag } from 'antd';
 
 import { DEFAULT_PAGE_SIZE_OPTIONS } from '@leaa/dashboard/src/constants';
 import { GET_ARTICLES, DELETE_ARTICLE } from '@leaa/common/src/graphqls';
@@ -97,6 +97,14 @@ export default (props: IPage) => {
         <>
           <Link to={`${props.route.path}/${record.id}`}>{record.title}</Link>
           <small className={style['col-slug']}>{record.slug}</small>
+
+          {record.tags && record.tags.length > 0 && (
+            <small className={style['col-tags-wrapper']}>
+              {record.tags.map(tag => (
+                <Tag className={style['col-tags-item']}>{tag.name}</Tag>
+              ))}
+            </small>
+          )}
         </>
       ),
     },

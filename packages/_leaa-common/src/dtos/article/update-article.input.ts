@@ -1,6 +1,7 @@
 import { IsOptional } from 'class-validator';
 import { Field, InputType, Int } from 'type-graphql';
-import { Column } from 'typeorm';
+
+import { Tag } from '@leaa/common/src/entrys';
 
 @InputType()
 export class UpdateArticleInput {
@@ -35,4 +36,8 @@ export class UpdateArticleInput {
   @IsOptional()
   @Field(() => Date, { nullable: true })
   public created_at?: Date;
+
+  @IsOptional()
+  @Field(() => [Number], { nullable: true })
+  public tagIds?: number[] = [];
 }

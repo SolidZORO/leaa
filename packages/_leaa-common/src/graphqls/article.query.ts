@@ -17,6 +17,11 @@ export const GET_ARTICLES = gql`
           name
           slug
         }
+        tags {
+          id
+          name
+          description
+        }
         user_id
         status
         created_at
@@ -37,6 +42,11 @@ export const GET_ARTICLE = gql`
       category {
         name
         slug
+      }
+      tags {
+        id
+        name
+        description
       }
       user_id
       status

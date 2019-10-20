@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Repository, FindOneOptions, Like } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { Article, Category } from '@leaa/common/src/entrys';
+import { Article, Category, Tag } from '@leaa/common/src/entrys';
 import {
   ArticlesArgs,
   ArticlesWithPaginationObject,
@@ -19,20 +19,13 @@ export class ArticleService {
   constructor(
     @InjectRepository(Article) private readonly articleRepository: Repository<Article>,
     @InjectRepository(Category) private readonly categoryRepository: Repository<Category>,
+    @InjectRepository(Tag) private readonly tagRepository: Repository<Tag>,
   ) {}
-
-  async getCategory(article: Article): Promise<Category | undefined> {
-    const nextArticle = article;
-
-    if (!nextArticle || !nextArticle.category_id) {
-      return undefined;
-    }
-
-    return this.categoryRepository.findOne(article.category_id);
-  }
 
   async articles(args: ArticlesArgs): Promise<ArticlesWithPaginationObject> {
     const nextArgs = formatUtil.formatArgs(args);
+
+    nextArgs.relations = ['tags'];
 
     if (nextArgs.q) {
       const qLike = Like(`%${nextArgs.q}%`);
@@ -50,6 +43,7 @@ export class ArticleService {
 
     if (args) {
       nextArgs = args;
+      nextArgs.relations = ['tags'];
     }
 
     return this.articleRepository.findOne(id, nextArgs);
@@ -60,8 +54,18 @@ export class ArticleService {
   }
 
   async updateArticle(id: number, args: UpdateArticleInput): Promise<Article | undefined> {
+    const relationArgs: { tags?: Tag[] } = {};
+
     const trimSlug = args.slug ? args.slug.trim().toLowerCase() : args.slug;
     const trimDescription = args.description ? args.description.trim() : args.description;
+
+    let tagObjects;
+
+    if (args.tagIds) {
+      tagObjects = await this.tagRepository.findByIds(args.tagIds);
+    }
+
+    relationArgs.tags = tagObjects;
 
     const nextArgs = {
       ...args,
@@ -69,7 +73,7 @@ export class ArticleService {
       description: trimDescription,
     };
 
-    return curdUtil.commonUpdate(this.articleRepository, CONSTRUCTOR_NAME, id, nextArgs);
+    return curdUtil.commonUpdate(this.articleRepository, CONSTRUCTOR_NAME, id, nextArgs, relationArgs);
   }
 
   async deleteArticle(id: number): Promise<Article | undefined> {

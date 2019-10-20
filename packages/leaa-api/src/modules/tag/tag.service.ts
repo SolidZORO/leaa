@@ -38,7 +38,10 @@ export class TagService {
 
   formatTag(str: string): string {
     if (str) {
-      return str.trim().replace(/\s/g, '-');
+      return str
+        .trim()
+        .toLowerCase()
+        .replace(/\s/g, '-');
     }
 
     return '';
