@@ -1,4 +1,4 @@
-![leaa-banner](https://raw.githubusercontent.com/SolidZORO/leaa/master/designs/ui/leaa-banner-github.png)
+![leaa-banner](https://raw.githubusercontent.com/SolidZORO/leaa/master/designs/ui/leaa-banner-github.png?v001)
 
 # Leaa (project 1d1h)
 
