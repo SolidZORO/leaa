@@ -2,7 +2,7 @@ import { Repository } from 'typeorm';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 
-import { Article, Category } from '@leaa/common/src/entrys';
+import { Article, Category, Tag } from '@leaa/common/src/entrys';
 import { CreateArticleInput, UpdateArticleInput } from '@leaa/common/src/dtos/article';
 import { ArticleService } from '@leaa/api/src/modules/article/article.service';
 
@@ -10,6 +10,7 @@ describe('ArticleService', () => {
   let articleService: ArticleService;
   const ARTICLE_REPOSITORY_MOCK: Repository<Article> = new Repository<Article>();
   const CATEGORY_REPOSITORY_MOCK: Repository<Category> = new Repository<Category>();
+  const TAG_REPOSITORY_MOCK: Repository<Tag> = new Repository<Tag>();
 
   beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -22,6 +23,10 @@ describe('ArticleService', () => {
         {
           provide: getRepositoryToken(Category),
           useValue: CATEGORY_REPOSITORY_MOCK,
+        },
+        {
+          provide: getRepositoryToken(Tag),
+          useValue: TAG_REPOSITORY_MOCK,
         },
       ],
     }).compile();
