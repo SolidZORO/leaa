@@ -35,8 +35,6 @@ export const SelectCategoryIdByTree = forwardRef((props: IProps, ref: React.Ref<
     return value;
   };
 
-  console.log(props.value);
-
   const [value, setValue] = useState<number | number[] | undefined>(getValue(props.value));
 
   useEffect(() => {
@@ -49,8 +47,6 @@ export const SelectCategoryIdByTree = forwardRef((props: IProps, ref: React.Ref<
 
   const onChange = (v: number | number[]) => {
     const nextV = typeof v === 'number' ? Number(v) : v;
-
-    console.log('onChange', typeof nextV, nextV);
 
     setValue(nextV);
 
