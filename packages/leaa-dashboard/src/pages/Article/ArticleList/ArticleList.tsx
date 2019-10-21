@@ -101,7 +101,9 @@ export default (props: IPage) => {
           {record.tags && record.tags.length > 0 && (
             <small className={style['col-tags-wrapper']}>
               {record.tags.map(tag => (
-                <Tag className={style['col-tags-item']}>{tag.name}</Tag>
+                <Tag key={tag.name} className={style['col-tags-item']}>
+                  {tag.name}
+                </Tag>
               ))}
             </small>
           )}
@@ -112,7 +114,9 @@ export default (props: IPage) => {
       title: t('_lang:category'),
       dataIndex: 'category',
       width: 100,
-      render: (text: string, record: Article) => <span>{record.category ? record.category.name : '----'}</span>,
+      render: (text: string, record: Article) => (
+        <span>{record.categories && record.categories.length > 0 ? record.categories[0].name : '----'}</span>
+      ),
     },
     {
       title: t('_lang:status'),

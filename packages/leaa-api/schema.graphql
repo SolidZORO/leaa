@@ -10,12 +10,11 @@ type Article {
   deleted_at: DateTime
   title: String!
   slug: String
-  category_id: Int
   user_id: Int
   description: String
   content: String
   status: Int
-  category: Category
+  categories: [Category!]
   tags: [Tag!]
 }
 
@@ -148,7 +147,7 @@ type Category {
 input CreateArticleInput {
   title: String!
   slug: String
-  category_id: Int
+  categoryIds: [Int!]
   user_id: Int
   description: String
   content: String
@@ -415,13 +414,13 @@ type TagsWithPaginationObject {
 input UpdateArticleInput {
   title: String!
   slug: String
-  category_id: Int
   user_id: Int
   description: String
   content: String
   status: Int
   created_at: DateTime
-  tagIds: [Float!] = []
+  categoryIds: [Int!]
+  tagIds: [Int!]
 }
 
 input UpdateAttachmentInput {

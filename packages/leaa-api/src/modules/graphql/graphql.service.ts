@@ -18,7 +18,7 @@ export class GraphqlService implements GqlOptionsFactory {
 
     return {
       autoSchemaFile: 'schema.graphql',
-      // installSubscriptionHandlers: dev,
+      installSubscriptionHandlers: dev,
       debug: dev,
       tracing: dev,
       playground: dev,

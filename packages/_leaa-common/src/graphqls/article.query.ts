@@ -12,8 +12,8 @@ export const GET_ARTICLES = gql`
         title
         slug
         description
-        category_id
-        category {
+        categories {
+          id
           name
           slug
         }
@@ -38,8 +38,8 @@ export const GET_ARTICLE = gql`
       slug
       content
       description
-      category_id
-      category {
+      categories {
+        id
         name
         slug
       }

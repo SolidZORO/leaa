@@ -12,8 +12,8 @@ export class CreateArticleInput {
   public slug?: string;
 
   @IsOptional()
-  @Field(() => Int, { nullable: true })
-  public category_id?: number;
+  @Field(() => [Int], { nullable: true })
+  public categoryIds?: number[];
 
   @IsOptional()
   @Field(() => Int, { nullable: true })

@@ -1,8 +1,6 @@
 import { IsOptional } from 'class-validator';
 import { Field, InputType, Int } from 'type-graphql';
 
-import { Tag } from '@leaa/common/src/entrys';
-
 @InputType()
 export class UpdateArticleInput {
   @IsOptional()
@@ -12,10 +10,6 @@ export class UpdateArticleInput {
   @IsOptional()
   @Field(() => String, { nullable: true })
   public slug?: string;
-
-  @IsOptional()
-  @Field(() => Int, { nullable: true })
-  public category_id?: number;
 
   @IsOptional()
   @Field(() => Int, { nullable: true })
@@ -38,6 +32,10 @@ export class UpdateArticleInput {
   public created_at?: Date;
 
   @IsOptional()
-  @Field(() => [Number], { nullable: true })
-  public tagIds?: number[] = [];
+  @Field(() => [Int], { nullable: true })
+  public categoryIds?: number[];
+
+  @IsOptional()
+  @Field(() => [Int], { nullable: true })
+  public tagIds?: number[];
 }

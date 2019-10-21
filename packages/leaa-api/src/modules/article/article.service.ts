@@ -25,7 +25,7 @@ export class ArticleService {
   async articles(args: ArticlesArgs): Promise<ArticlesWithPaginationObject> {
     const nextArgs = formatUtil.formatArgs(args);
 
-    nextArgs.relations = ['tags'];
+    nextArgs.relations = ['tags', 'categories'];
 
     if (nextArgs.q) {
       const qLike = Like(`%${nextArgs.q}%`);
@@ -43,29 +43,44 @@ export class ArticleService {
 
     if (args) {
       nextArgs = args;
-      nextArgs.relations = ['tags'];
+      nextArgs.relations = ['tags', 'categories'];
     }
 
     return this.articleRepository.findOne(id, nextArgs);
   }
 
   async createArticle(args: CreateArticleInput): Promise<Article | undefined> {
-    return this.articleRepository.save({ ...args });
+    const relationArgs: { categories?: Category[] } = {};
+
+    // category
+    let categoryObjects;
+    if (args.categoryIds) {
+      categoryObjects = await this.categoryRepository.findByIds(args.categoryIds);
+    }
+    relationArgs.categories = categoryObjects;
+
+    return this.articleRepository.save({ ...args, ...relationArgs });
   }
 
   async updateArticle(id: number, args: UpdateArticleInput): Promise<Article | undefined> {
-    const relationArgs: { tags?: Tag[] } = {};
+    const relationArgs: { tags?: Tag[]; categories?: Category[] } = {};
 
     const trimSlug = args.slug ? args.slug.trim().toLowerCase() : args.slug;
     const trimDescription = args.description ? args.description.trim() : args.description;
 
+    // tags
     let tagObjects;
-
     if (args.tagIds) {
       tagObjects = await this.tagRepository.findByIds(args.tagIds);
     }
-
     relationArgs.tags = tagObjects;
+
+    // category
+    let categoryObjects;
+    if (args.categoryIds) {
+      categoryObjects = await this.categoryRepository.findByIds(args.categoryIds);
+    }
+    relationArgs.categories = categoryObjects;
 
     const nextArgs = {
       ...args,

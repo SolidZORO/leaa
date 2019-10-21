@@ -1,7 +1,7 @@
-import { Args, Query, Mutation, Resolver, ResolveProperty, Parent } from '@nestjs/graphql';
+import { Args, Query, Mutation, Resolver } from '@nestjs/graphql';
 import { Int } from 'type-graphql';
 
-import { Article, Category } from '@leaa/common/src/entrys';
+import { Article } from '@leaa/common/src/entrys';
 import {
   ArticlesArgs,
   ArticlesWithPaginationObject,
@@ -10,19 +10,10 @@ import {
   UpdateArticleInput,
 } from '@leaa/common/src/dtos/article';
 import { ArticleService } from '@leaa/api/src/modules/article/article.service';
-import { ArticleProperty } from '@leaa/api/src/modules/article/article.property';
 
 @Resolver(() => Article)
 export class ArticleResolver {
-  constructor(private readonly articleService: ArticleService, private readonly articleProperty: ArticleProperty) {}
-
-  @ResolveProperty(() => Category)
-  async category(@Parent() article: Article): Promise<Category | undefined> {
-    return this.articleProperty.resolvePropertyCategory(article);
-  }
-
-  //
-  //
+  constructor(private readonly articleService: ArticleService) {}
 
   @Query(() => ArticlesWithPaginationObject)
   async articles(@Args() args: ArticlesArgs): Promise<ArticlesWithPaginationObject | undefined> {

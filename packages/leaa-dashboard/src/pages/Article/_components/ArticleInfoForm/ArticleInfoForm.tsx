@@ -64,8 +64,12 @@ class ArticleInfoFormInner extends React.PureComponent<IProps> {
 
             <Col>
               <Form.Item label={t('_lang:category')} className={style['form-item-category']} colon={false}>
-                {getFieldDecorator('category_id', {
-                  initialValue: props.item ? props.item.category_id : undefined,
+                {getFieldDecorator('categoryIds', {
+                  initialValue:
+                    // TIPS: here you can set up multiple categories, but now just single.
+                    props.item && props.item.categories && props.item.categories.length > 0
+                      ? props.item.categories[0].id
+                      : undefined,
                   rules: [{ required: true }],
                   normalize: e => e && Number(e),
                 })(<SelectCategoryIdByTree size="small" className={style['form-item-category-select']} />)}

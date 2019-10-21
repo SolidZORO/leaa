@@ -1,4 +1,4 @@
-import React, { useState, useRef, createRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, message } from 'antd';
 import { useQuery, useMutation } from '@apollo/react-hooks';
@@ -60,6 +60,8 @@ export default (props: IPage) => {
 
         return;
       }
+
+      console.log(articleInfoFormRef, formData);
 
       submitData = formData;
     });
