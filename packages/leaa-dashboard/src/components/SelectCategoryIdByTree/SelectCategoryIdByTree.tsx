@@ -11,11 +11,12 @@ import { ErrorCard } from '@leaa/dashboard/src/components/ErrorCard';
 
 import style from './style.less';
 
-interface IProps extends TreeSelectProps<any> {
+interface IProps {
   value?: number | number[] | undefined;
   className?: string;
   onChange?: (value: number | number[]) => void;
   multipleSelect?: boolean;
+  componentProps?: TreeSelectProps<any>;
 }
 
 // const { SHOW_PARENT } = TreeSelect;
@@ -64,14 +65,14 @@ export const SelectCategoryIdByTree = forwardRef((props: IProps, ref: React.Ref<
     : {};
 
   return (
-    <div className={cx(style['wrapper'], props.className)}>
+    <div className={cx(style['wrapper'])}>
       {getCategoriesByTreeQuery.error ? <ErrorCard error={getCategoriesByTreeQuery.error} /> : null}
 
       <TreeSelect
         {...multipleSelectOption}
+        className={props.className}
         loading={getCategoriesByTreeQuery.loading}
         value={value}
-        size={props.size}
         dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
         treeData={
           getCategoriesByTreeQuery &&
@@ -81,8 +82,8 @@ export const SelectCategoryIdByTree = forwardRef((props: IProps, ref: React.Ref<
           JSON.parse(getCategoriesByTreeQuery.data.categoriesByTree.treeByStringify)
         }
         placeholder={t('_lang:category')}
-        treeDefaultExpandAll
         onChange={onChange}
+        {...props.componentProps}
       />
     </div>
   );

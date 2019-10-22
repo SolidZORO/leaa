@@ -22,6 +22,7 @@ import { TableColumnId } from '@leaa/dashboard/src/components/TableColumnId';
 import { SwitchNumber } from '@leaa/dashboard/src/components/SwitchNumber';
 import { TableColumnDate } from '@leaa/dashboard/src/components/TableColumnDate';
 import { TableColumnDeleteButton } from '@leaa/dashboard/src/components/TableColumnDeleteButton';
+import { SelectCategoryIdByTree } from '@leaa/dashboard/src/components/SelectCategoryIdByTree';
 
 import style from './style.less';
 
@@ -35,6 +36,12 @@ export default (props: IPage) => {
   const [page, setPage] = useState<number | undefined>(urlPagination.page);
   const [pageSize, setPageSize] = useState<number | undefined>(urlPagination.pageSize);
   const [selectedRowKeys, setSelectedRowKeys] = useState<number[] | string[]>([]);
+  const [tagName, setTagName] = useState<string | undefined>(
+    urlParams && urlParams.tagName ? `${urlParams.tagName}` : undefined,
+  );
+  const [categoryId, setCategoryId] = useState<number | undefined>(
+    urlParams && urlParams.categoryId ? Number(urlParams.categoryId) : undefined,
+  );
 
   // sort
   const [orderBy, setOrderBy] = useState<string | undefined>(
@@ -46,7 +53,7 @@ export default (props: IPage) => {
   );
 
   // query
-  const getArticlesVariables = { page, pageSize, q, orderBy, orderSort };
+  const getArticlesVariables = { page, pageSize, q, orderBy, orderSort, tagName, categoryId };
   const getArticlesQuery = useQuery<{ articles: ArticlesWithPaginationObject }, ArticleArgs>(GET_ARTICLES, {
     variables: getArticlesVariables,
   });
@@ -63,6 +70,8 @@ export default (props: IPage) => {
     setOrderBy(undefined);
     setOrderSort(undefined);
     setQ(undefined);
+    setTagName(undefined);
+    setCategoryId(undefined);
   };
 
   useEffect(() => {
@@ -145,6 +154,33 @@ export default (props: IPage) => {
     },
   ];
 
+  const onFilter = (params: { field: string; value: any }) => {
+    console.log('onFilter', params);
+
+    setPage(1);
+
+    const filterParams: { q?: string; categoryId?: number } = {};
+
+    if (params.field === 'q') {
+      setQ(params.value);
+      filterParams.q = params.value;
+    }
+
+    if (params.field === 'categoryId') {
+      setCategoryId(params.value);
+      filterParams.categoryId = params.value;
+    }
+
+    urlUtil.mergeParamToUrlQuery({
+      window,
+      params: {
+        page: 1,
+        ...filterParams,
+      },
+      replace: true,
+    });
+  };
+
   return (
     <PageCard
       title={
@@ -156,22 +192,21 @@ export default (props: IPage) => {
         </span>
       }
       extra={
-        <SearchInput
-          value={q}
-          onChange={(keyword: string) => {
-            setPage(1);
-            setQ(keyword);
+        <div className={style['filter-bar-wrapper']}>
+          <Icon type="filter" className={style['filter-bar-icon']} />
 
-            urlUtil.mergeParamToUrlQuery({
-              window,
-              params: {
-                page: 1,
-                q: keyword,
-              },
-              replace: true,
-            });
-          }}
-        />
+          <SelectCategoryIdByTree
+            className={style['filter-bar-category']}
+            componentProps={{ allowClear: true }}
+            onChange={(v: number | number[]) => onFilter({ field: 'categoryId', value: Number(v) })}
+          />
+
+          <SearchInput
+            className={style['filter-bar-search']}
+            value={q}
+            onChange={(v: string) => onFilter({ field: 'q', value: v })}
+          />
+        </div>
       }
       className={style['wapper']}
       loading={getArticlesQuery.loading}

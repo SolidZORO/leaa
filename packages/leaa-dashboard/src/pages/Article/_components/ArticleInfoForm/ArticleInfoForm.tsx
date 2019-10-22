@@ -72,7 +72,12 @@ class ArticleInfoFormInner extends React.PureComponent<IProps> {
                       : undefined,
                   rules: [{ required: true }],
                   normalize: e => e && Number(e),
-                })(<SelectCategoryIdByTree size="small" className={style['form-item-category-select']} />)}
+                })(
+                  <SelectCategoryIdByTree
+                    className={style['form-item-category-select']}
+                    componentProps={{ allowClear: true, size: 'small' }}
+                  />,
+                )}
               </Form.Item>
 
               <Form.Item label={t('_lang:status')} className={style['form-item-status']} colon={false}>

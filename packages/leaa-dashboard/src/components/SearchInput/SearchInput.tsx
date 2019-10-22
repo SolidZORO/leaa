@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import cx from 'classnames';
+import { useTranslation } from 'react-i18next';
 import { Input, Icon } from 'antd';
 import { InputProps } from 'antd/lib/input';
 
@@ -9,9 +10,11 @@ interface IProps {
   onChange?: Function;
   value?: string | string[];
   componentProps?: InputProps;
+  className?: string;
 }
 
 export const SearchInput = (props: IProps) => {
+  const { t } = useTranslation();
   const [searchText, setSearchText] = useState<string | string[] | undefined>(props.value || undefined);
 
   const onPassToParent = (text: string | string[] | undefined) => {
@@ -37,6 +40,7 @@ export const SearchInput = (props: IProps) => {
       prefixCls="search-input ant-input"
       className={cx(style['search-input-wrapper'], 'search-input-wrapper')}
       allowClear
+      placeholder={`${t(`_comp:SearchInput.placeholder`)}`}
       onChange={onChange}
       defaultValue={searchText}
       value={searchText}

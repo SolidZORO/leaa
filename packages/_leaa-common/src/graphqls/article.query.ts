@@ -1,8 +1,26 @@
 import gql from 'graphql-tag';
 
 export const GET_ARTICLES = gql`
-  query($page: Int, $pageSize: Int, $orderBy: String, $orderSort: String, $q: String) {
-    articles(page: $page, pageSize: $pageSize, orderBy: $orderBy, orderSort: $orderSort, q: $q) {
+  query(
+    $page: Int
+    $pageSize: Int
+    $orderBy: String
+    $orderSort: String
+    $q: String
+    $tagName: String
+    $categoryId: Int
+    $categoryName: String
+  ) {
+    articles(
+      page: $page
+      pageSize: $pageSize
+      orderBy: $orderBy
+      orderSort: $orderSort
+      q: $q
+      tagName: $tagName
+      categoryId: $categoryId
+      categoryName: $categoryName
+    ) {
       total
       page
       nextPage
