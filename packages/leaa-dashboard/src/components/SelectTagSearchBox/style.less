@@ -2,7 +2,7 @@
 
 .wrapper {
   position: relative;
-  background-color: #fff;
+  //background-color: #fff;
   //padding: 10px;
 }
 
@@ -11,16 +11,21 @@
 }
 
 .tag-optional-wrapper {
-  position: relative;
+  position: absolute;
   background-color: #fff;
-  min-height: 200px;
-  margin-top: 10px;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 9999;
+  border: 1px solid #eee;
+  border-top: none 0;
+  border-radius: 3px;
 
   .tag-optional-item {
     cursor: pointer;
     padding: 5px 17px;
     transition: all 0.1s;
-    margin: 0 -16px;
+    //margin: 0 -16px;
 
     &:hover {
       background-color: lighten(@primary-color, 35%);
@@ -42,4 +47,14 @@
       opacity: 0.5;
     }
   }
+}
+
+.tag-optional-wrapper--show {
+  //z-index: 9999;
+  display: block;
+}
+
+.tag-optional-wrapper--hide {
+  //z-index: -1;
+  display: none;
 }

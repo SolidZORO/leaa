@@ -7,12 +7,15 @@ import { Tag as TagEntry } from '@leaa/common/src/entrys';
 import { TagsWithPaginationObject, TagArgs } from '@leaa/common/src/dtos/tag';
 import { GET_TAGS } from '@leaa/common/src/graphqls';
 import { apolloClient } from '@leaa/dashboard/src/libs';
-import { QuickCreateTagButton } from '../QuickCreateTagButton/QuickCreateTagButton';
+import { QuickCreateTagButton } from './_components/QuickCreateTagButton/QuickCreateTagButton';
 
 import style from './style.less';
 
 interface IProps {
   onSelectTagCallback?: (tag: TagEntry) => void;
+  onSearchCallback?: (tag: string) => void;
+  className?: string;
+  useOnBlur?: boolean;
 }
 
 const DEBOUNCE_MS = 500;
@@ -23,6 +26,7 @@ export const SelectTagSearchBox = (props: IProps) => {
   const [searchTimes, setSearchTimes] = useState<number>(0);
   const [lastSearchKey, setLastSearchKey] = useState<string>();
   const [optionalTags, setOptionalTags] = useState<TagEntry[]>([]);
+  const [showOptionalTags, setShowOptionalTags] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
 
   const queryTags = useRef(
@@ -50,6 +54,9 @@ export const SelectTagSearchBox = (props: IProps) => {
           if (result && result.data.tags && result.data.tags.items) {
             setOptionalTags(result.data.tags.items);
           }
+
+          console.log('setShowOptionalTags');
+          setShowOptionalTags(true);
         })
         .finally(() => setLoading(false));
     }, DEBOUNCE_MS),
@@ -65,12 +72,13 @@ export const SelectTagSearchBox = (props: IProps) => {
 
   const onCreatedTagCallback = (tag: TagEntry) => {
     setOptionalTags([tag]);
-    // onQueryTags(tag.name);
     onSelectTag(tag);
   };
 
-  const onSearch = (tag: any) => {
-    console.log(tag);
+  const onSearch = (e: any) => {
+    if (props.onSearchCallback) {
+      props.onSearchCallback(e.currentTarget.value);
+    }
   };
 
   useEffect(() => {
@@ -82,16 +90,30 @@ export const SelectTagSearchBox = (props: IProps) => {
   }, []);
 
   return (
-    <div className={cx(style['wrapper'])}>
-      <div className={style['container']}>
-        <Input.Search
+    <div className={style['wrapper']}>
+      <div className={cx(style['container'], props.className)}>
+        <Input
+          // loading={loading.toString()}
+          allowClear
           placeholder={t(`_comp:SelectTagId.searchTags`)}
           onChange={e => onQueryTags(e.currentTarget.value)}
-          onFocus={() => searchTimes === 0 && onQueryTags('')}
-          onSearch={onSearch}
+          onFocus={() => {
+            setShowOptionalTags(true);
+
+            if (searchTimes === 0) {
+              onQueryTags('');
+            }
+          }}
+          onPressEnter={onSearch}
+          onBlur={() => props.useOnBlur && setTimeout(() => setShowOptionalTags(false), 200)}
         />
 
-        <div className={style['tag-optional-wrapper']}>
+        <div
+          className={cx(style['tag-optional-wrapper'], {
+            [style['tag-optional-wrapper--show']]: showOptionalTags,
+            [style['tag-optional-wrapper--hide']]: !showOptionalTags,
+          })}
+        >
           {lastSearchKey && optionalTags.length === 0 ? (
             <div className={style['tag-optional-empty']}>{t(`_comp:SelectTagId.notFoundTags`)}</div>
           ) : (

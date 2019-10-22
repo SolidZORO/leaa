@@ -5,7 +5,7 @@ import { Tag, Button, Popover } from 'antd';
 import { TooltipPlacement } from 'antd/lib/tooltip';
 
 import { Tag as TagEntry } from '@leaa/common/src/entrys';
-import { SelectTagSearchBox } from './_components/SelectTagSearchBox/SelectTagSearchBox';
+import { SelectTagSearchBox } from '@leaa/dashboard/src/components/SelectTagSearchBox/SelectTagSearchBox';
 
 import style from './style.less';
 

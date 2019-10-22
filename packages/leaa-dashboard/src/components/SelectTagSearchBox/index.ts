@@ -1,0 +1,1 @@
+export { SelectTagSearchBox } from './SelectTagSearchBox';

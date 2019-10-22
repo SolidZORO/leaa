@@ -8,7 +8,7 @@ import { Table, Icon, message, Tag } from 'antd';
 
 import { DEFAULT_PAGE_SIZE_OPTIONS } from '@leaa/dashboard/src/constants';
 import { GET_ARTICLES, DELETE_ARTICLE } from '@leaa/common/src/graphqls';
-import { Article } from '@leaa/common/src/entrys';
+import { Article, Tag as TagEntry } from '@leaa/common/src/entrys';
 import { IOrderSort } from '@leaa/common/src/dtos/_common';
 import { ArticlesWithPaginationObject, ArticleArgs } from '@leaa/common/src/dtos/article';
 import { urlUtil, tableUtil } from '@leaa/dashboard/src/utils';
@@ -23,6 +23,7 @@ import { SwitchNumber } from '@leaa/dashboard/src/components/SwitchNumber';
 import { TableColumnDate } from '@leaa/dashboard/src/components/TableColumnDate';
 import { TableColumnDeleteButton } from '@leaa/dashboard/src/components/TableColumnDeleteButton';
 import { SelectCategoryIdByTree } from '@leaa/dashboard/src/components/SelectCategoryIdByTree';
+import { SelectTagSearchBox } from '@leaa/dashboard/src/components/SelectTagSearchBox';
 
 import style from './style.less';
 
@@ -159,7 +160,7 @@ export default (props: IPage) => {
 
     setPage(1);
 
-    const filterParams: { q?: string; categoryId?: number } = {};
+    const filterParams: { q?: string; categoryId?: number; tagName?: string } = {};
 
     if (params.field === 'q') {
       setQ(params.value);
@@ -169,6 +170,11 @@ export default (props: IPage) => {
     if (params.field === 'categoryId') {
       setCategoryId(params.value);
       filterParams.categoryId = params.value;
+    }
+
+    if (params.field === 'tagName') {
+      setTagName(params.value);
+      filterParams.tagName = params.value;
     }
 
     urlUtil.mergeParamToUrlQuery({
@@ -194,6 +200,13 @@ export default (props: IPage) => {
       extra={
         <div className={style['filter-bar-wrapper']}>
           <Icon type="filter" className={style['filter-bar-icon']} />
+
+          <SelectTagSearchBox
+            className={style['filter-bar-tag']}
+            useOnBlur
+            onSearchCallback={(v: string) => onFilter({ field: 'tagName', value: v })}
+            onSelectTagCallback={(v: TagEntry) => onFilter({ field: 'tagName', value: v.name })}
+          />
 
           <SelectCategoryIdByTree
             className={style['filter-bar-category']}
