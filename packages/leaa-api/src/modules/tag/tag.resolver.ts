@@ -22,6 +22,14 @@ export class TagResolver {
     return this.tagService.tag(id, args);
   }
 
+  @Query(() => Tag)
+  async tagByName(
+    @Args({ name: 'name', type: () => String }) name: string,
+    @Args() args?: TagArgs,
+  ): Promise<Tag | undefined> {
+    return this.tagService.tagByName(name, args);
+  }
+
   @Mutation(() => Tag)
   async createTag(@Args('tag') args: CreateTagInput): Promise<Tag | undefined> {
     return this.tagService.createTag(args);

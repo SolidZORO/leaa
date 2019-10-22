@@ -328,8 +328,9 @@ type Query {
   users(page: Int = 1, pageSize: Int = 30, orderBy: String = "created_at", orderSort: String = "DESC", q: String): UsersWithPaginationObject!
   user(id: Int!): User!
   userByToken(token: String): User!
-  articles(page: Int = 1, pageSize: Int = 30, orderBy: String = "created_at", orderSort: String = "DESC", q: String): ArticlesWithPaginationObject!
+  articles(page: Int = 1, pageSize: Int = 30, orderBy: String = "created_at", orderSort: String = "DESC", q: String, tagName: String, categoryName: String, categoryId: Int): ArticlesWithPaginationObject!
   article(id: Int!): Article!
+  articleBySlug(slug: String!): Article!
   categories(page: Int = 1, pageSize: Int = 30, orderBy: String = "created_at", orderSort: String = "DESC", q: String, type: String = "list"): CategoriesWithPaginationObject!
   categoriesByTree: CategoriesWithTreeObject!
   category(id: Int!): Category!
@@ -343,6 +344,7 @@ type Query {
   settingBySlug(slug: String!): Setting!
   tags(page: Int = 1, pageSize: Int = 30, orderBy: String = "created_at", orderSort: String = "DESC", q: String): TagsWithPaginationObject!
   tag(id: Int!): Tag!
+  tagByName(name: String!): Tag!
 }
 
 type Role {

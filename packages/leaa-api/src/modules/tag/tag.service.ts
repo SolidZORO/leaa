@@ -4,7 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 import { Tag } from '@leaa/common/src/entrys';
 import { TagsArgs, TagsWithPaginationObject, TagArgs, CreateTagInput, UpdateTagInput } from '@leaa/common/src/dtos/tag';
-import { formatUtil, curdUtil, paginationUtil } from '@leaa/api/src/utils';
+import { formatUtil, curdUtil, paginationUtil, loggerUtil } from '@leaa/api/src/utils';
 
 const CONSTRUCTOR_NAME = 'TagService';
 
@@ -34,6 +34,20 @@ export class TagService {
     }
 
     return this.tagRepository.findOne(id, nextArgs);
+  }
+
+  async tagByName(name: string, args?: TagArgs & FindOneOptions<Tag>): Promise<Tag | undefined> {
+    const tag = await this.tagRepository.findOne({ where: { name } });
+
+    if (!tag) {
+      const message = 'not found tag';
+
+      loggerUtil.warn(message, CONSTRUCTOR_NAME);
+
+      return undefined;
+    }
+
+    return this.tag(tag.id, args);
   }
 
   formatTag(str: string): string {

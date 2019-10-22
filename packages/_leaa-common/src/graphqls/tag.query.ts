@@ -29,3 +29,15 @@ export const GET_TAG = gql`
     }
   }
 `;
+
+export const GET_TAG_BY_NAME = gql`
+  query($name: String!) {
+    tagByName(name: $name) {
+      id
+      name
+      icon
+      description
+      created_at
+    }
+  }
+`;

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Repository, FindOneOptions, Like } from 'typeorm';
+import { Repository, FindOneOptions } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { Article, Category, Tag } from '@leaa/common/src/entrys';
@@ -10,7 +10,7 @@ import {
   CreateArticleInput,
   UpdateArticleInput,
 } from '@leaa/common/src/dtos/article';
-import { formatUtil, paginationUtil, curdUtil, stringUtil } from '@leaa/api/src/utils';
+import { formatUtil, paginationUtil, curdUtil, stringUtil, loggerUtil } from '@leaa/api/src/utils';
 
 const CONSTRUCTOR_NAME = 'ArticleService';
 
@@ -25,15 +25,33 @@ export class ArticleService {
   async articles(args: ArticlesArgs): Promise<ArticlesWithPaginationObject> {
     const nextArgs = formatUtil.formatArgs(args);
 
-    nextArgs.relations = ['tags', 'categories'];
+    const qb = await this.articleRepository.createQueryBuilder('article');
+
+    // relations
+    qb.leftJoinAndSelect('article.categories', 'categories');
+    qb.leftJoinAndSelect('article.tags', 'tags');
 
     if (nextArgs.q) {
-      const qLike = Like(`%${nextArgs.q}%`);
+      const qLike = `%${nextArgs.q}%`;
 
-      nextArgs.where = [{ slug: qLike }, { title: qLike }];
+      console.log(qLike);
+      qb.andWhere('article.title LIKE :title', { title: qLike });
+      qb.andWhere('article.slug LIKE :slug', { slug: qLike });
     }
 
-    const [items, total] = await this.articleRepository.findAndCount(nextArgs);
+    if (nextArgs.tagName) {
+      qb.andWhere('tags.name IN (:...tagName)', { tagName: nextArgs.tagName });
+    }
+
+    if (nextArgs.categoryName) {
+      qb.andWhere('categories.name IN (:...categoryName)', { categoryName: nextArgs.categoryName });
+    }
+
+    if (nextArgs.categoryId) {
+      qb.andWhere('categories.id IN (:...categoryId)', { categoryId: nextArgs.categoryId });
+    }
+
+    const [items, total] = await qb.getManyAndCount();
 
     return paginationUtil.calcPageInfo({ items, total, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
@@ -47,6 +65,20 @@ export class ArticleService {
     }
 
     return this.articleRepository.findOne(id, nextArgs);
+  }
+
+  async articleBySlug(slug: string, args?: ArticleArgs & FindOneOptions<Article>): Promise<Article | undefined> {
+    const article = await this.articleRepository.findOne({ where: { slug } });
+
+    if (!article) {
+      const message = 'not found article';
+
+      loggerUtil.warn(message, CONSTRUCTOR_NAME);
+
+      return undefined;
+    }
+
+    return this.article(article.id, args);
   }
 
   async createArticle(args: CreateArticleInput): Promise<Article | undefined> {

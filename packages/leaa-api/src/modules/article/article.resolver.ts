@@ -28,6 +28,14 @@ export class ArticleResolver {
     return this.articleService.article(id, args);
   }
 
+  @Query(() => Article)
+  async articleBySlug(
+    @Args({ name: 'slug', type: () => String }) slug: string,
+    @Args() args?: ArticleArgs,
+  ): Promise<Article | undefined> {
+    return this.articleService.articleBySlug(slug, args);
+  }
+
   @Mutation(() => Article)
   async createArticle(@Args('article') args: CreateArticleInput): Promise<Article | undefined> {
     return this.articleService.createArticle(args);
