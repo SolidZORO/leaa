@@ -61,8 +61,6 @@ export default (props: IPage) => {
         return;
       }
 
-      console.log(articleInfoFormRef, formData);
-
       submitData = formData;
     });
 

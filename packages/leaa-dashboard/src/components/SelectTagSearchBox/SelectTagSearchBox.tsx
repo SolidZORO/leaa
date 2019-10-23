@@ -70,8 +70,9 @@ export const SelectTagSearchBox = (props: IProps) => {
   };
 
   const onChange = (v: any) => {
-    console.log('>>>>> onChange', v);
+    // console.log('>>>>> onChange', v);
     setInputKey(v);
+
     if (props.onChangeTagNameCallback) {
       props.onChangeTagNameCallback(v);
     }
@@ -89,8 +90,8 @@ export const SelectTagSearchBox = (props: IProps) => {
     onQueryTags(v);
   };
 
-  const onSelect = (tag: any, option: any) => {
-    console.log('>>>>> onSelect', tag, option);
+  const onSelect = (tag: any) => {
+    // console.log('>>>>> onSelect', tag);
     const tagObject = optionalTags.find(item => item.name === tag);
 
     if (props.onSelectTagCallback && tagObject) {

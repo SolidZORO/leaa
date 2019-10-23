@@ -82,7 +82,7 @@ export const SelectTagId = forwardRef((props: IProps, ref: React.Ref<any>) => {
             content={
               <div className={style['popover-content-wrapper']}>
                 <SelectTagSearchBox
-                  autoFocus
+                  // autoFocus
                   onSelectTagCallback={onSelectTag}
                   enterCreateTag={props.enterCreateTag}
                   onChangeTagNameCallback={setTagName}

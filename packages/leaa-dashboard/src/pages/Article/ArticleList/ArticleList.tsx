@@ -59,8 +59,6 @@ export default (props: IPage) => {
     variables: getArticlesVariables,
   });
 
-  console.log(getArticlesVariables);
-
   // mutation
   const [deleteArticleMutate, deleteArticleMutation] = useMutation<Article>(DELETE_ARTICLE, {
     onCompleted: () => message.success(t('_lang:deletedSuccessfully')),
@@ -158,8 +156,6 @@ export default (props: IPage) => {
   ];
 
   const onFilter = (params: { field: string; value: any }) => {
-    console.log('onFilter', params);
-
     setPage(1);
 
     const filterParams: { q?: string; categoryId?: number; tagName?: string } = {};
@@ -170,8 +166,10 @@ export default (props: IPage) => {
     }
 
     if (params.field === 'categoryId') {
-      setCategoryId(params.value);
-      filterParams.categoryId = params.value;
+      const v = Number.isNaN(params.value) ? undefined : params.value;
+
+      setCategoryId(v);
+      filterParams.categoryId = v;
     }
 
     if (params.field === 'tagName') {
@@ -216,7 +214,7 @@ export default (props: IPage) => {
             className={style['filter-bar-category']}
             componentProps={{ allowClear: true }}
             onChange={(v: number | number[]) => onFilter({ field: 'categoryId', value: Number(v) })}
-            value={categoryId}
+            value={categoryId || undefined}
           />
 
           <SearchInput
