@@ -1,5 +1,6 @@
-import React, { useState, forwardRef, useEffect } from 'react';
+import React, { useState, forwardRef, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import _ from 'lodash';
 import cx from 'classnames';
 import { Tag, Button, Popover } from 'antd';
 import { TooltipPlacement } from 'antd/lib/tooltip';
@@ -23,6 +24,7 @@ export const SelectTagId = forwardRef((props: IProps, ref: React.Ref<any>) => {
   const { t } = useTranslation();
 
   const [selectedTags, setSelectedTags] = useState<TagEntry[]>(props.selectedTags || []);
+  const [selectTag, setSelectTag] = useState<TagEntry>();
   const [tagName, setTagName] = useState<string | undefined>();
 
   const onRemoveTag = (tag: TagEntry) => {
@@ -32,7 +34,10 @@ export const SelectTagId = forwardRef((props: IProps, ref: React.Ref<any>) => {
   };
 
   const onSelectTag = (tag: TagEntry) => {
+    setSelectTag(tag);
+
     if (tag && !selectedTags.map(item => item.name).includes(tag.name)) {
+      setSelectTag(undefined);
       setSelectedTags(selectedTags.concat(tag));
     }
   };
@@ -42,6 +47,11 @@ export const SelectTagId = forwardRef((props: IProps, ref: React.Ref<any>) => {
       props.onChangeSelectedTagsCallback(selectedTags);
     }
   }, [selectedTags]);
+
+  // warning tag-selected-item exist
+  useEffect(() => {
+    setTimeout(() => setSelectTag(undefined), 1100);
+  }, [selectTag]);
 
   useEffect(() => {
     if (props.selectedTags) {
@@ -54,7 +64,14 @@ export const SelectTagId = forwardRef((props: IProps, ref: React.Ref<any>) => {
       <div className={style['tag-selected-wrapper']} ref={ref}>
         {selectedTags &&
           selectedTags.map(tag => (
-            <Tag key={tag.name} closable className={style['tag-selected-item']} onClose={() => onRemoveTag(tag)}>
+            <Tag
+              key={tag.name}
+              closable
+              onClose={() => onRemoveTag(tag)}
+              className={cx(style['tag-selected-item'], {
+                [style['tag-selected-item--exist']]: tag.name === (selectTag && selectTag.name),
+              })}
+            >
               {tag.name}
             </Tag>
           ))}

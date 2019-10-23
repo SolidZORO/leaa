@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import cx from 'classnames';
 import _ from 'lodash';
@@ -23,7 +23,7 @@ interface IProps {
 
 const DEBOUNCE_MS = 500;
 
-export const SelectTagSearchBox = (props: IProps) => {
+export const SelectTagSearchBox = forwardRef((props: IProps, ref: React.Ref<any>) => {
   const { t } = useTranslation();
 
   const [inputKey, setInputKey] = useState<string | undefined>(props.value);
@@ -37,7 +37,6 @@ export const SelectTagSearchBox = (props: IProps) => {
   };
 
   useEffect(() => {
-    console.log('init');
     return () => init();
   }, []);
 
@@ -115,6 +114,7 @@ export const SelectTagSearchBox = (props: IProps) => {
       <div className={cx(style['container'], props.className)}>
         <AutoComplete
           // backfill
+          ref={ref}
           autoFocus={props.autoFocus}
           allowClear
           defaultActiveFirstOption={false}
@@ -133,4 +133,4 @@ export const SelectTagSearchBox = (props: IProps) => {
       </div>
     </div>
   );
-};
+});
