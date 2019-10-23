@@ -10,7 +10,7 @@ import { CREATE_TAG } from '@leaa/common/src/graphqls';
 import style from './style.less';
 
 interface IProps {
-  tagName: string;
+  tagName: string | undefined;
   onCreatedTagCallback: (tag: Tag) => void;
 }
 
@@ -30,8 +30,8 @@ export const QuickCreateTagButton = (props: IProps) => {
 
   return (
     <div className={cx(style['wrapper'])}>
-      <Button type="link" onClick={() => createTagMutate()}>
-        {t('_lang:create')}?
+      <Button onClick={() => createTagMutate()} size="small">
+        {t('_comp:SelectTagId.createAndAdd')}
       </Button>
     </div>
   );

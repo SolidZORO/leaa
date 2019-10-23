@@ -162,7 +162,9 @@ export default (props: IPage) => {
       <div className={style['select-tag-id-wrapper']}>
         <SelectTagId
           ref={selectTagIdRef}
-          placement="right"
+          placement="bottomLeft"
+          enterCreateTag
+          selectedTagsMaxLength={5}
           selectedTags={getArticleQuery.data && getArticleQuery.data.article && getArticleQuery.data.article.tags}
           onChangeSelectedTagsCallback={onChangeSelectedTagsCallback}
         />

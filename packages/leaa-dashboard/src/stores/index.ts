@@ -1,5 +1,5 @@
 import { configure } from 'mobx';
-import { useStaticRendering } from 'mobx-react-lite';
+import { useStaticRendering } from 'mobx-react';
 import { createContext, useContext } from 'react';
 
 import { IMappingStore, MappingStore } from './mapping.store';
@@ -12,7 +12,8 @@ export interface IStore {
 
 const isServer = typeof window === 'undefined';
 
-configure({ enforceActions: 'observed' });
+// configure({ enforceActions: 'observed' });
+configure({ enforceActions: 'never' });
 useStaticRendering(isServer);
 
 export class Store {

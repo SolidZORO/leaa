@@ -6,20 +6,24 @@ import { TooltipPlacement } from 'antd/lib/tooltip';
 
 import { Tag as TagEntry } from '@leaa/common/src/entrys';
 import { SelectTagSearchBox } from '@leaa/dashboard/src/components/SelectTagSearchBox/SelectTagSearchBox';
+// eslint-disable-next-line max-len
+import { QuickCreateTagButton } from '@leaa/dashboard/src/components/SelectTagId/_components/QuickCreateTagButton/QuickCreateTagButton';
 
 import style from './style.less';
 
 interface IProps {
+  selectedTagsMaxLength: number;
   selectedTags?: TagEntry[];
   onChangeSelectedTagsCallback?: (tags: TagEntry[]) => void;
   placement?: TooltipPlacement;
-  selectedTagsLength?: number;
+  enterCreateTag?: boolean;
 }
 
 export const SelectTagId = forwardRef((props: IProps, ref: React.Ref<any>) => {
   const { t } = useTranslation();
 
   const [selectedTags, setSelectedTags] = useState<TagEntry[]>(props.selectedTags || []);
+  const [tagName, setTagName] = useState<string | undefined>();
 
   const onRemoveTag = (tag: TagEntry) => {
     setSelectedTags(selectedTags.filter(i => i.name !== tag.name));
@@ -28,7 +32,7 @@ export const SelectTagId = forwardRef((props: IProps, ref: React.Ref<any>) => {
   };
 
   const onSelectTag = (tag: TagEntry) => {
-    if (!selectedTags.includes(tag)) {
+    if (tag && !selectedTags.map(item => item.name).includes(tag.name)) {
       setSelectedTags(selectedTags.concat(tag));
     }
   };
@@ -55,9 +59,36 @@ export const SelectTagId = forwardRef((props: IProps, ref: React.Ref<any>) => {
             </Tag>
           ))}
 
-        {selectedTags && selectedTags.length < (props.selectedTagsLength || 5) && (
+        {selectedTags && selectedTags.length < (props.selectedTagsMaxLength || 5) && (
           <Popover
-            content={<SelectTagSearchBox onSelectTagCallback={onSelectTag} />}
+            title={
+              <div className={style['popover-title-wrapper']}>
+                <div className={style['popover-title-tips']}>
+                  {t(`_comp:SelectTagId.canAlsoAddTagsQuantity`, {
+                    length: `${props.selectedTagsMaxLength - selectedTags.length}`,
+                  })}
+                </div>
+
+                <div
+                  className={cx(style['popover-title-button'], {
+                    [style['popover-title-button--show']]: tagName,
+                    [style['popover-title-button--hide']]: !tagName,
+                  })}
+                >
+                  <QuickCreateTagButton tagName={tagName} onCreatedTagCallback={onSelectTag} />
+                </div>
+              </div>
+            }
+            content={
+              <div className={style['popover-content-wrapper']}>
+                <SelectTagSearchBox
+                  autoFocus
+                  onSelectTagCallback={onSelectTag}
+                  enterCreateTag={props.enterCreateTag}
+                  onChangeTagNameCallback={setTagName}
+                />
+              </div>
+            }
             trigger="click"
             placement={props.placement || 'bottomLeft'}
             overlayClassName={style['popover-overlay']}

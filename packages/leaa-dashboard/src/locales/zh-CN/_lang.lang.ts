@@ -41,7 +41,7 @@ export default {
   options: '可选项',
   tips: '提示',
   //
-  create: '新建',
+  create: '创建',
   edit: '编辑',
   update: '更新',
   delete: '删除',

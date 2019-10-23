@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import React, { useState, forwardRef, useImperativeHandle, useRef } from 'react';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { message, Icon, Button, Tooltip } from 'antd';
+import { message, Tooltip } from 'antd';
 
 import { GET_ATTACHMENTS, UPDATE_ATTACHMENTS } from '@leaa/common/src/graphqls';
 import { IAttachmentParams } from '@leaa/common/src/interfaces';

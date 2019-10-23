@@ -59,6 +59,8 @@ export default (props: IPage) => {
     variables: getArticlesVariables,
   });
 
+  console.log(getArticlesVariables);
+
   // mutation
   const [deleteArticleMutate, deleteArticleMutation] = useMutation<Article>(DELETE_ARTICLE, {
     onCompleted: () => message.success(t('_lang:deletedSuccessfully')),
@@ -204,14 +206,17 @@ export default (props: IPage) => {
           <SelectTagSearchBox
             className={style['filter-bar-tag']}
             useOnBlur
-            onSearchCallback={(v: string) => onFilter({ field: 'tagName', value: v })}
             onSelectTagCallback={(v: TagEntry) => onFilter({ field: 'tagName', value: v.name })}
+            onEnterCallback={(v: string | undefined) => onFilter({ field: 'tagName', value: v })}
+            value={tagName}
+            placeholder={t('_lang:tag')}
           />
 
           <SelectCategoryIdByTree
             className={style['filter-bar-category']}
             componentProps={{ allowClear: true }}
             onChange={(v: number | number[]) => onFilter({ field: 'categoryId', value: Number(v) })}
+            value={categoryId}
           />
 
           <SearchInput

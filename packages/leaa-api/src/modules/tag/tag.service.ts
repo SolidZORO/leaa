@@ -62,6 +62,12 @@ export class TagService {
   }
 
   async createTag(args: CreateTagInput): Promise<Tag | undefined> {
+    const tag = await this.tagByName(args.name);
+
+    if (tag) {
+      return tag;
+    }
+
     const nextArgs = { ...args, name: this.formatTag(args.name) };
 
     return this.tagRepository.save({ ...nextArgs });
