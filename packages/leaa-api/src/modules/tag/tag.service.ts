@@ -1,3 +1,4 @@
+import xss from 'xss';
 import { Injectable } from '@nestjs/common';
 import { Repository, FindOneOptions, Like } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -52,10 +53,7 @@ export class TagService {
 
   formatTag(str: string): string {
     if (str) {
-      return str
-        .trim()
-        .toLowerCase()
-        .replace(/\s/g, '-');
+      return xss.filterXSS(str.trim().replace(/\s/g, '-'));
     }
 
     return '';
