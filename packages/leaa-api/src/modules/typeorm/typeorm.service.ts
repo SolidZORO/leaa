@@ -13,6 +13,8 @@ import {
   Oauth,
   Tag,
 } from '@leaa/common/src/entrys';
+
+import { TagSubscriber } from '@leaa/common/src/subscribers';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 
 const CONSTRUCTOR_NAME = 'TypeormService';
@@ -49,6 +51,7 @@ export class TypeormService implements TypeOrmOptionsFactory {
         Setting,
         Tag,
       ],
+      subscribers: [TagSubscriber],
     };
 
     if (this.configService.DB_TYPE === 'mysql') {

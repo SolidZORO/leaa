@@ -19,7 +19,6 @@ import { ErrorCard } from '@leaa/dashboard/src/components/ErrorCard';
 import { SearchInput } from '@leaa/dashboard/src/components/SearchInput';
 import { TableCard } from '@leaa/dashboard/src/components/TableCard';
 import { TableColumnId } from '@leaa/dashboard/src/components/TableColumnId';
-import { SwitchNumber } from '@leaa/dashboard/src/components/SwitchNumber';
 import { TableColumnDate } from '@leaa/dashboard/src/components/TableColumnDate';
 import { TableColumnDeleteButton } from '@leaa/dashboard/src/components/TableColumnDeleteButton';
 
@@ -82,7 +81,7 @@ export default (props: IPage) => {
     {
       title: 'ID',
       dataIndex: 'id',
-      width: 50,
+      width: 80,
       render: (text: string) => <TableColumnId id={text} />,
     },
     {
@@ -93,16 +92,29 @@ export default (props: IPage) => {
       render: (text: string, record: Tag) => <Link to={`${props.route.path}/${record.id}`}>{record.name}</Link>,
     },
     {
+      title: t('_page:Tag.Component.count'),
+      dataIndex: 'count',
+      sorter: true,
+      width: 150,
+      sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'count'),
+      render: (text: string, record: Tag) => (
+        <small>
+          <code>{record.count}</code>
+        </small>
+      ),
+    },
+    {
       title: t('_lang:created_at'),
       dataIndex: 'created_at',
       sorter: true,
+      width: 120,
       sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'created_at'),
       render: (text: string) => <TableColumnDate date={text} size="small" />,
     },
     {
       title: t('_lang:action'),
       dataIndex: 'operation',
-      width: 50,
+      width: 60,
       render: (text: string, record: Tag) => (
         <TableColumnDeleteButton
           id={record.id}

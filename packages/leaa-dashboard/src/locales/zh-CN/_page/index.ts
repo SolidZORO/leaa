@@ -6,5 +6,6 @@ import Category from './Category.lang';
 import Article from './Article.lang';
 import Ax from './Ax.lang';
 import Setting from './Setting.lang';
+import Tag from './Tag.lang';
 
-export default { Auth, User, Role, Permission, Category, Article, Ax, Setting };
+export default { Auth, User, Role, Permission, Category, Article, Ax, Setting, Tag };

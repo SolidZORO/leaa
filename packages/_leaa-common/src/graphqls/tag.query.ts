@@ -12,6 +12,7 @@ export const GET_TAGS = gql`
         name
         icon
         description
+        count
         created_at
       }
     }
@@ -25,6 +26,7 @@ export const GET_TAG = gql`
       name
       icon
       description
+      count
       created_at
     }
   }
@@ -37,6 +39,7 @@ export const GET_TAG_BY_NAME = gql`
       name
       icon
       description
+      count
       created_at
     }
   }

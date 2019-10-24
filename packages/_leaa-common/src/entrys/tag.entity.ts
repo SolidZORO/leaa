@@ -1,5 +1,5 @@
 import { Index, Entity, Column } from 'typeorm';
-import { ObjectType, Field } from 'type-graphql';
+import { ObjectType, Field, Int } from 'type-graphql';
 
 import { Base } from '@leaa/common/src/entrys';
 
@@ -18,4 +18,8 @@ export class Tag extends Base {
   @Column({ type: 'text', nullable: true })
   @Field(() => String, { nullable: true })
   public description?: string;
+
+  @Column({ type: 'int', default: 0 })
+  @Field(() => Int, { defaultValue: 0 })
+  public count?: number;
 }

@@ -107,7 +107,7 @@ export default (props: IPage) => {
     {
       title: t('_lang:action'),
       dataIndex: 'operation',
-      width: 50,
+      width: 60,
       render: (text: string, record: Role) => (
         <TableColumnDeleteButton
           id={record.id}
