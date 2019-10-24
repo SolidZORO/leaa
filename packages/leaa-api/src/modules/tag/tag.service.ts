@@ -71,6 +71,25 @@ export class TagService {
     return this.tagRepository.save({ ...nextArgs });
   }
 
+  async createTags(tagNames: string[]): Promise<Tag[] | undefined> {
+    let tags: Tag[] = [];
+    const batchUpdatePromise: Promise<any>[] = [];
+
+    await tagNames.forEach(tagName => {
+      batchUpdatePromise.push(this.createTag({ name: tagName }));
+    });
+
+    await Promise.all(batchUpdatePromise)
+      .then(data => {
+        tags = data;
+      })
+      .catch(() => {
+        loggerUtil.error(`createTags faild, args: ${JSON.stringify(tags)}`, CONSTRUCTOR_NAME);
+      });
+
+    return tags;
+  }
+
   async updateTag(id: number, args: UpdateTagInput): Promise<Tag | undefined> {
     let nextArgs = args;
 

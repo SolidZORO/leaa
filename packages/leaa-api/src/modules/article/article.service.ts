@@ -1,4 +1,6 @@
 import { Injectable } from '@nestjs/common';
+import nodejieba from 'nodejieba';
+import htmlToText from 'html-to-text';
 import { Repository, FindOneOptions } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
@@ -11,6 +13,7 @@ import {
   UpdateArticleInput,
 } from '@leaa/common/src/dtos/article';
 import { formatUtil, paginationUtil, curdUtil, stringUtil, loggerUtil } from '@leaa/api/src/utils';
+import { TagService } from '@leaa/api/src/modules/tag/tag.service';
 
 const CONSTRUCTOR_NAME = 'ArticleService';
 
@@ -20,6 +23,7 @@ export class ArticleService {
     @InjectRepository(Article) private readonly articleRepository: Repository<Article>,
     @InjectRepository(Category) private readonly categoryRepository: Repository<Category>,
     @InjectRepository(Tag) private readonly tagRepository: Repository<Tag>,
+    private readonly tagService: TagService,
   ) {}
 
   async articles(args: ArticlesArgs): Promise<ArticlesWithPaginationObject> {
@@ -94,6 +98,14 @@ export class ArticleService {
     return this.articleRepository.save({ ...args, ...relationArgs });
   }
 
+  contentHtmlToText(content?: string, title?: string): string {
+    const resultTitle = `${title || ''}\n\n`;
+
+    const resultText = htmlToText.fromString(content, { wordwrap: false, ignoreHref: false });
+
+    return resultTitle + resultText;
+  }
+
   async updateArticle(id: number, args: UpdateArticleInput): Promise<Article | undefined> {
     const relationArgs: { tags?: Tag[]; categories?: Category[] } = {};
 
@@ -102,7 +114,7 @@ export class ArticleService {
 
     // tags
     let tagObjects;
-    if (args.tagIds) {
+    if (args.tagIds && args.tagIds.length > 0) {
       tagObjects = await this.tagRepository.findByIds(args.tagIds);
     }
     relationArgs.tags = tagObjects;
@@ -119,6 +131,18 @@ export class ArticleService {
       slug: !args.slug && args.title ? stringUtil.getSlug(args.title) : trimSlug,
       description: trimDescription,
     };
+
+    // auto add tag from article content (by jieba)
+    if (args.content && (!args.tagIds || (args.tagIds && args.tagIds.length === 0))) {
+      const allText = this.contentHtmlToText(args.content, args.title);
+      // @ts-ignore
+      const jiebaAllTags = nodejieba.tagWordsToStr(nodejieba.tag(allText));
+      const jiebaExtractTags: { word: string; weight: number }[] = nodejieba.extractWithWords(jiebaAllTags, 5);
+      const jiebaTag = jiebaExtractTags.map(tag => tag.word);
+
+      // batch create tags
+      relationArgs.tags = await this.tagService.createTags(jiebaTag);
+    }
 
     return curdUtil.commonUpdate(this.articleRepository, CONSTRUCTOR_NAME, id, nextArgs, relationArgs);
   }

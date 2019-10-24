@@ -264,6 +264,7 @@ type Mutation {
   loginByTicket(ticket: String!): User!
   signup(oid: Int, user: AuthSignupInput!): User!
   createTag(tag: CreateTagInput!): Tag!
+  createTags(tagNames: [String!]!): Tag!
   updateTag(tag: UpdateTagInput!, id: Int!): Tag!
   deleteTag(id: Int!): Tag!
 }

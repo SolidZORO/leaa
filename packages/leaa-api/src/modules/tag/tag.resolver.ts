@@ -36,6 +36,11 @@ export class TagResolver {
   }
 
   @Mutation(() => Tag)
+  async createTags(@Args({ name: 'tagNames', type: () => [String] }) tagNames: string[]): Promise<Tag[] | undefined> {
+    return this.tagService.createTags(tagNames);
+  }
+
+  @Mutation(() => Tag)
   async updateTag(
     @Args({ name: 'id', type: () => Int }) id: number,
     @Args('tag') args: UpdateTagInput,
