@@ -34,7 +34,7 @@ class TagInfoFormInner extends React.PureComponent<IProps> {
         <FormCard title={t('_page:Tag.Component.TagInfo')}>
           <Form className={cx('g-form--zero-margin-bottom', style['form-wrapper'])}>
             <Row gutter={16} className={style['form-row']}>
-              <Col xs={24} sm={14}>
+              <Col xs={24} sm={10}>
                 <Form.Item label={t('_lang:name')}>
                   {getFieldDecorator('name', {
                     initialValue: props.item ? props.item.name : undefined,
@@ -43,7 +43,7 @@ class TagInfoFormInner extends React.PureComponent<IProps> {
                 </Form.Item>
               </Col>
 
-              <Col xs={24} sm={6}>
+              <Col xs={24} sm={10}>
                 <Form.Item label={t('_lang:icon')}>
                   {getFieldDecorator('icon', {
                     initialValue: props.item ? props.item.icon : undefined,
@@ -51,6 +51,14 @@ class TagInfoFormInner extends React.PureComponent<IProps> {
                   })(<Input placeholder={t('_lang:icon')} />)}
                 </Form.Item>
               </Col>
+
+              {props.item && props.item.icon && (
+                <Col xs={24} sm={4}>
+                  <Form.Item label={t('_page:Tag.Component.count')}>
+                    <Input placeholder={t('_lang:count')} value={props.item.count} disabled />
+                  </Form.Item>
+                </Col>
+              )}
 
               <Col xs={24}>
                 <Form.Item label={t('_lang:description')}>

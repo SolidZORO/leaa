@@ -2,6 +2,6 @@
 
 export default {
   Component: {
-    AxInfo: '广告信息',
+    axInfo: '广告信息',
   },
 };

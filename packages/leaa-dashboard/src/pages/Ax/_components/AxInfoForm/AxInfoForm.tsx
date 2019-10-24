@@ -33,7 +33,7 @@ class AxInfoFormInner extends React.PureComponent<IProps> {
     // title={t('_page:Ax.Component.articleInfo')}
     return (
       <div className={cx(style['wrapper'], props.className)}>
-        <FormCard title={t('_page:Ax.Component.AxInfo')}>
+        <FormCard title={t('_page:Ax.Component.axInfo')}>
           <Form className={cx('g-form--zero-margin-bottom', style['form-wrapper'])}>
             <Row gutter={16} className={style['form-row']}>
               <Col xs={24} sm={14}>
