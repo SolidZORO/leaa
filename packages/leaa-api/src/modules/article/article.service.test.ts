@@ -5,6 +5,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { Article, Category, Tag } from '@leaa/common/src/entrys';
 import { CreateArticleInput, UpdateArticleInput } from '@leaa/common/src/dtos/article';
 import { ArticleService } from '@leaa/api/src/modules/article/article.service';
+import { TagService } from '@leaa/api/src/modules/tag/tag.service';
 
 describe('ArticleService', () => {
   let articleService: ArticleService;
@@ -16,6 +17,7 @@ describe('ArticleService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         ArticleService,
+        TagService,
         {
           provide: getRepositoryToken(Article),
           useValue: ARTICLE_REPOSITORY_MOCK,
