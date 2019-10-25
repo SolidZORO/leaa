@@ -1,11 +1,11 @@
+import moment from 'moment';
 import React from 'react';
 import { DatePicker } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 import { IPage } from '@leaa/dashboard/src/interfaces';
 import { HtmlMeta } from '@leaa/dashboard/src/components/HtmlMeta';
-import { SuspenseFallback } from '@leaa/dashboard/src/components/SuspenseFallback';
-import moment from 'moment';
+// import { SuspenseFallback } from '@leaa/dashboard/src/components/SuspenseFallback';
 
 export default (props: IPage) => {
   const { t } = useTranslation();

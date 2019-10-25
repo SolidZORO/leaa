@@ -2,12 +2,12 @@ import express from 'express';
 import next from 'next';
 import cookieParser from 'cookie-parser';
 
-import { envConfig } from '@leaa/www/configs';
-import { authMiddleware } from '@leaa/www/middlewares';
+import { envConfig } from '@leaa/www/src/configs';
+import { authMiddleware } from '@leaa/www/src/middlewares';
 
 const dev = process.env.NODE_ENV !== 'production';
 
-const app = next({ dev, dir: dev ? '.' : './_dist/leaa-www' });
+const app = next({ dev, dir: dev ? './' : './_dist/leaa-www' });
 const handle = app.getRequestHandler();
 
 (async () => {

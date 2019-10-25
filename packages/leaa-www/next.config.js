@@ -6,13 +6,13 @@ const lessToJS = require('less-vars-to-js');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const FilterWarningsPlugin = require('webpack-filter-warnings-plugin');
 
-const env = require('@leaa/www/configs/next-dotenv-object');
+const env = require('@leaa/www/tools/next/next-dotenv-object');
 
-const withDotenv = require('@leaa/www/configs/next-dotenv');
-const withImage = require('@leaa/www/configs/next-image');
-const withAntd = require('@leaa/www/configs/next-antd');
+const withDotenv = require('@leaa/www/tools/next/next-dotenv');
+const withImage = require('@leaa/www/tools/next/next-image');
+const withAntd = require('@leaa/www/tools/next/next-antd');
 
-const antdVariables = lessToJS(fs.readFileSync(path.resolve(__dirname, './styles/variables.less'), 'utf8'));
+const antdVariables = lessToJS(fs.readFileSync(path.resolve(__dirname, './src/styles/variables.less'), 'utf8'));
 
 // fix: prevents error when .less files are required by node
 if (typeof require !== 'undefined') {
@@ -26,7 +26,7 @@ const webpackConfig = (config, options) => {
     new webpack.NormalModuleReplacementPlugin(
       // fixed wechat HMR
       /\/eventsource$/,
-      path.resolve(__dirname, './configs/next-eventsource.js'),
+      path.resolve(__dirname, './tools/next/next-eventsource.js'),
     ),
     new FilterWarningsPlugin({
       // ignore ANTD chunk styles [mini-css-extract-plugin] warning
@@ -35,7 +35,7 @@ const webpackConfig = (config, options) => {
   );
 
   // comstom antd icon
-  config.resolve.alias['@ant-design/icons/lib/dist$'] = path.resolve(__dirname, './configs/next-antd-icon');
+  config.resolve.alias['@ant-design/icons/lib/dist$'] = path.resolve(__dirname, './tools/next/next-antd-icon');
   config.resolve.alias['swiper$'] = 'swiper/js/swiper.js';
 
   config.node = {

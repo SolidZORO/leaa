@@ -1,0 +1,23 @@
+@import '~@leaa/www/src/styles/variables.less';
+
+.full-layout-wrapper {
+  position: relative;
+  //background: transparent;
+  //min-height: 100vh;
+}
+
+.full-layout-inner {
+  position: relative;
+  min-height: 100vh;
+  // background-color: #f5f6fa;
+
+  :global {
+    .ant-layout {
+      background: #fff;
+    }
+  }
+}
+
+.full-layout-container {
+  padding: 0 20px;
+}
