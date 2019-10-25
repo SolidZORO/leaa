@@ -6,3 +6,4 @@ export { attachmentUtil } from '@leaa/api/src/utils/attachment.util';
 export { paginationUtil } from '@leaa/api/src/utils/pagination.util';
 export { curdUtil } from '@leaa/api/src/utils/curd.util';
 export { stringUtil } from '@leaa/api/src/utils/string.util';
+export { dictUtil } from '@leaa/api/src/utils/dict.util';

@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import nodejieba from 'nodejieba';
 import htmlToText from 'html-to-text';
 import { Repository, FindOneOptions } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -12,7 +11,7 @@ import {
   CreateArticleInput,
   UpdateArticleInput,
 } from '@leaa/common/src/dtos/article';
-import { formatUtil, paginationUtil, curdUtil, stringUtil, loggerUtil } from '@leaa/api/src/utils';
+import { formatUtil, paginationUtil, curdUtil, stringUtil, loggerUtil, dictUtil } from '@leaa/api/src/utils';
 import { TagService } from '@leaa/api/src/modules/tag/tag.service';
 
 const CONSTRUCTOR_NAME = 'ArticleService';
@@ -133,15 +132,12 @@ export class ArticleService {
     };
 
     // auto add tag from article content (by jieba)
-    if (args.content && (!args.tagIds || (args.tagIds && args.tagIds.length === 0))) {
+    // if (args.content && (!args.tagIds || (args.tagIds && args.tagIds.length === 0))) {
+    if (1) {
       const allText = this.contentHtmlToText(args.content, args.title);
-      // @ts-ignore
-      const jiebaAllTags = nodejieba.tagWordsToStr(nodejieba.tag(allText));
-      const jiebaExtractTags: { word: string; weight: number }[] = nodejieba.extractWithWords(jiebaAllTags, 5);
-      const jiebaTag = jiebaExtractTags.map(tag => tag.word);
 
       // batch create tags
-      relationArgs.tags = await this.tagService.createTags(jiebaTag);
+      relationArgs.tags = await this.tagService.createTags(dictUtil.cutTags(allText));
     }
 
     return curdUtil.commonUpdate(this.articleRepository, CONSTRUCTOR_NAME, id, nextArgs, relationArgs);

@@ -1,4 +1,4 @@
-import { Index, Entity, Column, ManyToMany, OneToOne, JoinTable, JoinColumn } from 'typeorm';
+import { Index, Entity, Column, ManyToMany, JoinTable } from 'typeorm';
 import { ObjectType, Field, Int } from 'type-graphql';
 
 import { Base, Category, Tag } from '@leaa/common/src/entrys';

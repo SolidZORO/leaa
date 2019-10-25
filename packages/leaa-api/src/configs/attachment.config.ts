@@ -12,8 +12,8 @@ const ALLOW_FILE_TYPES = /image|jpeg|jpg|png|gif|webp|pdf|text|mp4|mp3/;
 
 const URL_PREFIX_BY_LOCAL = `${envConfig.PROTOCOL}://${envConfig.BASE_HOST}${
   dev
-    ? `:${envConfig.PORT}` // dev have PROTOCOL, e.g. http://localhost:8888/attachments/upload
-    : '' //                   prod not PROTOCOL, e.g. http://test-leaa.com/attachments/upload
+    ? `:${envConfig.PORT}` // dev have PORT, e.g. http://localhost:8888/attachments/upload
+    : '' //                   prod not PORT, e.g. http://test-leaa.com/attachments/upload
 }`;
 const URL_PREFIX_BY_OSS = `${envConfig.PROTOCOL}://${envConfig.OSS_ALIYUN_BUCKET}.${envConfig.OSS_ALIYUN_REGION}.aliyuncs.com`; // eslint-disable-line max-len
 

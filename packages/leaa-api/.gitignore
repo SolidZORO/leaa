@@ -4,6 +4,8 @@
 
 #Accests
 /public/attachments
+/src/assets/dicts/*
+!/src/assets/dicts/.gitkeep
 
 # Compiled
 /.dist
