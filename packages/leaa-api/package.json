@@ -6,7 +6,7 @@
   "sideEffect": false,
   "license": "BSD-3-Clause-Clear",
   "engines": {
-    "node": "10.17.x",
+    "node": "10.x.x",
     "npm": ">=6.4.0"
   },
   "scripts": {
