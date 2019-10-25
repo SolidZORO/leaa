@@ -1,5 +1,6 @@
 import fs from 'fs';
 import xss from 'xss';
+import mkdirp from 'mkdirp';
 import { Injectable } from '@nestjs/common';
 import { Repository, FindOneOptions, Like } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -66,6 +67,14 @@ export class TagService {
   }
 
   async syncTagsToDictFile(): Promise<SyncTagsToFileObject> {
+    if (!fs.existsSync(dictConfig.TAGS_DICT_PATH)) {
+      loggerUtil.log(`syncTagsToDictFile, not exists ${dictConfig.DICT_DIR}`, CONSTRUCTOR_NAME);
+
+      mkdirp(dictConfig.DICT_DIR, err =>
+        loggerUtil.log(`syncTagsToDictFile, mkdirp ${dictConfig.DICT_DIR} ${JSON.stringify(err)}`, CONSTRUCTOR_NAME),
+      );
+    }
+
     const [items, count] = await this.tagRepository.findAndCount({ select: ['name'] });
 
     if (count) {

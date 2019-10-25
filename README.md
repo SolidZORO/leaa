@@ -72,6 +72,7 @@ You can click `demo` link online preview, all demos are deployed in `heroku` and
     - [x] @2x to @1x
   - [x] Ax (Ad)
   - [x] Category (infinity level)
+  - [x] Tag (word segmentation by NodeJieba)
   - [x] Logger
   - [x] Seed
   - [x] Setting
@@ -83,6 +84,7 @@ You can click `demo` link online preview, all demos are deployed in `heroku` and
   - [x] Home
   - [x] Ax (Ad)
   - [x] Category (infinity level)
+  - [x] Tag (word segmentation by NodeJieba)
   - [x] Article
     - [x] WYSIWYGEditor
   - [x] Attachment
