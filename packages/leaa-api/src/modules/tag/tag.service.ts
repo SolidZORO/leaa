@@ -75,16 +75,16 @@ export class TagService {
       );
     }
 
-    const [items, count] = await this.tagRepository.findAndCount({ select: ['name'] });
+    const [items, total] = await this.tagRepository.findAndCount({ select: ['name'] });
 
-    if (count) {
+    if (total) {
       fs.writeFileSync(dictConfig.TAGS_DICT_PATH, items.map(item => item.name).join('\n'));
     }
 
-    loggerUtil.log(`syncTagsToDictFile, ${count} tags`, CONSTRUCTOR_NAME);
+    loggerUtil.log(`syncTagsToDictFile, ${total} tags`, CONSTRUCTOR_NAME);
 
     return {
-      status: `sync successful ${count} tags`,
+      status: `sync successful ${total} tags`,
     };
   }
 
