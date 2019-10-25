@@ -570,4 +570,4 @@ RN 的生态是真不好，也没人交流。国内外几大 RN 社区人气也�
 
 另外为了统计 Tag 展示次数，用上了 TypeORM 的 `EntitySubscriberInterface`，只要是被浏览过的 Tag 无论什么情况被浏览的都可以往计数器里 + 1，哈哈哈哈，就连 Dashboard 中看到的也不放过。
 
-除了 Tag 功能外，还实现了从文章自动取词做文章的 Tag，方案用的是 [NodeJieba](https://github.com/yanyiwu/nodejieba)，总体感觉良好，不过有时候一些专业词汇识别得并不好，我就开始定义 `dicts/user.dict.utf8`，初步考虑是把所有 Tag 都同步过去，这样用户写文章时，自行添加的 Tag 可以用于分词，算是人工训练。当然啦，人工怎么写都不如提前预置，比如批量抓取 Zhihu 或 StackOverflow 上的 Tag。当然啦，想归想，Tag 这一块如果真的要花时间完善可以当成一个小项目去做了，可能会花很多时间，所以暂且先这样，对于当下而言是以足够用了。
+除了 Tag 功能外，还实现了从文章自动取词做文章的 Tag，方案用的是 [NodeJieba](https://github.com/yanyiwu/nodejieba)，总体感觉良好，不过有时候一些专业词汇识别得并不好，我就开始定义 `dicts/user.dict.utf8`，初步考虑是把所有 Tag 都同步过去，这样用户写文章时，自行添加的 Tag 可以用于分词，算是人工训练。当然啦，人工怎么写都不如提前预置，比如批量抓取 Zhihu 或 StackOverflow 上的 Tag。但想归想，Tag 这一块如果真的要花时间完善可以当成一个小项目去做了，可能会花很多时间，所以暂且先这样，对于当下而言是以足够用了。
