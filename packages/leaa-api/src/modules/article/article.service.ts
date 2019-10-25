@@ -28,24 +28,28 @@ export class ArticleService {
   async articles(args: ArticlesArgs): Promise<ArticlesWithPaginationObject> {
     const nextArgs = formatUtil.formatArgs(args);
 
-    const qb = await this.articleRepository.createQueryBuilder('article');
+    const PRIMARY_TABLE = 'article';
+    const qb = await this.articleRepository.createQueryBuilder(PRIMARY_TABLE);
 
     // relations
-    qb.leftJoinAndSelect('article.categories', 'categories');
-    qb.leftJoinAndSelect('article.tags', 'tags');
+    qb.leftJoinAndSelect(`${PRIMARY_TABLE}.categories`, 'categories');
+    qb.leftJoinAndSelect(`${PRIMARY_TABLE}.tags`, 'tags');
 
+    // q
     if (nextArgs.q) {
       const qLike = `%${nextArgs.q}%`;
 
       console.log(qLike);
-      qb.andWhere('article.title LIKE :title', { title: qLike });
-      qb.andWhere('article.slug LIKE :slug', { slug: qLike });
+      qb.andWhere(`${PRIMARY_TABLE}.title LIKE :title`, { title: qLike });
+      qb.andWhere(`${PRIMARY_TABLE}.slug LIKE :slug`, { slug: qLike });
     }
 
+    // tag
     if (nextArgs.tagName) {
       qb.andWhere('tags.name IN (:...tagName)', { tagName: nextArgs.tagName });
     }
 
+    // category
     if (nextArgs.categoryName) {
       qb.andWhere('categories.name IN (:...categoryName)', { categoryName: nextArgs.categoryName });
     }
@@ -53,6 +57,9 @@ export class ArticleService {
     if (nextArgs.categoryId) {
       qb.andWhere('categories.id IN (:...categoryId)', { categoryId: nextArgs.categoryId });
     }
+
+    // order
+    qb.orderBy(`${PRIMARY_TABLE}.${nextArgs.orderBy}`, nextArgs.orderSort);
 
     const [items, total] = await qb.getManyAndCount();
 
