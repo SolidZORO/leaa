@@ -12,7 +12,6 @@ export default (props: IPage) => {
 
   return (
     <>
-      <SuspenseFallback />
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
       <h2>i18n</h2>

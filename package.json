@@ -24,7 +24,7 @@
   "scripts": {
     "bootstrap": "npx lerna bootstrap",
     "clean": "npx lerna clean",
-    "nuke": "yarn clean && yarn install",
+    "nuke": "yarn clean && yarn bootstrap",
     "tsc-check": "yarn workspaces run tsc-check",
     "u": "yarn upgrade-interactive --latest"
   },
@@ -55,13 +55,12 @@
     "lodash": "^4.17.15",
     "mobx": "^5.14.0",
     "mobx-react": "6.1.3",
-    "mobx-react-lite": "^1.4.1",
     "moment": "2.24.0",
     "prop-types": "15.7.2",
     "react": "16.8.6",
     "react-apollo": "^3.0.1",
-    "react-test-renderer": "16.8.6",
-    "react-dom": "16.8.6"
+    "react-dom": "16.8.6",
+    "react-test-renderer": "16.8.6"
   },
   "devDependencies": {
     "@babel/cli": "7.6.4",
