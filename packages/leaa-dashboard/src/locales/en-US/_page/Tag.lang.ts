@@ -3,5 +3,6 @@
 export default {
   Component: {
     count: 'Count',
+    tagInfo: 'Tag Info',
   },
 };
