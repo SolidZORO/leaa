@@ -4,14 +4,14 @@ import { useTranslation } from 'react-i18next';
 import queryString from 'query-string';
 import { Link } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { Table, Icon, message } from 'antd';
+import { Table, Icon, Button, message } from 'antd';
 
 import { DEFAULT_PAGE_SIZE_OPTIONS } from '@leaa/dashboard/src/constants';
 import { GET_TAGS, DELETE_TAG } from '@leaa/common/src/graphqls';
 import { Tag } from '@leaa/common/src/entrys';
 import { IOrderSort } from '@leaa/common/src/dtos/_common';
 import { TagsWithPaginationObject, TagArgs } from '@leaa/common/src/dtos/tag';
-import { urlUtil, tableUtil } from '@leaa/dashboard/src/utils';
+import { urlUtil, tableUtil, authUtil } from '@leaa/dashboard/src/utils';
 import { IPage } from '@leaa/dashboard/src/interfaces';
 import { PageCard } from '@leaa/dashboard/src/components/PageCard';
 import { HtmlMeta } from '@leaa/dashboard/src/components/HtmlMeta';
@@ -21,6 +21,8 @@ import { TableCard } from '@leaa/dashboard/src/components/TableCard';
 import { TableColumnId } from '@leaa/dashboard/src/components/TableColumnId';
 import { TableColumnDate } from '@leaa/dashboard/src/components/TableColumnDate';
 import { TableColumnDeleteButton } from '@leaa/dashboard/src/components/TableColumnDeleteButton';
+
+import { SyncTagsToFileButton } from '../_components/SyncTagsToFileButton/SyncTagsToFileButton';
 
 import style from './style.less';
 
@@ -137,22 +139,28 @@ export default (props: IPage) => {
         </span>
       }
       extra={
-        <SearchInput
-          value={q}
-          onChange={(keyword: string) => {
-            setPage(1);
-            setQ(keyword);
+        <div className={style['extra-wrapper']}>
+          {authUtil.getAuthInfo().flatePermissions.includes('tag.update') && (
+            <SyncTagsToFileButton className={style['sync-tags-to-file-button']} />
+          )}
 
-            urlUtil.mergeParamToUrlQuery({
-              window,
-              params: {
-                page: 1,
-                q: keyword,
-              },
-              replace: true,
-            });
-          }}
-        />
+          <SearchInput
+            value={q}
+            onChange={(keyword: string) => {
+              setPage(1);
+              setQ(keyword);
+
+              urlUtil.mergeParamToUrlQuery({
+                window,
+                params: {
+                  page: 1,
+                  q: keyword,
+                },
+                replace: true,
+              });
+            }}
+          />
+        </div>
       }
       className={style['wapper']}
       loading={getTagsQuery.loading}

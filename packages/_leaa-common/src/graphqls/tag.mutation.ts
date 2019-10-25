@@ -35,3 +35,11 @@ export const DELETE_TAG = gql`
     }
   }
 `;
+
+export const SYNC_TAGS_TO_FILE = gql`
+  mutation {
+    syncTagsToDictFile {
+      status
+    }
+  }
+`;

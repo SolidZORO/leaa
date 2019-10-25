@@ -265,6 +265,7 @@ type Mutation {
   signup(oid: Int, user: AuthSignupInput!): User!
   createTag(tag: CreateTagInput!): Tag!
   createTags(tagNames: [String!]!): Tag!
+  syncTagsToDictFile: SyncTagsToFileObject!
   updateTag(tag: UpdateTagInput!, id: Int!): Tag!
   deleteTag(id: Int!): Tag!
 }
@@ -393,6 +394,10 @@ type SettingsWithPaginationObject {
   itemsCount: Int!
   total: Int!
   items: [Setting!]!
+}
+
+type SyncTagsToFileObject {
+  status: String!
 }
 
 type Tag {

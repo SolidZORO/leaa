@@ -2,7 +2,14 @@ import { Args, Query, Mutation, Resolver } from '@nestjs/graphql';
 import { Int } from 'type-graphql';
 
 import { Tag } from '@leaa/common/src/entrys';
-import { TagsArgs, TagsWithPaginationObject, TagArgs, CreateTagInput, UpdateTagInput } from '@leaa/common/src/dtos/tag';
+import {
+  TagsArgs,
+  TagsWithPaginationObject,
+  TagArgs,
+  CreateTagInput,
+  UpdateTagInput,
+  SyncTagsToFileObject,
+} from '@leaa/common/src/dtos/tag';
 import { TagService } from '@leaa/api/src/modules/tag/tag.service';
 
 @Resolver(() => Tag)
@@ -38,6 +45,11 @@ export class TagResolver {
   @Mutation(() => Tag)
   async createTags(@Args({ name: 'tagNames', type: () => [String] }) tagNames: string[]): Promise<Tag[] | undefined> {
     return this.tagService.createTags(tagNames);
+  }
+
+  @Mutation(() => SyncTagsToFileObject)
+  async syncTagsToDictFile(): Promise<SyncTagsToFileObject> {
+    return this.tagService.syncTagsToDictFile();
   }
 
   @Mutation(() => Tag)

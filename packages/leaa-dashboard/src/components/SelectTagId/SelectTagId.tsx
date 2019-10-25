@@ -1,6 +1,5 @@
-import React, { useState, forwardRef, useEffect, useRef } from 'react';
+import React, { useState, forwardRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import _ from 'lodash';
 import cx from 'classnames';
 import { Tag, Button, Popover } from 'antd';
 import { TooltipPlacement } from 'antd/lib/tooltip';

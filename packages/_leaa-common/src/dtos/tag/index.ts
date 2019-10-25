@@ -3,3 +3,4 @@ export * from './update-tag.input';
 export * from './tags.args';
 export * from './tag.args';
 export * from './tags-with-pagination.object';
+export * from './sync-tags-to-file.object';

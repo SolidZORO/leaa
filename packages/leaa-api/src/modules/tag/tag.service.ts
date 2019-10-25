@@ -1,11 +1,21 @@
+import fs from 'fs';
 import xss from 'xss';
 import { Injectable } from '@nestjs/common';
 import { Repository, FindOneOptions, Like } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { Tag } from '@leaa/common/src/entrys';
-import { TagsArgs, TagsWithPaginationObject, TagArgs, CreateTagInput, UpdateTagInput } from '@leaa/common/src/dtos/tag';
-import { formatUtil, curdUtil, paginationUtil, loggerUtil } from '@leaa/api/src/utils';
+import { Tag, User } from '@leaa/common/src/entrys';
+import {
+  TagsArgs,
+  TagsWithPaginationObject,
+  TagArgs,
+  CreateTagInput,
+  UpdateTagInput,
+  SyncTagsToFileObject,
+} from '@leaa/common/src/dtos/tag';
+
+import { formatUtil, curdUtil, paginationUtil, loggerUtil, permissionUtil } from '@leaa/api/src/utils';
+import { dictConfig } from '@leaa/api/src/configs';
 
 const CONSTRUCTOR_NAME = 'TagService';
 
@@ -41,10 +51,6 @@ export class TagService {
     const tag = await this.tagRepository.findOne({ where: { name } });
 
     if (!tag) {
-      const message = 'not found tag';
-
-      loggerUtil.warn(message, CONSTRUCTOR_NAME);
-
       return undefined;
     }
 
@@ -57,6 +63,20 @@ export class TagService {
     }
 
     return '';
+  }
+
+  async syncTagsToDictFile(): Promise<SyncTagsToFileObject> {
+    const [items, count] = await this.tagRepository.findAndCount({ select: ['name'] });
+
+    if (count) {
+      fs.writeFileSync(dictConfig.TAGS_DICT_PATH, items.map(item => item.name).join('\n'));
+    }
+
+    loggerUtil.log(`syncTagsToDictFile, ${count} tags`, CONSTRUCTOR_NAME);
+
+    return {
+      status: `sync successful ${count} tags`,
+    };
   }
 
   async createTag(args: CreateTagInput): Promise<Tag | undefined> {

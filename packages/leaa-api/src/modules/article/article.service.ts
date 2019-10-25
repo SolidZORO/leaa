@@ -132,12 +132,15 @@ export class ArticleService {
     };
 
     // auto add tag from article content (by jieba)
-    // if (args.content && (!args.tagIds || (args.tagIds && args.tagIds.length === 0))) {
-    if (1) {
+    if (args.content && (!args.tagIds || (args.tagIds && args.tagIds.length === 0))) {
       const allText = this.contentHtmlToText(args.content, args.title);
 
       // batch create tags
       relationArgs.tags = await this.tagService.createTags(dictUtil.cutTags(allText));
+
+      // ⚠️ sync tags
+      // execute only once when the article has no tag, reducing server pressure
+      await this.tagService.syncTagsToDictFile();
     }
 
     return curdUtil.commonUpdate(this.articleRepository, CONSTRUCTOR_NAME, id, nextArgs, relationArgs);
