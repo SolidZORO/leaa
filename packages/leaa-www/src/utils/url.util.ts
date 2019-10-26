@@ -6,6 +6,7 @@ const isServer = typeof window === 'undefined';
 const routerPathToClassName = (routerPath: string): string =>
   routerPath
     .replace(/^\//, '') // remove ^/
+    .replace(/[[\]]/g, '') // remove ^[]
     .replace(/\/\d+/g, '-item') // replace /444  ->  -item
     .replace(/\//g, '-'); // replace all /  ->  -
 

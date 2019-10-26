@@ -1,29 +1,34 @@
 @import '~@leaa/www/src/styles/variables.less';
 
 .wrapper {
-  margin-top: 30px;
+  margin: 40px 0;
 }
 
 .full-container {
   background-color: transparent;
 }
 
-.item {
-  margin-top: 20px;
-}
-
-.title {
-  font-size: 120%;
-  margin: 0;
-
-  .link {
-    font-size: 100%;
-    color: #555;
+.container-card {
+  @media (min-width: @screen-md) {
+    padding-top: 50px;
   }
 }
 
-.date {
-  display: inline-block;
-  font-size: 80%;
-  color: #999;
+.item {
+  margin-bottom: 25px;
+
+  .title {
+    font-size: 110%;
+    margin: 0;
+
+    .link {
+      color: #333;
+    }
+  }
+
+  .date {
+    display: inline-block;
+    font-size: 80%;
+    color: #999;
+  }
 }

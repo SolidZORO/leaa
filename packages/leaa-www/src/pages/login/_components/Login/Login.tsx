@@ -9,7 +9,7 @@ export default () => {
   return (
     <div className={style['wrapper']}>
       <div className={cx('g-full-container', style['full-container'])}>
-        <div className={style['login-box']}>
+        <div className={cx('g-container-card', style['login-box'])}>
           <h2 className={style['title']}>Login</h2>
           <div className={style['login-form']}>
             <LoginForm />

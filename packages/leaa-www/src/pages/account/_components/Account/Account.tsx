@@ -14,7 +14,7 @@ export default (props: IProps) => {
   return (
     <div className={style['wrapper']}>
       <div className={cx('g-full-container', style['full-container'])}>
-        <div>
+        <div className={cx('g-container-card', style['account-box'])}>
           <h1 className={style['title']}>Account</h1>
 
           <div className={style['account-info']}>

@@ -6,7 +6,7 @@ import { GET_ARTICLES } from '@leaa/common/src/graphqls';
 import { ArticleArgs, ArticlesWithPaginationObject } from '@leaa/common/src/dtos/article';
 import { ErrorCard } from '@leaa/www/src/components/ErrorCard';
 import { HtmlMeta } from '@leaa/www/src/components/HtmlMeta';
-import { PageCard } from '../../components/PageCard/PageCard';
+import { PageCard } from '@leaa/www/src/components/PageCard/PageCard';
 
 const ArticleList = dynamic(() => import('@leaa/www/src/pages/article/_components/ArticleList/ArticleList'));
 
@@ -21,14 +21,16 @@ export default () => {
     variables: getArticlesVariables,
   });
 
+  const articles = getArticlesQuery && getArticlesQuery.data && getArticlesQuery.data.articles;
+
   return (
     <PageCard loading={getArticlesQuery.loading}>
       {getArticlesQuery.error ? <ErrorCard error={getArticlesQuery.error} /> : null}
 
-      {getArticlesQuery.data && getArticlesQuery.data.articles && (
+      {articles && (
         <>
           <HtmlMeta title="Article" keywords="article, list" />
-          <ArticleList articles={getArticlesQuery.data.articles} />
+          <ArticleList articles={articles} />
         </>
       )}
     </PageCard>

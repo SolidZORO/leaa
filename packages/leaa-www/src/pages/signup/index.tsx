@@ -12,7 +12,6 @@ const nextPage = ({ router }: IPageProps) => {
   return (
     <PageCard>
       <HtmlMeta title="Sign Up" />
-
       <Signup urlQuery={router.query} />
     </PageCard>
   );

@@ -135,7 +135,7 @@ export class ArticleService {
 
     const nextArgs = {
       ...args,
-      slug: !args.slug && args.title ? stringUtil.getSlug(args.title) : trimSlug,
+      slug: !args.slug && args.title ? stringUtil.getSlug(args.title, args.title) : trimSlug,
       description: trimDescription,
     };
 

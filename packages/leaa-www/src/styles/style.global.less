@@ -12,38 +12,27 @@
     text-rendering: optimizeLegibility;
   }
 
-  .g {
-    background: #000;
-  }
-
   .g-full-container {
     position: relative;
     width: 100%;
     margin: 0 auto;
     padding: 0 @page-card-padding-x;
 
-    //@media (min-width: @screen-sm) {
-    //  width: @screen-md;
-    //  background: #ff9c64;
-    //}
-
-    //@media (min-width: @screen-md) {
-    //  width: @screen-lg;
-    //  background: #ffe85f;
-    //}
-
     @media (min-width: @screen-md) {
       max-width: 1032px; // fit is 1000px (1000 + 16 * 2 = 1032)
     }
+  }
 
-    //@media (min-width: @screen-xl) {
-    //  width: @screen-xxl;
-    //  background: #bdffe7;
-    //}
-    //
-    //@media (min-width: @screen-xxl) {
-    //  width: @screen-xxl;
-    //  background: #c1d9ff;
-    //}
+  .g-container-card {
+    width: 100%;
+
+    @media (min-width: @screen-md) {
+      width: 800px;
+      border-radius: 3px;
+      box-shadow: 0 2px 6px 0 #ddd;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 20px 30px;
+    }
   }
 }

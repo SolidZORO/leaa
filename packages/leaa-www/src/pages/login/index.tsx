@@ -1,5 +1,5 @@
 import React from 'react';
-// import dynamic from 'next/dynamic';
+import dynamic from 'next/dynamic';
 import { FetchResult } from 'apollo-link';
 
 import { LOGIN_BY_TICKET_FOR_WWW } from '@leaa/common/src/graphqls';
@@ -10,14 +10,12 @@ import { initApollo } from '@leaa/www/src/libs/init-apollo.lib';
 import { PageCard } from '@leaa/www/src/components/PageCard';
 import { HtmlMeta } from '@leaa/www/src/components/HtmlMeta';
 
-import Login from '@leaa/www/src/pages/login/_components/Login/Login';
-// const Login = dynamic(() => import('@leaa/www/pages/login/_components/Login/Login'));
+const Login = dynamic(() => import('@leaa/www/src/pages/login/_components/Login/Login'));
 
 const nextPage = () => {
   return (
     <PageCard>
-      <HtmlMeta title="Login" />
-
+      <HtmlMeta title="登录" />
       <Login />
     </PageCard>
   );
