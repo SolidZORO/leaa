@@ -1,0 +1,93 @@
+{
+  "id": "1310103",
+  "name": "leaa-www",
+  "font_family": "fi",
+  "css_prefix_text": "anticon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "331077",
+      "name": "qrcode",
+      "font_class": "x-qrcode",
+      "unicode": "e781",
+      "unicode_decimal": 59265
+    },
+    {
+      "icon_id": "1107768",
+      "name": "menu",
+      "font_class": "x-menu",
+      "unicode": "e778",
+      "unicode_decimal": 59256
+    },
+    {
+      "icon_id": "2045170",
+      "name": "close",
+      "font_class": "x-close",
+      "unicode": "e785",
+      "unicode_decimal": 59269
+    },
+    {
+      "icon_id": "2899354",
+      "name": "cart-raw",
+      "font_class": "x-cart",
+      "unicode": "e779",
+      "unicode_decimal": 59257
+    },
+    {
+      "icon_id": "7008930",
+      "name": "enter",
+      "font_class": "x-enter",
+      "unicode": "e6f8",
+      "unicode_decimal": 59128
+    },
+    {
+      "icon_id": "7008997",
+      "name": "return",
+      "font_class": "x-return",
+      "unicode": "e720",
+      "unicode_decimal": 59168
+    },
+    {
+      "icon_id": "7009048",
+      "name": "packup",
+      "font_class": "x-packup",
+      "unicode": "e749",
+      "unicode_decimal": 59209
+    },
+    {
+      "icon_id": "7009049",
+      "name": "unfold",
+      "font_class": "x-unfold",
+      "unicode": "e74a",
+      "unicode_decimal": 59210
+    },
+    {
+      "icon_id": "9214998",
+      "name": "排行榜_line",
+      "font_class": "x-article",
+      "unicode": "e877",
+      "unicode_decimal": 59511
+    },
+    {
+      "icon_id": "9215008",
+      "name": "社区_line",
+      "font_class": "x-smile",
+      "unicode": "e87a",
+      "unicode_decimal": 59514
+    },
+    {
+      "icon_id": "9215012",
+      "name": "首页_line",
+      "font_class": "x-home",
+      "unicode": "e87b",
+      "unicode_decimal": 59515
+    },
+    {
+      "icon_id": "10243216",
+      "name": "x-account",
+      "font_class": "x-account",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    }
+  ]
+}

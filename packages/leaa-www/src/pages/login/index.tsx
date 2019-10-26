@@ -6,7 +6,7 @@ import { LOGIN_BY_TICKET_FOR_WWW } from '@leaa/common/src/graphqls';
 import { IGetInitialProps } from '@leaa/www/src/interfaces';
 import { User } from '@leaa/common/src/entrys';
 import { authUtil, urlUtil } from '@leaa/www/src/utils';
-import { initApollo } from '@leaa/www/src/libs/init-apollo-client.lib';
+import { initApollo } from '@leaa/www/src/libs/init-apollo.lib';
 import { PageCard } from '@leaa/www/src/components/PageCard';
 import { HtmlMeta } from '@leaa/www/src/components/HtmlMeta';
 

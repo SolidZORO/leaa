@@ -10,7 +10,7 @@ const env = require('@leaa/www/tools/next/next-dotenv-object');
 
 const withDotenv = require('@leaa/www/tools/next/next-dotenv');
 const withImage = require('@leaa/www/tools/next/next-image');
-const withAntd = require('@leaa/www/tools/next/next-antd');
+const withAntdStyle = require('@leaa/www/tools/next/next-antd-style');
 
 const antdVariables = lessToJS(fs.readFileSync(path.resolve(__dirname, './src/styles/variables.less'), 'utf8'));
 
@@ -24,7 +24,7 @@ const webpackConfig = (config, options) => {
     new LodashModuleReplacementPlugin({ paths: true }),
     new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /zh-cn|en/),
     new webpack.NormalModuleReplacementPlugin(
-      // fixed wechat HMR
+      // ⚠️ fixed wechat HMR (replace mod eventsource.js)
       /\/eventsource$/,
       path.resolve(__dirname, './tools/next/next-eventsource.js'),
     ),
@@ -47,12 +47,12 @@ const webpackConfig = (config, options) => {
 
 module.exports = withDotenv(
   withImage(
-    withAntd({
+    withAntdStyle({
       cssModules: true,
       cssLoaderOptions: {
         sourceMap: false,
         importLoaders: 1,
-        // localIdentName: '[local]--[hash:8]',
+        localIdentName: '[local]--[hash:8]',
       },
       lessLoaderOptions: {
         javascriptEnabled: true,

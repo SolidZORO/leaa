@@ -17,15 +17,20 @@ const nextPage = ({ pageProps }: IPageProps) => {
     variables: { id: Number(pageProps.id) },
   });
 
+  const article = getArticleQuery && getArticleQuery.data && getArticleQuery.data.article;
+
   return (
     <PageCard loading={getArticleQuery.loading}>
       {getArticleQuery.error ? <ErrorCard error={getArticleQuery.error} /> : null}
 
-      {getArticleQuery && getArticleQuery.data && getArticleQuery.data.article && (
+      {article && (
         <>
-          <HtmlMeta title={getArticleQuery.data.article.title} description={getArticleQuery.data.article.description} />
-
-          <ArticleItem article={getArticleQuery.data.article} />
+          <HtmlMeta
+            title={article.title}
+            description={article.description}
+            keywords={article.tags && article.tags.map(tag => tag.name).join(', ')}
+          />
+          <ArticleItem article={article} />
         </>
       )}
     </PageCard>

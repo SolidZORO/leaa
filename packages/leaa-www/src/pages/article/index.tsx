@@ -23,11 +23,13 @@ export default () => {
 
   return (
     <PageCard loading={getArticlesQuery.loading}>
-      <HtmlMeta title="Article" />
-
       {getArticlesQuery.error ? <ErrorCard error={getArticlesQuery.error} /> : null}
+
       {getArticlesQuery.data && getArticlesQuery.data.articles && (
-        <ArticleList articles={getArticlesQuery.data.articles} />
+        <>
+          <HtmlMeta title="Article" keywords="article, list" />
+          <ArticleList articles={getArticlesQuery.data.articles} />
+        </>
       )}
     </PageCard>
   );

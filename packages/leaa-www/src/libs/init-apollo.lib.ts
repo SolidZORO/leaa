@@ -11,7 +11,7 @@ import { envConfig } from '@leaa/www/src/configs';
 
 const isServer = typeof window === 'undefined';
 
-let apolloClient: ApolloClient<any> | null = null;
+let apolloClient: ApolloClient<NormalizedCacheObject>;
 
 if (isServer) {
   // @ts-ignore
@@ -21,7 +21,8 @@ if (isServer) {
 function createApolloClient(initialState: NormalizedCacheObject, authToken?: string) {
   const httpLink = new HttpLink({
     uri: envConfig.GRAPHQL_ENDPOINT,
-    // credentials: 'same-origin',
+    credentials: 'same-origin',
+    fetch,
   });
 
   const authLink = new ApolloLink((operation, forward) => {
@@ -61,7 +62,7 @@ function createApolloClient(initialState: NormalizedCacheObject, authToken?: str
 
   return new ApolloClient({
     link: ApolloLink.from([authLink, errorLink, terminatingLink]),
-    cache: new InMemoryCache().restore(initialState),
+    cache: new InMemoryCache().restore(initialState || {}),
     connectToDevTools: !isServer,
     ssrMode: isServer,
   });

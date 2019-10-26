@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { GET_USER_BY_TOKEN } from '@leaa/common/src/graphqls/user.query';
 import { AUTH_INFO, AUTH_TOKEN_NAME } from '@leaa/www/src/constants';
 import { IAuthInfo } from '@leaa/www/src/interfaces';
-import { initApollo } from '@leaa/www/src/libs/init-apollo-client.lib';
+import { initApollo } from '@leaa/www/src/libs/init-apollo.lib';
 
 export const authMiddleware = async (req: Request, res: Response, next: Function) => {
   const { authToken, authInfo } = req.cookies;

@@ -36,7 +36,9 @@ function EventSourceWrapper(options) {
     for (let i = 0; i < listeners.length; i++) {
       listeners[i](event);
     }
+
     if (event.data.indexOf('action') !== -1) {
+      // ⚠️ fixed wechat HMR (replace mod eventsource.js)
       if (typeof window !== 'undefined' && /micromessenger/.test(window.navigator.userAgent.toLowerCase())) {
         return;
       }

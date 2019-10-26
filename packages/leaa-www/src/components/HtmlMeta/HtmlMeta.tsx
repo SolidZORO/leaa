@@ -48,15 +48,13 @@ export const HtmlMeta = (props: IProps) => {
 
   return (
     <Head>
-      <>
-        <title>
-          {props.title}
-          {siteName}
-        </title>
+      <title>
+        {props.title}
+        {siteName}
+      </title>
 
-        {description && <meta name="description" content={description} />}
-        {props.keywords && <meta name="keywords" content={props.keywords} />}
-      </>
+      <meta name="description" content={description || storeSiteName} />
+      <meta name="keywords" content={props.keywords || storeSiteName} />
     </Head>
   );
 };
