@@ -45,6 +45,18 @@ const webpackConfig = (config, options) => {
   return config;
 };
 
+const nextConfig = {
+  env,
+  // target: 'serverless',
+  target: 'server',
+  // exportPathMap: async (defaultPathMap, { dev, dir, outDir, distDir, buildId }) => {
+  //   return {
+  //     '/': { page: '/' },
+  //     '/login': { page: '/login' },
+  //   };
+  // },
+};
+
 module.exports = withDotenv(
   withImage(
     withAntdStyle({
@@ -59,8 +71,7 @@ module.exports = withDotenv(
         modifyVars: antdVariables,
       },
       webpack: webpackConfig,
-      target: 'serverless',
-      env,
+      ...nextConfig,
     }),
   ),
 );

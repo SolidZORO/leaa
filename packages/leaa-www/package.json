@@ -24,6 +24,7 @@
     "---------------------------------------------------------------------- PROD ----": "----",
     "build": "yarn clear && NODE_ENV=production next build && tsc --project tsconfig.build.json",
     "start-by-next": "NODE_ENV=production next start",
+    "export": "next build && NODE_ENV=production next export",
     "start": "NODE_ENV=production node ./index.js",
     "---------------------------------------------------------------------- ALIAS ----": "----",
     "u": "yarn upgrade-interactive --latest"

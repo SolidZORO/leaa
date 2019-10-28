@@ -2483,14 +2483,6 @@
   resolved "https://registry.npm.taobao.org/@sindresorhus/is/download/@sindresorhus/is-0.14.0.tgz#9fb3a3cf3132328151f353de4632e01e52102bea"
   integrity sha1-n7OjzzEyMoFR81PeRjLgHlIQK+o=
 
-"@sindresorhus/slugify@^0.9.1":
-  version "0.9.1"
-  resolved "https://registry.npm.taobao.org/@sindresorhus/slugify/download/@sindresorhus/slugify-0.9.1.tgz#892ad24d70b442c0a14fe519cb4019d59bc5069f"
-  integrity sha1-iSrSTXC0QsChT+UZy0AZ1ZvFBp8=
-  dependencies:
-    escape-string-regexp "^1.0.5"
-    lodash.deburr "^4.1.0"
-
 "@szmarczak/http-timer@^1.1.2":
   version "1.1.2"
   resolved "https://registry.npm.taobao.org/@szmarczak/http-timer/download/@szmarczak/http-timer-1.1.2.tgz#b1665e2c461a2cd92f4c1bbf50d5454de0d4b421"
@@ -11330,11 +11322,6 @@ lodash.debounce@^4.0.0, lodash.debounce@^4.0.8:
   version "4.0.8"
   resolved "https://registry.npm.taobao.org/lodash.debounce/download/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
   integrity sha1-gteb/zCmfEAF/9XiUVMArZyk168=
-
-lodash.deburr@^4.1.0:
-  version "4.1.0"
-  resolved "https://registry.npm.taobao.org/lodash.deburr/download/lodash.deburr-4.1.0.tgz#ddb1bbb3ef07458c0177ba07de14422cb033ff9b"
-  integrity sha1-3bG7s+8HRYwBd7oH3hRCLLAz/5s=
 
 lodash.get@^4.4.2:
   version "4.4.2"

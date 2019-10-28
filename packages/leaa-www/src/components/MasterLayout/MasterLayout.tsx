@@ -27,8 +27,6 @@ interface IProps extends IPageProps {
 }
 
 export const MasterLayout = (props: IProps) => {
-  console.log(props.router);
-
   const pageClassName =
     props && props.router.pathname ? `page-${urlUtil.routerPathToClassName(props.router.pathname)}` : null;
 
