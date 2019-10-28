@@ -1,7 +1,7 @@
 {
   "name": "@leaa/www",
   "author": "solidzoro@live.com",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "private": false,
   "sideEffect": false,
   "license": "BSD-3-Clause-Clear",
