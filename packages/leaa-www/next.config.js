@@ -49,6 +49,7 @@ const nextConfig = {
   env,
   // target: 'serverless',
   target: 'server',
+  exportTrailingSlash: true,
   // exportPathMap: async (defaultPathMap, { dev, dir, outDir, distDir, buildId }) => {
   //   return {
   //     '/': { page: '/' },
