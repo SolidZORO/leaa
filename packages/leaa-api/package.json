@@ -81,6 +81,7 @@
     "reflect-metadata": "^0.1.12",
     "request": "^2.88.0",
     "rimraf": "^3.0.0",
+    "rxjs": "^6.5.3",
     "supertest": "^4.0.2",
     "typeorm": "^0.2.20",
     "uuid": "^3.3.3",
