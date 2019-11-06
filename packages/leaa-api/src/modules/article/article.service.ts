@@ -106,9 +106,12 @@ export class ArticleService {
 
   contentHtmlToText(content?: string, title?: string): string {
     const resultTitle = `${title || ''}\n\n`;
+    let resultText = '';
 
-    // @see https://github.com/werk85/node-html-to-text
-    const resultText = htmlToText.fromString(content, { wordwrap: false, ignoreHref: true });
+    if (content) {
+      // @see https://github.com/werk85/node-html-to-text
+      resultText = htmlToText.fromString(content, { wordwrap: false, ignoreHref: true });
+    }
 
     return resultTitle + resultText;
   }
