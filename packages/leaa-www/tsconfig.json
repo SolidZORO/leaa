@@ -14,16 +14,16 @@
     "noEmit": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "types": ["node", "jest"],
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "skipLibCheck": true,
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "types": ["node", "jest"],
     "paths": {
       "@leaa/common/*": ["../_leaa-common/*"],
       "@leaa/www/*": ["./*"]
     }
   },
-  "include": ["**/*", "typings/*"],
+  "include": ["src/**/*", "typings/*"],
   "exclude": ["node_modules", "_dist"]
 }
