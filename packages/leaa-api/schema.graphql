@@ -144,6 +144,30 @@ type Category {
   key: String
 }
 
+type Coupon {
+  id: Int!
+  created_at: DateTime!
+  updated_at: DateTime
+  deleted_at: DateTime
+  code: String
+  type: String!
+  slug: String!
+  amount: Float!
+  promo_id: Int
+  promo_code: String
+  over_amount: Float!
+  user_id: Int!
+  order_id: Int
+  order_serial: String
+  available_product_ids: String!
+  unavailable_product_ids: String!
+  start_time: DateTime
+  expire_time: DateTime
+  convert_method: String
+  creator_id: Int!
+  status: Int
+}
+
 input CreateArticleInput {
   title: String!
   slug: String

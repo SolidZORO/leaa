@@ -22,6 +22,7 @@ import { PermissionModule } from '@leaa/api/src/modules/permission/permission.mo
 import { SettingModule } from '@leaa/api/src/modules/setting/setting.module';
 import { OauthModule } from '@leaa/api/src/modules/oauth/oauth.module';
 import { TagModule } from '@leaa/api/src/modules/tag/tag.module';
+import { CouponModule } from '@leaa/api/src/modules/coupon/coupon.module';
 
 @Module({
   imports: [
@@ -50,6 +51,7 @@ import { TagModule } from '@leaa/api/src/modules/tag/tag.module';
     SettingModule,
     OauthModule,
     TagModule,
+    CouponModule,
   ],
   providers: [ConfigModule, AuthModule, UserModule],
   controllers: [],

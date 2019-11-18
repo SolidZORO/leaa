@@ -9,3 +9,4 @@ export { Ax } from './ax.entity';
 export { Setting } from './setting.entity';
 export { Oauth, OauthPlatform } from './oauth.entity';
 export { Tag } from './tag.entity';
+export { Coupon } from './coupon.entity';
