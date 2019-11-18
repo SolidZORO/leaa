@@ -2,14 +2,13 @@ import { Repository } from 'typeorm';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 
-import { Coupon, Category } from '@leaa/common/src/entrys';
+import { Coupon } from '@leaa/common/src/entrys';
 import { CreateCouponInput, UpdateCouponInput } from '@leaa/common/src/dtos/coupon';
 import { CouponService } from '@leaa/api/src/modules/coupon/coupon.service';
 
 describe('CouponService', () => {
   let couponService: CouponService;
   const ARTICLE_REPOSITORY_MOCK: Repository<Coupon> = new Repository<Coupon>();
-  const CATEGORY_REPOSITORY_MOCK: Repository<Category> = new Repository<Category>();
 
   beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -18,10 +17,6 @@ describe('CouponService', () => {
         {
           provide: getRepositoryToken(Coupon),
           useValue: ARTICLE_REPOSITORY_MOCK,
-        },
-        {
-          provide: getRepositoryToken(Category),
-          useValue: CATEGORY_REPOSITORY_MOCK,
         },
       ],
     }).compile();
