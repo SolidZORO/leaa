@@ -32,6 +32,7 @@ export default {
   desktop: '电脑',
   banner: '题图',
   cover: '封面',
+  quantity: '数量',
   ax: '广告',
   ad: '广告',
   tag: '标签',

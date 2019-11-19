@@ -31,14 +31,8 @@ export class GraphqlService implements GqlOptionsFactory {
       formatError(error: any) {
         loggerUtil.error(JSON.stringify(error), CONSTRUCTOR_NAME);
 
-        console.log(error.message.error);
-
         if (error.message && error.message.error) {
           return new Error(error.message.error);
-        }
-
-        if (error.message && typeof error.message.includes('Database Error: ')) {
-          return new Error('Internal Server Error');
         }
 
         return error;

@@ -34,6 +34,8 @@ export const notValidateUserQuerys = [
   'attachment',
   'settings',
   'setting',
+  'tags',
+  'tag',
 ];
 
 export const permissions = shield(
@@ -65,6 +67,12 @@ export const permissions = shield(
       //
       settings: allow,
       setting: allow,
+      //
+      tags: allow,
+      tag: allow,
+      //
+      coupons: allow,
+      coupon: allow,
     },
     Mutation: {
       login: allow,
@@ -102,6 +110,14 @@ export const permissions = shield(
       createSetting: checkPermission('setting.create'),
       updateSetting: checkPermission('setting.update'),
       deleteSetting: checkPermission('setting.delete'),
+      //
+      createTag: checkPermission('tag.create'),
+      updateTag: checkPermission('tag.update'),
+      deleteTag: checkPermission('tag.delete'),
+      //
+      createCoupon: checkPermission('coupon.create'),
+      updateCoupon: checkPermission('coupon.update'),
+      deleteCoupon: checkPermission('coupon.delete'),
     },
   },
   {

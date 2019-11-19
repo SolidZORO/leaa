@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useMutation } from '@apollo/react-hooks';
 
 import { Category } from '@leaa/common/src/entrys';
-import { UpdateCategoryInput } from '@leaa/common/src/dtos/category';
+import { CreateCategoryInput } from '@leaa/common/src/dtos/category';
 import { IPage } from '@leaa/dashboard/src/interfaces';
 import { CREATE_CATEGORY } from '@leaa/common/src/graphqls';
 import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
@@ -24,7 +24,7 @@ export default (props: IPage) => {
   const [categoryInfoFormRef, setCategoryInfoFormRef] = useState<any>();
 
   // mutation
-  const [submitVariables, setSubmitVariables] = useState<{ category: UpdateCategoryInput }>();
+  const [submitVariables, setSubmitVariables] = useState<{ category: CreateCategoryInput }>();
   const [createCategoryMutate, createCategoryMutation] = useMutation<{ createCategory: Category }>(CREATE_CATEGORY, {
     variables: submitVariables,
     onError: e => message.error(e.message),
@@ -35,7 +35,7 @@ export default (props: IPage) => {
   });
 
   const onSubmit = async () => {
-    categoryInfoFormRef.props.form.validateFieldsAndScroll(async (err: any, formData: Category) => {
+    categoryInfoFormRef.props.form.validateFieldsAndScroll(async (err: any, formData: CreateCategoryInput) => {
       if (err) {
         message.error(err[Object.keys(err)[0]].errors[0].message);
 

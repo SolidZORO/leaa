@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useMutation } from '@apollo/react-hooks';
 
 import { Ax } from '@leaa/common/src/entrys';
-import { UpdateAxInput } from '@leaa/common/src/dtos/ax';
+import { CreateAxInput } from '@leaa/common/src/dtos/ax';
 import { IPage } from '@leaa/dashboard/src/interfaces';
 import { CREATE_AX } from '@leaa/common/src/graphqls';
 import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
@@ -24,7 +24,7 @@ export default (props: IPage) => {
   const [axInfoFormRef, setAxInfoFormRef] = useState<any>();
 
   // mutation
-  const [submitVariables, setSubmitVariables] = useState<{ ax: UpdateAxInput }>();
+  const [submitVariables, setSubmitVariables] = useState<{ ax: CreateAxInput }>();
   const [createAxMutate, createAxMutation] = useMutation<{ createAx: Ax }>(CREATE_AX, {
     variables: submitVariables,
     onError: e => message.error(e.message),
@@ -35,7 +35,7 @@ export default (props: IPage) => {
   });
 
   const onSubmit = async () => {
-    axInfoFormRef.props.form.validateFieldsAndScroll(async (err: any, formData: Ax) => {
+    axInfoFormRef.props.form.validateFieldsAndScroll(async (err: any, formData: CreateAxInput) => {
       if (err) {
         message.error(err[Object.keys(err)[0]].errors[0].message);
 

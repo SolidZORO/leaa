@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useMutation } from '@apollo/react-hooks';
 
 import { Role } from '@leaa/common/src/entrys';
-import { UpdateRoleInput } from '@leaa/common/src/dtos/role';
+import { CreateRoleInput } from '@leaa/common/src/dtos/role';
 import { IPage } from '@leaa/dashboard/src/interfaces';
 import { RoleInfoForm } from '@leaa/dashboard/src/pages/Role/_components/RoleInfoForm/RoleInfoForm';
 import { CREATE_ROLE } from '@leaa/common/src/graphqls';
@@ -23,7 +23,7 @@ export default (props: IPage) => {
   const [roleInfoFormRef, setRoleInfoFormRef] = useState<any>();
 
   // mutation
-  const [submitVariables, setSubmitVariables] = useState<{ role: UpdateRoleInput }>({ role: {} });
+  const [submitVariables, setSubmitVariables] = useState<{ role: CreateRoleInput }>();
   const [createRoleMutate, createRoleMutation] = useMutation<{ createRole: Role }>(CREATE_ROLE, {
     variables: submitVariables,
     onCompleted({ createRole }) {
@@ -34,9 +34,9 @@ export default (props: IPage) => {
 
   const onSubmit = async () => {
     let hasError = false;
-    let submitData: UpdateRoleInput = {};
+    let submitData: CreateRoleInput = {} as CreateRoleInput;
 
-    roleInfoFormRef.props.form.validateFieldsAndScroll(async (err: any, formData: Role) => {
+    roleInfoFormRef.props.form.validateFieldsAndScroll(async (err: any, formData: CreateRoleInput) => {
       if (err) {
         hasError = true;
         message.error(err[Object.keys(err)[0]].errors[0].message);

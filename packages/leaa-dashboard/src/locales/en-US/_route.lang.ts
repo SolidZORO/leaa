@@ -13,6 +13,7 @@ const ax = 'Ad';
 const tag = 'Tag';
 const attachment = 'Attachment';
 const setting = 'Setting';
+const coupon = 'Coupon';
 
 export default {
   home,
@@ -60,4 +61,8 @@ export default {
   editAttachment: `${_lang.edit}${attachment}`,
   //
   setting,
+  //
+  coupon,
+  createCoupon: `${_lang.create}${coupon}`,
+  editCoupon: `${_lang.edit}${coupon}`,
 };

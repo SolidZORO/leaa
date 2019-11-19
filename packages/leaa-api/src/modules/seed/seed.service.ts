@@ -6,7 +6,6 @@ import { CategoryService } from '@leaa/api/src/modules/category/category.service
 import { ArticleService } from '@leaa/api/src/modules/article/article.service';
 import { AxService } from '@leaa/api/src/modules/ax/ax.service';
 import { SettingService } from '@leaa/api/src/modules/setting/setting.service';
-import { AttachmentService } from '@leaa/api/src/modules/attachment/attachment.service';
 
 import {
   permissionsSeed,

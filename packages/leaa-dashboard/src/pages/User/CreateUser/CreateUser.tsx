@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useMutation } from '@apollo/react-hooks';
 
 import { User } from '@leaa/common/src/entrys';
-import { UpdateUserInput } from '@leaa/common/src/dtos/user';
+import { CreateUserInput } from '@leaa/common/src/dtos/user';
 import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { IPage } from '@leaa/dashboard/src/interfaces';
 import { CREATE_USER } from '@leaa/common/src/graphqls';
@@ -24,7 +24,7 @@ export default (props: IPage) => {
   const [userInfoFormRef, setUserInfoFormRef] = useState<any>();
 
   // mutation
-  const [submitVariables, setSubmitVariables] = useState<{ user: UpdateUserInput }>({ user: {} });
+  const [submitVariables, setSubmitVariables] = useState<{ user: CreateUserInput }>();
   const [createUserMutate, createUserMutation] = useMutation<{ createUser: User }>(CREATE_USER, {
     variables: submitVariables,
     onCompleted({ createUser }) {
@@ -35,9 +35,9 @@ export default (props: IPage) => {
 
   const onSubmit = async () => {
     let hasError = false;
-    let submitData: UpdateUserInput = {};
+    let submitData: CreateUserInput = {} as CreateUserInput;
 
-    userInfoFormRef.props.form.validateFieldsAndScroll(async (err: any, formData: User) => {
+    userInfoFormRef.props.form.validateFieldsAndScroll(async (err: any, formData: CreateUserInput) => {
       if (err) {
         hasError = true;
         message.error(err[Object.keys(err)[0]].errors[0].message);

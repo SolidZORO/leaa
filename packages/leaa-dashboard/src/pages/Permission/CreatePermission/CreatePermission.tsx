@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useMutation } from '@apollo/react-hooks';
 
 import { Permission } from '@leaa/common/src/entrys';
-import { UpdatePermissionInput } from '@leaa/common/src/dtos/permission';
+import { CreatePermissionInput } from '@leaa/common/src/dtos/permission';
 import { IPage } from '@leaa/dashboard/src/interfaces';
 // eslint-disable-next-line max-len
 import { PermissionInfoForm } from '@leaa/dashboard/src/pages/Permission/_components/PermissionInfoForm/PermissionInfoForm';
@@ -23,7 +23,7 @@ export default (props: IPage) => {
   const [permissionInfoFormRef, setPermissionInfoFormRef] = useState<any>();
 
   // mutation
-  const [submitVariables, setSubmitVariables] = useState<{ permission: UpdatePermissionInput }>({ permission: {} });
+  const [submitVariables, setSubmitVariables] = useState<{ permission: CreatePermissionInput }>();
   const [createPermissionMutate, createPermissionMutation] = useMutation<{ createPermission: Permission }>(
     CREATE_PERMISSION,
     {
@@ -38,9 +38,9 @@ export default (props: IPage) => {
 
   const onSubmit = async () => {
     let hasError = false;
-    let submitData: UpdatePermissionInput = {};
+    let submitData: CreatePermissionInput = {} as CreatePermissionInput;
 
-    permissionInfoFormRef.props.form.validateFieldsAndScroll(async (err: any, formData: Permission) => {
+    permissionInfoFormRef.props.form.validateFieldsAndScroll(async (err: any, formData: CreatePermissionInput) => {
       if (err) {
         hasError = true;
         message.error(err[Object.keys(err)[0]].errors[0].message);

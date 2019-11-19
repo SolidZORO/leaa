@@ -23,11 +23,11 @@ export class Coupon extends Base {
   @Field(() => Float)
   public amount?: number;
 
-  @Column({ type: 'int' })
+  @Column({ type: 'int', nullable: true })
   @Field(() => Int, { nullable: true })
   public promo_id?: number;
 
-  @Column({ type: 'varchar' })
+  @Column({ type: 'varchar', nullable: true })
   @Field(() => String, { nullable: true })
   public promo_code?: number;
 
@@ -39,20 +39,20 @@ export class Coupon extends Base {
   @Field(() => Int)
   public user_id?: number;
 
-  @Column({ type: 'int' })
+  @Column({ type: 'int', nullable: true })
   @Field(() => Int, { nullable: true })
   public order_id?: number;
 
-  @Column({ type: 'varchar' })
+  @Column({ type: 'varchar', nullable: true })
   @Field(() => String, { nullable: true })
   public order_serial?: number;
 
   @Column({ type: 'text', nullable: true })
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   public available_product_ids?: string;
 
   @Column({ type: 'text', nullable: true })
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   public unavailable_product_ids?: string;
 
   @Column({ nullable: true })

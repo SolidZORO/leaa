@@ -12,28 +12,32 @@ export class CreateCouponInput {
   public slug!: string;
 
   @IsNotEmpty()
+  @Field(() => Int)
+  public quantity!: number;
+
+  @IsNotEmpty()
   @Field(() => Float)
   public amount!: number;
 
   @IsOptional()
-  @Field(() => Float)
+  @Field(() => Float, { nullable: true })
   public over_amount?: number;
 
   @IsOptional()
-  @Field(() => Float)
+  @Field(() => String, { nullable: true })
   public available_product_ids?: string;
 
   @IsOptional()
-  @Field(() => Float)
+  @Field(() => String, { nullable: true })
   public unavailable_product_ids?: string;
 
   @IsNotEmpty()
-  @Field(() => Date, { nullable: true })
-  public start_time?: Date;
+  @Field(() => Date)
+  public start_time!: Date;
 
   @IsNotEmpty()
-  @Field(() => Date, { nullable: true })
-  public expire_time?: Date;
+  @Field(() => Date)
+  public expire_time!: Date;
 
   @IsNotEmpty()
   @Field(() => Int)

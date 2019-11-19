@@ -28,3 +28,6 @@ export * from './setting.fragment';
 
 export * from './tag.query';
 export * from './tag.mutation';
+
+export * from './coupon.query';
+export * from './coupon.mutation';

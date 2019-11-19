@@ -39,7 +39,6 @@ export class ArticleService {
     if (nextArgs.q) {
       const qLike = `%${nextArgs.q}%`;
 
-      console.log(qLike);
       qb.andWhere(`${PRIMARY_TABLE}.title LIKE :title`, { title: qLike });
       qb.andWhere(`${PRIMARY_TABLE}.slug LIKE :slug`, { slug: qLike });
     }
@@ -61,9 +60,7 @@ export class ArticleService {
     // order
     qb.orderBy(`${PRIMARY_TABLE}.${nextArgs.orderBy}`, nextArgs.orderSort);
 
-    const [items, total] = await qb.getManyAndCount();
-
-    return paginationUtil.calcPageInfo({ items, total, page: nextArgs.page, pageSize: nextArgs.pageSize });
+    return paginationUtil.calcQueryBuilderPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
   async article(id: number, args?: ArticleArgs & FindOneOptions<Article>): Promise<Article | undefined> {

@@ -8,9 +8,9 @@ import { Table, Icon, message } from 'antd';
 
 import { DEFAULT_PAGE_SIZE_OPTIONS } from '@leaa/dashboard/src/constants';
 import { GET_COUPONS, DELETE_COUPON } from '@leaa/common/src/graphqls';
-import { Ax } from '@leaa/common/src/entrys';
+import { Coupon } from '@leaa/common/src/entrys';
 import { IOrderSort } from '@leaa/common/src/dtos/_common';
-import { AxsWithPaginationObject, AxArgs } from '@leaa/common/src/dtos/ax';
+import { CouponsWithPaginationObject, CouponArgs } from '@leaa/common/src/dtos/coupon';
 import { urlUtil, tableUtil } from '@leaa/dashboard/src/utils';
 import { IPage } from '@leaa/dashboard/src/interfaces';
 import { PageCard } from '@leaa/dashboard/src/components/PageCard';
@@ -46,16 +46,16 @@ export default (props: IPage) => {
   );
 
   // query
-  const getAxsVariables = { page, pageSize, q, orderBy, orderSort };
-  const getAxsQuery = useQuery<{ axs: AxsWithPaginationObject }, AxArgs>(GET_COUPONS, {
-    variables: getAxsVariables,
+  const getCouponsVariables = { page, pageSize, q, orderBy, orderSort };
+  const getCouponsQuery = useQuery<{ coupons: CouponsWithPaginationObject }, CouponArgs>(GET_COUPONS, {
+    variables: getCouponsVariables,
     fetchPolicy: 'network-only',
   });
 
   // mutation
-  const [deleteAxMutate, deleteAxMutation] = useMutation<Ax>(DELETE_COUPON, {
+  const [deleteCouponMutate, deleteCouponMutation] = useMutation<Coupon>(DELETE_COUPON, {
     onCompleted: () => message.success(t('_lang:deletedSuccessfully')),
-    refetchQueries: () => [{ query: GET_COUPONS, variables: getAxsVariables }],
+    refetchQueries: () => [{ query: GET_COUPONS, variables: getCouponsVariables }],
   });
 
   const resetUrlParams = () => {
@@ -82,15 +82,15 @@ export default (props: IPage) => {
     {
       title: 'ID',
       dataIndex: 'id',
-      width: 50,
+      width: 80,
       render: (text: string) => <TableColumnId id={text} />,
     },
     {
-      title: t('_lang:title'),
-      dataIndex: 'title',
+      title: t('_lang:code'),
+      dataIndex: 'code',
       sorter: true,
-      sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'title'),
-      render: (text: string, record: Ax) => <Link to={`${props.route.path}/${record.id}`}>{record.title}</Link>,
+      sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'code'),
+      render: (text: string, record: Coupon) => <Link to={`${props.route.path}/${record.id}`}>{record.code}</Link>,
     },
     {
       title: t('_lang:slug'),
@@ -101,7 +101,7 @@ export default (props: IPage) => {
     {
       title: t('_lang:status'),
       dataIndex: 'status',
-      render: (text: string, record: Ax) => <SwitchNumber value={Number(record.status)} size="small" disabled />,
+      render: (text: string, record: Coupon) => <SwitchNumber value={Number(record.status)} size="small" disabled />,
     },
     {
       title: t('_lang:created_at'),
@@ -114,12 +114,12 @@ export default (props: IPage) => {
       title: t('_lang:action'),
       dataIndex: 'operation',
       width: 60,
-      render: (text: string, record: Ax) => (
+      render: (text: string, record: Coupon) => (
         <TableColumnDeleteButton
           id={record.id}
-          fieldName={record.title}
-          loading={deleteAxMutation.loading}
-          onClick={async () => deleteAxMutate({ variables: { id: Number(record.id) } })}
+          fieldName={record.code}
+          loading={deleteCouponMutation.loading}
+          onClick={async () => deleteCouponMutate({ variables: { id: Number(record.id) } })}
         />
       ),
     },
@@ -154,25 +154,25 @@ export default (props: IPage) => {
         />
       }
       className={style['wapper']}
-      loading={getAxsQuery.loading}
+      loading={getCouponsQuery.loading}
     >
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
-      {getAxsQuery.error ? <ErrorCard error={getAxsQuery.error} /> : null}
-      {deleteAxMutation.error ? <ErrorCard error={deleteAxMutation.error} /> : null}
+      {getCouponsQuery.error ? <ErrorCard error={getCouponsQuery.error} /> : null}
+      {deleteCouponMutation.error ? <ErrorCard error={deleteCouponMutation.error} /> : null}
 
-      {getAxsQuery.data && getAxsQuery.data.axs && getAxsQuery.data.axs.items && (
+      {getCouponsQuery.data && getCouponsQuery.data.coupons && getCouponsQuery.data.coupons.items && (
         <TableCard selectedRowKeys={selectedRowKeys}>
           <Table
             rowKey="id"
             size="small"
             rowSelection={rowSelection}
             columns={columns}
-            dataSource={getAxsQuery.data.axs.items}
+            dataSource={getCouponsQuery.data.coupons.items}
             pagination={{
               defaultCurrent: page,
               defaultPageSize: pageSize,
-              total: getAxsQuery.data.axs.total,
+              total: getCouponsQuery.data.coupons.total,
               current: page,
               pageSize,
               //

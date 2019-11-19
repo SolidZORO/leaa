@@ -1,5 +1,6 @@
+import uuid from 'uuid';
 import { Injectable } from '@nestjs/common';
-import { Repository, FindOneOptions, getRepository, SelectQueryBuilder } from 'typeorm';
+import { Repository, FindOneOptions, getRepository, Transaction, SelectQueryBuilder } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { Coupon, User } from '@leaa/common/src/entrys';
@@ -10,7 +11,7 @@ import {
   CreateCouponInput,
   UpdateCouponInput,
 } from '@leaa/common/src/dtos/coupon';
-import { formatUtil, loggerUtil, permissionUtil, curdUtil } from '@leaa/api/src/utils';
+import { formatUtil, permissionUtil, curdUtil, paginationUtil } from '@leaa/api/src/utils';
 
 const CONSTRUCTOR_NAME = 'CouponService';
 
@@ -27,7 +28,7 @@ export class CouponService {
     if (nextArgs.q) {
       const aliasName = new SelectQueryBuilder(qb).alias;
 
-      ['title', 'slug'].forEach(q => {
+      ['code', 'slug'].forEach(q => {
         qb.andWhere(`${aliasName}.${q} LIKE :${q}`, { [q]: `%${nextArgs.q}%` });
       });
     }
@@ -36,14 +37,7 @@ export class CouponService {
       qb.andWhere('status = :status', { status: 1 });
     }
 
-    const [items, total] = await qb.getManyAndCount();
-
-    return {
-      items,
-      total,
-      page: nextArgs.page || 1,
-      pageSize: nextArgs.pageSize || 30,
-    };
+    return paginationUtil.calcQueryBuilderPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
   async coupon(id: number, args?: CouponArgs & FindOneOptions<Coupon>, user?: User): Promise<Coupon | undefined> {
@@ -65,26 +59,27 @@ export class CouponService {
     });
   }
 
-  async couponBySlug(
-    slug: string,
-    args?: CouponArgs & FindOneOptions<Coupon>,
-    user?: User,
-  ): Promise<Coupon | undefined> {
-    const coupon = await this.couponRepository.findOne({ where: { slug } });
-
-    if (!coupon) {
-      const message = 'not found coupon';
-
-      loggerUtil.warn(message, CONSTRUCTOR_NAME);
-
-      return undefined;
-    }
-
-    return this.coupon(coupon.id, args, user);
+  generateCouponCode(prefix: string): string {
+    return `${prefix}${uuid
+      .v4()
+      .replace(/-/g, '')
+      .slice(0, 15)}`.toUpperCase();
   }
 
   async createCoupon(args: CreateCouponInput): Promise<Coupon | undefined> {
-    return this.couponRepository.save({ ...args });
+    const couponInputs = [];
+
+    for (let i = 0; i < args.quantity; i += 1) {
+      couponInputs.push({
+        ...args,
+        code: this.generateCouponCode('C'),
+      });
+    }
+
+    // TODO: The best way is to pre-generate the list of pairs.
+    const result = await this.couponRepository.save(couponInputs);
+
+    return result && result[0];
   }
 
   async updateCoupon(id: number, args: UpdateCouponInput): Promise<Coupon | undefined> {

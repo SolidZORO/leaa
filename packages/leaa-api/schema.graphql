@@ -159,13 +159,22 @@ type Coupon {
   user_id: Int!
   order_id: Int
   order_serial: String
-  available_product_ids: String!
-  unavailable_product_ids: String!
+  available_product_ids: String
+  unavailable_product_ids: String
   start_time: DateTime
   expire_time: DateTime
   convert_method: String
   creator_id: Int!
   status: Int
+}
+
+type CouponsWithPaginationObject {
+  page: Int
+  pageSize: Int!
+  nextPage: Int
+  itemsCount: Int!
+  total: Int!
+  items: [Coupon!]!
 }
 
 input CreateArticleInput {
@@ -214,6 +223,19 @@ input CreateCategoryInput {
   slug: String!
   parent_id: Int
   description: String
+}
+
+input CreateCouponInput {
+  type: String!
+  slug: String!
+  quantity: Int!
+  amount: Float!
+  over_amount: Float
+  available_product_ids: String
+  unavailable_product_ids: String
+  start_time: DateTime!
+  expire_time: DateTime!
+  status: Int!
 }
 
 input CreatePermissionInput {
@@ -292,6 +314,9 @@ type Mutation {
   syncTagsToDictFile: SyncTagsToFileObject!
   updateTag(tag: UpdateTagInput!, id: Int!): Tag!
   deleteTag(id: Int!): Tag!
+  createCoupon(coupon: CreateCouponInput!): Coupon!
+  updateCoupon(coupon: UpdateCouponInput!, id: Int!): Coupon!
+  deleteCoupon(id: Int!): Coupon!
 }
 
 type Oauth {
@@ -346,31 +371,33 @@ type PermissionsWithPaginationObject {
 }
 
 type Query {
-  roles(page: Int = 1, pageSize: Int = 30, orderBy: String = "created_at", orderSort: String = "DESC", q: String): RolesWithPaginationObject!
+  roles(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): RolesWithPaginationObject!
   role(id: Int!): Role!
-  permissions(page: Int = 1, pageSize: Int = 30, orderBy: String = "created_at", orderSort: String = "DESC", q: String): PermissionsWithPaginationObject!
+  permissions(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): PermissionsWithPaginationObject!
   permission(id: Int!): Permission!
   ram: Float!
-  users(page: Int = 1, pageSize: Int = 30, orderBy: String = "created_at", orderSort: String = "DESC", q: String): UsersWithPaginationObject!
+  users(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): UsersWithPaginationObject!
   user(id: Int!): User!
   userByToken(token: String): User!
-  articles(page: Int = 1, pageSize: Int = 30, orderBy: String = "created_at", orderSort: String = "DESC", q: String, tagName: String, categoryName: String, categoryId: Int): ArticlesWithPaginationObject!
+  articles(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String, tagName: String, categoryName: String, categoryId: Int): ArticlesWithPaginationObject!
   article(id: Int!): Article!
   articleBySlug(slug: String!): Article!
-  categories(page: Int = 1, pageSize: Int = 30, orderBy: String = "created_at", orderSort: String = "DESC", q: String, type: String = "list"): CategoriesWithPaginationObject!
+  categories(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String, type: String = "list"): CategoriesWithPaginationObject!
   categoriesByTree: CategoriesWithTreeObject!
   category(id: Int!): Category!
-  axs(page: Int = 1, pageSize: Int = 30, orderBy: String = "created_at", orderSort: String = "DESC", q: String): AxsWithPaginationObject!
+  axs(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): AxsWithPaginationObject!
   ax(id: Int!): Ax!
   axBySlug(slug: String!): Ax!
-  attachments(page: Int = 1, pageSize: Int = 30, orderBy: String = "created_at", orderSort: String = "DESC", q: String, type: String, moduleName: String, moduleId: Int, moduleType: String, category_id: Int, user_id: Int, refreshHash: Int): AttachmentsWithPaginationObject!
+  attachments(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String, type: String, moduleName: String, moduleId: Int, moduleType: String, category_id: Int, user_id: Int, refreshHash: Int): AttachmentsWithPaginationObject!
   attachment(uuid: String!): Attachment!
-  settings(page: Int = 1, pageSize: Int = 30, orderBy: String = "created_at", orderSort: String = "DESC", q: String): SettingsWithPaginationObject!
+  settings(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): SettingsWithPaginationObject!
   setting(id: Int!): Setting!
   settingBySlug(slug: String!): Setting!
-  tags(page: Int = 1, pageSize: Int = 30, orderBy: String = "created_at", orderSort: String = "DESC", q: String): TagsWithPaginationObject!
+  tags(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): TagsWithPaginationObject!
   tag(id: Int!): Tag!
   tagByName(name: String!): Tag!
+  coupons(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): CouponsWithPaginationObject!
+  coupon(id: Int!): Coupon!
 }
 
 type Role {
@@ -485,6 +512,12 @@ input UpdateCategoryInput {
   slug: String!
   parent_id: Int
   description: String
+}
+
+input UpdateCouponInput {
+  start_time: DateTime
+  expire_time: DateTime
+  status: Int
 }
 
 input UpdatePermissionInput {

@@ -3,17 +3,17 @@ import { Button, message } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useMutation } from '@apollo/react-hooks';
 
-import { Tag } from '@leaa/common/src/entrys';
-import { CreateTagInput } from '@leaa/common/src/dtos/tag';
+import { Coupon } from '@leaa/common/src/entrys';
+import { CreateCouponInput } from '@leaa/common/src/dtos/coupon';
 import { IPage } from '@leaa/dashboard/src/interfaces';
-import { CREATE_TAG } from '@leaa/common/src/graphqls';
+import { CREATE_COUPON } from '@leaa/common/src/graphqls';
 import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { PageCard } from '@leaa/dashboard/src/components/PageCard';
 import { HtmlMeta } from '@leaa/dashboard/src/components/HtmlMeta';
 import { SubmitBar } from '@leaa/dashboard/src/components/SubmitBar/SubmitBar';
 import { ErrorCard } from '@leaa/dashboard/src/components/ErrorCard';
 
-import { TagInfoForm } from '@leaa/dashboard/src/pages/Tag/_components/TagInfoForm/TagInfoForm';
+import { CouponInfoForm } from '@leaa/dashboard/src/pages/Coupon/_components/CouponInfoForm/CouponInfoForm';
 
 import style from './style.less';
 
@@ -21,39 +21,39 @@ export default (props: IPage) => {
   const { t } = useTranslation();
 
   // ref
-  const [tagInfoFormRef, setTagInfoFormRef] = useState<any>();
+  const [couponInfoFormRef, setCouponInfoFormRef] = useState<any>();
 
   // mutation
-  const [submitVariables, setSubmitVariables] = useState<{ tag: CreateTagInput }>();
-  const [createTagMutate, createTagMutation] = useMutation<{ createTag: Tag }>(CREATE_TAG, {
+  const [submitVariables, setSubmitVariables] = useState<{ coupon: CreateCouponInput }>();
+  const [createCouponMutate, createCouponMutation] = useMutation<{ createCoupon: Coupon }>(CREATE_COUPON, {
     variables: submitVariables,
     onError: e => message.error(e.message),
-    onCompleted({ createTag }) {
+    onCompleted({ createCoupon }) {
       message.success(t('_lang:createdSuccessfully'));
-      props.history.push(`/tags/${createTag.id}`);
+      props.history.push(`/coupons/${createCoupon.id}`);
     },
   });
 
   const onSubmit = async () => {
-    tagInfoFormRef.props.form.validateFieldsAndScroll(async (err: any, formData: CreateTagInput) => {
+    couponInfoFormRef.props.form.validateFieldsAndScroll(async (err: any, formData: CreateCouponInput) => {
       if (err) {
         message.error(err[Object.keys(err)[0]].errors[0].message);
 
         return;
       }
 
-      await setSubmitVariables({ tag: formData });
-      await createTagMutate();
+      await setSubmitVariables({ coupon: formData });
+      await createCouponMutate();
     });
   };
 
   return (
-    <PageCard title={t(`${props.route.namei18n}`)} className={style['wapper']} loading={createTagMutation.loading}>
+    <PageCard title={t(`${props.route.namei18n}`)} className={style['wapper']} loading={createCouponMutation.loading}>
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
-      {createTagMutation.error ? <ErrorCard error={createTagMutation.error} /> : null}
+      {createCouponMutation.error ? <ErrorCard error={createCouponMutation.error} /> : null}
 
-      <TagInfoForm wrappedComponentRef={(inst: unknown) => setTagInfoFormRef(inst)} />
+      <CouponInfoForm wrappedComponentRef={(inst: unknown) => setCouponInfoFormRef(inst)} />
 
       <SubmitBar>
         <Button
@@ -61,7 +61,7 @@ export default (props: IPage) => {
           size="large"
           icon={CREATE_BUTTON_ICON}
           className="submit-button"
-          loading={createTagMutation.loading}
+          loading={createCouponMutation.loading}
           onClick={onSubmit}
         >
           {t('_lang:create')}

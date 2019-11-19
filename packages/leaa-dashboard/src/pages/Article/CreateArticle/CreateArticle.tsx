@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useMutation } from '@apollo/react-hooks';
 
 import { Article } from '@leaa/common/src/entrys';
-import { UpdateArticleInput } from '@leaa/common/src/dtos/article';
+import { CreateArticleInput } from '@leaa/common/src/dtos/article';
 import { IPage } from '@leaa/dashboard/src/interfaces';
 import { CREATE_ARTICLE } from '@leaa/common/src/graphqls';
 import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
@@ -24,7 +24,7 @@ export default (props: IPage) => {
   const [articleInfoFormRef, setArticleInfoFormRef] = useState<any>();
 
   // mutation
-  const [submitVariables, setSubmitVariables] = useState<{ article: UpdateArticleInput }>();
+  const [submitVariables, setSubmitVariables] = useState<{ article: CreateArticleInput }>();
   const [createArticleMutate, createArticleMutation] = useMutation<{ createArticle: Article }>(CREATE_ARTICLE, {
     variables: submitVariables,
     onError: e => message.error(e.message),
@@ -35,7 +35,7 @@ export default (props: IPage) => {
   });
 
   const onSubmit = async () => {
-    articleInfoFormRef.props.form.validateFieldsAndScroll(async (err: any, formData: Article) => {
+    articleInfoFormRef.props.form.validateFieldsAndScroll(async (err: any, formData: CreateArticleInput) => {
       if (err) {
         message.error(err[Object.keys(err)[0]].errors[0].message);
 

@@ -13,6 +13,7 @@ const ax = '广告';
 const tag = '标签';
 const attachment = '附件';
 const setting = '设置';
+const coupon = '代金券';
 
 export default {
   home,
@@ -60,4 +61,8 @@ export default {
   editAttachment: `${_lang.edit}${attachment}`,
   //
   setting,
+  //
+  coupon,
+  createCoupon: `${_lang.create}${coupon}`,
+  editCoupon: `${_lang.edit}${coupon}`,
 };

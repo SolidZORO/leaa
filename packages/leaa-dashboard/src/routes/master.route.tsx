@@ -262,6 +262,46 @@ export const masterRoutes: IRouteItem[] = [
   //
   //
   {
+    name: 'Create Coupon',
+    namei18n: '_route:createCoupon',
+    permission: 'coupon.create',
+    path: '/coupons/create',
+    icon: 'money-collect',
+    LazyComponent: React.lazy(() =>
+      import(/* webpackChunkName: 'CreateCoupon' */ '../pages/Coupon/CreateCoupon/CreateCoupon'),
+    ),
+    exact: true,
+    isCreate: true,
+  },
+  {
+    name: 'Edit Coupon',
+    namei18n: '_route:editCoupon',
+    permission: 'coupon.item',
+    path: '/coupons/:id(\\d+)',
+    icon: 'money-collect',
+    LazyComponent: React.lazy(() =>
+      import(/* webpackChunkName: 'EditCoupon' */ '../pages/Coupon/EditCoupon/EditCoupon'),
+    ),
+    exact: true,
+  },
+  {
+    name: 'Coupon',
+    namei18n: '_route:coupon',
+    permission: 'coupon.list',
+    path: '/coupons',
+    icon: 'money-collect',
+    LazyComponent: React.lazy(() =>
+      import(/* webpackChunkName: 'CouponList' */ '../pages/Coupon/CouponList/CouponList'),
+    ),
+    canCreate: true,
+    exact: true,
+  },
+  //
+  //
+  //
+  //
+  //
+  {
     name: 'Setting',
     namei18n: '_route:setting',
     permission: 'setting.list',

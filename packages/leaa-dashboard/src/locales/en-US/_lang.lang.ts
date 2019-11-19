@@ -32,6 +32,7 @@ export default {
   desktop: 'Desktop',
   banner: 'Banner',
   cover: 'Cover',
+  quantity: 'Quantity',
   ax: 'Ad',
   ad: 'Ad',
   tag: 'Tag',
