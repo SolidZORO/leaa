@@ -8,12 +8,10 @@ import { CreateCouponInput } from '@leaa/common/src/dtos/coupon';
 import { IPage } from '@leaa/dashboard/src/interfaces';
 import { CREATE_COUPON } from '@leaa/common/src/graphqls';
 import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
-import { PageCard } from '@leaa/dashboard/src/components/PageCard';
-import { HtmlMeta } from '@leaa/dashboard/src/components/HtmlMeta';
-import { SubmitBar } from '@leaa/dashboard/src/components/SubmitBar/SubmitBar';
-import { ErrorCard } from '@leaa/dashboard/src/components/ErrorCard';
 
-import { CouponInfoForm } from '@leaa/dashboard/src/pages/Coupon/_components/CouponInfoForm/CouponInfoForm';
+import { HtmlMeta, PageCard, ErrorCard, SubmitBar } from '@leaa/dashboard/src/components';
+
+import { CouponInfoForm } from '../_components/CouponInfoForm/CouponInfoForm';
 
 import style from './style.less';
 
@@ -28,9 +26,9 @@ export default (props: IPage) => {
   const [createCouponMutate, createCouponMutation] = useMutation<{ createCoupon: Coupon }>(CREATE_COUPON, {
     variables: submitVariables,
     onError: e => message.error(e.message),
-    onCompleted({ createCoupon }) {
+    onCompleted() {
       message.success(t('_lang:createdSuccessfully'));
-      props.history.push(`/coupons/${createCoupon.id}`);
+      props.history.push('/coupons');
     },
   });
 

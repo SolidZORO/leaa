@@ -6,8 +6,8 @@ import { FormComponentProps } from 'antd/lib/form';
 
 import { Category } from '@leaa/common/src/entrys';
 import { ITfn } from '@leaa/dashboard/src/interfaces';
-import { FormCard } from '@leaa/dashboard/src/components/FormCard';
-import { SelectCategoryIdByTree } from '@leaa/dashboard/src/components/SelectCategoryIdByTree';
+
+import { FormCard, SelectCategoryIdByTree } from '@leaa/dashboard/src/components';
 
 import style from './style.less';
 

@@ -7,8 +7,8 @@ import logo from '@leaa/dashboard/src/assets/images/logo/logo-black.svg';
 import { IPage } from '@leaa/dashboard/src/interfaces';
 import { authUtil } from '@leaa/dashboard/src/utils';
 import { LOGIN_REDIRECT_URL } from '@leaa/dashboard/src/constants';
-import { SwitchLanguage } from '@leaa/dashboard/src/components/SwitchLanguage';
-import { HtmlMeta } from '@leaa/dashboard/src/components/HtmlMeta';
+import { HtmlMeta, SwitchLanguage } from '@leaa/dashboard/src/components';
+
 import { LoginForm } from './_components/LoginForm/LoginForm';
 
 import style from './style.less';

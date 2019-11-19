@@ -7,8 +7,8 @@ import zhCN from 'antd/lib/locale-provider/zh_CN';
 import enUS from 'antd/lib/locale-provider/en_US';
 
 import { apolloClient, history } from '@leaa/dashboard/src/libs';
-import { ErrorBoundary } from '@leaa/dashboard/src/components/ErrorBoundary';
-import { RefreshFlatePermissions } from '@leaa/dashboard/src/components/RefreshFlatePermissions';
+
+import { ErrorBoundary, RefreshFlatePermissions } from '@leaa/dashboard/src/components';
 
 import { masterRoute, authRoute, otherRoute } from '@leaa/dashboard/src/routes';
 import { initStore, StoreProvider } from '@leaa/dashboard/src/stores';

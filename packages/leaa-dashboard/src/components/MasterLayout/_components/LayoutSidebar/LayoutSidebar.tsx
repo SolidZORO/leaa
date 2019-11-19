@@ -9,8 +9,9 @@ import { IRouteItem } from '@leaa/dashboard/src/interfaces';
 import { masterRoutes, flateMasterRoutes } from '@leaa/dashboard/src/routes/master.route';
 import { authUtil, deviceUtil } from '@leaa/dashboard/src/utils';
 import { ALLOW_PERMISSION, SIDERBAR_COLLAPSED_SL_KEY } from '@leaa/dashboard/src/constants';
-import { SwitchLanguage } from '@leaa/dashboard/src/components/SwitchLanguage';
-import { SidebarTarget } from '@leaa/dashboard/src/components/MasterLayout/_components/SidebarTarget/SidebarTarget';
+import { SwitchLanguage } from '@leaa/dashboard/src/components';
+
+import { SidebarTarget } from '../SidebarTarget/SidebarTarget';
 
 import style from './style.less';
 

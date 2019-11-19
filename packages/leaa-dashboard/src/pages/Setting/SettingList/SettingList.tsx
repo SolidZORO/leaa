@@ -20,12 +20,11 @@ import {
   UpdateSettingsInput,
 } from '@leaa/common/src/dtos/setting';
 import { IPage } from '@leaa/dashboard/src/interfaces';
-import { SettingListForm } from '@leaa/dashboard/src/pages/Setting/_components/SettingListForm/SettingListForm';
-import { SettingModalForm } from '@leaa/dashboard/src/pages/Setting/_components/SettingModalForm/SettingModalForm';
-import { PageCard } from '@leaa/dashboard/src/components/PageCard';
-import { HtmlMeta } from '@leaa/dashboard/src/components/HtmlMeta';
-import { ErrorCard } from '@leaa/dashboard/src/components/ErrorCard';
-import { SubmitBar } from '@leaa/dashboard/src/components/SubmitBar';
+
+import { HtmlMeta, PageCard, ErrorCard, SubmitBar } from '@leaa/dashboard/src/components';
+
+import { SettingListForm } from '../_components/SettingListForm/SettingListForm';
+import { SettingModalForm } from '../_components/SettingModalForm/SettingModalForm';
 
 import style from './style.less';
 

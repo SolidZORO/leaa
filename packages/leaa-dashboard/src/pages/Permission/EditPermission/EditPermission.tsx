@@ -8,10 +8,8 @@ import { GET_PERMISSION, UPDATE_PERMISSION } from '@leaa/common/src/graphqls';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { PermissionArgs, UpdatePermissionInput } from '@leaa/common/src/dtos/permission';
 import { IPage } from '@leaa/dashboard/src/interfaces';
-import { PageCard } from '@leaa/dashboard/src/components/PageCard';
-import { HtmlMeta } from '@leaa/dashboard/src/components/HtmlMeta';
-import { ErrorCard } from '@leaa/dashboard/src/components/ErrorCard';
-import { SubmitBar } from '@leaa/dashboard/src/components/SubmitBar/SubmitBar';
+
+import { HtmlMeta, PageCard, ErrorCard, SubmitBar } from '@leaa/dashboard/src/components';
 
 import { PermissionInfoForm } from '../_components/PermissionInfoForm/PermissionInfoForm';
 

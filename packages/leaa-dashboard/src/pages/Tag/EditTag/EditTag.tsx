@@ -8,10 +8,8 @@ import { GET_TAG, UPDATE_TAG } from '@leaa/common/src/graphqls';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { TagArgs, UpdateTagInput } from '@leaa/common/src/dtos/tag';
 import { IPage } from '@leaa/dashboard/src/interfaces';
-import { PageCard } from '@leaa/dashboard/src/components/PageCard';
-import { ErrorCard } from '@leaa/dashboard/src/components/ErrorCard';
-import { HtmlMeta } from '@leaa/dashboard/src/components/HtmlMeta';
-import { SubmitBar } from '@leaa/dashboard/src/components/SubmitBar/SubmitBar';
+
+import { HtmlMeta, PageCard, ErrorCard, SubmitBar } from '@leaa/dashboard/src/components';
 
 import { TagInfoForm } from '../_components/TagInfoForm/TagInfoForm';
 

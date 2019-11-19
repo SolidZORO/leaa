@@ -1,11 +1,10 @@
 import React from 'react';
-import { Divider, Input } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 import { IPage } from '@leaa/dashboard/src/interfaces';
 import { useStore } from '@leaa/dashboard/src/stores';
-import { HtmlMeta } from '@leaa/dashboard/src/components/HtmlMeta';
-import { SelectTagId } from '@leaa/dashboard/src/components/SelectTagId';
+
+import { HtmlMeta, SelectTagId } from '@leaa/dashboard/src/components';
 
 export default (props: IPage) => {
   const { t } = useTranslation();
@@ -27,7 +26,7 @@ export default (props: IPage) => {
 
       <h2>TAG</h2>
 
-      <SelectTagId />
+      <SelectTagId selectedTagsMaxLength={5} />
 
       {/* <h2>STORE</h2> */}
 

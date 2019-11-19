@@ -5,7 +5,9 @@ import { Layout } from 'antd';
 import animateScrollTo from 'animated-scroll-to';
 import { urlUtil, authUtil } from '@leaa/dashboard/src/utils';
 import { IRouteItem } from '@leaa/dashboard/src/interfaces';
-import { DefaultLayout } from '@leaa/dashboard/src/components/DefaultLayout';
+
+import { DefaultLayout } from '@leaa/dashboard/src/components';
+
 import { LayoutHeader } from './_components/LayoutHeader/LayoutHeader';
 import { LayoutSidebar } from './_components/LayoutSidebar/LayoutSidebar';
 import { LayoutContent } from './_components/LayoutContent/LayoutContent';

@@ -12,7 +12,7 @@ import {
   UpdateSettingsInput,
   SettingsObject,
 } from '@leaa/common/src/dtos/setting';
-import { formatUtil, loggerUtil, curdUtil } from '@leaa/api/src/utils';
+import { formatUtil, loggerUtil, curdUtil, paginationUtil } from '@leaa/api/src/utils';
 
 const CONSTRUCTOR_NAME = 'SettingService';
 
@@ -24,25 +24,19 @@ export class SettingService {
     const nextArgs = formatUtil.formatArgs(args);
 
     const qb = getRepository(Setting).createQueryBuilder();
-    qb.select();
-    qb.orderBy({ sort: 'ASC' }).addOrderBy('created_at', 'ASC');
+    qb.select()
+      .orderBy({ sort: 'ASC' })
+      .addOrderBy('id', 'ASC');
 
     if (nextArgs.q) {
-      const qbAlias = new SelectQueryBuilder(qb).alias;
+      const aliasName = new SelectQueryBuilder(qb).alias;
 
       ['name', 'slug'].forEach(q => {
-        qb.andWhere(`${qbAlias}.${q} LIKE :${q}`, { [q]: `%${nextArgs.q}%` });
+        qb.andWhere(`${aliasName}.${q} LIKE :${q}`, { [q]: `%${nextArgs.q}%` });
       });
     }
 
-    const [items, total] = await qb.getManyAndCount();
-
-    return {
-      items,
-      total,
-      page: nextArgs.page || 1,
-      pageSize: nextArgs.pageSize || 30,
-    };
+    return paginationUtil.calcQueryBuilderPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
   async setting(id: number, args?: SettingArgs & FindOneOptions<Setting>): Promise<Setting | undefined> {

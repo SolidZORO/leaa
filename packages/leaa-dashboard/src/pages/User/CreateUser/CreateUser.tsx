@@ -8,10 +8,8 @@ import { CreateUserInput } from '@leaa/common/src/dtos/user';
 import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { IPage } from '@leaa/dashboard/src/interfaces';
 import { CREATE_USER } from '@leaa/common/src/graphqls';
-import { PageCard } from '@leaa/dashboard/src/components/PageCard';
-import { HtmlMeta } from '@leaa/dashboard/src/components/HtmlMeta';
-import { SubmitBar } from '@leaa/dashboard/src/components/SubmitBar/SubmitBar';
-import { ErrorCard } from '@leaa/dashboard/src/components/ErrorCard';
+
+import { HtmlMeta, PageCard, ErrorCard, SubmitBar } from '@leaa/dashboard/src/components';
 
 import { UserInfoForm } from '../_components/UserInfoForm/UserInfoForm';
 

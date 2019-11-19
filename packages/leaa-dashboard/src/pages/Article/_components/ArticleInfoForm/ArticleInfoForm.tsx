@@ -7,8 +7,7 @@ import { FormComponentProps } from 'antd/lib/form';
 import { Article } from '@leaa/common/src/entrys';
 import { ITfn } from '@leaa/dashboard/src/interfaces';
 
-import { SelectCategoryIdByTree } from '@leaa/dashboard/src/components/SelectCategoryIdByTree';
-import { SwitchNumber } from '@leaa/dashboard/src/components/SwitchNumber';
+import { SwitchNumber, SelectCategoryIdByTree } from '@leaa/dashboard/src/components';
 
 import style from './style.less';
 

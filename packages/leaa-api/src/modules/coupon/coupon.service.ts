@@ -23,7 +23,7 @@ export class CouponService {
     const nextArgs = formatUtil.formatArgs(args);
 
     const qb = getRepository(Coupon).createQueryBuilder();
-    qb.select().orderBy(nextArgs.orderBy || 'created_at', nextArgs.orderSort);
+    qb.select().orderBy(nextArgs.orderBy || 'id', nextArgs.orderSort);
 
     if (nextArgs.q) {
       const aliasName = new SelectQueryBuilder(qb).alias;

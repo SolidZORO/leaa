@@ -6,8 +6,8 @@ import { FormComponentProps } from 'antd/lib/form';
 
 import { Ax } from '@leaa/common/src/entrys';
 import { ITfn } from '@leaa/dashboard/src/interfaces';
-import { SwitchNumber } from '@leaa/dashboard/src/components/SwitchNumber';
-import { FormCard } from '@leaa/dashboard/src/components/FormCard';
+
+import { FormCard, SwitchNumber } from '@leaa/dashboard/src/components';
 
 import style from './style.less';
 

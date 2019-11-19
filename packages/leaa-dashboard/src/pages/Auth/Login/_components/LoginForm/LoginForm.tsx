@@ -9,7 +9,7 @@ import { IAuthInfo } from '@leaa/dashboard/src/interfaces';
 import { AuthLoginInput } from '@leaa/common/src/dtos/auth';
 import { LOGIN } from '@leaa/common/src/graphqls';
 import { authUtil } from '@leaa/dashboard/src/utils';
-import { ErrorCard } from '@leaa/dashboard/src/components/ErrorCard';
+import { ErrorCard } from '@leaa/dashboard/src/components';
 
 import style from './style.less';
 

@@ -9,11 +9,8 @@ import { GET_AX, UPDATE_AX } from '@leaa/common/src/graphqls';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { AxArgs, UpdateAxInput } from '@leaa/common/src/dtos/ax';
 import { IPage } from '@leaa/dashboard/src/interfaces';
-import { AttachmentBox } from '@leaa/dashboard/src/components/AttachmentBox';
-import { PageCard } from '@leaa/dashboard/src/components/PageCard';
-import { ErrorCard } from '@leaa/dashboard/src/components/ErrorCard';
-import { HtmlMeta } from '@leaa/dashboard/src/components/HtmlMeta';
-import { SubmitBar } from '@leaa/dashboard/src/components/SubmitBar/SubmitBar';
+
+import { HtmlMeta, PageCard, ErrorCard, SubmitBar, AttachmentBox } from '@leaa/dashboard/src/components';
 
 import { CouponInfoForm } from '../_components/CouponInfoForm/CouponInfoForm';
 

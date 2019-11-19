@@ -1,9 +1,9 @@
 import bcryptjs from 'bcryptjs';
 import { Injectable } from '@nestjs/common';
-import { Repository, FindOneOptions, Like, getRepository, SelectQueryBuilder } from 'typeorm';
+import { Repository, FindOneOptions, getRepository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { User, Role, Permission, Category } from '@leaa/common/src/entrys';
+import { User, Role, Permission } from '@leaa/common/src/entrys';
 import {
   UsersArgs,
   UsersWithPaginationObject,

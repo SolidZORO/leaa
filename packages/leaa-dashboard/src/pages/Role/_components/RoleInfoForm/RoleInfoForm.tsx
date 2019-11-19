@@ -6,7 +6,8 @@ import { FormComponentProps } from 'antd/lib/form';
 
 import { Role } from '@leaa/common/src/entrys';
 import { ITfn } from '@leaa/dashboard/src/interfaces';
-import { FormCard } from '@leaa/dashboard/src/components/FormCard';
+
+import { FormCard } from '@leaa/dashboard/src/components';
 
 import style from './style.less';
 

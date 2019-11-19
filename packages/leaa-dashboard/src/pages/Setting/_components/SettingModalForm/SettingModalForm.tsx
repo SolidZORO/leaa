@@ -6,7 +6,8 @@ import { FormComponentProps } from 'antd/lib/form';
 
 import { Setting } from '@leaa/common/src/entrys';
 import { ITfn } from '@leaa/dashboard/src/interfaces';
-import { buildTypeDom } from '@leaa/dashboard/src/pages/Setting/_components/SettingListForm/SettingListForm';
+
+import { buildTypeDom } from '../SettingListForm/SettingListForm';
 
 import style from './style.less';
 

@@ -5,9 +5,9 @@ import { Tag, Button, Popover } from 'antd';
 import { TooltipPlacement } from 'antd/lib/tooltip';
 
 import { Tag as TagEntry } from '@leaa/common/src/entrys';
-import { SelectTagSearchBox } from '@leaa/dashboard/src/components/SelectTagSearchBox/SelectTagSearchBox';
-// eslint-disable-next-line max-len
-import { QuickCreateTagButton } from '@leaa/dashboard/src/components/SelectTagId/_components/QuickCreateTagButton/QuickCreateTagButton';
+import { SelectTagSearchBox } from '@leaa/dashboard/src/components';
+
+import { QuickCreateTagButton } from './_components/QuickCreateTagButton/QuickCreateTagButton';
 
 import style from './style.less';
 

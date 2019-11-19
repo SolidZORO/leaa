@@ -9,10 +9,8 @@ import { RolesWithPaginationObject, RolesArgs } from '@leaa/common/src/dtos/role
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { UserArgs, UpdateUserInput } from '@leaa/common/src/dtos/user';
 import { IPage } from '@leaa/dashboard/src/interfaces';
-import { PageCard } from '@leaa/dashboard/src/components/PageCard';
-import { HtmlMeta } from '@leaa/dashboard/src/components/HtmlMeta';
-import { ErrorCard } from '@leaa/dashboard/src/components/ErrorCard';
-import { SubmitBar } from '@leaa/dashboard/src/components/SubmitBar/SubmitBar';
+
+import { HtmlMeta, PageCard, ErrorCard, SubmitBar } from '@leaa/dashboard/src/components';
 
 import { UserInfoForm } from '../_components/UserInfoForm/UserInfoForm';
 import { UserRolesForm } from '../_components/UserRolesForm/UserRolesForm';

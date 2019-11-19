@@ -8,12 +8,10 @@ import { CreateAxInput } from '@leaa/common/src/dtos/ax';
 import { IPage } from '@leaa/dashboard/src/interfaces';
 import { CREATE_AX } from '@leaa/common/src/graphqls';
 import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
-import { PageCard } from '@leaa/dashboard/src/components/PageCard';
-import { HtmlMeta } from '@leaa/dashboard/src/components/HtmlMeta';
-import { SubmitBar } from '@leaa/dashboard/src/components/SubmitBar/SubmitBar';
-import { ErrorCard } from '@leaa/dashboard/src/components/ErrorCard';
 
-import { AxInfoForm } from '@leaa/dashboard/src/pages/Ax/_components/AxInfoForm/AxInfoForm';
+import { HtmlMeta, PageCard, ErrorCard, SubmitBar } from '@leaa/dashboard/src/components';
+
+import { AxInfoForm } from '../_components/AxInfoForm/AxInfoForm';
 
 import style from './style.less';
 

@@ -9,12 +9,14 @@ import { GET_ARTICLE, UPDATE_ARTICLE } from '@leaa/common/src/graphqls';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { ArticleArgs, UpdateArticleInput } from '@leaa/common/src/dtos/article';
 import { IPage } from '@leaa/dashboard/src/interfaces';
-import { WYSIWYGEditor } from '@leaa/dashboard/src/components/WYSIWYGEditor/WYSIWYGEditor';
-import { AttachmentBox } from '@leaa/dashboard/src/components/AttachmentBox';
-import { PageCard } from '@leaa/dashboard/src/components/PageCard';
-import { HtmlMeta } from '@leaa/dashboard/src/components/HtmlMeta';
-import { ErrorCard } from '@leaa/dashboard/src/components/ErrorCard';
-import { SelectTagId } from '@leaa/dashboard/src/components/SelectTagId';
+import {
+  PageCard,
+  HtmlMeta,
+  ErrorCard,
+  WYSIWYGEditor,
+  AttachmentBox,
+  SelectTagId,
+} from '@leaa/dashboard/src/components';
 
 import { ArticleInfoForm } from '../_components/ArticleInfoForm/ArticleInfoForm';
 import { ArticleExtForm } from '../_components/ArticleExtForm/ArticleExtForm';

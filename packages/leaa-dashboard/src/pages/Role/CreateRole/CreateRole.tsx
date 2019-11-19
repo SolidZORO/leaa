@@ -6,13 +6,12 @@ import { useMutation } from '@apollo/react-hooks';
 import { Role } from '@leaa/common/src/entrys';
 import { CreateRoleInput } from '@leaa/common/src/dtos/role';
 import { IPage } from '@leaa/dashboard/src/interfaces';
-import { RoleInfoForm } from '@leaa/dashboard/src/pages/Role/_components/RoleInfoForm/RoleInfoForm';
 import { CREATE_ROLE } from '@leaa/common/src/graphqls';
 import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
-import { PageCard } from '@leaa/dashboard/src/components/PageCard';
-import { HtmlMeta } from '@leaa/dashboard/src/components/HtmlMeta';
-import { SubmitBar } from '@leaa/dashboard/src/components/SubmitBar/SubmitBar';
-import { ErrorCard } from '@leaa/dashboard/src/components/ErrorCard';
+
+import { HtmlMeta, PageCard, ErrorCard, SubmitBar } from '@leaa/dashboard/src/components';
+
+import { RoleInfoForm } from '../_components/RoleInfoForm/RoleInfoForm';
 
 import style from './style.less';
 

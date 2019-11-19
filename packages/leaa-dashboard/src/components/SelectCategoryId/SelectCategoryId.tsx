@@ -1,12 +1,13 @@
+import cx from 'classnames';
 import React, { useState, useEffect, forwardRef } from 'react';
-import { Select } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/react-hooks';
+import { Select } from 'antd';
 
 import { GET_CATEGORIES } from '@leaa/common/src/graphqls';
 import { CategoriesWithPaginationObject, CategoriesArgs } from '@leaa/common/src/dtos/category';
-import { ErrorCard } from '@leaa/dashboard/src/components/ErrorCard';
-import cx from 'classnames';
+
+import { ErrorCard } from '@leaa/dashboard/src/components';
 
 import style from './style.less';
 

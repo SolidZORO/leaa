@@ -13,8 +13,8 @@ import {
   AttachmentsWithPaginationObject,
   UpdateAttachmentsInput,
 } from '@leaa/common/src/dtos/attachment';
-import { ErrorCard } from '@leaa/dashboard/src/components/ErrorCard';
-import { FormCard } from '@leaa/dashboard/src/components/FormCard';
+
+import { ErrorCard, FormCard } from '@leaa/dashboard/src/components';
 
 import { AttachmentList } from './_components/AttachmentList/AttachmentList';
 import { AttachmentDropzone } from './_components/AttachmentDropzone/AttachmentDropzone';

@@ -7,12 +7,11 @@ import { Permission } from '@leaa/common/src/entrys';
 import { CreatePermissionInput } from '@leaa/common/src/dtos/permission';
 import { IPage } from '@leaa/dashboard/src/interfaces';
 // eslint-disable-next-line max-len
-import { PermissionInfoForm } from '@leaa/dashboard/src/pages/Permission/_components/PermissionInfoForm/PermissionInfoForm';
 import { CREATE_PERMISSION } from '@leaa/common/src/graphqls';
 import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
-import { PageCard } from '@leaa/dashboard/src/components/PageCard';
-import { SubmitBar } from '@leaa/dashboard/src/components/SubmitBar/SubmitBar';
-import { ErrorCard } from '@leaa/dashboard/src/components/ErrorCard';
+import { PageCard, ErrorCard, SubmitBar } from '@leaa/dashboard/src/components';
+
+import { PermissionInfoForm } from '../_components/PermissionInfoForm/PermissionInfoForm';
 
 import style from './style.less';
 

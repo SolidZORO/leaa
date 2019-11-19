@@ -13,17 +13,20 @@ import { IOrderSort } from '@leaa/common/src/dtos/_common';
 import { ArticlesWithPaginationObject, ArticleArgs } from '@leaa/common/src/dtos/article';
 import { urlUtil, tableUtil } from '@leaa/dashboard/src/utils';
 import { IPage } from '@leaa/dashboard/src/interfaces';
-import { PageCard } from '@leaa/dashboard/src/components/PageCard';
-import { HtmlMeta } from '@leaa/dashboard/src/components/HtmlMeta';
-import { ErrorCard } from '@leaa/dashboard/src/components/ErrorCard';
-import { SearchInput } from '@leaa/dashboard/src/components/SearchInput';
-import { TableCard } from '@leaa/dashboard/src/components/TableCard';
-import { TableColumnId } from '@leaa/dashboard/src/components/TableColumnId';
-import { SwitchNumber } from '@leaa/dashboard/src/components/SwitchNumber';
-import { TableColumnDate } from '@leaa/dashboard/src/components/TableColumnDate';
-import { TableColumnDeleteButton } from '@leaa/dashboard/src/components/TableColumnDeleteButton';
-import { SelectCategoryIdByTree } from '@leaa/dashboard/src/components/SelectCategoryIdByTree';
-import { SelectTagSearchBox } from '@leaa/dashboard/src/components/SelectTagSearchBox';
+
+import {
+  PageCard,
+  HtmlMeta,
+  ErrorCard,
+  SearchInput,
+  TableCard,
+  TableColumnId,
+  SwitchNumber,
+  TableColumnDate,
+  TableColumnDeleteButton,
+  SelectCategoryIdByTree,
+  SelectTagSearchBox,
+} from '@leaa/dashboard/src/components';
 
 import style from './style.less';
 

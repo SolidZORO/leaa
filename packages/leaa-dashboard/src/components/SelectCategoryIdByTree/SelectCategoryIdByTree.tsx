@@ -7,7 +7,8 @@ import { TreeSelectProps } from 'antd/lib/tree-select';
 
 import { GET_CATEGORIES_BY_TREE } from '@leaa/common/src/graphqls';
 import { CategoriesWithTreeObject } from '@leaa/common/src/dtos/category';
-import { ErrorCard } from '@leaa/dashboard/src/components/ErrorCard';
+
+import { ErrorCard } from '@leaa/dashboard/src/components';
 
 import style from './style.less';
 

@@ -8,10 +8,8 @@ import { GET_CATEGORY, UPDATE_CATEGORY, GET_CATEGORIES } from '@leaa/common/src/
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { CategoryArgs, UpdateCategoryInput, CategoriesWithPaginationObject } from '@leaa/common/src/dtos/category';
 import { IPage } from '@leaa/dashboard/src/interfaces';
-import { PageCard } from '@leaa/dashboard/src/components/PageCard';
-import { HtmlMeta } from '@leaa/dashboard/src/components/HtmlMeta';
-import { ErrorCard } from '@leaa/dashboard/src/components/ErrorCard';
-import { SubmitBar } from '@leaa/dashboard/src/components/SubmitBar/SubmitBar';
+
+import { HtmlMeta, PageCard, ErrorCard, SubmitBar } from '@leaa/dashboard/src/components';
 
 import { CategoryInfoForm } from '../_components/CategoryInfoForm/CategoryInfoForm';
 

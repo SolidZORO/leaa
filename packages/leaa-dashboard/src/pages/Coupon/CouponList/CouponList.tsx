@@ -13,15 +13,18 @@ import { IOrderSort } from '@leaa/common/src/dtos/_common';
 import { CouponsWithPaginationObject, CouponArgs } from '@leaa/common/src/dtos/coupon';
 import { urlUtil, tableUtil } from '@leaa/dashboard/src/utils';
 import { IPage } from '@leaa/dashboard/src/interfaces';
-import { PageCard } from '@leaa/dashboard/src/components/PageCard';
-import { HtmlMeta } from '@leaa/dashboard/src/components/HtmlMeta';
-import { ErrorCard } from '@leaa/dashboard/src/components/ErrorCard';
-import { SearchInput } from '@leaa/dashboard/src/components/SearchInput';
-import { TableCard } from '@leaa/dashboard/src/components/TableCard';
-import { TableColumnId } from '@leaa/dashboard/src/components/TableColumnId';
-import { SwitchNumber } from '@leaa/dashboard/src/components/SwitchNumber';
-import { TableColumnDate } from '@leaa/dashboard/src/components/TableColumnDate';
-import { TableColumnDeleteButton } from '@leaa/dashboard/src/components/TableColumnDeleteButton';
+
+import {
+  HtmlMeta,
+  PageCard,
+  ErrorCard,
+  TableCard,
+  SearchInput,
+  SwitchNumber,
+  TableColumnDate,
+  TableColumnDeleteButton,
+  TableColumnId,
+} from '@leaa/dashboard/src/components';
 
 import style from './style.less';
 
