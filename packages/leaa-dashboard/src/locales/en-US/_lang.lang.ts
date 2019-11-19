@@ -2,8 +2,10 @@ export default {
   test: '0x00EN',
   langen: 'English',
   langcn: 'Chinese',
-  'langen-US': 'English',
-  'langzh-CN': 'Chinese',
+  'lang-en-US': 'English',
+  'lang-zh-CN': 'Chinese',
+  'lang-code-en-US': 'EN',
+  'lang-code-zh-CN': 'CN',
   //
   id: 'ID',
   category: 'Category',

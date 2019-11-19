@@ -61,7 +61,7 @@ webpackConst.REGX_TS = /\.(ts|tsx)$/;
 webpackConst.REGX_SCRIPT = /\.(js|jsx)$/;
 webpackConst.REGX_STYLE = /\.(less|css|styl|scss|sass|sss)$/;
 webpackConst.REGX_IMAGE = /\.(bmp|gif|jpg|jpeg|png|svg)$/;
-webpackConst.REGX_FONT = /\.(woff2|woff|svg|ttf)$/;
+webpackConst.REGX_FONT = /\.(woff2|woff|svg|ttf|eot)$/;
 
 // ETC
 // eslint-disable-next-line no-underscore-dangle

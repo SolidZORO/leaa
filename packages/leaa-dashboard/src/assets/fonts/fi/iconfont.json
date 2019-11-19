@@ -1,0 +1,16 @@
+{
+  "id": "1518809",
+  "name": "leaa-dashboard",
+  "font_family": "fi",
+  "css_prefix_text": "anticon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "6620855",
+      "name": "language",
+      "font_class": "swlang",
+      "unicode": "e65d",
+      "unicode_decimal": 58973
+    }
+  ]
+}

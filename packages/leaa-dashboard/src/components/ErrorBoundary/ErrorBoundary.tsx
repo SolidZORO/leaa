@@ -37,12 +37,19 @@ export class ErrorBoundary extends React.Component<IProps, IState> {
         <div className={style['wrapper']}>
           <div className={style['container']}>
             <div className={style['title']}>
-              <Button type="primary" shape="circle" icon="home" onClick={this.onGoToHome} />
-              <strong>SOMETHING WENT WRONG</strong>
+              <Button type="primary" shape="circle" icon="disconnect" onClick={this.onGoToHome} />
+              <strong>Server Error</strong>
             </div>
 
             <div className={style['error-info']}>
               <code>{JSON.stringify(this.state.errorInfo)}</code>
+              <Button
+                shape="circle"
+                icon="close"
+                size="small"
+                onClick={this.onGoToHome}
+                className={style['close-error-info']}
+              />
             </div>
           </div>
         </div>

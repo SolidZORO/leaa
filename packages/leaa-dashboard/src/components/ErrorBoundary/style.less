@@ -28,13 +28,34 @@
 }
 
 .error-info {
-  margin-top: 20px;
+  position: relative;
+  margin: 20px auto;
   font-family: @code-family;
   font-size: 80%;
   display: block;
-  width: 100%;
+  //width: 100%;
+  max-width: 640px;
+  text-align: center;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 3px;
+  border: 1px solid #f3f3f3;
 
   code {
     font-family: @code-family;
   }
+
+  .close-error-info {
+    position: absolute;
+    right: -10px;
+    top: -10px;
+
+    i {
+      margin-top: 4px;
+    }
+  }
+}
+
+.footer {
+  margin: 20px auto;
 }

@@ -42,19 +42,19 @@ export const SwitchLanguage = (props: IProps): JSX.Element => {
                   className={cx(style['lang-flag'], style[`lang-flag--${lang}`])}
                   onClick={() => changeLanguage(lang)}
                 >
-                  {t(`_lang:lang${lang}`)}
+                  {t(`_lang:lang-${lang}`)}
                   {i18n.language === lang && <Icon type="check-circle" />}
                 </Button>
               ))}
             </>
           }
         >
-          <Button
-            type="link"
-            className={cx(style['lang-flag'], style[`lang-flag--${i18n.language}`], style['lang-flag--current'])}
-          >
-            {t(`_lang:lang${i18n.language}`)}
-          </Button>
+          <div className={style['switch-language-button']}>
+            <Button type="link" size="small">
+              <Icon type="swlang" />
+              {t(`_lang:lang-code-${i18n.language}`)}
+            </Button>
+          </div>
         </Popover>
       </ConfigProvider>
     </div>

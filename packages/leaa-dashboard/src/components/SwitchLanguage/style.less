@@ -9,6 +9,24 @@
   min-width: 150px;
 }
 
+.switch-language-button {
+  margin-right: 20px;
+
+  button {
+    color: #555;
+    font-size: 90%;
+
+    span {
+      display: inline-block;
+      border: 1px solid #ddd;
+      border-radius: 3px;
+      padding: 2px 5px;
+      line-height: 1;
+      font-size: 80%;
+    }
+  }
+}
+
 .lang-flag {
   display: block;
 
@@ -30,7 +48,7 @@
 }
 
 .lang-flag--current {
-  @color: #3339;
+  @color: #333;
 
   font-size: 12px;
   color: @color;
@@ -40,13 +58,13 @@
   }
 
   &:before {
-    opacity: 0.4;
+    opacity: 0.7;
     vertical-align: -4px;
     transition: all 0.3s;
   }
 
   span {
-    opacity: 0.35;
+    opacity: 0.7;
     transition: all 0.3s;
   }
 
@@ -74,17 +92,15 @@
 }
 
 .wrapper--dark {
-  .lang-flag--current {
-    @color: #fff9;
+  .switch-language-button {
+    margin-right: 20px;
 
-    font-weight: 200;
-    color: @color;
+    button {
+      color: #fff7;
 
-    &:focus,
-    &:hover,
-    &:before,
-    span {
-      color: @color;
+      span {
+        border: 1px solid #fff5;
+      }
     }
   }
 }

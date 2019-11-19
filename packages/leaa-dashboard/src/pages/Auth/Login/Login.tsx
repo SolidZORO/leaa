@@ -52,13 +52,13 @@ export default (props: IPage) => {
               <div className={style['login-form']}>
                 <LoginForm onLoginedCallback={onLoginedCallback} />
               </div>
+
+              <div className={style['switch-language']}>
+                <SwitchLanguage placement="topRight" />
+              </div>
             </div>
           </Col>
         </Row>
-      </div>
-
-      <div className={style['switch-language']}>
-        <SwitchLanguage placement="topRight" />
       </div>
     </div>
   );

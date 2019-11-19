@@ -9,7 +9,6 @@ import { IRouteItem } from '@leaa/dashboard/src/interfaces';
 import { masterRoutes, flateMasterRoutes } from '@leaa/dashboard/src/routes/master.route';
 import { authUtil, deviceUtil } from '@leaa/dashboard/src/utils';
 import { ALLOW_PERMISSION, SIDERBAR_COLLAPSED_SL_KEY } from '@leaa/dashboard/src/constants';
-import { SwitchLanguage } from '@leaa/dashboard/src/components';
 
 import { SidebarTarget } from '../SidebarTarget/SidebarTarget';
 
@@ -163,10 +162,6 @@ export const LayoutSidebar = (props: IProps) => {
           {makeFlatMenus(masterRoutes)}
         </Menu>
       )}
-
-      <div className={cx(style['switch-language-wrapper'], 'switch-language-wrapper')}>
-        <SwitchLanguage className={style['switch-language']} placement="topLeft" dark />
-      </div>
 
       <div className={cx(style['target-button-wrapper'], 'target-button-wrapper')}>
         <SidebarTarget onCallbackSidebarTarget={() => onCollapse(collapsed, 'clickTrigger')} collapsed={collapsed} />

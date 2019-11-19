@@ -2,8 +2,10 @@ export default {
   test: '0x00中文',
   langen: '英文',
   langcn: '中文',
-  'langen-US': '英文',
-  'langzh-CN': '中文',
+  'lang-en-US': '英文',
+  'lang-zh-CN': '中文',
+  'lang-code-en-US': 'EN',
+  'lang-code-zh-CN': 'CN',
   //
   id: 'ID',
   category: '分类',
