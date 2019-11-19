@@ -4,7 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 import { Ax, User } from '@leaa/common/src/entrys';
 import { AxsArgs, AxsWithPaginationObject, AxArgs, CreateAxInput, UpdateAxInput } from '@leaa/common/src/dtos/ax';
-import { formatUtil, loggerUtil, permissionUtil, curdUtil } from '@leaa/api/src/utils';
+import { formatUtil, loggerUtil, permissionUtil, curdUtil, paginationUtil } from '@leaa/api/src/utils';
 
 const CONSTRUCTOR_NAME = 'AxService';
 
@@ -30,14 +30,7 @@ export class AxService {
       qb.andWhere('status = :status', { status: 1 });
     }
 
-    const [items, total] = await qb.getManyAndCount();
-
-    return {
-      items,
-      total,
-      page: nextArgs.page || 1,
-      pageSize: nextArgs.pageSize || 30,
-    };
+    return paginationUtil.calcQueryBuilderPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
   async ax(id: number, args?: AxArgs & FindOneOptions<Ax>, user?: User): Promise<Ax | undefined> {

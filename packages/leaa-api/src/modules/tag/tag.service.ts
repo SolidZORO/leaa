@@ -2,10 +2,10 @@ import fs from 'fs';
 import xss from 'xss';
 import mkdirp from 'mkdirp';
 import { Injectable } from '@nestjs/common';
-import { Repository, FindOneOptions, Like } from 'typeorm';
+import { Repository, FindOneOptions, getRepository, SelectQueryBuilder } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { Tag, User } from '@leaa/common/src/entrys';
+import { Tag } from '@leaa/common/src/entrys';
 import {
   TagsArgs,
   TagsWithPaginationObject,
@@ -15,7 +15,7 @@ import {
   SyncTagsToFileObject,
 } from '@leaa/common/src/dtos/tag';
 
-import { formatUtil, curdUtil, paginationUtil, loggerUtil, permissionUtil } from '@leaa/api/src/utils';
+import { formatUtil, curdUtil, paginationUtil, loggerUtil } from '@leaa/api/src/utils';
 import { dictConfig } from '@leaa/api/src/configs';
 
 const CONSTRUCTOR_NAME = 'TagService';
@@ -27,15 +27,18 @@ export class TagService {
   async tags(args: TagsArgs): Promise<TagsWithPaginationObject> {
     const nextArgs = formatUtil.formatArgs(args);
 
-    if (nextArgs.q) {
-      const qLike = Like(`%${nextArgs.q}%`);
+    const qb = getRepository(Tag).createQueryBuilder();
+    qb.select().orderBy(nextArgs.orderBy || 'created_at', nextArgs.orderSort);
 
-      nextArgs.where = [{ name: qLike }];
+    if (nextArgs.q) {
+      const aliasName = new SelectQueryBuilder(qb).alias;
+
+      ['name'].forEach(q => {
+        qb.andWhere(`${aliasName}.${q} LIKE :${q}`, { [q]: `%${nextArgs.q}%` });
+      });
     }
 
-    const [items, total] = await this.tagRepository.findAndCount(nextArgs);
-
-    return paginationUtil.calcPageInfo({ items, total, page: nextArgs.page, pageSize: nextArgs.pageSize });
+    return paginationUtil.calcQueryBuilderPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
   async tag(id: number, args?: TagArgs & FindOneOptions<Tag>): Promise<Tag | undefined> {

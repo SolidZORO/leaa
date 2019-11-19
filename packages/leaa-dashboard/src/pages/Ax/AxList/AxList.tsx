@@ -7,7 +7,7 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import { Table, Icon, message } from 'antd';
 
 import { DEFAULT_PAGE_SIZE_OPTIONS } from '@leaa/dashboard/src/constants';
-import { GET_COUPONS, DELETE_COUPON } from '@leaa/common/src/graphqls';
+import { GET_AXS, DELETE_AX } from '@leaa/common/src/graphqls';
 import { Ax } from '@leaa/common/src/entrys';
 import { IOrderSort } from '@leaa/common/src/dtos/_common';
 import { AxsWithPaginationObject, AxArgs } from '@leaa/common/src/dtos/ax';
@@ -47,15 +47,15 @@ export default (props: IPage) => {
 
   // query
   const getAxsVariables = { page, pageSize, q, orderBy, orderSort };
-  const getAxsQuery = useQuery<{ axs: AxsWithPaginationObject }, AxArgs>(GET_COUPONS, {
+  const getAxsQuery = useQuery<{ axs: AxsWithPaginationObject }, AxArgs>(GET_AXS, {
     variables: getAxsVariables,
     fetchPolicy: 'network-only',
   });
 
   // mutation
-  const [deleteAxMutate, deleteAxMutation] = useMutation<Ax>(DELETE_COUPON, {
+  const [deleteAxMutate, deleteAxMutation] = useMutation<Ax>(DELETE_AX, {
     onCompleted: () => message.success(t('_lang:deletedSuccessfully')),
-    refetchQueries: () => [{ query: GET_COUPONS, variables: getAxsVariables }],
+    refetchQueries: () => [{ query: GET_AXS, variables: getAxsVariables }],
   });
 
   const resetUrlParams = () => {

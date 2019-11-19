@@ -16,7 +16,7 @@ export class RoleResolver {
   constructor(private readonly roleService: RoleService) {}
 
   @Query(() => RolesWithPaginationObject)
-  async roles(@Args() args?: RolesArgs): Promise<RolesWithPaginationObject | undefined> {
+  async roles(@Args() args: RolesArgs): Promise<RolesWithPaginationObject | undefined> {
     return this.roleService.roles(args);
   }
 

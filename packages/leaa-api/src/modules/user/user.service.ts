@@ -1,9 +1,9 @@
 import bcryptjs from 'bcryptjs';
 import { Injectable } from '@nestjs/common';
-import { Repository, FindOneOptions, Like } from 'typeorm';
+import { Repository, FindOneOptions, Like, getRepository, SelectQueryBuilder } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { User, Role, Permission } from '@leaa/common/src/entrys';
+import { User, Role, Permission, Category } from '@leaa/common/src/entrys';
 import {
   UsersArgs,
   UsersWithPaginationObject,
@@ -13,7 +13,7 @@ import {
 } from '@leaa/common/src/dtos/user';
 import { RoleService } from '@leaa/api/src/modules/role/role.service';
 import { UserProperty } from '@leaa/api/src/modules/user/user.property';
-import { formatUtil, permissionUtil, curdUtil, loggerUtil } from '@leaa/api/src/utils';
+import { formatUtil, permissionUtil, curdUtil, loggerUtil, paginationUtil } from '@leaa/api/src/utils';
 import { JwtService } from '@nestjs/jwt';
 
 const CONSTRUCTOR_NAME = 'UserService';
@@ -44,26 +44,24 @@ export class UserService {
   async users(args: UsersArgs, user?: User): Promise<UsersWithPaginationObject> {
     const nextArgs = formatUtil.formatArgs(args);
 
-    let whereQuery = {};
+    const PRIMARY_TABLE = 'users';
+    const qb = getRepository(User).createQueryBuilder(PRIMARY_TABLE);
+    qb.select().orderBy(`${PRIMARY_TABLE}.${nextArgs.orderBy || 'id'}`, nextArgs.orderSort);
 
-    if (nextArgs.q) {
-      whereQuery = { ...whereQuery, email: Like(`%${nextArgs.q}%`) };
-    }
-
-    nextArgs.where = whereQuery;
-
+    // relations
     if (user && permissionUtil.hasPermission(user, 'role.list')) {
-      nextArgs.relations = ['roles'];
+      qb.leftJoinAndSelect(`${PRIMARY_TABLE}.roles`, 'roles');
     }
 
-    const [items, total] = await this.userRepository.findAndCount(nextArgs);
+    // q
+    if (nextArgs.q) {
+      const qLike = `%${nextArgs.q}%`;
 
-    return {
-      items,
-      total,
-      page: nextArgs.page || 1,
-      pageSize: nextArgs.pageSize || 30,
-    };
+      qb.andWhere(`${PRIMARY_TABLE}.name LIKE :name`, { name: qLike });
+      qb.andWhere(`${PRIMARY_TABLE}.email LIKE :email`, { email: qLike });
+    }
+
+    return paginationUtil.calcQueryBuilderPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
   async user(id: number, args?: UserArgs & FindOneOptions<User>): Promise<User | undefined> {
@@ -141,7 +139,7 @@ export class UserService {
     if (roleObjects) {
       relationArgs.roles = roleObjects;
     } else {
-      const message = `user error`;
+      const message = 'user error';
 
       loggerUtil.warn(message, CONSTRUCTOR_NAME);
       throw new Error(message);

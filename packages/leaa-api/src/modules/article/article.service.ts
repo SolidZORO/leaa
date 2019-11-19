@@ -28,7 +28,7 @@ export class ArticleService {
   async articles(args: ArticlesArgs): Promise<ArticlesWithPaginationObject> {
     const nextArgs = formatUtil.formatArgs(args);
 
-    const PRIMARY_TABLE = 'article';
+    const PRIMARY_TABLE = 'articles';
     const qb = await this.articleRepository.createQueryBuilder(PRIMARY_TABLE);
 
     // relations

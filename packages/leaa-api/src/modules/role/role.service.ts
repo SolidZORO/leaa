@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { Repository, FindOneOptions, In, Like } from 'typeorm';
+import { Repository, FindOneOptions, In, getRepository, SelectQueryBuilder } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { Role, Permission } from '@leaa/common/src/entrys';
 import { RolesArgs, RolesWithPaginationObject, CreateRoleInput, UpdateRoleInput } from '@leaa/common/src/dtos/role';
-import { formatUtil, loggerUtil, curdUtil } from '@leaa/api/src/utils';
+import { formatUtil, loggerUtil, curdUtil, paginationUtil } from '@leaa/api/src/utils';
 import { PermissionService } from '@leaa/api/src/modules/permission/permission.service';
 
 const CONSTRUCTOR_NAME = 'RoleService';
@@ -17,26 +17,21 @@ export class RoleService {
     private readonly permissionService: PermissionService,
   ) {}
 
-  async roles(args?: RolesArgs): Promise<RolesWithPaginationObject | undefined> {
-    const nextArgs = args ? formatUtil.formatArgs(args) : {};
+  async roles(args: RolesArgs): Promise<RolesWithPaginationObject | undefined> {
+    const nextArgs = formatUtil.formatArgs(args);
 
-    let whereQuery = {};
+    const qb = getRepository(Role).createQueryBuilder();
+    qb.select().orderBy(nextArgs.orderBy || 'id', nextArgs.orderSort);
 
     if (nextArgs.q) {
-      whereQuery = { ...whereQuery, slug: Like(`%${nextArgs.q}%`) };
+      const aliasName = new SelectQueryBuilder(qb).alias;
+
+      ['name', 'slug'].forEach(q => {
+        qb.andWhere(`${aliasName}.${q} LIKE :${q}`, { [q]: `%${nextArgs.q}%` });
+      });
     }
 
-    nextArgs.where = whereQuery;
-    nextArgs.relations = [];
-
-    const [items, total] = await this.roleRepository.findAndCount(nextArgs);
-
-    return {
-      items,
-      total,
-      page: nextArgs.page || 1,
-      pageSize: nextArgs.pageSize || 30,
-    };
+    return paginationUtil.calcQueryBuilderPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
   async role(id: number, args?: FindOneOptions<Role>): Promise<Role | undefined> {

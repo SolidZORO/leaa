@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { Repository, FindOneOptions, Like } from 'typeorm';
+import { Repository, FindOneOptions, Like, getRepository, SelectQueryBuilder } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { Category } from '@leaa/common/src/entrys';
+import { Category, Tag } from '@leaa/common/src/entrys';
 import {
   CategoriesArgs,
   CategoriesWithPaginationObject,
@@ -11,7 +11,7 @@ import {
   UpdateCategoryInput,
   CategoriesWithTreeObject,
 } from '@leaa/common/src/dtos/category';
-import { formatUtil, loggerUtil, curdUtil } from '@leaa/api/src/utils';
+import { formatUtil, loggerUtil, curdUtil, paginationUtil } from '@leaa/api/src/utils';
 import { ICategoryTreeWithKey } from '@leaa/api/src/interfaces';
 
 const CONSTRUCTOR_NAME = 'CategoryService';
@@ -22,7 +22,7 @@ export class CategoryService {
 
   async categories(args?: CategoriesArgs): Promise<CategoriesWithPaginationObject> {
     if (!args) {
-      const message = `get categories args does not exist`;
+      const message = 'get categories args does not exist';
 
       loggerUtil.warn(message, CONSTRUCTOR_NAME);
       throw new Error(message);
@@ -30,20 +30,18 @@ export class CategoryService {
 
     const nextArgs = formatUtil.formatArgs(args);
 
-    if (nextArgs.q) {
-      const qLike = Like(`%${nextArgs.q}%`);
+    const qb = getRepository(Category).createQueryBuilder();
+    qb.select().orderBy(nextArgs.orderBy || 'created_at', nextArgs.orderSort);
 
-      nextArgs.where = [{ slug: qLike }, { name: qLike }];
+    if (nextArgs.q) {
+      const aliasName = new SelectQueryBuilder(qb).alias;
+
+      ['name', 'slug'].forEach(q => {
+        qb.andWhere(`${aliasName}.${q} LIKE :${q}`, { [q]: `%${nextArgs.q}%` });
+      });
     }
 
-    const [items, total] = await this.categoryRepository.findAndCount(nextArgs);
-
-    return {
-      items,
-      total,
-      page: nextArgs.page || 1,
-      pageSize: nextArgs.pageSize || 30,
-    };
+    return paginationUtil.calcQueryBuilderPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
   async categoriesByTree(): Promise<CategoriesWithTreeObject | undefined> {
@@ -88,7 +86,7 @@ export class CategoryService {
     tree.unshift({
       id: 0,
       parent_id: 0,
-      key: `0-0-0-root`,
+      key: '0-0-0-root',
       title: '----',
       value: 0,
     });

@@ -1,6 +1,6 @@
 import uuid from 'uuid';
 import { Injectable } from '@nestjs/common';
-import { Repository, FindOneOptions, getRepository, Transaction, SelectQueryBuilder } from 'typeorm';
+import { Repository, FindOneOptions, getRepository, SelectQueryBuilder } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { Coupon, User } from '@leaa/common/src/entrys';

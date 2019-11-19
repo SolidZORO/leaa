@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Repository, In, Like } from 'typeorm';
+import { Repository, In, getRepository, SelectQueryBuilder } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { Permission } from '@leaa/common/src/entrys';
@@ -10,7 +10,7 @@ import {
   CreatePermissionInput,
   UpdatePermissionInput,
 } from '@leaa/common/src/dtos/permission';
-import { formatUtil, curdUtil } from '@leaa/api/src/utils';
+import { formatUtil, curdUtil, paginationUtil } from '@leaa/api/src/utils';
 
 const CONSTRUCTOR_NAME = 'PermissionService';
 
@@ -21,24 +21,29 @@ export class PermissionService {
   async permissions(args: PermissionsArgs): Promise<PermissionsWithPaginationObject> {
     const nextArgs = formatUtil.formatArgs(args);
 
-    let whereQuery = {};
+    const qb = getRepository(Permission).createQueryBuilder();
+    qb.select().orderBy(nextArgs.orderBy || 'created_at', nextArgs.orderSort);
 
     if (nextArgs.q) {
-      whereQuery = { ...whereQuery, slug: Like(`%${nextArgs.q}%`) };
+      const aliasName = new SelectQueryBuilder(qb).alias;
+
+      ['name', 'slug'].forEach(q => {
+        qb.andWhere(`${aliasName}.${q} LIKE :${q}`, { [q]: `%${nextArgs.q}%` });
+      });
     }
 
-    nextArgs.where = whereQuery;
-
-    const [items, total] = await this.permissionRepository.findAndCount(nextArgs);
+    const pageInfo = await paginationUtil.calcQueryBuilderPageInfo({
+      qb,
+      page: nextArgs.page,
+      pageSize: nextArgs.pageSize,
+    });
 
     return {
-      items: items.map(i => ({
+      ...pageInfo,
+      items: pageInfo.items.map(i => ({
         ...i,
         slugGroup: i.slug.split('.')[0],
       })),
-      total,
-      page: nextArgs.page || 1,
-      pageSize: nextArgs.pageSize || 30,
     };
   }
 

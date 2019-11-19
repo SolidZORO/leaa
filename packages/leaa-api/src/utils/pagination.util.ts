@@ -48,7 +48,7 @@ async function calcPageInfoFromQueryBuilder({
   page,
 }: IPageInfoFromQueryBuilder): Promise<IPageInfoResult> {
   const calcPage = page || 0;
-  const calcPageSize = pageSize || 0;
+  const calcPageSize = pageSize || 30;
 
   const [items, total] = await qb
     .skip((calcPage - 1) * calcPageSize)
@@ -60,8 +60,6 @@ async function calcPageInfoFromQueryBuilder({
   if (page && pageSize && items.length < pageSize) {
     calcNextPage = null;
   }
-
-  // console.log(items.length, total, pageSize, page, 'N>>>>', calcNextPage);
 
   return {
     items,
