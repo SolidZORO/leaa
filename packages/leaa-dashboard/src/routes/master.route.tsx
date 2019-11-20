@@ -7,120 +7,284 @@ import { ALLOW_PERMISSION } from '@leaa/dashboard/src/constants';
 
 import { MasterLayout, SuspenseFallback } from '@leaa/dashboard/src/components';
 
-// TIPS: ALLOW_PERMISSION is always display
+// TIPS: permission: 'ALLOW_PERMISSION' will be always display
 
 export const masterRoutes: IRouteItem[] = [
+  // -------- [User Group] --------
   {
-    name: 'Create User',
-    namei18n: '_route:createUser',
-    permission: 'user.create',
-    path: '/users/create',
-    icon: 'user',
-    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'CreateUser' */ '../pages/User/CreateUser/CreateUser')),
-    exact: true,
-    isCreate: true,
+    name: 'User Group',
+    namei18n: '_route:userGroup',
+    permission: 'user.list | role.list | permission.list',
+    path: '_user-group',
+    icon: 'x-usergroup',
+    children: [
+      // ---- User ----
+      {
+        name: 'Create User',
+        namei18n: '_route:createUser',
+        permission: 'user.create',
+        path: '/users/create',
+        icon: 'x-user2',
+        LazyComponent: React.lazy(() =>
+          import(/* webpackChunkName: 'CreateUser' */ '../pages/User/CreateUser/CreateUser'),
+        ),
+        exact: true,
+        isCreate: true,
+      },
+      {
+        name: 'Edit User',
+        namei18n: '_route:editUser',
+        permission: 'user.item',
+        path: '/users/:id(\\d+)',
+        icon: 'x-user2',
+        LazyComponent: React.lazy(() => import(/* webpackChunkName: 'EditUser' */ '../pages/User/EditUser/EditUser')),
+        exact: true,
+      },
+      {
+        name: 'User',
+        namei18n: '_route:user',
+        permission: 'user.list',
+        path: '/users',
+        icon: 'x-user2',
+        LazyComponent: React.lazy(() => import(/* webpackChunkName: 'UserList' */ '../pages/User/UserList/UserList')),
+        canCreate: true,
+        exact: true,
+      },
+      // ---- Role ----
+      {
+        name: 'Create Role',
+        namei18n: '_route:createRole',
+        permission: 'role.create',
+        path: '/roles/create',
+        icon: 'x-role',
+        LazyComponent: React.lazy(() =>
+          import(/* webpackChunkName: 'CreateRole' */ '../pages/Role/CreateRole/CreateRole'),
+        ),
+        exact: true,
+        isCreate: true,
+      },
+      {
+        name: 'Edit Role',
+        namei18n: '_route:editRole',
+        permission: 'role.item',
+        path: '/roles/:id(\\d+)',
+        icon: 'x-role',
+        LazyComponent: React.lazy(() => import(/* webpackChunkName: 'EditRole' */ '../pages/Role/EditRole/EditRole')),
+        exact: true,
+      },
+      {
+        name: 'Role',
+        namei18n: '_route:role',
+        permission: 'role.list',
+        path: '/roles',
+        icon: 'x-role',
+        LazyComponent: React.lazy(() => import(/* webpackChunkName: 'RoleList' */ '../pages/Role/RoleList/RoleList')),
+        canCreate: true,
+        exact: true,
+      },
+      // ---- Permission ----
+      {
+        name: 'Create Permission',
+        namei18n: '_route:createPermission',
+        permission: 'permission.create',
+        path: '/permissions/create',
+        icon: 'x-permission2',
+        LazyComponent: React.lazy(() =>
+          import(/* webpackChunkName: 'CreatePermission' */ '../pages/Permission/CreatePermission/CreatePermission'),
+        ),
+        exact: true,
+        isCreate: true,
+      },
+      {
+        name: 'Edit Permission',
+        namei18n: '_route:editPermission',
+        permission: 'permission.item',
+        path: '/permissions/:id(\\d+)',
+        icon: 'x-permission2',
+        LazyComponent: React.lazy(() =>
+          import(/* webpackChunkName: 'EditPermission' */ '../pages/Permission/EditPermission/EditPermission'),
+        ),
+        exact: true,
+      },
+      {
+        name: 'Permission',
+        namei18n: '_route:permission',
+        permission: 'permission.list',
+        path: '/permissions',
+        icon: 'x-permission2',
+        LazyComponent: React.lazy(() =>
+          import(/* webpackChunkName: 'PermissionList' */ '../pages/Permission/PermissionList/PermissionList'),
+        ),
+        canCreate: true,
+        exact: true,
+      },
+    ],
   },
+  //
+  // -------- [Content Group] --------
+  //
   {
-    name: 'Edit User',
-    namei18n: '_route:editUser',
-    permission: 'user.item',
-    path: '/users/:id(\\d+)',
-    icon: 'user',
-    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'EditUser' */ '../pages/User/EditUser/EditUser')),
-    exact: true,
+    name: 'Content Group',
+    namei18n: '_route:contentGroup',
+    permission: 'article.list | tag.list',
+    path: '_content-group',
+    icon: 'x-content-group',
+    children: [
+      // ---- Article ----
+      {
+        name: 'Create Article',
+        namei18n: '_route:createArticle',
+        permission: 'article.create',
+        path: '/articles/create',
+        icon: 'x-document',
+        LazyComponent: React.lazy(() =>
+          import(/* webpackChunkName: 'CreateArticle' */ '../pages/Article/CreateArticle/CreateArticle'),
+        ),
+        exact: true,
+        isCreate: true,
+      },
+      {
+        name: 'Edit Article',
+        namei18n: '_route:editArticle',
+        permission: 'article.item',
+        path: '/articles/:id(\\d+)',
+        icon: 'x-document',
+        LazyComponent: React.lazy(() =>
+          import(/* webpackChunkName: 'EditArticle' */ '../pages/Article/EditArticle/EditArticle'),
+        ),
+        exact: true,
+      },
+      {
+        name: 'Article',
+        namei18n: '_route:article',
+        permission: 'article.list',
+        path: '/articles',
+        icon: 'x-document',
+        LazyComponent: React.lazy(() =>
+          import(/* webpackChunkName: 'ArticleList' */ '../pages/Article/ArticleList/ArticleList'),
+        ),
+        canCreate: true,
+        exact: true,
+      },
+      // ---- Tag ----
+      {
+        name: 'Create Tag',
+        namei18n: '_route:createTag',
+        permission: 'tag.create',
+        path: '/tags/create',
+        icon: 'x-tag',
+        LazyComponent: React.lazy(() => import(/* webpackChunkName: 'CreateTag' */ '../pages/Tag/CreateTag/CreateTag')),
+        exact: true,
+        isCreate: true,
+      },
+      {
+        name: 'Edit Tag',
+        namei18n: '_route:editTag',
+        permission: 'tag.item',
+        path: '/tags/:id(\\d+)',
+        icon: 'x-tag',
+        LazyComponent: React.lazy(() => import(/* webpackChunkName: 'EditTag' */ '../pages/Tag/EditTag/EditTag')),
+        exact: true,
+      },
+      {
+        name: 'Tag',
+        namei18n: '_route:tag',
+        permission: 'tag.list',
+        path: '/tags',
+        icon: 'x-tag',
+        LazyComponent: React.lazy(() => import(/* webpackChunkName: 'TagList' */ '../pages/Tag/TagList/TagList')),
+        canCreate: true,
+        exact: true,
+      },
+    ],
   },
+  //
+  // -------- [Marketing Group] --------
+  //
   {
-    name: 'User',
-    namei18n: '_route:user',
-    permission: 'user.list',
-    path: '/users',
-    icon: 'user',
-    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'UserList' */ '../pages/User/UserList/UserList')),
-    canCreate: true,
-    exact: true,
+    name: 'Marketing Group',
+    namei18n: '_route:marketingGroup',
+    permission: 'coupon.list | ax.list',
+    path: '_marketing-group',
+    icon: 'x-marketing',
+    children: [
+      // ---- Ax ----
+      {
+        name: 'Create Ax',
+        namei18n: '_route:createAx',
+        permission: 'ax.create',
+        path: '/axs/create',
+        icon: 'x-pic',
+        LazyComponent: React.lazy(() => import(/* webpackChunkName: 'CreateAx' */ '../pages/Ax/CreateAx/CreateAx')),
+        exact: true,
+        isCreate: true,
+      },
+      {
+        name: 'Edit Ax',
+        namei18n: '_route:editAx',
+        permission: 'ax.item',
+        path: '/axs/:id(\\d+)',
+        icon: 'x-pic',
+        LazyComponent: React.lazy(() => import(/* webpackChunkName: 'EditAx' */ '../pages/Ax/EditAx/EditAx')),
+        exact: true,
+      },
+      {
+        name: 'Ax',
+        namei18n: '_route:ax',
+        permission: 'ax.list',
+        path: '/axs',
+        icon: 'x-pic',
+        LazyComponent: React.lazy(() => import(/* webpackChunkName: 'AxList' */ '../pages/Ax/AxList/AxList')),
+        canCreate: true,
+        exact: true,
+      },
+      // ---- Coupon ----
+      {
+        name: 'Create Coupon',
+        namei18n: '_route:createCoupon',
+        permission: 'coupon.create',
+        path: '/coupons/create',
+        icon: 'x-coupon',
+        LazyComponent: React.lazy(() =>
+          import(/* webpackChunkName: 'CreateCoupon' */ '../pages/Coupon/CreateCoupon/CreateCoupon'),
+        ),
+        exact: true,
+        isCreate: true,
+      },
+      {
+        name: 'Edit Coupon',
+        namei18n: '_route:editCoupon',
+        permission: 'coupon.item',
+        path: '/coupons/:id(\\d+)',
+        icon: 'x-coupon',
+        LazyComponent: React.lazy(() =>
+          import(/* webpackChunkName: 'EditCoupon' */ '../pages/Coupon/EditCoupon/EditCoupon'),
+        ),
+        exact: true,
+      },
+      {
+        name: 'Coupon',
+        namei18n: '_route:coupon',
+        permission: 'coupon.list',
+        path: '/coupons',
+        icon: 'x-coupon',
+        LazyComponent: React.lazy(() =>
+          import(/* webpackChunkName: 'CouponList' */ '../pages/Coupon/CouponList/CouponList'),
+        ),
+        canCreate: true,
+        exact: true,
+      },
+    ],
   },
   //
-  //
-  //
-  //
-  {
-    name: 'Create Role',
-    namei18n: '_route:createRole',
-    permission: 'role.create',
-    path: '/roles/create',
-    icon: 'crown',
-    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'CreateRole' */ '../pages/Role/CreateRole/CreateRole')),
-    exact: true,
-    isCreate: true,
-  },
-  {
-    name: 'Edit Role',
-    namei18n: '_route:editRole',
-    permission: 'role.item',
-    path: '/roles/:id(\\d+)',
-    icon: 'crown',
-    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'EditRole' */ '../pages/Role/EditRole/EditRole')),
-    exact: true,
-  },
-  {
-    name: 'Role',
-    namei18n: '_route:role',
-    permission: 'role.list',
-    path: '/roles',
-    icon: 'crown',
-    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'RoleList' */ '../pages/Role/RoleList/RoleList')),
-    canCreate: true,
-    exact: true,
-  },
-  //
-  //
-  //
-  //
-  {
-    name: 'Create Permission',
-    namei18n: '_route:createPermission',
-    permission: 'permission.create',
-    path: '/permissions/create',
-    icon: 'key',
-    LazyComponent: React.lazy(() =>
-      import(/* webpackChunkName: 'CreatePermission' */ '../pages/Permission/CreatePermission/CreatePermission'),
-    ),
-    exact: true,
-    isCreate: true,
-  },
-  {
-    name: 'Edit Permission',
-    namei18n: '_route:editPermission',
-    permission: 'permission.item',
-    path: '/permissions/:id(\\d+)',
-    icon: 'key',
-    LazyComponent: React.lazy(() =>
-      import(/* webpackChunkName: 'EditPermission' */ '../pages/Permission/EditPermission/EditPermission'),
-    ),
-    exact: true,
-  },
-  {
-    name: 'Permission',
-    namei18n: '_route:permission',
-    permission: 'permission.list',
-    path: '/permissions',
-    icon: 'key',
-    LazyComponent: React.lazy(() =>
-      import(/* webpackChunkName: 'PermissionList' */ '../pages/Permission/PermissionList/PermissionList'),
-    ),
-    canCreate: true,
-    exact: true,
-  },
-  //
-  //
-  //
+  // ---- Category ----
   //
   {
     name: 'Create Category',
     namei18n: '_route:createCategory',
     permission: 'category.create',
     path: '/categories/create',
-    icon: 'apartment',
+    icon: 'x-category',
     LazyComponent: React.lazy(() =>
       import(/* webpackChunkName: 'CreateCategory' */ '../pages/Category/CreateCategory/CreateCategory'),
     ),
@@ -132,7 +296,7 @@ export const masterRoutes: IRouteItem[] = [
     namei18n: '_route:editCategory',
     permission: 'category.item',
     path: '/categories/:id(\\d+)',
-    icon: 'apartment',
+    icon: 'x-category',
     LazyComponent: React.lazy(() =>
       import(/* webpackChunkName: 'EditCategory' */ '../pages/Category/EditCategory/EditCategory'),
     ),
@@ -143,7 +307,7 @@ export const masterRoutes: IRouteItem[] = [
     namei18n: '_route:category',
     permission: 'category.list',
     path: '/categories',
-    icon: 'apartment',
+    icon: 'x-category',
     LazyComponent: React.lazy(() =>
       import(/* webpackChunkName: 'CategoryList' */ '../pages/Category/CategoryList/CategoryList'),
     ),
@@ -151,172 +315,24 @@ export const masterRoutes: IRouteItem[] = [
     exact: true,
   },
   //
-  //
-  //
-  //
-  {
-    name: 'Create Article',
-    namei18n: '_route:createArticle',
-    permission: 'article.create',
-    path: '/articles/create',
-    icon: 'container',
-    LazyComponent: React.lazy(() =>
-      import(/* webpackChunkName: 'CreateArticle' */ '../pages/Article/CreateArticle/CreateArticle'),
-    ),
-    exact: true,
-    isCreate: true,
-  },
-  {
-    name: 'Edit Article',
-    namei18n: '_route:editArticle',
-    permission: 'article.item',
-    path: '/articles/:id(\\d+)',
-    icon: 'container',
-    LazyComponent: React.lazy(() =>
-      import(/* webpackChunkName: 'EditArticle' */ '../pages/Article/EditArticle/EditArticle'),
-    ),
-    exact: true,
-  },
-  {
-    name: 'Article',
-    namei18n: '_route:article',
-    permission: 'article.list',
-    path: '/articles',
-    icon: 'container',
-    LazyComponent: React.lazy(() =>
-      import(/* webpackChunkName: 'ArticleList' */ '../pages/Article/ArticleList/ArticleList'),
-    ),
-    canCreate: true,
-    exact: true,
-  },
-  //
-  //
-  //
-  //
-  {
-    name: 'Create Ax',
-    namei18n: '_route:createAx',
-    permission: 'ax.create',
-    path: '/axs/create',
-    icon: 'star',
-    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'CreateAx' */ '../pages/Ax/CreateAx/CreateAx')),
-    exact: true,
-    isCreate: true,
-  },
-  {
-    name: 'Edit Ax',
-    namei18n: '_route:editAx',
-    permission: 'ax.item',
-    path: '/axs/:id(\\d+)',
-    icon: 'star',
-    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'EditAx' */ '../pages/Ax/EditAx/EditAx')),
-    exact: true,
-  },
-  {
-    name: 'Ax',
-    namei18n: '_route:ax',
-    permission: 'ax.list',
-    path: '/axs',
-    icon: 'star',
-    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'AxList' */ '../pages/Ax/AxList/AxList')),
-    canCreate: true,
-    exact: true,
-  },
-  //
-  //
-  //
-  //
-  //
-  {
-    name: 'Create Tag',
-    namei18n: '_route:createTag',
-    permission: 'tag.create',
-    path: '/tags/create',
-    icon: 'tag',
-    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'CreateTag' */ '../pages/Tag/CreateTag/CreateTag')),
-    exact: true,
-    isCreate: true,
-  },
-  {
-    name: 'Edit Tag',
-    namei18n: '_route:editTag',
-    permission: 'tag.item',
-    path: '/tags/:id(\\d+)',
-    icon: 'tag',
-    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'EditTag' */ '../pages/Tag/EditTag/EditTag')),
-    exact: true,
-  },
-  {
-    name: 'Tag',
-    namei18n: '_route:tag',
-    permission: 'tag.list',
-    path: '/tags',
-    icon: 'tag',
-    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'TagList' */ '../pages/Tag/TagList/TagList')),
-    canCreate: true,
-    exact: true,
-  },
-  //
-  //
-  //
-  //
-  //
-  {
-    name: 'Create Coupon',
-    namei18n: '_route:createCoupon',
-    permission: 'coupon.create',
-    path: '/coupons/create',
-    icon: 'money-collect',
-    LazyComponent: React.lazy(() =>
-      import(/* webpackChunkName: 'CreateCoupon' */ '../pages/Coupon/CreateCoupon/CreateCoupon'),
-    ),
-    exact: true,
-    isCreate: true,
-  },
-  {
-    name: 'Edit Coupon',
-    namei18n: '_route:editCoupon',
-    permission: 'coupon.item',
-    path: '/coupons/:id(\\d+)',
-    icon: 'money-collect',
-    LazyComponent: React.lazy(() =>
-      import(/* webpackChunkName: 'EditCoupon' */ '../pages/Coupon/EditCoupon/EditCoupon'),
-    ),
-    exact: true,
-  },
-  {
-    name: 'Coupon',
-    namei18n: '_route:coupon',
-    permission: 'coupon.list',
-    path: '/coupons',
-    icon: 'money-collect',
-    LazyComponent: React.lazy(() =>
-      import(/* webpackChunkName: 'CouponList' */ '../pages/Coupon/CouponList/CouponList'),
-    ),
-    canCreate: true,
-    exact: true,
-  },
-  //
-  //
-  //
-  //
+  // ---- Setting ----
   //
   {
     name: 'Setting',
     namei18n: '_route:setting',
     permission: 'setting.list',
     path: '/settings',
-    icon: 'setting',
+    icon: 'x-setting',
     LazyComponent: React.lazy(() =>
       import(/* webpackChunkName: 'SettingList' */ '../pages/Setting/SettingList/SettingList'),
     ),
     exact: true,
   },
   //
-  //
+  // ---- Home ----
   //
   {
-    name: 'HOME',
+    name: 'Home',
     namei18n: '_route:home',
     permission: ALLOW_PERMISSION,
     path: '/',
@@ -324,22 +340,21 @@ export const masterRoutes: IRouteItem[] = [
     exact: true,
   },
   //
-  //
-  //
+  // -------- [Debug Group] --------
   //
   {
-    name: 'Lab',
-    namei18n: '_route:lab',
+    name: 'Debug Group',
+    namei18n: '_route:debug',
     permission: 'lab.root',
-    path: '_group',
-    icon: 'experiment',
+    path: '_debug-group',
+    icon: 'x-diamond',
     children: [
       {
         name: 'Test Any',
         namei18n: '_route:testAny',
         permission: ALLOW_PERMISSION,
         path: '/test-any',
-        icon: 'deployment-unit',
+        icon: 'x-numbersign',
         LazyComponent: React.lazy(() => import(/* webpackChunkName: 'TestAny' */ '../pages/Test/TestAny/TestAny')),
         exact: true,
       },
@@ -348,7 +363,7 @@ export const masterRoutes: IRouteItem[] = [
         namei18n: '_route:testAttachment',
         permission: ALLOW_PERMISSION,
         path: '/test-attachment',
-        icon: 'deployment-unit',
+        icon: 'x-numbersign',
         LazyComponent: React.lazy(() =>
           import(/* webpackChunkName: 'TestAttachment' */ '../pages/Test/TestAttachment/TestAttachment'),
         ),
@@ -359,7 +374,7 @@ export const masterRoutes: IRouteItem[] = [
         namei18n: '_route:testI18n',
         permission: ALLOW_PERMISSION,
         path: '/test-i18n',
-        icon: 'deployment-unit',
+        icon: 'x-numbersign',
         LazyComponent: React.lazy(() => import(/* webpackChunkName: 'TestI18n' */ '../pages/Test/TestI18n/TestI18n')),
         exact: true,
       },

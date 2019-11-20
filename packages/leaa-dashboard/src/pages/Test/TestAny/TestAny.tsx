@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Icon } from 'antd';
 
 import { IPage } from '@leaa/dashboard/src/interfaces';
 import { useStore } from '@leaa/dashboard/src/stores';
@@ -27,6 +28,12 @@ export default (props: IPage) => {
       <h2>TAG</h2>
 
       <SelectTagId selectedTagsMaxLength={5} />
+
+      <br />
+
+      <Icon type="thunderbolt" />
+      <Icon type="shandian" />
+      <Icon type="flashlight" />
 
       {/* <h2>STORE</h2> */}
 

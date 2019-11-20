@@ -29,6 +29,21 @@ const getMenuName = (menu: IRouteItem) => {
   return menu.name;
 };
 
+const checkPermission = (permission: string) => {
+  const { flatePermissions } = authUtil.getAuthInfo();
+
+  // e.g. 'user.list | role.list' in (master.route.tsx)
+  if (permission.includes('|')) {
+    return permission
+      .split('|')
+      .map(p => p.trim())
+      .some(k => flatePermissions.includes(k));
+  }
+
+  return flatePermissions.includes(permission);
+};
+
+// group
 const makeFlatMenu = (menu: IRouteItem): React.ReactNode => {
   let dom = null;
 
@@ -46,7 +61,7 @@ const makeFlatMenu = (menu: IRouteItem): React.ReactNode => {
     return dom;
   }
 
-  if (authUtil.getAuthInfo().flatePermissions.includes(menu.permission) || menu.permission === ALLOW_PERMISSION) {
+  if (checkPermission(menu.permission) || menu.permission === ALLOW_PERMISSION) {
     const currentMenuCreatePermission = `${menu.permission.split('.')[0]}.create`;
 
     dom = (
@@ -72,12 +87,10 @@ const makeFlatMenu = (menu: IRouteItem): React.ReactNode => {
   return dom;
 };
 
+// group
 const makeFlatMenus = (menus: IRouteItem[]): React.ReactNode => {
   return menus.map(menu => {
-    if (
-      menu.children &&
-      (authUtil.getAuthInfo().flatePermissions.includes(menu.permission) || menu.permission === ALLOW_PERMISSION)
-    ) {
+    if (menu.children && (checkPermission(menu.permission) || menu.permission === ALLOW_PERMISSION)) {
       return (
         <Menu.SubMenu
           className={`g-sidebar-group-menu-${menu.path}`}

@@ -1,9 +1,10 @@
 import _lang from './_lang.lang';
 
+const group = 'Group';
 const home = 'Home';
 const playground = 'Playground';
 const test = 'Test';
-const lab = 'Lab';
+const debug = 'Debug Fn';
 const user = 'User';
 const role = 'Role';
 const permission = 'Permission';
@@ -14,6 +15,8 @@ const tag = 'Tag';
 const attachment = 'Attachment';
 const setting = 'Setting';
 const coupon = 'Coupon';
+const marketing = 'Marketing';
+const content = 'Content';
 
 export default {
   home,
@@ -22,12 +25,13 @@ export default {
   //
   playground,
   test,
-  lab,
+  debug,
   testAny: 'Test Any',
   testAttachment: 'Test Attachment',
   testI18n: 'Test I18n',
   testStore: 'Test Store',
   //
+  userGroup: `${user} ${group}`,
   user,
   createUser: `${_lang.create} ${user}`,
   editUser: `${_lang.edit} ${user}`,
@@ -44,6 +48,7 @@ export default {
   createCategory: `${_lang.create} ${category}`,
   editCategory: `${_lang.edit} ${category}`,
   //
+  contentGroup: `${content}`,
   article,
   createArticle: `${_lang.create} ${article}`,
   editArticle: `${_lang.edit} ${article}`,
@@ -62,6 +67,7 @@ export default {
   //
   setting,
   //
+  marketingGroup: `${marketing}`,
   coupon,
   createCoupon: `${_lang.create}${coupon}`,
   editCoupon: `${_lang.edit}${coupon}`,

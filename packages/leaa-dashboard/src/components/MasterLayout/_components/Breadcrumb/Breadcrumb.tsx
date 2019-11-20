@@ -70,7 +70,7 @@ export const Breadcrumb = (props: IProps) => {
     if (homeBreadcrumbItem && routes.length === 1) {
       return (
         <Link to={route.path}>
-          <Icon type="home" /> {route.breadcrumbName}
+          <Icon type="x-home" /> {route.breadcrumbName}
         </Link>
       );
     }
@@ -78,7 +78,7 @@ export const Breadcrumb = (props: IProps) => {
     if (homeBreadcrumbItem) {
       return (
         <Link to={route.path}>
-          <Icon type="home" />
+          <Icon type="x-home" />
         </Link>
       );
     }

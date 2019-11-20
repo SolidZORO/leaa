@@ -51,7 +51,7 @@ export const SwitchLanguage = (props: IProps): JSX.Element => {
         >
           <div className={style['switch-language-button']}>
             <Button type="link" size="small">
-              <Icon type="swlang" />
+              <Icon type="x-lang" />
               {t(`_lang:lang-code-${i18n.language}`)}
             </Button>
           </div>
