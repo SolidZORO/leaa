@@ -5,7 +5,7 @@ import { RouteComponentProps } from 'react-router-dom';
 
 import { authUtil } from '@leaa/dashboard/src/utils';
 import { LOGOUT_REDIRECT_URL } from '@leaa/dashboard/src/constants';
-import avatar from '@leaa/dashboard/src/assets/images/avatar/avatar-cli.svg';
+import avatar from '@leaa/dashboard/src/assets/images/avatar/avatar-line.svg';
 
 import style from './style.less';
 
