@@ -24,15 +24,12 @@ export class CouponService {
 
     const qb = getRepository(Coupon).createQueryBuilder();
 
-    console.log(nextArgs);
     qb.select().orderBy(nextArgs.orderBy || 'id', nextArgs.orderSort);
 
     if (nextArgs.q) {
       const aliasName = new SelectQueryBuilder(qb).alias;
 
-      console.log(nextArgs.q);
-
-      ['code', 'slug'].forEach(q => {
+      ['code', 'name'].forEach(q => {
         qb.orWhere(`${aliasName}.${q} = :${q}`, { [q]: `${nextArgs.q}` });
       });
     }
