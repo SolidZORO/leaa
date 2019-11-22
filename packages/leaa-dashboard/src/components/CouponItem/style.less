@@ -1,0 +1,198 @@
+@import '~@leaa/dashboard/src/styles/variables.less';
+
+.coupon-wrapper {
+  position: relative;
+  display: inline-block;
+  font-family: sans-serif;
+
+  @text-color: #fff;
+  @coupon-border-radius: 8px;
+
+  .coupon-inner {
+    width: 100%;
+    height: 110px;
+    background: linear-gradient(-27deg, darken(@primary-color, -7%) 0%, darken(@primary-color, -1%) 100%);
+    border-radius: @coupon-border-radius;
+  }
+
+  .coupon-card {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    color: @text-color;
+    float: left;
+    position: relative;
+
+    .coupon-card-inner {
+      background-color: transparent;
+    }
+  }
+
+  .coupon-card--left {
+    text-align: center;
+    width: 140px;
+    height: 100%;
+  }
+
+  .coupon-card--right {
+    border-left: 2px dashed #fff;
+    min-width: 270px;
+    height: 100%;
+
+    &:before,
+    &:after {
+      content: '';
+      position: absolute;
+      display: block;
+      width: 12px;
+      height: 12px;
+      left: -7px;
+      background: #fff;
+      border-radius: 50%;
+    }
+
+    &:before {
+      top: -7px;
+    }
+
+    &:after {
+      bottom: -7px;
+    }
+  }
+
+  .amount {
+    font-size: 160%;
+    line-height: 1;
+    font-weight: 600;
+  }
+
+  .over-amount {
+    font-size: 80%;
+    transform: scale(0.6);
+    opacity: 0.5;
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+  }
+
+  .title {
+    line-height: 1;
+    font-size: 130%;
+    font-weight: 600;
+
+    a {
+      color: @text-color;
+    }
+  }
+
+  .date-range {
+    margin-top: 6px;
+    margin-left: 1px;
+    line-height: 1;
+    font-size: 12px;
+    transform: scale(0.7);
+    transform-origin: 0;
+
+    .date-range-line {
+      padding: 0 3px;
+      opacity: 0.5;
+    }
+  }
+
+  .coupon-code {
+    margin-top: 6px;
+    line-height: 1;
+    font-size: 90%;
+
+    strong {
+      font-family: @code-family;
+      font-weight: normal;
+    }
+
+    .copy-code {
+      position: relative;
+      top: -1px;
+      margin: 0;
+      padding: 0;
+      font-size: 80%;
+      display: inline-block;
+      line-height: 1;
+
+      svg {
+        opacity: 0.7;
+        color: @text-color;
+        transform: scale(0.8);
+        transform-origin: 0;
+      }
+    }
+  }
+}
+
+.coupon-wrapper--small {
+  @coupon-border-radius: 6px;
+
+  .coupon-inner {
+    height: 75px;
+    border-radius: @coupon-border-radius;
+  }
+
+  .coupon-card {
+  }
+
+  .coupon-card--left {
+    width: 120px;
+  }
+
+  .coupon-card--right {
+    border-left: 1px dashed #fff;
+    min-width: 200px;
+
+    &:before,
+    &:after {
+      width: 7px;
+      height: 7px;
+      left: -4px;
+    }
+
+    &:before {
+      top: -3px;
+    }
+
+    &:after {
+      bottom: -3px;
+    }
+  }
+
+  .amount {
+    font-size: 130%;
+  }
+
+  .over-amount {
+    transform: scale(0.7);
+    bottom: 3px;
+    opacity: 0.4;
+  }
+
+  .title {
+    margin-top: 3px;
+    font-size: 100%;
+  }
+
+  .date-range {
+    margin-top: 3px;
+  }
+
+  .coupon-code {
+    margin-top: 3px;
+    font-size: 80%;
+    transform: scale(0.9);
+    transform-origin: 0;
+
+    strong {
+      font-family: @code-family;
+      font-weight: normal;
+    }
+  }
+}

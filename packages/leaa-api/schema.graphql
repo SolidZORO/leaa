@@ -254,6 +254,7 @@ input CreateSettingInput {
   value: String!
   type: String!
   description: String
+  options: String
   sort: Int = 0
 }
 

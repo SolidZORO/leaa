@@ -23,6 +23,10 @@ export class CreateSettingInput {
   @Field(() => String, { nullable: true })
   public description?: string;
 
+  @IsOptional()
+  @Field(() => String, { nullable: true })
+  public options?: string;
+
   @IsNotEmpty()
   @Field(() => Int, { defaultValue: 0 })
   public sort!: number;

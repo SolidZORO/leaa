@@ -31,7 +31,7 @@ export default {
   testI18n: '测试 I18n',
   testStore: '测试 Store',
   //
-  userGroup: `${user}${group}`,
+  userGroup: `${user}`,
   user,
   createUser: `${_lang.create}${user}`,
   editUser: `${_lang.edit}${user}`,

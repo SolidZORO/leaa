@@ -109,6 +109,21 @@ class SettingInfoFormInner extends React.PureComponent<IProps> {
               <Form.Item
                 label={
                   <span>
+                    <Icon type="question-circle" /> {t('_lang:options')}
+                  </span>
+                }
+              >
+                {getFieldDecorator('options', {
+                  initialValue: props.item ? props.item.options : undefined,
+                  rules: [],
+                })(<Input.TextArea rows={2} placeholder={t('_lang:options')} />)}
+              </Form.Item>
+            </Col>
+
+            <Col xs={24}>
+              <Form.Item
+                label={
+                  <span>
                     <Icon type="question-circle" /> {t('_lang:tips')}
                   </span>
                 }

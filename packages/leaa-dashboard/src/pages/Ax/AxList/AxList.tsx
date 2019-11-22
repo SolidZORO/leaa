@@ -85,7 +85,9 @@ export default (props: IPage) => {
     {
       title: 'ID',
       dataIndex: 'id',
-      width: 50,
+      width: 60,
+      sorter: true,
+      sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'id'),
       render: (text: string) => <TableColumnId id={text} />,
     },
     {

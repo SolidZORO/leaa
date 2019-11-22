@@ -32,7 +32,7 @@ export class SettingService {
       const aliasName = new SelectQueryBuilder(qb).alias;
 
       ['name', 'slug'].forEach(q => {
-        qb.andWhere(`${aliasName}.${q} LIKE :${q}`, { [q]: `%${nextArgs.q}%` });
+        qb.orWhere(`${aliasName}.${q} LIKE :${q}`, { [q]: `%${nextArgs.q}%` });
       });
     }
 

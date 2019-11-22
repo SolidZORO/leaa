@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'classnames';
-import { Button, Form, Input, Icon, Tooltip } from 'antd';
+import { Button, Form, Input, Icon, Tooltip, Select } from 'antd';
 import { withTranslation } from 'react-i18next';
 import { FormComponentProps } from 'antd/lib/form';
 
@@ -19,16 +19,27 @@ interface IFormProps extends FormComponentProps {
 
 type IProps = IFormProps & ITfn;
 
-export const buildTypeDom = (setting: Pick<Setting, 'type' | 'name'>) => {
+export const buildTypeDom = (setting: Pick<Setting, 'type' | 'name' | 'options'>) => {
   let dom = <span>----</span>;
 
-  const { type, name } = setting;
+  const { type, name, options } = setting;
 
   if (type === 'input') {
     dom = <Input placeholder={name} />;
   }
 
-  if (['radio', 'checkbox', 'textarea'].includes(type)) {
+  if (['radio'].includes(type)) {
+    console.log(options);
+
+    dom = (
+      <Select>
+        {options && options.split(/[\n]/).map((option: string) => <Select.Option key={option}>{option}</Select.Option>)}
+      </Select>
+    );
+    // dom = <Input.TextArea placeholder={name} rows={3} />;
+  }
+
+  if (['checkbox', 'textarea'].includes(type)) {
     dom = <Input.TextArea placeholder={name} rows={3} />;
   }
 

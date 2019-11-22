@@ -23,17 +23,21 @@ export class CouponService {
     const nextArgs = formatUtil.formatArgs(args);
 
     const qb = getRepository(Coupon).createQueryBuilder();
+
+    console.log(nextArgs);
     qb.select().orderBy(nextArgs.orderBy || 'id', nextArgs.orderSort);
 
     if (nextArgs.q) {
       const aliasName = new SelectQueryBuilder(qb).alias;
 
+      console.log(nextArgs.q);
+
       ['code', 'slug'].forEach(q => {
-        qb.andWhere(`${aliasName}.${q} LIKE :${q}`, { [q]: `%${nextArgs.q}%` });
+        qb.orWhere(`${aliasName}.${q} = :${q}`, { [q]: `${nextArgs.q}` });
       });
     }
 
-    if (!user || (user && !permissionUtil.hasPermission(user, 'attachment.list'))) {
+    if (!user || (user && !permissionUtil.hasPermission(user, 'coupon.list'))) {
       qb.andWhere('status = :status', { status: 1 });
     }
 
@@ -49,7 +53,7 @@ export class CouponService {
 
     const whereQuery: { id: number; status?: number } = { id };
 
-    if (!user || (user && !permissionUtil.hasPermission(user, 'attachment.list'))) {
+    if (!user || (user && !permissionUtil.hasPermission(user, 'coupon.list'))) {
       whereQuery.status = 1;
     }
 

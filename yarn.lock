@@ -3306,6 +3306,11 @@
   resolved "https://registry.npm.taobao.org/@types/debug/download/@types/debug-4.1.5.tgz#b14efa8852b7768d898906613c23f688713e02cd"
   integrity sha1-sU76iFK3do2JiQZhPCP2iHE+As0=
 
+"@types/dinero.js@^1.6.1":
+  version "1.6.1"
+  resolved "https://registry.npm.taobao.org/@types/dinero.js/download/@types/dinero.js-1.6.1.tgz#47dae88088ec3cc5418d93a83a889377a43dcc3e"
+  integrity sha1-R9rogIjsPMVBjZOoOoiTd6Q9zD4=
+
 "@types/dotenv-webpack@^1.7.0":
   version "1.7.0"
   resolved "https://registry.npm.taobao.org/@types/dotenv-webpack/download/@types/dotenv-webpack-1.7.0.tgz#48eb5a430737e7321f169bfec6c93a3ac566c094"
@@ -7759,6 +7764,11 @@ csstype@^2.2.0:
   resolved "https://registry.npm.taobao.org/csstype/download/csstype-2.6.7.tgz#20b0024c20b6718f4eda3853a1f5a1cce7f5e4a5"
   integrity sha1-ILACTCC2cY9O2jhTofWhzOf15KU=
 
+currency.js@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.npm.taobao.org/currency.js/download/currency.js-1.2.2.tgz#ae84daf68798051097ad3feb2d022ad08994f526"
+  integrity sha1-roTa9oeYBRCXrT/rLQIq0ImU9SY=
+
 currently-unhandled@^0.4.1:
   version "0.4.1"
   resolved "https://registry.npm.taobao.org/currently-unhandled/download/currently-unhandled-0.4.1.tgz#988df33feab191ef799a61369dd76c17adf957ea"
@@ -8179,6 +8189,11 @@ digest-header@^0.0.1:
   integrity sha1-Ecz23uxXZqw3l0TZAcEsuklRS+Y=
   dependencies:
     utility "0.1.11"
+
+dinero.js@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.npm.taobao.org/dinero.js/download/dinero.js-1.6.0.tgz#d1e4fc4c1784cd8a853c2f1f1b1bb765736ec709"
+  integrity sha1-0eT8TBeEzYqFPC8fGxu3ZXNuxwk=
 
 dir-glob@^2.2.2:
   version "2.2.2"

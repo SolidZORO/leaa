@@ -34,7 +34,7 @@ export class TagService {
       const aliasName = new SelectQueryBuilder(qb).alias;
 
       ['name'].forEach(q => {
-        qb.andWhere(`${aliasName}.${q} LIKE :${q}`, { [q]: `%${nextArgs.q}%` });
+        qb.orWhere(`${aliasName}.${q} LIKE :${q}`, { [q]: `%${nextArgs.q}%` });
       });
     }
 

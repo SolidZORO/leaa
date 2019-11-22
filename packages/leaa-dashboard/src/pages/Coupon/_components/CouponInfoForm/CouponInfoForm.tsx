@@ -32,37 +32,15 @@ class CouponInfoFormInner extends React.PureComponent<IProps> {
     const { props } = this;
     const { getFieldDecorator } = this.props.form;
 
-    console.log(curremtTime.toISOString());
-
-    // quantity
-    // type
-    // slug
-    // amount
-    // promo_id
-    // promo_code
-    // over_amount
-    // user_id
-    // order_id
-    // order_serial
-    // available_product_ids
-    // unavailable_product_ids
-    // start_time
-    // expire_time
-    // convert_method
-    // creator_id
-    // status
-    // created_at
-
-    // title={t('_page:Coupon.Component.articleInfo')}
     return (
       <div className={cx(style['wrapper'], props.className)}>
         <FormCard title={t('_page:Coupon.Component.couponInfo')}>
           <Form className={cx('g-form--zero-margin-bottom', style['form-wrapper'])}>
             <Row gutter={16} className={style['form-row']}>
               {getFieldDecorator('type', {
+                // initialValue: props.item ? props.item.type : 'coupon',
                 // [type] is reserved field, for future expansion
                 initialValue: 'coupon',
-                // initialValue: props.item ? props.item.type : 'coupon',
                 rules: [{ required: true }],
               })(<Input hidden placeholder={t('_lang:type')} />)}
 
@@ -75,12 +53,21 @@ class CouponInfoFormInner extends React.PureComponent<IProps> {
                 </Form.Item>
               </Col>
 
-              <Col xs={24} sm={4}>
+              <Col xs={24} sm={3}>
                 <Form.Item label={t('_page:Coupon.Component.amount')}>
                   {getFieldDecorator('amount', {
                     initialValue: props.item ? props.item.amount : 0,
                     rules: [{ required: true }],
-                  })(<InputNumber placeholder={t('_lang:amount')} />)}
+                  })(<InputNumber placeholder={t('_lang:amount')} className={style['input-number']} />)}
+                </Form.Item>
+              </Col>
+
+              <Col xs={24} sm={3}>
+                <Form.Item label={t('_page:Coupon.Component.overAmount')}>
+                  {getFieldDecorator('over_amount', {
+                    initialValue: props.item ? props.item.over_amount : 0,
+                    rules: [{ required: true }],
+                  })(<InputNumber placeholder={t('_lang:over_amount')} className={style['input-number']} />)}
                 </Form.Item>
               </Col>
 
@@ -90,19 +77,10 @@ class CouponInfoFormInner extends React.PureComponent<IProps> {
                     {getFieldDecorator('quantity', {
                       initialValue: 1,
                       rules: [{ required: true }],
-                    })(<InputNumber placeholder={t('_lang:quantity')} style={{ width: 55 }} />)}
+                    })(<InputNumber placeholder={t('_lang:quantity')} className={style['input-number']} />)}
                   </Form.Item>
                 </Col>
               )}
-
-              <Col xs={24} sm={4}>
-                <Form.Item label={t('_page:Coupon.Component.overAmount')}>
-                  {getFieldDecorator('over_amount', {
-                    initialValue: props.item ? props.item.over_amount : 0,
-                    rules: [{ required: true }],
-                  })(<InputNumber placeholder={t('_lang:over_amount')} />)}
-                </Form.Item>
-              </Col>
 
               <Col xs={24} sm={2}>
                 <Form.Item label={t('_lang:status')}>
@@ -138,7 +116,7 @@ class CouponInfoFormInner extends React.PureComponent<IProps> {
             </Row>
 
             <Row gutter={16} className={style['form-row']}>
-              <Col xs={24} sm={6}>
+              <Col xs={24} sm={12}>
                 <Form.Item label={t('_page:Coupon.Component.availableProductIds')}>
                   {getFieldDecorator('available_product_ids', {
                     initialValue: props.item ? props.item.available_product_ids : undefined,
@@ -147,7 +125,7 @@ class CouponInfoFormInner extends React.PureComponent<IProps> {
                 </Form.Item>
               </Col>
 
-              <Col xs={24} sm={6}>
+              <Col xs={24} sm={12}>
                 <Form.Item label={t('_page:Coupon.Component.unavailableProductIds')}>
                   {getFieldDecorator('unavailable_product_ids', {
                     initialValue: props.item ? props.item.unavailable_product_ids : undefined,

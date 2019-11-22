@@ -1,0 +1,138 @@
+@import '~@leaa/dashboard/src/styles/variables.less';
+
+.wrapper {
+}
+
+.form-row {
+}
+
+.form-wrapper {
+}
+
+.coupon-wrapper {
+  position: relative;
+  display: inline-block;
+  font-family: sans-serif;
+
+  .coupon-inner {
+    width: 100%;
+    height: 110px;
+  }
+
+  .coupon-card {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(to bottom, darken(@primary-color, -1%) 0%, darken(@primary-color, -7%) 100%);
+    color: #fff;
+    //background: darken(@primary-color, 1%);
+    //background: linear-gradient(to bottom, #efefef 0%, #e8e8e8 100%);
+    //color: #000;
+    float: left;
+    position: relative;
+    padding: 20px;
+
+    .coupon-card-inner {
+      background-color: transparent;
+    }
+  }
+
+  .coupon-card--left {
+    border-top-left-radius: @coupon-border-radius;
+    border-bottom-left-radius: @coupon-border-radius;
+    color: #fff;
+    text-align: center;
+    width: 120px;
+    height: 100%;
+  }
+
+  .coupon-card--right {
+    border-left: 2px dashed #fff;
+    border-top-right-radius: @coupon-border-radius;
+    border-bottom-right-radius: @coupon-border-radius;
+    min-width: 260px;
+    height: 100%;
+
+    &:before,
+    &:after {
+      content: '';
+      position: absolute;
+      display: block;
+      width: 14px;
+      height: 14px;
+      left: -8px;
+      background: #fff;
+      border-radius: 50%;
+    }
+
+    &:before {
+      top: -7px;
+    }
+
+    &:after {
+      bottom: -7px;
+    }
+  }
+
+  .amount {
+    font-size: 180%;
+    line-height: 1;
+    font-weight: 600;
+  }
+
+  .over-amount {
+    font-size: 80%;
+    transform: scale(0.8);
+    opacity: 0.5;
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+  }
+
+  .slug {
+    font-size: 140%;
+    font-weight: 600;
+    line-height: 1;
+  }
+
+  .date-range {
+    margin-top: 5px;
+    font-size: 12px;
+    transform: scale(0.7);
+    transform-origin: 0;
+    //color: #ccc;
+
+    .date-range-line {
+      padding: 0 3px;
+    }
+  }
+
+  .coupon-code {
+    margin-top: 4px;
+    font-size: 90%;
+
+    strong {
+      font-family: @code-family;
+      font-weight: normal;
+    }
+
+    .copy-code {
+      position: relative;
+      top: -1px;
+      margin: 0;
+      padding: 0;
+      font-size: 80%;
+      display: inline-block;
+      line-height: 1;
+
+      svg {
+        color: #fff9;
+        font-size: 75%;
+      }
+    }
+  }
+
+  @coupon-border-radius: 8px;
+}

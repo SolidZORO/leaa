@@ -20,6 +20,7 @@ import {
   UpdateSettingsInput,
 } from '@leaa/common/src/dtos/setting';
 import { IPage } from '@leaa/dashboard/src/interfaces';
+import { settingUtil } from '@leaa/dashboard/src/utils';
 
 import { HtmlMeta, PageCard, ErrorCard, SubmitBar } from '@leaa/dashboard/src/components';
 
@@ -43,6 +44,10 @@ export default (props: IPage) => {
     if (settingInfoFormRef && settingInfoFormRef.props) {
       settingInfoFormRef.props.form.resetFields();
     }
+  };
+
+  const onRefreshSettings = () => {
+    settingUtil.refreshLocalStorageSettings();
   };
 
   const onCloseModalVisible = () => {
@@ -84,6 +89,7 @@ export default (props: IPage) => {
     onCompleted: () => {
       message.success(t('_lang:createdSuccessfully'));
       onCloseModalVisible();
+      onRefreshSettings();
     },
     refetchQueries: () => [{ query: GET_SETTINGS }],
   });
@@ -94,6 +100,7 @@ export default (props: IPage) => {
     onCompleted: () => {
       message.success(t('_lang:updatedSuccessfully'));
       onCloseModalVisible();
+      onRefreshSettings();
     },
     refetchQueries: () => [{ query: GET_SETTINGS }],
   });
@@ -104,6 +111,7 @@ export default (props: IPage) => {
     onCompleted: () => {
       message.success(t('_lang:updatedSuccessfully'));
       onCloseModalVisible();
+      onRefreshSettings();
     },
     refetchQueries: () => [{ query: GET_SETTINGS }],
   });
@@ -114,6 +122,7 @@ export default (props: IPage) => {
     onCompleted: () => {
       message.success(t('_lang:deletedSuccessfully'));
       onCloseModalVisible();
+      onRefreshSettings();
     },
     refetchQueries: () => [{ query: GET_SETTINGS }],
   });

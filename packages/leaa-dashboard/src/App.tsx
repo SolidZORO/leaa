@@ -11,6 +11,7 @@ import { apolloClient, history } from '@leaa/dashboard/src/libs';
 // cannot use deconstruction components dir in here (App.tsx)
 import { ErrorBoundary } from '@leaa/dashboard/src/components/ErrorBoundary';
 import { RefreshFlatePermissions } from '@leaa/dashboard/src/components/RefreshFlatePermissions';
+import { RefreshSetting } from '@leaa/dashboard/src/components/RefreshSetting';
 
 import { masterRoute, authRoute, otherRoute } from '@leaa/dashboard/src/routes';
 import { initStore, StoreProvider } from '@leaa/dashboard/src/stores';
@@ -34,15 +35,17 @@ export const App = (): JSX.Element => {
         <ApolloProvider client={apolloClient}>
           <StoreProvider value={store}>
             <I18nextProvider i18n={i18n}>
-              <RefreshFlatePermissions history={history}>
-                <Router history={history}>
-                  <Switch>
-                    {authRoute}
-                    {masterRoute}
-                    {otherRoute}
-                  </Switch>
-                </Router>
-              </RefreshFlatePermissions>
+              <RefreshSetting>
+                <RefreshFlatePermissions history={history}>
+                  <Router history={history}>
+                    <Switch>
+                      {authRoute}
+                      {masterRoute}
+                      {otherRoute}
+                    </Switch>
+                  </Router>
+                </RefreshFlatePermissions>
+              </RefreshSetting>
             </I18nextProvider>
           </StoreProvider>
         </ApolloProvider>

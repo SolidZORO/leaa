@@ -6,3 +6,9 @@ export interface IDotEnv {
   API_HOST: string;
   GRAPHQL_ENDPOINT: string;
 }
+
+export interface ISetting {
+  name: string;
+  slug: string;
+  value: string;
+}

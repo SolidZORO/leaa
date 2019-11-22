@@ -9,27 +9,27 @@
   position: relative;
 
   :global {
-    .ant-pagination {
+    .ant-pagination.ant-pagination.mini {
       .ant-pagination-next,
       .ant-pagination-prev {
         .ant-pagination-item-link {
+          .btn-default();
+
           background-color: #fff !important;
           margin: 0 8px;
           padding-left: 10px;
           padding-right: 10px;
-          border: 1px solid #999;
+          border: 1px solid #ddd;
           line-height: 23px;
-
-          .btn-default();
         }
       }
 
       .ant-pagination-disabled {
-        opacity: 0.3;
+        opacity: 0.5;
 
         &:hover {
           .ant-pagination-item-link {
-            border-color: #ccc;
+            border-color: #ddd;
           }
         }
       }

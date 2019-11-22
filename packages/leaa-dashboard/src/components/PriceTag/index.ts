@@ -1,0 +1,1 @@
+export { PriceTag } from './PriceTag';

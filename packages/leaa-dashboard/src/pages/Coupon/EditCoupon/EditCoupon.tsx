@@ -1,53 +1,48 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, message, Row, Col } from 'antd';
+import { Button, message } from 'antd';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
-import { Ax } from '@leaa/common/src/entrys';
-import { IAttachmentBoxRef } from '@leaa/common/src/interfaces';
-import { GET_AX, UPDATE_AX } from '@leaa/common/src/graphqls';
+import { Coupon } from '@leaa/common/src/entrys';
+import { GET_COUPON, UPDATE_COUPON } from '@leaa/common/src/graphqls';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
-import { AxArgs, UpdateAxInput } from '@leaa/common/src/dtos/ax';
+import { CouponArgs, UpdateCouponInput } from '@leaa/common/src/dtos/coupon';
 import { IPage } from '@leaa/dashboard/src/interfaces';
 
-import { HtmlMeta, PageCard, ErrorCard, SubmitBar, AttachmentBox } from '@leaa/dashboard/src/components';
+import { HtmlMeta, PageCard, ErrorCard, SubmitBar } from '@leaa/dashboard/src/components';
 
 import { CouponInfoForm } from '../_components/CouponInfoForm/CouponInfoForm';
+import { CouponCodeStatus } from '../_components/CouponCodeStatus/CouponCodeStatus';
 
 import style from './style.less';
 
 export default (props: IPage) => {
   const { t } = useTranslation();
   const { id } = props.match.params as { id: string };
-  const listHeight = 600;
 
   // ref
-  const [axInfoFormRef, setAxInfoFormRef] = useState<any>();
-  const getBannerMbRef = useRef<IAttachmentBoxRef>(null);
-  const getBannerPcRef = useRef<IAttachmentBoxRef>(null);
-  const getGalleryMbRef = useRef<IAttachmentBoxRef>(null);
-  const getGalleryPcRef = useRef<IAttachmentBoxRef>(null);
+  const [couponInfoFormRef, setCouponInfoFormRef] = useState<any>();
 
   // query
-  const getAxVariables = { id: Number(id) };
-  const getAxQuery = useQuery<{ ax: Ax }, AxArgs>(GET_AX, {
-    variables: getAxVariables,
+  const getCouponVariables = { id: Number(id) };
+  const getCouponQuery = useQuery<{ coupon: Coupon }, CouponArgs>(GET_COUPON, {
+    variables: getCouponVariables,
     fetchPolicy: 'network-only',
   });
 
   // mutation
-  const [submitVariables, setSubmitVariables] = useState<{ id: number; ax: UpdateAxInput }>();
-  const [updateAxMutate, updateAxMutation] = useMutation<Ax>(UPDATE_AX, {
+  const [submitVariables, setSubmitVariables] = useState<{ id: number; coupon: UpdateCouponInput }>();
+  const [updateCouponMutate, updateCouponMutation] = useMutation<Coupon>(UPDATE_COUPON, {
     variables: submitVariables,
     onCompleted: () => message.success(t('_lang:updatedSuccessfully')),
-    refetchQueries: () => [{ query: GET_AX, variables: getAxVariables }],
+    refetchQueries: () => [{ query: GET_COUPON, variables: getCouponVariables }],
   });
 
   const onSubmit = async () => {
     let hasError = false;
-    let submitData: UpdateAxInput = {};
+    let submitData: UpdateCouponInput = {};
 
-    axInfoFormRef.props.form.validateFieldsAndScroll(async (err: any, formData: Ax) => {
+    couponInfoFormRef.props.form.validateFieldsAndScroll(async (err: any, formData: UpdateCouponInput) => {
       if (err) {
         hasError = true;
         message.error(err[Object.keys(err)[0]].errors[0].message);
@@ -57,85 +52,29 @@ export default (props: IPage) => {
 
       submitData = formData;
 
-      await setSubmitVariables({ id: Number(id), ax: submitData });
-      await updateAxMutate();
-
-      if (getBannerMbRef && getBannerMbRef.current) {
-        getBannerMbRef.current.onUpdateAttachments();
-      }
-
-      if (getBannerPcRef && getBannerPcRef.current) {
-        getBannerPcRef.current.onUpdateAttachments();
-      }
-
-      if (getGalleryMbRef && getGalleryMbRef.current) {
-        getGalleryMbRef.current.onUpdateAttachments();
-      }
-
-      if (getGalleryPcRef && getGalleryPcRef.current) {
-        getGalleryPcRef.current.onUpdateAttachments();
-      }
+      await setSubmitVariables({ id: Number(id), coupon: submitData });
+      await updateCouponMutate();
     });
   };
-
-  const layoutCol = { xs: 24, md: 12 };
 
   return (
     <PageCard
       title={t(`${props.route.namei18n}`)}
       className={style['wapper']}
-      loading={getAxQuery.loading || updateAxMutation.loading}
+      loading={getCouponQuery.loading || updateCouponMutation.loading}
     >
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
-      {getAxQuery.error ? <ErrorCard error={getAxQuery.error} /> : null}
-      {updateAxMutation.error ? <ErrorCard error={updateAxMutation.error} /> : null}
+      {getCouponQuery.error ? <ErrorCard error={getCouponQuery.error} /> : null}
+      {updateCouponMutation.error ? <ErrorCard error={updateCouponMutation.error} /> : null}
+
+      <CouponCodeStatus item={getCouponQuery.data && getCouponQuery.data.coupon} loading={getCouponQuery.loading} />
 
       <CouponInfoForm
-        item={getAxQuery.data && getAxQuery.data.ax}
-        loading={getAxQuery.loading}
-        wrappedComponentRef={(inst: unknown) => setAxInfoFormRef(inst)}
+        item={getCouponQuery.data && getCouponQuery.data.coupon}
+        loading={getCouponQuery.loading}
+        wrappedComponentRef={(inst: unknown) => setCouponInfoFormRef(inst)}
       />
-
-      <Row gutter={16}>
-        <Col {...layoutCol}>
-          <AttachmentBox
-            disableMessage
-            ref={getBannerMbRef}
-            attachmentParams={{ type: 'image', moduleId: Number(id), moduleName: 'ax', moduleType: 'banner_mb' }}
-            listHeight={listHeight}
-          />
-        </Col>
-
-        <Col {...layoutCol}>
-          <AttachmentBox
-            disableMessage
-            ref={getBannerPcRef}
-            attachmentParams={{ type: 'image', moduleId: Number(id), moduleName: 'ax', moduleType: 'banner_pc' }}
-            listHeight={listHeight}
-          />
-        </Col>
-      </Row>
-
-      <Row gutter={16}>
-        <Col {...layoutCol}>
-          <AttachmentBox
-            disableMessage
-            ref={getGalleryMbRef}
-            attachmentParams={{ type: 'image', moduleId: Number(id), moduleName: 'ax', moduleType: 'gallery_mb' }}
-            listHeight={listHeight}
-          />
-        </Col>
-
-        <Col {...layoutCol}>
-          <AttachmentBox
-            disableMessage
-            ref={getGalleryPcRef}
-            attachmentParams={{ type: 'image', moduleId: Number(id), moduleName: 'ax', moduleType: 'gallery_pc' }}
-            listHeight={listHeight}
-          />
-        </Col>
-      </Row>
 
       <SubmitBar>
         <Button
@@ -143,7 +82,7 @@ export default (props: IPage) => {
           size="large"
           icon={UPDATE_BUTTON_ICON}
           className="submit-button"
-          loading={updateAxMutation.loading}
+          loading={updateCouponMutation.loading}
           onClick={onSubmit}
         >
           {t('_lang:update')}

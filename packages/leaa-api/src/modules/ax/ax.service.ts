@@ -22,7 +22,7 @@ export class AxService {
       const aliasName = new SelectQueryBuilder(qb).alias;
 
       ['title', 'slug'].forEach(q => {
-        qb.andWhere(`${aliasName}.${q} LIKE :${q}`, { [q]: `%${nextArgs.q}%` });
+        qb.orWhere(`${aliasName}.${q} LIKE :${q}`, { [q]: `%${nextArgs.q}%` });
       });
     }
 

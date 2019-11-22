@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import queryString from 'query-string';
 import { Link } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { Table, Icon, message } from 'antd';
+import { Table, Icon, message, Typography } from 'antd';
 
 import { DEFAULT_PAGE_SIZE_OPTIONS } from '@leaa/dashboard/src/constants';
 import { GET_COUPONS, DELETE_COUPON } from '@leaa/common/src/graphqls';
@@ -24,6 +24,7 @@ import {
   TableColumnDate,
   TableColumnDeleteButton,
   TableColumnId,
+  CouponItem,
 } from '@leaa/dashboard/src/components';
 
 import style from './style.less';
@@ -86,32 +87,28 @@ export default (props: IPage) => {
       title: 'ID',
       dataIndex: 'id',
       width: 80,
+      sorter: true,
+      sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'id'),
       render: (text: string) => <TableColumnId id={text} />,
     },
     {
-      title: t('_lang:code'),
+      title: t('_page:Coupon.Component.code'),
       dataIndex: 'code',
-      sorter: true,
-      sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'code'),
-      render: (text: string, record: Coupon) => <Link to={`${props.route.path}/${record.id}`}>{record.code}</Link>,
+      width: 180,
+      render: (text: string, record: Coupon) => (
+        <CouponItem
+          item={record}
+          size="small"
+          title={<Link to={`${props.route.path}/${record.id}`}>{record.slug}</Link>}
+        />
+      ),
     },
-    {
-      title: t('_lang:slug'),
-      dataIndex: 'slug',
-      sorter: true,
-      sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'slug'),
-    },
+
     {
       title: t('_lang:status'),
       dataIndex: 'status',
+      width: 50,
       render: (text: string, record: Coupon) => <SwitchNumber value={Number(record.status)} size="small" disabled />,
-    },
-    {
-      title: t('_lang:created_at'),
-      dataIndex: 'created_at',
-      sorter: true,
-      sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'created_at'),
-      render: (text: string) => <TableColumnDate date={text} size="small" />,
     },
     {
       title: t('_lang:action'),

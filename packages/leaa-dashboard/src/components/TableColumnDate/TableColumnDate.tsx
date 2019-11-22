@@ -9,6 +9,8 @@ interface IProps {
   date: string;
   size?: 'small';
   format?: string;
+  prefix?: string;
+  suffix?: string;
   className?: string;
 }
 
@@ -23,7 +25,9 @@ export const TableColumnDate = (props: IProps) => {
     >
       {props.date ? (
         <Tooltip title={moment(props.date).format('YYYY-MM-DD HH:mm:ss')} mouseEnterDelay={0.01} mouseLeaveDelay={0.01}>
+          {props.prefix}
           {moment(props.date).format(FORMAT)}
+          {props.suffix}
         </Tooltip>
       ) : (
         <span>N/A</span>

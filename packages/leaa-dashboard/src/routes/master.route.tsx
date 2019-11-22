@@ -10,6 +10,84 @@ import { MasterLayout, SuspenseFallback } from '@leaa/dashboard/src/components';
 // TIPS: permission: 'ALLOW_PERMISSION' will be always display
 
 export const masterRoutes: IRouteItem[] = [
+  //
+  // -------- [Content Group] --------
+  //
+  {
+    name: 'Content Group',
+    namei18n: '_route:contentGroup',
+    permission: 'article.list | tag.list',
+    path: '_content-group',
+    icon: 'x-content-group',
+    children: [
+      // ---- Article ----
+      {
+        name: 'Create Article',
+        namei18n: '_route:createArticle',
+        permission: 'article.create',
+        path: '/articles/create',
+        icon: 'x-document',
+        LazyComponent: React.lazy(() =>
+          import(/* webpackChunkName: 'CreateArticle' */ '../pages/Article/CreateArticle/CreateArticle'),
+        ),
+        exact: true,
+        isCreate: true,
+      },
+      {
+        name: 'Edit Article',
+        namei18n: '_route:editArticle',
+        permission: 'article.item',
+        path: '/articles/:id(\\d+)',
+        icon: 'x-document',
+        LazyComponent: React.lazy(() =>
+          import(/* webpackChunkName: 'EditArticle' */ '../pages/Article/EditArticle/EditArticle'),
+        ),
+        exact: true,
+      },
+      {
+        name: 'Article',
+        namei18n: '_route:article',
+        permission: 'article.list',
+        path: '/articles',
+        icon: 'x-document',
+        LazyComponent: React.lazy(() =>
+          import(/* webpackChunkName: 'ArticleList' */ '../pages/Article/ArticleList/ArticleList'),
+        ),
+        canCreate: true,
+        exact: true,
+      },
+      // ---- Tag ----
+      {
+        name: 'Create Tag',
+        namei18n: '_route:createTag',
+        permission: 'tag.create',
+        path: '/tags/create',
+        icon: 'x-tag',
+        LazyComponent: React.lazy(() => import(/* webpackChunkName: 'CreateTag' */ '../pages/Tag/CreateTag/CreateTag')),
+        exact: true,
+        isCreate: true,
+      },
+      {
+        name: 'Edit Tag',
+        namei18n: '_route:editTag',
+        permission: 'tag.item',
+        path: '/tags/:id(\\d+)',
+        icon: 'x-tag',
+        LazyComponent: React.lazy(() => import(/* webpackChunkName: 'EditTag' */ '../pages/Tag/EditTag/EditTag')),
+        exact: true,
+      },
+      {
+        name: 'Tag',
+        namei18n: '_route:tag',
+        permission: 'tag.list',
+        path: '/tags',
+        icon: 'x-tag',
+        LazyComponent: React.lazy(() => import(/* webpackChunkName: 'TagList' */ '../pages/Tag/TagList/TagList')),
+        canCreate: true,
+        exact: true,
+      },
+    ],
+  },
   // -------- [User Group] --------
   {
     name: 'User Group',
@@ -115,84 +193,6 @@ export const masterRoutes: IRouteItem[] = [
         LazyComponent: React.lazy(() =>
           import(/* webpackChunkName: 'PermissionList' */ '../pages/Permission/PermissionList/PermissionList'),
         ),
-        canCreate: true,
-        exact: true,
-      },
-    ],
-  },
-  //
-  // -------- [Content Group] --------
-  //
-  {
-    name: 'Content Group',
-    namei18n: '_route:contentGroup',
-    permission: 'article.list | tag.list',
-    path: '_content-group',
-    icon: 'x-content-group',
-    children: [
-      // ---- Article ----
-      {
-        name: 'Create Article',
-        namei18n: '_route:createArticle',
-        permission: 'article.create',
-        path: '/articles/create',
-        icon: 'x-document',
-        LazyComponent: React.lazy(() =>
-          import(/* webpackChunkName: 'CreateArticle' */ '../pages/Article/CreateArticle/CreateArticle'),
-        ),
-        exact: true,
-        isCreate: true,
-      },
-      {
-        name: 'Edit Article',
-        namei18n: '_route:editArticle',
-        permission: 'article.item',
-        path: '/articles/:id(\\d+)',
-        icon: 'x-document',
-        LazyComponent: React.lazy(() =>
-          import(/* webpackChunkName: 'EditArticle' */ '../pages/Article/EditArticle/EditArticle'),
-        ),
-        exact: true,
-      },
-      {
-        name: 'Article',
-        namei18n: '_route:article',
-        permission: 'article.list',
-        path: '/articles',
-        icon: 'x-document',
-        LazyComponent: React.lazy(() =>
-          import(/* webpackChunkName: 'ArticleList' */ '../pages/Article/ArticleList/ArticleList'),
-        ),
-        canCreate: true,
-        exact: true,
-      },
-      // ---- Tag ----
-      {
-        name: 'Create Tag',
-        namei18n: '_route:createTag',
-        permission: 'tag.create',
-        path: '/tags/create',
-        icon: 'x-tag',
-        LazyComponent: React.lazy(() => import(/* webpackChunkName: 'CreateTag' */ '../pages/Tag/CreateTag/CreateTag')),
-        exact: true,
-        isCreate: true,
-      },
-      {
-        name: 'Edit Tag',
-        namei18n: '_route:editTag',
-        permission: 'tag.item',
-        path: '/tags/:id(\\d+)',
-        icon: 'x-tag',
-        LazyComponent: React.lazy(() => import(/* webpackChunkName: 'EditTag' */ '../pages/Tag/EditTag/EditTag')),
-        exact: true,
-      },
-      {
-        name: 'Tag',
-        namei18n: '_route:tag',
-        permission: 'tag.list',
-        path: '/tags',
-        icon: 'x-tag',
-        LazyComponent: React.lazy(() => import(/* webpackChunkName: 'TagList' */ '../pages/Tag/TagList/TagList')),
         canCreate: true,
         exact: true,
       },
