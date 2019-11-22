@@ -22,8 +22,11 @@ async function calcPageInfoFromQueryBuilder({
   const calcPage = page || 0;
   const calcPageSize = pageSize || 30;
 
+  // prevent skip negative numbers (e.g. skip -30)
+  const skipSize = calcPage - 1 < 0 ? 0 : (calcPage - 1) * calcPageSize;
+
   const [items, total] = await qb
-    .skip((calcPage - 1) * calcPageSize)
+    .skip(skipSize)
     .take(calcPageSize)
     .getManyAndCount();
 
