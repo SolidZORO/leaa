@@ -9,7 +9,7 @@ import { ITfn } from '@leaa/dashboard/src/interfaces';
 
 import { buildTypeDom } from '../SettingListForm/SettingListForm';
 
-import style from './style.less';
+import style from './style.module.less';
 
 interface IFormProps extends FormComponentProps {
   className?: string;

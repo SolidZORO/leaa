@@ -11,7 +11,7 @@ import { LOGIN } from '@leaa/common/src/graphqls';
 import { authUtil } from '@leaa/dashboard/src/utils';
 import { ErrorCard } from '@leaa/dashboard/src/components';
 
-import style from './style.less';
+import style from './style.module.less';
 
 interface IProps extends FormComponentProps {
   className?: string;

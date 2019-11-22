@@ -11,7 +11,7 @@ import { langUtil } from '@leaa/dashboard/src/utils';
 
 import { AttachmentItem } from '../AttachmentItem/AttachmentItem';
 
-import style from './style.less';
+import style from './style.module.less';
 
 interface IProps {
   attachmentParams: IAttachmentParams;

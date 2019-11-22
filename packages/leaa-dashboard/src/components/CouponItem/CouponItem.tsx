@@ -8,7 +8,7 @@ import { Coupon } from '@leaa/common/src/entrys';
 import { priceUtil } from '@leaa/dashboard/src/utils';
 import { PriceTag } from '@leaa/dashboard/src/components';
 
-import style from './style.less';
+import style from './style.module.less';
 
 interface IProps {
   className?: string;

@@ -10,7 +10,7 @@ import { CategoriesWithTreeObject } from '@leaa/common/src/dtos/category';
 
 import { ErrorCard } from '@leaa/dashboard/src/components';
 
-import style from './style.less';
+import style from './style.module.less';
 
 interface IProps {
   value?: number | number[] | undefined;

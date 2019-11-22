@@ -4,7 +4,6 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const webpackConst = require('./_webpack_const');
 
-const globalExtractCSS = [/[\\/]node_modules[\\/].*antd/, /[\\/]src[\\/].*font_fi/];
 const antdModifyVars = lessToJS(fs.readFileSync(`${webpackConst.SRC_DIR}/styles/variables.less`, 'utf8'));
 
 // REQUIRE
@@ -24,41 +23,27 @@ webpackModule.rules = [
     ],
   },
   //
-  // FOR SRC STYLE
+  // FOR MODULE STYLE
   {
-    test: webpackConst.REGX_STYLE,
-    exclude: /[\\/]node_modules[\\/].*antd/, // 除了antd 以外的样式都使用以下规则
+    test: webpackConst.REGX_MODULE_STYLE,
     rules: [
       {
         loader: webpackConst.__DEV__ ? 'style-loader' : MiniCssExtractPlugin.loader,
       },
-      // 3rd Folder
       {
-        exclude: webpackConst.SRC_DIR,
-        loader: 'css-loader',
-        options: {
-          sourceMap: false,
-        },
-      },
-      // src Folder
-      {
-        include: webpackConst.SRC_DIR,
         loader: 'css-loader',
         options: {
           modules: {
             localIdentName: webpackConst.LOADER_CSS_LOADERR_LOCAL_IDENT_NAME,
           },
-          importLoaders: 1,
+          importLoaders: 2,
           sourceMap: false,
         },
       },
-      // PostCSS
       {
         loader: 'postcss-loader',
       },
-      // Less
       {
-        test: /\.less$/,
         loader: 'less-loader',
         options: {
           javascriptEnabled: true,
@@ -67,16 +52,20 @@ webpackModule.rules = [
     ],
   },
   //
-  // FOR GLOBAL STYLE
+  // FOR STYLE
   {
     test: webpackConst.REGX_STYLE,
-    include: globalExtractCSS,
+    exclude: webpackConst.REGX_MODULE_STYLE,
     use: [
       {
         loader: webpackConst.__DEV__ ? 'style-loader' : MiniCssExtractPlugin.loader,
       },
       {
         loader: 'css-loader',
+        options: {
+          importLoaders: 2,
+          sourceMap: false,
+        },
       },
       {
         loader: 'postcss-loader',

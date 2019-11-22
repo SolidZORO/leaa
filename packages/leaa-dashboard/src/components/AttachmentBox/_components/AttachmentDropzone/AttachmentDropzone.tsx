@@ -5,7 +5,7 @@ import { Icon } from 'antd';
 
 import { IAttachmentParams } from '@leaa/common/src/interfaces';
 
-import style from './style.less';
+import style from './style.module.less';
 
 interface IProps {
   value?: number | undefined;

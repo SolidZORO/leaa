@@ -19,7 +19,7 @@ import { ErrorCard, FormCard } from '@leaa/dashboard/src/components';
 import { AttachmentList } from './_components/AttachmentList/AttachmentList';
 import { AttachmentDropzone } from './_components/AttachmentDropzone/AttachmentDropzone';
 
-import style from './style.less';
+import style from './style.module.less';
 
 interface IProps {
   value?: number | undefined;

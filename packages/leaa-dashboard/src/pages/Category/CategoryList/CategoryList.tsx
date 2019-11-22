@@ -25,7 +25,7 @@ import {
   TableColumnId,
 } from '@leaa/dashboard/src/components';
 
-import style from './style.less';
+import style from './style.module.less';
 
 export default (props: IPage) => {
   const { t } = useTranslation();

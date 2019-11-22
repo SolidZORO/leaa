@@ -18,7 +18,7 @@ import { DELETE_ATTACHMENT } from '@leaa/common/src/graphqls';
 import { Attachment } from '@leaa/common/src/entrys';
 import { SwitchNumber, ErrorCard } from '@leaa/dashboard/src/components';
 
-import style from './style.less';
+import style from './style.module.less';
 
 interface IProps {
   attachment: Attachment;

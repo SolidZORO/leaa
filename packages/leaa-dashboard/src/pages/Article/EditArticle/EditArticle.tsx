@@ -21,7 +21,7 @@ import {
 import { ArticleInfoForm } from '../_components/ArticleInfoForm/ArticleInfoForm';
 import { ArticleExtForm } from '../_components/ArticleExtForm/ArticleExtForm';
 
-import style from './style.less';
+import style from './style.module.less';
 
 export default (props: IPage) => {
   const { t } = useTranslation();

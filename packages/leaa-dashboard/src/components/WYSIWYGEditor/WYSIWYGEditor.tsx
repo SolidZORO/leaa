@@ -16,7 +16,7 @@ import { attachmentUtil } from '@leaa/dashboard/src/utils';
 
 import './editor.less';
 import cx from 'classnames';
-import style from './style.less';
+import style from './style.module.less';
 
 interface IProps {
   attachmentParams: IAttachmentParams;

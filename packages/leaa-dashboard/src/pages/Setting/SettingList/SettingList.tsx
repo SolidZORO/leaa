@@ -27,7 +27,7 @@ import { HtmlMeta, PageCard, ErrorCard, SubmitBar } from '@leaa/dashboard/src/co
 import { SettingListForm } from '../_components/SettingListForm/SettingListForm';
 import { SettingModalForm } from '../_components/SettingModalForm/SettingModalForm';
 
-import style from './style.less';
+import style from './style.module.less';
 
 export default (props: IPage) => {
   const { t } = useTranslation();

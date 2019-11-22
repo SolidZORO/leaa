@@ -7,7 +7,7 @@ import { SwitchSize } from 'antd/lib/switch';
 
 import { apolloClient } from '@leaa/dashboard/src/libs';
 
-import style from './style.less';
+import style from './style.module.less';
 
 interface IProps {
   className?: string;

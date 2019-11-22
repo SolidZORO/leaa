@@ -7,7 +7,7 @@ import { useMutation } from '@apollo/react-hooks';
 import { Tag } from '@leaa/common/src/entrys';
 import { CREATE_TAG } from '@leaa/common/src/graphqls';
 
-import style from './style.less';
+import style from './style.module.less';
 
 interface IProps {
   tagName: string | undefined;

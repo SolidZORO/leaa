@@ -8,7 +8,7 @@ import { SwitchLanguage } from '@leaa/dashboard/src/components';
 import { Breadcrumb } from '../Breadcrumb/Breadcrumb';
 import { UserMenu } from '../UserMenu/UserMenu';
 
-import style from './style.less';
+import style from './style.module.less';
 
 interface IProps extends RouteComponentProps {
   onCallbackSidebarTarget?: () => void;

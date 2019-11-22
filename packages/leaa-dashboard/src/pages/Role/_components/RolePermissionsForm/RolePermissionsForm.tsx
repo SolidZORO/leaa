@@ -14,7 +14,7 @@ import { ITfn } from '@leaa/dashboard/src/interfaces';
 
 import { FormCard } from '@leaa/dashboard/src/components';
 
-import style from './style.less';
+import style from './style.module.less';
 
 interface IFormProps extends FormComponentProps {
   className?: string;

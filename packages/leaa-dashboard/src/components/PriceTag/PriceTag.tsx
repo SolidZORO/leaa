@@ -4,7 +4,7 @@ import currency, { Options } from 'currency.js';
 
 import { settingUtil } from '@leaa/dashboard/src/utils';
 
-import style from './style.less';
+import style from './style.module.less';
 
 interface IProps extends Options {
   className?: string;

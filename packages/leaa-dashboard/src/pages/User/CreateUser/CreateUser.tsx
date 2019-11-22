@@ -13,7 +13,7 @@ import { HtmlMeta, PageCard, ErrorCard, SubmitBar } from '@leaa/dashboard/src/co
 
 import { UserInfoForm } from '../_components/UserInfoForm/UserInfoForm';
 
-import style from './style.less';
+import style from './style.module.less';
 
 export default (props: IPage) => {
   const { t } = useTranslation();

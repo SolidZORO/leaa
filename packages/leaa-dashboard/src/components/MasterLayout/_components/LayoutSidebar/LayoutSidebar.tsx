@@ -12,7 +12,7 @@ import { ALLOW_PERMISSION, SIDERBAR_COLLAPSED_SL_KEY } from '@leaa/dashboard/src
 
 import { SidebarTarget } from '../SidebarTarget/SidebarTarget';
 
-import style from './style.less';
+import style from './style.module.less';
 
 interface IProps extends RouteComponentProps {
   className?: string;

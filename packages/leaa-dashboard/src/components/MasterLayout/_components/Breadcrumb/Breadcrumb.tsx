@@ -6,7 +6,7 @@ import { Route } from 'antd/lib/breadcrumb/Breadcrumb';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { flateMasterRoutes } from '@leaa/dashboard/src/routes/master.route';
 
-import style from './style.less';
+import style from './style.module.less';
 
 interface IBreadcrumb {
   path: string;

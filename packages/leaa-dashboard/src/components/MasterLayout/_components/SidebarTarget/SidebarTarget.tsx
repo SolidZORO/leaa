@@ -2,7 +2,7 @@ import React from 'react';
 import cx from 'classnames';
 import { Icon, Button } from 'antd';
 
-import style from './style.less';
+import style from './style.module.less';
 
 interface IProps {
   onCallbackSidebarTarget?: () => void;

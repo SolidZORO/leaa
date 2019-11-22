@@ -7,7 +7,7 @@ import { Tag as TagEntry } from '@leaa/common/src/entrys';
 import { TagsWithPaginationObject, TagArgs } from '@leaa/common/src/dtos/tag';
 import { GET_TAGS } from '@leaa/common/src/graphqls';
 import { apolloClient } from '@leaa/dashboard/src/libs';
-import style from './style.less';
+import style from './style.module.less';
 
 interface IProps {
   className?: string;

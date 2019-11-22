@@ -3,7 +3,7 @@ import { Popconfirm, Button, Icon, Tag } from 'antd';
 import { useTranslation } from 'react-i18next';
 import cx from 'classnames';
 
-import style from './style.less';
+import style from './style.module.less';
 
 interface IProps {
   id: React.ReactNode;

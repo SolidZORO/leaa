@@ -4,7 +4,7 @@ import { Button, Popover, ConfigProvider, Icon } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { TooltipPlacement } from 'antd/lib/tooltip';
 
-import style from './style.less';
+import style from './style.module.less';
 
 interface IProps {
   className?: string;

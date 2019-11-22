@@ -3,7 +3,7 @@ import { notification } from 'antd';
 import { ApolloError } from 'apollo-client';
 import { messageUtil } from '@leaa/dashboard/src/utils';
 
-import style from './style.less';
+import style from './style.module.less';
 
 interface IProps {
   error: ApolloError;

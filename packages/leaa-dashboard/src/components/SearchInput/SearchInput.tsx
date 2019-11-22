@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Input, Icon } from 'antd';
 import { InputProps } from 'antd/lib/input';
 
-import style from './style.less';
+import style from './style.module.less';
 
 interface IProps {
   onChange?: Function;

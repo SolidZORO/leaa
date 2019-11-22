@@ -7,7 +7,7 @@ import { SyncTagsToFileObject } from '@leaa/common/src/dtos/tag';
 import { SYNC_TAGS_TO_FILE } from '@leaa/common/src/graphqls';
 import { messageUtil } from '@leaa/dashboard/src/utils';
 
-import style from './style.less';
+import style from './style.module.less';
 
 interface IProps {
   className?: string;

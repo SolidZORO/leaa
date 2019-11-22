@@ -3,7 +3,7 @@ import moment from 'moment';
 import { Tooltip } from 'antd';
 import cx from 'classnames';
 
-import style from './style.less';
+import style from './style.module.less';
 
 interface IProps {
   date: string;

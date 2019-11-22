@@ -60,6 +60,7 @@ webpackConst.STATIC_ASSET_NAME = webpackConst.__DEV__
 webpackConst.REGX_TS = /\.(ts|tsx)$/;
 webpackConst.REGX_SCRIPT = /\.(js|jsx)$/;
 webpackConst.REGX_STYLE = /\.(less|css|styl|scss|sass|sss)$/;
+webpackConst.REGX_MODULE_STYLE = /\.module\.less$/;
 webpackConst.REGX_IMAGE = /\.(bmp|gif|jpg|jpeg|png|svg)$/;
 webpackConst.REGX_FONT = /\.(woff2|woff|svg|ttf|eot)$/;
 

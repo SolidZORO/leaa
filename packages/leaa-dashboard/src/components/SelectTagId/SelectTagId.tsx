@@ -9,7 +9,7 @@ import { SelectTagSearchBox } from '@leaa/dashboard/src/components';
 
 import { QuickCreateTagButton } from './_components/QuickCreateTagButton/QuickCreateTagButton';
 
-import style from './style.less';
+import style from './style.module.less';
 
 interface IProps {
   selectedTagsMaxLength: number;

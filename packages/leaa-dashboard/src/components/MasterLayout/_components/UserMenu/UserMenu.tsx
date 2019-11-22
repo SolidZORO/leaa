@@ -7,7 +7,7 @@ import { authUtil } from '@leaa/dashboard/src/utils';
 import { LOGOUT_REDIRECT_URL } from '@leaa/dashboard/src/constants';
 import avatar from '@leaa/dashboard/src/assets/images/avatar/avatar-line.svg';
 
-import style from './style.less';
+import style from './style.module.less';
 
 interface IProps extends RouteComponentProps {}
 

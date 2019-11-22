@@ -2,7 +2,7 @@ import React from 'react';
 import cx from 'classnames';
 import { Card } from 'antd';
 
-import style from './style.less';
+import style from './style.module.less';
 
 interface IProps {
   children: React.ReactNode;
