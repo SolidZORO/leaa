@@ -7,7 +7,7 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import { Table, Icon, message, Tag } from 'antd';
 
 import { DEFAULT_PAGE_SIZE_OPTIONS } from '@leaa/dashboard/src/constants';
-import { GET_ARTICLES, DELETE_ARTICLE, UPDATE_ARTICLE } from '@leaa/common/src/graphqls';
+import { GET_ARTICLES, DELETE_ARTICLE, UPDATE_ARTICLE, GET_USERS } from '@leaa/common/src/graphqls';
 import { Article, Tag as TagEntry } from '@leaa/common/src/entrys';
 import { IOrderSort } from '@leaa/common/src/dtos/_common';
 import { ArticlesWithPaginationObject, ArticleArgs } from '@leaa/common/src/dtos/article';
@@ -143,6 +143,7 @@ export default (props: IPage) => {
           size="small"
           variablesField="article"
           mutation={UPDATE_ARTICLE}
+          refetchQueries={[{ query: GET_ARTICLES, variables: getArticlesVariables }]}
         />
       ),
     },

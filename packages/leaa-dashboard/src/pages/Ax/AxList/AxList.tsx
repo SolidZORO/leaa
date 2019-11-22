@@ -113,6 +113,7 @@ export default (props: IPage) => {
           size="small"
           variablesField="ax"
           mutation={UPDATE_AX}
+          refetchQueries={[{ query: GET_AXS, variables: getAxsVariables }]}
         />
       ),
     },

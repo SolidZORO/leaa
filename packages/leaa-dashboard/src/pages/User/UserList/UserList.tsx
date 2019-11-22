@@ -7,7 +7,7 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import { Icon, Table, Button, Tag, message } from 'antd';
 
 import { DEFAULT_PAGE_SIZE_OPTIONS } from '@leaa/dashboard/src/constants';
-import { GET_USERS, DELETE_USER, UPDATE_USER } from '@leaa/common/src/graphqls';
+import { GET_USERS, DELETE_USER, UPDATE_USER, GET_PERMISSION } from '@leaa/common/src/graphqls';
 import { User } from '@leaa/common/src/entrys';
 import { IOrderSort } from '@leaa/common/src/dtos/_common';
 import { UsersWithPaginationObject, UsersArgs } from '@leaa/common/src/dtos/user';
@@ -120,6 +120,7 @@ export default (props: IPage) => {
           size="small"
           variablesField="user"
           mutation={UPDATE_USER}
+          refetchQueries={[{ query: GET_USERS, variables: getUsersVariables }]}
         />
       ),
     },

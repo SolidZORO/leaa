@@ -17,6 +17,7 @@ interface IProps {
   value: number;
   variablesField: string;
   mutation: DocumentNode;
+  refetchQueries?: any;
 }
 
 export const TableColumnStatusSwitch = (props: IProps) => {
@@ -29,6 +30,7 @@ export const TableColumnStatusSwitch = (props: IProps) => {
         mutation: props.mutation,
         variables: { id: Number(props.id), [props.variablesField]: { status: Number(e) } },
         fetchPolicy: 'no-cache',
+        refetchQueries: props.refetchQueries,
       })
       .then(() => {
         setSwitchStatus(e);
