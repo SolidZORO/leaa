@@ -3,5 +3,15 @@ import UserMenu from './UserMenu.lang';
 import TableColumnDeleteButton from './TableColumnDeleteButton.lang';
 import SelectTagId from './SelectTagId.lang';
 import SearchInput from './SearchInput.lang';
+import CouponItem from './CouponItem.lang';
+import TableColumnStatusSwitch from './TableColumnStatusSwitch.lang';
 
-export default { SwitchLanguage, UserMenu, TableColumnDeleteButton, SelectTagId, SearchInput };
+export default {
+  SwitchLanguage,
+  UserMenu,
+  TableColumnDeleteButton,
+  SelectTagId,
+  SearchInput,
+  CouponItem,
+  TableColumnStatusSwitch,
+};

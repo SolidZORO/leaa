@@ -4,7 +4,7 @@ import { Field, InputType, Int } from 'type-graphql';
 @InputType()
 export class UpdateArticleInput {
   @IsOptional()
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   public title?: string;
 
   @IsOptional()

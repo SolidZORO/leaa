@@ -7,7 +7,7 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import { Table, Icon, message, Typography } from 'antd';
 
 import { DEFAULT_PAGE_SIZE_OPTIONS } from '@leaa/dashboard/src/constants';
-import { GET_COUPONS, DELETE_COUPON } from '@leaa/common/src/graphqls';
+import { GET_COUPONS, DELETE_COUPON, UPDATE_COUPON } from '@leaa/common/src/graphqls';
 import { Coupon } from '@leaa/common/src/entrys';
 import { IOrderSort } from '@leaa/common/src/dtos/_common';
 import { CouponsWithPaginationObject, CouponArgs } from '@leaa/common/src/dtos/coupon';
@@ -25,6 +25,7 @@ import {
   TableColumnDeleteButton,
   TableColumnId,
   CouponItem,
+  TableColumnStatusSwitch,
 } from '@leaa/dashboard/src/components';
 
 import style from './style.less';
@@ -99,7 +100,7 @@ export default (props: IPage) => {
         <CouponItem
           item={record}
           size="small"
-          title={<Link to={`${props.route.path}/${record.id}`}>{record.slug}</Link>}
+          name={<Link to={`${props.route.path}/${record.id}`}>{record.name}</Link>}
         />
       ),
     },
@@ -108,7 +109,15 @@ export default (props: IPage) => {
       title: t('_lang:status'),
       dataIndex: 'status',
       width: 50,
-      render: (text: string, record: Coupon) => <SwitchNumber value={Number(record.status)} size="small" disabled />,
+      render: (text: string, record: Coupon) => (
+        <TableColumnStatusSwitch
+          id={Number(record.id)}
+          value={Number(record.status)}
+          size="small"
+          variablesField="coupon"
+          mutation={UPDATE_COUPON}
+        />
+      ),
     },
     {
       title: t('_lang:action'),

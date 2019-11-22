@@ -7,7 +7,7 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import { Icon, Table, Button, Tag, message } from 'antd';
 
 import { DEFAULT_PAGE_SIZE_OPTIONS } from '@leaa/dashboard/src/constants';
-import { GET_USERS, DELETE_USER } from '@leaa/common/src/graphqls';
+import { GET_USERS, DELETE_USER, UPDATE_USER } from '@leaa/common/src/graphqls';
 import { User } from '@leaa/common/src/entrys';
 import { IOrderSort } from '@leaa/common/src/dtos/_common';
 import { UsersWithPaginationObject, UsersArgs } from '@leaa/common/src/dtos/user';
@@ -20,10 +20,10 @@ import {
   ErrorCard,
   TableCard,
   SearchInput,
-  SwitchNumber,
   TableColumnDate,
   TableColumnDeleteButton,
   TableColumnId,
+  TableColumnStatusSwitch,
 } from '@leaa/dashboard/src/components';
 
 import style from './style.less';
@@ -113,7 +113,15 @@ export default (props: IPage) => {
     {
       title: t('_lang:status'),
       dataIndex: 'status',
-      render: (text: string, record: User) => <SwitchNumber value={record.status} size="small" disabled />,
+      render: (text: string, record: User) => (
+        <TableColumnStatusSwitch
+          id={Number(record.id)}
+          value={Number(record.status)}
+          size="small"
+          variablesField="user"
+          mutation={UPDATE_USER}
+        />
+      ),
     },
     {
       title: t('_lang:created_at'),

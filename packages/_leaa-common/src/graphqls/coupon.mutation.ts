@@ -3,7 +3,7 @@ import gql from 'graphql-tag';
 export const CREATE_COUPON = gql`
   mutation($coupon: CreateCouponInput!) {
     createCoupon(coupon: $coupon) {
-      slug
+      name
       amount
       over_amount
       status
@@ -19,7 +19,7 @@ export const UPDATE_COUPON = gql`
   mutation($id: Int!, $coupon: UpdateCouponInput!) {
     updateCoupon(id: $id, coupon: $coupon) {
       id
-      slug
+      name
       status
     }
   }
@@ -29,7 +29,7 @@ export const DELETE_COUPON = gql`
   mutation($id: Int!) {
     deleteCoupon(id: $id) {
       id
-      slug
+      name
     }
   }
 `;

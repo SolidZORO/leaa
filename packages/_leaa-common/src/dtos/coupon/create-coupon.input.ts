@@ -9,7 +9,7 @@ export class CreateCouponInput {
 
   @IsNotEmpty()
   @Field(() => String)
-  public slug!: string;
+  public name!: string;
 
   @IsNotEmpty()
   @Field(() => Int)

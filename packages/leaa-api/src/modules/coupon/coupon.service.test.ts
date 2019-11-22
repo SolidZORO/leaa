@@ -33,9 +33,10 @@ describe('CouponService', () => {
   describe('createCoupon', () => {
     const createCouponInput: CreateCouponInput = {
       type: 'coupon',
-      slug: 'COUPON-TEST',
-      amount: 66.66,
-      over_amount: 99.99,
+      quantity: 10,
+      name: 'COUPON-TEST',
+      amount: 666.66,
+      over_amount: 999.99,
       start_time: new Date(),
       expire_time: new Date(),
       status: 1,

@@ -17,7 +17,7 @@ export class Coupon extends Base {
 
   @Column({ type: 'varchar', length: 32 })
   @Field(() => String)
-  public slug?: string;
+  public name?: string;
 
   @Column({ type: 'decimal', precision: 11, scale: 2 })
   @Field(() => Float)
@@ -74,4 +74,8 @@ export class Coupon extends Base {
   @Column({ type: 'int', default: 0 })
   @Field(() => Int, { nullable: true })
   public status?: number;
+
+  // Virtual Field (not in DB)
+  @Field(() => Boolean)
+  public available?: boolean;
 }

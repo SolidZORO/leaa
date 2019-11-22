@@ -151,7 +151,7 @@ type Coupon {
   deleted_at: DateTime
   code: String
   type: String!
-  slug: String!
+  name: String!
   amount: Float!
   promo_id: Int
   promo_code: String
@@ -166,6 +166,7 @@ type Coupon {
   convert_method: String
   creator_id: Int!
   status: Int
+  available: Boolean!
 }
 
 type CouponsWithPaginationObject {
@@ -227,7 +228,7 @@ input CreateCategoryInput {
 
 input CreateCouponInput {
   type: String!
-  slug: String!
+  name: String!
   quantity: Int!
   amount: Float!
   over_amount: Float
@@ -473,7 +474,7 @@ type TagsWithPaginationObject {
 }
 
 input UpdateArticleInput {
-  title: String!
+  title: String
   slug: String
   user_id: Int
   description: String
@@ -516,6 +517,12 @@ input UpdateCategoryInput {
 }
 
 input UpdateCouponInput {
+  type: String
+  name: String
+  amount: Float
+  over_amount: Float
+  available_product_ids: String
+  unavailable_product_ids: String
   start_time: DateTime
   expire_time: DateTime
   status: Int

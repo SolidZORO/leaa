@@ -136,13 +136,11 @@ export class UserService {
       roleObjects = await this.roleRepository.findByIds(roleIds);
     }
 
-    if (roleObjects) {
+    if (
+      (typeof args.roleIds !== 'undefined' || typeof args.roleSlugs !== 'undefined') &&
+      typeof roleObjects !== 'undefined'
+    ) {
       relationArgs.roles = roleObjects;
-    } else {
-      const message = 'user error';
-
-      loggerUtil.warn(message, CONSTRUCTOR_NAME);
-      throw new Error(message);
     }
 
     if (args && args.password) {

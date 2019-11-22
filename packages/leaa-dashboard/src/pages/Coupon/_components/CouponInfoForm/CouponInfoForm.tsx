@@ -45,11 +45,11 @@ class CouponInfoFormInner extends React.PureComponent<IProps> {
               })(<Input hidden placeholder={t('_lang:type')} />)}
 
               <Col xs={24} sm={6}>
-                <Form.Item label={t('_lang:slug')}>
-                  {getFieldDecorator('slug', {
-                    initialValue: props.item ? props.item.slug : undefined,
+                <Form.Item label={t('_lang:name')}>
+                  {getFieldDecorator('name', {
+                    initialValue: props.item ? props.item.name : undefined,
                     rules: [{ required: true }],
-                  })(<Input placeholder={t('_lang:slug')} />)}
+                  })(<Input placeholder={t('_lang:name')} />)}
                 </Form.Item>
               </Col>
 

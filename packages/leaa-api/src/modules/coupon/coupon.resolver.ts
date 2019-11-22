@@ -1,7 +1,7 @@
-import { Args, Query, Mutation, Resolver } from '@nestjs/graphql';
+import { Args, Query, Mutation, Resolver, ResolveProperty, Parent } from '@nestjs/graphql';
 import { Int } from 'type-graphql';
 
-import { Coupon, User } from '@leaa/common/src/entrys';
+import { Coupon, User, Ax } from '@leaa/common/src/entrys';
 import {
   CouponsArgs,
   CouponsWithPaginationObject,
@@ -10,11 +10,22 @@ import {
   UpdateCouponInput,
 } from '@leaa/common/src/dtos/coupon';
 import { UserDecorator } from '@leaa/api/src/decorators';
+import { AxAttachmentsObject } from '@leaa/common/src/dtos/ax';
 import { CouponService } from '@leaa/api/src/modules/coupon/coupon.service';
+import { CouponProperty } from '@leaa/api/src/modules/coupon/coupon.property';
+import { AxProperty } from '@leaa/api/src/modules/ax/ax.property';
 
 @Resolver(() => Coupon)
 export class CouponResolver {
-  constructor(private readonly couponService: CouponService) {}
+  constructor(private readonly couponService: CouponService, private readonly couponProperty: CouponProperty) {}
+
+  @ResolveProperty(() => Boolean)
+  async available(@Parent() coupon: Coupon): Promise<boolean> {
+    return this.couponProperty.resolvePropertyAvailable(coupon);
+  }
+
+  //
+  //
 
   @Query(() => CouponsWithPaginationObject)
   async coupons(

@@ -7,7 +7,7 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import { Table, Icon, message } from 'antd';
 
 import { DEFAULT_PAGE_SIZE_OPTIONS } from '@leaa/dashboard/src/constants';
-import { GET_AXS, DELETE_AX } from '@leaa/common/src/graphqls';
+import { GET_AXS, DELETE_AX, UPDATE_AX } from '@leaa/common/src/graphqls';
 import { Ax } from '@leaa/common/src/entrys';
 import { IOrderSort } from '@leaa/common/src/dtos/_common';
 import { AxsWithPaginationObject, AxArgs } from '@leaa/common/src/dtos/ax';
@@ -20,10 +20,10 @@ import {
   ErrorCard,
   TableCard,
   SearchInput,
-  SwitchNumber,
   TableColumnDate,
   TableColumnDeleteButton,
   TableColumnId,
+  TableColumnStatusSwitch,
 } from '@leaa/dashboard/src/components';
 
 import style from './style.less';
@@ -106,7 +106,15 @@ export default (props: IPage) => {
     {
       title: t('_lang:status'),
       dataIndex: 'status',
-      render: (text: string, record: Ax) => <SwitchNumber value={Number(record.status)} size="small" disabled />,
+      render: (text: string, record: Ax) => (
+        <TableColumnStatusSwitch
+          id={Number(record.id)}
+          value={Number(record.status)}
+          size="small"
+          variablesField="ax"
+          mutation={UPDATE_AX}
+        />
+      ),
     },
     {
       title: t('_lang:created_at'),

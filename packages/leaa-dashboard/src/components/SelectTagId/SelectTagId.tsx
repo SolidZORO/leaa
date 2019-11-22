@@ -80,7 +80,7 @@ export const SelectTagId = forwardRef((props: IProps, ref: React.Ref<any>) => {
             title={
               <div className={style['popover-title-wrapper']}>
                 <div className={style['popover-title-tips']}>
-                  {t(`_comp:SelectTagId.canAlsoAddTagsQuantity`, {
+                  {t('_comp:SelectTagId.canAlsoAddTagsQuantity', {
                     length: `${props.selectedTagsMaxLength - selectedTags.length}`,
                   })}
                 </div>
