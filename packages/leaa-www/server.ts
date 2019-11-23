@@ -35,6 +35,4 @@ const handle = app.getRequestHandler();
   const nodeEnv = `${dev ? '🚀' : '🔰'} ${(process.env.NODE_ENV || 'development').toUpperCase()}`;
 
   console.log(`\n> ${nodeEnv} / ${NAME} / ${urlWithEmoji}\n`);
-
-  console.log('xxxxxxxxxxxxxxxxx');
 })();

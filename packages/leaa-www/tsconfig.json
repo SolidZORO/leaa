@@ -24,6 +24,6 @@
       "@leaa/www/*": ["./*"]
     }
   },
-  "include": ["src/**/*", "typings/*"],
+  "include": ["src/**/*", "typings/*", "server.ts"],
   "exclude": ["node_modules", "_dist"]
 }

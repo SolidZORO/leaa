@@ -19,7 +19,8 @@
     "fix": "yarn run fix-js && yarn run fix-css",
     "tsc-check": "tsc --noEmit",
     "---------------------------------------------------------------------- DEV ----": "----",
-    "dev": "NODE_ENV=development nodemon server.ts",
+    "dev-tsnodedev": "NODE_ENV=development ts-node-dev --respawn --transpileOnly --ignore-watch node_modules --compiler-options '{\"module\":\"commonjs\"}' -r tsconfig-paths/register server.ts",
+    "dev": "NODE_ENV=development yarn dev-tsnodedev",
     "clear": "rimraf .next && rimraf _dist",
     "---------------------------------------------------------------------- PROD ----": "----",
     "build": "yarn clear && NODE_ENV=production next build && tsc --project tsconfig.build.json",
@@ -101,12 +102,12 @@
     "husky": "^3.1.0",
     "lerna": "^3.19.0",
     "lint-staged": "^9.4.3",
-    "nodemon": "^2.0.1",
     "postcss": "7.0.23",
     "prettier": "^1.19.1",
     "stylelint": "^12.0.0",
     "ts-jest": "24.2.0",
     "ts-node": "^8.5.2",
+    "ts-node-dev": "^1.0.0-pre.44",
     "url-loader": "^2.3.0"
   }
 }
