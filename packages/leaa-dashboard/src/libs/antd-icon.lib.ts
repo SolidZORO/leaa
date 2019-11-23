@@ -36,6 +36,8 @@ export { default as PoweroffOutline } from '@ant-design/icons/lib/outline/Powero
 export { default as QuestionOutline } from '@ant-design/icons/lib/outline/QuestionOutline';
 export { default as QuestionCircleOutline } from '@ant-design/icons/lib/outline/QuestionCircleOutline';
 export { default as CopyOutline } from '@ant-design/icons/lib/outline/CopyOutline';
+export { default as DisconnectOutline } from '@ant-design/icons/lib/outline/DisconnectOutline';
+export { default as LinkOutline } from '@ant-design/icons/lib/outline/LinkOutline';
 
 // Fill
 export { default as CheckCircleFill } from '@ant-design/icons/lib/fill/CheckCircleFill';
