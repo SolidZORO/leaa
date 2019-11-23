@@ -15,7 +15,6 @@ export default class CustomDocument extends Document {
           <meta name="renderer" content="webkit" />
           <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
           <link rel="shortcut icon" href="/static/favicons/favicon.ico" />
-          <link rel="stylesheet" type="text/css" href="/static/fonts/fi/iconfont.css" />
         </Head>
         <body>
           <Main />

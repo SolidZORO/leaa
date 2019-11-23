@@ -5,6 +5,7 @@ const lessToJS = require('less-vars-to-js');
 const cssLoaderConfig = require('@zeit/next-css/css-loader-config');
 
 const antdVariables = lessToJS(fs.readFileSync(path.resolve(__dirname, '../../src/styles/variables.less'), 'utf8'));
+const ANTD_STYLE_REGX = /antd\/.*?\/style.*?/;
 
 module.exports = (nextConfig = {}) => ({
   ...nextConfig,
@@ -37,36 +38,35 @@ module.exports = (nextConfig = {}) => ({
         },
       };
 
-      // FOR node_modules (e.g. antd, swiper...)
+      // FOR antd
       config.module.rules.push({
         test: /\.less$/,
-        include: /node_modules/,
+        include: ANTD_STYLE_REGX,
         use: cssLoaderConfig(config, baseLessConfig),
       });
 
       // FOR src
       config.module.rules.push({
         test: /\.less$/,
-        exclude: /node_modules/,
+        exclude: ANTD_STYLE_REGX,
         use: cssLoaderConfig(config, {
           ...baseLessConfig,
           extensions: ['less'],
           cssModules: true,
           cssLoaderOptions: {
             ...baseLessConfig.cssLoaderOptions,
-            localIdentName: '[local]--[hash:8]',
+            localIdentName: dev ? '[local]--[hash:8]' : '[hash:8]',
           },
         }),
       });
 
       // for antd less in server (yarn build)
       if (isServer) {
-        const antdStyles = /antd\/.*?\/style.*?/;
         const rawExternals = [...config.externals];
 
         config.externals = [
           (context, request, callback) => {
-            if (request.match(antdStyles)) {
+            if (request.match(ANTD_STYLE_REGX)) {
               return callback();
             }
 
@@ -80,7 +80,7 @@ module.exports = (nextConfig = {}) => ({
         ];
 
         config.module.rules.unshift({
-          test: antdStyles,
+          test: ANTD_STYLE_REGX,
           use: 'null-loader',
         });
       }
