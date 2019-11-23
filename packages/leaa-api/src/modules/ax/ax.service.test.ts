@@ -8,7 +8,7 @@ import { AxService } from '@leaa/api/src/modules/ax/ax.service';
 
 describe('AxService', () => {
   let axService: AxService;
-  const ARTICLE_REPOSITORY_MOCK: Repository<Ax> = new Repository<Ax>();
+  const AX_REPOSITORY_MOCK: Repository<Ax> = new Repository<Ax>();
   const CATEGORY_REPOSITORY_MOCK: Repository<Category> = new Repository<Category>();
 
   beforeAll(async () => {
@@ -17,7 +17,7 @@ describe('AxService', () => {
         AxService,
         {
           provide: getRepositoryToken(Ax),
-          useValue: ARTICLE_REPOSITORY_MOCK,
+          useValue: AX_REPOSITORY_MOCK,
         },
         {
           provide: getRepositoryToken(Category),
