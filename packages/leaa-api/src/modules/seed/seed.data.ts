@@ -379,5 +379,5 @@ export const settingSeed: CreateSettingInput[] = [
   { name: 'Site Name', slug: 'site_name', type: 'input', sort: 1, value: 'Leaa', description: '站点名，最大 220 字' },
   { name: 'Site Description', slug: 'site_description', type: 'textarea', sort: 2, value: 'Leaa - project 1h 4 1d',  description: '站点描述， 最大 220 字' },
   { name: 'Site Keywords', slug: 'site_keywords', type: 'input', sort: 3, value: 'Leaa, mono-repo, C\'est la vie. project 1h 4 1d', description: '站点关键字，使用英文 , 分隔' },
-  { name: 'Currency Symbol', slug: 'currency_symbol', type: 'input', sort: 4, value: '$', description: 'Currency Symbol', options: '$\n¥' },
+  { name: 'Currency Symbol', slug: 'currency_symbol', type: 'radio', sort: 4, value: '$', description: 'Currency Symbol', options: '$\n¥' },
 ];

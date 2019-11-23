@@ -10,7 +10,8 @@ if (webpackConst.IS_ANALYZER) {
 webpackConst.__DEV__ = !process.argv.includes('--release');
 webpackConst.IS_SERVER = process.argv.includes('--server');
 webpackConst.IS_VERBOSE = process.argv.includes('--verbose');
-webpackConst.IS_ANALYZER = process.argv.includes('--analyze') || process.argv.includes('--analyse');
+webpackConst.IS_ANALYZER =
+  process.argv.includes('--analyze') || process.argv.includes('--analyse') || process.argv.includes('--vvv');
 
 webpackConst.DEV_PREFIX = webpackConst.__DEV__ ? '____' : '';
 webpackConst.CHUNK_HASH = webpackConst.__DEV__ ? '_devvvvvvvvvvvv' : '_[chunkhash:8]';
@@ -23,6 +24,7 @@ webpackConst.DEVTOOL = webpackConst.__DEV__
   : false;
 
 // DIR PATH
+
 webpackConst.ROOT_DIR = path.resolve(__dirname, '../../');
 webpackConst.SRC_DIR = path.resolve(`${webpackConst.ROOT_DIR}/src`);
 webpackConst.PUBLIC_DIR = path.resolve(`${webpackConst.ROOT_DIR}/public`);
