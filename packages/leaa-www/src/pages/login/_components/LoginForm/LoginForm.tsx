@@ -15,7 +15,7 @@ import { authUtil } from '@leaa/www/src/utils';
 import WechatLoginButton from '@leaa/www/src/pages/login/_components/WechatLoginButton/WechatLoginButton';
 import PhoneLoginButton from '@leaa/www/src/pages/login/_components/PhoneLoginButton/PhoneLoginButton';
 
-import style from './style.less';
+import style from './style.module.less';
 
 interface IProps extends FormComponentProps {
   className?: string;

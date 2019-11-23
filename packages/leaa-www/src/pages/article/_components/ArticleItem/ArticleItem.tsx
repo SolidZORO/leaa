@@ -3,7 +3,7 @@ import cx from 'classnames';
 
 import { Article } from '@leaa/common/src/entrys';
 
-import style from './style.less';
+import style from './style.module.less';
 
 interface IProps {
   article: Article;

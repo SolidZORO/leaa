@@ -14,8 +14,8 @@ import { LayoutContent } from './_components/LayoutContent/LayoutContent';
 import { LayoutHeader } from './_components/LayoutHeader/LayoutHeader';
 import { LayoutSimpleFooter } from './_components/LayoutSimpleFooter/LayoutSimpleFooter';
 
-import '@leaa/www/src/styles/style.global.less';
-import style from './style.less';
+import '@leaa/www/src/styles/global.less';
+import style from './style.module.less';
 
 Spin.setDefaultIndicator(<Icon type="loading" spin style={{ fontSize: '200%' }} />);
 
@@ -80,7 +80,7 @@ export const MasterLayout = (props: IProps) => {
         <style
           id="transition-without-ssr"
           // eslint-disable-next-line react/no-danger
-          dangerouslySetInnerHTML={{ __html: ` *, *::before, *::after { transition: none!important; }` }}
+          dangerouslySetInnerHTML={{ __html: ' *, *::before, *::after { transition: none!important; }' }}
         />
       )}
     </div>

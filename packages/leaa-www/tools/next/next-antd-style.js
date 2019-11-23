@@ -1,5 +1,10 @@
 /* eslint-disable */
+const fs = require('fs');
+const path = require('path');
+const lessToJS = require('less-vars-to-js');
 const cssLoaderConfig = require('@zeit/next-css/css-loader-config');
+
+const antdVariables = lessToJS(fs.readFileSync(path.resolve(__dirname, '../../src/styles/variables.less'), 'utf8'));
 
 module.exports = (nextConfig = {}) => ({
   ...nextConfig,
@@ -12,40 +17,46 @@ module.exports = (nextConfig = {}) => ({
       }
 
       const { dev, isServer } = options;
-      const { cssModules, cssLoaderOptions, postcssLoaderOptions, lessLoaderOptions = {} } = nextConfig;
 
       // for all less in client
       const baseLessConfig = {
-        extensions: ['less'],
-        cssModules,
-        cssLoaderOptions,
-        postcssLoaderOptions,
         dev,
         isServer,
         loaders: [
           {
             loader: 'less-loader',
-            options: lessLoaderOptions,
+            options: {
+              javascriptEnabled: true,
+              modifyVars: antdVariables,
+            },
           },
         ],
+        cssLoaderOptions: {
+          sourceMap: false,
+          importLoaders: 2,
+        },
       };
 
-      config.module.rules.push({
-        test: /\.less$/,
-        exclude: /node_modules/,
-        use: cssLoaderConfig(config, baseLessConfig),
-      });
-
-      // for antd less in client
-      const antdLessConfig = {
-        ...baseLessConfig,
-        ...{ cssModules: false, cssLoaderOptions: {}, postcssLoaderOptions: {} },
-      };
-
+      // FOR node_modules (e.g. antd, swiper...)
       config.module.rules.push({
         test: /\.less$/,
         include: /node_modules/,
-        use: cssLoaderConfig(config, antdLessConfig),
+        use: cssLoaderConfig(config, baseLessConfig),
+      });
+
+      // FOR src
+      config.module.rules.push({
+        test: /\.less$/,
+        exclude: /node_modules/,
+        use: cssLoaderConfig(config, {
+          ...baseLessConfig,
+          extensions: ['less'],
+          cssModules: true,
+          cssLoaderOptions: {
+            ...baseLessConfig.cssLoaderOptions,
+            localIdentName: '[local]--[hash:8]',
+          },
+        }),
       });
 
       // for antd less in server (yarn build)

@@ -2,7 +2,7 @@ import cx from 'classnames';
 import React, { useState } from 'react';
 import { Button, message } from 'antd';
 
-import style from './style.less';
+import style from './style.module.less';
 
 export default () => {
   const [type, setType] = useState<string>('mobile');

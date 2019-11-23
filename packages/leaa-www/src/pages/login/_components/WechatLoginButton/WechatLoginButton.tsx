@@ -4,7 +4,7 @@ import { Button } from 'antd';
 import { deviceUtil } from '@leaa/www/src/utils';
 import { envConfig } from '@leaa/www/src/configs';
 
-import style from './style.less';
+import style from './style.module.less';
 
 interface IProps {
   // user: IAuthInfo;

@@ -3,7 +3,7 @@ import React from 'react';
 import { SwiperImage } from '@leaa/www/src/components/SwiperImage';
 import { Ax } from '@leaa/common/src/entrys';
 
-import style from './style.less';
+import style from './style.module.less';
 
 interface IProps {
   ax: Ax;

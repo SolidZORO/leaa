@@ -3,7 +3,7 @@ import cx from 'classnames';
 
 import LoginForm from '@leaa/www/src/pages/login/_components/LoginForm/LoginForm';
 
-import style from './style.less';
+import style from './style.module.less';
 
 export default () => {
   return (

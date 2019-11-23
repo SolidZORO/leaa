@@ -1,18 +1,14 @@
 /* eslint-disable */
-const fs = require('fs');
 const path = require('path');
 const webpack = require('webpack');
-const lessToJS = require('less-vars-to-js');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const FilterWarningsPlugin = require('webpack-filter-warnings-plugin');
-
-const env = require('@leaa/www/tools/next/next-dotenv-object');
 
 const withDotenv = require('@leaa/www/tools/next/next-dotenv');
 const withImage = require('@leaa/www/tools/next/next-image');
 const withAntdStyle = require('@leaa/www/tools/next/next-antd-style');
 
-const antdVariables = lessToJS(fs.readFileSync(path.resolve(__dirname, './src/styles/variables.less'), 'utf8'));
+const env = require('@leaa/www/tools/next/next-dotenv-object');
 
 // fix: prevents error when .less files are required by node
 if (typeof require !== 'undefined') {
@@ -47,30 +43,14 @@ const webpackConfig = (config, options) => {
 
 const nextConfig = {
   env,
-  // target: 'serverless',
   target: 'server',
-  exportTrailingSlash: true,
-  // exportPathMap: async (defaultPathMap, { dev, dir, outDir, distDir, buildId }) => {
-  //   return {
-  //     '/': { page: '/' },
-  //     '/login': { page: '/login' },
-  //   };
-  // },
+  // target: 'serverless',
+  // exportTrailingSlash: true,
 };
 
 module.exports = withDotenv(
   withImage(
     withAntdStyle({
-      cssModules: true,
-      cssLoaderOptions: {
-        sourceMap: false,
-        importLoaders: 1,
-        localIdentName: '[local]--[hash:8]',
-      },
-      lessLoaderOptions: {
-        javascriptEnabled: true,
-        modifyVars: antdVariables,
-      },
       webpack: webpackConfig,
       ...nextConfig,
     }),

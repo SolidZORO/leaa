@@ -11,7 +11,7 @@ import { User } from '@leaa/common/src/entrys';
 import { authUtil } from '@leaa/www/src/utils';
 import Router from 'next/router';
 
-import style from './style.less';
+import style from './style.module.less';
 
 interface IProps extends FormComponentProps {
   urlQuery?: { [key: string]: string | string[] };

@@ -6,7 +6,7 @@ import dayjs from 'dayjs';
 import { HtmlMeta } from '@leaa/www/src/components/HtmlMeta';
 import { ArticlesWithPaginationObject } from '@leaa/common/src/dtos/article';
 
-import style from './style.less';
+import style from './style.module.less';
 
 interface IProps {
   articles: ArticlesWithPaginationObject;

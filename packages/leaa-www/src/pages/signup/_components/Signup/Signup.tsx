@@ -3,7 +3,7 @@ import cx from 'classnames';
 
 import SignupForm from '@leaa/www/src/pages/signup/_components/SignupForm/SignupForm';
 
-import style from './style.less';
+import style from './style.module.less';
 
 export default ({ urlQuery }: { urlQuery?: { [key: string]: string | string[] } }) => {
   return (
