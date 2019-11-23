@@ -14,6 +14,8 @@
 /_documents
 /public
 /static
+/src/assets
+/public/assets
 
 /tools/module-alias
 /tools/webpack
