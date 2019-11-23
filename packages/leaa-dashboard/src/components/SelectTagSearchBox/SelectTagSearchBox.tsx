@@ -125,7 +125,7 @@ export const SelectTagSearchBox = forwardRef((props: IProps, ref: React.Ref<any>
           dataSource={optionalTags.map(tag => (
             <Select.Option key={tag.name}>{tag.name}</Select.Option>
           ))}
-          placeholder={props.placeholder || t(`_comp:SelectTagId.searchTags`)}
+          placeholder={props.placeholder || t('_comp:SelectTagId.searchTags')}
           value={inputKey}
         >
           <Input onPressEnter={onEnter} />

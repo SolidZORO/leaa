@@ -22,8 +22,9 @@
     ]
   },
   "scripts": {
-    "bootstrap": "npx lerna bootstrap",
-    "clean": "npx lerna clean",
+    "bootstrap": "lerna bootstrap",
+    "clean": "lerna clean",
+    "fix": "lerna run fix",
     "nuke": "yarn clean && yarn bootstrap",
     "tsc-check": "yarn workspaces run tsc-check",
     "u": "yarn upgrade-interactive --latest"

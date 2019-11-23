@@ -40,7 +40,7 @@ export const SearchInput = (props: IProps) => {
       prefixCls="search-input ant-input"
       className={cx(style['search-input-wrapper'], 'search-input-wrapper')}
       allowClear
-      placeholder={`${t(`_comp:SearchInput.placeholder`)}`}
+      placeholder={`${t('_comp:SearchInput.placeholder')}`}
       onChange={onChange}
       defaultValue={searchText}
       value={searchText}

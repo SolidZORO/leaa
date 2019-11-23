@@ -101,7 +101,7 @@ export class RoleService {
     if (permissionObjects) {
       relationArgs.permissions = permissionObjects;
     } else {
-      const message = `permissions error`;
+      const message = 'permissions error';
 
       loggerUtil.warn(message, CONSTRUCTOR_NAME);
       throw new Error(message);

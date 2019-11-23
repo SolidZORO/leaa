@@ -52,7 +52,7 @@ nextPage.getInitialProps = async (ctx: IGetInitialProps) => {
             authUtil.setAuthToken(loginByTicket.authToken, loginByTicket.authExpiresIn, ctx);
           }
 
-          urlUtil.redirect(`/account`, ctx.res);
+          urlUtil.redirect('/account', ctx.res);
         }
       })
       .catch(error => {

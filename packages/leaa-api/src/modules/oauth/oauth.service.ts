@@ -67,7 +67,7 @@ export class OauthService {
 
   async getUserByTicket(ticket: string): Promise<User> {
     if (!ticket) {
-      const message = `ticket error`;
+      const message = 'ticket error';
 
       loggerUtil.warn(message, CONSTRUCTOR_NAME);
       throw new Error(message);
@@ -76,7 +76,7 @@ export class OauthService {
     const oauth = await this.oauthRepository.findOne({ ticket });
 
     if (!oauth) {
-      const message = `oauth does not exist`;
+      const message = 'oauth does not exist';
 
       loggerUtil.warn(message, CONSTRUCTOR_NAME);
       throw new Error(message);
@@ -85,7 +85,7 @@ export class OauthService {
     const user = await this.userRepository.findOne({ id: oauth.user_id });
 
     if (!user) {
-      const message = `user does not exist`;
+      const message = 'user does not exist';
 
       loggerUtil.warn(message, CONSTRUCTOR_NAME);
       throw new Error(message);
@@ -179,7 +179,7 @@ export class OauthService {
 
   async wechatCallback(req: Request, res: Response): Promise<void | string> {
     if (!req.query.state || !req.query.code) {
-      const message = `wechat callback error`;
+      const message = 'wechat callback error';
 
       loggerUtil.warn(message, CONSTRUCTOR_NAME);
       throw new Error(message);
@@ -189,7 +189,7 @@ export class OauthService {
     const { url, query } = queryString.parseUrl(jumpUrl);
 
     if (!query || !query.platform || !['wechat', 'weibo'].includes(query.platform as string)) {
-      const message = `wechat callback invalid platform`;
+      const message = 'wechat callback invalid platform';
 
       loggerUtil.warn(message, CONSTRUCTOR_NAME);
       throw new Error(message);
@@ -235,7 +235,7 @@ export class OauthService {
       ) {
         await this.clearTicket(oauth.id);
 
-        const message = `wechat callback ticket expired`;
+        const message = 'wechat callback ticket expired';
 
         loggerUtil.warn(message, CONSTRUCTOR_NAME);
 

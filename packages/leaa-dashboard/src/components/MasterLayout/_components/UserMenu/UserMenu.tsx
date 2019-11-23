@@ -19,7 +19,7 @@ export const UserMenu = (props: IProps): JSX.Element => {
       return props.history.push(LOGOUT_REDIRECT_URL);
     }
 
-    const messageText = t(`_comp:UserMenu.logoutFaild`);
+    const messageText = t('_comp:UserMenu.logoutFaild');
 
     return console.log(messageText);
   };
@@ -34,7 +34,7 @@ export const UserMenu = (props: IProps): JSX.Element => {
 
       <div className={style['footer']}>
         <Button className={style['logout-button']} block type="ghost" onClick={onLogout}>
-          <Icon type="poweroff" /> {t(`_comp:UserMenu.safelyLogout`)}
+          <Icon type="poweroff" /> {t('_comp:UserMenu.safelyLogout')}
         </Button>
       </div>
     </div>

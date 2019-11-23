@@ -157,7 +157,7 @@ export const WYSIWYGEditor = forwardRef((props: IProps, ref: React.Ref<any>) => 
         // eslint-disable-next-line no-undef
         $el: $(
           '<button ' +
-            `class="tui-editor-icon tui-fn-preview tui-editor-icon-preview" ` +
+            'class="tui-editor-icon tui-fn-preview tui-editor-icon-preview" ' +
             'type="button"' +
             '></button>',
         ),
@@ -172,7 +172,7 @@ export const WYSIWYGEditor = forwardRef((props: IProps, ref: React.Ref<any>) => 
         // eslint-disable-next-line no-undef
         $el: $(
           '<button ' +
-            `class="tui-editor-icon tui-fn-fullscreen tui-editor-icon-fullscreen" ` +
+            'class="tui-editor-icon tui-fn-fullscreen tui-editor-icon-fullscreen" ' +
             'type="button"' +
             '></button>',
         ),

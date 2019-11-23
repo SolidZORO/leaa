@@ -110,7 +110,7 @@ export const SelectTagId = forwardRef((props: IProps, ref: React.Ref<any>) => {
             overlayClassName={style['popover-overlay']}
           >
             <Button size="small" icon="plus" className={style['add-tag-button']}>
-              {t(`_comp:SelectTagId.addTag`)}
+              {t('_comp:SelectTagId.addTag')}
             </Button>
           </Popover>
         )}

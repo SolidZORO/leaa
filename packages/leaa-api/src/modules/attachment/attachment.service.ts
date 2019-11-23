@@ -153,7 +153,7 @@ export class AttachmentService {
 
   async updateAttachments(attachments: UpdateAttachmentsInput[]): Promise<AttachmentsObject> {
     if (!attachments) {
-      const message = `update attachments does not exist`;
+      const message = 'update attachments does not exist';
 
       loggerUtil.warn(message, CONSTRUCTOR_NAME);
       throw new Error(message);
