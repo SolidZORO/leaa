@@ -12,7 +12,7 @@ interface IProps extends Options {
 }
 
 export const PriceTag = (props: IProps) => {
-  const symbol = props.symbol || settingUtil.getSetting('currency_symbol').value;
+  const symbol = props.symbol || settingUtil.getSetting({ key: 'currency_symbol' }).value;
   const amount = currency(props.amount || 0, { symbol, precision: props.precision || 2 });
 
   return (

@@ -108,7 +108,7 @@ export class SettingService {
 
   async deleteSetting(id: number): Promise<Setting | undefined> {
     // default setting DONT
-    if (id <= 3) {
+    if (id <= 5) {
       throw Error('PLEASE DONT');
     }
 

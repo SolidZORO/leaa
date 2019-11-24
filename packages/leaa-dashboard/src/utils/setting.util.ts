@@ -32,20 +32,22 @@ const refreshLocalStorageSettings = () => {
     });
 };
 
-const getSetting = (key: string): ISetting => {
+const getSetting = (params: { key: string; disableNotification?: boolean }): ISetting => {
   const settingByEerrorTips: ISetting = {
-    name: 'ERROR-SETTING-NAME-TIPS',
-    slug: 'ERROR-SETTING-SLUG-TIPS',
-    value: 'ERROR-SETTING-VALUE-TIPS',
+    name: '',
+    slug: '',
+    value: '',
   };
   const settingsByEmpty: ISetting[] = [settingByEerrorTips];
   const settingsByLs = localStorage.getItem('settings');
   const settings = settingsByLs ? (JSON.parse(settingsByLs) as ISetting[]) : settingsByEmpty;
 
-  const setting = settings.find(t => t.slug === key);
+  const setting = settings.find(t => t.slug === params.key);
 
   if (!setting) {
-    notification.error({ message: `setting  ${key} not  found` });
+    if (!params.disableNotification) {
+      notification.error({ message: `setting  ${params.key} not  found` });
+    }
 
     return settingByEerrorTips;
   }

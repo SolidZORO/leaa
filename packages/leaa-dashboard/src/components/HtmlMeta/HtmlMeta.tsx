@@ -12,7 +12,7 @@ interface IProps {
 export const HtmlMeta = (props: IProps) => {
   const siteName = props.disableSiteName
     ? ''
-    : ` - ${settingUtil.getSetting('site_name').value || envConfig.SITE_NAME}`;
+    : ` - ${settingUtil.getSetting({ key: 'site_name', disableNotification: true }).value || envConfig.SITE_NAME}`;
 
   return (
     <Helmet>
