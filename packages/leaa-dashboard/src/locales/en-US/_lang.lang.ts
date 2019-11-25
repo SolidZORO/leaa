@@ -50,6 +50,7 @@ export default {
   delete: 'Delete',
   submit: 'Submit',
   convert: 'Convert',
+  search: 'Search',
   //
   select: 'Select',
   selected: 'Selected',

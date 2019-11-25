@@ -50,6 +50,7 @@ export default {
   delete: '删除',
   submit: '提交',
   convert: '兑换',
+  search: '搜索',
   //
   select: '选择',
   selected: '选中',

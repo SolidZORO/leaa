@@ -25,6 +25,18 @@ export const UPDATE_COUPON = gql`
   }
 `;
 
+export const CONVERT_COUPON = gql`
+  mutation($info: ConvertCouponInput!) {
+    convertCoupon(info: $info) {
+      id
+      name
+      code
+      user_id
+      status
+    }
+  }
+`;
+
 export const DELETE_COUPON = gql`
   mutation($id: Int!) {
     deleteCoupon(id: $id) {

@@ -14,5 +14,7 @@ export default {
     unavailableProductIds: '不可用商品',
     convert: '兑换',
     convertConpon: '兑换代金券',
+    convertToUser: '兑换给用户',
+    convertUserId: '兑换用户 ID',
   },
 };

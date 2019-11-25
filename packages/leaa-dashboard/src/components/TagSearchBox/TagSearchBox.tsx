@@ -3,37 +3,39 @@ import { useTranslation } from 'react-i18next';
 import cx from 'classnames';
 import _ from 'lodash';
 import { Select, AutoComplete, Input } from 'antd';
-import { User as UserEntry } from '@leaa/common/src/entrys';
-import { UsersWithPaginationObject, UserArgs } from '@leaa/common/src/dtos/user';
-import { GET_USERS } from '@leaa/common/src/graphqls';
+import { AutoCompleteProps } from '@leaa/dashboard/node_modules/antd/lib/auto-complete';
+
+import { Tag as TagEntry } from '@leaa/common/src/entrys';
+import { TagsWithPaginationObject, TagArgs } from '@leaa/common/src/dtos/tag';
+import { GET_TAGS } from '@leaa/common/src/graphqls';
 import { apolloClient } from '@leaa/dashboard/src/libs';
 import style from './style.module.less';
 
-interface IProps {
+interface IProps extends AutoCompleteProps {
   className?: string;
   useOnBlur?: boolean;
-  enterCreateUser?: boolean;
+  enterCreateTag?: boolean;
   value?: string | undefined;
   autoFocus?: boolean;
-  onSelectUserCallback?: (user: UserEntry) => void;
-  onEnterCallback?: (user: string | undefined) => void;
-  onChangeUserNameCallback?: (user: string | undefined) => void;
+  onSelectTagCallback?: (tag: TagEntry) => void;
+  onEnterCallback?: (tag: string | undefined) => void;
+  onChangeTagNameCallback?: (tag: string | undefined) => void;
   placeholder?: string;
 }
 
 const DEBOUNCE_MS = 500;
 
-export const SelectUserSearchBox = forwardRef((props: IProps, ref: React.Ref<any>) => {
+export const TagSearchBox = forwardRef((props: IProps, ref: React.Ref<any>) => {
   const { t } = useTranslation();
 
   const [inputKey, setInputKey] = useState<string | undefined>(props.value);
-  const [optionalUsers, setOptionalUsers] = useState<UserEntry[]>([]);
+  const [optionalTags, setOptionalTags] = useState<TagEntry[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
   const init = () => {
     setLoading(false);
     setInputKey(undefined);
-    setOptionalUsers([]);
+    setOptionalTags([]);
   };
 
   useEffect(() => {
@@ -41,20 +43,20 @@ export const SelectUserSearchBox = forwardRef((props: IProps, ref: React.Ref<any
   }, []);
 
   // query
-  const queryUsers = useRef(
+  const queryTags = useRef(
     _.debounce((v: string) => {
       setLoading(true);
-      setOptionalUsers([]);
+      setOptionalTags([]);
 
       apolloClient
-        .query<{ users: UsersWithPaginationObject }, UserArgs>({
-          query: GET_USERS,
+        .query<{ tags: TagsWithPaginationObject }, TagArgs>({
+          query: GET_TAGS,
           variables: { page: 1, pageSize: 10, q: v },
           fetchPolicy: 'network-only',
         })
-        .then((result: { data: { users: UsersWithPaginationObject } }) => {
-          if (result && result.data.users && result.data.users.items) {
-            setOptionalUsers(result.data.users.items);
+        .then((result: { data: { tags: TagsWithPaginationObject } }) => {
+          if (result && result.data.tags && result.data.tags.items) {
+            setOptionalTags(result.data.tags.items);
           }
         })
         .finally(() => setLoading(false));
@@ -62,17 +64,18 @@ export const SelectUserSearchBox = forwardRef((props: IProps, ref: React.Ref<any
   );
 
   // query
-  const onQueryUsers = (user: string) => queryUsers.current(user);
+  const onQueryTags = (tag: string) => queryTags.current(tag);
 
   const onClear = () => {
     init();
   };
 
   const onChange = (v: any) => {
+    // console.log('>>>>> onChange', v);
     setInputKey(v);
 
-    if (props.onChangeUserNameCallback) {
-      props.onChangeUserNameCallback(v);
+    if (props.onChangeTagNameCallback) {
+      props.onChangeTagNameCallback(v);
     }
 
     if (typeof v === 'undefined') {
@@ -85,21 +88,18 @@ export const SelectUserSearchBox = forwardRef((props: IProps, ref: React.Ref<any
   };
 
   const onSearch = (v: string) => {
-    onQueryUsers(v);
+    onQueryTags(v);
   };
 
-  const onSelect = (user: any) => {
-    console.log('onSelect', user);
-    // const userObject = optionalUsers.find(item => item.name === user);
+  const onSelect = (tagName: any) => {
+    const tagObject = optionalTags.find(item => item.name === tagName);
 
-    if (props.onSelectUserCallback && user) {
-      props.onSelectUserCallback(user);
+    if (props.onSelectTagCallback && tagObject) {
+      props.onSelectTagCallback(tagObject);
     }
   };
 
   const onEnter = (e: any) => {
-    console.log('onEnter', e);
-
     if (props.onEnterCallback) {
       props.onEnterCallback(e.currentTarget.value);
     }
@@ -123,11 +123,12 @@ export const SelectUserSearchBox = forwardRef((props: IProps, ref: React.Ref<any
           onSearch={onSearch}
           onChange={onChange}
           onSelect={onSelect}
-          dataSource={optionalUsers.map(user => (
-            <Select.Option key={user.id}>{`#${user.id} ${user.name} (${user.email})`}</Select.Option>
+          dataSource={optionalTags.map(tag => (
+            <Select.Option key={tag.name}>{tag.name}</Select.Option>
           ))}
-          placeholder={props.placeholder || t('_comp:SelectUserId.searchUsers')}
+          placeholder={props.placeholder || t('_comp:SelectTagId.searchTags')}
           value={inputKey}
+          size={props.size}
         >
           <Input onPressEnter={onEnter} />
         </AutoComplete>

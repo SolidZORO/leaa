@@ -24,7 +24,7 @@ import {
   TableColumnDate,
   TableColumnDeleteButton,
   SelectCategoryIdByTree,
-  SelectTagSearchBox,
+  TagSearchBox,
   TableColumnStatusSwitch,
 } from '@leaa/dashboard/src/components';
 
@@ -215,7 +215,7 @@ export default (props: IPage) => {
         <div className={style['filter-bar-wrapper']}>
           <Icon type="filter" className={style['filter-bar-icon']} />
 
-          <SelectTagSearchBox
+          <TagSearchBox
             className={style['filter-bar-tag']}
             useOnBlur
             onSelectTagCallback={(v: TagEntry) => onFilter({ field: 'tagName', value: v.name })}

@@ -144,6 +144,11 @@ type Category {
   key: String
 }
 
+input ConvertCouponInput {
+  code: String!
+  userId: Int
+}
+
 type Coupon {
   id: Int!
   created_at: DateTime!
@@ -318,6 +323,7 @@ type Mutation {
   deleteTag(id: Int!): Tag!
   createCoupon(coupon: CreateCouponInput!): Coupon!
   updateCoupon(coupon: UpdateCouponInput!, id: Int!): Coupon!
+  convertCoupon(info: ConvertCouponInput!): Coupon!
   deleteCoupon(id: Int!): Coupon!
 }
 
@@ -400,6 +406,7 @@ type Query {
   tagByName(name: String!): Tag!
   coupons(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): CouponsWithPaginationObject!
   coupon(id: Int!): Coupon!
+  couponByCode(code: String!): Coupon!
 }
 
 type Role {

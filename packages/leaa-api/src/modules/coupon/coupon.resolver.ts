@@ -1,19 +1,18 @@
 import { Args, Query, Mutation, Resolver, ResolveProperty, Parent } from '@nestjs/graphql';
 import { Int } from 'type-graphql';
 
-import { Coupon, User, Ax } from '@leaa/common/src/entrys';
+import { Coupon, User } from '@leaa/common/src/entrys';
 import {
   CouponsArgs,
   CouponsWithPaginationObject,
   CouponArgs,
   CreateCouponInput,
   UpdateCouponInput,
+  ConvertCouponInput,
 } from '@leaa/common/src/dtos/coupon';
 import { UserDecorator } from '@leaa/api/src/decorators';
-import { AxAttachmentsObject } from '@leaa/common/src/dtos/ax';
 import { CouponService } from '@leaa/api/src/modules/coupon/coupon.service';
 import { CouponProperty } from '@leaa/api/src/modules/coupon/coupon.property';
-import { AxProperty } from '@leaa/api/src/modules/ax/ax.property';
 
 @Resolver(() => Coupon)
 export class CouponResolver {
@@ -44,6 +43,15 @@ export class CouponResolver {
     return this.couponService.coupon(id, args, user);
   }
 
+  @Query(() => Coupon)
+  async couponByCode(
+    @Args({ name: 'code', type: () => String }) code: string,
+    @Args() args?: CouponArgs,
+    @UserDecorator() user?: User,
+  ): Promise<Coupon | undefined> {
+    return this.couponService.couponByCode(code, args, user);
+  }
+
   @Mutation(() => Coupon)
   async createCoupon(@Args('coupon') args: CreateCouponInput): Promise<Coupon | undefined> {
     return this.couponService.createCoupon(args);
@@ -55,6 +63,14 @@ export class CouponResolver {
     @Args('coupon') args: UpdateCouponInput,
   ): Promise<Coupon | undefined> {
     return this.couponService.updateCoupon(id, args);
+  }
+
+  @Mutation(() => Coupon)
+  async convertCoupon(
+    @Args('info') info: ConvertCouponInput,
+    @UserDecorator() user?: User,
+  ): Promise<Coupon | undefined> {
+    return this.couponService.convertCoupon(info, user);
   }
 
   @Mutation(() => Coupon)

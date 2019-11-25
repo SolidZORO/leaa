@@ -1,11 +1,10 @@
 import React from 'react';
 import moment from 'moment';
 import cx from 'classnames';
-import { Typography, Icon, Tooltip } from 'antd';
+import { Typography, Tooltip } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 import { Coupon } from '@leaa/common/src/entrys';
-import { priceUtil } from '@leaa/dashboard/src/utils';
 import { PriceTag } from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';

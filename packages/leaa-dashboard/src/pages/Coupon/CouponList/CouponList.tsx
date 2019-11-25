@@ -28,6 +28,7 @@ import {
 
 import style from './style.module.less';
 import cx from 'classnames';
+import { ConvertCouponToUseButton } from '@leaa/dashboard/src/pages/Coupon/_components/ConvertCouponToUseButton/ConvertCouponToUseButton';
 
 export default (props: IPage) => {
   const { t } = useTranslation();
@@ -103,7 +104,12 @@ export default (props: IPage) => {
         />
       ),
     },
-
+    {
+      title: t('_page:Coupon.Component.convertUserId'),
+      dataIndex: 'user_id',
+      width: 180,
+      render: (text: string, record: Coupon) => <ConvertCouponToUseButton item={record} />,
+    },
     {
       title: t('_lang:status'),
       dataIndex: 'status',

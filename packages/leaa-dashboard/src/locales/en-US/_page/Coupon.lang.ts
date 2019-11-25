@@ -14,5 +14,7 @@ export default {
     unavailableProductIds: 'Unvailable Product',
     convert: 'Convert',
     convertConpon: 'Convert Coupon',
+    convertToUser: 'Convert To User',
+    convertUserId: 'Convert User ID',
   },
 };

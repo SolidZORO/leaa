@@ -71,7 +71,22 @@ class CouponInfoFormInner extends React.PureComponent<IProps> {
                 </Form.Item>
               </Col>
 
-              {!props.item && (
+              <Col xs={24} sm={2}>
+                <Form.Item label={t('_lang:status')}>
+                  {getFieldDecorator('status', {
+                    initialValue: props.item ? Number(props.item.status) : 1,
+                    rules: [{ required: true }],
+                  })(<SwitchNumber />)}
+                </Form.Item>
+              </Col>
+
+              {props.item ? (
+                <Col xs={24} sm={2}>
+                  <Form.Item label={t('_page:Coupon.Component.convertUserId')}>
+                    <Input disabled className={style['input-number']} value={props.item.user_id} />
+                  </Form.Item>
+                </Col>
+              ) : (
                 <Col xs={24} sm={2}>
                   <Form.Item label={t('_lang:quantity')}>
                     {getFieldDecorator('quantity', {
@@ -81,15 +96,6 @@ class CouponInfoFormInner extends React.PureComponent<IProps> {
                   </Form.Item>
                 </Col>
               )}
-
-              <Col xs={24} sm={2}>
-                <Form.Item label={t('_lang:status')}>
-                  {getFieldDecorator('status', {
-                    initialValue: props.item ? Number(props.item.status) : 1,
-                    rules: [{ required: true }],
-                  })(<SwitchNumber />)}
-                </Form.Item>
-              </Col>
             </Row>
 
             <Row gutter={16} className={style['form-row']}>

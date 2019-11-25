@@ -10,8 +10,9 @@ import {
   CouponArgs,
   CreateCouponInput,
   UpdateCouponInput,
+  ConvertCouponInput,
 } from '@leaa/common/src/dtos/coupon';
-import { formatUtil, permissionUtil, curdUtil, paginationUtil } from '@leaa/api/src/utils';
+import { formatUtil, permissionUtil, curdUtil, paginationUtil, loggerUtil } from '@leaa/api/src/utils';
 
 const CONSTRUCTOR_NAME = 'CouponService';
 
@@ -60,6 +61,24 @@ export class CouponService {
     });
   }
 
+  async couponByCode(
+    code: string,
+    args?: CouponArgs & FindOneOptions<Coupon>,
+    user?: User,
+  ): Promise<Coupon | undefined> {
+    const coupon = await this.couponRepository.findOne({ where: { code } });
+
+    if (!coupon) {
+      const message = 'not found coupon';
+
+      loggerUtil.warn(message, CONSTRUCTOR_NAME);
+
+      return undefined;
+    }
+
+    return this.coupon(coupon.id, args, user);
+  }
+
   generateCouponCode(prefix: string): string {
     return `${prefix}${uuid
       .v4()
@@ -85,6 +104,48 @@ export class CouponService {
 
   async updateCoupon(id: number, args: UpdateCouponInput): Promise<Coupon | undefined> {
     return curdUtil.commonUpdate(this.couponRepository, CONSTRUCTOR_NAME, id, args);
+  }
+
+  async convertCoupon(info: ConvertCouponInput, user?: User): Promise<Coupon | undefined> {
+    const coupon = await this.couponByCode(info.code);
+
+    if (!coupon) {
+      const message = 'not found coupon, convert error.';
+
+      loggerUtil.warn(message, CONSTRUCTOR_NAME);
+
+      throw Error(message);
+    }
+
+    if (coupon.user_id) {
+      const message = 'coupon already redeemed';
+
+      loggerUtil.warn(message, CONSTRUCTOR_NAME);
+
+      throw Error(message);
+    }
+
+    if (!user || !user.id) {
+      const message = 'not found user';
+
+      loggerUtil.warn(message, CONSTRUCTOR_NAME);
+
+      throw Error(message);
+    }
+
+    let nextCoupon = {
+      ...coupon,
+      user_id: user.id,
+    };
+
+    if (info.userId && permissionUtil.hasPermission(user, 'coupon.convert-to-any-user')) {
+      nextCoupon = {
+        ...coupon,
+        user_id: info.userId,
+      };
+    }
+
+    return this.couponRepository.save(nextCoupon);
   }
 
   async deleteCoupon(id: number): Promise<Coupon | undefined> {

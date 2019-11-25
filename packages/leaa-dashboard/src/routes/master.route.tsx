@@ -252,18 +252,6 @@ export const masterRoutes: IRouteItem[] = [
         isCreate: true,
       },
       {
-        name: 'Convert Coupon',
-        namei18n: '_route:convertCoupon',
-        permission: ALLOW_PERMISSION,
-        path: '/coupons/convert',
-        icon: 'x-coupon',
-        LazyComponent: React.lazy(() =>
-          import(/* webpackChunkName: 'ConvertCoupon' */ '../pages/Coupon/ConvertCoupon/ConvertCoupon'),
-        ),
-        exact: true,
-        isFn: true,
-      },
-      {
         name: 'Edit Coupon',
         namei18n: '_route:editCoupon',
         permission: 'coupon.item',

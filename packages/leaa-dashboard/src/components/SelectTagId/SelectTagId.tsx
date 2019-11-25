@@ -5,7 +5,7 @@ import { Tag, Button, Popover } from 'antd';
 import { TooltipPlacement } from 'antd/lib/tooltip';
 
 import { Tag as TagEntry } from '@leaa/common/src/entrys';
-import { SelectTagSearchBox } from '@leaa/dashboard/src/components';
+import { TagSearchBox } from '@leaa/dashboard/src/components';
 
 import { QuickCreateTagButton } from './_components/QuickCreateTagButton/QuickCreateTagButton';
 
@@ -97,7 +97,7 @@ export const SelectTagId = forwardRef((props: IProps, ref: React.Ref<any>) => {
             }
             content={
               <div className={style['popover-content-wrapper']}>
-                <SelectTagSearchBox
+                <TagSearchBox
                   // autoFocus
                   onSelectTagCallback={onSelectTag}
                   enterCreateTag={props.enterCreateTag}
