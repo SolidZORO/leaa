@@ -71,4 +71,5 @@ export default {
   coupon,
   createCoupon: `${_lang.create}${coupon}`,
   editCoupon: `${_lang.edit}${coupon}`,
+  convertCoupon: `${_lang.convert}${coupon}`,
 };

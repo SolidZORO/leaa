@@ -10,12 +10,12 @@ export class UpdateUserInput {
 
   @IsOptional()
   @IsEmail()
-  @MinLength(6)
+  @MinLength(4)
   @Field(() => String, { nullable: true })
   email?: string;
 
   @IsOptional()
-  @Length(4, 64)
+  @Length(1, 64)
   @Field(() => String, { nullable: true })
   name?: string;
 

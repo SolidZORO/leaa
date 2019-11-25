@@ -61,6 +61,10 @@ const makeFlatMenu = (menu: IRouteItem): React.ReactNode => {
     return dom;
   }
 
+  if (menu.isFn) {
+    return dom;
+  }
+
   if (checkPermission(menu.permission) || menu.permission === ALLOW_PERMISSION) {
     const currentMenuCreatePermission = `${menu.permission.split('.')[0]}.create`;
 

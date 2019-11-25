@@ -49,6 +49,7 @@ export default {
   update: 'Update',
   delete: 'Delete',
   submit: 'Submit',
+  convert: 'Convert',
   //
   select: 'Select',
   selected: 'Selected',

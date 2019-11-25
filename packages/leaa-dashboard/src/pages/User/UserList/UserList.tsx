@@ -52,6 +52,7 @@ export default (props: IPage) => {
   const getUsersVariables = { page, pageSize, q, orderBy, orderSort };
   const getUsersQuery = useQuery<{ users: UsersWithPaginationObject }, UsersArgs>(GET_USERS, {
     variables: getUsersVariables,
+    fetchPolicy: 'network-only',
   });
 
   // mutation

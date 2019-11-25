@@ -49,6 +49,7 @@ export default {
   update: '更新',
   delete: '删除',
   submit: '提交',
+  convert: '兑换',
   //
   select: '选择',
   selected: '选中',

@@ -12,5 +12,7 @@ export default {
     availableDate: '生效时间',
     availableProductIds: '可用商品',
     unavailableProductIds: '不可用商品',
+    convert: '兑换',
+    convertConpon: '兑换代金券',
   },
 };

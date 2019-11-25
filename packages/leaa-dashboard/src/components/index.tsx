@@ -26,3 +26,4 @@ export { WYSIWYGEditor } from './WYSIWYGEditor/WYSIWYGEditor';
 export { CouponItem } from './CouponItem/CouponItem';
 export { PriceTag } from './PriceTag/PriceTag';
 export { TableColumnStatusSwitch } from './TableColumnStatusSwitch/TableColumnStatusSwitch';
+export { SelectUserSearchBox } from './SelectUserSearchBox/SelectUserSearchBox';

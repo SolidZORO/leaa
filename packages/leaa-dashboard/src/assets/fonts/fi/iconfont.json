@@ -13,6 +13,13 @@
       "unicode_decimal": 59262
     },
     {
+      "icon_id": "4766679",
+      "name": "experiment",
+      "font_class": "x-labs",
+      "unicode": "e7c3",
+      "unicode_decimal": 59331
+    },
+    {
       "icon_id": "6620855",
       "name": "language",
       "font_class": "x-lang",
@@ -50,7 +57,7 @@
     {
       "icon_id": "11372649",
       "name": "测试",
-      "font_class": "x-labs",
+      "font_class": "x-labs2",
       "unicode": "e8ad",
       "unicode_decimal": 59565
     },
@@ -209,6 +216,13 @@
       "unicode_decimal": 59143
     },
     {
+      "icon_id": "11474361",
+      "name": "sorting",
+      "font_class": "x-sorting",
+      "unicode": "e708",
+      "unicode_decimal": 59144
+    },
+    {
       "icon_id": "11474394",
       "name": "tool",
       "font_class": "x-tool",
@@ -228,6 +242,13 @@
       "font_class": "x-content",
       "unicode": "e600",
       "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "11944049",
+      "name": "sorting",
+      "font_class": "x-exchange",
+      "unicode": "e8c1",
+      "unicode_decimal": 59585
     }
   ]
 }

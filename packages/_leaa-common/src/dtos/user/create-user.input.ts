@@ -10,12 +10,12 @@ export class CreateUserInput {
 
   @IsNotEmpty()
   @IsEmail()
-  @MinLength(6)
+  @MinLength(4)
   @Field(() => String)
   public email!: string;
 
   @IsOptional()
-  @Length(4, 64)
+  @Length(1, 64)
   @Field(() => String, { nullable: true })
   public name?: string;
 

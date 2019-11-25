@@ -54,21 +54,22 @@ export default {
   editArticle: `${_lang.edit} ${article}`,
   //
   ax,
-  createAx: `${_lang.create}${ax}`,
-  editAx: `${_lang.edit}${ax}`,
+  createAx: `${_lang.create} ${ax}`,
+  editAx: `${_lang.edit} ${ax}`,
   //
   tag,
-  createTag: `${_lang.create}${tag}`,
-  editTag: `${_lang.edit}${tag}`,
+  createTag: `${_lang.create} ${tag}`,
+  editTag: `${_lang.edit} ${tag}`,
   //
   attachment,
-  createAttachment: `${_lang.create}${attachment}`,
-  editAttachment: `${_lang.edit}${attachment}`,
+  createAttachment: `${_lang.create} ${attachment}`,
+  editAttachment: `${_lang.edit} ${attachment}`,
   //
   setting,
   //
   marketingGroup: `${marketing}`,
   coupon,
-  createCoupon: `${_lang.create}${coupon}`,
-  editCoupon: `${_lang.edit}${coupon}`,
+  createCoupon: `${_lang.create} ${coupon}`,
+  editCoupon: `${_lang.edit} ${coupon}`,
+  convertCoupon: `${_lang.convert} ${coupon}`,
 };

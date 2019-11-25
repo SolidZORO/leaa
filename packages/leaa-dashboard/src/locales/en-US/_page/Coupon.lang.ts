@@ -12,5 +12,7 @@ export default {
     availableDate: 'Available Date',
     availableProductIds: 'Available Product',
     unavailableProductIds: 'Unvailable Product',
+    convert: 'Convert',
+    convertConpon: 'Convert Coupon',
   },
 };
