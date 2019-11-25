@@ -8,7 +8,7 @@ import { User, Coupon } from '@leaa/common/src/entrys';
 
 import { UserSearchBox, ErrorCard } from '@leaa/dashboard/src/components';
 import { CONVERT_COUPON } from '@leaa/common/src/graphqls';
-import { langUtil } from '@leaa/dashboard/src/utils';
+import { langUtil, authUtil } from '@leaa/dashboard/src/utils';
 
 import style from './style.module.less';
 
@@ -49,7 +49,7 @@ export const ConvertCouponToUseButton = (props: IProps) => {
     );
   }
 
-  if (!props.item.available) {
+  if (!props.item.available || !authUtil.permissionCan('coupon.convert-to-any-user')) {
     return <code className={style['normal-status']} />;
   }
 

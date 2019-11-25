@@ -118,7 +118,7 @@ if (webpackConst.__DEV__) {
       parallel: true,
       cache: true,
       exclude: /\/monaco/,
-      extractComments: true,
+      extractComments: false,
       terserOptions: {
         ecma: 8,
         warnings: false,

@@ -95,6 +95,37 @@ const checkAuthIsAvailably = (): boolean => {
   return true;
 };
 
+//
+//
+
+const permissionCan = (permission: string): boolean => {
+  const authInfoString = localStorage.getItem(AUTH_INFO);
+
+  if (!authInfoString || !permission) {
+    return false;
+  }
+
+  let authInfo: IAuthInfo;
+
+  try {
+    authInfo = JSON.parse(authInfoString);
+  } catch (e) {
+    console.log(e);
+
+    return false;
+  }
+
+  if (!authInfo) {
+    return false;
+  }
+
+  if (!authInfo.flatePermissions || !Array.isArray(authInfo.flatePermissions)) {
+    return false;
+  }
+
+  return authInfo.flatePermissions.includes(permission);
+};
+
 export const authUtil = {
   setAuthToken,
   setAuthInfo,
@@ -104,4 +135,5 @@ export const authUtil = {
   removeAuthInfo,
   removeAuth,
   checkAuthIsAvailably,
+  permissionCan,
 };
