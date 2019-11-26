@@ -29,9 +29,10 @@ const currentDayZeroTime = moment().startOf('day');
 const defaultTimeRange: ITimeRange = [
   currentDayZeroTime,
   moment(currentDayZeroTime)
-    .endOf('day')
-    .add(1, 'day')
-    .subtract(1, 'second'),
+    .add(3, 'day')
+    .add(23, 'hour')
+    .add(59, 'minute')
+    .add(59, 'second'),
 ];
 
 const AVAILABLE_DATE_TIPS_FORMAT = 'YYYY-MM-DD HH:mm:ss';
@@ -57,7 +58,13 @@ class PromoInfoFormInner extends React.PureComponent<IProps, IState> {
   updateTimeRange = (timeRange: ITimeRange) => {
     const nextTimeRange: ITimeRange = [
       moment(timeRange[0].startOf('day')),
-      moment(timeRange[1].endOf('day').subtract(1, 'second')),
+      moment(
+        timeRange[1]
+          .startOf('day')
+          .add(23, 'hour')
+          .add(59, 'minute')
+          .add(59, 'second'),
+      ),
     ];
 
     this.props.form.setFieldsValue({
@@ -66,8 +73,6 @@ class PromoInfoFormInner extends React.PureComponent<IProps, IState> {
     });
 
     this.setState({ timeRange: nextTimeRange });
-
-    console.log(this.props.form.getFieldsValue());
   };
 
   render() {
@@ -163,14 +168,10 @@ class PromoInfoFormInner extends React.PureComponent<IProps, IState> {
                   colon={false}
                   label={
                     <span className={style['available-date-row']}>
-                      <strong>{t('_page:Coupon.Component.availableDate')} : </strong>
+                      <strong>{t('_page:Promo.Component.availableDate')} : </strong>
                       <em>
                         {moment(this.state.timeRange[0]).format(AVAILABLE_DATE_TIPS_FORMAT)} ~{' '}
-                        {/* TODO  this time in DB is `23:59:59`, but load to UI is `23:59:58` */}
-                        {/* TODO  i dot konw why, so add 1 second */}
-                        {moment(this.state.timeRange[1])
-                          .add(1, 'second')
-                          .format(AVAILABLE_DATE_TIPS_FORMAT)}
+                        {moment(this.state.timeRange[1]).format(AVAILABLE_DATE_TIPS_FORMAT)}
                       </em>
                     </span>
                   }
