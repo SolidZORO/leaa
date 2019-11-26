@@ -8,7 +8,7 @@ import { FormComponentProps } from 'antd/lib/form';
 import { Coupon } from '@leaa/common/src/entrys';
 import { ITfn } from '@leaa/dashboard/src/interfaces';
 
-import { FormCard, SwitchNumber } from '@leaa/dashboard/src/components';
+import { FormCard, SwitchNumber, IdTag } from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';
 
@@ -83,7 +83,7 @@ class CouponInfoFormInner extends React.PureComponent<IProps> {
               {props.item ? (
                 <Col xs={24} sm={2}>
                   <Form.Item label={t('_page:Coupon.Component.convertUserId')}>
-                    <Input disabled className={style['input-number']} value={props.item.user_id} />
+                    <IdTag id={props.item.user_id} link={`/users/${props.item.user_id}`} />
                   </Form.Item>
                 </Col>
               ) : (

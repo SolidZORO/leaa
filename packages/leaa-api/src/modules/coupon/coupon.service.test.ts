@@ -94,11 +94,27 @@ describe('CouponService', () => {
       expect(result).toBe(couponObject);
     });
 
+    it('should return couponByCode', async () => {
+      jest.spyOn(couponService, 'couponByCode').mockImplementation(async () => couponObject);
+      const result = await couponService.couponByCode('C76112A50DAE445C');
+
+      expect(result).toBe(couponObject);
+    });
+
     it('should return coupon (undefined)', async () => {
       jest.spyOn(couponService, 'coupon').mockImplementation(async () => undefined);
       const result = await couponService.coupon(2);
 
       expect(result).toBe(undefined);
+    });
+  });
+
+  describe('convertCoupon', () => {
+    it('should convert coupon', async () => {
+      jest.spyOn(couponService, 'convertCoupon').mockImplementation(async () => couponObject);
+      const result = await couponService.convertCoupon({ code: 'C76112A50DAE445C' });
+
+      expect(result).toBe(couponObject);
     });
   });
 

@@ -6,7 +6,7 @@ import { useMutation } from '@apollo/react-hooks';
 
 import { User, Coupon } from '@leaa/common/src/entrys';
 
-import { UserSearchBox, ErrorCard } from '@leaa/dashboard/src/components';
+import { UserSearchBox, ErrorCard, IdTag } from '@leaa/dashboard/src/components';
 import { CONVERT_COUPON } from '@leaa/common/src/graphqls';
 import { langUtil, permissionUtil } from '@leaa/dashboard/src/utils';
 
@@ -40,17 +40,12 @@ export const ConvertCouponToUseButton = (props: IProps) => {
 
   const onSubmit = () => convertCouponMutate();
 
-  if (props.item.user_id) {
+  if (props.item.user_id || (!props.item.available || !permissionUtil.hasPermission('coupon.convert-to-any-user'))) {
     return (
       <code className={style['normal-status']}>
-        <sup>#</sup>
-        {props.item.user_id}
+        <IdTag id={props.item.user_id} link={`/users/${props.item.user_id}`} />
       </code>
     );
-  }
-
-  if (!props.item.available || !permissionUtil.hasPermission('coupon.convert-to-any-user')) {
-    return <code className={style['normal-status']} />;
   }
 
   return (

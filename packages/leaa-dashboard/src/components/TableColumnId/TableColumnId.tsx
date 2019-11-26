@@ -1,6 +1,8 @@
 import React from 'react';
 import cx from 'classnames';
 
+import { IdTag } from '@leaa/dashboard/src/components';
+
 import style from './style.module.less';
 
 interface IProps {
@@ -11,10 +13,7 @@ interface IProps {
 export const TableColumnId = (props: IProps) => {
   return (
     <div className={cx(style['wrapper'], props.className)}>
-      <code>
-        <sup>#</sup>
-        {props.id}
-      </code>
+      <IdTag id={props.id} />
     </div>
   );
 };

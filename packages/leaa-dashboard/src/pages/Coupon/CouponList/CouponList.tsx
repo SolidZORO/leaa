@@ -4,10 +4,10 @@ import { useTranslation } from 'react-i18next';
 import queryString from 'query-string';
 import { Link } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { Table, Icon, message, Button } from 'antd';
+import { Table, Icon, message } from 'antd';
 
 import { DEFAULT_PAGE_SIZE_OPTIONS } from '@leaa/dashboard/src/constants';
-import { GET_COUPONS, DELETE_COUPON, UPDATE_COUPON, GET_COUPON } from '@leaa/common/src/graphqls';
+import { GET_COUPONS, DELETE_COUPON, UPDATE_COUPON } from '@leaa/common/src/graphqls';
 import { Coupon } from '@leaa/common/src/entrys';
 import { IOrderSort } from '@leaa/common/src/dtos/_common';
 import { CouponsWithPaginationObject, CouponArgs } from '@leaa/common/src/dtos/coupon';
@@ -26,9 +26,9 @@ import {
   TableColumnStatusSwitch,
 } from '@leaa/dashboard/src/components';
 
+import { ConvertCouponToUseButton } from '../_components/ConvertCouponToUseButton/ConvertCouponToUseButton';
+
 import style from './style.module.less';
-import cx from 'classnames';
-import { ConvertCouponToUseButton } from '@leaa/dashboard/src/pages/Coupon/_components/ConvertCouponToUseButton/ConvertCouponToUseButton';
 
 export default (props: IPage) => {
   const { t } = useTranslation();
@@ -152,12 +152,6 @@ export default (props: IPage) => {
       }
       extra={
         <div className={style['extra-wrapper']}>
-          <Link to={`${props.route.path}/convert`}>
-            <Button className={cx(style['convert-button'])} type="link" icon="x-exchange">
-              {t('_page:Coupon.Component.convert')}
-            </Button>
-          </Link>
-
           <SearchInput
             value={q}
             onChange={(keyword: string) => {
