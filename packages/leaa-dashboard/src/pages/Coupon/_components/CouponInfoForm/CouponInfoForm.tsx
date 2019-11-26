@@ -1,8 +1,8 @@
 import React from 'react';
 import cx from 'classnames';
-import { Col, Form, Input, InputNumber, Row, DatePicker } from 'antd';
-import { withTranslation } from 'react-i18next';
 import moment from 'moment';
+import { Col, Form, Input, InputNumber, Row, DatePicker, Tooltip } from 'antd';
+import { withTranslation } from 'react-i18next';
 import { FormComponentProps } from 'antd/lib/form';
 
 import { Coupon } from '@leaa/common/src/entrys';
@@ -19,12 +19,54 @@ interface IFormProps extends FormComponentProps {
 }
 
 type IProps = IFormProps & ITfn;
-const curremtTime = moment();
+type ITimeRange = [moment.Moment, moment.Moment];
 
-class CouponInfoFormInner extends React.PureComponent<IProps> {
+interface IState {
+  timeRange: ITimeRange;
+}
+
+const currentDayZeroTime = moment().startOf('day');
+const defaultTimeRange: ITimeRange = [
+  currentDayZeroTime,
+  moment(currentDayZeroTime)
+    .endOf('day')
+    .add(1, 'day')
+    .subtract(1, 'second'),
+];
+
+const AVAILABLE_DATE_TIPS_FORMAT = 'YYYY-MM-DD (HH:mm:ss)';
+
+class CouponInfoFormInner extends React.PureComponent<IProps, IState> {
   constructor(props: IProps) {
     super(props);
+
+    this.state = { timeRange: defaultTimeRange };
   }
+
+  componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>): void {
+    if (
+      this.props.item &&
+      this.props.item !== prevProps.item &&
+      this.props.item.start_time &&
+      this.props.item.expire_time
+    ) {
+      this.updateTimeRange([moment(this.props.item.start_time), moment(this.props.item.expire_time)]);
+    }
+  }
+
+  updateTimeRange = (timeRange: ITimeRange) => {
+    const nextTimeRange: ITimeRange = [
+      moment(timeRange[0].startOf('day')),
+      moment(timeRange[1].endOf('day').subtract(1, 'second')),
+    ];
+
+    this.props.form.setFieldsValue({
+      start_time: nextTimeRange[0],
+      expire_time: nextTimeRange[1],
+    });
+
+    this.setState({ timeRange: nextTimeRange });
+  };
 
   render() {
     const { t } = this.props;
@@ -99,24 +141,38 @@ class CouponInfoFormInner extends React.PureComponent<IProps> {
             </Row>
 
             <Row gutter={16} className={style['form-row']}>
-              <Col xs={24} sm={6}>
-                <Form.Item label={t('_page:Coupon.Component.startTime')}>
-                  {getFieldDecorator('start_time', {
-                    initialValue: props.item && props.item.start_time ? moment(props.item.start_time) : curremtTime,
-                    rules: [{ required: true }],
-                  })(<DatePicker showTime />)}
-                </Form.Item>
-              </Col>
+              <Col xs={24}>
+                {getFieldDecorator('start_time', {
+                  initialValue:
+                    props.item && props.item.start_time ? moment(props.item.start_time) : defaultTimeRange[0],
+                  rules: [{ required: true }],
+                })(<Input type="hidden" />)}
+                {getFieldDecorator('expire_time', {
+                  initialValue:
+                    props.item && props.item.expire_time ? moment(props.item.expire_time) : defaultTimeRange[1],
+                  rules: [{ required: true }],
+                })(<Input type="hidden" />)}
 
-              <Col xs={24} sm={4}>
-                <Form.Item label={t('_page:Coupon.Component.expireTime')}>
-                  {getFieldDecorator('expire_time', {
-                    initialValue:
-                      props.item && props.item.expire_time
-                        ? moment(props.item.expire_time)
-                        : moment(curremtTime).add(3, 'day'),
-                    rules: [{ required: true }],
-                  })(<DatePicker showTime />)}
+                <Form.Item
+                  colon={false}
+                  label={
+                    <span className={style['available-date-row']}>
+                      <strong>{t('_page:Coupon.Component.availableDate')} : </strong>
+                      <em>
+                        {moment(this.state.timeRange[0]).format(AVAILABLE_DATE_TIPS_FORMAT)} ~{' '}
+                        {/* TODO  this time in DB is `23:59:59`, but load to UI is `23:59:58` */}
+                        {/* TODO  i dot konw why, so add 1 second */}
+                        {moment(this.state.timeRange[1])
+                          .add(1, 'second')
+                          .format(AVAILABLE_DATE_TIPS_FORMAT)}
+                      </em>
+                    </span>
+                  }
+                >
+                  <DatePicker.RangePicker
+                    value={this.state.timeRange}
+                    onChange={e => this.updateTimeRange(e as ITimeRange)}
+                  />
                 </Form.Item>
               </Col>
             </Row>

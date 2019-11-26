@@ -60,11 +60,15 @@ export class PromoService {
   }
 
   async createPromo(args: CreatePromoInput): Promise<Promo | undefined> {
-    return this.promoRepository.save({ ...args });
+    const nextArgs = formatUtil.formatDataRange(args, 'start_time', 'expire_time');
+
+    return this.promoRepository.save({ ...nextArgs });
   }
 
   async updatePromo(id: number, args: UpdatePromoInput): Promise<Promo | undefined> {
-    return curdUtil.commonUpdate(this.promoRepository, CONSTRUCTOR_NAME, id, args);
+    const nextArgs = formatUtil.formatDataRange(args, 'start_time', 'expire_time');
+
+    return curdUtil.commonUpdate(this.promoRepository, CONSTRUCTOR_NAME, id, nextArgs);
   }
 
   async deletePromo(id: number): Promise<Promo | undefined> {

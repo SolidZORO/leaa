@@ -87,11 +87,12 @@ export class CouponService {
   }
 
   async createCoupon(args: CreateCouponInput): Promise<Coupon | undefined> {
+    const nextArgs = formatUtil.formatDataRange(args, 'start_time', 'expire_time');
     const couponInputs = [];
 
-    for (let i = 0; i < args.quantity; i += 1) {
+    for (let i = 0; i < nextArgs.quantity; i += 1) {
       couponInputs.push({
-        ...args,
+        ...nextArgs,
         code: this.generateCouponCode('C'),
       });
     }
@@ -103,7 +104,9 @@ export class CouponService {
   }
 
   async updateCoupon(id: number, args: UpdateCouponInput): Promise<Coupon | undefined> {
-    return curdUtil.commonUpdate(this.couponRepository, CONSTRUCTOR_NAME, id, args);
+    const nextArgs = formatUtil.formatDataRange(args, 'start_time', 'expire_time');
+
+    return curdUtil.commonUpdate(this.couponRepository, CONSTRUCTOR_NAME, id, nextArgs);
   }
 
   async redeemCoupon(info: RedeemCouponInput, user?: User): Promise<Coupon | undefined> {

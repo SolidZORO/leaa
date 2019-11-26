@@ -1,3 +1,4 @@
+import moment from 'moment';
 import { FindManyOptions } from 'typeorm';
 import { ItemsArgs } from '@leaa/common/src/dtos/_common';
 
@@ -35,6 +36,36 @@ function formatArgs<T>(args: T & IFormatArgs): T & IFormatArgs {
   return nextArgs;
 }
 
+function formatDataRange<T>(args: T, startField: string, expireField: string): T {
+  if (!args) {
+    throw Error('missing format args');
+  }
+
+  const nextArgs = {
+    ...args,
+  };
+
+  if (startField) {
+    // @ts-ignore
+    nextArgs[startField] = moment(args[startField])
+      .startOf('day')
+      .toDate();
+  }
+
+  if (expireField) {
+    // @ts-ignore
+    nextArgs[expireField] = moment(args[expireField])
+      .endOf('day')
+      .subtract(1, 'second')
+      .toDate();
+  }
+
+  console.log('QQQQQQQQQQQQ', args, nextArgs);
+
+  return nextArgs;
+}
+
 export const formatUtil = {
   formatArgs,
+  formatDataRange,
 };

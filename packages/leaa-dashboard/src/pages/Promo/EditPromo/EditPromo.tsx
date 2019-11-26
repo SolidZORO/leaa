@@ -52,6 +52,7 @@ export default (props: IPage) => {
       submitData = formData;
 
       await setSubmitVariables({ id: Number(id), promo: submitData });
+      console.log(submitData);
       await updatePromoMutate();
     });
   };
