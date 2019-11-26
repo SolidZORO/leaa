@@ -3,7 +3,7 @@ export default {
   langen: 'English',
   langcn: 'Chinese',
   'lang-en-US': 'English',
-  'lang-zh-CN': 'Chinese',
+  'lang-zh-CN': '中文',
   'lang-code-en-US': 'EN',
   'lang-code-zh-CN': 'CN',
   //
