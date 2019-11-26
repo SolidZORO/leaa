@@ -9,63 +9,63 @@ import { Base } from '@leaa/common/src/entrys';
 export class Attachment extends Base {
   @Column({ type: 'varchar', length: 48, unique: true })
   @Field(() => String)
-  public uuid!: string;
+  uuid!: string;
 
   @Column({ type: 'varchar', length: 255 })
   @Field(() => String)
-  public title!: string;
+  title!: string;
 
   @Column({ type: 'varchar', length: 255 })
   @Field(() => String)
-  public alt!: string;
+  alt!: string;
 
   @Column({ type: 'varchar', length: 16 })
   @Field(() => String)
-  public type!: string;
+  type!: string;
 
   @Column({ type: 'varchar', length: 255 })
   @Field(() => String)
-  public filename!: string;
+  filename!: string;
 
   @Column({ type: 'text', nullable: true })
   @Field(() => String, { nullable: true })
-  public description?: string | null;
+  description?: string | null;
 
   @Column({ type: 'varchar', length: 255, nullable: true })
   @Field(() => String, { nullable: true })
-  public link?: string | null;
+  link?: string | null;
 
   @Column({ type: 'varchar', length: 64 })
   @Field(() => String)
-  public module_name!: string;
+  module_name!: string;
 
   @Column({ type: 'int' })
   @Field(() => Int)
-  public module_id!: number;
+  module_id!: number;
 
   @Column({ type: 'varchar', length: 64 })
   @Field(() => String)
-  public module_type!: string;
+  module_type!: string;
 
   @Column({ type: 'varchar', length: 8 })
   @Field(() => String)
-  public ext!: string;
+  ext!: string;
 
   @Column({ type: 'int', default: 0 })
   @Field(() => Int)
-  public width!: number;
+  width!: number;
 
   @Column({ type: 'int', default: 0 })
   @Field(() => Int)
-  public height!: number;
+  height!: number;
 
   @Column({ type: 'int', default: 0 })
   @Field(() => Int)
-  public size?: number;
+  size?: number;
 
   @Column({ type: 'varchar', length: 512 })
   @Field(() => String)
-  public path!: string;
+  path!: string;
 
   @Column({
     type: 'varchar',
@@ -74,39 +74,39 @@ export class Attachment extends Base {
     comment: 'support multi-urls, e.g.: https://a.com/a.jpg|https://a.com/a_2x.jpg',
   })
   @Field(() => String)
-  public external_url?: string;
+  external_url?: string;
 
   @Field(() => String, { nullable: true })
-  public url?: string | null;
+  url?: string | null;
 
   @Field(() => String, { nullable: true })
-  public urlAt2x?: string | null;
+  urlAt2x?: string | null;
 
   @Column({ type: 'int', default: 0 })
   @Field(() => Int)
-  public at2x!: number;
+  at2x!: number;
 
   @Column({ type: 'int', default: 0 })
   @Field(() => Int)
-  public in_local!: number;
+  in_local!: number;
 
   @Column({ type: 'int', default: 0 })
   @Field(() => Int)
-  public in_oss!: number;
+  in_oss!: number;
 
   @Column({ type: 'int', nullable: true })
   @Field(() => Int, { nullable: true })
-  public category_id?: number | null;
+  category_id?: number | null;
 
   @Column({ type: 'int', nullable: true })
   @Field(() => Int, { nullable: true })
-  public user_id?: number | null;
+  user_id?: number | null;
 
   @Column({ type: 'int', default: 0 })
   @Field(() => Int)
-  public sort!: number;
+  sort!: number;
 
   @Column({ type: 'int', default: 1 })
   @Field(() => Int)
-  public status!: number;
+  status!: number;
 }

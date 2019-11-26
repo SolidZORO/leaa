@@ -10,29 +10,29 @@ import { Base } from '@leaa/common/src/entrys';
 export class Setting extends Base {
   @Column({ type: 'varchar', length: 32, unique: true })
   @Field(() => String)
-  public name!: string;
+  name!: string;
 
   @Column({ type: 'varchar', length: 32, unique: true })
   @Field(() => String, { nullable: true })
-  public slug?: string;
+  slug?: string;
 
   @Column({ type: 'varchar', length: 32 })
   @Field(() => String, { nullable: true })
-  public type!: string;
+  type!: string;
 
   @Column({ type: 'text', nullable: true })
   @Field(() => String, { nullable: true })
-  public description?: string;
+  description?: string;
 
   @Column({ type: 'text', nullable: true })
   @Field(() => String, { nullable: true })
-  public options?: string;
+  options?: string;
 
   @Column({ type: 'text', nullable: true })
   @Field(() => String, { nullable: true })
-  public value?: string;
+  value?: string;
 
   @Column({ type: 'int', default: 0 })
   @Field(() => Int)
-  public sort!: number;
+  sort!: number;
 }

@@ -40,7 +40,7 @@ export class SeedService {
   /* eslint-disable no-restricted-syntax */
   /* eslint-disable no-await-in-loop */
 
-  public async insertPermissions() {
+  async insertPermissions() {
     for (const i of permissionsSeed) {
       const item = await this.permissionService.createPermission(i);
 
@@ -48,7 +48,7 @@ export class SeedService {
     }
   }
 
-  public async insertRoles() {
+  async insertRoles() {
     for (const i of rolesSeed) {
       const item = await this.roleService.createRole(i);
 
@@ -56,7 +56,7 @@ export class SeedService {
     }
   }
 
-  public async insertUsers() {
+  async insertUsers() {
     for (const i of usersSeed) {
       const item = await this.userService.createUser(i);
 
@@ -64,13 +64,13 @@ export class SeedService {
     }
   }
 
-  public async insertRandomUsers() {
+  async insertRandomUsers() {
     for (const i of randomSersSeed) {
       await this.userService.createUser(i);
     }
   }
 
-  public async insertRoleAddPermissions() {
+  async insertRoleAddPermissions() {
     for (const i of roleAddPermissionsSeed) {
       const role = await this.roleService.roleBySlug(i.roleSlug);
 
@@ -82,7 +82,7 @@ export class SeedService {
     }
   }
 
-  public async insertUserAddRole() {
+  async insertUserAddRole() {
     for (const i of userAddRolesSeed) {
       const user = await this.userService.userByEmail(i.userEmail);
 
@@ -94,7 +94,7 @@ export class SeedService {
     }
   }
 
-  public async insertCategory() {
+  async insertCategory() {
     for (const i of categorySeed) {
       const item = await this.categoryService.createCategory(i);
 
@@ -102,7 +102,7 @@ export class SeedService {
     }
   }
 
-  public async insertArticle() {
+  async insertArticle() {
     for (const i of articleSeed) {
       const item = await this.articleService.createArticle(i);
 
@@ -110,7 +110,7 @@ export class SeedService {
     }
   }
 
-  public async insertAx() {
+  async insertAx() {
     for (const i of axSeed) {
       const item = await this.axService.createAx(i);
 
@@ -118,7 +118,7 @@ export class SeedService {
     }
   }
 
-  public async insertAttachment() {
+  async insertAttachment() {
     for (const i of attachmentSeed) {
       const item = await this.attachmentRepository.save(i);
 
@@ -126,7 +126,7 @@ export class SeedService {
     }
   }
 
-  public async insertSetting() {
+  async insertSetting() {
     for (const i of settingSeed) {
       const item = await this.settingService.createSetting(i);
 

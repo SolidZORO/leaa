@@ -9,73 +9,73 @@ import { Base } from '@leaa/common/src/entrys';
 export class Coupon extends Base {
   @Column({ type: 'varchar', length: 32, unique: true })
   @Field(() => String, { nullable: true })
-  public code?: string;
+  code?: string;
 
   @Column({ type: 'varchar' })
   @Field(() => String)
-  public type?: string;
+  type?: string;
 
   @Column({ type: 'varchar', length: 32 })
   @Field(() => String)
-  public name?: string;
+  name?: string;
 
   @Column({ type: 'decimal', precision: 11, scale: 2 })
   @Field(() => Float)
-  public amount?: number;
+  amount?: number;
 
   @Column({ type: 'int', nullable: true })
   @Field(() => Int, { nullable: true })
-  public promo_id?: number;
+  promo_id?: number;
 
   @Column({ type: 'varchar', nullable: true })
   @Field(() => String, { nullable: true })
-  public promo_code?: number;
+  promo_code?: number;
 
   @Column({ type: 'decimal', precision: 11, scale: 2, comment: 'trigger amount, including the amount value' })
   @Field(() => Float)
-  public over_amount?: number;
+  over_amount?: number;
 
   @Column({ type: 'int', default: 0 })
   @Field(() => Int)
-  public user_id?: number;
+  user_id?: number;
 
   @Column({ type: 'int', nullable: true })
   @Field(() => Int, { nullable: true })
-  public order_id?: number;
+  order_id?: number;
 
   @Column({ type: 'varchar', nullable: true })
   @Field(() => String, { nullable: true })
-  public order_serial?: number;
+  order_serial?: number;
 
   @Column({ type: 'text', nullable: true })
   @Field(() => String, { nullable: true })
-  public available_product_ids?: string;
+  available_product_ids?: string;
 
   @Column({ type: 'text', nullable: true })
   @Field(() => String, { nullable: true })
-  public unavailable_product_ids?: string;
+  unavailable_product_ids?: string;
 
   @Column({ nullable: true })
   @Field(() => Date, { nullable: true })
-  public start_time?: Date;
+  start_time?: Date;
 
   @Column({ nullable: true })
   @Field(() => Date, { nullable: true })
-  public expire_time?: Date;
+  expire_time?: Date;
 
   @Column({ type: 'text', nullable: true })
   @Field(() => String, { nullable: true })
-  public convert_method?: string;
+  convert_method?: string;
 
   @Column({ type: 'int', default: 0 })
   @Field(() => Int)
-  public creator_id?: number;
+  creator_id?: number;
 
   @Column({ type: 'int', default: 0 })
   @Field(() => Int, { nullable: true })
-  public status?: number;
+  status?: number;
 
   // Virtual Field (not in DB)
   @Field(() => Boolean)
-  public available?: boolean;
+  available?: boolean;
 }

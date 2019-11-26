@@ -5,5 +5,5 @@ import { Attachment } from '@leaa/common/src/entrys';
 @ObjectType()
 export class AttachmentsObject {
   @Field(() => [Attachment])
-  public readonly items: Attachment[] = [];
+  readonly items: Attachment[] = [];
 }

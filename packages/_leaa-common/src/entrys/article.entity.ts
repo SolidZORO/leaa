@@ -10,27 +10,27 @@ import { Base, Category, Tag } from '@leaa/common/src/entrys';
 export class Article extends Base {
   @Column({ type: 'varchar', length: 128, unique: true })
   @Field()
-  public title!: string;
+  title!: string;
 
   @Column({ type: 'varchar', length: 128, unique: true, default: null })
   @Field(() => String, { nullable: true })
-  public slug?: string;
+  slug?: string;
 
   @Column({ type: 'int', nullable: true })
   @Field(() => Int, { nullable: true })
-  public user_id?: number;
+  user_id?: number;
 
   @Column({ type: 'text', nullable: true })
   @Field(() => String, { nullable: true })
-  public description?: string;
+  description?: string;
 
   @Column({ type: 'text', nullable: true })
   @Field(() => String, { nullable: true })
-  public content?: string;
+  content?: string;
 
   @Column({ type: 'int', default: 0 })
   @Field(() => Int, { nullable: true })
-  public status?: number;
+  status?: number;
 
   @ManyToMany(() => Category)
   @JoinTable()

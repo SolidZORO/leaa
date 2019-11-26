@@ -5,18 +5,18 @@ export type IOrderSort = 'ASC' | 'DESC' | undefined;
 @ArgsType()
 export class ItemsArgs {
   @Field(() => Int, { nullable: true, defaultValue: 1 })
-  public readonly page?: number = 1;
+  readonly page?: number = 1;
 
   @Field(() => Int, { nullable: true, defaultValue: 30 })
-  public readonly pageSize?: number = 30;
+  readonly pageSize?: number = 30;
 
   @Field(() => String, { nullable: true, defaultValue: 'id' })
-  public readonly orderBy?: string = 'id';
+  readonly orderBy?: string = 'id';
 
   @Field(() => String, { nullable: true, defaultValue: 'DESC' })
-  public readonly orderSort?: IOrderSort = 'DESC';
+  readonly orderSort?: IOrderSort = 'DESC';
 
   // q -> query -> keyword
   @Field(() => String, { nullable: true })
-  public readonly q?: string;
+  readonly q?: string;
 }

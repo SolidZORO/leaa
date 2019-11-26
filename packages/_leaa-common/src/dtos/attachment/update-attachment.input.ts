@@ -3,17 +3,17 @@ import { Field, InputType, Int } from 'type-graphql';
 @InputType()
 export class UpdateAttachmentInput {
   @Field(() => String, { nullable: true })
-  public title?: string;
+  title?: string;
 
   @Field(() => String, { nullable: true })
-  public link?: string;
+  link?: string;
 
   @Field(() => Int)
-  public sort!: number;
+  sort!: number;
 
   @Field(() => Int)
-  public status!: number;
+  status!: number;
 
   @Field(() => String, { nullable: true })
-  public external_url?: string;
+  external_url?: string;
 }

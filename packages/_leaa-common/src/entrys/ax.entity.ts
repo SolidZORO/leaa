@@ -11,21 +11,21 @@ import { Base } from '@leaa/common/src/entrys';
 export class Ax extends Base {
   @Column({ type: 'varchar', length: 32, unique: true })
   @Field(() => String)
-  public title!: string;
+  title!: string;
 
   @Column({ type: 'varchar', length: 32, unique: true, default: null })
   @Field(() => String, { nullable: true })
-  public slug?: string;
+  slug?: string;
 
   @Column({ type: 'text', nullable: true })
   @Field(() => String, { nullable: true })
-  public description?: string;
+  description?: string;
 
   @Column({ type: 'int', default: 0 })
   @Field(() => Int, { nullable: true })
-  public status?: number;
+  status?: number;
 
   // Virtual Field (not in DB)
   @Field(() => AxAttachmentsObject, { nullable: true })
-  public attachments?: AxAttachmentsObject;
+  attachments?: AxAttachmentsObject;
 }

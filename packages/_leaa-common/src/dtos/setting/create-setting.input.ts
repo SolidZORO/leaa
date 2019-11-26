@@ -5,29 +5,29 @@ import { Field, InputType, Int } from 'type-graphql';
 export class CreateSettingInput {
   @IsNotEmpty()
   @Field(() => String)
-  public name!: string;
+  name!: string;
 
   @IsNotEmpty()
   @Field(() => String)
-  public slug!: string;
+  slug!: string;
 
   @IsNotEmpty()
   @Field(() => String)
-  public value!: string;
+  value!: string;
 
   @IsNotEmpty()
   @Field(() => String)
-  public type!: string;
+  type!: string;
 
   @IsOptional()
   @Field(() => String, { nullable: true })
-  public description?: string;
+  description?: string;
 
   @IsOptional()
   @Field(() => String, { nullable: true })
-  public options?: string;
+  options?: string;
 
   @IsNotEmpty()
   @Field(() => Int, { defaultValue: 0 })
-  public sort!: number;
+  sort!: number;
 }

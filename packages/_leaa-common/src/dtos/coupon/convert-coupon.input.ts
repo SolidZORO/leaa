@@ -5,9 +5,9 @@ import { Field, InputType, Int } from 'type-graphql';
 export class ConvertCouponInput {
   @IsNotEmpty()
   @Field(() => String)
-  public code!: string;
+  code!: string;
 
   @IsOptional()
   @Field(() => Int, { nullable: true })
-  public userId?: number;
+  userId?: number;
 }

@@ -5,5 +5,5 @@ import { ItemsArgs } from '@leaa/common/src/dtos/_common';
 @ArgsType()
 export class CategoriesArgs extends ItemsArgs {
   @Field(() => String, { nullable: true, defaultValue: 'list' })
-  public readonly type?: 'list' | 'tree' = 'list';
+  readonly type?: 'list' | 'tree' = 'list';
 }

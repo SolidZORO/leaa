@@ -5,9 +5,9 @@ import { Field, InputType, Int } from 'type-graphql';
 export class UpdateSettingsInput {
   @IsNotEmpty()
   @Field(() => Int)
-  public id!: number;
+  id!: number;
 
   @IsNotEmpty()
   @Field(() => String)
-  public value!: string;
+  value!: string;
 }

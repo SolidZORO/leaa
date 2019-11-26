@@ -11,7 +11,7 @@ export class PlaygroundService {
     private readonly userService: UserService,
   ) {}
 
-  public async test() {
+  async test() {
     const userEmail = 'admin@admin.com';
     const roleSlugs = ['admin', 'staff'];
 
@@ -28,7 +28,7 @@ export class PlaygroundService {
     }
   }
 
-  // public async test() {
+  // async test() {
   //   const roleSlug = 'admin';
   //   const permissionSlugs = ['user.update', 'user.delete'];
   //

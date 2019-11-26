@@ -35,7 +35,7 @@ export class SaveInOssService {
   private uploadEndPoint = attachmentConfig.UPLOAD_ENDPOINT_BY_OSS;
   private EXPIRED_TIME_MINUTES = 10;
 
-  public client: OSS = new OSS({
+  client: OSS = new OSS({
     accessKeyId: this.configService.OSS_ALIYUN_AK_ID,
     accessKeySecret: this.configService.OSS_ALIYUN_AK_SECRET,
     region: this.configService.OSS_ALIYUN_REGION,

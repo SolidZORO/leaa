@@ -43,11 +43,11 @@ export class AuthService {
     };
   }
 
-  public async validateUser(payload: IJwtPayload): Promise<User | undefined | boolean> {
+  async validateUser(payload: IJwtPayload): Promise<User | undefined | boolean> {
     return this.userService.user(payload.id, {});
   }
 
-  public async validateUserByReq(req: Request): Promise<User | undefined | boolean> {
+  async validateUserByReq(req: Request): Promise<User | undefined | boolean> {
     const isGuest = req.headers && !req.headers.authorization;
 
     if (req.body && isGuest && permissionConfig.notValidateUserQuerys.some(item => req.body.query.includes(item))) {

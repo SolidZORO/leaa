@@ -14,7 +14,7 @@ configure({ enforceActions: 'observed' });
 useStaticRendering(isServer);
 
 export class Store {
-  public setting: SettingStore;
+  setting: SettingStore;
 
   constructor(initData: IStore = {}) {
     this.setting = new SettingStore(initData && initData.setting);

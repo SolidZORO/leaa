@@ -5,9 +5,9 @@ import { Field, InputType } from 'type-graphql';
 export class UpdatePermissionInput {
   @IsOptional()
   @Field(() => String, { nullable: true })
-  public name?: string;
+  name?: string;
 
   @IsOptional()
   @Field(() => String, { nullable: true })
-  public slug?: string;
+  slug?: string;
 }

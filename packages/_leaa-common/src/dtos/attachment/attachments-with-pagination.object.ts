@@ -6,5 +6,5 @@ import { PaginationObject } from '@leaa/common/src/dtos/_common';
 @ObjectType()
 export class AttachmentsWithPaginationObject extends PaginationObject {
   @Field(() => [Attachment])
-  public readonly items: Attachment[] = [];
+  readonly items: Attachment[] = [];
 }

@@ -9,17 +9,17 @@ import { Base } from '@leaa/common/src/entrys';
 export class Tag extends Base {
   @Column({ type: 'varchar', length: 32, unique: true })
   @Field(() => String)
-  public name!: string;
+  name!: string;
 
   @Column({ type: 'varchar', length: 256, nullable: true })
   @Field(() => String, { nullable: true })
-  public icon?: string;
+  icon?: string;
 
   @Column({ type: 'text', nullable: true })
   @Field(() => String, { nullable: true })
-  public description?: string;
+  description?: string;
 
   @Column({ type: 'int', default: 0 })
   @Field(() => Int, { defaultValue: 0 })
-  public count?: number;
+  count?: number;
 }

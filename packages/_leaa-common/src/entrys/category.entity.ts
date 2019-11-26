@@ -10,23 +10,23 @@ import { Base } from '@leaa/common/src/entrys';
 export class Category extends Base {
   @Column({ type: 'varchar', length: 32, unique: true })
   @Field(() => String)
-  public name!: string;
+  name!: string;
 
   @Column({ type: 'varchar', length: 32, unique: true })
   @Field(() => String)
-  public slug!: string;
+  slug!: string;
 
   @Column({ type: 'int', default: 0 })
   @Field(() => Int)
-  public parent_id!: number;
+  parent_id!: number;
 
   @Column({ type: 'text', nullable: true })
   @Field(() => String, { nullable: true })
-  public description?: string;
+  description?: string;
 
   @Field(() => [Category], { nullable: true })
-  public children?: Category[];
+  children?: Category[];
 
   @Field(() => String, { nullable: true })
-  public key?: string;
+  key?: string;
 }

@@ -6,24 +6,24 @@ export class CreateUserInput {
   @IsOptional()
   @IsPhoneNumber('CN')
   @Field({ nullable: true })
-  public phone?: string;
+  phone?: string;
 
   @IsNotEmpty()
   @IsEmail()
   @MinLength(4)
   @Field(() => String)
-  public email!: string;
+  email!: string;
 
   @IsOptional()
   @Length(1, 64)
   @Field(() => String, { nullable: true })
-  public name?: string;
+  name?: string;
 
   @IsNotEmpty()
   @Length(6, 64)
   @Field(() => String)
-  public password!: string;
+  password!: string;
 
   @Field(() => Int, { nullable: true })
-  public status?: number;
+  status?: number;
 }

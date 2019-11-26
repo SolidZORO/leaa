@@ -5,37 +5,37 @@ import { Field, InputType, Int, Float } from 'type-graphql';
 export class UpdateCouponInput {
   @IsOptional()
   @Field(() => String, { nullable: true })
-  public type?: string;
+  type?: string;
 
   @IsOptional()
   @Field(() => String, { nullable: true })
-  public name?: string;
+  name?: string;
 
   @IsOptional()
   @Field(() => Float, { nullable: true })
-  public amount?: number;
+  amount?: number;
 
   @IsOptional()
   @Field(() => Float, { nullable: true })
-  public over_amount?: number;
+  over_amount?: number;
 
   @IsOptional()
   @Field(() => String, { nullable: true })
-  public available_product_ids?: string;
+  available_product_ids?: string;
 
   @IsOptional()
   @Field(() => String, { nullable: true })
-  public unavailable_product_ids?: string;
+  unavailable_product_ids?: string;
 
   @IsOptional()
   @Field(() => Date, { nullable: true })
-  public start_time?: Date;
+  start_time?: Date;
 
   @IsOptional()
   @Field(() => Date, { nullable: true })
-  public expire_time?: Date;
+  expire_time?: Date;
 
   @IsOptional()
   @Field(() => Int, { nullable: true })
-  public status?: number;
+  status?: number;
 }

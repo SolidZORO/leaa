@@ -5,25 +5,25 @@ import { Field, InputType } from 'type-graphql';
 export class UpdateOauthInput {
   @IsOptional()
   @Field(() => String, { nullable: true })
-  public union_id?: string;
+  union_id?: string;
 
   @IsOptional()
   @Field(() => String, { nullable: true })
-  public ticket?: string;
+  ticket?: string;
 
   @IsOptional()
   @Field(() => String, { nullable: true })
-  public access_token?: string;
+  access_token?: string;
 
   @IsOptional()
   @Field(() => String, { nullable: true })
-  public refresh_token?: string;
+  refresh_token?: string;
 
   @IsOptional()
   @Field(() => Date, { nullable: true })
-  public last_oauth_at?: Date;
+  last_oauth_at?: Date;
 
   @IsOptional()
   @Field(() => Date, { nullable: true })
-  public ticket_at?: Date;
+  ticket_at?: Date;
 }

@@ -17,8 +17,8 @@ configure({ enforceActions: 'never' });
 useStaticRendering(isServer);
 
 export class Store {
-  public mapping: MappingStore;
-  public auth: AuthStore;
+  mapping: MappingStore;
+  auth: AuthStore;
 
   constructor(initData: IStore = {}) {
     this.mapping = new MappingStore(initData && initData.mapping);

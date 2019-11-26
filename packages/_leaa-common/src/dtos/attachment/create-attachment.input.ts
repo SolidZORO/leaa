@@ -3,71 +3,71 @@ import { Field, InputType, Int } from 'type-graphql';
 @InputType()
 export class CreateAttachmentInput {
   @Field(() => String)
-  public uuid!: string;
+  uuid!: string;
 
   @Field(() => String)
-  public title!: string;
+  title!: string;
 
   @Field(() => String)
-  public alt!: string;
+  alt!: string;
 
   @Field(() => String)
-  public type!: string;
+  type!: string;
 
   @Field(() => String)
-  public filename!: string;
+  filename!: string;
 
   // @Field(() => String, { nullable: true })
-  // public description?: string;
+  // description?: string;
 
   // @Field(() => String, { nullable: true })
-  // public link?: string;
+  // link?: string;
 
   @Field(() => String)
-  public moduleName!: string;
+  moduleName!: string;
 
   @Field(() => Int)
-  public moduleId!: number;
+  moduleId!: number;
 
   @Field(() => String)
-  public moduleType!: string;
+  moduleType!: string;
 
   @Field(() => String)
-  public ext!: string;
+  ext!: string;
 
   @Field(() => Int)
-  public width!: number;
+  width!: number;
 
   @Field(() => Int)
-  public height!: number;
+  height!: number;
 
   @Field(() => Int)
-  public size!: number;
+  size!: number;
 
   @Field(() => String)
-  public path!: string;
+  path!: string;
 
   @Field(() => String, { nullable: true })
-  public external_url?: string;
+  external_url?: string;
 
   @Field(() => Int)
-  public at2x!: number;
+  at2x!: number;
 
   @Field(() => Int)
-  public in_local!: number;
+  in_local!: number;
 
   @Field(() => Int)
-  public in_oss!: number;
+  in_oss!: number;
 
   @Field(() => Int, { nullable: true })
-  public category_id?: number | null;
+  category_id?: number | null;
 
   @Field(() => Int, { nullable: true })
-  public user_id?: number | null;
+  user_id?: number | null;
 
   @Field(() => Int)
-  public sort!: number;
+  sort!: number;
 
   @Field(() => Int)
-  public status!: number;
+  status!: number;
 }
