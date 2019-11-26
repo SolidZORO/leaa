@@ -118,7 +118,7 @@ export const permissions = shield(
       createCoupon: checkPermission('coupon.create'),
       updateCoupon: checkPermission('coupon.update'),
       deleteCoupon: checkPermission('coupon.delete'),
-      convertCoupon: allow,
+      redeemCoupon: allow,
     },
   },
   {

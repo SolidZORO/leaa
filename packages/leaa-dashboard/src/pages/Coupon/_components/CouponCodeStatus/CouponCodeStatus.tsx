@@ -1,13 +1,12 @@
 import React from 'react';
-import moment from 'moment';
 import cx from 'classnames';
-import { Col, Form, Row, Typography } from 'antd';
+import { Col, Form, Row } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 import { Coupon } from '@leaa/common/src/entrys';
 
 import { FormCard, CouponItem } from '@leaa/dashboard/src/components';
-import { ConvertCouponToUseButton } from '../ConvertCouponToUseButton/ConvertCouponToUseButton';
+import { RedeemCouponToUseButton } from '../RedeemCouponToUseButton/RedeemCouponToUseButton';
 
 import style from './style.module.less';
 
@@ -25,11 +24,11 @@ export const CouponCodeStatus = (props: IProps) => {
       <FormCard
         title={
           <div className={style['form-card-wrapper']}>
-            <div className={style['coupon-title']}>{t('_page:Coupon.Component.couponCodeStatusTitle')}</div>
+            <div className={style['coupon-title']}>{t('_page:Coupon.Component.redeemToUser')}</div>
 
             {props.item && props.item.code && !props.item.user_id && (
-              <div className={style['convert-coupon-to-use-button']}>
-                <ConvertCouponToUseButton item={props.item} />
+              <div className={style['redeem-coupon-to-use-button']}>
+                <RedeemCouponToUseButton item={props.item} />
               </div>
             )}
           </div>
@@ -38,7 +37,7 @@ export const CouponCodeStatus = (props: IProps) => {
         <Form className={cx('g-form--zero-margin-bottom', style['form-wrapper'])} layout="inline">
           <Row gutter={16} className={style['form-row']}>
             <Col xs={24} sm={12}>
-              <CouponItem item={props.item} />
+              <CouponItem type="coupon" item={props.item} />
             </Col>
           </Row>
         </Form>

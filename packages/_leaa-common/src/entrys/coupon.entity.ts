@@ -65,7 +65,7 @@ export class Coupon extends Base {
 
   @Column({ type: 'text', nullable: true })
   @Field(() => String, { nullable: true })
-  convert_method?: string;
+  redeem_method?: string;
 
   @Column({ type: 'int', default: 0 })
   @Field(() => Int)

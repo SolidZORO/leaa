@@ -70,7 +70,13 @@ export const permissionsSeed = [
   { name: 'Coupon Create', slug: 'coupon.create' },
   { name: 'Coupon Update', slug: 'coupon.update' },
   { name: 'Coupon Delete', slug: 'coupon.delete' },
-  { name: 'Coupon Convert To Any User', slug: 'coupon.convert-to-any-user' },
+  { name: 'Coupon Redeem To Any User', slug: 'coupon.redeem-to-any-user' },
+  //
+  { name: 'Promo List', slug: 'promo.list' },
+  { name: 'Promo Item', slug: 'promo.item' },
+  { name: 'Promo Create', slug: 'promo.create' },
+  { name: 'Promo Update', slug: 'promo.update' },
+  { name: 'Promo Delete', slug: 'promo.delete' },
 ];
 
 // prettier-ignore

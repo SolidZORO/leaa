@@ -25,9 +25,9 @@ export const UPDATE_COUPON = gql`
   }
 `;
 
-export const CONVERT_COUPON = gql`
-  mutation($info: ConvertCouponInput!) {
-    convertCoupon(info: $info) {
+export const REDEEM_COUPON = gql`
+  mutation($info: RedeemCouponInput!) {
+    redeemCoupon(info: $info) {
       id
       name
       code

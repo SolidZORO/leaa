@@ -109,10 +109,10 @@ describe('CouponService', () => {
     });
   });
 
-  describe('convertCoupon', () => {
-    it('should convert coupon', async () => {
-      jest.spyOn(couponService, 'convertCoupon').mockImplementation(async () => couponObject);
-      const result = await couponService.convertCoupon({ code: 'C76112A50DAE445C' });
+  describe('redeemCoupon', () => {
+    it('should redeem coupon', async () => {
+      jest.spyOn(couponService, 'redeemCoupon').mockImplementation(async () => couponObject);
+      const result = await couponService.redeemCoupon({ code: 'C76112A50DAE445C' });
 
       expect(result).toBe(couponObject);
     });

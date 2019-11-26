@@ -16,6 +16,10 @@ export class UpdatePromoInput {
   quantity?: number;
 
   @IsOptional()
+  @Field(() => Int, { nullable: true })
+  redeemed_quantity?: number;
+
+  @IsOptional()
   @Field(() => Float, { nullable: true })
   amount?: number;
 

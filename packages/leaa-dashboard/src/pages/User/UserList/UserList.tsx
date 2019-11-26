@@ -114,6 +114,7 @@ export default (props: IPage) => {
     {
       title: t('_lang:status'),
       dataIndex: 'status',
+      width: 60,
       render: (text: string, record: User) => (
         <TableColumnStatusSwitch
           id={Number(record.id)}

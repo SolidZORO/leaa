@@ -13,6 +13,7 @@ import {
   Oauth,
   Tag,
   Coupon,
+  Promo,
 } from '@leaa/common/src/entrys';
 
 import { TagSubscriber } from '@leaa/common/src/subscribers';
@@ -52,6 +53,7 @@ export class TypeormService implements TypeOrmOptionsFactory {
         Setting,
         Tag,
         Coupon,
+        Promo,
       ],
       subscribers: [TagSubscriber],
     };

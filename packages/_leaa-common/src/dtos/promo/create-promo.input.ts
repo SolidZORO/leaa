@@ -12,6 +12,10 @@ export class CreatePromoInput {
   quantity!: number;
 
   @IsNotEmpty()
+  @Field(() => Int, { nullable: true })
+  redeemed_quantity?: number;
+
+  @IsNotEmpty()
   @Field(() => Float)
   amount!: number;
 

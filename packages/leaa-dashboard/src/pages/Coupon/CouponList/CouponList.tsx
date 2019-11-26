@@ -24,9 +24,10 @@ import {
   TableColumnId,
   CouponItem,
   TableColumnStatusSwitch,
+  IdTag,
 } from '@leaa/dashboard/src/components';
 
-import { ConvertCouponToUseButton } from '../_components/ConvertCouponToUseButton/ConvertCouponToUseButton';
+import { RedeemCouponToUseButton } from '../_components/RedeemCouponToUseButton/RedeemCouponToUseButton';
 
 import style from './style.module.less';
 
@@ -87,17 +88,17 @@ export default (props: IPage) => {
     {
       title: 'ID',
       dataIndex: 'id',
-      width: 80,
+      width: 100,
       sorter: true,
       sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'id'),
       render: (text: string) => <TableColumnId id={text} />,
     },
     {
-      title: t('_page:Coupon.Component.code'),
+      title: t('_page:Coupon.Component.couponInfo'),
       dataIndex: 'code',
-      width: 180,
       render: (text: string, record: Coupon) => (
         <CouponItem
+          type="coupon"
           item={record}
           size="small"
           name={<Link to={`${props.route.path}/${record.id}`}>{record.name}</Link>}
@@ -105,15 +106,21 @@ export default (props: IPage) => {
       ),
     },
     {
-      title: t('_page:Coupon.Component.convertUserId'),
+      title: t('_page:Coupon.Component.redeemUser'),
       dataIndex: 'user_id',
-      width: 180,
-      render: (text: string, record: Coupon) => <ConvertCouponToUseButton item={record} />,
+      width: 100,
+      render: (text: string, record: Coupon) => <RedeemCouponToUseButton item={record} />,
+    },
+    {
+      title: t('_page:Coupon.Component.accessOrder'),
+      dataIndex: 'order_id',
+      width: 100,
+      render: (text: string, record: Coupon) => <IdTag id={record.order_id} link={`/orders/${record.order_id}`} />,
     },
     {
       title: t('_lang:status'),
       dataIndex: 'status',
-      width: 50,
+      width: 60,
       render: (text: string, record: Coupon) => (
         <TableColumnStatusSwitch
           id={Number(record.id)}

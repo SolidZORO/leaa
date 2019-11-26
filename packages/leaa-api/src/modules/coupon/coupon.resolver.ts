@@ -8,7 +8,7 @@ import {
   CouponArgs,
   CreateCouponInput,
   UpdateCouponInput,
-  ConvertCouponInput,
+  RedeemCouponInput,
 } from '@leaa/common/src/dtos/coupon';
 import { UserDecorator } from '@leaa/api/src/decorators';
 import { CouponService } from '@leaa/api/src/modules/coupon/coupon.service';
@@ -66,11 +66,11 @@ export class CouponResolver {
   }
 
   @Mutation(() => Coupon)
-  async convertCoupon(
-    @Args('info') info: ConvertCouponInput,
+  async redeemCoupon(
+    @Args('info') info: RedeemCouponInput,
     @UserDecorator() user?: User,
   ): Promise<Coupon | undefined> {
-    return this.couponService.convertCoupon(info, user);
+    return this.couponService.redeemCoupon(info, user);
   }
 
   @Mutation(() => Coupon)

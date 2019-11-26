@@ -1,25 +1,25 @@
 @import '~@leaa/dashboard/src/styles/variables.less';
 
-.coupon-wrapper {
+.wrapper {
   position: relative;
   display: inline-block;
   font-family: sans-serif;
 
   @text-color: #fff;
-  @coupon-border-radius: 8px;
+  @border-radius: 8px;
 
-  .coupon-disabled {
+  .disabled {
     display: none;
   }
 
-  .coupon-inner {
+  .inner {
     width: 100%;
     height: 110px;
-    background: linear-gradient(-27deg, darken(@primary-color, -7%) 0%, darken(@primary-color, -1%) 100%);
-    border-radius: @coupon-border-radius;
+    background: linear-gradient(-39deg, #673ab7 0%, #5e35b1 100%);
+    border-radius: @border-radius;
   }
 
-  .coupon-card {
+  .card {
     display: flex;
     align-content: center;
     align-items: center;
@@ -28,18 +28,18 @@
     float: left;
     position: relative;
 
-    .coupon-card-inner {
+    .card-inner {
       background-color: transparent;
     }
   }
 
-  .coupon-card--left {
+  .card--left {
     text-align: center;
     width: 140px;
     height: 100%;
   }
 
-  .coupon-card--right {
+  .card--right {
     border-left: 2px dashed #fff;
     min-width: 250px;
     height: 100%;
@@ -85,6 +85,7 @@
     bottom: 10px;
     left: 0;
     right: 0;
+    line-height: 1;
   }
 
   .name {
@@ -111,7 +112,7 @@
     }
   }
 
-  .coupon-code {
+  .code {
     margin-top: 6px;
     line-height: 1;
     font-size: 90%;
@@ -120,42 +121,42 @@
       font-family: @code-family;
       font-weight: normal;
     }
+  }
 
-    .copy-code {
-      position: relative;
-      top: -1px;
-      margin: 0;
-      padding: 0;
-      font-size: 80%;
-      display: inline-block;
-      line-height: 1;
+  .copy-code {
+    position: relative;
+    top: -1px;
+    margin: 0;
+    padding: 0;
+    font-size: 80%;
+    display: inline-block;
+    line-height: 1;
 
-      svg {
-        opacity: 0.7;
-        color: @text-color;
-        transform: scale(0.8);
-        transform-origin: 0;
-      }
+    svg {
+      opacity: 0.7;
+      color: @text-color;
+      transform: scale(0.8);
+      transform-origin: 0;
     }
   }
 }
 
-.coupon-wrapper--small {
-  @coupon-border-radius: 6px;
+.wrapper--small {
+  @border-radius: 6px;
 
-  .coupon-inner {
+  .inner {
     height: 80px;
-    border-radius: @coupon-border-radius;
+    border-radius: @border-radius;
   }
 
-  .coupon-card {
+  .card {
   }
 
-  .coupon-card--left {
+  .card--left {
     width: 115px;
   }
 
-  .coupon-card--right {
+  .card--right {
     border-left: 1px dashed #fff;
     min-width: 200px;
 
@@ -187,7 +188,7 @@
 
   .over-amount {
     transform: scale(0.7);
-    bottom: 3px;
+    bottom: 4px;
     opacity: 0.4;
   }
 
@@ -200,7 +201,7 @@
     margin-top: 4px;
   }
 
-  .coupon-code {
+  .code {
     margin-top: 4px;
     font-size: 80%;
     transform: scale(0.9);
@@ -213,12 +214,12 @@
   }
 }
 
-.coupon-wrapper--disabled {
-  .coupon-inner {
+.wrapper--disabled {
+  .inner {
     opacity: 0.3;
   }
 
-  .coupon-disabled {
+  .disabled {
     z-index: 2;
     display: block;
     position: absolute;
@@ -240,5 +241,14 @@
       border-bottom: 7px solid transparent;
       border-right: 7px solid #fff;
     }
+  }
+}
+
+.wrapper--coupon {
+}
+
+.wrapper--promo {
+  .inner {
+    background: linear-gradient(-39deg, #f44336 0%, #f91100 100%);
   }
 }

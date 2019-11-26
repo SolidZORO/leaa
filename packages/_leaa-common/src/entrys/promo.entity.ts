@@ -6,7 +6,7 @@ import { Base } from '@leaa/common/src/entrys';
 @Entity('promos')
 @Index('promos_name_unique', ['name'], { unique: true })
 @ObjectType()
-export class Coupon extends Base {
+export class Promo extends Base {
   @Column({ type: 'varchar', length: 32 })
   @Field(() => String)
   name?: string;
@@ -18,6 +18,10 @@ export class Coupon extends Base {
   @Column({ type: 'int', default: 0 })
   @Field(() => Int)
   quantity?: number;
+
+  @Column({ type: 'int', default: 0 })
+  @Field(() => Int)
+  redeemed_quantity?: number;
 
   @Column({ type: 'decimal', precision: 11, scale: 2, comment: 'trigger amount, including the amount value' })
   @Field(() => Float)

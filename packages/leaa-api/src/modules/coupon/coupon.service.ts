@@ -10,7 +10,7 @@ import {
   CouponArgs,
   CreateCouponInput,
   UpdateCouponInput,
-  ConvertCouponInput,
+  RedeemCouponInput,
 } from '@leaa/common/src/dtos/coupon';
 import { formatUtil, permissionUtil, curdUtil, paginationUtil, loggerUtil } from '@leaa/api/src/utils';
 
@@ -106,11 +106,11 @@ export class CouponService {
     return curdUtil.commonUpdate(this.couponRepository, CONSTRUCTOR_NAME, id, args);
   }
 
-  async convertCoupon(info: ConvertCouponInput, user?: User): Promise<Coupon | undefined> {
+  async redeemCoupon(info: RedeemCouponInput, user?: User): Promise<Coupon | undefined> {
     const coupon = await this.couponByCode(info.code);
 
     if (!coupon) {
-      const message = 'not found coupon, convert error.';
+      const message = 'not found coupon, redeem error.';
 
       loggerUtil.warn(message, CONSTRUCTOR_NAME);
 
@@ -138,7 +138,7 @@ export class CouponService {
       user_id: user.id,
     };
 
-    if (info.userId && permissionUtil.hasPermission(user, 'coupon.convert-to-any-user')) {
+    if (info.userId && permissionUtil.hasPermission(user, 'coupon.redeem-to-any-user')) {
       nextCoupon = {
         ...coupon,
         user_id: info.userId,

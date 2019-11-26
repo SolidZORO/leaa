@@ -8,5 +8,6 @@ import Ax from './Ax.lang';
 import Setting from './Setting.lang';
 import Tag from './Tag.lang';
 import Coupon from './Coupon.lang';
+import Promo from './Promo.lang';
 
-export default { Auth, User, Role, Permission, Category, Article, Ax, Setting, Tag, Coupon };
+export default { Auth, User, Role, Permission, Category, Article, Ax, Setting, Tag, Coupon, Promo };

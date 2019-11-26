@@ -20,7 +20,7 @@ export const GET_COUPONS = gql`
         unavailable_product_ids
         start_time
         expire_time
-        convert_method
+        redeem_method
         creator_id
         status
         created_at
@@ -48,7 +48,7 @@ export const GET_COUPON = gql`
       unavailable_product_ids
       start_time
       expire_time
-      convert_method
+      redeem_method
       creator_id
       status
       created_at

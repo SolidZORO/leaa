@@ -43,13 +43,14 @@ export default {
   value: '值',
   options: '可选项',
   tips: '提示',
+  unavailable: '不可用',
   //
   create: '创建',
   edit: '编辑',
   update: '更新',
   delete: '删除',
   submit: '提交',
-  convert: '兑换',
+  redeem: '兑换',
   search: '搜索',
   //
   select: '选择',

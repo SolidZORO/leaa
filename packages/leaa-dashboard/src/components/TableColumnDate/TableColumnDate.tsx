@@ -6,7 +6,7 @@ import cx from 'classnames';
 import style from './style.module.less';
 
 interface IProps {
-  date: string;
+  date?: Date | string;
   size?: 'small';
   format?: string;
   prefix?: string;

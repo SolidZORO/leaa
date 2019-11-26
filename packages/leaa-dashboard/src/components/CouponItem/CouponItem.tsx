@@ -10,6 +10,7 @@ import { PriceTag } from '@leaa/dashboard/src/components';
 import style from './style.module.less';
 
 interface IProps {
+  type: 'coupon' | 'promo';
   className?: string;
   item?: Coupon;
   name?: JSX.Element;
@@ -21,18 +22,18 @@ export const CouponItem = (props: IProps) => {
 
   return (
     <div
-      className={cx(style['coupon-wrapper'], {
-        [style['coupon-wrapper--small']]: props.size === 'small',
-        [style['coupon-wrapper--disabled']]: props.item && !props.item.available,
+      className={cx(style['wrapper'], style[`wrapper--${props.type}`], {
+        [style['wrapper--small']]: props.size === 'small',
+        [style['wrapper--disabled']]: props.item && !props.item.available,
       })}
     >
-      <div className={style['coupon-inner']}>
+      <div className={style['inner']}>
         <Tooltip placement="right" title={t('_comp:CouponItem.unavailable')}>
-          <div className={style['coupon-disabled']} />
+          <div className={style['disabled']} />
         </Tooltip>
 
-        <div className={cx(style['coupon-card'], style['coupon-card--left'])}>
-          <div className={style['coupon-card-inner']}>
+        <div className={cx(style['card'], style['card--left'])}>
+          <div className={style['card-inner']}>
             <div className={style['amount']}>{props.item && <PriceTag amount={props.item && props.item.amount} />}</div>
 
             {Boolean(props.item && props.item.over_amount && props.item.over_amount > 0) && (
@@ -44,9 +45,14 @@ export const CouponItem = (props: IProps) => {
           </div>
         </div>
 
-        <div className={cx(style['coupon-card'], style['coupon-card--right'])}>
-          <div className={style['coupon-card-inner']}>
-            <div className={style['name']}>{props.name || (props.item && props.item.name)}</div>
+        <div className={cx(style['card'], style['card--right'])}>
+          <div className={style['card-inner']}>
+            <div className={style['name']}>
+              {props.name || (props.item && props.item.name)}{' '}
+              {props.type === 'promo' && (
+                <Typography.Text className={style['copy-code']} copyable={{ text: props.item && props.item.name }} />
+              )}
+            </div>
 
             <div className={style['date-range']}>
               <span>{moment(props.item && props.item.start_time).format('YYYY-MM-DD')}</span>
@@ -54,10 +60,12 @@ export const CouponItem = (props: IProps) => {
               <span>{moment(props.item && props.item.expire_time).format('YYYY-MM-DD')}</span>
             </div>
 
-            <div className={style['coupon-code']}>
-              <strong>{props.item && props.item.code}</strong>
-              <Typography.Text className={style['copy-code']} copyable={{ text: props.item && props.item.code }} />
-            </div>
+            {props.type === 'coupon' && (
+              <div className={style['code']}>
+                <strong>{props.item && props.item.code}</strong>
+                <Typography.Text className={style['copy-code']} copyable={{ text: props.item && props.item.code }} />
+              </div>
+            )}
           </div>
         </div>
       </div>

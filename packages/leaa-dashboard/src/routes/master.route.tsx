@@ -204,7 +204,7 @@ export const masterRoutes: IRouteItem[] = [
   {
     name: 'Marketing Group',
     namei18n: '_route:marketingGroup',
-    permission: 'coupon.list | ax.list',
+    permission: 'coupon.list | ax.list | promo.list',
     path: '_marketing-group',
     icon: 'x-marketing',
     children: [
@@ -270,6 +270,42 @@ export const masterRoutes: IRouteItem[] = [
         icon: 'x-coupon',
         LazyComponent: React.lazy(() =>
           import(/* webpackChunkName: 'CouponList' */ '../pages/Coupon/CouponList/CouponList'),
+        ),
+        canCreate: true,
+        exact: true,
+      },
+      // ---- Promo ----
+      {
+        name: 'Create Promo',
+        namei18n: '_route:createPromo',
+        permission: 'promo.create',
+        path: '/promos/create',
+        icon: 'x-promo',
+        LazyComponent: React.lazy(() =>
+          import(/* webpackChunkName: 'CreatePromo' */ '../pages/Promo/CreatePromo/CreatePromo'),
+        ),
+        exact: true,
+        isCreate: true,
+      },
+      {
+        name: 'Edit Promo',
+        namei18n: '_route:editPromo',
+        permission: 'promo.item',
+        path: '/promos/:id(\\d+)',
+        icon: 'x-promo',
+        LazyComponent: React.lazy(() =>
+          import(/* webpackChunkName: 'EditPromo' */ '../pages/Promo/EditPromo/EditPromo'),
+        ),
+        exact: true,
+      },
+      {
+        name: 'Promo',
+        namei18n: '_route:promo',
+        permission: 'promo.list',
+        path: '/promos',
+        icon: 'x-promo',
+        LazyComponent: React.lazy(() =>
+          import(/* webpackChunkName: 'PromoList' */ '../pages/Promo/PromoList/PromoList'),
         ),
         canCreate: true,
         exact: true,

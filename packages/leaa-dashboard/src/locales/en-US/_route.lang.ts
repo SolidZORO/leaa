@@ -15,6 +15,7 @@ const tag = 'Tag';
 const attachment = 'Attachment';
 const setting = 'Setting';
 const coupon = 'Coupon';
+const promo = 'Promo';
 const marketing = 'Marketing';
 const content = 'Content';
 
@@ -71,5 +72,10 @@ export default {
   coupon,
   createCoupon: `${_lang.create} ${coupon}`,
   editCoupon: `${_lang.edit} ${coupon}`,
-  convertCoupon: `${_lang.convert} ${coupon}`,
+  redeemCoupon: `${_lang.redeem} ${coupon}`,
+  //
+  promo,
+  createPromo: `${_lang.create}${promo}`,
+  editPromo: `${_lang.edit}${promo}`,
+  redeemPromo: `${_lang.redeem}${promo}`,
 };

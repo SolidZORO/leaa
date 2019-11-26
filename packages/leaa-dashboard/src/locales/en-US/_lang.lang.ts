@@ -43,13 +43,14 @@ export default {
   value: 'Value',
   options: 'Options',
   tips: 'Tips',
+  unavailable: 'Unavailable',
   //
   create: 'Create',
   edit: 'Edit',
   update: 'Update',
   delete: 'Delete',
   submit: 'Submit',
-  convert: 'Convert',
+  redeem: 'Redeem',
   search: 'Search',
   //
   select: 'Select',

@@ -8,6 +8,7 @@ interface IProps {
   className?: string;
   id: number | string | undefined;
   link?: string;
+  size?: 'small' | 'large';
 }
 
 export const IdTag = (props: IProps) => {
@@ -20,9 +21,15 @@ export const IdTag = (props: IProps) => {
 
   return (
     <div
-      className={cx(style['id-tag-wrapper'], props.className, 'g-id-tag-wrapper', {
-        [style['id-tag-wrapper--empty']]: !props.id,
-      })}
+      className={cx(
+        style['id-tag-wrapper'],
+        props.className,
+        style[`id-tag-wrapper--size-${props.size}`],
+        'g-id-tag-wrapper',
+        {
+          [style['id-tag-wrapper--empty']]: !props.id,
+        },
+      )}
     >
       {props.link && props.id ? <Link to={props.link}>{idDom}</Link> : idDom}
     </div>

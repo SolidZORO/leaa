@@ -13,7 +13,7 @@ interface IProps {
 export const TableColumnId = (props: IProps) => {
   return (
     <div className={cx(style['wrapper'], props.className)}>
-      <IdTag id={props.id} />
+      <IdTag id={props.id} size="small" />
     </div>
   );
 };

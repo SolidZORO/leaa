@@ -144,11 +144,6 @@ type Category {
   key: String
 }
 
-input ConvertCouponInput {
-  code: String!
-  userId: Int
-}
-
 type Coupon {
   id: Int!
   created_at: DateTime!
@@ -168,7 +163,7 @@ type Coupon {
   unavailable_product_ids: String
   start_time: DateTime
   expire_time: DateTime
-  convert_method: String
+  redeem_method: String
   creator_id: Int!
   status: Int
   available: Boolean!
@@ -249,6 +244,19 @@ input CreatePermissionInput {
   slug: String!
 }
 
+input CreatePromoInput {
+  name: String!
+  quantity: Int!
+  redeemed_quantity: Int
+  amount: Float!
+  over_amount: Float
+  available_product_ids: String
+  unavailable_product_ids: String
+  start_time: DateTime!
+  expire_time: DateTime!
+  status: Int!
+}
+
 input CreateRoleInput {
   name: String!
   slug: String!
@@ -323,8 +331,11 @@ type Mutation {
   deleteTag(id: Int!): Tag!
   createCoupon(coupon: CreateCouponInput!): Coupon!
   updateCoupon(coupon: UpdateCouponInput!, id: Int!): Coupon!
-  convertCoupon(info: ConvertCouponInput!): Coupon!
+  redeemCoupon(info: RedeemCouponInput!): Coupon!
   deleteCoupon(id: Int!): Coupon!
+  createPromo(promo: CreatePromoInput!): Promo!
+  updatePromo(promo: UpdatePromoInput!, id: Int!): Promo!
+  deletePromo(id: Int!): Promo!
 }
 
 type Oauth {
@@ -378,6 +389,34 @@ type PermissionsWithPaginationObject {
   items: [Permission!]!
 }
 
+type Promo {
+  id: Int!
+  created_at: DateTime!
+  updated_at: DateTime
+  deleted_at: DateTime
+  name: String!
+  amount: Float!
+  quantity: Int!
+  redeemed_quantity: Int!
+  over_amount: Float!
+  available_product_ids: String
+  unavailable_product_ids: String
+  start_time: DateTime
+  expire_time: DateTime
+  creator_id: Int!
+  status: Int
+  available: Boolean!
+}
+
+type PromosWithPaginationObject {
+  page: Int
+  pageSize: Int!
+  nextPage: Int
+  itemsCount: Int!
+  total: Int!
+  items: [Promo!]!
+}
+
 type Query {
   roles(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): RolesWithPaginationObject!
   role(id: Int!): Role!
@@ -407,6 +446,13 @@ type Query {
   coupons(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): CouponsWithPaginationObject!
   coupon(id: Int!): Coupon!
   couponByCode(code: String!): Coupon!
+  promos(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): PromosWithPaginationObject!
+  promo(id: Int!): Promo!
+}
+
+input RedeemCouponInput {
+  code: String!
+  userId: Int
 }
 
 type Role {
@@ -538,6 +584,20 @@ input UpdateCouponInput {
 input UpdatePermissionInput {
   name: String
   slug: String
+}
+
+input UpdatePromoInput {
+  type: String
+  name: String
+  quantity: Int
+  redeemed_quantity: Int
+  amount: Float
+  over_amount: Float
+  available_product_ids: String
+  unavailable_product_ids: String
+  start_time: DateTime
+  expire_time: DateTime
+  status: Int
 }
 
 input UpdateRoleInput {

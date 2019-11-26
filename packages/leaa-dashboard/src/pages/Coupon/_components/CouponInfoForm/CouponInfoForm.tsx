@@ -82,7 +82,7 @@ class CouponInfoFormInner extends React.PureComponent<IProps> {
 
               {props.item ? (
                 <Col xs={24} sm={2}>
-                  <Form.Item label={t('_page:Coupon.Component.convertUserId')}>
+                  <Form.Item label={t('_page:Coupon.Component.redeemUser')}>
                     <IdTag id={props.item.user_id} link={`/users/${props.item.user_id}`} />
                   </Form.Item>
                 </Col>
@@ -117,26 +117,6 @@ class CouponInfoFormInner extends React.PureComponent<IProps> {
                         : moment(curremtTime).add(3, 'day'),
                     rules: [{ required: true }],
                   })(<DatePicker showTime />)}
-                </Form.Item>
-              </Col>
-            </Row>
-
-            <Row gutter={16} className={style['form-row']}>
-              <Col xs={24} sm={12}>
-                <Form.Item label={t('_page:Coupon.Component.availableProductIds')}>
-                  {getFieldDecorator('available_product_ids', {
-                    initialValue: props.item ? props.item.available_product_ids : undefined,
-                    rules: [],
-                  })(<Input />)}
-                </Form.Item>
-              </Col>
-
-              <Col xs={24} sm={12}>
-                <Form.Item label={t('_page:Coupon.Component.unavailableProductIds')}>
-                  {getFieldDecorator('unavailable_product_ids', {
-                    initialValue: props.item ? props.item.unavailable_product_ids : undefined,
-                    rules: [],
-                  })(<Input />)}
                 </Form.Item>
               </Col>
             </Row>

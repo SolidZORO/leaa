@@ -10,3 +10,4 @@ export { Setting } from './setting.entity';
 export { Oauth, OauthPlatform } from './oauth.entity';
 export { Tag } from './tag.entity';
 export { Coupon } from './coupon.entity';
+export { Promo } from './promo.entity';
