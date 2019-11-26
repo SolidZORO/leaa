@@ -41,7 +41,7 @@ if (webpackConst.IS_ANALYZER) {
 // OUTPUT HTML
 const outputHtmlOption = {
   title: `${process.env.SITE_NAME || '-'}`,
-  env: new Buffer(JSON.stringify(_.pick(env, Object.keys(env)))).toString('base64'),
+  env: Buffer.from(JSON.stringify(_.pick(env, Object.keys(env)))).toString('base64'),
   filename: `${webpackConst.BUILD_PUBLIC_DIR}/index.html`,
   template: `${webpackConst.VIEWS_DIR}/index.ejs`,
   favicon: `${webpackConst.SRC_DIR}/assets/favicons/favicon.ico`,
