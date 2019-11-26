@@ -56,11 +56,9 @@ function formatDataRange<T>(args: T, startField: string, expireField: string): T
     // @ts-ignore
     nextArgs[expireField] = moment(args[expireField])
       .endOf('day')
-      .subtract(1, 'second')
+      .subtract(2, 'second')
       .toDate();
   }
-
-  console.log('QQQQQQQQQQQQ', args, nextArgs);
 
   return nextArgs;
 }
