@@ -10,7 +10,7 @@ const log = (
   context?: string,
   trace?: string | any,
 ) => {
-  const LOG_DIR_PATH = path.resolve('logs');
+  const LOG_DIR_PATH = path.resolve(__dirname, '../../logs');
 
   const WINSTON_TIMESTAMP_FORMAT = 'YYYY-MM-DD HH:mm:ss';
   const WINSTON_INFO_FORMAT = winston.format.combine(

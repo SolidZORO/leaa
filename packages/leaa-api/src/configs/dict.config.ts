@@ -1,6 +1,6 @@
 import path from 'path';
 
-const DICT_DIR = path.resolve('./src/assets/dicts/');
+const DICT_DIR = path.resolve(__dirname, '../assets/dicts');
 const TAGS_DICT_PATH = `${DICT_DIR}/tags.dict.txt`;
 
 export const dictConfig = {

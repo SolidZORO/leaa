@@ -4,6 +4,7 @@
 
 #Accests
 /public/attachments
+/public/buildinfo.json
 /src/assets/dicts/*
 !/src/assets/dicts/.gitkeep
 

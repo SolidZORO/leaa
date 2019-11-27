@@ -1,12 +1,13 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Skeleton, Icon, Avatar, Popover, Button, message } from 'antd';
+import { Skeleton, Icon, Avatar, Popover, Button } from 'antd';
 import { RouteComponentProps } from 'react-router-dom';
 
 import { authUtil } from '@leaa/dashboard/src/utils';
+import { buildConfig } from '@leaa/dashboard/src/configs';
 import { LOGOUT_REDIRECT_URL } from '@leaa/dashboard/src/constants';
-import avatar from '@leaa/dashboard/src/assets/images/avatar/avatar-line.svg';
 
+import avatar from '@leaa/dashboard/src/assets/images/avatar/avatar-line.svg';
 import style from './style.module.less';
 
 interface IProps extends RouteComponentProps {}
@@ -30,6 +31,23 @@ export const UserMenu = (props: IProps): JSX.Element => {
 
       <div className={style['container']}>
         <Skeleton active />
+
+        <div className={style['build-list']}>
+          <div className={style['build-item']}>
+            <span>MODE:</span>
+            <strong>{buildConfig.MODE}</strong>
+          </div>
+
+          <div className={style['build-item']}>
+            <span>VERSION:</span>
+            <strong>{buildConfig.VERSION}</strong>
+          </div>
+
+          <div className={style['build-item']}>
+            <span>TIMESTAMP:</span>
+            <strong>{buildConfig.TIMESTAMP}</strong>
+          </div>
+        </div>
       </div>
 
       <div className={style['footer']}>

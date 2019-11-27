@@ -12,3 +12,9 @@ export interface ISetting {
   slug: string;
   value: string;
 }
+
+export interface IBuild {
+  MODE: string;
+  VERSION: string;
+  TIMESTAMP: string;
+}

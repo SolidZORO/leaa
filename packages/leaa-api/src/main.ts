@@ -18,8 +18,8 @@ import { AppModule } from '@leaa/api/src/app.module';
   });
 
   const configService = await app.get(ConfigService);
+  const publicPath = path.resolve(__dirname, `../${configService.PUBLIC_DIR}`);
 
-  const publicPath = path.resolve(configService.PUBLIC_DIR);
   app.useStaticAssets(publicPath);
   app.useGlobalPipes(new ValidationPipe());
 
@@ -37,7 +37,7 @@ import { AppModule } from '@leaa/api/src/app.module';
 
   await app.listen(configService.PORT);
 
-  // ⚠️ init sync tags to file
+  // ⚠️ sync all tags to file @ initApp
   const tagService = await app.get(TagService);
   await tagService.syncTagsToDictFile();
 
@@ -48,4 +48,6 @@ import { AppModule } from '@leaa/api/src/app.module';
     NODE_ENV: process.env.NODE_ENV,
     showGraphql: true,
   });
+
+  console.log(`> 📮 PUBLIC-PATH ${publicPath}\n\n`);
 })();

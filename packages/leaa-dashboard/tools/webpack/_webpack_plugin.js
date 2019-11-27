@@ -1,6 +1,7 @@
 const _ = require('lodash');
 const webpack = require('webpack');
 const dotenv = require('dotenv');
+const moment = require('moment');
 // const Dotenv = require('dotenv-webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -13,6 +14,7 @@ const webpackShimming = require('./_webpack_shimming');
 
 const envPath = `${webpackConst.ROOT_DIR}/${webpackConst.__DEV__ ? '.env' : '.env.production'}`;
 const env = dotenv.config({ path: envPath }).parsed;
+const pkg = require(webpackConst.PACKAGE_FILE);
 
 class WebpackCallbackPlugin {
   apply(compiler) {
@@ -42,6 +44,13 @@ if (webpackConst.IS_ANALYZER) {
 const outputHtmlOption = {
   title: `${process.env.SITE_NAME || '-'}`,
   env: Buffer.from(JSON.stringify(_.pick(env, Object.keys(env)))).toString('base64'),
+  build: Buffer.from(
+    JSON.stringify({
+      TIMESTAMP: moment().format('YYYYMMDD-HHmmss'),
+      VERSION: pkg.version,
+      MODE: webpackConst.MODE,
+    }),
+  ).toString('base64'),
   filename: `${webpackConst.BUILD_PUBLIC_DIR}/index.html`,
   template: `${webpackConst.VIEWS_DIR}/index.ejs`,
   favicon: `${webpackConst.SRC_DIR}/assets/favicons/favicon.ico`,

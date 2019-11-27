@@ -20,7 +20,7 @@ export const emoji = ({
   console.log(`\n\n> ${serverEnv} /     URL ${serverBaseByEmoji}\n`);
 
   if (showGraphql) {
-    console.log(`> ${serverEnv} / GRAPHQL ${serverGraphqlByEmoji}\n\n`);
+    console.log(`> ${serverEnv} / GRAPHQL ${serverGraphqlByEmoji}\n`);
   }
 };
 

@@ -39,7 +39,7 @@ if [[ $KEY = "" ]]; then
     mkdir -p ${API_DIR}/public
     cp -fr ./public/robots.txt ${API_DIR}/public
     cp -fr ./public/get-weixin-code.html ${API_DIR}/public
-    echo "${DEPLOY_COMMIT}" > ${API_DIR}/public/deploy.txt
+    cp -fr ./public/buildinfo.json ${API_DIR}/public
 
 
     # DEPLOY DIR

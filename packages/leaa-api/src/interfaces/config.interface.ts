@@ -35,3 +35,9 @@ export interface IDotEnv {
   OAUTH_WECHAT_TOKEN?: string;
   OAUTH_WECHAT_REDIRECT_URL?: string;
 }
+
+export interface IBuild {
+  // MODE: string;
+  VERSION: string;
+  TIMESTAMP: string;
+}
