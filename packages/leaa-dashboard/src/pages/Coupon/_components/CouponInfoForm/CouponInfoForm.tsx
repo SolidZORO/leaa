@@ -25,15 +25,8 @@ interface IState {
   timeRange: ITimeRange;
 }
 
-const currentDayZeroTime = moment().startOf('day');
-const defaultTimeRange: ITimeRange = [
-  currentDayZeroTime,
-  moment(currentDayZeroTime)
-    .add(3, 'day')
-    .add(23, 'hour')
-    .add(59, 'minute')
-    .add(59, 'second'),
-];
+const currentDayZeroTime = moment();
+const defaultTimeRange: ITimeRange = [currentDayZeroTime, moment(currentDayZeroTime).add(3, 'day')];
 
 const AVAILABLE_DATE_TIPS_FORMAT = 'YYYY-MM-DD (HH:mm:ss)';
 
@@ -56,16 +49,7 @@ class CouponInfoFormInner extends React.PureComponent<IProps, IState> {
   }
 
   updateTimeRange = (timeRange: ITimeRange) => {
-    const nextTimeRange: ITimeRange = [
-      moment(timeRange[0].startOf('day')),
-      moment(
-        timeRange[1]
-          .startOf('day')
-          .add(23, 'hour')
-          .add(59, 'minute')
-          .add(59, 'second'),
-      ),
-    ];
+    const nextTimeRange: ITimeRange = [moment(timeRange[0]), moment(timeRange[1])];
 
     this.props.form.setFieldsValue({
       start_time: nextTimeRange[0],
