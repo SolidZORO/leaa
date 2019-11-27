@@ -69,7 +69,7 @@ export class TypeormService implements TypeOrmOptionsFactory {
           keepConnectionAlive: true,
           acquireTimeout: 20 * 1000, // 20s
           // fix local and server timeone out of sync
-          dateStrings: true,
+          // dateStrings: true,
           // timezone: 'Z',
         },
       };
