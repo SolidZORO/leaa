@@ -8,12 +8,13 @@ import style from './style.module.less';
 interface IProps {
   id: string;
   className?: string;
+  link?: string;
 }
 
 export const TableColumnId = (props: IProps) => {
   return (
     <div className={cx(style['wrapper'], props.className)}>
-      <IdTag id={props.id} size="small" />
+      <IdTag id={props.id} size="small" linkNormalColor link={props.link} />
     </div>
   );
 };

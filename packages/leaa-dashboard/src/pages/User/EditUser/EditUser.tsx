@@ -119,7 +119,7 @@ export default (props: IPage) => {
 
       <UserRolesForm
         item={getUserQuery.data && getUserQuery.data.user}
-        loading={getUserQuery.loading}
+        loading={getRolesQuery.loading}
         roles={(getRolesQuery.data && getRolesQuery.data.roles && getRolesQuery.data.roles.items) || []}
         wrappedComponentRef={(inst: unknown) => setUserRoleFormRef(inst)}
       />

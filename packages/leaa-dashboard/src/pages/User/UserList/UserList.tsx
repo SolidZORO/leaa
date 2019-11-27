@@ -88,7 +88,7 @@ export default (props: IPage) => {
       width: 60,
       sorter: true,
       sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'id'),
-      render: (text: string) => <TableColumnId id={text} />,
+      render: (id: string) => <TableColumnId id={id} link={`${props.route.path}/${id}`} />,
     },
     {
       title: t('_lang:email'),
@@ -112,6 +112,14 @@ export default (props: IPage) => {
       ),
     },
     {
+      title: t('_lang:created_at'),
+      dataIndex: 'created_at',
+      width: 120,
+      sorter: true,
+      sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'created_at'),
+      render: (text: string) => <TableColumnDate date={text} size="small" />,
+    },
+    {
       title: t('_lang:status'),
       dataIndex: 'status',
       width: 60,
@@ -125,13 +133,6 @@ export default (props: IPage) => {
           refetchQueries={[{ query: GET_USERS, variables: getUsersVariables }]}
         />
       ),
-    },
-    {
-      title: t('_lang:created_at'),
-      dataIndex: 'created_at',
-      sorter: true,
-      sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'created_at'),
-      render: (text: string) => <TableColumnDate date={text} size="small" />,
     },
     {
       title: t('_lang:action'),

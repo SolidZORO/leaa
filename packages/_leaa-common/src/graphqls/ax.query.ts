@@ -13,6 +13,7 @@ export const GET_AXS = gql`
         description
         status
         created_at
+        updated_at
       }
     }
   }

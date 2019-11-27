@@ -28,3 +28,4 @@ export { PriceTag } from './PriceTag/PriceTag';
 export { TableColumnStatusSwitch } from './TableColumnStatusSwitch/TableColumnStatusSwitch';
 export { UserSearchBox } from './UserSearchBox/UserSearchBox';
 export { IdTag } from './IdTag/IdTag';
+export { EntryInfoDate } from './EntryInfoDate/EntryInfoDate';

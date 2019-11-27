@@ -8,7 +8,7 @@ import { FormComponentProps } from 'antd/lib/form';
 import { Promo } from '@leaa/common/src/entrys';
 import { ITfn } from '@leaa/dashboard/src/interfaces';
 
-import { FormCard, SwitchNumber } from '@leaa/dashboard/src/components';
+import { FormCard, SwitchNumber, EntryInfoDate } from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';
 
@@ -83,7 +83,10 @@ class PromoInfoFormInner extends React.PureComponent<IProps, IState> {
 
     return (
       <div className={cx(style['wrapper'], props.className)}>
-        <FormCard title={t('_page:Promo.Component.promoInfo')}>
+        <FormCard
+          title={t('_page:Promo.Component.promoInfo')}
+          extra={<EntryInfoDate date={props.item && [props.item.created_at, props.item.updated_at]} />}
+        >
           <Form className={cx('g-form--zero-margin-bottom', style['form-wrapper'])}>
             <Row gutter={16} className={style['form-row']}>
               <Col xs={24} sm={6}>

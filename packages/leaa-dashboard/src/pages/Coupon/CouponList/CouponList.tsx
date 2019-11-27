@@ -25,6 +25,7 @@ import {
   CouponItem,
   TableColumnStatusSwitch,
   IdTag,
+  TableColumnDate,
 } from '@leaa/dashboard/src/components';
 
 import { RedeemCouponToUseButton } from '../_components/RedeemCouponToUseButton/RedeemCouponToUseButton';
@@ -91,7 +92,7 @@ export default (props: IPage) => {
       width: 100,
       sorter: true,
       sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'id'),
-      render: (text: string) => <TableColumnId id={text} />,
+      render: (id: string) => <TableColumnId id={id} link={`${props.route.path}/${id}`} />,
     },
     {
       title: t('_page:Coupon.Component.couponInfo'),
@@ -116,6 +117,14 @@ export default (props: IPage) => {
       dataIndex: 'order_id',
       width: 100,
       render: (text: string, record: Coupon) => <IdTag id={record.order_id} link={`/orders/${record.order_id}`} />,
+    },
+    {
+      title: t('_lang:created_at'),
+      dataIndex: 'created_at',
+      width: 120,
+      sorter: true,
+      sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'created_at'),
+      render: (text: string) => <TableColumnDate date={text} size="small" />,
     },
     {
       title: t('_lang:status'),

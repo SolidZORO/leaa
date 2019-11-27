@@ -41,6 +41,7 @@ export default {
   icon: '图标',
   type: '类型',
   value: '值',
+  noData: '无数据',
   options: '可选项',
   tips: '提示',
   unavailable: '不可用',

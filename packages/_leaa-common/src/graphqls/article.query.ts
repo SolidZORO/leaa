@@ -43,6 +43,7 @@ export const GET_ARTICLES = gql`
         user_id
         status
         created_at
+        updated_at
       }
     }
   }

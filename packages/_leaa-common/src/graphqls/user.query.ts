@@ -13,6 +13,7 @@ export const GET_USERS = gql`
           name
         }
         created_at
+        updated_at
       }
     }
   }

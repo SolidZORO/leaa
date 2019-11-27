@@ -15,6 +15,7 @@ export const UPDATE_ATTACHMENT = gql`
       path
       status
       created_at
+      updated_at
     }
   }
 `;

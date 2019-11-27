@@ -41,6 +41,7 @@ export default {
   icon: 'Icon',
   type: 'Type',
   value: 'Value',
+  noData: 'No Data',
   options: 'Options',
   tips: 'Tips',
   unavailable: 'Unavailable',

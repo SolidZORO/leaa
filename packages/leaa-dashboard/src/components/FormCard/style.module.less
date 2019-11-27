@@ -3,20 +3,32 @@
 .wrapper {
 }
 
-.title {
+.header {
   display: flex;
+  justify-content: space-between;
+}
+
+.header--less {
+  height: 0;
+  //display: flex;
   //display: table;
+  //margin-top: -20px;
+}
+
+.title {
+  //display: table;
+  display: flex;
   line-height: 1;
   margin: -5px 0 15px 0;
   font-size: 110%;
   padding: 0;
+  font-weight: 500;
   //padding-left: 5px;
   //border-left: 3px solid @primary-color;
 }
 
-.title-less {
-  height: 0;
+.extra {
   display: flex;
-  //display: table;
-  margin-top: -20px;
+  line-height: 1;
+  margin: -5px 0 15px 0;
 }

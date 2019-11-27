@@ -55,6 +55,20 @@
       "unicode_decimal": 59176
     },
     {
+      "icon_id": "7009027",
+      "name": "time_fill",
+      "font_class": "x-time-info-fill",
+      "unicode": "e735",
+      "unicode_decimal": 59189
+    },
+    {
+      "icon_id": "7009028",
+      "name": "time",
+      "font_class": "x-time-info",
+      "unicode": "e736",
+      "unicode_decimal": 59190
+    },
+    {
       "icon_id": "11372649",
       "name": "测试",
       "font_class": "x-labs2",

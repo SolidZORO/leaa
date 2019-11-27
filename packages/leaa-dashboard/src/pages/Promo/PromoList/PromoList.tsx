@@ -23,6 +23,7 @@ import {
   TableColumnId,
   TableColumnStatusSwitch,
   CouponItem,
+  IdTag,
 } from '@leaa/dashboard/src/components';
 import { IPage } from '@leaa/dashboard/src/interfaces';
 
@@ -88,7 +89,7 @@ export default (props: IPage) => {
       width: 100,
       sorter: true,
       sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'id'),
-      render: (text: string) => <TableColumnId id={text} />,
+      render: (id: string) => <TableColumnId id={id} link={`${props.route.path}/${id}`} />,
     },
     {
       title: t('_page:Promo.Component.promoInfo'),
@@ -107,10 +108,18 @@ export default (props: IPage) => {
       dataIndex: 'quantity',
       width: 200,
       render: (text: string, record: Promo) => (
-        <div>
+        <div className={style['redeemed-quantity']}>
           {record.quantity} / {record.redeemed_quantity}
         </div>
       ),
+    },
+    {
+      title: t('_lang:created_at'),
+      dataIndex: 'created_at',
+      width: 120,
+      sorter: true,
+      sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'created_at'),
+      render: (text: string) => <TableColumnDate date={text} size="small" />,
     },
     {
       title: t('_lang:status'),

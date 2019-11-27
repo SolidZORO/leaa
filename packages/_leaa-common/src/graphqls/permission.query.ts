@@ -10,6 +10,7 @@ export const GET_PERMISSIONS = gql`
         slug
         slugGroup
         created_at
+        updated_at
       }
     }
   }

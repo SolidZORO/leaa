@@ -48,6 +48,7 @@ export const GET_ATTACHMENTS = gql`
         sort
         at2x
         created_at
+        updated_at
       }
     }
   }

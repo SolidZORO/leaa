@@ -7,7 +7,7 @@ import { FormComponentProps } from 'antd/lib/form';
 import { Ax } from '@leaa/common/src/entrys';
 import { ITfn } from '@leaa/dashboard/src/interfaces';
 
-import { FormCard, SwitchNumber } from '@leaa/dashboard/src/components';
+import { FormCard, SwitchNumber, EntryInfoDate } from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';
 
@@ -33,7 +33,10 @@ class AxInfoFormInner extends React.PureComponent<IProps> {
     // title={t('_page:Ax.Component.articleInfo')}
     return (
       <div className={cx(style['wrapper'], props.className)}>
-        <FormCard title={t('_page:Ax.Component.axInfo')}>
+        <FormCard
+          title={t('_page:Ax.Component.axInfo')}
+          extra={<EntryInfoDate date={props.item && [props.item.created_at, props.item.updated_at]} />}
+        >
           <Form className={cx('g-form--zero-margin-bottom', style['form-wrapper'])}>
             <Row gutter={16} className={style['form-row']}>
               <Col xs={24} sm={14}>

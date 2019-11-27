@@ -87,7 +87,7 @@ export default (props: IPage) => {
       width: 60,
       sorter: true,
       sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'id'),
-      render: (text: string) => <TableColumnId id={text} />,
+      render: (id: string) => <TableColumnId id={id} link={`${props.route.path}/${id}`} />,
     },
     {
       title: t('_lang:name'),
@@ -107,11 +107,12 @@ export default (props: IPage) => {
       dataIndex: 'parent_id',
       sorter: true,
       sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'parent_id'),
-      render: (text: string) => <TableColumnId id={text} />,
+      render: (id: string) => <TableColumnId id={id} link={`${props.route.path}/${id}`} />,
     },
     {
       title: t('_lang:created_at'),
       dataIndex: 'created_at',
+      width: 120,
       sorter: true,
       sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'created_at'),
       render: (text: string) => <TableColumnDate date={text} size="small" />,

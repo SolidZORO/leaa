@@ -7,7 +7,7 @@ import { FormComponentProps } from 'antd/lib/form';
 import { Permission } from '@leaa/common/src/entrys';
 import { ITfn } from '@leaa/dashboard/src/interfaces';
 
-import { FormCard } from '@leaa/dashboard/src/components';
+import { FormCard, EntryInfoDate } from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';
 
@@ -32,7 +32,10 @@ class PermissionInfoFormInner extends React.PureComponent<IProps> {
 
     return (
       <div className={cx(style['wrapper'], props.className)}>
-        <FormCard title={t('_page:Permission.Component.permissionInfo')}>
+        <FormCard
+          title={t('_page:Permission.Component.permissionInfo')}
+          extra={<EntryInfoDate date={props.item && [props.item.created_at, props.item.updated_at]} />}
+        >
           <Form className={cx('g-form--zero-margin-bottom', style['form-wrapper'])}>
             <Row gutter={16} className={style['form-row']}>
               <Col xs={24} sm={6}>
@@ -53,32 +56,6 @@ class PermissionInfoFormInner extends React.PureComponent<IProps> {
                 </Form.Item>
               </Col>
             </Row>
-
-            {props.item && (
-              <Row gutter={16} className={style['form-row']}>
-                <Col xs={24} sm={6}>
-                  <Form.Item label={t('_lang:created_at')}>
-                    <Input
-                      value={props.item ? `${props.item.created_at}` : undefined}
-                      placeholder={t('_lang:created_at')}
-                      readOnly
-                      disabled
-                    />
-                  </Form.Item>
-                </Col>
-
-                <Col xs={24} sm={6}>
-                  <Form.Item label={t('_lang:updated_at')}>
-                    <Input
-                      value={props.item ? `${props.item.updated_at}` : undefined}
-                      placeholder={t('_lang:updated_at')}
-                      readOnly
-                      disabled
-                    />
-                  </Form.Item>
-                </Col>
-              </Row>
-            )}
           </Form>
         </FormCard>
       </div>

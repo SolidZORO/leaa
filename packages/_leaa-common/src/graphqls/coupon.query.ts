@@ -24,6 +24,7 @@ export const GET_COUPONS = gql`
         creator_id
         status
         created_at
+        updated_at
         available
       }
     }

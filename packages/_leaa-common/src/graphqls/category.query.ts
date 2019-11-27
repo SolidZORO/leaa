@@ -11,6 +11,7 @@ export const GET_CATEGORIES = gql`
         parent_id
         description
         created_at
+        updated_at
       }
     }
   }

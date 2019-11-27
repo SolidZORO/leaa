@@ -9,6 +9,7 @@ export const GET_ROLES = gql`
         name
         slug
         created_at
+        updated_at
       }
     }
   }

@@ -8,6 +8,7 @@ export const CREATE_TAG = gql`
       icon
       description
       created_at
+      updated_at
     }
   }
 `;
@@ -20,6 +21,7 @@ export const UPDATE_TAG = gql`
       icon
       description
       created_at
+      updated_at
     }
   }
 `;
@@ -32,6 +34,7 @@ export const DELETE_TAG = gql`
       icon
       description
       created_at
+      updated_at
     }
   }
 `;

@@ -7,20 +7,20 @@ import style from './style.module.less';
 interface IProps {
   children: React.ReactNode;
   title?: string | React.ReactNode;
-  // extra?: React.ReactNode;
+  extra?: string | React.ReactNode;
   className?: string;
 }
 
 export const FormCard = (props: IProps) => (
   <Card className={cx(style['wrapper'], props.className)}>
-    <h3
-      className={cx({
-        [style['title']]: props.title,
-        [style['title-less']]: !props.title,
+    <div
+      className={cx(style['header'], {
+        [style['header--less']]: !props.title && !props.extra,
       })}
     >
-      {props.title}
-    </h3>
+      {props.title && <div className={style['title']}>{props.title}</div>}
+      {props.extra && <div className={style['extra']}>{props.extra}</div>}
+    </div>
     {props.children}
   </Card>
 );

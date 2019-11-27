@@ -93,7 +93,7 @@ class SettingInfoFormInner extends React.PureComponent<IProps> {
 
     return (
       <div className={cx(style['wrapper'], props.className)}>
-        <FormCard title=" ">
+        <FormCard>
           <Form
             className={cx('g-form--zero-margin-bottom', style['form-wrapper'])}
             hideRequiredMark

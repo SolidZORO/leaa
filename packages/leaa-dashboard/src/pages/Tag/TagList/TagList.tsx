@@ -89,7 +89,7 @@ export default (props: IPage) => {
       width: 60,
       sorter: true,
       sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'id'),
-      render: (text: string) => <TableColumnId id={text} />,
+      render: (id: string) => <TableColumnId id={id} link={`${props.route.path}/${id}`} />,
     },
     {
       title: t('_lang:name'),

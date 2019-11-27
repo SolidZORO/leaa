@@ -9,6 +9,7 @@ interface IProps {
   id: number | string | undefined;
   link?: string;
   size?: 'small' | 'large';
+  linkNormalColor?: boolean;
 }
 
 export const IdTag = (props: IProps) => {
@@ -28,6 +29,7 @@ export const IdTag = (props: IProps) => {
         'g-id-tag-wrapper',
         {
           [style['id-tag-wrapper--empty']]: !props.id,
+          [style['id-tag-wrapper--link-normal-color']]: props.linkNormalColor,
         },
       )}
     >
