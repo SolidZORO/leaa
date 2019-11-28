@@ -8,6 +8,7 @@ import { CreateTagInput } from '@leaa/common/src/dtos/tag';
 import { IPage } from '@leaa/dashboard/src/interfaces';
 import { CREATE_TAG } from '@leaa/common/src/graphqls';
 import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
+import { messageUtil } from '@leaa/dashboard/src/utils';
 
 import { HtmlMeta, PageCard, ErrorCard, SubmitBar } from '@leaa/dashboard/src/components';
 
@@ -25,7 +26,7 @@ export default (props: IPage) => {
   const [submitVariables, setSubmitVariables] = useState<{ tag: CreateTagInput }>();
   const [createTagMutate, createTagMutation] = useMutation<{ createTag: Tag }>(CREATE_TAG, {
     variables: submitVariables,
-    onError: e => message.error(e.message),
+    onError: e => message.error(messageUtil.formatGqlmessage(e.message)),
     onCompleted({ createTag }) {
       message.success(t('_lang:createdSuccessfully'));
       props.history.push(`/tags/${createTag.id}`);

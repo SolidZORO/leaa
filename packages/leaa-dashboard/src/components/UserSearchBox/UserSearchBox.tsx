@@ -2,13 +2,14 @@ import React, { useState, useEffect, useRef, forwardRef, CSSProperties } from 'r
 import { useTranslation } from 'react-i18next';
 import cx from 'classnames';
 import _ from 'lodash';
-import { Select, AutoComplete, Input } from 'antd';
+import { Select, AutoComplete, Input, Icon } from 'antd';
 import { AutoCompleteProps } from 'antd/lib/auto-complete';
 
 import { User as UserEntry } from '@leaa/common/src/entrys';
 import { UsersWithPaginationObject, UserArgs } from '@leaa/common/src/dtos/user';
 import { GET_USERS } from '@leaa/common/src/graphqls';
 import { apolloClient } from '@leaa/dashboard/src/libs';
+
 import style from './style.module.less';
 
 interface IProps extends AutoCompleteProps {
@@ -18,7 +19,7 @@ interface IProps extends AutoCompleteProps {
   enterCreateUser?: boolean;
   value?: string | undefined;
   autoFocus?: boolean;
-  onSelectUserCallback?: (user: UserEntry) => void;
+  onSelectUserCallback?: (user: UserEntry | undefined) => void;
   onEnterCallback?: (userId: number | undefined) => void;
   onChangeUserNameCallback?: (user: string | undefined) => void;
   placeholder?: string;
@@ -27,7 +28,7 @@ interface IProps extends AutoCompleteProps {
 const DEBOUNCE_MS = 500;
 
 export const UserSearchBox = forwardRef((props: IProps, ref: React.Ref<any>) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const [inputKey, setInputKey] = useState<string | undefined>(props.value);
   const [optionalUsers, setOptionalUsers] = useState<UserEntry[]>([]);
@@ -69,6 +70,17 @@ export const UserSearchBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
 
   const onClear = () => {
     init();
+
+    if (props.onEnterCallback) {
+      props.onEnterCallback(undefined);
+    }
+
+    if (props.onChangeUserNameCallback) {
+      props.onChangeUserNameCallback(undefined);
+    }
+    if (props.onSelectUserCallback) {
+      props.onSelectUserCallback(undefined);
+    }
   };
 
   const onChange = (v: any) => {
@@ -80,10 +92,6 @@ export const UserSearchBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
 
     if (typeof v === 'undefined') {
       onClear();
-
-      if (props.onEnterCallback) {
-        props.onEnterCallback(undefined);
-      }
     }
   };
 
@@ -122,11 +130,15 @@ export const UserSearchBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
           dataSource={optionalUsers.map(user => (
             <Select.Option key={user.id}>{`#${user.id} - ${user.name} - ${user.email}`}</Select.Option>
           ))}
-          placeholder={props.placeholder || t('_comp:SelectUserId.searchUsers')}
+          placeholder={props.placeholder || t('_comp:UserSearchBox.searchUsers', i18n.language)}
           value={inputKey}
           size={props.size}
         >
-          <Input onPressEnter={onEnter} />
+          <Input
+            onPressEnter={onEnter}
+            className={style['search-input']}
+            suffix={loading ? <Icon type="loading" /> : <span />}
+          />
         </AutoComplete>
       </div>
     </div>

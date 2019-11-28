@@ -9,6 +9,7 @@ import { RolesWithPaginationObject, RolesArgs } from '@leaa/common/src/dtos/role
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { UserArgs, UpdateUserInput } from '@leaa/common/src/dtos/user';
 import { IPage } from '@leaa/dashboard/src/interfaces';
+import { messageUtil } from '@leaa/dashboard/src/utils';
 
 import { HtmlMeta, PageCard, ErrorCard, SubmitBar } from '@leaa/dashboard/src/components';
 
@@ -45,6 +46,7 @@ export default (props: IPage) => {
   });
   const [updateUserMutate, updateUserMutation] = useMutation<User>(UPDATE_USER, {
     variables: submitVariables,
+    onError: e => message.error(messageUtil.formatGqlmessage(e.message)),
     onCompleted: () => message.success(t('_lang:updatedSuccessfully')),
     refetchQueries: () => [{ query: GET_USER, variables: getUserVariables }],
   });
@@ -109,7 +111,6 @@ export default (props: IPage) => {
 
       {getUserQuery.error ? <ErrorCard error={getUserQuery.error} /> : null}
       {getRolesQuery.error ? <ErrorCard error={getRolesQuery.error} /> : null}
-      {updateUserMutation.error ? <ErrorCard error={updateUserMutation.error} /> : null}
 
       <UserInfoForm
         item={getUserQuery.data && getUserQuery.data.user}

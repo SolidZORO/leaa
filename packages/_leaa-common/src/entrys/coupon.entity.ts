@@ -78,4 +78,7 @@ export class Coupon extends Base {
   // Virtual Field (not in DB)
   @Field(() => Boolean)
   available?: boolean;
+
+  @Field(() => Boolean)
+  canRedeem?: boolean;
 }

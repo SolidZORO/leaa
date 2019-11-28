@@ -8,6 +8,7 @@ import { CreateCategoryInput } from '@leaa/common/src/dtos/category';
 import { IPage } from '@leaa/dashboard/src/interfaces';
 import { CREATE_CATEGORY } from '@leaa/common/src/graphqls';
 import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
+import { messageUtil } from '@leaa/dashboard/src/utils';
 
 import { HtmlMeta, PageCard, ErrorCard, SubmitBar } from '@leaa/dashboard/src/components';
 
@@ -25,7 +26,7 @@ export default (props: IPage) => {
   const [submitVariables, setSubmitVariables] = useState<{ category: CreateCategoryInput }>();
   const [createCategoryMutate, createCategoryMutation] = useMutation<{ createCategory: Category }>(CREATE_CATEGORY, {
     variables: submitVariables,
-    onError: e => message.error(e.message),
+    onError: e => message.error(messageUtil.formatGqlmessage(e.message)),
     onCompleted({ createCategory }) {
       message.success(t('_lang:createdSuccessfully'));
       props.history.push(`/categories/${createCategory.id}`);

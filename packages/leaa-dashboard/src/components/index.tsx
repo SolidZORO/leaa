@@ -29,3 +29,4 @@ export { TableColumnStatusSwitch } from './TableColumnStatusSwitch/TableColumnSt
 export { UserSearchBox } from './UserSearchBox/UserSearchBox';
 export { IdTag } from './IdTag/IdTag';
 export { EntryInfoDate } from './EntryInfoDate/EntryInfoDate';
+export { NullTag } from './NullTag/NullTag';

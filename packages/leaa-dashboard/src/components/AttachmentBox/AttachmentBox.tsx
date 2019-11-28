@@ -7,7 +7,7 @@ import { GET_ATTACHMENTS, UPDATE_ATTACHMENTS } from '@leaa/common/src/graphqls';
 import { IAttachmentParams } from '@leaa/common/src/interfaces';
 
 import { Attachment } from '@leaa/common/src/entrys';
-import { langUtil } from '@leaa/dashboard/src/utils';
+import { langUtil, messageUtil } from '@leaa/dashboard/src/utils';
 import {
   AttachmentsArgs,
   AttachmentsWithPaginationObject,
@@ -54,7 +54,7 @@ export const AttachmentBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
     UPDATE_ATTACHMENTS,
     {
       variables: submitVariables,
-      onError: e => message.error(e.message),
+      onError: e => message.error(messageUtil.formatGqlmessage(e.message)),
       onCompleted: () =>
         !props.disableMessage &&
         message.success(

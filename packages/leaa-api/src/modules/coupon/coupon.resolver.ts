@@ -23,6 +23,11 @@ export class CouponResolver {
     return this.couponProperty.resolvePropertyAvailable(coupon);
   }
 
+  @ResolveProperty(() => Boolean)
+  async canRedeem(@Parent() coupon: Coupon): Promise<boolean> {
+    return this.couponProperty.resolvePropertyCanRedeem(coupon);
+  }
+
   //
   //
 
@@ -66,10 +71,7 @@ export class CouponResolver {
   }
 
   @Mutation(() => Coupon)
-  async redeemCoupon(
-    @Args('info') info: RedeemCouponInput,
-    @UserDecorator() user?: User,
-  ): Promise<Coupon | undefined> {
+  async redeemCoupon(@Args('info') info: RedeemCouponInput, @UserDecorator() user?: User): Promise<Coupon | undefined> {
     return this.couponService.redeemCoupon(info, user);
   }
 

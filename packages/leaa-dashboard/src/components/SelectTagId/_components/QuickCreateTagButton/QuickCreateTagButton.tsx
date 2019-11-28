@@ -6,6 +6,7 @@ import { useMutation } from '@apollo/react-hooks';
 
 import { Tag } from '@leaa/common/src/entrys';
 import { CREATE_TAG } from '@leaa/common/src/graphqls';
+import { messageUtil } from '@leaa/dashboard/src/utils';
 
 import style from './style.module.less';
 
@@ -20,7 +21,7 @@ export const QuickCreateTagButton = (props: IProps) => {
   // mutation
   const [createTagMutate] = useMutation<{ createTag: Tag }>(CREATE_TAG, {
     variables: { tag: { name: props.tagName } },
-    onError: e => message.error(e.message),
+    onError: e => message.error(messageUtil.formatGqlmessage(e.message)),
     onCompleted({ createTag }) {
       if (props.onCreatedTagCallback) {
         props.onCreatedTagCallback(createTag);

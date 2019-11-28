@@ -14,11 +14,16 @@ import {
 } from '@leaa/common/src/dtos/coupon';
 import { formatUtil, permissionUtil, curdUtil, paginationUtil, loggerUtil } from '@leaa/api/src/utils';
 
+import { CouponProperty } from '@leaa/api/src/modules/coupon/coupon.property';
+
 const CONSTRUCTOR_NAME = 'CouponService';
 
 @Injectable()
 export class CouponService {
-  constructor(@InjectRepository(Coupon) private readonly couponRepository: Repository<Coupon>) {}
+  constructor(
+    @InjectRepository(Coupon) private readonly couponRepository: Repository<Coupon>,
+    private readonly couponProperty: CouponProperty,
+  ) {}
 
   async coupons(args: CouponsArgs, user?: User): Promise<CouponsWithPaginationObject> {
     const nextArgs = formatUtil.formatArgs(args);
@@ -114,6 +119,16 @@ export class CouponService {
 
     if (!coupon) {
       const message = 'not found coupon, redeem error.';
+
+      loggerUtil.warn(message, CONSTRUCTOR_NAME);
+
+      throw Error(message);
+    }
+
+    const canRedeemCoupon = this.couponProperty.resolvePropertyCanRedeem(coupon);
+
+    if (!canRedeemCoupon) {
+      const message = 'not available coupon, redeem error.';
 
       loggerUtil.warn(message, CONSTRUCTOR_NAME);
 

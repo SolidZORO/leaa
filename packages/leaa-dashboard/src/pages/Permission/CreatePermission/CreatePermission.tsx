@@ -9,6 +9,8 @@ import { IPage } from '@leaa/dashboard/src/interfaces';
 // eslint-disable-next-line max-len
 import { CREATE_PERMISSION } from '@leaa/common/src/graphqls';
 import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
+import { messageUtil } from '@leaa/dashboard/src/utils';
+
 import { PageCard, ErrorCard, SubmitBar } from '@leaa/dashboard/src/components';
 
 import { PermissionInfoForm } from '../_components/PermissionInfoForm/PermissionInfoForm';
@@ -27,7 +29,7 @@ export default (props: IPage) => {
     CREATE_PERMISSION,
     {
       variables: submitVariables,
-      onError: e => message.error(e.message),
+      onError: e => message.error(messageUtil.formatGqlmessage(e.message)),
       onCompleted({ createPermission }) {
         message.success(t('_lang:createdSuccessfully'));
         props.history.push(`/permissions/${createPermission.id}`);

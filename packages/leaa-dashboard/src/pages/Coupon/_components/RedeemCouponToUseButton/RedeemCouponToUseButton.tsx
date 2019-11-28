@@ -4,7 +4,7 @@ import { Popconfirm, Button, message } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useMutation } from '@apollo/react-hooks';
 
-import { User, Coupon } from '@leaa/common/src/entrys';
+import { Coupon } from '@leaa/common/src/entrys';
 
 import { UserSearchBox, ErrorCard, IdTag } from '@leaa/dashboard/src/components';
 import { REDEEM_COUPON } from '@leaa/common/src/graphqls';
@@ -14,7 +14,7 @@ import style from './style.module.less';
 
 interface IProps {
   item: Coupon;
-  available?: boolean;
+  canRedeem?: boolean;
   onConvetCompletedCallback?: () => void;
   loading?: boolean;
   className?: string;
@@ -40,7 +40,7 @@ export const RedeemCouponToUseButton = (props: IProps) => {
 
   const onSubmit = () => redeemCouponMutate();
 
-  if (props.item.user_id || (!props.item.available || !permissionUtil.hasPermission('coupon.redeem-to-any-user'))) {
+  if (props.item.user_id || (!props.item.canRedeem || !permissionUtil.hasPermission('coupon.redeem-to-any-user'))) {
     return (
       <code className={style['normal-status']}>
         <IdTag id={props.item.user_id} link={`/users/${props.item.user_id}`} />
@@ -63,7 +63,7 @@ export const RedeemCouponToUseButton = (props: IProps) => {
             <div className={style['content']}>
               <UserSearchBox
                 useOnBlur
-                onSelectUserCallback={(user: User) => setUserId(user.id)}
+                onSelectUserCallback={user => setUserId(user && user.id)}
                 onEnterCallback={v => setUserId(v)}
                 // value={tagName}
                 placeholder={langUtil.removeSpace(`${t('_lang:search')} ${t('_lang:user')}`, i18n.language)}

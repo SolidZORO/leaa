@@ -8,6 +8,7 @@ import { CreateCouponInput } from '@leaa/common/src/dtos/coupon';
 import { IPage } from '@leaa/dashboard/src/interfaces';
 import { CREATE_COUPON } from '@leaa/common/src/graphqls';
 import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
+import { messageUtil } from '@leaa/dashboard/src/utils';
 
 import { HtmlMeta, PageCard, ErrorCard, SubmitBar } from '@leaa/dashboard/src/components';
 
@@ -25,7 +26,7 @@ export default (props: IPage) => {
   const [submitVariables, setSubmitVariables] = useState<{ coupon: CreateCouponInput }>();
   const [createCouponMutate, createCouponMutation] = useMutation<{ createCoupon: Coupon }>(CREATE_COUPON, {
     variables: submitVariables,
-    onError: e => message.error(e.message),
+    onError: e => message.error(messageUtil.formatGqlmessage(e.message)),
     onCompleted() {
       message.success(t('_lang:createdSuccessfully'));
       props.history.push('/coupons');

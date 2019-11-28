@@ -8,6 +8,7 @@ import { CreateAxInput } from '@leaa/common/src/dtos/ax';
 import { IPage } from '@leaa/dashboard/src/interfaces';
 import { CREATE_AX } from '@leaa/common/src/graphqls';
 import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
+import { messageUtil } from '@leaa/dashboard/src/utils';
 
 import { HtmlMeta, PageCard, ErrorCard, SubmitBar } from '@leaa/dashboard/src/components';
 
@@ -25,7 +26,7 @@ export default (props: IPage) => {
   const [submitVariables, setSubmitVariables] = useState<{ ax: CreateAxInput }>();
   const [createAxMutate, createAxMutation] = useMutation<{ createAx: Ax }>(CREATE_AX, {
     variables: submitVariables,
-    onError: e => message.error(e.message),
+    onError: e => message.error(messageUtil.formatGqlmessage(e.message)),
     onCompleted({ createAx }) {
       message.success(t('_lang:createdSuccessfully'));
       props.history.push(`/axs/${createAx.id}`);

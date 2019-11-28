@@ -2,6 +2,8 @@ import React from 'react';
 import cx from 'classnames';
 import { Link } from 'react-router-dom';
 
+import { NullTag } from '@leaa/dashboard/src/components';
+
 import style from './style.module.less';
 
 interface IProps {
@@ -33,7 +35,7 @@ export const IdTag = (props: IProps) => {
         },
       )}
     >
-      {props.link && props.id ? <Link to={props.link}>{idDom}</Link> : idDom}
+      {props.link && props.id ? <Link to={props.link}>{idDom}</Link> : <NullTag opacity={0.4} />}
     </div>
   );
 };

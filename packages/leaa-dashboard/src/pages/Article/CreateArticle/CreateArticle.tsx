@@ -8,6 +8,8 @@ import { CreateArticleInput } from '@leaa/common/src/dtos/article';
 import { IPage } from '@leaa/dashboard/src/interfaces';
 import { CREATE_ARTICLE } from '@leaa/common/src/graphqls';
 import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
+import { messageUtil } from '@leaa/dashboard/src/utils';
+
 import { PageCard, HtmlMeta, ErrorCard, SubmitBar } from '@leaa/dashboard/src/components';
 
 import { ArticleInfoForm } from '../_components/ArticleInfoForm/ArticleInfoForm';
@@ -24,7 +26,7 @@ export default (props: IPage) => {
   const [submitVariables, setSubmitVariables] = useState<{ article: CreateArticleInput }>();
   const [createArticleMutate, createArticleMutation] = useMutation<{ createArticle: Article }>(CREATE_ARTICLE, {
     variables: submitVariables,
-    onError: e => message.error(e.message),
+    onError: e => message.error(messageUtil.formatGqlmessage(e.message)),
     onCompleted({ createArticle }) {
       message.success(t('_lang:createdSuccessfully'));
       props.history.push(`/articles/${createArticle.id}`);

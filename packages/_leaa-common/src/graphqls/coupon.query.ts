@@ -26,6 +26,7 @@ export const GET_COUPONS = gql`
         created_at
         updated_at
         available
+        canRedeem
       }
     }
   }
@@ -55,6 +56,7 @@ export const GET_COUPON = gql`
       created_at
       updated_at
       available
+      canRedeem
     }
   }
 `;

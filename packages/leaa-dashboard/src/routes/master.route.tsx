@@ -240,6 +240,18 @@ export const masterRoutes: IRouteItem[] = [
       },
       // ---- Coupon ----
       {
+        name: 'redeem Coupon',
+        namei18n: '_route:redeemCoupon',
+        permission: 'coupon.redeem',
+        path: '/coupons/redeem',
+        icon: 'x-coupon',
+        LazyComponent: React.lazy(() =>
+          import(/* webpackChunkName: 'RedeemCoupon' */ '../pages/Coupon/RedeemCoupon/RedeemCoupon'),
+        ),
+        exact: true,
+        isCreate: true,
+      },
+      {
         name: 'Create Coupon',
         namei18n: '_route:createCoupon',
         permission: 'coupon.create',

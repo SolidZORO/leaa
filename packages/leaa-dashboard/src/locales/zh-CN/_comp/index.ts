@@ -5,6 +5,7 @@ import SelectTagId from './SelectTagId.lang';
 import SearchInput from './SearchInput.lang';
 import CouponItem from './CouponItem.lang';
 import TableColumnStatusSwitch from './TableColumnStatusSwitch.lang';
+import UserSearchBox from './UserSearchBox.lang';
 
 export default {
   SwitchLanguage,
@@ -14,4 +15,5 @@ export default {
   SearchInput,
   CouponItem,
   TableColumnStatusSwitch,
+  UserSearchBox,
 };

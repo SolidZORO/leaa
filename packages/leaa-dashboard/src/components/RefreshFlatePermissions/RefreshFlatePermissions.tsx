@@ -6,7 +6,7 @@ import { useQuery } from '@apollo/react-hooks';
 
 import { GET_USER_BY_TOKEN } from '@leaa/common/src/graphqls';
 import { LOGOUT_REDIRECT_URL } from '@leaa/dashboard/src/constants';
-import { authUtil } from '@leaa/dashboard/src/utils';
+import { authUtil, messageUtil } from '@leaa/dashboard/src/utils';
 import { IAuthInfo } from '@leaa/dashboard/src/interfaces';
 
 interface IProps {
@@ -33,7 +33,7 @@ export const RefreshFlatePermissions = (props: IProps) => {
           return props.history.push(LOGOUT_REDIRECT_URL);
         }
 
-        return message.error(e.message);
+        return message.error(messageUtil.formatGqlmessage(e.message));
       },
     });
   }

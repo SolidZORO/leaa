@@ -167,6 +167,7 @@ type Coupon {
   creator_id: Int!
   status: Int
   available: Boolean!
+  canRedeem: Boolean!
 }
 
 type CouponsWithPaginationObject {
