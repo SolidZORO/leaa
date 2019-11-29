@@ -12,7 +12,7 @@ import {
   UpdateCouponInput,
   RedeemCouponInput,
 } from '@leaa/common/src/dtos/coupon';
-import { formatUtil, permissionUtil, curdUtil, paginationUtil, loggerUtil } from '@leaa/api/src/utils';
+import { formatUtil, curdUtil, paginationUtil, loggerUtil, authUtil } from '@leaa/api/src/utils';
 
 import { CouponProperty } from '@leaa/api/src/modules/coupon/coupon.property';
 
@@ -25,7 +25,9 @@ export class CouponService {
     private readonly couponProperty: CouponProperty,
   ) {}
 
-  async coupons(args: CouponsArgs, user?: User): Promise<CouponsWithPaginationObject> {
+  async coupons(args: CouponsArgs, user?: User): Promise<CouponsWithPaginationObject | undefined> {
+    if (!user || !authUtil.checkAvailabilityUser(user)) throw Error();
+
     const nextArgs = formatUtil.formatArgs(args);
 
     const qb = getRepository(Coupon).createQueryBuilder();
@@ -40,7 +42,11 @@ export class CouponService {
       });
     }
 
-    if (!user || (user && !permissionUtil.hasPermission(user, 'coupon.list'))) {
+    if (!authUtil.hasPermission(user, 'coupon.list-allow-all-user-id')) {
+      qb.andWhere('user_id = :user_id', { user_id: user.id });
+    }
+
+    if (!authUtil.hasPermission(user, 'coupon.list-allow-all-status')) {
       qb.andWhere('status = :status', { status: 1 });
     }
 
@@ -48,15 +54,23 @@ export class CouponService {
   }
 
   async coupon(id: number, args?: CouponArgs & FindOneOptions<Coupon>, user?: User): Promise<Coupon | undefined> {
+    if (!user || !authUtil.checkAvailabilityUser(user)) throw Error();
+
     let nextArgs: FindOneOptions<Coupon> = {};
 
     if (args) {
       nextArgs = args;
     }
 
+    const qb = getRepository(Coupon).createQueryBuilder();
+
+    if (!authUtil.hasPermission(user, 'coupon.item-allow-all-user-id')) {
+      qb.andWhere('user_id = :user_id', { user_id: user.id });
+    }
+
     const whereQuery: { id: number; status?: number } = { id };
 
-    if (!user || (user && !permissionUtil.hasPermission(user, 'coupon.list'))) {
+    if (!user || (user && !authUtil.hasPermission(user, 'coupon.list'))) {
       whereQuery.status = 1;
     }
 
@@ -74,9 +88,9 @@ export class CouponService {
     const coupon = await this.couponRepository.findOne({ where: { code } });
 
     if (!coupon) {
-      const message = 'not found coupon';
+      const message = 'Not Found Coupon';
 
-      loggerUtil.warn(message, CONSTRUCTOR_NAME);
+      loggerUtil.warn(`couponByCode: ${message}`, CONSTRUCTOR_NAME);
 
       return undefined;
     }
@@ -118,36 +132,49 @@ export class CouponService {
     const coupon = await this.couponByCode(info.code);
 
     if (!coupon) {
-      const message = 'not found coupon, redeem error.';
+      const message = 'Not Found Coupon';
 
       loggerUtil.warn(message, CONSTRUCTOR_NAME);
-
       throw Error(message);
     }
 
-    const canRedeemCoupon = this.couponProperty.resolvePropertyCanRedeem(coupon);
+    //
+
+    const availableCoupon = this.couponProperty.available(coupon);
+
+    if (!availableCoupon) {
+      const message = 'Coupon Unavailable';
+
+      loggerUtil.warn(message, CONSTRUCTOR_NAME);
+      throw Error(message);
+    }
+
+    //
+
+    const canRedeemCoupon = this.couponProperty.canRedeem(coupon);
 
     if (!canRedeemCoupon) {
-      const message = 'not available coupon, redeem error.';
+      const message = 'Coupon Irredeemable';
 
       loggerUtil.warn(message, CONSTRUCTOR_NAME);
-
       throw Error(message);
     }
+
+    //
 
     if (coupon.user_id) {
-      const message = 'coupon already redeemed';
+      const message = 'Coupon Already redeemed';
 
       loggerUtil.warn(message, CONSTRUCTOR_NAME);
-
       throw Error(message);
     }
 
+    //
+
     if (!user || !user.id) {
-      const message = 'not found user';
+      const message = 'Not Found User';
 
       loggerUtil.warn(message, CONSTRUCTOR_NAME);
-
       throw Error(message);
     }
 
@@ -156,7 +183,7 @@ export class CouponService {
       user_id: user.id,
     };
 
-    if (info.userId && permissionUtil.hasPermission(user, 'coupon.redeem-to-any-user')) {
+    if (info.userId && authUtil.hasPermission(user, 'coupon.redeem-to-any-user')) {
       nextCoupon = {
         ...coupon,
         user_id: info.userId,

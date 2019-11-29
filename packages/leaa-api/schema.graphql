@@ -336,6 +336,7 @@ type Mutation {
   deleteCoupon(id: Int!): Coupon!
   createPromo(promo: CreatePromoInput!): Promo!
   updatePromo(promo: UpdatePromoInput!, id: Int!): Promo!
+  redeemPromo(info: RedeemPromoInput!): Promo!
   deletePromo(id: Int!): Promo!
 }
 
@@ -449,9 +450,15 @@ type Query {
   couponByCode(code: String!): Coupon!
   promos(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): PromosWithPaginationObject!
   promo(id: Int!): Promo!
+  promoByCode(code: String!): Promo!
 }
 
 input RedeemCouponInput {
+  code: String!
+  userId: Int
+}
+
+input RedeemPromoInput {
   code: String!
   userId: Int
 }

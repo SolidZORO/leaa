@@ -19,13 +19,13 @@ export class CouponResolver {
   constructor(private readonly couponService: CouponService, private readonly couponProperty: CouponProperty) {}
 
   @ResolveProperty(() => Boolean)
-  async available(@Parent() coupon: Coupon): Promise<boolean> {
-    return this.couponProperty.resolvePropertyAvailable(coupon);
+  available(@Parent() coupon: Coupon): boolean {
+    return this.couponProperty.available(coupon);
   }
 
   @ResolveProperty(() => Boolean)
-  async canRedeem(@Parent() coupon: Coupon): Promise<boolean> {
-    return this.couponProperty.resolvePropertyCanRedeem(coupon);
+  canRedeem(@Parent() coupon: Coupon): boolean {
+    return this.couponProperty.canRedeem(coupon);
   }
 
   //

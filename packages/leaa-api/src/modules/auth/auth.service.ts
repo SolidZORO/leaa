@@ -43,7 +43,7 @@ export class AuthService {
     };
   }
 
-  async validateUser(payload: IJwtPayload): Promise<User | undefined | boolean> {
+  async validateUser(payload: IJwtPayload): Promise<User | undefined> {
     return this.userService.user(payload.id, {});
   }
 
@@ -71,7 +71,9 @@ export class AuthService {
     let userPayload;
 
     try {
-      userPayload = jwt.verify(tokenWithoutBearer, this.configService.JWT_SECRET_KEY) as (IJwtPayload | undefined);
+      userPayload = (await jwt.verify(tokenWithoutBearer, this.configService.JWT_SECRET_KEY)) as (
+        | IJwtPayload
+        | undefined);
     } catch (error) {
       if (error instanceof jwt.NotBeforeError) {
         throw new AuthenticationError('Token not before');

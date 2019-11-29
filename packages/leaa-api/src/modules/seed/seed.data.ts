@@ -66,7 +66,9 @@ export const permissionsSeed = [
   { name: 'Setting Delete', slug: 'setting.delete' },
   //
   { name: 'Coupon List', slug: 'coupon.list' },
+  { name: 'Coupon List Allow All Status', slug: 'coupon.list-allow-all-status' },
   { name: 'Coupon Item', slug: 'coupon.item' },
+  { name: 'Coupon Item Allow All User Id', slug: 'coupon.item-allow-all-user-id' },
   { name: 'Coupon Create', slug: 'coupon.create' },
   { name: 'Coupon Update', slug: 'coupon.update' },
   { name: 'Coupon Delete', slug: 'coupon.delete' },
@@ -88,9 +90,12 @@ export const rolesSeed = [
 
 // prettier-ignore
 export const usersSeed = [
-  { email: 'admin@leaa.com', name: 'admin', password: 'h8Hx9qvPKoHMLQgj', status: 1 },
-  { email: 'staff@leaa.com', name: 'staff', password: '7PkQGjvHMMkoo4RZ', status: 1 },
-  { email: 'disabled@leaa.com', name: 'disabled', password: 'uUB3YGrdL3gJZYij', status: 0 },
+  { email: 'admin@leaa.com', name: 'Admin', password: 'h8Hx9qvPKoHMLQgj', status: 1 },
+  { email: 'staff@leaa.com', name: 'Staff', password: '7PkQGjvHMMkoo4RZ', status: 1 },
+  { email: 'disabled@leaa.com', name: 'Disabled', password: 'uUB3YGrdL3gJZYij', status: 1 },
+  { email: 'empty-en@leaa.com', name: 'Empty User', password: 'uUB3YGrdL3gJZYi1', status: 1 },
+  { email: 'empty-cn@leaa.com', name: '空号用户', password: 'uUB3YGrdL3gJZYi2', status: 1 },
+  { email: 'empty-jp@leaa.com', name: '空のユーザー', password: 'uUB3YGrdL3gJZYi3', status: 1 },
 ];
 
 const randomSersSeedData = [];

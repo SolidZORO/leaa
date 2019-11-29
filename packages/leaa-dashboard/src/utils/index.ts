@@ -7,4 +7,3 @@ export { attachmentUtil } from './attachment.util';
 export { messageUtil } from './message.util';
 export { priceUtil } from './price.util';
 export { settingUtil } from './setting.util';
-export { permissionUtil } from './permission.util';

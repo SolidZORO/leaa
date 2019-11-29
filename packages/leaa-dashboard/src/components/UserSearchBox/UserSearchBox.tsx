@@ -5,9 +5,9 @@ import _ from 'lodash';
 import { Select, AutoComplete, Input, Icon } from 'antd';
 import { AutoCompleteProps } from 'antd/lib/auto-complete';
 
-import { User as UserEntry } from '@leaa/common/src/entrys';
-import { UsersWithPaginationObject, UserArgs } from '@leaa/common/src/dtos/user';
-import { GET_USERS } from '@leaa/common/src/graphqls';
+import { User as UserEntry, User } from '@leaa/common/src/entrys';
+import { UsersWithPaginationObject, UserArgs, UsersArgs } from '@leaa/common/src/dtos/user';
+import { GET_USERS, GET_USER } from '@leaa/common/src/graphqls';
 import { apolloClient } from '@leaa/dashboard/src/libs';
 
 import style from './style.module.less';
@@ -17,7 +17,8 @@ interface IProps extends AutoCompleteProps {
   className?: string;
   useOnBlur?: boolean;
   enterCreateUser?: boolean;
-  value?: string | undefined;
+  value?: string;
+  defaultValue?: string | string[] | number;
   autoFocus?: boolean;
   onSelectUserCallback?: (user: UserEntry | undefined) => void;
   onEnterCallback?: (userId: number | undefined) => void;
@@ -34,26 +35,24 @@ export const UserSearchBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
   const [optionalUsers, setOptionalUsers] = useState<UserEntry[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const init = () => {
-    setLoading(false);
-    setInputKey(undefined);
-    setOptionalUsers([]);
+  const onSelect = (userId: any) => {
+    const userObject = optionalUsers.find(item => item.id === Number(userId));
+
+    if (props.onSelectUserCallback && userObject) {
+      props.onSelectUserCallback(userObject);
+    }
   };
 
-  useEffect(() => {
-    return () => init();
-  }, []);
-
-  // query
+  // query users
   const queryUsers = useRef(
-    _.debounce((v: string) => {
+    _.debounce((q: string) => {
       setLoading(true);
       setOptionalUsers([]);
 
       apolloClient
-        .query<{ users: UsersWithPaginationObject }, UserArgs>({
+        .query<{ users: UsersWithPaginationObject }, UsersArgs>({
           query: GET_USERS,
-          variables: { page: 1, pageSize: 10, q: v },
+          variables: { page: 1, pageSize: 10, q },
           fetchPolicy: 'network-only',
         })
         .then((result: { data: { users: UsersWithPaginationObject } }) => {
@@ -64,13 +63,40 @@ export const UserSearchBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
         .finally(() => setLoading(false));
     }, DEBOUNCE_MS),
   );
+  const onQueryUsers = (q: string) => queryUsers.current(q);
 
-  // query
-  const onQueryUsers = (user: string) => queryUsers.current(user);
+  // query user
+  const onQueryUser = (userId: number) =>
+    apolloClient
+      .query<{ user: User }, UserArgs>({
+        query: GET_USER,
+        variables: { id: userId },
+        fetchPolicy: 'network-only',
+      })
+      .then((result?: { data?: { user?: User } }) => {
+        if (result && result.data && result.data.user) {
+          setOptionalUsers([result.data.user]);
 
-  const onClear = () => {
+          setInputKey(`${userId}`);
+        }
+      })
+      .finally(() => setLoading(false));
+
+  const init = () => {
+    setLoading(false);
+    setInputKey(undefined);
+    setOptionalUsers([]);
+  };
+
+  useEffect(() => {
     init();
 
+    if (props.defaultValue) {
+      onQueryUser(Number(props.defaultValue)).then();
+    }
+  }, []);
+
+  const onClear = () => {
     if (props.onEnterCallback) {
       props.onEnterCallback(undefined);
     }
@@ -78,9 +104,12 @@ export const UserSearchBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
     if (props.onChangeUserNameCallback) {
       props.onChangeUserNameCallback(undefined);
     }
+
     if (props.onSelectUserCallback) {
       props.onSelectUserCallback(undefined);
     }
+
+    init();
   };
 
   const onChange = (v: any) => {
@@ -99,19 +128,13 @@ export const UserSearchBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
     onQueryUsers(v);
   };
 
-  const onSelect = (userId: any) => {
-    const userObject = optionalUsers.find(item => item.id === Number(userId));
-
-    if (props.onSelectUserCallback && userObject) {
-      props.onSelectUserCallback(userObject);
-    }
-  };
-
   const onEnter = (e: any) => {
     if (props.onEnterCallback) {
       props.onEnterCallback(e.currentTarget.value);
     }
   };
+
+  console.log(optionalUsers);
 
   // TIPS: onEnter & onSelect will be CONFLICT!
   return (
@@ -132,6 +155,7 @@ export const UserSearchBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
           ))}
           placeholder={props.placeholder || t('_comp:UserSearchBox.searchUsers', i18n.language)}
           value={inputKey}
+          defaultValue={props.defaultValue}
           size={props.size}
         >
           <Input

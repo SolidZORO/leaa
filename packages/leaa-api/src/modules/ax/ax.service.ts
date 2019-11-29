@@ -4,7 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 import { Ax, User } from '@leaa/common/src/entrys';
 import { AxsArgs, AxsWithPaginationObject, AxArgs, CreateAxInput, UpdateAxInput } from '@leaa/common/src/dtos/ax';
-import { formatUtil, loggerUtil, permissionUtil, curdUtil, paginationUtil } from '@leaa/api/src/utils';
+import { formatUtil, loggerUtil, authUtil, curdUtil, paginationUtil } from '@leaa/api/src/utils';
 
 const CONSTRUCTOR_NAME = 'AxService';
 
@@ -26,7 +26,7 @@ export class AxService {
       });
     }
 
-    if (!user || (user && !permissionUtil.hasPermission(user, 'attachment.list'))) {
+    if (!user || (user && !authUtil.hasPermission(user, 'attachment.list'))) {
       qb.andWhere('status = :status', { status: 1 });
     }
 
@@ -42,7 +42,7 @@ export class AxService {
 
     const whereQuery: { id: number; status?: number } = { id };
 
-    if (!user || (user && !permissionUtil.hasPermission(user, 'attachment.list'))) {
+    if (!user || (user && !authUtil.hasPermission(user, 'attachment.list'))) {
       whereQuery.status = 1;
     }
 

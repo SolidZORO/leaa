@@ -8,6 +8,7 @@ import {
   PromoArgs,
   CreatePromoInput,
   UpdatePromoInput,
+  RedeemPromoInput,
 } from '@leaa/common/src/dtos/promo';
 import { UserDecorator } from '@leaa/api/src/decorators';
 import { PromoService } from '@leaa/api/src/modules/promo/promo.service';
@@ -19,7 +20,7 @@ export class PromoResolver {
 
   @ResolveProperty(() => Boolean)
   async available(@Parent() promo: Promo): Promise<boolean> {
-    return this.promoProperty.resolvePropertyAvailable(promo);
+    return this.promoProperty.available(promo);
   }
 
   //
@@ -42,6 +43,15 @@ export class PromoResolver {
     return this.promoService.promo(id, args, user);
   }
 
+  @Query(() => Promo)
+  async promoByCode(
+    @Args({ name: 'code', type: () => String }) code: string,
+    @Args() args?: PromoArgs,
+    @UserDecorator() user?: User,
+  ): Promise<Promo | undefined> {
+    return this.promoService.promoByCode(code, args, user);
+  }
+
   @Mutation(() => Promo)
   async createPromo(@Args('promo') args: CreatePromoInput): Promise<Promo | undefined> {
     return this.promoService.createPromo(args);
@@ -53,6 +63,11 @@ export class PromoResolver {
     @Args('promo') args: UpdatePromoInput,
   ): Promise<Promo | undefined> {
     return this.promoService.updatePromo(id, args);
+  }
+
+  @Mutation(() => Promo)
+  async redeemPromo(@Args('info') info: RedeemPromoInput, @UserDecorator() user?: User): Promise<Promo | undefined> {
+    return this.promoService.redeemPromo(info, user);
   }
 
   @Mutation(() => Promo)

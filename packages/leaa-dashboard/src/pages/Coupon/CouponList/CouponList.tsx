@@ -11,7 +11,7 @@ import { GET_COUPONS, DELETE_COUPON, UPDATE_COUPON } from '@leaa/common/src/grap
 import { Coupon } from '@leaa/common/src/entrys';
 import { IOrderSort } from '@leaa/common/src/dtos/_common';
 import { CouponsWithPaginationObject, CouponArgs } from '@leaa/common/src/dtos/coupon';
-import { urlUtil, tableUtil } from '@leaa/dashboard/src/utils';
+import { urlUtil, tableUtil, langUtil } from '@leaa/dashboard/src/utils';
 import { IPage } from '@leaa/dashboard/src/interfaces';
 
 import {
@@ -26,6 +26,7 @@ import {
   TableColumnStatusSwitch,
   IdTag,
   TableColumnDate,
+  UserSearchBox,
 } from '@leaa/dashboard/src/components';
 
 import { RedeemCouponToUseButton } from '../_components/RedeemCouponToUseButton/RedeemCouponToUseButton';
@@ -38,22 +39,22 @@ export default (props: IPage) => {
   const urlParams = queryString.parse(window.location.search);
   const urlPagination = urlUtil.getPagination(urlParams);
 
-  const [q, setQ] = useState<string | undefined>(urlParams && urlParams.q ? `${urlParams.q}` : undefined);
+  const [q, setQ] = useState<string | undefined>(urlParams.q ? `${urlParams.q}` : undefined);
   const [page, setPage] = useState<number | undefined>(urlPagination.page);
   const [pageSize, setPageSize] = useState<number | undefined>(urlPagination.pageSize);
   const [selectedRowKeys, setSelectedRowKeys] = useState<number[] | string[]>([]);
 
   // sort
-  const [orderBy, setOrderBy] = useState<string | undefined>(
-    urlParams && urlParams.orderBy ? `${urlParams.orderBy}` : undefined,
+  const [orderBy, setOrderBy] = useState<string | undefined>(urlParams.orderBy ? `${urlParams.orderBy}` : undefined);
+  const [orderSort, setOrderSort] = useState<IOrderSort | undefined>(
+    urlParams.orderSort ? urlUtil.formatOrderSort(`${urlParams.orderSort}`) : undefined,
   );
 
-  const [orderSort, setOrderSort] = useState<IOrderSort | undefined>(
-    urlParams && urlParams.orderSort ? urlUtil.formatOrderSort(`${urlParams.orderSort}`) : undefined,
-  );
+  // filter
+  const [userId, setUserId] = useState<number | undefined>(urlParams.userId ? Number(urlParams.userId) : undefined);
 
   // query
-  const getCouponsVariables = { page, pageSize, q, orderBy, orderSort };
+  const getCouponsVariables = { page, pageSize, q, orderBy, orderSort, userId };
   const getCouponsQuery = useQuery<{ coupons: CouponsWithPaginationObject }, CouponArgs>(GET_COUPONS, {
     variables: getCouponsVariables,
     fetchPolicy: 'network-only',
@@ -71,6 +72,7 @@ export default (props: IPage) => {
     setOrderBy(undefined);
     setOrderSort(undefined);
     setQ(undefined);
+    setUserId(undefined);
   };
 
   useEffect(() => {
@@ -173,6 +175,25 @@ export default (props: IPage) => {
               {t('_page:Coupon.Component.redeem')}
             </Button>
           </Link>
+
+          <UserSearchBox
+            className={style['user-search-box']}
+            useOnBlur
+            defaultValue={userId}
+            onSelectUserCallback={user => {
+              urlUtil.mergeParamToUrlQuery({
+                window,
+                params: {
+                  page: 1,
+                  userId: user && user.id,
+                },
+                replace: true,
+              });
+
+              setUserId(user && user.id);
+            }}
+            style={{ width: 200 }}
+          />
 
           <SearchInput
             value={q}

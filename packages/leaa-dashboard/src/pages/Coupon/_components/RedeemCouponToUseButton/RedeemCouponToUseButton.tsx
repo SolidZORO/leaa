@@ -8,7 +8,7 @@ import { Coupon } from '@leaa/common/src/entrys';
 
 import { UserSearchBox, ErrorCard, IdTag } from '@leaa/dashboard/src/components';
 import { REDEEM_COUPON } from '@leaa/common/src/graphqls';
-import { langUtil, permissionUtil } from '@leaa/dashboard/src/utils';
+import { langUtil, authUtil } from '@leaa/dashboard/src/utils';
 
 import style from './style.module.less';
 
@@ -40,7 +40,7 @@ export const RedeemCouponToUseButton = (props: IProps) => {
 
   const onSubmit = () => redeemCouponMutate();
 
-  if (props.item.user_id || (!props.item.canRedeem || !permissionUtil.hasPermission('coupon.redeem-to-any-user'))) {
+  if (props.item.user_id || (!props.item.canRedeem || !authUtil.hasPermission('coupon.redeem-to-any-user'))) {
     return (
       <code className={style['normal-status']}>
         <IdTag id={props.item.user_id} link={`/users/${props.item.user_id}`} />

@@ -13,7 +13,7 @@ import {
 } from '@leaa/common/src/dtos/user';
 import { RoleService } from '@leaa/api/src/modules/role/role.service';
 import { UserProperty } from '@leaa/api/src/modules/user/user.property';
-import { formatUtil, permissionUtil, curdUtil, loggerUtil, paginationUtil } from '@leaa/api/src/utils';
+import { formatUtil, curdUtil, paginationUtil, authUtil } from '@leaa/api/src/utils';
 import { JwtService } from '@nestjs/jwt';
 
 const CONSTRUCTOR_NAME = 'UserService';
@@ -49,7 +49,7 @@ export class UserService {
     qb.select().orderBy(`${PRIMARY_TABLE}.${nextArgs.orderBy || 'id'}`, nextArgs.orderSort);
 
     // relations
-    if (user && permissionUtil.hasPermission(user, 'role.list')) {
+    if (user && authUtil.hasPermission(user, 'role.list')) {
       qb.leftJoinAndSelect(`${PRIMARY_TABLE}.roles`, 'roles');
     }
 
