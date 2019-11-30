@@ -127,8 +127,11 @@ class RolePermissionsFormInner extends React.PureComponent<IProps> {
                         <h3>{t(`_route:${key}`)}</h3>
                         <Row gutter={16} type="flex" className={style['permission-group']}>
                           {pg.map(p => (
-                            <Col key={p.id} xs={12} lg={6}>
-                              <Checkbox value={p.id}>{p.name}</Checkbox>
+                            <Col key={p.id} xs={24} className={style['permission-item']}>
+                              <Checkbox value={p.id}>
+                                <strong>{p.name}</strong>
+                                <em>{p.slug}</em>
+                              </Checkbox>
                             </Col>
                           ))}
                         </Row>

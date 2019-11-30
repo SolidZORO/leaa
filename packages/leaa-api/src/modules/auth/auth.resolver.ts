@@ -11,6 +11,7 @@ export class AuthResolver {
 
   @Mutation(() => User)
   async login(@Args('user') args: AuthLoginInput): Promise<User | undefined> {
+    console.log(11111111, args);
     return this.authService.login(args);
   }
 

@@ -23,7 +23,13 @@ export class Promo extends Base {
   @Field(() => Int)
   redeemed_quantity?: number;
 
-  @Column({ type: 'decimal', precision: 11, scale: 2, comment: 'trigger amount, including the amount value' })
+  @Column({
+    type: 'decimal',
+    precision: 11,
+    scale: 2,
+    default: 1.0,
+    comment: 'trigger amount, including the amount value',
+  })
   @Field(() => Float)
   over_amount?: number;
 

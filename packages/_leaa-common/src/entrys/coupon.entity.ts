@@ -31,7 +31,13 @@ export class Coupon extends Base {
   @Field(() => String, { nullable: true })
   promo_code?: number;
 
-  @Column({ type: 'decimal', precision: 11, scale: 2, comment: 'trigger amount, including the amount value' })
+  @Column({
+    type: 'decimal',
+    precision: 11,
+    scale: 2,
+    default: 1.0,
+    comment: 'trigger amount, including the amount value',
+  })
   @Field(() => Float)
   over_amount?: number;
 

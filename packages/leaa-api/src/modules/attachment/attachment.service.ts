@@ -79,7 +79,7 @@ export class AttachmentService {
       });
     }
 
-    if (!user || (user && !authUtil.hasPermission(user, 'attachment.list'))) {
+    if (!user || (user && !authUtil.can(user, 'attachment.list-read--all-status'))) {
       qb.andWhere('status = :status', { status: 1 });
     }
 
@@ -105,7 +105,7 @@ export class AttachmentService {
 
     const whereQuery: { uuid: string; status?: number } = { uuid };
 
-    if (!user || (user && !authUtil.hasPermission(user, 'attachment.item'))) {
+    if (!user || (user && !authUtil.can(user, 'attachment.item-read--all-status'))) {
       whereQuery.status = 1;
     }
 

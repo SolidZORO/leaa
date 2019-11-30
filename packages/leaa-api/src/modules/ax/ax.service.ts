@@ -26,7 +26,7 @@ export class AxService {
       });
     }
 
-    if (!user || (user && !authUtil.hasPermission(user, 'attachment.list'))) {
+    if (!user || (user && !authUtil.can(user, 'ax.list-read--all-status'))) {
       qb.andWhere('status = :status', { status: 1 });
     }
 
@@ -42,7 +42,7 @@ export class AxService {
 
     const whereQuery: { id: number; status?: number } = { id };
 
-    if (!user || (user && !authUtil.hasPermission(user, 'attachment.list'))) {
+    if (!user || (user && !authUtil.can(user, 'ax.item-read--all-status'))) {
       whereQuery.status = 1;
     }
 

@@ -11,7 +11,16 @@ import {
   CreateArticleInput,
   UpdateArticleInput,
 } from '@leaa/common/src/dtos/article';
-import { formatUtil, paginationUtil, curdUtil, stringUtil, loggerUtil, dictUtil } from '@leaa/api/src/utils';
+import {
+  formatUtil,
+  paginationUtil,
+  curdUtil,
+  stringUtil,
+  loggerUtil,
+  dictUtil,
+  authUtil,
+  messageUtil,
+} from '@leaa/api/src/utils';
 import { TagService } from '@leaa/api/src/modules/tag/tag.service';
 
 const CONSTRUCTOR_NAME = 'ArticleService';
@@ -39,8 +48,9 @@ export class ArticleService {
     if (nextArgs.q) {
       const qLike = `%${nextArgs.q}%`;
 
-      qb.andWhere(`${PRIMARY_TABLE}.title LIKE :title`, { title: qLike });
-      qb.andWhere(`${PRIMARY_TABLE}.slug LIKE :slug`, { slug: qLike });
+      ['title', 'slug'].forEach(key => {
+        qb.andWhere(`${PRIMARY_TABLE}.${key} LIKE :${key}`, { [key]: qLike });
+      });
     }
 
     // tag
@@ -77,13 +87,7 @@ export class ArticleService {
   async articleBySlug(slug: string, args?: ArticleArgs & FindOneOptions<Article>): Promise<Article | undefined> {
     const article = await this.articleRepository.findOne({ where: { slug } });
 
-    if (!article) {
-      const message = 'not found article';
-
-      loggerUtil.warn(message, CONSTRUCTOR_NAME);
-
-      return undefined;
-    }
+    if (!article) return messageUtil.NOT_FOUND();
 
     return this.article(article.id, args);
   }
@@ -96,6 +100,7 @@ export class ArticleService {
     if (args.categoryIds) {
       categoryObjects = await this.categoryRepository.findByIds(args.categoryIds);
     }
+
     relationArgs.categories = categoryObjects;
 
     return this.articleRepository.save({ ...args, ...relationArgs });

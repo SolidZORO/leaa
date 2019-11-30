@@ -13,10 +13,18 @@ import { SeedService } from '@leaa/api/src/modules/seed/seed.service';
   const app: NestExpressApplication = await NestFactory.create(AppModule);
 
   if (process.argv.includes('--nuke')) {
-    console.log('\n\n\n\n>>>>>>>>>>>>>>>> ✴️✴️✴️✴️✴️✴️✴️✴️✴️✴️ NUKE NUKE NUKE NUKE\n\n\n\n');
+    console.log('\n\n\n\n\n\n\n\n\n\n\n✴️✴️✴️✴️✴️✴️✴️✴️✴️✴️ NUKE NUKE NUKE NUKE\n\n\n\n');
 
     await getConnection().synchronize(true);
   }
+
+  const forceExit = () => {
+    process.exit();
+    process.exit(0);
+    process.exit(1);
+    process.kill(process.pid);
+    process.abort();
+  };
 
   try {
     const seedService: SeedService = await app.get(SeedService);
@@ -31,15 +39,21 @@ import { SeedService } from '@leaa/api/src/modules/seed/seed.service';
     await seedService.insertArticle();
     await seedService.insertAx();
     await seedService.insertAttachment();
+    await seedService.insertCoupon();
+    await seedService.insertPromo();
 
     if (process.argv.includes('--debug')) {
       await seedService.insertRandomUsers();
     }
 
-    process.exit(0);
+    await console.log('\n\n\n\n---- ALL SEED INSERTED ----');
+    // await process.exit(1);
+    await forceExit();
   } catch (e) {
-    process.exit(0);
+    await console.log('\n\n\n\n---- SEED INSERT FAILD ----', e);
+    await forceExit();
   }
 
-  await process.exit(0);
+  await console.log('\n\n\n\n---- SEED FINAL ----');
+  await forceExit();
 })();

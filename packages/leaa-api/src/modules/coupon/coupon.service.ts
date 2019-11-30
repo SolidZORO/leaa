@@ -4,6 +4,7 @@ import { Repository, FindOneOptions, getRepository, SelectQueryBuilder } from 't
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { Coupon, User } from '@leaa/common/src/entrys';
+import { ILLEGAL_USER } from '@leaa/api/src/constants';
 import {
   CouponsArgs,
   CouponsWithPaginationObject,
@@ -25,11 +26,17 @@ export class CouponService {
     private readonly couponProperty: CouponProperty,
   ) {}
 
-  async coupons(args: CouponsArgs, user?: User): Promise<CouponsWithPaginationObject | undefined> {
-    if (!user || !authUtil.checkAvailabilityUser(user)) throw Error();
+  generateCouponCode(prefix: string): string {
+    return `${prefix}${uuid
+      .v4()
+      .replace(/-/g, '')
+      .slice(0, 15)}`.toUpperCase();
+  }
+
+  async coupons(args: CouponsArgs, user?: User): Promise<CouponsWithPaginationObject> {
+    if (!user || !authUtil.checkAvailableUser(user)) throw Error(ILLEGAL_USER);
 
     const nextArgs = formatUtil.formatArgs(args);
-
     const qb = getRepository(Coupon).createQueryBuilder();
 
     qb.select().orderBy(nextArgs.orderBy || 'id', nextArgs.orderSort);
@@ -42,11 +49,11 @@ export class CouponService {
       });
     }
 
-    if (!authUtil.hasPermission(user, 'coupon.list-allow-all-user-id')) {
+    if (!authUtil.can(user, 'coupon.list-read--all-user-id')) {
       qb.andWhere('user_id = :user_id', { user_id: user.id });
     }
 
-    if (!authUtil.hasPermission(user, 'coupon.list-allow-all-status')) {
+    if (!authUtil.can(user, 'coupon.list-read--all-status')) {
       qb.andWhere('status = :status', { status: 1 });
     }
 
@@ -54,30 +61,19 @@ export class CouponService {
   }
 
   async coupon(id: number, args?: CouponArgs & FindOneOptions<Coupon>, user?: User): Promise<Coupon | undefined> {
-    if (!user || !authUtil.checkAvailabilityUser(user)) throw Error();
-
-    let nextArgs: FindOneOptions<Coupon> = {};
-
-    if (args) {
-      nextArgs = args;
-    }
+    if (!user || !authUtil.checkAvailableUser(user)) throw Error(ILLEGAL_USER);
 
     const qb = getRepository(Coupon).createQueryBuilder();
 
-    if (!authUtil.hasPermission(user, 'coupon.item-allow-all-user-id')) {
+    if (user && !authUtil.can(user, 'coupon.item-read--all-user-id')) {
       qb.andWhere('user_id = :user_id', { user_id: user.id });
     }
 
-    const whereQuery: { id: number; status?: number } = { id };
-
-    if (!user || (user && !authUtil.hasPermission(user, 'coupon.list'))) {
-      whereQuery.status = 1;
+    if (!user || (user && !authUtil.can(user, 'coupon.item-read--all-status'))) {
+      qb.andWhere('status = :status', { status: 1 });
     }
 
-    return this.couponRepository.findOne({
-      ...nextArgs,
-      where: whereQuery,
-    });
+    return qb.andWhere('id = :id', { id }).getOne();
   }
 
   async couponByCode(
@@ -98,15 +94,8 @@ export class CouponService {
     return this.coupon(coupon.id, args, user);
   }
 
-  generateCouponCode(prefix: string): string {
-    return `${prefix}${uuid
-      .v4()
-      .replace(/-/g, '')
-      .slice(0, 15)}`.toUpperCase();
-  }
-
   async createCoupon(args: CreateCouponInput): Promise<Coupon | undefined> {
-    const nextArgs = formatUtil.formatDataRange(args, 'start_time', 'expire_time');
+    const nextArgs = formatUtil.formatDateRange(args, 'start_time', 'expire_time');
     const couponInputs = [];
 
     for (let i = 0; i < nextArgs.quantity; i += 1) {
@@ -123,13 +112,15 @@ export class CouponService {
   }
 
   async updateCoupon(id: number, args: UpdateCouponInput): Promise<Coupon | undefined> {
-    const nextArgs = formatUtil.formatDataRange(args, 'start_time', 'expire_time');
+    const nextArgs = formatUtil.formatDateRange(args, 'start_time', 'expire_time');
 
     return curdUtil.commonUpdate(this.couponRepository, CONSTRUCTOR_NAME, id, nextArgs);
   }
 
   async redeemCoupon(info: RedeemCouponInput, user?: User): Promise<Coupon | undefined> {
-    const coupon = await this.couponByCode(info.code);
+    if (!user || !authUtil.checkAvailableUser(user)) throw Error(ILLEGAL_USER);
+
+    const coupon = await this.couponByCode(info.code, undefined, user);
 
     if (!coupon) {
       const message = 'Not Found Coupon';
@@ -183,7 +174,7 @@ export class CouponService {
       user_id: user.id,
     };
 
-    if (info.userId && authUtil.hasPermission(user, 'coupon.redeem-to-any-user')) {
+    if (info.userId && authUtil.can(user, 'coupon.item-redeem--to-all-user-id')) {
       nextCoupon = {
         ...coupon,
         user_id: info.userId,

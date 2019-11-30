@@ -322,14 +322,6 @@ type Mutation {
   updateSetting(setting: UpdateSettingInput!, id: Int!): Setting!
   updateSettings(settings: [UpdateSettingsInput!]!): SettingsObject!
   deleteSetting(id: Int!): Setting!
-  login(user: AuthLoginInput!): User!
-  loginByTicket(ticket: String!): User!
-  signup(oid: Int, user: AuthSignupInput!): User!
-  createTag(tag: CreateTagInput!): Tag!
-  createTags(tagNames: [String!]!): Tag!
-  syncTagsToDictFile: SyncTagsToFileObject!
-  updateTag(tag: UpdateTagInput!, id: Int!): Tag!
-  deleteTag(id: Int!): Tag!
   createCoupon(coupon: CreateCouponInput!): Coupon!
   updateCoupon(coupon: UpdateCouponInput!, id: Int!): Coupon!
   redeemCoupon(info: RedeemCouponInput!): Coupon!
@@ -338,6 +330,14 @@ type Mutation {
   updatePromo(promo: UpdatePromoInput!, id: Int!): Promo!
   redeemPromo(info: RedeemPromoInput!): Promo!
   deletePromo(id: Int!): Promo!
+  login(user: AuthLoginInput!): User!
+  loginByTicket(ticket: String!): User!
+  signup(oid: Int, user: AuthSignupInput!): User!
+  createTag(tag: CreateTagInput!): Tag!
+  createTags(tagNames: [String!]!): Tag!
+  syncTagsToDictFile: SyncTagsToFileObject!
+  updateTag(tag: UpdateTagInput!, id: Int!): Tag!
+  deleteTag(id: Int!): Tag!
 }
 
 type Oauth {
@@ -442,15 +442,15 @@ type Query {
   settings(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): SettingsWithPaginationObject!
   setting(id: Int!): Setting!
   settingBySlug(slug: String!): Setting!
-  tags(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): TagsWithPaginationObject!
-  tag(id: Int!): Tag!
-  tagByName(name: String!): Tag!
   coupons(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): CouponsWithPaginationObject!
   coupon(id: Int!): Coupon!
   couponByCode(code: String!): Coupon!
   promos(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): PromosWithPaginationObject!
   promo(id: Int!): Promo!
   promoByCode(code: String!): Promo!
+  tags(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): TagsWithPaginationObject!
+  tag(id: Int!): Tag!
+  tagByName(name: String!): Tag!
 }
 
 input RedeemCouponInput {

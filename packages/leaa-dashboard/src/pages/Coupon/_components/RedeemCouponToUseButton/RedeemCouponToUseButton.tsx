@@ -40,7 +40,7 @@ export const RedeemCouponToUseButton = (props: IProps) => {
 
   const onSubmit = () => redeemCouponMutate();
 
-  if (props.item.user_id || (!props.item.canRedeem || !authUtil.hasPermission('coupon.redeem-to-any-user'))) {
+  if (props.item.user_id || (!props.item.canRedeem || !authUtil.hasPermission('coupon.item-redeem--to-all-user-id'))) {
     return (
       <code className={style['normal-status']}>
         <IdTag id={props.item.user_id} link={`/users/${props.item.user_id}`} />

@@ -10,11 +10,11 @@ const checkPermission = (permissionSlug: string) => {
 
 // permissions names e.g.
 // ----------------------
-// users       --> user.list
-// user        --> user.item
-// createUser  --> user.create
-// updateUser  --> user.update
-// deleteUser  --> user.delete
+// users       --> user.list-read
+// user        --> user.item-read
+// createUser  --> user.item-create
+// updateUser  --> user.item-update
+// deleteUser  --> user.item-delete
 
 export const notValidateUserQuerys = [
   'IntrospectionQuery',
@@ -38,22 +38,23 @@ export const notValidateUserQuerys = [
   'tag',
 ];
 
+// TIPS relation file: packages/leaa-api/src/modules/seed/seed.data.ts
 export const permissions = shield(
   {
     Query: {
       userByToken: allow,
-      users: checkPermission('user.list'),
-      user: checkPermission('user.item'),
+      users: checkPermission('user.list-read'),
+      user: checkPermission('user.item-read'),
       //
-      roles: checkPermission('role.list'),
-      role: checkPermission('role.item'),
+      roles: checkPermission('role.list-read'),
+      role: checkPermission('role.item-read'),
       //
-      permissions: checkPermission('permission.list'),
-      permission: checkPermission('permission.item'),
+      permissions: checkPermission('permission.list-read'),
+      permission: checkPermission('permission.item-read'),
       //
-      categories: checkPermission('category.list'),
-      categoriesByTree: checkPermission('category.list'),
-      category: checkPermission('category.item'),
+      categories: checkPermission('category.list-read'),
+      categoriesByTree: checkPermission('category.list-read'),
+      category: checkPermission('category.item-read'),
       //
       articles: allow,
       article: allow,
@@ -73,52 +74,60 @@ export const permissions = shield(
       //
       coupons: allow,
       coupon: allow,
+      //
+      promos: checkPermission('promo.list-read'),
+      promo: allow,
     },
     Mutation: {
       login: allow,
       loginByTicket: allow,
       signup: allow,
       //
-      createUser: checkPermission('user.create'),
-      updateUser: checkPermission('user.update'),
-      deleteUser: checkPermission('user.delete'),
+      createUser: checkPermission('user.item-create'),
+      updateUser: checkPermission('user.item-update'),
+      deleteUser: checkPermission('user.item-delete'),
       //
-      createRole: checkPermission('role.create'),
-      updateRole: checkPermission('role.update'),
-      deleteRole: checkPermission('role.delete'),
+      createRole: checkPermission('role.item-create'),
+      updateRole: checkPermission('role.item-update'),
+      deleteRole: checkPermission('role.item-delete'),
       //
-      createPermission: checkPermission('permission.create'),
-      updatePermission: checkPermission('permission.update'),
-      deletePermission: checkPermission('permission.delete'),
+      createPermission: checkPermission('permission.item-create'),
+      updatePermission: checkPermission('permission.item-update'),
+      deletePermission: checkPermission('permission.item-delete'),
       //
-      createCategory: checkPermission('category.create'),
-      updateCategory: checkPermission('category.update'),
-      deleteCategory: checkPermission('category.delete'),
+      createCategory: checkPermission('category.item-create'),
+      updateCategory: checkPermission('category.item-update'),
+      deleteCategory: checkPermission('category.item-delete'),
       //
-      createArticle: checkPermission('article.create'),
-      updateArticle: checkPermission('article.update'),
-      deleteArticle: checkPermission('article.delete'),
+      createArticle: checkPermission('article.item-create'),
+      updateArticle: checkPermission('article.item-update'),
+      deleteArticle: checkPermission('article.item-delete'),
       //
-      createAx: checkPermission('ax.create'),
-      updateAx: checkPermission('ax.update'),
-      deleteAx: checkPermission('ax.delete'),
+      createAx: checkPermission('ax.item-create'),
+      updateAx: checkPermission('ax.item-update'),
+      deleteAx: checkPermission('ax.item-delete'),
       //
-      updateAttachment: checkPermission('attachment.update'),
-      updateAttachments: checkPermission('attachment.update'),
-      deleteAttachments: checkPermission('attachment.delete'),
+      updateAttachment: checkPermission('attachment.item-update'),
+      updateAttachments: checkPermission('attachment.item-update'),
+      deleteAttachments: checkPermission('attachment.item-delete'),
       //
-      createSetting: checkPermission('setting.create'),
-      updateSetting: checkPermission('setting.update'),
-      deleteSetting: checkPermission('setting.delete'),
+      createSetting: checkPermission('setting.item-create'),
+      updateSetting: checkPermission('setting.item-update'),
+      deleteSetting: checkPermission('setting.item-delete'),
       //
-      createTag: checkPermission('tag.create'),
-      updateTag: checkPermission('tag.update'),
-      deleteTag: checkPermission('tag.delete'),
+      createTag: checkPermission('tag.item-create'),
+      updateTag: checkPermission('tag.item-update'),
+      deleteTag: checkPermission('tag.item-delete'),
       //
-      createCoupon: checkPermission('coupon.create'),
-      updateCoupon: checkPermission('coupon.update'),
-      deleteCoupon: checkPermission('coupon.delete'),
+      createCoupon: checkPermission('coupon.item-create'),
+      updateCoupon: checkPermission('coupon.item-update'),
+      deleteCoupon: checkPermission('coupon.item-delete'),
       redeemCoupon: allow,
+      //
+      createPromo: checkPermission('promo.item-create'),
+      updatePromo: checkPermission('promo.item-update'),
+      deletePromo: checkPermission('promo.item-delete'),
+      redeemPromo: allow,
     },
   },
   {

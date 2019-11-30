@@ -8,17 +8,12 @@ import { CategoryService } from '@leaa/api/src/modules/category/category.service
 
 describe('CategoryService', () => {
   let categoryService: CategoryService;
-  const ARTICLE_REPOSITORY_MOCK: Repository<Category> = new Repository<Category>();
   const CATEGORY_REPOSITORY_MOCK: Repository<Category> = new Repository<Category>();
 
   beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         CategoryService,
-        {
-          provide: getRepositoryToken(Category),
-          useValue: ARTICLE_REPOSITORY_MOCK,
-        },
         {
           provide: getRepositoryToken(Category),
           useValue: CATEGORY_REPOSITORY_MOCK,

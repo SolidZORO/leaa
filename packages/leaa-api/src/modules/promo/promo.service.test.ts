@@ -5,10 +5,11 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { Promo } from '@leaa/common/src/entrys';
 import { CreatePromoInput, UpdatePromoInput } from '@leaa/common/src/dtos/promo';
 import { PromoService } from '@leaa/api/src/modules/promo/promo.service';
+import { PromoProperty } from '@leaa/api/src/modules/promo/promo.property';
 
 describe('PromoService', () => {
   let promoService: PromoService;
-  const ARTICLE_REPOSITORY_MOCK: Repository<Promo> = new Repository<Promo>();
+  const PROMO_REPOSITORY_MOCK: Repository<Promo> = new Repository<Promo>();
 
   beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -16,8 +17,9 @@ describe('PromoService', () => {
         PromoService,
         {
           provide: getRepositoryToken(Promo),
-          useValue: ARTICLE_REPOSITORY_MOCK,
+          useValue: PROMO_REPOSITORY_MOCK,
         },
+        PromoProperty,
       ],
     }).compile();
 

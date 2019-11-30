@@ -1,4 +1,5 @@
 import { User } from '@leaa/common/src/entrys';
+import { IPermissionSlug } from '@leaa/common/src/interfaces';
 import { loggerUtil } from '@leaa/api/src/utils';
 
 const checkAvailabilityUser = (user: User): boolean => {
@@ -8,7 +9,7 @@ const checkAvailabilityUser = (user: User): boolean => {
     errorMessage = 'Invalid User';
   }
 
-  if (user && user.status !== 1) {
+  if (user && user.status && Number(user.status) !== 1) {
     errorMessage = 'Disabled User';
   }
 
@@ -20,7 +21,7 @@ const checkAvailabilityUser = (user: User): boolean => {
   return true;
 };
 
-const hasPermission = (user: User, permissionName: string): boolean => {
+const can = (user: User, permissionName: IPermissionSlug): boolean => {
   if (!user || !permissionName || !user.flatePermissions) {
     return false;
   }
@@ -29,6 +30,6 @@ const hasPermission = (user: User, permissionName: string): boolean => {
 };
 
 export const authUtil = {
-  checkAvailabilityUser,
-  hasPermission,
+  checkAvailableUser: checkAvailabilityUser,
+  can,
 };

@@ -67,5 +67,5 @@ function formatDataRange<T>(args: T, startField: string, expireField: string): T
 
 export const formatUtil = {
   formatArgs,
-  formatDataRange,
+  formatDateRange: formatDataRange,
 };

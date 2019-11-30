@@ -49,7 +49,7 @@ export class UserService {
     qb.select().orderBy(`${PRIMARY_TABLE}.${nextArgs.orderBy || 'id'}`, nextArgs.orderSort);
 
     // relations
-    if (user && authUtil.hasPermission(user, 'role.list')) {
+    if (user && authUtil.can(user, 'role.list-read')) {
       qb.leftJoinAndSelect(`${PRIMARY_TABLE}.roles`, 'roles');
     }
 

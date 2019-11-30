@@ -65,7 +65,7 @@ const LoginFormInner = (props: IProps) => {
 
       const variables: { user: AuthLoginInput } = {
         user: {
-          email: formData.email,
+          email: formData.email && formData.email.trim(),
           password: formData.password,
         },
       };

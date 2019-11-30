@@ -8,11 +8,11 @@ import { Base, Role } from '@leaa/common/src/entrys';
 @Index('permissions_slug_unique', ['slug'], { unique: true })
 @ObjectType()
 export class Permission extends Base {
-  @Column({ type: 'varchar', length: 32, unique: true })
+  @Column({ type: 'varchar', length: 64, unique: true })
   @Field(() => String)
   name!: string;
 
-  @Column({ type: 'varchar', length: 32, unique: true })
+  @Column({ type: 'varchar', length: 64, unique: true })
   @Field(() => String)
   slug!: string;
 

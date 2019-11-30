@@ -6,6 +6,8 @@ import { CategoryService } from '@leaa/api/src/modules/category/category.service
 import { ArticleService } from '@leaa/api/src/modules/article/article.service';
 import { AxService } from '@leaa/api/src/modules/ax/ax.service';
 import { SettingService } from '@leaa/api/src/modules/setting/setting.service';
+import { CouponService } from '@leaa/api/src/modules/coupon/coupon.service';
+import { PromoService } from '@leaa/api/src/modules/promo/promo.service';
 
 import {
   permissionsSeed,
@@ -19,6 +21,8 @@ import {
   axSeed,
   settingSeed,
   attachmentSeed,
+  couponSeed,
+  promoSeed,
 } from '@leaa/api/src/modules/seed/seed.data';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Attachment } from '@leaa/common/src/entrys';
@@ -35,6 +39,8 @@ export class SeedService {
     private readonly articleService: ArticleService,
     private readonly axService: AxService,
     private readonly settingService: SettingService,
+    private readonly couponService: CouponService,
+    private readonly promoService: PromoService,
   ) {}
 
   /* eslint-disable no-restricted-syntax */
@@ -129,6 +135,22 @@ export class SeedService {
   async insertSetting() {
     for (const i of settingSeed) {
       const item = await this.settingService.createSetting(i);
+
+      console.log(item);
+    }
+  }
+
+  async insertCoupon() {
+    for (const i of couponSeed) {
+      const item = await this.couponService.createCoupon(i);
+
+      console.log(item);
+    }
+  }
+
+  async insertPromo() {
+    for (const i of promoSeed) {
+      const item = await this.promoService.createPromo(i);
 
       console.log(item);
     }

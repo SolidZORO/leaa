@@ -1,3 +1,4 @@
+import { IPermissionSlug } from '@leaa/common/src/interfaces';
 import { AUTH_TOKEN_NAME, AUTH_EXPIRES_IN_NAME, AUTH_INFO } from '@leaa/dashboard/src/constants';
 import { IAuthInfo } from '@leaa/dashboard/src/interfaces';
 
@@ -95,7 +96,7 @@ const checkAuthIsAvailably = (): boolean => {
   return true;
 };
 
-const hasPermission = (permissionName: string): boolean => {
+const can = (permissionName: IPermissionSlug): boolean => {
   const authInfoString = localStorage.getItem(AUTH_INFO);
 
   if (!authInfoString || !permissionName) {
@@ -132,5 +133,5 @@ export const authUtil = {
   removeAuthInfo,
   removeAuth,
   checkAuthIsAvailably,
-  hasPermission,
+  can,
 };

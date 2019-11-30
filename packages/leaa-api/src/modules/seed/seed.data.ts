@@ -1,84 +1,148 @@
 /* eslint-disable max-len */
 // prettier-ignore
+import moment from 'moment';
 import { Article } from '@leaa/common/src/entrys';
 import { CreateArticleInput } from '@leaa/common/src/dtos/article';
 import { CreateCategoryInput } from '@leaa/common/src/dtos/category';
 import { CreateAxInput } from '@leaa/common/src/dtos/ax';
 import { CreateSettingInput } from '@leaa/common/src/dtos/setting';
+import { CreateCouponInput } from '@leaa/common/src/dtos/coupon';
+import { CreatePromoInput } from '@leaa/common/src/dtos/promo';
 
-export const permissionsSeed = [
+// TIPS relation file: packages/leaa-api/src/configs/permission.config.ts
+export const permissionsSeed: { name: string; slug: string }[] = [
   { name: 'Playground', slug: 'playground.root' },
   { name: 'Test', slug: 'test.root' },
   { name: 'Lab', slug: 'lab.root' },
   //
-  { name: 'User List', slug: 'user.list' },
-  { name: 'User Item', slug: 'user.item' },
-  { name: 'User Create', slug: 'user.create' },
-  { name: 'User Update', slug: 'user.update' },
-  { name: 'User Delete', slug: 'user.delete' },
+  // --------------------------------
   //
-  { name: 'Role List', slug: 'role.list' },
-  { name: 'Role Item', slug: 'role.item' },
-  { name: 'Role Create', slug: 'role.create' },
-  { name: 'Role Update', slug: 'role.update' },
-  { name: 'Role Delete', slug: 'role.delete' },
+  { name: 'User List Read', slug: 'user.list-read' },
+  { name: 'User List Read (All User Id)', slug: 'user.list-read--all-user-id' },
   //
-  { name: 'Permission List', slug: 'permission.list' },
-  { name: 'Permission Item', slug: 'permission.item' },
-  { name: 'Permission Create', slug: 'permission.create' },
-  { name: 'Permission Update', slug: 'permission.update' },
-  { name: 'Permission Delete', slug: 'permission.delete' },
+  { name: 'User Item Read', slug: 'user.item-read' },
+  { name: 'User Item Read (All User Id)', slug: 'user.item-read--all-user-id' },
+  { name: 'User Item Create', slug: 'user.item-create' },
+  { name: 'User Item Update', slug: 'user.item-update' },
+  { name: 'User Item Delete', slug: 'user.item-delete' },
   //
-  { name: 'Category List', slug: 'category.list' },
-  { name: 'Category Item', slug: 'category.item' },
-  { name: 'Category Create', slug: 'category.create' },
-  { name: 'Category Update', slug: 'category.update' },
-  { name: 'Category Delete', slug: 'category.delete' },
+  // --------------------------------
   //
-  { name: 'Article List', slug: 'article.list' },
-  { name: 'Article Item', slug: 'article.item' },
-  { name: 'Article Create', slug: 'article.create' },
-  { name: 'Article Update', slug: 'article.update' },
-  { name: 'Article Delete', slug: 'article.delete' },
+  { name: 'Role List Read', slug: 'role.list-read' },
+  { name: 'Role List Read (All User Id)', slug: 'role.list-read--all-user-id' },
   //
-  { name: 'Ax List', slug: 'ax.list' },
-  { name: 'Ax Item', slug: 'ax.item' },
-  { name: 'Ax Create', slug: 'ax.create' },
-  { name: 'Ax Update', slug: 'ax.update' },
-  { name: 'Ax Delete', slug: 'ax.delete' },
+  { name: 'Role Item Read', slug: 'role.item-read' },
+  { name: 'Role Item Read (All User Id)', slug: 'role.item-read--all-user-id' },
+  { name: 'Role Item Create', slug: 'role.item-create' },
+  { name: 'Role Item Update', slug: 'role.item-update' },
+  { name: 'Role Item Delete', slug: 'role.item-delete' },
   //
-  { name: 'Tag List', slug: 'tag.list' },
-  { name: 'Tag Item', slug: 'tag.item' },
-  { name: 'Tag Create', slug: 'tag.create' },
-  { name: 'Tag Update', slug: 'tag.update' },
-  { name: 'Tag Delete', slug: 'tag.delete' },
+  // --------------------------------
   //
-  { name: 'Attachment List', slug: 'attachment.list' },
-  { name: 'Attachment Item', slug: 'attachment.item' },
-  { name: 'Attachment Create', slug: 'attachment.create' },
-  { name: 'Attachment Update', slug: 'attachment.update' },
-  { name: 'Attachment Delete', slug: 'attachment.delete' },
+  { name: 'Permission List Read', slug: 'permission.list-read' },
+  { name: 'Permission List Read (All User Id)', slug: 'permission.list-read--all-user-id' },
   //
-  { name: 'Setting List', slug: 'setting.list' },
-  { name: 'Setting Item', slug: 'setting.item' },
-  { name: 'Setting Create', slug: 'setting.create' },
-  { name: 'Setting Update', slug: 'setting.update' },
-  { name: 'Setting Delete', slug: 'setting.delete' },
+  { name: 'Permission Item Read', slug: 'permission.item-read' },
+  { name: 'Permission Item Read (All User Id)', slug: 'permission.item-read--all-user-id' },
+  { name: 'Permission Item Create', slug: 'permission.item-create' },
+  { name: 'Permission Item Update', slug: 'permission.item-update' },
+  { name: 'Permission Item Delete', slug: 'permission.item-delete' },
   //
-  { name: 'Coupon List', slug: 'coupon.list' },
-  { name: 'Coupon List Allow All Status', slug: 'coupon.list-allow-all-status' },
-  { name: 'Coupon Item', slug: 'coupon.item' },
-  { name: 'Coupon Item Allow All User Id', slug: 'coupon.item-allow-all-user-id' },
-  { name: 'Coupon Create', slug: 'coupon.create' },
-  { name: 'Coupon Update', slug: 'coupon.update' },
-  { name: 'Coupon Delete', slug: 'coupon.delete' },
-  { name: 'Coupon Redeem To Any User', slug: 'coupon.redeem-to-any-user' },
+  // --------------------------------
   //
-  { name: 'Promo List', slug: 'promo.list' },
-  { name: 'Promo Item', slug: 'promo.item' },
-  { name: 'Promo Create', slug: 'promo.create' },
-  { name: 'Promo Update', slug: 'promo.update' },
-  { name: 'Promo Delete', slug: 'promo.delete' },
+  { name: 'Category List Read', slug: 'category.list-read' },
+  //
+  { name: 'Category Item Read', slug: 'category.item-read' },
+  { name: 'Category Item Create', slug: 'category.item-create' },
+  { name: 'Category Item Update', slug: 'category.item-update' },
+  { name: 'Category Item Delete', slug: 'category.item-delete' },
+  //
+  // --------------------------------
+  //
+  { name: 'Article List Read', slug: 'article.list-read' },
+  { name: 'Article List Read (All User Id)', slug: 'article.list-read--all-user-id' },
+  { name: 'Article List Read (All Status)', slug: 'article.list-read--all-status' },
+  //
+  { name: 'Article Item Read', slug: 'article.item-read' },
+  { name: 'Article Item Read (All User Id)', slug: 'article.item-read--all-user-id' },
+  { name: 'Article Item Read (All Status)', slug: 'article.item-read--all-status' },
+  { name: 'Article Item Create', slug: 'article.item-create' },
+  { name: 'Article Item Update', slug: 'article.item-update' },
+  { name: 'Article Item Delete', slug: 'article.item-delete' },
+  //
+  // --------------------------------
+  //
+  { name: 'Ad List Read', slug: 'ax.list-read' },
+  { name: 'Ad List Read (All Status)', slug: 'ax.list-read--all-status' },
+  //
+  { name: 'Ad Item Read', slug: 'ax.item-read' },
+  { name: 'Ad Item Read (All Status)', slug: 'ax.item-read--all-status' },
+  { name: 'Ad Item Create', slug: 'ax.item-create' },
+  { name: 'Ad Item Update', slug: 'ax.item-update' },
+  { name: 'Ad Item Delete', slug: 'ax.item-delete' },
+  //
+  // --------------------------------
+  //
+  { name: 'Tag List Read', slug: 'tag.list-read' },
+  //
+  { name: 'Tag Item Read', slug: 'tag.item-read' },
+  { name: 'Tag Item Create', slug: 'tag.item-create' },
+  { name: 'Tag Item Update', slug: 'tag.item-update' },
+  { name: 'Tag Item Delete', slug: 'tag.item-delete' },
+  //
+  // --------------------------------
+  //
+  { name: 'Attachment List Read', slug: 'attachment.list-read' },
+  { name: 'Attachment List Read (All Status)', slug: 'attachment.list-read--all-status' },
+  //
+  { name: 'Attachment Item Read', slug: 'attachment.item-read' },
+  { name: 'Attachment Item Read (All Status)', slug: 'attachment.item-read--all-status' },
+  { name: 'Attachment Item Create', slug: 'attachment.item-create' },
+  { name: 'Attachment Item Update', slug: 'attachment.item-update' },
+  { name: 'Attachment Item Delete', slug: 'attachment.item-delete' },
+  //
+  // --------------------------------
+  //
+  { name: 'Setting List Read', slug: 'setting.list-read' },
+  { name: 'Setting List Read (All Status)', slug: 'setting.list-read--all-status' },
+  //
+  { name: 'Setting Item Read', slug: 'setting.item-read' },
+  { name: 'Setting Item Read (All Status)', slug: 'setting.item-read--all-status' },
+  { name: 'Setting Item Create', slug: 'setting.item-create' },
+  { name: 'Setting Item Update', slug: 'setting.item-update' },
+  { name: 'Setting Item Delete', slug: 'setting.item-delete' },
+  //
+  // --------------------------------
+  //
+  { name: 'Coupon List Read', slug: 'coupon.list-read' },
+  { name: 'Coupon List Read (All User Id)', slug: 'coupon.list-read--all-user-id' },
+  { name: 'Coupon List Read (All Status)', slug: 'coupon.list-read--all-status' },
+  //
+  { name: 'Coupon Item Read', slug: 'coupon.item-read' },
+  { name: 'Coupon Item Read (All User Id)', slug: 'coupon.item-read--all-user-id' },
+  { name: 'Coupon Item Read (All Status)', slug: 'coupon.item-read--all-status' },
+  { name: 'Coupon Item Create', slug: 'coupon.item-create' },
+  { name: 'Coupon Item Update', slug: 'coupon.item-update' },
+  { name: 'Coupon Item Delete', slug: 'coupon.item-delete' },
+  //
+  { name: 'Coupon Item Redeem', slug: 'coupon.item-redeem' },
+  { name: 'Coupon Item Redeem (To Any User)', slug: 'coupon.item-redeem--to-all-user-id' },
+  //
+  // --------------------------------
+  //
+  { name: 'Promo List Read', slug: 'promo.list-read' },
+  { name: 'Promo List Read (All User Id)', slug: 'promo.list-read--all-user-id' },
+  { name: 'Promo List Read (All Status)', slug: 'promo.list-read--all-status' },
+  //
+  { name: 'Promo Item Read', slug: 'promo.item-read' },
+  { name: 'Promo Item Read (All User Id)', slug: 'promo.item-read--all-user-id' },
+  { name: 'Promo Item Read (All Status)', slug: 'promo.item-read--all-status' },
+  { name: 'Promo Item Create', slug: 'promo.item-create' },
+  { name: 'Promo Item Update', slug: 'promo.item-update' },
+  { name: 'Promo Item Delete', slug: 'promo.item-delete' },
+  //
+  { name: 'Promo Item Redeem', slug: 'promo.item-redeem' },
+  { name: 'Promo Item Redeem (To Any User)', slug: 'promo.item-redeem--to-all-user-id' },
 ];
 
 // prettier-ignore
@@ -392,4 +456,40 @@ export const settingSeed: CreateSettingInput[] = [
   { name: 'Site Description', slug: 'site_description', type: 'textarea', sort: 2, value: 'Leaa - project 1h 4 1d',  description: '站点描述， 最大 220 字' },
   { name: 'Site Keywords', slug: 'site_keywords', type: 'input', sort: 3, value: 'Leaa, mono-repo, C\'est la vie. project 1h 4 1d', description: '站点关键字，使用英文 , 分隔' },
   { name: 'Currency Symbol', slug: 'currency_symbol', type: 'radio', sort: 4, value: '$', description: 'Currency Symbol', options: '$\n¥' },
+];
+
+// prettier-ignore
+export const couponSeed: CreateCouponInput[] = [
+  {
+    type: 'coupon',
+    name: 'SEED-COUPON',
+    quantity: 5,
+    amount: 9,
+    start_time: moment().toDate(),
+    expire_time: moment().add(1, 'year').toDate(),
+    status: 1,
+  },
+  {
+    type: 'coupon',
+    name: '新人通用券',
+    quantity: 5,
+    amount: 99,
+    over_amount: 9999,
+    start_time: moment().toDate(),
+    expire_time: moment().add(1, 'year').toDate(),
+    status: 1,
+  },
+];
+
+// prettier-ignore
+export const promoSeed: CreatePromoInput[] = [
+  {
+    name: 'SEED-PROMO',
+    quantity: 5,
+    redeemed_quantity: 0,
+    amount: 66,
+    start_time: moment().toDate(),
+    expire_time: moment().add(1, 'year').toDate(),
+    status: 1,
+  },
 ];
