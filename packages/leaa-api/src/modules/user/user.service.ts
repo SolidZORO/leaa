@@ -13,8 +13,11 @@ import {
 } from '@leaa/common/src/dtos/user';
 import { RoleService } from '@leaa/api/src/modules/role/role.service';
 import { UserProperty } from '@leaa/api/src/modules/user/user.property';
-import { formatUtil, curdUtil, paginationUtil, authUtil } from '@leaa/api/src/utils';
+import { formatUtil, curdUtil, paginationUtil, authUtil, errorUtil } from '@leaa/api/src/utils';
 import { JwtService } from '@nestjs/jwt';
+
+type IUsersArgs = UsersArgs & FindOneOptions<User>;
+type IUserArgs = UserArgs & FindOneOptions<User>;
 
 const CONSTRUCTOR_NAME = 'UserService';
 
@@ -36,13 +39,16 @@ export class UserService {
       return nextUser;
     }
 
-    nextUser.flatePermissions = await this.userProperty.resolvePropertyFlatPermissions(user);
+    nextUser.flatePermissions = await this.userProperty.flatPermissions(user);
 
     return nextUser;
   }
 
-  async users(args: UsersArgs, user?: User): Promise<UsersWithPaginationObject> {
-    const nextArgs = formatUtil.formatArgs(args);
+  async users(args: IUsersArgs, user?: User): Promise<UsersWithPaginationObject> {
+    if (!user || !authUtil.checkAvailableUser(user)) return errorUtil.ILLEGAL_USER({ user });
+    if (!authUtil.can(user, 'user.list-read')) return errorUtil.NOT_AUTH({ user });
+
+    const nextArgs: IUsersArgs = formatUtil.formatArgs(args);
 
     const PRIMARY_TABLE = 'users';
     const qb = getRepository(User).createQueryBuilder(PRIMARY_TABLE);
@@ -57,32 +63,42 @@ export class UserService {
     if (nextArgs.q) {
       const qLike = `%${nextArgs.q}%`;
 
-      qb.orWhere(`${PRIMARY_TABLE}.name LIKE :name`, { name: qLike });
-      qb.orWhere(`${PRIMARY_TABLE}.email LIKE :email`, { email: qLike });
+      ['name', 'email'].forEach(key => {
+        qb.orWhere(`${PRIMARY_TABLE}.${key} LIKE :${key}`, { [key]: qLike });
+      });
+    }
+
+    // can
+    if (!authUtil.can(user, 'user.list-read--all-user-id')) {
+      qb.andWhere('user_id = :user_id', { user_id: user.id });
     }
 
     return paginationUtil.calcQueryBuilderPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
-  async user(id: number, args?: UserArgs & FindOneOptions<User>): Promise<User | undefined> {
-    let nextArgs: FindOneOptions<User> = {};
+  async user(id: number, args?: IUserArgs, reqUser?: User): Promise<User | undefined> {
+    // DOT check reqUser
+    // if (!reqUser) return errorUtil.ILLEGAL_USER({ user: reqUser });
+
+    let nextArgs: IUserArgs = {};
 
     if (args) {
       nextArgs = args;
       nextArgs.relations = ['roles'];
     }
 
-    const user = await this.userRepository.findOne(id, nextArgs);
+    const whereQuery: { id: number; status?: number } = { id };
+    const user = await this.userRepository.findOne({ ...nextArgs, where: whereQuery });
+
+    if (!user) return errorUtil.NOT_FOUND({ user: reqUser });
 
     return this.addPermissionsTouser(user);
   }
 
-  async userByToken(token?: string, args?: UserArgs & FindOneOptions<User>): Promise<User | undefined> {
-    let nextArgs: FindOneOptions<User> = {};
+  async userByToken(token?: string, args?: IUserArgs): Promise<User | undefined> {
+    let nextArgs: IUserArgs = {};
 
-    if (!token) {
-      throw Error('Not Token');
-    }
+    if (!token) return errorUtil.ERROR({ error: 'Not Token' });
 
     if (args) {
       nextArgs = args;
@@ -91,10 +107,7 @@ export class UserService {
 
     // @ts-ignore
     const userDecode: { id: any } = this.jwtService.decode(token);
-
-    if (!userDecode || !userDecode.id) {
-      throw Error('Error Token');
-    }
+    if (!userDecode || !userDecode.id) return errorUtil.ERROR({ error: 'Error Token' });
 
     return this.userRepository.findOne(userDecode.id, nextArgs);
   }
@@ -111,8 +124,11 @@ export class UserService {
     return bcryptjs.hashSync(password, salt);
   }
 
-  async createUser(args: CreateUserInput): Promise<User | undefined> {
-    const nextArgs = args;
+  async createUser(args: CreateUserInput, user?: User): Promise<User | undefined> {
+    if (!user || !authUtil.checkAvailableUser(user)) return errorUtil.ILLEGAL_USER({ user });
+    if (!authUtil.can(user, 'user.item-create')) return errorUtil.NOT_AUTH({ user });
+
+    const nextArgs: CreateUserInput = args;
 
     if (args.password) {
       nextArgs.password = await this.createPassword(args.password);
@@ -121,7 +137,10 @@ export class UserService {
     return this.userRepository.save({ ...nextArgs });
   }
 
-  async updateUser(id: number, args: UpdateUserInput): Promise<User | undefined> {
+  async updateUser(id: number, args: UpdateUserInput, user?: User): Promise<User | undefined> {
+    if (!user || !authUtil.checkAvailableUser(user)) return errorUtil.ILLEGAL_USER({ user });
+    if (!authUtil.can(user, 'user.item-update')) return errorUtil.NOT_AUTH({ user });
+
     const nextArgs = args;
     const relationArgs: { roles?: Role[] } = {};
 
@@ -150,7 +169,10 @@ export class UserService {
     return curdUtil.commonUpdate(this.userRepository, CONSTRUCTOR_NAME, id, nextArgs, relationArgs);
   }
 
-  async deleteUser(id: number): Promise<User | undefined> {
+  async deleteUser(id: number, user?: User): Promise<User | undefined> {
+    if (!user || !authUtil.checkAvailableUser(user)) return errorUtil.ILLEGAL_USER({ user });
+    if (!authUtil.can(user, 'user.item-delete')) return errorUtil.NOT_AUTH({ user });
+
     // default user DONT
     if (id <= 3) {
       throw Error('PLEASE DONT');

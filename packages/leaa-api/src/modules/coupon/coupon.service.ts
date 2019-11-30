@@ -16,6 +16,9 @@ import { formatUtil, curdUtil, paginationUtil, authUtil, errorUtil } from '@leaa
 
 import { CouponProperty } from '@leaa/api/src/modules/coupon/coupon.property';
 
+type ICouponsArgs = CouponsArgs & FindOneOptions<Coupon>;
+type ICouponArgs = CouponArgs & FindOneOptions<Coupon>;
+
 const CONSTRUCTOR_NAME = 'CouponService';
 
 @Injectable()
@@ -32,10 +35,10 @@ export class CouponService {
       .slice(0, 15)}`.toUpperCase();
   }
 
-  async coupons(args: CouponsArgs, user?: User): Promise<CouponsWithPaginationObject> {
+  async coupons(args: ICouponsArgs, user?: User): Promise<CouponsWithPaginationObject> {
     if (!user || !authUtil.checkAvailableUser(user)) return errorUtil.ILLEGAL_USER({ user });
 
-    const nextArgs = formatUtil.formatArgs(args);
+    const nextArgs: ICouponsArgs = formatUtil.formatArgs(args);
     const qb = getRepository(Coupon).createQueryBuilder();
 
     qb.select().orderBy(nextArgs.orderBy || 'id', nextArgs.orderSort);
@@ -61,18 +64,17 @@ export class CouponService {
     return paginationUtil.calcQueryBuilderPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
-  async coupon(id: number, args?: CouponArgs & FindOneOptions<Coupon>, user?: User): Promise<Coupon | undefined> {
+  async coupon(id: number, args?: ICouponArgs, user?: User): Promise<Coupon | undefined> {
     if (!user || !authUtil.checkAvailableUser(user)) return errorUtil.ILLEGAL_USER({ user });
 
-    let nextArgs = {};
+    let nextArgs: ICouponArgs = {};
     if (args) nextArgs = args;
 
-    const whereQuery = { id };
+    const whereQuery: { id: number; status?: number } = { id };
 
     const coupon = await this.couponRepository.findOne({ ...nextArgs, where: whereQuery });
 
     if (!coupon) return errorUtil.NOT_FOUND({ user });
-
     if (coupon.status !== 1 && !authUtil.can(user, 'coupon.item-read--all-status')) return errorUtil.NOT_AUTH({ user });
 
     if (coupon.user_id !== user.id && !authUtil.can(user, 'coupon.item-read--all-user-id'))

@@ -20,7 +20,7 @@ export class AxResolver {
 
   @ResolveProperty(() => AxAttachmentsObject)
   async attachments(@Parent() ax: Ax | undefined): Promise<AxAttachmentsObject | undefined> {
-    return this.axProperty.resolvePropertyAttachments(ax);
+    return this.axProperty.attachments(ax);
   }
 
   //

@@ -1,3 +1,4 @@
+import { UseGuards } from '@nestjs/common';
 import { Args, Query, Mutation, Resolver, ResolveProperty, Parent } from '@nestjs/graphql';
 import { Int } from 'type-graphql';
 
@@ -10,9 +11,10 @@ import {
   UpdatePromoInput,
   RedeemPromoInput,
 } from '@leaa/common/src/dtos/promo';
-import { UserDecorator } from '@leaa/api/src/decorators';
+import { UserDecorator, PermissionsDecorator } from '@leaa/api/src/decorators';
 import { PromoService } from '@leaa/api/src/modules/promo/promo.service';
 import { PromoProperty } from '@leaa/api/src/modules/promo/promo.property';
+import { PermissionsGuard } from '@leaa/api/src/guards';
 
 @Resolver(() => Promo)
 export class PromoResolver {
@@ -27,6 +29,8 @@ export class PromoResolver {
   //
 
   @Query(() => PromosWithPaginationObject)
+  @UseGuards(PermissionsGuard)
+  @PermissionsDecorator('promo.list-read')
   async promos(
     @Args() args: PromosArgs,
     @UserDecorator() user?: User,
@@ -34,6 +38,8 @@ export class PromoResolver {
     return this.promoService.promos(args, user);
   }
 
+  @UseGuards(PermissionsGuard)
+  @PermissionsDecorator('promo.item-read')
   @Query(() => Promo)
   async promo(
     @Args({ name: 'id', type: () => Int }) id: number,
@@ -53,16 +59,17 @@ export class PromoResolver {
   }
 
   @Mutation(() => Promo)
-  async createPromo(@Args('promo') args: CreatePromoInput): Promise<Promo | undefined> {
-    return this.promoService.createPromo(args);
+  async createPromo(@Args('promo') args: CreatePromoInput, @UserDecorator() user?: User): Promise<Promo | undefined> {
+    return this.promoService.createPromo(args, user);
   }
 
   @Mutation(() => Promo)
   async updatePromo(
     @Args({ name: 'id', type: () => Int }) id: number,
     @Args('promo') args: UpdatePromoInput,
+    @UserDecorator() user?: User,
   ): Promise<Promo | undefined> {
-    return this.promoService.updatePromo(id, args);
+    return this.promoService.updatePromo(id, args, user);
   }
 
   @Mutation(() => Promo)
@@ -71,7 +78,10 @@ export class PromoResolver {
   }
 
   @Mutation(() => Promo)
-  async deletePromo(@Args({ name: 'id', type: () => Int }) id: number): Promise<Promo | undefined> {
-    return this.promoService.deletePromo(id);
+  async deletePromo(
+    @Args({ name: 'id', type: () => Int }) id: number,
+    @UserDecorator() user?: User,
+  ): Promise<Promo | undefined> {
+    return this.promoService.deletePromo(id, user);
   }
 }

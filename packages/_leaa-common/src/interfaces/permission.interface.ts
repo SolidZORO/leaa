@@ -1,5 +1,3 @@
-// declare const permissionSlug: ["default", "primary", "ghost", "dashed", "danger", "link"];
-
 declare const permissionSlug: [
   'playground.root',
   'test.root',

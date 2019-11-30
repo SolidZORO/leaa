@@ -235,8 +235,8 @@ export class SaveInOssService {
       in_local: 0,
     };
 
-    const url = this.attachmentProperty.resolvePropertyUrl(attachmentData as Attachment);
-    const urlAt2x = this.attachmentProperty.resolvePropertyUrlAt2x(attachmentData as Attachment);
+    const url = this.attachmentProperty.url(attachmentData as Attachment);
+    const urlAt2x = this.attachmentProperty.urlAt2x(attachmentData as Attachment);
 
     // if SAVE_IN_LOCAL failed, don't write DB
     if (this.configService.ATTACHMENT_SAVE_IN_LOCAL) {

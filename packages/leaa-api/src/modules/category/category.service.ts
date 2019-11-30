@@ -14,13 +14,16 @@ import {
 import { formatUtil, loggerUtil, curdUtil, paginationUtil } from '@leaa/api/src/utils';
 import { ICategoryTreeWithKey } from '@leaa/api/src/interfaces';
 
+type ICategoriessArgs = CategoriesArgs & FindOneOptions<Category>;
+type ICategoryArgs = CategoryArgs & FindOneOptions<Category>;
+
 const CONSTRUCTOR_NAME = 'CategoryService';
 
 @Injectable()
 export class CategoryService {
   constructor(@InjectRepository(Category) private readonly categoryRepository: Repository<Category>) {}
 
-  async categories(args?: CategoriesArgs): Promise<CategoriesWithPaginationObject> {
+  async categories(args?: ICategoriessArgs): Promise<CategoriesWithPaginationObject> {
     if (!args) {
       const message = 'get categories args does not exist';
 
@@ -28,7 +31,7 @@ export class CategoryService {
       throw new Error(message);
     }
 
-    const nextArgs = formatUtil.formatArgs(args);
+    const nextArgs: ICategoriessArgs = formatUtil.formatArgs(args);
 
     const qb = getRepository(Category).createQueryBuilder();
     qb.select().orderBy(nextArgs.orderBy || 'created_at', nextArgs.orderSort);
@@ -97,8 +100,8 @@ export class CategoryService {
     };
   }
 
-  async category(id: number, args?: CategoryArgs & FindOneOptions<Category>): Promise<Category | undefined> {
-    let nextArgs: FindOneOptions<Category> = {};
+  async category(id: number, args?: ICategoryArgs): Promise<Category | undefined> {
+    let nextArgs: ICategoryArgs = {};
 
     if (args) {
       nextArgs = args;

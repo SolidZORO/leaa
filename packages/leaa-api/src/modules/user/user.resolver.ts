@@ -19,12 +19,13 @@ export class UserResolver {
 
   @ResolveProperty(() => [String])
   async flatePermissions(@Parent() user: User | undefined): Promise<string[] | undefined> {
-    return this.userProperty.resolvePropertyFlatPermissions(user);
+    return this.userProperty.flatPermissions(user);
   }
 
   //
   //
 
+  // fot Test GraphQL
   @Query(() => Float)
   async ram(): Promise<number> {
     return Math.random();
@@ -36,8 +37,12 @@ export class UserResolver {
   }
 
   @Query(() => User)
-  async user(@Args({ name: 'id', type: () => Int }) id: number, @Args() args?: UserArgs): Promise<User | undefined> {
-    return this.userService.user(id, args);
+  async user(
+    @Args({ name: 'id', type: () => Int }) id: number,
+    @Args() args?: UserArgs,
+    @UserDecorator() user?: User,
+  ): Promise<User | undefined> {
+    return this.userService.user(id, args, user);
   }
 
   @Query(() => User)
@@ -49,20 +54,24 @@ export class UserResolver {
   }
 
   @Mutation(() => User)
-  async createUser(@Args('user') args: CreateUserInput): Promise<User | undefined> {
-    return this.userService.createUser(args);
+  async createUser(@Args('user') args: CreateUserInput, @UserDecorator() user?: User): Promise<User | undefined> {
+    return this.userService.createUser(args, user);
   }
 
   @Mutation(() => User)
   async updateUser(
     @Args({ name: 'id', type: () => Int }) id: number,
     @Args('user') args: UpdateUserInput,
+    @UserDecorator() user?: User,
   ): Promise<User | undefined> {
-    return this.userService.updateUser(id, args);
+    return this.userService.updateUser(id, args, user);
   }
 
   @Mutation(() => User)
-  async deleteUser(@Args({ name: 'id', type: () => Int }) id: number): Promise<User | undefined> {
-    return this.userService.deleteUser(id);
+  async deleteUser(
+    @Args({ name: 'id', type: () => Int }) id: number,
+    @UserDecorator() user?: User,
+  ): Promise<User | undefined> {
+    return this.userService.deleteUser(id, user);
   }
 }

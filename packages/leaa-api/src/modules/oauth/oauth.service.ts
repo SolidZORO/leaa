@@ -12,7 +12,7 @@ import { User, Oauth } from '@leaa/common/src/entrys';
 import { oauthConfig } from '@leaa/api/src/configs';
 import { IWechatDecryptUserInfo } from '@leaa/api/src/interfaces';
 import { CreateOauthInput } from '@leaa/common/src/dtos/oauth';
-import { loggerUtil } from '@leaa/api/src/utils';
+import { loggerUtil, errorUtil } from '@leaa/api/src/utils';
 
 const CONSTRUCTOR_NAME = 'OauthService';
 
@@ -33,30 +33,13 @@ export class OauthService {
   private miniProgram = this.checkMiniProgramConfig() && new MiniProgram(oauthConfig.wechat);
 
   async bindUserIdToOauth(user: User, oid: number): Promise<any> {
-    if (!oid || typeof Number(oid) !== 'number') {
-      const message = `oid ${oid} error`;
-
-      loggerUtil.warn(message, CONSTRUCTOR_NAME);
-      throw new Error(message);
-    }
+    if (!oid || typeof Number(oid) !== 'number') return errorUtil.ERROR({ error: `oid ${oid} error`, user });
 
     const oauth = await this.oauthRepository.findOne({ id: Number(oid) });
-
-    if (!oauth) {
-      const message = `oauth ${oid} does not exist`;
-
-      loggerUtil.warn(message, CONSTRUCTOR_NAME);
-      throw new Error(message);
-    }
+    if (!oauth) return errorUtil.ERROR({ error: `oauth ${oid} does not exist`, user });
 
     const result = await this.oauthRepository.update(Number(oid), { user_id: user.id });
-
-    if (!result) {
-      const message = `oauth ${oid} does not exist`;
-
-      loggerUtil.warn(message, CONSTRUCTOR_NAME);
-      throw new Error(message);
-    }
+    if (!result) return errorUtil.ERROR({ error: `bind ${oid} faild`, user });
 
     return result;
   }
@@ -66,30 +49,13 @@ export class OauthService {
   }
 
   async getUserByTicket(ticket: string): Promise<User> {
-    if (!ticket) {
-      const message = 'ticket error';
-
-      loggerUtil.warn(message, CONSTRUCTOR_NAME);
-      throw new Error(message);
-    }
+    if (!ticket) return errorUtil.ERROR({ error: 'ticket error' });
 
     const oauth = await this.oauthRepository.findOne({ ticket });
-
-    if (!oauth) {
-      const message = 'oauth does not exist';
-
-      loggerUtil.warn(message, CONSTRUCTOR_NAME);
-      throw new Error(message);
-    }
+    if (!oauth) return errorUtil.ERROR({ error: 'oauth does not exist' });
 
     const user = await this.userRepository.findOne({ id: oauth.user_id });
-
-    if (!user) {
-      const message = 'user does not exist';
-
-      loggerUtil.warn(message, CONSTRUCTOR_NAME);
-      throw new Error(message);
-    }
+    if (!user) return errorUtil.ERROR({ error: 'oauth does not exist' });
 
     await this.clearTicket(oauth.id);
 
@@ -172,27 +138,19 @@ export class OauthService {
       ticket_at: '',
     };
 
-    console.log('nextOauthInput', nextOauthInput);
-
     return this.oauthRepository.save(nextOauthInput);
   }
 
   async wechatCallback(req: Request, res: Response): Promise<void | string> {
     if (!req.query.state || !req.query.code) {
-      const message = 'wechat callback error';
-
-      loggerUtil.warn(message, CONSTRUCTOR_NAME);
-      throw new Error(message);
+      errorUtil.ERROR({ error: 'wechat callback error' });
     }
 
     const { jumpUrl } = JSON.parse(decodeURIComponent(req.query.state));
     const { url, query } = queryString.parseUrl(jumpUrl);
 
     if (!query || !query.platform || !['wechat', 'weibo'].includes(query.platform as string)) {
-      const message = 'wechat callback invalid platform';
-
-      loggerUtil.warn(message, CONSTRUCTOR_NAME);
-      throw new Error(message);
+      errorUtil.ERROR({ error: 'wechat callback invalid platform' });
     }
 
     const wechatInfo = await this.wechatOAuth.getUserInfo(req.query.code);
@@ -235,13 +193,9 @@ export class OauthService {
       ) {
         await this.clearTicket(oauth.id);
 
-        const message = 'wechat callback ticket expired';
-
-        loggerUtil.warn(message, CONSTRUCTOR_NAME);
-
         res.redirect(url);
 
-        throw new Error(message);
+        errorUtil.ERROR({ error: 'wechat callback ticket expired' });
       }
 
       const ticket = uuid.v4();

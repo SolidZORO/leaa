@@ -6,26 +6,31 @@ import { Ax, User } from '@leaa/common/src/entrys';
 import { AxsArgs, AxsWithPaginationObject, AxArgs, CreateAxInput, UpdateAxInput } from '@leaa/common/src/dtos/ax';
 import { formatUtil, loggerUtil, authUtil, curdUtil, paginationUtil } from '@leaa/api/src/utils';
 
+type IAxsArgs = AxsArgs & FindOneOptions<Ax>;
+type IAxArgs = AxArgs & FindOneOptions<Ax>;
+
 const CONSTRUCTOR_NAME = 'AxService';
 
 @Injectable()
 export class AxService {
   constructor(@InjectRepository(Ax) private readonly axRepository: Repository<Ax>) {}
 
-  async axs(args: AxsArgs, user?: User): Promise<AxsWithPaginationObject> {
+  async axs(args: IAxsArgs, user?: User): Promise<AxsWithPaginationObject> {
     const nextArgs = formatUtil.formatArgs(args);
-
     const qb = getRepository(Ax).createQueryBuilder();
+
     qb.select().orderBy(nextArgs.orderBy || 'created_at', nextArgs.orderSort);
 
+    // q
     if (nextArgs.q) {
       const aliasName = new SelectQueryBuilder(qb).alias;
 
-      ['title', 'slug'].forEach(q => {
-        qb.orWhere(`${aliasName}.${q} LIKE :${q}`, { [q]: `%${nextArgs.q}%` });
+      ['title', 'slug'].forEach(key => {
+        qb.orWhere(`${aliasName}.${key} = :${key}`, { [key]: `${nextArgs.q}` });
       });
     }
 
+    // can
     if (!user || (user && !authUtil.can(user, 'ax.list-read--all-status'))) {
       qb.andWhere('status = :status', { status: 1 });
     }
@@ -33,12 +38,9 @@ export class AxService {
     return paginationUtil.calcQueryBuilderPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
-  async ax(id: number, args?: AxArgs & FindOneOptions<Ax>, user?: User): Promise<Ax | undefined> {
-    let nextArgs: FindOneOptions<Ax> = {};
-
-    if (args) {
-      nextArgs = args;
-    }
+  async ax(id: number, args?: IAxArgs, user?: User): Promise<Ax | undefined> {
+    let nextArgs: IAxArgs = {};
+    if (args) nextArgs = args;
 
     const whereQuery: { id: number; status?: number } = { id };
 

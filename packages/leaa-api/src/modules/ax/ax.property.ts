@@ -10,7 +10,7 @@ import { AttachmentService } from '@leaa/api/src/modules/attachment/attachment.s
 export class AxProperty {
   constructor(private readonly attachmentService: AttachmentService) {}
 
-  async resolvePropertyAttachments(ax: Ax | undefined): Promise<AxAttachmentsObject | undefined> {
+  async attachments(ax: Ax | undefined): Promise<AxAttachmentsObject | undefined> {
     let bannerMbList: Attachment[] = [];
     let bannerPcList: Attachment[] = [];
     let galleryMbList: Attachment[] = [];

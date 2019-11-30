@@ -23,10 +23,10 @@ export class GraphqlService implements GqlOptionsFactory {
       tracing: dev,
       playground: dev,
       transformSchema: (schema: any): any => applyMiddleware(schema, permissionConfig.permissions),
-      context: async ({ req }: { req: Request }) => {
-        const user = await this.authService.validateUserByReq(req);
+      context: async (ctx: { req: Request }) => {
+        const user = await this.authService.validateUserByReq(ctx.req);
 
-        return { req, user };
+        return { user };
       },
       formatError(error: any) {
         loggerUtil.error(`${JSON.stringify(error)}\n`, CONSTRUCTOR_NAME);

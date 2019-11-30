@@ -11,19 +11,14 @@ import {
   CreateArticleInput,
   UpdateArticleInput,
 } from '@leaa/common/src/dtos/article';
-import {
-  formatUtil,
-  paginationUtil,
-  curdUtil,
-  stringUtil,
-  loggerUtil,
-  dictUtil,
-  authUtil,
-  errorUtil,
-} from '@leaa/api/src/utils';
+import { formatUtil, paginationUtil, curdUtil, stringUtil, dictUtil, errorUtil } from '@leaa/api/src/utils';
+
 import { TagService } from '@leaa/api/src/modules/tag/tag.service';
 
 const CONSTRUCTOR_NAME = 'ArticleService';
+
+type IArticlesArgs = ArticlesArgs & FindOneOptions<Article>;
+type IArticleArgs = ArticleArgs & FindOneOptions<Article>;
 
 @Injectable()
 export class ArticleService {
@@ -34,8 +29,8 @@ export class ArticleService {
     private readonly tagService: TagService,
   ) {}
 
-  async articles(args: ArticlesArgs): Promise<ArticlesWithPaginationObject> {
-    const nextArgs = formatUtil.formatArgs(args);
+  async articles(args: IArticlesArgs): Promise<ArticlesWithPaginationObject> {
+    const nextArgs: IArticlesArgs = formatUtil.formatArgs(args);
 
     const PRIMARY_TABLE = 'articles';
     const qb = await this.articleRepository.createQueryBuilder(PRIMARY_TABLE);
@@ -49,7 +44,7 @@ export class ArticleService {
       const qLike = `%${nextArgs.q}%`;
 
       ['title', 'slug'].forEach(key => {
-        qb.andWhere(`${PRIMARY_TABLE}.${key} LIKE :${key}`, { [key]: qLike });
+        qb.orWhere(`${PRIMARY_TABLE}.${key} LIKE :${key}`, { [key]: qLike });
       });
     }
 
@@ -73,8 +68,8 @@ export class ArticleService {
     return paginationUtil.calcQueryBuilderPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
-  async article(id: number, args?: ArticleArgs & FindOneOptions<Article>): Promise<Article | undefined> {
-    let nextArgs: FindOneOptions<Article> = {};
+  async article(id: number, args?: IArticleArgs): Promise<Article | undefined> {
+    let nextArgs: IArticleArgs = {};
 
     if (args) {
       nextArgs = args;

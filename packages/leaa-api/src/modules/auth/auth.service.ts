@@ -13,7 +13,7 @@ import { User } from '@leaa/common/src/entrys';
 import { AuthLoginInput, AuthSignupInput } from '@leaa/common/src/dtos/auth';
 import { IJwtPayload } from '@leaa/common/src/interfaces';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
-import { loggerUtil } from '@leaa/api/src/utils';
+import { errorUtil } from '@leaa/api/src/utils';
 import { UserService } from '@leaa/api/src/modules/user/user.service';
 import { permissionConfig } from '@leaa/api/src/configs';
 import { OauthService } from '@leaa/api/src/modules/oauth/oauth.service';
@@ -57,7 +57,7 @@ export class AuthService {
     const token = req.headers.authorization;
 
     if (!token) {
-      throw new AuthenticationError('Header miss Authorization');
+      throw new AuthenticationError('Header missing Authorization');
     }
 
     let tokenWithoutBearer = token;
@@ -89,7 +89,7 @@ export class AuthService {
     }
 
     if (!userPayload) {
-      throw Error('User payload error');
+      return errorUtil.ERROR({ error: 'User payload error' });
     }
 
     return this.validateUser(userPayload);
@@ -116,28 +116,11 @@ export class AuthService {
       relations: ['roles'],
     });
 
-    if (!user) {
-      const message = `user ${args.email} does not exist`;
-
-      loggerUtil.warn(message, CONSTRUCTOR_NAME);
-      throw new Error(message);
-    }
-
-    if (user.status !== 1) {
-      const message = `user ${args.email} is disabled`;
-
-      loggerUtil.warn(message, CONSTRUCTOR_NAME);
-      throw new Error(message);
-    }
+    if (!user) return errorUtil.ERROR({ error: `user ${args.email} does not exist` });
+    if (user.status !== 1) return errorUtil.ERROR({ error: `user ${args.email} is disabled` });
 
     const passwordIsMatch = await bcryptjs.compareSync(args.password, user.password);
-
-    if (!passwordIsMatch) {
-      const message = `user ${args.email} info not match`;
-
-      loggerUtil.warn(message, CONSTRUCTOR_NAME);
-      throw new Error(message);
-    }
+    if (!passwordIsMatch) return errorUtil.ERROR({ error: `user ${args.email} info not match` });
 
     return this.addTokenTouser(user);
   }
@@ -174,10 +157,7 @@ export class AuthService {
         await this.oauthService.clearTicket(oid);
       }
     } catch (error) {
-      const message = 'Sign Up Fail...';
-
-      loggerUtil.warn(message, CONSTRUCTOR_NAME);
-      throw new Error(message);
+      return errorUtil.ERROR({ error: 'sign up fail...' });
     }
 
     return this.addTokenTouser(newUser);

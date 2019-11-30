@@ -134,8 +134,8 @@ export class SaveInLocalService {
     return {
       attachment: {
         ...attachment,
-        url: this.attachmentProperty.resolvePropertyUrl(attachment),
-        urlAt2x: this.attachmentProperty.resolvePropertyUrlAt2x(attachment),
+        url: this.attachmentProperty.url(attachment),
+        urlAt2x: this.attachmentProperty.urlAt2x(attachment),
       },
     };
   }

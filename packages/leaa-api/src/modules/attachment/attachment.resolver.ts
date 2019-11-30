@@ -23,12 +23,12 @@ export class AttachmentResolver {
 
   @ResolveProperty(() => String, { nullable: true })
   url(@Parent() attachment: Attachment): string | null {
-    return this.attachmentProperty.resolvePropertyUrl(attachment);
+    return this.attachmentProperty.url(attachment);
   }
 
   @ResolveProperty(() => String, { nullable: true })
   urlAt2x(@Parent() attachment: Attachment): string | null {
-    return this.attachmentProperty.resolvePropertyUrlAt2x(attachment);
+    return this.attachmentProperty.urlAt2x(attachment);
   }
 
   //

@@ -20,10 +20,21 @@ import {
   ISaveInLocalSignature,
   IAttachmentParams,
 } from '@leaa/common/src/interfaces';
-import { formatUtil, loggerUtil, pathUtil, authUtil, attachmentUtil, paginationUtil } from '@leaa/api/src/utils';
+import {
+  formatUtil,
+  loggerUtil,
+  pathUtil,
+  authUtil,
+  attachmentUtil,
+  paginationUtil,
+  errorUtil,
+} from '@leaa/api/src/utils';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 import { SaveInOssService } from '@leaa/api/src/modules/attachment/save-in-oss.service';
 import { SaveInLocalService } from '@leaa/api/src/modules/attachment/save-in-local.service';
+
+type IAttachmentsArgs = AttachmentsArgs & FindOneOptions<Attachment>;
+type IAttachmentArgs = AttachmentArgs & FindOneOptions<Attachment>;
 
 const CONSTRUCTOR_NAME = 'AttachmentService';
 
@@ -50,7 +61,7 @@ export class AttachmentService {
     return null;
   }
 
-  async attachments(args: AttachmentsArgs, user?: User): Promise<AttachmentsWithPaginationObject> {
+  async attachments(args: IAttachmentsArgs, user?: User): Promise<AttachmentsWithPaginationObject> {
     const nextArgs = formatUtil.formatArgs(args);
 
     const moduleFilter: IAttachmentDbFilterField = {};
@@ -92,16 +103,10 @@ export class AttachmentService {
     return paginationUtil.calcQueryBuilderPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
-  async attachment(
-    uuid: string,
-    args?: AttachmentArgs & FindOneOptions<Attachment>,
-    user?: User,
-  ): Promise<Attachment | undefined> {
-    let nextArgs: FindOneOptions<Attachment> = {};
+  async attachment(uuid: string, args?: IAttachmentArgs, user?: User): Promise<Attachment | undefined> {
+    let nextArgs: IAttachmentArgs = {};
 
-    if (args) {
-      nextArgs = args;
-    }
+    if (args) nextArgs = args;
 
     const whereQuery: { uuid: string; status?: number } = { uuid };
 
@@ -123,27 +128,12 @@ export class AttachmentService {
   }
 
   async updateAttachment(uuid: string, args: UpdateAttachmentInput): Promise<Attachment | undefined> {
-    if (!args) {
-      const message = `update item ${uuid} args does not exist`;
-
-      loggerUtil.warn(message, CONSTRUCTOR_NAME);
-      throw new Error(message);
-    }
+    if (!args) return errorUtil.ERROR({ error: `update item ${uuid} args does not exist` });
 
     let prevItem = await this.attachmentRepository.findOne({ uuid });
+    if (!prevItem) return errorUtil.ERROR({ error: `update item ${uuid} does not exist` });
 
-    if (!prevItem) {
-      const message = `update item ${uuid} does not exist`;
-
-      loggerUtil.warn(message, CONSTRUCTOR_NAME);
-      throw new Error(message);
-    }
-
-    prevItem = {
-      ...prevItem,
-      ...args,
-    };
-
+    prevItem = { ...prevItem, ...args };
     const nextItem = await this.attachmentRepository.save(prevItem);
 
     loggerUtil.updateLog({ id: uuid, prevItem, nextItem, constructorName: CONSTRUCTOR_NAME });
@@ -152,12 +142,7 @@ export class AttachmentService {
   }
 
   async updateAttachments(attachments: UpdateAttachmentsInput[]): Promise<AttachmentsObject> {
-    if (!attachments) {
-      const message = 'update attachments does not exist';
-
-      loggerUtil.warn(message, CONSTRUCTOR_NAME);
-      throw new Error(message);
-    }
+    if (!attachments) return errorUtil.ERROR({ error: 'update attachments does not exist' });
 
     const batchUpdate = attachments.map(async attachment => {
       await this.attachmentRepository.update({ uuid: attachment.uuid }, _.omit(attachment, ['uuid']));
@@ -182,22 +167,10 @@ export class AttachmentService {
 
   async deleteAttachments(uuid: string[]): Promise<DeleteAttachmentsObject | undefined> {
     const prevItems = await this.attachmentRepository.find({ uuid: In(uuid) });
-
-    if (!prevItems) {
-      const message = `delete item ${uuid} does not exist`;
-
-      loggerUtil.warn(message, CONSTRUCTOR_NAME);
-      throw new Error(message);
-    }
+    if (!prevItems) return errorUtil.ERROR({ error: `delete item ${uuid} does not exist` });
 
     const nextItem = await this.attachmentRepository.remove(prevItems);
-
-    if (!nextItem) {
-      const message = `delete item ${uuid} faild`;
-
-      loggerUtil.warn(message, CONSTRUCTOR_NAME);
-      throw new Error(message);
-    }
+    if (!nextItem) return errorUtil.ERROR({ error: `delete item ${uuid} faild` });
 
     prevItems.forEach(i => {
       if (i.at2x) {

@@ -2,10 +2,19 @@ import { Injectable } from '@nestjs/common';
 import { Repository, FindOneOptions, In, getRepository, SelectQueryBuilder } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { Role, Permission } from '@leaa/common/src/entrys';
-import { RolesArgs, RolesWithPaginationObject, CreateRoleInput, UpdateRoleInput } from '@leaa/common/src/dtos/role';
-import { formatUtil, loggerUtil, curdUtil, paginationUtil } from '@leaa/api/src/utils';
+import { Role, Permission, User } from '@leaa/common/src/entrys';
+import {
+  RolesArgs,
+  RoleArgs,
+  RolesWithPaginationObject,
+  CreateRoleInput,
+  UpdateRoleInput,
+} from '@leaa/common/src/dtos/role';
+import { formatUtil, curdUtil, paginationUtil, authUtil, errorUtil } from '@leaa/api/src/utils';
 import { PermissionService } from '@leaa/api/src/modules/permission/permission.service';
+
+type IRolesArgs = RolesArgs & FindOneOptions<Role>;
+type IRoleArgs = RoleArgs & FindOneOptions<Role>;
 
 const CONSTRUCTOR_NAME = 'RoleService';
 
@@ -17,25 +26,32 @@ export class RoleService {
     private readonly permissionService: PermissionService,
   ) {}
 
-  async roles(args: RolesArgs): Promise<RolesWithPaginationObject | undefined> {
-    const nextArgs = formatUtil.formatArgs(args);
+  async roles(args: IRolesArgs, user?: User): Promise<RolesWithPaginationObject | undefined> {
+    if (!user || !authUtil.checkAvailableUser(user)) return errorUtil.ILLEGAL_USER({ user });
+    if (!authUtil.can(user, 'role.list-read')) return errorUtil.NOT_AUTH({ user });
 
+    const nextArgs = formatUtil.formatArgs(args);
     const qb = getRepository(Role).createQueryBuilder();
+
     qb.select().orderBy(nextArgs.orderBy || 'id', nextArgs.orderSort);
 
+    // q
     if (nextArgs.q) {
       const aliasName = new SelectQueryBuilder(qb).alias;
 
-      ['name', 'slug'].forEach(q => {
-        qb.orWhere(`${aliasName}.${q} LIKE :${q}`, { [q]: `%${nextArgs.q}%` });
+      ['name', 'slug'].forEach(key => {
+        qb.orWhere(`${aliasName}.${key} LIKE :${key}`, { [key]: `%${nextArgs.q}%` });
       });
     }
 
     return paginationUtil.calcQueryBuilderPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
-  async role(id: number, args?: FindOneOptions<Role>): Promise<Role | undefined> {
-    let nextArgs: FindOneOptions<Role> = {};
+  async role(id: number, args?: IRoleArgs, user?: User): Promise<Role | undefined> {
+    if (!user || !authUtil.checkAvailableUser(user)) return errorUtil.ILLEGAL_USER({ user });
+    if (!authUtil.can(user, 'role.item-read')) return errorUtil.NOT_AUTH({ user });
+
+    let nextArgs: IRoleArgs = {};
 
     if (args) {
       nextArgs = args;
@@ -80,11 +96,17 @@ export class RoleService {
     return roleIds;
   }
 
-  async createRole(args: CreateRoleInput): Promise<Role | undefined> {
+  async createRole(args: CreateRoleInput, user?: User): Promise<Role | undefined> {
+    if (!user || !authUtil.checkAvailableUser(user)) return errorUtil.ILLEGAL_USER({ user });
+    if (!authUtil.can(user, 'role.item-create')) return errorUtil.NOT_AUTH({ user });
+
     return this.roleRepository.save({ ...args });
   }
 
-  async updateRole(id: number, args: UpdateRoleInput): Promise<Role | undefined> {
+  async updateRole(id: number, args: UpdateRoleInput, user?: User): Promise<Role | undefined> {
+    if (!user || !authUtil.checkAvailableUser(user)) return errorUtil.ILLEGAL_USER({ user });
+    if (!authUtil.can(user, 'role.item-update')) return errorUtil.NOT_AUTH({ user });
+
     const relationArgs: { permissions?: Permission[] } = {};
 
     let permissionObjects;
@@ -101,19 +123,19 @@ export class RoleService {
     if (permissionObjects) {
       relationArgs.permissions = permissionObjects;
     } else {
-      const message = 'permissions error';
-
-      loggerUtil.warn(message, CONSTRUCTOR_NAME);
-      throw new Error(message);
+      return errorUtil.ERROR({ error: 'permissions error', user });
     }
 
     return curdUtil.commonUpdate(this.roleRepository, CONSTRUCTOR_NAME, id, args, relationArgs);
   }
 
-  async deleteRole(id: number): Promise<Role | undefined> {
+  async deleteRole(id: number, user?: User): Promise<Role | undefined> {
+    if (!user || !authUtil.checkAvailableUser(user)) return errorUtil.ILLEGAL_USER({ user });
+    if (!authUtil.can(user, 'role.item-delete')) return errorUtil.NOT_AUTH({ user });
+
     // default role DONT
     if (id <= 3) {
-      throw Error('PLEASE DONT');
+      return errorUtil.ERROR({ error: 'default role PLEASE DONT', user });
     }
 
     return curdUtil.commonDelete(this.roleRepository, CONSTRUCTOR_NAME, id);

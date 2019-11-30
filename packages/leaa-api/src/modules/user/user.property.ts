@@ -9,7 +9,7 @@ import { RoleService } from '@leaa/api/src/modules/role/role.service';
 export class UserProperty {
   constructor(private readonly roleService: RoleService) {}
 
-  async resolvePropertyFlatPermissions(user: User | undefined): Promise<string[] | undefined> {
+  async flatPermissions(user: User | undefined): Promise<string[] | undefined> {
     const nextUser = user;
 
     if (!nextUser || !nextUser.roles) {
@@ -23,6 +23,6 @@ export class UserProperty {
       return undefined;
     }
 
-    return [...new Set(nextUser.permissions.map(p => p.slug))];
+    return [...new Set(nextUser.permissions.map(permission => permission.slug))];
   }
 }

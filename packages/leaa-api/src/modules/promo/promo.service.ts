@@ -25,6 +25,7 @@ export class PromoService {
 
   async promos(args: PromosArgs, user?: User): Promise<PromosWithPaginationObject> {
     if (!user || !authUtil.checkAvailableUser(user)) return errorUtil.ILLEGAL_USER({ user });
+    // if (!authUtil.can(user, 'promo.list-read')) return errorUtil.NOT_AUTH({ user });
 
     const nextArgs = formatUtil.formatArgs(args);
     const qb = getRepository(Promo).createQueryBuilder();
@@ -54,11 +55,12 @@ export class PromoService {
 
   async promo(id: number, args?: PromoArgs & FindOneOptions<Promo>, user?: User): Promise<Promo | undefined> {
     if (!user || !authUtil.checkAvailableUser(user)) return errorUtil.ILLEGAL_USER({ user });
+    if (!authUtil.can(user, 'promo.item-read')) return errorUtil.NOT_AUTH({ user });
 
     let nextArgs = {};
     if (args) nextArgs = args;
 
-    const whereQuery = { id };
+    const whereQuery: { id: number; status?: number } = { id };
     const promo = await this.promoRepository.findOne({ ...nextArgs, where: whereQuery });
 
     if (!promo) return errorUtil.NOT_FOUND({ user });
@@ -75,19 +77,28 @@ export class PromoService {
     return this.promo(promo.id, args, user);
   }
 
-  async createPromo(args: CreatePromoInput): Promise<Promo | undefined> {
+  async createPromo(args: CreatePromoInput, user?: User): Promise<Promo | undefined> {
+    if (!user || !authUtil.checkAvailableUser(user)) return errorUtil.ILLEGAL_USER({ user });
+    if (!authUtil.can(user, 'promo.item-create')) return errorUtil.NOT_AUTH({ user });
+
     const nextArgs = formatUtil.formatDateRangeTime(args, 'start_time', 'expire_time');
 
     return this.promoRepository.save({ ...nextArgs });
   }
 
-  async updatePromo(id: number, args: UpdatePromoInput): Promise<Promo | undefined> {
+  async updatePromo(id: number, args: UpdatePromoInput, user?: User): Promise<Promo | undefined> {
+    if (!user || !authUtil.checkAvailableUser(user)) return errorUtil.ILLEGAL_USER({ user });
+    if (!authUtil.can(user, 'promo.item-create')) return errorUtil.NOT_AUTH({ user });
+
     const nextArgs = formatUtil.formatDateRangeTime(args, 'start_time', 'expire_time');
 
     return curdUtil.commonUpdate(this.promoRepository, CONSTRUCTOR_NAME, id, nextArgs);
   }
 
-  async deletePromo(id: number): Promise<Promo | undefined> {
+  async deletePromo(id: number, user?: User): Promise<Promo | undefined> {
+    if (!user || !authUtil.checkAvailableUser(user)) return errorUtil.ILLEGAL_USER({ user });
+    if (!authUtil.can(user, 'promo.item-create')) return errorUtil.NOT_AUTH({ user });
+
     return curdUtil.commonDelete(this.promoRepository, CONSTRUCTOR_NAME, id);
   }
 
