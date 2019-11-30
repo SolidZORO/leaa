@@ -9,7 +9,7 @@ import { Promo } from '@leaa/common/src/entrys';
 export class PromoProperty {
   constructor() {}
 
-  async available(promo: Promo): Promise<boolean> {
+  available(promo: Promo): boolean {
     if (
       typeof promo.quantity !== 'undefined' &&
       typeof promo.redeemed_quantity !== 'undefined' &&

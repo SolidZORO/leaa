@@ -19,7 +19,7 @@ import {
   loggerUtil,
   dictUtil,
   authUtil,
-  messageUtil,
+  errorUtil,
 } from '@leaa/api/src/utils';
 import { TagService } from '@leaa/api/src/modules/tag/tag.service';
 
@@ -87,7 +87,7 @@ export class ArticleService {
   async articleBySlug(slug: string, args?: ArticleArgs & FindOneOptions<Article>): Promise<Article | undefined> {
     const article = await this.articleRepository.findOne({ where: { slug } });
 
-    if (!article) return messageUtil.NOT_FOUND();
+    if (!article) return errorUtil.NOT_FOUND();
 
     return this.article(article.id, args);
   }

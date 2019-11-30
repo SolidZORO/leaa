@@ -29,7 +29,7 @@ export class GraphqlService implements GqlOptionsFactory {
         return { req, user };
       },
       formatError(error: any) {
-        loggerUtil.error(JSON.stringify(error), CONSTRUCTOR_NAME);
+        loggerUtil.error(`${JSON.stringify(error)}\n`, CONSTRUCTOR_NAME);
 
         if (error.message && error.message.error) {
           return new Error(error.message.error);

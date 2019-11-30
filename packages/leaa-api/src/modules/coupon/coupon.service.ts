@@ -4,7 +4,6 @@ import { Repository, FindOneOptions, getRepository, SelectQueryBuilder } from 't
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { Coupon, User } from '@leaa/common/src/entrys';
-import { ILLEGAL_USER } from '@leaa/api/src/constants';
 import {
   CouponsArgs,
   CouponsWithPaginationObject,
@@ -13,7 +12,7 @@ import {
   UpdateCouponInput,
   RedeemCouponInput,
 } from '@leaa/common/src/dtos/coupon';
-import { formatUtil, curdUtil, paginationUtil, loggerUtil, authUtil } from '@leaa/api/src/utils';
+import { formatUtil, curdUtil, paginationUtil, authUtil, errorUtil } from '@leaa/api/src/utils';
 
 import { CouponProperty } from '@leaa/api/src/modules/coupon/coupon.property';
 
@@ -34,21 +33,23 @@ export class CouponService {
   }
 
   async coupons(args: CouponsArgs, user?: User): Promise<CouponsWithPaginationObject> {
-    if (!user || !authUtil.checkAvailableUser(user)) throw Error(ILLEGAL_USER);
+    if (!user || !authUtil.checkAvailableUser(user)) return errorUtil.ILLEGAL_USER({ user });
 
     const nextArgs = formatUtil.formatArgs(args);
     const qb = getRepository(Coupon).createQueryBuilder();
 
     qb.select().orderBy(nextArgs.orderBy || 'id', nextArgs.orderSort);
 
+    // q
     if (nextArgs.q) {
       const aliasName = new SelectQueryBuilder(qb).alias;
 
-      ['code', 'name'].forEach(q => {
-        qb.orWhere(`${aliasName}.${q} = :${q}`, { [q]: `${nextArgs.q}` });
+      ['code', 'name'].forEach(key => {
+        qb.orWhere(`${aliasName}.${key} = :${key}`, { [key]: `${nextArgs.q}` });
       });
     }
 
+    // can
     if (!authUtil.can(user, 'coupon.list-read--all-user-id')) {
       qb.andWhere('user_id = :user_id', { user_id: user.id });
     }
@@ -61,19 +62,23 @@ export class CouponService {
   }
 
   async coupon(id: number, args?: CouponArgs & FindOneOptions<Coupon>, user?: User): Promise<Coupon | undefined> {
-    if (!user || !authUtil.checkAvailableUser(user)) throw Error(ILLEGAL_USER);
+    if (!user || !authUtil.checkAvailableUser(user)) return errorUtil.ILLEGAL_USER({ user });
 
-    const qb = getRepository(Coupon).createQueryBuilder();
+    let nextArgs = {};
+    if (args) nextArgs = args;
 
-    if (user && !authUtil.can(user, 'coupon.item-read--all-user-id')) {
-      qb.andWhere('user_id = :user_id', { user_id: user.id });
-    }
+    const whereQuery = { id };
 
-    if (!user || (user && !authUtil.can(user, 'coupon.item-read--all-status'))) {
-      qb.andWhere('status = :status', { status: 1 });
-    }
+    const coupon = await this.couponRepository.findOne({ ...nextArgs, where: whereQuery });
 
-    return qb.andWhere('id = :id', { id }).getOne();
+    if (!coupon) return errorUtil.NOT_FOUND({ user });
+
+    if (coupon.status !== 1 && !authUtil.can(user, 'coupon.item-read--all-status')) return errorUtil.NOT_AUTH({ user });
+
+    if (coupon.user_id !== user.id && !authUtil.can(user, 'coupon.item-read--all-user-id'))
+      return errorUtil.NOT_AUTH({ user });
+
+    return coupon;
   }
 
   async couponByCode(
@@ -83,19 +88,13 @@ export class CouponService {
   ): Promise<Coupon | undefined> {
     const coupon = await this.couponRepository.findOne({ where: { code } });
 
-    if (!coupon) {
-      const message = 'Not Found Coupon';
-
-      loggerUtil.warn(`couponByCode: ${message}`, CONSTRUCTOR_NAME);
-
-      return undefined;
-    }
+    if (!coupon) return errorUtil.NOT_FOUND({ user });
 
     return this.coupon(coupon.id, args, user);
   }
 
   async createCoupon(args: CreateCouponInput): Promise<Coupon | undefined> {
-    const nextArgs = formatUtil.formatDateRange(args, 'start_time', 'expire_time');
+    const nextArgs = formatUtil.formatDateRangeTime(args, 'start_time', 'expire_time');
     const couponInputs = [];
 
     for (let i = 0; i < nextArgs.quantity; i += 1) {
@@ -112,79 +111,32 @@ export class CouponService {
   }
 
   async updateCoupon(id: number, args: UpdateCouponInput): Promise<Coupon | undefined> {
-    const nextArgs = formatUtil.formatDateRange(args, 'start_time', 'expire_time');
+    const nextArgs = formatUtil.formatDateRangeTime(args, 'start_time', 'expire_time');
 
     return curdUtil.commonUpdate(this.couponRepository, CONSTRUCTOR_NAME, id, nextArgs);
   }
 
+  async deleteCoupon(id: number): Promise<Coupon | undefined> {
+    return curdUtil.commonDelete(this.couponRepository, CONSTRUCTOR_NAME, id);
+  }
+
   async redeemCoupon(info: RedeemCouponInput, user?: User): Promise<Coupon | undefined> {
-    if (!user || !authUtil.checkAvailableUser(user)) throw Error(ILLEGAL_USER);
+    if (!user || !user.id) return errorUtil.ILLEGAL_USER({ user });
 
     const coupon = await this.couponByCode(info.code, undefined, user);
+    if (!coupon) return errorUtil.NOT_FOUND({ user });
 
-    if (!coupon) {
-      const message = 'Not Found Coupon';
+    if (!this.couponProperty.available(coupon)) return errorUtil.ERROR({ error: 'Coupon Unavailable', user });
+    if (!this.couponProperty.canRedeem(coupon)) return errorUtil.ERROR({ error: 'Coupon Irredeemable', user });
+    if (coupon.user_id) return errorUtil.ERROR({ error: 'Coupon Already redeemed', user });
 
-      loggerUtil.warn(message, CONSTRUCTOR_NAME);
-      throw Error(message);
-    }
-
-    //
-
-    const availableCoupon = this.couponProperty.available(coupon);
-
-    if (!availableCoupon) {
-      const message = 'Coupon Unavailable';
-
-      loggerUtil.warn(message, CONSTRUCTOR_NAME);
-      throw Error(message);
-    }
-
-    //
-
-    const canRedeemCoupon = this.couponProperty.canRedeem(coupon);
-
-    if (!canRedeemCoupon) {
-      const message = 'Coupon Irredeemable';
-
-      loggerUtil.warn(message, CONSTRUCTOR_NAME);
-      throw Error(message);
-    }
-
-    //
-
-    if (coupon.user_id) {
-      const message = 'Coupon Already redeemed';
-
-      loggerUtil.warn(message, CONSTRUCTOR_NAME);
-      throw Error(message);
-    }
-
-    //
-
-    if (!user || !user.id) {
-      const message = 'Not Found User';
-
-      loggerUtil.warn(message, CONSTRUCTOR_NAME);
-      throw Error(message);
-    }
-
-    let nextCoupon = {
-      ...coupon,
-      user_id: user.id,
-    };
+    // [token user]
+    let nextCoupon = { ...coupon, user_id: user.id };
 
     if (info.userId && authUtil.can(user, 'coupon.item-redeem--to-all-user-id')) {
-      nextCoupon = {
-        ...coupon,
-        user_id: info.userId,
-      };
+      nextCoupon = { ...coupon, user_id: info.userId };
     }
 
     return this.couponRepository.save(nextCoupon);
-  }
-
-  async deleteCoupon(id: number): Promise<Coupon | undefined> {
-    return curdUtil.commonDelete(this.couponRepository, CONSTRUCTOR_NAME, id);
   }
 }

@@ -18,11 +18,12 @@ const handleError = ({ error, user }: IHeaderErrorParams) => {
   throw Error(errorText);
 };
 
+// FN_NAME just for Typescript to have hints in IDEA
 const NOT_AUTH = (params?: { user?: User }) => handleError({ error: 'NOT AUTHORIZED', user: params && params.user });
 const NOT_FOUND = (params?: { user?: User }) => handleError({ error: 'NOT FOUND', user: params && params.user });
 const ILLEGAL_USER = (params?: { user?: User }) => handleError({ error: 'ILLEGAL USER', user: params && params.user });
 
-export const messageUtil = {
+export const errorUtil = {
   ERROR: handleError,
   NOT_AUTH,
   NOT_FOUND,

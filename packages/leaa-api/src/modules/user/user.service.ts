@@ -57,8 +57,8 @@ export class UserService {
     if (nextArgs.q) {
       const qLike = `%${nextArgs.q}%`;
 
-      qb.andWhere(`${PRIMARY_TABLE}.name LIKE :name`, { name: qLike });
-      qb.andWhere(`${PRIMARY_TABLE}.email LIKE :email`, { email: qLike });
+      qb.orWhere(`${PRIMARY_TABLE}.name LIKE :name`, { name: qLike });
+      qb.orWhere(`${PRIMARY_TABLE}.email LIKE :email`, { email: qLike });
     }
 
     return paginationUtil.calcQueryBuilderPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
