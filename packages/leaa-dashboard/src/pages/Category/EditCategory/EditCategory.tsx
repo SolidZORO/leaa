@@ -8,6 +8,7 @@ import { GET_CATEGORY, UPDATE_CATEGORY, GET_CATEGORIES } from '@leaa/common/src/
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { CategoryArgs, UpdateCategoryInput, CategoriesWithPaginationObject } from '@leaa/common/src/dtos/category';
 import { IPage } from '@leaa/dashboard/src/interfaces';
+import { messageUtil } from '@leaa/dashboard/src/utils';
 
 import { HtmlMeta, PageCard, ErrorCard, SubmitBar } from '@leaa/dashboard/src/components';
 
@@ -39,7 +40,8 @@ export default (props: IPage) => {
   const [submitVariables, setSubmitVariables] = useState<{ id: number; category: UpdateCategoryInput }>();
   const [updateCategoryMutate, updateCategoryMutation] = useMutation<Category>(UPDATE_CATEGORY, {
     variables: submitVariables,
-    onCompleted: () => message.success(t('_lang:updatedSuccessfully')),
+    onError: e => messageUtil.gqlError(e.message),
+    onCompleted: () => messageUtil.gqlCompleted(t('_lang:updatedSuccessfully')),
     refetchQueries: () => [{ query: GET_CATEGORY, variables: getCategoryVariables }],
   });
 

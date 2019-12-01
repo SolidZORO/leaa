@@ -9,6 +9,7 @@ import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { RoleArgs, UpdateRoleInput } from '@leaa/common/src/dtos/role';
 import { PermissionsWithPaginationObject, PermissionsArgs } from '@leaa/common/src/dtos/permission';
 import { IPage } from '@leaa/dashboard/src/interfaces';
+import { messageUtil } from '@leaa/dashboard/src/utils';
 
 import { HtmlMeta, PageCard, ErrorCard, SubmitBar } from '@leaa/dashboard/src/components';
 
@@ -46,7 +47,8 @@ export default (props: IPage) => {
 
   const [updateRoleMutate, updateRoleMutation] = useMutation<Role>(UPDATE_ROLE, {
     variables: submitVariables,
-    onCompleted: () => message.success(t('_lang:updatedSuccessfully')),
+    onError: e => messageUtil.gqlError(e.message),
+    onCompleted: () => messageUtil.gqlCompleted(t('_lang:updatedSuccessfully')),
     refetchQueries: () => [{ query: GET_ROLE, variables: getRoleVariables }],
   });
 

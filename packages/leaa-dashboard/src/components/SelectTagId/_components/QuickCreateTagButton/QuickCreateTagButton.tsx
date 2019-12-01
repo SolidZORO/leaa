@@ -21,7 +21,7 @@ export const QuickCreateTagButton = (props: IProps) => {
   // mutation
   const [createTagMutate] = useMutation<{ createTag: Tag }>(CREATE_TAG, {
     variables: { tag: { name: props.tagName } },
-    onError: e => message.error(messageUtil.formatGqlmessage(e.message)),
+    onError: e => messageUtil.gqlError(e.message),
     onCompleted({ createTag }) {
       if (props.onCreatedTagCallback) {
         props.onCreatedTagCallback(createTag);

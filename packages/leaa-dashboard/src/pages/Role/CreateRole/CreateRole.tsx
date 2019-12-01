@@ -26,7 +26,7 @@ export default (props: IPage) => {
   const [createRoleMutate, createRoleMutation] = useMutation<{ createRole: Role }>(CREATE_ROLE, {
     variables: submitVariables,
     onCompleted({ createRole }) {
-      message.success(t('_lang:createdSuccessfully'));
+      messageUtil.gqlCompleted(t('_lang:createdSuccessfully'));
       props.history.push(`/roles/${createRole.id}`);
     },
   });

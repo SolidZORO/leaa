@@ -8,6 +8,7 @@ import { GET_TAG, UPDATE_TAG } from '@leaa/common/src/graphqls';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { TagArgs, UpdateTagInput } from '@leaa/common/src/dtos/tag';
 import { IPage } from '@leaa/dashboard/src/interfaces';
+import { messageUtil } from '@leaa/dashboard/src/utils';
 
 import { HtmlMeta, PageCard, ErrorCard, SubmitBar } from '@leaa/dashboard/src/components';
 
@@ -33,7 +34,8 @@ export default (props: IPage) => {
   const [submitVariables, setSubmitVariables] = useState<{ id: number; tag: UpdateTagInput }>();
   const [updateTagMutate, updateTagMutation] = useMutation<Tag>(UPDATE_TAG, {
     variables: submitVariables,
-    onCompleted: () => message.success(t('_lang:updatedSuccessfully')),
+    onError: e => messageUtil.gqlError(e.message),
+    onCompleted: () => messageUtil.gqlCompleted(t('_lang:updatedSuccessfully')),
     refetchQueries: () => [{ query: GET_TAG, variables: getTagVariables }],
   });
 

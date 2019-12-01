@@ -9,6 +9,8 @@ import { GET_ARTICLE, UPDATE_ARTICLE } from '@leaa/common/src/graphqls';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { ArticleArgs, UpdateArticleInput } from '@leaa/common/src/dtos/article';
 import { IPage } from '@leaa/dashboard/src/interfaces';
+import { messageUtil } from '@leaa/dashboard/src/utils';
+
 import {
   PageCard,
   HtmlMeta,
@@ -46,7 +48,8 @@ export default (props: IPage) => {
   const [submitVariables, setSubmitVariables] = useState<{ id: number; article: UpdateArticleInput }>();
   const [updateArticleMutate, updateArticleMutation] = useMutation<Article>(UPDATE_ARTICLE, {
     variables: submitVariables,
-    onCompleted: () => message.success(t('_lang:updatedSuccessfully')),
+    onError: e => messageUtil.gqlError(e.message),
+    onCompleted: () => messageUtil.gqlCompleted(t('_lang:updatedSuccessfully')),
     refetchQueries: () => [{ query: GET_ARTICLE, variables: getArticleVariables }],
   });
 

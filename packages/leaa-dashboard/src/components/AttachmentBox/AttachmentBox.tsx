@@ -54,10 +54,10 @@ export const AttachmentBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
     UPDATE_ATTACHMENTS,
     {
       variables: submitVariables,
-      onError: e => message.error(messageUtil.formatGqlmessage(e.message)),
+      onError: e => messageUtil.gqlError(e.message),
       onCompleted: () =>
         !props.disableMessage &&
-        message.success(
+        messageUtil.gqlCompleted(
           `${langUtil.removeSpace(`${t('_lang:attachment')} ${t('_lang:updatedSuccessfully')}`, i18n.language)}`,
         ),
       refetchQueries: () => [{ query: GET_ATTACHMENTS, variables: getAttachmentsVariables }],

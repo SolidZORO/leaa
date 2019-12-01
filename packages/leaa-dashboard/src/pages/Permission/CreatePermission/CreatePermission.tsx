@@ -29,9 +29,9 @@ export default (props: IPage) => {
     CREATE_PERMISSION,
     {
       variables: submitVariables,
-      onError: e => message.error(messageUtil.formatGqlmessage(e.message)),
+      onError: e => messageUtil.gqlError(e.message),
       onCompleted({ createPermission }) {
-        message.success(t('_lang:createdSuccessfully'));
+        messageUtil.gqlCompleted(t('_lang:createdSuccessfully'));
         props.history.push(`/permissions/${createPermission.id}`);
       },
     },

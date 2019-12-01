@@ -4,14 +4,14 @@ import { useTranslation } from 'react-i18next';
 import queryString from 'query-string';
 import { Link } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { Table, Icon, message, Tag } from 'antd';
+import { Table, Icon, Tag } from 'antd';
 
 import { DEFAULT_PAGE_SIZE_OPTIONS } from '@leaa/dashboard/src/constants';
-import { GET_ARTICLES, DELETE_ARTICLE, UPDATE_ARTICLE, GET_USERS } from '@leaa/common/src/graphqls';
+import { GET_ARTICLES, DELETE_ARTICLE, UPDATE_ARTICLE } from '@leaa/common/src/graphqls';
 import { Article, Tag as TagEntry } from '@leaa/common/src/entrys';
 import { IOrderSort } from '@leaa/common/src/dtos/_common';
 import { ArticlesWithPaginationObject, ArticleArgs } from '@leaa/common/src/dtos/article';
-import { urlUtil, tableUtil } from '@leaa/dashboard/src/utils';
+import { urlUtil, tableUtil, messageUtil } from '@leaa/dashboard/src/utils';
 import { IPage } from '@leaa/dashboard/src/interfaces';
 
 import {
@@ -61,7 +61,8 @@ export default (props: IPage) => {
 
   // mutation
   const [deleteArticleMutate, deleteArticleMutation] = useMutation<Article>(DELETE_ARTICLE, {
-    onCompleted: () => message.success(t('_lang:deletedSuccessfully')),
+    onError: e => messageUtil.gqlError(e.message),
+    onCompleted: () => messageUtil.gqlCompleted(t('_lang:deletedSuccessfully')),
     refetchQueries: () => [{ query: GET_ARTICLES, variables: getArticlesVariables }],
   });
 

@@ -46,8 +46,8 @@ export default (props: IPage) => {
   });
   const [updateUserMutate, updateUserMutation] = useMutation<User>(UPDATE_USER, {
     variables: submitVariables,
-    onError: e => message.error(messageUtil.formatGqlmessage(e.message)),
-    onCompleted: () => message.success(t('_lang:updatedSuccessfully')),
+    onError: e => messageUtil.gqlError(e.message),
+    onCompleted: () => messageUtil.gqlCompleted(t('_lang:createdSuccessfully')),
     refetchQueries: () => [{ query: GET_USER, variables: getUserVariables }],
   });
 

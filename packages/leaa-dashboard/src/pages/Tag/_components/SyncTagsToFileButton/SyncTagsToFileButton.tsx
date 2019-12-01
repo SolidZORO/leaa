@@ -19,9 +19,9 @@ export const SyncTagsToFileButton = (props: IProps) => {
     SYNC_TAGS_TO_FILE,
     {
       // variables: undefined,
-      onError: e => message.error(messageUtil.formatGqlmessage(e.message)),
+      onError: e => messageUtil.gqlError(e.message),
       onCompleted({ syncTagsToDictFile }) {
-        message.success(syncTagsToDictFile.status);
+        messageUtil.gqlCompleted(syncTagsToDictFile.status);
       },
     },
   );

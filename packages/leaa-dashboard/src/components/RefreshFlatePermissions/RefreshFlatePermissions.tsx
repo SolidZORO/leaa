@@ -33,7 +33,7 @@ export const RefreshFlatePermissions = (props: IProps) => {
           return props.history.push(LOGOUT_REDIRECT_URL);
         }
 
-        return message.error(messageUtil.formatGqlmessage(e.message));
+        return messageUtil.gqlError(e.message);
       },
     });
   }

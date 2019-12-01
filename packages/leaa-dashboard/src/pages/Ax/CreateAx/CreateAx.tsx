@@ -26,9 +26,9 @@ export default (props: IPage) => {
   const [submitVariables, setSubmitVariables] = useState<{ ax: CreateAxInput }>();
   const [createAxMutate, createAxMutation] = useMutation<{ createAx: Ax }>(CREATE_AX, {
     variables: submitVariables,
-    onError: e => message.error(messageUtil.formatGqlmessage(e.message)),
+    onError: e => messageUtil.gqlError(e.message),
     onCompleted({ createAx }) {
-      message.success(t('_lang:createdSuccessfully'));
+      messageUtil.gqlCompleted(t('_lang:createdSuccessfully'));
       props.history.push(`/axs/${createAx.id}`);
     },
   });

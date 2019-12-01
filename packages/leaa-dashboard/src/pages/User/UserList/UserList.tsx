@@ -4,14 +4,14 @@ import { useTranslation } from 'react-i18next';
 import queryString from 'query-string';
 import { Link } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { Icon, Table, Button, Tag, message } from 'antd';
+import { Icon, Table, Button, Tag } from 'antd';
 
 import { DEFAULT_PAGE_SIZE_OPTIONS } from '@leaa/dashboard/src/constants';
 import { GET_USERS, DELETE_USER, UPDATE_USER } from '@leaa/common/src/graphqls';
 import { User } from '@leaa/common/src/entrys';
 import { IOrderSort } from '@leaa/common/src/dtos/_common';
 import { UsersWithPaginationObject, UsersArgs } from '@leaa/common/src/dtos/user';
-import { urlUtil, tableUtil } from '@leaa/dashboard/src/utils';
+import { urlUtil, tableUtil, messageUtil } from '@leaa/dashboard/src/utils';
 import { IPage } from '@leaa/dashboard/src/interfaces';
 
 import {
@@ -54,7 +54,8 @@ export default (props: IPage) => {
 
   // mutation
   const [getUsersMutate, getUsersMutation] = useMutation<User>(DELETE_USER, {
-    onCompleted: () => message.success(t('_lang:deletedSuccessfully')),
+    onError: e => messageUtil.gqlError(e.message),
+    onCompleted: () => messageUtil.gqlCompleted(t('_lang:deletedSuccessfully')),
     refetchQueries: () => [{ query: GET_USERS, variables: getUsersVariables }],
   });
 

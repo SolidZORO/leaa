@@ -26,9 +26,9 @@ export default (props: IPage) => {
   const [submitVariables, setSubmitVariables] = useState<{ article: CreateArticleInput }>();
   const [createArticleMutate, createArticleMutation] = useMutation<{ createArticle: Article }>(CREATE_ARTICLE, {
     variables: submitVariables,
-    onError: e => message.error(messageUtil.formatGqlmessage(e.message)),
+    onError: e => messageUtil.gqlError(e.message),
     onCompleted({ createArticle }) {
-      message.success(t('_lang:createdSuccessfully'));
+      messageUtil.gqlCompleted(t('_lang:createdSuccessfully'));
       props.history.push(`/articles/${createArticle.id}`);
     },
   });

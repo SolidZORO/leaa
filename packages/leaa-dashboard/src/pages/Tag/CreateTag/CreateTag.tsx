@@ -26,9 +26,9 @@ export default (props: IPage) => {
   const [submitVariables, setSubmitVariables] = useState<{ tag: CreateTagInput }>();
   const [createTagMutate, createTagMutation] = useMutation<{ createTag: Tag }>(CREATE_TAG, {
     variables: submitVariables,
-    onError: e => message.error(messageUtil.formatGqlmessage(e.message)),
+    onError: e => messageUtil.gqlError(e.message),
     onCompleted({ createTag }) {
-      message.success(t('_lang:createdSuccessfully'));
+      messageUtil.gqlCompleted(t('_lang:createdSuccessfully'));
       props.history.push(`/tags/${createTag.id}`);
     },
   });

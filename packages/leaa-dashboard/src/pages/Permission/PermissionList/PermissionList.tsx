@@ -4,14 +4,14 @@ import { useTranslation } from 'react-i18next';
 import queryString from 'query-string';
 import { Link } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { Table, Icon, message } from 'antd';
+import { Table, Icon } from 'antd';
 
 import { DEFAULT_PAGE_SIZE_OPTIONS } from '@leaa/dashboard/src/constants';
 import { GET_PERMISSIONS, DELETE_PERMISSION } from '@leaa/common/src/graphqls';
 import { Permission } from '@leaa/common/src/entrys';
 import { IOrderSort } from '@leaa/common/src/dtos/_common';
 import { PermissionsWithPaginationObject, PermissionArgs } from '@leaa/common/src/dtos/permission';
-import { urlUtil, tableUtil } from '@leaa/dashboard/src/utils';
+import { urlUtil, tableUtil, messageUtil } from '@leaa/dashboard/src/utils';
 import { IPage } from '@leaa/dashboard/src/interfaces';
 
 import {
@@ -56,7 +56,8 @@ export default (props: IPage) => {
 
   // mutation
   const [deletePermissionMutate, deletePermissionMutation] = useMutation<Permission>(DELETE_PERMISSION, {
-    onCompleted: () => message.success(t('_lang:deletedSuccessfully')),
+    onError: e => messageUtil.gqlError(e.message),
+    onCompleted: () => messageUtil.gqlCompleted(t('_lang:deletedSuccessfully')),
     refetchQueries: () => [{ query: GET_PERMISSIONS, variables: getPermissionsVariables }],
   });
 

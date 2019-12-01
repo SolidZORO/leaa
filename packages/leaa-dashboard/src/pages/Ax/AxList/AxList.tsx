@@ -4,14 +4,14 @@ import { useTranslation } from 'react-i18next';
 import queryString from 'query-string';
 import { Link } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { Table, Icon, message } from 'antd';
+import { Table, Icon } from 'antd';
 
 import { DEFAULT_PAGE_SIZE_OPTIONS } from '@leaa/dashboard/src/constants';
 import { GET_AXS, DELETE_AX, UPDATE_AX } from '@leaa/common/src/graphqls';
 import { Ax } from '@leaa/common/src/entrys';
 import { IOrderSort } from '@leaa/common/src/dtos/_common';
 import { AxsWithPaginationObject, AxArgs } from '@leaa/common/src/dtos/ax';
-import { urlUtil, tableUtil } from '@leaa/dashboard/src/utils';
+import { urlUtil, tableUtil, messageUtil } from '@leaa/dashboard/src/utils';
 import { IPage } from '@leaa/dashboard/src/interfaces';
 
 import {
@@ -54,7 +54,8 @@ export default (props: IPage) => {
 
   // mutation
   const [deleteAxMutate, deleteAxMutation] = useMutation<Ax>(DELETE_AX, {
-    onCompleted: () => message.success(t('_lang:deletedSuccessfully')),
+    onError: e => messageUtil.gqlError(e.message),
+    onCompleted: () => messageUtil.gqlCompleted(t('_lang:deletedSuccessfully')),
     refetchQueries: () => [{ query: GET_AXS, variables: getAxsVariables }],
   });
 

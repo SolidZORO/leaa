@@ -4,14 +4,15 @@ import { useTranslation } from 'react-i18next';
 import queryString from 'query-string';
 import { Link } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { Table, Icon, Button, message } from 'antd';
+import { Table, Icon, Button } from 'antd';
 
 import { DEFAULT_PAGE_SIZE_OPTIONS } from '@leaa/dashboard/src/constants';
 import { GET_COUPONS, DELETE_COUPON, UPDATE_COUPON } from '@leaa/common/src/graphqls';
 import { Coupon } from '@leaa/common/src/entrys';
 import { IOrderSort } from '@leaa/common/src/dtos/_common';
 import { CouponsWithPaginationObject, CouponArgs } from '@leaa/common/src/dtos/coupon';
-import { urlUtil, tableUtil, langUtil } from '@leaa/dashboard/src/utils';
+import { urlUtil, tableUtil, messageUtil } from '@leaa/dashboard/src/utils';
+
 import { IPage } from '@leaa/dashboard/src/interfaces';
 
 import {
@@ -62,7 +63,8 @@ export default (props: IPage) => {
 
   // mutation
   const [deleteCouponMutate, deleteCouponMutation] = useMutation<Coupon>(DELETE_COUPON, {
-    onCompleted: () => message.success(t('_lang:deletedSuccessfully')),
+    onError: e => messageUtil.gqlError(e.message),
+    onCompleted: () => messageUtil.gqlCompleted(t('_lang:deletedSuccessfully')),
     refetchQueries: () => [{ query: GET_COUPONS, variables: getCouponsVariables }],
   });
 

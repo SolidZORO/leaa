@@ -8,7 +8,7 @@ import { Coupon } from '@leaa/common/src/entrys';
 
 import { UserSearchBox, ErrorCard, IdTag } from '@leaa/dashboard/src/components';
 import { REDEEM_COUPON } from '@leaa/common/src/graphqls';
-import { langUtil, authUtil } from '@leaa/dashboard/src/utils';
+import { langUtil, authUtil, messageUtil } from '@leaa/dashboard/src/utils';
 
 import style from './style.module.less';
 
@@ -29,8 +29,9 @@ export const RedeemCouponToUseButton = (props: IProps) => {
   // mutation
   const [redeemCouponMutate, redeemCouponMutation] = useMutation<Coupon>(REDEEM_COUPON, {
     variables: { info: { code: props.item.code, userId } },
+    onError: e => messageUtil.gqlError(e.message),
     onCompleted: () => {
-      message.success(t('_lang:updatedSuccessfully'));
+      messageUtil.gqlCompleted(t('_lang:updatedSuccessfully'));
 
       if (props.onConvetCompletedCallback) {
         props.onConvetCompletedCallback();

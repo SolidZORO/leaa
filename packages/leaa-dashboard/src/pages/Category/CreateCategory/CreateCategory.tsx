@@ -26,9 +26,9 @@ export default (props: IPage) => {
   const [submitVariables, setSubmitVariables] = useState<{ category: CreateCategoryInput }>();
   const [createCategoryMutate, createCategoryMutation] = useMutation<{ createCategory: Category }>(CREATE_CATEGORY, {
     variables: submitVariables,
-    onError: e => message.error(messageUtil.formatGqlmessage(e.message)),
+    onError: e => messageUtil.gqlError(e.message),
     onCompleted({ createCategory }) {
-      message.success(t('_lang:createdSuccessfully'));
+      messageUtil.gqlCompleted(t('_lang:createdSuccessfully'));
       props.history.push(`/categories/${createCategory.id}`);
     },
   });

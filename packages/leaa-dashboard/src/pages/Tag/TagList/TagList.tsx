@@ -4,14 +4,14 @@ import { useTranslation } from 'react-i18next';
 import queryString from 'query-string';
 import { Link } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { Table, Icon, message } from 'antd';
+import { Table, Icon } from 'antd';
 
 import { DEFAULT_PAGE_SIZE_OPTIONS } from '@leaa/dashboard/src/constants';
 import { GET_TAGS, DELETE_TAG } from '@leaa/common/src/graphqls';
 import { Tag } from '@leaa/common/src/entrys';
 import { IOrderSort } from '@leaa/common/src/dtos/_common';
 import { TagsWithPaginationObject, TagArgs } from '@leaa/common/src/dtos/tag';
-import { urlUtil, tableUtil, authUtil } from '@leaa/dashboard/src/utils';
+import { urlUtil, tableUtil, authUtil, messageUtil } from '@leaa/dashboard/src/utils';
 import { IPage } from '@leaa/dashboard/src/interfaces';
 
 import {
@@ -55,7 +55,8 @@ export default (props: IPage) => {
 
   // mutation
   const [deleteTagMutate, deleteTagMutation] = useMutation<Tag>(DELETE_TAG, {
-    onCompleted: () => message.success(t('_lang:deletedSuccessfully')),
+    onError: e => messageUtil.gqlError(e.message),
+    onCompleted: () => messageUtil.gqlCompleted(t('_lang:deletedSuccessfully')),
     refetchQueries: () => [{ query: GET_TAGS, variables: getTagsVariables }],
   });
 

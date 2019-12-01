@@ -1,9 +1,21 @@
-const formatGqlmessage = (string: string): string => {
-  console.log(string);
+import { message } from 'antd';
 
-  return string.replace(/GraphQL\serror:\s?/, '');
+const formatGqlmessage = (str: string): string => {
+  console.log(str);
+
+  return str.replace(/GraphQL\serror:\s?/, '');
+};
+
+const gqlError = (msg?: string): void => {
+  message.error(formatGqlmessage(msg || 'Error'));
+};
+
+const gqlCompleted = (msg?: string): void => {
+  message.success(msg || 'Completed');
 };
 
 export const messageUtil = {
   formatGqlmessage,
+  gqlCompleted,
+  gqlError,
 };

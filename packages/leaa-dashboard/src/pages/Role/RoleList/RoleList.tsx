@@ -4,14 +4,14 @@ import { useTranslation } from 'react-i18next';
 import queryString from 'query-string';
 import { Link } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { Table, Icon, message } from 'antd';
+import { Table, Icon } from 'antd';
 
 import { DEFAULT_PAGE_SIZE_OPTIONS } from '@leaa/dashboard/src/constants';
 import { GET_ROLES, DELETE_ROLE } from '@leaa/common/src/graphqls';
 import { Role } from '@leaa/common/src/entrys';
 import { IOrderSort } from '@leaa/common/src/dtos/_common';
 import { RolesWithPaginationObject, RolesArgs } from '@leaa/common/src/dtos/role';
-import { urlUtil, tableUtil } from '@leaa/dashboard/src/utils';
+import { urlUtil, tableUtil, messageUtil } from '@leaa/dashboard/src/utils';
 import { IPage } from '@leaa/dashboard/src/interfaces';
 
 import {
@@ -53,7 +53,8 @@ export default (props: IPage) => {
 
   // mutation
   const [deleteRoleMutate, deleteRoleMutation] = useMutation<Role>(DELETE_ROLE, {
-    onCompleted: () => message.success(t('_lang:deletedSuccessfully')),
+    onError: e => messageUtil.gqlError(e.message),
+    onCompleted: () => messageUtil.gqlCompleted(t('_lang:deletedSuccessfully')),
     refetchQueries: () => [{ query: GET_ROLES, variables: getRolesVariables }],
   });
 

@@ -20,7 +20,7 @@ import {
   UpdateSettingsInput,
 } from '@leaa/common/src/dtos/setting';
 import { IPage } from '@leaa/dashboard/src/interfaces';
-import { settingUtil } from '@leaa/dashboard/src/utils';
+import { settingUtil, messageUtil } from '@leaa/dashboard/src/utils';
 
 import { HtmlMeta, PageCard, ErrorCard, SubmitBar } from '@leaa/dashboard/src/components';
 
@@ -86,8 +86,9 @@ export default (props: IPage) => {
   const [createSettingVariables, setCreateSettingVariables] = useState<{ setting: CreateSettingInput }>();
   const [createSettingMutate, createSettingMutation] = useMutation<Setting>(CREATE_SETTING, {
     variables: createSettingVariables,
+    onError: e => messageUtil.gqlError(e.message),
     onCompleted: () => {
-      message.success(t('_lang:createdSuccessfully'));
+      messageUtil.gqlCompleted(t('_lang:createdSuccessfully'));
       onCloseModalVisible();
       onRefreshSettings();
     },
@@ -97,8 +98,9 @@ export default (props: IPage) => {
   const [updateSettingVariables, setUpdateSettingVariables] = useState<{ id: number; setting: UpdateSettingInput }>();
   const [updateSettingMutate, updateSettingMutation] = useMutation<Setting>(UPDATE_SETTING, {
     variables: updateSettingVariables,
+    onError: e => messageUtil.gqlError(e.message),
     onCompleted: () => {
-      message.success(t('_lang:updatedSuccessfully'));
+      messageUtil.gqlCompleted(t('_lang:updatedSuccessfully'));
       onCloseModalVisible();
       onRefreshSettings();
     },
@@ -108,8 +110,9 @@ export default (props: IPage) => {
   const [updateSettingsVariables, setUpdateSettingsVariables] = useState<{ settings: UpdateSettingsInput }>();
   const [updateSettingsMutate, updateSettingsMutation] = useMutation<Setting[]>(UPDATE_SETTINGS, {
     variables: updateSettingsVariables,
+    onError: e => messageUtil.gqlError(e.message),
     onCompleted: () => {
-      message.success(t('_lang:updatedSuccessfully'));
+      messageUtil.gqlCompleted(t('_lang:updatedSuccessfully'));
       onCloseModalVisible();
       onRefreshSettings();
     },
@@ -119,8 +122,9 @@ export default (props: IPage) => {
   const [deleteSettingVariables, setDeleteSettingVariables] = useState<{ id: number }>();
   const [deleteSettingMutate, deleteSettingMutation] = useMutation<Setting[]>(DELETE_SETTING, {
     variables: deleteSettingVariables,
+    onError: e => messageUtil.gqlError(e.message),
     onCompleted: () => {
-      message.success(t('_lang:deletedSuccessfully'));
+      messageUtil.gqlCompleted(t('_lang:deletedSuccessfully'));
       onCloseModalVisible();
       onRefreshSettings();
     },

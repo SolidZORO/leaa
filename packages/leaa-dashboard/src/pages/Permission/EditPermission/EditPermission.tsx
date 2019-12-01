@@ -8,6 +8,7 @@ import { GET_PERMISSION, UPDATE_PERMISSION } from '@leaa/common/src/graphqls';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { PermissionArgs, UpdatePermissionInput } from '@leaa/common/src/dtos/permission';
 import { IPage } from '@leaa/dashboard/src/interfaces';
+import { messageUtil } from '@leaa/dashboard/src/utils';
 
 import { HtmlMeta, PageCard, ErrorCard, SubmitBar } from '@leaa/dashboard/src/components';
 
@@ -36,7 +37,8 @@ export default (props: IPage) => {
   });
   const [updatePermissionMutate, updatePermissionMutation] = useMutation<Permission>(UPDATE_PERMISSION, {
     variables: submitVariables,
-    onCompleted: () => message.success(t('_lang:updatedSuccessfully')),
+    onError: e => messageUtil.gqlError(e.message),
+    onCompleted: () => messageUtil.gqlCompleted(t('_lang:updatedSuccessfully')),
     refetchQueries: () => [{ query: GET_PERMISSION, variables: getPermissionVariables }],
   });
 

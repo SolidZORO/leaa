@@ -4,14 +4,15 @@ import { useTranslation } from 'react-i18next';
 import queryString from 'query-string';
 import { Link } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { Table, Icon, message } from 'antd';
+import { Table, Icon } from 'antd';
 
 import { DEFAULT_PAGE_SIZE_OPTIONS } from '@leaa/dashboard/src/constants';
 import { GET_PROMOS, DELETE_PROMO, UPDATE_PROMO } from '@leaa/common/src/graphqls';
-import { Promo, Ax } from '@leaa/common/src/entrys';
+import { Promo } from '@leaa/common/src/entrys';
 import { IOrderSort } from '@leaa/common/src/dtos/_common';
 import { PromosWithPaginationObject, PromoArgs } from '@leaa/common/src/dtos/promo';
-import { urlUtil, tableUtil } from '@leaa/dashboard/src/utils';
+import { urlUtil, tableUtil, messageUtil } from '@leaa/dashboard/src/utils';
+
 import {
   TableColumnDate,
   HtmlMeta,
@@ -23,7 +24,6 @@ import {
   TableColumnId,
   TableColumnStatusSwitch,
   CouponItem,
-  IdTag,
 } from '@leaa/dashboard/src/components';
 import { IPage } from '@leaa/dashboard/src/interfaces';
 
@@ -55,7 +55,8 @@ export default (props: IPage) => {
 
   // mutation
   const [deletePromoMutate, deletePromoMutation] = useMutation<Promo>(DELETE_PROMO, {
-    onCompleted: () => message.success(t('_lang:deletedSuccessfully')),
+    onError: e => messageUtil.gqlError(e.message),
+    onCompleted: () => messageUtil.gqlCompleted(t('_lang:deletedSuccessfully')),
     refetchQueries: () => [{ query: GET_PROMOS, variables: getPromosVariables }],
   });
 

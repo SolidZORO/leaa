@@ -25,9 +25,9 @@ export default (props: IPage) => {
   const [submitVariables, setSubmitVariables] = useState<{ info: RedeemCouponInput }>();
   const [redeemCouponMutate, redeemCouponMutation] = useMutation<{ coupon: Coupon }>(REDEEM_COUPON, {
     variables: submitVariables,
-    onError: e => message.error(messageUtil.formatGqlmessage(e.message)),
+    onError: e => messageUtil.gqlError(e.message),
     onCompleted(e) {
-      message.success(t('_lang:createdSuccessfully'));
+      messageUtil.gqlCompleted(t('_lang:createdSuccessfully'));
       console.log(e);
       // props.history.push('/coupons');
     },

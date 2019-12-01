@@ -10,13 +10,14 @@ import {
   DragSourceConnector,
 } from 'react-dnd';
 import { XYCoord } from 'dnd-core';
-import { Input, Button, message } from 'antd';
+import { Input, Button } from 'antd';
 import { useMutation } from '@apollo/react-hooks';
 import { useTranslation } from 'react-i18next';
 
 import { DELETE_ATTACHMENT } from '@leaa/common/src/graphqls';
 import { Attachment } from '@leaa/common/src/entrys';
 import { SwitchNumber, ErrorCard } from '@leaa/dashboard/src/components';
+import { messageUtil } from '@leaa/dashboard/src/utils';
 
 import style from './style.module.less';
 
@@ -78,7 +79,8 @@ const AttachmentItemInner = forwardRef((props: IProps, ref: React.Ref<any>) => {
   const [deleteAttachmentsVariables, setDeleteAttachmentsVariables] = useState<{ uuid: string[] }>();
   const [deleteAttachmentsMutate, deleteAttachmentsMutation] = useMutation<{ uuid: string[] }>(DELETE_ATTACHMENT, {
     variables: deleteAttachmentsVariables,
-    onCompleted: () => message.success(t('_lang:deletedSuccessfully')),
+    onError: e => messageUtil.gqlError(e.message),
+    onCompleted: () => messageUtil.gqlCompleted(t('_lang:deletedSuccessfully')),
   });
 
   const onDelete = async (uuid: string) => {

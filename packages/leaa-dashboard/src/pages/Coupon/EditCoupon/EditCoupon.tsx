@@ -8,6 +8,7 @@ import { GET_COUPON, UPDATE_COUPON } from '@leaa/common/src/graphqls';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { CouponArgs, UpdateCouponInput } from '@leaa/common/src/dtos/coupon';
 import { IPage } from '@leaa/dashboard/src/interfaces';
+import { messageUtil } from '@leaa/dashboard/src/utils';
 
 import { HtmlMeta, PageCard, ErrorCard, SubmitBar } from '@leaa/dashboard/src/components';
 
@@ -34,7 +35,8 @@ export default (props: IPage) => {
   const [submitVariables, setSubmitVariables] = useState<{ id: number; coupon: UpdateCouponInput }>();
   const [updateCouponMutate, updateCouponMutation] = useMutation<Coupon>(UPDATE_COUPON, {
     variables: submitVariables,
-    onCompleted: () => message.success(t('_lang:updatedSuccessfully')),
+    onError: e => messageUtil.gqlError(e.message),
+    onCompleted: () => messageUtil.gqlCompleted(t('_lang:updatedSuccessfully')),
     refetchQueries: () => [{ query: GET_COUPON, variables: getCouponVariables }],
   });
 
