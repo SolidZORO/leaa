@@ -7,8 +7,6 @@ import { Select } from 'antd';
 import { GET_CATEGORIES } from '@leaa/common/src/graphqls';
 import { CategoriesWithPaginationObject, CategoriesArgs } from '@leaa/common/src/dtos/category';
 
-import { ErrorCard } from '@leaa/dashboard/src/components';
-
 import style from './style.module.less';
 
 interface IProps {

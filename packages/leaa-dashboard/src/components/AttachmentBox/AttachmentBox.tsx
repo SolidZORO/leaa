@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import React, { useState, forwardRef, useImperativeHandle, useRef } from 'react';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { message, Tooltip } from 'antd';
+import { Tooltip } from 'antd';
 
 import { GET_ATTACHMENTS, UPDATE_ATTACHMENTS } from '@leaa/common/src/graphqls';
 import { IAttachmentParams } from '@leaa/common/src/interfaces';
@@ -14,7 +14,7 @@ import {
   UpdateAttachmentsInput,
 } from '@leaa/common/src/dtos/attachment';
 
-import { ErrorCard, FormCard } from '@leaa/dashboard/src/components';
+import { FormCard } from '@leaa/dashboard/src/components';
 
 import { AttachmentList } from './_components/AttachmentList/AttachmentList';
 import { AttachmentDropzone } from './_components/AttachmentDropzone/AttachmentDropzone';

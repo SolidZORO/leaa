@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import cx from 'classnames';
-import { Button, message } from 'antd';
+import { Button } from 'antd';
 import { useMutation } from '@apollo/react-hooks';
 
 import { Tag } from '@leaa/common/src/entrys';

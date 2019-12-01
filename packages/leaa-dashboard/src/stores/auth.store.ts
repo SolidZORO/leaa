@@ -1,4 +1,5 @@
 import { observable } from 'mobx';
+
 // import { IAuthInfo } from '@leaa/dashboard/src/interfaces';
 
 export interface IAuthStore {

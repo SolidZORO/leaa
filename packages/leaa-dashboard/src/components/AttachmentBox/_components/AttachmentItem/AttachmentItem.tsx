@@ -16,7 +16,7 @@ import { useTranslation } from 'react-i18next';
 
 import { DELETE_ATTACHMENT } from '@leaa/common/src/graphqls';
 import { Attachment } from '@leaa/common/src/entrys';
-import { SwitchNumber, ErrorCard } from '@leaa/dashboard/src/components';
+import { SwitchNumber } from '@leaa/dashboard/src/components';
 import { messageUtil } from '@leaa/dashboard/src/utils';
 
 import style from './style.module.less';

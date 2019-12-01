@@ -7,7 +7,6 @@ import zhCN from 'antd/lib/locale-provider/zh_CN';
 import enUS from 'antd/lib/locale-provider/en_US';
 
 import { apolloClient, history } from '@leaa/dashboard/src/libs';
-
 // cannot use deconstruction components dir in here (App.tsx)
 import { ErrorBoundary } from '@leaa/dashboard/src/components/ErrorBoundary';
 import { RefreshFlatePermissions } from '@leaa/dashboard/src/components/RefreshFlatePermissions';
