@@ -11,7 +11,7 @@ import { PermissionsWithPaginationObject, PermissionsArgs } from '@leaa/common/s
 import { IPage } from '@leaa/dashboard/src/interfaces';
 import { messageUtil } from '@leaa/dashboard/src/utils';
 
-import { HtmlMeta, PageCard, ErrorCard, SubmitBar } from '@leaa/dashboard/src/components';
+import { HtmlMeta, PageCard, SubmitBar } from '@leaa/dashboard/src/components';
 
 import { RoleInfoForm } from '../_components/RoleInfoForm/RoleInfoForm';
 import { RolePermissionsForm } from '../_components/RolePermissionsForm/RolePermissionsForm';
@@ -109,10 +109,6 @@ export default (props: IPage) => {
       loading={getRoleQuery.loading || updateRoleMutation.loading}
     >
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
-
-      {getRoleQuery.error ? <ErrorCard error={getRoleQuery.error} /> : null}
-      {getPermissionsQuery.error ? <ErrorCard error={getPermissionsQuery.error} /> : null}
-      {updateRoleMutation.error ? <ErrorCard error={updateRoleMutation.error} /> : null}
 
       <RoleInfoForm
         item={getRoleQuery.data && getRoleQuery.data.role}

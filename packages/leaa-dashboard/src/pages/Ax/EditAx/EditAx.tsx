@@ -11,7 +11,7 @@ import { AxArgs, UpdateAxInput } from '@leaa/common/src/dtos/ax';
 import { IPage } from '@leaa/dashboard/src/interfaces';
 import { messageUtil } from '@leaa/dashboard/src/utils';
 
-import { HtmlMeta, PageCard, ErrorCard, SubmitBar, AttachmentBox } from '@leaa/dashboard/src/components';
+import { HtmlMeta, PageCard, SubmitBar, AttachmentBox } from '@leaa/dashboard/src/components';
 
 import { AxInfoForm } from '../_components/AxInfoForm/AxInfoForm';
 
@@ -89,9 +89,6 @@ export default (props: IPage) => {
       loading={getAxQuery.loading || updateAxMutation.loading}
     >
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
-
-      {getAxQuery.error ? <ErrorCard error={getAxQuery.error} /> : null}
-      {updateAxMutation.error ? <ErrorCard error={updateAxMutation.error} /> : null}
 
       <AxInfoForm
         item={getAxQuery.data && getAxQuery.data.ax}

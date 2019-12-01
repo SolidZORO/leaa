@@ -10,7 +10,7 @@ import { CREATE_AX } from '@leaa/common/src/graphqls';
 import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { messageUtil } from '@leaa/dashboard/src/utils';
 
-import { HtmlMeta, PageCard, ErrorCard, SubmitBar } from '@leaa/dashboard/src/components';
+import { HtmlMeta, PageCard, SubmitBar } from '@leaa/dashboard/src/components';
 
 import { AxInfoForm } from '../_components/AxInfoForm/AxInfoForm';
 
@@ -49,8 +49,6 @@ export default (props: IPage) => {
   return (
     <PageCard title={t(`${props.route.namei18n}`)} className={style['wapper']} loading={createAxMutation.loading}>
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
-
-      {createAxMutation.error ? <ErrorCard error={createAxMutation.error} /> : null}
 
       <AxInfoForm wrappedComponentRef={(inst: unknown) => setAxInfoFormRef(inst)} />
 

@@ -9,7 +9,7 @@ import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { IPage } from '@leaa/dashboard/src/interfaces';
 import { CREATE_USER } from '@leaa/common/src/graphqls';
 
-import { HtmlMeta, PageCard, ErrorCard, SubmitBar } from '@leaa/dashboard/src/components';
+import { HtmlMeta, PageCard, SubmitBar } from '@leaa/dashboard/src/components';
 
 import { UserInfoForm } from '../_components/UserInfoForm/UserInfoForm';
 
@@ -63,8 +63,6 @@ export default (props: IPage) => {
   return (
     <PageCard title={t(`${props.route.namei18n}`)} className={style['wapper']} loading={createUserMutation.loading}>
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
-
-      {createUserMutation.error ? <ErrorCard error={createUserMutation.error} /> : null}
 
       <UserInfoForm wrappedComponentRef={(inst: unknown) => setUserInfoFormRef(inst)} />
 

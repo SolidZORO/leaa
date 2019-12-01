@@ -10,7 +10,7 @@ import { CREATE_ARTICLE } from '@leaa/common/src/graphqls';
 import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { messageUtil } from '@leaa/dashboard/src/utils';
 
-import { PageCard, HtmlMeta, ErrorCard, SubmitBar } from '@leaa/dashboard/src/components';
+import { PageCard, HtmlMeta, SubmitBar } from '@leaa/dashboard/src/components';
 
 import { ArticleInfoForm } from '../_components/ArticleInfoForm/ArticleInfoForm';
 
@@ -49,8 +49,6 @@ export default (props: IPage) => {
   return (
     <PageCard title={t(`${props.route.namei18n}`)} className={style['wapper']} loading={createArticleMutation.loading}>
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
-
-      {createArticleMutation.error ? <ErrorCard error={createArticleMutation.error} /> : null}
 
       <ArticleInfoForm wrappedComponentRef={(inst: unknown) => setArticleInfoFormRef(inst)} />
 

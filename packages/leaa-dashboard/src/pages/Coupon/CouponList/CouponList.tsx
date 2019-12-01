@@ -18,7 +18,6 @@ import { IPage } from '@leaa/dashboard/src/interfaces';
 import {
   HtmlMeta,
   PageCard,
-  ErrorCard,
   TableCard,
   SearchInput,
   TableColumnDeleteButton,
@@ -219,9 +218,6 @@ export default (props: IPage) => {
       loading={getCouponsQuery.loading}
     >
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
-
-      {getCouponsQuery.error ? <ErrorCard error={getCouponsQuery.error} /> : null}
-      {deleteCouponMutation.error ? <ErrorCard error={deleteCouponMutation.error} /> : null}
 
       {getCouponsQuery.data && getCouponsQuery.data.coupons && getCouponsQuery.data.coupons.items && (
         <TableCard selectedRowKeys={selectedRowKeys}>

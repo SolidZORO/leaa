@@ -10,7 +10,7 @@ import { PermissionArgs, UpdatePermissionInput } from '@leaa/common/src/dtos/per
 import { IPage } from '@leaa/dashboard/src/interfaces';
 import { messageUtil } from '@leaa/dashboard/src/utils';
 
-import { HtmlMeta, PageCard, ErrorCard, SubmitBar } from '@leaa/dashboard/src/components';
+import { HtmlMeta, PageCard, SubmitBar } from '@leaa/dashboard/src/components';
 
 import { PermissionInfoForm } from '../_components/PermissionInfoForm/PermissionInfoForm';
 
@@ -77,9 +77,6 @@ export default (props: IPage) => {
       loading={getPermissionQuery.loading || updatePermissionMutation.loading}
     >
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
-
-      {getPermissionQuery.error ? <ErrorCard error={getPermissionQuery.error} /> : null}
-      {updatePermissionMutation.error ? <ErrorCard error={updatePermissionMutation.error} /> : null}
 
       <PermissionInfoForm
         item={getPermissionQuery.data && getPermissionQuery.data.permission}

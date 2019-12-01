@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'classnames';
-import { Button, message } from 'antd';
+import { Button } from 'antd';
 import { useMutation } from '@apollo/react-hooks';
 
 import { SyncTagsToFileObject } from '@leaa/common/src/dtos/tag';

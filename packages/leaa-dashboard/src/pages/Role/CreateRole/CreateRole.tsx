@@ -9,7 +9,7 @@ import { IPage } from '@leaa/dashboard/src/interfaces';
 import { CREATE_ROLE } from '@leaa/common/src/graphqls';
 import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 
-import { HtmlMeta, PageCard, ErrorCard, SubmitBar } from '@leaa/dashboard/src/components';
+import { HtmlMeta, PageCard, SubmitBar } from '@leaa/dashboard/src/components';
 
 import { RoleInfoForm } from '../_components/RoleInfoForm/RoleInfoForm';
 
@@ -63,8 +63,6 @@ export default (props: IPage) => {
   return (
     <PageCard title={t(`${props.route.namei18n}`)} className={style['wapper']} loading={createRoleMutation.loading}>
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
-
-      {createRoleMutation.error ? <ErrorCard error={createRoleMutation.error} /> : null}
 
       <RoleInfoForm wrappedComponentRef={(inst: unknown) => setRoleInfoFormRef(inst)} />
 

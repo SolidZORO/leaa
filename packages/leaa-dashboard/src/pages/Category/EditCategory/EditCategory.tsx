@@ -10,7 +10,7 @@ import { CategoryArgs, UpdateCategoryInput, CategoriesWithPaginationObject } fro
 import { IPage } from '@leaa/dashboard/src/interfaces';
 import { messageUtil } from '@leaa/dashboard/src/utils';
 
-import { HtmlMeta, PageCard, ErrorCard, SubmitBar } from '@leaa/dashboard/src/components';
+import { HtmlMeta, PageCard, SubmitBar } from '@leaa/dashboard/src/components';
 
 import { CategoryInfoForm } from '../_components/CategoryInfoForm/CategoryInfoForm';
 
@@ -65,10 +65,6 @@ export default (props: IPage) => {
       loading={getCategoryQuery.loading || updateCategoryMutation.loading}
     >
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
-
-      {getCategoryQuery.error ? <ErrorCard error={getCategoryQuery.error} /> : null}
-      {getCategoriesQuery.error ? <ErrorCard error={getCategoriesQuery.error} /> : null}
-      {updateCategoryMutation.error ? <ErrorCard error={updateCategoryMutation.error} /> : null}
 
       <CategoryInfoForm
         item={getCategoryQuery.data && getCategoryQuery.data.category}

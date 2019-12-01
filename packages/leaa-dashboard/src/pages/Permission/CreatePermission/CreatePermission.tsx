@@ -11,7 +11,7 @@ import { CREATE_PERMISSION } from '@leaa/common/src/graphqls';
 import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { messageUtil } from '@leaa/dashboard/src/utils';
 
-import { PageCard, ErrorCard, SubmitBar } from '@leaa/dashboard/src/components';
+import { PageCard, SubmitBar } from '@leaa/dashboard/src/components';
 
 import { PermissionInfoForm } from '../_components/PermissionInfoForm/PermissionInfoForm';
 
@@ -72,8 +72,6 @@ export default (props: IPage) => {
       className={style['wapper']}
       loading={createPermissionMutation.loading}
     >
-      {createPermissionMutation.error ? <ErrorCard error={createPermissionMutation.error} /> : null}
-
       <PermissionInfoForm wrappedComponentRef={(inst: unknown) => setPermissionInfoFormRef(inst)} />
 
       <SubmitBar>

@@ -9,7 +9,6 @@ import { IAuthInfo } from '@leaa/dashboard/src/interfaces';
 import { AuthLoginInput } from '@leaa/common/src/dtos/auth';
 import { LOGIN } from '@leaa/common/src/graphqls';
 import { authUtil } from '@leaa/dashboard/src/utils';
-import { ErrorCard } from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';
 
@@ -80,8 +79,6 @@ const LoginFormInner = (props: IProps) => {
 
   return (
     <div className={cx(style['wrapper'], className)}>
-      {submitLoginMutation.error ? <ErrorCard error={submitLoginMutation.error} /> : null}
-
       <Form>
         <Row gutter={16} className={style['form-row']}>
           <Col xs={24} sm={12}>

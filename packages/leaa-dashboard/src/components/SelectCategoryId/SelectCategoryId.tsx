@@ -40,7 +40,7 @@ export const SelectCategoryId = forwardRef((props: IProps, ref: React.Ref<any>) 
 
   return (
     <div className={cx(style['wrapper'], props.className)}>
-      {getCategoriesQuery.error ? <ErrorCard error={getCategoriesQuery.error} /> : null}
+
 
       <Select
         defaultValue={value}

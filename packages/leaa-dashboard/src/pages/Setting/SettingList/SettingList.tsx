@@ -22,7 +22,7 @@ import {
 import { IPage } from '@leaa/dashboard/src/interfaces';
 import { settingUtil, messageUtil } from '@leaa/dashboard/src/utils';
 
-import { HtmlMeta, PageCard, ErrorCard, SubmitBar } from '@leaa/dashboard/src/components';
+import { HtmlMeta, PageCard, SubmitBar } from '@leaa/dashboard/src/components';
 
 import { SettingListForm } from '../_components/SettingListForm/SettingListForm';
 import { SettingModalForm } from '../_components/SettingModalForm/SettingModalForm';
@@ -212,12 +212,6 @@ export default (props: IPage) => {
       loading={getSettingsQuery.loading || updateSettingsMutation.loading}
     >
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
-
-      {getSettingsQuery.error ? <ErrorCard error={getSettingsQuery.error} /> : null}
-      {updateSettingMutation.error ? <ErrorCard error={updateSettingMutation.error} /> : null}
-      {createSettingMutation.error ? <ErrorCard error={createSettingMutation.error} /> : null}
-      {updateSettingsMutation.error ? <ErrorCard error={updateSettingsMutation.error} /> : null}
-      {deleteSettingMutation.error ? <ErrorCard error={deleteSettingMutation.error} /> : null}
 
       <SettingListForm
         settings={getSettingsQuery.data && getSettingsQuery.data.settings && getSettingsQuery.data.settings.items}

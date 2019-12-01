@@ -11,7 +11,7 @@ import { UserArgs, UpdateUserInput } from '@leaa/common/src/dtos/user';
 import { IPage } from '@leaa/dashboard/src/interfaces';
 import { messageUtil } from '@leaa/dashboard/src/utils';
 
-import { HtmlMeta, PageCard, ErrorCard, SubmitBar } from '@leaa/dashboard/src/components';
+import { HtmlMeta, PageCard, SubmitBar } from '@leaa/dashboard/src/components';
 
 import { UserInfoForm } from '../_components/UserInfoForm/UserInfoForm';
 import { UserRolesForm } from '../_components/UserRolesForm/UserRolesForm';
@@ -108,9 +108,6 @@ export default (props: IPage) => {
       loading={getUserQuery.loading || updateUserMutation.loading}
     >
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
-
-      {getUserQuery.error ? <ErrorCard error={getUserQuery.error} /> : null}
-      {getRolesQuery.error ? <ErrorCard error={getRolesQuery.error} /> : null}
 
       <UserInfoForm
         item={getUserQuery.data && getUserQuery.data.user}

@@ -11,14 +11,7 @@ import { ArticleArgs, UpdateArticleInput } from '@leaa/common/src/dtos/article';
 import { IPage } from '@leaa/dashboard/src/interfaces';
 import { messageUtil } from '@leaa/dashboard/src/utils';
 
-import {
-  PageCard,
-  HtmlMeta,
-  ErrorCard,
-  WYSIWYGEditor,
-  AttachmentBox,
-  SelectTagId,
-} from '@leaa/dashboard/src/components';
+import { PageCard, HtmlMeta, WYSIWYGEditor, AttachmentBox, SelectTagId } from '@leaa/dashboard/src/components';
 
 import { ArticleInfoForm } from '../_components/ArticleInfoForm/ArticleInfoForm';
 import { ArticleExtForm } from '../_components/ArticleExtForm/ArticleExtForm';
@@ -128,9 +121,6 @@ export default (props: IPage) => {
       loading={getArticleQuery.loading || updateArticleMutation.loading}
     >
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
-
-      {getArticleQuery.error ? <ErrorCard error={getArticleQuery.error} /> : null}
-      {updateArticleMutation.error ? <ErrorCard error={updateArticleMutation.error} /> : null}
 
       <ArticleInfoForm
         item={getArticleQuery.data && getArticleQuery.data.article}

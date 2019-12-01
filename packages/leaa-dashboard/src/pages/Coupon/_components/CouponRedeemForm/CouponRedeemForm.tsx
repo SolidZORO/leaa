@@ -7,7 +7,7 @@ import { FormComponentProps } from 'antd/lib/form';
 import { Coupon } from '@leaa/common/src/entrys';
 import { ITfn } from '@leaa/dashboard/src/interfaces';
 
-import { FormCard, EntryInfoDate, UserSearchBox } from '@leaa/dashboard/src/components';
+import { FormCard, EntryInfoDate } from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';
 
@@ -56,7 +56,7 @@ class CouponRedeemFormInner extends React.PureComponent<IProps> {
                     initialValue: 1,
                     rules: [{ required: true }],
                   })(
-                    <Input />
+                    <Input />,
                     // <UserSearchBox
                     //   size="large"
                     //   useOnBlur

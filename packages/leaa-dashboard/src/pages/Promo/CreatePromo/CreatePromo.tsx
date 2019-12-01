@@ -10,7 +10,7 @@ import { CREATE_PROMO } from '@leaa/common/src/graphqls';
 import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { messageUtil } from '@leaa/dashboard/src/utils';
 
-import { HtmlMeta, PageCard, ErrorCard, SubmitBar } from '@leaa/dashboard/src/components';
+import { HtmlMeta, PageCard, SubmitBar } from '@leaa/dashboard/src/components';
 
 import { PromoInfoForm } from '../_components/PromoInfoForm/PromoInfoForm';
 
@@ -49,8 +49,6 @@ export default (props: IPage) => {
   return (
     <PageCard title={t(`${props.route.namei18n}`)} className={style['wapper']} loading={createPromoMutation.loading}>
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
-
-      {createPromoMutation.error ? <ErrorCard error={createPromoMutation.error} /> : null}
 
       <PromoInfoForm wrappedComponentRef={(inst: unknown) => setPromoInfoFormRef(inst)} />
 

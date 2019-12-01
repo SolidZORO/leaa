@@ -17,7 +17,6 @@ import { IPage } from '@leaa/dashboard/src/interfaces';
 import {
   HtmlMeta,
   PageCard,
-  ErrorCard,
   TableCard,
   SearchInput,
   TableColumnDate,
@@ -158,9 +157,6 @@ export default (props: IPage) => {
       loading={getPermissionsQuery.loading}
     >
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
-
-      {getPermissionsQuery.error ? <ErrorCard error={getPermissionsQuery.error} /> : null}
-      {deletePermissionMutation.error ? <ErrorCard error={deletePermissionMutation.error} /> : null}
 
       {/* eslint-disable-next-line max-len */}
       {getPermissionsQuery.data && getPermissionsQuery.data.permissions && getPermissionsQuery.data.permissions.items && (

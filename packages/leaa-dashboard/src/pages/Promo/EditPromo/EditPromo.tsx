@@ -10,7 +10,7 @@ import { PromoArgs, UpdatePromoInput } from '@leaa/common/src/dtos/promo';
 import { IPage } from '@leaa/dashboard/src/interfaces';
 import { messageUtil } from '@leaa/dashboard/src/utils';
 
-import { HtmlMeta, PageCard, ErrorCard, SubmitBar } from '@leaa/dashboard/src/components';
+import { HtmlMeta, PageCard, SubmitBar } from '@leaa/dashboard/src/components';
 
 import { PromoInfoForm } from '../_components/PromoInfoForm/PromoInfoForm';
 
@@ -65,9 +65,6 @@ export default (props: IPage) => {
       loading={getPromoQuery.loading || updatePromoMutation.loading}
     >
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
-
-      {getPromoQuery.error ? <ErrorCard error={getPromoQuery.error} /> : null}
-      {updatePromoMutation.error ? <ErrorCard error={updatePromoMutation.error} /> : null}
 
       <PromoInfoForm
         item={getPromoQuery.data && getPromoQuery.data.promo}

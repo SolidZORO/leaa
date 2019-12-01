@@ -17,7 +17,6 @@ import { IPage } from '@leaa/dashboard/src/interfaces';
 import {
   HtmlMeta,
   PageCard,
-  ErrorCard,
   TableCard,
   SearchInput,
   TableColumnDate,
@@ -155,9 +154,6 @@ export default (props: IPage) => {
       loading={getRolesQuery.loading}
     >
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
-
-      {getRolesQuery.error ? <ErrorCard error={getRolesQuery.error} /> : null}
-      {deleteRoleMutation.error ? <ErrorCard error={deleteRoleMutation.error} /> : null}
 
       {getRolesQuery.data && getRolesQuery.data.roles && getRolesQuery.data.roles.items && (
         <TableCard selectedRowKeys={selectedRowKeys}>

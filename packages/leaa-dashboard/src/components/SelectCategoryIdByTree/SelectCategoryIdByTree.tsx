@@ -67,7 +67,7 @@ export const SelectCategoryIdByTree = forwardRef((props: IProps, ref: React.Ref<
 
   return (
     <div className={cx(style['wrapper'])}>
-      {getCategoriesByTreeQuery.error ? <ErrorCard error={getCategoriesByTreeQuery.error} /> : null}
+
 
       <TreeSelect
         {...multipleSelectOption}

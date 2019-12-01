@@ -10,7 +10,7 @@ import { CREATE_CATEGORY } from '@leaa/common/src/graphqls';
 import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { messageUtil } from '@leaa/dashboard/src/utils';
 
-import { HtmlMeta, PageCard, ErrorCard, SubmitBar } from '@leaa/dashboard/src/components';
+import { HtmlMeta, PageCard, SubmitBar } from '@leaa/dashboard/src/components';
 
 import { CategoryInfoForm } from '../_components/CategoryInfoForm/CategoryInfoForm';
 
@@ -49,8 +49,6 @@ export default (props: IPage) => {
   return (
     <PageCard title={t(`${props.route.namei18n}`)} className={style['wapper']} loading={createCategoryMutation.loading}>
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
-
-      {createCategoryMutation.error ? <ErrorCard error={createCategoryMutation.error} /> : null}
 
       <CategoryInfoForm wrappedComponentRef={(inst: unknown) => setCategoryInfoFormRef(inst)} />
 

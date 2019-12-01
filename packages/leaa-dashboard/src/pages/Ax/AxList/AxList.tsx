@@ -17,7 +17,6 @@ import { IPage } from '@leaa/dashboard/src/interfaces';
 import {
   HtmlMeta,
   PageCard,
-  ErrorCard,
   TableCard,
   SearchInput,
   TableColumnDate,
@@ -171,9 +170,6 @@ export default (props: IPage) => {
       loading={getAxsQuery.loading}
     >
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
-
-      {getAxsQuery.error ? <ErrorCard error={getAxsQuery.error} /> : null}
-      {deleteAxMutation.error ? <ErrorCard error={deleteAxMutation.error} /> : null}
 
       {getAxsQuery.data && getAxsQuery.data.axs && getAxsQuery.data.axs.items && (
         <TableCard selectedRowKeys={selectedRowKeys}>

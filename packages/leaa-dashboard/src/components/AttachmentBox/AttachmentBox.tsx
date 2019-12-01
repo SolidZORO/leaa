@@ -112,9 +112,9 @@ export const AttachmentBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
 
   return (
     <div className={style['wrapper']}>
-      {getAttachmentsQuery.error ? <ErrorCard error={getAttachmentsQuery.error} /> : null}
-      {updateAttachmentsMutation.error ? <ErrorCard error={updateAttachmentsMutation.error} /> : null}
-      {updateAttachmentsMutation.error ? <ErrorCard error={updateAttachmentsMutation.error} /> : null}
+
+
+
 
       <FormCard
         title={

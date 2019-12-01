@@ -17,7 +17,6 @@ import { IPage } from '@leaa/dashboard/src/interfaces';
 import {
   HtmlMeta,
   PageCard,
-  ErrorCard,
   TableCard,
   SearchInput,
   TableColumnDate,
@@ -162,9 +161,6 @@ export default (props: IPage) => {
       loading={getCategoriesQuery.loading}
     >
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
-
-      {getCategoriesQuery.error ? <ErrorCard error={getCategoriesQuery.error} /> : null}
-      {deleteCategoryMutation.error ? <ErrorCard error={deleteCategoryMutation.error} /> : null}
 
       {getCategoriesQuery.data && getCategoriesQuery.data.categories && getCategoriesQuery.data.categories.items && (
         <TableCard selectedRowKeys={selectedRowKeys}>

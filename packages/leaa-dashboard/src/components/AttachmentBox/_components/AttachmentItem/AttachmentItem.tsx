@@ -101,7 +101,7 @@ const AttachmentItemInner = forwardRef((props: IProps, ref: React.Ref<any>) => {
         opacity,
       }}
     >
-      {deleteAttachmentsMutation.error ? <ErrorCard error={deleteAttachmentsMutation.error} /> : null}
+
 
       <div className={style['image']} ref={cardRef}>
         <img src={`${props.attachment.url}`} alt="" />

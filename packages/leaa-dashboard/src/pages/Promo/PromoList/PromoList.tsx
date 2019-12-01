@@ -17,7 +17,6 @@ import {
   TableColumnDate,
   HtmlMeta,
   PageCard,
-  ErrorCard,
   TableCard,
   SearchInput,
   TableColumnDeleteButton,
@@ -183,9 +182,6 @@ export default (props: IPage) => {
       loading={getPromosQuery.loading}
     >
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
-
-      {getPromosQuery.error ? <ErrorCard error={getPromosQuery.error} /> : null}
-      {deletePromoMutation.error ? <ErrorCard error={deletePromoMutation.error} /> : null}
 
       {getPromosQuery.data && getPromosQuery.data.promos && getPromosQuery.data.promos.items && (
         <TableCard selectedRowKeys={selectedRowKeys}>

@@ -1,12 +1,12 @@
 import React, { useState, CSSProperties } from 'react';
 import cx from 'classnames';
-import { Popconfirm, Button, message } from 'antd';
+import { Popconfirm, Button } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useMutation } from '@apollo/react-hooks';
 
 import { Coupon } from '@leaa/common/src/entrys';
 
-import { UserSearchBox, ErrorCard, IdTag } from '@leaa/dashboard/src/components';
+import { UserSearchBox, IdTag } from '@leaa/dashboard/src/components';
 import { REDEEM_COUPON } from '@leaa/common/src/graphqls';
 import { langUtil, authUtil, messageUtil } from '@leaa/dashboard/src/utils';
 
@@ -51,8 +51,6 @@ export const RedeemCouponToUseButton = (props: IProps) => {
 
   return (
     <div className={cx(style['wrapper'], props.className)} style={props.style}>
-      {redeemCouponMutation.error ? <ErrorCard error={redeemCouponMutation.error} /> : null}
-
       <Popconfirm
         // visible
         overlayClassName={style['redeem-popconfirm']}

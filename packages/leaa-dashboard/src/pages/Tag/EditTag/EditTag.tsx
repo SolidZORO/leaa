@@ -10,7 +10,7 @@ import { TagArgs, UpdateTagInput } from '@leaa/common/src/dtos/tag';
 import { IPage } from '@leaa/dashboard/src/interfaces';
 import { messageUtil } from '@leaa/dashboard/src/utils';
 
-import { HtmlMeta, PageCard, ErrorCard, SubmitBar } from '@leaa/dashboard/src/components';
+import { HtmlMeta, PageCard, SubmitBar } from '@leaa/dashboard/src/components';
 
 import { TagInfoForm } from '../_components/TagInfoForm/TagInfoForm';
 
@@ -68,9 +68,6 @@ export default (props: IPage) => {
       loading={getTagQuery.loading || updateTagMutation.loading}
     >
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
-
-      {getTagQuery.error ? <ErrorCard error={getTagQuery.error} /> : null}
-      {updateTagMutation.error ? <ErrorCard error={updateTagMutation.error} /> : null}
 
       <TagInfoForm
         item={getTagQuery.data && getTagQuery.data.tag}
