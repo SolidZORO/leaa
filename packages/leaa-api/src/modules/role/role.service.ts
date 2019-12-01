@@ -26,13 +26,10 @@ export class RoleService {
     private readonly permissionService: PermissionService,
   ) {}
 
-  async roles(args: IRolesArgs, user?: User): Promise<RolesWithPaginationObject | undefined> {
-    if (!user || !authUtil.checkAvailableUser(user)) return errorUtil.ILLEGAL_USER({ user });
-    if (!authUtil.can(user, 'role.list-read')) return errorUtil.NOT_AUTH({ user });
-
+  async roles(args: IRolesArgs): Promise<RolesWithPaginationObject | undefined> {
     const nextArgs = formatUtil.formatArgs(args);
-    const qb = getRepository(Role).createQueryBuilder();
 
+    const qb = getRepository(Role).createQueryBuilder();
     qb.select().orderBy(nextArgs.orderBy || 'id', nextArgs.orderSort);
 
     // q
@@ -47,10 +44,7 @@ export class RoleService {
     return paginationUtil.calcQueryBuilderPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
-  async role(id: number, args?: IRoleArgs, user?: User): Promise<Role | undefined> {
-    if (!user || !authUtil.checkAvailableUser(user)) return errorUtil.ILLEGAL_USER({ user });
-    if (!authUtil.can(user, 'role.item-read')) return errorUtil.NOT_AUTH({ user });
-
+  async role(id: number, args?: IRoleArgs): Promise<Role | undefined> {
     let nextArgs: IRoleArgs = {};
 
     if (args) {
@@ -96,17 +90,11 @@ export class RoleService {
     return roleIds;
   }
 
-  async createRole(args: CreateRoleInput, user?: User): Promise<Role | undefined> {
-    if (!user || !authUtil.checkAvailableUser(user)) return errorUtil.ILLEGAL_USER({ user });
-    if (!authUtil.can(user, 'role.item-create')) return errorUtil.NOT_AUTH({ user });
-
+  async createRole(args: CreateRoleInput): Promise<Role | undefined> {
     return this.roleRepository.save({ ...args });
   }
 
   async updateRole(id: number, args: UpdateRoleInput, user?: User): Promise<Role | undefined> {
-    if (!user || !authUtil.checkAvailableUser(user)) return errorUtil.ILLEGAL_USER({ user });
-    if (!authUtil.can(user, 'role.item-update')) return errorUtil.NOT_AUTH({ user });
-
     const relationArgs: { permissions?: Permission[] } = {};
 
     let permissionObjects;
@@ -130,9 +118,6 @@ export class RoleService {
   }
 
   async deleteRole(id: number, user?: User): Promise<Role | undefined> {
-    if (!user || !authUtil.checkAvailableUser(user)) return errorUtil.ILLEGAL_USER({ user });
-    if (!authUtil.can(user, 'role.item-delete')) return errorUtil.NOT_AUTH({ user });
-
     // default role DONT
     if (id <= 3) {
       return errorUtil.ERROR({ error: 'default role PLEASE DONT', user });

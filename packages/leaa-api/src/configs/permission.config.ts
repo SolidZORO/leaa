@@ -17,11 +17,11 @@ const checkPermission = (permissionSlug: IPermissionSlug) => {
 export const notValidateUserQuerys = [
   'IntrospectionQuery',
   //
-  // 'login',
-  // 'loginByTicket',
-  // 'register',
-  // 'signup',
-  // 'userByToken',
+  'login',
+  'loginByTicket',
+  'register',
+  'signup',
+  'userByToken',
   // //
   // 'ax',
   // 'axs',

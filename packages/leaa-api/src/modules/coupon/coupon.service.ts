@@ -36,8 +36,6 @@ export class CouponService {
   }
 
   async coupons(args: ICouponsArgs, user?: User): Promise<CouponsWithPaginationObject> {
-    if (!user || !authUtil.checkAvailableUser(user)) return errorUtil.ILLEGAL_USER({ user });
-
     const nextArgs: ICouponsArgs = formatUtil.formatArgs(args);
     const qb = getRepository(Coupon).createQueryBuilder();
 
@@ -53,43 +51,40 @@ export class CouponService {
     }
 
     // can
-    if (!authUtil.can(user, 'coupon.list-read--all-user-id')) {
-      qb.andWhere('user_id = :user_id', { user_id: user.id });
+    if (!(user && authUtil.can(user, 'coupon.list-read--all-status'))) {
+      qb.andWhere('status = :status', { status: 1 });
     }
 
-    if (!authUtil.can(user, 'coupon.list-read--all-status')) {
-      qb.andWhere('status = :status', { status: 1 });
+    if (!(user && authUtil.can(user, 'coupon.list-read--all-user-id'))) {
+      qb.andWhere('user_id = :user_id', { user_id: user && user.id });
     }
 
     return paginationUtil.calcQueryBuilderPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
   async coupon(id: number, args?: ICouponArgs, user?: User): Promise<Coupon | undefined> {
-    if (!user || !authUtil.checkAvailableUser(user)) return errorUtil.ILLEGAL_USER({ user });
-
     let nextArgs: ICouponArgs = {};
     if (args) nextArgs = args;
 
-    const whereQuery: { id: number; status?: number } = { id };
+    const whereQuery: { id: number; status?: number; user_id?: number } = { id };
+
+    // can
+    if (!(user && authUtil.can(user, 'coupon.item-read--all-status'))) {
+      whereQuery.status = 1;
+    }
+
+    if (!(user && authUtil.can(user, 'coupon.item-read--all-user-id'))) {
+      whereQuery.user_id = user && user.id;
+    }
 
     const coupon = await this.couponRepository.findOne({ ...nextArgs, where: whereQuery });
-
     if (!coupon) return errorUtil.NOT_FOUND({ user });
-    if (coupon.status !== 1 && !authUtil.can(user, 'coupon.item-read--all-status')) return errorUtil.NOT_AUTH({ user });
-
-    if (coupon.user_id !== user.id && !authUtil.can(user, 'coupon.item-read--all-user-id'))
-      return errorUtil.NOT_AUTH({ user });
 
     return coupon;
   }
 
-  async couponByCode(
-    code: string,
-    args?: CouponArgs & FindOneOptions<Coupon>,
-    user?: User,
-  ): Promise<Coupon | undefined> {
+  async couponByCode(code: string, args?: ICouponArgs, user?: User): Promise<Coupon | undefined> {
     const coupon = await this.couponRepository.findOne({ where: { code } });
-
     if (!coupon) return errorUtil.NOT_FOUND({ user });
 
     return this.coupon(coupon.id, args, user);
@@ -123,8 +118,6 @@ export class CouponService {
   }
 
   async redeemCoupon(info: RedeemCouponInput, user?: User): Promise<Coupon | undefined> {
-    if (!user || !user.id) return errorUtil.ILLEGAL_USER({ user });
-
     const coupon = await this.couponByCode(info.code, undefined, user);
     if (!coupon) return errorUtil.NOT_FOUND({ user });
 
@@ -133,9 +126,9 @@ export class CouponService {
     if (coupon.user_id) return errorUtil.ERROR({ error: 'Coupon Already redeemed', user });
 
     // [token user]
-    let nextCoupon = { ...coupon, user_id: user.id };
+    let nextCoupon = { ...coupon, user_id: user && user.id };
 
-    if (info.userId && authUtil.can(user, 'coupon.item-redeem--to-all-user-id')) {
+    if (info.userId && user && authUtil.can(user, 'coupon.item-redeem--to-all-user-id')) {
       nextCoupon = { ...coupon, user_id: info.userId };
     }
 

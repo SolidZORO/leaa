@@ -21,13 +21,10 @@ const CONSTRUCTOR_NAME = 'PermissionService';
 export class PermissionService {
   constructor(@InjectRepository(Permission) private readonly permissionRepository: Repository<Permission>) {}
 
-  async permissions(args: IPermissionsArgs, user?: User): Promise<PermissionsWithPaginationObject> {
-    if (!user || !authUtil.checkAvailableUser(user)) return errorUtil.ILLEGAL_USER({ user });
-    if (!authUtil.can(user, 'permission.list-read')) return errorUtil.NOT_AUTH({ user });
-
+  async permissions(args: IPermissionsArgs): Promise<PermissionsWithPaginationObject> {
     const nextArgs: IPermissionsArgs = formatUtil.formatArgs(args);
-    const qb = getRepository(Permission).createQueryBuilder();
 
+    const qb = getRepository(Permission).createQueryBuilder();
     qb.select().orderBy(nextArgs.orderBy || 'created_at', nextArgs.orderSort);
 
     // q
@@ -54,10 +51,7 @@ export class PermissionService {
     };
   }
 
-  async permission(id: number, args?: IPermissionArgs, user?: User): Promise<Permission | undefined> {
-    if (!user || !authUtil.checkAvailableUser(user)) return errorUtil.ILLEGAL_USER({ user });
-    if (!authUtil.can(user, 'permission.item-read')) return errorUtil.NOT_AUTH({ user });
-
+  async permission(id: number, args?: IPermissionArgs): Promise<Permission | undefined> {
     let nextArgs: IPermissionArgs = {};
     if (args) nextArgs = args;
 
@@ -78,24 +72,15 @@ export class PermissionService {
     return permissionIds;
   }
 
-  async createPermission(args: CreatePermissionInput, user?: User): Promise<Permission | undefined> {
-    if (!user || !authUtil.checkAvailableUser(user)) return errorUtil.ILLEGAL_USER({ user });
-    if (!authUtil.can(user, 'permission.item-create')) return errorUtil.NOT_AUTH({ user });
-
+  async createPermission(args: CreatePermissionInput): Promise<Permission | undefined> {
     return this.permissionRepository.save({ ...args });
   }
 
-  async updatePermission(id: number, args: UpdatePermissionInput, user?: User): Promise<Permission | undefined> {
-    if (!user || !authUtil.checkAvailableUser(user)) return errorUtil.ILLEGAL_USER({ user });
-    if (!authUtil.can(user, 'permission.item-update')) return errorUtil.NOT_AUTH({ user });
-
+  async updatePermission(id: number, args: UpdatePermissionInput): Promise<Permission | undefined> {
     return curdUtil.commonUpdate(this.permissionRepository, CONSTRUCTOR_NAME, id, args);
   }
 
   async deletePermission(id: number, user?: User): Promise<Permission | undefined> {
-    if (!user || !authUtil.checkAvailableUser(user)) return errorUtil.ILLEGAL_USER({ user });
-    if (!authUtil.can(user, 'permission.item-delete')) return errorUtil.NOT_AUTH({ user });
-
     // default permission DONT
     if (id <= 84) {
       return errorUtil.ERROR({ error: 'default permission PLEASE DONT', user });

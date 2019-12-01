@@ -20,9 +20,11 @@ export const permissionsSeed: { name: string; slug: IPermissionSlug }[] = [
   //
   { name: 'User List Read', slug: 'user.list-read' },
   { name: 'User List Read (All User Id)', slug: 'user.list-read--all-user-id' },
+  { name: 'User List Read (All Status)', slug: 'user.list-read--all-status' },
   //
   { name: 'User Item Read', slug: 'user.item-read' },
   { name: 'User Item Read (All User Id)', slug: 'user.item-read--all-user-id' },
+  { name: 'User Item Read (All Status)', slug: 'user.item-read--all-status' },
   { name: 'User Item Create', slug: 'user.item-create' },
   { name: 'User Item Update', slug: 'user.item-update' },
   { name: 'User Item Delete', slug: 'user.item-delete' },

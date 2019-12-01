@@ -5,7 +5,7 @@ import { Injectable } from '@nestjs/common';
 import { Repository, FindOneOptions, getRepository, SelectQueryBuilder } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { Tag } from '@leaa/common/src/entrys';
+import { Tag, User } from '@leaa/common/src/entrys';
 import {
   TagsArgs,
   TagsWithPaginationObject,
@@ -15,8 +15,11 @@ import {
   SyncTagsToFileObject,
 } from '@leaa/common/src/dtos/tag';
 
-import { formatUtil, curdUtil, paginationUtil, loggerUtil } from '@leaa/api/src/utils';
+import { formatUtil, curdUtil, paginationUtil, loggerUtil, errorUtil } from '@leaa/api/src/utils';
 import { dictConfig } from '@leaa/api/src/configs';
+
+type ITagsArgs = TagsArgs & FindOneOptions<Tag>;
+type ITagArgs = TagArgs & FindOneOptions<Tag>;
 
 const CONSTRUCTOR_NAME = 'TagService';
 
@@ -24,7 +27,7 @@ const CONSTRUCTOR_NAME = 'TagService';
 export class TagService {
   constructor(@InjectRepository(Tag) private readonly tagRepository: Repository<Tag>) {}
 
-  async tags(args: TagsArgs): Promise<TagsWithPaginationObject> {
+  async tags(args: ITagsArgs): Promise<TagsWithPaginationObject> {
     const nextArgs = formatUtil.formatArgs(args);
 
     const qb = getRepository(Tag).createQueryBuilder();
@@ -41,24 +44,21 @@ export class TagService {
     return paginationUtil.calcQueryBuilderPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
-  async tag(id: number, args?: TagArgs & FindOneOptions<Tag>): Promise<Tag | undefined> {
-    let nextArgs: FindOneOptions<Tag> = {};
+  async tag(id: number, args?: ITagArgs, user?: User): Promise<Tag | undefined> {
+    let nextArgs: ITagArgs = {};
+    if (args) nextArgs = args;
 
-    if (args) {
-      nextArgs = args;
-    }
+    const tag = this.tagRepository.findOne(id, nextArgs);
+    if (!tag) return errorUtil.NOT_FOUND({ user });
 
-    return this.tagRepository.findOne(id, nextArgs);
+    return tag;
   }
 
-  async tagByName(name: string, args?: TagArgs & FindOneOptions<Tag>): Promise<Tag | undefined> {
+  async tagByName(name: string, args?: ITagArgs, user?: User): Promise<Tag | undefined> {
     const tag = await this.tagRepository.findOne({ where: { name } });
+    if (!tag) return errorUtil.NOT_FOUND({ user });
 
-    if (!tag) {
-      return undefined;
-    }
-
-    return this.tag(tag.id, args);
+    return this.tag(tag.id, args, user);
   }
 
   formatTag(str: string): string {
@@ -94,16 +94,14 @@ export class TagService {
   async createTag(args: CreateTagInput): Promise<Tag | undefined> {
     const tag = await this.tagByName(args.name);
 
-    if (tag) {
-      return tag;
-    }
+    if (tag) return tag;
 
     const nextArgs = { ...args, name: this.formatTag(args.name) };
 
     return this.tagRepository.save({ ...nextArgs });
   }
 
-  async createTags(tagNames: string[]): Promise<Tag[] | undefined> {
+  async createTags(tagNames: string[], user?: User): Promise<Tag[] | undefined> {
     let tags: Tag[] = [];
     const batchUpdatePromise: Promise<any>[] = [];
 
@@ -116,14 +114,14 @@ export class TagService {
         tags = data;
       })
       .catch(() => {
-        loggerUtil.error(`createTags faild, args: ${JSON.stringify(tags)}`, CONSTRUCTOR_NAME);
+        return errorUtil.ERROR({ error: `createTags faild, args: ${JSON.stringify(tags)}`, user });
       });
 
     return tags;
   }
 
   async updateTag(id: number, args: UpdateTagInput): Promise<Tag | undefined> {
-    let nextArgs = args;
+    let nextArgs: UpdateTagInput = args;
 
     if (args.name) {
       nextArgs = { ...args, name: this.formatTag(args.name) };

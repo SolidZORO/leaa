@@ -14,6 +14,9 @@ import {
 import { formatUtil, authUtil, curdUtil, paginationUtil, errorUtil } from '@leaa/api/src/utils';
 import { PromoProperty } from '@leaa/api/src/modules/promo/promo.property';
 
+type IPromosArgs = PromosArgs & FindOneOptions<Promo>;
+type IPromoArgs = PromoArgs & FindOneOptions<Promo>;
+
 const CONSTRUCTOR_NAME = 'PromoService';
 
 @Injectable()
@@ -23,12 +26,10 @@ export class PromoService {
     private readonly promoProperty: PromoProperty,
   ) {}
 
-  // BASE
+  async promos(args: IPromosArgs, user?: User): Promise<PromosWithPaginationObject> {
+    const nextArgs: IPromosArgs = formatUtil.formatArgs(args);
 
-  async promos(args: PromosArgs, user?: User): Promise<PromosWithPaginationObject> {
-    const nextArgs = formatUtil.formatArgs(args);
     const qb = getRepository(Promo).createQueryBuilder();
-
     qb.select().orderBy(nextArgs.orderBy || 'id', nextArgs.orderSort);
 
     // q
@@ -41,31 +42,35 @@ export class PromoService {
     }
 
     // can
-    qb.andWhere(
-      // @ts-ignore
-      ...(user && authUtil.can(user, 'promo.list-read--all-status')
-        ? ['', undefined]
-        : ['status = :status', { status: 1 }]),
-    );
+    if (!(user && authUtil.can(user, 'promo.list-read--all-status'))) {
+      qb.andWhere('status = :status', { status: 1 });
+    }
 
     return paginationUtil.calcQueryBuilderPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
-  async promo(id: number, args?: PromoArgs & FindOneOptions<Promo>, user?: User): Promise<Promo | undefined> {
-    let nextArgs = {};
+  async promo(id: number, args?: IPromoArgs, user?: User): Promise<Promo | undefined> {
+    let nextArgs: IPromoArgs = {};
     if (args) nextArgs = args;
 
     const whereQuery: { id: number; status?: number } = { id, status: 1 };
 
     // can
-    if (user && authUtil.can(user, 'promo.item-read--all-status')) {
-      delete whereQuery.status;
+    if (!(user && authUtil.can(user, 'promo.item-read--all-status'))) {
+      whereQuery.status = 1;
     }
 
     const promo = await this.promoRepository.findOne({ ...nextArgs, where: whereQuery });
     if (!promo) return errorUtil.NOT_FOUND({ user });
 
     return promo;
+  }
+
+  async promoByCode(code: string, args?: IPromoArgs, user?: User): Promise<Promo | undefined> {
+    const promo = await this.promoRepository.findOne({ where: { code } });
+    if (!promo) return errorUtil.NOT_FOUND({ user });
+
+    return this.promo(promo.id, args, user);
   }
 
   async createPromo(args: CreatePromoInput): Promise<Promo | undefined> {
@@ -82,15 +87,6 @@ export class PromoService {
 
   async deletePromo(id: number): Promise<Promo | undefined> {
     return curdUtil.commonDelete(this.promoRepository, CONSTRUCTOR_NAME, id);
-  }
-
-  // EXT
-
-  async promoByCode(code: string, args?: PromoArgs & FindOneOptions<Promo>, user?: User): Promise<Promo | undefined> {
-    const promo = await this.promoRepository.findOne({ where: { code } });
-    if (!promo) return errorUtil.NOT_FOUND({ user });
-
-    return this.promo(promo.id, args, user);
   }
 
   async redeemPromo(info: RedeemPromoInput, user?: User): Promise<Promo | undefined> {

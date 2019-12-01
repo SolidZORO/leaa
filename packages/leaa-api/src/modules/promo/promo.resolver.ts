@@ -25,7 +25,7 @@ export class PromoResolver {
     return this.promoProperty.available(promo);
   }
 
-  // BASE
+  //
 
   @UseGuards(PermissionsGuard)
   @Permissions('promo.list-read')
@@ -43,6 +43,16 @@ export class PromoResolver {
     @CurrentUser() user?: User,
   ): Promise<Promo | undefined> {
     return this.promoService.promo(id, args, user);
+  }
+
+  @Query(() => Promo)
+  @Permissions('promo.item-read')
+  async promoByCode(
+    @Args({ name: 'code', type: () => String }) code: string,
+    @Args() args?: PromoArgs,
+    @CurrentUser() user?: User,
+  ): Promise<Promo | undefined> {
+    return this.promoService.promoByCode(code, args, user);
   }
 
   @UseGuards(PermissionsGuard)
@@ -67,17 +77,6 @@ export class PromoResolver {
   @Mutation(() => Promo)
   async deletePromo(@Args({ name: 'id', type: () => Int }) id: number): Promise<Promo | undefined> {
     return this.promoService.deletePromo(id);
-  }
-
-  // EXT
-
-  @Query(() => Promo)
-  async promoByCode(
-    @Args({ name: 'code', type: () => String }) code: string,
-    @Args() args?: PromoArgs,
-    @CurrentUser() user?: User,
-  ): Promise<Promo | undefined> {
-    return this.promoService.promoByCode(code, args, user);
   }
 
   @Mutation(() => Promo)

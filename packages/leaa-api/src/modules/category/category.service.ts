@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { Repository, FindOneOptions, Like, getRepository, SelectQueryBuilder } from 'typeorm';
+import { Repository, FindOneOptions, getRepository, SelectQueryBuilder } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { Category, Tag } from '@leaa/common/src/entrys';
+import { Category } from '@leaa/common/src/entrys';
 import {
   CategoriesArgs,
   CategoriesWithPaginationObject,
@@ -11,7 +11,7 @@ import {
   UpdateCategoryInput,
   CategoriesWithTreeObject,
 } from '@leaa/common/src/dtos/category';
-import { formatUtil, loggerUtil, curdUtil, paginationUtil } from '@leaa/api/src/utils';
+import { formatUtil, curdUtil, paginationUtil, errorUtil } from '@leaa/api/src/utils';
 import { ICategoryTreeWithKey } from '@leaa/api/src/interfaces';
 
 type ICategoriessArgs = CategoriesArgs & FindOneOptions<Category>;
@@ -23,14 +23,7 @@ const CONSTRUCTOR_NAME = 'CategoryService';
 export class CategoryService {
   constructor(@InjectRepository(Category) private readonly categoryRepository: Repository<Category>) {}
 
-  async categories(args?: ICategoriessArgs): Promise<CategoriesWithPaginationObject> {
-    if (!args) {
-      const message = 'get categories args does not exist';
-
-      loggerUtil.warn(message, CONSTRUCTOR_NAME);
-      throw new Error(message);
-    }
-
+  async categories(args: ICategoriessArgs): Promise<CategoriesWithPaginationObject> {
     const nextArgs: ICategoriessArgs = formatUtil.formatArgs(args);
 
     const qb = getRepository(Category).createQueryBuilder();
@@ -102,10 +95,7 @@ export class CategoryService {
 
   async category(id: number, args?: ICategoryArgs): Promise<Category | undefined> {
     let nextArgs: ICategoryArgs = {};
-
-    if (args) {
-      nextArgs = args;
-    }
+    if (args) nextArgs = args;
 
     return this.categoryRepository.findOne(id, nextArgs);
   }
@@ -121,7 +111,7 @@ export class CategoryService {
   async deleteCategory(id: number): Promise<Category | undefined> {
     // default category DONT
     if (id <= 2) {
-      throw Error('PLEASE DONT');
+      return errorUtil.ERROR({ error: 'default category PLEASE DONT' });
     }
 
     return curdUtil.commonDelete(this.categoryRepository, CONSTRUCTOR_NAME, id);

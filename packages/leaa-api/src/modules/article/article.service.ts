@@ -3,7 +3,7 @@ import htmlToText from 'html-to-text';
 import { Repository, FindOneOptions } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { Article, Category, Tag } from '@leaa/common/src/entrys';
+import { Article, Category, Tag, User } from '@leaa/common/src/entrys';
 import {
   ArticlesArgs,
   ArticlesWithPaginationObject,
@@ -11,7 +11,7 @@ import {
   CreateArticleInput,
   UpdateArticleInput,
 } from '@leaa/common/src/dtos/article';
-import { formatUtil, paginationUtil, curdUtil, stringUtil, dictUtil, errorUtil } from '@leaa/api/src/utils';
+import { formatUtil, paginationUtil, curdUtil, stringUtil, dictUtil, errorUtil, authUtil } from '@leaa/api/src/utils';
 
 import { TagService } from '@leaa/api/src/modules/tag/tag.service';
 
@@ -29,7 +29,7 @@ export class ArticleService {
     private readonly tagService: TagService,
   ) {}
 
-  async articles(args: IArticlesArgs): Promise<ArticlesWithPaginationObject> {
+  async articles(args: IArticlesArgs, user?: User): Promise<ArticlesWithPaginationObject> {
     const nextArgs: IArticlesArgs = formatUtil.formatArgs(args);
 
     const PRIMARY_TABLE = 'articles';
@@ -65,10 +65,15 @@ export class ArticleService {
     // order
     qb.orderBy(`${PRIMARY_TABLE}.${nextArgs.orderBy}`, nextArgs.orderSort);
 
+    // can
+    if (!(user && authUtil.can(user, 'article.list-read--all-status'))) {
+      qb.andWhere('status = :status', { status: 1 });
+    }
+
     return paginationUtil.calcQueryBuilderPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
-  async article(id: number, args?: IArticleArgs): Promise<Article | undefined> {
+  async article(id: number, args?: IArticleArgs, user?: User): Promise<Article | undefined> {
     let nextArgs: IArticleArgs = {};
 
     if (args) {
@@ -76,12 +81,16 @@ export class ArticleService {
       nextArgs.relations = ['tags', 'categories'];
     }
 
+    // can
+    if (!(user && authUtil.can(user, 'article.item-read--all-status'))) {
+      nextArgs.where = { status: 1 };
+    }
+
     return this.articleRepository.findOne(id, nextArgs);
   }
 
   async articleBySlug(slug: string, args?: ArticleArgs & FindOneOptions<Article>): Promise<Article | undefined> {
     const article = await this.articleRepository.findOne({ where: { slug } });
-
     if (!article) return errorUtil.NOT_FOUND();
 
     return this.article(article.id, args);

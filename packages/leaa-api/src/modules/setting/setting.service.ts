@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Repository, FindOneOptions, getRepository, In, SelectQueryBuilder } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { Setting } from '@leaa/common/src/entrys';
+import { Setting, User } from '@leaa/common/src/entrys';
 import {
   SettingsArgs,
   SettingsWithPaginationObject,
@@ -12,7 +12,7 @@ import {
   UpdateSettingsInput,
   SettingsObject,
 } from '@leaa/common/src/dtos/setting';
-import { formatUtil, loggerUtil, curdUtil, paginationUtil } from '@leaa/api/src/utils';
+import { formatUtil, loggerUtil, curdUtil, paginationUtil, errorUtil, authUtil } from '@leaa/api/src/utils';
 
 const CONSTRUCTOR_NAME = 'SettingService';
 
@@ -20,7 +20,7 @@ const CONSTRUCTOR_NAME = 'SettingService';
 export class SettingService {
   constructor(@InjectRepository(Setting) private readonly settingRepository: Repository<Setting>) {}
 
-  async settings(args: SettingsArgs): Promise<SettingsWithPaginationObject> {
+  async settings(args: SettingsArgs, user?: User): Promise<SettingsWithPaginationObject> {
     const nextArgs = formatUtil.formatArgs(args);
 
     const qb = getRepository(Setting).createQueryBuilder();
@@ -34,6 +34,11 @@ export class SettingService {
       ['name', 'slug'].forEach(q => {
         qb.orWhere(`${aliasName}.${q} LIKE :${q}`, { [q]: `%${nextArgs.q}%` });
       });
+    }
+
+    // can
+    if (!(user && authUtil.can(user, 'setting.list-read--all-status'))) {
+      qb.andWhere('status = :status', { status: 1 });
     }
 
     return paginationUtil.calcQueryBuilderPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
@@ -86,7 +91,7 @@ export class SettingService {
     return curdUtil.commonUpdate(this.settingRepository, CONSTRUCTOR_NAME, id, args);
   }
 
-  async updateSettings(settings: UpdateSettingsInput[]): Promise<SettingsObject> {
+  async updateSettings(settings: UpdateSettingsInput[], user?: User): Promise<SettingsObject> {
     const batchUpdate = settings.map(async setting => {
       await this.updateSetting(setting.id, setting);
     });
@@ -98,7 +103,7 @@ export class SettingService {
         items = await this.settingRepository.find({ id: In(settings.map(s => s.id)) });
       })
       .catch(() => {
-        loggerUtil.error(`updateSettings faild, args: ${JSON.stringify(settings)}`, CONSTRUCTOR_NAME);
+        return errorUtil.ERROR({ error: `updateSettings faild, args: ${JSON.stringify(settings)}`, user });
       });
 
     return {
@@ -106,10 +111,10 @@ export class SettingService {
     };
   }
 
-  async deleteSetting(id: number): Promise<Setting | undefined> {
+  async deleteSetting(id: number, user?: User): Promise<Setting | undefined> {
     // default setting DONT
     if (id <= 5) {
-      throw Error('PLEASE DONT');
+      return errorUtil.ERROR({ error: 'default setting PLEASE DONT', user });
     }
 
     return curdUtil.commonDelete(this.settingRepository, CONSTRUCTOR_NAME, id);

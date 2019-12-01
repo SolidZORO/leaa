@@ -4,7 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 import { Ax, User } from '@leaa/common/src/entrys';
 import { AxsArgs, AxsWithPaginationObject, AxArgs, CreateAxInput, UpdateAxInput } from '@leaa/common/src/dtos/ax';
-import { formatUtil, loggerUtil, authUtil, curdUtil, paginationUtil } from '@leaa/api/src/utils';
+import { formatUtil, authUtil, curdUtil, paginationUtil, errorUtil } from '@leaa/api/src/utils';
 
 type IAxsArgs = AxsArgs & FindOneOptions<Ax>;
 type IAxArgs = AxArgs & FindOneOptions<Ax>;
@@ -17,8 +17,8 @@ export class AxService {
 
   async axs(args: IAxsArgs, user?: User): Promise<AxsWithPaginationObject> {
     const nextArgs = formatUtil.formatArgs(args);
-    const qb = getRepository(Ax).createQueryBuilder();
 
+    const qb = getRepository(Ax).createQueryBuilder();
     qb.select().orderBy(nextArgs.orderBy || 'created_at', nextArgs.orderSort);
 
     // q
@@ -31,7 +31,7 @@ export class AxService {
     }
 
     // can
-    if (!user || (user && !authUtil.can(user, 'ax.list-read--all-status'))) {
+    if (!(user && authUtil.can(user, 'ax.list-read--all-status'))) {
       qb.andWhere('status = :status', { status: 1 });
     }
 
@@ -44,26 +44,20 @@ export class AxService {
 
     const whereQuery: { id: number; status?: number } = { id };
 
-    if (!user || (user && !authUtil.can(user, 'ax.item-read--all-status'))) {
+    // can
+    if (!(user && authUtil.can(user, 'ax.item-read--all-status'))) {
       whereQuery.status = 1;
     }
 
-    return this.axRepository.findOne({
-      ...nextArgs,
-      where: whereQuery,
-    });
+    const ax = await this.axRepository.findOne({ ...nextArgs, where: whereQuery });
+    if (!ax) return errorUtil.NOT_FOUND({ user });
+
+    return ax;
   }
 
-  async axBySlug(slug: string, args?: AxArgs & FindOneOptions<Ax>, user?: User): Promise<Ax | undefined> {
+  async axBySlug(slug: string, args?: IAxArgs, user?: User): Promise<Ax | undefined> {
     const ax = await this.axRepository.findOne({ where: { slug } });
-
-    if (!ax) {
-      const message = 'not found ax';
-
-      loggerUtil.warn(message, CONSTRUCTOR_NAME);
-
-      return undefined;
-    }
+    if (!ax) return errorUtil.NOT_FOUND({ user });
 
     return this.ax(ax.id, args, user);
   }

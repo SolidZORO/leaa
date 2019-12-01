@@ -324,8 +324,8 @@ type Mutation {
   deleteSetting(id: Int!): Setting!
   createCoupon(coupon: CreateCouponInput!): Coupon!
   updateCoupon(coupon: UpdateCouponInput!, id: Int!): Coupon!
-  redeemCoupon(info: RedeemCouponInput!): Coupon!
   deleteCoupon(id: Int!): Coupon!
+  redeemCoupon(info: RedeemCouponInput!): Coupon!
   createPromo(promo: CreatePromoInput!): Promo!
   updatePromo(promo: UpdatePromoInput!, id: Int!): Promo!
   deletePromo(id: Int!): Promo!
@@ -441,7 +441,7 @@ type Query {
   attachment(uuid: String!): Attachment!
   settings(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): SettingsWithPaginationObject!
   setting(id: Int!): Setting!
-  settingBySlug(slug: String!): Setting!
+  settingBySlug(slug: String!): Promo!
   coupons(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): CouponsWithPaginationObject!
   coupon(id: Int!): Coupon!
   couponByCode(code: String!): Coupon!

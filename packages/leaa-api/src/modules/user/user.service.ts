@@ -34,10 +34,7 @@ export class UserService {
 
   async addPermissionsTouser(user: User | undefined): Promise<User | undefined> {
     const nextUser = user;
-
-    if (!nextUser || !nextUser.roles) {
-      return nextUser;
-    }
+    if (!nextUser || !nextUser.roles) return nextUser;
 
     nextUser.flatePermissions = await this.userProperty.flatPermissions(user);
 
@@ -45,9 +42,6 @@ export class UserService {
   }
 
   async users(args: IUsersArgs, user?: User): Promise<UsersWithPaginationObject> {
-    if (!user || !authUtil.checkAvailableUser(user)) return errorUtil.ILLEGAL_USER({ user });
-    if (!authUtil.can(user, 'user.list-read')) return errorUtil.NOT_AUTH({ user });
-
     const nextArgs: IUsersArgs = formatUtil.formatArgs(args);
 
     const PRIMARY_TABLE = 'users';
@@ -69,8 +63,8 @@ export class UserService {
     }
 
     // can
-    if (!authUtil.can(user, 'user.list-read--all-user-id')) {
-      qb.andWhere('user_id = :user_id', { user_id: user.id });
+    if (!(user && authUtil.can(user, 'user.list-read--all-status'))) {
+      qb.andWhere('status = :status', { status: 1 });
     }
 
     return paginationUtil.calcQueryBuilderPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
@@ -78,7 +72,6 @@ export class UserService {
 
   async user(id: number, args?: IUserArgs, reqUser?: User): Promise<User | undefined> {
     // DOT check reqUser
-    // if (!reqUser) return errorUtil.ILLEGAL_USER({ user: reqUser });
 
     let nextArgs: IUserArgs = {};
 
@@ -124,10 +117,7 @@ export class UserService {
     return bcryptjs.hashSync(password, salt);
   }
 
-  async createUser(args: CreateUserInput, user?: User): Promise<User | undefined> {
-    if (!user || !authUtil.checkAvailableUser(user)) return errorUtil.ILLEGAL_USER({ user });
-    if (!authUtil.can(user, 'user.item-create')) return errorUtil.NOT_AUTH({ user });
-
+  async createUser(args: CreateUserInput): Promise<User | undefined> {
     const nextArgs: CreateUserInput = args;
 
     if (args.password) {
@@ -137,10 +127,7 @@ export class UserService {
     return this.userRepository.save({ ...nextArgs });
   }
 
-  async updateUser(id: number, args: UpdateUserInput, user?: User): Promise<User | undefined> {
-    if (!user || !authUtil.checkAvailableUser(user)) return errorUtil.ILLEGAL_USER({ user });
-    if (!authUtil.can(user, 'user.item-update')) return errorUtil.NOT_AUTH({ user });
-
+  async updateUser(id: number, args: UpdateUserInput): Promise<User | undefined> {
     const nextArgs = args;
     const relationArgs: { roles?: Role[] } = {};
 
@@ -170,12 +157,9 @@ export class UserService {
   }
 
   async deleteUser(id: number, user?: User): Promise<User | undefined> {
-    if (!user || !authUtil.checkAvailableUser(user)) return errorUtil.ILLEGAL_USER({ user });
-    if (!authUtil.can(user, 'user.item-delete')) return errorUtil.NOT_AUTH({ user });
-
     // default user DONT
     if (id <= 3) {
-      throw Error('PLEASE DONT');
+      return errorUtil.ERROR({ error: 'default user PLEASE DONT', user });
     }
 
     return curdUtil.commonDelete(this.userRepository, CONSTRUCTOR_NAME, id);

@@ -4,9 +4,11 @@ declare const permissionSlug: [
   'lab.root',
   'user.list-read',
   'user.list-read--all-user-id',
+  'user.list-read--all-status',
   //
   'user.item-read',
   'user.item-read--all-user-id',
+  'user.item-read--all-status',
   'user.item-create',
   'user.item-update',
   'user.item-delete',

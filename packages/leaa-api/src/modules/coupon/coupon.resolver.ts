@@ -1,3 +1,4 @@
+import { UseGuards } from '@nestjs/common';
 import { Args, Query, Mutation, Resolver, ResolveProperty, Parent } from '@nestjs/graphql';
 import { Int } from 'type-graphql';
 
@@ -10,9 +11,10 @@ import {
   UpdateCouponInput,
   RedeemCouponInput,
 } from '@leaa/common/src/dtos/coupon';
-import { CurrentUser } from '@leaa/api/src/decorators';
+import { CurrentUser, Permissions } from '@leaa/api/src/decorators';
 import { CouponService } from '@leaa/api/src/modules/coupon/coupon.service';
 import { CouponProperty } from '@leaa/api/src/modules/coupon/coupon.property';
+import { PermissionsGuard } from '@leaa/api/src/guards';
 
 @Resolver(() => Coupon)
 export class CouponResolver {
@@ -29,8 +31,9 @@ export class CouponResolver {
   }
 
   //
-  //
 
+  @UseGuards(PermissionsGuard)
+  @Permissions('coupon.list-read')
   @Query(() => CouponsWithPaginationObject)
   async coupons(
     @Args() args: CouponsArgs,
@@ -39,6 +42,8 @@ export class CouponResolver {
     return this.couponService.coupons(args, user);
   }
 
+  @UseGuards(PermissionsGuard)
+  @Permissions('coupon.item-read')
   @Query(() => Coupon)
   async coupon(
     @Args({ name: 'id', type: () => Int }) id: number,
@@ -48,6 +53,8 @@ export class CouponResolver {
     return this.couponService.coupon(id, args, user);
   }
 
+  @UseGuards(PermissionsGuard)
+  @Permissions('coupon.item-read')
   @Query(() => Coupon)
   async couponByCode(
     @Args({ name: 'code', type: () => String }) code: string,
@@ -57,11 +64,15 @@ export class CouponResolver {
     return this.couponService.couponByCode(code, args, user);
   }
 
+  @UseGuards(PermissionsGuard)
+  @Permissions('coupon.item-create')
   @Mutation(() => Coupon)
   async createCoupon(@Args('coupon') args: CreateCouponInput): Promise<Coupon | undefined> {
     return this.couponService.createCoupon(args);
   }
 
+  @UseGuards(PermissionsGuard)
+  @Permissions('coupon.item-update')
   @Mutation(() => Coupon)
   async updateCoupon(
     @Args({ name: 'id', type: () => Int }) id: number,
@@ -70,13 +81,15 @@ export class CouponResolver {
     return this.couponService.updateCoupon(id, args);
   }
 
-  @Mutation(() => Coupon)
-  async redeemCoupon(@Args('info') info: RedeemCouponInput, @CurrentUser() user?: User): Promise<Coupon | undefined> {
-    return this.couponService.redeemCoupon(info, user);
-  }
-
+  @UseGuards(PermissionsGuard)
+  @Permissions('coupon.item-delete')
   @Mutation(() => Coupon)
   async deleteCoupon(@Args({ name: 'id', type: () => Int }) id: number): Promise<Coupon | undefined> {
     return this.couponService.deleteCoupon(id);
+  }
+
+  @Mutation(() => Coupon)
+  async redeemCoupon(@Args('info') info: RedeemCouponInput, @CurrentUser() user?: User): Promise<Coupon | undefined> {
+    return this.couponService.redeemCoupon(info, user);
   }
 }

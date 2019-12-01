@@ -1,3 +1,4 @@
+import { UseGuards } from '@nestjs/common';
 import { Args, Query, Mutation, Resolver, ResolveProperty, Parent } from '@nestjs/graphql';
 import { Int } from 'type-graphql';
 
@@ -10,9 +11,10 @@ import {
   UpdateAxInput,
   AxAttachmentsObject,
 } from '@leaa/common/src/dtos/ax';
-import { CurrentUser } from '@leaa/api/src/decorators';
+import { CurrentUser, Permissions } from '@leaa/api/src/decorators';
 import { AxService } from '@leaa/api/src/modules/ax/ax.service';
 import { AxProperty } from '@leaa/api/src/modules/ax/ax.property';
+import { PermissionsGuard } from '@leaa/api/src/guards';
 
 @Resolver(() => Ax)
 export class AxResolver {
@@ -26,11 +28,15 @@ export class AxResolver {
   //
   //
 
+  @UseGuards(PermissionsGuard)
+  @Permissions('ax.item-read')
   @Query(() => AxsWithPaginationObject)
   async axs(@Args() args: AxsArgs, @CurrentUser() user?: User): Promise<AxsWithPaginationObject | undefined> {
     return this.axService.axs(args, user);
   }
 
+  @UseGuards(PermissionsGuard)
+  @Permissions('ax.item-read')
   @Query(() => Ax)
   async ax(
     @Args({ name: 'id', type: () => Int }) id: number,
@@ -40,6 +46,8 @@ export class AxResolver {
     return this.axService.ax(id, args, user);
   }
 
+  @UseGuards(PermissionsGuard)
+  @Permissions('ax.item-read')
   @Query(() => Ax)
   async axBySlug(
     @Args({ name: 'slug', type: () => String }) slug: string,
@@ -49,11 +57,15 @@ export class AxResolver {
     return this.axService.axBySlug(slug, args, user);
   }
 
+  @UseGuards(PermissionsGuard)
+  @Permissions('ax.item-create')
   @Mutation(() => Ax)
   async createAx(@Args('ax') args: CreateAxInput): Promise<Ax | undefined> {
     return this.axService.createAx(args);
   }
 
+  @UseGuards(PermissionsGuard)
+  @Permissions('ax.item-update')
   @Mutation(() => Ax)
   async updateAx(
     @Args({ name: 'id', type: () => Int }) id: number,
@@ -62,6 +74,8 @@ export class AxResolver {
     return this.axService.updateAx(id, args);
   }
 
+  @UseGuards(PermissionsGuard)
+  @Permissions('ax.item-delete')
   @Mutation(() => Ax)
   async deleteAx(@Args({ name: 'id', type: () => Int }) id: number): Promise<Ax | undefined> {
     return this.axService.deleteAx(id);
