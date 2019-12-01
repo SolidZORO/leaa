@@ -66,7 +66,7 @@ const makeFlatMenu = (menu: IRouteItem): React.ReactNode => {
   }
 
   if (checkPermission(menu.permission) || menu.permission === ALLOW_PERMISSION) {
-    const currentMenuCreatePermission = `${menu.permission.split('.')[0]}.create`;
+    const currentMenuCreatePermission = `${menu.permission.split('.')[0]}.item-create`;
 
     dom = (
       <Menu.Item key={menu.path} className={`g-sidebar-menu-${menu.path}`}>

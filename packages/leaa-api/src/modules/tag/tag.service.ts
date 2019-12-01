@@ -56,7 +56,7 @@ export class TagService {
 
   async tagByName(name: string, args?: ITagArgs, user?: User): Promise<Tag | undefined> {
     const tag = await this.tagRepository.findOne({ where: { name } });
-    if (!tag) return errorUtil.NOT_FOUND({ user });
+    if (!tag) return undefined;
 
     return this.tag(tag.id, args, user);
   }
@@ -101,7 +101,7 @@ export class TagService {
     return this.tagRepository.save({ ...nextArgs });
   }
 
-  async createTags(tagNames: string[], user?: User): Promise<Tag[] | undefined> {
+  async createTags(tagNames: string[]): Promise<Tag[] | undefined> {
     let tags: Tag[] = [];
     const batchUpdatePromise: Promise<any>[] = [];
 
@@ -114,7 +114,7 @@ export class TagService {
         tags = data;
       })
       .catch(() => {
-        return errorUtil.ERROR({ error: `createTags faild, args: ${JSON.stringify(tags)}`, user });
+        loggerUtil.error(`Create Tags Faild: ${JSON.stringify(tags)}`, CONSTRUCTOR_NAME);
       });
 
     return tags;

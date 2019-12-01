@@ -57,11 +57,8 @@ export class TagResolver {
   @UseGuards(PermissionsGuard)
   @Permissions('tag.item-create')
   @Mutation(() => Tag)
-  async createTags(
-    @Args({ name: 'tagNames', type: () => [String] }) tagNames: string[],
-    @CurrentUser() user?: User,
-  ): Promise<Tag[] | undefined> {
-    return this.tagService.createTags(tagNames, user);
+  async createTags(@Args({ name: 'tagNames', type: () => [String] }) tagNames: string[]): Promise<Tag[] | undefined> {
+    return this.tagService.createTags(tagNames);
   }
 
   @UseGuards(PermissionsGuard)

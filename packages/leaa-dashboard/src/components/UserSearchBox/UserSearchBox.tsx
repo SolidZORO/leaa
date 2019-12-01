@@ -134,8 +134,6 @@ export const UserSearchBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
     }
   };
 
-  console.log(optionalUsers);
-
   // TIPS: onEnter & onSelect will be CONFLICT!
   return (
     <div className={style['wrapper']}>
