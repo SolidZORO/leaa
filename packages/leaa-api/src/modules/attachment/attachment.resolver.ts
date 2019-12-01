@@ -12,7 +12,7 @@ import {
 } from '@leaa/common/src/dtos/attachment';
 import { AttachmentService } from '@leaa/api/src/modules/attachment/attachment.service';
 import { AttachmentProperty } from '@leaa/api/src/modules/attachment/attachment.property';
-import { UserDecorator } from '@leaa/api/src/decorators';
+import { CurrentUser } from '@leaa/api/src/decorators';
 
 @Resolver(() => Attachment)
 export class AttachmentResolver {
@@ -37,7 +37,7 @@ export class AttachmentResolver {
   @Query(() => AttachmentsWithPaginationObject)
   async attachments(
     @Args() args: AttachmentsArgs,
-    @UserDecorator() user?: User,
+    @CurrentUser() user?: User,
   ): Promise<AttachmentsWithPaginationObject | undefined> {
     return this.attachmentService.attachments(args, user);
   }
@@ -46,7 +46,7 @@ export class AttachmentResolver {
   async attachment(
     @Args({ name: 'uuid', type: () => String }) uuid: string,
     @Args() args?: AttachmentArgs,
-    @UserDecorator() user?: User,
+    @CurrentUser() user?: User,
   ): Promise<Attachment | undefined> {
     return this.attachmentService.attachment(uuid, args, user);
   }

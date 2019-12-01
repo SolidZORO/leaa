@@ -14,11 +14,7 @@ export interface IPageInfoResult {
   nextPage: number | null;
 }
 
-async function calcPageInfoFromQueryBuilder({
-  qb,
-  pageSize,
-  page,
-}: IPageInfoFromQueryBuilder): Promise<IPageInfoResult> {
+async function calcQueryBuilderPageInfo({ qb, pageSize, page }: IPageInfoFromQueryBuilder): Promise<IPageInfoResult> {
   const calcPage = page || 0;
   const calcPageSize = pageSize || 30;
 
@@ -46,5 +42,5 @@ async function calcPageInfoFromQueryBuilder({
 }
 
 export const paginationUtil = {
-  calcQueryBuilderPageInfo: calcPageInfoFromQueryBuilder,
+  calcQueryBuilderPageInfo,
 };

@@ -8,9 +8,10 @@ import { CreateAxInput } from '@leaa/common/src/dtos/ax';
 import { CreateSettingInput } from '@leaa/common/src/dtos/setting';
 import { CreateCouponInput } from '@leaa/common/src/dtos/coupon';
 import { CreatePromoInput } from '@leaa/common/src/dtos/promo';
+import { IPermissionSlug } from '@leaa/common/src/interfaces';
 
 // TIPS relation file: packages/leaa-api/src/configs/permission.config.ts
-export const permissionsSeed: { name: string; slug: string }[] = [
+export const permissionsSeed: { name: string; slug: IPermissionSlug }[] = [
   { name: 'Playground', slug: 'playground.root' },
   { name: 'Test', slug: 'test.root' },
   { name: 'Lab', slug: 'lab.root' },
@@ -131,11 +132,9 @@ export const permissionsSeed: { name: string; slug: string }[] = [
   // --------------------------------
   //
   { name: 'Promo List Read', slug: 'promo.list-read' },
-  { name: 'Promo List Read (All User Id)', slug: 'promo.list-read--all-user-id' },
   { name: 'Promo List Read (All Status)', slug: 'promo.list-read--all-status' },
   //
   { name: 'Promo Item Read', slug: 'promo.item-read' },
-  { name: 'Promo Item Read (All User Id)', slug: 'promo.item-read--all-user-id' },
   { name: 'Promo Item Read (All Status)', slug: 'promo.item-read--all-status' },
   { name: 'Promo Item Create', slug: 'promo.item-create' },
   { name: 'Promo Item Update', slug: 'promo.item-update' },

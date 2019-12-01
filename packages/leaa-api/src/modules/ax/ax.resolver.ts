@@ -10,7 +10,7 @@ import {
   UpdateAxInput,
   AxAttachmentsObject,
 } from '@leaa/common/src/dtos/ax';
-import { UserDecorator } from '@leaa/api/src/decorators';
+import { CurrentUser } from '@leaa/api/src/decorators';
 import { AxService } from '@leaa/api/src/modules/ax/ax.service';
 import { AxProperty } from '@leaa/api/src/modules/ax/ax.property';
 
@@ -27,7 +27,7 @@ export class AxResolver {
   //
 
   @Query(() => AxsWithPaginationObject)
-  async axs(@Args() args: AxsArgs, @UserDecorator() user?: User): Promise<AxsWithPaginationObject | undefined> {
+  async axs(@Args() args: AxsArgs, @CurrentUser() user?: User): Promise<AxsWithPaginationObject | undefined> {
     return this.axService.axs(args, user);
   }
 
@@ -35,7 +35,7 @@ export class AxResolver {
   async ax(
     @Args({ name: 'id', type: () => Int }) id: number,
     @Args() args?: AxArgs,
-    @UserDecorator() user?: User,
+    @CurrentUser() user?: User,
   ): Promise<Ax | undefined> {
     return this.axService.ax(id, args, user);
   }
@@ -44,7 +44,7 @@ export class AxResolver {
   async axBySlug(
     @Args({ name: 'slug', type: () => String }) slug: string,
     @Args() args?: AxArgs,
-    @UserDecorator() user?: User,
+    @CurrentUser() user?: User,
   ): Promise<Ax | undefined> {
     return this.axService.axBySlug(slug, args, user);
   }

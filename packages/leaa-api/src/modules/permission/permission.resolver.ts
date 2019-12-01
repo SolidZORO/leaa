@@ -10,7 +10,7 @@ import {
   UpdatePermissionInput,
 } from '@leaa/common/src/dtos/permission';
 import { PermissionService } from '@leaa/api/src/modules/permission/permission.service';
-import { UserDecorator } from '@leaa/api/src/decorators';
+import { CurrentUser } from '@leaa/api/src/decorators';
 
 @Resolver(() => Permission)
 export class PermissionResolver {
@@ -19,7 +19,7 @@ export class PermissionResolver {
   @Query(() => PermissionsWithPaginationObject)
   async permissions(
     @Args() args: PermissionsArgs,
-    @UserDecorator() user?: User,
+    @CurrentUser() user?: User,
   ): Promise<PermissionsWithPaginationObject> {
     return this.permissionService.permissions(args, user);
   }
@@ -28,7 +28,7 @@ export class PermissionResolver {
   async permission(
     @Args({ name: 'id', type: () => Int }) id: number,
     @Args() args: PermissionArgs,
-    @UserDecorator() user?: User,
+    @CurrentUser() user?: User,
   ): Promise<Permission | undefined> {
     return this.permissionService.permission(id, args, user);
   }
@@ -36,7 +36,7 @@ export class PermissionResolver {
   @Mutation(() => Permission)
   async createPermission(
     @Args('permission') args: CreatePermissionInput,
-    @UserDecorator() user?: User,
+    @CurrentUser() user?: User,
   ): Promise<Permission | undefined> {
     return this.permissionService.createPermission(args, user);
   }
@@ -45,7 +45,7 @@ export class PermissionResolver {
   async updatePermission(
     @Args({ name: 'id', type: () => Int }) id: number,
     @Args('permission') args: UpdatePermissionInput,
-    @UserDecorator() user?: User,
+    @CurrentUser() user?: User,
   ): Promise<Permission | undefined> {
     return this.permissionService.updatePermission(id, args, user);
   }
@@ -53,7 +53,7 @@ export class PermissionResolver {
   @Mutation(() => Permission)
   async deletePermission(
     @Args({ name: 'id', type: () => Int }) id: number,
-    @UserDecorator() user?: User,
+    @CurrentUser() user?: User,
   ): Promise<Permission | undefined> {
     return this.permissionService.deletePermission(id, user);
   }

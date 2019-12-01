@@ -10,14 +10,14 @@ import {
   UpdateRoleInput,
 } from '@leaa/common/src/dtos/role';
 import { RoleService } from '@leaa/api/src/modules/role/role.service';
-import { UserDecorator } from '@leaa/api/src/decorators';
+import { CurrentUser } from '@leaa/api/src/decorators';
 
 @Resolver(() => Role)
 export class RoleResolver {
   constructor(private readonly roleService: RoleService) {}
 
   @Query(() => RolesWithPaginationObject)
-  async roles(@Args() args: RolesArgs, @UserDecorator() user?: User): Promise<RolesWithPaginationObject | undefined> {
+  async roles(@Args() args: RolesArgs, @CurrentUser() user?: User): Promise<RolesWithPaginationObject | undefined> {
     return this.roleService.roles(args, user);
   }
 
@@ -25,13 +25,13 @@ export class RoleResolver {
   async role(
     @Args({ name: 'id', type: () => Int }) id: number,
     @Args() args?: RoleArgs,
-    @UserDecorator() user?: User,
+    @CurrentUser() user?: User,
   ): Promise<Role | undefined> {
     return this.roleService.role(id, args, user);
   }
 
   @Mutation(() => Role)
-  async createRole(@Args('role') args: CreateRoleInput, @UserDecorator() user?: User): Promise<Role | undefined> {
+  async createRole(@Args('role') args: CreateRoleInput, @CurrentUser() user?: User): Promise<Role | undefined> {
     return this.roleService.createRole(args, user);
   }
 
@@ -39,7 +39,7 @@ export class RoleResolver {
   async updateRole(
     @Args({ name: 'id', type: () => Int }) id: number,
     @Args('role') args: UpdateRoleInput,
-    @UserDecorator() user?: User,
+    @CurrentUser() user?: User,
   ): Promise<Role | undefined> {
     return this.roleService.updateRole(id, args, user);
   }
@@ -47,7 +47,7 @@ export class RoleResolver {
   @Mutation(() => Role)
   async deleteRole(
     @Args({ name: 'id', type: () => Int }) id: number,
-    @UserDecorator() user?: User,
+    @CurrentUser() user?: User,
   ): Promise<Role | undefined> {
     return this.roleService.deleteRole(id, user);
   }

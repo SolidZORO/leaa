@@ -11,7 +11,7 @@ import {
   UpdatePromoInput,
   RedeemPromoInput,
 } from '@leaa/common/src/dtos/promo';
-import { UserDecorator, PermissionsDecorator } from '@leaa/api/src/decorators';
+import { CurrentUser, Permissions } from '@leaa/api/src/decorators';
 import { PromoService } from '@leaa/api/src/modules/promo/promo.service';
 import { PromoProperty } from '@leaa/api/src/modules/promo/promo.property';
 import { PermissionsGuard } from '@leaa/api/src/guards';
@@ -25,63 +25,63 @@ export class PromoResolver {
     return this.promoProperty.available(promo);
   }
 
-  //
-  //
+  // BASE
 
-  @Query(() => PromosWithPaginationObject)
   @UseGuards(PermissionsGuard)
-  @PermissionsDecorator('promo.list-read')
-  async promos(
-    @Args() args: PromosArgs,
-    @UserDecorator() user?: User,
-  ): Promise<PromosWithPaginationObject | undefined> {
+  @Permissions('promo.list-read')
+  @Query(() => PromosWithPaginationObject)
+  async promos(@Args() args: PromosArgs, @CurrentUser() user?: User): Promise<PromosWithPaginationObject | undefined> {
     return this.promoService.promos(args, user);
   }
 
   @UseGuards(PermissionsGuard)
-  @PermissionsDecorator('promo.item-read')
+  @Permissions('promo.item-read')
   @Query(() => Promo)
   async promo(
     @Args({ name: 'id', type: () => Int }) id: number,
     @Args() args?: PromoArgs,
-    @UserDecorator() user?: User,
+    @CurrentUser() user?: User,
   ): Promise<Promo | undefined> {
     return this.promoService.promo(id, args, user);
   }
+
+  @UseGuards(PermissionsGuard)
+  @Permissions('promo.item-create')
+  @Mutation(() => Promo)
+  async createPromo(@Args('promo') args: CreatePromoInput): Promise<Promo | undefined> {
+    return this.promoService.createPromo(args);
+  }
+
+  @UseGuards(PermissionsGuard)
+  @Permissions('promo.item-update')
+  @Mutation(() => Promo)
+  async updatePromo(
+    @Args({ name: 'id', type: () => Int }) id: number,
+    @Args('promo') args: UpdatePromoInput,
+  ): Promise<Promo | undefined> {
+    return this.promoService.updatePromo(id, args);
+  }
+
+  @UseGuards(PermissionsGuard)
+  @Permissions('promo.item-delete')
+  @Mutation(() => Promo)
+  async deletePromo(@Args({ name: 'id', type: () => Int }) id: number): Promise<Promo | undefined> {
+    return this.promoService.deletePromo(id);
+  }
+
+  // EXT
 
   @Query(() => Promo)
   async promoByCode(
     @Args({ name: 'code', type: () => String }) code: string,
     @Args() args?: PromoArgs,
-    @UserDecorator() user?: User,
+    @CurrentUser() user?: User,
   ): Promise<Promo | undefined> {
     return this.promoService.promoByCode(code, args, user);
   }
 
   @Mutation(() => Promo)
-  async createPromo(@Args('promo') args: CreatePromoInput, @UserDecorator() user?: User): Promise<Promo | undefined> {
-    return this.promoService.createPromo(args, user);
-  }
-
-  @Mutation(() => Promo)
-  async updatePromo(
-    @Args({ name: 'id', type: () => Int }) id: number,
-    @Args('promo') args: UpdatePromoInput,
-    @UserDecorator() user?: User,
-  ): Promise<Promo | undefined> {
-    return this.promoService.updatePromo(id, args, user);
-  }
-
-  @Mutation(() => Promo)
-  async redeemPromo(@Args('info') info: RedeemPromoInput, @UserDecorator() user?: User): Promise<Promo | undefined> {
+  async redeemPromo(@Args('info') info: RedeemPromoInput, @CurrentUser() user?: User): Promise<Promo | undefined> {
     return this.promoService.redeemPromo(info, user);
-  }
-
-  @Mutation(() => Promo)
-  async deletePromo(
-    @Args({ name: 'id', type: () => Int }) id: number,
-    @UserDecorator() user?: User,
-  ): Promise<Promo | undefined> {
-    return this.promoService.deletePromo(id, user);
   }
 }

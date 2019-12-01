@@ -10,7 +10,7 @@ import {
   UpdateCouponInput,
   RedeemCouponInput,
 } from '@leaa/common/src/dtos/coupon';
-import { UserDecorator } from '@leaa/api/src/decorators';
+import { CurrentUser } from '@leaa/api/src/decorators';
 import { CouponService } from '@leaa/api/src/modules/coupon/coupon.service';
 import { CouponProperty } from '@leaa/api/src/modules/coupon/coupon.property';
 
@@ -34,7 +34,7 @@ export class CouponResolver {
   @Query(() => CouponsWithPaginationObject)
   async coupons(
     @Args() args: CouponsArgs,
-    @UserDecorator() user?: User,
+    @CurrentUser() user?: User,
   ): Promise<CouponsWithPaginationObject | undefined> {
     return this.couponService.coupons(args, user);
   }
@@ -43,7 +43,7 @@ export class CouponResolver {
   async coupon(
     @Args({ name: 'id', type: () => Int }) id: number,
     @Args() args?: CouponArgs,
-    @UserDecorator() user?: User,
+    @CurrentUser() user?: User,
   ): Promise<Coupon | undefined> {
     return this.couponService.coupon(id, args, user);
   }
@@ -52,7 +52,7 @@ export class CouponResolver {
   async couponByCode(
     @Args({ name: 'code', type: () => String }) code: string,
     @Args() args?: CouponArgs,
-    @UserDecorator() user?: User,
+    @CurrentUser() user?: User,
   ): Promise<Coupon | undefined> {
     return this.couponService.couponByCode(code, args, user);
   }
@@ -71,7 +71,7 @@ export class CouponResolver {
   }
 
   @Mutation(() => Coupon)
-  async redeemCoupon(@Args('info') info: RedeemCouponInput, @UserDecorator() user?: User): Promise<Coupon | undefined> {
+  async redeemCoupon(@Args('info') info: RedeemCouponInput, @CurrentUser() user?: User): Promise<Coupon | undefined> {
     return this.couponService.redeemCoupon(info, user);
   }
 

@@ -328,8 +328,8 @@ type Mutation {
   deleteCoupon(id: Int!): Coupon!
   createPromo(promo: CreatePromoInput!): Promo!
   updatePromo(promo: UpdatePromoInput!, id: Int!): Promo!
-  redeemPromo(info: RedeemPromoInput!): Promo!
   deletePromo(id: Int!): Promo!
+  redeemPromo(info: RedeemPromoInput!): Promo!
   login(user: AuthLoginInput!): User!
   loginByTicket(ticket: String!): User!
   signup(oid: Int, user: AuthSignupInput!): User!

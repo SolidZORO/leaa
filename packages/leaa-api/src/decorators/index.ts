@@ -1,2 +1,2 @@
-export { UserDecorator } from '@leaa/api/src/decorators/user.decorator';
-export { PermissionsDecorator, PermissionsMetadataKey } from '@leaa/api/src/decorators/permissions.decorator';
+export { CurrentUser } from '@leaa/api/src/decorators/current-user.decorator';
+export { Permissions, PermissionsMetadataKey } from '@leaa/api/src/decorators/permissions.decorator';

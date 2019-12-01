@@ -11,7 +11,7 @@ import {
 } from '@leaa/common/src/dtos/user';
 import { UserService } from '@leaa/api/src/modules/user/user.service';
 import { UserProperty } from '@leaa/api/src/modules/user/user.property';
-import { UserDecorator } from '@leaa/api/src/decorators';
+import { CurrentUser } from '@leaa/api/src/decorators';
 
 @Resolver(() => User)
 export class UserResolver {
@@ -32,7 +32,7 @@ export class UserResolver {
   }
 
   @Query(() => UsersWithPaginationObject)
-  async users(@Args() args: UsersArgs, @UserDecorator() user?: User): Promise<UsersWithPaginationObject | undefined> {
+  async users(@Args() args: UsersArgs, @CurrentUser() user?: User): Promise<UsersWithPaginationObject | undefined> {
     return this.userService.users(args, user);
   }
 
@@ -40,7 +40,7 @@ export class UserResolver {
   async user(
     @Args({ name: 'id', type: () => Int }) id: number,
     @Args() args?: UserArgs,
-    @UserDecorator() user?: User,
+    @CurrentUser() user?: User,
   ): Promise<User | undefined> {
     return this.userService.user(id, args, user);
   }
@@ -54,7 +54,7 @@ export class UserResolver {
   }
 
   @Mutation(() => User)
-  async createUser(@Args('user') args: CreateUserInput, @UserDecorator() user?: User): Promise<User | undefined> {
+  async createUser(@Args('user') args: CreateUserInput, @CurrentUser() user?: User): Promise<User | undefined> {
     return this.userService.createUser(args, user);
   }
 
@@ -62,7 +62,7 @@ export class UserResolver {
   async updateUser(
     @Args({ name: 'id', type: () => Int }) id: number,
     @Args('user') args: UpdateUserInput,
-    @UserDecorator() user?: User,
+    @CurrentUser() user?: User,
   ): Promise<User | undefined> {
     return this.userService.updateUser(id, args, user);
   }
@@ -70,7 +70,7 @@ export class UserResolver {
   @Mutation(() => User)
   async deleteUser(
     @Args({ name: 'id', type: () => Int }) id: number,
-    @UserDecorator() user?: User,
+    @CurrentUser() user?: User,
   ): Promise<User | undefined> {
     return this.userService.deleteUser(id, user);
   }

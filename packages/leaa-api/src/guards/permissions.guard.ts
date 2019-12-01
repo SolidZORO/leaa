@@ -22,13 +22,8 @@ export class PermissionsGuard implements CanActivate {
 
     const user = this.getUser(context);
 
-    if (!user) {
-      return errorUtil.ILLEGAL_USER();
-    }
-
-    if (!user.flatePermissions || user.flatePermissions.length <= 0) {
-      return errorUtil.NOT_AUTH();
-    }
+    if (!user) return errorUtil.ILLEGAL_USER();
+    if (!user.flatePermissions || user.flatePermissions.length <= 0) return errorUtil.NOT_AUTH();
 
     return (
       user.flatePermissions &&
