@@ -11,7 +11,7 @@
 
 .check-all {
   display: block;
-  margin-bottom: 10px;
+  margin-bottom: 40px;
 }
 
 .module-check-all {
@@ -23,7 +23,6 @@
 .module-check-all-title {
   display: inline-block;
   font-weight: 600;
-  font-size: 110%;
 }
 
 .permission-key-group {
@@ -36,16 +35,31 @@
 }
 
 .permission-item {
+  span {
+    //display: inline-block;
+    float: left;
+  }
+
   strong {
+    display: block;
     font-weight: 400;
     font-size: 12px;
+    line-height: 1;
+    padding-top: 1px;
   }
 
   em {
+    display: block;
     font-style: normal;
-    margin-left: 5px;
-    color: #ddd;
+    margin-left: 1px;
+    color: #eee;
+    line-height: 1;
     font-size: 12px;
-    transform: scale(0.7);
+    transform: scale(0.8);
+    transform-origin: 0;
   }
+}
+
+.permission-item-checkbox {
+  clear: both;
 }

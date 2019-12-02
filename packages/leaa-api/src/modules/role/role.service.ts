@@ -95,6 +95,8 @@ export class RoleService {
   }
 
   async updateRole(id: number, args: UpdateRoleInput, user?: User): Promise<Role | undefined> {
+    if (id === 1) return errorUtil.ERROR({ error: 'default role PLEASE DONT', user });
+
     const relationArgs: { permissions?: Permission[] } = {};
 
     let permissionObjects;
