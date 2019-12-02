@@ -2,7 +2,7 @@ import { UseGuards } from '@nestjs/common';
 import { Args, Query, Mutation, Resolver, Parent, ResolveProperty } from '@nestjs/graphql';
 import { Int, Float } from 'type-graphql';
 
-import { User } from '@leaa/common/src/entrys';
+import { User, Permission } from '@leaa/common/src/entrys';
 import {
   UsersArgs,
   UsersWithPaginationObject,
@@ -22,6 +22,11 @@ export class UserResolver {
   @ResolveProperty(() => [String])
   async flatePermissions(@Parent() user: User | undefined): Promise<string[] | undefined> {
     return this.userProperty.flatPermissions(user);
+  }
+
+  @ResolveProperty(() => [String])
+  async permissions(@Parent() user: User | undefined): Promise<Permission[] | undefined> {
+    return this.userProperty.permissions(user);
   }
 
   //
@@ -50,6 +55,8 @@ export class UserResolver {
     return this.userService.user(id, args, user);
   }
 
+  @UseGuards(PermissionsGuard)
+  @Permissions('user.item-read')
   @Query(() => User)
   async userByToken(
     @Args({ name: 'token', type: () => String, nullable: true }) token?: string,

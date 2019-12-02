@@ -12,7 +12,6 @@ import {
   UpdateUserInput,
 } from '@leaa/common/src/dtos/user';
 import { RoleService } from '@leaa/api/src/modules/role/role.service';
-import { UserProperty } from '@leaa/api/src/modules/user/user.property';
 import { formatUtil, curdUtil, paginationUtil, authUtil, errorUtil } from '@leaa/api/src/utils';
 import { JwtService } from '@nestjs/jwt';
 
@@ -29,17 +28,7 @@ export class UserService {
     @InjectRepository(Permission) private readonly permissionRepository: Repository<Permission>,
     private readonly roleService: RoleService,
     private readonly jwtService: JwtService,
-    private readonly userProperty: UserProperty,
   ) {}
-
-  async addPermissionsTouser(user: User | undefined): Promise<User | undefined> {
-    const nextUser = user;
-    if (!nextUser || !nextUser.roles) return nextUser;
-
-    nextUser.flatePermissions = await this.userProperty.flatPermissions(user);
-
-    return nextUser;
-  }
 
   async users(args: IUsersArgs, user?: User): Promise<UsersWithPaginationObject> {
     const nextArgs: IUsersArgs = formatUtil.formatArgs(args);
@@ -71,8 +60,6 @@ export class UserService {
   }
 
   async user(id: number, args?: IUserArgs, reqUser?: User): Promise<User | undefined> {
-    // DOT check reqUser
-
     let nextArgs: IUserArgs = {};
 
     if (args) {
@@ -81,11 +68,11 @@ export class UserService {
     }
 
     const whereQuery: { id: number; status?: number } = { id };
-    const user = await this.userRepository.findOne({ ...nextArgs, where: whereQuery });
 
+    const user = await this.userRepository.findOne({ ...nextArgs, where: whereQuery });
     if (!user) return errorUtil.NOT_FOUND({ user: reqUser });
 
-    return this.addPermissionsTouser(user);
+    return user;
   }
 
   async userByToken(token?: string, args?: IUserArgs): Promise<User | undefined> {

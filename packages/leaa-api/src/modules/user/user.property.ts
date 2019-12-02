@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import { User } from '@leaa/common/src/entrys';
+import { User, Permission } from '@leaa/common/src/entrys';
 import { RoleService } from '@leaa/api/src/modules/role/role.service';
 
 // const CONSTRUCTOR_NAME = 'UserProperty';
@@ -9,20 +9,21 @@ import { RoleService } from '@leaa/api/src/modules/role/role.service';
 export class UserProperty {
   constructor(private readonly roleService: RoleService) {}
 
+  async permissions(user: User | undefined): Promise<Permission[] | undefined> {
+    if (!user || !user.roles) return undefined;
+
+    const roleIds = user.roles.map(r => r.id);
+    const permissions = await this.roleService.rolePermissionsByRoleIds(roleIds);
+    if (!permissions) return undefined;
+
+    return permissions;
+  }
+
   async flatPermissions(user: User | undefined): Promise<string[] | undefined> {
-    const nextUser = user;
+    const permissions = await this.permissions(user);
 
-    if (!nextUser || !nextUser.roles) {
-      return undefined;
-    }
+    if (!permissions) return undefined;
 
-    const roleIds = nextUser.roles.map(r => r.id);
-    nextUser.permissions = await this.roleService.rolePermissionsByRoleIds(roleIds);
-
-    if (!nextUser.permissions || (nextUser.permissions.length && nextUser.permissions.length === 0)) {
-      return undefined;
-    }
-
-    return [...new Set(nextUser.permissions.map(permission => permission.slug))];
+    return [...new Set(permissions.map(permission => permission.slug))];
   }
 }

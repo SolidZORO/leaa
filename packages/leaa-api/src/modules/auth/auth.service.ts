@@ -17,6 +17,7 @@ import { errorUtil } from '@leaa/api/src/utils';
 import { UserService } from '@leaa/api/src/modules/user/user.service';
 import { permissionConfig } from '@leaa/api/src/configs';
 import { OauthService } from '@leaa/api/src/modules/oauth/oauth.service';
+import { UserProperty } from '@leaa/api/src/modules/user/user.property';
 
 const CONSTRUCTOR_NAME = 'AuthService';
 
@@ -28,6 +29,7 @@ export class AuthService {
     private readonly configService: ConfigService,
     private readonly userService: UserService,
     private readonly oauthService: OauthService,
+    private readonly userProperty: UserProperty,
   ) {}
 
   async createToken(user: User): Promise<{ authExpiresIn: number; authToken: string }> {
@@ -43,8 +45,17 @@ export class AuthService {
     };
   }
 
+  // MUST DO minimal cost query
   async validateUser(payload: IJwtPayload): Promise<User | undefined> {
-    return this.userService.user(payload.id, {});
+    const user = await this.userRepository.findOne({ relations: ['roles'], where: { id: payload.id } });
+    if (!user) throw new AuthenticationError('User Error');
+
+    const flatePermissions = await this.userProperty.flatPermissions(user);
+
+    return {
+      ...user,
+      flatePermissions,
+    };
   }
 
   async validateUserByReq(req: Request): Promise<User | undefined | boolean> {
@@ -97,7 +108,6 @@ export class AuthService {
 
   async addTokenTouser(user: User): Promise<User> {
     const nextUser = user;
-
     const userAuthInfo = await this.createToken(user);
 
     nextUser.authToken = userAuthInfo.authToken;
@@ -121,6 +131,8 @@ export class AuthService {
 
     const passwordIsMatch = await bcryptjs.compareSync(args.password, user.password);
     if (!passwordIsMatch) return errorUtil.ERROR({ error: `user ${args.email} info not match` });
+
+    delete user.password;
 
     return this.addTokenTouser(user);
   }

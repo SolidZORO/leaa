@@ -10,7 +10,7 @@ import {
   CreateRoleInput,
   UpdateRoleInput,
 } from '@leaa/common/src/dtos/role';
-import { formatUtil, curdUtil, paginationUtil, authUtil, errorUtil } from '@leaa/api/src/utils';
+import { formatUtil, curdUtil, paginationUtil, errorUtil } from '@leaa/api/src/utils';
 import { PermissionService } from '@leaa/api/src/modules/permission/permission.service';
 
 type IRolesArgs = RolesArgs & FindOneOptions<Role>;

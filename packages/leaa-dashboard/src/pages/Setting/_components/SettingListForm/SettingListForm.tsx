@@ -29,8 +29,6 @@ export const buildTypeDom = (setting: Pick<Setting, 'type' | 'name' | 'options'>
   }
 
   if (['radio'].includes(type)) {
-    console.log(options);
-
     dom = (
       <Select>
         {options && options.split(/[\n]/).map((option: string) => <Select.Option key={option}>{option}</Select.Option>)}
