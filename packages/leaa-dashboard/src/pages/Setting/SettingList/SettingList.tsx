@@ -84,7 +84,7 @@ export default (props: IPage) => {
 
   // mutation
   const [createSettingVariables, setCreateSettingVariables] = useState<{ setting: CreateSettingInput }>();
-  const [createSettingMutate, createSettingMutation] = useMutation<Setting>(CREATE_SETTING, {
+  const [createSettingMutate] = useMutation<Setting>(CREATE_SETTING, {
     variables: createSettingVariables,
     onError: e => messageUtil.gqlError(e.message),
     onCompleted: () => {

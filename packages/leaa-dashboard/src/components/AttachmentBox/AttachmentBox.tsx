@@ -50,19 +50,16 @@ export const AttachmentBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
   );
 
   const [submitVariables, setSubmitVariables] = useState<{ attachments: UpdateAttachmentsInput[] }>();
-  const [updateAttachmentsMutate, updateAttachmentsMutation] = useMutation<UpdateAttachmentsInput[]>(
-    UPDATE_ATTACHMENTS,
-    {
-      variables: submitVariables,
-      onError: e => messageUtil.gqlError(e.message),
-      onCompleted: () =>
-        !props.disableMessage &&
-        messageUtil.gqlCompleted(
-          `${langUtil.removeSpace(`${t('_lang:attachment')} ${t('_lang:updatedSuccessfully')}`, i18n.language)}`,
-        ),
-      refetchQueries: () => [{ query: GET_ATTACHMENTS, variables: getAttachmentsVariables }],
-    },
-  );
+  const [updateAttachmentsMutate] = useMutation<UpdateAttachmentsInput[]>(UPDATE_ATTACHMENTS, {
+    variables: submitVariables,
+    onError: e => messageUtil.gqlError(e.message),
+    onCompleted: () =>
+      !props.disableMessage &&
+      messageUtil.gqlCompleted(
+        `${langUtil.removeSpace(`${t('_lang:attachment')} ${t('_lang:updatedSuccessfully')}`, i18n.language)}`,
+      ),
+    refetchQueries: () => [{ query: GET_ATTACHMENTS, variables: getAttachmentsVariables }],
+  });
 
   const refreshAttachments = () => {
     // TODO here can save prev AttachmentList and then refresh
@@ -112,10 +109,6 @@ export const AttachmentBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
 
   return (
     <div className={style['wrapper']}>
-
-
-
-
       <FormCard
         title={
           <>
