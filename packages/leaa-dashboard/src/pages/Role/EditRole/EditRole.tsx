@@ -125,7 +125,7 @@ export default (props: IPage) => {
         wrappedComponentRef={(inst: unknown) => setRolePermissionsFormRef(inst)}
       />
 
-      <SubmitBar>
+      <SubmitBar full>
         <Button
           type="primary"
           size="large"

@@ -136,7 +136,7 @@ export default (props: IPage) => {
         </Col>
       </Row>
 
-      <SubmitBar>
+      <SubmitBar full>
         <Button
           type="primary"
           size="large"

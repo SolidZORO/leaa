@@ -38,6 +38,8 @@ export { default as QuestionCircleOutline } from '@ant-design/icons/lib/outline/
 export { default as CopyOutline } from '@ant-design/icons/lib/outline/CopyOutline';
 export { default as DisconnectOutline } from '@ant-design/icons/lib/outline/DisconnectOutline';
 export { default as LinkOutline } from '@ant-design/icons/lib/outline/LinkOutline';
+export { default as MenuUnfoldOutline } from '@ant-design/icons/lib/outline/MenuUnfoldOutline';
+export { default as MenuFoldOutline } from '@ant-design/icons/lib/outline/MenuFoldOutline';
 
 // Fill
 export { default as CheckCircleFill } from '@ant-design/icons/lib/fill/CheckCircleFill';
