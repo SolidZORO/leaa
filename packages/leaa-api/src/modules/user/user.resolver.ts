@@ -20,7 +20,7 @@ export class UserResolver {
   constructor(private readonly userService: UserService, private readonly userProperty: UserProperty) {}
 
   @ResolveProperty(() => [String])
-  async flatePermissions(@Parent() user: User | undefined): Promise<string[] | undefined> {
+  async flatPermissions(@Parent() user: User | undefined): Promise<string[] | undefined> {
     return this.userProperty.flatPermissions(user);
   }
 

@@ -50,11 +50,11 @@ export class AuthService {
     const user = await this.userRepository.findOne({ relations: ['roles'], where: { id: payload.id } });
     if (!user) throw new AuthenticationError('User Error');
 
-    const flatePermissions = await this.userProperty.flatPermissions(user);
+    const flatPermissions = await this.userProperty.flatPermissions(user);
 
     return {
       ...user,
-      flatePermissions,
+      flatPermissions,
     };
   }
 
@@ -122,7 +122,7 @@ export class AuthService {
       where: {
         email: xss.filterXSS(args.email.trim().toLowerCase()),
       },
-      // for flatePermissions
+      // for flatPermissions
       relations: ['roles'],
     });
 

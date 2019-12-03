@@ -13,18 +13,18 @@ interface IProps {
   history: History;
 }
 
-export const RefreshFlatePermissions = (props: IProps) => {
+export const RefreshflatPermissions = (props: IProps) => {
   if (authUtil.checkAuthIsAvailably()) {
     useQuery<{ userByToken: IAuthInfo }, { token: string }>(GET_USER_BY_TOKEN, {
       variables: { token: authUtil.getAuthToken() || '' },
       fetchPolicy: 'network-only',
       onCompleted: data => {
-        if (data && data.userByToken.flatePermissions && data.userByToken.flatePermissions.length === 0) {
+        if (data && data.userByToken.flatPermissions && data.userByToken.flatPermissions.length === 0) {
           authUtil.removeAuth();
         }
 
-        if (data && data.userByToken && data.userByToken.flatePermissions) {
-          authUtil.setAuthInfo(_.pick(data.userByToken, ['id', 'name', 'email', 'flatePermissions']));
+        if (data && data.userByToken && data.userByToken.flatPermissions) {
+          authUtil.setAuthInfo(_.pick(data.userByToken, ['id', 'name', 'email', 'flatPermissions']));
         }
       },
       onError: e => {

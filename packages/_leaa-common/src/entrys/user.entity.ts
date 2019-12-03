@@ -47,7 +47,7 @@ export class User extends Base {
   permissions?: Permission[];
 
   @Field(() => [String], { nullable: true })
-  flatePermissions?: string[];
+  flatPermissions?: string[];
 
   @Field(() => String, { nullable: true })
   authToken?: string;

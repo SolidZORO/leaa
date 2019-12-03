@@ -9,7 +9,7 @@ import enUS from 'antd/lib/locale-provider/en_US';
 import { apolloClient, history } from '@leaa/dashboard/src/libs';
 // cannot use deconstruction components dir in here (App.tsx)
 import { ErrorBoundary } from '@leaa/dashboard/src/components/ErrorBoundary';
-import { RefreshFlatePermissions } from '@leaa/dashboard/src/components/RefreshFlatePermissions';
+import { RefreshflatPermissions } from '@leaa/dashboard/src/components/RefreshflatPermissions';
 import { RefreshSetting } from '@leaa/dashboard/src/components/RefreshSetting';
 
 import { masterRoute, authRoute, otherRoute } from '@leaa/dashboard/src/routes';
@@ -35,7 +35,7 @@ export const App = (): JSX.Element => {
           <StoreProvider value={store}>
             <I18nextProvider i18n={i18n}>
               <RefreshSetting>
-                <RefreshFlatePermissions history={history}>
+                <RefreshflatPermissions history={history}>
                   <Router history={history}>
                     <Switch>
                       {authRoute}
@@ -43,7 +43,7 @@ export const App = (): JSX.Element => {
                       {otherRoute}
                     </Switch>
                   </Router>
-                </RefreshFlatePermissions>
+                </RefreshflatPermissions>
               </RefreshSetting>
             </I18nextProvider>
           </StoreProvider>

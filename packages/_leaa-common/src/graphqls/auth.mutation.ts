@@ -8,7 +8,7 @@ export const LOGIN = gql`
       email
       authToken
       authExpiresIn
-      flatePermissions
+      flatPermissions
     }
   }
 `;

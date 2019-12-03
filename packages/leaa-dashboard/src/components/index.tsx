@@ -7,7 +7,7 @@ export { FormCard } from './FormCard/FormCard';
 export { HtmlMeta } from './HtmlMeta/HtmlMeta';
 export { MasterLayout } from './MasterLayout/MasterLayout';
 export { PageCard } from './PageCard/PageCard';
-export { RefreshFlatePermissions } from './RefreshFlatePermissions/RefreshFlatePermissions';
+export { RefreshflatPermissions } from './RefreshflatPermissions/RefreshflatPermissions';
 export { RefreshSetting } from './RefreshSetting/RefreshSetting';
 export { SearchInput } from './SearchInput/SearchInput';
 export { SelectCategoryId } from './SelectCategoryId/SelectCategoryId';

@@ -50,7 +50,7 @@ export const GET_USER_BY_TOKEN = gql`
       email
       authToken
       authExpiresIn
-      flatePermissions
+      flatPermissions
     }
   }
 `;

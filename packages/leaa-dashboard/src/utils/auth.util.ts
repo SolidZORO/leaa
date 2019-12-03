@@ -34,7 +34,7 @@ const getAuthInfo = (): Required<IAuthInfo> => {
     id: 0,
     email: '',
     name: '',
-    flatePermissions: [],
+    flatPermissions: [],
   };
 
   return authInfo
@@ -117,11 +117,11 @@ const can = (permissionName: IPermissionSlug): boolean => {
     return false;
   }
 
-  if (!authInfo.flatePermissions || !Array.isArray(authInfo.flatePermissions)) {
+  if (!authInfo.flatPermissions || !Array.isArray(authInfo.flatPermissions)) {
     return false;
   }
 
-  return authInfo.flatePermissions.includes(permissionName);
+  return authInfo.flatPermissions.includes(permissionName);
 };
 
 export const authUtil = {

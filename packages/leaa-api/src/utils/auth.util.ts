@@ -22,11 +22,11 @@ const checkAvailabilityUser = (user: User): boolean => {
 };
 
 const can = (user: User, permissionName: IPermissionSlug): boolean => {
-  if (!user || !permissionName || !user.flatePermissions) {
+  if (!user || !permissionName || !user.flatPermissions) {
     return false;
   }
 
-  return user && user.flatePermissions && user.flatePermissions.includes(permissionName);
+  return user && user.flatPermissions && user.flatPermissions.includes(permissionName);
 };
 
 export const authUtil = {

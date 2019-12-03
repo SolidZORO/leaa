@@ -142,7 +142,7 @@ export default (props: IPage) => {
       }
       extra={
         <div className={style['extra-wrapper']}>
-          {authUtil.getAuthInfo().flatePermissions.includes('tag.update') && (
+          {authUtil.getAuthInfo().flatPermissions.includes('tag.update') && (
             <SyncTagsToFileButton className={style['sync-tags-to-file-button']} />
           )}
 

@@ -13,7 +13,7 @@ export class AuthStore {
   @observable authToken = 'AUTH-TOKEN';
   // @observable authInfo: IAuthInfo = {
   //   name: '',
-  //   flatePermissions: [],
+  //   flatPermissions: [],
   // };
 
   constructor(initData?: IAuthStore) {

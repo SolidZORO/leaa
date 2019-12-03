@@ -3,7 +3,7 @@ import { shield, allow, rule } from 'graphql-shield';
 import { IPermissionSlug } from '@leaa/common/src/interfaces';
 
 const checkPermission = (permissionSlug: IPermissionSlug) => {
-  return rule()((parent, args, ctx) => ctx.user.flatePermissions.includes(permissionSlug));
+  return rule()((parent, args, ctx) => ctx.user.flatPermissions.includes(permissionSlug));
 };
 
 // permissions names e.g.

@@ -30,17 +30,17 @@ const getMenuName = (menu: IRouteItem) => {
 };
 
 const checkPermission = (permission: string) => {
-  const { flatePermissions } = authUtil.getAuthInfo();
+  const { flatPermissions } = authUtil.getAuthInfo();
 
   // e.g. 'user.list | role.list' in (master.route.tsx)
   if (permission.includes('|')) {
     return permission
       .split('|')
       .map(p => p.trim())
-      .some(k => flatePermissions.includes(k));
+      .some(k => flatPermissions.includes(k));
   }
 
-  return flatePermissions.includes(permission);
+  return flatPermissions.includes(permission);
 };
 
 // group
@@ -78,7 +78,7 @@ const makeFlatMenu = (menu: IRouteItem): React.ReactNode => {
         </Link>
 
         {menu.canCreate &&
-          (authUtil.getAuthInfo().flatePermissions.includes(currentMenuCreatePermission) ||
+          (authUtil.getAuthInfo().flatPermissions.includes(currentMenuCreatePermission) ||
             menu.permission === ALLOW_PERMISSION) && (
             <Link to={`${menu.path}/create`} className={style['can-create-button']}>
               <Icon type="plus" />

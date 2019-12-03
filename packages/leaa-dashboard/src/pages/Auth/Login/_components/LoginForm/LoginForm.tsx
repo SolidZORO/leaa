@@ -27,18 +27,18 @@ const LoginFormInner = (props: IProps) => {
     login: IAuthInfo;
   }>(LOGIN, {
     onCompleted({ login }) {
-      if (login && login.name && login.flatePermissions && login.flatePermissions.length === 0) {
+      if (login && login.name && login.flatPermissions && login.flatPermissions.length === 0) {
         message.error(t('_page:Auth.Login.notPermissions'));
 
         return;
       }
 
-      if (login && login.name && login.flatePermissions) {
+      if (login && login.name && login.flatPermissions) {
         const authInfo = {
           id: login.id,
           email: login.email,
           name: login.name,
-          flatePermissions: login.flatePermissions,
+          flatPermissions: login.flatPermissions,
         };
 
         authUtil.setAuthInfo(authInfo);

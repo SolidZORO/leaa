@@ -1,4 +1,4 @@
-export const flatePermissions = [
+export const flatPermissions = [
   'permission.list',
   'permission.item',
   'permission.create',

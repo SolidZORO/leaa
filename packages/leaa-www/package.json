@@ -63,8 +63,8 @@
     "type-graphql": "^0.17.5",
     "typeorm": "^0.2.20",
     "ua-parser-js": "^0.7.20",
-    "url-loader": "^3.0.0",
     "vconsole": "^3.3.4",
+    "url-loader": "^3.0.0",
     "webpack-filter-warnings-plugin": "^1.2.1"
   },
   "devDependencies": {
@@ -107,7 +107,6 @@
     "stylelint": "^12.0.0",
     "ts-jest": "24.2.0",
     "ts-node": "^8.5.4",
-    "ts-node-dev": "^1.0.0-pre.44",
-    "url-loader": "^2.3.0"
+    "ts-node-dev": "^1.0.0-pre.44"
   }
 }
