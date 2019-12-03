@@ -38,11 +38,13 @@ describe('SettingService', () => {
       type: 'text',
       description: 'description',
       sort: 1,
+      private: 0,
     };
 
     settingObject = {
       ...createSettingInput,
       id: 1,
+      private: 0,
       created_at: new Date(),
     };
 
