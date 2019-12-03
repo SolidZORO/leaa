@@ -610,8 +610,14 @@ RN 的生态是真不好，也没人交流。国内外几大 RN 社区人气也�
 
 ### 2019-12-03 10:31
 
-最近大幅重构了一些 api 端的代码，主要是之前 Nest.js 用下来的最佳实践不住，写了很多样板代码，其实都可以用 @Decorator 来解决的，后面全改为 @Decorator 后感觉整体上清爽了不少，也算有些收获。另外就是在考虑加强 user 这块，比如价格 flatPermissions 字段缓存什么的，现在进入校验 user 阶段需要查询太多表，感觉到时候商用高并发怕是有性能问题。
+最近大幅重构了一些 api 端的代码，主要是之前 Nest.js 用下来的最佳实践不住，写了很多样板代码，其实都可以用 @Decorator 来解决的，后面全改为 @Decorator 后感觉整体上清爽了不少，也算有些收获。另外就是在考虑加强 user 这块，比如加个 flatPermissions 字段缓存什么的，现在进入校验 user 阶段需要查询太多表，感觉到时候商用高并发怕是有性能问题。
 
 还有一个就是缓存，也要加上才行，可惜 Nest.js 这个框架，并没有太多的最佳实践可拿来参考，导致上一个缓存系统都比较麻烦…… 骇，感叹一下 node 这边的生态的确是什么都有，但什么都一般。
 
 好吧，不多抱怨了，写 Shop 相关的代码去。
+
+### 2019-12-03 11:00
+
+刚想动缓存用户 flatPermissions 的时候想到，如果我 DB 字段 flatPermissions 存了比如 `coupon.item-read, coupon.list-read` 等我删除了 `coupon.list-read` 权限之后，那么所有有这两个的用户 flatPermissions 都需要批量更新，或者说我更新了 `coupon.list-read` 相关 role 之后，所有用户的 flatPermissions 也需要更新，这不但是在 user update 的时候简单刷新一下 flatPermissions 那么简单的时间。
+
+如果 user 不多还好，超过 1w 的时候我觉得遍历更新所有 user flatPermissions 字段肯定会慢到夸张，结合其他语言的 role lib 来看他们都没有做 permissions 的缓存。所以，我还是放弃 DB 直接存这个想法，后面会用缓存（cache）的方式优化一下。
