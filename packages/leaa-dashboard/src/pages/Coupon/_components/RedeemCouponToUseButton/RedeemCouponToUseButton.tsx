@@ -71,7 +71,7 @@ export const RedeemCouponToUseButton = (props: IProps) => {
 
               <Button
                 className={cx(style['submit-redeem-button'])}
-                icon="x-exchange"
+                icon="ri-swap-box-line"
                 disabled={typeof userId === 'undefined'}
                 onClick={onSubmit}
                 type="primary"
@@ -83,7 +83,7 @@ export const RedeemCouponToUseButton = (props: IProps) => {
           </div>
         }
       >
-        <Button className={cx(style['redeem-button'])} icon="x-exchange" size="small" type="link">
+        <Button className={cx(style['redeem-button'])} icon="ri-swap-box-line" size="small" type="link">
           {t('_page:Coupon.Component.redeem')}
         </Button>
       </Popconfirm>

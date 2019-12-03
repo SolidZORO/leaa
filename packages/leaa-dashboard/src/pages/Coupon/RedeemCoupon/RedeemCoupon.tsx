@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, message } from 'antd';
+import { Button, Icon, message } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useMutation } from '@apollo/react-hooks';
 
@@ -47,7 +47,16 @@ export default (props: IPage) => {
   };
 
   return (
-    <PageCard title={t(`${props.route.namei18n}`)} className={style['wapper']} loading={redeemCouponMutation.loading}>
+    <PageCard
+      title={
+        <span>
+          <Icon type={props.route.icon} />
+          <strong>{t(`${props.route.namei18n}`)}</strong>
+        </span>
+      }
+      className={style['wapper']}
+      loading={redeemCouponMutation.loading}
+    >
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
       <CouponRedeemForm
@@ -57,7 +66,7 @@ export default (props: IPage) => {
           <Button
             type="primary"
             size="large"
-            icon="x-exchange"
+            icon="ri-swap-box-line"
             className="submit-button"
             loading={redeemCouponMutation.loading}
             onClick={onSubmit}

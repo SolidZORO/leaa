@@ -270,6 +270,7 @@ input CreateSettingInput {
   type: String!
   description: String
   options: String
+  private: Int
   sort: Int = 0
 }
 
@@ -441,7 +442,7 @@ type Query {
   attachment(uuid: String!): Attachment!
   settings(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): SettingsWithPaginationObject!
   setting(id: Int!): Setting!
-  settingBySlug(slug: String!): Promo!
+  settingBySlug(slug: String!): Setting!
   coupons(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): CouponsWithPaginationObject!
   coupon(id: Int!): Coupon!
   couponByCode(code: String!): Coupon!
@@ -495,6 +496,7 @@ type Setting {
   options: String
   value: String
   sort: Int!
+  private: Int!
 }
 
 type SettingsObject {
@@ -622,6 +624,7 @@ input UpdateSettingInput {
   description: String
   value: String
   options: String
+  private: Int
   sort: Int
 }
 

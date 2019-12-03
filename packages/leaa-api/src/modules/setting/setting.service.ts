@@ -14,13 +14,16 @@ import {
 } from '@leaa/common/src/dtos/setting';
 import { formatUtil, loggerUtil, curdUtil, paginationUtil, errorUtil, authUtil } from '@leaa/api/src/utils';
 
+type ISettingsArgs = SettingsArgs & FindOneOptions<Setting>;
+type ISettingArgs = SettingArgs & FindOneOptions<Setting>;
+
 const CONSTRUCTOR_NAME = 'SettingService';
 
 @Injectable()
 export class SettingService {
   constructor(@InjectRepository(Setting) private readonly settingRepository: Repository<Setting>) {}
 
-  async settings(args: SettingsArgs, user?: User): Promise<SettingsWithPaginationObject> {
+  async settings(args: ISettingsArgs, user?: User): Promise<SettingsWithPaginationObject> {
     const nextArgs = formatUtil.formatArgs(args);
 
     const qb = getRepository(Setting).createQueryBuilder();
@@ -37,21 +40,26 @@ export class SettingService {
     }
 
     // can
-    if (!(user && authUtil.can(user, 'setting.list-read--all-status'))) {
-      qb.andWhere('status = :status', { status: 1 });
+    if (!(user && authUtil.can(user, 'setting.list-read--private'))) {
+      qb.andWhere('private = :private', { private: 0 });
     }
 
     return paginationUtil.calcQueryBuilderPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
-  async setting(id: number, args?: SettingArgs & FindOneOptions<Setting>): Promise<Setting | undefined> {
-    let nextArgs: FindOneOptions<Setting> = {};
+  async setting(id: number, args?: ISettingArgs, user?: User): Promise<Setting | undefined> {
+    let nextArgs: ISettingArgs = {};
 
     if (args) {
       nextArgs = args;
     }
 
-    const whereQuery: { id: number; status?: number } = { id };
+    const whereQuery: { id: number; private?: number } = { id };
+
+    // can
+    if (!(user && authUtil.can(user, 'setting.list-read--private'))) {
+      whereQuery.private = 0;
+    }
 
     const setting = this.settingRepository.findOne({
       ...nextArgs,
@@ -69,8 +77,15 @@ export class SettingService {
     return setting;
   }
 
-  async settingBySlug(slug: string, args?: SettingArgs & FindOneOptions<Setting>): Promise<Setting | undefined> {
-    const setting = await this.settingRepository.findOne({ where: { slug } });
+  async settingBySlug(slug: string, args?: ISettingArgs, user?: User): Promise<Setting | undefined> {
+    const whereQuery: { slug: string; private?: number } = { slug };
+
+    // can
+    if (!(user && authUtil.can(user, 'setting.list-read--private'))) {
+      whereQuery.private = 0;
+    }
+
+    const setting = await this.settingRepository.findOne({ where: whereQuery });
 
     if (!setting) {
       const message = 'not found settingBySlug';

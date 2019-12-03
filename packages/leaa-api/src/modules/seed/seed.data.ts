@@ -107,10 +107,10 @@ export const permissionsSeed: { name: string; slug: IPermissionSlug }[] = [
   // --------------------------------
   //
   { name: 'Setting List Read', slug: 'setting.list-read' },
-  { name: 'Setting List Read (All Status)', slug: 'setting.list-read--all-status' },
+  { name: 'Setting List Read (Private)', slug: 'setting.list-read--private' },
   //
   { name: 'Setting Item Read', slug: 'setting.item-read' },
-  { name: 'Setting Item Read (All Status)', slug: 'setting.item-read--all-status' },
+  { name: 'Setting Item Read (Private)', slug: 'setting.item-read--private' },
   { name: 'Setting Item Create', slug: 'setting.item-create' },
   { name: 'Setting Item Update', slug: 'setting.item-update' },
   { name: 'Setting Item Delete', slug: 'setting.item-delete' },

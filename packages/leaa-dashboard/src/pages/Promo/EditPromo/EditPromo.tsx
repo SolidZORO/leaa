@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, message } from 'antd';
+import { Button, Icon, message } from 'antd';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
 import { Promo } from '@leaa/common/src/entrys';
 import { GET_PROMO, UPDATE_PROMO } from '@leaa/common/src/graphqls';
-import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
+import { UPDATE_BUTTON_ICON, PAGE_CARD_TITLE_CREATE_ICON } from '@leaa/dashboard/src/constants';
 import { PromoArgs, UpdatePromoInput } from '@leaa/common/src/dtos/promo';
 import { IPage } from '@leaa/dashboard/src/interfaces';
 import { messageUtil } from '@leaa/dashboard/src/utils';
@@ -60,7 +60,12 @@ export default (props: IPage) => {
 
   return (
     <PageCard
-      title={t(`${props.route.namei18n}`)}
+      title={
+        <span>
+          <Icon type={props.route.icon} />
+          <strong>{t(`${props.route.namei18n}`)}</strong>
+        </span>
+      }
       className={style['wapper']}
       loading={getPromoQuery.loading || updatePromoMutation.loading}
     >

@@ -19,8 +19,9 @@ import { Permissions, CurrentUser } from '@leaa/api/src/decorators';
 export class CategoryResolver {
   constructor(private readonly categoryService: CategoryService) {}
 
-  @UseGuards(PermissionsGuard)
-  @Permissions('category.list-read')
+  // @UseGuards(PermissionsGuard)
+  // @Permissions('category.list-read')
+  // DO NOT CHECK PERMISSIONS
   @Query(() => CategoriesWithPaginationObject)
   async categories(@Args() args: CategoriesArgs): Promise<CategoriesWithPaginationObject | undefined> {
     return this.categoryService.categories(args);
@@ -33,8 +34,9 @@ export class CategoryResolver {
     return this.categoryService.categoriesByTree();
   }
 
-  @UseGuards(PermissionsGuard)
-  @Permissions('category.item-read')
+  // @UseGuards(PermissionsGuard)
+  // @Permissions('category.item-read')
+  // DO NOT CHECK PERMISSIONS
   @Query(() => Category)
   async category(
     @Args({ name: 'id', type: () => Int }) id: number,

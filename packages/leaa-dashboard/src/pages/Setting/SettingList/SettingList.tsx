@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { Icon, Button, Modal, message } from 'antd';
 
-import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
+import { UPDATE_BUTTON_ICON, PAGE_CARD_TITLE_CREATE_ICON } from '@leaa/dashboard/src/constants';
 import {
   GET_SETTINGS,
   UPDATE_SETTING,
@@ -202,9 +202,10 @@ export default (props: IPage) => {
     <PageCard
       title={
         <span>
+          <Icon type={props.route.icon} />
           <strong>{t(`${props.route.namei18n}`)}</strong>
-          <Button onClick={onOpenCreateSetting} type="link">
-            <Icon type="plus" />
+          <Button className="page-card-create-button" onClick={onOpenCreateSetting} type="link">
+            <Icon type={PAGE_CARD_TITLE_CREATE_ICON} />
           </Button>
         </span>
       }

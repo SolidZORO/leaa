@@ -75,10 +75,10 @@ declare const permissionSlug: [
   'attachment.item-delete',
   // --------------------
   'setting.list-read',
-  'setting.list-read--all-status',
+  'setting.list-read--private',
   //
   'setting.item-read',
-  'setting.item-read--all-status',
+  'setting.item-read--private',
   'setting.item-create',
   'setting.item-update',
   'setting.item-delete',

@@ -53,6 +53,8 @@ export default {
   submit: 'Submit',
   redeem: 'Redeem',
   search: 'Search',
+  private: 'Private',
+  public: 'Public',
   //
   select: 'Select',
   selected: 'Selected',

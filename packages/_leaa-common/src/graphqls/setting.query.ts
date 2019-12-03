@@ -13,6 +13,7 @@ export const GET_SETTINGS = gql`
         options
         value
         sort
+        private
       }
     }
   }

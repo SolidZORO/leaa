@@ -29,5 +29,9 @@ export class UpdateSettingInput {
 
   @IsOptional()
   @Field(() => Int, { nullable: true })
+  private?: number;
+
+  @IsOptional()
+  @Field(() => Int, { nullable: true })
   sort?: number;
 }

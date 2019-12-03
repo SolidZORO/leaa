@@ -48,7 +48,7 @@ export const EntryInfoDate = (props: IProps) => {
         [style['wrapper--small']]: props.size === 'small',
       })}
     >
-      <Icon type="x-time-info" />
+      <Icon type="ri-time-line" />
 
       {props.date && (
         <div className={style['inner']}>

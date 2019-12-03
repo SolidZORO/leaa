@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, message } from 'antd';
+import { Button, Icon, message } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useMutation } from '@apollo/react-hooks';
 
@@ -62,7 +62,16 @@ export default (props: IPage) => {
   };
 
   return (
-    <PageCard title={t(`${props.route.namei18n}`)} className={style['wapper']} loading={createRoleMutation.loading}>
+    <PageCard
+      title={
+        <span>
+          <Icon type={props.route.icon} />
+          <strong>{t(`${props.route.namei18n}`)}</strong>
+        </span>
+      }
+      className={style['wapper']}
+      loading={createRoleMutation.loading}
+    >
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
       <RoleInfoForm wrappedComponentRef={(inst: unknown) => setRoleInfoFormRef(inst)} />

@@ -1,0 +1,170 @@
+{
+  "id": "1544000",
+  "name": "leaa-dashboard",
+  "font_family": "ri",
+  "css_prefix_text": "anticon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "3859145",
+      "name": "plus",
+      "font_class": "ri-x-add-line",
+      "unicode": "e605",
+      "unicode_decimal": 58885
+    },
+    {
+      "icon_id": "12124384",
+      "name": "ri-function-line",
+      "font_class": "ri-function-line",
+      "unicode": "edf9",
+      "unicode_decimal": 60921
+    },
+    {
+      "icon_id": "12124424",
+      "name": "ri-paint-brush-line",
+      "font_class": "ri-paint-brush-line",
+      "unicode": "ee21",
+      "unicode_decimal": 60961
+    },
+    {
+      "icon_id": "12124666",
+      "name": "ri-filter-line",
+      "font_class": "ri-filter-line",
+      "unicode": "f091",
+      "unicode_decimal": 61585
+    },
+    {
+      "icon_id": "12124800",
+      "name": "ri-settings-line",
+      "font_class": "ri-settings-line",
+      "unicode": "f117",
+      "unicode_decimal": 61719
+    },
+    {
+      "icon_id": "12124926",
+      "name": "ri-time-line",
+      "font_class": "ri-time-line",
+      "unicode": "f195",
+      "unicode_decimal": 61845
+    },
+    {
+      "icon_id": "12125136",
+      "name": "ri-swap-box-line",
+      "font_class": "ri-swap-box-line",
+      "unicode": "f267",
+      "unicode_decimal": 62055
+    },
+    {
+      "icon_id": "12125239",
+      "name": "ri-terminal-box-line",
+      "font_class": "ri-terminal-box-line",
+      "unicode": "f2ce",
+      "unicode_decimal": 62158
+    },
+    {
+      "icon_id": "12125273",
+      "name": "ri-archive-line",
+      "font_class": "ri-archive-line",
+      "unicode": "f2f0",
+      "unicode_decimal": 62192
+    },
+    {
+      "icon_id": "12125278",
+      "name": "ri-coupon-line",
+      "font_class": "ri-coupon-line",
+      "unicode": "f2f5",
+      "unicode_decimal": 62197
+    },
+    {
+      "icon_id": "12125435",
+      "name": "ri-shield-user-line",
+      "font_class": "ri-shield-user-line",
+      "unicode": "f392",
+      "unicode_decimal": 62354
+    },
+    {
+      "icon_id": "12125463",
+      "name": "ri-voiceprint-line",
+      "font_class": "ri-voiceprint-line",
+      "unicode": "f3ae",
+      "unicode_decimal": 62382
+    },
+    {
+      "icon_id": "12125661",
+      "name": "ri-code-s-slash-line",
+      "font_class": "ri-code-s-slash-line",
+      "unicode": "f474",
+      "unicode_decimal": 62580
+    },
+    {
+      "icon_id": "12126244",
+      "name": "ri-home-5-line",
+      "font_class": "ri-home-5-line",
+      "unicode": "efe4",
+      "unicode_decimal": 61412
+    },
+    {
+      "icon_id": "12126530",
+      "name": "ri-coupon-3-line",
+      "font_class": "ri-coupon-3-line",
+      "unicode": "efa0",
+      "unicode_decimal": 61344
+    },
+    {
+      "icon_id": "12126557",
+      "name": "ri-price-tag-3-line",
+      "font_class": "ri-price-tag-3-line",
+      "unicode": "efbb",
+      "unicode_decimal": 61371
+    },
+    {
+      "icon_id": "12126572",
+      "name": "ri-user-3-line",
+      "font_class": "ri-user-3-line",
+      "unicode": "efca",
+      "unicode_decimal": 61386
+    },
+    {
+      "icon_id": "12127138",
+      "name": "ri-edit-2-line",
+      "font_class": "ri-edit-2-line",
+      "unicode": "ef43",
+      "unicode_decimal": 61251
+    },
+    {
+      "icon_id": "12127184",
+      "name": "ri-file-list-2-line",
+      "font_class": "ri-file-list-2-line",
+      "unicode": "ef29",
+      "unicode_decimal": 61225
+    },
+    {
+      "icon_id": "12127240",
+      "name": "ri-lock-2-line",
+      "font_class": "ri-lock-2-line",
+      "unicode": "ef01",
+      "unicode_decimal": 61185
+    },
+    {
+      "icon_id": "12127409",
+      "name": "ri-translate-2",
+      "font_class": "ri-translate-2",
+      "unicode": "eeaf",
+      "unicode_decimal": 61103
+    },
+    {
+      "icon_id": "12127413",
+      "name": "ri-vip-crown-2-line",
+      "font_class": "ri-vip-crown-2-line",
+      "unicode": "eeb3",
+      "unicode_decimal": 61107
+    },
+    {
+      "icon_id": "12128297",
+      "name": "ri-add-line",
+      "font_class": "ri-plus-line",
+      "unicode": "f4a2",
+      "unicode_decimal": 62626
+    }
+  ]
+}

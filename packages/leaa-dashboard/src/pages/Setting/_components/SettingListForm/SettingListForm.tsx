@@ -81,8 +81,11 @@ class SettingInfoFormInner extends React.PureComponent<IProps> {
               onClick={() => props.onClickLabelEditCallback(setting)}
               className={cx(style['label-button'])}
             >
-              <Icon type="edit" className={cx(style['label-icon'])} />
-              <strong className={cx(style['label-text'])}>{setting.name}</strong>
+              <Icon type="edit" className={style['label-icon']} />
+              <strong className={cx(style['label-text'])}>
+                {setting.private ? <Icon type="ri-lock-2-line" className={style['private-icon']} /> : null}
+                {setting.name}
+              </strong>
             </Button>
           </Tooltip>
         </span>

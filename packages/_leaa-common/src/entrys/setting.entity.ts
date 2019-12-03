@@ -35,4 +35,8 @@ export class Setting extends Base {
   @Column({ type: 'int', default: 0 })
   @Field(() => Int)
   sort!: number;
+
+  @Column({ type: 'int', default: 0 })
+  @Field(() => Int)
+  private!: number;
 }

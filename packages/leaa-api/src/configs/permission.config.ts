@@ -30,7 +30,7 @@ export const notValidateUserQuerys = [
   // 'article',
   // 'attachments',
   // 'attachment',
-  // 'settings',
+  'settings',
   // 'setting',
   // 'tags',
   // 'tag',

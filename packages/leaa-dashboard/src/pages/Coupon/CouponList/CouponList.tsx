@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { Table, Icon, Button } from 'antd';
 
-import { DEFAULT_PAGE_SIZE_OPTIONS } from '@leaa/dashboard/src/constants';
+import { DEFAULT_PAGE_SIZE_OPTIONS, PAGE_CARD_TITLE_CREATE_ICON } from '@leaa/dashboard/src/constants';
 import { GET_COUPONS, DELETE_COUPON, UPDATE_COUPON } from '@leaa/common/src/graphqls';
 import { Coupon } from '@leaa/common/src/entrys';
 import { IOrderSort } from '@leaa/common/src/dtos/_common';
@@ -163,16 +163,17 @@ export default (props: IPage) => {
     <PageCard
       title={
         <span>
+          <Icon type={props.route.icon} />
           <strong>{t(`${props.route.namei18n}`)}</strong>
-          <Link to={`${props.route.path}/create`}>
-            <Icon type="plus" />
+          <Link className="page-card-create-link" to={`${props.route.path}/create`}>
+            <Icon type={PAGE_CARD_TITLE_CREATE_ICON} />
           </Link>
         </span>
       }
       extra={
         <div className={style['extra-wrapper']}>
           <Link to={`${props.route.path}/redeem`}>
-            <Button size="small" icon="x-exchange" type="link" className={style['redeem-button']}>
+            <Button size="small" icon="ri-swap-box-line" type="link" className={style['redeem-button']}>
               {t('_page:Coupon.Component.redeem')}
             </Button>
           </Link>

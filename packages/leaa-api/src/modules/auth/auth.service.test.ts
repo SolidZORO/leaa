@@ -87,8 +87,8 @@ describe('AuthService', () => {
     const validateUserResult = userObject;
 
     it('should validate user', async () => {
-      jest.spyOn(authService, 'validateUser').mockImplementation(async () => validateUserResult);
-      const result = await authService.validateUser(jwtPayload);
+      jest.spyOn(authService, 'validateUserByPayload').mockImplementation(async () => validateUserResult);
+      const result = await authService.validateUserByPayload(jwtPayload);
 
       expect(result).toBe(validateUserResult);
     });

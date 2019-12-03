@@ -2,7 +2,7 @@ import { UseGuards } from '@nestjs/common';
 import { Args, Query, Mutation, Resolver } from '@nestjs/graphql';
 import { Int } from 'type-graphql';
 
-import { Setting, Promo, User } from '@leaa/common/src/entrys';
+import { Setting, User } from '@leaa/common/src/entrys';
 import {
   SettingsArgs,
   SettingsWithPaginationObject,
@@ -20,8 +20,9 @@ import { Permissions, CurrentUser } from '@leaa/api/src/decorators';
 export class SettingResolver {
   constructor(private readonly settingService: SettingService) {}
 
-  @UseGuards(PermissionsGuard)
-  @Permissions('setting.list-read')
+  // @UseGuards(PermissionsGuard)
+  // @Permissions('setting.list-read')
+  // DO NOT CHECK PERMISSIONS
   @Query(() => SettingsWithPaginationObject)
   async settings(
     @Args() args: SettingsArgs,
@@ -30,24 +31,28 @@ export class SettingResolver {
     return this.settingService.settings(args, user);
   }
 
-  @UseGuards(PermissionsGuard)
-  @Permissions('setting.item-read')
+  // @UseGuards(PermissionsGuard)
+  // @Permissions('setting.item-read')
+  // DO NOT CHECK PERMISSIONS
   @Query(() => Setting)
   async setting(
     @Args({ name: 'id', type: () => Int }) id: number,
     @Args() args?: SettingArgs,
+    @CurrentUser() user?: User,
   ): Promise<Setting | undefined> {
-    return this.settingService.setting(id, args);
+    return this.settingService.setting(id, args, user);
   }
 
-  @Query(() => Promo)
-  @Permissions('setting.item-read')
+  // @UseGuards(PermissionsGuard)
+  // @Permissions('setting.item-read')
+  // DO NOT CHECK PERMISSIONS
   @Query(() => Setting)
   async settingBySlug(
     @Args({ name: 'slug', type: () => String }) slug: string,
     @Args() args?: SettingArgs,
+    @CurrentUser() user?: User,
   ): Promise<Setting | undefined> {
-    return this.settingService.settingBySlug(slug, args);
+    return this.settingService.settingBySlug(slug, args, user);
   }
 
   @UseGuards(PermissionsGuard)

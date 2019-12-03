@@ -53,6 +53,8 @@ export default {
   submit: '提交',
   redeem: '兑换',
   search: '搜索',
+  private: '私有',
+  public: '公开',
   //
   select: '选择',
   selected: '选中',

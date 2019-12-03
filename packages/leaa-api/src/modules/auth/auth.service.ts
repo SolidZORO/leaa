@@ -3,7 +3,7 @@ import xss from 'xss';
 import jwt from 'jsonwebtoken';
 import bcryptjs from 'bcryptjs';
 import { Request } from 'express';
-import { Injectable } from '@nestjs/common';
+import { Injectable, CacheKey } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -45,31 +45,8 @@ export class AuthService {
     };
   }
 
-  // MUST DO minimal cost query
-  async validateUser(payload: IJwtPayload): Promise<User | undefined> {
-    const user = await this.userRepository.findOne({ relations: ['roles'], where: { id: payload.id } });
-    if (!user) throw new AuthenticationError('User Error');
-
-    const flatPermissions = await this.userProperty.flatPermissions(user);
-
-    return {
-      ...user,
-      flatPermissions,
-    };
-  }
-
-  async validateUserByReq(req: Request): Promise<User | undefined | boolean> {
-    const isGuest = req.headers && !req.headers.authorization;
-
-    if (req.body && isGuest && permissionConfig.notValidateUserQuerys.some(item => req.body.query.includes(item))) {
-      return true;
-    }
-
-    const token = req.headers.authorization;
-
-    if (!token) {
-      throw new AuthenticationError('Header missing Authorization');
-    }
+  getUserPayload(token?: string): IJwtPayload {
+    if (!token) throw new AuthenticationError('Header missing Authorization');
 
     let tokenWithoutBearer = token;
 
@@ -79,31 +56,41 @@ export class AuthService {
       throw new AuthenticationError('Header include incorrect Bearer prefix');
     }
 
-    let userPayload;
+    let payload;
 
     try {
-      userPayload = (await jwt.verify(tokenWithoutBearer, this.configService.JWT_SECRET_KEY)) as (
-        | IJwtPayload
-        | undefined);
+      payload = jwt.verify(tokenWithoutBearer, this.configService.JWT_SECRET_KEY) as (IJwtPayload | undefined);
     } catch (error) {
-      if (error instanceof jwt.NotBeforeError) {
-        throw new AuthenticationError('Token not before');
-      }
-
-      if (error instanceof jwt.TokenExpiredError) {
-        throw new AuthenticationError('Token has expired');
-      }
-
-      if (error instanceof jwt.JsonWebTokenError) {
-        throw new AuthenticationError('Token is incorrect');
-      }
+      if (error instanceof jwt.NotBeforeError) throw new AuthenticationError('Token Not Before');
+      if (error instanceof jwt.TokenExpiredError) throw new AuthenticationError('Token Expired Error');
+      if (error instanceof jwt.JsonWebTokenError) throw new AuthenticationError('Token Error');
     }
 
-    if (!userPayload) {
-      return errorUtil.ERROR({ error: 'User payload error' });
+    return payload || errorUtil.ERROR({ error: 'Token Verify Error' });
+  }
+
+  // MUST DO minimal cost query
+  @CacheKey('validate_user')
+  // @CacheTTL(20)
+  async validateUserByPayload(payload: IJwtPayload): Promise<User | undefined> {
+    const user = await this.userRepository.findOne({ relations: ['roles'], where: { id: payload.id } });
+    if (!user) throw new AuthenticationError('User Error');
+
+    const flatPermissions = await this.userProperty.flatPermissions(user);
+
+    return { ...user, flatPermissions };
+  }
+
+  async validateUserByReq(req: Request): Promise<User | undefined | boolean> {
+    const isGuest = req.headers && !req.headers.authorization;
+
+    if (req.body && isGuest && permissionConfig.notValidateUserQuerys.some(item => req.body.query.includes(item))) {
+      return true;
     }
 
-    return this.validateUser(userPayload);
+    const payload = this.getUserPayload(req.headers.authorization);
+
+    return this.validateUserByPayload(payload);
   }
 
   async addTokenTouser(user: User): Promise<User> {

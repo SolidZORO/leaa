@@ -10,6 +10,7 @@ import { ITfn } from '@leaa/dashboard/src/interfaces';
 import { buildTypeDom } from '../SettingListForm/SettingListForm';
 
 import style from './style.module.less';
+import { SwitchNumber } from '@leaa/dashboard/src/components';
 
 interface IFormProps extends FormComponentProps {
   className?: string;
@@ -48,6 +49,26 @@ class SettingInfoFormInner extends React.PureComponent<IProps> {
             })(<Input type="number" placeholder="ID" hidden />)}
 
           <Row gutter={16} className={style['form-row']}>
+            <Col xs={24} sm={12}>
+              <Form.Item label={t('_lang:name')}>
+                {getFieldDecorator('name', {
+                  initialValue: props.item ? props.item.name : undefined,
+                  rules: [{ required: true }],
+                })(<Input placeholder={t('_lang:name')} />)}
+              </Form.Item>
+            </Col>
+
+            <Col xs={24} sm={12}>
+              <Form.Item label={t('_lang:slug')}>
+                {getFieldDecorator('slug', {
+                  initialValue: props.item ? props.item.slug : undefined,
+                  rules: [{ required: true }],
+                })(<Input placeholder={t('_lang:slug')} />)}
+              </Form.Item>
+            </Col>
+          </Row>
+
+          <Row gutter={16} className={style['form-row']}>
             <Col xs={24} sm={6}>
               <Form.Item label={t('_lang:type')}>
                 {getFieldDecorator('type', {
@@ -63,35 +84,7 @@ class SettingInfoFormInner extends React.PureComponent<IProps> {
               </Form.Item>
             </Col>
 
-            <Col xs={24} sm={7}>
-              <Form.Item label={t('_lang:name')}>
-                {getFieldDecorator('name', {
-                  initialValue: props.item ? props.item.name : undefined,
-                  rules: [{ required: true }],
-                })(<Input placeholder={t('_lang:name')} />)}
-              </Form.Item>
-            </Col>
-
-            <Col xs={24} sm={7}>
-              <Form.Item label={t('_lang:slug')}>
-                {getFieldDecorator('slug', {
-                  initialValue: props.item ? props.item.slug : undefined,
-                  rules: [{ required: true }],
-                })(<Input placeholder={t('_lang:slug')} />)}
-              </Form.Item>
-            </Col>
-
-            <Col xs={24} sm={4}>
-              <Form.Item label={t('_lang:sort')}>
-                {getFieldDecorator('sort', {
-                  initialValue: props.item ? props.item.sort : 0,
-                  rules: [{ required: true }],
-                  normalize: e => e && Number(e),
-                })(<Input placeholder={t('_lang:sort')} />)}
-              </Form.Item>
-            </Col>
-
-            <Col xs={24} sm={24}>
+            <Col xs={24} sm={18}>
               <Form.Item label={t('_lang:value')}>
                 {getFieldDecorator('value', {
                   initialValue: props.item ? props.item.value : undefined,
@@ -104,8 +97,31 @@ class SettingInfoFormInner extends React.PureComponent<IProps> {
                 )}
               </Form.Item>
             </Col>
+          </Row>
 
-            <Col xs={24}>
+          <Row gutter={16} className={style['form-row']}>
+            <Col xs={24} sm={6}>
+              <Form.Item label={t('_lang:sort')}>
+                {getFieldDecorator('sort', {
+                  initialValue: props.item ? props.item.sort : 0,
+                  rules: [{ required: true }],
+                  normalize: e => e && Number(e),
+                })(<Input placeholder={t('_lang:sort')} />)}
+              </Form.Item>
+            </Col>
+
+            <Col xs={24} sm={6}>
+              <Form.Item label={t('_lang:private')}>
+                {getFieldDecorator('private', {
+                  initialValue: props.item ? Number(props.item.private) : 0,
+                  rules: [],
+                })(<SwitchNumber />)}
+              </Form.Item>
+            </Col>
+          </Row>
+
+          <Row gutter={16} className={style['form-row']}>
+            <Col xs={24} sm={12}>
               <Form.Item
                 label={
                   <span>
@@ -116,11 +132,11 @@ class SettingInfoFormInner extends React.PureComponent<IProps> {
                 {getFieldDecorator('options', {
                   initialValue: props.item ? props.item.options : undefined,
                   rules: [],
-                })(<Input.TextArea rows={2} placeholder={t('_lang:options')} />)}
+                })(<Input.TextArea rows={3} placeholder={t('_lang:options')} />)}
               </Form.Item>
             </Col>
 
-            <Col xs={24}>
+            <Col xs={24} sm={12}>
               <Form.Item
                 label={
                   <span>
@@ -131,7 +147,7 @@ class SettingInfoFormInner extends React.PureComponent<IProps> {
                 {getFieldDecorator('description', {
                   initialValue: props.item ? props.item.description : undefined,
                   rules: [],
-                })(<Input.TextArea rows={2} placeholder={t('_lang:description')} />)}
+                })(<Input.TextArea rows={3} placeholder={t('_lang:description')} />)}
               </Form.Item>
             </Col>
           </Row>

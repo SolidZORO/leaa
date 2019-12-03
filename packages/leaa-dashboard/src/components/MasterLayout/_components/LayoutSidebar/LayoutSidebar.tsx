@@ -8,7 +8,7 @@ import logo from '@leaa/dashboard/src/assets/images/logo/logo-white.svg';
 import { IRouteItem } from '@leaa/dashboard/src/interfaces';
 import { masterRoutes, flateMasterRoutes } from '@leaa/dashboard/src/routes/master.route';
 import { authUtil, deviceUtil } from '@leaa/dashboard/src/utils';
-import { ALLOW_PERMISSION, SIDERBAR_COLLAPSED_SL_KEY } from '@leaa/dashboard/src/constants';
+import { ALLOW_PERMISSION, SIDERBAR_COLLAPSED_SL_KEY, CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 
 import { SidebarTarget } from '../SidebarTarget/SidebarTarget';
 
@@ -81,7 +81,7 @@ const makeFlatMenu = (menu: IRouteItem): React.ReactNode => {
           (authUtil.getAuthInfo().flatPermissions.includes(currentMenuCreatePermission) ||
             menu.permission === ALLOW_PERMISSION) && (
             <Link to={`${menu.path}/create`} className={style['can-create-button']}>
-              <Icon type="plus" />
+              <Icon type={CREATE_BUTTON_ICON} />
             </Link>
           )}
       </Menu.Item>

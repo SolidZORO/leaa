@@ -28,15 +28,17 @@ export class AxResolver {
   //
   //
 
-  @UseGuards(PermissionsGuard)
-  @Permissions('ax.item-read')
+  // @UseGuards(PermissionsGuard)
+  // @Permissions('ax.item-read')
+  // DO NOT CHECK PERMISSIONS
   @Query(() => AxsWithPaginationObject)
   async axs(@Args() args: AxsArgs, @CurrentUser() user?: User): Promise<AxsWithPaginationObject | undefined> {
     return this.axService.axs(args, user);
   }
 
-  @UseGuards(PermissionsGuard)
-  @Permissions('ax.item-read')
+  // @UseGuards(PermissionsGuard)
+  // @Permissions('ax.item-read')
+  // DO NOT CHECK PERMISSIONS
   @Query(() => Ax)
   async ax(
     @Args({ name: 'id', type: () => Int }) id: number,
@@ -46,8 +48,9 @@ export class AxResolver {
     return this.axService.ax(id, args, user);
   }
 
-  @UseGuards(PermissionsGuard)
-  @Permissions('ax.item-read')
+  // @UseGuards(PermissionsGuard)
+  // @Permissions('ax.item-read')
+  // DO NOT CHECK PERMISSIONS
   @Query(() => Ax)
   async axBySlug(
     @Args({ name: 'slug', type: () => String }) slug: string,

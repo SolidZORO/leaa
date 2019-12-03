@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, message } from 'antd';
+import { Button, Icon, message } from 'antd';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
 import { User } from '@leaa/common/src/entrys';
@@ -103,7 +103,12 @@ export default (props: IPage) => {
 
   return (
     <PageCard
-      title={t(`${props.route.namei18n}`)}
+      title={
+        <span>
+          <Icon type={props.route.icon} />
+          <strong>{t(`${props.route.namei18n}`)}</strong>
+        </span>
+      }
       className={style['wapper']}
       loading={getUserQuery.loading || updateUserMutation.loading}
     >

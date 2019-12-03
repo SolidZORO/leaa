@@ -19,15 +19,17 @@ import { Permissions, CurrentUser } from '@leaa/api/src/decorators';
 export class TagResolver {
   constructor(private readonly tagService: TagService) {}
 
-  @UseGuards(PermissionsGuard)
-  @Permissions('tag.list-read')
+  // @UseGuards(PermissionsGuard)
+  // @Permissions('tag.list-read')
+  // DO NOT CHECK PERMISSIONS
   @Query(() => TagsWithPaginationObject)
   async tags(@Args() args: TagsArgs): Promise<TagsWithPaginationObject | undefined> {
     return this.tagService.tags(args);
   }
 
-  @UseGuards(PermissionsGuard)
-  @Permissions('tag.item-read')
+  // @UseGuards(PermissionsGuard)
+  // @Permissions('tag.item-read')
+  // DO NOT CHECK PERMISSIONS
   @Query(() => Tag)
   async tag(
     @Args({ name: 'id', type: () => Int }) id: number,

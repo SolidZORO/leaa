@@ -33,27 +33,44 @@
   .title {
     font-size: 140%;
     margin: 0;
-    padding: 0 0 0 3px;
-    font-weight: 600;
+    padding: 0 0 0 2px;
+    color: #333;
+    opacity: 0.9;
 
     span {
-      strong {
-        font-weight: 600;
+      i {
+        display: none;
+        font-weight: 400;
+        margin-right: 8px;
       }
 
-      a,
-      button {
+      strong {
+        font-weight: 500;
+        vertical-align: -1px;
+      }
+    }
+
+    :global {
+      .page-card-create-link {
+        display: inline-block;
         margin-left: 10px;
         color: #aaa;
 
         &:hover {
           color: @primary-color;
         }
+
+        .anticon {
+          display: inline-block;
+          font-size: 100%;
+          vertical-align: -2px;
+        }
       }
 
-      button {
-        padding: 0;
-        font-size: 95%;
+      .page-card-create-button {
+        font-size: 110%;
+        vertical-align: -1px;
+        color: #bbb;
       }
     }
   }

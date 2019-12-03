@@ -9,5 +9,6 @@ export const SETTING_FRAGMENT = gql`
     options
     value
     sort
+    private
   }
 `;

@@ -18,8 +18,9 @@ import { Permissions, CurrentUser } from '@leaa/api/src/decorators';
 export class ArticleResolver {
   constructor(private readonly articleService: ArticleService) {}
 
-  @UseGuards(PermissionsGuard)
-  @Permissions('article.list-read')
+  // @UseGuards(PermissionsGuard)
+  // @Permissions('article.list-read')
+  // DO NOT CHECK PERMISSIONS
   @Query(() => ArticlesWithPaginationObject)
   async articles(
     @Args() args: ArticlesArgs,
@@ -28,8 +29,9 @@ export class ArticleResolver {
     return this.articleService.articles(args, user);
   }
 
-  @UseGuards(PermissionsGuard)
-  @Permissions('article.item-read')
+  // @UseGuards(PermissionsGuard)
+  // @Permissions('article.item-read')
+  // DO NOT CHECK PERMISSIONS
   @Query(() => Article)
   async article(
     @Args({ name: 'id', type: () => Int }) id: number,
@@ -39,8 +41,9 @@ export class ArticleResolver {
     return this.articleService.article(id, args, user);
   }
 
-  @UseGuards(PermissionsGuard)
-  @Permissions('article.item-read')
+  // @UseGuards(PermissionsGuard)
+  // @Permissions('article.item-read')
+  // DO NOT CHECK PERMISSIONS
   @Query(() => Article)
   async articleBySlug(
     @Args({ name: 'slug', type: () => String }) slug: string,
