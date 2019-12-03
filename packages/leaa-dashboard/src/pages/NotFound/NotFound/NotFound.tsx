@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from '@leaa/dashboard/node_modules/antd';
+import { Button } from 'antd';
 
 import style from './style.module.less';
 
