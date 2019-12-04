@@ -16,5 +16,6 @@
     "lint": "yarn run lint-js",
     "fix": "yarn run fix-js",
     "tsc-check": "tsc --noEmit"
-  }
+  },
+  "devDependencies": {}
 }

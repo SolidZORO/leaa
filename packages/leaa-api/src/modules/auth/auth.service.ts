@@ -70,7 +70,7 @@ export class AuthService {
   }
 
   // MUST DO minimal cost query
-  @CacheKey('validate_user')
+  // @CacheKey('validate_user')
   // @CacheTTL(20)
   async validateUserByPayload(payload: IJwtPayload): Promise<User | undefined> {
     const user = await this.userRepository.findOne({ relations: ['roles'], where: { id: payload.id } });

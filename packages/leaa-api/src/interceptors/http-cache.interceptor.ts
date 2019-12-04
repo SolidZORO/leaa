@@ -15,6 +15,8 @@ export class HttpCacheInterceptor extends CacheInterceptor {
     //
     // console.log(cacheKey);
 
+    // console.log('----------------------');
+    // return 'key';
     return undefined;
     // const isGetRequest = httpServer.getRequestMethod(request) === 'GET';
     // const excludePaths: string[] = ['login'];

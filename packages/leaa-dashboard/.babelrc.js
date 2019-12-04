@@ -30,6 +30,7 @@ module.exports = {
         style: true,
       },
     ],
+    ['@babel/plugin-transform-runtime'],
   ],
   ignore: ['node_modules', 'logs', '_build'],
 };
