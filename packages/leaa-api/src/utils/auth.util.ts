@@ -2,7 +2,7 @@ import { User } from '@leaa/common/src/entrys';
 import { IPermissionSlug } from '@leaa/common/src/interfaces';
 import { loggerUtil, errorUtil } from '@leaa/api/src/utils';
 
-const checkAvailableUser = (user: User): User | Error => {
+const checkAvailableUser = (user?: User): User => {
   if (!user) {
     const message = 'NOT FOUND USER';
 

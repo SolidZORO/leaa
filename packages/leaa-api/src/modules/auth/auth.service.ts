@@ -4,7 +4,7 @@ import moment from 'moment';
 import jwt from 'jsonwebtoken';
 import bcryptjs from 'bcryptjs';
 import { Request } from 'express';
-import { Injectable, UnauthorizedException, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -46,14 +46,14 @@ export class AuthService {
   }
 
   getUserPayload(token?: string): IJwtPayload {
-    if (!token) throw new NotFoundException('Not Found Token');
+    if (!token) return errorUtil.ERROR({ error: 'Not Found Token' });
 
     let tokenWithoutBearer = token;
 
     if (token.slice(0, 6) === 'Bearer') {
       tokenWithoutBearer = token.slice(7);
     } else {
-      throw new UnauthorizedException('Header include incorrect Bearer prefix');
+      return errorUtil.ERROR({ error: 'Header include incorrect Bearer prefix' });
     }
 
     let payload;
@@ -71,13 +71,15 @@ export class AuthService {
 
   // MUST DO minimal cost query
   async validateUserByPayload(payload: IJwtPayload): Promise<User | undefined> {
-    if (!payload) throw new NotFoundException('Not Found Validate Info');
-    if (!payload.iat || !payload.exp || !payload.id) throw new NotFoundException('Not Found Validate Info Details');
+    if (!payload) return errorUtil.ERROR({ error: 'Not Found Validate Info' });
 
-    const user = await this.userRepository.findOne({ relations: ['roles'], where: { id: payload.id } });
+    if (!payload.iat || !payload.exp || !payload.id) {
+      return errorUtil.ERROR({ error: 'Not Found Validate Info Details' });
+    }
 
-    if (!user) throw new NotFoundException('Not Found User');
-    if (!authUtil.checkAvailableUser(user)) throw new UnauthorizedException('Unauthorized User');
+    const findUser = await this.userRepository.findOne({ relations: ['roles'], where: { id: payload.id } });
+
+    const user = authUtil.checkAvailableUser(findUser);
 
     // IMPORTANT! if user info or password is changed, Compare `iat` and `updated_at`
     if (moment.unix(payload.iat).isBefore(moment(user.updated_at))) {
@@ -112,26 +114,21 @@ export class AuthService {
   }
 
   async login(args: AuthLoginInput): Promise<User | undefined> {
-    const user = await this.userRepository.findOne({
+    const findUser = await this.userRepository.findOne({
       select: ['id', 'email', 'name', 'status', 'password'],
       where: {
         email: xss.filterXSS(args.email.trim().toLowerCase()),
       },
-      // for flatPermissions
+      // for get flatPermissions
       relations: ['roles'],
     });
 
-    if (!user) throw new NotFoundException('Not Found User');
-    if (!authUtil.checkAvailableUser(user)) throw new UnauthorizedException('Unauthorized User');
-
-    if (!user || !(user && authUtil.checkAvailableUser(user))) {
-      throw new UnauthorizedException();
-    }
+    const user = authUtil.checkAvailableUser(findUser);
 
     const passwordIsMatch = await bcryptjs.compareSync(args.password, user.password);
     if (!passwordIsMatch) return errorUtil.ERROR({ error: `User (${args.email}) Info Not Match` });
 
-    delete user.password;
+    if (user.password) delete user.password;
 
     return this.addTokenTouser(user);
   }
