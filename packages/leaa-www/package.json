@@ -86,7 +86,7 @@
     "type-graphql": "^0.17.5",
     "typeorm": "^0.2.20",
     "ua-parser-js": "^0.7.20",
-    "url-loader": "^3.0.0",
+    "url-loader": "^2.3.0",
     "vconsole": "^3.3.4",
     "webpack-filter-warnings-plugin": "^1.2.1"
   },

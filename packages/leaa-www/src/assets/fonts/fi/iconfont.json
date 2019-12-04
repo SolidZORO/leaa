@@ -85,9 +85,9 @@
     {
       "icon_id": "10243216",
       "name": "x-account",
-      "font_class": "x-account",
-      "unicode": "e600",
-      "unicode_decimal": 58880
+      "font_class": "x-user",
+      "unicode": "e6870",
+      "unicode_decimal": 944240
     }
   ]
 }

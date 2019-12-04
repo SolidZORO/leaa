@@ -95,7 +95,7 @@ export class AuthService {
     const isGuest = req.headers && !req.headers.authorization;
 
     if (req.body && isGuest && permissionConfig.notValidateUserQuerys.some(item => req.body.query.includes(item))) {
-      return true;
+      return undefined;
     }
 
     const payload = this.getUserPayload(req.headers.authorization);

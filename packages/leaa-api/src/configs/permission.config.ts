@@ -22,18 +22,18 @@ export const notValidateUserQuerys = [
   'register',
   'signup',
   'userByToken',
-  // //
-  // 'ax',
-  // 'axs',
-  // 'axBySlug',
-  // 'articles',
-  // 'article',
-  // 'attachments',
-  // 'attachment',
+  //
+  'ax',
+  'axs',
+  'axBySlug',
+  'articles',
+  'article',
+  'attachments',
+  'attachment',
   'settings',
-  // 'setting',
-  // 'tags',
-  // 'tag',
+  'setting',
+  'tags',
+  'tag',
 ];
 
 const pQuery = {} as any;

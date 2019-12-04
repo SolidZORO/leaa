@@ -9,7 +9,7 @@ module.exports = (nextConfig = {}) => ({
       }
 
       config.module.rules.push({
-        test: /\.(jpg|jpeg|png|svg|eot|otf|ttf|woff|woff2)$/,
+        test: /\.(jpg|jpeg|png|svg|ttf|woff|woff2|eot|otf)$/,
         use: {
           loader: 'url-loader',
           options: {

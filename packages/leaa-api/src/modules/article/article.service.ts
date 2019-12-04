@@ -66,7 +66,7 @@ export class ArticleService {
     qb.orderBy(`${PRIMARY_TABLE}.${nextArgs.orderBy}`, nextArgs.orderSort);
 
     // can
-    if (!(user && authUtil.can(user, 'article.list-read--all-status'))) {
+    if (!user && !(user && authUtil.can(user, 'article.list-read--all-status'))) {
       qb.andWhere('status = :status', { status: 1 });
     }
 

@@ -3722,7 +3722,7 @@
     "@types/koa-compose" "*"
     "@types/node" "*"
 
-"@types/less@3.0.1":
+"@types/less@3.0.1", "@types/less@^3.0.1":
   version "3.0.1"
   resolved "https://registry.npm.taobao.org/@types/less/download/@types/less-3.0.1.tgz?cache=0&sync_timestamp=1572462709719&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fless%2Fdownload%2F%40types%2Fless-3.0.1.tgz#625694093c72f8356c4042754e222407e50d6b08"
   integrity sha1-YlaUCTxy+DVsQEJ1TiIkB+UNawg=
@@ -3826,13 +3826,6 @@
   resolved "https://registry.npm.taobao.org/@types/node/download/@types/node-6.14.9.tgz?cache=0&sync_timestamp=1573849514401&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-6.14.9.tgz#733583e21ef0eab85a9737dfafbaa66345a92ef0"
   integrity sha1-czWD4h7w6rhalzffr7qmY0WpLvA=
 
-"@types/nodemon@^1.19.0":
-  version "1.19.0"
-  resolved "https://registry.npm.taobao.org/@types/nodemon/download/@types/nodemon-1.19.0.tgz#7ff8e53c61e7a21f9f8dc65444d5904621afc080"
-  integrity sha1-f/jlPGHnoh+fjcZURNWQRiGvwIA=
-  dependencies:
-    "@types/node" "*"
-
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"
   resolved "https://registry.npm.taobao.org/@types/normalize-package-data/download/@types/normalize-package-data-2.4.0.tgz#e486d0d97396d79beedd0a6e33f4534ff6b4973e"
@@ -3891,10 +3884,15 @@
   resolved "https://registry.npm.taobao.org/@types/prettier/download/@types/prettier-1.19.0.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fprettier%2Fdownload%2F%40types%2Fprettier-1.19.0.tgz#a2502fb7ce9b6626fdbfc2e2a496f472de1bdd05"
   integrity sha1-olAvt86bZib9v8LipJb0ct4b3QU=
 
-"@types/prop-types@*", "@types/prop-types@15.7.3", "@types/prop-types@^15.7.3":
+"@types/prop-types@*", "@types/prop-types@^15.7.3":
   version "15.7.3"
   resolved "https://registry.npm.taobao.org/@types/prop-types/download/@types/prop-types-15.7.3.tgz#2ab0d5da2e5815f94b0b9d4b95d1e5f243ab2ca7"
   integrity sha1-KrDV2i5YFflLC51LldHl8kOrLKc=
+
+"@types/prop-types@15.7.2":
+  version "15.7.2"
+  resolved "https://registry.npm.taobao.org/@types/prop-types/download/@types/prop-types-15.7.2.tgz#0e58ae66773d7fd7c372a493aff740878ec9ceaa"
+  integrity sha1-DliuZnc9f9fDcqSTr/dAh47Jzqo=
 
 "@types/q@^1.5.1":
   version "1.5.2"
@@ -3967,6 +3965,14 @@
   version "16.9.14"
   resolved "https://registry.npm.taobao.org/@types/react/download/@types/react-16.9.14.tgz#7f1158ce450b4b5aa83b1c5e1324fa75f348bdd1"
   integrity sha1-fxFYzkULS1qoOxxeEyT6dfNIvdE=
+  dependencies:
+    "@types/prop-types" "*"
+    csstype "^2.2.0"
+
+"@types/react@16.8.6":
+  version "16.8.6"
+  resolved "https://registry.npm.taobao.org/@types/react/download/@types/react-16.8.6.tgz#fa1de3fe56cc9b6afeddc73d093d7f30fd5e31cc"
+  integrity sha1-+h3j/lbMm2r+3cc9CT1/MP1eMcw=
   dependencies:
     "@types/prop-types" "*"
     csstype "^2.2.0"
@@ -4179,7 +4185,7 @@
     "@types/source-list-map" "*"
     source-map "^0.6.1"
 
-"@types/webpack@*", "@types/webpack@^4.39.8", "@types/webpack@^4.41.0":
+"@types/webpack@*", "@types/webpack@^4.39.8":
   version "4.41.0"
   resolved "https://registry.npm.taobao.org/@types/webpack/download/@types/webpack-4.41.0.tgz#b813a044d8b0dec7dfcd7622fdbe327bde06eb9a"
   integrity sha1-uBOgRNiw3sffzXYi/b4ye94G65o=
@@ -20069,6 +20075,15 @@ urix@^0.1.0:
   version "0.1.0"
   resolved "https://registry.npm.taobao.org/urix/download/urix-0.1.0.tgz#da937f7a62e21fec1fd18d49b35c2935067a6c72"
   integrity sha1-2pN/emLiH+wf0Y1Js1wpNQZ6bHI=
+
+url-loader@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.npm.taobao.org/url-loader/download/url-loader-2.3.0.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Furl-loader%2Fdownload%2Furl-loader-2.3.0.tgz#e0e2ef658f003efb8ca41b0f3ffbf76bab88658b"
+  integrity sha1-4OLvZY8APvuMpBsPP/v3a6uIZYs=
+  dependencies:
+    loader-utils "^1.2.3"
+    mime "^2.4.4"
+    schema-utils "^2.5.0"
 
 url-loader@^3.0.0:
   version "3.0.0"

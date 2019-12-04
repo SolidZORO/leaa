@@ -1,9 +1,8 @@
 import React from 'react';
 import Head from 'next/head';
-import { ApolloClient } from 'apollo-client';
 import { renderToString } from 'react-dom/server';
 import { AppContext } from 'next/app';
-import { getMarkupFromTree, getDataFromTree } from '@apollo/react-ssr';
+import { getMarkupFromTree } from '@apollo/react-ssr';
 
 import { initApollo } from '@leaa/www/src/libs/init-apollo.lib';
 

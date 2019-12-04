@@ -34,7 +34,7 @@ export const LayoutHeader = () => {
     <Button type="link" className={style['account-button']}>
       <Link href="/account" prefetch={false}>
         <a onClick={() => onSetVisible(false)}>
-          <Icon type="x-account" />
+          <Icon type="x-user" />
         </a>
       </Link>
     </Button>

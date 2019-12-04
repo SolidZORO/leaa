@@ -38,15 +38,11 @@ function createApolloClient(initialState: NormalizedCacheObject, authToken?: str
     return forward(operation);
   });
 
-  const errorLink = onError(({ graphQLErrors, networkError }) => {
+  const errorLink = onError(({ graphQLErrors }) => {
     if (graphQLErrors) {
-      graphQLErrors.map(({ message, locations, path }) =>
-        console.error(`❌ [GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`),
-      );
-    }
-
-    if (networkError) {
-      console.error(`❌ [Network error]: ${networkError}`);
+      graphQLErrors.forEach(error => {
+        console.error(`❌ [GraphQL error]: ${JSON.stringify(error)}`);
+      });
     }
   });
 
