@@ -18,6 +18,13 @@ export const RefreshflatPermissions = (props: IProps) => {
     useQuery<{ userByToken: IAuthInfo }, { token: string }>(GET_USER_BY_TOKEN, {
       variables: { token: authUtil.getAuthToken() || '' },
       fetchPolicy: 'network-only',
+      onError: e => {
+        if (authUtil.removeAuth()) {
+          return props.history.push(LOGOUT_REDIRECT_URL);
+        }
+
+        return messageUtil.gqlError(e.message);
+      },
       onCompleted: data => {
         if (data && data.userByToken.flatPermissions && data.userByToken.flatPermissions.length === 0) {
           authUtil.removeAuth();
@@ -26,13 +33,6 @@ export const RefreshflatPermissions = (props: IProps) => {
         if (data && data.userByToken && data.userByToken.flatPermissions) {
           authUtil.setAuthInfo(_.pick(data.userByToken, ['id', 'name', 'email', 'flatPermissions']));
         }
-      },
-      onError: e => {
-        if (authUtil.removeAuth()) {
-          return props.history.push(LOGOUT_REDIRECT_URL);
-        }
-
-        return messageUtil.gqlError(e.message);
       },
     });
   }

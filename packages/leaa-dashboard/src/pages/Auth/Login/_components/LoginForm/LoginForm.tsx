@@ -8,7 +8,7 @@ import { FormComponentProps } from 'antd/lib/form';
 import { IAuthInfo } from '@leaa/dashboard/src/interfaces';
 import { AuthLoginInput } from '@leaa/common/src/dtos/auth';
 import { LOGIN } from '@leaa/common/src/graphqls';
-import { authUtil } from '@leaa/dashboard/src/utils';
+import { authUtil, messageUtil } from '@leaa/dashboard/src/utils';
 
 import style from './style.module.less';
 
@@ -26,6 +26,7 @@ const LoginFormInner = (props: IProps) => {
   const [submitLoginMutate, submitLoginMutation] = useMutation<{
     login: IAuthInfo;
   }>(LOGIN, {
+    onError: e => messageUtil.gqlError(e.message),
     onCompleted({ login }) {
       if (login && login.name && login.flatPermissions && login.flatPermissions.length === 0) {
         message.error(t('_page:Auth.Login.notPermissions'));

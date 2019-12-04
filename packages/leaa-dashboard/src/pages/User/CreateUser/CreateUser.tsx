@@ -26,6 +26,7 @@ export default (props: IPage) => {
   const [submitVariables, setSubmitVariables] = useState<{ user: CreateUserInput }>();
   const [createUserMutate, createUserMutation] = useMutation<{ createUser: User }>(CREATE_USER, {
     variables: submitVariables,
+    onError: e => messageUtil.gqlError(e.message),
     onCompleted({ createUser }) {
       messageUtil.gqlCompleted(t('_lang:createdSuccessfully'));
       props.history.push(`/users/${createUser.id}`);

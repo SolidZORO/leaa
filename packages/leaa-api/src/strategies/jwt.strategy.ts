@@ -1,7 +1,6 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
-import { Request } from 'express';
 import { JwtService } from '@nestjs/jwt';
 
 import { IJwtPayload } from '@leaa/common/src/interfaces';
@@ -27,6 +26,8 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
   async validate(payload: IJwtPayload) {
     const user = await this.authService.validateUserByPayload(payload);
 
+    console.log(1111111111111111111111);
+
     if (!user) {
       throw new UnauthorizedException();
     }
@@ -37,30 +38,4 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
 
     return user;
   }
-
-  // authenticate(req: Request, options?: any): void {
-  //   console.log('QQQQQQQQQQQQQQQQQQQ', req.header);
-  //
-  //   // logger.log(`validate ${r(options)}`);
-  //   // const self: Strategy = this as any;
-  //   // const key = getIgnoreCase(req.headers, API_KEY_HEADER) as string;
-  //   // if (key) {
-  //   //   // TODO verify api key later
-  //   //   self.success({ apiKey: key });
-  //   // } else {
-  //   //   self.fail('ApiKey is required', 401);
-  //   // }
-  // }
-
-  // authenticate(req: Request, options?: any): void {
-  //   logger.log(`validate ${r(options)}`);
-  //   const self: Strategy = this as any;
-  //   const key = getIgnoreCase(req.headers, API_KEY_HEADER) as string;
-  //   if (key) {
-  //     // TODO verify api key later
-  //     self.success({ apiKey: key });
-  //   } else {
-  //     self.fail('ApiKey is required', 401);
-  //   }
-  // }
 }
