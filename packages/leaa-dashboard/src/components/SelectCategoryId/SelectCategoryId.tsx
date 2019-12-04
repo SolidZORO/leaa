@@ -38,8 +38,6 @@ export const SelectCategoryId = forwardRef((props: IProps, ref: React.Ref<any>) 
 
   return (
     <div className={cx(style['wrapper'], props.className)}>
-
-
       <Select
         defaultValue={value}
         value={value}

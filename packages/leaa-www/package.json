@@ -19,7 +19,7 @@
     "fix": "yarn run fix-js && yarn run fix-css",
     "tsc-check": "tsc --noEmit",
     "---------------------------------------------------------------------- DEV ----": "----",
-    "dev-tsnodedev": "NODE_ENV=development ts-node-dev --respawn --transpileOnly --ignore-watch node_modules --compiler-options '{\"module\":\"commonjs\"}' -r tsconfig-paths/register server.ts",
+    "dev-tsnodedev": "NODE_ENV=development ts-node-dev --respawn --transpileOnly --ignore-watch node_modules --ignore-watch .next --compiler-options '{\"module\":\"commonjs\"}' -r tsconfig-paths/register server.ts",
     "dev": "NODE_ENV=development yarn dev-tsnodedev",
     "clear": "rimraf .next && rimraf _dist",
     "---------------------------------------------------------------------- PROD ----": "----",

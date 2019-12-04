@@ -37,7 +37,10 @@ export class User extends Base {
   @Field(() => Date, { nullable: true })
   lastLogin_at?: Date;
 
-  @ManyToMany(() => Role, role => role.user)
+  @ManyToMany(
+    () => Role,
+    role => role.user,
+  )
   @JoinTable()
   @Field(() => [Role], { nullable: true })
   roles?: Role[];

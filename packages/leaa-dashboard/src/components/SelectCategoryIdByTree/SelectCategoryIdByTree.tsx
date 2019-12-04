@@ -65,8 +65,6 @@ export const SelectCategoryIdByTree = forwardRef((props: IProps, ref: React.Ref<
 
   return (
     <div className={cx(style['wrapper'])}>
-
-
       <TreeSelect
         {...multipleSelectOption}
         className={props.className}

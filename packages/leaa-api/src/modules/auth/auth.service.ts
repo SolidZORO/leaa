@@ -59,7 +59,7 @@ export class AuthService {
     let payload;
 
     try {
-      payload = jwt.verify(tokenWithoutBearer, this.configService.JWT_SECRET_KEY) as (IJwtPayload | undefined);
+      payload = jwt.verify(tokenWithoutBearer, this.configService.JWT_SECRET_KEY) as IJwtPayload | undefined;
     } catch (error) {
       if (error instanceof jwt.NotBeforeError) throw new AuthenticationError('Token Not Before');
       if (error instanceof jwt.TokenExpiredError) throw new AuthenticationError('Token Expired Error');

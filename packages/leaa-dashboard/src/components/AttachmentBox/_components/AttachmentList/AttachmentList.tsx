@@ -46,7 +46,10 @@ export const AttachmentList = forwardRef((props: IProps, ref: React.Ref<any>) =>
 
       setAttachments(
         update(attachments, {
-          $splice: [[dragIndex, 1], [hoverIndex, 0, dragCard]],
+          $splice: [
+            [dragIndex, 1],
+            [hoverIndex, 0, dragCard],
+          ],
         }),
       );
     }

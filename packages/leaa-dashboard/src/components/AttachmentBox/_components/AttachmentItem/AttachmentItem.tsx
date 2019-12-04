@@ -101,8 +101,6 @@ const AttachmentItemInner = forwardRef((props: IProps, ref: React.Ref<any>) => {
         opacity,
       }}
     >
-
-
       <div className={style['image']} ref={cardRef}>
         <img src={`${props.attachment.url}`} alt="" />
 
