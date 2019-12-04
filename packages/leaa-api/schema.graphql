@@ -286,6 +286,7 @@ input CreateUserInput {
   name: String
   password: String!
   status: Int
+  is_admin: Int
 }
 
 """
@@ -647,6 +648,7 @@ input UpdateUserInput {
   name: String
   password: String
   status: Int
+  is_admin: Int
   roleIds: [Int!]
   roleSlugs: [String!]
 }
@@ -660,6 +662,7 @@ type User {
   phone: String
   email: String!
   status: Int!
+  is_admin: Int!
   lastLogin_ip: String
   lastLogin_at: DateTime
   roles: [Role!]

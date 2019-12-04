@@ -9,6 +9,7 @@ export const GET_USERS = gql`
         name
         email
         status
+        is_admin
         roles {
           name
         }
@@ -28,6 +29,7 @@ export const GET_USER = gql`
       created_at
       updated_at
       status
+      is_admin
       permissions {
         id
         name
@@ -48,6 +50,7 @@ export const GET_USER_BY_TOKEN = gql`
       id
       name
       email
+      is_admin
       authToken
       authExpiresIn
       flatPermissions

@@ -88,6 +88,14 @@ export default (props: IPage) => {
       render: (id: string) => <TableColumnId id={id} link={`${props.route.path}/${id}`} />,
     },
     {
+      title: <Icon type="ri-vip-crown-2-line" />,
+      width: 30,
+      dataIndex: 'is_admin',
+      sorter: true,
+      sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'is_admin'),
+      render: (text: string, record: User) => (record.is_admin ? <Icon type="ri-vip-crown-2-line" /> : null),
+    },
+    {
       title: t('_lang:email'),
       width: 300,
       dataIndex: 'email',

@@ -45,6 +45,7 @@ export default {
   options: 'Options',
   tips: 'Tips',
   unavailable: 'Unavailable',
+  admin: 'Admin',
   //
   create: 'Create',
   edit: 'Edit',

@@ -29,6 +29,10 @@ export class UpdateUserInput {
   status?: number;
 
   @IsOptional()
+  @Field(() => Int, { nullable: true })
+  is_admin?: number;
+
+  @IsOptional()
   @Field(() => [Int], { nullable: true })
   roleIds?: number[];
 

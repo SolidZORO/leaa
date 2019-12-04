@@ -6,6 +6,7 @@ export const CREATE_USER = gql`
       id
       name
       email
+      is_admin
     }
   }
 `;
@@ -16,6 +17,7 @@ export const UPDATE_USER = gql`
       id
       name
       email
+      is_admin
     }
   }
 `;

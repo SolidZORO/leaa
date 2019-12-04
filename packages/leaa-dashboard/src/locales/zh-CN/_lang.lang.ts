@@ -45,6 +45,7 @@ export default {
   options: '可选项',
   tips: '提示',
   unavailable: '不可用',
+  admin: '管理员',
   //
   create: '创建',
   edit: '编辑',

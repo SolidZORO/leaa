@@ -26,8 +26,11 @@ export class User extends Base {
   status?: number;
 
   @Column({ type: 'varchar', length: 64, select: false })
-  // @Field()
   password!: string;
+
+  @Column({ type: 'int', default: 0 })
+  @Field(() => Int)
+  is_admin?: number;
 
   @Column({ type: 'varchar', length: 32, nullable: true })
   @Field(() => String, { nullable: true })

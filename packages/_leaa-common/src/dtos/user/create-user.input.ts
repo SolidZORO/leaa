@@ -26,4 +26,7 @@ export class CreateUserInput {
 
   @Field(() => Int, { nullable: true })
   status?: number;
+
+  @Field(() => Int, { nullable: true })
+  is_admin?: number;
 }
