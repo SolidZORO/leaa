@@ -41,7 +41,7 @@ export default (props: IPage) => {
   const [submitVariables, setSubmitVariables] = useState<{ id: number; article: UpdateArticleInput }>();
   const [updateArticleMutate, updateArticleMutation] = useMutation<Article>(UPDATE_ARTICLE, {
     variables: submitVariables,
-    onError: e => messageUtil.gqlError(e.message),
+    // apollo-link-error onError: e => messageUtil.gqlError(e.message),
     onCompleted: () => messageUtil.gqlCompleted(t('_lang:updatedSuccessfully')),
     refetchQueries: () => [{ query: GET_ARTICLE, variables: getArticleVariables }],
   });

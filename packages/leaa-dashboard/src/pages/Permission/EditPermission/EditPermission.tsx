@@ -37,7 +37,7 @@ export default (props: IPage) => {
   });
   const [updatePermissionMutate, updatePermissionMutation] = useMutation<Permission>(UPDATE_PERMISSION, {
     variables: submitVariables,
-    onError: e => messageUtil.gqlError(e.message),
+    // apollo-link-error onError: e => messageUtil.gqlError(e.message),
     onCompleted: () => messageUtil.gqlCompleted(t('_lang:updatedSuccessfully')),
     refetchQueries: () => [{ query: GET_PERMISSION, variables: getPermissionVariables }],
   });

@@ -54,7 +54,7 @@ export default (props: IPage) => {
 
   // mutation
   const [deletePromoMutate, deletePromoMutation] = useMutation<Promo>(DELETE_PROMO, {
-    onError: e => messageUtil.gqlError(e.message),
+    // apollo-link-error onError: e => messageUtil.gqlError(e.message),
     onCompleted: () => messageUtil.gqlCompleted(t('_lang:deletedSuccessfully')),
     refetchQueries: () => [{ query: GET_PROMOS, variables: getPromosVariables }],
   });

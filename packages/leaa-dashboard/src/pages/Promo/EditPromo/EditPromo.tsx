@@ -34,7 +34,7 @@ export default (props: IPage) => {
   const [submitVariables, setSubmitVariables] = useState<{ id: number; promo: UpdatePromoInput }>();
   const [updatePromoMutate, updatePromoMutation] = useMutation<Promo>(UPDATE_PROMO, {
     variables: submitVariables,
-    onError: e => messageUtil.gqlError(e.message),
+    // apollo-link-error onError: e => messageUtil.gqlError(e.message),
     onCompleted: () => messageUtil.gqlCompleted(t('_lang:updatedSuccessfully')),
     refetchQueries: () => [{ query: GET_PROMO, variables: getPromoVariables }],
   });

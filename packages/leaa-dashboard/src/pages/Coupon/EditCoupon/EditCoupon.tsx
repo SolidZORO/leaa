@@ -35,7 +35,7 @@ export default (props: IPage) => {
   const [submitVariables, setSubmitVariables] = useState<{ id: number; coupon: UpdateCouponInput }>();
   const [updateCouponMutate, updateCouponMutation] = useMutation<Coupon>(UPDATE_COUPON, {
     variables: submitVariables,
-    onError: e => messageUtil.gqlError(e.message),
+    // apollo-link-error onError: e => messageUtil.gqlError(e.message),
     onCompleted: () => messageUtil.gqlCompleted(t('_lang:updatedSuccessfully')),
     refetchQueries: () => [{ query: GET_COUPON, variables: getCouponVariables }],
   });

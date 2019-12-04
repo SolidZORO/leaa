@@ -26,7 +26,7 @@ export default (props: IPage) => {
   const [submitVariables, setSubmitVariables] = useState<{ ax: CreateAxInput }>();
   const [createAxMutate, createAxMutation] = useMutation<{ createAx: Ax }>(CREATE_AX, {
     variables: submitVariables,
-    onError: e => messageUtil.gqlError(e.message),
+    // apollo-link-error onError: e => messageUtil.gqlError(e.message),
     onCompleted({ createAx }) {
       messageUtil.gqlCompleted(t('_lang:createdSuccessfully'));
       props.history.push(`/axs/${createAx.id}`);

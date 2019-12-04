@@ -29,7 +29,7 @@ export const RedeemCouponToUseButton = (props: IProps) => {
   // mutation
   const [redeemCouponMutate, redeemCouponMutation] = useMutation<Coupon>(REDEEM_COUPON, {
     variables: { info: { code: props.item.code, userId } },
-    onError: e => messageUtil.gqlError(e.message),
+    // apollo-link-error onError: e => messageUtil.gqlError(e.message),
     onCompleted: () => {
       messageUtil.gqlCompleted(t('_lang:updatedSuccessfully'));
 

@@ -26,7 +26,7 @@ export default (props: IPage) => {
   const [submitVariables, setSubmitVariables] = useState<{ article: CreateArticleInput }>();
   const [createArticleMutate, createArticleMutation] = useMutation<{ createArticle: Article }>(CREATE_ARTICLE, {
     variables: submitVariables,
-    onError: e => messageUtil.gqlError(e.message),
+    // apollo-link-error onError: e => messageUtil.gqlError(e.message),
     onCompleted({ createArticle }) {
       messageUtil.gqlCompleted(t('_lang:createdSuccessfully'));
       props.history.push(`/articles/${createArticle.id}`);

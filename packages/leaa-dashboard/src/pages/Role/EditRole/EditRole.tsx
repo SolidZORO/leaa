@@ -47,7 +47,7 @@ export default (props: IPage) => {
 
   const [updateRoleMutate, updateRoleMutation] = useMutation<Role>(UPDATE_ROLE, {
     variables: submitVariables,
-    onError: e => messageUtil.gqlError(e.message),
+    // apollo-link-error onError: e => messageUtil.gqlError(e.message),
     onCompleted: () => messageUtil.gqlCompleted(t('_lang:updatedSuccessfully')),
     refetchQueries: () => [{ query: GET_ROLE, variables: getRoleVariables }],
   });

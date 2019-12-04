@@ -168,7 +168,7 @@ export class SaveInOssService {
     const splitFilename = req.object.split('/').pop();
 
     if (!splitFilename) {
-      const message = 'not found filename';
+      const message = 'Not Found Filename';
 
       loggerUtil.warn(message, CONSTRUCTOR_NAME);
 
@@ -205,7 +205,7 @@ export class SaveInOssService {
       const at1x = await this.saveAt2xToAt1xByOss(req.object);
 
       if (!at1x) {
-        const message = `save @2x to @1x failed, ${JSON.stringify(req.object)}`;
+        const message = `Save @2x To @1x Failed, ${JSON.stringify(req.object)}`;
 
         loggerUtil.warn(message, CONSTRUCTOR_NAME);
 

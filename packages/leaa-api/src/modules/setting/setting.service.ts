@@ -67,7 +67,7 @@ export class SettingService {
     });
 
     if (!setting) {
-      const message = 'not found setting';
+      const message = 'Not Found Setting';
 
       loggerUtil.warn(message, CONSTRUCTOR_NAME);
 
@@ -88,7 +88,7 @@ export class SettingService {
     const setting = await this.settingRepository.findOne({ where: whereQuery });
 
     if (!setting) {
-      const message = 'not found settingBySlug';
+      const message = 'Not Found SettingBySlug';
 
       loggerUtil.warn(message, CONSTRUCTOR_NAME);
 
@@ -127,9 +127,8 @@ export class SettingService {
   }
 
   async deleteSetting(id: number, user?: User): Promise<Setting | undefined> {
-    // default setting DONT
     if (id <= 5) {
-      return errorUtil.ERROR({ error: 'default setting PLEASE DONT', user });
+      return errorUtil.ERROR({ error: 'Default Setting, PLEASE DONT', user });
     }
 
     return curdUtil.commonDelete(this.settingRepository, CONSTRUCTOR_NAME, id);

@@ -2,7 +2,7 @@ import { HttpLink } from 'apollo-link-http';
 import { onError } from 'apollo-link-error';
 import { ApolloLink, split } from 'apollo-link';
 import { ApolloClient } from 'apollo-client';
-import { authUtil } from '@leaa/dashboard/src/utils';
+import { authUtil, messageUtil } from '@leaa/dashboard/src/utils';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { OperationDefinitionNode } from 'graphql';
 
@@ -26,13 +26,13 @@ const authLink = new ApolloLink((operation, forward) => {
   return forward(operation);
 });
 
-const errorLink = onError(({ graphQLErrors, networkError }) => {
+const errorLink = onError(({ graphQLErrors }) => {
   if (graphQLErrors) {
-    graphQLErrors.forEach(error => console.error(`❌ [GraphQL error]: ${JSON.stringify(error)}`));
-  }
+    graphQLErrors.forEach(error => {
+      console.error(`❌ [GraphQL error]: ${JSON.stringify(error)}`);
 
-  if (networkError) {
-    console.error(`❌ [Network error]: ${networkError}`);
+      messageUtil.gqlError(error.message);
+    });
   }
 });
 

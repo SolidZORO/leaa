@@ -81,9 +81,8 @@ export class PermissionService {
   }
 
   async deletePermission(id: number, user?: User): Promise<Permission | undefined> {
-    // default permission DONT
     if (id <= 84) {
-      return errorUtil.ERROR({ error: 'default permission PLEASE DONT', user });
+      return errorUtil.ERROR({ error: 'Default Permission, PLEASE DONT', user });
     }
 
     return curdUtil.commonDelete(this.permissionRepository, CONSTRUCTOR_NAME, id);

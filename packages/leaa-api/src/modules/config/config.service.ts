@@ -83,12 +83,12 @@ export class ConfigService {
     return this.envConfig.DB_DATABASE;
   }
 
-  get CLIENT_COOKIE_EXPIRES_DAY(): number {
-    return Number(this.envConfig.CLIENT_COOKIE_EXPIRES_DAY);
+  get CLIENT_COOKIE_EXPIRES_SECOND(): number {
+    return Number(this.envConfig.CLIENT_COOKIE_EXPIRES_SECOND);
   }
 
-  get SERVER_COOKIE_EXPIRES_DAY(): number {
-    return Number(this.envConfig.SERVER_COOKIE_EXPIRES_DAY);
+  get SERVER_COOKIE_EXPIRES_SECOND(): number {
+    return Number(this.envConfig.SERVER_COOKIE_EXPIRES_SECOND);
   }
 
   //
@@ -161,8 +161,8 @@ export class ConfigService {
       //
       TRUST_PROXY: envalid.str(),
       JWT_SECRET_KEY: envalid.str(),
-      CLIENT_COOKIE_EXPIRES_DAY: envalid.num(),
-      SERVER_COOKIE_EXPIRES_DAY: envalid.num(),
+      CLIENT_COOKIE_EXPIRES_SECOND: envalid.num(),
+      SERVER_COOKIE_EXPIRES_SECOND: envalid.num(),
       //
       // OSS_ALIYUN_BUCKET: envalid.str(),
       // OSS_ALIYUN_AK_SECRET: envalid.str(),

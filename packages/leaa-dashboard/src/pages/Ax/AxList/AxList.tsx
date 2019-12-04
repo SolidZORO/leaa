@@ -53,7 +53,7 @@ export default (props: IPage) => {
 
   // mutation
   const [deleteAxMutate, deleteAxMutation] = useMutation<Ax>(DELETE_AX, {
-    onError: e => messageUtil.gqlError(e.message),
+    // apollo-link-error onError: e => messageUtil.gqlError(e.message),
     onCompleted: () => messageUtil.gqlCompleted(t('_lang:deletedSuccessfully')),
     refetchQueries: () => [{ query: GET_AXS, variables: getAxsVariables }],
   });

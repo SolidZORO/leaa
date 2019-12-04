@@ -128,10 +128,10 @@ export class AttachmentService {
   }
 
   async updateAttachment(uuid: string, args: UpdateAttachmentInput): Promise<Attachment | undefined> {
-    if (!args) return errorUtil.ERROR({ error: `update item ${uuid} args does not exist` });
+    if (!args) return errorUtil.ERROR({ error: `Not Found Args by ${uuid}` });
 
     let prevItem = await this.attachmentRepository.findOne({ uuid });
-    if (!prevItem) return errorUtil.ERROR({ error: `update item ${uuid} does not exist` });
+    if (!prevItem) return errorUtil.ERROR({ error: `Not Found Item ${uuid}` });
 
     prevItem = { ...prevItem, ...args };
     const nextItem = await this.attachmentRepository.save(prevItem);
@@ -142,7 +142,7 @@ export class AttachmentService {
   }
 
   async updateAttachments(attachments: UpdateAttachmentsInput[]): Promise<AttachmentsObject> {
-    if (!attachments) return errorUtil.ERROR({ error: 'update attachments does not exist' });
+    if (!attachments) return errorUtil.ERROR({ error: 'Not Found attachments' });
 
     const batchUpdate = attachments.map(async attachment => {
       await this.attachmentRepository.update({ uuid: attachment.uuid }, _.omit(attachment, ['uuid']));
@@ -167,10 +167,10 @@ export class AttachmentService {
 
   async deleteAttachments(uuid: string[]): Promise<DeleteAttachmentsObject | undefined> {
     const prevItems = await this.attachmentRepository.find({ uuid: In(uuid) });
-    if (!prevItems) return errorUtil.ERROR({ error: `delete item ${uuid} does not exist` });
+    if (!prevItems) return errorUtil.ERROR({ error: `Not Found Item ${uuid}` });
 
     const nextItem = await this.attachmentRepository.remove(prevItems);
-    if (!nextItem) return errorUtil.ERROR({ error: `delete item ${uuid} faild` });
+    if (!nextItem) return errorUtil.ERROR({ error: `Delete Item ${uuid} Faild` });
 
     prevItems.forEach(i => {
       if (i.at2x) {

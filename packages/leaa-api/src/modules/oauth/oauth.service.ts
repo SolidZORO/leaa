@@ -33,13 +33,13 @@ export class OauthService {
   private miniProgram = this.checkMiniProgramConfig() && new MiniProgram(oauthConfig.wechat);
 
   async bindUserIdToOauth(user: User, oid: number): Promise<any> {
-    if (!oid || typeof Number(oid) !== 'number') return errorUtil.ERROR({ error: `oid ${oid} error`, user });
+    if (!oid || typeof Number(oid) !== 'number') return errorUtil.ERROR({ error: `Nout Found oid ${oid}`, user });
 
     const oauth = await this.oauthRepository.findOne({ id: Number(oid) });
-    if (!oauth) return errorUtil.ERROR({ error: `oauth ${oid} does not exist`, user });
+    if (!oauth) return errorUtil.ERROR({ error: `Not Found Oauth ${oid}`, user });
 
     const result = await this.oauthRepository.update(Number(oid), { user_id: user.id });
-    if (!result) return errorUtil.ERROR({ error: `bind ${oid} faild`, user });
+    if (!result) return errorUtil.ERROR({ error: `Binding ${oid} Failed`, user });
 
     return result;
   }
@@ -49,13 +49,13 @@ export class OauthService {
   }
 
   async getUserByTicket(ticket: string): Promise<User> {
-    if (!ticket) return errorUtil.ERROR({ error: 'ticket error' });
+    if (!ticket) return errorUtil.ERROR({ error: 'Not Found Ticket' });
 
     const oauth = await this.oauthRepository.findOne({ ticket });
-    if (!oauth) return errorUtil.ERROR({ error: 'oauth does not exist' });
+    if (!oauth) return errorUtil.ERROR({ error: 'Not Found Oauth' });
 
     const user = await this.userRepository.findOne({ id: oauth.user_id });
-    if (!user) return errorUtil.ERROR({ error: 'oauth does not exist' });
+    if (!user) return errorUtil.ERROR({ error: 'Not Found User' });
 
     await this.clearTicket(oauth.id);
 
@@ -143,14 +143,14 @@ export class OauthService {
 
   async wechatCallback(req: Request, res: Response): Promise<void | string> {
     if (!req.query.state || !req.query.code) {
-      errorUtil.ERROR({ error: 'wechat callback error' });
+      errorUtil.ERROR({ error: 'Wechat Callback Error' });
     }
 
     const { jumpUrl } = JSON.parse(decodeURIComponent(req.query.state));
     const { url, query } = queryString.parseUrl(jumpUrl);
 
     if (!query || !query.platform || !['wechat', 'weibo'].includes(query.platform as string)) {
-      errorUtil.ERROR({ error: 'wechat callback invalid platform' });
+      errorUtil.ERROR({ error: 'Wechat Callback Invalid Platform' });
     }
 
     const wechatInfo = await this.wechatOAuth.getUserInfo(req.query.code);
@@ -195,7 +195,7 @@ export class OauthService {
 
         res.redirect(url);
 
-        errorUtil.ERROR({ error: 'wechat callback ticket expired' });
+        errorUtil.ERROR({ error: 'Wechat Callback Ticket Expired' });
       }
 
       const ticket = uuid.v4();

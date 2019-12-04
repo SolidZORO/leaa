@@ -19,8 +19,8 @@ export interface IDotEnv {
 
   TRUST_PROXY: string;
   JWT_SECRET_KEY: string;
-  CLIENT_COOKIE_EXPIRES_DAY: number;
-  SERVER_COOKIE_EXPIRES_DAY: number;
+  CLIENT_COOKIE_EXPIRES_SECOND: number;
+  SERVER_COOKIE_EXPIRES_SECOND: number;
 
   OSS_ALIYUN_BUCKET?: string;
   OSS_ALIYUN_AK_SECRET?: string;

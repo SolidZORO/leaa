@@ -18,12 +18,13 @@ export const RefreshflatPermissions = (props: IProps) => {
     useQuery<{ userByToken: IAuthInfo }, { token: string }>(GET_USER_BY_TOKEN, {
       variables: { token: authUtil.getAuthToken() || '' },
       fetchPolicy: 'network-only',
-      onError: e => {
+      onError: () => {
         if (authUtil.removeAuth()) {
           return props.history.push(LOGOUT_REDIRECT_URL);
         }
 
-        return messageUtil.gqlError(e.message);
+        return false;
+        // return messageUtil.gqlError(e.message);
       },
       onCompleted: data => {
         if (data && data.userByToken.flatPermissions && data.userByToken.flatPermissions.length === 0) {

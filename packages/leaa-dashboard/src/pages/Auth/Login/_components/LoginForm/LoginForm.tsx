@@ -26,7 +26,7 @@ const LoginFormInner = (props: IProps) => {
   const [submitLoginMutate, submitLoginMutation] = useMutation<{
     login: IAuthInfo;
   }>(LOGIN, {
-    onError: e => messageUtil.gqlError(e.message),
+    // apollo-link-error onError: e => messageUtil.gqlError(e.message),
     onCompleted({ login }) {
       if (login && login.name && login.flatPermissions && login.flatPermissions.length === 0) {
         message.error(t('_page:Auth.Login.notPermissions'));

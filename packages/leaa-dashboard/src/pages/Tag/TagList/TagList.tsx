@@ -54,7 +54,7 @@ export default (props: IPage) => {
 
   // mutation
   const [deleteTagMutate, deleteTagMutation] = useMutation<Tag>(DELETE_TAG, {
-    onError: e => messageUtil.gqlError(e.message),
+    // apollo-link-error onError: e => messageUtil.gqlError(e.message),
     onCompleted: () => messageUtil.gqlCompleted(t('_lang:deletedSuccessfully')),
     refetchQueries: () => [{ query: GET_TAGS, variables: getTagsVariables }],
   });

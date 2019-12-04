@@ -78,7 +78,7 @@ export class UserService {
   async userByToken(token?: string, args?: IUserArgs): Promise<User | undefined> {
     let nextArgs: IUserArgs = {};
 
-    if (!token) return errorUtil.ERROR({ error: 'Not Token' });
+    if (!token) return errorUtil.ERROR({ error: 'Not Found Token' });
 
     if (args) {
       nextArgs = args;
@@ -87,7 +87,7 @@ export class UserService {
 
     // @ts-ignore
     const userDecode: { id: any } = this.jwtService.decode(token);
-    if (!userDecode || !userDecode.id) return errorUtil.ERROR({ error: 'Error Token' });
+    if (!userDecode || !userDecode.id) return errorUtil.ERROR({ error: 'Token Error' });
 
     return this.userRepository.findOne(userDecode.id, nextArgs);
   }
@@ -144,9 +144,8 @@ export class UserService {
   }
 
   async deleteUser(id: number, user?: User): Promise<User | undefined> {
-    // default user DONT
     if (id <= 3) {
-      return errorUtil.ERROR({ error: 'default user PLEASE DONT', user });
+      return errorUtil.ERROR({ error: 'Default User, PLEASE DONT', user });
     }
 
     return curdUtil.commonDelete(this.userRepository, CONSTRUCTOR_NAME, id);

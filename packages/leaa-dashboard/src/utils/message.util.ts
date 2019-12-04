@@ -3,7 +3,7 @@ import { message } from 'antd';
 const formatGqlmessage = (str: string): string => {
   console.log(str);
 
-  return str.replace(/GraphQL\serror:\s?/, '');
+  return str.replace(/(GraphQL error:|Context creation failed:)\s?/, '');
 };
 
 const gqlError = (msg?: string): void => {

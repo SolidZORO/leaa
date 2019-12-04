@@ -30,8 +30,6 @@ export class GraphqlService implements GqlOptionsFactory {
       // }),
 
       context: async (ctx: { req: Request }) => {
-        console.log(11111111111, _.get(ctx.req, 'user'));
-
         return {
           ...ctx,
           user: await this.authService.validateUserByReq(ctx.req),

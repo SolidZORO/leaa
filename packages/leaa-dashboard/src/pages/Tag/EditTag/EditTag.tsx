@@ -34,7 +34,7 @@ export default (props: IPage) => {
   const [submitVariables, setSubmitVariables] = useState<{ id: number; tag: UpdateTagInput }>();
   const [updateTagMutate, updateTagMutation] = useMutation<Tag>(UPDATE_TAG, {
     variables: submitVariables,
-    onError: e => messageUtil.gqlError(e.message),
+    // apollo-link-error onError: e => messageUtil.gqlError(e.message),
     onCompleted: () => messageUtil.gqlCompleted(t('_lang:updatedSuccessfully')),
     refetchQueries: () => [{ query: GET_TAG, variables: getTagVariables }],
   });

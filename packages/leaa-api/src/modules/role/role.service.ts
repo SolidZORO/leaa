@@ -100,7 +100,7 @@ export class RoleService {
       ((args.permissionIds && !args.permissionIds.toString()) ||
         (args.permissionSlugs && !args.permissionSlugs.toString()))
     )
-      return errorUtil.ERROR({ error: 'default role PLEASE DONT', user });
+      return errorUtil.ERROR({ error: 'Default Role, PLEASE DONT', user });
 
     const relationArgs: { permissions?: Permission[] } = {};
 
@@ -118,16 +118,15 @@ export class RoleService {
     if (permissionObjects) {
       relationArgs.permissions = permissionObjects;
     } else {
-      return errorUtil.ERROR({ error: 'permissions error', user });
+      return errorUtil.ERROR({ error: 'Permissions Error', user });
     }
 
     return curdUtil.commonUpdate(this.roleRepository, CONSTRUCTOR_NAME, id, args, relationArgs);
   }
 
   async deleteRole(id: number, user?: User): Promise<Role | undefined> {
-    // default role DONT
     if (id <= 3) {
-      return errorUtil.ERROR({ error: 'default role PLEASE DONT', user });
+      return errorUtil.ERROR({ error: 'Default Role, PLEASE DONT', user });
     }
 
     return curdUtil.commonDelete(this.roleRepository, CONSTRUCTOR_NAME, id);

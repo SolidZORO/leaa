@@ -52,7 +52,7 @@ export const AttachmentBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
   const [submitVariables, setSubmitVariables] = useState<{ attachments: UpdateAttachmentsInput[] }>();
   const [updateAttachmentsMutate] = useMutation<UpdateAttachmentsInput[]>(UPDATE_ATTACHMENTS, {
     variables: submitVariables,
-    onError: e => messageUtil.gqlError(e.message),
+    // apollo-link-error onError: e => messageUtil.gqlError(e.message),
     onCompleted: () =>
       !props.disableMessage &&
       messageUtil.gqlCompleted(

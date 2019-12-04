@@ -68,7 +68,7 @@ export class SaveInLocalService {
     },
   ): Promise<{ attachment: Attachment } | undefined> {
     if (!file) {
-      const message = 'not found attachment';
+      const message = 'Not Found Attachment';
 
       loggerUtil.warn(message, CONSTRUCTOR_NAME);
 

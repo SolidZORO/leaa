@@ -1,24 +1,23 @@
 import { User } from '@leaa/common/src/entrys';
 import { IPermissionSlug } from '@leaa/common/src/interfaces';
-import { loggerUtil } from '@leaa/api/src/utils';
+import { loggerUtil, errorUtil } from '@leaa/api/src/utils';
 
-const checkAvailabilityUser = (user: User): boolean => {
-  let errorMessage = '';
-
+const checkAvailableUser = (user: User): User | Error => {
   if (!user) {
-    errorMessage = 'Invalid User';
+    const message = 'NOT FOUND USER';
+
+    loggerUtil.warn(`${message}: ${JSON.stringify(user)}`, 'AuthUtil');
+    return errorUtil.ERROR({ error: message });
   }
 
-  if (user && user.status && Number(user.status) !== 1) {
-    errorMessage = 'Disabled User';
+  if (user && user.status !== 1) {
+    const message = 'INVALID USER';
+
+    loggerUtil.warn(`${message}: ${JSON.stringify(user)}`, 'AuthUtil');
+    return errorUtil.ERROR({ error: message });
   }
 
-  if (errorMessage !== '') {
-    loggerUtil.warn(`${errorMessage}: ${JSON.stringify(user)}`, 'authUtil');
-    return false;
-  }
-
-  return true;
+  return user;
 };
 
 const can = (user: User, permissionName: IPermissionSlug): boolean => {
@@ -30,6 +29,6 @@ const can = (user: User, permissionName: IPermissionSlug): boolean => {
 };
 
 export const authUtil = {
-  checkAvailableUser: checkAvailabilityUser,
+  checkAvailableUser,
   can,
 };

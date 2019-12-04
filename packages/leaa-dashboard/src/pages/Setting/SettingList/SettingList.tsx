@@ -86,7 +86,7 @@ export default (props: IPage) => {
   const [createSettingVariables, setCreateSettingVariables] = useState<{ setting: CreateSettingInput }>();
   const [createSettingMutate] = useMutation<Setting>(CREATE_SETTING, {
     variables: createSettingVariables,
-    onError: e => messageUtil.gqlError(e.message),
+    // apollo-link-error onError: e => messageUtil.gqlError(e.message),
     onCompleted: () => {
       messageUtil.gqlCompleted(t('_lang:createdSuccessfully'));
       onCloseModalVisible();
@@ -98,7 +98,7 @@ export default (props: IPage) => {
   const [updateSettingVariables, setUpdateSettingVariables] = useState<{ id: number; setting: UpdateSettingInput }>();
   const [updateSettingMutate, updateSettingMutation] = useMutation<Setting>(UPDATE_SETTING, {
     variables: updateSettingVariables,
-    onError: e => messageUtil.gqlError(e.message),
+    // apollo-link-error onError: e => messageUtil.gqlError(e.message),
     onCompleted: () => {
       messageUtil.gqlCompleted(t('_lang:updatedSuccessfully'));
       onCloseModalVisible();
@@ -110,7 +110,7 @@ export default (props: IPage) => {
   const [updateSettingsVariables, setUpdateSettingsVariables] = useState<{ settings: UpdateSettingsInput }>();
   const [updateSettingsMutate, updateSettingsMutation] = useMutation<Setting[]>(UPDATE_SETTINGS, {
     variables: updateSettingsVariables,
-    onError: e => messageUtil.gqlError(e.message),
+    // apollo-link-error onError: e => messageUtil.gqlError(e.message),
     onCompleted: () => {
       messageUtil.gqlCompleted(t('_lang:updatedSuccessfully'));
       onCloseModalVisible();
@@ -122,7 +122,7 @@ export default (props: IPage) => {
   const [deleteSettingVariables, setDeleteSettingVariables] = useState<{ id: number }>();
   const [deleteSettingMutate, deleteSettingMutation] = useMutation<Setting[]>(DELETE_SETTING, {
     variables: deleteSettingVariables,
-    onError: e => messageUtil.gqlError(e.message),
+    // apollo-link-error onError: e => messageUtil.gqlError(e.message),
     onCompleted: () => {
       messageUtil.gqlCompleted(t('_lang:deletedSuccessfully'));
       onCloseModalVisible();

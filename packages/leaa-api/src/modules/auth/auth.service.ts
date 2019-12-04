@@ -1,19 +1,19 @@
 import _ from 'lodash';
 import xss from 'xss';
+import moment from 'moment';
 import jwt from 'jsonwebtoken';
 import bcryptjs from 'bcryptjs';
 import { Request } from 'express';
-import { Injectable, CacheKey } from '@nestjs/common';
+import { Injectable, UnauthorizedException, NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
-import { AuthenticationError } from 'apollo-server-core';
 
 import { User } from '@leaa/common/src/entrys';
 import { AuthLoginInput, AuthSignupInput } from '@leaa/common/src/dtos/auth';
 import { IJwtPayload } from '@leaa/common/src/interfaces';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
-import { errorUtil } from '@leaa/api/src/utils';
+import { errorUtil, authUtil } from '@leaa/api/src/utils';
 import { UserService } from '@leaa/api/src/modules/user/user.service';
 import { permissionConfig } from '@leaa/api/src/configs';
 import { OauthService } from '@leaa/api/src/modules/oauth/oauth.service';
@@ -36,7 +36,7 @@ export class AuthService {
     const jwtPayload: IJwtPayload = { id: user.id };
 
     // https://github.com/auth0/node-jsonwebtoken#jwtsignpayload-secretorprivatekey-options-callback
-    const authExpiresIn = this.configService.SERVER_COOKIE_EXPIRES_DAY * (60 * 60 * 24);
+    const authExpiresIn = this.configService.SERVER_COOKIE_EXPIRES_SECOND;
     const authToken = await this.jwtService.sign(jwtPayload, { expiresIn: authExpiresIn });
 
     return {
@@ -46,14 +46,14 @@ export class AuthService {
   }
 
   getUserPayload(token?: string): IJwtPayload {
-    if (!token) throw new AuthenticationError('Header missing Authorization');
+    if (!token) throw new NotFoundException('Not Found Token');
 
     let tokenWithoutBearer = token;
 
     if (token.slice(0, 6) === 'Bearer') {
       tokenWithoutBearer = token.slice(7);
     } else {
-      throw new AuthenticationError('Header include incorrect Bearer prefix');
+      throw new UnauthorizedException('Header include incorrect Bearer prefix');
     }
 
     let payload;
@@ -61,20 +61,28 @@ export class AuthService {
     try {
       payload = jwt.verify(tokenWithoutBearer, this.configService.JWT_SECRET_KEY) as IJwtPayload | undefined;
     } catch (error) {
-      if (error instanceof jwt.NotBeforeError) throw new AuthenticationError('Token Not Before');
-      if (error instanceof jwt.TokenExpiredError) throw new AuthenticationError('Token Expired Error');
-      if (error instanceof jwt.JsonWebTokenError) throw new AuthenticationError('Token Error');
+      if (error instanceof jwt.NotBeforeError) return errorUtil.ERROR({ error: 'Your Token Has Not Before' });
+      if (error instanceof jwt.TokenExpiredError) return errorUtil.ERROR({ error: 'Your Token Has Expired' });
+      if (error instanceof jwt.JsonWebTokenError) return errorUtil.ERROR({ error: 'Your Token Has Error' });
     }
 
-    return payload || errorUtil.ERROR({ error: 'Token Verify Error' });
+    return payload || errorUtil.ERROR({ error: 'Your Token Verify Faild' });
   }
 
   // MUST DO minimal cost query
-  // @CacheKey('validate_user')
-  // @CacheTTL(20)
   async validateUserByPayload(payload: IJwtPayload): Promise<User | undefined> {
+    if (!payload) throw new NotFoundException('Not Found Validate Info');
+    if (!payload.iat || !payload.exp || !payload.id) throw new NotFoundException('Not Found Validate Info Details');
+
     const user = await this.userRepository.findOne({ relations: ['roles'], where: { id: payload.id } });
-    if (!user) throw new AuthenticationError('User Error');
+
+    if (!user) throw new NotFoundException('Not Found User');
+    if (!authUtil.checkAvailableUser(user)) throw new UnauthorizedException('Unauthorized User');
+
+    // IMPORTANT! if user info or password is changed, Compare `iat` and `updated_at`
+    if (moment.unix(payload.iat).isBefore(moment(user.updated_at))) {
+      return errorUtil.ERROR({ error: 'Your user info has been updated, Please login again' });
+    }
 
     const flatPermissions = await this.userProperty.flatPermissions(user);
 
@@ -113,11 +121,15 @@ export class AuthService {
       relations: ['roles'],
     });
 
-    if (!user) return errorUtil.ERROR({ error: `user ${args.email} does not exist` });
-    if (user.status !== 1) return errorUtil.ERROR({ error: `user ${args.email} is disabled` });
+    if (!user) throw new NotFoundException('Not Found User');
+    if (!authUtil.checkAvailableUser(user)) throw new UnauthorizedException('Unauthorized User');
+
+    if (!user || !(user && authUtil.checkAvailableUser(user))) {
+      throw new UnauthorizedException();
+    }
 
     const passwordIsMatch = await bcryptjs.compareSync(args.password, user.password);
-    if (!passwordIsMatch) return errorUtil.ERROR({ error: `user ${args.email} info not match` });
+    if (!passwordIsMatch) return errorUtil.ERROR({ error: `User (${args.email}) Info Not Match` });
 
     delete user.password;
 
@@ -156,7 +168,7 @@ export class AuthService {
         await this.oauthService.clearTicket(oid);
       }
     } catch (error) {
-      return errorUtil.ERROR({ error: 'sign up fail...' });
+      return errorUtil.ERROR({ error: 'Sign Up Fail' });
     }
 
     return this.addTokenTouser(newUser);

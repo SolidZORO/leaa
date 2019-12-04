@@ -46,7 +46,7 @@ export default (props: IPage) => {
   });
   const [updateUserMutate, updateUserMutation] = useMutation<User>(UPDATE_USER, {
     variables: submitVariables,
-    onError: e => messageUtil.gqlError(e.message),
+    // apollo-link-error onError: e => messageUtil.gqlError(e.message),
     onCompleted: () => messageUtil.gqlCompleted(t('_lang:updatedSuccessfully')),
     refetchQueries: () => [{ query: GET_USER, variables: getUserVariables }],
   });

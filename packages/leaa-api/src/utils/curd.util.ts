@@ -9,7 +9,7 @@ const commonUpdate = async (
   relationArgs: any = {},
 ): Promise<any | undefined> => {
   if (!args) {
-    const message = `update item ${id} args does not exist`;
+    const message = `Not Found Args by ${id}`;
 
     loggerUtil.warn(message, CONSTRUCTOR_NAME);
 
@@ -19,7 +19,7 @@ const commonUpdate = async (
   const prevItem = await repository.findOne(id);
 
   if (!prevItem) {
-    const message = `update item ${id} does not exist`;
+    const message = `Not Found Item ${id}`;
 
     loggerUtil.warn(message, CONSTRUCTOR_NAME);
 
@@ -46,7 +46,7 @@ const commonDelete = async (
   const prevItem = await repository.findOne(id);
 
   if (!prevItem) {
-    const message = `delete item ${id} does not exist`;
+    const message = `Not Found Item ${id}`;
 
     loggerUtil.warn(message, CONSTRUCTOR_NAME);
 
@@ -56,7 +56,7 @@ const commonDelete = async (
   const nextItem = await repository.remove(prevItem);
 
   if (!nextItem) {
-    const message = `delete item ${id} faild`;
+    const message = `Delete Item ${id} Faild`;
 
     loggerUtil.warn(message, CONSTRUCTOR_NAME);
 

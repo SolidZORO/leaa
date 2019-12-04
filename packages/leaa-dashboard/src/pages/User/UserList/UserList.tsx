@@ -53,7 +53,7 @@ export default (props: IPage) => {
 
   // mutation
   const [getUsersMutate, getUsersMutation] = useMutation<User>(DELETE_USER, {
-    onError: e => messageUtil.gqlError(e.message),
+    // apollo-link-error onError: e => messageUtil.gqlError(e.message),
     onCompleted: () => messageUtil.gqlCompleted(t('_lang:deletedSuccessfully')),
     refetchQueries: () => [{ query: GET_USERS, variables: getUsersVariables }],
   });

@@ -29,7 +29,7 @@ export default (props: IPage) => {
     CREATE_PERMISSION,
     {
       variables: submitVariables,
-      onError: e => messageUtil.gqlError(e.message),
+      // apollo-link-error onError: e => messageUtil.gqlError(e.message),
       onCompleted({ createPermission }) {
         messageUtil.gqlCompleted(t('_lang:createdSuccessfully'));
         props.history.push(`/permissions/${createPermission.id}`);

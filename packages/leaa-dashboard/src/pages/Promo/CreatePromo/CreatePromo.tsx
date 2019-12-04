@@ -26,7 +26,7 @@ export default (props: IPage) => {
   const [submitVariables, setSubmitVariables] = useState<{ promo: CreatePromoInput }>();
   const [createPromoMutate, createPromoMutation] = useMutation<{ createPromo: Promo }>(CREATE_PROMO, {
     variables: submitVariables,
-    onError: e => messageUtil.gqlError(e.message),
+    // apollo-link-error onError: e => messageUtil.gqlError(e.message),
     onCompleted() {
       messageUtil.gqlCompleted(t('_lang:createdSuccessfully'));
       props.history.push('/promos');
