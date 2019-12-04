@@ -3,7 +3,7 @@ import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 
-import { cliUtil } from '@leaa/common/src/utils';
+import { cliUtil } from '@leaa/api/src/utils';
 import { LoggerService } from '@leaa/api/src/modules/logger/logger.service';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 import { TagService } from '@leaa/api/src/modules/tag/tag.service';

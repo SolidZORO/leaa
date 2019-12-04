@@ -8,3 +8,4 @@ export { stringUtil } from '@leaa/api/src/utils/string.util';
 export { dictUtil } from '@leaa/api/src/utils/dict.util';
 export { authUtil } from '@leaa/api/src/utils/auth.util';
 export { errorUtil } from '@leaa/api/src/utils/error.util';
+export { cliUtil } from '@leaa/api/src/utils/cli.util';

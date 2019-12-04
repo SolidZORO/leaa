@@ -16,7 +16,7 @@ import {
   Promo,
 } from '@leaa/common/src/entrys';
 
-import { TagSubscriber } from '@leaa/common/src/subscribers';
+import { TagSubscriber } from '@leaa/common/../../subscribers';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 
 const CONSTRUCTOR_NAME = 'TypeormService';

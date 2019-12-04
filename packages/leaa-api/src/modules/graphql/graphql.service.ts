@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { applyMiddleware } from 'graphql-middleware';
 import { Injectable } from '@nestjs/common';
 import { Request } from 'express';
@@ -23,10 +24,18 @@ export class GraphqlService implements GqlOptionsFactory {
       tracing: dev,
       playground: dev,
       transformSchema: (schema: any): any => applyMiddleware(schema, permissionConfig.permissions),
-      context: async ({ req }: { req: Request }) => {
-        const user = await this.authService.validateUserByReq(req);
+      // context: async (ctx: { req: Request }) => ({
+      //   ...ctx,
+      //   user: await this.authService.validateUserByReq(ctx.req),
+      // }),
 
-        return { user };
+      context: async (ctx: { req: Request }) => {
+        console.log(11111111111, _.get(ctx.req, 'user'));
+
+        return {
+          ...ctx,
+          user: await this.authService.validateUserByReq(ctx.req),
+        };
       },
       formatError(error: any) {
         loggerUtil.error(`${JSON.stringify(error)}\n`, CONSTRUCTOR_NAME);
