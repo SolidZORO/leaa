@@ -12,6 +12,7 @@ import { initStore, StoreProvider } from '@leaa/www/src/stores';
 const store = initStore();
 
 // force refresh style.chunk.css (ONLY for dev mode)
+// related discussions @see https://github.com/zeit/next-plugins/issues/282
 if (process.env.NODE_ENV !== 'production') {
   const refreshChunkStyle = (chunkFileName: string) => {
     const head = document.getElementsByTagName('head')[0];
