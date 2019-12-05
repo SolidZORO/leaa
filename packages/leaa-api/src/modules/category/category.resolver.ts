@@ -2,18 +2,17 @@ import { UseGuards } from '@nestjs/common';
 import { Args, Query, Mutation, Resolver } from '@nestjs/graphql';
 import { Int } from 'type-graphql';
 
-import { Category, User } from '@leaa/common/src/entrys';
+import { Category } from '@leaa/common/src/entrys';
 import {
   CategoriesArgs,
   CategoriesWithPaginationObject,
   CategoryArgs,
   CreateCategoryInput,
   UpdateCategoryInput,
-  CategoriesWithTreeObject,
 } from '@leaa/common/src/dtos/category';
 import { CategoryService } from '@leaa/api/src/modules/category/category.service';
 import { PermissionsGuard } from '@leaa/api/src/guards';
-import { Permissions, CurrentUser } from '@leaa/api/src/decorators';
+import { Permissions } from '@leaa/api/src/decorators';
 
 @Resolver(() => Category)
 export class CategoryResolver {
@@ -25,13 +24,6 @@ export class CategoryResolver {
   @Query(() => CategoriesWithPaginationObject)
   async categories(@Args() args: CategoriesArgs): Promise<CategoriesWithPaginationObject | undefined> {
     return this.categoryService.categories(args);
-  }
-
-  @UseGuards(PermissionsGuard)
-  @Permissions('category.list-read')
-  @Query(() => CategoriesWithTreeObject)
-  async categoriesByTree(): Promise<CategoriesWithTreeObject | undefined> {
-    return this.categoryService.categoriesByTree();
   }
 
   // @UseGuards(PermissionsGuard)

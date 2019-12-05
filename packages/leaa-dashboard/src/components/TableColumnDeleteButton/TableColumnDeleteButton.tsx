@@ -1,5 +1,6 @@
 import React from 'react';
 import { Popconfirm, Button, Icon, Tag } from 'antd';
+import { ButtonSize } from 'antd/lib/button';
 import { useTranslation } from 'react-i18next';
 import cx from 'classnames';
 
@@ -12,6 +13,7 @@ interface IProps {
   extra?: React.ReactNode;
   className?: string;
   onClick?: () => void;
+  size?: ButtonSize;
   loading?: boolean;
 }
 
@@ -37,7 +39,7 @@ export const TableColumnDeleteButton = (props: IProps) => {
         placement="topRight"
         onConfirm={props.onClick}
       >
-        <Button icon="delete" size="small" />
+        <Button icon="delete" size={props.size || 'small'} />
       </Popconfirm>
     </div>
   );

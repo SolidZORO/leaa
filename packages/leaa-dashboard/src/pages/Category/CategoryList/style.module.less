@@ -3,3 +3,42 @@
 .wapper {
   background-color: transparent;
 }
+
+.tree-wrapper {
+  background-color: transparent;
+
+  :global {
+    .rst__rowTitleWithSubtitle {
+      height: inherit;
+    }
+  }
+}
+
+.tree-item {
+  display: block;
+  //font-size: 12px;
+  line-height: 1;
+}
+
+.tree-item-title {
+  display: block;
+  line-height: 1;
+  font-size: 14px;
+  margin-bottom: 3px;
+}
+
+.tree-item-sub-title {
+  line-height: 1;
+  display: block;
+}
+
+.tree-item-delete-button {
+  margin-right: 10px;
+  opacity: 0.05;
+  transition: opacity 0.3s;
+
+  &:hover {
+    transition: opacity 0.3s;
+    opacity: 1;
+  }
+}

@@ -1,5 +1,6 @@
 import React from 'react';
 import cx from 'classnames';
+import queryString from 'query-string';
 import { Col, Form, Input, Row } from 'antd';
 import { withTranslation } from 'react-i18next';
 import { FormComponentProps } from 'antd/lib/form';
@@ -30,6 +31,13 @@ class CategoryInfoFormInner extends React.PureComponent<IProps> {
 
     const { props } = this;
     const { getFieldDecorator } = this.props.form;
+    const parentId = () => {
+      if (props.item) return props.item.parent_id;
+
+      const urlParams = queryString.parse(window.location.search);
+
+      return urlParams.parent_id || 0;
+    };
 
     return (
       <div className={cx(style['wrapper'], props.className)}>
@@ -42,7 +50,7 @@ class CategoryInfoFormInner extends React.PureComponent<IProps> {
               <Col xs={24} sm={6}>
                 <Form.Item label={`${t('_lang:parent')} ID`}>
                   {getFieldDecorator('parent_id', {
-                    initialValue: props.item ? props.item.parent_id : 0,
+                    initialValue: parentId(),
                     rules: [{ required: true }],
                     normalize: e => e && Number(e),
                   })(<SelectCategoryIdByTree />)}

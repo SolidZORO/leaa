@@ -1,9 +1,26 @@
 import gql from 'graphql-tag';
 
 export const GET_CATEGORIES = gql`
-  query($page: Int, $pageSize: Int, $orderBy: String, $orderSort: String, $q: String) {
-    categories(page: $page, pageSize: $pageSize, orderBy: $orderBy, orderSort: $orderSort, q: $q) {
+  query(
+    $page: Int
+    $pageSize: Int
+    $orderBy: String
+    $orderSort: String
+    $q: String
+    $treeType: Boolean
+    $listType: Boolean
+  ) {
+    categories(
+      page: $page
+      pageSize: $pageSize
+      orderBy: $orderBy
+      orderSort: $orderSort
+      q: $q
+      treeType: $treeType
+      listType: $listType
+    ) {
       total
+      treeByStringify
       items {
         id
         name
@@ -13,14 +30,6 @@ export const GET_CATEGORIES = gql`
         created_at
         updated_at
       }
-    }
-  }
-`;
-
-export const GET_CATEGORIES_BY_TREE = gql`
-  query {
-    categoriesByTree {
-      treeByStringify
     }
   }
 `;

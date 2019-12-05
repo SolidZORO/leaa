@@ -3954,11 +3954,28 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-sortable-tree@^0.3.11":
+  version "0.3.11"
+  resolved "https://registry.npm.taobao.org/@types/react-sortable-tree/download/@types/react-sortable-tree-0.3.11.tgz#39e55cf86bb8bbdaefe1111e9ddc77515cd61a5e"
+  integrity sha1-OeVc+Gu4u9rv4REendx3UVzWGl4=
+  dependencies:
+    "@types/react" "*"
+    "@types/react-virtualized" "*"
+    react-dnd "^9.3.1"
+
 "@types/react-test-renderer@16.9.1":
   version "16.9.1"
   resolved "https://registry.npm.taobao.org/@types/react-test-renderer/download/@types/react-test-renderer-16.9.1.tgz?cache=0&sync_timestamp=1572482226452&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Freact-test-renderer%2Fdownload%2F%40types%2Freact-test-renderer-16.9.1.tgz#9d432c46c515ebe50c45fa92c6fb5acdc22e39c4"
   integrity sha1-nUMsRsUV6+UMRfqSxvtazcIuOcQ=
   dependencies:
+    "@types/react" "*"
+
+"@types/react-virtualized@*":
+  version "9.21.6"
+  resolved "https://registry.npm.taobao.org/@types/react-virtualized/download/@types/react-virtualized-9.21.6.tgz#97697724aaa1b5d920b73f1e6b4f0075d6cfd996"
+  integrity sha1-l2l3JKqhtdkgtz8ea08AddbP2ZY=
+  dependencies:
+    "@types/prop-types" "*"
     "@types/react" "*"
 
 "@types/react@*", "@types/react@16.9.14":
@@ -6881,6 +6898,11 @@ clone@^2.1.1, clone@^2.1.2:
   resolved "https://registry.npm.taobao.org/clone/download/clone-2.1.2.tgz#1b7f4b9f591f1e8f83670401600345a02887435f"
   integrity sha1-G39Ln1kfHo+DZwQBYANFoCiHQ18=
 
+clsx@^1.0.1:
+  version "1.0.4"
+  resolved "https://registry.npm.taobao.org/clsx/download/clsx-1.0.4.tgz#0c0171f6d5cb2fe83848463c15fcc26b4df8c2ec"
+  integrity sha1-DAFx9tXLL+g4SEY8FfzCa034wuw=
+
 co-defer@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npm.taobao.org/co-defer/download/co-defer-1.0.0.tgz#3e4a787a8eed6b0a21ee287c094f7e8de0d3c818"
@@ -7842,7 +7864,7 @@ cssstyle@^1.0.0:
   dependencies:
     cssom "0.3.x"
 
-csstype@^2.2.0:
+csstype@^2.2.0, csstype@^2.6.7:
   version "2.6.7"
   resolved "https://registry.npm.taobao.org/csstype/download/csstype-2.6.7.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fcsstype%2Fdownload%2Fcsstype-2.6.7.tgz#20b0024c20b6718f4eda3853a1f5a1cce7f5e4a5"
   integrity sha1-ILACTCC2cY9O2jhTofWhzOf15KU=
@@ -8370,6 +8392,14 @@ dom-converter@^0.2:
   integrity sha1-ZyGp2u4uKTaClVtq/kFncWJ7t2g=
   dependencies:
     utila "~0.4"
+
+dom-helpers@^5.0.0:
+  version "5.1.3"
+  resolved "https://registry.npm.taobao.org/dom-helpers/download/dom-helpers-5.1.3.tgz#7233248eb3a2d1f74aafca31e52c5299cc8ce821"
+  integrity sha1-cjMkjrOi0fdKr8ox5SxSmcyM6CE=
+  dependencies:
+    "@babel/runtime" "^7.6.3"
+    csstype "^2.6.7"
 
 dom-matches@>=1.0.1:
   version "2.0.0"
@@ -9779,6 +9809,19 @@ from2@^2.1.0:
   dependencies:
     inherits "^2.0.1"
     readable-stream "^2.0.0"
+
+frontend-collective-react-dnd-scrollzone@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.npm.taobao.org/frontend-collective-react-dnd-scrollzone/download/frontend-collective-react-dnd-scrollzone-1.0.2.tgz#cf5ed6165335f7d26504a40126f8e972ee644698"
+  integrity sha1-z17WFlM199JlBKQBJvjpcu5kRpg=
+  dependencies:
+    hoist-non-react-statics "^3.1.0"
+    lodash.throttle "^4.0.1"
+    prop-types "^15.5.9"
+    raf "^3.2.0"
+    react "^16.3.0"
+    react-display-name "^0.2.0"
+    react-dom "^16.3.0"
 
 fs-capacitor@^2.0.4:
   version "2.0.4"
@@ -12852,6 +12895,11 @@ lodash.isempty@4.4.0:
   resolved "https://registry.npm.taobao.org/lodash.isempty/download/lodash.isempty-4.4.0.tgz#6f86cbedd8be4ec987be9aaf33c9684db1b31e7e"
   integrity sha1-b4bL7di+TsmHvpqvM8loTbGzHn4=
 
+lodash.isequal@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.npm.taobao.org/lodash.isequal/download/lodash.isequal-4.5.0.tgz#415c4478f2bcc30120c22ce10ed3226f7d3e18e0"
+  integrity sha1-QVxEePK8wwEgwizhDtMib30+GOA=
+
 lodash.isinteger@^4.0.4:
   version "4.0.4"
   resolved "https://registry.npm.taobao.org/lodash.isinteger/download/lodash.isinteger-4.0.4.tgz#619c0af3d03f8b04c31f5882840b77b11cd68343"
@@ -12912,7 +12960,7 @@ lodash.templatesettings@^4.0.0:
   dependencies:
     lodash._reinterpolate "^3.0.0"
 
-lodash.throttle@^4.0.0:
+lodash.throttle@^4.0.0, lodash.throttle@^4.0.1:
   version "4.1.1"
   resolved "https://registry.npm.taobao.org/lodash.throttle/download/lodash.throttle-4.1.1.tgz#c23e91b710242ac70c37f1e1cda9274cc39bf2f4"
   integrity sha1-wj6RtxAkKscMN/HhzaknTMOb8vQ=
@@ -12988,7 +13036,7 @@ longest-streak@^2.0.1:
   resolved "https://registry.npm.taobao.org/longest-streak/download/longest-streak-2.0.3.tgz#3de7a3f47ee18e9074ded8575b5c091f5d0a4105"
   integrity sha1-Peej9H7hjpB03thXW1wJH10KQQU=
 
-loose-envify@^1.0.0, loose-envify@^1.1.0, loose-envify@^1.2.0, loose-envify@^1.3.1, loose-envify@^1.4.0:
+loose-envify@^1.0.0, loose-envify@^1.1.0, loose-envify@^1.2.0, loose-envify@^1.3.0, loose-envify@^1.3.1, loose-envify@^1.4.0:
   version "1.4.0"
   resolved "https://registry.npm.taobao.org/loose-envify/download/loose-envify-1.4.0.tgz#71ee51fa7be4caec1a63839f7e682d8132d30caf"
   integrity sha1-ce5R+nvkyuwaY4OffmgtgTLTDK8=
@@ -16101,7 +16149,7 @@ prop-types-exact@1.2.0:
     object.assign "^4.1.0"
     reflect.ownkeys "^0.2.0"
 
-prop-types@15.7.2, prop-types@15.x, prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.6, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@^15.5.9, prop-types@^15.6.0, prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@15.7.2, prop-types@15.x, prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.6, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@^15.5.9, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.npm.taobao.org/prop-types/download/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha1-UsQedbjIfnK52TYOAga5ncv/psU=
@@ -16295,7 +16343,7 @@ quick-lru@^1.0.0:
   resolved "https://registry.npm.taobao.org/quick-lru/download/quick-lru-1.1.0.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fquick-lru%2Fdownload%2Fquick-lru-1.1.0.tgz#4360b17c61136ad38078397ff11416e186dcfbb8"
   integrity sha1-Q2CxfGETatOAeDl/8RQW4Ybc+7g=
 
-raf@^3.3.0, raf@^3.4.0, raf@^3.4.1:
+raf@^3.2.0, raf@^3.3.0, raf@^3.4.0, raf@^3.4.1:
   version "3.4.1"
   resolved "https://registry.npm.taobao.org/raf/download/raf-3.4.1.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fraf%2Fdownload%2Fraf-3.4.1.tgz#0742e99a4a6552f445d73e3ee0328af0ff1ede39"
   integrity sha1-B0LpmkplUvRF1z4+4DKK8P8e3jk=
@@ -16810,14 +16858,19 @@ react-css-modules@4.7.11:
     lodash "^4.16.6"
     object-unfreeze "^1.1.0"
 
-react-dnd-html5-backend@^9.5.1:
+react-display-name@^0.2.0:
+  version "0.2.5"
+  resolved "https://registry.npm.taobao.org/react-display-name/download/react-display-name-0.2.5.tgz#304c7cbfb59ee40389d436e1a822c17fe27936c6"
+  integrity sha1-MEx8v7We5AOJ1DbhqCLBf+J5NsY=
+
+react-dnd-html5-backend@^9.3.4, react-dnd-html5-backend@^9.5.1:
   version "9.5.1"
   resolved "https://registry.npm.taobao.org/react-dnd-html5-backend/download/react-dnd-html5-backend-9.5.1.tgz?cache=0&sync_timestamp=1574746127012&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Freact-dnd-html5-backend%2Fdownload%2Freact-dnd-html5-backend-9.5.1.tgz#e6a0aed3ece800c1abe004f9ed9991513e2e644c"
   integrity sha1-5qCu0+zoAMGr4AT57ZmRUT4uZEw=
   dependencies:
     dnd-core "^9.5.1"
 
-react-dnd@^9.5.1:
+react-dnd@^9.3.1, react-dnd@^9.3.4, react-dnd@^9.5.1:
   version "9.5.1"
   resolved "https://registry.npm.taobao.org/react-dnd/download/react-dnd-9.5.1.tgz#907e55c791d6c50cbed1a4021c14b989b86ac467"
   integrity sha1-kH5Vx5HWxQy+0aQCHBS5ibhqxGc=
@@ -16837,6 +16890,16 @@ react-dom@16.8.6:
     object-assign "^4.1.1"
     prop-types "^15.6.2"
     scheduler "^0.13.6"
+
+react-dom@^16.3.0:
+  version "16.12.0"
+  resolved "https://registry.npm.taobao.org/react-dom/download/react-dom-16.12.0.tgz#0da4b714b8d13c2038c9396b54a92baea633fe11"
+  integrity sha1-DaS3FLjRPCA4yTlrVKkrrqYz/hE=
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+    prop-types "^15.6.2"
+    scheduler "^0.18.0"
 
 react-dropzone@^10.2.0:
   version "10.2.0"
@@ -16968,6 +17031,20 @@ react-slick@~0.25.2:
     lodash.debounce "^4.0.8"
     resize-observer-polyfill "^1.5.0"
 
+react-sortable-tree@^2.6.0, react-sortable-tree@^2.7.1:
+  version "2.7.1"
+  resolved "https://registry.npm.taobao.org/react-sortable-tree/download/react-sortable-tree-2.7.1.tgz#99bce93fe838ed90258c1796ccd7ac59b70f8fbd"
+  integrity sha1-mbzpP+g47ZAljBeWzNesWbcPj70=
+  dependencies:
+    frontend-collective-react-dnd-scrollzone "^1.0.2"
+    lodash.isequal "^4.5.0"
+    prop-types "^15.6.1"
+    react-dnd "^9.3.4"
+    react-dnd-html5-backend "^9.3.4"
+    react-lifecycles-compat "^3.0.4"
+    react-sortable-tree "^2.6.0"
+    react-virtualized "^9.19.1"
+
 react-test-renderer@16.8.6:
   version "16.8.6"
   resolved "https://registry.npm.taobao.org/react-test-renderer/download/react-test-renderer-16.8.6.tgz?cache=0&sync_timestamp=1571899867094&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Freact-test-renderer%2Fdownload%2Freact-test-renderer-16.8.6.tgz#188d8029b8c39c786f998aa3efd3ffe7642d5ba1"
@@ -16978,6 +17055,18 @@ react-test-renderer@16.8.6:
     react-is "^16.8.6"
     scheduler "^0.13.6"
 
+react-virtualized@^9.19.1:
+  version "9.21.2"
+  resolved "https://registry.npm.taobao.org/react-virtualized/download/react-virtualized-9.21.2.tgz#02e6df65c1e020c8dbf574ec4ce971652afca84e"
+  integrity sha1-AubfZcHgIMjb9XTsTOlxZSr8qE4=
+  dependencies:
+    babel-runtime "^6.26.0"
+    clsx "^1.0.1"
+    dom-helpers "^5.0.0"
+    loose-envify "^1.3.0"
+    prop-types "^15.6.0"
+    react-lifecycles-compat "^3.0.4"
+
 react@16.8.6:
   version "16.8.6"
   resolved "https://registry.npm.taobao.org/react/download/react-16.8.6.tgz#ad6c3a9614fd3a4e9ef51117f54d888da01f2bbe"
@@ -16987,6 +17076,15 @@ react@16.8.6:
     object-assign "^4.1.1"
     prop-types "^15.6.2"
     scheduler "^0.13.6"
+
+react@^16.3.0:
+  version "16.12.0"
+  resolved "https://registry.npm.taobao.org/react/download/react-16.12.0.tgz#0c0a9c6a142429e3614834d5a778e18aa78a0b83"
+  integrity sha1-DAqcahQkKeNhSDTVp3jhiqeKC4M=
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+    prop-types "^15.6.2"
 
 read-cmd-shim@^1.0.1:
   version "1.0.5"
@@ -17742,6 +17840,14 @@ scheduler@^0.13.6:
   version "0.13.6"
   resolved "https://registry.npm.taobao.org/scheduler/download/scheduler-0.13.6.tgz#466a4ec332467b31a91b9bf74e5347072e4cd889"
   integrity sha1-RmpOwzJGezGpG5v3TlNHBy5M2Ik=
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+
+scheduler@^0.18.0:
+  version "0.18.0"
+  resolved "https://registry.npm.taobao.org/scheduler/download/scheduler-0.18.0.tgz?cache=0&sync_timestamp=1574323692883&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fscheduler%2Fdownload%2Fscheduler-0.18.0.tgz#5901ad6659bc1d8f3fdaf36eb7a67b0d6746b1c4"
+  integrity sha1-WQGtZlm8HY8/2vNut6Z7DWdGscQ=
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"

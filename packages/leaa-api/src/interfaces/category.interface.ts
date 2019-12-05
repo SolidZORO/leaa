@@ -6,5 +6,7 @@ export interface ICategoryTreeWithKey extends ICategoryBase {
   key: string;
   title: string;
   value: number;
+  slug?: string;
+  subtitle?: string;
   children?: ICategoryTreeWithKey[];
 }

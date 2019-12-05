@@ -72,7 +72,6 @@ pMutation.deletePermission = checkPermission('permission.item-delete');
 //
 // --------------------
 pQuery.categories = checkPermission('category.list-read');
-pQuery.categoriesByTree = checkPermission('category.list-read');
 pQuery.category = checkPermission('category.item-read');
 //
 pMutation.createCategory = checkPermission('category.item-create');

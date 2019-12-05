@@ -9,7 +9,6 @@ import {
   CategoryArgs,
   CreateCategoryInput,
   UpdateCategoryInput,
-  CategoriesWithTreeObject,
 } from '@leaa/common/src/dtos/category';
 import { formatUtil, curdUtil, paginationUtil, errorUtil } from '@leaa/api/src/utils';
 import { ICategoryTreeWithKey } from '@leaa/api/src/interfaces';
@@ -23,32 +22,18 @@ const CONSTRUCTOR_NAME = 'CategoryService';
 export class CategoryService {
   constructor(@InjectRepository(Category) private readonly categoryRepository: Repository<Category>) {}
 
-  async categories(args: ICategoriessArgs): Promise<CategoriesWithPaginationObject> {
-    const nextArgs: ICategoriessArgs = formatUtil.formatArgs(args);
-
-    const qb = getRepository(Category).createQueryBuilder();
-    qb.select().orderBy(nextArgs.orderBy || 'created_at', nextArgs.orderSort);
-
-    if (nextArgs.q) {
-      const aliasName = new SelectQueryBuilder(qb).alias;
-
-      ['name', 'slug'].forEach(q => {
-        qb.orWhere(`${aliasName}.${q} LIKE :${q}`, { [q]: `%${nextArgs.q}%` });
-      });
-    }
-
-    return paginationUtil.calcQueryBuilderPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
-  }
-
-  async categoriesByTree(): Promise<CategoriesWithTreeObject | undefined> {
-    const [items] = await this.categoryRepository.findAndCount();
+  categoriesByTree(items: Category[], args?: ICategoriessArgs): string {
+    // const [items] = await this.categoryRepository.findAndCount();
 
     const itemsWithKey: ICategoryTreeWithKey[] = items.map((item: Category, i) => ({
       id: item.id,
       parent_id: item.parent_id,
       key: `${item.parent_id}-${item.id}-${i}-${item.slug}`,
       title: item.name,
+      subtitle: item.description,
+      slug: item.slug,
       value: item.id,
+      expanded: args && args.expanded,
     }));
 
     const buildTree = (data: ICategoryTreeWithKey[]) => {
@@ -83,14 +68,46 @@ export class CategoryService {
       id: 0,
       parent_id: 0,
       key: '0-0-0-root',
+      subtitle: 'Root',
+      slug: 'root',
       title: '----',
       value: 0,
     });
 
     // TODO Is there any other better way for recurrence (GraphQL)?
-    return {
-      treeByStringify: JSON.stringify(tree),
-    };
+    return JSON.stringify(tree);
+  }
+
+  async categories(args: ICategoriessArgs): Promise<CategoriesWithPaginationObject | undefined> {
+    const nextArgs: ICategoriessArgs = formatUtil.formatArgs(args);
+
+    const qb = getRepository(Category).createQueryBuilder();
+    qb.select().orderBy(nextArgs.orderBy || 'created_at', nextArgs.orderSort);
+
+    if (nextArgs.q) {
+      const aliasName = new SelectQueryBuilder(qb).alias;
+
+      ['name', 'slug'].forEach(q => {
+        qb.orWhere(`${aliasName}.${q} LIKE :${q}`, { [q]: `%${nextArgs.q}%` });
+      });
+    }
+
+    const result = await paginationUtil.calcQueryBuilderPageInfo({
+      qb,
+      page: nextArgs.page,
+      pageSize: nextArgs.pageSize,
+    });
+
+    if (args.treeType) {
+      const treeByStringify = this.categoriesByTree(result.items, { expanded: true });
+
+      return {
+        ...result,
+        treeByStringify,
+      };
+    }
+
+    return result;
   }
 
   async category(id: number, args?: ICategoryArgs): Promise<Category | undefined> {

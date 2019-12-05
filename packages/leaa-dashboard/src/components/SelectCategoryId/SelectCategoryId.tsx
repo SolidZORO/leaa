@@ -24,7 +24,9 @@ export const SelectCategoryId = forwardRef((props: IProps, ref: React.Ref<any>) 
     setValue(props.value);
   }, [props.value]);
 
+  const getCategoriesVariables: CategoriesArgs = { expanded: true, listType: true };
   const getCategoriesQuery = useQuery<{ categories: CategoriesWithPaginationObject }, CategoriesArgs>(GET_CATEGORIES, {
+    variables: getCategoriesVariables,
     fetchPolicy: 'network-only',
   });
 
@@ -35,6 +37,8 @@ export const SelectCategoryId = forwardRef((props: IProps, ref: React.Ref<any>) 
       props.onChange(v);
     }
   };
+
+  console.log(getCategoriesQuery.data);
 
   return (
     <div className={cx(style['wrapper'], props.className)}>
@@ -53,6 +57,7 @@ export const SelectCategoryId = forwardRef((props: IProps, ref: React.Ref<any>) 
         {getCategoriesQuery &&
           getCategoriesQuery.data &&
           getCategoriesQuery.data.categories &&
+          getCategoriesQuery.data.categories.items &&
           getCategoriesQuery.data.categories.items.map(category => (
             <Select.Option key={category.id} value={category.id}>
               {category.name}

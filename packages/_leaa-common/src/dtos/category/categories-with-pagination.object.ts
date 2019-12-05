@@ -6,5 +6,8 @@ import { PaginationObject } from '@leaa/common/src/dtos/_common';
 @ObjectType()
 export class CategoriesWithPaginationObject extends PaginationObject {
   @Field(() => [Category])
-  readonly items: Category[] = [];
+  readonly items?: Category[] = [];
+
+  @Field(() => String, { nullable: true })
+  readonly treeByStringify?: string;
 }

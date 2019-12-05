@@ -5,8 +5,8 @@ import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/react-hooks';
 import { TreeSelectProps } from 'antd/lib/tree-select';
 
-import { GET_CATEGORIES_BY_TREE } from '@leaa/common/src/graphqls';
-import { CategoriesWithTreeObject } from '@leaa/common/src/dtos/category';
+import { GET_CATEGORIES } from '@leaa/common/src/graphqls';
+import { CategoriesWithPaginationObject, CategoriesArgs } from '@leaa/common/src/dtos/category';
 
 import style from './style.module.less';
 
@@ -18,10 +18,15 @@ interface IProps {
   componentProps?: TreeSelectProps<any>;
 }
 
-// const { SHOW_PARENT } = TreeSelect;
-
 export const SelectCategoryIdByTree = forwardRef((props: IProps, ref: React.Ref<any>) => {
   const { t } = useTranslation();
+
+  // query
+  const getCategoriesVariables: CategoriesArgs = { expanded: true, treeType: true };
+  const getCategoriesQuery = useQuery<{ categories: CategoriesWithPaginationObject }, CategoriesArgs>(GET_CATEGORIES, {
+    variables: getCategoriesVariables,
+    fetchPolicy: 'network-only',
+  });
 
   const getValue = (value: number | number[] | undefined) => {
     if (typeof value === 'undefined') {
@@ -40,10 +45,6 @@ export const SelectCategoryIdByTree = forwardRef((props: IProps, ref: React.Ref<
   useEffect(() => {
     setValue(getValue(props.value));
   }, [props.value]);
-
-  const getCategoriesByTreeQuery = useQuery<{ categoriesByTree: CategoriesWithTreeObject }>(GET_CATEGORIES_BY_TREE, {
-    fetchPolicy: 'network-only',
-  });
 
   const onChange = (v: number | number[]) => {
     const nextV = typeof v === 'number' ? Number(v) : v;
@@ -66,17 +67,18 @@ export const SelectCategoryIdByTree = forwardRef((props: IProps, ref: React.Ref<
   return (
     <div className={cx(style['wrapper'])}>
       <TreeSelect
+        ref={ref}
         {...multipleSelectOption}
         className={props.className}
-        loading={getCategoriesByTreeQuery.loading}
+        loading={getCategoriesQuery.loading}
         value={value}
         dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
         treeData={
-          getCategoriesByTreeQuery &&
-          getCategoriesByTreeQuery.data &&
-          getCategoriesByTreeQuery.data.categoriesByTree &&
-          getCategoriesByTreeQuery.data.categoriesByTree.treeByStringify &&
-          JSON.parse(getCategoriesByTreeQuery.data.categoriesByTree.treeByStringify)
+          getCategoriesQuery &&
+          getCategoriesQuery.data &&
+          getCategoriesQuery.data.categories &&
+          getCategoriesQuery.data.categories.treeByStringify &&
+          JSON.parse(getCategoriesQuery.data.categories.treeByStringify)
         }
         placeholder={t('_lang:category')}
         onChange={onChange}

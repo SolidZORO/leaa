@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import cx from 'classnames';
 import _ from 'lodash';
 import { Select, AutoComplete, Input } from 'antd';
-import { AutoCompleteProps } from '@leaa/dashboard/node_modules/antd/lib/auto-complete';
+import { AutoCompleteProps } from 'antd/lib/auto-complete';
 
 import { Tag as TagEntry } from '@leaa/common/src/entrys';
 import { TagsWithPaginationObject, TagArgs } from '@leaa/common/src/dtos/tag';

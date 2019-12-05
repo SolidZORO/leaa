@@ -1,51 +1,37 @@
 import _ from 'lodash';
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import queryString from 'query-string';
 import { Link } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { Table, Icon } from 'antd';
+import { Button, Icon } from 'antd';
+import SortableTree, { TreeItem } from 'react-sortable-tree';
 
-import { DEFAULT_PAGE_SIZE_OPTIONS, PAGE_CARD_TITLE_CREATE_ICON } from '@leaa/dashboard/src/constants';
-import { GET_CATEGORIES, DELETE_CATEGORY } from '@leaa/common/src/graphqls';
+import { PAGE_CARD_TITLE_CREATE_ICON, CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
+import { DELETE_CATEGORY, GET_CATEGORIES } from '@leaa/common/src/graphqls';
 import { Category } from '@leaa/common/src/entrys';
-import { IOrderSort } from '@leaa/common/src/dtos/_common';
-import { CategoriesWithPaginationObject, CategoryArgs } from '@leaa/common/src/dtos/category';
-import { urlUtil, tableUtil, messageUtil } from '@leaa/dashboard/src/utils';
+import { CategoriesWithPaginationObject, CategoriesArgs } from '@leaa/common/src/dtos/category';
+import { messageUtil } from '@leaa/dashboard/src/utils';
 import { IPage } from '@leaa/dashboard/src/interfaces';
 
-import {
-  HtmlMeta,
-  PageCard,
-  TableCard,
-  SearchInput,
-  TableColumnDate,
-  TableColumnDeleteButton,
-  TableColumnId,
-} from '@leaa/dashboard/src/components';
+import { HtmlMeta, PageCard, TableCard, TableColumnDeleteButton } from '@leaa/dashboard/src/components';
 
+import 'react-sortable-tree/style.css';
 import style from './style.module.less';
 
 export default (props: IPage) => {
   const { t } = useTranslation();
 
-  const urlParams = queryString.parse(window.location.search);
-  const urlPagination = urlUtil.getPagination(urlParams);
-
-  const [q, setQ] = useState<string | undefined>(urlParams.q ? `${urlParams.q}` : undefined);
-  const [page, setPage] = useState<number | undefined>(urlPagination.page);
-  const [pageSize, setPageSize] = useState<number | undefined>(urlPagination.pageSize);
-  const [selectedRowKeys, setSelectedRowKeys] = useState<number[] | string[]>([]);
-
-  // sort
-  const [orderBy, setOrderBy] = useState<string | undefined>(urlParams.orderBy ? `${urlParams.orderBy}` : undefined);
-  const [orderSort, setOrderSort] = useState<IOrderSort | undefined>(
-    urlParams.orderSort ? urlUtil.formatOrderSort(`${urlParams.orderSort}`) : undefined,
-  );
+  const [treeData, setTreeData] = useState<TreeItem[]>([]);
 
   // query
-  const getCategoriesVariables = { page, pageSize, q, orderBy, orderSort };
-  const getCategoriesQuery = useQuery<{ categories: CategoriesWithPaginationObject }, CategoryArgs>(GET_CATEGORIES, {
+  // const getCategoriesByTreeVariables = { expanded: true };
+  // const getCategoriesQuery = useQuery<{ categoriesByTree: CategoriesWithTreeObject }>(GET_CATEGORIES_BY_TREE, {
+  //   variables: getCategoriesByTreeVariables,
+  //   fetchPolicy: 'network-only',
+  // });
+
+  const getCategoriesVariables: CategoriesArgs = { expanded: true, treeType: true };
+  const getCategoriesQuery = useQuery<{ categories: CategoriesWithPaginationObject }, CategoriesArgs>(GET_CATEGORIES, {
     variables: getCategoriesVariables,
     fetchPolicy: 'network-only',
   });
@@ -57,77 +43,21 @@ export default (props: IPage) => {
     refetchQueries: () => [{ query: GET_CATEGORIES, variables: getCategoriesVariables }],
   });
 
-  const resetUrlParams = () => {
-    setPage(urlPagination.page);
-    setPageSize(urlPagination.pageSize);
-    setOrderBy(undefined);
-    setOrderSort(undefined);
-    setQ(undefined);
-  };
-
   useEffect(() => {
-    if (_.isEmpty(urlParams)) {
-      resetUrlParams();
+    if (
+      getCategoriesQuery &&
+      getCategoriesQuery.data &&
+      getCategoriesQuery.data.categories &&
+      getCategoriesQuery.data.categories.treeByStringify
+    ) {
+      setTreeData(JSON.parse(getCategoriesQuery.data.categories.treeByStringify));
     }
-  }, [urlParams]);
-
-  const rowSelection = {
-    columnWidth: 30,
-    onChange: (keys: number[] | string[]) => setSelectedRowKeys(keys),
-    selectedRowKeys,
-  };
-
-  const columns = [
-    {
-      title: 'ID',
-      dataIndex: 'id',
-      width: 60,
-      sorter: true,
-      sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'id'),
-      render: (id: string) => <TableColumnId id={id} link={`${props.route.path}/${id}`} />,
-    },
-    {
-      title: t('_lang:name'),
-      dataIndex: 'name',
-      sorter: true,
-      sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'name'),
-      render: (text: string, record: Category) => <Link to={`${props.route.path}/${record.id}`}>{record.name}</Link>,
-    },
-    {
-      title: t('_lang:slug'),
-      dataIndex: 'slug',
-      sorter: true,
-      sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'slug'),
-    },
-    {
-      title: `${t('_lang:parent')} ID`,
-      dataIndex: 'parent_id',
-      sorter: true,
-      sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'parent_id'),
-      render: (id: string) => <TableColumnId id={id} link={`${props.route.path}/${id}`} />,
-    },
-    {
-      title: t('_lang:created_at'),
-      dataIndex: 'created_at',
-      width: 120,
-      sorter: true,
-      sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'created_at'),
-      render: (text: string) => <TableColumnDate date={text} size="small" />,
-    },
-    {
-      title: t('_lang:action'),
-      dataIndex: 'operation',
-      width: 60,
-      render: (text: string, record: Category) => (
-        <TableColumnDeleteButton
-          id={record.id}
-          fieldName={record.name}
-          loading={deleteCategoryMutation.loading}
-          onClick={async () => deleteCategoryMutate({ variables: { id: Number(record.id) } })}
-        />
-      ),
-    },
-  ];
+  }, [
+    getCategoriesQuery &&
+      getCategoriesQuery.data &&
+      getCategoriesQuery.data.categories &&
+      getCategoriesQuery.data.categories.treeByStringify,
+  ]);
 
   return (
     <PageCard
@@ -140,66 +70,52 @@ export default (props: IPage) => {
           </Link>
         </span>
       }
-      extra={
-        <SearchInput
-          value={q}
-          onChange={(keyword: string) => {
-            setPage(1);
-            setQ(keyword);
-
-            urlUtil.mergeParamToUrlQuery({
-              window,
-              params: {
-                page: 1,
-                q: keyword,
-              },
-              replace: true,
-            });
-          }}
-        />
-      }
       className={style['wapper']}
       loading={getCategoriesQuery.loading}
     >
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
-      {getCategoriesQuery.data && getCategoriesQuery.data.categories && getCategoriesQuery.data.categories.items && (
-        <TableCard selectedRowKeys={selectedRowKeys}>
-          <Table
-            rowKey="id"
-            size="small"
-            rowSelection={rowSelection}
-            columns={columns}
-            dataSource={getCategoriesQuery.data.categories.items}
-            pagination={{
-              defaultCurrent: page,
-              defaultPageSize: pageSize,
-              total: getCategoriesQuery.data.categories.total,
-              current: page,
-              pageSize,
-              //
-              pageSizeOptions: DEFAULT_PAGE_SIZE_OPTIONS,
-              showSizeChanger: true,
-            }}
-            onChange={(pagination, filters, sorter) => {
-              setPage(pagination.current);
-              setPageSize(pagination.pageSize);
-              setOrderBy(sorter.field);
-              setOrderSort(urlUtil.formatOrderSort(sorter.order));
-              setSelectedRowKeys([]);
-
-              urlUtil.mergeParamToUrlQuery({
-                window,
-                params: {
-                  ...urlUtil.pickPagination(pagination),
-                  ...urlUtil.pickOrder(sorter),
-                },
-                replace: true,
-              });
-            }}
+      <TableCard>
+        <div style={{ height: '70vh' }}>
+          <SortableTree
+            className={style['tree-wrapper']}
+            isVirtualized={false}
+            canDrag={false}
+            treeData={treeData}
+            onChange={e => setTreeData(e)}
+            generateNodeProps={({ node }) => ({
+              className: style['tree-item'],
+              title: [
+                <div className={style['tree-item-title']} key={`${node.id}`}>
+                  {node.id ? <Link to={`/categories/${node.id}`}>{node.title}</Link> : node.title}
+                </div>,
+              ],
+              subtitle: [
+                <div className={style['tree-item-sub-title']} key={`${node.id}`}>
+                  {node.slug}
+                </div>,
+              ],
+              buttons: [
+                <TableColumnDeleteButton
+                  key={`${node.id}`}
+                  size="small"
+                  id={node.id}
+                  fieldName={node.name}
+                  loading={deleteCategoryMutation.loading}
+                  onClick={async () => deleteCategoryMutate({ variables: { id: Number(node.id) } })}
+                  className={style['tree-item-delete-button']}
+                />,
+                <Button key={`${node.id}`} title={_.toString(node)} size="small">
+                  <Link to={`/categories/create?parent_id=${node.id}`}>
+                    <Icon type={CREATE_BUTTON_ICON} />
+                  </Link>
+                </Button>,
+                <span key={`${node.id}`}>&nbsp;</span>,
+              ],
+            })}
           />
-        </TableCard>
-      )}
+        </div>
+      </TableCard>
     </PageCard>
   );
 };
