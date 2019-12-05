@@ -101,6 +101,8 @@ export class CategoryService {
     if (args.treeType) {
       const treeByStringify = this.categoriesByTree(result.items, { expanded: true });
 
+      result.items = [];
+
       return {
         ...result,
         treeByStringify,

@@ -92,7 +92,7 @@ export default (props: IPage) => {
               ],
               subtitle: [
                 <div className={style['tree-item-sub-title']} key={`${node.id}`}>
-                  {node.slug}
+                  <small>#{node.id}</small> {node.slug}
                 </div>,
               ],
               buttons: [
