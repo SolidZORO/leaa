@@ -1,22 +1,14 @@
 {
   "name": "test-leaa-api",
   "version": 2,
-  "dotenv": ".env.production",
-  "builds": [
-    {
-      "src": "server.js",
-      "use": "@now/node"
-    }
-  ],
-  "build": {
-    "env": {
-      "NODE_PATH": "_dist/"
-    }
+  "env": {
+    "NODE_ENV": "production",
+    "NODE_PATH": "./"
   },
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "server.js"
-    }
-  ]
+  "github": {
+    "enabled": false,
+    "autoAlias": false
+  },
+  "builds": [{ "src": "./index.js", "use": "@now/node@canary" }],
+  "routes": [{ "src": "/(.*)", "dest": "./index.js" }]
 }

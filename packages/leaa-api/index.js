@@ -8,4 +8,6 @@ moduleAlias.addAliases({
 
 moduleAlias({});
 
+console.log('\n\n\n\n---- hello, leaa-api-server. ----\n\n');
+
 require('./_dist/leaa-api/src/main');
