@@ -1,7 +1,7 @@
 import React, { ErrorInfo } from 'react';
 import App from 'next/app';
 import { ApolloProvider } from '@apollo/react-hooks';
-// import Router from 'next/router';
+import Router from 'next/router';
 
 import { IPageProps } from '@leaa/www/src/interfaces';
 import { withApolloClient } from '@leaa/www/src/libs/with-apollo-client.lib';
@@ -11,23 +11,33 @@ import { initStore, StoreProvider } from '@leaa/www/src/stores';
 
 const store = initStore();
 
-// force refresh style.chunk.css ONLY for dev mode
-// if (process.env.NODE_ENV !== 'production') {
-//   Router.events.on('routeChangeComplete', () => {
-//     const path = '/_next/static/css/styles.chunk.css';
-//     const chunksNodes = document.querySelectorAll(`link[href*="${path}"]`);
-//
-//     if (chunksNodes.length) {
-//       // @ts-ignore
-//       // eslint-disable-next-line no-return-assign,no-param-reassign
-//       chunksNodes.forEach(chunk => (chunk.href = `${path}?force-refresh-ts=${new Date().getTime()}`));
-//     }
-//   });
-// }
+// force refresh style.chunk.css (ONLY for dev mode)
+if (process.env.NODE_ENV !== 'production') {
+  const refreshChunkStyle = (chunkFileName: string) => {
+    const head = document.getElementsByTagName('head')[0];
+    const style = document.createElement('link');
+
+    style.rel = 'stylesheet';
+    style.href = `${chunkFileName}?ts=${new Date().getTime()}`;
+    head.append(style);
+
+    const chunks = document.querySelectorAll(`link[href*="${chunkFileName}"]`);
+
+    // delete all chunks css, except the last one. (delay 1s to keep the page from flickering)
+    setTimeout(
+      () => chunks.forEach((c, i) => i !== chunks.length - 1 && c && c.parentNode && c.parentNode.removeChild(c)),
+      1000,
+    );
+  };
+
+  Router.events.on('routeChangeComplete', () => {
+    refreshChunkStyle('/_next/static/css/styles.chunk.css');
+  });
+}
 
 class CustomApp extends App<IPageProps> {
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.log('CUSTOM ERROR HANDLING', error);
+    console.log('CUSTOM-APP ERROR HANDLING', error);
 
     // This is needed to render errors correctly in development / production
     super.componentDidCatch(error, errorInfo);
