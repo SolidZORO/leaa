@@ -1,6 +1,8 @@
 import { IsOptional } from 'class-validator';
 import { Field, InputType, Int } from 'type-graphql';
 
+import { Category } from '@leaa/common/src/entrys';
+
 @InputType()
 export class UpdateCategoryInput {
   @IsOptional()
@@ -18,4 +20,8 @@ export class UpdateCategoryInput {
   @IsOptional()
   @Field(() => String, { nullable: true })
   description?: string;
+
+  // @IsOptional()
+  // @Field(() => Category, { nullable: true })
+  parent?: Category;
 }

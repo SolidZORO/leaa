@@ -2,14 +2,14 @@ import _ from 'lodash';
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { useQuery, useMutation } from '@apollo/react-hooks';
+import { useQuery, useMutation, useLazyQuery } from '@apollo/react-hooks';
 import { Button, Icon } from 'antd';
 import SortableTree, { TreeItem } from 'react-sortable-tree';
 
 import { PAGE_CARD_TITLE_CREATE_ICON, CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { DELETE_CATEGORY, GET_CATEGORIES } from '@leaa/common/src/graphqls';
 import { Category } from '@leaa/common/src/entrys';
-import { CategoriesWithPaginationObject, CategoriesArgs } from '@leaa/common/src/dtos/category';
+import { CategoriesWithPaginationOrTreeObject, CategoriesArgs } from '@leaa/common/src/dtos/category';
 import { messageUtil } from '@leaa/dashboard/src/utils';
 import { IPage } from '@leaa/dashboard/src/interfaces';
 
@@ -23,18 +23,14 @@ export default (props: IPage) => {
 
   const [treeData, setTreeData] = useState<TreeItem[]>([]);
 
-  // query
-  // const getCategoriesByTreeVariables = { expanded: true };
-  // const getCategoriesQuery = useQuery<{ categoriesByTree: CategoriesWithTreeObject }>(GET_CATEGORIES_BY_TREE, {
-  //   variables: getCategoriesByTreeVariables,
-  //   fetchPolicy: 'network-only',
-  // });
-
   const getCategoriesVariables: CategoriesArgs = { expanded: true, treeType: true };
-  const getCategoriesQuery = useQuery<{ categories: CategoriesWithPaginationObject }, CategoriesArgs>(GET_CATEGORIES, {
-    variables: getCategoriesVariables,
-    fetchPolicy: 'network-only',
-  });
+  const getCategoriesQuery = useQuery<{ categories: CategoriesWithPaginationOrTreeObject }, CategoriesArgs>(
+    GET_CATEGORIES,
+    {
+      variables: getCategoriesVariables,
+      fetchPolicy: 'network-only',
+    },
+  );
 
   // mutation
   const [deleteCategoryMutate, deleteCategoryMutation] = useMutation<Category>(DELETE_CATEGORY, {
@@ -48,15 +44,16 @@ export default (props: IPage) => {
       getCategoriesQuery &&
       getCategoriesQuery.data &&
       getCategoriesQuery.data.categories &&
-      getCategoriesQuery.data.categories.treeByStringify
+      getCategoriesQuery.data.categories.trees
     ) {
-      setTreeData(JSON.parse(getCategoriesQuery.data.categories.treeByStringify));
+      // setTreeData(JSON.parse(getCategoriesQuery.data.categories.treeByStringify));
+      setTreeData(getCategoriesQuery.data.categories.trees);
     }
   }, [
     getCategoriesQuery &&
       getCategoriesQuery.data &&
       getCategoriesQuery.data.categories &&
-      getCategoriesQuery.data.categories.treeByStringify,
+      getCategoriesQuery.data.categories.trees,
   ]);
 
   return (
@@ -92,7 +89,8 @@ export default (props: IPage) => {
               ],
               subtitle: [
                 <div className={style['tree-item-sub-title']} key={`${node.id}`}>
-                  <small>#{node.id}</small> {node.slug}
+                  {node.slug}
+                  <small>#{node.id}</small>
                 </div>,
               ],
               buttons: [

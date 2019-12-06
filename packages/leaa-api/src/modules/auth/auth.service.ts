@@ -92,6 +92,11 @@ export class AuthService {
   }
 
   async validateUserByReq(req: Request): Promise<User | undefined | boolean> {
+    // Graphql Playground IntrospectionQuery DOT NOT Validate
+    if (req.body.query.includes('IntrospectionQuery')) {
+      return true;
+    }
+
     const isGuest = req.headers && !req.headers.authorization;
 
     if (req.body && isGuest && permissionConfig.notValidateUserQuerys.some(item => req.body.query.includes(item))) {

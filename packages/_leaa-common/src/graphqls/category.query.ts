@@ -1,5 +1,7 @@
 import gql from 'graphql-tag';
 
+import { CATEGORY_CHILD_FRAGMENT } from './category.fragment';
+
 export const GET_CATEGORIES = gql`
   query(
     $page: Int
@@ -9,6 +11,7 @@ export const GET_CATEGORIES = gql`
     $q: String
     $treeType: Boolean
     $listType: Boolean
+    $expanded: Boolean
   ) {
     categories(
       page: $page
@@ -18,9 +21,57 @@ export const GET_CATEGORIES = gql`
       q: $q
       treeType: $treeType
       listType: $listType
+      expanded: $expanded
     ) {
       total
-      treeByStringify
+      trees {
+        ...CATEGORY_TREE_FRAGMENT
+        children {
+          ...CATEGORY_TREE_FRAGMENT
+          children {
+            ...CATEGORY_TREE_FRAGMENT
+            children {
+              ...CATEGORY_TREE_FRAGMENT
+              children {
+                ...CATEGORY_TREE_FRAGMENT
+                children {
+                  ...CATEGORY_TREE_FRAGMENT
+                  children {
+                    ...CATEGORY_TREE_FRAGMENT
+                    children {
+                      ...CATEGORY_TREE_FRAGMENT
+                      children {
+                        ...CATEGORY_TREE_FRAGMENT
+                        children {
+                          ...CATEGORY_TREE_FRAGMENT
+                          children {
+                            ...CATEGORY_TREE_FRAGMENT
+                            children {
+                              ...CATEGORY_TREE_FRAGMENT
+                              children {
+                                ...CATEGORY_TREE_FRAGMENT
+                                children {
+                                  ...CATEGORY_TREE_FRAGMENT
+                                  children {
+                                    ...CATEGORY_TREE_FRAGMENT
+                                    children {
+                                      ...CATEGORY_TREE_FRAGMENT
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
       items {
         id
         name
@@ -32,6 +83,7 @@ export const GET_CATEGORIES = gql`
       }
     }
   }
+  ${CATEGORY_CHILD_FRAGMENT}
 `;
 
 export const GET_CATEGORY = gql`

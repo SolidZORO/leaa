@@ -118,14 +118,14 @@ type Base {
   deleted_at: DateTime
 }
 
-type CategoriesWithPaginationObject {
+type CategoriesWithPaginationOrTreeObject {
   page: Int
-  pageSize: Int!
+  pageSize: Int
   nextPage: Int
-  itemsCount: Int!
-  total: Int!
-  items: [Category!]!
-  treeByStringify: String
+  itemsCount: Int
+  total: Int
+  items: [Category!]
+  trees: [CategoryTreeObject!]
 }
 
 type Category {
@@ -138,7 +138,26 @@ type Category {
   parent_id: Int!
   description: String
   children: [Category!]
+  parent: Category
   key: String
+}
+
+type CategoryTreeObject {
+  id: Int!
+  created_at: DateTime!
+  updated_at: DateTime
+  deleted_at: DateTime
+  name: String!
+  slug: String!
+  parent_id: Int!
+  description: String
+  children: [CategoryTreeObject!]
+  parent: Category
+  key: String!
+  value: Int!
+  title: String
+  subtitle: String
+  expanded: Boolean
 }
 
 type Coupon {
@@ -430,7 +449,7 @@ type Query {
   articles(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String, tagName: String, categoryName: String, categoryId: Int): ArticlesWithPaginationObject!
   article(id: Int!): Article!
   articleBySlug(slug: String!): Article!
-  categories(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String, expanded: Boolean, listType: Boolean, treeType: Boolean): CategoriesWithPaginationObject!
+  categories(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String, expanded: Boolean, listType: Boolean, treeType: Boolean): CategoriesWithPaginationOrTreeObject!
   category(id: Int!): Category!
   axs(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): AxsWithPaginationObject!
   ax(id: Int!): Ax!

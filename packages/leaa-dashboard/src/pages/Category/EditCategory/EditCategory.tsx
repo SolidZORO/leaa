@@ -6,7 +6,11 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import { Category } from '@leaa/common/src/entrys';
 import { GET_CATEGORY, UPDATE_CATEGORY, GET_CATEGORIES } from '@leaa/common/src/graphqls';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
-import { CategoryArgs, UpdateCategoryInput, CategoriesWithPaginationObject } from '@leaa/common/src/dtos/category';
+import {
+  CategoryArgs,
+  UpdateCategoryInput,
+  CategoriesWithPaginationOrTreeObject,
+} from '@leaa/common/src/dtos/category';
 import { IPage } from '@leaa/dashboard/src/interfaces';
 import { messageUtil } from '@leaa/dashboard/src/utils';
 
@@ -31,10 +35,13 @@ export default (props: IPage) => {
   });
 
   const getCategoriesVariables = { page: 1, pageSize: 9999 };
-  const getCategoriesQuery = useQuery<{ categories: CategoriesWithPaginationObject }, CategoryArgs>(GET_CATEGORIES, {
-    variables: getCategoriesVariables,
-    fetchPolicy: 'network-only',
-  });
+  const getCategoriesQuery = useQuery<{ categories: CategoriesWithPaginationOrTreeObject }, CategoryArgs>(
+    GET_CATEGORIES,
+    {
+      variables: getCategoriesVariables,
+      fetchPolicy: 'network-only',
+    },
+  );
 
   // mutation
   const [submitVariables, setSubmitVariables] = useState<{ id: number; category: UpdateCategoryInput }>();

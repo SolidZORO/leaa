@@ -6,7 +6,7 @@ import { useQuery } from '@apollo/react-hooks';
 import { TreeSelectProps } from 'antd/lib/tree-select';
 
 import { GET_CATEGORIES } from '@leaa/common/src/graphqls';
-import { CategoriesWithPaginationObject, CategoriesArgs } from '@leaa/common/src/dtos/category';
+import { CategoriesArgs, CategoriesWithPaginationOrTreeObject } from '@leaa/common/src/dtos/category';
 
 import style from './style.module.less';
 
@@ -23,10 +23,13 @@ export const SelectCategoryIdByTree = forwardRef((props: IProps, ref: React.Ref<
 
   // query
   const getCategoriesVariables: CategoriesArgs = { expanded: true, treeType: true };
-  const getCategoriesQuery = useQuery<{ categories: CategoriesWithPaginationObject }, CategoriesArgs>(GET_CATEGORIES, {
-    variables: getCategoriesVariables,
-    fetchPolicy: 'network-only',
-  });
+  const getCategoriesQuery = useQuery<{ categories: CategoriesWithPaginationOrTreeObject }, CategoriesArgs>(
+    GET_CATEGORIES,
+    {
+      variables: getCategoriesVariables,
+      fetchPolicy: 'network-only',
+    },
+  );
 
   const getValue = (value: number | number[] | undefined) => {
     if (typeof value === 'undefined') {
@@ -77,8 +80,7 @@ export const SelectCategoryIdByTree = forwardRef((props: IProps, ref: React.Ref<
           getCategoriesQuery &&
           getCategoriesQuery.data &&
           getCategoriesQuery.data.categories &&
-          getCategoriesQuery.data.categories.treeByStringify &&
-          JSON.parse(getCategoriesQuery.data.categories.treeByStringify)
+          getCategoriesQuery.data.categories.trees
         }
         placeholder={t('_lang:category')}
         onChange={onChange}

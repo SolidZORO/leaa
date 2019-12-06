@@ -5,7 +5,7 @@ import { Int } from 'type-graphql';
 import { Category } from '@leaa/common/src/entrys';
 import {
   CategoriesArgs,
-  CategoriesWithPaginationObject,
+  CategoriesWithPaginationOrTreeObject,
   CategoryArgs,
   CreateCategoryInput,
   UpdateCategoryInput,
@@ -21,8 +21,8 @@ export class CategoryResolver {
   // @UseGuards(PermissionsGuard)
   // @Permissions('category.list-read')
   // DO NOT CHECK PERMISSIONS
-  @Query(() => CategoriesWithPaginationObject)
-  async categories(@Args() args: CategoriesArgs): Promise<CategoriesWithPaginationObject | undefined> {
+  @Query(() => CategoriesWithPaginationOrTreeObject)
+  async categories(@Args() args: CategoriesArgs): Promise<CategoriesWithPaginationOrTreeObject | undefined> {
     return this.categoryService.categories(args);
   }
 

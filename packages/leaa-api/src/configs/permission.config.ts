@@ -15,8 +15,6 @@ const checkPermission = (permissionSlug: IPermissionSlug) => {
 // deleteUser  --> user.item-delete
 
 export const notValidateUserQuerys = [
-  'IntrospectionQuery',
-  //
   'login',
   'loginByTicket',
   'register',
