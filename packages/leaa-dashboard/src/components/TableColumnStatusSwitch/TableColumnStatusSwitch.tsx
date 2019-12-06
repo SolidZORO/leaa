@@ -37,7 +37,6 @@ export const TableColumnStatusSwitch = (props: IProps) => {
         message.success(t('_comp:TableColumnStatusSwitch.updatedSuccessfully', { id: props.id }));
       })
       .catch((error: Error) => {
-        console.log(error);
         message.info(error.message);
       });
   };

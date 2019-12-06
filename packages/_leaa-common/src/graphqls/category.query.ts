@@ -12,6 +12,8 @@ export const GET_CATEGORIES = gql`
     $treeType: Boolean
     $listType: Boolean
     $expanded: Boolean
+    $parentSlug: String
+    $parentId: Int
   ) {
     categories(
       page: $page
@@ -22,6 +24,8 @@ export const GET_CATEGORIES = gql`
       treeType: $treeType
       listType: $listType
       expanded: $expanded
+      parentSlug: $parentSlug
+      parentId: $parentId
     ) {
       total
       trees {

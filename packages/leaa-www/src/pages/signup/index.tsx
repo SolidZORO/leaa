@@ -18,8 +18,6 @@ const nextPage = ({ router }: IPageProps) => {
 };
 
 nextPage.getInitialProps = async (ctx: NextPageContext) => {
-  console.log(ctx.query);
-
   return { query: ctx.query };
 };
 

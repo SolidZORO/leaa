@@ -47,21 +47,24 @@ export class CategoryService {
 
     const result = recursiveItems(items);
 
-    result.unshift({
-      key: '0-0-0-root',
-      id: 0,
-      parent_id: 0,
-      slug: 'root',
-      name: '----',
-      //
-      title: '----',
-      subtitle: 'Root',
-      value: 0,
-      expanded: true,
-      created_at: moment.unix(1318000000).toDate(),
-    });
+    if (args && (args.parentId || args.parentSlug)) return result;
 
-    return result;
+    return [
+      {
+        key: '0-0-0-root',
+        id: 0,
+        parent_id: 0,
+        slug: 'root',
+        name: '----',
+        //
+        title: '----',
+        subtitle: 'Root',
+        value: 0,
+        expanded: true,
+        created_at: moment.unix(1318000000).toDate(),
+        children: result,
+      },
+    ];
   }
 
   async categories(args: ICategoriessArgs): Promise<CategoriesWithPaginationOrTreeObject | undefined> {
@@ -78,11 +81,31 @@ export class CategoryService {
       });
     }
 
-    if (args.treeType) {
+    if (nextArgs.treeType) {
+      let parent;
+
       const manager = getManager();
+
+      // filter by parent slug
+      if (nextArgs.parentSlug) {
+        parent = await this.categoryRepository.findOne({ where: { slug: nextArgs.parentSlug } });
+      }
+
+      // filter by parent id
+      if (nextArgs.parentId) {
+        parent = await this.categoryRepository.findOne(nextArgs.parentId);
+      }
+
+      if (parent && (nextArgs.parentSlug || nextArgs.parentId)) {
+        const trees = await manager.getTreeRepository(Category).findDescendantsTree(parent);
+
+        return { trees: this.categoriesByTrees([trees], nextArgs) };
+      }
+
+      // all trees
       const trees = await manager.getTreeRepository(Category).findTrees();
 
-      return { trees: this.categoriesByTrees(trees, { expanded: args.expanded }) };
+      return { trees: this.categoriesByTrees(trees, nextArgs) };
     }
 
     return paginationUtil.calcQueryBuilderPageInfo({

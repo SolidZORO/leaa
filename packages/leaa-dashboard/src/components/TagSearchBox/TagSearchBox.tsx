@@ -71,7 +71,6 @@ export const TagSearchBox = forwardRef((props: IProps, ref: React.Ref<any>) => {
   };
 
   const onChange = (v: any) => {
-    // console.log('>>>>> onChange', v);
     setInputKey(v);
 
     if (props.onChangeTagNameCallback) {

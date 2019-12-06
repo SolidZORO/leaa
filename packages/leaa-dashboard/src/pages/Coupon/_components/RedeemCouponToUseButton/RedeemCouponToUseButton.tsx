@@ -1,4 +1,4 @@
-import React, { useState, CSSProperties } from 'react';
+import React, { useState } from 'react';
 import cx from 'classnames';
 import { Popconfirm, Button } from 'antd';
 import { useTranslation } from 'react-i18next';
@@ -18,7 +18,7 @@ interface IProps {
   onConvetCompletedCallback?: () => void;
   loading?: boolean;
   className?: string;
-  style?: CSSProperties;
+  style?: React.CSSProperties;
 }
 
 export const RedeemCouponToUseButton = (props: IProps) => {

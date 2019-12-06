@@ -16,13 +16,21 @@ interface IProps {
   onChange?: (value: number | number[]) => void;
   multipleSelect?: boolean;
   componentProps?: TreeSelectProps<any>;
+  parentId?: number;
+  parentSlug?: string;
+  style?: React.CSSProperties;
 }
 
 export const SelectCategoryIdByTree = forwardRef((props: IProps, ref: React.Ref<any>) => {
   const { t } = useTranslation();
 
   // query
-  const getCategoriesVariables: CategoriesArgs = { expanded: true, treeType: true };
+  const getCategoriesVariables: CategoriesArgs = {
+    expanded: true,
+    treeType: true,
+    parentId: props.parentId,
+    parentSlug: props.parentSlug,
+  };
   const getCategoriesQuery = useQuery<{ categories: CategoriesWithPaginationOrTreeObject }, CategoriesArgs>(
     GET_CATEGORIES,
     {
@@ -75,6 +83,7 @@ export const SelectCategoryIdByTree = forwardRef((props: IProps, ref: React.Ref<
         className={props.className}
         loading={getCategoriesQuery.loading}
         value={value}
+        treeDefaultExpandAll
         dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
         treeData={
           getCategoriesQuery &&
@@ -84,6 +93,7 @@ export const SelectCategoryIdByTree = forwardRef((props: IProps, ref: React.Ref<
         }
         placeholder={t('_lang:category')}
         onChange={onChange}
+        style={props.style}
         {...props.componentProps}
       />
     </div>

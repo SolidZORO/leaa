@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, forwardRef, CSSProperties } from 'react';
+import React, { useState, useEffect, useRef, forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import cx from 'classnames';
 import _ from 'lodash';
@@ -13,7 +13,6 @@ import { apolloClient } from '@leaa/dashboard/src/libs';
 import style from './style.module.less';
 
 interface IProps extends AutoCompleteProps {
-  style?: CSSProperties;
   className?: string;
   useOnBlur?: boolean;
   enterCreateUser?: boolean;
@@ -24,6 +23,7 @@ interface IProps extends AutoCompleteProps {
   onEnterCallback?: (userId: number | undefined) => void;
   onChangeUserNameCallback?: (user: string | undefined) => void;
   placeholder?: string;
+  style?: React.CSSProperties;
 }
 
 const DEBOUNCE_MS = 500;
