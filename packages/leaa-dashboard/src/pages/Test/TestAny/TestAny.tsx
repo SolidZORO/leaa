@@ -38,6 +38,11 @@ export default (props: IPage) => {
       <br />
       <h5>ARTICLE</h5>
       <SelectCategoryIdByTree componentProps={{ allowClear: true }} style={{ width: 200 }} parentSlug="article" />
+
+      <br />
+      <br />
+      <h5>NOT THIS SLUG</h5>
+      <SelectCategoryIdByTree componentProps={{ allowClear: true }} style={{ width: 200 }} parentSlug="JUST-TEST" />
       {/* <h2>STORE</h2> */}
       {/* <code> */}
       {/*  <Input.TextArea rows={5} value={JSON.stringify(store)} /> */}

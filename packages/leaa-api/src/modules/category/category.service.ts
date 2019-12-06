@@ -82,24 +82,23 @@ export class CategoryService {
     }
 
     if (nextArgs.treeType) {
-      let parent;
-
       const manager = getManager();
 
-      // filter by parent slug
-      if (nextArgs.parentSlug) {
-        parent = await this.categoryRepository.findOne({ where: { slug: nextArgs.parentSlug } });
-      }
+      // pick parent slug OR id
+      if (nextArgs.parentSlug || nextArgs.parentId) {
+        let where;
+        if (nextArgs.parentSlug) where = { slug: nextArgs.parentSlug };
+        if (nextArgs.parentId) where = { id: nextArgs.parentId };
 
-      // filter by parent id
-      if (nextArgs.parentId) {
-        parent = await this.categoryRepository.findOne(nextArgs.parentId);
-      }
+        const parent = await this.categoryRepository.findOne({ where });
 
-      if (parent && (nextArgs.parentSlug || nextArgs.parentId)) {
-        const trees = await manager.getTreeRepository(Category).findDescendantsTree(parent);
+        if (parent) {
+          const trees = await manager.getTreeRepository(Category).findDescendantsTree(parent);
 
-        return { trees: this.categoriesByTrees([trees], nextArgs) };
+          return { trees: this.categoriesByTrees([trees], nextArgs) };
+        }
+
+        return { trees: [] };
       }
 
       // all trees
