@@ -7,12 +7,6 @@ import { AppModule } from '@leaa/api/src/app.module';
 import { SeedService } from '@leaa/api/src/modules/seed/seed.service';
 
 (async function seed() {
-  const logger = new Logger('Seed-Log');
-  logger.log('Seed Launcher...', ' 🔰 ');
-
-  const app: NestExpressApplication = await NestFactory.create(AppModule);
-  const seedService: SeedService = await app.get(SeedService);
-
   const forceExit = () => {
     process.exit();
     process.exit(0);
@@ -21,13 +15,33 @@ import { SeedService } from '@leaa/api/src/modules/seed/seed.service';
     process.abort();
   };
 
-  if (process.argv.includes('--re-auth')) {
-    console.log('\n\n\n\n RE-BUILD AUTH\n\n\n\n');
+  if (process.argv.includes('--rebuild-auth') || process.argv.includes('--nuke')) {
+    const logger = new Logger('Seed-Log');
+    logger.log('Seed Launcher...', ' 🔰 ');
+  } else {
+    await console.log('\n\nPLEASE INPUT: `yarn seed --nuke` or `yarn seed --rebuild-auth`\n\n');
+    await forceExit();
+  }
+
+  const app: NestExpressApplication = await NestFactory.create(AppModule);
+  const seedService: SeedService = await app.get(SeedService);
+
+  const insertAuth = async () => {
+    await seedService.insertPermissions();
+    await seedService.insertRoles();
+    await seedService.insertUsers();
+    await seedService.insertUserAddRole();
+    await seedService.insertRoleAddPermissions();
+  };
+
+  if (process.argv.includes('--rebuild-auth')) {
+    console.log('\n\n\n\n REBUILD AUTH\n\n\n\n');
 
     const queryRunner = getConnection().createQueryRunner();
 
     await getManager().query('SET FOREIGN_KEY_CHECKS = 0;');
 
+    // clear
     await getRepository('Permission').clear();
     await getRepository('Role').clear();
     await getRepository('User').clear();
@@ -42,12 +56,10 @@ import { SeedService } from '@leaa/api/src/modules/seed/seed.service';
 
     await getManager().query('SET FOREIGN_KEY_CHECKS = 1;');
 
-    await seedService.insertPermissions();
-    await seedService.insertRoles();
-    await seedService.insertUsers();
+    // re-build
+    await insertAuth();
 
-    await console.log('\n\n\n\n---- RE-BUILD AUTH DONE ----');
-
+    await console.log('\n\n\n\n---- REBUILD AUTH DONE ----');
     await forceExit();
     return;
   }
@@ -56,34 +68,32 @@ import { SeedService } from '@leaa/api/src/modules/seed/seed.service';
     console.log('\n\n\n\n✴️✴️✴️✴️✴️✴️✴️✴️✴️✴️ NUKE NUKE NUKE NUKE ALL DB TABLE\n\n\n\n');
 
     await getConnection().synchronize(true);
-  }
 
-  try {
-    await seedService.insertSetting();
-    await seedService.insertPermissions();
-    await seedService.insertRoles();
-    await seedService.insertUsers();
-    await seedService.insertUserAddRole();
-    await seedService.insertRoleAddPermissions();
-    await seedService.insertCategory();
-    await seedService.insertArticle();
-    await seedService.insertAx();
-    await seedService.insertAttachment();
-    await seedService.insertCoupon();
-    await seedService.insertPromo();
+    try {
+      await seedService.insertSetting();
 
-    if (process.argv.includes('--debug')) {
-      await seedService.insertRandomUsers();
+      await insertAuth();
+
+      await seedService.insertCategory();
+      await seedService.insertArticle();
+      await seedService.insertAx();
+      await seedService.insertAttachment();
+      await seedService.insertCoupon();
+      await seedService.insertPromo();
+
+      if (process.argv.includes('--debug')) {
+        await seedService.insertRandomUsers();
+      }
+
+      await console.log('\n\n\n\n---- ALL SEED INSERTED ----');
+      // await process.exit(1);
+      await forceExit();
+    } catch (e) {
+      await console.log('\n\n\n\n---- SEED INSERT FAILD ----', e);
+      await forceExit();
     }
 
-    await console.log('\n\n\n\n---- ALL SEED INSERTED ----');
-    // await process.exit(1);
-    await forceExit();
-  } catch (e) {
-    await console.log('\n\n\n\n---- SEED INSERT FAILD ----', e);
+    await console.log('\n\n\n\n---- SEED FINAL ----');
     await forceExit();
   }
-
-  await console.log('\n\n\n\n---- SEED FINAL ----');
-  await forceExit();
 })();
