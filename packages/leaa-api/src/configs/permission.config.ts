@@ -26,6 +26,8 @@ export const notValidateUserQuerys = [
   'axBySlug',
   'articles',
   'article',
+  'products',
+  'product',
   'attachments',
   'attachment',
   'settings',
@@ -134,6 +136,14 @@ pMutation.createPromo = checkPermission('promo.item-create');
 pMutation.updatePromo = checkPermission('promo.item-update');
 pMutation.deletePromo = checkPermission('promo.item-delete');
 pMutation.redeemPromo = allow;
+//
+// --------------------
+pQuery.products = allow;
+pQuery.product = allow;
+//
+pMutation.createPromo = checkPermission('product.item-create');
+pMutation.updatePromo = checkPermission('product.item-update');
+pMutation.deletePromo = checkPermission('product.item-delete');
 
 // TIPS relation file: packages/leaa-api/src/modules/seed/seed.data.ts
 export const permissions = shield(

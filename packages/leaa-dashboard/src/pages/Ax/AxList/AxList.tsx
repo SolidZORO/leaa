@@ -10,7 +10,7 @@ import { DEFAULT_PAGE_SIZE_OPTIONS, PAGE_CARD_TITLE_CREATE_ICON } from '@leaa/da
 import { GET_AXS, DELETE_AX, UPDATE_AX } from '@leaa/common/src/graphqls';
 import { Ax } from '@leaa/common/src/entrys';
 import { IOrderSort } from '@leaa/common/src/dtos/_common';
-import { AxsWithPaginationObject, AxArgs } from '@leaa/common/src/dtos/ax';
+import { AxsWithPaginationObject, AxsArgs } from '@leaa/common/src/dtos/ax';
 import { urlUtil, tableUtil, messageUtil } from '@leaa/dashboard/src/utils';
 import { IPage } from '@leaa/dashboard/src/interfaces';
 
@@ -46,7 +46,7 @@ export default (props: IPage) => {
 
   // query
   const getAxsVariables = { page, pageSize, q, orderBy, orderSort };
-  const getAxsQuery = useQuery<{ axs: AxsWithPaginationObject }, AxArgs>(GET_AXS, {
+  const getAxsQuery = useQuery<{ axs: AxsWithPaginationObject }, AxsArgs>(GET_AXS, {
     variables: getAxsVariables,
     fetchPolicy: 'network-only',
   });

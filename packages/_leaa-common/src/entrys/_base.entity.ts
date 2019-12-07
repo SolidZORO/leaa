@@ -4,7 +4,7 @@ import { ObjectType, Field, Int } from 'type-graphql';
 @ObjectType()
 export class Base {
   @PrimaryGeneratedColumn()
-  @Field(() => Int)
+  @Field(() => Int, { nullable: true })
   id!: number;
 
   //

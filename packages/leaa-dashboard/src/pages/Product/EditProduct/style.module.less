@@ -1,0 +1,48 @@
+@import '~@leaa/dashboard/src/styles/variables.less';
+
+.wapper {
+  background-color: transparent;
+}
+
+.container-wrapper {
+  display: block;
+
+  @media (min-width: @screen-md) {
+    display: flex;
+  }
+}
+
+.container-main {
+  display: block;
+  position: relative;
+
+  @media (min-width: @screen-md) {
+    flex: auto;
+    margin-right: @page-card-padding-x;
+  }
+}
+
+.container-ext {
+  width: 100%;
+
+  @media (min-width: @screen-md) {
+    width: @container-ext-width;
+  }
+}
+
+.submit-bar {
+  //margin-bottom: @page-card-padding-x;
+  margin-bottom: 47px;
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  .submit-bar-button {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+}
+
+.select-tag-id-wrapper {
+  margin-bottom: 20px;
+}

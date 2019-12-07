@@ -9,5 +9,6 @@ import Setting from './Setting.lang';
 import Tag from './Tag.lang';
 import Coupon from './Coupon.lang';
 import Promo from './Promo.lang';
+import Product from './Product.lang';
 
-export default { Auth, User, Role, Permission, Category, Article, Ax, Setting, Tag, Coupon, Promo };
+export default { Auth, User, Role, Permission, Category, Article, Ax, Setting, Tag, Coupon, Promo, Product };

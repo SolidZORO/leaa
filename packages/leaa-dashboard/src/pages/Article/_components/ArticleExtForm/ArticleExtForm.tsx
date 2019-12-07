@@ -37,7 +37,7 @@ class ArticleExtFormInner extends React.PureComponent<IProps> {
           <Form className={cx('g-form--zero-margin', style['form-wrapper'])}>
             <Form.Item label={t('_lang:description')}>
               {getFieldDecorator('description', {
-                initialValue: props.item ? props.item.description : null,
+                initialValue: props.item ? props.item.description : undefined,
                 rules: [],
               })(<Input.TextArea rows={4} placeholder={t('_lang:description')} />)}
             </Form.Item>

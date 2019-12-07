@@ -4,7 +4,7 @@
 # -----------------------------------------------
 
 type Article {
-  id: Int!
+  id: Int
   created_at: DateTime!
   updated_at: DateTime
   deleted_at: DateTime
@@ -28,7 +28,7 @@ type ArticlesWithPaginationObject {
 }
 
 type Attachment {
-  id: Int!
+  id: Int
   created_at: DateTime!
   updated_at: DateTime
   deleted_at: DateTime
@@ -84,7 +84,7 @@ input AuthSignupInput {
 }
 
 type Ax {
-  id: Int!
+  id: Int
   created_at: DateTime!
   updated_at: DateTime
   deleted_at: DateTime
@@ -112,7 +112,7 @@ type AxsWithPaginationObject {
 }
 
 type Base {
-  id: Int!
+  id: Int
   created_at: DateTime!
   updated_at: DateTime
   deleted_at: DateTime
@@ -129,13 +129,13 @@ type CategoriesWithPaginationOrTreeObject {
 }
 
 type Category {
-  id: Int!
+  id: Int
   created_at: DateTime!
   updated_at: DateTime
   deleted_at: DateTime
-  name: String!
-  slug: String!
-  parent_id: Int!
+  name: String
+  slug: String
+  parent_id: Int
   description: String
   children: [Category!]
   parent: Category
@@ -143,13 +143,13 @@ type Category {
 }
 
 type CategoryTreeObject {
-  id: Int!
+  id: Int
   created_at: DateTime!
   updated_at: DateTime
   deleted_at: DateTime
-  name: String!
-  slug: String!
-  parent_id: Int!
+  name: String
+  slug: String
+  parent_id: Int
   description: String
   children: [CategoryTreeObject!]
   parent: Category
@@ -161,7 +161,7 @@ type CategoryTreeObject {
 }
 
 type Coupon {
-  id: Int!
+  id: Int
   created_at: DateTime!
   updated_at: DateTime
   deleted_at: DateTime
@@ -261,6 +261,22 @@ input CreatePermissionInput {
   slug: String!
 }
 
+input CreateProductInput {
+  name: String!
+  fullname: String
+  serial: String!
+  price: Float!
+  cost_price: Float
+  market_price: Float
+  status: Int!
+  sort: Int
+  description: String
+  content: String
+  brandIds: [Int!]
+  styleIds: [Int!]
+  tagIds: [Int!]
+}
+
 input CreatePromoInput {
   name: String!
   quantity: Int!
@@ -356,10 +372,13 @@ type Mutation {
   syncTagsToDictFile: SyncTagsToFileObject!
   updateTag(tag: UpdateTagInput!, id: Int!): Tag!
   deleteTag(id: Int!): Tag!
+  createProduct(product: CreateProductInput!): Product!
+  updateProduct(product: UpdateProductInput!, id: Int!): Product!
+  deleteProduct(id: Int!): Product!
 }
 
 type Oauth {
-  id: Int!
+  id: Int
   created_at: DateTime!
   updated_at: DateTime
   deleted_at: DateTime
@@ -390,7 +409,7 @@ type PaginationObject {
 }
 
 type Permission {
-  id: Int!
+  id: Int
   created_at: DateTime!
   updated_at: DateTime
   deleted_at: DateTime
@@ -410,27 +429,36 @@ type PermissionsWithPaginationObject {
 }
 
 type Product {
-  id: Int!
+  id: Int
   created_at: DateTime!
   updated_at: DateTime
   deleted_at: DateTime
   name: String!
-  fullname: String!
+  fullname: String
   serial: String
   price: Float!
-  cost_price: Float!
-  original_price: Float!
+  cost_price: Float
+  market_price: Float
   status: Int!
   sort: Int
   description: String
   content: String
-  brand_category: Category
-  style_category: Category
+  brands: [Category!]
+  styles: [Category!]
   tags: [Tag!]
 }
 
+type ProductsWithPaginationObject {
+  page: Int
+  pageSize: Int!
+  nextPage: Int
+  itemsCount: Int!
+  total: Int!
+  items: [Product!]!
+}
+
 type Promo {
-  id: Int!
+  id: Int
   created_at: DateTime!
   updated_at: DateTime
   deleted_at: DateTime
@@ -488,6 +516,8 @@ type Query {
   tags(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): TagsWithPaginationObject!
   tag(id: Int!): Tag!
   tagByName(name: String!): Tag!
+  products(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String, tagName: String, styleName: String, brandName: String): ProductsWithPaginationObject
+  product(id: Int!): Product
 }
 
 input RedeemCouponInput {
@@ -501,7 +531,7 @@ input RedeemPromoInput {
 }
 
 type Role {
-  id: Int!
+  id: Int
   created_at: DateTime!
   updated_at: DateTime
   deleted_at: DateTime
@@ -521,7 +551,7 @@ type RolesWithPaginationObject {
 }
 
 type Setting {
-  id: Int!
+  id: Int
   created_at: DateTime!
   updated_at: DateTime
   deleted_at: DateTime
@@ -553,11 +583,11 @@ type SyncTagsToFileObject {
 }
 
 type Tag {
-  id: Int!
+  id: Int
   created_at: DateTime!
   updated_at: DateTime
   deleted_at: DateTime
-  name: String!
+  name: String
   icon: String
   description: String
   count: Int
@@ -632,6 +662,22 @@ input UpdatePermissionInput {
   slug: String
 }
 
+input UpdateProductInput {
+  name: String
+  fullname: String
+  serial: String
+  price: Float
+  cost_price: Float
+  market_price: Float
+  status: Int
+  sort: Int
+  description: String
+  content: String
+  brandIds: [Int!]
+  styleIds: [Int!]
+  tagIds: [Int!]
+}
+
 input UpdatePromoInput {
   type: String
   name: String
@@ -689,7 +735,7 @@ input UpdateUserInput {
 }
 
 type User {
-  id: Int!
+  id: Int
   created_at: DateTime!
   updated_at: DateTime
   deleted_at: DateTime

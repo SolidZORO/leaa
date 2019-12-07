@@ -8,8 +8,8 @@ export class ProductsArgs extends ItemsArgs {
   tagName?: string;
 
   @Field(() => String, { nullable: true })
-  categoryName?: string;
+  styleName?: string;
 
-  @Field(() => Int, { nullable: true })
-  categoryId?: number;
+  @Field(() => String, { nullable: true })
+  brandName?: string;
 }

@@ -41,11 +41,25 @@
       "unicode_decimal": 61719
     },
     {
+      "icon_id": "12124816",
+      "name": "ri-t-shirt-line",
+      "font_class": "ri-t-shirt-line",
+      "unicode": "f127",
+      "unicode_decimal": 61735
+    },
+    {
       "icon_id": "12124926",
       "name": "ri-time-line",
       "font_class": "ri-time-line",
       "unicode": "f195",
       "unicode_decimal": 61845
+    },
+    {
+      "icon_id": "12125113",
+      "name": "ri-store-line",
+      "font_class": "ri-store-line",
+      "unicode": "f250",
+      "unicode_decimal": 62032
     },
     {
       "icon_id": "12125136",

@@ -13,6 +13,7 @@ export default {
   role: 'Role',
   email: 'Email',
   name: 'Name',
+  fullname: 'Fullname',
   title: 'Title',
   parent: 'Parent',
   slug: 'Slug',
@@ -46,6 +47,8 @@ export default {
   tips: 'Tips',
   unavailable: 'Unavailable',
   admin: 'Admin',
+  price: 'Price',
+  serial: 'Serial',
   //
   create: 'Create',
   edit: 'Edit',

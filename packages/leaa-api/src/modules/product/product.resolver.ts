@@ -21,7 +21,7 @@ export class ProductResolver {
   // @UseGuards(PermissionsGuard)
   // @Permissions('product.list-read')
   // DO NOT CHECK PERMISSIONS
-  @Query(() => ProductsWithPaginationObject)
+  @Query(() => ProductsWithPaginationObject, { nullable: true })
   async products(
     @Args() args: ProductsArgs,
     @CurrentUser() user?: User,
@@ -32,7 +32,7 @@ export class ProductResolver {
   // @UseGuards(PermissionsGuard)
   // @Permissions('product.item-read')
   // DO NOT CHECK PERMISSIONS
-  @Query(() => Product)
+  @Query(() => Product, { nullable: true })
   async product(
     @Args({ name: 'id', type: () => Int }) id: number,
     @Args() args?: ProductArgs,

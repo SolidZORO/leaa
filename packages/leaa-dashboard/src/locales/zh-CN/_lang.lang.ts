@@ -13,6 +13,7 @@ export default {
   role: '角色',
   email: 'Email',
   name: '名字',
+  fullname: '全名',
   title: '标题',
   parent: '父',
   slug: '标识',
@@ -46,6 +47,8 @@ export default {
   tips: '提示',
   unavailable: '不可用',
   admin: '管理员',
+  price: '价格',
+  serial: '编号',
   //
   create: '创建',
   edit: '编辑',

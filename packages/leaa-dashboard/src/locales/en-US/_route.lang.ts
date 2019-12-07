@@ -18,6 +18,7 @@ const coupon = 'Coupon';
 const promo = 'Promo';
 const marketing = 'Marketing';
 const content = 'Content';
+const product = 'Product';
 
 export default {
   home,
@@ -78,4 +79,9 @@ export default {
   createPromo: `${_lang.create}${promo}`,
   editPromo: `${_lang.edit}${promo}`,
   redeemPromo: `${_lang.redeem}${promo}`,
+  //
+  productGroup: `${product}`,
+  product,
+  createProduct: `${_lang.create} ${product}`,
+  editProduct: `${_lang.edit} ${product}`,
 };

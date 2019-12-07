@@ -27,6 +27,7 @@ import { OauthModule } from '@leaa/api/src/modules/oauth/oauth.module';
 import { TagModule } from '@leaa/api/src/modules/tag/tag.module';
 import { CouponModule } from '@leaa/api/src/modules/coupon/coupon.module';
 import { PromoModule } from '@leaa/api/src/modules/promo/promo.module';
+import { ProductModule } from '@leaa/api/src/modules/product/product.module';
 
 @Module({
   imports: [
@@ -57,6 +58,7 @@ import { PromoModule } from '@leaa/api/src/modules/promo/promo.module';
     TagModule,
     CouponModule,
     PromoModule,
+    ProductModule,
   ],
   providers: [
     ConfigModule,

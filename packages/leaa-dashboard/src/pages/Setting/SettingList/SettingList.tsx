@@ -14,7 +14,7 @@ import {
 import { Setting } from '@leaa/common/src/entrys';
 import {
   SettingsWithPaginationObject,
-  SettingArgs,
+  SettingsArgs,
   UpdateSettingInput,
   CreateSettingInput,
   UpdateSettingsInput,
@@ -79,7 +79,7 @@ export default (props: IPage) => {
   // query
   const getSettingsQuery = useQuery<
     { settings: SettingsWithPaginationObject; fetchPolicy: 'network-only' },
-    SettingArgs
+    SettingsArgs
   >(GET_SETTINGS);
 
   // mutation

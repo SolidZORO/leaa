@@ -7,10 +7,10 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import { Table, Icon, Tag } from 'antd';
 
 import { DEFAULT_PAGE_SIZE_OPTIONS, PAGE_CARD_TITLE_CREATE_ICON } from '@leaa/dashboard/src/constants';
-import { GET_ARTICLES, DELETE_ARTICLE, UPDATE_ARTICLE } from '@leaa/common/src/graphqls';
-import { Article, Tag as TagEntry } from '@leaa/common/src/entrys';
+import { GET_PRODUCTS, DELETE_PRODUCT, UPDATE_PRODUCT } from '@leaa/common/src/graphqls';
+import { Product, Tag as TagEntry } from '@leaa/common/src/entrys';
 import { IOrderSort } from '@leaa/common/src/dtos/_common';
-import { ArticlesWithPaginationObject, ArticlesArgs } from '@leaa/common/src/dtos/article';
+import { ProductsWithPaginationObject, ProductsArgs } from '@leaa/common/src/dtos/product';
 import { urlUtil, tableUtil, messageUtil } from '@leaa/dashboard/src/utils';
 import { IPage } from '@leaa/dashboard/src/interfaces';
 
@@ -25,6 +25,7 @@ import {
   SelectCategoryIdByTree,
   TagSearchBox,
   TableColumnStatusSwitch,
+  PriceTag,
 } from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';
@@ -53,16 +54,16 @@ export default (props: IPage) => {
   );
 
   // query
-  const getArticlesVariables = { page, pageSize, q, orderBy, orderSort, tagName, categoryId };
-  const getArticlesQuery = useQuery<{ articles: ArticlesWithPaginationObject }, ArticlesArgs>(GET_ARTICLES, {
-    variables: getArticlesVariables,
+  const getProductsVariables = { page, pageSize, q, orderBy, orderSort, tagName };
+  const getProductsQuery = useQuery<{ products: ProductsWithPaginationObject }, ProductsArgs>(GET_PRODUCTS, {
+    variables: getProductsVariables,
   });
 
   // mutation
-  const [deleteArticleMutate, deleteArticleMutation] = useMutation<Article>(DELETE_ARTICLE, {
+  const [deleteProductMutate, deleteProductMutation] = useMutation<Product>(DELETE_PRODUCT, {
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
     onCompleted: () => messageUtil.gqlCompleted(t('_lang:deletedSuccessfully')),
-    refetchQueries: () => [{ query: GET_ARTICLES, variables: getArticlesVariables }],
+    refetchQueries: () => [{ query: GET_PRODUCTS, variables: getProductsVariables }],
   });
 
   const resetUrlParams = () => {
@@ -82,7 +83,7 @@ export default (props: IPage) => {
   }, [urlParams]);
 
   useEffect(() => {
-    (async () => getArticlesQuery.refetch())();
+    (async () => getProductsQuery.refetch())();
   }, [props.history.location.key]);
 
   const rowSelection = {
@@ -101,14 +102,14 @@ export default (props: IPage) => {
       render: (id: string) => <TableColumnId id={id} link={`${props.route.path}/${id}`} />,
     },
     {
-      title: t('_lang:title'),
-      dataIndex: 'title',
+      title: t('_lang:name'),
+      dataIndex: 'name',
       sorter: true,
       sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'title'),
-      render: (text: string, record: Article) => (
+      render: (text: string, record: Product) => (
         <>
-          <Link to={`${props.route.path}/${record.id}`}>{record.title}</Link>
-          <small className={style['col-slug']}>{record.slug}</small>
+          <Link to={`${props.route.path}/${record.id}`}>{record.name}</Link>
+          <small className={style['col-slug']}>{record.serial}</small>
 
           {record.tags && record.tags.length > 0 && (
             <small className={style['col-tags-wrapper']}>
@@ -123,11 +124,30 @@ export default (props: IPage) => {
       ),
     },
     {
-      title: t('_lang:category'),
-      dataIndex: 'category',
+      title: t('_lang:serial'),
+      dataIndex: 'serial',
       width: 100,
-      render: (text: string, record: Article) => (
-        <span>{record.categories && record.categories.length > 0 ? record.categories[0].name : '----'}</span>
+      render: (text: string, record: Product) => <span>{record.serial ? record.serial : '----'}</span>,
+    },
+    {
+      title: t('_lang:price'),
+      dataIndex: 'price',
+      render: (text: string, record: Product) => <PriceTag amount={record && record.price} size="small" />,
+    },
+    {
+      title: t('_page:Product.Component.style'),
+      dataIndex: 'style',
+      width: 100,
+      render: (text: string, record: Product) => (
+        <span>{record.styles && record.styles.length ? record.styles[0].name : '----'}</span>
+      ),
+    },
+    {
+      title: t('_page:Product.Component.brand'),
+      dataIndex: 'brand',
+      width: 100,
+      render: (text: string, record: Product) => (
+        <span>{record.brands && record.brands.length ? record.brands[0].name : '----'}</span>
       ),
     },
     {
@@ -139,17 +159,17 @@ export default (props: IPage) => {
       render: (text: string) => <TableColumnDate date={text} size="small" />,
     },
     {
-      title: t('_lang:status'),
+      title: t('_page:Product.Component.putOnSale'),
       dataIndex: 'status',
       width: 60,
-      render: (text: string, record: Article) => (
+      render: (text: string, record: Product) => (
         <TableColumnStatusSwitch
           id={Number(record.id)}
           value={Number(record.status)}
           size="small"
-          variablesField="article"
-          mutation={UPDATE_ARTICLE}
-          refetchQueries={[{ query: GET_ARTICLES, variables: getArticlesVariables }]}
+          variablesField="product"
+          mutation={UPDATE_PRODUCT}
+          refetchQueries={[{ query: GET_PRODUCTS, variables: getProductsVariables }]}
         />
       ),
     },
@@ -157,12 +177,12 @@ export default (props: IPage) => {
       title: t('_lang:action'),
       dataIndex: 'operation',
       width: 60,
-      render: (text: string, record: Article) => (
+      render: (text: string, record: Product) => (
         <TableColumnDeleteButton
           id={record.id}
-          fieldName={record.title}
-          loading={deleteArticleMutation.loading}
-          onClick={async () => deleteArticleMutate({ variables: { id: Number(record.id) } })}
+          fieldName={record.name}
+          loading={deleteProductMutation.loading}
+          onClick={async () => deleteProductMutate({ variables: { id: Number(record.id) } })}
         />
       ),
     },
@@ -239,22 +259,22 @@ export default (props: IPage) => {
         </div>
       }
       className={style['wapper']}
-      loading={getArticlesQuery.loading}
+      loading={getProductsQuery.loading}
     >
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
-      {getArticlesQuery.data && getArticlesQuery.data.articles && getArticlesQuery.data.articles.items && (
+      {getProductsQuery.data && getProductsQuery.data.products && getProductsQuery.data.products.items && (
         <TableCard selectedRowKeys={selectedRowKeys}>
           <Table
             rowKey="id"
             size="small"
             rowSelection={rowSelection}
             columns={columns}
-            dataSource={getArticlesQuery.data.articles.items}
+            dataSource={getProductsQuery.data.products.items}
             pagination={{
               defaultCurrent: page,
               defaultPageSize: pageSize,
-              total: getArticlesQuery.data.articles.total,
+              total: getProductsQuery.data.products.total,
               current: page,
               pageSize,
               //

@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import htmlToText from 'html-to-text';
 import { Repository, FindOneOptions } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 

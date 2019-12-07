@@ -10,7 +10,7 @@ import { DEFAULT_PAGE_SIZE_OPTIONS, PAGE_CARD_TITLE_CREATE_ICON } from '@leaa/da
 import { GET_COUPONS, DELETE_COUPON, UPDATE_COUPON } from '@leaa/common/src/graphqls';
 import { Coupon } from '@leaa/common/src/entrys';
 import { IOrderSort } from '@leaa/common/src/dtos/_common';
-import { CouponsWithPaginationObject, CouponArgs } from '@leaa/common/src/dtos/coupon';
+import { CouponsWithPaginationObject, CouponsArgs } from '@leaa/common/src/dtos/coupon';
 import { urlUtil, tableUtil, messageUtil } from '@leaa/dashboard/src/utils';
 
 import { IPage } from '@leaa/dashboard/src/interfaces';
@@ -55,7 +55,7 @@ export default (props: IPage) => {
 
   // query
   const getCouponsVariables = { page, pageSize, q, orderBy, orderSort, userId };
-  const getCouponsQuery = useQuery<{ coupons: CouponsWithPaginationObject }, CouponArgs>(GET_COUPONS, {
+  const getCouponsQuery = useQuery<{ coupons: CouponsWithPaginationObject }, CouponsArgs>(GET_COUPONS, {
     variables: getCouponsVariables,
     fetchPolicy: 'network-only',
   });

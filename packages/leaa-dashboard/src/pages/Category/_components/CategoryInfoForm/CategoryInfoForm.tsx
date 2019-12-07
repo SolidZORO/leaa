@@ -31,12 +31,13 @@ class CategoryInfoFormInner extends React.PureComponent<IProps> {
 
     const { props } = this;
     const { getFieldDecorator } = this.props.form;
+
     const parentId = () => {
       if (props.item) return props.item.parent_id;
 
       const urlParams = queryString.parse(window.location.search);
 
-      return urlParams.parent_id || 0;
+      return urlParams.parent_id || undefined;
     };
 
     return (

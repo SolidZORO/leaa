@@ -9,6 +9,8 @@ import style from './style.module.less';
 interface IProps extends Options {
   className?: string;
   amount: number | undefined;
+  size?: 'small' | 'large';
+  precision?: number;
 }
 
 export const PriceTag = (props: IProps) => {
@@ -16,7 +18,11 @@ export const PriceTag = (props: IProps) => {
   const amount = currency(props.amount || 0, { symbol, precision: props.precision || 2 });
 
   return (
-    <div className={cx(style['price-tag-wrapper'], props.className, 'g-price-tag-wrapper')}>
+    <div
+      className={cx(style['price-tag-wrapper'], props.className, 'g-price-tag-wrapper', {
+        [style[`price-tag-wrapper--${props.size}`]]: props.size,
+      })}
+    >
       <span className={cx(style['price-tag-symbol'], 'g-price-tag-symbol')}>{symbol}</span>
       <span className={cx(style['price-tag-amount'], 'g-price-tag-amount')}>{amount.format()}</span>
     </div>

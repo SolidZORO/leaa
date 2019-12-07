@@ -18,6 +18,7 @@ const coupon = '代金券';
 const promo = '优惠码';
 const marketing = '营销';
 const content = '内容';
+const product = '商品';
 
 export default {
   home,
@@ -78,4 +79,9 @@ export default {
   createPromo: `${_lang.create}${promo}`,
   editPromo: `${_lang.edit}${promo}`,
   redeemPromo: `${_lang.redeem}${promo}`,
+  //
+  productGroup: `${product}`,
+  product,
+  createProduct: `${_lang.create} ${product}`,
+  editProduct: `${_lang.edit} ${product}`,
 };

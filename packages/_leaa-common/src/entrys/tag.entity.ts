@@ -8,7 +8,7 @@ import { Base } from '@leaa/common/src/entrys';
 @ObjectType()
 export class Tag extends Base {
   @Column({ type: 'varchar', length: 32, unique: true })
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   name!: string;
 
   @Column({ type: 'varchar', length: 256, nullable: true })
@@ -20,6 +20,6 @@ export class Tag extends Base {
   description?: string;
 
   @Column({ type: 'int', default: 0 })
-  @Field(() => Int, { defaultValue: 0 })
+  @Field(() => Int, { nullable: true, defaultValue: 0 })
   count?: number;
 }

@@ -10,7 +10,7 @@ import { DEFAULT_PAGE_SIZE_OPTIONS, PAGE_CARD_TITLE_CREATE_ICON } from '@leaa/da
 import { GET_PROMOS, DELETE_PROMO, UPDATE_PROMO } from '@leaa/common/src/graphqls';
 import { Promo } from '@leaa/common/src/entrys';
 import { IOrderSort } from '@leaa/common/src/dtos/_common';
-import { PromosWithPaginationObject, PromoArgs } from '@leaa/common/src/dtos/promo';
+import { PromosWithPaginationObject, PromosArgs } from '@leaa/common/src/dtos/promo';
 import { urlUtil, tableUtil, messageUtil } from '@leaa/dashboard/src/utils';
 
 import {
@@ -47,7 +47,7 @@ export default (props: IPage) => {
 
   // query
   const getPromosVariables = { page, pageSize, q, orderBy, orderSort };
-  const getPromosQuery = useQuery<{ promos: PromosWithPaginationObject }, PromoArgs>(GET_PROMOS, {
+  const getPromosQuery = useQuery<{ promos: PromosWithPaginationObject }, PromosArgs>(GET_PROMOS, {
     variables: getPromosVariables,
     fetchPolicy: 'network-only',
   });

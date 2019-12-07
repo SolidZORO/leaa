@@ -10,7 +10,7 @@ import {
   CreateProductInput,
   UpdateProductInput,
 } from '@leaa/common/src/dtos/product';
-import { formatUtil, paginationUtil, curdUtil, stringUtil, dictUtil, authUtil } from '@leaa/api/src/utils';
+import { formatUtil, paginationUtil, curdUtil, authUtil } from '@leaa/api/src/utils';
 
 import { TagService } from '@leaa/api/src/modules/tag/tag.service';
 
@@ -28,21 +28,22 @@ export class ProductService {
     private readonly tagService: TagService,
   ) {}
 
-  async products(args: IProductsArgs, user?: User): Promise<ProductsWithPaginationObject> {
+  async products(args: IProductsArgs, user?: User): Promise<ProductsWithPaginationObject | undefined> {
     const nextArgs: IProductsArgs = formatUtil.formatArgs(args);
 
     const PRIMARY_TABLE = 'products';
     const qb = await this.productRepository.createQueryBuilder(PRIMARY_TABLE);
 
     // relations
-    qb.leftJoinAndSelect(`${PRIMARY_TABLE}.categories`, 'categories');
+    qb.leftJoinAndSelect(`${PRIMARY_TABLE}.styles`, 'styles');
+    qb.leftJoinAndSelect(`${PRIMARY_TABLE}.brands`, 'brands');
     qb.leftJoinAndSelect(`${PRIMARY_TABLE}.tags`, 'tags');
 
     // q
     if (nextArgs.q) {
       const qLike = `%${nextArgs.q}%`;
 
-      ['title', 'slug'].forEach(key => {
+      ['name', 'serial'].forEach(key => {
         qb.orWhere(`${PRIMARY_TABLE}.${key} LIKE :${key}`, { [key]: qLike });
       });
     }
@@ -53,12 +54,12 @@ export class ProductService {
     }
 
     // category
-    if (nextArgs.categoryName) {
-      qb.andWhere('categories.name IN (:...categoryName)', { categoryName: nextArgs.categoryName });
+    if (nextArgs.styleName) {
+      qb.andWhere('styles.name IN (:...styleName)', { styleName: nextArgs.styleName });
     }
 
-    if (nextArgs.categoryId) {
-      qb.andWhere('categories.id IN (:...categoryId)', { categoryId: nextArgs.categoryId });
+    if (nextArgs.brandName) {
+      qb.andWhere('brands.name IN (:...brandName)', { brandName: nextArgs.brandName });
     }
 
     // order
@@ -73,66 +74,76 @@ export class ProductService {
   }
 
   async product(id: number, args?: IProductArgs, user?: User): Promise<Product | undefined> {
-    let nextArgs: IProductArgs = {};
+    const PRIMARY_TABLE = 'products';
+    const qb = await this.productRepository.createQueryBuilder(PRIMARY_TABLE);
 
-    if (args) {
-      nextArgs = args;
-      nextArgs.relations = ['tags', 'categories'];
-    }
+    // relations
+    qb.leftJoinAndSelect(`${PRIMARY_TABLE}.styles`, 'styles');
+    qb.leftJoinAndSelect(`${PRIMARY_TABLE}.brands`, 'brands');
+    qb.leftJoinAndSelect(`${PRIMARY_TABLE}.tags`, 'tags');
 
-    // can
-    if (!(user && authUtil.can(user, 'product.item-read--all-status'))) {
-      nextArgs.where = { status: 1 };
-    }
+    qb.where({ id }).getOne();
 
-    return this.productRepository.findOne(id, nextArgs);
+    return qb.where({ id }).getOne();
   }
 
-  async createProduct(args: CreateProductInput): Promise<Product | undefined> {
-    const relationArgs: { categories?: Category[] } = {};
+  async formatArgs(
+    args: CreateProductInput | UpdateProductInput,
+  ): Promise<{
+    nextArgs: Pick<Product, 'tags' | 'styles' | 'brands' | 'description'> & (CreateProductInput | UpdateProductInput);
+    nextRelation: any;
+  }> {
+    const nextRelation: { tags?: Tag[]; styles?: Category[]; brands?: Category[] } = {};
 
-    return this.productRepository.save({ ...args, ...relationArgs });
-  }
-
-  async updateProduct(id: number, args: UpdateProductInput): Promise<Product | undefined> {
-    const relationArgs: { tags?: Tag[]; categories?: Category[] } = {};
-
-    const trimSlug = args.slug ? args.slug.trim().toLowerCase() : args.slug;
     const trimDescription = args.description ? args.description.trim() : args.description;
 
     // tags
-    let tagObjects;
+    let tags;
     if (args.tagIds && args.tagIds.length > 0) {
-      tagObjects = await this.tagRepository.findByIds(args.tagIds);
+      tags = await this.tagRepository.findByIds(args.tagIds);
     }
-    relationArgs.tags = tagObjects;
 
-    // category
-    let categoryObjects;
-    if (args.categoryIds) {
-      categoryObjects = await this.categoryRepository.findByIds(args.categoryIds);
+    // styles
+    let styles;
+    if (args.styleIds && args.styleIds.length > 0) {
+      styles = await this.categoryRepository.findByIds(args.styleIds);
     }
-    relationArgs.categories = categoryObjects;
 
-    const nextArgs = {
-      ...args,
-      slug: !args.slug && args.title ? stringUtil.getSlug(args.title, args.title) : trimSlug,
-      description: trimDescription,
+    // brans
+    let brands;
+    if (args.brandIds && args.brandIds.length > 0) {
+      brands = await this.categoryRepository.findByIds(args.brandIds);
+    }
+
+    return {
+      nextArgs: {
+        ...args,
+        description: trimDescription,
+        styles,
+        brands,
+        tags,
+      },
+      nextRelation,
     };
+  }
+
+  async createProduct(args: CreateProductInput): Promise<Product | undefined> {
+    const { nextRelation, nextArgs } = await this.formatArgs(args);
+
+    return this.productRepository.save({ ...nextArgs, ...nextRelation });
+  }
+
+  async updateProduct(id: number, args: UpdateProductInput): Promise<Product | undefined> {
+    const { nextRelation, nextArgs } = await this.formatArgs(args);
 
     // auto add tag from product content (by jieba)
-    if (args.content && (!args.tagIds || (args.tagIds && args.tagIds.length === 0))) {
-      const allText = formatUtil.formatHtmlToText(args.content, args.title);
-
-      // batch create tags
-      relationArgs.tags = await this.tagService.createTags(dictUtil.cutTags(allText));
-
+    if (nextArgs.content && (!nextArgs.tagIds || (nextArgs.tagIds && nextArgs.tagIds.length === 0))) {
       // ⚠️ sync tags
       // execute only once when the product has no tag, reducing server pressure
       await this.tagService.syncTagsToDictFile();
     }
 
-    return curdUtil.commonUpdate(this.productRepository, CONSTRUCTOR_NAME, id, nextArgs, relationArgs);
+    return curdUtil.commonUpdate(this.productRepository, CONSTRUCTOR_NAME, id, nextArgs, nextRelation);
   }
 
   async deleteProduct(id: number): Promise<Product | undefined> {

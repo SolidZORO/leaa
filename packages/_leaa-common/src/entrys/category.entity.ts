@@ -1,15 +1,6 @@
 import { ObjectType, Field, Int } from 'type-graphql';
 
-import {
-  Index,
-  Entity,
-  Tree,
-  Column,
-  PrimaryGeneratedColumn,
-  TreeChildren,
-  TreeParent,
-  TreeLevelColumn,
-} from 'typeorm';
+import { Index, Entity, Tree, Column, TreeChildren, TreeParent } from 'typeorm';
 
 import { Base } from '@leaa/common/src/entrys';
 
@@ -20,15 +11,15 @@ import { Base } from '@leaa/common/src/entrys';
 @Tree('nested-set')
 export class Category extends Base {
   @Column({ type: 'varchar', length: 32, unique: true })
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   name!: string;
 
   @Column({ type: 'varchar', length: 32, unique: true })
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   slug!: string;
 
   @Column({ type: 'int', default: 0 })
-  @Field(() => Int)
+  @Field(() => Int, { nullable: true })
   parent_id!: number;
 
   @Column({ type: 'text', nullable: true })
@@ -46,11 +37,4 @@ export class Category extends Base {
   // Virtual Field (not in DB)
   @Field(() => String, { nullable: true })
   key?: string;
-
-  // @Field(() => Int, { nullable: true })
-  // parentId?: number;
-
-  // @Column({ type: 'int', default: 0 })
-  // @Field(() => Int)
-  // parent_id!: number;
 }

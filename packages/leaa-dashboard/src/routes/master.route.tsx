@@ -88,6 +88,54 @@ export const masterRoutes: IRouteItem[] = [
       },
     ],
   },
+  //
+  // -------- [Product Group] --------
+  //
+  {
+    name: 'Product Group',
+    namei18n: '_route:productGroup',
+    permission: 'product.list-read',
+    path: '_product-group',
+    icon: 'ri-store-line',
+    children: [
+      // ---- Product ----
+      {
+        name: 'Create Product',
+        namei18n: '_route:createProduct',
+        permission: 'product.item-create',
+        path: '/products/create',
+        icon: 'ri-t-shirt-line',
+        LazyComponent: React.lazy(() =>
+          import(/* webpackChunkName: 'CreateProduct' */ '../pages/Product/CreateProduct/CreateProduct'),
+        ),
+        exact: true,
+        isCreate: true,
+      },
+      {
+        name: 'Edit Product',
+        namei18n: '_route:editProduct',
+        permission: 'product.item-read',
+        path: '/products/:id(\\d+)',
+        icon: 'ri-t-shirt-line',
+        LazyComponent: React.lazy(() =>
+          import(/* webpackChunkName: 'EditProduct' */ '../pages/Product/EditProduct/EditProduct'),
+        ),
+        exact: true,
+      },
+      {
+        name: 'Product',
+        namei18n: '_route:product',
+        permission: 'product.list-read',
+        path: '/products',
+        icon: 'ri-t-shirt-line',
+        LazyComponent: React.lazy(() =>
+          import(/* webpackChunkName: 'ProductList' */ '../pages/Product/ProductList/ProductList'),
+        ),
+        canCreate: true,
+        exact: true,
+      },
+    ],
+  },
   // -------- [User Group] --------
   {
     name: 'User Group',

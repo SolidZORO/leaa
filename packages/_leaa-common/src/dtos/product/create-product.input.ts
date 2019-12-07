@@ -1,8 +1,6 @@
 import { IsNotEmpty, IsOptional } from 'class-validator';
 import { Field, InputType, Int, Float } from 'type-graphql';
 
-import { Tag } from '@leaa/common/src/entrys';
-
 @InputType()
 export class CreateProductInput {
   @IsNotEmpty()
@@ -10,24 +8,24 @@ export class CreateProductInput {
   name!: string;
 
   @IsOptional()
-  @Field(() => String)
-  fullname!: string;
+  @Field(() => String, { nullable: true })
+  fullname?: string;
 
   @IsNotEmpty()
-  @Field(() => String, { nullable: true })
-  serial?: string;
+  @Field(() => String)
+  serial!: string;
 
   @IsNotEmpty()
   @Field(() => Float)
   price!: number;
 
   @IsOptional()
-  @Field(() => Float)
+  @Field(() => Float, { nullable: true })
   cost_price?: number;
 
   @IsOptional()
-  @Field(() => Float)
-  original_price?: number;
+  @Field(() => Float, { nullable: true })
+  market_price?: number;
 
   @IsNotEmpty()
   @Field(() => Int)
@@ -46,14 +44,14 @@ export class CreateProductInput {
   content?: string;
 
   @IsOptional()
-  @Field(() => Int, { nullable: true })
-  brandCategoryId?: number;
+  @Field(() => [Int], { nullable: true })
+  brandIds?: number[];
 
   @IsOptional()
-  @Field(() => Int, { nullable: true })
-  styleCategoryId?: number;
+  @Field(() => [Int], { nullable: true })
+  styleIds?: number[];
 
   @IsOptional()
-  @Field(() => [Tag], { nullable: true })
-  tags?: Tag[];
+  @Field(() => [Int], { nullable: true })
+  tagIds?: number[];
 }

@@ -12,8 +12,8 @@ export class Product extends Base {
   @Field(() => String)
   name!: string;
 
-  @Column({ type: 'varchar', length: 220 })
-  @Field(() => String)
+  @Column({ type: 'varchar', length: 220, nullable: true, default: null })
+  @Field(() => String, { nullable: true })
   fullname?: string;
 
   @Column({ type: 'varchar', length: 220, unique: true })
@@ -24,13 +24,13 @@ export class Product extends Base {
   @Field(() => Float)
   price!: number;
 
-  @Column({ type: 'decimal', precision: 11, scale: 2 })
-  @Field(() => Float)
+  @Column({ type: 'decimal', precision: 11, scale: 2, nullable: true, default: 0.0 })
+  @Field(() => Float, { nullable: true })
   cost_price?: number;
 
-  @Column({ type: 'decimal', precision: 11, scale: 2 })
-  @Field(() => Float)
-  original_price?: number;
+  @Column({ type: 'decimal', precision: 11, scale: 2, nullable: true, default: 0.0 })
+  @Field(() => Float, { nullable: true })
+  market_price?: number;
 
   @Column({ type: 'int', default: 0 })
   @Field(() => Int)
@@ -50,13 +50,13 @@ export class Product extends Base {
 
   @ManyToMany(() => Category)
   @JoinTable()
-  @Field(() => Category, { nullable: true })
-  brand_category?: Category;
+  @Field(() => [Category], { nullable: true })
+  brands?: Category[];
 
   @ManyToMany(() => Category)
   @JoinTable()
-  @Field(() => Category, { nullable: true })
-  style_category?: Category;
+  @Field(() => [Category], { nullable: true })
+  styles?: Category[];
 
   @ManyToMany(() => Tag)
   @JoinTable()

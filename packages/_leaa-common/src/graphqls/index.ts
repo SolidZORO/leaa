@@ -34,3 +34,6 @@ export * from './coupon.mutation';
 
 export * from './promo.query';
 export * from './promo.mutation';
+
+export * from './product.query';
+export * from './product.mutation';
