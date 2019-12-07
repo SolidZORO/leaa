@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import htmlToText from 'html-to-text';
 import { Repository, FindOneOptions } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
@@ -11,7 +10,7 @@ import {
   CreateProductInput,
   UpdateProductInput,
 } from '@leaa/common/src/dtos/product';
-import { formatUtil, paginationUtil, curdUtil, stringUtil, dictUtil, errorUtil, authUtil } from '@leaa/api/src/utils';
+import { formatUtil, paginationUtil, curdUtil, stringUtil, dictUtil, authUtil } from '@leaa/api/src/utils';
 
 import { TagService } from '@leaa/api/src/modules/tag/tag.service';
 
@@ -89,37 +88,10 @@ export class ProductService {
     return this.productRepository.findOne(id, nextArgs);
   }
 
-  async productBySlug(slug: string, args?: ProductArgs & FindOneOptions<Product>): Promise<Product | undefined> {
-    const product = await this.productRepository.findOne({ where: { slug } });
-    if (!product) return errorUtil.NOT_FOUND();
-
-    return this.product(product.id, args);
-  }
-
   async createProduct(args: CreateProductInput): Promise<Product | undefined> {
     const relationArgs: { categories?: Category[] } = {};
 
-    // category
-    let categoryObjects;
-    if (args.categoryIds) {
-      categoryObjects = await this.categoryRepository.findByIds(args.categoryIds);
-    }
-
-    relationArgs.categories = categoryObjects;
-
     return this.productRepository.save({ ...args, ...relationArgs });
-  }
-
-  contentHtmlToText(content?: string, title?: string): string {
-    const resultTitle = `${title || ''}\n\n`;
-    let resultText = '';
-
-    if (content) {
-      // @see https://github.com/werk85/node-html-to-text
-      resultText = htmlToText.fromString(content, { wordwrap: false, ignoreHref: true });
-    }
-
-    return resultTitle + resultText;
   }
 
   async updateProduct(id: number, args: UpdateProductInput): Promise<Product | undefined> {
@@ -150,7 +122,7 @@ export class ProductService {
 
     // auto add tag from product content (by jieba)
     if (args.content && (!args.tagIds || (args.tagIds && args.tagIds.length === 0))) {
-      const allText = this.contentHtmlToText(args.content, args.title);
+      const allText = formatUtil.formatHtmlToText(args.content, args.title);
 
       // batch create tags
       relationArgs.tags = await this.tagService.createTags(dictUtil.cutTags(allText));

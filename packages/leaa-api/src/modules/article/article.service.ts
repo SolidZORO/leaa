@@ -110,18 +110,6 @@ export class ArticleService {
     return this.articleRepository.save({ ...args, ...relationArgs });
   }
 
-  contentHtmlToText(content?: string, title?: string): string {
-    const resultTitle = `${title || ''}\n\n`;
-    let resultText = '';
-
-    if (content) {
-      // @see https://github.com/werk85/node-html-to-text
-      resultText = htmlToText.fromString(content, { wordwrap: false, ignoreHref: true });
-    }
-
-    return resultTitle + resultText;
-  }
-
   async updateArticle(id: number, args: UpdateArticleInput): Promise<Article | undefined> {
     const relationArgs: { tags?: Tag[]; categories?: Category[] } = {};
 
@@ -150,7 +138,7 @@ export class ArticleService {
 
     // auto add tag from article content (by jieba)
     if (args.content && (!args.tagIds || (args.tagIds && args.tagIds.length === 0))) {
-      const allText = this.contentHtmlToText(args.content, args.title);
+      const allText = formatUtil.formatHtmlToText(args.content, args.title);
 
       // batch create tags
       relationArgs.tags = await this.tagService.createTags(dictUtil.cutTags(allText));

@@ -1,10 +1,12 @@
 import moment from 'moment';
+import htmlToText from 'html-to-text';
 import { FindManyOptions } from 'typeorm';
+
 import { ItemsArgs } from '@leaa/common/src/dtos/_common';
 
 type IFormatArgs = FindManyOptions & ItemsArgs;
 
-function formatArgs<T>(args: T & IFormatArgs): T & IFormatArgs {
+const formatArgs = <T>(args: T & IFormatArgs): T & IFormatArgs => {
   if (!args) {
     throw Error('missing format args');
   }
@@ -34,9 +36,9 @@ function formatArgs<T>(args: T & IFormatArgs): T & IFormatArgs {
   }
 
   return nextArgs;
-}
+};
 
-function formatDataRange<T>(args: T, startField: string, expireField: string): T {
+const formatDateRangeTime = <T>(args: T, startField: string, expireField: string): T => {
   if (!args) {
     throw Error('missing format args');
   }
@@ -63,9 +65,22 @@ function formatDataRange<T>(args: T, startField: string, expireField: string): T
   }
 
   return nextArgs;
-}
+};
+
+const formatHtmlToText = (content?: string, title?: string): string => {
+  const resultTitle = `${title || ''}\n\n`;
+  let resultText = '';
+
+  if (content) {
+    // @see https://github.com/werk85/node-html-to-text
+    resultText = htmlToText.fromString(content, { wordwrap: false, ignoreHref: true });
+  }
+
+  return resultTitle + resultText;
+};
 
 export const formatUtil = {
   formatArgs,
-  formatDateRangeTime: formatDataRange,
+  formatDateRangeTime,
+  formatHtmlToText,
 };

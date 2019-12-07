@@ -41,17 +41,6 @@ export class ProductResolver {
     return this.productService.product(id, args, user);
   }
 
-  // @UseGuards(PermissionsGuard)
-  // @Permissions('product.item-read')
-  // DO NOT CHECK PERMISSIONS
-  @Query(() => Product)
-  async productBySlug(
-    @Args({ name: 'slug', type: () => String }) slug: string,
-    @Args() args?: ProductArgs,
-  ): Promise<Product | undefined> {
-    return this.productService.productBySlug(slug, args);
-  }
-
   @UseGuards(PermissionsGuard)
   @Permissions('product.item-create')
   @Mutation(() => Product)
