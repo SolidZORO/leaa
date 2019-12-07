@@ -97,17 +97,24 @@ declare const permissionSlug: [
   'coupon.item-redeem--to-all-user-id',
   // --------------------
   'promo.list-read',
-  'promo.list-read--all-user-id',
   'promo.list-read--all-status',
   //
   'promo.item-read',
-  'promo.item-read--all-user-id',
   'promo.item-read--all-status',
   'promo.item-create',
   'promo.item-update',
   'promo.item-delete',
   'promo.item-redeem',
   'promo.item-redeem--to-all-user-id',
+  // --------------------
+  'product.list-read',
+  'product.list-read--all-status',
+  //
+  'product.item-read',
+  'product.item-read--all-status',
+  'product.item-create',
+  'product.item-update',
+  'product.item-delete',
 ];
 
 export declare type IPermissionSlug = typeof permissionSlug[number];

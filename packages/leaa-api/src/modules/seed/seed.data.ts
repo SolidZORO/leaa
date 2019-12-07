@@ -144,6 +144,17 @@ export const permissionsSeed: { name: string; slug: IPermissionSlug }[] = [
   //
   { name: 'Promo Item Redeem', slug: 'promo.item-redeem' },
   { name: 'Promo Item Redeem (To Any User)', slug: 'promo.item-redeem--to-all-user-id' },
+  //
+  // --------------------------------
+  //
+  { name: 'Product List Read', slug: 'product.list-read' },
+  { name: 'Product List Read (All Status)', slug: 'product.list-read--all-status' },
+  //
+  { name: 'Product Item Read', slug: 'product.item-read' },
+  { name: 'Product Item Read (All Status)', slug: 'product.item-read--all-status' },
+  { name: 'Product Item Create', slug: 'product.item-create' },
+  { name: 'Product Item Update', slug: 'product.item-update' },
+  { name: 'Product Item Delete', slug: 'product.item-delete' },
 ];
 
 // prettier-ignore

@@ -409,6 +409,26 @@ type PermissionsWithPaginationObject {
   items: [Permission!]!
 }
 
+type Product {
+  id: Int!
+  created_at: DateTime!
+  updated_at: DateTime
+  deleted_at: DateTime
+  name: String!
+  fullname: String!
+  serial: String
+  price: Float!
+  cost_price: Float!
+  original_price: Float!
+  status: Int!
+  sort: Int
+  description: String
+  content: String
+  brand_category: Category
+  style_category: Category
+  tags: [Tag!]
+}
+
 type Promo {
   id: Int!
   created_at: DateTime!

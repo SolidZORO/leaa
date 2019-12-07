@@ -8,11 +8,11 @@ import { Base, Category, Tag } from '@leaa/common/src/entrys';
 @Index('articles_slug_unique', ['slug'], { unique: true })
 @ObjectType()
 export class Article extends Base {
-  @Column({ type: 'varchar', length: 128, unique: true })
-  @Field()
+  @Column({ type: 'varchar', length: 220, unique: true })
+  @Field(() => String)
   title!: string;
 
-  @Column({ type: 'varchar', length: 128, unique: true, default: null })
+  @Column({ type: 'varchar', length: 220, unique: true, default: null })
   @Field(() => String, { nullable: true })
   slug?: string;
 

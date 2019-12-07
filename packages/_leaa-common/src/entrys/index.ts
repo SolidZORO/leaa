@@ -11,3 +11,4 @@ export { Oauth, OauthPlatform } from './oauth.entity';
 export { Tag } from './tag.entity';
 export { Coupon } from './coupon.entity';
 export { Promo } from './promo.entity';
+export { Product } from './product.entity';

@@ -3,7 +3,7 @@ import { ArgsType, Field, Int } from 'type-graphql';
 import { ItemsArgs } from '@leaa/common/src/dtos/_common';
 
 @ArgsType()
-export class ArticlesArgs extends ItemsArgs {
+export class ProductsArgs extends ItemsArgs {
   @Field(() => String, { nullable: true })
   tagName?: string;
 

@@ -5,17 +5,17 @@ import { ItemsArgs } from '@leaa/common/src/dtos/_common';
 @ArgsType()
 export class CategoriesArgs extends ItemsArgs {
   @Field(() => Boolean, { nullable: true })
-  readonly expanded?: boolean;
+  expanded?: boolean;
 
   @Field(() => Boolean, { nullable: true })
-  readonly listType?: boolean;
+  listType?: boolean;
 
   @Field(() => Boolean, { nullable: true })
-  readonly treeType?: boolean;
+  treeType?: boolean;
 
   @Field(() => String, { nullable: true })
-  readonly parentSlug?: string;
+  parentSlug?: string;
 
   @Field(() => Int, { nullable: true })
-  readonly parentId?: number;
+  parentId?: number;
 }

@@ -1,7 +1,7 @@
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
-import { getConnection } from 'typeorm';
+import { getConnection, getManager, getRepository } from 'typeorm';
 
 import { AppModule } from '@leaa/api/src/app.module';
 import { SeedService } from '@leaa/api/src/modules/seed/seed.service';
@@ -11,12 +11,7 @@ import { SeedService } from '@leaa/api/src/modules/seed/seed.service';
   logger.log('Seed Launcher...', ' 🔰 ');
 
   const app: NestExpressApplication = await NestFactory.create(AppModule);
-
-  if (process.argv.includes('--nuke')) {
-    console.log('\n\n\n\n\n\n\n\n\n\n\n✴️✴️✴️✴️✴️✴️✴️✴️✴️✴️ NUKE NUKE NUKE NUKE\n\n\n\n');
-
-    await getConnection().synchronize(true);
-  }
+  const seedService: SeedService = await app.get(SeedService);
 
   const forceExit = () => {
     process.exit();
@@ -26,9 +21,44 @@ import { SeedService } from '@leaa/api/src/modules/seed/seed.service';
     process.abort();
   };
 
-  try {
-    const seedService: SeedService = await app.get(SeedService);
+  if (process.argv.includes('--re-auth')) {
+    console.log('\n\n\n\n RE-BUILD AUTH\n\n\n\n');
 
+    const queryRunner = getConnection().createQueryRunner();
+
+    await getManager().query('SET FOREIGN_KEY_CHECKS = 0;');
+
+    await getRepository('Permission').clear();
+    await getRepository('Role').clear();
+    await getRepository('User').clear();
+
+    if (await queryRunner.getTable('roles_permissions_permissions')) {
+      await getRepository('roles_permissions_permissions').clear();
+    }
+
+    if (await queryRunner.getTable('users_roles_roles')) {
+      await getRepository('users_roles_roles').clear();
+    }
+
+    await getManager().query('SET FOREIGN_KEY_CHECKS = 1;');
+
+    await seedService.insertPermissions();
+    await seedService.insertRoles();
+    await seedService.insertUsers();
+
+    await console.log('\n\n\n\n---- RE-BUILD AUTH DONE ----');
+
+    await forceExit();
+    return;
+  }
+
+  if (process.argv.includes('--nuke')) {
+    console.log('\n\n\n\n✴️✴️✴️✴️✴️✴️✴️✴️✴️✴️ NUKE NUKE NUKE NUKE ALL DB TABLE\n\n\n\n');
+
+    await getConnection().synchronize(true);
+  }
+
+  try {
     await seedService.insertSetting();
     await seedService.insertPermissions();
     await seedService.insertRoles();
