@@ -2,10 +2,6 @@
   "name": "test-leaa-www",
   "version": 2,
   "env": { "NODE_ENV": "production" },
-  "github": {
-    "enabled": false,
-    "autoAlias": false
-  },
   "builds": [{ "src": "/packages/leaa-www/package.json", "use": "@now/next" }],
   "routes": [{ "src": "/(.*)", "dest": "/packages/leaa-www/$1", "continue": true }]
 }

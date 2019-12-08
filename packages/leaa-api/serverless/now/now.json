@@ -5,10 +5,6 @@
     "NODE_ENV": "production",
     "NODE_PATH": "./"
   },
-  "github": {
-    "enabled": false,
-    "autoAlias": false
-  },
   "builds": [{ "src": "./index.js", "use": "@now/node@canary" }],
   "routes": [{ "src": "/(.*)", "dest": "./index.js" }]
 }
