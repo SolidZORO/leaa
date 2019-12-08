@@ -15,7 +15,8 @@ export const ATTACHMENT_FRAGMENT = gql`
     link
     module_name
     module_id
-    module_type
+    type_name
+    type_platform
     ext
     width
     height

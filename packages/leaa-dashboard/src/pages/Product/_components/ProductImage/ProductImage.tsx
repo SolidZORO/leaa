@@ -47,7 +47,8 @@ export const ProductImage = forwardRef((props: IProps, ref: React.Ref<any>) => {
                 type: 'image',
                 moduleId: Number(props.item.id),
                 moduleName: 'product',
-                moduleType: 'banner_mb',
+                typeName: 'banner',
+                typePlatform: 'mb',
               }}
             />
           </Col>
@@ -62,7 +63,8 @@ export const ProductImage = forwardRef((props: IProps, ref: React.Ref<any>) => {
                 type: 'image',
                 moduleId: Number(props.item.id),
                 moduleName: 'product',
-                moduleType: 'gallery_mb',
+                typeName: 'gallery',
+                typePlatform: 'mb',
               }}
             />
           </Col>
@@ -79,7 +81,8 @@ export const ProductImage = forwardRef((props: IProps, ref: React.Ref<any>) => {
                 type: 'image',
                 moduleId: Number(props.item.id),
                 moduleName: 'product',
-                moduleType: 'banner_pc',
+                typeName: 'banner',
+                typePlatform: 'pc',
               }}
             />
           </Col>
@@ -94,7 +97,8 @@ export const ProductImage = forwardRef((props: IProps, ref: React.Ref<any>) => {
                 type: 'image',
                 moduleId: Number(props.item.id),
                 moduleName: 'product',
-                moduleType: 'gallery_pc',
+                typeName: 'gallery',
+                typePlatform: 'pc',
               }}
             />
           </Col>

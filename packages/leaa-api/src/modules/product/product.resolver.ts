@@ -1,5 +1,5 @@
 import { UseGuards } from '@nestjs/common';
-import { Args, Query, Mutation, Resolver } from '@nestjs/graphql';
+import { Args, Query, Mutation, Resolver, ResolveProperty, Parent } from '@nestjs/graphql';
 import { Int } from 'type-graphql';
 
 import { Product, User } from '@leaa/common/src/entrys';
@@ -9,14 +9,24 @@ import {
   ProductArgs,
   CreateProductInput,
   UpdateProductInput,
+  ProductAttachmentsObject,
 } from '@leaa/common/src/dtos/product';
 import { ProductService } from '@leaa/api/src/modules/product/product.service';
 import { PermissionsGuard } from '@leaa/api/src/guards';
 import { Permissions, CurrentUser } from '@leaa/api/src/decorators';
+import { ProductProperty } from '@leaa/api/src/modules/product/product.property';
 
 @Resolver(() => Product)
 export class ProductResolver {
-  constructor(private readonly productService: ProductService) {}
+  constructor(private readonly productService: ProductService, private readonly productProperty: ProductProperty) {}
+
+  @ResolveProperty(() => ProductAttachmentsObject)
+  async attachments(@Parent() product: Product | undefined): Promise<ProductAttachmentsObject | undefined> {
+    return this.productProperty.attachments(product);
+  }
+
+  //
+  //
 
   // @UseGuards(PermissionsGuard)
   // @Permissions('product.list-read')

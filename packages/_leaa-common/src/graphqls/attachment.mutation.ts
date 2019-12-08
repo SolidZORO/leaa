@@ -11,7 +11,8 @@ export const UPDATE_ATTACHMENT = gql`
       user_id
       module_name
       module_id
-      module_type
+      type_name
+      type_platform
       path
       status
       created_at

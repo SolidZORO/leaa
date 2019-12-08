@@ -2,6 +2,8 @@ import { Index, Entity, Column, ManyToMany, JoinTable } from 'typeorm';
 import { ObjectType, Field, Int, Float } from 'type-graphql';
 
 import { Base, Category, Tag, Attachment } from '@leaa/common/src/entrys';
+import { AxAttachmentsObject } from '@leaa/common/src/dtos/ax';
+import { ProductAttachmentsObject } from '@leaa/common/src/dtos/product';
 
 @Entity('products')
 @Index('products_name_unique', ['name'], { unique: true })
@@ -63,13 +65,7 @@ export class Product extends Base {
   @Field(() => [Tag], { nullable: true })
   tags?: Tag[];
 
-  @ManyToMany(() => Attachment)
-  @JoinTable()
-  @Field(() => [Attachment], { nullable: true })
-  banners?: Attachment[];
-
-  @ManyToMany(() => Attachment)
-  @JoinTable()
-  @Field(() => [Attachment], { nullable: true })
-  galleries?: Attachment[];
+  // Virtual Field (not in DB)
+  @Field(() => ProductAttachmentsObject, { nullable: true })
+  attachments?: ProductAttachmentsObject;
 }

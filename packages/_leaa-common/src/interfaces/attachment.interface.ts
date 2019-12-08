@@ -16,17 +16,20 @@ export interface IMediaItem {
 
 // export type IAttachmentParams = Pick<
 //   CreateAttachmentInput,
-//   'type' | 'user_id' | 'moduleId' | 'moduleName' | 'moduleType'
+//   'type' | 'user_id' | 'moduleId' | 'moduleName' | 'typeName'
 // >;
 
 export interface IAttachmentParams {
   type: string;
   moduleId: number;
   moduleName: string;
-  moduleType: string;
+  typeName: string;
+  typePlatform?: string;
 }
 
-export type IAttachmentDbFilterField = Partial<Pick<Attachment, 'module_name' | 'module_id' | 'module_type'>>;
+export type IAttachmentDbFilterField = Partial<
+  Pick<Attachment, 'module_name' | 'module_id' | 'type_name' | 'type_platform'>
+>;
 
 export type IAttachmentCreateFieldByLocal = Pick<
   Attachment,
@@ -37,7 +40,8 @@ export type IAttachmentCreateFieldByLocal = Pick<
   | 'filename'
   | 'module_name'
   | 'module_id'
-  | 'module_type'
+  | 'type_name'
+  | 'type_platform'
   | 'ext'
   | 'width'
   | 'height'
@@ -90,5 +94,6 @@ export interface ICraeteAttachmentByOssCallback {
   type: string;
   moduleId: string;
   moduleName: string;
-  moduleType: string;
+  typeName: string;
+  typePlatform: string;
 }

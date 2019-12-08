@@ -30,7 +30,8 @@ export default (props: IPage) => {
           type: 'image',
           moduleId: 9,
           moduleName: 'playground',
-          moduleType: 'testbox',
+          typeName: 'testbox',
+          typePlatform: 'mb',
         }}
         listHeight={200}
       />

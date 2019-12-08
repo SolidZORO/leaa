@@ -74,8 +74,12 @@ export class AttachmentService {
       moduleFilter.module_id = nextArgs.moduleId;
     }
 
-    if (nextArgs.moduleType) {
-      moduleFilter.module_type = nextArgs.moduleType;
+    if (nextArgs.typeName) {
+      moduleFilter.type_name = nextArgs.typeName;
+    }
+
+    if (nextArgs.typePlatform) {
+      moduleFilter.type_platform = nextArgs.typePlatform;
     }
 
     const qb = getRepository(Attachment).createQueryBuilder();

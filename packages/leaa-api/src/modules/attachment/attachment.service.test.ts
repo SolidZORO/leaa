@@ -72,7 +72,8 @@ describe('AttachmentService', () => {
       ...createAttachmentBase,
       moduleName: 'ax',
       moduleId: 1,
-      moduleType: 'banner_mb',
+      typeName: 'banner',
+      typePlatform: 'mb',
     };
 
     attachmentObject = {
@@ -80,7 +81,8 @@ describe('AttachmentService', () => {
       id: 1,
       module_id: createAttachmentInput.moduleId,
       module_name: createAttachmentInput.moduleName,
-      module_type: createAttachmentInput.moduleType,
+      type_name: createAttachmentInput.typeName,
+      type_platform: createAttachmentInput.typePlatform,
       created_at: new Date(),
     };
 

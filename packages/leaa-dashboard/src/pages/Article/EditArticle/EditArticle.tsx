@@ -153,7 +153,7 @@ export default (props: IPage) => {
           type: 'image',
           moduleId: Number(id),
           moduleName: 'article',
-          moduleType: 'editor',
+          typeName: 'editor',
         }}
       />
 
@@ -178,7 +178,7 @@ export default (props: IPage) => {
               type: 'image',
               moduleId: Number(id),
               moduleName: 'article',
-              moduleType: 'banner',
+              typeName: 'banner',
             }}
           />
         </div>

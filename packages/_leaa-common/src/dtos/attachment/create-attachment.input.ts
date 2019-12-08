@@ -30,7 +30,10 @@ export class CreateAttachmentInput {
   moduleId!: number;
 
   @Field(() => String)
-  moduleType!: string;
+  typeName!: string;
+
+  @Field(() => String, { nullable: true })
+  typePlatform?: string;
 
   @Field(() => String)
   ext!: string;
@@ -60,10 +63,10 @@ export class CreateAttachmentInput {
   in_oss!: number;
 
   @Field(() => Int, { nullable: true })
-  category_id?: number | null;
+  categoryId?: number | null;
 
   @Field(() => Int, { nullable: true })
-  user_id?: number | null;
+  userId?: number | null;
 
   @Field(() => Int)
   sort!: number;

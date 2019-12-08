@@ -10,9 +10,10 @@ export const GET_ATTACHMENTS = gql`
     $type: String
     $moduleName: String
     $moduleId: Int
-    $moduleType: String
-    $category_id: Int
-    $user_id: Int
+    $typeName: String
+    $typePlatform: String
+    $categoryId: Int
+    $userId: Int
     $refreshHash: Int
   ) {
     attachments(
@@ -24,9 +25,10 @@ export const GET_ATTACHMENTS = gql`
       type: $type
       moduleName: $moduleName
       moduleId: $moduleId
-      moduleType: $moduleType
-      category_id: $category_id
-      user_id: $user_id
+      typeName: $typeName
+      typePlatform: $typePlatform
+      categoryId: $categoryId
+      userId: $userId
       refreshHash: $refreshHash
     ) {
       total
@@ -42,7 +44,8 @@ export const GET_ATTACHMENTS = gql`
         user_id
         module_name
         module_id
-        module_type
+        type_name
+        type_platform
         path
         url
         urlAt2x
@@ -70,7 +73,8 @@ export const GET_ATTACHMENT = gql`
       user_id
       module_name
       module_id
-      module_type
+      type_name
+      type_platform
       path
       url
       urlAt2x

@@ -136,12 +136,15 @@ export const AttachmentBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
               title={
                 <code className={style['title-code-tooltip']}>
                   {props.attachmentParams.type}-{props.attachmentParams.moduleName}-{/* prettier-ignore */}
-                  {props.attachmentParams.moduleType}-{props.attachmentParams.moduleId}
+                  {props.attachmentParams.typeName}-{props.attachmentParams.moduleId}
                 </code>
               }
               trigger="hover"
             >
-              <code className={style['title-code-text']}>{props.attachmentParams.moduleType}</code>
+              <code className={style['title-code-text']}>
+                {props.attachmentParams.typeName}
+                <small>{props.attachmentParams.typePlatform}</small>
+              </code>
             </Tooltip>
           </>
         }

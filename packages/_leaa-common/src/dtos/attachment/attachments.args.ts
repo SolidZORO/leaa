@@ -19,15 +19,19 @@ export class AttachmentsArgs extends ItemsArgs {
 
   @IsOptional()
   @Field(() => String, { nullable: true })
-  moduleType?: string;
+  typeName?: string;
+
+  @IsOptional()
+  @Field(() => String, { nullable: true })
+  typePlatform?: string;
 
   @IsOptional()
   @Field(() => Int, { nullable: true })
-  category_id?: number;
+  categoryId?: number;
 
   @IsOptional()
   @Field(() => Int, { nullable: true })
-  user_id?: number;
+  userId?: number;
 
   @IsOptional()
   @Field(() => Int, { nullable: true })

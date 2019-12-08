@@ -39,9 +39,10 @@ type Attachment {
   filename: String!
   description: String
   link: String
-  module_name: String!
   module_id: Int!
-  module_type: String!
+  module_name: String!
+  type_name: String!
+  type_platform: String
   ext: String!
   width: Int!
   height: Int!
@@ -213,7 +214,8 @@ input CreateAttachmentInput {
   filename: String!
   moduleName: String!
   moduleId: Int!
-  moduleType: String!
+  typeName: String!
+  typePlatform: String
   ext: String!
   width: Int!
   height: Int!
@@ -223,8 +225,8 @@ input CreateAttachmentInput {
   at2x: Int!
   in_local: Int!
   in_oss: Int!
-  category_id: Int
-  user_id: Int
+  categoryId: Int
+  userId: Int
   sort: Int!
   status: Int!
 }
@@ -447,8 +449,14 @@ type Product {
   brands: [Category!]
   styles: [Category!]
   tags: [Tag!]
-  banners: [Attachment!]
-  galleries: [Attachment!]
+  attachments: ProductAttachmentsObject
+}
+
+type ProductAttachmentsObject {
+  bannerMbList: [Attachment!]!
+  bannerPcList: [Attachment!]!
+  galleryMbList: [Attachment!]!
+  galleryPcList: [Attachment!]!
 }
 
 type ProductsWithPaginationObject {
@@ -505,7 +513,7 @@ type Query {
   axs(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): AxsWithPaginationObject!
   ax(id: Int!): Ax!
   axBySlug(slug: String!): Ax!
-  attachments(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String, type: String, moduleName: String, moduleId: Int, moduleType: String, category_id: Int, user_id: Int, refreshHash: Int): AttachmentsWithPaginationObject!
+  attachments(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String, type: String, moduleName: String, moduleId: Int, typeName: String, typePlatform: String, categoryId: Int, userId: Int, refreshHash: Int): AttachmentsWithPaginationObject!
   attachment(uuid: String!): Attachment!
   settings(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): SettingsWithPaginationObject!
   setting(id: Int!): Setting!

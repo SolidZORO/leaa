@@ -35,17 +35,21 @@ export class Attachment extends Base {
   @Field(() => String, { nullable: true })
   link?: string | null;
 
-  @Column({ type: 'varchar', length: 64 })
-  @Field(() => String)
-  module_name!: string;
-
   @Column({ type: 'int' })
   @Field(() => Int)
   module_id!: number;
 
-  @Column({ type: 'varchar', length: 64 })
+  @Column({ type: 'varchar', length: 64, comment: 'e.g. product' })
   @Field(() => String)
-  module_type!: string;
+  module_name!: string;
+
+  @Column({ type: 'varchar', length: 64, comment: 'e.g. gallery' })
+  @Field(() => String)
+  type_name!: string;
+
+  @Column({ type: 'varchar', length: 64, nullable: true, comment: 'e.g. mb/pc' })
+  @Field(() => String, { nullable: true })
+  type_platform?: string;
 
   @Column({ type: 'varchar', length: 8 })
   @Field(() => String)

@@ -116,7 +116,8 @@ export class SaveInLocalService {
       // module_abc --> moduleAbc
       module_name: body.moduleName,
       module_id: typeof body.moduleId !== 'undefined' ? Number(body.moduleId) : 0,
-      module_type: body.moduleType,
+      type_name: body.typeName,
+      type_platform: body.typePlatform,
       //
       ext,
       width,

@@ -106,7 +106,13 @@ export default (props: IPage) => {
           <AttachmentBox
             disableMessage
             ref={getBannerMbRef}
-            attachmentParams={{ type: 'image', moduleId: Number(id), moduleName: 'ax', moduleType: 'banner_mb' }}
+            attachmentParams={{
+              type: 'image',
+              moduleId: Number(id),
+              moduleName: 'ax',
+              typeName: 'banner',
+              typePlatform: 'mb',
+            }}
             listHeight={listHeight}
           />
         </Col>
@@ -115,7 +121,13 @@ export default (props: IPage) => {
           <AttachmentBox
             disableMessage
             ref={getBannerPcRef}
-            attachmentParams={{ type: 'image', moduleId: Number(id), moduleName: 'ax', moduleType: 'banner_pc' }}
+            attachmentParams={{
+              type: 'image',
+              moduleId: Number(id),
+              moduleName: 'ax',
+              typeName: 'banner',
+              typePlatform: 'pc',
+            }}
             listHeight={listHeight}
           />
         </Col>
@@ -126,7 +138,13 @@ export default (props: IPage) => {
           <AttachmentBox
             disableMessage
             ref={getGalleryMbRef}
-            attachmentParams={{ type: 'image', moduleId: Number(id), moduleName: 'ax', moduleType: 'gallery_mb' }}
+            attachmentParams={{
+              type: 'image',
+              moduleId: Number(id),
+              moduleName: 'ax',
+              typeName: 'gallery',
+              typePlatform: 'mb',
+            }}
             listHeight={listHeight}
           />
         </Col>
@@ -135,7 +153,13 @@ export default (props: IPage) => {
           <AttachmentBox
             disableMessage
             ref={getGalleryPcRef}
-            attachmentParams={{ type: 'image', moduleId: Number(id), moduleName: 'ax', moduleType: 'gallery_pc' }}
+            attachmentParams={{
+              type: 'image',
+              moduleId: Number(id),
+              moduleName: 'ax',
+              typeName: 'gallery',
+              typePlatform: 'pc',
+            }}
             listHeight={listHeight}
           />
         </Col>

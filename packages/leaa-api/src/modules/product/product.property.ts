@@ -1,21 +1,21 @@
 import { Injectable } from '@nestjs/common';
 
-import { Ax, Attachment } from '@leaa/common/src/entrys';
-import { AxAttachmentsObject } from '@leaa/common/src/dtos/ax';
+import { Product, Attachment } from '@leaa/common/src/entrys';
+import { ProductAttachmentsObject } from '@leaa/common/src/dtos/product';
 import { AttachmentService } from '@leaa/api/src/modules/attachment/attachment.service';
 
-// const CONSTRUCTOR_NAME = 'AxProperty';
+// const CONSTRUCTOR_NAME = 'ProductProperty';
 
 @Injectable()
-export class AxProperty {
+export class ProductProperty {
   constructor(private readonly attachmentService: AttachmentService) {}
 
-  async attachments(ax: Ax | undefined): Promise<AxAttachmentsObject | undefined> {
-    if (!ax || (ax && !ax.id)) {
+  async attachments(product: Product | undefined): Promise<ProductAttachmentsObject | undefined> {
+    if (!product || (product && !product.id)) {
       return undefined;
     }
 
-    const attachmentsResult = await this.attachmentService.attachments({ moduleName: 'ax', moduleId: ax.id });
+    const attachmentsResult = await this.attachmentService.attachments({ moduleName: 'product', moduleId: product.id });
     const attachments: Attachment[] = (attachmentsResult && attachmentsResult.items) || [];
 
     return {

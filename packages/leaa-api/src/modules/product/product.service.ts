@@ -39,7 +39,6 @@ export class ProductService {
     qb.leftJoinAndSelect(`${PRIMARY_TABLE}.styles`, 'styles');
     qb.leftJoinAndSelect(`${PRIMARY_TABLE}.brands`, 'brands');
     qb.leftJoinAndSelect(`${PRIMARY_TABLE}.tags`, 'tags');
-    qb.leftJoinAndSelect(`${PRIMARY_TABLE}.banners`, 'banners');
 
     // q
     if (nextArgs.q) {
@@ -51,26 +50,12 @@ export class ProductService {
     }
 
     // tag
-    if (nextArgs.tagName) {
-      qb.andWhere('tags.name IN (:...tagName)', { tagName: nextArgs.tagName });
-    }
+    if (nextArgs.tagName) qb.andWhere('tags.name IN (:...tagName)', { tagName: nextArgs.tagName });
 
-    // category
-    if (nextArgs.styleName) {
-      qb.andWhere('styles.name IN (:...styleName)', { styleName: nextArgs.styleName });
-    }
-
-    if (nextArgs.brandName) {
-      qb.andWhere('brands.name IN (:...brandName)', { brandName: nextArgs.brandName });
-    }
-
-    if (nextArgs.styleId) {
-      qb.andWhere('styles.id IN (:...styleId)', { styleId: nextArgs.styleId });
-    }
-
-    if (nextArgs.brandId) {
-      qb.andWhere('brands.id IN (:...brandId)', { brandId: nextArgs.brandId });
-    }
+    if (nextArgs.styleId) qb.andWhere('styles.id IN (:...styleId)', { styleId: nextArgs.styleId });
+    if (nextArgs.brandId) qb.andWhere('styles.id IN (:...styleId)', { styleId: nextArgs.styleId });
+    if (nextArgs.styleName) qb.andWhere('styles.name IN (:...styleName)', { styleName: nextArgs.styleName });
+    if (nextArgs.brandName) qb.andWhere('brands.name IN (:...brandName)', { brandName: nextArgs.brandName });
 
     // order
     qb.orderBy(`${PRIMARY_TABLE}.${nextArgs.orderBy}`, nextArgs.orderSort);
@@ -100,8 +85,7 @@ export class ProductService {
   async formatArgs(
     args: CreateProductInput | UpdateProductInput,
   ): Promise<{
-    nextArgs: Pick<Product, 'tags' | 'styles' | 'brands' | 'banners' | 'description'> &
-      (CreateProductInput | UpdateProductInput);
+    nextArgs: Pick<Product, 'tags' | 'styles' | 'brands' | 'description'> & (CreateProductInput | UpdateProductInput);
     nextRelation: any;
   }> {
     const nextRelation: { tags?: Tag[]; styles?: Category[]; brands?: Category[] } = {};
@@ -126,12 +110,6 @@ export class ProductService {
       brands = await this.categoryRepository.findByIds(args.brandIds);
     }
 
-    // banners
-    let banners;
-    if (args.bannerIds && args.bannerIds.length > 0) {
-      banners = await this.attachmentRepository.findByIds(args.bannerIds);
-    }
-
     return {
       nextArgs: {
         ...args,
@@ -139,7 +117,6 @@ export class ProductService {
         styles,
         brands,
         tags,
-        banners,
       },
       nextRelation,
     };

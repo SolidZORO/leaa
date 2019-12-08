@@ -82,7 +82,8 @@ export class SaveInOssService {
       '"type": ${x:type},' +
       '"moduleId": ${x:module_id},' +
       '"moduleName": ${x:module_name},' +
-      '"moduleType": ${x:module_type}' +
+      '"typeName": ${x:type_name}' +
+      '"typePlatform": ${x:type_platform}' +
       '}';
     /* eslint-enable no-template-curly-in-string */
 
@@ -197,7 +198,7 @@ export class SaveInOssService {
 
     const filepath = `/${req.object.replace('_2x', '')}`;
 
-    const ext = `.${req.format}`;
+    const ext = `.${req.format}`.toLowerCase();
     const uuid = filename.replace(ext, '');
     const title = req.originalname.replace(ext, '');
 
@@ -222,7 +223,8 @@ export class SaveInOssService {
       // DB use snakeCase, e.g. module_abc --> moduleAbc
       module_name: req.moduleName,
       module_id: typeof req.moduleId !== 'undefined' ? Number(req.moduleId) : 0,
-      module_type: req.moduleType,
+      type_name: req.typeName,
+      type_platform: req.typePlatform,
       //
       ext,
       width,
