@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Repository, FindOneOptions } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { Product, Category, Tag, User } from '@leaa/common/src/entrys';
+import { Product, Category, Tag, User, Attachment } from '@leaa/common/src/entrys';
 import {
   ProductsArgs,
   ProductsWithPaginationObject,
@@ -25,6 +25,7 @@ export class ProductService {
     @InjectRepository(Product) private readonly productRepository: Repository<Product>,
     @InjectRepository(Category) private readonly categoryRepository: Repository<Category>,
     @InjectRepository(Tag) private readonly tagRepository: Repository<Tag>,
+    @InjectRepository(Attachment) private readonly attachmentRepository: Repository<Attachment>,
     private readonly tagService: TagService,
   ) {}
 
@@ -38,6 +39,7 @@ export class ProductService {
     qb.leftJoinAndSelect(`${PRIMARY_TABLE}.styles`, 'styles');
     qb.leftJoinAndSelect(`${PRIMARY_TABLE}.brands`, 'brands');
     qb.leftJoinAndSelect(`${PRIMARY_TABLE}.tags`, 'tags');
+    qb.leftJoinAndSelect(`${PRIMARY_TABLE}.banners`, 'banners');
 
     // q
     if (nextArgs.q) {
@@ -98,7 +100,8 @@ export class ProductService {
   async formatArgs(
     args: CreateProductInput | UpdateProductInput,
   ): Promise<{
-    nextArgs: Pick<Product, 'tags' | 'styles' | 'brands' | 'description'> & (CreateProductInput | UpdateProductInput);
+    nextArgs: Pick<Product, 'tags' | 'styles' | 'brands' | 'banners' | 'description'> &
+      (CreateProductInput | UpdateProductInput);
     nextRelation: any;
   }> {
     const nextRelation: { tags?: Tag[]; styles?: Category[]; brands?: Category[] } = {};
@@ -123,6 +126,12 @@ export class ProductService {
       brands = await this.categoryRepository.findByIds(args.brandIds);
     }
 
+    // banners
+    let banners;
+    if (args.bannerIds && args.bannerIds.length > 0) {
+      banners = await this.attachmentRepository.findByIds(args.bannerIds);
+    }
+
     return {
       nextArgs: {
         ...args,
@@ -130,6 +139,7 @@ export class ProductService {
         styles,
         brands,
         tags,
+        banners,
       },
       nextRelation,
     };

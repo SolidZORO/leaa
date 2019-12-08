@@ -16,16 +16,16 @@ import { IPage } from '@leaa/dashboard/src/interfaces';
 
 import {
   PageCard,
+  PriceTag,
   HtmlMeta,
-  SearchInput,
   TableCard,
+  SearchInput,
+  TagSearchBox,
   TableColumnId,
   TableColumnDate,
   TableColumnDeleteButton,
   SelectCategoryIdByTree,
-  TagSearchBox,
   TableColumnStatusSwitch,
-  PriceTag,
 } from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';
@@ -40,22 +40,14 @@ export default (props: IPage) => {
   const [page, setPage] = useState<number | undefined>(urlPagination.page);
   const [pageSize, setPageSize] = useState<number | undefined>(urlPagination.pageSize);
   const [selectedRowKeys, setSelectedRowKeys] = useState<number[] | string[]>([]);
-  const [tagName, setTagName] = useState<string | undefined>(
-    urlParams && urlParams.tagName ? `${urlParams.tagName}` : undefined,
-  );
-  const [styleId, setStyleId] = useState<number | undefined>(
-    urlParams && urlParams.styleId ? Number(urlParams.styleId) : undefined,
-  );
 
-  const [brandId, setBrandId] = useState<number | undefined>(
-    urlParams && urlParams.brandId ? Number(urlParams.brandId) : undefined,
-  );
+  const [tagName, setTagName] = useState<string | undefined>(urlParams.tagName ? `${urlParams.tagName}` : undefined);
+  const [styleId, setStyleId] = useState<number | undefined>(urlParams.styleId ? Number(urlParams.styleId) : undefined);
+  const [brandId, setBrandId] = useState<number | undefined>(urlParams.brandId ? Number(urlParams.brandId) : undefined);
 
   // sort
   const [orderBy, setOrderBy] = useState<string | undefined>(urlParams.orderBy ? `${urlParams.orderBy}` : undefined);
-  const [orderSort, setOrderSort] = useState<IOrderSort | undefined>(
-    urlParams.orderSort ? urlUtil.formatOrderSort(`${urlParams.orderSort}`) : undefined,
-  );
+  const [orderSort, setOrderSort] = useState<IOrderSort | undefined>(urlUtil.formatOrderSort(`${urlParams.orderSort}`));
 
   // query
   const getProductsVariables = { page, pageSize, q, orderBy, orderSort, tagName, styleId, brandId };
@@ -116,7 +108,7 @@ export default (props: IPage) => {
           <Link to={`${props.route.path}/${record.id}`}>{record.name}</Link>
           <small className={style['col-slug']}>{record.serial}</small>
 
-          {record.tags && record.tags.length > 0 && (
+          {record.tags && record.tags?.length > 0 && (
             <small className={style['col-tags-wrapper']}>
               {record.tags.map(tag => (
                 <Tag key={tag.name} className={style['col-tags-item']}>
@@ -139,23 +131,19 @@ export default (props: IPage) => {
       dataIndex: 'price',
       sorter: true,
       sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'price'),
-      render: (text: string, record: Product) => <PriceTag amount={record && record.price} size="small" />,
+      render: (text: string, record: Product) => <PriceTag amount={record?.price} size="small" />,
     },
     {
       title: t('_page:Product.Component.style'),
       dataIndex: 'style',
       width: 100,
-      render: (text: string, record: Product) => (
-        <span>{record.styles && record.styles.length ? record.styles[0].name : '----'}</span>
-      ),
+      render: (text: string, record: Product) => <span>{record.styles?.length ? record.styles[0].name : '----'}</span>,
     },
     {
       title: t('_page:Product.Component.brand'),
       dataIndex: 'brand',
       width: 100,
-      render: (text: string, record: Product) => (
-        <span>{record.brands && record.brands.length ? record.brands[0].name : '----'}</span>
-      ),
+      render: (text: string, record: Product) => <span>{record.brands?.length ? record.brands[0].name : '----'}</span>,
     },
     {
       title: t('_lang:created_at'),
@@ -226,10 +214,7 @@ export default (props: IPage) => {
 
     urlUtil.mergeParamToUrlQuery({
       window,
-      params: {
-        page: 1,
-        ...filterParams,
-      },
+      params: { page: 1, ...filterParams },
       replace: true,
     });
   };
@@ -288,7 +273,7 @@ export default (props: IPage) => {
     >
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
-      {getProductsQuery.data && getProductsQuery.data.products && getProductsQuery.data.products.items && (
+      {getProductsQuery?.data?.products?.items && (
         <TableCard selectedRowKeys={selectedRowKeys}>
           <Table
             rowKey="id"

@@ -14,6 +14,7 @@ module.exports = {
   plugins: [
     //
     // PROPOSAL
+    ['@babel/plugin-proposal-optional-chaining'],
     ['@babel/plugin-proposal-decorators', { legacy: true }],
     ['@babel/plugin-proposal-class-properties', { loose: true }],
     ['@babel/plugin-proposal-export-default-from'],

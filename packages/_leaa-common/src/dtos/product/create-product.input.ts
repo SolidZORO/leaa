@@ -54,4 +54,8 @@ export class CreateProductInput {
   @IsOptional()
   @Field(() => [Int], { nullable: true })
   tagIds?: number[];
+
+  @IsOptional()
+  @Field(() => [Int], { nullable: true })
+  bannerIds?: number[];
 }

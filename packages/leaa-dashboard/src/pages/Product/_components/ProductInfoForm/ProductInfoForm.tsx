@@ -41,7 +41,7 @@ class ProductInfoFormInner extends React.PureComponent<IProps> {
               <Col xs={24} sm={8}>
                 <Form.Item label={t('_page:Product.Component.productName')}>
                   {getFieldDecorator('name', {
-                    initialValue: props.item ? props.item.name : undefined,
+                    initialValue: props.item?.name || undefined,
                     rules: [{ required: true }],
                   })(<Input placeholder={t('_lang:name')} />)}
                 </Form.Item>
@@ -50,7 +50,7 @@ class ProductInfoFormInner extends React.PureComponent<IProps> {
               <Col xs={24} sm={8}>
                 <Form.Item label={t('_page:Product.Component.productFullname')}>
                   {getFieldDecorator('fullname', {
-                    initialValue: props.item ? props.item.fullname : undefined,
+                    initialValue: props.item?.fullname || undefined,
                     rules: [],
                   })(<Input placeholder={t('_lang:fullname')} />)}
                 </Form.Item>
@@ -59,7 +59,7 @@ class ProductInfoFormInner extends React.PureComponent<IProps> {
               <Col xs={24} sm={6}>
                 <Form.Item label={t('_lang:serial')}>
                   {getFieldDecorator('serial', {
-                    initialValue: props.item ? props.item.serial : undefined,
+                    initialValue: props.item?.serial || undefined,
                     rules: [{ required: true }],
                   })(<Input placeholder={t('_lang:serial')} />)}
                 </Form.Item>
@@ -79,7 +79,7 @@ class ProductInfoFormInner extends React.PureComponent<IProps> {
               <Col xs={24} sm={4}>
                 <Form.Item label={t('_page:Product.Component.price')}>
                   {getFieldDecorator('price', {
-                    initialValue: props.item ? props.item.price : undefined,
+                    initialValue: props.item?.price || undefined,
                     rules: [{ required: true }],
                   })(<InputNumber placeholder={t('_lang:price')} className={style['input-number']} />)}
                 </Form.Item>
@@ -88,7 +88,7 @@ class ProductInfoFormInner extends React.PureComponent<IProps> {
               <Col xs={24} sm={4}>
                 <Form.Item label={t('_page:Product.Component.costPrice')}>
                   {getFieldDecorator('cost_price', {
-                    initialValue: props.item ? props.item.cost_price : undefined,
+                    initialValue: props.item?.cost_price || undefined,
                     rules: [],
                   })(
                     <InputNumber
@@ -102,7 +102,7 @@ class ProductInfoFormInner extends React.PureComponent<IProps> {
               <Col xs={24} sm={4}>
                 <Form.Item label={t('_page:Product.Component.marketPrice')}>
                   {getFieldDecorator('market_price', {
-                    initialValue: props.item ? props.item.market_price : undefined,
+                    initialValue: props.item?.market_price || undefined,
                     rules: [],
                   })(
                     <InputNumber
@@ -116,8 +116,7 @@ class ProductInfoFormInner extends React.PureComponent<IProps> {
               <Col xs={24} sm={6}>
                 <Form.Item label={t('_page:Product.Component.style')}>
                   {getFieldDecorator('styleIds', {
-                    initialValue:
-                      props.item && props.item.styles && props.item.styles.length ? props.item.styles[0].id : undefined,
+                    initialValue: props.item?.styles?.length ? props.item.styles[0].id : undefined,
                     rules: [{ required: true }],
                     normalize: e => e && Number(e),
                   })(<SelectCategoryIdByTree parentSlug="products" />)}
@@ -127,8 +126,7 @@ class ProductInfoFormInner extends React.PureComponent<IProps> {
               <Col xs={24} sm={6}>
                 <Form.Item label={t('_page:Product.Component.brand')}>
                   {getFieldDecorator('brandIds', {
-                    initialValue:
-                      props.item && props.item.brands && props.item.brands.length ? props.item.brands[0].id : undefined,
+                    initialValue: props.item?.brands?.length ? props.item.brands[0].id : undefined,
                     rules: [{ required: true }],
                     normalize: e => e && Number(e),
                   })(<SelectCategoryIdByTree parentSlug="brands" />)}

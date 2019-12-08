@@ -1,11 +1,11 @@
-import React, { useRef } from 'react';
+import React, { useRef, forwardRef, useImperativeHandle } from 'react';
 import cx from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { Col, Row } from 'antd';
 
 import { Product } from '@leaa/common/src/entrys';
 
-import { AttachmentBox, FormCard, EntryInfoDate } from '@leaa/dashboard/src/components';
+import { AttachmentBox, FormCard } from '@leaa/dashboard/src/components';
 
 import { IAttachmentBoxRef } from '@leaa/common/src/interfaces/attachment.interface';
 
@@ -17,21 +17,32 @@ interface IProps {
   loading?: boolean;
 }
 
-export const ProductImage = (props: IProps) => {
+export const ProductImage = forwardRef((props: IProps, ref: React.Ref<any>) => {
   const { t } = useTranslation();
 
-  const getBannerPcRef = useRef<IAttachmentBoxRef>(null);
+  const productImageRef = useRef<any>(null);
+
+  const getBannerMbRef = useRef<IAttachmentBoxRef>(null);
+  const getGallerMbRef = useRef<IAttachmentBoxRef>(null);
+
+  // useImperativeHandle<{}, any>(
+  //   ref,
+  //   () => ({
+  //     getGallerMbRef,
+  //   }),
+  //   [],
+  // );
 
   return (
     <div className={cx(style['wrapper'], props.className)}>
       <FormCard title={t('_page:Product.Component.productImage')}>
-        <Row gutter={16} className={style['form-row']}>
+        <Row gutter={16} className={style['form-row']} ref={productImageRef}>
           <Col xs={24} sm={8}>
             <AttachmentBox
               type="card"
               title={t('_page:Product.Component.bannerMb')}
               disableMessage
-              ref={getBannerPcRef}
+              ref={getBannerMbRef}
               attachmentParams={{
                 type: 'image',
                 moduleId: Number(props.item.id),
@@ -46,7 +57,7 @@ export const ProductImage = (props: IProps) => {
               type="list"
               title={t('_page:Product.Component.galleryMb')}
               disableMessage
-              ref={getBannerPcRef}
+              ref={getGallerMbRef}
               attachmentParams={{
                 type: 'image',
                 moduleId: Number(props.item.id),
@@ -63,7 +74,7 @@ export const ProductImage = (props: IProps) => {
               type="card"
               title={t('_page:Product.Component.bannerPc')}
               disableMessage
-              ref={getBannerPcRef}
+              // ref={getBannerMbRef}
               attachmentParams={{
                 type: 'image',
                 moduleId: Number(props.item.id),
@@ -78,7 +89,7 @@ export const ProductImage = (props: IProps) => {
               type="list"
               title={t('_page:Product.Component.galleryPc')}
               disableMessage
-              ref={getBannerPcRef}
+              // ref={getBannerMbRef}
               attachmentParams={{
                 type: 'image',
                 moduleId: Number(props.item.id),
@@ -91,4 +102,4 @@ export const ProductImage = (props: IProps) => {
       </FormCard>
     </div>
   );
-};
+});

@@ -26,6 +26,8 @@ export default (props: IPage) => {
   const selectTagIdRef = useRef<any>(null);
   const attachmentBoxRef = useRef<IAttachmentBoxRef>(null);
   const productContentRef = useRef<any>(null);
+  const productAttachmentRef = useRef<IAttachmentBoxRef>(null);
+
   const [productInfoFormRef, setProductInfoFormRef] = useState<any>();
   const [productTags, setProductTags] = useState<Tag[]>();
 
@@ -70,10 +72,7 @@ export default (props: IPage) => {
     }
 
     if (
-      productContentRef &&
-      productContentRef.current &&
-      productContentRef.current.getInstance() &&
-      productContentRef.current.getInstance().getHtml() &&
+      productContentRef?.current?.getInstance()?.getHtml() &&
       typeof productContentRef.current.getInstance().getHtml() !== 'undefined'
     ) {
       submitData.content = productContentRef.current.getInstance().getHtml();
@@ -116,7 +115,9 @@ export default (props: IPage) => {
         wrappedComponentRef={(inst: unknown) => setProductInfoFormRef(inst)}
       />
 
-      {getProductQuery.data && getProductQuery.data.product && <ProductImage item={getProductQuery.data.product} />}
+      {getProductQuery.data && getProductQuery.data.product && (
+        <ProductImage item={getProductQuery.data.product} ref={productAttachmentRef} />
+      )}
 
       <div className={style['select-tag-id-wrapper']}>
         <SelectTagId

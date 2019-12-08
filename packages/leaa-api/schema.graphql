@@ -275,6 +275,7 @@ input CreateProductInput {
   brandIds: [Int!]
   styleIds: [Int!]
   tagIds: [Int!]
+  bannerIds: [Int!]
 }
 
 input CreatePromoInput {
@@ -446,6 +447,8 @@ type Product {
   brands: [Category!]
   styles: [Category!]
   tags: [Tag!]
+  banners: [Attachment!]
+  galleries: [Attachment!]
 }
 
 type ProductsWithPaginationObject {
@@ -676,6 +679,7 @@ input UpdateProductInput {
   brandIds: [Int!]
   styleIds: [Int!]
   tagIds: [Int!]
+  bannerIds: [Int!]
 }
 
 input UpdatePromoInput {
