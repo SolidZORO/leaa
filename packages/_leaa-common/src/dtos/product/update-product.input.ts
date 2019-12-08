@@ -33,6 +33,10 @@ export class UpdateProductInput {
 
   @IsOptional()
   @Field(() => Int, { nullable: true })
+  stock?: number;
+
+  @IsOptional()
+  @Field(() => Int, { nullable: true })
   sort?: number;
 
   @IsOptional()

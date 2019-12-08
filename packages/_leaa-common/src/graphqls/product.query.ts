@@ -40,6 +40,7 @@ export const GET_PRODUCTS = gql`
         content
         sort
         serial
+        stock
         tags {
           id
           name
@@ -52,6 +53,11 @@ export const GET_PRODUCTS = gql`
         brands {
           id
           name
+        }
+        attachments {
+          bannerMbList {
+            url
+          }
         }
         status
         created_at
@@ -73,6 +79,7 @@ export const GET_PRODUCT = gql`
       description
       content
       serial
+      stock
       sort
       tags {
         id

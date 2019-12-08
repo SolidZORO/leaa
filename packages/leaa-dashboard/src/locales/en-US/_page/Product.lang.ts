@@ -12,6 +12,7 @@ export default {
     marketPrice: 'Market Price',
     brand: 'Brand',
     style: 'Style',
+    banner: 'Banner',
     //
     productImage: 'Product Images',
     bannerMb: 'Banner Mb',

@@ -50,6 +50,7 @@ export default {
   admin: '管理员',
   price: '价格',
   serial: '编号',
+  stock: '库存',
   //
   create: '创建',
   edit: '编辑',

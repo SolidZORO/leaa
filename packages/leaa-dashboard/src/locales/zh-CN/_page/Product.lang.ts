@@ -12,6 +12,7 @@ export default {
     marketPrice: '市场价',
     brand: '品牌',
     style: '款式',
+    banner: '商品图',
     //
     productImage: '商品配图',
     bannerMb: '主图 MB',

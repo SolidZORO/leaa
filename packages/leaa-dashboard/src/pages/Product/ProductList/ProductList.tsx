@@ -26,6 +26,7 @@ import {
   TableColumnDeleteButton,
   SelectCategoryIdByTree,
   TableColumnStatusSwitch,
+  TableColumnImage,
 } from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';
@@ -99,10 +100,16 @@ export default (props: IPage) => {
       render: (id: string) => <TableColumnId id={id} link={`${props.route.path}/${id}`} />,
     },
     {
+      title: t('_page:Product.Component.banner'),
+      width: 80,
+      dataIndex: 'banner',
+      render: (text: string, record: Product) => <TableColumnImage url={record.attachments?.bannerMbList[0]?.url} />,
+    },
+    {
       title: t('_page:Product.Component.productName'),
       dataIndex: 'name',
       sorter: true,
-      sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'title'),
+      sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'name'),
       render: (text: string, record: Product) => (
         <>
           <Link to={`${props.route.path}/${record.id}`}>{record.name}</Link>
@@ -121,10 +128,12 @@ export default (props: IPage) => {
       ),
     },
     {
-      title: t('_lang:serial'),
-      dataIndex: 'serial',
+      title: t('_lang:stock'),
+      dataIndex: 'stock',
       width: 100,
-      render: (text: string, record: Product) => <span>{record.serial ? record.serial : '----'}</span>,
+      sorter: true,
+      sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'stock'),
+      render: (text: string, record: Product) => <span>{record.stock ? record.stock : '----'}</span>,
     },
     {
       title: t('_lang:price'),

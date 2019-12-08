@@ -53,7 +53,7 @@ export class ProductService {
     if (nextArgs.tagName) qb.andWhere('tags.name IN (:...tagName)', { tagName: nextArgs.tagName });
 
     if (nextArgs.styleId) qb.andWhere('styles.id IN (:...styleId)', { styleId: nextArgs.styleId });
-    if (nextArgs.brandId) qb.andWhere('styles.id IN (:...styleId)', { styleId: nextArgs.styleId });
+    if (nextArgs.brandId) qb.andWhere('brands.id IN (:...brandId)', { brandId: nextArgs.brandId });
     if (nextArgs.styleName) qb.andWhere('styles.name IN (:...styleName)', { styleName: nextArgs.styleName });
     if (nextArgs.brandName) qb.andWhere('brands.name IN (:...brandName)', { brandName: nextArgs.brandName });
 

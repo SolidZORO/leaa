@@ -31,6 +31,10 @@ export class CreateProductInput {
   @Field(() => Int)
   status!: number;
 
+  @IsNotEmpty()
+  @Field(() => Int)
+  stock!: number;
+
   @IsOptional()
   @Field(() => Int, { nullable: true })
   sort?: number;

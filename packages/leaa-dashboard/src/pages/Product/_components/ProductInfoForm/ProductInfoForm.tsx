@@ -133,6 +133,17 @@ class ProductInfoFormInner extends React.PureComponent<IProps> {
                 </Form.Item>
               </Col>
             </Row>
+
+            <Row gutter={16} className={style['form-row']}>
+              <Col xs={24} sm={4}>
+                <Form.Item label={t('_lang:stock')}>
+                  {getFieldDecorator('stock', {
+                    initialValue: props.item?.stock || undefined,
+                    rules: [{ required: true }],
+                  })(<InputNumber placeholder={t('_lang:stock')} className={style['input-number']} />)}
+                </Form.Item>
+              </Col>
+            </Row>
           </Form>
         </FormCard>
       </div>

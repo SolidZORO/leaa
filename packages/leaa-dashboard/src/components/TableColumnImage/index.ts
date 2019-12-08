@@ -1,0 +1,1 @@
+export { TableColumnImage } from './TableColumnImage';

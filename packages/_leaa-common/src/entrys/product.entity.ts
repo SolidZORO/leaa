@@ -39,6 +39,10 @@ export class Product extends Base {
   status!: number;
 
   @Column({ type: 'int', default: 0 })
+  @Field(() => Int)
+  stock!: number;
+
+  @Column({ type: 'int', default: 0 })
   @Field(() => Int, { nullable: true })
   sort!: number;
 

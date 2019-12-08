@@ -271,6 +271,7 @@ input CreateProductInput {
   cost_price: Float
   market_price: Float
   status: Int!
+  stock: Int!
   sort: Int
   description: String
   content: String
@@ -443,6 +444,7 @@ type Product {
   cost_price: Float
   market_price: Float
   status: Int!
+  stock: Int!
   sort: Int
   description: String
   content: String
@@ -681,6 +683,7 @@ input UpdateProductInput {
   cost_price: Float
   market_price: Float
   status: Int
+  stock: Int
   sort: Int
   description: String
   content: String

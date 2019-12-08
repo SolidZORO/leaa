@@ -50,6 +50,7 @@ export default {
   admin: 'Admin',
   price: 'Price',
   serial: 'Serial',
+  stock: 'Stock',
   //
   create: 'Create',
   edit: 'Edit',
