@@ -110,13 +110,13 @@ export default (props: IPage) => {
     >
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
-      {getProductQuery.data && <ProductImage item={getProductQuery.data.product} />}
-
       <ProductInfoForm
         item={getProductQuery.data && getProductQuery.data.product}
         loading={getProductQuery.loading}
         wrappedComponentRef={(inst: unknown) => setProductInfoFormRef(inst)}
       />
+
+      {getProductQuery.data && getProductQuery.data.product && <ProductImage item={getProductQuery.data.product} />}
 
       <div className={style['select-tag-id-wrapper']}>
         <SelectTagId

@@ -12,4 +12,10 @@ export class ProductsArgs extends ItemsArgs {
 
   @Field(() => String, { nullable: true })
   brandName?: string;
+
+  @Field(() => Int, { nullable: true })
+  styleId?: number;
+
+  @Field(() => Int, { nullable: true })
+  brandId?: number;
 }

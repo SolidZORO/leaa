@@ -19,6 +19,7 @@ interface IProps {
   parentId?: number;
   parentSlug?: string;
   style?: React.CSSProperties;
+  placeholder?: string;
 }
 
 export const SelectCategoryIdByTree = forwardRef((props: IProps, ref: React.Ref<any>) => {
@@ -91,7 +92,7 @@ export const SelectCategoryIdByTree = forwardRef((props: IProps, ref: React.Ref<
           getCategoriesQuery.data.categories &&
           getCategoriesQuery.data.categories.trees
         }
-        placeholder={t('_lang:category')}
+        placeholder={props.placeholder || t('_lang:category')}
         onChange={onChange}
         style={props.style}
         {...props.componentProps}

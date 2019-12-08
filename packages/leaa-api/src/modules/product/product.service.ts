@@ -62,6 +62,14 @@ export class ProductService {
       qb.andWhere('brands.name IN (:...brandName)', { brandName: nextArgs.brandName });
     }
 
+    if (nextArgs.styleId) {
+      qb.andWhere('styles.id IN (:...styleId)', { styleId: nextArgs.styleId });
+    }
+
+    if (nextArgs.brandId) {
+      qb.andWhere('brands.id IN (:...brandId)', { brandId: nextArgs.brandId });
+    }
+
     // order
     qb.orderBy(`${PRIMARY_TABLE}.${nextArgs.orderBy}`, nextArgs.orderSort);
 

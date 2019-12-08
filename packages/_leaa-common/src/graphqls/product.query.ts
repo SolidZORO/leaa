@@ -8,8 +8,10 @@ export const GET_PRODUCTS = gql`
     $orderSort: String
     $q: String
     $tagName: String
-    $styleName: String
     $brandName: String
+    $brandId: Int
+    $styleName: String
+    $styleId: Int
   ) {
     products(
       page: $page
@@ -18,8 +20,10 @@ export const GET_PRODUCTS = gql`
       orderSort: $orderSort
       q: $q
       tagName: $tagName
-      styleName: $styleName
       brandName: $brandName
+      brandId: $brandId
+      styleName: $styleName
+      styleId: $styleId
     ) {
       total
       page

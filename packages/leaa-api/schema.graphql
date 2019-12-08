@@ -516,7 +516,7 @@ type Query {
   tags(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): TagsWithPaginationObject!
   tag(id: Int!): Tag!
   tagByName(name: String!): Tag!
-  products(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String, tagName: String, styleName: String, brandName: String): ProductsWithPaginationObject
+  products(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String, tagName: String, styleName: String, brandName: String, styleId: Int, brandId: Int): ProductsWithPaginationObject
   product(id: Int!): Product
 }
 

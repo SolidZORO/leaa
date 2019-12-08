@@ -31,7 +31,7 @@ import {
 import style from './style.module.less';
 
 export default (props: IPage) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const urlParams = queryString.parse(window.location.search);
   const urlPagination = urlUtil.getPagination(urlParams);
@@ -43,8 +43,12 @@ export default (props: IPage) => {
   const [tagName, setTagName] = useState<string | undefined>(
     urlParams && urlParams.tagName ? `${urlParams.tagName}` : undefined,
   );
-  const [categoryId, setCategoryId] = useState<number | undefined>(
-    urlParams && urlParams.categoryId ? Number(urlParams.categoryId) : undefined,
+  const [styleId, setStyleId] = useState<number | undefined>(
+    urlParams && urlParams.styleId ? Number(urlParams.styleId) : undefined,
+  );
+
+  const [brandId, setBrandId] = useState<number | undefined>(
+    urlParams && urlParams.brandId ? Number(urlParams.brandId) : undefined,
   );
 
   // sort
@@ -54,7 +58,7 @@ export default (props: IPage) => {
   );
 
   // query
-  const getProductsVariables = { page, pageSize, q, orderBy, orderSort, tagName };
+  const getProductsVariables = { page, pageSize, q, orderBy, orderSort, tagName, styleId, brandId };
   const getProductsQuery = useQuery<{ products: ProductsWithPaginationObject }, ProductsArgs>(GET_PRODUCTS, {
     variables: getProductsVariables,
   });
@@ -73,7 +77,8 @@ export default (props: IPage) => {
     setOrderSort(undefined);
     setQ(undefined);
     setTagName(undefined);
-    setCategoryId(undefined);
+    setStyleId(undefined);
+    setBrandId(undefined);
   };
 
   useEffect(() => {
@@ -102,7 +107,7 @@ export default (props: IPage) => {
       render: (id: string) => <TableColumnId id={id} link={`${props.route.path}/${id}`} />,
     },
     {
-      title: t('_lang:name'),
+      title: t('_page:Product.Component.productName'),
       dataIndex: 'name',
       sorter: true,
       sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'title'),
@@ -132,6 +137,8 @@ export default (props: IPage) => {
     {
       title: t('_lang:price'),
       dataIndex: 'price',
+      sorter: true,
+      sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'price'),
       render: (text: string, record: Product) => <PriceTag amount={record && record.price} size="small" />,
     },
     {
@@ -161,7 +168,9 @@ export default (props: IPage) => {
     {
       title: t('_page:Product.Component.putOnSale'),
       dataIndex: 'status',
-      width: 60,
+      width: i18n.language.includes('zh') ? 70 : 110,
+      sorter: true,
+      sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'status'),
       render: (text: string, record: Product) => (
         <TableColumnStatusSwitch
           id={Number(record.id)}
@@ -191,23 +200,28 @@ export default (props: IPage) => {
   const onFilter = (params: { field: string; value: any }) => {
     setPage(1);
 
-    const filterParams: { q?: string; categoryId?: number; tagName?: string } = {};
+    const filterParams: { q?: string; styleId?: number; brandId?: number; tagName?: string } = {};
 
     if (params.field === 'q') {
       setQ(params.value);
       filterParams.q = params.value;
     }
 
-    if (params.field === 'categoryId') {
+    if (params.field === 'styleId') {
       const v = Number.isNaN(params.value) ? undefined : params.value;
 
-      setCategoryId(v);
-      filterParams.categoryId = v;
+      setStyleId(v);
+      filterParams.styleId = v;
     }
 
     if (params.field === 'tagName') {
       setTagName(params.value);
       filterParams.tagName = params.value;
+    }
+
+    if (params.field === 'brandId') {
+      setBrandId(params.value);
+      filterParams.brandId = params.value;
     }
 
     urlUtil.mergeParamToUrlQuery({
@@ -247,8 +261,19 @@ export default (props: IPage) => {
           <SelectCategoryIdByTree
             className={style['filter-bar-category']}
             componentProps={{ allowClear: true }}
-            onChange={(v: number | number[]) => onFilter({ field: 'categoryId', value: Number(v) })}
-            value={categoryId || undefined}
+            onChange={(v: number | number[]) => onFilter({ field: 'styleId', value: Number(v) })}
+            value={styleId || undefined}
+            parentSlug="products"
+            placeholder={t('_page:Product.Component.style')}
+          />
+
+          <SelectCategoryIdByTree
+            className={style['filter-bar-category']}
+            componentProps={{ allowClear: true }}
+            onChange={(v: number | number[]) => onFilter({ field: 'brandId', value: Number(v) })}
+            value={brandId || undefined}
+            parentSlug="brands"
+            placeholder={t('_page:Product.Component.brand')}
           />
 
           <SearchInput

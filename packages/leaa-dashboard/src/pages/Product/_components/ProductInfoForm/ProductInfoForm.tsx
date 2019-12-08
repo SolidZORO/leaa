@@ -38,8 +38,8 @@ class ProductInfoFormInner extends React.PureComponent<IProps> {
         >
           <Form className={cx('g-form--zero-margin-bottom', style['form-wrapper'])}>
             <Row gutter={16} className={style['form-row']}>
-              <Col xs={24} sm={6}>
-                <Form.Item label={t('_lang:name')}>
+              <Col xs={24} sm={8}>
+                <Form.Item label={t('_page:Product.Component.productName')}>
                   {getFieldDecorator('name', {
                     initialValue: props.item ? props.item.name : undefined,
                     rules: [{ required: true }],
@@ -47,8 +47,8 @@ class ProductInfoFormInner extends React.PureComponent<IProps> {
                 </Form.Item>
               </Col>
 
-              <Col xs={24} sm={6}>
-                <Form.Item label={t('_lang:fullname')}>
+              <Col xs={24} sm={8}>
+                <Form.Item label={t('_page:Product.Component.productFullname')}>
                   {getFieldDecorator('fullname', {
                     initialValue: props.item ? props.item.fullname : undefined,
                     rules: [],
@@ -65,7 +65,7 @@ class ProductInfoFormInner extends React.PureComponent<IProps> {
                 </Form.Item>
               </Col>
 
-              <Col xs={24} sm={3}>
+              <Col xs={24} sm={2}>
                 <Form.Item label={t('_page:Product.Component.putOnSale')}>
                   {getFieldDecorator('status', {
                     initialValue: props.item ? Number(props.item.status) : 1,
@@ -76,19 +76,19 @@ class ProductInfoFormInner extends React.PureComponent<IProps> {
             </Row>
 
             <Row gutter={16} className={style['form-row']}>
-              <Col xs={24} sm={3}>
+              <Col xs={24} sm={4}>
                 <Form.Item label={t('_page:Product.Component.price')}>
                   {getFieldDecorator('price', {
-                    initialValue: props.item ? props.item.price : 0,
+                    initialValue: props.item ? props.item.price : undefined,
                     rules: [{ required: true }],
                   })(<InputNumber placeholder={t('_lang:price')} className={style['input-number']} />)}
                 </Form.Item>
               </Col>
 
-              <Col xs={24} sm={3}>
+              <Col xs={24} sm={4}>
                 <Form.Item label={t('_page:Product.Component.costPrice')}>
                   {getFieldDecorator('cost_price', {
-                    initialValue: props.item ? props.item.cost_price : 0,
+                    initialValue: props.item ? props.item.cost_price : undefined,
                     rules: [],
                   })(
                     <InputNumber
@@ -99,10 +99,10 @@ class ProductInfoFormInner extends React.PureComponent<IProps> {
                 </Form.Item>
               </Col>
 
-              <Col xs={24} sm={3}>
+              <Col xs={24} sm={4}>
                 <Form.Item label={t('_page:Product.Component.marketPrice')}>
                   {getFieldDecorator('market_price', {
-                    initialValue: props.item ? props.item.market_price : 0,
+                    initialValue: props.item ? props.item.market_price : undefined,
                     rules: [],
                   })(
                     <InputNumber
@@ -112,9 +112,7 @@ class ProductInfoFormInner extends React.PureComponent<IProps> {
                   )}
                 </Form.Item>
               </Col>
-            </Row>
 
-            <Row gutter={16} className={style['form-row']}>
               <Col xs={24} sm={6}>
                 <Form.Item label={t('_page:Product.Component.style')}>
                   {getFieldDecorator('styleIds', {
