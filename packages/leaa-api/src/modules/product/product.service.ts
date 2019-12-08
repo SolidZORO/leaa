@@ -40,15 +40,6 @@ export class ProductService {
     qb.leftJoinAndSelect(`${PRIMARY_TABLE}.brands`, 'brands');
     qb.leftJoinAndSelect(`${PRIMARY_TABLE}.tags`, 'tags');
 
-    // q
-    if (nextArgs.q) {
-      const qLike = `%${nextArgs.q}%`;
-
-      ['name', 'serial'].forEach(key => {
-        qb.orWhere(`${PRIMARY_TABLE}.${key} LIKE :${key}`, { [key]: qLike });
-      });
-    }
-
     // tag
     if (nextArgs.tagName) qb.andWhere('tags.name IN (:...tagName)', { tagName: nextArgs.tagName });
 
@@ -56,6 +47,15 @@ export class ProductService {
     if (nextArgs.brandId) qb.andWhere('brands.id IN (:...brandId)', { brandId: nextArgs.brandId });
     if (nextArgs.styleName) qb.andWhere('styles.name IN (:...styleName)', { styleName: nextArgs.styleName });
     if (nextArgs.brandName) qb.andWhere('brands.name IN (:...brandName)', { brandName: nextArgs.brandName });
+
+    // q
+    if (nextArgs.q) {
+      const qLike = `%${nextArgs.q}%`;
+
+      ['name'].forEach(key => {
+        qb.andWhere(`${PRIMARY_TABLE}.${key} LIKE :${key}`, { [key]: qLike });
+      });
+    }
 
     // order
     qb.orderBy(`${PRIMARY_TABLE}.${nextArgs.orderBy}`, nextArgs.orderSort);
