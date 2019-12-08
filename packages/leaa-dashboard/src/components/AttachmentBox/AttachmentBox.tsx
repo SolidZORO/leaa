@@ -1,3 +1,4 @@
+import cx from 'classnames';
 import { useTranslation } from 'react-i18next';
 import React, { useState, forwardRef, useImperativeHandle, useRef } from 'react';
 import { useQuery, useMutation } from '@apollo/react-hooks';
@@ -26,12 +27,18 @@ interface IProps {
   onChange?: (checked: boolean) => void;
   attachmentParams: IAttachmentParams;
   onSubmitCallback?: (v: any) => void;
+  type?: 'list' | 'card';
+  title?: React.ReactNode;
   disableMessage?: boolean;
   listHeight?: number;
+  cardHeight?: number;
 }
 
 export const AttachmentBox = forwardRef((props: IProps, ref: React.Ref<any>) => {
   const { t, i18n } = useTranslation();
+  const type = props.type || 'list';
+  const cardHeight = props.cardHeight || 230;
+  const listHeight = props.listHeight || 130;
 
   const attachmentListRef = useRef<any>(null);
 
@@ -108,11 +115,21 @@ export const AttachmentBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
   );
 
   return (
-    <div className={style['wrapper']}>
+    <div
+      className={cx(style['wrapper'], {
+        [style['wrapper-box--list']]: type === 'list',
+        [style['wrapper-box--card']]: type === 'card',
+      })}
+      style={{ height: props.type === 'card' ? cardHeight : undefined }}
+    >
       <FormCard
         title={
           <>
-            {langUtil.removeSpace(`${t('_lang:attachment')} ${t('_lang:list')}`, i18n.language)}
+            {props.title ||
+              langUtil.removeSpace(
+                `${t('_lang:attachment')} ${props.type === 'list' ? t('_lang:list') : t('_lang:card')}`,
+                i18n.language,
+              )}
 
             <Tooltip
               title={
@@ -128,7 +145,19 @@ export const AttachmentBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
           </>
         }
       >
-        <AttachmentDropzone attachmentParams={{ ...props.attachmentParams }} onUploadedCallback={refreshAttachments} />
+        <AttachmentDropzone
+          attachmentParams={{ ...props.attachmentParams }}
+          onUploadedCallback={refreshAttachments}
+          attachments={
+            getAttachmentsQuery &&
+            getAttachmentsQuery.data &&
+            getAttachmentsQuery.data.attachments &&
+            getAttachmentsQuery.data.attachments.items
+          }
+          type={type}
+          cardHeight={cardHeight}
+        />
+
         <AttachmentList
           ref={attachmentListRef}
           attachmentParams={{ ...props.attachmentParams }}
@@ -140,7 +169,9 @@ export const AttachmentBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
           }
           onChangeAttachmentsCallback={onChangeAttachments}
           onDeleteAttachmentCallback={refreshAttachments}
-          listHeight={props.listHeight}
+          type={type}
+          listHeight={listHeight}
+          cardHeight={cardHeight}
         />
       </FormCard>
     </div>

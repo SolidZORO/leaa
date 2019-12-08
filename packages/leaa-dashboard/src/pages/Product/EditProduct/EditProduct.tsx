@@ -14,6 +14,7 @@ import { messageUtil } from '@leaa/dashboard/src/utils';
 import { PageCard, HtmlMeta, SelectTagId, SubmitBar } from '@leaa/dashboard/src/components';
 
 import { ProductInfoForm } from '../_components/ProductInfoForm/ProductInfoForm';
+import { ProductImage } from '../_components/ProductImage/ProductImage';
 
 import style from './style.module.less';
 
@@ -109,6 +110,8 @@ export default (props: IPage) => {
     >
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
+      {getProductQuery.data && <ProductImage item={getProductQuery.data.product} />}
+
       <ProductInfoForm
         item={getProductQuery.data && getProductQuery.data.product}
         loading={getProductQuery.loading}
@@ -124,10 +127,6 @@ export default (props: IPage) => {
           selectedTags={getProductQuery.data && getProductQuery.data.product && getProductQuery.data.product.tags}
           onChangeSelectedTagsCallback={onChangeSelectedTagsCallback}
         />
-      </div>
-
-      <div className={style['container-wrapper']}>
-        <div className={style['container-main']}>PRODUCT</div>
       </div>
 
       <SubmitBar full>

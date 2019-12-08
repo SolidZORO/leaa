@@ -95,7 +95,9 @@ export class CategoryService {
         if (parent) {
           const trees = await manager.getTreeRepository(Category).findDescendantsTree(parent);
 
-          return { trees: this.categoriesByTrees([trees], nextArgs) };
+          if (trees && trees.children && trees.children.length) {
+            return { trees: this.categoriesByTrees(nextArgs.includeParent ? [trees] : trees.children, nextArgs) };
+          }
         }
 
         return { trees: [] };

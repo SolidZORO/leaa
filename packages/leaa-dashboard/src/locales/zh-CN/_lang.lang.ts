@@ -31,6 +31,7 @@ export default {
   attachment: '附件',
   empty: '暂无',
   list: '列表',
+  card: '卡片',
   mobile: '手机',
   desktop: '电脑',
   banner: '题图',

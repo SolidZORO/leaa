@@ -20,7 +20,7 @@ import style from './style.module.less';
 export default (props: IPage) => {
   const { t } = useTranslation();
   const { id } = props.match.params as { id: string };
-  const listHeight = 600;
+  const listHeight = 200;
 
   // ref
   const [axInfoFormRef, setAxInfoFormRef] = useState<any>();

@@ -21,6 +21,8 @@ interface IProps {
   onChangeAttachmentsCallback?: (attachments: Attachment[]) => void;
   onDeleteAttachmentCallback?: (uuid: string) => void;
   listHeight?: number;
+  type?: 'list' | 'card';
+  cardHeight?: number;
 }
 
 export const AttachmentList = forwardRef((props: IProps, ref: React.Ref<any>) => {
@@ -89,36 +91,47 @@ export const AttachmentList = forwardRef((props: IProps, ref: React.Ref<any>) =>
 
   const isEmpty = attachments && attachments.length === 0;
 
+  const dndDom = () => {
+    if (attachments && !isEmpty) {
+      return attachments.map((a, i) => (
+        <AttachmentItem
+          key={a.uuid}
+          index={i}
+          attachment={a}
+          onMoveAttachmentCallback={onMoveAttachment}
+          onStoponMoveAttachmentCallback={onStopMoveAttachment}
+          onChangeAttachmentCallback={onChangeAttachment}
+          onDeleteAttachmentCallback={props.onDeleteAttachmentCallback}
+          onChangeStatusCallback={onChangeStatus}
+          type={props.type}
+          cardHeight={props.cardHeight}
+        />
+      ));
+    }
+
+    if (props.type === 'list') {
+      return (
+        <div className={style['empty-text']}>
+          {langUtil.removeSpace(`${t('_lang:empty')} ${t('_lang:attachment')}`, i18n.language)}
+        </div>
+      );
+    }
+
+    return null;
+  };
+
   return (
     <div
-      className={cx(style['wrapper'], { [style['wrapper--empty']]: isEmpty })}
-      style={{
-        height: props.listHeight || 150,
-        paddingTop: isEmpty && props.listHeight ? props.listHeight / 2 - 10 : undefined,
-      }}
       ref={ref}
+      className={cx(style['wrapper'], {
+        [style['wrapper-list--list']]: props.type === 'list',
+        [style['wrapper-list--card']]: props.type === 'card',
+        [style['wrapper-list--empty']]: isEmpty,
+      })}
+      style={{ height: props.type === 'list' ? props.listHeight : undefined }}
     >
       <div className={style['wrapper-inner']}>
-        <DndProvider backend={HTML5Backend}>
-          {attachments && !isEmpty ? (
-            attachments.map((a, i) => (
-              <AttachmentItem
-                key={a.uuid}
-                index={i}
-                attachment={a}
-                onMoveAttachmentCallback={onMoveAttachment}
-                onStoponMoveAttachmentCallback={onStopMoveAttachment}
-                onChangeAttachmentCallback={onChangeAttachment}
-                onDeleteAttachmentCallback={props.onDeleteAttachmentCallback}
-                onChangeStatusCallback={onChangeStatus}
-              />
-            ))
-          ) : (
-            <div className={style['empty-text']}>
-              {langUtil.removeSpace(`${t('_lang:empty')} ${t('_lang:attachment')}`, i18n.language)}
-            </div>
-          )}
-        </DndProvider>
+        <DndProvider backend={HTML5Backend}>{dndDom()}</DndProvider>
       </div>
     </div>
   );

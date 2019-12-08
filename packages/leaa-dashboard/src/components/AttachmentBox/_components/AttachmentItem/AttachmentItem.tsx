@@ -1,3 +1,4 @@
+import cx from 'classnames';
 import React, { forwardRef, useState, useEffect, useImperativeHandle, useRef } from 'react';
 import {
   DragSource,
@@ -10,7 +11,7 @@ import {
   DragSourceConnector,
 } from 'react-dnd';
 import { XYCoord } from 'dnd-core';
-import { Input, Button } from 'antd';
+import { Input, Button, Icon, Tooltip } from 'antd';
 import { useMutation } from '@apollo/react-hooks';
 import { useTranslation } from 'react-i18next';
 
@@ -32,6 +33,8 @@ interface IProps {
   onChangeAttachmentCallback: (attachment: Attachment) => void;
   onDeleteAttachmentCallback?: (uuid: string) => void;
   onChangeStatusCallback?: (attachment: Attachment) => void;
+  type?: 'list' | 'card';
+  cardHeight?: number;
 }
 
 interface IAttachmentInstance {
@@ -42,6 +45,7 @@ const AttachmentItemInner = forwardRef((props: IProps, ref: React.Ref<any>) => {
   const { t } = useTranslation();
   const cardRef = useRef(null);
   const opacity = props.isDragging ? 0.3 : 1;
+  const cardHeight = (props.type === 'card' && props.cardHeight) || undefined;
 
   // TODO just handles <image> sort
   props.connectDragSource(cardRef);
@@ -94,52 +98,74 @@ const AttachmentItemInner = forwardRef((props: IProps, ref: React.Ref<any>) => {
 
   return (
     <div
-      className={style['wrapper']}
+      className={cx(style['wrapper'], {
+        // Fucking!! Warning: Unsupported style property wrapperItem-card. Did you mean wrapperItemCard?
+        [style['wrapperItemList']]: props.type === 'list',
+        [style['wrapperItemCard']]: props.type === 'card',
+      })}
       style={{
         ...style,
         // stylelint-disable-line
         opacity,
       }}
     >
-      <div className={style['image']} ref={cardRef}>
-        <img src={`${props.attachment.url}`} alt="" />
-
-        <div className={style['toolbar']}>
-          <Button
-            type="link"
-            size="small"
-            shape="circle"
-            icon="delete"
-            className={style['delete']}
-            loading={deleteAttachmentsMutation.loading}
-            onClick={() => onDelete(attachment.uuid)}
-          />
-          {props.attachment.at2x === 1 && <strong title="image include _2x" className={style['at2xdot']} />}
-        </div>
+      <div className={cx(style['toolbar'])} ref={cardRef} style={{ height: cardHeight }}>
+        <Button
+          type="link"
+          size="small"
+          shape="circle"
+          icon="delete"
+          className={style['delete']}
+          loading={deleteAttachmentsMutation.loading}
+          onClick={() => onDelete(attachment.uuid)}
+        />
       </div>
 
-      <Input
-        className={style['title']}
-        value={attachment.title}
-        onChange={e => onChangeAttachment('title', e)}
-        placeholder={t('_lang:title')}
-      />
+      <div ref={cardRef} className={cx(style['image'])} style={{ height: cardHeight }}>
+        <Tooltip
+          overlayClassName={style['imageTooltip']}
+          title={
+            // @ts-ignore
+            // eslint-disable-next-line react/jsx-no-target-blank
+            <a href={props.attachment.url} target="_blank">
+              <img alt={props.attachment.alt} src={`${props.attachment.url}`} />
+            </a>
+          }
+        >
+          <Icon type="ri-eye-line" className={style['zoomimage']} />
+        </Tooltip>
 
-      <Input
-        className={style['link']}
-        value={attachment.link || undefined}
-        onChange={e => onChangeAttachment('link', e)}
-        placeholder={t('_lang:link')}
-      />
+        {props.attachment.at2x === 1 && <Icon type="ri-hd-line" title="@2x image" className={style['at2xdot']} />}
 
-      <Input
-        className={style['sort']}
-        value={attachment.sort}
-        onChange={e => onChangeAttachment('sort', e)}
-        placeholder={t('_lang:sort')}
-      />
+        <img src={`${props.attachment.url}`} alt="" />
+      </div>
 
-      <SwitchNumber className={style['status']} value={props.attachment.status} onChange={onChangeStatus} />
+      {props.type === 'list' && (
+        <>
+          <Input
+            className={style['title']}
+            value={attachment.title}
+            onChange={e => onChangeAttachment('title', e)}
+            placeholder={t('_lang:title')}
+          />
+
+          <Input
+            className={style['link']}
+            value={attachment.link || undefined}
+            onChange={e => onChangeAttachment('link', e)}
+            placeholder={t('_lang:link')}
+          />
+
+          <Input
+            className={style['sort']}
+            value={attachment.sort}
+            onChange={e => onChangeAttachment('sort', e)}
+            placeholder={t('_lang:sort')}
+          />
+
+          <SwitchNumber className={style['status']} value={props.attachment.status} onChange={onChangeStatus} />
+        </>
+      )}
     </div>
   );
 });
@@ -196,10 +222,16 @@ export const AttachmentItem = DropTarget(
   DragSource(
     'card',
     {
-      beginDrag: (props: IProps) => ({
-        id: props.attachment.id,
-        index: props.index,
-      }),
+      beginDrag: (props: IProps) => {
+        if (props.type === 'card') {
+          return undefined;
+        }
+
+        return {
+          id: props.attachment.id,
+          index: props.index,
+        };
+      },
     },
     (connect: DragSourceConnector, monitor: DragSourceMonitor) => ({
       connectDragSource: connect.dragSource(),

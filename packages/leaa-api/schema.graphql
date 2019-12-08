@@ -497,7 +497,7 @@ type Query {
   articles(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String, tagName: String, categoryName: String, categoryId: Int): ArticlesWithPaginationObject!
   article(id: Int!): Article!
   articleBySlug(slug: String!): Article!
-  categories(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String, expanded: Boolean, listType: Boolean, treeType: Boolean, parentSlug: String, parentId: Int): CategoriesWithPaginationOrTreeObject!
+  categories(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String, expanded: Boolean, listType: Boolean, treeType: Boolean, parentSlug: String, parentId: Int, includeParent: Boolean): CategoriesWithPaginationOrTreeObject!
   category(id: Int!): Category!
   axs(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): AxsWithPaginationObject!
   ax(id: Int!): Ax!

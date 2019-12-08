@@ -35,6 +35,8 @@ export const GET_ATTACHMENTS = gql`
         title
         link
         type
+        width
+        height
         description
         category_id
         user_id
@@ -61,6 +63,8 @@ export const GET_ATTACHMENT = gql`
       title
       link
       type
+      width
+      height
       description
       category_id
       user_id

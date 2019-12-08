@@ -18,4 +18,8 @@ export class CategoriesArgs extends ItemsArgs {
 
   @Field(() => Int, { nullable: true })
   parentId?: number;
+
+  // findDescendantsTree include parent category (default: parent.children)
+  @Field(() => Boolean, { nullable: true })
+  includeParent?: boolean;
 }

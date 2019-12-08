@@ -45,8 +45,6 @@ export const SelectCategoryIdByTree = forwardRef((props: IProps, ref: React.Ref<
     }
 
     if (!props.multipleSelect) {
-      console.log(typeof value);
-
       return Number(value);
     }
 

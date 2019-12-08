@@ -34,6 +34,13 @@
       "unicode_decimal": 61585
     },
     {
+      "icon_id": "12124773",
+      "name": "ri-search-line",
+      "font_class": "ri-search-line",
+      "unicode": "f0fc",
+      "unicode_decimal": 61692
+    },
+    {
       "icon_id": "12124800",
       "name": "ri-settings-line",
       "font_class": "ri-settings-line",
@@ -62,11 +69,25 @@
       "unicode_decimal": 62032
     },
     {
+      "icon_id": "12125125",
+      "name": "ri-hd-line",
+      "font_class": "ri-hd-line",
+      "unicode": "f25c",
+      "unicode_decimal": 62044
+    },
+    {
       "icon_id": "12125136",
       "name": "ri-swap-box-line",
       "font_class": "ri-swap-box-line",
       "unicode": "f267",
       "unicode_decimal": 62055
+    },
+    {
+      "icon_id": "12125153",
+      "name": "ri-eye-line",
+      "font_class": "ri-eye-line",
+      "unicode": "f278",
+      "unicode_decimal": 62072
     },
     {
       "icon_id": "12125239",
@@ -90,6 +111,13 @@
       "unicode_decimal": 62197
     },
     {
+      "icon_id": "12125348",
+      "name": "ri-search-eye-line",
+      "font_class": "ri-search-eye-line",
+      "unicode": "f33b",
+      "unicode_decimal": 62267
+    },
+    {
       "icon_id": "12125435",
       "name": "ri-shield-user-line",
       "font_class": "ri-shield-user-line",
@@ -102,6 +130,13 @@
       "font_class": "ri-voiceprint-line",
       "unicode": "f3ae",
       "unicode_decimal": 62382
+    },
+    {
+      "icon_id": "12125500",
+      "name": "ri-zoom-in-line",
+      "font_class": "ri-zoom-in-line",
+      "unicode": "f3d3",
+      "unicode_decimal": 62419
     },
     {
       "icon_id": "12125661",

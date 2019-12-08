@@ -31,6 +31,7 @@ export default {
   attachment: 'Attachment',
   empty: 'Empty',
   list: 'List',
+  card: 'Card',
   mobile: 'Mobile',
   desktop: 'Desktop',
   banner: 'Banner',

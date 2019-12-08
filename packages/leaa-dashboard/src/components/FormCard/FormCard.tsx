@@ -12,14 +12,14 @@ interface IProps {
 }
 
 export const FormCard = (props: IProps) => (
-  <Card className={cx(style['wrapper'], props.className)}>
+  <Card className={cx(style['wrapper'], 'g-form-card-wrapper', props.className)}>
     <div
       className={cx(style['header'], {
         [style['header--less']]: !props.title && !props.extra,
       })}
     >
-      {props.title && <div className={style['title']}>{props.title}</div>}
-      {props.extra && <div className={style['extra']}>{props.extra}</div>}
+      {props.title && <div className={cx(style['title'], 'g-form-card-title')}>{props.title}</div>}
+      {props.extra && <div className={cx(style['extra'], 'g-form-card-extra')}>{props.extra}</div>}
     </div>
     {props.children}
   </Card>
