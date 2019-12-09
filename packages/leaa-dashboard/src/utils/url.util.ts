@@ -2,7 +2,7 @@ import _ from 'lodash';
 import animateScrollTo from 'animated-scroll-to';
 import queryString, { ParsedQuery } from 'query-string';
 import { PaginationProps } from 'antd/lib/pagination';
-import { SortOrder } from 'antd/lib/table';
+import { SortOrder, SorterResult } from 'antd/lib/table/interface';
 
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from '@leaa/dashboard/src/constants';
 
@@ -121,12 +121,13 @@ const pickPagination = (params: PaginationProps): IPickPaginationResult => {
   return result;
 };
 
-const pickOrder = (params: IPickOrderProps): IPickOrderResult => {
+// const pickOrder = (params: IPickOrderProps | any): IPickOrderResult => {
+const pickOrder = (params: IPickOrderProps | any) => {
   if (_.isEmpty(params)) {
     return { orderBy: undefined, orderSort: undefined };
   }
 
-  const result: IPickOrderResult = {};
+  const result: any = {};
 
   if (params.field) {
     result.orderBy = params.field;

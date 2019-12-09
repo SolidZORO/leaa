@@ -87,7 +87,7 @@ export default (props: IPage) => {
 
   const rowSelection = {
     columnWidth: 30,
-    onChange: (keys: number[] | string[]) => setSelectedRowKeys(keys),
+    onChange: (keys: any) => setSelectedRowKeys(keys),
     selectedRowKeys,
   };
 
@@ -289,7 +289,7 @@ export default (props: IPage) => {
             rowKey="id"
             size="small"
             rowSelection={rowSelection}
-            columns={columns}
+            columns={columns as any}
             dataSource={getProductsQuery.data.products.items}
             pagination={{
               defaultCurrent: page,
@@ -304,7 +304,9 @@ export default (props: IPage) => {
             onChange={(pagination, filters, sorter) => {
               setPage(pagination.current);
               setPageSize(pagination.pageSize);
+              // @ts-ignore
               setOrderBy(sorter.field);
+              // @ts-ignore
               setOrderSort(urlUtil.formatOrderSort(sorter.order));
               setSelectedRowKeys([]);
 

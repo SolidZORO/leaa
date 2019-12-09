@@ -2,15 +2,14 @@ import React, { useState, useEffect, useRef, forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import cx from 'classnames';
 import _ from 'lodash';
-import { Select, AutoComplete, Input } from 'antd';
+import { AutoComplete, Input } from 'antd';
 import { AutoCompleteProps } from 'antd/lib/auto-complete';
+import { LoadingOutlined } from '@ant-design/icons';
 
 import { User as UserEntry, User } from '@leaa/common/src/entrys';
 import { UsersWithPaginationObject, UserArgs, UsersArgs } from '@leaa/common/src/dtos/user';
 import { GET_USERS, GET_USER } from '@leaa/common/src/graphqls';
 import { apolloClient } from '@leaa/dashboard/src/libs';
-
-import { Rcon } from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';
 
@@ -19,7 +18,6 @@ interface IProps extends AutoCompleteProps {
   useOnBlur?: boolean;
   enterCreateUser?: boolean;
   value?: string;
-  defaultValue?: string | string[] | number;
   autoFocus?: boolean;
   onSelectUserCallback?: (user: UserEntry | undefined) => void;
   onEnterCallback?: (userId: number | undefined) => void;
@@ -150,9 +148,10 @@ export const UserSearchBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
           onSearch={onSearch}
           onChange={onChange}
           onSelect={onSelect}
-          dataSource={optionalUsers.map(user => (
-            <Select.Option key={user.id}>{`#${user.id} - ${user.name} - ${user.email}`}</Select.Option>
-          ))}
+          options={optionalUsers.map(user => ({
+            label: `#${user.id} - ${user.name} - ${user.email}`,
+            value: user.id,
+          }))}
           placeholder={props.placeholder || t('_comp:UserSearchBox.searchUsers', i18n.language)}
           value={inputKey}
           defaultValue={props.defaultValue}
@@ -161,7 +160,7 @@ export const UserSearchBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
           <Input
             onPressEnter={onEnter}
             className={style['search-input']}
-            suffix={loading ? <Rcon type="loading" /> : <span />}
+            suffix={loading ? <LoadingOutlined /> : <span />}
           />
         </AutoComplete>
       </div>

@@ -2,13 +2,15 @@ import React, { useState, useEffect, useRef, forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import cx from 'classnames';
 import _ from 'lodash';
-import { Select, AutoComplete, Input } from 'antd';
+import { AutoComplete, Input } from 'antd';
 import { AutoCompleteProps } from 'antd/lib/auto-complete';
+import { LoadingOutlined } from '@ant-design/icons';
 
 import { Tag as TagEntry } from '@leaa/common/src/entrys';
 import { TagsWithPaginationObject, TagArgs } from '@leaa/common/src/dtos/tag';
 import { GET_TAGS } from '@leaa/common/src/graphqls';
 import { apolloClient } from '@leaa/dashboard/src/libs';
+
 import style from './style.module.less';
 
 interface IProps extends AutoCompleteProps {
@@ -93,6 +95,8 @@ export const TagSearchBox = forwardRef((props: IProps, ref: React.Ref<any>) => {
   const onSelect = (tagName: any) => {
     const tagObject = optionalTags.find(item => item.name === tagName);
 
+    console.log(tagObject);
+
     if (props.onSelectTagCallback && tagObject) {
       props.onSelectTagCallback(tagObject);
     }
@@ -122,14 +126,17 @@ export const TagSearchBox = forwardRef((props: IProps, ref: React.Ref<any>) => {
           onSearch={onSearch}
           onChange={onChange}
           onSelect={onSelect}
-          dataSource={optionalTags.map(tag => (
-            <Select.Option key={tag.name}>{tag.name}</Select.Option>
-          ))}
-          placeholder={props.placeholder || t('_comp:SelectTagId.searchTags')}
+          options={optionalTags.map(tag => ({
+            label: tag.name,
+            value: tag.name,
+          }))}
           value={inputKey}
-          size={props.size}
         >
-          <Input onPressEnter={onEnter} />
+          <Input
+            onPressEnter={onEnter}
+            suffix={loading ? <LoadingOutlined /> : <span />}
+            placeholder={props.placeholder || t('_comp:SelectTagId.searchTags')}
+          />
         </AutoComplete>
       </div>
     </div>
