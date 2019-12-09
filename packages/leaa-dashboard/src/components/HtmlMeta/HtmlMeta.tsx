@@ -1,7 +1,8 @@
 import React from 'react';
-import { Helmet } from 'react-helmet';
+// import { Helmet } from 'react-helmet';
 import { envConfig } from '@leaa/dashboard/src/configs';
 import { settingUtil } from '@leaa/dashboard/src/utils';
+import { Helmet } from 'react-helmet-async';
 
 // import { useTranslation } from 'react-i18next';
 

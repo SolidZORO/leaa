@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { IPage } from '@leaa/dashboard/src/interfaces';
 import { useStore } from '@leaa/dashboard/src/stores';
 
-import { HtmlMeta, SelectTagId, SelectCategoryIdByTree, Rcon } from '@leaa/dashboard/src/components';
+import { HtmlMeta, SelectTagId, SelectCategoryIdByTree, Rcon, SuspenseFallback } from '@leaa/dashboard/src/components';
 
 // import { MessageOutlined, createFromIconfontCN } from '@ant-design/icons';
 
@@ -45,6 +45,8 @@ export default (props: IPage) => {
 
       <br />
       <br />
+
+      <SuspenseFallback />
 
       <Rcon type="ri-time-line" />
     </div>
