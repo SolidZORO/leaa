@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Button, message } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useMutation } from '@apollo/react-hooks';
@@ -21,6 +21,7 @@ export default (props: IPage) => {
 
   // ref
   const [productInfoFormRef, setProductInfoFormRef] = useState<any>();
+  const infoFormRef = useRef<any>(null);
 
   // mutation
   const [submitVariables, setSubmitVariables] = useState<{ product: CreateProductInput }>();
@@ -34,16 +35,17 @@ export default (props: IPage) => {
   });
 
   const onSubmit = async () => {
-    productInfoFormRef.props.form.validateFieldsAndScroll(async (err: any, formData: CreateProductInput) => {
-      if (err) {
-        message.error(err[Object.keys(err)[0]].errors[0].message);
-
-        return;
-      }
-
-      await setSubmitVariables({ product: formData });
-      await createProductMutate();
-    });
+    console.log(infoFormRef);
+    // productInfoFormRef.props.form.validateFieldsAndScroll(async (err: any, formData: CreateProductInput) => {
+    //   if (err) {
+    //     message.error(err[Object.keys(err)[0]].errors[0].message);
+    //
+    //     return;
+    //   }
+    //
+    //   await setSubmitVariables({ product: formData });
+    //   await createProductMutate();
+    // });
   };
 
   return (
@@ -59,7 +61,7 @@ export default (props: IPage) => {
     >
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
-      <ProductInfoForm wrappedComponentRef={(inst: unknown) => setProductInfoFormRef(inst)} />
+      <ProductInfoForm ref={infoFormRef} />
 
       <SubmitBar>
         <Button

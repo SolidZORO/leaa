@@ -1,12 +1,14 @@
 import React, { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, message } from 'antd';
+import { FormProps } from 'antd/lib/form/Form';
+import { FormInstance } from 'rc-field-form/lib';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
 import { Product, Tag } from '@leaa/common/src/entrys';
 import { IAttachmentBoxRef } from '@leaa/common/src/interfaces';
 import { GET_PRODUCT, UPDATE_PRODUCT } from '@leaa/common/src/graphqls';
-import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
+import { UPDATE_BUTTON_ICON, PAGE_CARD_TITLE_CREATE_ICON } from '@leaa/dashboard/src/constants';
 import { ProductArgs, UpdateProductInput } from '@leaa/common/src/dtos/product';
 import { IPage } from '@leaa/dashboard/src/interfaces';
 import { messageUtil } from '@leaa/dashboard/src/utils';
@@ -27,6 +29,7 @@ export default (props: IPage) => {
   const attachmentBoxRef = useRef<IAttachmentBoxRef>(null);
   const productContentRef = useRef<any>(null);
   const productAttachmentRef = useRef<IAttachmentBoxRef>(null);
+  const infoFormRef = useRef<{ onValidateForm: any; form: FormInstance }>(null);
 
   const [productInfoFormRef, setProductInfoFormRef] = useState<any>();
   const [productTags, setProductTags] = useState<Tag[]>();
@@ -49,30 +52,10 @@ export default (props: IPage) => {
   });
 
   const onSubmit = async () => {
-    let hasError = false;
-    let submitData: UpdateProductInput = {};
+    const submitData: UpdateProductInput = await infoFormRef.current?.onValidateForm();
 
-    // info
-    productInfoFormRef.props.form.validateFieldsAndScroll(async (err: any, formData: Product) => {
-      if (err) {
-        hasError = true;
-        message.error(err[Object.keys(err)[0]].errors[0].message);
-
-        return;
-      }
-
-      submitData = formData;
-    });
-
-    if (hasError) {
+    if (!submitData) {
       return;
-    }
-
-    if (
-      productContentRef?.current?.getInstance()?.getHtml() &&
-      typeof productContentRef.current.getInstance().getHtml() !== 'undefined'
-    ) {
-      submitData.content = productContentRef.current.getInstance().getHtml();
     }
 
     submitData.tagIds = productTags && productTags?.length > 0 ? productTags.map(item => Number(item.id)) : undefined;
@@ -80,13 +63,8 @@ export default (props: IPage) => {
     await setSubmitVariables({ id: Number(id), product: submitData });
     await updateProductMutate();
 
-    // attachment box
-    if (attachmentBoxRef?.current) {
-      attachmentBoxRef.current.onUpdateAttachments();
-    }
-
     // keep form fields consistent with API
-    productInfoFormRef.props.form.resetFields();
+    infoFormRef.current?.form?.resetFields();
   };
 
   const onChangeSelectedTagsCallback = (tags: Tag[]) => setProductTags(tags);
@@ -104,13 +82,9 @@ export default (props: IPage) => {
     >
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
-      <ProductInfoForm
-        item={getProductQuery.data?.product}
-        loading={getProductQuery.loading}
-        wrappedComponentRef={(inst: unknown) => setProductInfoFormRef(inst)}
-      />
+      <ProductInfoForm ref={infoFormRef} item={getProductQuery.data?.product} />
 
-      {getProductQuery.data?.product && <ProductImage item={getProductQuery.data.product} ref={productAttachmentRef} />}
+      {getProductQuery.data?.product && <ProductImage item={getProductQuery.data.product} />}
 
       <div className={style['select-tag-id-wrapper']}>
         <SelectTagId
@@ -127,7 +101,7 @@ export default (props: IPage) => {
         <Button
           type="primary"
           size="large"
-          icon={UPDATE_BUTTON_ICON}
+          icon={<Rcon type={UPDATE_BUTTON_ICON} />}
           className="submit-button"
           loading={updateProductMutation.loading}
           onClick={onSubmit}

@@ -1,13 +1,11 @@
-import React, { useRef, forwardRef, useImperativeHandle } from 'react';
 import cx from 'classnames';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Col, Row } from 'antd';
 
 import { Product } from '@leaa/common/src/entrys';
 
 import { AttachmentBox, FormCard } from '@leaa/dashboard/src/components';
-
-import { IAttachmentBoxRef } from '@leaa/common/src/interfaces/attachment.interface';
 
 import style from './style.module.less';
 
@@ -17,32 +15,18 @@ interface IProps {
   loading?: boolean;
 }
 
-export const ProductImage = forwardRef((props: IProps, ref: React.Ref<any>) => {
+export const ProductImage = (props: IProps) => {
   const { t } = useTranslation();
-
-  const productImageRef = useRef<any>(null);
-
-  const getBannerMbRef = useRef<IAttachmentBoxRef>(null);
-  const getGallerMbRef = useRef<IAttachmentBoxRef>(null);
-
-  // useImperativeHandle<{}, any>(
-  //   ref,
-  //   () => ({
-  //     getGallerMbRef,
-  //   }),
-  //   [],
-  // );
 
   return (
     <div className={cx(style['wrapper'], props.className)}>
       <FormCard title={t('_page:Product.Component.productImage')}>
-        <Row gutter={16} className={style['form-row']} ref={productImageRef}>
+        <Row gutter={16} className={style['form-row']}>
           <Col xs={24} sm={8}>
             <AttachmentBox
               type="card"
               title={t('_page:Product.Component.bannerMb')}
               disableMessage
-              ref={getBannerMbRef}
               attachmentParams={{
                 type: 'image',
                 moduleId: Number(props.item.id),
@@ -58,7 +42,6 @@ export const ProductImage = forwardRef((props: IProps, ref: React.Ref<any>) => {
               type="list"
               title={t('_page:Product.Component.galleryMb')}
               disableMessage
-              ref={getGallerMbRef}
               attachmentParams={{
                 type: 'image',
                 moduleId: Number(props.item.id),
@@ -76,7 +59,6 @@ export const ProductImage = forwardRef((props: IProps, ref: React.Ref<any>) => {
               type="card"
               title={t('_page:Product.Component.bannerPc')}
               disableMessage
-              // ref={getBannerMbRef}
               attachmentParams={{
                 type: 'image',
                 moduleId: Number(props.item.id),
@@ -92,7 +74,6 @@ export const ProductImage = forwardRef((props: IProps, ref: React.Ref<any>) => {
               type="list"
               title={t('_page:Product.Component.galleryPc')}
               disableMessage
-              // ref={getBannerMbRef}
               attachmentParams={{
                 type: 'image',
                 moduleId: Number(props.item.id),
@@ -106,4 +87,4 @@ export const ProductImage = forwardRef((props: IProps, ref: React.Ref<any>) => {
       </FormCard>
     </div>
   );
-});
+};

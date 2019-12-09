@@ -14,6 +14,7 @@ import { XYCoord } from 'dnd-core';
 import { Input, Button, Tooltip } from 'antd';
 import { useMutation } from '@apollo/react-hooks';
 import { useTranslation } from 'react-i18next';
+import { DeleteOutlined, LoadingOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 
 import { DELETE_ATTACHMENT } from '@leaa/common/src/graphqls';
 import { Attachment } from '@leaa/common/src/entrys';
@@ -114,7 +115,7 @@ const AttachmentItemInner = forwardRef((props: IProps, ref: React.Ref<any>) => {
           type="link"
           size="small"
           shape="circle"
-          icon="delete"
+          icon={<DeleteOutlined />}
           className={style['delete']}
           loading={deleteAttachmentsMutation.loading}
           onClick={() => onDelete(attachment.uuid)}

@@ -41,13 +41,8 @@ export const SelectCategoryIdByTree = forwardRef((props: IProps, ref: React.Ref<
   );
 
   const getValue = (value: number | number[] | undefined) => {
-    if (typeof value === 'undefined') {
-      return value;
-    }
-
-    if (!props.multipleSelect) {
-      return Number(value);
-    }
+    if (typeof value === 'undefined') return value;
+    if (!props.multipleSelect) return Number(value);
 
     return value;
   };
@@ -83,15 +78,11 @@ export const SelectCategoryIdByTree = forwardRef((props: IProps, ref: React.Ref<
         {...multipleSelectOption}
         className={props.className}
         loading={getCategoriesQuery.loading}
-        value={value}
+        // TIPS: waiting data then select (fix only show number)
+        value={getCategoriesQuery.data?.categories?.trees && value}
         treeDefaultExpandAll
         dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-        treeData={
-          getCategoriesQuery &&
-          getCategoriesQuery.data &&
-          getCategoriesQuery.data.categories &&
-          getCategoriesQuery.data.categories.trees
-        }
+        treeData={getCategoriesQuery.data?.categories?.trees}
         placeholder={props.placeholder || t('_lang:category')}
         onChange={onChange}
         style={props.style}

@@ -16,7 +16,7 @@ interface IProps extends RouteComponentProps {
 
 export const LayoutHeader = (props: IProps) => (
   <Layout.Header className={style['full-layout-header']}>
-    <Row type="flex" justify="space-between" align="middle">
+    <Row justify="space-between" align="middle">
       <Col className={cx(style['full-layout-breadcrumb'], 'g-full-layout-breadcrumb')}>
         <Breadcrumb {...props} />
       </Col>

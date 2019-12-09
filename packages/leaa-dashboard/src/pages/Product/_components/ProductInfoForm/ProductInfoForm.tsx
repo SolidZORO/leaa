@@ -1,155 +1,150 @@
-import React from 'react';
 import cx from 'classnames';
+import React, { useEffect, forwardRef, useImperativeHandle } from 'react';
 import { Col, Form, Input, InputNumber, Row } from 'antd';
-import { withTranslation } from 'react-i18next';
-import { FormComponentProps } from 'antd/lib/form';
+
+import { useTranslation } from 'react-i18next';
 
 import { Product } from '@leaa/common/src/entrys';
-import { ITfn } from '@leaa/dashboard/src/interfaces';
+import { messageUtil } from '@leaa/dashboard/src/utils';
 
 import { FormCard, SwitchNumber, EntryInfoDate, SelectCategoryIdByTree } from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';
 
-interface IFormProps extends FormComponentProps {
-  className?: string;
+interface IProps {
   item?: Product;
+  className?: string;
   loading?: boolean;
+  onValidateFieldsCallback?: (e: any) => void;
 }
 
-type IProps = IFormProps & ITfn;
+export const ProductInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
+  const { t } = useTranslation();
+  const [form] = Form.useForm();
 
-class ProductInfoFormInner extends React.PureComponent<IProps> {
-  constructor(props: IProps) {
-    super(props);
-  }
+  const onValidateForm = async () => {
+    try {
+      return await form.validateFields();
+    } catch (error) {
+      return messageUtil.gqlError(error.errorFields[0]?.errors[0] || 'ERROR!');
+    }
+  };
 
-  render() {
-    const { t } = this.props;
+  const formatInitialValues = (item?: Product): Product | {} => {
+    if (!item) {
+      return {
+        status: 1,
+      };
+    }
 
-    const { props } = this;
-    const { getFieldDecorator } = this.props.form;
+    return {
+      ...item,
+      styleIds: item?.styles?.length ? item.styles[0].id : undefined,
+      brandIds: item?.brands?.length ? item.brands[0].id : undefined,
+    };
+  };
 
-    return (
-      <div className={cx(style['wrapper'], props.className)}>
-        <FormCard
-          title={t('_page:Product.Component.productInfo')}
-          extra={<EntryInfoDate date={props.item && [props.item.created_at, props.item.updated_at]} />}
-        >
-          <Form className={cx('g-form--zero-margin-bottom', style['form-wrapper'])}>
-            <Row gutter={16} className={style['form-row']}>
-              <Col xs={24} sm={8}>
-                <Form.Item label={t('_page:Product.Component.productName')}>
-                  {getFieldDecorator('name', {
-                    initialValue: props.item?.name || undefined,
-                    rules: [{ required: true }],
-                  })(<Input placeholder={t('_lang:name')} />)}
-                </Form.Item>
-              </Col>
+  useEffect(() => {
+    if (props.item) form.setFieldsValue(formatInitialValues(props.item));
+  }, [props.item]);
 
-              <Col xs={24} sm={8}>
-                <Form.Item label={t('_page:Product.Component.productFullname')}>
-                  {getFieldDecorator('fullname', {
-                    initialValue: props.item?.fullname || undefined,
-                    rules: [],
-                  })(<Input placeholder={t('_lang:fullname')} />)}
-                </Form.Item>
-              </Col>
+  useImperativeHandle(ref, () => ({
+    form,
+    onValidateForm,
+  }));
 
-              <Col xs={24} sm={6}>
-                <Form.Item label={t('_lang:serial')}>
-                  {getFieldDecorator('serial', {
-                    initialValue: props.item?.serial || undefined,
-                    rules: [{ required: true }],
-                  })(<Input placeholder={t('_lang:serial')} />)}
-                </Form.Item>
-              </Col>
+  return (
+    <div className={cx(style['wrapper'], props.className)}>
+      <FormCard
+        title={t('_page:Product.Component.productInfo')}
+        extra={<EntryInfoDate date={props.item && [props.item.created_at, props.item.updated_at]} />}
+      >
+        <Form form={form} name="infoForm" layout="vertical" initialValues={formatInitialValues(props.item)}>
+          <Row gutter={16} className={style['form-row']}>
+            <Col xs={24} sm={8}>
+              <Form.Item name="name" label={t('_page:Product.Component.productName')} rules={[{ required: true }]}>
+                <Input placeholder={t('_page:Product.Component.productName')} />
+              </Form.Item>
+            </Col>
 
-              <Col xs={24} sm={2}>
-                <Form.Item label={t('_page:Product.Component.putOnSale')}>
-                  {getFieldDecorator('status', {
-                    initialValue: props.item ? Number(props.item.status) : 1,
-                    rules: [{ required: true }],
-                  })(<SwitchNumber />)}
-                </Form.Item>
-              </Col>
-            </Row>
+            <Col xs={24} sm={8}>
+              <Form.Item
+                name="fullname"
+                label={t('_page:Product.Component.productFullname')}
+                rules={[{ required: true }]}
+              >
+                <Input placeholder={t('_lang:fullname')} />
+              </Form.Item>
+            </Col>
 
-            <Row gutter={16} className={style['form-row']}>
-              <Col xs={24} sm={4}>
-                <Form.Item label={t('_page:Product.Component.price')}>
-                  {getFieldDecorator('price', {
-                    initialValue: props.item?.price || undefined,
-                    rules: [{ required: true }],
-                  })(<InputNumber placeholder={t('_lang:price')} className={style['input-number']} />)}
-                </Form.Item>
-              </Col>
+            <Col xs={24} sm={6}>
+              <Form.Item name="serial" label={t('_lang:serial')} rules={[{ required: true }]}>
+                <Input placeholder={t('_lang:serial')} />
+              </Form.Item>
+            </Col>
 
-              <Col xs={24} sm={4}>
-                <Form.Item label={t('_page:Product.Component.costPrice')}>
-                  {getFieldDecorator('cost_price', {
-                    initialValue: props.item?.cost_price || undefined,
-                    rules: [],
-                  })(
-                    <InputNumber
-                      placeholder={t('_page:Product.Component.costPrice')}
-                      className={style['input-number']}
-                    />,
-                  )}
-                </Form.Item>
-              </Col>
+            <Col xs={24} sm={2}>
+              <Form.Item
+                name="status"
+                normalize={e => e && Number(e)}
+                label={t('_page:Product.Component.putOnSale')}
+                rules={[{ required: true }]}
+              >
+                <SwitchNumber />
+              </Form.Item>
+            </Col>
+          </Row>
 
-              <Col xs={24} sm={4}>
-                <Form.Item label={t('_page:Product.Component.marketPrice')}>
-                  {getFieldDecorator('market_price', {
-                    initialValue: props.item?.market_price || undefined,
-                    rules: [],
-                  })(
-                    <InputNumber
-                      placeholder={t('_page:Product.Component.marketPrice')}
-                      className={style['input-number']}
-                    />,
-                  )}
-                </Form.Item>
-              </Col>
+          <Row gutter={16} className={style['form-row']}>
+            <Col xs={24} sm={4}>
+              <Form.Item name="price" label={t('_page:Product.Component.price')} rules={[{ required: true }]}>
+                <InputNumber placeholder={t('_lang:price')} className={style['input-number']} />
+              </Form.Item>
+            </Col>
 
-              <Col xs={24} sm={6}>
-                <Form.Item label={t('_page:Product.Component.style')}>
-                  {getFieldDecorator('styleIds', {
-                    initialValue: props.item?.styles?.length ? props.item.styles[0].id : undefined,
-                    rules: [{ required: true }],
-                    normalize: e => e && Number(e),
-                  })(<SelectCategoryIdByTree parentSlug="products" />)}
-                </Form.Item>
-              </Col>
+            <Col xs={24} sm={4}>
+              <Form.Item name="cost_price" label={t('_page:Product.Component.costPrice')} rules={[]}>
+                <InputNumber placeholder={t('_page:Product.Component.costPrice')} className={style['input-number']} />
+              </Form.Item>
+            </Col>
 
-              <Col xs={24} sm={6}>
-                <Form.Item label={t('_page:Product.Component.brand')}>
-                  {getFieldDecorator('brandIds', {
-                    initialValue: props.item?.brands?.length ? props.item.brands[0].id : undefined,
-                    rules: [{ required: true }],
-                    normalize: e => e && Number(e),
-                  })(<SelectCategoryIdByTree parentSlug="brands" />)}
-                </Form.Item>
-              </Col>
-            </Row>
+            <Col xs={24} sm={4}>
+              <Form.Item name="market_price" label={t('_page:Product.Component.marketPrice')} rules={[]}>
+                <InputNumber placeholder={t('_page:Product.Component.marketPrice')} className={style['input-number']} />
+              </Form.Item>
+            </Col>
 
-            <Row gutter={16} className={style['form-row']}>
-              <Col xs={24} sm={4}>
-                <Form.Item label={t('_lang:stock')}>
-                  {getFieldDecorator('stock', {
-                    initialValue: props.item?.stock || undefined,
-                    rules: [{ required: true }],
-                  })(<InputNumber placeholder={t('_lang:stock')} className={style['input-number']} />)}
-                </Form.Item>
-              </Col>
-            </Row>
-          </Form>
-        </FormCard>
-      </div>
-    );
-  }
-}
+            <Col xs={24} sm={6}>
+              <Form.Item
+                name="styleIds"
+                normalize={e => e && Number(e)}
+                label={t('_page:Product.Component.style')}
+                rules={[{ required: true }]}
+              >
+                <SelectCategoryIdByTree parentSlug="products" />
+              </Form.Item>
+            </Col>
+            <Col xs={24} sm={6}>
+              <Form.Item
+                name="brandIds"
+                normalize={e => e && Number(e)}
+                label={t('_page:Product.Component.brand')}
+                rules={[{ required: true }]}
+              >
+                <SelectCategoryIdByTree parentSlug="brands" />
+              </Form.Item>
+            </Col>
+          </Row>
 
-// @ts-ignore
-export const ProductInfoForm = withTranslation()(Form.create<IFormProps>()(ProductInfoFormInner));
+          <Row gutter={16} className={style['form-row']}>
+            <Col xs={24} sm={4}>
+              <Form.Item name="stock" label={t('_lang:stock')} rules={[{ required: true }]}>
+                <InputNumber placeholder={t('_lang:stock')} className={style['input-number']} />
+              </Form.Item>
+            </Col>
+          </Row>
+        </Form>
+      </FormCard>
+    </div>
+  );
+});

@@ -42,7 +42,6 @@ export const AttachmentBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
 
   const attachmentListRef = useRef<any>(null);
 
-  const [attachmentIds, setAttachmentIds] = useState<number[]>([]);
   const [getAttachmentsVariables, setgetAttachmentsVariables] = useState<AttachmentsArgs>({
     ...props.attachmentParams,
     orderBy: 'sort',

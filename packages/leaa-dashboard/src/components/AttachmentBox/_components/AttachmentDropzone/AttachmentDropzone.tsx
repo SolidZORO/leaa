@@ -2,7 +2,7 @@ import cx from 'classnames';
 import React, { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { attachmentUtil } from '@leaa/dashboard/src/utils';
-import { Icon } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 
 import { Attachment } from '@leaa/common/src/entrys';
 import { IAttachmentParams } from '@leaa/common/src/interfaces';
@@ -34,7 +34,7 @@ export const AttachmentDropzone = (props: IProps) => {
   const onDrop = useCallback(async acceptedFiles => onUploadFileList(acceptedFiles), []);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop, accept: 'image/*' });
-  const dropTipsDom = <Icon type="plus" className={style['file-icon']} style={{ height: cardHeight }} />;
+  const dropTipsDom = <PlusOutlined className={style['file-icon']} style={{ height: cardHeight }} />;
   const isEmpty = props.attachments && props.attachments.length === 0;
 
   return (

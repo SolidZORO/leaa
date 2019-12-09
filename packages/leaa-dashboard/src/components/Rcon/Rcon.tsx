@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import cx from 'classnames';
 
 import { createFromIconfontCN } from '@ant-design/icons';
+import { IconBaseProps } from '@ant-design/icons/lib/components/Icon';
 
 // @ts-ignore
 import localIconfont from '@leaa/dashboard/src/assets/fonts/ri/iconfont';
@@ -40,7 +41,7 @@ type IIconType =
   | 'ri-vip-crown-2-line'
   | 'ri-plus-line';
 
-interface IProps {
+interface IProps extends IconBaseProps {
   // type: string;
   type: IIconType | string | undefined;
   className?: string;
@@ -49,8 +50,15 @@ interface IProps {
 const iconfontPrefix = 'anticon-';
 
 // ANTD OFFICIAL ICON --> '//at.alicdn.com/t/font_1329669_t1u72b9zk8s.js'
-const CustomIcon: any = createFromIconfontCN({ scriptUrl: localIconfont });
+// const CustomIcon: any = createFromIconfontCN({ scriptUrl: localIconfont, extraCommonProps={{ ref }} });
 
-export const Rcon = (props: IProps) => (
-  <CustomIcon type={`${iconfontPrefix}${props.type}`} className={cx(style['anticon'], props.className)} />
-);
+export const Rcon = forwardRef((props: IProps, ref: React.Ref<any>) => {
+  const CustomIcon: any = createFromIconfontCN({ scriptUrl: localIconfont, extraCommonProps: { ...props } });
+
+  return (
+    <CustomIcon
+      className={cx(style['custom-icon'], 'anticon', props.className)}
+      type={`${iconfontPrefix}${props.type}`}
+    />
+  );
+});
