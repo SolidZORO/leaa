@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Spin, Icon, ConfigProvider } from 'antd';
+import { Spin, ConfigProvider } from 'antd';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { Router, Switch } from 'react-router-dom';
 import { I18nextProvider } from 'react-i18next';
@@ -12,13 +12,13 @@ import { ErrorBoundary } from '@leaa/dashboard/src/components/ErrorBoundary';
 import { RefreshflatPermissions } from '@leaa/dashboard/src/components/RefreshflatPermissions';
 import { RefreshSetting } from '@leaa/dashboard/src/components/RefreshSetting';
 
-import { masterRoute, authRoute, otherRoute } from '@leaa/dashboard/src/routes';
+import { masterRoute, authRoute, otherRoute, testWithoutLayoutRoute } from '@leaa/dashboard/src/routes';
 import { initStore, StoreProvider } from '@leaa/dashboard/src/stores';
 import i18n from '@leaa/dashboard/src/i18n';
 
 const store = initStore();
 
-Spin.setDefaultIndicator(<Icon type="loading" spin style={{ fontSize: '150%' }} />);
+// Spin.setDefaultIndicator(<Icon type="loading" spin style={{ fontSize: '150%' }} />);
 
 export const App = (): JSX.Element => {
   const getLocale = () => (i18n.language === 'zh-CN' ? zhCN : enUS);
@@ -40,6 +40,7 @@ export const App = (): JSX.Element => {
                     <Switch>
                       {authRoute}
                       {masterRoute}
+                      {testWithoutLayoutRoute}
                       {otherRoute}
                     </Switch>
                   </Router>

@@ -6,7 +6,7 @@ declare namespace NodeJS {
   }
 }
 
-declare module 'braft-extensions/*';
+// declare module '@ant-design/icons';
 declare module 'to-mark';
 declare module '@toast-ui/react-editor';
 // declare module '@toast-ui/react-editor' {

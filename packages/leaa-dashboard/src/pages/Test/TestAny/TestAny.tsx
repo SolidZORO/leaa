@@ -1,12 +1,13 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Icon } from 'antd';
+// import { Icon } from 'antd';
 
 import { IPage } from '@leaa/dashboard/src/interfaces';
 import { useStore } from '@leaa/dashboard/src/stores';
 
-import { HtmlMeta, SelectTagId, SelectCategoryIdByTree } from '@leaa/dashboard/src/components';
-import style from '@leaa/dashboard/src/pages/Article/_components/ArticleInfoForm/style.module.less';
+import { HtmlMeta, SelectTagId, SelectCategoryIdByTree, Rcon } from '@leaa/dashboard/src/components';
+
+// import { MessageOutlined, createFromIconfontCN } from '@ant-design/icons';
 
 export default (props: IPage) => {
   const { t } = useTranslation();
@@ -28,9 +29,7 @@ export default (props: IPage) => {
       <h2>TAG</h2>
       <SelectTagId selectedTagsMaxLength={5} />
       <br />
-      <Icon type="thunderbolt" />
-      <Icon type="shandian" />
-      <Icon type="flashlight" />
+
       <h5>ALL</h5>
       <SelectCategoryIdByTree componentProps={{ allowClear: true }} style={{ width: 200 }} />
 
@@ -43,15 +42,11 @@ export default (props: IPage) => {
       <br />
       <h5>NOT THIS SLUG</h5>
       <SelectCategoryIdByTree componentProps={{ allowClear: true }} style={{ width: 200 }} parentSlug="JUST-TEST" />
-      {/* <h2>STORE</h2> */}
-      {/* <code> */}
-      {/*  <Input.TextArea rows={5} value={JSON.stringify(store)} /> */}
-      {/* </code> */}
-      {/* <Divider /> */}
-      {/* <h2>LOCALSTORAGE</h2> */}
-      {/* <code> */}
-      {/*  <Input.TextArea rows={10} value={JSON.stringify(ls)} /> */}
-      {/* </code> */}
+
+      <br />
+      <br />
+
+      <Rcon type="ri-time-line" />
     </div>
   );
 };

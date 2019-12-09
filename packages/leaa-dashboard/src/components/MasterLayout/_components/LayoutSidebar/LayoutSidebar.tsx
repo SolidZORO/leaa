@@ -1,13 +1,15 @@
 import cx from 'classnames';
 import React, { useState, useEffect } from 'react';
-import { Layout, Menu, Icon } from 'antd';
+import { Layout, Menu } from 'antd';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
-import logo from '@leaa/dashboard/src/assets/images/logo/logo-white.svg';
 import { IRouteItem } from '@leaa/dashboard/src/interfaces';
 import { masterRoutes, flateMasterRoutes } from '@leaa/dashboard/src/routes/master.route';
 import { authUtil, deviceUtil } from '@leaa/dashboard/src/utils';
+import { Rcon } from '@leaa/dashboard/src/components';
+import logo from '@leaa/dashboard/src/assets/images/logo/logo-white.svg';
+
 import { ALLOW_PERMISSION, SIDERBAR_COLLAPSED_SL_KEY, CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 
 import { SidebarTarget } from '../SidebarTarget/SidebarTarget';
@@ -72,7 +74,7 @@ const makeFlatMenu = (menu: IRouteItem): React.ReactNode => {
       <Menu.Item key={menu.path} className={`g-sidebar-menu-${menu.path}`}>
         <Link to={menu.path}>
           <span className={style['nav-text']}>
-            {menu.icon && <Icon type={menu.icon} />}
+            {menu.icon && <Rcon type={menu.icon} />}
             <em className="menu-name">{getMenuName(menu)}</em>
           </span>
         </Link>
@@ -81,7 +83,7 @@ const makeFlatMenu = (menu: IRouteItem): React.ReactNode => {
           (authUtil.getAuthInfo().flatPermissions.includes(currentMenuCreatePermission) ||
             menu.permission === ALLOW_PERMISSION) && (
             <Link to={`${menu.path}/create`} className={style['can-create-button']}>
-              <Icon type={CREATE_BUTTON_ICON} />
+              <Rcon type={CREATE_BUTTON_ICON} />
             </Link>
           )}
       </Menu.Item>
@@ -101,7 +103,7 @@ const makeFlatMenus = (menus: IRouteItem[]): React.ReactNode => {
           key={menu.path}
           title={
             <span className={style['nav-text']}>
-              {menu.icon && <Icon type={menu.icon} />}
+              {menu.icon && <Rcon type={menu.icon} />}
               <em className="menu-name">{getMenuName(menu)}</em>
             </span>
           }
