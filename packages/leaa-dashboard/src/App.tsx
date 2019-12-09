@@ -31,8 +31,8 @@ export const App = (): JSX.Element => {
   });
 
   return (
-    <HelmetProvider>
-      <ErrorBoundary>
+    <ErrorBoundary>
+      <HelmetProvider>
         <ConfigProvider locale={locale}>
           <ApolloProvider client={apolloClient}>
             <StoreProvider value={store}>
@@ -53,7 +53,7 @@ export const App = (): JSX.Element => {
             </StoreProvider>
           </ApolloProvider>
         </ConfigProvider>
-      </ErrorBoundary>
-    </HelmetProvider>
+      </HelmetProvider>
+    </ErrorBoundary>
   );
 };
