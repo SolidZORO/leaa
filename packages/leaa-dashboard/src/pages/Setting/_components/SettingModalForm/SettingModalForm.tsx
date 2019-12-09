@@ -1,16 +1,16 @@
 import React from 'react';
 import cx from 'classnames';
-import { Col, Select, Form, Input, Row, Icon } from 'antd';
+import { Col, Select, Form, Input, Row } from 'antd';
 import { withTranslation } from 'react-i18next';
 import { FormComponentProps } from 'antd/lib/form';
 
 import { Setting } from '@leaa/common/src/entrys';
 import { ITfn } from '@leaa/dashboard/src/interfaces';
+import { SwitchNumber, Rcon } from '@leaa/dashboard/src/components';
 
 import { buildTypeDom } from '../SettingListForm/SettingListForm';
 
 import style from './style.module.less';
-import { SwitchNumber } from '@leaa/dashboard/src/components';
 
 interface IFormProps extends FormComponentProps {
   className?: string;
@@ -125,7 +125,7 @@ class SettingInfoFormInner extends React.PureComponent<IProps> {
               <Form.Item
                 label={
                   <span>
-                    <Icon type="question-circle" /> {t('_lang:options')}
+                    <Rcon type="question-circle" /> {t('_lang:options')}
                   </span>
                 }
               >
@@ -140,7 +140,7 @@ class SettingInfoFormInner extends React.PureComponent<IProps> {
               <Form.Item
                 label={
                   <span>
-                    <Icon type="question-circle" /> {t('_lang:tips')}
+                    <Rcon type="question-circle" /> {t('_lang:tips')}
                   </span>
                 }
               >

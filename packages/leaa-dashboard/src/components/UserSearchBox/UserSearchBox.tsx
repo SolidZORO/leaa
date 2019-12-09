@@ -2,13 +2,15 @@ import React, { useState, useEffect, useRef, forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import cx from 'classnames';
 import _ from 'lodash';
-import { Select, AutoComplete, Input, Icon } from 'antd';
+import { Select, AutoComplete, Input } from 'antd';
 import { AutoCompleteProps } from 'antd/lib/auto-complete';
 
 import { User as UserEntry, User } from '@leaa/common/src/entrys';
 import { UsersWithPaginationObject, UserArgs, UsersArgs } from '@leaa/common/src/dtos/user';
 import { GET_USERS, GET_USER } from '@leaa/common/src/graphqls';
 import { apolloClient } from '@leaa/dashboard/src/libs';
+
+import { Rcon } from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';
 
@@ -159,7 +161,7 @@ export const UserSearchBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
           <Input
             onPressEnter={onEnter}
             className={style['search-input']}
-            suffix={loading ? <Icon type="loading" /> : <span />}
+            suffix={loading ? <Rcon type="loading" /> : <span />}
           />
         </AutoComplete>
       </div>

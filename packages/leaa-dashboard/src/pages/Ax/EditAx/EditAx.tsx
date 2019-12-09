@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, message, Icon, Row, Col } from 'antd';
+import { Button, message, Row, Col } from 'antd';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
 import { Ax } from '@leaa/common/src/entrys';
@@ -11,7 +11,7 @@ import { AxArgs, UpdateAxInput } from '@leaa/common/src/dtos/ax';
 import { IPage } from '@leaa/dashboard/src/interfaces';
 import { messageUtil } from '@leaa/dashboard/src/utils';
 
-import { HtmlMeta, PageCard, SubmitBar, AttachmentBox } from '@leaa/dashboard/src/components';
+import { HtmlMeta, PageCard, SubmitBar, AttachmentBox, Rcon } from '@leaa/dashboard/src/components';
 
 import { AxInfoForm } from '../_components/AxInfoForm/AxInfoForm';
 
@@ -86,7 +86,7 @@ export default (props: IPage) => {
     <PageCard
       title={
         <span>
-          <Icon type={props.route.icon} />
+          <Rcon type={props.route.icon} />
           <strong>{t(`${props.route.namei18n}`)}</strong>
         </span>
       }

@@ -11,13 +11,13 @@ import {
   DragSourceConnector,
 } from 'react-dnd';
 import { XYCoord } from 'dnd-core';
-import { Input, Button, Icon, Tooltip } from 'antd';
+import { Input, Button, Tooltip } from 'antd';
 import { useMutation } from '@apollo/react-hooks';
 import { useTranslation } from 'react-i18next';
 
 import { DELETE_ATTACHMENT } from '@leaa/common/src/graphqls';
 import { Attachment } from '@leaa/common/src/entrys';
-import { SwitchNumber } from '@leaa/dashboard/src/components';
+import { SwitchNumber, Rcon } from '@leaa/dashboard/src/components';
 import { messageUtil } from '@leaa/dashboard/src/utils';
 
 import style from './style.module.less';
@@ -132,10 +132,10 @@ const AttachmentItemInner = forwardRef((props: IProps, ref: React.Ref<any>) => {
             </a>
           }
         >
-          <Icon type="ri-eye-line" className={style['zoomimage']} />
+          <Rcon type="ri-eye-line" className={style['zoomimage']} />
         </Tooltip>
 
-        {props.attachment.at2x === 1 && <Icon type="ri-hd-line" title="@2x image" className={style['at2xdot']} />}
+        {props.attachment.at2x === 1 && <Rcon type="ri-hd-line" title="@2x image" className={style['at2xdot']} />}
 
         <img src={`${props.attachment.url}`} alt="" />
       </div>

@@ -32,33 +32,28 @@
 .menu-wrapper {
   background-color: transparent;
 
-  // fixed must click span, click li not work.
   li {
-    padding: 0 !important;
-
-    span {
-      display: block;
-      padding-left: 24px;
-
-      i {
-        font-size: 110% !important;
-      }
-    }
+    padding: 0;
   }
 
   :global {
+    .anticon {
+      font-size: 105%;
+      vertical-align: -0.14em;
+    }
+
     .ant-menu-inline.ant-menu-sub {
       box-shadow: none;
       background-color: @sidebar-background-color !important;
     }
 
-    .ant-menu-submenu {
-      span {
-        padding-left: 0 !important;
-      }
+    .ant-menu-item {
+      padding-left: 24px;
+    }
 
+    .ant-menu-submenu {
       .ant-menu-item {
-        padding-left: 46px !important;
+        padding-left: 46px;
       }
     }
 
@@ -81,12 +76,14 @@
   opacity: 0.4;
   transition: all 0.4s;
 
-  i {
-    padding: 2px;
-  }
-
   &:hover {
     opacity: 1;
+  }
+
+  :global {
+    .anticon {
+      font-size: 95%;
+    }
   }
 }
 

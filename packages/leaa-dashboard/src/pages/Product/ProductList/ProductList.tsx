@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import queryString from 'query-string';
 import { Link } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { Table, Icon, Tag } from 'antd';
+import { Table, Tag } from 'antd';
 
 import { DEFAULT_PAGE_SIZE_OPTIONS, PAGE_CARD_TITLE_CREATE_ICON } from '@leaa/dashboard/src/constants';
 import { GET_PRODUCTS, DELETE_PRODUCT, UPDATE_PRODUCT } from '@leaa/common/src/graphqls';
@@ -27,6 +27,7 @@ import {
   SelectCategoryIdByTree,
   TableColumnStatusSwitch,
   TableColumnImage,
+  Rcon,
 } from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';
@@ -232,16 +233,16 @@ export default (props: IPage) => {
     <PageCard
       title={
         <span>
-          <Icon type={props.route.icon} />
+          <Rcon type={props.route.icon} />
           <strong>{t(`${props.route.namei18n}`)}</strong>
           <Link className="page-card-create-link" to={`${props.route.path}/create`}>
-            <Icon type={PAGE_CARD_TITLE_CREATE_ICON} />
+            <Rcon type={PAGE_CARD_TITLE_CREATE_ICON} />
           </Link>
         </span>
       }
       extra={
         <div className={style['filter-bar-wrapper']}>
-          <Icon type="ri-filter-line" className={style['filter-bar-icon']} />
+          <Rcon type="ri-filter-line" className={style['filter-bar-icon']} />
 
           <TagSearchBox
             className={style['filter-bar-tag']}

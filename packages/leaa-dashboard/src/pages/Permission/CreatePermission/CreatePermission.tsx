@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Icon, message } from 'antd';
+import { Button, message } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useMutation } from '@apollo/react-hooks';
 
@@ -11,7 +11,7 @@ import { CREATE_PERMISSION } from '@leaa/common/src/graphqls';
 import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { messageUtil } from '@leaa/dashboard/src/utils';
 
-import { PageCard, SubmitBar } from '@leaa/dashboard/src/components';
+import { PageCard, SubmitBar, Rcon } from '@leaa/dashboard/src/components';
 
 import { PermissionInfoForm } from '../_components/PermissionInfoForm/PermissionInfoForm';
 
@@ -70,7 +70,7 @@ export default (props: IPage) => {
     <PageCard
       title={
         <span>
-          <Icon type={props.route.icon} />
+          <Rcon type={props.route.icon} />
           <strong>{t(`${props.route.namei18n}`)}</strong>
         </span>
       }

@@ -1,12 +1,12 @@
 import React from 'react';
 import cx from 'classnames';
-import { Button, Form, Input, Icon, Tooltip, Select } from 'antd';
+import { Button, Form, Input, Tooltip, Select } from 'antd';
 import { withTranslation } from 'react-i18next';
 import { FormComponentProps } from 'antd/lib/form';
 
 import { Setting } from '@leaa/common/src/entrys';
 import { ITfn } from '@leaa/dashboard/src/interfaces';
-import { FormCard } from '@leaa/dashboard/src/components';
+import { FormCard, Rcon } from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';
 
@@ -70,7 +70,7 @@ class SettingInfoFormInner extends React.PureComponent<IProps> {
           <Tooltip
             title={
               <>
-                <Icon type="question-circle" /> {setting.description}
+                <Rcon type="question-circle" /> {setting.description}
               </>
             }
             trigger="hover"
@@ -81,9 +81,9 @@ class SettingInfoFormInner extends React.PureComponent<IProps> {
               onClick={() => props.onClickLabelEditCallback(setting)}
               className={cx(style['label-button'])}
             >
-              <Icon type="edit" className={style['label-icon']} />
+              <Rcon type="edit" className={style['label-icon']} />
               <strong className={cx(style['label-text'])}>
-                {setting.private ? <Icon type="ri-lock-2-line" className={style['private-icon']} /> : null}
+                {setting.private ? <Rcon type="ri-lock-2-line" className={style['private-icon']} /> : null}
                 {setting.name}
               </strong>
             </Button>

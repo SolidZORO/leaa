@@ -1,8 +1,10 @@
 import React from 'react';
 import moment from 'moment';
-import { Tooltip, Icon } from 'antd';
+import { Tooltip } from 'antd';
 import cx from 'classnames';
 import { useTranslation } from 'react-i18next';
+
+import { Rcon } from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';
 
@@ -48,7 +50,7 @@ export const EntryInfoDate = (props: IProps) => {
         [style['wrapper--small']]: props.size === 'small',
       })}
     >
-      <Icon type="ri-time-line" />
+      <Rcon type="ri-time-line" />
 
       {props.date && (
         <div className={style['inner']}>

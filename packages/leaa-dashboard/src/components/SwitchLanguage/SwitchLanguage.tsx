@@ -1,8 +1,12 @@
 import React from 'react';
 import cx from 'classnames';
-import { Button, Popover, ConfigProvider, Icon } from 'antd';
+import { Button, Popover, ConfigProvider } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { TooltipPlacement } from 'antd/lib/tooltip';
+
+import { CheckCircleOutlined } from '@ant-design/icons';
+
+import { Rcon } from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';
 
@@ -43,7 +47,7 @@ export const SwitchLanguage = (props: IProps): JSX.Element => {
                   onClick={() => changeLanguage(lang)}
                 >
                   {t(`_lang:lang-${lang}`)}
-                  {i18n.language === lang && <Icon type="check-circle" />}
+                  {i18n.language === lang && <CheckCircleOutlined />}
                 </Button>
               ))}
             </>
@@ -51,8 +55,8 @@ export const SwitchLanguage = (props: IProps): JSX.Element => {
         >
           <div className={style['switch-language-button']}>
             <Button type="link" size="small">
-              <Icon type="ri-translate-2" />
-              {t(`_lang:lang-code-${i18n.language}`)}
+              <Rcon type="ri-translate-2" className={style['switch-language-button--icon']} />
+              <span className={style['switch-language-button--lang']}>{t(`_lang:lang-code-${i18n.language}`)}</span>
             </Button>
           </div>
         </Popover>

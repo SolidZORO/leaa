@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Icon, message } from 'antd';
+import { Button, message } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useMutation } from '@apollo/react-hooks';
 
@@ -9,7 +9,7 @@ import { IPage } from '@leaa/dashboard/src/interfaces';
 import { REDEEM_COUPON } from '@leaa/common/src/graphqls';
 import { messageUtil } from '@leaa/dashboard/src/utils';
 
-import { HtmlMeta, PageCard } from '@leaa/dashboard/src/components';
+import { HtmlMeta, PageCard, Rcon } from '@leaa/dashboard/src/components';
 
 import { CouponRedeemForm } from '../_components/CouponRedeemForm/CouponRedeemForm';
 
@@ -50,7 +50,7 @@ export default (props: IPage) => {
     <PageCard
       title={
         <span>
-          <Icon type={props.route.icon} />
+          <Rcon type={props.route.icon} />
           <strong>{t(`${props.route.namei18n}`)}</strong>
         </span>
       }

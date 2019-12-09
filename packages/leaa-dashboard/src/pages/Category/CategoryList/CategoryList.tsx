@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { useQuery, useMutation, useLazyQuery } from '@apollo/react-hooks';
-import { Button, Icon } from 'antd';
+import { Button } from 'antd';
 import SortableTree, { TreeItem } from 'react-sortable-tree';
 
 import { PAGE_CARD_TITLE_CREATE_ICON, CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
@@ -13,7 +13,7 @@ import { CategoriesWithPaginationOrTreeObject, CategoriesArgs } from '@leaa/comm
 import { messageUtil } from '@leaa/dashboard/src/utils';
 import { IPage } from '@leaa/dashboard/src/interfaces';
 
-import { HtmlMeta, PageCard, TableCard, TableColumnDeleteButton } from '@leaa/dashboard/src/components';
+import { HtmlMeta, PageCard, TableCard, TableColumnDeleteButton, Rcon } from '@leaa/dashboard/src/components';
 
 import 'react-sortable-tree/style.css';
 import style from './style.module.less';
@@ -60,10 +60,10 @@ export default (props: IPage) => {
     <PageCard
       title={
         <span>
-          <Icon type={props.route.icon} />
+          <Rcon type={props.route.icon} />
           <strong>{t(`${props.route.namei18n}`)}</strong>
           <Link className="page-card-create-link" to={`${props.route.path}/create`}>
-            <Icon type={PAGE_CARD_TITLE_CREATE_ICON} />
+            <Rcon type={PAGE_CARD_TITLE_CREATE_ICON} />
           </Link>
         </span>
       }
@@ -105,7 +105,7 @@ export default (props: IPage) => {
                 />,
                 <Button key={`${node.id}`} title={_.toString(node)} size="small">
                   <Link to={`/categories/create?parent_id=${node.id}`}>
-                    <Icon type={CREATE_BUTTON_ICON} />
+                    <Rcon type={CREATE_BUTTON_ICON} />
                   </Link>
                 </Button>,
                 <span key={`${node.id}`}>&nbsp;</span>,

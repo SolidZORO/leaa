@@ -1,13 +1,13 @@
 import React from 'react';
 import cx from 'classnames';
-import { Form, Input, Col, Icon, Row } from 'antd';
+import { Form, Input, Col, Row } from 'antd';
 import { withTranslation } from 'react-i18next';
 import { FormComponentProps } from 'antd/lib/form';
 
 import { Article } from '@leaa/common/src/entrys';
 import { ITfn } from '@leaa/dashboard/src/interfaces';
 
-import { SwitchNumber, SelectCategoryIdByTree } from '@leaa/dashboard/src/components';
+import { SwitchNumber, SelectCategoryIdByTree, Rcon } from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';
 
@@ -53,7 +53,7 @@ class ArticleInfoFormInner extends React.PureComponent<IProps> {
                     <Input
                       size="small"
                       className={style['form-item-slug-input']}
-                      prefix={<Icon type="link" />}
+                      prefix={<Rcon type="link" />}
                       placeholder={t('_lang:slug')}
                     />,
                   )}

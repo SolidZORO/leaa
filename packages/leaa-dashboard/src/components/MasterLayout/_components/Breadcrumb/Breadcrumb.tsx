@@ -1,9 +1,11 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Breadcrumb as AntdBreadcrumb, Icon } from 'antd';
+import { Breadcrumb as AntdBreadcrumb } from 'antd';
 import { Route } from 'antd/lib/breadcrumb/Breadcrumb';
 
 import { Link, RouteComponentProps } from 'react-router-dom';
+
+import { Rcon } from '@leaa/dashboard/src/components';
 import { flateMasterRoutes } from '@leaa/dashboard/src/routes/master.route';
 
 import style from './style.module.less';
@@ -70,7 +72,7 @@ export const Breadcrumb = (props: IProps) => {
     if (homeBreadcrumbItem && routes.length === 1) {
       return (
         <Link to={route.path}>
-          <Icon type="ri-home-5-line" /> {route.breadcrumbName}
+          <Rcon type="ri-home-5-line" /> {route.breadcrumbName}
         </Link>
       );
     }
@@ -78,7 +80,7 @@ export const Breadcrumb = (props: IProps) => {
     if (homeBreadcrumbItem) {
       return (
         <Link to={route.path}>
-          <Icon type="ri-home-5-line" />
+          <Rcon type="ri-home-5-line" />
         </Link>
       );
     }

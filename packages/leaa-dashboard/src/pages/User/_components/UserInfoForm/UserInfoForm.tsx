@@ -1,13 +1,13 @@
 import React from 'react';
 import cx from 'classnames';
-import { Col, Form, Icon, Input, Row } from 'antd';
+import { Col, Form, Input, Row } from 'antd';
 import { withTranslation } from 'react-i18next';
 import { FormComponentProps } from 'antd/lib/form';
 
 import { User } from '@leaa/common/src/entrys';
 import { ITfn } from '@leaa/dashboard/src/interfaces';
 
-import { FormCard, SwitchNumber, EntryInfoDate } from '@leaa/dashboard/src/components';
+import { FormCard, SwitchNumber, EntryInfoDate, Rcon } from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';
 
@@ -38,7 +38,7 @@ class UserInfoFormInner extends React.PureComponent<IProps> {
             <>
               {t('_page:User.Component.userInfo')}{' '}
               {props.item && props.item.is_admin ? (
-                <Icon type="ri-vip-crown-2-line" className={style['is-admin-icon']} />
+                <Rcon type="ri-vip-crown-2-line" className={style['is-admin-icon']} />
               ) : null}
             </>
           }

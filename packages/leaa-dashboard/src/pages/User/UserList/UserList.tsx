@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import queryString from 'query-string';
 import { Link } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { Icon, Table, Button, Tag } from 'antd';
+import { Table, Button, Tag } from 'antd';
 
 import { DEFAULT_PAGE_SIZE_OPTIONS, PAGE_CARD_TITLE_CREATE_ICON } from '@leaa/dashboard/src/constants';
 import { GET_USERS, DELETE_USER, UPDATE_USER } from '@leaa/common/src/graphqls';
@@ -23,6 +23,7 @@ import {
   TableColumnDeleteButton,
   TableColumnId,
   TableColumnStatusSwitch,
+  Rcon,
 } from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';
@@ -88,12 +89,12 @@ export default (props: IPage) => {
       render: (id: string) => <TableColumnId id={id} link={`${props.route.path}/${id}`} />,
     },
     {
-      title: <Icon type="ri-vip-crown-2-line" />,
+      title: <Rcon type="ri-vip-crown-2-line" />,
       width: 30,
       dataIndex: 'is_admin',
       sorter: true,
       sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'is_admin'),
-      render: (text: string, record: User) => (record.is_admin ? <Icon type="ri-vip-crown-2-line" /> : null),
+      render: (text: string, record: User) => (record.is_admin ? <Rcon type="ri-vip-crown-2-line" /> : null),
     },
     {
       title: t('_lang:email'),
@@ -158,10 +159,10 @@ export default (props: IPage) => {
     <PageCard
       title={
         <span>
-          <Icon type={props.route.icon} />
+          <Rcon type={props.route.icon} />
           <strong>{t(`${props.route.namei18n}`)}</strong>
           <Link className="page-card-create-link" to={`${props.route.path}/create`}>
-            <Icon type={PAGE_CARD_TITLE_CREATE_ICON} />
+            <Rcon type={PAGE_CARD_TITLE_CREATE_ICON} />
           </Link>
         </span>
       }

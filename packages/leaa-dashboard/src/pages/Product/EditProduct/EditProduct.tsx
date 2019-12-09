@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Icon, message } from 'antd';
+import { Button, message } from 'antd';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
 import { Product, Tag } from '@leaa/common/src/entrys';
@@ -11,7 +11,7 @@ import { ProductArgs, UpdateProductInput } from '@leaa/common/src/dtos/product';
 import { IPage } from '@leaa/dashboard/src/interfaces';
 import { messageUtil } from '@leaa/dashboard/src/utils';
 
-import { PageCard, HtmlMeta, SelectTagId, SubmitBar } from '@leaa/dashboard/src/components';
+import { PageCard, HtmlMeta, SelectTagId, SubmitBar, Rcon } from '@leaa/dashboard/src/components';
 
 import { ProductInfoForm } from '../_components/ProductInfoForm/ProductInfoForm';
 import { ProductImage } from '../_components/ProductImage/ProductImage';
@@ -95,7 +95,7 @@ export default (props: IPage) => {
     <PageCard
       title={
         <span>
-          <Icon type={props.route.icon} />
+          <Rcon type={props.route.icon} />
           <strong>{t(`${props.route.namei18n}`)}</strong>
         </span>
       }

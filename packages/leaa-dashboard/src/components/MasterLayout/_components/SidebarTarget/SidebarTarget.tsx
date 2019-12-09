@@ -1,6 +1,8 @@
 import React from 'react';
 import cx from 'classnames';
-import { Icon, Button } from 'antd';
+import { Button } from 'antd';
+
+import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 
 import style from './style.module.less';
 
@@ -18,7 +20,7 @@ export const SidebarTarget = (props: IProps): JSX.Element => {
       })}
     >
       <Button type="link" onClick={props.onCallbackSidebarTarget}>
-        {props.collapsed ? <Icon type="menu-unfold" /> : <Icon type="menu-fold" />}
+        {props.collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
       </Button>
     </div>
   );

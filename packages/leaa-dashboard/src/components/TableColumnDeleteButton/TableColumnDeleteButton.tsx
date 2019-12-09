@@ -1,8 +1,10 @@
 import React from 'react';
-import { Popconfirm, Button, Icon, Tag } from 'antd';
+import { Popconfirm, Button, Tag } from 'antd';
 import { ButtonSize } from 'antd/lib/button';
 import { useTranslation } from 'react-i18next';
 import cx from 'classnames';
+
+import { DeleteOutlined, LoadingOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 
 import style from './style.module.less';
 
@@ -23,7 +25,13 @@ export const TableColumnDeleteButton = (props: IProps) => {
   return (
     <div className={cx(style['wrapper'], props.className)}>
       <Popconfirm
-        icon={<Icon type={props.loading ? 'loading' : 'question-circle'} className={style['icon-question']} />}
+        icon={
+          props.loading ? (
+            <LoadingOutlined className={style['icon-question']} />
+          ) : (
+            <QuestionCircleOutlined className={style['icon-question']} />
+          )
+        }
         title={
           <span>
             {t('_comp:TableColumnDeleteButton.confirmDeleteItem')}{' '}
@@ -39,7 +47,7 @@ export const TableColumnDeleteButton = (props: IProps) => {
         placement="topRight"
         onConfirm={props.onClick}
       >
-        <Button icon="delete" size={props.size || 'small'} />
+        <Button icon={<DeleteOutlined />} size={props.size || 'small'} />
       </Popconfirm>
     </div>
   );

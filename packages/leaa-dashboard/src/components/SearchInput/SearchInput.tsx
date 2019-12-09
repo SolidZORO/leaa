@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import cx from 'classnames';
 import { useTranslation } from 'react-i18next';
-import { Input, Icon } from 'antd';
+import { Input } from 'antd';
 import { InputProps } from 'antd/lib/input';
+import { SearchOutlined } from '@ant-design/icons';
 
 import style from './style.module.less';
 
@@ -45,11 +46,7 @@ export const SearchInput = (props: IProps) => {
       defaultValue={searchText}
       value={searchText}
       addonAfter={
-        <Icon
-          type="search"
-          className={style['search-input-search-button']}
-          onClick={() => onPassToParent(searchText)}
-        />
+        <SearchOutlined className={style['search-input-search-button']} onClick={() => onPassToParent(searchText)} />
       }
       onPressEnter={() => onPassToParent(searchText)}
       {...props.componentProps}

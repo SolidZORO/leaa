@@ -42,7 +42,7 @@ type IIconType =
 
 interface IProps {
   // type: string;
-  type: IIconType | string;
+  type: IIconType | string | undefined;
   className?: string;
 }
 
@@ -52,5 +52,5 @@ const iconfontPrefix = 'anticon-';
 const CustomIcon: any = createFromIconfontCN({ scriptUrl: localIconfont });
 
 export const Rcon = (props: IProps) => (
-  <CustomIcon type={`${iconfontPrefix}${props.type}`} className={cx(style['icon'], props.className)} />
+  <CustomIcon type={`${iconfontPrefix}${props.type}`} className={cx(style['anticon'], props.className)} />
 );

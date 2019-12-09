@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Icon, message } from 'antd';
+import { Button, message } from 'antd';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
 import { Role } from '@leaa/common/src/entrys';
@@ -11,7 +11,7 @@ import { PermissionsWithPaginationObject, PermissionsArgs } from '@leaa/common/s
 import { IPage } from '@leaa/dashboard/src/interfaces';
 import { messageUtil } from '@leaa/dashboard/src/utils';
 
-import { HtmlMeta, PageCard, SubmitBar } from '@leaa/dashboard/src/components';
+import { HtmlMeta, PageCard, SubmitBar, Rcon } from '@leaa/dashboard/src/components';
 
 import { RoleInfoForm } from '../_components/RoleInfoForm/RoleInfoForm';
 import { RolePermissionsForm } from '../_components/RolePermissionsForm/RolePermissionsForm';
@@ -106,7 +106,7 @@ export default (props: IPage) => {
     <PageCard
       title={
         <span>
-          <Icon type={props.route.icon} />
+          <Rcon type={props.route.icon} />
           <strong>{t(`${props.route.namei18n}`)}</strong>
         </span>
       }

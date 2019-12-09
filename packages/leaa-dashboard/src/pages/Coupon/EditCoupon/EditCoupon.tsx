@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Icon, message } from 'antd';
+import { Button, message } from 'antd';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
 import { Coupon } from '@leaa/common/src/entrys';
@@ -10,7 +10,7 @@ import { CouponArgs, UpdateCouponInput } from '@leaa/common/src/dtos/coupon';
 import { IPage } from '@leaa/dashboard/src/interfaces';
 import { messageUtil } from '@leaa/dashboard/src/utils';
 
-import { HtmlMeta, PageCard, SubmitBar } from '@leaa/dashboard/src/components';
+import { HtmlMeta, PageCard, SubmitBar, Rcon } from '@leaa/dashboard/src/components';
 
 import { CouponInfoForm } from '../_components/CouponInfoForm/CouponInfoForm';
 import { CouponCodeStatus } from '../_components/CouponCodeStatus/CouponCodeStatus';
@@ -63,7 +63,7 @@ export default (props: IPage) => {
     <PageCard
       title={
         <span>
-          <Icon type={props.route.icon} />
+          <Rcon type={props.route.icon} />
           <strong>{t(`${props.route.namei18n}`)}</strong>
         </span>
       }

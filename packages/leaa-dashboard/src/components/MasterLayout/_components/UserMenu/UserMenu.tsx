@@ -1,10 +1,11 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Skeleton, Icon, Avatar, Popover, Button } from 'antd';
+import { Skeleton, Avatar, Popover, Button } from 'antd';
 import { RouteComponentProps } from 'react-router-dom';
 
 import { authUtil } from '@leaa/dashboard/src/utils';
 import { buildConfig } from '@leaa/dashboard/src/configs';
+import { Rcon } from '@leaa/dashboard/src/components';
 import { LOGOUT_REDIRECT_URL } from '@leaa/dashboard/src/constants';
 
 import avatar from '@leaa/dashboard/src/assets/images/avatar/avatar-line.svg';
@@ -54,7 +55,7 @@ export const UserMenu = (props: IProps): JSX.Element => {
 
       <div className={style['footer']}>
         <Button className={style['logout-button']} block type="ghost" onClick={onLogout}>
-          <Icon type="poweroff" /> {t('_comp:UserMenu.safelyLogout')}
+          <Rcon type="poweroff" /> {t('_comp:UserMenu.safelyLogout')}
         </Button>
       </div>
     </div>
