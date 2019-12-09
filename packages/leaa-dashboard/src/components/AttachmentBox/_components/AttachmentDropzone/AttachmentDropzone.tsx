@@ -11,7 +11,7 @@ import style from './style.module.less';
 
 interface IProps {
   value?: number | undefined;
-  attachmentParams: IAttachmentParams;
+  attachmentParams?: IAttachmentParams;
   onUploadedCallback?: (uploaded: number) => void;
   type?: 'list' | 'card';
   cardHeight?: number;

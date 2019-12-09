@@ -25,7 +25,7 @@ import style from './style.module.less';
 interface IProps {
   value?: number | undefined;
   onChange?: (checked: boolean) => void;
-  attachmentParams: IAttachmentParams;
+  attachmentParams?: IAttachmentParams;
   onSubmitCallback?: (v: any) => void;
   type?: 'list' | 'card';
   title?: React.ReactNode;
@@ -35,7 +35,10 @@ interface IProps {
 }
 
 export const AttachmentBox = forwardRef((props: IProps, ref: React.Ref<any>) => {
+  if (!props.attachmentParams || (props.attachmentParams && !props.attachmentParams.moduleId)) return null;
+
   const { t, i18n } = useTranslation();
+
   const type = props.type || 'list';
   const cardHeight = props.cardHeight || 230;
   const listHeight = props.listHeight || 130;
@@ -99,7 +102,7 @@ export const AttachmentBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
 
   // from parent
   const onUpdateAttachments = async () => {
-    if (attachmentListRef.current.attachments && attachmentListRef.current.attachments.length > 0) {
+    if (attachmentListRef.current?.attachments?.length > 0) {
       await setSubmitVariables({ attachments: pickAttachments(attachmentListRef.current.attachments) });
       await updateAttachmentsMutate();
     }
@@ -134,42 +137,33 @@ export const AttachmentBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
             <Tooltip
               title={
                 <code className={style['title-code-tooltip']}>
-                  {props.attachmentParams.type}-{props.attachmentParams.moduleName}-{/* prettier-ignore */}
-                  {props.attachmentParams.typeName}-{props.attachmentParams.moduleId}
+                  {props.attachmentParams?.type}-{props.attachmentParams?.moduleName}-{/* prettier-ignore */}
+                  {props.attachmentParams?.typeName}-{props.attachmentParams?.moduleId}
                 </code>
               }
               trigger="hover"
             >
               <code className={style['title-code-text']}>
-                {props.attachmentParams.typeName}
-                <small>{props.attachmentParams.typePlatform}</small>
+                {props.attachmentParams?.typeName}
+                <small>{props.attachmentParams?.typePlatform}</small>
+                <small>{props.attachmentParams?.moduleId}</small>
               </code>
             </Tooltip>
           </>
         }
       >
         <AttachmentDropzone
-          attachmentParams={{ ...props.attachmentParams }}
+          attachmentParams={props.attachmentParams && { ...props.attachmentParams }}
           onUploadedCallback={refreshAttachments}
-          attachments={
-            getAttachmentsQuery &&
-            getAttachmentsQuery.data &&
-            getAttachmentsQuery.data.attachments &&
-            getAttachmentsQuery.data.attachments.items
-          }
+          attachments={getAttachmentsQuery.data?.attachments?.items}
           type={type}
           cardHeight={cardHeight}
         />
 
         <AttachmentList
           ref={attachmentListRef}
-          attachmentParams={{ ...props.attachmentParams }}
-          attachments={
-            getAttachmentsQuery &&
-            getAttachmentsQuery.data &&
-            getAttachmentsQuery.data.attachments &&
-            getAttachmentsQuery.data.attachments.items
-          }
+          attachmentParams={props.attachmentParams && { ...props.attachmentParams }}
+          attachments={getAttachmentsQuery.data?.attachments?.items}
           onChangeAttachmentsCallback={onChangeAttachments}
           onDeleteAttachmentCallback={refreshAttachments}
           type={type}

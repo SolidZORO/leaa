@@ -1,35 +1,52 @@
 import cx from 'classnames';
-import React from 'react';
+import React, { useRef, forwardRef, useImperativeHandle } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Col, Row } from 'antd';
 
 import { Product } from '@leaa/common/src/entrys';
-
+import { IAttachmentBoxRef } from '@leaa/common/src/interfaces';
 import { AttachmentBox, FormCard } from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';
 
 interface IProps {
-  item: Product;
+  item?: Product;
   className?: string;
   loading?: boolean;
 }
 
-export const ProductImage = (props: IProps) => {
+export const ProductImage = forwardRef((props: IProps, ref: React.Ref<any>) => {
   const { t } = useTranslation();
+
+  const bannerMbRef = useRef<IAttachmentBoxRef>(null);
+  const galleryMbRef = useRef<IAttachmentBoxRef>(null);
+  //
+  const bannerPcRef = useRef<IAttachmentBoxRef>(null);
+  const galleryPcRef = useRef<IAttachmentBoxRef>(null);
+
+  const onUpdateAllAttachments = () => {
+    bannerMbRef.current?.onUpdateAttachments();
+    galleryMbRef.current?.onUpdateAttachments();
+    //
+    bannerPcRef.current?.onUpdateAttachments();
+    galleryPcRef.current?.onUpdateAttachments();
+  };
+
+  useImperativeHandle<{}, any>(ref, () => ({ onUpdateAllAttachments }), []);
 
   return (
     <div className={cx(style['wrapper'], props.className)}>
       <FormCard title={t('_page:Product.Component.productImage')}>
-        <Row gutter={16} className={style['form-row']}>
+        <Row gutter={16} className={style['form-row']} ref={ref}>
           <Col xs={24} sm={8}>
             <AttachmentBox
               type="card"
               title={t('_page:Product.Component.bannerMb')}
               disableMessage
+              ref={bannerMbRef}
               attachmentParams={{
                 type: 'image',
-                moduleId: Number(props.item.id),
+                moduleId: Number(props.item?.id),
                 moduleName: 'product',
                 typeName: 'banner',
                 typePlatform: 'mb',
@@ -42,9 +59,10 @@ export const ProductImage = (props: IProps) => {
               type="list"
               title={t('_page:Product.Component.galleryMb')}
               disableMessage
+              ref={galleryMbRef}
               attachmentParams={{
                 type: 'image',
-                moduleId: Number(props.item.id),
+                moduleId: Number(props.item?.id),
                 moduleName: 'product',
                 typeName: 'gallery',
                 typePlatform: 'mb',
@@ -59,9 +77,10 @@ export const ProductImage = (props: IProps) => {
               type="card"
               title={t('_page:Product.Component.bannerPc')}
               disableMessage
+              ref={bannerPcRef}
               attachmentParams={{
                 type: 'image',
-                moduleId: Number(props.item.id),
+                moduleId: Number(props.item?.id),
                 moduleName: 'product',
                 typeName: 'banner',
                 typePlatform: 'pc',
@@ -74,9 +93,10 @@ export const ProductImage = (props: IProps) => {
               type="list"
               title={t('_page:Product.Component.galleryPc')}
               disableMessage
+              ref={galleryPcRef}
               attachmentParams={{
                 type: 'image',
-                moduleId: Number(props.item.id),
+                moduleId: Number(props.item?.id),
                 moduleName: 'product',
                 typeName: 'gallery',
                 typePlatform: 'pc',
@@ -87,4 +107,4 @@ export const ProductImage = (props: IProps) => {
       </FormCard>
     </div>
   );
-};
+});

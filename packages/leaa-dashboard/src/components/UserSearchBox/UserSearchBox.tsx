@@ -53,7 +53,7 @@ export const UserSearchBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
         .query<{ users: UsersWithPaginationObject }, UsersArgs>({
           query: GET_USERS,
           variables: { page: 1, pageSize: 10, q },
-          fetchPolicy: 'network-only',
+          // fetchPolicy: 'network-only',
         })
         .then((result: { data: { users: UsersWithPaginationObject } }) => {
           if (result && result.data.users && result.data.users.items) {
@@ -71,7 +71,7 @@ export const UserSearchBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
       .query<{ user: User }, UserArgs>({
         query: GET_USER,
         variables: { id: userId },
-        fetchPolicy: 'network-only',
+        // fetchPolicy: 'network-only',
       })
       .then((result?: { data?: { user?: User } }) => {
         if (result && result.data && result.data.user) {

@@ -54,7 +54,7 @@ export const TagSearchBox = forwardRef((props: IProps, ref: React.Ref<any>) => {
         .query<{ tags: TagsWithPaginationObject }, TagArgs>({
           query: GET_TAGS,
           variables: { page: 1, pageSize: 10, q: v },
-          fetchPolicy: 'network-only',
+          // fetchPolicy: 'network-only',
         })
         .then((result: { data: { tags: TagsWithPaginationObject } }) => {
           if (result && result.data.tags && result.data.tags.items) {

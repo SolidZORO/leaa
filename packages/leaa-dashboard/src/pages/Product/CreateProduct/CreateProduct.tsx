@@ -1,13 +1,13 @@
 import React, { useState, useRef } from 'react';
-import { Button, message } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useMutation } from '@apollo/react-hooks';
+import { Button } from 'antd';
 
 import { Product } from '@leaa/common/src/entrys';
 import { CreateProductInput } from '@leaa/common/src/dtos/product';
 import { IPage } from '@leaa/dashboard/src/interfaces';
 import { CREATE_PRODUCT } from '@leaa/common/src/graphqls';
-import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
+import { CREATE_BUTTON_ICON, UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { messageUtil } from '@leaa/dashboard/src/utils';
 
 import { PageCard, HtmlMeta, SubmitBar, Rcon } from '@leaa/dashboard/src/components';
@@ -20,7 +20,6 @@ export default (props: IPage) => {
   const { t } = useTranslation();
 
   // ref
-  const [productInfoFormRef, setProductInfoFormRef] = useState<any>();
   const infoFormRef = useRef<any>(null);
 
   // mutation
@@ -35,17 +34,12 @@ export default (props: IPage) => {
   });
 
   const onSubmit = async () => {
-    console.log(infoFormRef);
-    // productInfoFormRef.props.form.validateFieldsAndScroll(async (err: any, formData: CreateProductInput) => {
-    //   if (err) {
-    //     message.error(err[Object.keys(err)[0]].errors[0].message);
-    //
-    //     return;
-    //   }
-    //
-    //   await setSubmitVariables({ product: formData });
-    //   await createProductMutate();
-    // });
+    const submitData: CreateProductInput = await infoFormRef.current?.onValidateForm();
+
+    if (!submitData) return;
+
+    await setSubmitVariables({ product: submitData });
+    await createProductMutate();
   };
 
   return (
@@ -67,7 +61,7 @@ export default (props: IPage) => {
         <Button
           type="primary"
           size="large"
-          icon={CREATE_BUTTON_ICON}
+          icon={<Rcon type={CREATE_BUTTON_ICON} />}
           className="submit-button"
           loading={createProductMutation.loading}
           onClick={onSubmit}

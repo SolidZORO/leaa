@@ -10,25 +10,29 @@
 
 .header--less {
   height: 0;
-  //display: flex;
-  //display: table;
-  //margin-top: -20px;
 }
 
 .title {
-  //display: table;
   display: flex;
   line-height: 1;
   margin: -5px 0 15px 0;
   font-size: 110%;
   padding: 0;
   font-weight: 500;
-  //padding-left: 5px;
-  //border-left: 3px solid @primary-color;
 }
 
 .extra {
   display: flex;
   line-height: 1;
   margin: -5px 0 15px 0;
+}
+
+:global {
+  .ant-form-vertical {
+    & > .ant-row:last-child {
+      .ant-row {
+        margin-bottom: @page-card-padding-x / 2;
+      }
+    }
+  }
 }

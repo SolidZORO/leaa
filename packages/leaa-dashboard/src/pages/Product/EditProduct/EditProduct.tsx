@@ -1,14 +1,13 @@
 import React, { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, message } from 'antd';
-import { FormProps } from 'antd/lib/form/Form';
+import { Button } from 'antd';
 import { FormInstance } from 'rc-field-form/lib';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
 import { Product, Tag } from '@leaa/common/src/entrys';
 import { IAttachmentBoxRef } from '@leaa/common/src/interfaces';
 import { GET_PRODUCT, UPDATE_PRODUCT } from '@leaa/common/src/graphqls';
-import { UPDATE_BUTTON_ICON, PAGE_CARD_TITLE_CREATE_ICON } from '@leaa/dashboard/src/constants';
+import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { ProductArgs, UpdateProductInput } from '@leaa/common/src/dtos/product';
 import { IPage } from '@leaa/dashboard/src/interfaces';
 import { messageUtil } from '@leaa/dashboard/src/utils';
@@ -25,13 +24,9 @@ export default (props: IPage) => {
   const { id } = props.match.params as { id: string };
 
   // ref
-  const selectTagIdRef = useRef<any>(null);
-  const attachmentBoxRef = useRef<IAttachmentBoxRef>(null);
-  const productContentRef = useRef<any>(null);
-  const productAttachmentRef = useRef<IAttachmentBoxRef>(null);
   const infoFormRef = useRef<{ onValidateForm: any; form: FormInstance }>(null);
+  const productImageRef = useRef<{ onUpdateAllAttachments: () => void }>(null);
 
-  const [productInfoFormRef, setProductInfoFormRef] = useState<any>();
   const [productTags, setProductTags] = useState<Tag[]>();
 
   // query
@@ -54,9 +49,7 @@ export default (props: IPage) => {
   const onSubmit = async () => {
     const submitData: UpdateProductInput = await infoFormRef.current?.onValidateForm();
 
-    if (!submitData) {
-      return;
-    }
+    if (!submitData) return;
 
     submitData.tagIds = productTags && productTags?.length > 0 ? productTags.map(item => Number(item.id)) : undefined;
 
@@ -64,7 +57,8 @@ export default (props: IPage) => {
     await updateProductMutate();
 
     // keep form fields consistent with API
-    infoFormRef.current?.form?.resetFields();
+    await infoFormRef.current?.form?.resetFields();
+    await productImageRef.current?.onUpdateAllAttachments();
   };
 
   const onChangeSelectedTagsCallback = (tags: Tag[]) => setProductTags(tags);
@@ -83,12 +77,10 @@ export default (props: IPage) => {
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
       <ProductInfoForm ref={infoFormRef} item={getProductQuery.data?.product} />
-
-      {getProductQuery.data?.product && <ProductImage item={getProductQuery.data.product} />}
+      <ProductImage item={getProductQuery.data?.product} ref={productImageRef} />
 
       <div className={style['select-tag-id-wrapper']}>
         <SelectTagId
-          ref={selectTagIdRef}
           placement="topLeft"
           enterCreateTag
           selectedTagsMaxLength={5}

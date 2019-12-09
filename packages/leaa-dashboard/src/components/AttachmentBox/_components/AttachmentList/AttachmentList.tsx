@@ -14,7 +14,7 @@ import { AttachmentItem } from '../AttachmentItem/AttachmentItem';
 import style from './style.module.less';
 
 interface IProps {
-  attachmentParams: IAttachmentParams;
+  attachmentParams?: IAttachmentParams;
   value?: number | string | undefined;
   attachments?: Attachment[];
   onChange?: (checked: boolean) => void;
@@ -71,7 +71,7 @@ export const AttachmentList = forwardRef((props: IProps, ref: React.Ref<any>) =>
   };
 
   const onChangeAttachment = (newAttachment: any) => {
-    if (attachments && attachments.length > 0) {
+    if (attachments && attachments?.length > 0) {
       const aIndex = attachments.findIndex(a => a.uuid === newAttachment.uuid);
 
       if (typeof aIndex !== 'undefined') {
