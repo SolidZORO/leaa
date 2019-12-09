@@ -30,8 +30,6 @@ export class SaveInLocalService {
   ) {}
 
   async getSignature(): Promise<ISaveInLocalSignature> {
-    console.log(attachmentConfig.UPLOAD_ENDPOINT_BY_LOCAL);
-
     return {
       saveIn: 'local',
       saveDirPath: attachmentConfig.SAVE_DIR_BY_DB,
@@ -131,13 +129,15 @@ export class SaveInLocalService {
 
     const attachment = await this.attachmentRepository.save({ ...attachmentData });
 
-    // eslint-disable-next-line consistent-return
-    return {
+    const result = {
       attachment: {
         ...attachment,
         url: this.attachmentProperty.url(attachment),
         urlAt2x: this.attachmentProperty.urlAt2x(attachment),
       },
     };
+
+    // eslint-disable-next-line consistent-return
+    return result;
   }
 }

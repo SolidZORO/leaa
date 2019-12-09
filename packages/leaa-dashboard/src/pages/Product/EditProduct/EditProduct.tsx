@@ -36,6 +36,7 @@ export default (props: IPage) => {
   const getProductQuery = useQuery<{ product: Product }, ProductArgs>(GET_PRODUCT, {
     variables: getProductVariables,
     fetchPolicy: 'network-only',
+    onCompleted: data => !data.product && props.history.push('/products'),
   });
 
   // mutation
@@ -67,10 +68,6 @@ export default (props: IPage) => {
       return;
     }
 
-    if (hasError) {
-      return;
-    }
-
     if (
       productContentRef?.current?.getInstance()?.getHtml() &&
       typeof productContentRef.current.getInstance().getHtml() !== 'undefined'
@@ -78,13 +75,13 @@ export default (props: IPage) => {
       submitData.content = productContentRef.current.getInstance().getHtml();
     }
 
-    submitData.tagIds = productTags && productTags.length > 0 ? productTags.map(item => Number(item.id)) : undefined;
+    submitData.tagIds = productTags && productTags?.length > 0 ? productTags.map(item => Number(item.id)) : undefined;
 
     await setSubmitVariables({ id: Number(id), product: submitData });
     await updateProductMutate();
 
     // attachment box
-    if (attachmentBoxRef && attachmentBoxRef.current) {
+    if (attachmentBoxRef?.current) {
       attachmentBoxRef.current.onUpdateAttachments();
     }
 
@@ -92,9 +89,7 @@ export default (props: IPage) => {
     productInfoFormRef.props.form.resetFields();
   };
 
-  const onChangeSelectedTagsCallback = (tags: Tag[]) => {
-    setProductTags(tags);
-  };
+  const onChangeSelectedTagsCallback = (tags: Tag[]) => setProductTags(tags);
 
   return (
     <PageCard
@@ -110,14 +105,12 @@ export default (props: IPage) => {
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
       <ProductInfoForm
-        item={getProductQuery.data && getProductQuery.data.product}
+        item={getProductQuery.data?.product}
         loading={getProductQuery.loading}
         wrappedComponentRef={(inst: unknown) => setProductInfoFormRef(inst)}
       />
 
-      {getProductQuery.data && getProductQuery.data.product && (
-        <ProductImage item={getProductQuery.data.product} ref={productAttachmentRef} />
-      )}
+      {getProductQuery.data?.product && <ProductImage item={getProductQuery.data.product} ref={productAttachmentRef} />}
 
       <div className={style['select-tag-id-wrapper']}>
         <SelectTagId
@@ -125,7 +118,7 @@ export default (props: IPage) => {
           placement="topLeft"
           enterCreateTag
           selectedTagsMaxLength={5}
-          selectedTags={getProductQuery.data && getProductQuery.data.product && getProductQuery.data.product.tags}
+          selectedTags={getProductQuery.data?.product?.tags}
           onChangeSelectedTagsCallback={onChangeSelectedTagsCallback}
         />
       </div>
