@@ -20,8 +20,8 @@ interface IProps extends AutoCompleteProps {
   value?: string | undefined;
   autoFocus?: boolean;
   onSelectTagCallback?: (tag: TagEntry) => void;
-  onEnterCallback?: (tag: string | undefined) => void;
-  onChangeTagNameCallback?: (tag: string | undefined) => void;
+  onEnterCallback?: (tag?: string) => void;
+  onChangeTagNameCallback?: (tag?: string) => void;
   placeholder?: string;
 }
 

@@ -18,6 +18,7 @@ type IIconType =
   | 'ri-settings-line'
   | 'ri-t-shirt-line'
   | 'ri-time-line'
+  | 'ri-close-circle-line'
   | 'ri-store-line'
   | 'ri-hd-line'
   | 'ri-swap-box-line'
@@ -25,6 +26,8 @@ type IIconType =
   | 'ri-terminal-box-line'
   | 'ri-archive-line'
   | 'ri-coupon-line'
+  | 'ri-close-circle-fill'
+  | 'ri-close-line'
   | 'ri-search-eye-line'
   | 'ri-shield-user-line'
   | 'ri-voiceprint-line'
@@ -49,7 +52,7 @@ interface IProps extends IconBaseProps {
 
 const iconfontPrefix = 'anticon-';
 
-export const Rcon = forwardRef((props: IProps, ref: React.Ref<any>) => {
+export const Rcon = forwardRef((props: IProps, ref) => {
   // ANTD OFFICIAL ICON --> '//at.alicdn.com/t/font_1329669_t1u72b9zk8s.js'
   const CustomIcon: any = createFromIconfontCN({ scriptUrl: localIconfont, extraCommonProps: { ...props } });
 

@@ -39,7 +39,7 @@ export const MasterLayout = (props: IProps) => {
           if (!authIsAvailably) {
             matchProps.history.push(`/login?redirect=${window.location.pathname}`);
           }
-        });
+        }, []);
 
         return (
           <div

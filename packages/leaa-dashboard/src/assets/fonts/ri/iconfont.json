@@ -62,6 +62,13 @@
       "unicode_decimal": 61845
     },
     {
+      "icon_id": "12125065",
+      "name": "ri-close-circle-line",
+      "font_class": "ri-close-circle-line",
+      "unicode": "f220",
+      "unicode_decimal": 61984
+    },
+    {
       "icon_id": "12125113",
       "name": "ri-store-line",
       "font_class": "ri-store-line",
@@ -109,6 +116,20 @@
       "font_class": "ri-coupon-line",
       "unicode": "f2f5",
       "unicode_decimal": 62197
+    },
+    {
+      "icon_id": "12125282",
+      "name": "ri-close-circle-fill",
+      "font_class": "ri-close-circle-fill",
+      "unicode": "f2f9",
+      "unicode_decimal": 62201
+    },
+    {
+      "icon_id": "12125287",
+      "name": "ri-close-line",
+      "font_class": "ri-close-line",
+      "unicode": "f2fe",
+      "unicode_decimal": 62206
     },
     {
       "icon_id": "12125348",

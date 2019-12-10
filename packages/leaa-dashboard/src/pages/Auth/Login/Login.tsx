@@ -64,7 +64,7 @@ export default (props: IPage) => {
     if (authIsAvailably) {
       props.history.push('/');
     }
-  });
+  }, []);
 
   const onSubmit = async () => {
     const submitData: ISubmitData<AuthLoginInput> = await loginFormRef.current?.onValidateForm();

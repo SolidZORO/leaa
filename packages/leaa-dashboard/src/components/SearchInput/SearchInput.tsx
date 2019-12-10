@@ -8,7 +8,7 @@ import { SearchOutlined } from '@ant-design/icons';
 import style from './style.module.less';
 
 interface IProps {
-  onChange?: Function;
+  onChange?: (str?: string) => void;
   value?: string | string[];
   componentProps?: InputProps;
   className?: string;
@@ -18,7 +18,7 @@ export const SearchInput = (props: IProps) => {
   const { t } = useTranslation();
   const [searchText, setSearchText] = useState<string | string[] | undefined>(props.value || undefined);
 
-  const onPassToParent = (text: string | string[] | undefined) => {
+  const onPassToParent = (text?: string) => {
     const nextText = text === '__CLEAR__' ? undefined : text;
 
     setSearchText(nextText);
@@ -46,9 +46,12 @@ export const SearchInput = (props: IProps) => {
       defaultValue={searchText}
       value={searchText}
       addonAfter={
-        <SearchOutlined className={style['search-input-search-button']} onClick={() => onPassToParent(searchText)} />
+        <SearchOutlined
+          className={style['search-input-search-button']}
+          onClick={() => onPassToParent(searchText as string)}
+        />
       }
-      onPressEnter={() => onPassToParent(searchText)}
+      onPressEnter={() => onPassToParent(searchText as string)}
       {...props.componentProps}
     />
   );

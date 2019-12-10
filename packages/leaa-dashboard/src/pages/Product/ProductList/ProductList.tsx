@@ -22,6 +22,7 @@ import {
   TableCard,
   SearchInput,
   TagSearchBox,
+  FilterIcon,
   TableColumnId,
   TableColumnDate,
   TableColumnImage,
@@ -73,6 +74,7 @@ export default (props: IPage) => {
       orderSort: undefined,
     });
 
+    // setTablePagination({});
     setQ(undefined);
     setTagName(undefined);
     setStyleId(undefined);
@@ -80,13 +82,7 @@ export default (props: IPage) => {
   };
 
   useEffect(() => {
-    if (_.isEmpty(urlParams)) {
-      resetUrlParams();
-    }
-  }, [urlParams]);
-
-  useEffect(() => {
-    (async () => getProductsQuery.refetch())();
+    if (_.isEmpty(urlParams)) resetUrlParams(); // change route reset url
   }, [props.history.location.key]);
 
   const rowSelection = {
@@ -199,31 +195,39 @@ export default (props: IPage) => {
     },
   ];
 
-  const onFilter = (params: { field: string; value: any }) => {
+  const onFilter = (params: { field: string; value?: string | number | number[] }) => {
     setTablePagination({ ...tablePagination, page: 1 });
 
     const filterParams: { q?: string; styleId?: number; brandId?: number; tagName?: string } = {};
 
     if (params.field === 'q') {
-      setQ(params.value);
-      filterParams.q = params.value;
-    }
+      const result = params.value ? String(params.value) : undefined;
 
-    if (params.field === 'styleId') {
-      const v = Number.isNaN(params.value) ? undefined : params.value;
-
-      setStyleId(v);
-      filterParams.styleId = v;
+      setQ(result);
+      filterParams.q = result;
     }
 
     if (params.field === 'tagName') {
-      setTagName(params.value);
-      filterParams.tagName = params.value;
+      const result = params.value ? String(params.value) : undefined;
+
+      setTagName(result);
+      filterParams.tagName = result;
+    }
+
+    if (params.field === 'styleId') {
+      const num = Number(params.value);
+      const result = Number.isNaN(num) ? undefined : num;
+
+      setStyleId(result);
+      filterParams.styleId = result;
     }
 
     if (params.field === 'brandId') {
-      setBrandId(params.value);
-      filterParams.brandId = params.value;
+      const num = Number(params.value);
+      const result = Number.isNaN(num) ? undefined : num;
+
+      setBrandId(result);
+      filterParams.brandId = result;
     }
 
     urlUtil.mergeParamToUrlQuery({
@@ -246,13 +250,13 @@ export default (props: IPage) => {
       }
       extra={
         <div className={style['filter-bar-wrapper']}>
-          <Rcon type="ri-filter-line" className={style['filter-bar-icon']} />
+          <FilterIcon urlParams={urlParams} onClose={() => props.history.push('/products')} />
 
           <TagSearchBox
             className={style['filter-bar-tag']}
             useOnBlur
             onSelectTagCallback={(v: TagEntry) => onFilter({ field: 'tagName', value: v.name })}
-            onEnterCallback={(v: string | undefined) => onFilter({ field: 'tagName', value: v })}
+            onEnterCallback={v => onFilter({ field: 'tagName', value: v })}
             value={tagName}
             placeholder={t('_lang:tag')}
           />
@@ -260,7 +264,7 @@ export default (props: IPage) => {
           <SelectCategoryIdByTree
             className={style['filter-bar-category']}
             componentProps={{ allowClear: true }}
-            onChange={(v: number | number[]) => onFilter({ field: 'styleId', value: Number(v) })}
+            onChange={v => onFilter({ field: 'styleId', value: v })}
             value={styleId || undefined}
             parentSlug="products"
             placeholder={t('_page:Product.Component.style')}
@@ -269,7 +273,7 @@ export default (props: IPage) => {
           <SelectCategoryIdByTree
             className={style['filter-bar-category']}
             componentProps={{ allowClear: true }}
-            onChange={(v: number | number[]) => onFilter({ field: 'brandId', value: Number(v) })}
+            onChange={(v: number | number[]) => onFilter({ field: 'brandId', value: v })}
             value={brandId || undefined}
             parentSlug="brands"
             placeholder={t('_page:Product.Component.brand')}
@@ -278,7 +282,7 @@ export default (props: IPage) => {
           <SearchInput
             className={style['filter-bar-search']}
             value={q}
-            onChange={(v: string) => onFilter({ field: 'q', value: v })}
+            onChange={v => onFilter({ field: 'q', value: v })}
           />
         </div>
       }
