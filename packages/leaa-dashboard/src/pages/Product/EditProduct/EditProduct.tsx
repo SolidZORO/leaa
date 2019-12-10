@@ -5,7 +5,6 @@ import { FormInstance } from 'rc-field-form/lib';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
 import { Product, Tag } from '@leaa/common/src/entrys';
-import { IAttachmentBoxRef } from '@leaa/common/src/interfaces';
 import { GET_PRODUCT, UPDATE_PRODUCT } from '@leaa/common/src/graphqls';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { ProductArgs, UpdateProductInput } from '@leaa/common/src/dtos/product';

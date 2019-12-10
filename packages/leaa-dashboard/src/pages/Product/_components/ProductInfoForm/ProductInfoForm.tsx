@@ -31,12 +31,14 @@ export const ProductInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =
   };
 
   const formatInitialValues = (item?: Product): Product | {} => {
+    // create
     if (!item) {
       return {
         status: 1,
       };
     }
 
+    // edit
     return {
       ...item,
       styleIds: item?.styles?.length ? item.styles[0].id : undefined,
@@ -62,7 +64,7 @@ export const ProductInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =
         <Form form={form} name="infoForm" layout="vertical" initialValues={formatInitialValues(props.item)}>
           <Row gutter={16} className={style['form-row']}>
             <Col xs={24} sm={8}>
-              <Form.Item name="name" label={t('_page:Product.Component.productName')} rules={[{ required: true }]}>
+              <Form.Item name="name" rules={[{ required: true }]} label={t('_page:Product.Component.productName')}>
                 <Input placeholder={t('_page:Product.Component.productName')} />
               </Form.Item>
             </Col>
@@ -70,15 +72,15 @@ export const ProductInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =
             <Col xs={24} sm={8}>
               <Form.Item
                 name="fullname"
-                label={t('_page:Product.Component.productFullname')}
                 rules={[{ required: true }]}
+                label={t('_page:Product.Component.productFullname')}
               >
                 <Input placeholder={t('_lang:fullname')} />
               </Form.Item>
             </Col>
 
             <Col xs={24} sm={6}>
-              <Form.Item name="serial" label={t('_lang:serial')} rules={[{ required: true }]}>
+              <Form.Item name="serial" rules={[{ required: true }]} label={t('_lang:serial')}>
                 <Input placeholder={t('_lang:serial')} />
               </Form.Item>
             </Col>
@@ -87,8 +89,8 @@ export const ProductInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =
               <Form.Item
                 name="status"
                 normalize={e => e && Number(e)}
-                label={t('_page:Product.Component.putOnSale')}
                 rules={[{ required: true }]}
+                label={t('_page:Product.Component.putOnSale')}
               >
                 <SwitchNumber />
               </Form.Item>
@@ -97,20 +99,20 @@ export const ProductInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =
 
           <Row gutter={16} className={style['form-row']}>
             <Col xs={24} sm={4}>
-              <Form.Item name="price" label={t('_page:Product.Component.price')} rules={[{ required: true }]}>
-                <InputNumber placeholder={t('_lang:price')} className={style['input-number']} />
+              <Form.Item name="price" rules={[{ required: true }]} label={t('_page:Product.Component.price')}>
+                <InputNumber className={style['input-number']} placeholder={t('_lang:price')} />
               </Form.Item>
             </Col>
 
             <Col xs={24} sm={4}>
-              <Form.Item name="cost_price" label={t('_page:Product.Component.costPrice')} rules={[]}>
-                <InputNumber placeholder={t('_page:Product.Component.costPrice')} className={style['input-number']} />
+              <Form.Item name="cost_price" rules={[]} label={t('_page:Product.Component.costPrice')}>
+                <InputNumber className={style['input-number']} placeholder={t('_page:Product.Component.costPrice')} />
               </Form.Item>
             </Col>
 
             <Col xs={24} sm={4}>
-              <Form.Item name="market_price" label={t('_page:Product.Component.marketPrice')} rules={[]}>
-                <InputNumber placeholder={t('_page:Product.Component.marketPrice')} className={style['input-number']} />
+              <Form.Item name="market_price" rules={[]} label={t('_page:Product.Component.marketPrice')}>
+                <InputNumber className={style['input-number']} placeholder={t('_page:Product.Component.marketPrice')} />
               </Form.Item>
             </Col>
 
@@ -118,18 +120,19 @@ export const ProductInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =
               <Form.Item
                 name="styleIds"
                 normalize={e => e && Number(e)}
-                label={t('_page:Product.Component.style')}
                 rules={[{ required: true }]}
+                label={t('_page:Product.Component.style')}
               >
                 <SelectCategoryIdByTree parentSlug="products" />
               </Form.Item>
             </Col>
+
             <Col xs={24} sm={6}>
               <Form.Item
                 name="brandIds"
                 normalize={e => e && Number(e)}
-                label={t('_page:Product.Component.brand')}
                 rules={[{ required: true }]}
+                label={t('_page:Product.Component.brand')}
               >
                 <SelectCategoryIdByTree parentSlug="brands" />
               </Form.Item>
@@ -138,8 +141,8 @@ export const ProductInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =
 
           <Row gutter={16} className={style['form-row']}>
             <Col xs={24} sm={4}>
-              <Form.Item name="stock" label={t('_lang:stock')} rules={[{ required: true }]}>
-                <InputNumber placeholder={t('_lang:stock')} className={style['input-number']} />
+              <Form.Item name="stock" rules={[{ required: true }]} label={t('_lang:stock')}>
+                <InputNumber className={style['input-number']} placeholder={t('_lang:stock')} />
               </Form.Item>
             </Col>
           </Row>
