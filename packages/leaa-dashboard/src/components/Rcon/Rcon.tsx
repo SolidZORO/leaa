@@ -52,7 +52,7 @@ interface IProps extends IconBaseProps {
 
 const iconfontPrefix = 'anticon-';
 
-export const Rcon = forwardRef((props: IProps, ref) => {
+export const Rcon = forwardRef((props: IProps) => {
   // ANTD OFFICIAL ICON --> '//at.alicdn.com/t/font_1329669_t1u72b9zk8s.js'
   const CustomIcon: any = createFromIconfontCN({ scriptUrl: localIconfont, extraCommonProps: { ...props } });
 

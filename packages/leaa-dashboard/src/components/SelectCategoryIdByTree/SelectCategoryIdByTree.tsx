@@ -72,11 +72,10 @@ export const SelectCategoryIdByTree = forwardRef((props: IProps, ref: React.Ref<
     : {};
 
   return (
-    <div className={cx(style['wrapper'])}>
+    <div className={cx(style['wrapper'], props.className)}>
       <TreeSelect
         ref={ref}
         {...multipleSelectOption}
-        className={props.className}
         loading={getCategoriesQuery.loading}
         // TIPS: waiting data then select (fix only show number)
         value={getCategoriesQuery.data?.categories?.trees && value}

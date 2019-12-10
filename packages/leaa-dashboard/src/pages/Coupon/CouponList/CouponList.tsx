@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import cx from 'classnames';
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import queryString from 'query-string';
@@ -185,13 +186,13 @@ export default (props: IPage) => {
         <span>
           <Rcon type={props.route.icon} />
           <strong>{t(`${props.route.namei18n}`)}</strong>
-          <Link className="page-card-create-link" to={`${props.route.path}/create`}>
+          <Link className="g-page-card-create-link" to={`${props.route.path}/create`}>
             <Rcon type={PAGE_CARD_TITLE_CREATE_ICON} />
           </Link>
         </span>
       }
       extra={
-        <div className={style['filter-bar-wrapper']}>
+        <div className="g-page-card-extra-filter-bar-wrapper">
           <Link to={`${props.route.path}/redeem`}>
             <Button size="small" icon={<Rcon type="ri-swap-box-line" />} type="link" className={style['redeem-button']}>
               {t('_page:Coupon.Component.redeem')}
@@ -199,7 +200,7 @@ export default (props: IPage) => {
           </Link>
 
           <UserSearchBox
-            className={style['user-search-box']}
+            className={cx('g-extra-filter-bar--item', 'g-extra-filter-bar--q')}
             useOnBlur
             onSelectUserCallback={user => onFilter({ field: 'userId', value: user && user.id })}
             style={{ width: 200 }}
@@ -207,7 +208,7 @@ export default (props: IPage) => {
           />
 
           <SearchInput
-            className={style['filter-bar-search']}
+            className="g-page-card-extra-filter-bar-search"
             value={q}
             onChange={v => onFilter({ field: 'q', value: v })}
           />

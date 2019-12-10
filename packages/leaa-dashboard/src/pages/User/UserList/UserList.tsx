@@ -1,29 +1,30 @@
 import _ from 'lodash';
+import cx from 'classnames';
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import queryString from 'query-string';
 import { Link } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { Table, Button, Tag } from 'antd';
+import { Table, Tag } from 'antd';
 
 import { DEFAULT_PAGE_SIZE_OPTIONS, PAGE_CARD_TITLE_CREATE_ICON } from '@leaa/dashboard/src/constants';
 import { GET_USERS, DELETE_USER, UPDATE_USER } from '@leaa/common/src/graphqls';
+
 import { User } from '@leaa/common/src/entrys';
-import { IOrderSort } from '@leaa/common/src/dtos/_common';
 import { UsersWithPaginationObject, UsersArgs } from '@leaa/common/src/dtos/user';
+import { IPage, IKey, ITablePagination } from '@leaa/dashboard/src/interfaces';
 import { urlUtil, tableUtil, messageUtil } from '@leaa/dashboard/src/utils';
-import { IPage, IKey } from '@leaa/dashboard/src/interfaces';
 
 import {
-  HtmlMeta,
+  Rcon,
   PageCard,
+  HtmlMeta,
   TableCard,
   SearchInput,
+  TableColumnId,
   TableColumnDate,
   TableColumnDeleteButton,
-  TableColumnId,
   TableColumnStatusSwitch,
-  Rcon,
 } from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';
@@ -34,49 +35,43 @@ export default (props: IPage) => {
   const urlParams = queryString.parse(window.location.search);
   const urlPagination = urlUtil.getPagination(urlParams);
 
-  const [q, setQ] = useState<string | undefined>(urlParams.q ? `${urlParams.q}` : undefined);
-  const [page, setPage] = useState<number | undefined>(urlPagination.page);
-  const [pageSize, setPageSize] = useState<number | undefined>(urlPagination.pageSize);
-  const [selectedRowKeys, setSelectedRowKeys] = useState<IKey[]>([]);
+  const [tablePagination, setTablePagination] = useState<ITablePagination>(urlUtil.initPaginationState(urlParams));
 
-  // sort
-  const [orderBy, setOrderBy] = useState<string | undefined>(urlParams.orderBy ? `${urlParams.orderBy}` : undefined);
-  const [orderSort, setOrderSort] = useState<IOrderSort | undefined>(
-    urlParams.orderSort ? urlUtil.formatOrderSort(`${urlParams.orderSort}`) : undefined,
-  );
+  const [q, setQ] = useState<string | undefined>(urlParams.q ? String(urlParams.q) : undefined);
 
   // query
-  const getUsersVariables = { page, pageSize, q, orderBy, orderSort };
+  const getUsersVariables = { ...tablePagination, q };
   const getUsersQuery = useQuery<{ users: UsersWithPaginationObject }, UsersArgs>(GET_USERS, {
     variables: getUsersVariables,
-    fetchPolicy: 'network-only',
   });
 
   // mutation
-  const [getUsersMutate, getUsersMutation] = useMutation<User>(DELETE_USER, {
+  const [deleteUserMutate, deleteUserMutation] = useMutation<User>(DELETE_USER, {
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
     onCompleted: () => messageUtil.gqlCompleted(t('_lang:deletedSuccessfully')),
     refetchQueries: () => [{ query: GET_USERS, variables: getUsersVariables }],
   });
 
   const resetUrlParams = () => {
-    setPage(urlPagination.page);
-    setPageSize(urlPagination.pageSize);
-    setOrderBy(undefined);
-    setOrderSort(undefined);
+    setTablePagination({
+      page: urlPagination.page,
+      pageSize: urlPagination.pageSize,
+      selectedRowKeys: [],
+      orderBy: undefined,
+      orderSort: undefined,
+    });
+
     setQ(undefined);
   };
 
   useEffect(() => {
-    if (_.isEmpty(urlParams)) {
-      resetUrlParams();
-    }
-  }, [urlParams]);
+    if (_.isEmpty(urlParams)) resetUrlParams(); // change route reset url
+  }, [props.history.location.key]);
 
   const rowSelection = {
     columnWidth: 30,
-    onChange: (keys: IKey[]) => setSelectedRowKeys(keys),
-    selectedRowKeys,
+    onChange: (keys: IKey[]) => setTablePagination({ ...tablePagination, selectedRowKeys: keys }),
+    selectedRowKeys: tablePagination.selectedRowKeys,
   };
 
   const columns = [
@@ -85,7 +80,7 @@ export default (props: IPage) => {
       dataIndex: 'id',
       width: 60,
       sorter: true,
-      sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'id'),
+      sortOrder: tableUtil.calcDefaultSortOrder(tablePagination.orderSort, tablePagination.orderBy, 'id'),
       render: (id: string) => <TableColumnId id={id} link={`${props.route.path}/${id}`} />,
     },
     {
@@ -93,7 +88,7 @@ export default (props: IPage) => {
       width: 30,
       dataIndex: 'is_admin',
       sorter: true,
-      sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'is_admin'),
+      sortOrder: tableUtil.calcDefaultSortOrder(tablePagination.orderSort, tablePagination.orderBy, 'is_admin'),
       render: (text: string, record: User) => (record.is_admin ? <Rcon type="ri-vip-crown-2-line" /> : null),
     },
     {
@@ -101,14 +96,14 @@ export default (props: IPage) => {
       width: 300,
       dataIndex: 'email',
       sorter: true,
-      sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'email'),
+      sortOrder: tableUtil.calcDefaultSortOrder(tablePagination.orderSort, tablePagination.orderBy, 'email'),
       render: (text: string, record: User) => <Link to={`${props.route.path}/${record.id}`}>{record.email}</Link>,
     },
     {
       title: t('_lang:name'),
       dataIndex: 'name',
       sorter: true,
-      sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'name'),
+      sortOrder: tableUtil.calcDefaultSortOrder(tablePagination.orderSort, tablePagination.orderBy, 'name'),
     },
     {
       title: t('_lang:role'),
@@ -122,7 +117,7 @@ export default (props: IPage) => {
       dataIndex: 'created_at',
       width: 120,
       sorter: true,
-      sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'created_at'),
+      sortOrder: tableUtil.calcDefaultSortOrder(tablePagination.orderSort, tablePagination.orderBy, 'created_at'),
       render: (text: string) => <TableColumnDate date={text} size="small" />,
     },
     {
@@ -148,12 +143,31 @@ export default (props: IPage) => {
         <TableColumnDeleteButton
           id={record.id}
           fieldName={record.name}
-          loading={getUsersMutation.loading}
-          onClick={async () => getUsersMutate({ variables: { id: Number(record.id) } })}
+          loading={deleteUserMutation.loading}
+          onClick={async () => deleteUserMutate({ variables: { id: Number(record.id) } })}
         />
       ),
     },
   ];
+
+  const onFilter = (params: { field: string; value?: string | number | number[] }) => {
+    setTablePagination({ ...tablePagination, page: 1 });
+
+    const filterParams: { q?: string; categoryId?: number; brandId?: number; tagName?: string } = {};
+
+    if (params.field === 'q') {
+      const result = params.value ? String(params.value) : undefined;
+
+      setQ(result);
+      filterParams.q = result;
+    }
+
+    urlUtil.mergeParamToUrlQuery({
+      window,
+      params: { page: 1, ...filterParams },
+      replace: true,
+    });
+  };
 
   return (
     <PageCard
@@ -161,65 +175,52 @@ export default (props: IPage) => {
         <span>
           <Rcon type={props.route.icon} />
           <strong>{t(`${props.route.namei18n}`)}</strong>
-          <Link className="page-card-create-link" to={`${props.route.path}/create`}>
+          <Link className="g-page-card-create-link" to={`${props.route.path}/create`}>
             <Rcon type={PAGE_CARD_TITLE_CREATE_ICON} />
           </Link>
         </span>
       }
       extra={
-        <SearchInput
-          value={q}
-          onChange={(keyword: string) => {
-            setPage(1);
-            setQ(keyword);
-
-            urlUtil.mergeParamToUrlQuery({
-              window,
-              params: {
-                page: 1,
-                q: keyword,
-              },
-              replace: true,
-            });
-          }}
-        />
+        <div className="g-page-card-extra-filter-bar-wrapper">
+          <SearchInput
+            className={cx('g-extra-filter-bar--item', 'g-extra-filter-bar--q')}
+            value={q}
+            onChange={v => onFilter({ field: 'q', value: v })}
+          />
+        </div>
       }
       className={style['wapper']}
       loading={getUsersQuery.loading}
     >
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
-      {getUsersQuery.data && getUsersQuery.data.users && getUsersQuery.data.users.items && (
-        <TableCard
-          selectedRowKeys={selectedRowKeys}
-          selectedRowBar={
-            <Button type="danger" size="small" icon="delete">
-              {t('_lang:delete')}
-            </Button>
-          }
-        >
+      {getUsersQuery?.data?.users?.items && (
+        <TableCard selectedRowKeys={tablePagination.selectedRowKeys}>
           <Table
             rowKey="id"
             size="small"
             rowSelection={rowSelection}
-            columns={columns}
+            columns={columns as any}
             dataSource={getUsersQuery.data.users.items}
             pagination={{
-              defaultCurrent: page,
-              defaultPageSize: pageSize,
+              defaultCurrent: tablePagination.page,
+              defaultPageSize: tablePagination.pageSize,
               total: getUsersQuery.data.users.total,
-              current: page,
-              pageSize,
+              current: tablePagination.page,
+              pageSize: tablePagination.pageSize,
               //
               pageSizeOptions: DEFAULT_PAGE_SIZE_OPTIONS,
               showSizeChanger: true,
             }}
-            onChange={(pagination, filters, sorter) => {
-              setPage(pagination.current);
-              setPageSize(pagination.pageSize);
-              setOrderBy(sorter.field);
-              setOrderSort(urlUtil.formatOrderSort(sorter.order));
-              setSelectedRowKeys([]);
+            onChange={(pagination, filters, sorter: any) => {
+              setTablePagination({
+                ...tablePagination,
+                page: pagination.current,
+                pageSize: pagination.pageSize,
+                orderBy: urlUtil.formatOrderBy(sorter.field),
+                orderSort: urlUtil.formatOrderSort(sorter.order),
+                selectedRowKeys: [],
+              });
 
               urlUtil.mergeParamToUrlQuery({
                 window,

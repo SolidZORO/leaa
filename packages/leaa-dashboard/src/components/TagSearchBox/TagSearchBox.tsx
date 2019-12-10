@@ -113,8 +113,8 @@ export const TagSearchBox = forwardRef((props: IProps, ref: React.Ref<any>) => {
 
   // TIPS: onEnter & onSelect will be CONFLICT!
   return (
-    <div className={style['wrapper']}>
-      <div className={cx(style['container'], props.className)}>
+    <div className={cx(style['wrapper'], props.className)}>
+      <div className={cx(style['container'])}>
         <AutoComplete
           // backfill
           ref={ref}

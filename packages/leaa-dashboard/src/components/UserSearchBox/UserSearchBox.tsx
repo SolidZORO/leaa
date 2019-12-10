@@ -150,8 +150,8 @@ export const UserSearchBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
 
   // TIPS: onEnter & onSelect will be CONFLICT!
   return (
-    <div className={style['wrapper']}>
-      <div className={cx(style['container'], props.className)} style={props.style}>
+    <div className={cx(style['wrapper'], props.className)} style={props.style}>
+      <div className={cx(style['container'])}>
         <AutoComplete
           // backfill
           ref={ref}

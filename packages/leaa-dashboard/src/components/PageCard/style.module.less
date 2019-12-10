@@ -53,7 +53,7 @@
     }
 
     :global {
-      .page-card-create-link {
+      .g-page-card-create-link {
         display: inline-block;
         margin-left: 10px;
         color: #aaa;
@@ -64,8 +64,11 @@
 
         .anticon {
           display: inline-block;
-          font-size: 100%;
-          vertical-align: -2px;
+          vertical-align: -4px;
+
+          svg {
+            font-size: 24px;
+          }
         }
       }
 
@@ -81,6 +84,29 @@
     //font-size: 140%;
     margin: 0;
     padding: 0 0 0 3px;
+
+    :global {
+      .g-page-card-extra-filter-bar-wrapper {
+        display: flex;
+        align-items: center;
+      }
+
+      .g-extra-filter-bar--item {
+        margin-left: 8px;
+      }
+
+      .g-extra-filter-bar--tag {
+        width: 130px;
+      }
+
+      .g-extra-filter-bar--category {
+        width: 150px;
+      }
+
+      .g-extra-filter-bar--q {
+        width: 180px;
+      }
+    }
   }
 }
 

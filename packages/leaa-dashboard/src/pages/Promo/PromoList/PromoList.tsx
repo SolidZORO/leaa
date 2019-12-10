@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import cx from 'classnames';
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import queryString from 'query-string';
@@ -8,24 +9,24 @@ import { Table } from 'antd';
 
 import { DEFAULT_PAGE_SIZE_OPTIONS, PAGE_CARD_TITLE_CREATE_ICON } from '@leaa/dashboard/src/constants';
 import { GET_PROMOS, DELETE_PROMO, UPDATE_PROMO } from '@leaa/common/src/graphqls';
+
 import { Promo } from '@leaa/common/src/entrys';
-import { IOrderSort } from '@leaa/common/src/dtos/_common';
 import { PromosWithPaginationObject, PromosArgs } from '@leaa/common/src/dtos/promo';
+import { IPage, IKey, ITablePagination } from '@leaa/dashboard/src/interfaces';
 import { urlUtil, tableUtil, messageUtil } from '@leaa/dashboard/src/utils';
 
 import {
-  TableColumnDate,
-  HtmlMeta,
+  Rcon,
   PageCard,
+  HtmlMeta,
   TableCard,
   SearchInput,
-  TableColumnDeleteButton,
   TableColumnId,
+  TableColumnDate,
+  TableColumnDeleteButton,
   TableColumnStatusSwitch,
   CouponItem,
-  Rcon,
 } from '@leaa/dashboard/src/components';
-import { IPage, IKey } from '@leaa/dashboard/src/interfaces';
 
 import style from './style.module.less';
 
@@ -35,22 +36,15 @@ export default (props: IPage) => {
   const urlParams = queryString.parse(window.location.search);
   const urlPagination = urlUtil.getPagination(urlParams);
 
-  const [q, setQ] = useState<string | undefined>(urlParams.q ? `${urlParams.q}` : undefined);
-  const [page, setPage] = useState<number | undefined>(urlPagination.page);
-  const [pageSize, setPageSize] = useState<number | undefined>(urlPagination.pageSize);
-  const [selectedRowKeys, setSelectedRowKeys] = useState<IKey[]>([]);
+  const [tablePagination, setTablePagination] = useState<ITablePagination>(urlUtil.initPaginationState(urlParams));
 
-  // sort
-  const [orderBy, setOrderBy] = useState<string | undefined>(urlParams.orderBy ? `${urlParams.orderBy}` : undefined);
-  const [orderSort, setOrderSort] = useState<IOrderSort | undefined>(
-    urlParams.orderSort ? urlUtil.formatOrderSort(`${urlParams.orderSort}`) : undefined,
-  );
+  // filter
+  const [q, setQ] = useState<string | undefined>(urlParams.q ? String(urlParams.q) : undefined);
 
   // query
-  const getPromosVariables = { page, pageSize, q, orderBy, orderSort };
+  const getPromosVariables = { ...tablePagination, q };
   const getPromosQuery = useQuery<{ promos: PromosWithPaginationObject }, PromosArgs>(GET_PROMOS, {
     variables: getPromosVariables,
-    fetchPolicy: 'network-only',
   });
 
   // mutation
@@ -61,23 +55,25 @@ export default (props: IPage) => {
   });
 
   const resetUrlParams = () => {
-    setPage(urlPagination.page);
-    setPageSize(urlPagination.pageSize);
-    setOrderBy(undefined);
-    setOrderSort(undefined);
+    setTablePagination({
+      page: urlPagination.page,
+      pageSize: urlPagination.pageSize,
+      selectedRowKeys: [],
+      orderBy: undefined,
+      orderSort: undefined,
+    });
+
     setQ(undefined);
   };
 
   useEffect(() => {
-    if (_.isEmpty(urlParams)) {
-      resetUrlParams();
-    }
-  }, [urlParams]);
+    if (_.isEmpty(urlParams)) resetUrlParams(); // change route reset url
+  }, [props.history.location.key]);
 
   const rowSelection = {
     columnWidth: 30,
-    onChange: (keys: IKey[]) => setSelectedRowKeys(keys),
-    selectedRowKeys,
+    onChange: (keys: IKey[]) => setTablePagination({ ...tablePagination, selectedRowKeys: keys }),
+    selectedRowKeys: tablePagination.selectedRowKeys,
   };
 
   const columns = [
@@ -86,7 +82,7 @@ export default (props: IPage) => {
       dataIndex: 'id',
       width: 100,
       sorter: true,
-      sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'id'),
+      sortOrder: tableUtil.calcDefaultSortOrder(tablePagination.orderSort, tablePagination.orderBy, 'id'),
       render: (id: string) => <TableColumnId id={id} link={`${props.route.path}/${id}`} />,
     },
     {
@@ -116,7 +112,7 @@ export default (props: IPage) => {
       dataIndex: 'created_at',
       width: 120,
       sorter: true,
-      sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'created_at'),
+      sortOrder: tableUtil.calcDefaultSortOrder(tablePagination.orderSort, tablePagination.orderBy, 'created_at'),
       render: (text: string) => <TableColumnDate date={text} size="small" />,
     },
     {
@@ -149,34 +145,42 @@ export default (props: IPage) => {
     },
   ];
 
+  const onFilter = (params: { field: string; value?: string | number | number[] }) => {
+    setTablePagination({ ...tablePagination, page: 1 });
+
+    const filterParams: { q?: string; userId?: string } = {};
+
+    if (params.field === 'q') {
+      const result = params.value ? String(params.value) : undefined;
+
+      setQ(result);
+      filterParams.q = result;
+    }
+
+    urlUtil.mergeParamToUrlQuery({
+      window,
+      params: { page: 1, ...filterParams },
+      replace: true,
+    });
+  };
+
   return (
     <PageCard
       title={
         <span>
           <Rcon type={props.route.icon} />
           <strong>{t(`${props.route.namei18n}`)}</strong>
-          <Link className="page-card-create-link" to={`${props.route.path}/create`}>
+          <Link className="g-page-card-create-link" to={`${props.route.path}/create`}>
             <Rcon type={PAGE_CARD_TITLE_CREATE_ICON} />
           </Link>
         </span>
       }
       extra={
-        <div className={style['extra-wrapper']}>
+        <div className="g-page-card-extra-filter-bar-wrapper">
           <SearchInput
+            className={cx('g-extra-filter-bar--item', 'g-extra-filter-bar--q')}
             value={q}
-            onChange={(keyword: string) => {
-              setPage(1);
-              setQ(keyword);
-
-              urlUtil.mergeParamToUrlQuery({
-                window,
-                params: {
-                  page: 1,
-                  q: keyword,
-                },
-                replace: true,
-              });
-            }}
+            onChange={v => onFilter({ field: 'q', value: v })}
           />
         </div>
       }
@@ -185,30 +189,33 @@ export default (props: IPage) => {
     >
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
-      {getPromosQuery.data && getPromosQuery.data.promos && getPromosQuery.data.promos.items && (
-        <TableCard selectedRowKeys={selectedRowKeys}>
+      {getPromosQuery?.data?.promos?.items && (
+        <TableCard selectedRowKeys={tablePagination.selectedRowKeys}>
           <Table
             rowKey="id"
             size="small"
             rowSelection={rowSelection}
-            columns={columns}
+            columns={columns as any}
             dataSource={getPromosQuery.data.promos.items}
             pagination={{
-              defaultCurrent: page,
-              defaultPageSize: pageSize,
+              defaultCurrent: tablePagination.page,
+              defaultPageSize: tablePagination.pageSize,
               total: getPromosQuery.data.promos.total,
-              current: page,
-              pageSize,
+              current: tablePagination.page,
+              pageSize: tablePagination.pageSize,
               //
               pageSizeOptions: DEFAULT_PAGE_SIZE_OPTIONS,
               showSizeChanger: true,
             }}
-            onChange={(pagination, filters, sorter) => {
-              setPage(pagination.current);
-              setPageSize(pagination.pageSize);
-              setOrderBy(sorter.field);
-              setOrderSort(urlUtil.formatOrderSort(sorter.order));
-              setSelectedRowKeys([]);
+            onChange={(pagination, filters, sorter: any) => {
+              setTablePagination({
+                ...tablePagination,
+                page: pagination.current,
+                pageSize: pagination.pageSize,
+                orderBy: urlUtil.formatOrderBy(sorter.field),
+                orderSort: urlUtil.formatOrderSort(sorter.order),
+                selectedRowKeys: [],
+              });
 
               urlUtil.mergeParamToUrlQuery({
                 window,

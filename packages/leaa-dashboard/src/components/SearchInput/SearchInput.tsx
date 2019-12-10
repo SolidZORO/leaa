@@ -37,22 +37,24 @@ export const SearchInput = (props: IProps) => {
   };
 
   return (
-    <Input
-      prefixCls="search-input ant-input"
-      className={cx(style['search-input-wrapper'], 'search-input-wrapper')}
-      allowClear
-      placeholder={`${t('_comp:SearchInput.placeholder')}`}
-      onChange={onChange}
-      defaultValue={searchText}
-      value={searchText}
-      addonAfter={
-        <SearchOutlined
-          className={style['search-input-search-button']}
-          onClick={() => onPassToParent(searchText as string)}
-        />
-      }
-      onPressEnter={() => onPassToParent(searchText as string)}
-      {...props.componentProps}
-    />
+    <div className={cx(style['wrapper'], props.className)}>
+      <Input
+        prefixCls="search-input ant-input"
+        className={cx(style['search-input-wrapper'], 'search-input-wrapper')}
+        allowClear
+        placeholder={`${t('_comp:SearchInput.placeholder')}`}
+        onChange={onChange}
+        defaultValue={searchText}
+        value={searchText}
+        addonAfter={
+          <SearchOutlined
+            className={style['search-input-search-button']}
+            onClick={() => onPassToParent(searchText as string)}
+          />
+        }
+        onPressEnter={() => onPassToParent(searchText as string)}
+        {...props.componentProps}
+      />
+    </div>
   );
 };
