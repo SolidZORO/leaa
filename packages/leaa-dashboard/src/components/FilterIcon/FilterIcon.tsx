@@ -1,5 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
+import cx from 'classnames';
 import { Options } from 'currency.js';
 import { ParsedQuery } from 'query-string';
 
@@ -13,9 +14,17 @@ interface IProps extends Options {
 }
 
 export const FilterIcon = (props: IProps) => {
-  return _.isEmpty(props.urlParams) ? (
-    <Rcon type="ri-filter-line" className={style['filter-bar-icon']} />
-  ) : (
-    <Rcon type="ri-close-circle-line" className={style['filter-bar-icon']} onClick={props.onClose} />
+  let showClose = false;
+
+  if (!_.isEmpty(props.urlParams)) {
+    showClose = !_.isEmpty(_.omit(props.urlParams, ['page', 'pageSize', 'orderBy', 'orderSort']));
+  }
+
+  return (
+    <Rcon
+      className={cx(style['filter-bar-icon'], { [style['filter-bar-icon--show-close']]: showClose })}
+      type={showClose ? 'ri-close-circle-line' : 'ri-filter-line'}
+      onClick={showClose ? props.onClose : undefined}
+    />
   );
 };

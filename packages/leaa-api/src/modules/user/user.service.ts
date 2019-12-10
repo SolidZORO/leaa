@@ -115,6 +115,10 @@ export class UserService {
   }
 
   async updateUser(id: number, args: UpdateUserInput): Promise<User | undefined> {
+    if (id === 1 && (args.password || args.status)) {
+      return errorUtil.ERROR({ error: 'Default User, PLEASE DONT' });
+    }
+
     const nextArgs = args;
     const relationArgs: { roles?: Role[] } = {};
 
