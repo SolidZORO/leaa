@@ -7,7 +7,7 @@ import { Permission } from '@leaa/common/src/entrys';
 import { GET_PERMISSION, UPDATE_PERMISSION } from '@leaa/common/src/graphqls';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { PermissionArgs, UpdatePermissionInput } from '@leaa/common/src/dtos/permission';
-import { IPage } from '@leaa/dashboard/src/interfaces';
+import { IPage, IKey } from '@leaa/dashboard/src/interfaces';
 import { messageUtil } from '@leaa/dashboard/src/utils';
 
 import { HtmlMeta, PageCard, SubmitBar, Rcon } from '@leaa/dashboard/src/components';

@@ -8,7 +8,7 @@ import { IAttachmentBoxRef } from '@leaa/common/src/interfaces';
 import { GET_AX, UPDATE_AX } from '@leaa/common/src/graphqls';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { AxArgs, UpdateAxInput } from '@leaa/common/src/dtos/ax';
-import { IPage } from '@leaa/dashboard/src/interfaces';
+import { IPage, IKey } from '@leaa/dashboard/src/interfaces';
 import { messageUtil } from '@leaa/dashboard/src/utils';
 
 import { HtmlMeta, PageCard, SubmitBar, AttachmentBox, Rcon } from '@leaa/dashboard/src/components';

@@ -11,7 +11,7 @@ import {
   UpdateCategoryInput,
   CategoriesWithPaginationOrTreeObject,
 } from '@leaa/common/src/dtos/category';
-import { IPage } from '@leaa/dashboard/src/interfaces';
+import { IPage, IKey } from '@leaa/dashboard/src/interfaces';
 import { messageUtil } from '@leaa/dashboard/src/utils';
 
 import { HtmlMeta, PageCard, SubmitBar, Rcon } from '@leaa/dashboard/src/components';

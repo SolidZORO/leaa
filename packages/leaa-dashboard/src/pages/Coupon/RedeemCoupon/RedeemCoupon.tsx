@@ -5,7 +5,7 @@ import { useMutation } from '@apollo/react-hooks';
 
 import { Coupon } from '@leaa/common/src/entrys';
 import { RedeemCouponInput } from '@leaa/common/src/dtos/coupon';
-import { IPage } from '@leaa/dashboard/src/interfaces';
+import { IPage, IKey } from '@leaa/dashboard/src/interfaces';
 import { REDEEM_COUPON } from '@leaa/common/src/graphqls';
 import { messageUtil } from '@leaa/dashboard/src/utils';
 

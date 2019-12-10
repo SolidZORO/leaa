@@ -6,7 +6,7 @@ import { Button } from 'antd';
 import { Product } from '@leaa/common/src/entrys';
 import { CREATE_PRODUCT } from '@leaa/common/src/graphqls';
 import { CreateProductInput } from '@leaa/common/src/dtos/product';
-import { IPage } from '@leaa/dashboard/src/interfaces';
+import { IPage, ISubmitData, ICommenFormRef } from '@leaa/dashboard/src/interfaces';
 import { messageUtil } from '@leaa/dashboard/src/utils';
 import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { PageCard, HtmlMeta, SubmitBar, Rcon } from '@leaa/dashboard/src/components';
@@ -19,7 +19,7 @@ export default (props: IPage) => {
   const { t } = useTranslation();
 
   // ref
-  const infoFormRef = useRef<any>(null);
+  const infoFormRef = useRef<ICommenFormRef<CreateProductInput>>(null);
 
   // mutation
   const [submitVariables, setSubmitVariables] = useState<{ product: CreateProductInput }>();
@@ -33,7 +33,7 @@ export default (props: IPage) => {
   });
 
   const onSubmit = async () => {
-    const submitData: CreateProductInput = await infoFormRef.current?.onValidateForm();
+    const submitData: ISubmitData<CreateProductInput> = await infoFormRef.current?.onValidateForm();
 
     if (!submitData) return;
 

@@ -7,7 +7,7 @@ import { Promo } from '@leaa/common/src/entrys';
 import { GET_PROMO, UPDATE_PROMO } from '@leaa/common/src/graphqls';
 import { UPDATE_BUTTON_ICON, PAGE_CARD_TITLE_CREATE_ICON } from '@leaa/dashboard/src/constants';
 import { PromoArgs, UpdatePromoInput } from '@leaa/common/src/dtos/promo';
-import { IPage } from '@leaa/dashboard/src/interfaces';
+import { IPage, IKey } from '@leaa/dashboard/src/interfaces';
 import { messageUtil } from '@leaa/dashboard/src/utils';
 
 import { HtmlMeta, PageCard, SubmitBar, Rcon } from '@leaa/dashboard/src/components';

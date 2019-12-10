@@ -11,7 +11,7 @@ import { DELETE_CATEGORY, GET_CATEGORIES } from '@leaa/common/src/graphqls';
 import { Category } from '@leaa/common/src/entrys';
 import { CategoriesWithPaginationOrTreeObject, CategoriesArgs } from '@leaa/common/src/dtos/category';
 import { messageUtil } from '@leaa/dashboard/src/utils';
-import { IPage } from '@leaa/dashboard/src/interfaces';
+import { IPage, IKey } from '@leaa/dashboard/src/interfaces';
 
 import { HtmlMeta, PageCard, TableCard, TableColumnDeleteButton, Rcon } from '@leaa/dashboard/src/components';
 

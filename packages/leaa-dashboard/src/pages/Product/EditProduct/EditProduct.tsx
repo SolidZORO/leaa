@@ -1,14 +1,13 @@
 import React, { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from 'antd';
-import { FormInstance } from 'rc-field-form/lib';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
 import { Product, Tag } from '@leaa/common/src/entrys';
 import { GET_PRODUCT, UPDATE_PRODUCT } from '@leaa/common/src/graphqls';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { ProductArgs, UpdateProductInput } from '@leaa/common/src/dtos/product';
-import { IPage } from '@leaa/dashboard/src/interfaces';
+import { IPage, ICommenFormRef, ISubmitData } from '@leaa/dashboard/src/interfaces';
 import { messageUtil } from '@leaa/dashboard/src/utils';
 
 import { PageCard, HtmlMeta, SelectTagId, SubmitBar, Rcon } from '@leaa/dashboard/src/components';
@@ -23,7 +22,7 @@ export default (props: IPage) => {
   const { id } = props.match.params as { id: string };
 
   // ref
-  const infoFormRef = useRef<{ onValidateForm: any; form: FormInstance }>(null);
+  const infoFormRef = useRef<ICommenFormRef<UpdateProductInput>>(null);
   const productImageRef = useRef<{ onUpdateAllAttachments: () => void }>(null);
 
   const [productTags, setProductTags] = useState<Tag[]>();
@@ -46,7 +45,7 @@ export default (props: IPage) => {
   });
 
   const onSubmit = async () => {
-    const submitData: UpdateProductInput = await infoFormRef.current?.onValidateForm();
+    const submitData: ISubmitData<UpdateProductInput> = await infoFormRef.current?.onValidateForm();
 
     if (!submitData) return;
 

@@ -6,6 +6,8 @@ import { useTranslation } from 'react-i18next';
 
 import { Product } from '@leaa/common/src/entrys';
 import { messageUtil } from '@leaa/dashboard/src/utils';
+import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
+import { UpdateProductInput } from '@leaa/common/src/dtos/product';
 
 import { FormCard, SwitchNumber, EntryInfoDate, SelectCategoryIdByTree } from '@leaa/dashboard/src/components';
 
@@ -15,14 +17,13 @@ interface IProps {
   item?: Product;
   className?: string;
   loading?: boolean;
-  onValidateFieldsCallback?: (e: any) => void;
 }
 
 export const ProductInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
   const { t } = useTranslation();
   const [form] = Form.useForm();
 
-  const onValidateForm = async () => {
+  const onValidateForm = async (): IOnValidateFormResult<UpdateProductInput> => {
     try {
       return await form.validateFields();
     } catch (error) {

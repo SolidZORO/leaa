@@ -1,6 +1,7 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import cx from 'classnames';
+import { useTranslation } from 'react-i18next';
+import { IKey } from '@leaa/dashboard/src/interfaces';
 
 import style from './style.module.less';
 
@@ -11,7 +12,7 @@ interface IProps {
   className?: string;
   loading?: boolean;
   selectedRowBar?: React.ReactNode;
-  selectedRowKeys?: string[] | number[];
+  selectedRowKeys?: IKey[];
 }
 
 export const TableCard = (props: IProps) => {

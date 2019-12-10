@@ -1,5 +1,7 @@
 @import '~@leaa/dashboard/src/styles/variables.less';
 
+@element-hegith: 45px;
+
 .wrapper {
   height: 100%;
 }
@@ -55,9 +57,43 @@
 
 .login-form {
   padding-top: 30px;
+}
 
-  @media (min-width: @screen-md) {
-    padding-top: 20px;
+.button-row {
+  button {
+    height: @element-hegith;
+    margin-right: 16px;
+    display: block;
+    width: 100%;
+
+    @media (min-width: @screen-md) {
+      display: inline-block;
+      width: auto;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    span {
+      @widht: 40px;
+
+      padding-left: @widht;
+      padding-right: @widht;
+    }
+  }
+
+  .button-login {
+  }
+
+  .button-back {
+    background: transparent;
+    opacity: 0.5;
+
+    // for MB
+    @media (max-width: @screen-md) {
+      display: none;
+    }
   }
 }
 
@@ -66,11 +102,4 @@
   right: 0;
   top: 10px;
   z-index: 1;
-
-  //@media (min-width: @screen-md) {
-  //  right: inherit;
-  //  top: inherit;
-  //  left: 5px;
-  //  bottom: 10px;
-  //}
 }

@@ -5,7 +5,7 @@ import { useMutation } from '@apollo/react-hooks';
 
 import { Permission } from '@leaa/common/src/entrys';
 import { CreatePermissionInput } from '@leaa/common/src/dtos/permission';
-import { IPage } from '@leaa/dashboard/src/interfaces';
+import { IPage, IKey } from '@leaa/dashboard/src/interfaces';
 // eslint-disable-next-line max-len
 import { CREATE_PERMISSION } from '@leaa/common/src/graphqls';
 import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';

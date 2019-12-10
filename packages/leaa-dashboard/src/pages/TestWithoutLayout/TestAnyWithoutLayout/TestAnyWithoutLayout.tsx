@@ -1,5 +1,5 @@
 import React from 'react';
-import { IPage } from '@leaa/dashboard/src/interfaces';
+import { IPage, IKey } from '@leaa/dashboard/src/interfaces';
 import { Rcon } from '@leaa/dashboard/src/components';
 // import { Icon } from 'antd';
 

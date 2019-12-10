@@ -1,6 +1,6 @@
-import _ from 'lodash';
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import _ from 'lodash';
 import queryString from 'query-string';
 import { Link } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/react-hooks';
@@ -8,11 +8,13 @@ import { Table } from 'antd';
 
 import { DEFAULT_PAGE_SIZE_OPTIONS, PAGE_CARD_TITLE_CREATE_ICON } from '@leaa/dashboard/src/constants';
 import { GET_PERMISSIONS, DELETE_PERMISSION } from '@leaa/common/src/graphqls';
+
 import { Permission } from '@leaa/common/src/entrys';
 import { IOrderSort } from '@leaa/common/src/dtos/_common';
 import { PermissionsWithPaginationObject, PermissionArgs } from '@leaa/common/src/dtos/permission';
+
+import { IPage, IKey } from '@leaa/dashboard/src/interfaces';
 import { urlUtil, tableUtil, messageUtil } from '@leaa/dashboard/src/utils';
-import { IPage } from '@leaa/dashboard/src/interfaces';
 
 import {
   HtmlMeta,
@@ -36,7 +38,7 @@ export default (props: IPage) => {
   const [q, setQ] = useState<string | undefined>(urlParams.q ? `${urlParams.q}` : undefined);
   const [page, setPage] = useState<number | undefined>(urlPagination.page);
   const [pageSize, setPageSize] = useState<number | undefined>(urlPagination.pageSize);
-  const [selectedRowKeys, setSelectedRowKeys] = useState<number[] | string[]>([]);
+  const [selectedRowKeys, setSelectedRowKeys] = useState<IKey[]>([]);
 
   // sort
   const [orderBy, setOrderBy] = useState<string | undefined>(urlParams.orderBy ? `${urlParams.orderBy}` : undefined);
@@ -77,7 +79,7 @@ export default (props: IPage) => {
 
   const rowSelection = {
     columnWidth: 30,
-    onChange: (keys: number[] | string[]) => setSelectedRowKeys(keys),
+    onChange: (keys: IKey[]) => setSelectedRowKeys(keys),
     selectedRowKeys,
   };
 

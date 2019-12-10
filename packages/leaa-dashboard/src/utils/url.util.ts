@@ -2,7 +2,7 @@ import _ from 'lodash';
 import animateScrollTo from 'animated-scroll-to';
 import queryString, { ParsedQuery } from 'query-string';
 import { PaginationProps } from 'antd/lib/pagination';
-import { SortOrder, SorterResult } from 'antd/lib/table/interface';
+import { SortOrder } from 'antd/lib/table/interface';
 
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from '@leaa/dashboard/src/constants';
 
@@ -85,12 +85,12 @@ const getPagination = (urlParams: ParsedQuery): IGetPaginationResult => {
   return result;
 };
 
-const formatOrderSort = (orderSort?: string): IFormatOrderSortResult => {
+const formatOrderSort = (orderSort?: string[] | string | null | undefined): IFormatOrderSortResult => {
   if (!orderSort) {
     return undefined;
   }
 
-  const result = orderSort.toLowerCase();
+  const result = String(orderSort).toLowerCase();
 
   if (['desc', 'descend'].includes(result)) {
     return 'DESC';
@@ -101,6 +101,14 @@ const formatOrderSort = (orderSort?: string): IFormatOrderSortResult => {
   }
 
   return undefined;
+};
+
+const formatOrderBy = (orderBy?: string[] | string | null | undefined): string | undefined => {
+  if (!orderBy) {
+    return undefined;
+  }
+
+  return String(orderBy);
 };
 
 const pickPagination = (params: PaginationProps): IPickPaginationResult => {
@@ -147,4 +155,5 @@ export const urlUtil = {
   pickPagination,
   pickOrder,
   formatOrderSort,
+  formatOrderBy,
 };

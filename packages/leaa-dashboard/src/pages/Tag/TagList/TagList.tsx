@@ -12,7 +12,7 @@ import { Tag } from '@leaa/common/src/entrys';
 import { IOrderSort } from '@leaa/common/src/dtos/_common';
 import { TagsWithPaginationObject, TagArgs } from '@leaa/common/src/dtos/tag';
 import { urlUtil, tableUtil, authUtil, messageUtil } from '@leaa/dashboard/src/utils';
-import { IPage } from '@leaa/dashboard/src/interfaces';
+import { IPage, IKey } from '@leaa/dashboard/src/interfaces';
 
 import {
   HtmlMeta,
@@ -38,7 +38,7 @@ export default (props: IPage) => {
   const [q, setQ] = useState<string | undefined>(urlParams.q ? `${urlParams.q}` : undefined);
   const [page, setPage] = useState<number | undefined>(urlPagination.page);
   const [pageSize, setPageSize] = useState<number | undefined>(urlPagination.pageSize);
-  const [selectedRowKeys, setSelectedRowKeys] = useState<number[] | string[]>([]);
+  const [selectedRowKeys, setSelectedRowKeys] = useState<IKey[]>([]);
 
   // sort
   const [orderBy, setOrderBy] = useState<string | undefined>(urlParams.orderBy ? `${urlParams.orderBy}` : undefined);
@@ -76,7 +76,7 @@ export default (props: IPage) => {
 
   const rowSelection = {
     columnWidth: 30,
-    onChange: (keys: number[] | string[]) => setSelectedRowKeys(keys),
+    onChange: (keys: IKey[]) => setSelectedRowKeys(keys),
     selectedRowKeys,
   };
 

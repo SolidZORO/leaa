@@ -8,7 +8,7 @@ import { GET_USER, GET_ROLES, UPDATE_USER } from '@leaa/common/src/graphqls';
 import { RolesWithPaginationObject, RolesArgs } from '@leaa/common/src/dtos/role';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { UserArgs, UpdateUserInput } from '@leaa/common/src/dtos/user';
-import { IPage } from '@leaa/dashboard/src/interfaces';
+import { IPage, IKey } from '@leaa/dashboard/src/interfaces';
 import { messageUtil } from '@leaa/dashboard/src/utils';
 
 import { HtmlMeta, PageCard, SubmitBar, Rcon } from '@leaa/dashboard/src/components';
