@@ -5,6 +5,7 @@ import { PaginationProps } from 'antd/lib/pagination';
 import { SortOrder } from 'antd/lib/table/interface';
 
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from '@leaa/dashboard/src/constants';
+import { ITablePagination } from '@leaa/dashboard/src/interfaces';
 
 interface IMergeParamToUrlQuery {
   window: Window;
@@ -129,6 +130,7 @@ const pickPagination = (params: PaginationProps): IPickPaginationResult => {
   return result;
 };
 
+// TODO EDIT TYPE
 // const pickOrder = (params: IPickOrderProps | any): IPickOrderResult => {
 const pickOrder = (params: IPickOrderProps | any) => {
   if (_.isEmpty(params)) {
@@ -148,6 +150,18 @@ const pickOrder = (params: IPickOrderProps | any) => {
   return result;
 };
 
+const initPaginationState = (urlParams: ParsedQuery): ITablePagination => {
+  const urlPagination = getPagination(urlParams);
+
+  return {
+    page: urlPagination.page,
+    pageSize: urlPagination?.pageSize,
+    selectedRowKeys: [],
+    orderBy: formatOrderBy(urlParams.orderBy),
+    orderSort: formatOrderSort(urlParams.orderSort),
+  };
+};
+
 export const urlUtil = {
   routerPathToClassName,
   mergeParamToUrlQuery,
@@ -156,4 +170,5 @@ export const urlUtil = {
   pickOrder,
   formatOrderSort,
   formatOrderBy,
+  initPaginationState,
 };

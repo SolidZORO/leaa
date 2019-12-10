@@ -17,7 +17,7 @@ interface IProps extends AutoCompleteProps {
   className?: string;
   useOnBlur?: boolean;
   enterCreateTag?: boolean;
-  value?: string | undefined;
+  value?: string;
   autoFocus?: boolean;
   onSelectTagCallback?: (tag: TagEntry) => void;
   onEnterCallback?: (tag?: string) => void;
@@ -44,7 +44,6 @@ export const TagSearchBox = forwardRef((props: IProps, ref: React.Ref<any>) => {
     return () => init();
   }, []);
 
-  // query
   const queryTags = useRef(
     _.debounce((v: string) => {
       setLoading(true);
@@ -65,7 +64,7 @@ export const TagSearchBox = forwardRef((props: IProps, ref: React.Ref<any>) => {
     }, DEBOUNCE_MS),
   );
 
-  // query
+  // query tags
   const onQueryTags = (tag: string) => queryTags.current(tag);
 
   const onClear = () => {

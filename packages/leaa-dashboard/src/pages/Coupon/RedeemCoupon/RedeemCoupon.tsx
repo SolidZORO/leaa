@@ -66,7 +66,7 @@ export default (props: IPage) => {
           <Button
             type="primary"
             size="large"
-            icon="ri-swap-box-line"
+            icon={<Rcon type="ri-swap-box-line" />}
             className="submit-button"
             loading={redeemCouponMutation.loading}
             onClick={onSubmit}

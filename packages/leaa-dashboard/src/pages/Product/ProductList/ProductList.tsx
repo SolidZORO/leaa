@@ -20,14 +20,15 @@ import {
   PriceTag,
   HtmlMeta,
   TableCard,
+  FilterIcon,
+  TagMiniSets,
   SearchInput,
   TagSearchBox,
-  FilterIcon,
   TableColumnId,
   TableColumnDate,
   TableColumnImage,
-  TableColumnDeleteButton,
   SelectCategoryIdByTree,
+  TableColumnDeleteButton,
   TableColumnStatusSwitch,
 } from '@leaa/dashboard/src/components';
 
@@ -39,13 +40,7 @@ export default (props: IPage) => {
   const urlParams = queryString.parse(window.location.search);
   const urlPagination = urlUtil.getPagination(urlParams);
 
-  const [tablePagination, setTablePagination] = useState<ITablePagination>({
-    page: urlPagination?.page,
-    pageSize: urlPagination?.pageSize,
-    selectedRowKeys: [],
-    orderBy: urlUtil.formatOrderBy(urlParams.orderBy),
-    orderSort: urlUtil.formatOrderSort(urlParams.orderSort),
-  });
+  const [tablePagination, setTablePagination] = useState<ITablePagination>(urlUtil.initPaginationState(urlParams));
 
   const [q, setQ] = useState<string | undefined>(urlParams.q ? String(urlParams.q) : undefined);
   const [tagName, setTagName] = useState<string | undefined>(urlParams.tagName ? String(urlParams.tagName) : undefined);
@@ -74,7 +69,6 @@ export default (props: IPage) => {
       orderSort: undefined,
     });
 
-    // setTablePagination({});
     setQ(undefined);
     setTagName(undefined);
     setStyleId(undefined);
@@ -116,15 +110,7 @@ export default (props: IPage) => {
           <Link to={`${props.route.path}/${record.id}`}>{record.name}</Link>
           <small className={style['col-slug']}>{record.serial}</small>
 
-          {record.tags && record.tags?.length > 0 && (
-            <small className={style['col-tags-wrapper']}>
-              {record.tags.map(tag => (
-                <Tag key={tag.name} className={style['col-tags-item']}>
-                  {tag.name}
-                </Tag>
-              ))}
-            </small>
-          )}
+          <TagMiniSets tags={record.tags} />
         </>
       ),
     },

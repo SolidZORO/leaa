@@ -20,7 +20,7 @@ import i18n from '@leaa/dashboard/src/i18n';
 
 const store = initStore();
 
-Spin.setDefaultIndicator(<LoadingOutlined spin style={{ fontSize: '180%', marginTop: 50 }} />);
+Spin.setDefaultIndicator(<LoadingOutlined spin style={{ fontSize: '180%', marginTop: 30 }} />);
 
 export const App = (): JSX.Element => {
   const getLocale = () => (i18n.language === 'zh-CN' ? zhCN : enUS);

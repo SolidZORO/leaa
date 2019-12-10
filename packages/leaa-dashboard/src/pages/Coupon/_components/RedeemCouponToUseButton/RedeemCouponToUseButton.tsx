@@ -6,7 +6,7 @@ import { useMutation } from '@apollo/react-hooks';
 
 import { Coupon } from '@leaa/common/src/entrys';
 
-import { UserSearchBox, IdTag } from '@leaa/dashboard/src/components';
+import { UserSearchBox, IdTag, Rcon } from '@leaa/dashboard/src/components';
 import { REDEEM_COUPON } from '@leaa/common/src/graphqls';
 import { langUtil, authUtil, messageUtil } from '@leaa/dashboard/src/utils';
 
@@ -71,7 +71,7 @@ export const RedeemCouponToUseButton = (props: IProps) => {
 
               <Button
                 className={cx(style['submit-redeem-button'])}
-                icon="ri-swap-box-line"
+                icon={<Rcon type="ri-swap-box-line" />}
                 disabled={typeof userId === 'undefined'}
                 onClick={onSubmit}
                 type="primary"
@@ -83,7 +83,7 @@ export const RedeemCouponToUseButton = (props: IProps) => {
           </div>
         }
       >
-        <Button className={cx(style['redeem-button'])} icon="ri-swap-box-line" size="small" type="link">
+        <Button className={cx(style['redeem-button'])} icon={<Rcon type="ri-swap-box-line" />} size="small" type="link">
           {t('_page:Coupon.Component.redeem')}
         </Button>
       </Popconfirm>

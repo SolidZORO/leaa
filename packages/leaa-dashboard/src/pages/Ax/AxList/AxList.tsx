@@ -8,22 +8,22 @@ import { Table } from 'antd';
 
 import { DEFAULT_PAGE_SIZE_OPTIONS, PAGE_CARD_TITLE_CREATE_ICON } from '@leaa/dashboard/src/constants';
 import { GET_AXS, DELETE_AX, UPDATE_AX } from '@leaa/common/src/graphqls';
+
 import { Ax } from '@leaa/common/src/entrys';
-import { IOrderSort } from '@leaa/common/src/dtos/_common';
 import { AxsWithPaginationObject, AxsArgs } from '@leaa/common/src/dtos/ax';
+import { IPage, IKey, ITablePagination } from '@leaa/dashboard/src/interfaces';
 import { urlUtil, tableUtil, messageUtil } from '@leaa/dashboard/src/utils';
-import { IPage, IKey } from '@leaa/dashboard/src/interfaces';
 
 import {
-  HtmlMeta,
+  Rcon,
   PageCard,
+  HtmlMeta,
   TableCard,
   SearchInput,
+  TableColumnId,
   TableColumnDate,
   TableColumnDeleteButton,
-  TableColumnId,
   TableColumnStatusSwitch,
-  Rcon,
 } from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';
@@ -34,22 +34,14 @@ export default (props: IPage) => {
   const urlParams = queryString.parse(window.location.search);
   const urlPagination = urlUtil.getPagination(urlParams);
 
-  const [q, setQ] = useState<string | undefined>(urlParams.q ? `${urlParams.q}` : undefined);
-  const [page, setPage] = useState<number | undefined>(urlPagination.page);
-  const [pageSize, setPageSize] = useState<number | undefined>(urlPagination.pageSize);
-  const [selectedRowKeys, setSelectedRowKeys] = useState<IKey[]>([]);
+  const [tablePagination, setTablePagination] = useState<ITablePagination>(urlUtil.initPaginationState(urlParams));
 
-  // sort
-  const [orderBy, setOrderBy] = useState<string | undefined>(urlParams.orderBy ? `${urlParams.orderBy}` : undefined);
-  const [orderSort, setOrderSort] = useState<IOrderSort | undefined>(
-    urlParams.orderSort ? urlUtil.formatOrderSort(`${urlParams.orderSort}`) : undefined,
-  );
+  const [q, setQ] = useState<string | undefined>(urlParams.q ? String(urlParams.q) : undefined);
 
   // query
-  const getAxsVariables = { page, pageSize, q, orderBy, orderSort };
+  const getAxsVariables = { ...tablePagination, q };
   const getAxsQuery = useQuery<{ axs: AxsWithPaginationObject }, AxsArgs>(GET_AXS, {
     variables: getAxsVariables,
-    fetchPolicy: 'network-only',
   });
 
   // mutation
@@ -60,23 +52,25 @@ export default (props: IPage) => {
   });
 
   const resetUrlParams = () => {
-    setPage(urlPagination.page);
-    setPageSize(urlPagination.pageSize);
-    setOrderBy(undefined);
-    setOrderSort(undefined);
+    setTablePagination({
+      page: urlPagination.page,
+      pageSize: urlPagination.pageSize,
+      selectedRowKeys: [],
+      orderBy: undefined,
+      orderSort: undefined,
+    });
+
     setQ(undefined);
   };
 
   useEffect(() => {
-    if (_.isEmpty(urlParams)) {
-      resetUrlParams();
-    }
-  }, [urlParams]);
+    if (_.isEmpty(urlParams)) resetUrlParams(); // change route reset url
+  }, [props.history.location.key]);
 
   const rowSelection = {
     columnWidth: 30,
-    onChange: (keys: IKey[]) => setSelectedRowKeys(keys),
-    selectedRowKeys,
+    onChange: (keys: IKey[]) => setTablePagination({ ...tablePagination, selectedRowKeys: keys }),
+    selectedRowKeys: tablePagination.selectedRowKeys,
   };
 
   const columns = [
@@ -85,28 +79,28 @@ export default (props: IPage) => {
       dataIndex: 'id',
       width: 60,
       sorter: true,
-      sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'id'),
+      sortOrder: tableUtil.calcDefaultSortOrder(tablePagination.orderSort, tablePagination.orderBy, 'id'),
       render: (id: string) => <TableColumnId id={id} link={`${props.route.path}/${id}`} />,
     },
     {
       title: t('_lang:title'),
       dataIndex: 'title',
       sorter: true,
-      sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'title'),
+      sortOrder: tableUtil.calcDefaultSortOrder(tablePagination.orderSort, tablePagination.orderBy, 'title'),
       render: (text: string, record: Ax) => <Link to={`${props.route.path}/${record.id}`}>{record.title}</Link>,
     },
     {
       title: t('_lang:slug'),
       dataIndex: 'slug',
       sorter: true,
-      sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'slug'),
+      sortOrder: tableUtil.calcDefaultSortOrder(tablePagination.orderSort, tablePagination.orderBy, 'slug'),
     },
     {
       title: t('_lang:created_at'),
       dataIndex: 'created_at',
       width: 120,
       sorter: true,
-      sortOrder: tableUtil.calcDefaultSortOrder(orderSort, orderBy, 'created_at'),
+      sortOrder: tableUtil.calcDefaultSortOrder(tablePagination.orderSort, tablePagination.orderBy, 'created_at'),
       render: (text: string) => <TableColumnDate date={text} size="small" />,
     },
     {
@@ -139,6 +133,25 @@ export default (props: IPage) => {
     },
   ];
 
+  const onFilter = (params: { field: string; value?: string | number | number[] }) => {
+    setTablePagination({ ...tablePagination, page: 1 });
+
+    const filterParams: { q?: string; categoryId?: number; brandId?: number; tagName?: string } = {};
+
+    if (params.field === 'q') {
+      const result = params.value ? String(params.value) : undefined;
+
+      setQ(result);
+      filterParams.q = result;
+    }
+
+    urlUtil.mergeParamToUrlQuery({
+      window,
+      params: { page: 1, ...filterParams },
+      replace: true,
+    });
+  };
+
   return (
     <PageCard
       title={
@@ -151,52 +164,46 @@ export default (props: IPage) => {
         </span>
       }
       extra={
-        <SearchInput
-          value={q}
-          onChange={(keyword: string) => {
-            setPage(1);
-            setQ(keyword);
-
-            urlUtil.mergeParamToUrlQuery({
-              window,
-              params: {
-                page: 1,
-                q: keyword,
-              },
-              replace: true,
-            });
-          }}
-        />
+        <div className={style['filter-bar-wrapper']}>
+          <SearchInput
+            className={style['filter-bar-search']}
+            value={q}
+            onChange={v => onFilter({ field: 'q', value: v })}
+          />
+        </div>
       }
       className={style['wapper']}
       loading={getAxsQuery.loading}
     >
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
-      {getAxsQuery.data && getAxsQuery.data.axs && getAxsQuery.data.axs.items && (
-        <TableCard selectedRowKeys={selectedRowKeys}>
+      {getAxsQuery?.data?.axs?.items && (
+        <TableCard selectedRowKeys={tablePagination.selectedRowKeys}>
           <Table
             rowKey="id"
             size="small"
             rowSelection={rowSelection}
-            columns={columns}
+            columns={columns as any}
             dataSource={getAxsQuery.data.axs.items}
             pagination={{
-              defaultCurrent: page,
-              defaultPageSize: pageSize,
+              defaultCurrent: tablePagination.page,
+              defaultPageSize: tablePagination.pageSize,
               total: getAxsQuery.data.axs.total,
-              current: page,
-              pageSize,
+              current: tablePagination.page,
+              pageSize: tablePagination.pageSize,
               //
               pageSizeOptions: DEFAULT_PAGE_SIZE_OPTIONS,
               showSizeChanger: true,
             }}
-            onChange={(pagination, filters, sorter) => {
-              setPage(pagination.current);
-              setPageSize(pagination.pageSize);
-              setOrderBy(sorter.field);
-              setOrderSort(urlUtil.formatOrderSort(sorter.order));
-              setSelectedRowKeys([]);
+            onChange={(pagination, filters, sorter: any) => {
+              setTablePagination({
+                ...tablePagination,
+                page: pagination.current,
+                pageSize: pagination.pageSize,
+                orderBy: urlUtil.formatOrderBy(sorter.field),
+                orderSort: urlUtil.formatOrderSort(sorter.order),
+                selectedRowKeys: [],
+              });
 
               urlUtil.mergeParamToUrlQuery({
                 window,

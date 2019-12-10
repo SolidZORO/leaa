@@ -31,19 +31,12 @@ const DEBOUNCE_MS = 500;
 export const UserSearchBox = forwardRef((props: IProps, ref: React.Ref<any>) => {
   const { t, i18n } = useTranslation();
 
-  const [inputKey, setInputKey] = useState<string | undefined>(props.value);
+  const [inputKey, setInputKey] = useState<string | undefined>(props.value ? `${props.value}` : undefined);
   const [optionalUsers, setOptionalUsers] = useState<UserEntry[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const onSelect = (userId: any) => {
-    const userObject = optionalUsers.find(item => item.id === Number(userId));
+  const makeUserLabel = (user?: User) => (!user ? undefined : `#${user?.id} - ${user?.name} - ${user?.email}`);
 
-    if (props.onSelectUserCallback && userObject) {
-      props.onSelectUserCallback(userObject);
-    }
-  };
-
-  // query users
   const queryUsers = useRef(
     _.debounce((q: string) => {
       setLoading(true);
@@ -63,6 +56,8 @@ export const UserSearchBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
         .finally(() => setLoading(false));
     }, DEBOUNCE_MS),
   );
+
+  // query users
   const onQueryUsers = (q: string) => queryUsers.current(q);
 
   // query user
@@ -77,7 +72,9 @@ export const UserSearchBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
         if (result && result.data && result.data.user) {
           setOptionalUsers([result.data.user]);
 
-          setInputKey(`${userId}`);
+          // TODO Antd v4 need to set the label manually, v3 is auto.
+          // setInputKey(`${userId}`);
+          setInputKey(makeUserLabel(result.data.user));
         }
       })
       .finally(() => setLoading(false));
@@ -88,15 +85,9 @@ export const UserSearchBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
     setOptionalUsers([]);
   };
 
-  useEffect(() => {
+  const onClear = () => {
     init();
 
-    if (props.defaultValue) {
-      onQueryUser(Number(props.defaultValue)).then();
-    }
-  }, []);
-
-  const onClear = () => {
     if (props.onEnterCallback) {
       props.onEnterCallback(undefined);
     }
@@ -108,24 +99,42 @@ export const UserSearchBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
     if (props.onSelectUserCallback) {
       props.onSelectUserCallback(undefined);
     }
-
-    init();
   };
 
-  const onChange = (v: any) => {
-    setInputKey(v);
+  useEffect(() => {
+    init();
+
+    if (props.value) onQueryUser(Number(props.value)).then();
+  }, []);
+
+  useEffect(() => {
+    if (!props.value) onClear();
+  }, [props.value]);
+
+  const onSelect = (userId: string) => {
+    const userObject = optionalUsers.find(item => item.id === Number(userId));
+
+    setInputKey(makeUserLabel(userObject));
+
+    if (props.onSelectUserCallback && userObject) {
+      props.onSelectUserCallback(userObject);
+    }
+  };
+
+  const onChange = (str: any) => {
+    setInputKey(str);
 
     if (props.onChangeUserNameCallback) {
-      props.onChangeUserNameCallback(v);
+      props.onChangeUserNameCallback(str);
     }
 
-    if (typeof v === 'undefined') {
+    if (str === undefined || '') {
       onClear();
     }
   };
 
-  const onSearch = (v: string) => {
-    onQueryUsers(v);
+  const onSearch = (str: string) => {
+    onQueryUsers(str);
   };
 
   const onEnter = (e: any) => {
@@ -133,6 +142,11 @@ export const UserSearchBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
       props.onEnterCallback(e.currentTarget.value);
     }
   };
+
+  const options = optionalUsers.map(user => ({
+    label: makeUserLabel(user),
+    value: `${user.id}`,
+  }));
 
   // TIPS: onEnter & onSelect will be CONFLICT!
   return (
@@ -148,19 +162,14 @@ export const UserSearchBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
           onSearch={onSearch}
           onChange={onChange}
           onSelect={onSelect}
-          options={optionalUsers.map(user => ({
-            label: `#${user.id} - ${user.name} - ${user.email}`,
-            value: user.id,
-          }))}
-          placeholder={props.placeholder || t('_comp:UserSearchBox.searchUsers', i18n.language)}
-          value={inputKey}
-          defaultValue={props.defaultValue}
-          size={props.size}
+          options={options}
+          value={inputKey || undefined}
         >
           <Input
             onPressEnter={onEnter}
             className={style['search-input']}
             suffix={loading ? <LoadingOutlined /> : <span />}
+            placeholder={props.placeholder || t('_comp:UserSearchBox.searchUsers', i18n.language)}
           />
         </AutoComplete>
       </div>
