@@ -1,3 +1,3 @@
 export default {
-  updatedSuccessfully: '#{{ id }} Status Updated Successfully',
+  updatedSuccessfully: '#{{ id }} Status Updated To ',
 };

@@ -2,7 +2,7 @@ import cx from 'classnames';
 import React, { useState } from 'react';
 import { DocumentNode } from 'graphql';
 import { useTranslation } from 'react-i18next';
-import { Switch } from 'antd';
+import { Switch, message } from 'antd';
 import { SwitchSize } from 'antd/lib/switch';
 
 import { messageUtil } from '@leaa/dashboard/src/utils';
@@ -24,8 +24,11 @@ interface IProps {
 export const TableColumnStatusSwitch = (props: IProps) => {
   const { t } = useTranslation();
   const [switchStatus, setSwitchStatus] = useState<boolean>(Boolean(props.value));
+  const [switchLoading, setSwitchLoading] = useState<boolean>(false);
 
   const onChange = (e: boolean) => {
+    setSwitchLoading(true);
+
     apolloClient
       .mutate<any>({
         mutation: props.mutation,
@@ -36,17 +39,30 @@ export const TableColumnStatusSwitch = (props: IProps) => {
       .then(() => {
         setSwitchStatus(e);
 
+        message.success(
+          <span>
+            {t('_comp:TableColumnStatusSwitch.updatedSuccessfully', { id: props.id })}
+            <Switch checked={e} size="small" className={style['tips-switch']} />
+          </span>,
+        );
+
         // TODO add status tips
-        messageUtil.gqlSuccess(t('_comp:TableColumnStatusSwitch.updatedSuccessfully', { id: props.id }));
+        // messageUtil.gqlSuccess(
+        //   t('_comp:TableColumnStatusSwitch.updatedSuccessfully', {
+        //     id: props.id,
+        //     status: (e && t('_comp:TableColumnStatusSwitch.true')) || <p>xxxx</p>,
+        //   }),
+        // );
       })
       .catch((error: Error) => {
         messageUtil.gqlError(error.message);
-      });
+      })
+      .finally(() => setSwitchLoading(false));
   };
 
   return (
     <div className={cx(style['wrapper'], props.className)}>
-      <Switch checked={switchStatus} onChange={onChange} size={props.size} />
+      <Switch checked={switchStatus} onChange={onChange} size={props.size} loading={switchLoading} />
     </div>
   );
 };

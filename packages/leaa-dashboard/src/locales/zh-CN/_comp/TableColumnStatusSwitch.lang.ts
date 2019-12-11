@@ -1,3 +1,3 @@
 export default {
-  updatedSuccessfully: '#{{ id }} 状态更新成功',
+  updatedSuccessfully: '#{{ id }} 状态更新为 ',
 };

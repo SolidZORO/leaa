@@ -24,7 +24,7 @@ export const TableColumnDate = (props: IProps) => {
       })}
     >
       {props.date ? (
-        <Tooltip title={moment(props.date).format('YYYY-MM-DD HH:mm:ss')} mouseEnterDelay={0.01} mouseLeaveDelay={0.01}>
+        <Tooltip title={moment(props.date).format('YYYY-MM-DD HH:mm:ss')}>
           {props.prefix}
           {moment(props.date).format(FORMAT)}
           {props.suffix}
