@@ -30,7 +30,7 @@ export default (props: IPage) => {
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
     onCompleted({ login }) {
       if (login?.name && login.flatPermissions?.length === 0) {
-        messageUtil.gqlCompleted(t('_page:Auth.Login.notPermissions'));
+        messageUtil.gqlSuccess(t('_page:Auth.Login.notPermissions'));
 
         return;
       }
@@ -82,7 +82,7 @@ export default (props: IPage) => {
   };
 
   const onBack = () => {
-    messageUtil.gqlCompleted(t('_page:Auth.Login.backTips'));
+    messageUtil.gqlSuccess(t('_page:Auth.Login.backTips'));
   };
 
   return (

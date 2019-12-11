@@ -1,21 +1,30 @@
 import { message } from 'antd';
+import { ERROR_MESSAGE, SUCCESS_MESSAGE, GQL_ERROR_MESSAGE, GQL_SUCCESS_MESSAGE } from '@leaa/dashboard/src/constants';
 
 const formatGqlmessage = (str: string): string => {
-  console.log(str);
-
   return str.replace(/(GraphQL error:|Context creation failed:)\s?/, '');
 };
 
-const gqlError = (msg?: string): void => {
-  message.error(formatGqlmessage(msg || 'Error'));
+const error = (msg: string): void => {
+  message.error(msg || ERROR_MESSAGE);
 };
 
-const gqlCompleted = (msg?: string): void => {
-  message.success(msg || 'Completed');
+const success = (msg: string): void => {
+  message.success(msg || SUCCESS_MESSAGE);
+};
+
+const gqlError = (msg?: string): void => {
+  message.error(formatGqlmessage(msg || GQL_ERROR_MESSAGE));
+};
+
+const gqlSuccess = (msg?: string): void => {
+  message.success(formatGqlmessage(msg || GQL_SUCCESS_MESSAGE));
 };
 
 export const messageUtil = {
   formatGqlmessage,
-  gqlCompleted,
+  gqlSuccess,
   gqlError,
+  error,
+  success,
 };

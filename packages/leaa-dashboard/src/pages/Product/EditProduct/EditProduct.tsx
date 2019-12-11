@@ -40,7 +40,7 @@ export default (props: IPage) => {
   const [updateProductMutate, updateProductMutation] = useMutation<Product>(UPDATE_PRODUCT, {
     variables: submitVariables,
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
-    onCompleted: () => messageUtil.gqlCompleted(t('_lang:updatedSuccessfully')),
+    onCompleted: () => messageUtil.gqlSuccess(t('_lang:updatedSuccessfully')),
     refetchQueries: () => [{ query: GET_PRODUCT, variables: getProductVariables }],
   });
 
@@ -49,7 +49,7 @@ export default (props: IPage) => {
 
     if (!submitData) return;
 
-    submitData.tagIds = productTags && productTags?.length > 0 ? productTags.map(item => Number(item.id)) : undefined;
+    submitData.tagIds = productTags?.length ? productTags.map(item => Number(item.id)) : null;
 
     await setSubmitVariables({ id: Number(id), product: submitData });
     await updateProductMutate();

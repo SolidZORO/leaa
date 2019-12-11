@@ -17,7 +17,7 @@ import { formatUtil, curdUtil, paginationUtil, errorUtil } from '@leaa/api/src/u
 type ICategoriessArgs = CategoriesArgs & FindOneOptions<Category>;
 type ICategoryArgs = CategoryArgs & FindOneOptions<Category>;
 
-const CONSTRUCTOR_NAME = 'CategoryService';
+const CLS_NAME = 'CategoryService';
 
 @Injectable()
 export class CategoryService {
@@ -146,6 +146,8 @@ export class CategoryService {
   }
 
   async updateCategory(id: number, args: UpdateCategoryInput): Promise<Category | undefined> {
+    if (curdUtil.isOneField(args, 'status')) return curdUtil.commonUpdate(this.categoryRepository, CLS_NAME, id, args);
+
     const nextArgs = args;
 
     if (typeof args.parent_id !== 'undefined') {
@@ -159,7 +161,7 @@ export class CategoryService {
       }
     }
 
-    return curdUtil.commonUpdate(this.categoryRepository, CONSTRUCTOR_NAME, id, nextArgs);
+    return curdUtil.commonUpdate(this.categoryRepository, CLS_NAME, id, nextArgs);
   }
 
   async deleteCategory(id: number): Promise<Category | undefined> {
@@ -167,6 +169,6 @@ export class CategoryService {
       return errorUtil.ERROR({ error: 'Default Category, PLEASE DONT' });
     }
 
-    return curdUtil.commonDelete(this.categoryRepository, CONSTRUCTOR_NAME, id);
+    return curdUtil.commonDelete(this.categoryRepository, CLS_NAME, id);
   }
 }

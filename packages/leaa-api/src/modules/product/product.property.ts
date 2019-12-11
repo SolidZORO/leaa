@@ -4,7 +4,7 @@ import { Product, Attachment } from '@leaa/common/src/entrys';
 import { ProductAttachmentsObject } from '@leaa/common/src/dtos/product';
 import { AttachmentService } from '@leaa/api/src/modules/attachment/attachment.service';
 
-// const CONSTRUCTOR_NAME = 'ProductProperty';
+// const CLS_NAME = 'ProductProperty';
 
 @Injectable()
 export class ProductProperty {

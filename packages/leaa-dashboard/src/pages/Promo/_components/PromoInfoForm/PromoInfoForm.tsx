@@ -87,7 +87,7 @@ class PromoInfoFormInner extends React.PureComponent<IProps, IState> {
                   {getFieldDecorator('amount', {
                     initialValue: props.item ? props.item.amount : 0,
                     rules: [{ required: true }],
-                  })(<InputNumber placeholder={t('_lang:amount')} className={style['input-number']} />)}
+                  })(<InputNumber placeholder={t('_lang:amount')} className="g-input-number" />)}
                 </Form.Item>
               </Col>
 
@@ -96,7 +96,7 @@ class PromoInfoFormInner extends React.PureComponent<IProps, IState> {
                   {getFieldDecorator('over_amount', {
                     initialValue: props.item ? props.item.over_amount : 0,
                     rules: [{ required: true }],
-                  })(<InputNumber placeholder={t('_lang:over_amount')} className={style['input-number']} />)}
+                  })(<InputNumber placeholder={t('_lang:over_amount')} className="g-input-number" />)}
                 </Form.Item>
               </Col>
 
@@ -115,7 +115,7 @@ class PromoInfoFormInner extends React.PureComponent<IProps, IState> {
                     initialValue:
                       props.item && typeof props.item.quantity !== 'undefined' ? Number(props.item.quantity) : 1,
                     rules: [{ required: true }],
-                  })(<InputNumber placeholder={t('_lang:quantity')} className={style['input-number']} />)}
+                  })(<InputNumber placeholder={t('_lang:quantity')} className="g-input-number" />)}
                 </Form.Item>
               </Col>
 
@@ -128,11 +128,7 @@ class PromoInfoFormInner extends React.PureComponent<IProps, IState> {
                         : 0,
                     rules: [{ required: true }],
                   })(
-                    <InputNumber
-                      placeholder={t('_lang:quantity')}
-                      className={style['input-number']}
-                      disabled={!props.item}
-                    />,
+                    <InputNumber placeholder={t('_lang:quantity')} className="g-input-number" disabled={!props.item} />,
                   )}
                 </Form.Item>
               </Col>

@@ -31,7 +31,7 @@ export const RedeemCouponToUseButton = (props: IProps) => {
     variables: { info: { code: props.item.code, userId } },
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
     onCompleted: () => {
-      messageUtil.gqlCompleted(t('_lang:updatedSuccessfully'));
+      messageUtil.gqlSuccess(t('_lang:updatedSuccessfully'));
 
       if (props.onConvetCompletedCallback) {
         props.onConvetCompletedCallback();

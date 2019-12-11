@@ -19,7 +19,7 @@ import { Attachment } from '@leaa/common/src/entrys';
 import { loggerUtil, attachmentUtil } from '@leaa/api/src/utils';
 import { attachmentConfig } from '@leaa/api/src/configs';
 
-const CONSTRUCTOR_NAME = 'SaveInLocalService';
+const CLS_NAME = 'SaveInLocalService';
 
 @Injectable()
 export class SaveInLocalService {
@@ -68,7 +68,7 @@ export class SaveInLocalService {
     if (!file) {
       const message = 'Not Found Attachment';
 
-      loggerUtil.warn(message, CONSTRUCTOR_NAME);
+      loggerUtil.warn(message, CLS_NAME);
 
       return;
     }

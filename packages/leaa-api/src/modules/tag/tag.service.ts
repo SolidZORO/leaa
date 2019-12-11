@@ -21,7 +21,7 @@ import { dictConfig } from '@leaa/api/src/configs';
 type ITagsArgs = TagsArgs & FindOneOptions<Tag>;
 type ITagArgs = TagArgs & FindOneOptions<Tag>;
 
-const CONSTRUCTOR_NAME = 'TagService';
+const CLS_NAME = 'TagService';
 
 @Injectable()
 export class TagService {
@@ -71,10 +71,10 @@ export class TagService {
 
   async syncTagsToDictFile(): Promise<SyncTagsToFileObject> {
     if (!fs.existsSync(dictConfig.TAGS_DICT_PATH)) {
-      loggerUtil.log(`syncTagsToDictFile, not exists ${dictConfig.DICT_DIR}`, CONSTRUCTOR_NAME);
+      loggerUtil.log(`syncTagsToDictFile, not exists ${dictConfig.DICT_DIR}`, CLS_NAME);
 
       mkdirp(dictConfig.DICT_DIR, err =>
-        loggerUtil.log(`syncTagsToDictFile, mkdirp ${dictConfig.DICT_DIR} ${JSON.stringify(err)}`, CONSTRUCTOR_NAME),
+        loggerUtil.log(`syncTagsToDictFile, mkdirp ${dictConfig.DICT_DIR} ${JSON.stringify(err)}`, CLS_NAME),
       );
     }
 
@@ -84,7 +84,7 @@ export class TagService {
       fs.writeFileSync(dictConfig.TAGS_DICT_PATH, items.map(item => item.name).join('\n'));
     }
 
-    loggerUtil.log(`syncTagsToDictFile, ${total} tags`, CONSTRUCTOR_NAME);
+    loggerUtil.log(`syncTagsToDictFile, ${total} tags`, CLS_NAME);
 
     return {
       status: `sync successful ${total} tags`,
@@ -114,23 +114,25 @@ export class TagService {
         tags = data;
       })
       .catch(() => {
-        loggerUtil.error(`Create Tags Faild: ${JSON.stringify(tags)}`, CONSTRUCTOR_NAME);
+        loggerUtil.error(`Create Tags Faild: ${JSON.stringify(tags)}`, CLS_NAME);
       });
 
     return tags;
   }
 
   async updateTag(id: number, args: UpdateTagInput): Promise<Tag | undefined> {
+    if (curdUtil.isOneField(args, 'status')) return curdUtil.commonUpdate(this.tagRepository, CLS_NAME, id, args);
+
     let nextArgs: UpdateTagInput = args;
 
     if (args.name) {
       nextArgs = { ...args, name: this.formatTag(args.name) };
     }
 
-    return curdUtil.commonUpdate(this.tagRepository, CONSTRUCTOR_NAME, id, nextArgs);
+    return curdUtil.commonUpdate(this.tagRepository, CLS_NAME, id, nextArgs);
   }
 
   async deleteTag(id: number): Promise<Tag | undefined> {
-    return curdUtil.commonDelete(this.tagRepository, CONSTRUCTOR_NAME, id);
+    return curdUtil.commonDelete(this.tagRepository, CLS_NAME, id);
   }
 }

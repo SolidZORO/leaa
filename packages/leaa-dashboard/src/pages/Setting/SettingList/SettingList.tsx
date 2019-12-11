@@ -88,7 +88,7 @@ export default (props: IPage) => {
     variables: createSettingVariables,
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
     onCompleted: () => {
-      messageUtil.gqlCompleted(t('_lang:createdSuccessfully'));
+      messageUtil.gqlSuccess(t('_lang:createdSuccessfully'));
       onCloseModalVisible();
       onRefreshSettings();
     },
@@ -100,7 +100,7 @@ export default (props: IPage) => {
     variables: updateSettingVariables,
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
     onCompleted: () => {
-      messageUtil.gqlCompleted(t('_lang:updatedSuccessfully'));
+      messageUtil.gqlSuccess(t('_lang:updatedSuccessfully'));
       onCloseModalVisible();
       onRefreshSettings();
     },
@@ -112,7 +112,7 @@ export default (props: IPage) => {
     variables: updateSettingsVariables,
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
     onCompleted: () => {
-      messageUtil.gqlCompleted(t('_lang:updatedSuccessfully'));
+      messageUtil.gqlSuccess(t('_lang:updatedSuccessfully'));
       onCloseModalVisible();
       onRefreshSettings();
     },
@@ -124,7 +124,7 @@ export default (props: IPage) => {
     variables: deleteSettingVariables,
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
     onCompleted: () => {
-      messageUtil.gqlCompleted(t('_lang:deletedSuccessfully'));
+      messageUtil.gqlSuccess(t('_lang:deletedSuccessfully'));
       onCloseModalVisible();
       onRefreshSettings();
     },

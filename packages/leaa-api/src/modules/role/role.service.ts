@@ -16,7 +16,7 @@ import { PermissionService } from '@leaa/api/src/modules/permission/permission.s
 type IRolesArgs = RolesArgs & FindOneOptions<Role>;
 type IRoleArgs = RoleArgs & FindOneOptions<Role>;
 
-const CONSTRUCTOR_NAME = 'RoleService';
+const CLS_NAME = 'RoleService';
 
 @Injectable()
 export class RoleService {
@@ -95,6 +95,8 @@ export class RoleService {
   }
 
   async updateRole(id: number, args: UpdateRoleInput, user?: User): Promise<Role | undefined> {
+    if (curdUtil.isOneField(args, 'status')) return curdUtil.commonUpdate(this.roleRepository, CLS_NAME, id, args);
+
     if (
       id === 1 &&
       ((args.permissionIds && !args.permissionIds.toString()) ||
@@ -121,7 +123,7 @@ export class RoleService {
       return errorUtil.ERROR({ error: 'Permissions Error', user });
     }
 
-    return curdUtil.commonUpdate(this.roleRepository, CONSTRUCTOR_NAME, id, args, relationArgs);
+    return curdUtil.commonUpdate(this.roleRepository, CLS_NAME, id, args, relationArgs);
   }
 
   async deleteRole(id: number, user?: User): Promise<Role | undefined> {
@@ -129,6 +131,6 @@ export class RoleService {
       return errorUtil.ERROR({ error: 'Default Role, PLEASE DONT', user });
     }
 
-    return curdUtil.commonDelete(this.roleRepository, CONSTRUCTOR_NAME, id);
+    return curdUtil.commonDelete(this.roleRepository, CLS_NAME, id);
   }
 }

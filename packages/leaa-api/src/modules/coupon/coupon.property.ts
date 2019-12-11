@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 
 import { Coupon } from '@leaa/common/src/entrys';
 
-// const CONSTRUCTOR_NAME = 'CouponProperty';
+// const CLS_NAME = 'CouponProperty';
 
 @Injectable()
 export class CouponProperty {

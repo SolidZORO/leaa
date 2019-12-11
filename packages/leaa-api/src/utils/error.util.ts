@@ -2,7 +2,7 @@ import { loggerUtil } from '@leaa/api/src/utils/logger.util';
 import { User } from '@leaa/common/src/entrys';
 
 interface IHeaderErrorParams {
-  error: string | { CONSTRUCTOR_NAME?: string; message?: string };
+  error: string | { CLS_NAME?: string; message?: string };
   user?: User;
 }
 
@@ -12,7 +12,7 @@ const handleError = ({ error, user }: IHeaderErrorParams) => {
 
   loggerUtil.warn(
     `${errorText} / ${userText}`,
-    (error && typeof error === 'object' && error.CONSTRUCTOR_NAME) || 'MessageUtil',
+    (error && typeof error === 'object' && error.CLS_NAME) || 'MessageUtil',
   );
 
   throw Error(errorText);

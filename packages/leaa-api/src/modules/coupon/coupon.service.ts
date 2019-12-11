@@ -19,7 +19,7 @@ import { CouponProperty } from '@leaa/api/src/modules/coupon/coupon.property';
 type ICouponsArgs = CouponsArgs & FindOneOptions<Coupon>;
 type ICouponArgs = CouponArgs & FindOneOptions<Coupon>;
 
-const CONSTRUCTOR_NAME = 'CouponService';
+const CLS_NAME = 'CouponService';
 
 @Injectable()
 export class CouponService {
@@ -108,13 +108,15 @@ export class CouponService {
   }
 
   async updateCoupon(id: number, args: UpdateCouponInput): Promise<Coupon | undefined> {
+    if (curdUtil.isOneField(args, 'status')) return curdUtil.commonUpdate(this.couponRepository, CLS_NAME, id, args);
+
     const nextArgs = formatUtil.formatDateRangeTime(args, 'start_time', 'expire_time');
 
-    return curdUtil.commonUpdate(this.couponRepository, CONSTRUCTOR_NAME, id, nextArgs);
+    return curdUtil.commonUpdate(this.couponRepository, CLS_NAME, id, nextArgs);
   }
 
   async deleteCoupon(id: number): Promise<Coupon | undefined> {
-    return curdUtil.commonDelete(this.couponRepository, CONSTRUCTOR_NAME, id);
+    return curdUtil.commonDelete(this.couponRepository, CLS_NAME, id);
   }
 
   async redeemCoupon(info: RedeemCouponInput, user?: User): Promise<Coupon | undefined> {

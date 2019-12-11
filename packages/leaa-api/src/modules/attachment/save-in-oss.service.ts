@@ -21,7 +21,7 @@ import { attachmentUtil, loggerUtil } from '@leaa/api/src/utils';
 import { attachmentConfig } from '@leaa/api/src/configs';
 import mkdirp from 'mkdirp';
 
-const CONSTRUCTOR_NAME = 'SaveInOssService';
+const CLS_NAME = 'SaveInOssService';
 
 @Injectable()
 export class SaveInOssService {
@@ -141,7 +141,7 @@ export class SaveInOssService {
   ): Promise<'success' | Error> {
     await this.downloadFile(attachment.url || '', file => {
       try {
-        mkdirp(attachmentConfig.SAVE_DIR_BY_DISK, err => loggerUtil.error(JSON.stringify(err), CONSTRUCTOR_NAME));
+        mkdirp(attachmentConfig.SAVE_DIR_BY_DISK, err => loggerUtil.error(JSON.stringify(err), CLS_NAME));
 
         fs.writeFileSync(`${attachmentConfig.SAVE_DIR_BY_DISK}/${attachment.filename}`, file);
       } catch (e) {
@@ -171,7 +171,7 @@ export class SaveInOssService {
     if (!splitFilename) {
       const message = 'Not Found Filename';
 
-      loggerUtil.warn(message, CONSTRUCTOR_NAME);
+      loggerUtil.warn(message, CLS_NAME);
 
       return;
     }
@@ -208,7 +208,7 @@ export class SaveInOssService {
       if (!at1x) {
         const message = `Save @2x To @1x Failed, ${JSON.stringify(req.object)}`;
 
-        loggerUtil.warn(message, CONSTRUCTOR_NAME);
+        loggerUtil.warn(message, CLS_NAME);
 
         return;
       }

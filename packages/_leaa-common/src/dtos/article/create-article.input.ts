@@ -13,7 +13,7 @@ export class CreateArticleInput {
 
   @IsOptional()
   @Field(() => [Int], { nullable: true })
-  categoryIds?: number[];
+  categoryIds?: number[] | null;
 
   @IsOptional()
   @Field(() => Int, { nullable: true })

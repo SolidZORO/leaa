@@ -5,7 +5,7 @@ import { Attachment } from '@leaa/common/src/entrys';
 import { pathUtil } from '@leaa/api/src/utils';
 import { attachmentConfig } from '@leaa/api/src/configs';
 
-// const CONSTRUCTOR_NAME = 'AttachmentProperty';
+// const CLS_NAME = 'AttachmentProperty';
 
 @Injectable()
 export class AttachmentProperty {

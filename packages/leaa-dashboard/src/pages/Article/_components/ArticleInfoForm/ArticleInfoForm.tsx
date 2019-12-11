@@ -1,96 +1,116 @@
-import React from 'react';
 import cx from 'classnames';
-import { Form, Input, Col, Row } from 'antd';
-import { withTranslation } from 'react-i18next';
-import { FormComponentProps } from 'antd/lib/form';
+import React, { useEffect, forwardRef, useImperativeHandle } from 'react';
+import { Col, Form, Input, InputNumber, Row } from 'antd';
+
+import { useTranslation } from 'react-i18next';
 
 import { Article } from '@leaa/common/src/entrys';
-import { ITfn } from '@leaa/dashboard/src/interfaces';
+import { UpdateArticleInput } from '@leaa/common/src/dtos/article';
+import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
+import { messageUtil } from '@leaa/dashboard/src/utils';
 
-import { SwitchNumber, SelectCategoryIdByTree, Rcon } from '@leaa/dashboard/src/components';
+import { FormCard, SwitchNumber, EntryInfoDate, SelectCategoryIdByTree, Rcon } from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';
 
-interface IFormProps extends FormComponentProps {
-  className?: string;
+interface IProps {
   item?: Article;
+  className?: string;
   loading?: boolean;
 }
 
-type IProps = IFormProps & ITfn;
+export const ArticleInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
+  const { t } = useTranslation();
+  const [form] = Form.useForm();
 
-class ArticleInfoFormInner extends React.PureComponent<IProps> {
-  constructor(props: IProps) {
-    super(props);
-  }
+  const onValidateForm = async (): IOnValidateFormResult<UpdateArticleInput> => {
+    try {
+      return await form.validateFields();
+    } catch (error) {
+      return messageUtil.error(error.errorFields[0]?.errors[0]);
+    }
+  };
 
-  render() {
-    const { t } = this.props;
+  const formatInitialValues = (item?: Article): Article | {} => {
+    // create
+    if (!item) {
+      return {
+        status: 0,
+      };
+    }
 
-    const { props } = this;
-    const { getFieldDecorator } = this.props.form;
+    // edit
+    return {
+      ...item,
+    };
+  };
 
-    return (
-      <div className={cx(style['wrapper'], props.className)}>
-        <Form className={style['form-wrapper-title']}>
-          <Form.Item label={false} className={style['form-item-title']}>
-            {getFieldDecorator('title', {
-              initialValue: props.item ? props.item.title : undefined,
-              rules: [{ required: true }],
-            })(<Input placeholder={t('_lang:title')} size="large" className={style['form-item-title-input']} />)}
+  useEffect(() => {
+    if (props.item) form.setFieldsValue(formatInitialValues(props.item));
+  }, [props.item]);
+
+  useImperativeHandle(ref, () => ({
+    form,
+    onValidateForm,
+  }));
+
+  return (
+    <div className={cx(style['wrapper'], props.className)}>
+      <Form
+        form={form}
+        name="infoForm"
+        layout="vertical"
+        initialValues={formatInitialValues(props.item)}
+        className={style['form--title-wrapper']}
+      >
+        <Form.Item name="title" rules={[{ required: true }]}>
+          <Input size="large" placeholder={t('_lang:title')} />
+        </Form.Item>
+      </Form>
+
+      <Form
+        form={form}
+        name="infoForm"
+        layout="inline"
+        initialValues={formatInitialValues(props.item)}
+        hideRequiredMark
+        className={style['form--slug-wrapper']}
+      >
+        <div className={style['block--slug']}>
+          <Form.Item name="slug" rules={[]} className={style['item--slug']}>
+            <Input
+              size="small"
+              className={style['form-item-slug-input']}
+              prefix={<Rcon type="ri-link-m" />}
+              placeholder={t('_lang:slug')}
+            />
           </Form.Item>
-        </Form>
+        </div>
 
-        <Form className={style['form-wrapper-slug']} layout="inline" hideRequiredMark={Boolean(props.item)}>
-          <Row gutter={16} className={style['form-row']} type="flex" justify="space-between">
-            {props.item && (
-              <Col>
-                <Form.Item label={false} className={style['form-item-slug']}>
-                  {getFieldDecorator('slug', {
-                    initialValue: props.item ? props.item.slug : undefined,
-                    rules: [],
-                  })(
-                    <Input
-                      size="small"
-                      className={style['form-item-slug-input']}
-                      prefix={<Rcon type="link" />}
-                      placeholder={t('_lang:slug')}
-                    />,
-                  )}
-                </Form.Item>
-              </Col>
-            )}
+        <div className={style['block--category-and-status']}>
+          <Form.Item
+            name="categoryIds"
+            normalize={e => e && Number(e)}
+            rules={[]}
+            label={t('_lang:category')}
+            colon={false}
+            className={style['item--category']}
+          >
+            <SelectCategoryIdByTree parentSlug="articles" componentProps={{ allowClear: true, size: 'small' }} />
+          </Form.Item>
 
-            <Col>
-              <Form.Item label={t('_lang:category')} className={style['form-item-category']} colon={false}>
-                {getFieldDecorator('categoryIds', {
-                  initialValue:
-                    // TIPS: here you can set up multiple categories, but now just single.
-                    props.item && props.item.categories && props.item.categories.length > 0
-                      ? props.item.categories[0].id
-                      : undefined,
-                  rules: [{ required: true }],
-                  normalize: e => e && Number(e),
-                })(
-                  <SelectCategoryIdByTree
-                    className={style['form-item-category-select']}
-                    componentProps={{ allowClear: true, size: 'small' }}
-                  />,
-                )}
-              </Form.Item>
-
-              <Form.Item label={t('_lang:status')} className={style['form-item-status']} colon={false}>
-                {getFieldDecorator('status', {
-                  initialValue: props.item ? Number(props.item.status) : 0,
-                })(<SwitchNumber size="small" />)}
-              </Form.Item>
-            </Col>
-          </Row>
-        </Form>
-      </div>
-    );
-  }
-}
-
-// @ts-ignore
-export const ArticleInfoForm = withTranslation()(Form.create<IFormProps>()(ArticleInfoFormInner));
+          <Form.Item
+            name="status"
+            normalize={e => e && Number(e)}
+            rules={[{ required: true }]}
+            label={t('_lang:status')}
+            colon={false}
+            className={style['item--status']}
+          >
+            <SwitchNumber size="small" />
+          </Form.Item>
+        </div>
+      </Form>
+    </div>
+  );
+});

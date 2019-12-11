@@ -36,7 +36,7 @@ import { SaveInLocalService } from '@leaa/api/src/modules/attachment/save-in-loc
 type IAttachmentsArgs = AttachmentsArgs & FindOneOptions<Attachment>;
 type IAttachmentArgs = AttachmentArgs & FindOneOptions<Attachment>;
 
-const CONSTRUCTOR_NAME = 'AttachmentService';
+const CLS_NAME = 'AttachmentService';
 
 @Injectable()
 export class AttachmentService {
@@ -56,7 +56,7 @@ export class AttachmentService {
       return this.saveInLocalServer.getSignature();
     }
 
-    loggerUtil.warn('Signature Missing SAVE_IN... Params', CONSTRUCTOR_NAME);
+    loggerUtil.warn('Signature Missing SAVE_IN... Params', CLS_NAME);
 
     return null;
   }
@@ -140,7 +140,7 @@ export class AttachmentService {
     prevItem = { ...prevItem, ...args };
     const nextItem = await this.attachmentRepository.save(prevItem);
 
-    loggerUtil.updateLog({ id: uuid, prevItem, nextItem, constructorName: CONSTRUCTOR_NAME });
+    loggerUtil.updateLog({ id: uuid, prevItem, nextItem, constructorName: CLS_NAME });
 
     return nextItem;
   }
@@ -156,12 +156,12 @@ export class AttachmentService {
 
     await Promise.all(batchUpdate)
       .then(async () => {
-        loggerUtil.log(JSON.stringify(attachments), CONSTRUCTOR_NAME);
+        loggerUtil.log(JSON.stringify(attachments), CLS_NAME);
 
         items = await this.attachmentRepository.find({ uuid: In(attachments.map(a => a.uuid)) });
       })
       .catch(() => {
-        loggerUtil.error(JSON.stringify(attachments), CONSTRUCTOR_NAME);
+        loggerUtil.error(JSON.stringify(attachments), CLS_NAME);
       });
 
     return {
@@ -183,35 +183,35 @@ export class AttachmentService {
           fs.unlinkSync(`${this.configService.PUBLIC_DIR}${pathUtil.getAt2xPath(i.path)}`);
 
           // delete oss
-          loggerUtil.log(`delete local 2x file ${i.path}\n\n`, CONSTRUCTOR_NAME);
+          loggerUtil.log(`delete local 2x file ${i.path}\n\n`, CLS_NAME);
 
           if (i.in_oss) {
             this.saveInOssServer.client.delete(attachmentUtil.filenameAt1xToAt2x(i.path.substr(1)));
 
-            loggerUtil.log(`delete oss 2x file ${i.path}\n\n`, CONSTRUCTOR_NAME);
+            loggerUtil.log(`delete oss 2x file ${i.path}\n\n`, CLS_NAME);
           }
         } catch (err) {
-          loggerUtil.error(`delete _2x item ${i.path} fail: ${JSON.stringify(i)}\n\n`, CONSTRUCTOR_NAME, err);
+          loggerUtil.error(`delete _2x item ${i.path} fail: ${JSON.stringify(i)}\n\n`, CLS_NAME, err);
         }
       }
 
       try {
         // delete local
         fs.unlinkSync(`${this.configService.PUBLIC_DIR}${i.path}`);
-        loggerUtil.log(`delete local 1x file ${i.path}\n\n`, CONSTRUCTOR_NAME);
+        loggerUtil.log(`delete local 1x file ${i.path}\n\n`, CLS_NAME);
 
         // delete oss
         if (i.in_oss) {
           this.saveInOssServer.client.delete(i.path.substr(1));
 
-          loggerUtil.log(`delete oss 1x file ${i.path}\n\n`, CONSTRUCTOR_NAME);
+          loggerUtil.log(`delete oss 1x file ${i.path}\n\n`, CLS_NAME);
         }
       } catch (err) {
-        loggerUtil.error(`delete file ${i.path} fail: ${JSON.stringify(i)}\n\n`, CONSTRUCTOR_NAME, err);
+        loggerUtil.error(`delete file ${i.path} fail: ${JSON.stringify(i)}\n\n`, CLS_NAME, err);
       }
     });
 
-    loggerUtil.log(`delete all-file ${uuid} successful: ${JSON.stringify(nextItem)}\n\n`, CONSTRUCTOR_NAME);
+    loggerUtil.log(`delete all-file ${uuid} successful: ${JSON.stringify(nextItem)}\n\n`, CLS_NAME);
 
     return {
       items: nextItem.map(i => i.uuid),

@@ -41,7 +41,7 @@ export default (props: IPage) => {
   const [updateAxMutate, updateAxMutation] = useMutation<Ax>(UPDATE_AX, {
     variables: submitVariables,
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
-    onCompleted: () => messageUtil.gqlCompleted(t('_lang:updatedSuccessfully')),
+    onCompleted: () => messageUtil.gqlSuccess(t('_lang:updatedSuccessfully')),
     refetchQueries: () => [{ query: GET_AX, variables: getAxVariables }],
   });
 

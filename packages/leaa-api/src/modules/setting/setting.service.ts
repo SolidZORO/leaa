@@ -17,7 +17,7 @@ import { formatUtil, loggerUtil, curdUtil, paginationUtil, errorUtil, authUtil }
 type ISettingsArgs = SettingsArgs & FindOneOptions<Setting>;
 type ISettingArgs = SettingArgs & FindOneOptions<Setting>;
 
-const CONSTRUCTOR_NAME = 'SettingService';
+const CLS_NAME = 'SettingService';
 
 @Injectable()
 export class SettingService {
@@ -69,7 +69,7 @@ export class SettingService {
     if (!setting) {
       const message = 'Not Found Setting';
 
-      loggerUtil.warn(message, CONSTRUCTOR_NAME);
+      loggerUtil.warn(message, CLS_NAME);
 
       return undefined;
     }
@@ -90,7 +90,7 @@ export class SettingService {
     if (!setting) {
       const message = 'Not Found SettingBySlug';
 
-      loggerUtil.warn(message, CONSTRUCTOR_NAME);
+      loggerUtil.warn(message, CLS_NAME);
 
       return undefined;
     }
@@ -103,7 +103,9 @@ export class SettingService {
   }
 
   async updateSetting(id: number, args: UpdateSettingInput & FindOneOptions): Promise<Setting | undefined> {
-    return curdUtil.commonUpdate(this.settingRepository, CONSTRUCTOR_NAME, id, args);
+    if (curdUtil.isOneField(args, 'status')) return curdUtil.commonUpdate(this.settingRepository, CLS_NAME, id, args);
+
+    return curdUtil.commonUpdate(this.settingRepository, CLS_NAME, id, args);
   }
 
   async updateSettings(settings: UpdateSettingsInput[], user?: User): Promise<SettingsObject> {
@@ -131,6 +133,6 @@ export class SettingService {
       return errorUtil.ERROR({ error: 'Default Setting, PLEASE DONT', user });
     }
 
-    return curdUtil.commonDelete(this.settingRepository, CONSTRUCTOR_NAME, id);
+    return curdUtil.commonDelete(this.settingRepository, CLS_NAME, id);
   }
 }

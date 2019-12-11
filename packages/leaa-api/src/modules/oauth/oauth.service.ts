@@ -14,7 +14,7 @@ import { IWechatDecryptUserInfo } from '@leaa/api/src/interfaces';
 import { CreateOauthInput } from '@leaa/common/src/dtos/oauth';
 import { loggerUtil, errorUtil } from '@leaa/api/src/utils';
 
-const CONSTRUCTOR_NAME = 'OauthService';
+const CLS_NAME = 'OauthService';
 
 @Injectable()
 export class OauthService {

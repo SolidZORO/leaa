@@ -48,7 +48,7 @@ export default (props: IPage) => {
   // mutation
   const [deletePermissionMutate, deletePermissionMutation] = useMutation<Permission>(DELETE_PERMISSION, {
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
-    onCompleted: () => messageUtil.gqlCompleted(t('_lang:deletedSuccessfully')),
+    onCompleted: () => messageUtil.gqlSuccess(t('_lang:deletedSuccessfully')),
     refetchQueries: () => [{ query: GET_PERMISSIONS, variables: getPermissionsVariables }],
   });
 

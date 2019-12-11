@@ -28,7 +28,7 @@ export default (props: IPage) => {
     variables: submitVariables,
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
     onCompleted({ createAx }) {
-      messageUtil.gqlCompleted(t('_lang:createdSuccessfully'));
+      messageUtil.gqlSuccess(t('_lang:createdSuccessfully'));
       props.history.push(`/axs/${createAx.id}`);
     },
   });

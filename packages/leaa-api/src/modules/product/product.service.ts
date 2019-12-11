@@ -14,7 +14,7 @@ import { formatUtil, paginationUtil, curdUtil, authUtil } from '@leaa/api/src/ut
 
 import { TagService } from '@leaa/api/src/modules/tag/tag.service';
 
-const CONSTRUCTOR_NAME = 'ProductService';
+const CLS_NAME = 'ProductService';
 
 type IProductsArgs = ProductsArgs & FindOneOptions<Product>;
 type IProductArgs = ProductArgs & FindOneOptions<Product>;
@@ -129,6 +129,8 @@ export class ProductService {
   }
 
   async updateProduct(id: number, args: UpdateProductInput): Promise<Product | undefined> {
+    if (curdUtil.isOneField(args, 'status')) return curdUtil.commonUpdate(this.productRepository, CLS_NAME, id, args);
+
     const { nextRelation, nextArgs } = await this.formatArgs(args);
 
     // auto add tag from product content (by jieba)
@@ -138,10 +140,10 @@ export class ProductService {
       await this.tagService.syncTagsToDictFile();
     }
 
-    return curdUtil.commonUpdate(this.productRepository, CONSTRUCTOR_NAME, id, nextArgs, nextRelation);
+    return curdUtil.commonUpdate(this.productRepository, CLS_NAME, id, nextArgs, nextRelation);
   }
 
   async deleteProduct(id: number): Promise<Product | undefined> {
-    return curdUtil.commonDelete(this.productRepository, CONSTRUCTOR_NAME, id);
+    return curdUtil.commonDelete(this.productRepository, CLS_NAME, id);
   }
 }

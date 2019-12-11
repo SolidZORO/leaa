@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { User, Permission } from '@leaa/common/src/entrys';
 import { RoleService } from '@leaa/api/src/modules/role/role.service';
 
-// const CONSTRUCTOR_NAME = 'UserProperty';
+// const CLS_NAME = 'UserProperty';
 
 @Injectable()
 export class UserProperty {

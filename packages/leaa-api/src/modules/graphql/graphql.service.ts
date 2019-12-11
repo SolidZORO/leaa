@@ -8,7 +8,7 @@ import { AuthService } from '@leaa/api/src/modules/auth/auth.service';
 import { permissionConfig } from '@leaa/api/src/configs';
 import { loggerUtil } from '@leaa/api/src/utils';
 
-const CONSTRUCTOR_NAME = 'GraphqlService';
+const CLS_NAME = 'GraphqlService';
 
 @Injectable()
 export class GraphqlService implements GqlOptionsFactory {
@@ -29,7 +29,7 @@ export class GraphqlService implements GqlOptionsFactory {
         user: await this.authService.validateUserByReq(ctx.req),
       }),
       formatError(error: any) {
-        loggerUtil.error(`${JSON.stringify(error)}\n`, CONSTRUCTOR_NAME);
+        loggerUtil.error(`${JSON.stringify(error)}\n`, CLS_NAME);
 
         if (error.message && error.message.error) {
           return new Error(error.message.error);

@@ -15,7 +15,7 @@ import { formatUtil, curdUtil, paginationUtil, authUtil, errorUtil } from '@leaa
 type IPermissionsArgs = PermissionsArgs & FindOneOptions<Permission>;
 type IPermissionArgs = PermissionArgs & FindOneOptions<Permission>;
 
-const CONSTRUCTOR_NAME = 'PermissionService';
+const CLS_NAME = 'PermissionService';
 
 @Injectable()
 export class PermissionService {
@@ -77,7 +77,11 @@ export class PermissionService {
   }
 
   async updatePermission(id: number, args: UpdatePermissionInput): Promise<Permission | undefined> {
-    return curdUtil.commonUpdate(this.permissionRepository, CONSTRUCTOR_NAME, id, args);
+    // prettier-ignore
+    // eslint-disable-next-line max-len
+    if (curdUtil.isOneField(args, 'status')) return curdUtil.commonUpdate(this.permissionRepository, CLS_NAME, id, args);
+
+    return curdUtil.commonUpdate(this.permissionRepository, CLS_NAME, id, args);
   }
 
   async deletePermission(id: number, user?: User): Promise<Permission | undefined> {
@@ -85,6 +89,6 @@ export class PermissionService {
       return errorUtil.ERROR({ error: 'Default Permission, PLEASE DONT', user });
     }
 
-    return curdUtil.commonDelete(this.permissionRepository, CONSTRUCTOR_NAME, id);
+    return curdUtil.commonDelete(this.permissionRepository, CLS_NAME, id);
   }
 }

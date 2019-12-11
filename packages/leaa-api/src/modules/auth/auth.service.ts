@@ -19,7 +19,7 @@ import { permissionConfig } from '@leaa/api/src/configs';
 import { OauthService } from '@leaa/api/src/modules/oauth/oauth.service';
 import { UserProperty } from '@leaa/api/src/modules/user/user.property';
 
-const CONSTRUCTOR_NAME = 'AuthService';
+const CLS_NAME = 'AuthService';
 
 @Injectable()
 export class AuthService {

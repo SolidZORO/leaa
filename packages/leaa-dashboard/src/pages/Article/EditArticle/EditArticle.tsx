@@ -8,7 +8,7 @@ import { IAttachmentBoxRef } from '@leaa/common/src/interfaces';
 import { GET_ARTICLE, UPDATE_ARTICLE } from '@leaa/common/src/graphqls';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { ArticleArgs, UpdateArticleInput } from '@leaa/common/src/dtos/article';
-import { IPage, IKey } from '@leaa/dashboard/src/interfaces';
+import { IPage, IKey, ICommenFormRef, ISubmitData } from '@leaa/dashboard/src/interfaces';
 import { messageUtil } from '@leaa/dashboard/src/utils';
 
 import { PageCard, HtmlMeta, WYSIWYGEditor, AttachmentBox, SelectTagId, Rcon } from '@leaa/dashboard/src/components';
@@ -21,6 +21,9 @@ import style from './style.module.less';
 export default (props: IPage) => {
   const { t } = useTranslation();
   const { id } = props.match.params as { id: string };
+
+  // ref
+  const infoFormRef = useRef<ICommenFormRef<UpdateArticleInput>>(null);
 
   // ref
   const selectTagIdRef = useRef<any>(null);
@@ -42,77 +45,91 @@ export default (props: IPage) => {
   const [updateArticleMutate, updateArticleMutation] = useMutation<Article>(UPDATE_ARTICLE, {
     variables: submitVariables,
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
-    onCompleted: () => messageUtil.gqlCompleted(t('_lang:updatedSuccessfully')),
+    onCompleted: () => messageUtil.gqlSuccess(t('_lang:updatedSuccessfully')),
     refetchQueries: () => [{ query: GET_ARTICLE, variables: getArticleVariables }],
   });
 
   const onSubmit = async () => {
-    let hasError = false;
-    let submitData: UpdateArticleInput = {};
+    const submitData: ISubmitData<UpdateArticleInput> = await infoFormRef.current?.onValidateForm();
 
-    // info
-    articleInfoFormRef.props.form.validateFieldsAndScroll(async (err: any, formData: Article) => {
-      if (err) {
-        hasError = true;
-        message.error(err[Object.keys(err)[0]].errors[0].message);
+    console.log(submitData);
 
-        return;
-      }
+    if (!submitData) return;
 
-      submitData = formData;
-    });
+    submitData.tagIds = articleTags?.length ? articleTags.map(item => Number(item.id)) : null;
 
-    if (hasError) {
-      return;
-    }
-
-    // ext
-    articleExtFormRef.props.form.validateFieldsAndScroll(async (err: any, formData: Article) => {
-      if (err) {
-        hasError = true;
-        message.error(err[Object.keys(err)[0]].errors[0].message);
-
-        return;
-      }
-
-      submitData = {
-        ...submitData,
-        ...formData,
-      };
-    });
-
-    if (hasError) {
-      return;
-    }
-
-    if (
-      articleContentRef &&
-      articleContentRef.current &&
-      articleContentRef.current.getInstance() &&
-      articleContentRef.current.getInstance().getHtml() &&
-      typeof articleContentRef.current.getInstance().getHtml() !== 'undefined'
-    ) {
-      submitData.content = articleContentRef.current.getInstance().getHtml();
-    }
-
-    submitData.tagIds = articleTags && articleTags.length > 0 ? articleTags.map(item => Number(item.id)) : undefined;
+    console.log(submitData.tagIds);
 
     await setSubmitVariables({ id: Number(id), article: submitData });
     await updateArticleMutate();
 
-    // attachment box
-    if (attachmentBoxRef && attachmentBoxRef.current) {
-      attachmentBoxRef.current.onUpdateAttachments();
-    }
-
     // keep form fields consistent with API
-    articleInfoFormRef.props.form.resetFields();
-    articleExtFormRef.props.form.resetFields();
+    await infoFormRef.current?.form?.resetFields();
+    // await productImageRef.current?.onUpdateAllAttachments();
+    // let hasError = false;
+    // let submitData: UpdateArticleInput = {};
+    //
+    // // info
+    // articleInfoFormRef.props.form.validateFieldsAndScroll(async (err: any, formData: Article) => {
+    //   if (err) {
+    //     hasError = true;
+    //     message.error(err[Object.keys(err)[0]].errors[0].message);
+    //
+    //     return;
+    //   }
+    //
+    //   submitData = formData;
+    // });
+    //
+    // if (hasError) {
+    //   return;
+    // }
+    //
+    // // ext
+    // articleExtFormRef.props.form.validateFieldsAndScroll(async (err: any, formData: Article) => {
+    //   if (err) {
+    //     hasError = true;
+    //     message.error(err[Object.keys(err)[0]].errors[0].message);
+    //
+    //     return;
+    //   }
+    //
+    //   submitData = {
+    //     ...submitData,
+    //     ...formData,
+    //   };
+    // });
+    //
+    // if (hasError) {
+    //   return;
+    // }
+    //
+    // if (
+    //   articleContentRef &&
+    //   articleContentRef.current &&
+    //   articleContentRef.current.getInstance() &&
+    //   articleContentRef.current.getInstance().getHtml() &&
+    //   typeof articleContentRef.current.getInstance().getHtml() !== 'undefined'
+    // ) {
+    //   submitData.content = articleContentRef.current.getInstance().getHtml();
+    // }
+    //
+    // submitData.tagIds = articleTags && articleTags.length > 0 ? articleTags.map(item => Number(item.id)) : undefined;
+    //
+    // await setSubmitVariables({ id: Number(id), article: submitData });
+    // await updateArticleMutate();
+    //
+    // // attachment box
+    // if (attachmentBoxRef && attachmentBoxRef.current) {
+    //   attachmentBoxRef.current.onUpdateAttachments();
+    // }
+    //
+    // // keep form fields consistent with API
+    // articleInfoFormRef.props.form.resetFields();
+    // articleExtFormRef.props.form.resetFields();
   };
 
-  const onChangeSelectedTagsCallback = (tags: Tag[]) => {
-    setArticleTags(tags);
-  };
+  const onChangeSelectedTagsCallback = (tags: Tag[]) => setArticleTags(tags);
 
   return (
     <PageCard
@@ -130,14 +147,14 @@ export default (props: IPage) => {
       <ArticleInfoForm
         item={getArticleQuery.data && getArticleQuery.data.article}
         loading={getArticleQuery.loading}
-        wrappedComponentRef={(inst: unknown) => setArticleInfoFormRef(inst)}
+        ref={infoFormRef}
       />
 
       <div className={style['submit-bar']}>
         <Button
           type="primary"
           size="large"
-          icon={UPDATE_BUTTON_ICON}
+          icon={<Rcon type={UPDATE_BUTTON_ICON} />}
           className={style['submit-bar-button']}
           loading={updateArticleMutation.loading}
           onClick={onSubmit}

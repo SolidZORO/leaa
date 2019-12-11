@@ -35,7 +35,7 @@ export default (props: IPage) => {
   // mutation
   const [deleteCategoryMutate, deleteCategoryMutation] = useMutation<Category>(DELETE_CATEGORY, {
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
-    onCompleted: () => messageUtil.gqlCompleted(t('_lang:deletedSuccessfully')),
+    onCompleted: () => messageUtil.gqlSuccess(t('_lang:deletedSuccessfully')),
     refetchQueries: () => [{ query: GET_CATEGORIES, variables: getCategoriesVariables }],
   });
 

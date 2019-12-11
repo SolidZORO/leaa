@@ -57,7 +57,7 @@ export default (props: IPage) => {
   // mutation
   const [deleteProductMutate, deleteProductMutation] = useMutation<Product>(DELETE_PRODUCT, {
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
-    onCompleted: () => messageUtil.gqlCompleted(t('_lang:deletedSuccessfully')),
+    onCompleted: () => messageUtil.gqlSuccess(t('_lang:deletedSuccessfully')),
     refetchQueries: () => [{ query: GET_PRODUCTS, variables: getProductsVariables }],
   });
 

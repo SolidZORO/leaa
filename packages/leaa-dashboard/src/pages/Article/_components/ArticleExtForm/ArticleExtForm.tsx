@@ -1,67 +1,154 @@
-import React from 'react';
 import cx from 'classnames';
-import moment from 'moment';
-import { Form, Input, DatePicker } from 'antd';
-import { withTranslation } from 'react-i18next';
-import { FormComponentProps } from 'antd/lib/form';
+import React, { useEffect, forwardRef, useImperativeHandle } from 'react';
+import { Col, Form, Input, InputNumber, Row } from 'antd';
+
+import { useTranslation } from 'react-i18next';
 
 import { Article } from '@leaa/common/src/entrys';
-import { ITfn } from '@leaa/dashboard/src/interfaces';
+import { messageUtil } from '@leaa/dashboard/src/utils';
+import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
+import { UpdateArticleInput } from '@leaa/common/src/dtos/article';
 
-import { FormCard } from '@leaa/dashboard/src/components';
+import { FormCard, SwitchNumber, EntryInfoDate, SelectCategoryIdByTree } from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';
 
-interface IFormProps extends FormComponentProps {
-  className?: string;
+interface IProps {
   item?: Article;
+  className?: string;
   loading?: boolean;
 }
 
-type IProps = IFormProps & ITfn;
+export const ArticleExtForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
+  const { t } = useTranslation();
+  const [form] = Form.useForm();
 
-class ArticleExtFormInner extends React.PureComponent<IProps> {
-  constructor(props: IProps) {
-    super(props);
-  }
+  const onValidateForm = async (): IOnValidateFormResult<UpdateArticleInput> => {
+    try {
+      return await form.validateFields();
+    } catch (error) {
+      return messageUtil.error(error.errorFields[0]?.errors[0]);
+    }
+  };
 
-  render() {
-    const { t } = this.props;
+  const formatInitialValues = (item?: Article): Article | {} => {
+    // create
+    if (!item) {
+      return {
+        status: 1,
+      };
+    }
 
-    const { props } = this;
-    const { getFieldDecorator } = this.props.form;
+    // edit
+    return {
+      ...item,
+      styleIds: item?.styles?.length ? item.styles[0].id : undefined,
+      brandIds: item?.brands?.length ? item.brands[0].id : undefined,
+    };
+  };
 
-    return (
-      <div className={cx(style['wrapper'], props.className)}>
-        <FormCard title={t('_page:Article.Component.extendedInfo')}>
-          <Form className={cx('g-form--zero-margin', style['form-wrapper'])}>
-            <Form.Item label={t('_lang:description')}>
-              {getFieldDecorator('description', {
-                initialValue: props.item ? props.item.description : undefined,
-                rules: [],
-              })(<Input.TextArea rows={4} placeholder={t('_lang:description')} />)}
-            </Form.Item>
+  useEffect(() => {
+    if (props.item) form.setFieldsValue(formatInitialValues(props.item));
+  }, [props.item]);
 
-            <Form.Item label={t('_lang:created_at')}>
-              {getFieldDecorator('created_at', {
-                initialValue: props.item ? moment(props.item.created_at) : moment(undefined),
-                rules: [],
-              })(<DatePicker showTime />)}
-            </Form.Item>
+  useImperativeHandle(ref, () => ({
+    form,
+    onValidateForm,
+  }));
 
-            <Form.Item label={t('_lang:updated_at')}>
-              <DatePicker
-                showTime
-                value={props.item && props.item.updated_at ? moment(props.item.updated_at) : moment()}
-                disabled
-              />
-            </Form.Item>
-          </Form>
-        </FormCard>
-      </div>
-    );
-  }
-}
+  return (
+    <div className={cx(style['wrapper'], props.className)}>
+      <FormCard
+        title={t('_page:Article.Component.articleInfo')}
+        extra={<EntryInfoDate date={props.item && [props.item.created_at, props.item.updated_at]} />}
+      >
+        <Form form={form} name="infoForm" layout="vertical" initialValues={formatInitialValues(props.item)}>
+          <Row gutter={16} className={style['form-row']}>
+            <Col xs={24} sm={8}>
+              <Form.Item name="name" rules={[{ required: true }]} label={t('_page:Article.Component.articleName')}>
+                <Input placeholder={t('_page:Article.Component.articleName')} />
+              </Form.Item>
+            </Col>
 
-// @ts-ignore
-export const ArticleExtForm = withTranslation()(Form.create<IFormProps>()(ArticleExtFormInner));
+            <Col xs={24} sm={8}>
+              <Form.Item
+                name="fullname"
+                rules={[{ required: true }]}
+                label={t('_page:Article.Component.articleFullname')}
+              >
+                <Input placeholder={t('_lang:fullname')} />
+              </Form.Item>
+            </Col>
+
+            <Col xs={24} sm={6}>
+              <Form.Item name="serial" rules={[{ required: true }]} label={t('_lang:serial')}>
+                <Input placeholder={t('_lang:serial')} />
+              </Form.Item>
+            </Col>
+
+            <Col xs={24} sm={2}>
+              <Form.Item
+                name="status"
+                normalize={e => e && Number(e)}
+                rules={[{ required: true }]}
+                label={t('_page:Article.Component.putOnSale')}
+              >
+                <SwitchNumber />
+              </Form.Item>
+            </Col>
+          </Row>
+
+          <Row gutter={16} className={style['form-row']}>
+            <Col xs={24} sm={4}>
+              <Form.Item name="price" rules={[{ required: true }]} label={t('_page:Article.Component.price')}>
+                <InputNumber className="g-input-number" placeholder={t('_lang:price')} />
+              </Form.Item>
+            </Col>
+
+            <Col xs={24} sm={4}>
+              <Form.Item name="cost_price" rules={[]} label={t('_page:Article.Component.costPrice')}>
+                <InputNumber className="g-input-number" placeholder={t('_page:Article.Component.costPrice')} />
+              </Form.Item>
+            </Col>
+
+            <Col xs={24} sm={4}>
+              <Form.Item name="market_price" rules={[]} label={t('_page:Article.Component.marketPrice')}>
+                <InputNumber className="g-input-number" placeholder={t('_page:Article.Component.marketPrice')} />
+              </Form.Item>
+            </Col>
+
+            <Col xs={24} sm={6}>
+              <Form.Item
+                name="styleIds"
+                normalize={e => e && Number(e)}
+                rules={[{ required: true }]}
+                label={t('_page:Article.Component.style')}
+              >
+                <SelectCategoryIdByTree parentSlug="articles" />
+              </Form.Item>
+            </Col>
+
+            <Col xs={24} sm={6}>
+              <Form.Item
+                name="brandIds"
+                normalize={e => e && Number(e)}
+                rules={[{ required: true }]}
+                label={t('_page:Article.Component.brand')}
+              >
+                <SelectCategoryIdByTree parentSlug="brands" />
+              </Form.Item>
+            </Col>
+          </Row>
+
+          <Row gutter={16} className={style['form-row']}>
+            <Col xs={24} sm={4}>
+              <Form.Item name="stock" rules={[{ required: true }]} label={t('_lang:stock')}>
+                <InputNumber className="g-input-number" placeholder={t('_lang:stock')} />
+              </Form.Item>
+            </Col>
+          </Row>
+        </Form>
+      </FormCard>
+    </div>
+  );
+});

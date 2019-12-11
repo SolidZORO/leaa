@@ -47,7 +47,7 @@ export default (props: IPage) => {
   // mutation
   const [deleteRoleMutate, deleteRoleMutation] = useMutation<Role>(DELETE_ROLE, {
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
-    onCompleted: () => messageUtil.gqlCompleted(t('_lang:deletedSuccessfully')),
+    onCompleted: () => messageUtil.gqlSuccess(t('_lang:deletedSuccessfully')),
     refetchQueries: () => [{ query: GET_ROLES, variables: getRolesVariables }],
   });
 

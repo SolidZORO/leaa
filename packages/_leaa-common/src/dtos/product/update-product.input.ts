@@ -49,17 +49,17 @@ export class UpdateProductInput {
 
   @IsOptional()
   @Field(() => [Int], { nullable: true })
-  brandIds?: number[];
+  brandIds?: number[] | null;
 
   @IsOptional()
   @Field(() => [Int], { nullable: true })
-  styleIds?: number[];
+  styleIds?: number[] | null;
 
   @IsOptional()
   @Field(() => [Int], { nullable: true })
-  tagIds?: number[];
+  tagIds?: number[] | null;
 
   @IsOptional()
   @Field(() => [Int], { nullable: true })
-  bannerIds?: number[];
+  bannerIds?: number[] | null;
 }

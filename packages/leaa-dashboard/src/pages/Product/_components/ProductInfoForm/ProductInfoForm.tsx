@@ -27,7 +27,7 @@ export const ProductInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =
     try {
       return await form.validateFields();
     } catch (error) {
-      return messageUtil.gqlError(error.errorFields[0]?.errors[0] || 'ERROR!');
+      return messageUtil.error(error.errorFields[0]?.errors[0]);
     }
   };
 
@@ -101,19 +101,19 @@ export const ProductInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =
           <Row gutter={16} className={style['form-row']}>
             <Col xs={24} sm={4}>
               <Form.Item name="price" rules={[{ required: true }]} label={t('_page:Product.Component.price')}>
-                <InputNumber className={style['input-number']} placeholder={t('_lang:price')} />
+                <InputNumber className="g-input-number" placeholder={t('_lang:price')} />
               </Form.Item>
             </Col>
 
             <Col xs={24} sm={4}>
               <Form.Item name="cost_price" rules={[]} label={t('_page:Product.Component.costPrice')}>
-                <InputNumber className={style['input-number']} placeholder={t('_page:Product.Component.costPrice')} />
+                <InputNumber className="g-input-number" placeholder={t('_page:Product.Component.costPrice')} />
               </Form.Item>
             </Col>
 
             <Col xs={24} sm={4}>
               <Form.Item name="market_price" rules={[]} label={t('_page:Product.Component.marketPrice')}>
-                <InputNumber className={style['input-number']} placeholder={t('_page:Product.Component.marketPrice')} />
+                <InputNumber className="g-input-number" placeholder={t('_page:Product.Component.marketPrice')} />
               </Form.Item>
             </Col>
 
@@ -143,7 +143,7 @@ export const ProductInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =
           <Row gutter={16} className={style['form-row']}>
             <Col xs={24} sm={4}>
               <Form.Item name="stock" rules={[{ required: true }]} label={t('_lang:stock')}>
-                <InputNumber className={style['input-number']} placeholder={t('_lang:stock')} />
+                <InputNumber className="g-input-number" placeholder={t('_lang:stock')} />
               </Form.Item>
             </Col>
           </Row>

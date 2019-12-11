@@ -9,7 +9,7 @@ import { formatUtil, authUtil, curdUtil, paginationUtil, errorUtil } from '@leaa
 type IAxsArgs = AxsArgs & FindOneOptions<Ax>;
 type IAxArgs = AxArgs & FindOneOptions<Ax>;
 
-const CONSTRUCTOR_NAME = 'AxService';
+const CLS_NAME = 'AxService';
 
 @Injectable()
 export class AxService {
@@ -67,10 +67,12 @@ export class AxService {
   }
 
   async updateAx(id: number, args: UpdateAxInput): Promise<Ax | undefined> {
-    return curdUtil.commonUpdate(this.axRepository, CONSTRUCTOR_NAME, id, args);
+    if (curdUtil.isOneField(args, 'status')) return curdUtil.commonUpdate(this.axRepository, CLS_NAME, id, args);
+
+    return curdUtil.commonUpdate(this.axRepository, CLS_NAME, id, args);
   }
 
   async deleteAx(id: number): Promise<Ax | undefined> {
-    return curdUtil.commonDelete(this.axRepository, CONSTRUCTOR_NAME, id);
+    return curdUtil.commonDelete(this.axRepository, CLS_NAME, id);
   }
 }

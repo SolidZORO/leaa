@@ -21,7 +21,7 @@ export const SyncTagsToFileButton = (props: IProps) => {
       // variables: undefined,
       // apollo-link-error onError: e => messageUtil.gqlError(e.message),
       onCompleted({ syncTagsToDictFile }) {
-        messageUtil.gqlCompleted(syncTagsToDictFile.status);
+        messageUtil.gqlSuccess(syncTagsToDictFile.status);
       },
     },
   );

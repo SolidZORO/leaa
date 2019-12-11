@@ -94,7 +94,7 @@ class CouponInfoFormInner extends React.PureComponent<IProps, IState> {
                   {getFieldDecorator('amount', {
                     initialValue: props.item ? props.item.amount : 0,
                     rules: [{ required: true }],
-                  })(<InputNumber placeholder={t('_lang:amount')} className={style['input-number']} />)}
+                  })(<InputNumber placeholder={t('_lang:amount')} className="g-input-number" />)}
                 </Form.Item>
               </Col>
 
@@ -103,7 +103,7 @@ class CouponInfoFormInner extends React.PureComponent<IProps, IState> {
                   {getFieldDecorator('over_amount', {
                     initialValue: props.item ? props.item.over_amount : 0,
                     rules: [{ required: true }],
-                  })(<InputNumber placeholder={t('_lang:over_amount')} className={style['input-number']} />)}
+                  })(<InputNumber placeholder={t('_lang:over_amount')} className="g-input-number" />)}
                 </Form.Item>
               </Col>
 
@@ -128,7 +128,7 @@ class CouponInfoFormInner extends React.PureComponent<IProps, IState> {
                     {getFieldDecorator('quantity', {
                       initialValue: 1,
                       rules: [{ required: true }],
-                    })(<InputNumber placeholder={t('_lang:quantity')} className={style['input-number']} />)}
+                    })(<InputNumber placeholder={t('_lang:quantity')} className="g-input-number" />)}
                   </Form.Item>
                 </Col>
               )}

@@ -20,14 +20,14 @@ import {
 import { TagSubscriber } from '@leaa/api/src/subscribers';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 
-const CONSTRUCTOR_NAME = 'TypeormService';
+const CLS_NAME = 'TypeormService';
 
 @Injectable()
 export class TypeormService implements TypeOrmOptionsFactory {
   private logger: Logger;
 
   constructor(readonly configService: ConfigService) {
-    this.logger = new Logger(CONSTRUCTOR_NAME);
+    this.logger = new Logger(CLS_NAME);
   }
 
   createTypeOrmOptions(): TypeOrmModuleOptions {

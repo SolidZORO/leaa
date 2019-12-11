@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { Injectable } from '@nestjs/common';
 import { Repository, FindOneOptions } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -14,7 +15,7 @@ import { formatUtil, paginationUtil, curdUtil, stringUtil, dictUtil, errorUtil, 
 
 import { TagService } from '@leaa/api/src/modules/tag/tag.service';
 
-const CONSTRUCTOR_NAME = 'ArticleService';
+const CLS_NAME = 'ArticleService';
 
 type IArticlesArgs = ArticlesArgs & FindOneOptions<Article>;
 type IArticleArgs = ArticleArgs & FindOneOptions<Article>;
@@ -110,16 +111,17 @@ export class ArticleService {
   }
 
   async updateArticle(id: number, args: UpdateArticleInput): Promise<Article | undefined> {
-    const relationArgs: { tags?: Tag[]; categories?: Category[] } = {};
+    if (curdUtil.isOneField(args, 'status')) return curdUtil.commonUpdate(this.articleRepository, CLS_NAME, id, args);
 
+    const relationArgs: { tags?: Tag[]; categories?: Category[] } = {};
     const trimSlug = args.slug ? args.slug.trim().toLowerCase() : args.slug;
     const trimDescription = args.description ? args.description.trim() : args.description;
 
     // tags
     let tagObjects;
-    if (args.tagIds && args.tagIds.length > 0) {
-      tagObjects = await this.tagRepository.findByIds(args.tagIds);
-    }
+    if (args.tagIds && args.tagIds.length) tagObjects = await this.tagRepository.findByIds(args.tagIds);
+    if (args.tagIds === null) tagObjects = [];
+
     relationArgs.tags = tagObjects;
 
     // category
@@ -147,10 +149,10 @@ export class ArticleService {
       await this.tagService.syncTagsToDictFile();
     }
 
-    return curdUtil.commonUpdate(this.articleRepository, CONSTRUCTOR_NAME, id, nextArgs, relationArgs);
+    return curdUtil.commonUpdate(this.articleRepository, CLS_NAME, id, nextArgs, relationArgs);
   }
 
   async deleteArticle(id: number): Promise<Article | undefined> {
-    return curdUtil.commonDelete(this.articleRepository, CONSTRUCTOR_NAME, id);
+    return curdUtil.commonDelete(this.articleRepository, CLS_NAME, id);
   }
 }

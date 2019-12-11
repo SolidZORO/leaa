@@ -65,7 +65,7 @@ export const AttachmentBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
     onCompleted: () =>
       !props.disableMessage &&
-      messageUtil.gqlCompleted(
+      messageUtil.gqlSuccess(
         `${langUtil.removeSpace(`${t('_lang:attachment')} ${t('_lang:updatedSuccessfully')}`, i18n.language)}`,
       ),
     refetchQueries: () => [{ query: GET_ATTACHMENTS, variables: getAttachmentsVariables }],

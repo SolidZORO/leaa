@@ -2,9 +2,10 @@ import cx from 'classnames';
 import React, { useState } from 'react';
 import { DocumentNode } from 'graphql';
 import { useTranslation } from 'react-i18next';
-import { message, Switch } from 'antd';
+import { Switch } from 'antd';
 import { SwitchSize } from 'antd/lib/switch';
 
+import { messageUtil } from '@leaa/dashboard/src/utils';
 import { apolloClient } from '@leaa/dashboard/src/libs';
 
 import style from './style.module.less';
@@ -34,10 +35,12 @@ export const TableColumnStatusSwitch = (props: IProps) => {
       })
       .then(() => {
         setSwitchStatus(e);
-        message.success(t('_comp:TableColumnStatusSwitch.updatedSuccessfully', { id: props.id }));
+
+        // TODO add status tips
+        messageUtil.gqlSuccess(t('_comp:TableColumnStatusSwitch.updatedSuccessfully', { id: props.id }));
       })
       .catch((error: Error) => {
-        message.info(error.message);
+        messageUtil.gqlError(error.message);
       });
   };
 

@@ -4,7 +4,7 @@ import { Ax, Attachment } from '@leaa/common/src/entrys';
 import { AxAttachmentsObject } from '@leaa/common/src/dtos/ax';
 import { AttachmentService } from '@leaa/api/src/modules/attachment/attachment.service';
 
-// const CONSTRUCTOR_NAME = 'AxProperty';
+// const CLS_NAME = 'AxProperty';
 
 @Injectable()
 export class AxProperty {

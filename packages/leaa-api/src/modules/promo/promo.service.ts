@@ -17,7 +17,7 @@ import { PromoProperty } from '@leaa/api/src/modules/promo/promo.property';
 type IPromosArgs = PromosArgs & FindOneOptions<Promo>;
 type IPromoArgs = PromoArgs & FindOneOptions<Promo>;
 
-const CONSTRUCTOR_NAME = 'PromoService';
+const CLS_NAME = 'PromoService';
 
 @Injectable()
 export class PromoService {
@@ -80,13 +80,15 @@ export class PromoService {
   }
 
   async updatePromo(id: number, args: UpdatePromoInput): Promise<Promo | undefined> {
+    if (curdUtil.isOneField(args, 'status')) return curdUtil.commonUpdate(this.promoRepository, CLS_NAME, id, args);
+
     const nextArgs = formatUtil.formatDateRangeTime(args, 'start_time', 'expire_time');
 
-    return curdUtil.commonUpdate(this.promoRepository, CONSTRUCTOR_NAME, id, nextArgs);
+    return curdUtil.commonUpdate(this.promoRepository, CLS_NAME, id, nextArgs);
   }
 
   async deletePromo(id: number): Promise<Promo | undefined> {
-    return curdUtil.commonDelete(this.promoRepository, CONSTRUCTOR_NAME, id);
+    return curdUtil.commonDelete(this.promoRepository, CLS_NAME, id);
   }
 
   async redeemPromo(info: RedeemPromoInput, user?: User): Promise<Promo | undefined> {

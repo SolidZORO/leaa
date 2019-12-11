@@ -18,7 +18,7 @@ import { JwtService } from '@nestjs/jwt';
 type IUsersArgs = UsersArgs & FindOneOptions<User>;
 type IUserArgs = UserArgs & FindOneOptions<User>;
 
-const CONSTRUCTOR_NAME = 'UserService';
+const CLS_NAME = 'UserService';
 
 @Injectable()
 export class UserService {
@@ -115,6 +115,8 @@ export class UserService {
   }
 
   async updateUser(id: number, args: UpdateUserInput): Promise<User | undefined> {
+    if (curdUtil.isOneField(args, 'status')) return curdUtil.commonUpdate(this.userRepository, CLS_NAME, id, args);
+
     if (id === 1 && (args.password || args.status)) {
       return errorUtil.ERROR({ error: 'Default User, PLEASE DONT' });
     }
@@ -144,7 +146,7 @@ export class UserService {
       nextArgs.password = await this.createPassword(args.password);
     }
 
-    return curdUtil.commonUpdate(this.userRepository, CONSTRUCTOR_NAME, id, nextArgs, relationArgs);
+    return curdUtil.commonUpdate(this.userRepository, CLS_NAME, id, nextArgs, relationArgs);
   }
 
   async deleteUser(id: number, user?: User): Promise<User | undefined> {
@@ -152,6 +154,6 @@ export class UserService {
       return errorUtil.ERROR({ error: 'Default User, PLEASE DONT', user });
     }
 
-    return curdUtil.commonDelete(this.userRepository, CONSTRUCTOR_NAME, id);
+    return curdUtil.commonDelete(this.userRepository, CLS_NAME, id);
   }
 }

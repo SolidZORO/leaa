@@ -85,7 +85,7 @@ const AttachmentItemInner = forwardRef((props: IProps, ref: React.Ref<any>) => {
   const [deleteAttachmentsMutate, deleteAttachmentsMutation] = useMutation<{ uuid: string[] }>(DELETE_ATTACHMENT, {
     variables: deleteAttachmentsVariables,
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
-    onCompleted: () => messageUtil.gqlCompleted(t('_lang:deletedSuccessfully')),
+    onCompleted: () => messageUtil.gqlSuccess(t('_lang:deletedSuccessfully')),
   });
 
   const onDelete = async (uuid: string) => {
