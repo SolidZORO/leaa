@@ -53,10 +53,6 @@ export default (props: IPage) => {
 
     await setSubmitVariables({ id: Number(id), product: submitData });
     await updateProductMutate();
-
-    // keep form fields consistent with API
-    await infoFormRef.current?.form?.resetFields();
-    await productImageRef.current?.onUpdateAllAttachments();
   };
 
   const onChangeSelectedTagsCallback = (tags: Tag[]) => setProductTags(tags);

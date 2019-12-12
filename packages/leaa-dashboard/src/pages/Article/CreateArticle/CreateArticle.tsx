@@ -1,11 +1,11 @@
 import React, { useState, useRef } from 'react';
-import { Button, message } from 'antd';
+import { Button } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useMutation } from '@apollo/react-hooks';
 
 import { Article } from '@leaa/common/src/entrys';
 import { CreateArticleInput } from '@leaa/common/src/dtos/article';
-import { IPage, IKey, ISubmitData, ICommenFormRef } from '@leaa/dashboard/src/interfaces';
+import { IPage, ISubmitData, ICommenFormRef } from '@leaa/dashboard/src/interfaces';
 import { CREATE_ARTICLE } from '@leaa/common/src/graphqls';
 import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { messageUtil } from '@leaa/dashboard/src/utils';

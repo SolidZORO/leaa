@@ -1,21 +1,25 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
+import cx from 'classnames';
 import i18n from 'i18next';
 import React, { useState, useEffect, forwardRef } from 'react';
 
 import { Editor } from '@toast-ui/react-editor';
 import tuiEditor from 'tui-editor';
 import toMark from 'to-mark';
+
 import 'tui-editor/dist/tui-editor-extScrollSync';
 import 'tui-editor/dist/tui-editor-extTable';
 import 'codemirror/lib/codemirror.css';
-import 'tui-editor/dist/tui-editor.min.css';
-import 'tui-editor/dist/tui-editor-contents.min.css';
+import 'tui-editor/dist/tui-editor.css';
+// import 'tui-editor/dist/tui-editor-contents.css';
 
 import { IAttachmentParams } from '@leaa/common/src/interfaces';
 import { attachmentUtil } from '@leaa/dashboard/src/utils';
 
+import './tui-editor-contents.less';
+import './tui-editor.less';
 import './editor.less';
-import cx from 'classnames';
+
 import style from './style.module.less';
 
 interface IProps {
@@ -32,6 +36,7 @@ interface ITuiEditor extends tuiEditor {
   eventManager: any;
 }
 
+// docs: https://nhn.github.io/tui.editor/latest
 export const WYSIWYGEditor = forwardRef((props: IProps, ref: React.Ref<any>) => {
   const [editor, setEditor] = useState<ITuiEditor>();
 

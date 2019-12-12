@@ -123,14 +123,14 @@ export const AttachmentBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
         [style['wrapper-box--list']]: type === 'list',
         [style['wrapper-box--card']]: type === 'card',
       })}
-      style={{ height: props.type === 'card' ? cardHeight : undefined }}
+      style={{ height: type === 'card' ? cardHeight : undefined }}
     >
       <FormCard
         title={
           <>
             {props.title ||
               langUtil.removeSpace(
-                `${t('_lang:attachment')} ${props.type === 'list' ? t('_lang:list') : t('_lang:card')}`,
+                `${t('_lang:attachment')} ${type === 'list' ? t('_lang:list') : t('_lang:card')}`,
                 i18n.language,
               )}
 

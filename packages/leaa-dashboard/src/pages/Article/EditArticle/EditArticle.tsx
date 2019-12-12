@@ -74,6 +74,10 @@ export default (props: IPage) => {
       submitData.content = articleContentRef.current.getInstance().getHtml();
     }
 
+    if (typeof submitData.categoryIds === 'undefined') {
+      submitData.categoryIds = null;
+    }
+
     submitData.tagIds = articleTags?.length ? articleTags.map(item => Number(item.id)) : null;
 
     await setSubmitVariables({ id: Number(id), article: submitData });
@@ -125,7 +129,7 @@ export default (props: IPage) => {
           <AttachmentBox
             ref={attachmentBoxRef}
             disableMessage
-            listHeight={217}
+            listHeight={229}
             attachmentParams={{
               type: 'image',
               moduleId: Number(id),

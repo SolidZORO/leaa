@@ -128,6 +128,8 @@ export class ArticleService {
     let categoryObjects;
     if (args.categoryIds) {
       categoryObjects = await this.categoryRepository.findByIds(args.categoryIds);
+    } else if (args.categoryIds === null) {
+      categoryObjects = [];
     }
     relationArgs.categories = categoryObjects;
 

@@ -31,30 +31,27 @@ export const ProductInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =
     }
   };
 
-  const formatInitialValues = (item?: Product): Product | {} => {
-    // create
-    if (!item) {
-      return {
-        status: 1,
-      };
+  const onUpdateForm = (item?: Product) => {
+    if (!item) return form.setFieldsValue({ status: 1 });
+
+    // if APIs return error, do not flush out edited data
+    if (form.getFieldValue('updated_at') && !item.updated_at) return undefined;
+
+    // update was successful, keeping the form data and APIs in sync.
+    if (form.getFieldValue('updated_at') !== item.updated_at) {
+      form.setFieldsValue({
+        ...item,
+        styleIds: item?.styles?.length ? item.styles[0].id : undefined,
+        brandIds: item?.brands?.length ? item.brands[0].id : undefined,
+      });
     }
 
-    // edit
-    return {
-      ...item,
-      styleIds: item?.styles?.length ? item.styles[0].id : undefined,
-      brandIds: item?.brands?.length ? item.brands[0].id : undefined,
-    };
+    return undefined;
   };
 
-  useEffect(() => {
-    if (props.item) form.setFieldsValue(formatInitialValues(props.item));
-  }, [props.item]);
+  useEffect(() => onUpdateForm(props.item), [form, props.item]);
 
-  useImperativeHandle(ref, () => ({
-    form,
-    onValidateForm,
-  }));
+  useImperativeHandle(ref, () => ({ form, onValidateForm }));
 
   return (
     <div className={cx(style['wrapper'], props.className)}>
@@ -62,7 +59,7 @@ export const ProductInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =
         title={t('_page:Product.Component.productInfo')}
         extra={<EntryInfoDate date={props.item && [props.item.created_at, props.item.updated_at]} />}
       >
-        <Form form={form} name="infoForm" layout="vertical" initialValues={formatInitialValues(props.item)}>
+        <Form form={form} name="infoForm" layout="vertical">
           <Row gutter={16} className={style['form-row']}>
             <Col xs={24} sm={8}>
               <Form.Item name="name" rules={[{ required: true }]} label={t('_page:Product.Component.productName')}>
