@@ -67,7 +67,7 @@ export default (props: IPage) => {
             type="primary"
             size="large"
             icon={<Rcon type="ri-swap-box-line" />}
-            className="submit-button"
+            className="g-submit-bar-button"
             loading={redeemCouponMutation.loading}
             onClick={onSubmit}
             // className={style['coupon-redeem-form-wrapper']}

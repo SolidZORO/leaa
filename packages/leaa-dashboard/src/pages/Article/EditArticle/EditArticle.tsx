@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, message } from 'antd';
+import { Button } from 'antd';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
 import { Article, Tag } from '@leaa/common/src/entrys';
@@ -8,10 +8,18 @@ import { IAttachmentBoxRef } from '@leaa/common/src/interfaces';
 import { GET_ARTICLE, UPDATE_ARTICLE } from '@leaa/common/src/graphqls';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { ArticleArgs, UpdateArticleInput } from '@leaa/common/src/dtos/article';
-import { IPage, IKey, ICommenFormRef, ISubmitData } from '@leaa/dashboard/src/interfaces';
+import { IPage, ICommenFormRef, ISubmitData } from '@leaa/dashboard/src/interfaces';
 import { messageUtil } from '@leaa/dashboard/src/utils';
 
-import { PageCard, HtmlMeta, WYSIWYGEditor, AttachmentBox, SelectTagId, Rcon } from '@leaa/dashboard/src/components';
+import {
+  PageCard,
+  HtmlMeta,
+  WYSIWYGEditor,
+  AttachmentBox,
+  SelectTagId,
+  Rcon,
+  SubmitBar,
+} from '@leaa/dashboard/src/components';
 
 import { ArticleInfoForm } from '../_components/ArticleInfoForm/ArticleInfoForm';
 import { ArticleExtForm } from '../_components/ArticleExtForm/ArticleExtForm';
@@ -24,13 +32,11 @@ export default (props: IPage) => {
 
   // ref
   const infoFormRef = useRef<ICommenFormRef<UpdateArticleInput>>(null);
+  const extFormRef = useRef<ICommenFormRef<UpdateArticleInput>>(null);
 
-  // ref
-  const selectTagIdRef = useRef<any>(null);
-  const attachmentBoxRef = useRef<IAttachmentBoxRef>(null);
   const articleContentRef = useRef<any>(null);
-  const [articleInfoFormRef, setArticleInfoFormRef] = useState<any>();
-  const [articleExtFormRef, setArticleExtFormRef] = useState<any>();
+  const attachmentBoxRef = useRef<IAttachmentBoxRef>(null);
+  const selectTagIdRef = useRef<any>(null);
   const [articleTags, setArticleTags] = useState<Tag[]>();
 
   // query
@@ -50,86 +56,32 @@ export default (props: IPage) => {
   });
 
   const onSubmit = async () => {
-    const submitData: ISubmitData<UpdateArticleInput> = await infoFormRef.current?.onValidateForm();
+    const infoData: ISubmitData<UpdateArticleInput> = await infoFormRef.current?.onValidateForm();
+    const extData: ISubmitData<UpdateArticleInput> = await extFormRef.current?.onValidateForm();
 
-    console.log(submitData);
+    if (!infoData) return;
+    if (!extData) return;
 
-    if (!submitData) return;
+    const submitData: ISubmitData<UpdateArticleInput> = {
+      ...infoData,
+      ...extData,
+    };
+
+    if (
+      articleContentRef.current?.getInstance()?.getHtml() &&
+      typeof articleContentRef.current.getInstance().getHtml() !== 'undefined'
+    ) {
+      submitData.content = articleContentRef.current.getInstance().getHtml();
+    }
 
     submitData.tagIds = articleTags?.length ? articleTags.map(item => Number(item.id)) : null;
-
-    console.log(submitData.tagIds);
 
     await setSubmitVariables({ id: Number(id), article: submitData });
     await updateArticleMutate();
 
-    // keep form fields consistent with API
-    await infoFormRef.current?.form?.resetFields();
-    // await productImageRef.current?.onUpdateAllAttachments();
-    // let hasError = false;
-    // let submitData: UpdateArticleInput = {};
-    //
-    // // info
-    // articleInfoFormRef.props.form.validateFieldsAndScroll(async (err: any, formData: Article) => {
-    //   if (err) {
-    //     hasError = true;
-    //     message.error(err[Object.keys(err)[0]].errors[0].message);
-    //
-    //     return;
-    //   }
-    //
-    //   submitData = formData;
-    // });
-    //
-    // if (hasError) {
-    //   return;
-    // }
-    //
-    // // ext
-    // articleExtFormRef.props.form.validateFieldsAndScroll(async (err: any, formData: Article) => {
-    //   if (err) {
-    //     hasError = true;
-    //     message.error(err[Object.keys(err)[0]].errors[0].message);
-    //
-    //     return;
-    //   }
-    //
-    //   submitData = {
-    //     ...submitData,
-    //     ...formData,
-    //   };
-    // });
-    //
-    // if (hasError) {
-    //   return;
-    // }
-    //
-    // if (
-    //   articleContentRef &&
-    //   articleContentRef.current &&
-    //   articleContentRef.current.getInstance() &&
-    //   articleContentRef.current.getInstance().getHtml() &&
-    //   typeof articleContentRef.current.getInstance().getHtml() !== 'undefined'
-    // ) {
-    //   submitData.content = articleContentRef.current.getInstance().getHtml();
-    // }
-    //
-    // submitData.tagIds = articleTags && articleTags.length > 0 ? articleTags.map(item => Number(item.id)) : undefined;
-    //
-    // await setSubmitVariables({ id: Number(id), article: submitData });
-    // await updateArticleMutate();
-    //
-    // // attachment box
-    // if (attachmentBoxRef && attachmentBoxRef.current) {
-    //   attachmentBoxRef.current.onUpdateAttachments();
-    // }
-    //
-    // // keep form fields consistent with API
-    // articleInfoFormRef.props.form.resetFields();
-    // articleExtFormRef.props.form.resetFields();
+    // attachments
+    await attachmentBoxRef.current?.onUpdateAttachments();
   };
-
-  const onChangeSelectedTagsCallback = (tags: Tag[]) => setArticleTags(tags);
 
   return (
     <PageCard
@@ -144,28 +96,11 @@ export default (props: IPage) => {
     >
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
-      <ArticleInfoForm
-        item={getArticleQuery.data && getArticleQuery.data.article}
-        loading={getArticleQuery.loading}
-        ref={infoFormRef}
-      />
-
-      <div className={style['submit-bar']}>
-        <Button
-          type="primary"
-          size="large"
-          icon={<Rcon type={UPDATE_BUTTON_ICON} />}
-          className={style['submit-bar-button']}
-          loading={updateArticleMutation.loading}
-          onClick={onSubmit}
-        >
-          {t('_lang:update')}
-        </Button>
-      </div>
+      <ArticleInfoForm item={getArticleQuery.data?.article} loading={getArticleQuery.loading} ref={infoFormRef} />
 
       <WYSIWYGEditor
         ref={articleContentRef}
-        content={getArticleQuery.data && getArticleQuery.data.article && getArticleQuery.data.article.content}
+        content={getArticleQuery.data?.article?.content}
         attachmentParams={{
           type: 'image',
           moduleId: Number(id),
@@ -180,16 +115,16 @@ export default (props: IPage) => {
           placement="topLeft"
           enterCreateTag
           selectedTagsMaxLength={5}
-          selectedTags={getArticleQuery.data && getArticleQuery.data.article && getArticleQuery.data.article.tags}
-          onChangeSelectedTagsCallback={onChangeSelectedTagsCallback}
+          selectedTags={getArticleQuery.data?.article?.tags}
+          onChangeSelectedTagsCallback={(tags: Tag[]) => setArticleTags(tags)}
         />
       </div>
 
       <div className={style['container-wrapper']}>
         <div className={style['container-main']}>
           <AttachmentBox
-            disableMessage
             ref={attachmentBoxRef}
+            disableMessage
             listHeight={217}
             attachmentParams={{
               type: 'image',
@@ -201,13 +136,22 @@ export default (props: IPage) => {
         </div>
 
         <div className={style['container-ext']}>
-          <ArticleExtForm
-            item={getArticleQuery.data && getArticleQuery.data.article}
-            loading={getArticleQuery.loading}
-            wrappedComponentRef={(inst: unknown) => setArticleExtFormRef(inst)}
-          />
+          <ArticleExtForm item={getArticleQuery.data?.article} loading={getArticleQuery.loading} ref={extFormRef} />
         </div>
       </div>
+
+      <SubmitBar full>
+        <Button
+          type="primary"
+          size="large"
+          icon={<Rcon type={UPDATE_BUTTON_ICON} />}
+          className="g-submit-bar-button"
+          loading={updateArticleMutation.loading}
+          onClick={onSubmit}
+        >
+          {t('_lang:update')}
+        </Button>
+      </SubmitBar>
     </PageCard>
   );
 };

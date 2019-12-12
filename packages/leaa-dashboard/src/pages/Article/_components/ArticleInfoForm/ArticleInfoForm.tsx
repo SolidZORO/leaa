@@ -1,6 +1,6 @@
 import cx from 'classnames';
 import React, { useEffect, forwardRef, useImperativeHandle } from 'react';
-import { Col, Form, Input, InputNumber, Row } from 'antd';
+import { Form, Input } from 'antd';
 
 import { useTranslation } from 'react-i18next';
 
@@ -9,7 +9,7 @@ import { UpdateArticleInput } from '@leaa/common/src/dtos/article';
 import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
 import { messageUtil } from '@leaa/dashboard/src/utils';
 
-import { FormCard, SwitchNumber, EntryInfoDate, SelectCategoryIdByTree, Rcon } from '@leaa/dashboard/src/components';
+import { SwitchNumber, SelectCategoryIdByTree, Rcon } from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';
 
@@ -31,51 +31,36 @@ export const ArticleInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =
     }
   };
 
-  const formatInitialValues = (item?: Article): Article | {} => {
-    // create
-    if (!item) {
-      return {
-        status: 0,
-      };
+  const onUpdateForm = (item?: Article) => {
+    if (!item) return form.setFieldsValue({ status: 0 });
+
+    // if APIs return error, do not flush out edited data
+    if (form.getFieldValue('updated_at') && !item.updated_at) return undefined;
+
+    // update was successful, keeping the form data and APIs in sync.
+    if (form.getFieldValue('updated_at') !== item.updated_at) {
+      form.setFieldsValue({
+        ...item,
+        categoryIds: (item?.categories && item.categories[0]?.id) || undefined,
+      });
     }
 
-    // edit
-    return {
-      ...item,
-    };
+    return undefined;
   };
 
-  useEffect(() => {
-    if (props.item) form.setFieldsValue(formatInitialValues(props.item));
-  }, [props.item]);
+  useEffect(() => onUpdateForm(props.item), [form, props.item]);
 
-  useImperativeHandle(ref, () => ({
-    form,
-    onValidateForm,
-  }));
+  useImperativeHandle(ref, () => ({ form, onValidateForm }));
 
   return (
     <div className={cx(style['wrapper'], props.className)}>
-      <Form
-        form={form}
-        name="infoForm"
-        layout="vertical"
-        initialValues={formatInitialValues(props.item)}
-        className={style['form--title-wrapper']}
-      >
+      <Form form={form} name="infoForm" layout="vertical" className={style['form--title-wrapper']}>
         <Form.Item name="title" rules={[{ required: true }]}>
           <Input size="large" placeholder={t('_lang:title')} />
         </Form.Item>
       </Form>
 
-      <Form
-        form={form}
-        name="infoForm"
-        layout="inline"
-        initialValues={formatInitialValues(props.item)}
-        hideRequiredMark
-        className={style['form--slug-wrapper']}
-      >
+      <Form form={form} name="infoForm" layout="inline" hideRequiredMark className={style['form--slug-wrapper']}>
         <div className={style['block--slug']}>
           <Form.Item name="slug" rules={[]} className={style['item--slug']}>
             <Input

@@ -79,8 +79,22 @@ const formatHtmlToText = (content?: string, title?: string): string => {
   return resultTitle + resultText;
 };
 
+const formatFormInitialData = (
+  form: any,
+  item: any,
+  param: { timeFields?: string[] } = { timeFields: undefined },
+): any => {
+  form.setFieldsValue(item);
+
+  const times = [{ name: 'released_at', value: moment(item.released_at) }];
+
+  // field type or date
+  form.setFields(times);
+};
+
 export const formatUtil = {
   formatArgs,
   formatDateRangeTime,
   formatHtmlToText,
+  formatFormInitialData,
 };

@@ -116,7 +116,7 @@ export default (props: IPage) => {
       render: (text: string, record: Coupon) => <IdTag id={record.order_id} link={`/orders/${record.order_id}`} />,
     },
     {
-      title: t('_lang:created_at'),
+      title: t('_lang:createdAt'),
       dataIndex: 'created_at',
       width: 120,
       sorter: true,

@@ -35,6 +35,7 @@ export const UPDATE_ARTICLE_STATUS = gql`
       description
       content
       status
+      released_at
     }
   }
 `;

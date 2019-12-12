@@ -6,7 +6,6 @@ import { useMutation } from '@apollo/react-hooks';
 
 import { Tag } from '@leaa/common/src/entrys';
 import { CREATE_TAG } from '@leaa/common/src/graphqls';
-import { messageUtil } from '@leaa/dashboard/src/utils';
 
 import style from './style.module.less';
 

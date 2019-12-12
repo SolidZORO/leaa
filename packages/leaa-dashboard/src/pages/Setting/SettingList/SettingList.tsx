@@ -225,7 +225,7 @@ export default (props: IPage) => {
           type="primary"
           size="large"
           icon={UPDATE_BUTTON_ICON}
-          className="submit-button"
+          className="g-submit-bar-button"
           loading={updateSettingsMutation.loading}
           onClick={onUpdateSettings}
         >

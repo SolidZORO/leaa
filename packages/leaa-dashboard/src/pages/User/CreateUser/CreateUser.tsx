@@ -81,8 +81,8 @@ export default (props: IPage) => {
         <Button
           type="primary"
           size="large"
-          icon={CREATE_BUTTON_ICON}
-          className="submit-button"
+          icon={<Rcon type={CREATE_BUTTON_ICON} />}
+          className="g-submit-bar-button"
           loading={createUserMutation.loading}
           onClick={onSubmit}
         >

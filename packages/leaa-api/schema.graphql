@@ -16,6 +16,7 @@ type Article {
   status: Int
   categories: [Category!]
   tags: [Tag!]
+  released_at: DateTime
 }
 
 type ArticlesWithPaginationObject {
@@ -622,7 +623,7 @@ input UpdateArticleInput {
   description: String
   content: String
   status: Int
-  created_at: DateTime
+  released_at: DateTime
   categoryIds: [Int!]
   tagIds: [Int!]
 }

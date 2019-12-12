@@ -5,7 +5,7 @@ import { Tag, Button, Popover } from 'antd';
 import { TooltipPlacement } from 'antd/lib/tooltip';
 
 import { Tag as TagEntry } from '@leaa/common/src/entrys';
-import { TagSearchBox } from '@leaa/dashboard/src/components';
+import { TagSearchBox, Rcon } from '@leaa/dashboard/src/components';
 
 import { QuickCreateTagButton } from './_components/QuickCreateTagButton/QuickCreateTagButton';
 
@@ -109,7 +109,7 @@ export const SelectTagId = forwardRef((props: IProps, ref: React.Ref<any>) => {
             placement={props.placement || 'bottomLeft'}
             overlayClassName={style['popover-overlay']}
           >
-            <Button size="small" icon="plus" className={style['add-tag-button']}>
+            <Button size="small" icon={<Rcon type="ri-plus-line" />} className={style['add-tag-button']}>
               {t('_comp:SelectTagId.addTag')}
             </Button>
           </Popover>

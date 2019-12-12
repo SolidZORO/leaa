@@ -41,4 +41,8 @@ export class Article extends Base {
   @JoinTable()
   @Field(() => [Tag], { nullable: true })
   tags?: Tag[];
+
+  @Column({ nullable: true })
+  @Field(() => Date, { nullable: true })
+  released_at?: Date;
 }

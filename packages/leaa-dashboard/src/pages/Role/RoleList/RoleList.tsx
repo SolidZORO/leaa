@@ -96,7 +96,7 @@ export default (props: IPage) => {
       sortOrder: tableUtil.calcDefaultSortOrder(tablePagination.orderSort, tablePagination.orderBy, 'slug'),
     },
     {
-      title: t('_lang:created_at'),
+      title: t('_lang:createdAt'),
       dataIndex: 'created_at',
       width: 120,
       sorter: true,

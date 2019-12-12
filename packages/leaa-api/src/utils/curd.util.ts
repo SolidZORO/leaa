@@ -2,7 +2,7 @@ import _ from 'lodash';
 import { Repository } from 'typeorm';
 import { loggerUtil } from '@leaa/api/src/utils';
 
-const isOnlyOneField = (args: {}, fieldName: string) => _.keys(args).length === 1 && _.has(args, fieldName);
+const isOneField = (args: {}, fieldName: string) => _.keys(args).length === 1 && _.has(args, fieldName);
 
 const commonUpdate = async (
   repository: Repository<any>,
@@ -71,7 +71,7 @@ const commonDelete = async (repository: Repository<any>, CLS_NAME: string, id: n
 };
 
 export const curdUtil = {
-  isOneField: isOnlyOneField,
+  isOneField,
   commonUpdate,
   commonDelete,
 };

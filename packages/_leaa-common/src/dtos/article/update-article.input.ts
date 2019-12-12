@@ -29,7 +29,7 @@ export class UpdateArticleInput {
 
   @IsOptional()
   @Field(() => Date, { nullable: true })
-  created_at?: Date;
+  released_at?: Date;
 
   @IsOptional()
   @Field(() => [Int], { nullable: true })

@@ -5,6 +5,7 @@ import cx from 'classnames';
 import { useTranslation } from 'react-i18next';
 
 import { Rcon } from '@leaa/dashboard/src/components';
+import { FORMAT_DATA, FORMAT_DATA_TIME } from '@leaa/dashboard/src/constants';
 
 import style from './style.module.less';
 
@@ -22,10 +23,7 @@ export const EntryInfoDate = (props: IProps) => {
 
   const { t } = useTranslation();
 
-  const LABEL_FORMAT = props.format || 'YYYY-MM-DD';
-  const TOOLTIP_FORMAT = 'YYYY-MM-DD HH:mm:ss';
-
-  const buildDateDom = (date: Date | undefined, type: 'created_at' | 'updated_at') => {
+  const buildDateDom = (date: Date | undefined, type: 'createdAt' | 'updatedAt') => {
     const tipsLabel = t(`_lang:${type}`);
     const noDataLabel = t('_lang:noData');
 
@@ -38,8 +36,8 @@ export const EntryInfoDate = (props: IProps) => {
     }
 
     return (
-      <Tooltip title={`${tipsLabel}  ${moment(date).format(TOOLTIP_FORMAT)}`}>
-        {moment(date).format(LABEL_FORMAT)}
+      <Tooltip title={`${tipsLabel}  ${moment(date).format(FORMAT_DATA_TIME)}`}>
+        {moment(date).format(props.format || FORMAT_DATA)}
       </Tooltip>
     );
   };
@@ -54,9 +52,9 @@ export const EntryInfoDate = (props: IProps) => {
 
       {props.date && (
         <div className={style['inner']}>
-          <strong>{buildDateDom(props.date[0], 'created_at')}</strong>
+          <strong>{buildDateDom(props.date[0], 'createdAt')}</strong>
           <span className={style['symbol']}>/</span>
-          <strong>{buildDateDom(props.date[1], 'updated_at')}</strong>
+          <strong>{buildDateDom(props.date[1], 'updatedAt')}</strong>
         </div>
       )}
     </div>

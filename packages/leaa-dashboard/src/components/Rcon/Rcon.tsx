@@ -45,14 +45,18 @@ type IIconType =
   | 'ri-plus-line';
 
 interface IProps extends IconBaseProps {
-  // type: string;
   type: IIconType | string | undefined;
   className?: string;
 }
 
 const iconfontPrefix = 'anticon-';
 
-export const Rcon = forwardRef((props: IProps) => {
+// TIPS: keep this param ref, avoid console warnings!
+//
+// if not ref in params, console will be warnings.
+// if use this ref to <CustomIcon />, in children element (e.g. Tooltips), console will be warnings too.
+// so. declare it, but don't use.
+export const Rcon = forwardRef((props: IProps, ref: any) => {
   // ANTD OFFICIAL ICON --> '//at.alicdn.com/t/font_1329669_t1u72b9zk8s.js'
   const CustomIcon: any = createFromIconfontCN({ scriptUrl: localIconfont, extraCommonProps: { ...props } });
 

@@ -51,6 +51,7 @@ export default (props: IPage) => {
   const getArticlesVariables = { ...tablePagination, q, tagName, categoryId };
   const getArticlesQuery = useQuery<{ articles: ArticlesWithPaginationObject }, ArticlesArgs>(GET_ARTICLES, {
     variables: getArticlesVariables,
+    fetchPolicy: 'network-only',
   });
 
   // mutation
@@ -116,7 +117,7 @@ export default (props: IPage) => {
       ),
     },
     {
-      title: t('_lang:created_at'),
+      title: t('_lang:createdAt'),
       dataIndex: 'created_at',
       width: 120,
       sorter: true,

@@ -92,7 +92,7 @@ export default (props: IPage) => {
           type="primary"
           size="large"
           icon={<Rcon type={UPDATE_BUTTON_ICON} />}
-          className="submit-button"
+          className="g-submit-bar-button"
           loading={updateProductMutation.loading}
           onClick={onSubmit}
         >

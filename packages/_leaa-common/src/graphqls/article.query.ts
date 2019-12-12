@@ -42,6 +42,7 @@ export const GET_ARTICLES = gql`
         }
         user_id
         status
+        released_at
         created_at
         updated_at
       }
@@ -69,6 +70,7 @@ export const GET_ARTICLE = gql`
       }
       user_id
       status
+      released_at
       created_at
       updated_at
     }
@@ -95,6 +97,7 @@ export const GET_ARTICLE_BY_SLUG = gql`
       }
       user_id
       status
+      released_at
       created_at
       updated_at
     }

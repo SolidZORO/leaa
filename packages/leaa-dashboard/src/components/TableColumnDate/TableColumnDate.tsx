@@ -3,6 +3,8 @@ import moment from 'moment';
 import { Tooltip } from 'antd';
 import cx from 'classnames';
 
+import { FORMAT_DATA, FORMAT_DATA_TIME } from '@leaa/dashboard/src/constants';
+
 import style from './style.module.less';
 
 interface IProps {
@@ -15,8 +17,6 @@ interface IProps {
 }
 
 export const TableColumnDate = (props: IProps) => {
-  const FORMAT = props.format || 'YYYY-MM-DD';
-
   return (
     <div
       className={cx(style['wrapper'], props.className, {
@@ -24,9 +24,9 @@ export const TableColumnDate = (props: IProps) => {
       })}
     >
       {props.date ? (
-        <Tooltip title={moment(props.date).format('YYYY-MM-DD HH:mm:ss')}>
+        <Tooltip title={moment(props.date).format(FORMAT_DATA_TIME)}>
           {props.prefix}
-          {moment(props.date).format(FORMAT)}
+          {moment(props.date).format(props.format || FORMAT_DATA)}
           {props.suffix}
         </Tooltip>
       ) : (

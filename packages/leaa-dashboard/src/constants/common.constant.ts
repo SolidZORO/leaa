@@ -12,3 +12,9 @@ export const SUCCESS_MESSAGE = 'SUCCESS';
 
 export const GQL_ERROR_MESSAGE = 'ERROR (GQL)';
 export const GQL_SUCCESS_MESSAGE = 'COMPLETED (GQL)';
+
+// time
+
+export const FORMAT_DATA_TIME = 'YYYY-MM-DD HH:mm:ss';
+export const FORMAT_DATA = 'YYYY-MM-DD';
+export const FORMAT_TIME = 'HH:mm:ss';

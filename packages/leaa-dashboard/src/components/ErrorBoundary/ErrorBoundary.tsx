@@ -2,7 +2,8 @@ import React from 'react';
 import queryString from 'query-string';
 import { Button } from 'antd';
 
-import { urlUtil } from '@leaa/dashboard/src/utils';
+import { urlUtil } from '@leaa/dashboard/src/utils/url.util';
+import { Rcon } from '@leaa/dashboard/src/components/Rcon/Rcon';
 
 import style from './style.module.less';
 
@@ -56,7 +57,13 @@ export class ErrorBoundary extends React.Component<IProps, IState> {
         <div className={style['wrapper']}>
           <div className={style['container']}>
             <div className={style['title']}>
-              <Button type="primary" shape="circle" icon="disconnect" onClick={this.onGoToHome} />
+              <Button
+                type="primary"
+                shape="circle"
+                icon={<Rcon type="ri-arrow-left-line" />}
+                onClick={this.onGoToHome}
+                className={style['goto-home-button']}
+              />
               <strong>Server Error</strong>
             </div>
 
@@ -64,7 +71,7 @@ export class ErrorBoundary extends React.Component<IProps, IState> {
               <code>{JSON.stringify(this.state.errorInfo)}</code>
               <Button
                 shape="circle"
-                icon="close"
+                icon={<Rcon type="ri-close-line" />}
                 size="small"
                 onClick={this.onGoToHome}
                 className={style['close-error-info']}

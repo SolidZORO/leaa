@@ -102,7 +102,7 @@ export default (props: IPage) => {
       ),
     },
     {
-      title: t('_lang:created_at'),
+      title: t('_lang:createdAt'),
       dataIndex: 'created_at',
       sorter: true,
       width: 120,

@@ -143,7 +143,7 @@ export default (props: IPage) => {
       render: (text: string, record: Product) => <span>{record.brands?.length ? record.brands[0].name : '----'}</span>,
     },
     {
-      title: t('_lang:created_at'),
+      title: t('_lang:createdAt'),
       dataIndex: 'created_at',
       width: 120,
       sorter: true,

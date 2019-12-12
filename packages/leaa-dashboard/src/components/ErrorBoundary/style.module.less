@@ -33,16 +33,16 @@
   font-family: @code-family;
   font-size: 80%;
   display: block;
-  //width: 100%;
   max-width: 640px;
   text-align: center;
   background-color: #f9f9f9;
-  padding: 20px;
+  padding: 50px 30px;
   border-radius: 3px;
   border: 1px solid #f3f3f3;
 
   code {
     font-family: @code-family;
+    line-height: 1;
   }
 
   .close-error-info {
@@ -50,9 +50,17 @@
     right: -10px;
     top: -10px;
 
-    i {
-      margin-top: 4px;
+    span {
+      display: inline-block;
+      margin-top: 3px;
     }
+  }
+}
+
+.goto-home-button {
+  svg {
+    font-size: 20px;
+    margin-top: 2px;
   }
 }
 
