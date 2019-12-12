@@ -1,85 +1,94 @@
-import React from 'react';
 import cx from 'classnames';
+import React, { useEffect, forwardRef, useImperativeHandle } from 'react';
 import { Col, Form, Input, Row } from 'antd';
-import { withTranslation } from 'react-i18next';
-import { FormComponentProps } from 'antd/lib/form';
+
+import { useTranslation } from 'react-i18next';
 
 import { Ax } from '@leaa/common/src/entrys';
-import { ITfn } from '@leaa/dashboard/src/interfaces';
+import { messageUtil } from '@leaa/dashboard/src/utils';
+import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
+import { UpdateAxInput } from '@leaa/common/src/dtos/ax';
 
-import { FormCard, SwitchNumber, EntryInfoDate } from '@leaa/dashboard/src/components';
+import { FormCard, EntryInfoDate, SwitchNumber } from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';
 
-interface IFormProps extends FormComponentProps {
-  className?: string;
+interface IProps {
   item?: Ax;
+  className?: string;
   loading?: boolean;
 }
 
-type IProps = IFormProps & ITfn;
+export const AxInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
+  const { t } = useTranslation();
+  const [form] = Form.useForm();
 
-class AxInfoFormInner extends React.PureComponent<IProps> {
-  constructor(props: IProps) {
-    super(props);
-  }
+  const onValidateForm = async (): IOnValidateFormResult<UpdateAxInput> => {
+    try {
+      return await form.validateFields();
+    } catch (error) {
+      return messageUtil.error(error.errorFields[0]?.errors[0]);
+    }
+  };
 
-  render() {
-    const { t } = this.props;
+  const onUpdateForm = (item?: Ax) => {
+    if (!item) return undefined;
 
-    const { props } = this;
-    const { getFieldDecorator } = this.props.form;
+    // if APIs return error, do not flush out edited data
+    if (form.getFieldValue('updated_at') && !item.updated_at) return undefined;
 
-    // title={t('_page:Ax.Component.articleInfo')}
-    return (
-      <div className={cx(style['wrapper'], props.className)}>
-        <FormCard
-          title={t('_page:Ax.Component.axInfo')}
-          extra={<EntryInfoDate date={props.item && [props.item.created_at, props.item.updated_at]} />}
-        >
-          <Form className={cx('g-form--zero-margin-bottom', style['form-wrapper'])}>
-            <Row gutter={16} className={style['form-row']}>
-              <Col xs={24} sm={14}>
-                <Form.Item label={t('_lang:title')}>
-                  {getFieldDecorator('title', {
-                    initialValue: props.item ? props.item.title : undefined,
-                    rules: [{ required: true }],
-                  })(<Input placeholder={t('_lang:title')} />)}
-                </Form.Item>
-              </Col>
+    // update was successful, keeping the form data and APIs in sync.
+    if (form.getFieldValue('updated_at') !== item.updated_at) {
+      form.setFieldsValue(item);
+    }
 
-              <Col xs={24} sm={6}>
-                <Form.Item label={t('_lang:slug')}>
-                  {getFieldDecorator('slug', {
-                    initialValue: props.item ? props.item.slug : undefined,
-                    rules: [{ required: true }],
-                  })(<Input placeholder={t('_lang:slug')} />)}
-                </Form.Item>
-              </Col>
+    return undefined;
+  };
 
-              <Col xs={24} sm={4}>
-                <Form.Item label={t('_lang:status')}>
-                  {getFieldDecorator('status', {
-                    initialValue: props.item ? Number(props.item.status) : 0,
-                  })(<SwitchNumber />)}
-                </Form.Item>
-              </Col>
+  useEffect(() => onUpdateForm(props.item), [form, props.item]);
 
-              <Col xs={24}>
-                <Form.Item label={t('_lang:description')}>
-                  {getFieldDecorator('description', {
-                    initialValue: props.item ? props.item.description : undefined,
-                    rules: [],
-                  })(<Input.TextArea rows={1} placeholder={t('_lang:description')} />)}
-                </Form.Item>
-              </Col>
-            </Row>
-          </Form>
-        </FormCard>
-      </div>
-    );
-  }
-}
+  useImperativeHandle(ref, () => ({ form, onValidateForm }));
 
-// @ts-ignore
-export const AxInfoForm = withTranslation()(Form.create<IFormProps>()(AxInfoFormInner));
+  return (
+    <div className={cx(style['wrapper'], props.className)}>
+      <FormCard
+        title={t('_page:Ax.axInfo')}
+        extra={<EntryInfoDate date={props.item && [props.item.created_at, props.item.updated_at]} />}
+      >
+        <Form form={form} layout="vertical">
+          <Row gutter={16} className={style['form-row']}>
+            <Col xs={24} sm={6}>
+              <Form.Item name="title" rules={[]} label={t('_lang:title')}>
+                <Input placeholder={t('_lang:title')} />
+              </Form.Item>
+            </Col>
+
+            <Col xs={24} sm={6}>
+              <Form.Item name="slug" rules={[]} label={t('_lang:slug')}>
+                <Input placeholder={t('_lang:slug')} />
+              </Form.Item>
+            </Col>
+            <Col xs={24} sm={6}>
+              <Form.Item
+                name="status"
+                normalize={e => e && Number(e)}
+                rules={[{ required: true }]}
+                label={t('_lang:status')}
+              >
+                <SwitchNumber />
+              </Form.Item>
+            </Col>
+          </Row>
+
+          <Row gutter={16} className={style['form-row']}>
+            <Col xs={24}>
+              <Form.Item name="description" rules={[]} label={t('_lang:description')}>
+                <Input.TextArea rows={2} placeholder={t('_lang:description')} />
+              </Form.Item>
+            </Col>
+          </Row>
+        </Form>
+      </FormCard>
+    </div>
+  );
+});

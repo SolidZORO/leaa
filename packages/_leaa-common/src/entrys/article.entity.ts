@@ -24,7 +24,7 @@ export class Article extends Base {
   @Field(() => String, { nullable: true })
   description?: string;
 
-  @Column({ type: 'text', nullable: true })
+  @Column({ type: 'mediumtext', nullable: true })
   @Field(() => String, { nullable: true })
   content?: string;
 

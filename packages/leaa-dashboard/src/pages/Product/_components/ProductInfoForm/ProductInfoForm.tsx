@@ -56,23 +56,19 @@ export const ProductInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =
   return (
     <div className={cx(style['wrapper'], props.className)}>
       <FormCard
-        title={t('_page:Product.Component.productInfo')}
+        title={t('_page:Product.productInfo')}
         extra={<EntryInfoDate date={props.item && [props.item.created_at, props.item.updated_at]} />}
       >
-        <Form form={form} name="infoForm" layout="vertical">
+        <Form form={form} layout="vertical">
           <Row gutter={16} className={style['form-row']}>
             <Col xs={24} sm={8}>
-              <Form.Item name="name" rules={[{ required: true }]} label={t('_page:Product.Component.productName')}>
-                <Input placeholder={t('_page:Product.Component.productName')} />
+              <Form.Item name="name" rules={[{ required: true }]} label={t('_page:Product.productName')}>
+                <Input placeholder={t('_page:Product.productName')} />
               </Form.Item>
             </Col>
 
             <Col xs={24} sm={8}>
-              <Form.Item
-                name="fullname"
-                rules={[{ required: true }]}
-                label={t('_page:Product.Component.productFullname')}
-              >
+              <Form.Item name="fullname" rules={[{ required: true }]} label={t('_page:Product.productFullname')}>
                 <Input placeholder={t('_lang:fullname')} />
               </Form.Item>
             </Col>
@@ -88,7 +84,7 @@ export const ProductInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =
                 name="status"
                 normalize={e => e && Number(e)}
                 rules={[{ required: true }]}
-                label={t('_page:Product.Component.putOnSale')}
+                label={t('_page:Product.putOnSale')}
               >
                 <SwitchNumber />
               </Form.Item>
@@ -97,20 +93,20 @@ export const ProductInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =
 
           <Row gutter={16} className={style['form-row']}>
             <Col xs={24} sm={4}>
-              <Form.Item name="price" rules={[{ required: true }]} label={t('_page:Product.Component.price')}>
+              <Form.Item name="price" rules={[{ required: true }]} label={t('_page:Product.price')}>
                 <InputNumber className="g-input-number" placeholder={t('_lang:price')} />
               </Form.Item>
             </Col>
 
             <Col xs={24} sm={4}>
-              <Form.Item name="cost_price" rules={[]} label={t('_page:Product.Component.costPrice')}>
-                <InputNumber className="g-input-number" placeholder={t('_page:Product.Component.costPrice')} />
+              <Form.Item name="cost_price" rules={[]} label={t('_page:Product.costPrice')}>
+                <InputNumber className="g-input-number" placeholder={t('_page:Product.costPrice')} />
               </Form.Item>
             </Col>
 
             <Col xs={24} sm={4}>
-              <Form.Item name="market_price" rules={[]} label={t('_page:Product.Component.marketPrice')}>
-                <InputNumber className="g-input-number" placeholder={t('_page:Product.Component.marketPrice')} />
+              <Form.Item name="market_price" rules={[]} label={t('_page:Product.marketPrice')}>
+                <InputNumber className="g-input-number" placeholder={t('_page:Product.marketPrice')} />
               </Form.Item>
             </Col>
 
@@ -119,7 +115,7 @@ export const ProductInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =
                 name="styleIds"
                 normalize={e => e && Number(e)}
                 rules={[{ required: true }]}
-                label={t('_page:Product.Component.style')}
+                label={t('_page:Product.style')}
               >
                 <SelectCategoryIdByTree parentSlug="products" />
               </Form.Item>
@@ -130,7 +126,7 @@ export const ProductInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =
                 name="brandIds"
                 normalize={e => e && Number(e)}
                 rules={[{ required: true }]}
-                label={t('_page:Product.Component.brand')}
+                label={t('_page:Product.brand')}
               >
                 <SelectCategoryIdByTree parentSlug="brands" />
               </Form.Item>

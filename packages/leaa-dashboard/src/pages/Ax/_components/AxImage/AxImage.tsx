@@ -3,19 +3,19 @@ import React, { useRef, forwardRef, useImperativeHandle } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Col, Row } from 'antd';
 
-import { Product } from '@leaa/common/src/entrys';
+import { Ax } from '@leaa/common/src/entrys';
 import { IAttachmentBoxRef } from '@leaa/common/src/interfaces';
 import { AttachmentBox, FormCard } from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';
 
 interface IProps {
-  item?: Product;
+  item?: Ax;
   className?: string;
   loading?: boolean;
 }
 
-export const ProductImage = forwardRef((props: IProps, ref: React.Ref<any>) => {
+export const AxImage = forwardRef((props: IProps, ref: React.Ref<any>) => {
   const { t } = useTranslation();
 
   const bannerMbRef = useRef<IAttachmentBoxRef>(null);
@@ -36,7 +36,7 @@ export const ProductImage = forwardRef((props: IProps, ref: React.Ref<any>) => {
 
   return (
     <div className={cx(style['wrapper'], props.className)}>
-      <FormCard title={t('_page:Product.productImage')}>
+      <FormCard title={t('_page:Ax.axImage')}>
         <Row gutter={16} className={style['form-row']} ref={ref}>
           <Col xs={24} sm={8}>
             <AttachmentBox
@@ -47,7 +47,7 @@ export const ProductImage = forwardRef((props: IProps, ref: React.Ref<any>) => {
               attachmentParams={{
                 type: 'image',
                 moduleId: Number(props.item?.id),
-                moduleName: 'product',
+                moduleName: 'ax',
                 typeName: 'banner',
                 typePlatform: 'mb',
               }}
@@ -63,7 +63,7 @@ export const ProductImage = forwardRef((props: IProps, ref: React.Ref<any>) => {
               attachmentParams={{
                 type: 'image',
                 moduleId: Number(props.item?.id),
-                moduleName: 'product',
+                moduleName: 'ax',
                 typeName: 'gallery',
                 typePlatform: 'mb',
               }}
@@ -81,7 +81,7 @@ export const ProductImage = forwardRef((props: IProps, ref: React.Ref<any>) => {
               attachmentParams={{
                 type: 'image',
                 moduleId: Number(props.item?.id),
-                moduleName: 'product',
+                moduleName: 'ax',
                 typeName: 'banner',
                 typePlatform: 'pc',
               }}
@@ -97,7 +97,7 @@ export const ProductImage = forwardRef((props: IProps, ref: React.Ref<any>) => {
               attachmentParams={{
                 type: 'image',
                 moduleId: Number(props.item?.id),
-                moduleName: 'product',
+                moduleName: 'ax',
                 typeName: 'gallery',
                 typePlatform: 'pc',
               }}

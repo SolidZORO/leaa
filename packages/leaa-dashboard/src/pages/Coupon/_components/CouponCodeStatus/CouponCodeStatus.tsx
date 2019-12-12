@@ -24,7 +24,7 @@ export const CouponCodeStatus = (props: IProps) => {
       <FormCard
         title={
           <div className={style['form-card-wrapper']}>
-            <div className={style['coupon-title']}>{t('_page:Coupon.Component.redeemToUser')}</div>
+            <div className={style['coupon-title']}>{t('_page:Coupon.redeemToUser')}</div>
 
             {props.item && props.item.code && !props.item.user_id && (
               <div className={style['redeem-coupon-to-use-button']}>

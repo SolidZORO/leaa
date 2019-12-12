@@ -32,7 +32,7 @@ export const LoginForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
 
   return (
     <div className={cx(style['wrapper'], props.className)}>
-      <Form form={form} name="infoForm" layout="vertical" initialValues={initialValues}>
+      <Form form={form} layout="vertical" initialValues={initialValues}>
         <Row gutter={16} className={style['form-row']}>
           <Col xs={24} sm={12}>
             <Form.Item

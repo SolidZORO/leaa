@@ -68,7 +68,7 @@ class PromoInfoFormInner extends React.PureComponent<IProps, IState> {
     return (
       <div className={cx(style['wrapper'], props.className)}>
         <FormCard
-          title={t('_page:Promo.Component.promoInfo')}
+          title={t('_page:Promo.promoInfo')}
           extra={<EntryInfoDate date={props.item && [props.item.created_at, props.item.updated_at]} />}
         >
           <Form className={cx('g-form--zero-margin-bottom', style['form-wrapper'])}>
@@ -83,7 +83,7 @@ class PromoInfoFormInner extends React.PureComponent<IProps, IState> {
               </Col>
 
               <Col xs={24} sm={3}>
-                <Form.Item label={t('_page:Promo.Component.amount')}>
+                <Form.Item label={t('_page:Promo.amount')}>
                   {getFieldDecorator('amount', {
                     initialValue: props.item ? props.item.amount : 0,
                     rules: [{ required: true }],
@@ -92,7 +92,7 @@ class PromoInfoFormInner extends React.PureComponent<IProps, IState> {
               </Col>
 
               <Col xs={24} sm={3}>
-                <Form.Item label={t('_page:Promo.Component.overAmount')}>
+                <Form.Item label={t('_page:Promo.overAmount')}>
                   {getFieldDecorator('over_amount', {
                     initialValue: props.item ? props.item.over_amount : 0,
                     rules: [{ required: true }],
@@ -120,7 +120,7 @@ class PromoInfoFormInner extends React.PureComponent<IProps, IState> {
               </Col>
 
               <Col xs={24} sm={3}>
-                <Form.Item label={t('_page:Promo.Component.redeemedQuantity')}>
+                <Form.Item label={t('_page:Promo.redeemedQuantity')}>
                   {getFieldDecorator('redeemed_quantity', {
                     initialValue:
                       props.item && typeof props.item.redeemed_quantity !== 'undefined'
@@ -151,7 +151,7 @@ class PromoInfoFormInner extends React.PureComponent<IProps, IState> {
                   colon={false}
                   label={
                     <span className={style['available-date-row']}>
-                      <strong>{t('_page:Promo.Component.availableDate')} : </strong>
+                      <strong>{t('_page:Promo.availableDate')} : </strong>
                       <em>
                         {moment(this.state.timeRange[0]).format(AVAILABLE_DATE_TIPS_FORMAT)} ~{' '}
                         {moment(this.state.timeRange[1]).format(AVAILABLE_DATE_TIPS_FORMAT)}

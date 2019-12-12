@@ -90,7 +90,7 @@ export default (props: IPage) => {
       render: (text: string, record: TagEntry) => <Link to={`${props.route.path}/${record.id}`}>{record.name}</Link>,
     },
     {
-      title: t('_page:Tag.Component.count'),
+      title: t('_page:Tag.count'),
       dataIndex: 'count',
       sorter: true,
       width: 150,

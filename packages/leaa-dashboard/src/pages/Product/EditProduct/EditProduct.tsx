@@ -23,7 +23,7 @@ export default (props: IPage) => {
 
   // ref
   const infoFormRef = useRef<ICommenFormRef<UpdateProductInput>>(null);
-  const productImageRef = useRef<{ onUpdateAllAttachments: () => void }>(null);
+  const imageRef = useRef<{ onUpdateAllAttachments: () => void }>(null);
 
   const [productTags, setProductTags] = useState<Tag[]>();
 
@@ -53,6 +53,8 @@ export default (props: IPage) => {
 
     await setSubmitVariables({ id: Number(id), product: submitData });
     await updateProductMutate();
+
+    await imageRef.current?.onUpdateAllAttachments();
   };
 
   const onChangeSelectedTagsCallback = (tags: Tag[]) => setProductTags(tags);
@@ -71,7 +73,7 @@ export default (props: IPage) => {
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
       <ProductInfoForm ref={infoFormRef} item={getProductQuery.data?.product} />
-      <ProductImage item={getProductQuery.data?.product} ref={productImageRef} />
+      <ProductImage item={getProductQuery.data?.product} ref={imageRef} />
 
       <div className={style['select-tag-id-wrapper']}>
         <SelectTagId

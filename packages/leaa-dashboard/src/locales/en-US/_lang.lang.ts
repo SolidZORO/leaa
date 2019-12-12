@@ -79,4 +79,9 @@ export default {
   createdSuccessfully: 'Created Successfully',
   updatedSuccessfully: 'Updated Successfully',
   deletedSuccessfully: 'Deleted Successfully',
+  //
+  bannerMb: 'Banner Mb',
+  bannerPc: 'Banner PC',
+  galleryMb: 'Gallery Mb',
+  galleryPc: 'Gallery PC',
 };

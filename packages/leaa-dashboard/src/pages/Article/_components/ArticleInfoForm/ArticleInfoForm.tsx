@@ -54,13 +54,13 @@ export const ArticleInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =
 
   return (
     <div className={cx(style['wrapper'], props.className)}>
-      <Form form={form} name="infoForm" layout="vertical" className={style['form--title-wrapper']}>
+      <Form form={form} layout="vertical" className={style['form--title-wrapper']}>
         <Form.Item name="title" rules={[{ required: true }]}>
           <Input size="large" placeholder={t('_lang:title')} />
         </Form.Item>
       </Form>
 
-      <Form form={form} name="infoForm" layout="inline" hideRequiredMark className={style['form--slug-wrapper']}>
+      <Form form={form} layout="inline" hideRequiredMark className={style['form--slug-wrapper']}>
         <div className={style['block--slug']}>
           <Form.Item name="slug" rules={[]} className={style['item--slug']}>
             <Input

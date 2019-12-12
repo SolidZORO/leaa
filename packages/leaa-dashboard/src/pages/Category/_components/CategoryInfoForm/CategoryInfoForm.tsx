@@ -43,7 +43,7 @@ class CategoryInfoFormInner extends React.PureComponent<IProps> {
     return (
       <div className={cx(style['wrapper'], props.className)}>
         <FormCard
-          title={t('_page:Category.Component.categoryInfo')}
+          title={t('_page:Category.categoryInfo')}
           extra={<EntryInfoDate date={props.item && [props.item.created_at, props.item.updated_at]} />}
         >
           <Form className={cx('g-form--zero-margin-bottom', style['form-wrapper'])}>

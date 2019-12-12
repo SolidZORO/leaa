@@ -33,10 +33,10 @@ class UserInfoFormInner extends React.PureComponent<IProps> {
     return (
       <div className={cx(style['wrapper'], props.className)}>
         <FormCard
-          // title={t('_page:User.Component.userInfo')}
+          // title={t('_page:User.userInfo')}
           title={
             <>
-              {t('_page:User.Component.userInfo')}{' '}
+              {t('_page:User.userInfo')}{' '}
               {props.item && props.item.is_admin ? (
                 <Rcon type="ri-vip-crown-2-line" className={style['is-admin-icon']} />
               ) : null}

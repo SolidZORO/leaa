@@ -96,13 +96,13 @@ export default (props: IPage) => {
       render: (id: string) => <TableColumnId id={id} link={`${props.route.path}/${id}`} />,
     },
     {
-      title: t('_page:Product.Component.banner'),
+      title: t('_page:Product.banner'),
       width: 80,
       dataIndex: 'banner',
       render: (text: string, record: Product) => <TableColumnImage url={record.attachments?.bannerMbList[0]?.url} />,
     },
     {
-      title: t('_page:Product.Component.productName'),
+      title: t('_page:Product.productName'),
       dataIndex: 'name',
       sorter: true,
       sortOrder: tableUtil.calcDefaultSortOrder(tablePagination.orderSort, tablePagination.orderBy, 'name'),
@@ -131,13 +131,13 @@ export default (props: IPage) => {
       render: (text: string, record: Product) => <PriceTag amount={record?.price} size="small" />,
     },
     {
-      title: t('_page:Product.Component.style'),
+      title: t('_page:Product.style'),
       dataIndex: 'style',
       width: 100,
       render: (text: string, record: Product) => <span>{record.styles?.length ? record.styles[0].name : '----'}</span>,
     },
     {
-      title: t('_page:Product.Component.brand'),
+      title: t('_page:Product.brand'),
       dataIndex: 'brand',
       width: 100,
       render: (text: string, record: Product) => <span>{record.brands?.length ? record.brands[0].name : '----'}</span>,
@@ -151,7 +151,7 @@ export default (props: IPage) => {
       render: (text: string) => <TableColumnDate date={text} size="small" />,
     },
     {
-      title: t('_page:Product.Component.putOnSale'),
+      title: t('_page:Product.putOnSale'),
       dataIndex: 'status',
       width: i18n.language.includes('zh') ? 70 : 110,
       sorter: true,
@@ -254,7 +254,7 @@ export default (props: IPage) => {
             onChange={v => onFilter({ field: 'styleId', value: v })}
             value={styleId || undefined}
             parentSlug="products"
-            placeholder={t('_page:Product.Component.style')}
+            placeholder={t('_page:Product.style')}
           />
 
           <SelectCategoryIdByTree
@@ -263,7 +263,7 @@ export default (props: IPage) => {
             onChange={(v: number | number[]) => onFilter({ field: 'brandId', value: v })}
             value={brandId || undefined}
             parentSlug="brands"
-            placeholder={t('_page:Product.Component.brand')}
+            placeholder={t('_page:Product.brand')}
           />
 
           <SearchInput

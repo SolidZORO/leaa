@@ -33,7 +33,7 @@ class PermissionInfoFormInner extends React.PureComponent<IProps> {
     return (
       <div className={cx(style['wrapper'], props.className)}>
         <FormCard
-          title={t('_page:Permission.Component.permissionInfo')}
+          title={t('_page:Permission.permissionInfo')}
           extra={<EntryInfoDate date={props.item && [props.item.created_at, props.item.updated_at]} />}
         >
           <Form className={cx('g-form--zero-margin-bottom', style['form-wrapper'])}>

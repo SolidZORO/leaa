@@ -86,7 +86,7 @@ export default (props: IPage) => {
       render: (id: string) => <TableColumnId id={id} link={`${props.route.path}/${id}`} />,
     },
     {
-      title: t('_page:Promo.Component.promoInfo'),
+      title: t('_page:Promo.promoInfo'),
       dataIndex: 'name',
       render: (text: string, record: Promo) => (
         <CouponItem
@@ -98,7 +98,7 @@ export default (props: IPage) => {
       ),
     },
     {
-      title: `${t('_lang:quantity')} / ${t('_page:Promo.Component.redeemedQuantity')}`,
+      title: `${t('_lang:quantity')} / ${t('_page:Promo.redeemedQuantity')}`,
       dataIndex: 'quantity',
       width: 200,
       render: (text: string, record: Promo) => (

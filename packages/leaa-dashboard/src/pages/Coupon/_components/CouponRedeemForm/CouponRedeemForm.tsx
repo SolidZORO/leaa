@@ -34,18 +34,18 @@ class CouponRedeemFormInner extends React.PureComponent<IProps> {
     return (
       <div className={cx(style['wrapper'], props.className)}>
         <FormCard
-          title={t('_page:Coupon.Component.couponInfo')}
+          title={t('_page:Coupon.couponInfo')}
           extra={<EntryInfoDate date={props.item && [props.item.created_at, props.item.updated_at]} />}
         >
           <Form className={cx('g-form--zero-margin-bottom', style['form-wrapper'])}>
             <Row gutter={16} className={style['form-row']}>
               <Col xs={24} sm={8}>
-                <Form.Item label={t('_page:Coupon.Component.code')}>
+                <Form.Item label={t('_page:Coupon.code')}>
                   {getFieldDecorator('code', {
                     // initialValue: undefined,
                     initialValue: 'Tooltip',
                     rules: [{ required: true }],
-                  })(<Input size="large" placeholder={t('_page:Coupon.Component.code')} />)}
+                  })(<Input size="large" placeholder={t('_page:Coupon.code')} />)}
                 </Form.Item>
               </Col>
 

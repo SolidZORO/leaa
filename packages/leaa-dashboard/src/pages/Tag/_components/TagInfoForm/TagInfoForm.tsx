@@ -33,7 +33,7 @@ class TagInfoFormInner extends React.PureComponent<IProps> {
     return (
       <div className={cx(style['wrapper'], props.className)}>
         <FormCard
-          title={t('_page:Tag.Component.tagInfo')}
+          title={t('_page:Tag.tagInfo')}
           extra={<EntryInfoDate date={props.item && [props.item.created_at, props.item.updated_at]} />}
         >
           <Form className={cx('g-form--zero-margin-bottom', style['form-wrapper'])}>
@@ -58,7 +58,7 @@ class TagInfoFormInner extends React.PureComponent<IProps> {
 
               {props.item && props.item.icon && (
                 <Col xs={24} sm={4}>
-                  <Form.Item label={t('_page:Tag.Component.count')}>
+                  <Form.Item label={t('_page:Tag.count')}>
                     <Input placeholder={t('_lang:count')} value={props.item.count} disabled />
                   </Form.Item>
                 </Col>

@@ -92,7 +92,7 @@ export default (props: IPage) => {
       render: (id: string) => <TableColumnId id={id} link={`${props.route.path}/${id}`} />,
     },
     {
-      title: t('_page:Coupon.Component.couponInfo'),
+      title: t('_page:Coupon.couponInfo'),
       dataIndex: 'code',
       render: (text: string, record: Coupon) => (
         <CouponItem
@@ -104,13 +104,13 @@ export default (props: IPage) => {
       ),
     },
     {
-      title: t('_page:Coupon.Component.redeemUser'),
+      title: t('_page:Coupon.redeemUser'),
       dataIndex: 'user_id',
       width: 100,
       render: (text: string, record: Coupon) => <RedeemCouponToUseButton item={record} />,
     },
     {
-      title: t('_page:Coupon.Component.accessOrder'),
+      title: t('_page:Coupon.accessOrder'),
       dataIndex: 'order_id',
       width: 100,
       render: (text: string, record: Coupon) => <IdTag id={record.order_id} link={`/orders/${record.order_id}`} />,
@@ -195,7 +195,7 @@ export default (props: IPage) => {
         <div className="g-page-card-extra-filter-bar-wrapper">
           <Link to={`${props.route.path}/redeem`}>
             <Button size="small" icon={<Rcon type="ri-swap-box-line" />} type="link" className={style['redeem-button']}>
-              {t('_page:Coupon.Component.redeem')}
+              {t('_page:Coupon.redeem')}
             </Button>
           </Link>
 

@@ -57,7 +57,7 @@ export const RedeemCouponToUseButton = (props: IProps) => {
         icon={null}
         title={
           <div className={style['redeem-popconfirm-container']}>
-            <div className={style['title']}>{t('_page:Coupon.Component.redeemToUser')} :</div>
+            <div className={style['title']}>{t('_page:Coupon.redeemToUser')} :</div>
 
             <div className={style['content']}>
               <UserSearchBox
@@ -77,14 +77,14 @@ export const RedeemCouponToUseButton = (props: IProps) => {
                 type="primary"
                 loading={redeemCouponMutation.loading}
               >
-                {t('_page:Coupon.Component.redeem')}
+                {t('_page:Coupon.redeem')}
               </Button>
             </div>
           </div>
         }
       >
         <Button className={cx(style['redeem-button'])} icon={<Rcon type="ri-swap-box-line" />} size="small" type="link">
-          {t('_page:Coupon.Component.redeem')}
+          {t('_page:Coupon.redeem')}
         </Button>
       </Popconfirm>
     </div>

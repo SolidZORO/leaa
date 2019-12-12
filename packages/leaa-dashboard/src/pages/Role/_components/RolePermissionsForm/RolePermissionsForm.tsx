@@ -56,7 +56,7 @@ class RolePermissionsFormInner extends React.PureComponent<IProps> {
 
     return (
       <div className={cx(style['wrapper'], props.className)}>
-        <FormCard title={t('_page:Role.Component.rolePermissions')}>
+        <FormCard title={t('_page:Role.rolePermissions')}>
           <Form className={cx('g-form--zero-margin-bottom', style['form-wrapper'])}>
             <div className={style['form-row']}>
               {getFieldDecorator('permissionIds', {

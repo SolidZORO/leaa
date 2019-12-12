@@ -82,4 +82,9 @@ export default {
   createdSuccessfully: '创建成功',
   updatedSuccessfully: '更新成功',
   deletedSuccessfully: '删除成功',
+  //
+  bannerMb: '主图 MB',
+  galleryMb: '商品图 MB',
+  bannerPc: '主图 PC',
+  galleryPc: '商品图 PC',
 };

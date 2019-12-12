@@ -1,8 +1,6 @@
 // import _lang from '../_lang.lang';
 
 export default {
-  Component: {
-    userInfo: 'User Info',
-    userRoles: 'User Roles',
-  },
+  userInfo: 'User Info',
+  userRoles: 'User Roles',
 };
