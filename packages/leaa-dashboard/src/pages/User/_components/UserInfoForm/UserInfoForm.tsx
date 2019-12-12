@@ -1,100 +1,116 @@
-import React from 'react';
 import cx from 'classnames';
+import React, { useEffect, forwardRef, useImperativeHandle } from 'react';
 import { Col, Form, Input, Row } from 'antd';
-import { withTranslation } from 'react-i18next';
-import { FormComponentProps } from 'antd/lib/form';
+
+import { useTranslation } from 'react-i18next';
 
 import { User } from '@leaa/common/src/entrys';
-import { ITfn } from '@leaa/dashboard/src/interfaces';
+import { messageUtil } from '@leaa/dashboard/src/utils';
+import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
+import { UpdateUserInput } from '@leaa/common/src/dtos/user';
 
-import { FormCard, SwitchNumber, EntryInfoDate, Rcon } from '@leaa/dashboard/src/components';
+import { FormCard, EntryInfoDate, SwitchNumber, Rcon } from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';
 
-interface IFormProps extends FormComponentProps {
-  className?: string;
+interface IProps {
   item?: User;
+  className?: string;
   loading?: boolean;
 }
 
-type IProps = IFormProps & ITfn;
+export const UserInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
+  const { t } = useTranslation();
+  const [form] = Form.useForm();
 
-class UserInfoFormInner extends React.PureComponent<IProps> {
-  constructor(props: IProps) {
-    super(props);
-  }
+  const onValidateForm = async (): IOnValidateFormResult<UpdateUserInput> => {
+    try {
+      return await form.validateFields();
+    } catch (error) {
+      return messageUtil.error(error.errorFields[0]?.errors[0]);
+    }
+  };
 
-  render() {
-    const { t } = this.props;
+  const onUpdateForm = (item?: User) => {
+    if (!item) return form.setFieldsValue({ status: 0, is_admin: 0 });
 
-    const { props } = this;
-    const { getFieldDecorator } = this.props.form;
+    // if APIs return error, do not flush out edited data
+    if (form.getFieldValue('updated_at') && !item.updated_at) return undefined;
 
-    return (
-      <div className={cx(style['wrapper'], props.className)}>
-        <FormCard
-          // title={t('_page:User.userInfo')}
-          title={
-            <>
-              {t('_page:User.userInfo')}{' '}
-              {props.item && props.item.is_admin ? (
-                <Rcon type="ri-vip-crown-2-line" className={style['is-admin-icon']} />
-              ) : null}
-            </>
-          }
-          extra={<EntryInfoDate date={props.item && [props.item.created_at, props.item.updated_at]} />}
-        >
-          <Form className={cx('g-form--zero-margin-bottom', style['form-wrapper'])}>
-            <Row gutter={16} className={style['form-row']}>
-              <Col xs={24} sm={6}>
-                <Form.Item label={t('_lang:email')}>
-                  {getFieldDecorator('email', {
-                    initialValue: props.item ? props.item.email : undefined,
-                    rules: [{ required: true }, { type: 'email' }],
-                  })(<Input placeholder={t('_lang:email')} />)}
-                </Form.Item>
-              </Col>
+    // update was successful, keeping the form data and APIs in sync.
+    if (form.getFieldValue('updated_at') !== item.updated_at) {
+      form.setFieldsValue(item);
+    }
 
-              <Col xs={24} sm={6}>
-                <Form.Item label={t('_lang:password')}>
-                  {getFieldDecorator('password', {
-                    initialValue: props.item ? props.item.password : undefined,
-                    rules: [{ required: !props.item }, { min: 6 }],
-                  })(<Input placeholder={t('_lang:password')} type="password" minLength={6} />)}
-                </Form.Item>
-              </Col>
+    return undefined;
+  };
 
-              <Col xs={24} sm={4}>
-                <Form.Item label={t('_lang:name')}>
-                  {getFieldDecorator('name', {
-                    initialValue: props.item ? props.item.name : undefined,
-                    rules: [],
-                  })(<Input placeholder={t('_lang:name')} />)}
-                </Form.Item>
-              </Col>
+  useEffect(() => onUpdateForm(props.item), [form, props.item]);
 
-              <Col xs={24} sm={4}>
-                <Form.Item label={t('_lang:status')}>
-                  {getFieldDecorator('status', {
-                    initialValue: props.item ? Number(props.item.status) : 0,
-                  })(<SwitchNumber />)}
-                </Form.Item>
-              </Col>
+  useImperativeHandle(ref, () => ({ form, onValidateForm }));
 
-              <Col xs={24} sm={4}>
-                <Form.Item label={t('_lang:admin')}>
-                  {getFieldDecorator('is_admin', {
-                    initialValue: props.item ? Number(props.item.is_admin) : 0,
-                  })(<SwitchNumber />)}
-                </Form.Item>
-              </Col>
-            </Row>
-          </Form>
-        </FormCard>
-      </div>
-    );
-  }
-}
+  return (
+    <div className={cx(style['wrapper'], props.className)}>
+      <FormCard
+        title={
+          <>
+            {t('_page:User.userInfo')}{' '}
+            {props.item && props.item.is_admin ? (
+              <Rcon type="ri-vip-crown-2-line" className={style['is-admin-icon']} />
+            ) : null}
+          </>
+        }
+        extra={<EntryInfoDate date={props.item && [props.item.created_at, props.item.updated_at]} />}
+      >
+        <Form form={form} layout="vertical">
+          <Row gutter={16} className={style['form-row']}>
+            <Col xs={24} sm={6}>
+              <Form.Item
+                name="email"
+                rules={[{ required: true, type: 'email', min: 6 }]}
+                validateTrigger={['onBlur']}
+                label={t('_lang:email')}
+              >
+                <Input placeholder={t('_lang:email')} />
+              </Form.Item>
+            </Col>
 
-// @ts-ignore
-export const UserInfoForm = withTranslation()(Form.create<IFormProps>()(UserInfoFormInner));
+            <Col xs={24} sm={6}>
+              <Form.Item name="password" rules={[{ required: !props.item }, { min: 6 }]} label={t('_lang:password')}>
+                <Input minLength={6} placeholder={t('_lang:password')} />
+              </Form.Item>
+            </Col>
+
+            <Col xs={24} sm={6}>
+              <Form.Item name="name" rules={[{ required: true }]} label={t('_lang:name')}>
+                <Input placeholder={t('_lang:name')} />
+              </Form.Item>
+            </Col>
+
+            <Col xs={24} sm={3}>
+              <Form.Item
+                name="status"
+                normalize={e => e && Number(e)}
+                rules={[{ required: true }]}
+                label={t('_lang:status')}
+              >
+                <SwitchNumber />
+              </Form.Item>
+            </Col>
+
+            <Col xs={24} sm={3}>
+              <Form.Item
+                name="is_admin"
+                normalize={e => e && Number(e)}
+                rules={[{ required: true }]}
+                label={t('_lang:admin')}
+              >
+                <SwitchNumber />
+              </Form.Item>
+            </Col>
+          </Row>
+        </Form>
+      </FormCard>
+    </div>
+  );
+});

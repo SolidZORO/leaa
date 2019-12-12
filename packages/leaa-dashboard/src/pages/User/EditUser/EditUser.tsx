@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, message } from 'antd';
+import { Button } from 'antd';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
 import { User } from '@leaa/common/src/entrys';
@@ -8,7 +8,7 @@ import { GET_USER, GET_ROLES, UPDATE_USER } from '@leaa/common/src/graphqls';
 import { RolesWithPaginationObject, RolesArgs } from '@leaa/common/src/dtos/role';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { UserArgs, UpdateUserInput } from '@leaa/common/src/dtos/user';
-import { IPage, IKey } from '@leaa/dashboard/src/interfaces';
+import { IPage, ICommenFormRef, ISubmitData } from '@leaa/dashboard/src/interfaces';
 import { messageUtil } from '@leaa/dashboard/src/utils';
 
 import { HtmlMeta, PageCard, SubmitBar, Rcon } from '@leaa/dashboard/src/components';
@@ -23,8 +23,8 @@ export default (props: IPage) => {
   const { id } = props.match.params as { id: string };
 
   // ref
-  const [userInfoFormRef, setUserInfoFormRef] = useState<any>();
-  const [userRoleFormRef, setUserRoleFormRef] = useState<any>();
+  const infoFormRef = useRef<ICommenFormRef<UpdateUserInput>>(null);
+  const userRolesFormRef = useRef<ICommenFormRef<UpdateUserInput>>(null);
 
   // query
   const getUserVariables = { id: Number(id) };
@@ -52,53 +52,23 @@ export default (props: IPage) => {
   });
 
   const onSubmit = async () => {
-    let hasError = false;
-    let submitData: UpdateUserInput = { roleIds: [] };
+    const infoData: ISubmitData<UpdateUserInput> = await infoFormRef.current?.onValidateForm();
+    const userRolesData: ISubmitData<UpdateUserInput> = await userRolesFormRef.current?.onValidateForm();
 
-    userRoleFormRef.props.form.validateFieldsAndScroll(async (err: any, formData: { roleIds: number[] }) => {
-      if (err) {
-        hasError = true;
-        message.error(err[Object.keys(err)[0]].errors[0].message);
+    console.log(userRolesData);
 
-        return;
-      }
+    if (!infoData) return;
+    if (!userRolesData) return;
 
-      submitData.roleIds = formData.roleIds;
-    });
-
-    if (hasError) {
-      return;
-    }
-
-    userInfoFormRef.props.form.validateFieldsAndScroll(async (err: any, formData: User) => {
-      if (err) {
-        hasError = true;
-        message.error(err[Object.keys(err)[0]].errors[0].message);
-
-        return;
-      }
-
-      submitData = {
-        ...submitData,
-        ...formData,
-      };
-    });
-
-    if (hasError) {
-      return;
-    }
-
-    const nextSubmitData = {
-      ...submitVariables,
-      ...{ user: submitData },
+    const submitData: ISubmitData<UpdateUserInput> = {
+      ...infoData,
+      ...userRolesData,
     };
 
-    await setSubmitVariables(nextSubmitData);
-    await updateUserMutate();
+    console.log('ALL', submitData);
 
-    // keep form fields consistent with API
-    userInfoFormRef.props.form.resetFields();
-    userRoleFormRef.props.form.resetFields();
+    await setSubmitVariables({ id: Number(id), user: submitData });
+    await updateUserMutate();
   };
 
   return (
@@ -114,24 +84,20 @@ export default (props: IPage) => {
     >
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
-      <UserInfoForm
-        item={getUserQuery.data && getUserQuery.data.user}
-        loading={getUserQuery.loading}
-        wrappedComponentRef={(inst: unknown) => setUserInfoFormRef(inst)}
-      />
+      <UserInfoForm ref={infoFormRef} item={getUserQuery.data?.user} loading={getUserQuery.loading} />
 
       <UserRolesForm
-        item={getUserQuery.data && getUserQuery.data.user}
+        ref={userRolesFormRef}
+        item={getUserQuery.data?.user}
         loading={getRolesQuery.loading}
-        roles={(getRolesQuery.data && getRolesQuery.data.roles && getRolesQuery.data.roles.items) || []}
-        wrappedComponentRef={(inst: unknown) => setUserRoleFormRef(inst)}
+        roles={getRolesQuery.data?.roles?.items || []}
       />
 
       <SubmitBar>
         <Button
           type="primary"
           size="large"
-          icon={UPDATE_BUTTON_ICON}
+          icon={<Rcon type={UPDATE_BUTTON_ICON} />}
           className="g-submit-bar-button"
           loading={updateUserMutation.loading}
           onClick={onSubmit}

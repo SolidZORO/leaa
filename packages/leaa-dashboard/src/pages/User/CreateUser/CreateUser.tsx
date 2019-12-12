@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { Button, message } from 'antd';
+import React, { useState, useRef } from 'react';
+import { Button } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useMutation } from '@apollo/react-hooks';
 
 import { User } from '@leaa/common/src/entrys';
 import { CreateUserInput } from '@leaa/common/src/dtos/user';
 import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
-import { IPage, IKey } from '@leaa/dashboard/src/interfaces';
+import { IPage, ICommenFormRef, ISubmitData } from '@leaa/dashboard/src/interfaces';
 import { CREATE_USER } from '@leaa/common/src/graphqls';
 import { messageUtil } from '@leaa/dashboard/src/utils';
 
@@ -20,7 +20,7 @@ export default (props: IPage) => {
   const { t } = useTranslation();
 
   // ref
-  const [userInfoFormRef, setUserInfoFormRef] = useState<any>();
+  const infoFormRef = useRef<ICommenFormRef<CreateUserInput>>(null);
 
   // mutation
   const [submitVariables, setSubmitVariables] = useState<{ user: CreateUserInput }>();
@@ -34,31 +34,15 @@ export default (props: IPage) => {
   });
 
   const onSubmit = async () => {
-    let hasError = false;
-    let submitData: CreateUserInput = {} as CreateUserInput;
+    const infoData: ISubmitData<CreateUserInput> = await infoFormRef.current?.onValidateForm();
 
-    userInfoFormRef.props.form.validateFieldsAndScroll(async (err: any, formData: CreateUserInput) => {
-      if (err) {
-        hasError = true;
-        message.error(err[Object.keys(err)[0]].errors[0].message);
+    if (!infoData) return;
 
-        return;
-      }
+    const submitData: ISubmitData<CreateUserInput> = {
+      ...infoData,
+    };
 
-      submitData = {
-        ...submitData,
-        ...formData,
-      };
-    });
-
-    if (hasError) {
-      return;
-    }
-
-    await setSubmitVariables({
-      ...submitVariables,
-      ...{ user: submitData },
-    });
+    await setSubmitVariables({ user: submitData });
     await createUserMutate();
   };
 
@@ -75,7 +59,7 @@ export default (props: IPage) => {
     >
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
-      <UserInfoForm wrappedComponentRef={(inst: unknown) => setUserInfoFormRef(inst)} />
+      <UserInfoForm ref={infoFormRef} />
 
       <SubmitBar>
         <Button

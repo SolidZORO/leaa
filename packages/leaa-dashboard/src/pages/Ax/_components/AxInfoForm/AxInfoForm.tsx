@@ -58,13 +58,13 @@ export const AxInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
         <Form form={form} layout="vertical">
           <Row gutter={16} className={style['form-row']}>
             <Col xs={24} sm={6}>
-              <Form.Item name="title" rules={[]} label={t('_lang:title')}>
+              <Form.Item name="title" rules={[{ required: true }]} label={t('_lang:title')}>
                 <Input placeholder={t('_lang:title')} />
               </Form.Item>
             </Col>
 
             <Col xs={24} sm={6}>
-              <Form.Item name="slug" rules={[]} label={t('_lang:slug')}>
+              <Form.Item name="slug" rules={[{ required: true }]} label={t('_lang:slug')}>
                 <Input placeholder={t('_lang:slug')} />
               </Form.Item>
             </Col>

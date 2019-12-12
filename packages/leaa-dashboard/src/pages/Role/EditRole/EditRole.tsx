@@ -134,7 +134,7 @@ export default (props: IPage) => {
         <Button
           type="primary"
           size="large"
-          icon={UPDATE_BUTTON_ICON}
+          icon={<Rcon type={UPDATE_BUTTON_ICON} />}
           className="g-submit-bar-button"
           loading={updateRoleMutation.loading}
           onClick={onSubmit}
