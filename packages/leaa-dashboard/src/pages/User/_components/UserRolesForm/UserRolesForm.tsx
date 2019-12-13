@@ -24,10 +24,13 @@ interface IProps {
 
 export const UserRolesForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
   const { t } = useTranslation();
+  const rolesLength = Array.isArray(props.roles) ? props.roles.length : 0;
+
   const [form] = Form.useForm();
 
-  const [checkAll, setCheckAll] = useState<boolean>(false);
-  const [indeterminate, setIndeterminate] = useState<boolean>(false);
+  const getRoleIds = (roles: Role[] | undefined): number[] => roles?.map(r => r.id) || [];
+
+  const [roleIds, setRoleIds] = useState<number[]>(getRoleIds(props.item?.roles));
 
   const onValidateForm = async (): IOnValidateFormResult<UpdateUserInput> => {
     try {
@@ -37,47 +40,21 @@ export const UserRolesForm = forwardRef((props: IProps, ref: React.Ref<any>) => 
     }
   };
 
-  const onCheckAllChange = (event: CheckboxChangeEvent): void => {
-    setIndeterminate(false);
-    setCheckAll(event.target.checked);
-    form.setFieldsValue({ roleIds: event.target.checked ? props.roles.map(r => r.id) : [] });
+  const onCheckedAll = (event: CheckboxChangeEvent): void => {
+    const ids = event.target.checked ? props.roles.map(r => r.id) : [];
+
+    setRoleIds(ids);
+    form.setFieldsValue({ roleIds: ids });
   };
 
-  const getUserRoleIds = (userItem: User | undefined): number[] => {
-    // const userRoles = userItem && userItem?.roles;
-    return userItem?.roles?.map(r => r.id) || [];
+  const onChange = (value: CheckboxValueType[]): void => {
+    const ids = value.map(v => Number(v));
+
+    setRoleIds(ids);
+    form.setFieldsValue({ roleIds: ids });
   };
 
-  // TODO v1 checked all error
-  const calcCheckStatus = (selected: number[]) => {
-    if (typeof selected === 'undefined' || typeof props.roles === 'undefined') {
-      return;
-    }
-
-    if (selected.length > 0 && props.roles.length > 0 && selected.length === props.roles.length) {
-      setCheckAll(true);
-      setIndeterminate(false);
-      return;
-    }
-
-    if (selected.length > 0) {
-      setCheckAll(false);
-      setIndeterminate(true);
-      return;
-    }
-
-    setCheckAll(false);
-    setIndeterminate(false);
-  };
-
-  const onChange = (value: CheckboxValueType[]) => {
-    const nextValue = value.map(v => Number(v));
-    form.setFieldsValue({ roleIds: nextValue });
-
-    calcCheckStatus(nextValue);
-  };
-
-  const onUpdateForm = (item?: User) => {
+  const onUpdateForm = (item?: User): void => {
     if (!item) return undefined;
 
     // if APIs return error, do not flush out edited data
@@ -87,25 +64,32 @@ export const UserRolesForm = forwardRef((props: IProps, ref: React.Ref<any>) => 
     if (form.getFieldValue('updated_at') !== item.updated_at) {
       form.setFieldsValue({
         ...item,
-        roleIds: getUserRoleIds(props.item),
+        roleIds: getRoleIds(props.item?.roles),
       });
     }
 
     return undefined;
   };
 
-  useEffect(() => onUpdateForm(props.item), [form, props.item]);
+  const onClacIndeterminate = () => rolesLength > 0 && roleIds.length > 0 && roleIds.length < rolesLength;
+  const onClacChecked = () => rolesLength > 0 && roleIds.length === rolesLength;
 
+  useEffect(() => {
+    if (props.item?.roles) setRoleIds(props.item?.roles?.map(r => r.id));
+  }, [props.item]);
+
+  useEffect(() => onUpdateForm(props.item), [form, props.item]);
   useImperativeHandle(ref, () => ({ form, onValidateForm }));
 
   return (
     <div className={cx(style['wrapper'], props.className)}>
-      <FormCard title={t('_page:User.userRoles')}>
+      <FormCard title={t('_page:User.roleIds')}>
         <Checkbox
-          indeterminate={indeterminate}
-          checked={checkAll}
-          onChange={onCheckAllChange}
+          indeterminate={onClacIndeterminate()}
+          checked={onClacChecked()}
+          onChange={onCheckedAll}
           className={style['check-all']}
+          value={roleIds}
         >
           {t('_lang:checkAll')}
         </Checkbox>

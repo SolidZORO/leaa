@@ -8,10 +8,11 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import { Table } from 'antd';
 
 import { DEFAULT_PAGE_SIZE_OPTIONS, PAGE_CARD_TITLE_CREATE_ICON } from '@leaa/dashboard/src/constants';
-import { GET_ROLES, DELETE_ROLE } from '@leaa/common/src/graphqls';
+import { GET_ROLES, DELETE_ROLE, GET_PERMISSIONS } from '@leaa/common/src/graphqls';
 
 import { Role } from '@leaa/common/src/entrys';
 import { RolesWithPaginationObject, RolesArgs } from '@leaa/common/src/dtos/role';
+import { PermissionsWithPaginationObject, PermissionsArgs } from '@leaa/common/src/dtos/permission';
 import { IPage, IKey, ITablePagination } from '@leaa/dashboard/src/interfaces';
 import { urlUtil, tableUtil, messageUtil } from '@leaa/dashboard/src/utils';
 
@@ -25,6 +26,8 @@ import {
   TableColumnDate,
   TableColumnDeleteButton,
 } from '@leaa/dashboard/src/components';
+
+import { RolePermissionLength } from '../_components/RolePermissionLength/RolePermissionLength';
 
 import style from './style.module.less';
 
@@ -43,6 +46,12 @@ export default (props: IPage) => {
   const getRolesQuery = useQuery<{ roles: RolesWithPaginationObject }, RolesArgs>(GET_ROLES, {
     variables: getRolesVariables,
   });
+
+  const getPermissionsVariables = { pageSize: 9999 };
+  const getPermissionsQuery = useQuery<{ permissions: PermissionsWithPaginationObject }, PermissionsArgs>(
+    GET_PERMISSIONS,
+    { variables: getPermissionsVariables, fetchPolicy: 'network-only' },
+  );
 
   // mutation
   const [deleteRoleMutate, deleteRoleMutation] = useMutation<Role>(DELETE_ROLE, {
@@ -87,7 +96,19 @@ export default (props: IPage) => {
       dataIndex: 'name',
       sorter: true,
       sortOrder: tableUtil.calcDefaultSortOrder(tablePagination.orderSort, tablePagination.orderBy, 'name'),
-      render: (text: string, record: Role) => <Link to={`${props.route.path}/${record.id}`}>{record.name}</Link>,
+      render: (text: string, record: Role) => (
+        <Link to={`${props.route.path}/${record.id}`}>
+          <span>
+            {record.name}{' '}
+            <sup>
+              <RolePermissionLength
+                rolePermissionsLength={record.permissions?.length}
+                allPermissionsLength={getPermissionsQuery.data?.permissions?.items?.length}
+              />
+            </sup>
+          </span>
+        </Link>
+      ),
     },
     {
       title: t('_lang:slug'),

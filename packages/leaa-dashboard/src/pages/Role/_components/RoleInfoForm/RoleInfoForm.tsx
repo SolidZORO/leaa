@@ -1,67 +1,76 @@
-import React from 'react';
 import cx from 'classnames';
+import React, { useEffect, forwardRef, useImperativeHandle } from 'react';
 import { Col, Form, Input, Row } from 'antd';
-import { withTranslation } from 'react-i18next';
-import { FormComponentProps } from 'antd/lib/form';
+
+import { useTranslation } from 'react-i18next';
 
 import { Role } from '@leaa/common/src/entrys';
-import { ITfn } from '@leaa/dashboard/src/interfaces';
+import { messageUtil } from '@leaa/dashboard/src/utils';
+import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
+import { UpdateRoleInput } from '@leaa/common/src/dtos/role';
 
 import { FormCard, EntryInfoDate } from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';
 
-interface IFormProps extends FormComponentProps {
-  className?: string;
+interface IProps {
   item?: Role;
   loading?: boolean;
+  className?: string;
 }
 
-type IProps = IFormProps & ITfn;
+export const RoleInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
+  const { t } = useTranslation();
+  const [form] = Form.useForm();
 
-class RoleInfoFormInner extends React.PureComponent<IProps> {
-  constructor(props: IProps) {
-    super(props);
-  }
+  const onValidateForm = async (): IOnValidateFormResult<UpdateRoleInput> => {
+    try {
+      return await form.validateFields();
+    } catch (error) {
+      return messageUtil.error(error.errorFields[0]?.errors[0]);
+    }
+  };
 
-  render() {
-    const { t } = this.props;
+  const onUpdateForm = (item?: Role) => {
+    if (!item) return undefined;
 
-    const { props } = this;
-    const { getFieldDecorator } = this.props.form;
+    // if APIs return error, do not flush out edited data
+    if (form.getFieldValue('updated_at') && !item.updated_at) return undefined;
 
-    return (
-      <div className={cx(style['wrapper'], props.className)}>
-        <FormCard
-          title={t('_page:Role.roleInfo')}
-          extra={<EntryInfoDate date={props.item && [props.item.created_at, props.item.updated_at]} />}
-        >
-          <Form className={cx('g-form--zero-margin-bottom', style['form-wrapper'])}>
-            <Row gutter={16} className={style['form-row']}>
-              <Col xs={24} sm={6}>
-                <Form.Item label={t('_lang:name')}>
-                  {getFieldDecorator('name', {
-                    initialValue: props.item ? props.item.name : undefined,
-                    rules: [{ required: true }],
-                  })(<Input placeholder={t('_lang:name')} />)}
-                </Form.Item>
-              </Col>
+    // update was successful, keeping the form data and APIs in sync.
+    if (form.getFieldValue('updated_at') !== item.updated_at) {
+      form.setFieldsValue(item);
+    }
 
-              <Col xs={24} sm={6}>
-                <Form.Item label={t('_lang:slug')}>
-                  {getFieldDecorator('slug', {
-                    initialValue: props.item ? props.item.slug : undefined,
-                    rules: [{ required: true }],
-                  })(<Input placeholder={t('_lang:slug')} />)}
-                </Form.Item>
-              </Col>
-            </Row>
-          </Form>
-        </FormCard>
-      </div>
-    );
-  }
-}
+    return undefined;
+  };
 
-// @ts-ignore
-export const RoleInfoForm = withTranslation()(Form.create<IFormProps>()(RoleInfoFormInner));
+  useEffect(() => onUpdateForm(props.item), [form, props.item]);
+
+  useImperativeHandle(ref, () => ({ form, onValidateForm }));
+
+  return (
+    <div className={cx(style['wrapper'], props.className)}>
+      <FormCard
+        title={t('_page:Role.roleInfo')}
+        extra={<EntryInfoDate date={props.item && [props.item.created_at, props.item.updated_at]} />}
+      >
+        <Form form={form} layout="vertical">
+          <Row gutter={16}>
+            <Col xs={24} sm={6}>
+              <Form.Item name="name" rules={[{ required: true }]} label={t('_lang:name')}>
+                <Input placeholder={t('_lang:name')} />
+              </Form.Item>
+            </Col>
+
+            <Col xs={24} sm={6}>
+              <Form.Item name="slug" rules={[{ required: true }]} label={t('_lang:slug')}>
+                <Input placeholder={t('_lang:slug')} />
+              </Form.Item>
+            </Col>
+          </Row>
+        </Form>
+      </FormCard>
+    </div>
+  );
+});

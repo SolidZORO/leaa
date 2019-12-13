@@ -17,6 +17,14 @@ export class ConfigService {
     return Number(this.envConfig.PORT);
   }
 
+  get DEMO_MODE(): boolean {
+    return Boolean(this.envConfig.DEMO_MODE === 'true');
+  }
+
+  get DEBUG_MODE(): boolean {
+    return Boolean(this.envConfig.DEBUG_MODE === 'true');
+  }
+
   get BASE_HOST(): string {
     return this.envConfig.BASE_HOST;
   }
@@ -143,6 +151,9 @@ export class ConfigService {
     const rule = {
       PROTOCOL: envalid.str({ choices: ['http', 'https'], default: 'http' }),
       PORT: envalid.port({ default: 5555 }),
+      //
+      DEMO_MODE: envalid.str({ choices: ['true', 'false'], default: 'false' }),
+      DEBUG_MODE: envalid.str({ choices: ['true', 'false'], default: 'false' }),
       //
       BASE_HOST: envalid.str(),
       PUBLIC_DIR: envalid.str(),

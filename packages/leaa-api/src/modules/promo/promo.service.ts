@@ -29,7 +29,7 @@ export class PromoService {
   async promos(args: IPromosArgs, user?: User): Promise<PromosWithPaginationObject> {
     const nextArgs: IPromosArgs = formatUtil.formatArgs(args);
 
-    const qb = getRepository(Promo).createQueryBuilder();
+    const qb = this.promoRepository.createQueryBuilder();
     qb.select().orderBy(nextArgs.orderBy || 'id', nextArgs.orderSort);
 
     // q

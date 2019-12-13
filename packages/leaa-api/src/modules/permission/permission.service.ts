@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Repository, FindOneOptions, In, getRepository, SelectQueryBuilder } from 'typeorm';
+import { Repository, FindOneOptions, In, SelectQueryBuilder } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { Permission, User } from '@leaa/common/src/entrys';
@@ -10,7 +10,8 @@ import {
   CreatePermissionInput,
   UpdatePermissionInput,
 } from '@leaa/common/src/dtos/permission';
-import { formatUtil, curdUtil, paginationUtil, authUtil, errorUtil } from '@leaa/api/src/utils';
+import { formatUtil, curdUtil, paginationUtil, errorUtil } from '@leaa/api/src/utils';
+import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 
 type IPermissionsArgs = PermissionsArgs & FindOneOptions<Permission>;
 type IPermissionArgs = PermissionArgs & FindOneOptions<Permission>;
@@ -19,12 +20,15 @@ const CLS_NAME = 'PermissionService';
 
 @Injectable()
 export class PermissionService {
-  constructor(@InjectRepository(Permission) private readonly permissionRepository: Repository<Permission>) {}
+  constructor(
+    @InjectRepository(Permission) private readonly permissionRepository: Repository<Permission>,
+    private readonly configService: ConfigService,
+  ) {}
 
   async permissions(args: IPermissionsArgs): Promise<PermissionsWithPaginationObject> {
     const nextArgs: IPermissionsArgs = formatUtil.formatArgs(args);
 
-    const qb = getRepository(Permission).createQueryBuilder();
+    const qb = this.permissionRepository.createQueryBuilder();
     qb.select().orderBy(nextArgs.orderBy || 'created_at', nextArgs.orderSort);
 
     // q
@@ -77,6 +81,11 @@ export class PermissionService {
   }
 
   async updatePermission(id: number, args: UpdatePermissionInput): Promise<Permission | undefined> {
+    if (this.configService.DEMO_MODE && id <= 93) {
+      // eslint-disable-next-line no-param-reassign
+      delete args.slug;
+    }
+
     // prettier-ignore
     // eslint-disable-next-line max-len
     if (curdUtil.isOneField(args, 'status')) return curdUtil.commonUpdate(this.permissionRepository, CLS_NAME, id, args);
@@ -85,7 +94,7 @@ export class PermissionService {
   }
 
   async deletePermission(id: number, user?: User): Promise<Permission | undefined> {
-    if (id <= 84) {
+    if (this.configService.DEMO_MODE && id <= 93) {
       return errorUtil.ERROR({ error: 'Default Permission, PLEASE DONT', user });
     }
 

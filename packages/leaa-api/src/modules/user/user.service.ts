@@ -12,6 +12,7 @@ import {
   UpdateUserInput,
 } from '@leaa/common/src/dtos/user';
 import { RoleService } from '@leaa/api/src/modules/role/role.service';
+import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 import { formatUtil, curdUtil, paginationUtil, authUtil, errorUtil } from '@leaa/api/src/utils';
 import { JwtService } from '@nestjs/jwt';
 
@@ -28,13 +29,14 @@ export class UserService {
     @InjectRepository(Permission) private readonly permissionRepository: Repository<Permission>,
     private readonly roleService: RoleService,
     private readonly jwtService: JwtService,
+    private readonly configService: ConfigService,
   ) {}
 
   async users(args: IUsersArgs, user?: User): Promise<UsersWithPaginationObject> {
     const nextArgs: IUsersArgs = formatUtil.formatArgs(args);
 
     const PRIMARY_TABLE = 'users';
-    const qb = getRepository(User).createQueryBuilder(PRIMARY_TABLE);
+    const qb = this.userRepository.createQueryBuilder(PRIMARY_TABLE);
     qb.select().orderBy(`${PRIMARY_TABLE}.${nextArgs.orderBy || 'id'}`, nextArgs.orderSort);
 
     // relations
@@ -117,7 +119,7 @@ export class UserService {
   async updateUser(id: number, args: UpdateUserInput): Promise<User | undefined> {
     if (curdUtil.isOneField(args, 'status')) return curdUtil.commonUpdate(this.userRepository, CLS_NAME, id, args);
 
-    if (id === 1 && (args.password || args.status)) {
+    if (this.configService.DEMO_MODE && id === 1) {
       return errorUtil.ERROR({ error: 'Default User, PLEASE DONT' });
     }
 
@@ -150,7 +152,7 @@ export class UserService {
   }
 
   async deleteUser(id: number, user?: User): Promise<User | undefined> {
-    if (id <= 3) {
+    if (this.configService.DEMO_MODE && id <= 3) {
       return errorUtil.ERROR({ error: 'Default User, PLEASE DONT', user });
     }
 

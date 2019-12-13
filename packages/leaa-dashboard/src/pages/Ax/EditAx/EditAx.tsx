@@ -70,9 +70,9 @@ export default (props: IPage) => {
     >
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
-      <AxInfoForm item={getAxQuery.data?.ax} loading={getAxQuery.loading} ref={infoFormRef} />
+      <AxInfoForm ref={infoFormRef} item={getAxQuery.data?.ax} loading={getAxQuery.loading} />
 
-      <AxImage item={getAxQuery.data?.ax} ref={imageRef} />
+      <AxImage ref={imageRef} item={getAxQuery.data?.ax} />
 
       <SubmitBar full>
         <Button

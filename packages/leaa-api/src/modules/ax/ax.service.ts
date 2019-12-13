@@ -18,7 +18,7 @@ export class AxService {
   async axs(args: IAxsArgs, user?: User): Promise<AxsWithPaginationObject> {
     const nextArgs = formatUtil.formatArgs(args);
 
-    const qb = getRepository(Ax).createQueryBuilder();
+    const qb = this.axRepository.createQueryBuilder();
     qb.select().orderBy(nextArgs.orderBy || 'created_at', nextArgs.orderSort);
 
     // q

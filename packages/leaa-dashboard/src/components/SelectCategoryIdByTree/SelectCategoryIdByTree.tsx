@@ -71,6 +71,22 @@ export const SelectCategoryIdByTree = forwardRef((props: IProps, ref: React.Ref<
       }
     : {};
 
+  const onCalcValue = () => {
+    if (getCategoriesQuery.data?.categories?.trees?.length) {
+      return value;
+    }
+
+    return undefined;
+  };
+
+  const onCalcTreeData = () => {
+    if (getCategoriesQuery.data?.categories?.trees?.length) {
+      return getCategoriesQuery.data.categories.trees;
+    }
+
+    return [];
+  };
+
   return (
     <div className={cx(style['wrapper'], props.className)}>
       <TreeSelect
@@ -78,10 +94,10 @@ export const SelectCategoryIdByTree = forwardRef((props: IProps, ref: React.Ref<
         {...multipleSelectOption}
         loading={getCategoriesQuery.loading}
         // TIPS: waiting data then select (fix only show number)
-        value={getCategoriesQuery.data?.categories?.trees && value}
+        value={onCalcValue()}
         treeDefaultExpandAll
         dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-        treeData={getCategoriesQuery.data?.categories?.trees}
+        treeData={onCalcTreeData()}
         placeholder={props.placeholder || t('_lang:category')}
         onChange={onChange}
         style={props.style}

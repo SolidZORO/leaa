@@ -2,6 +2,9 @@ export interface IDotEnv {
   PROTOCOL: string;
   PORT: number;
 
+  DEMO_MODE: string;
+  DEBUG_MODE: string;
+
   BASE_HOST: string;
   PUBLIC_DIR: string;
   ATTACHMENT_DIR: string;

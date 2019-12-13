@@ -23,5 +23,5 @@ export class UpdateCategoryInput {
 
   // @IsOptional()
   // @Field(() => Category, { nullable: true })
-  parent?: Category;
+  parent?: Category | null;
 }

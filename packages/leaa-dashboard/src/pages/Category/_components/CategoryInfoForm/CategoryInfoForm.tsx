@@ -1,98 +1,107 @@
-import React from 'react';
 import cx from 'classnames';
 import queryString from 'query-string';
+import React, { useEffect, forwardRef, useImperativeHandle } from 'react';
 import { Col, Form, Input, Row } from 'antd';
-import { withTranslation } from 'react-i18next';
-import { FormComponentProps } from 'antd/lib/form';
+
+import { useTranslation } from 'react-i18next';
 
 import { Category } from '@leaa/common/src/entrys';
-import { ITfn } from '@leaa/dashboard/src/interfaces';
+import { messageUtil } from '@leaa/dashboard/src/utils';
+import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
+import { UpdateCategoryInput } from '@leaa/common/src/dtos/category';
 
-import { FormCard, SelectCategoryIdByTree, EntryInfoDate } from '@leaa/dashboard/src/components';
+import { FormCard, EntryInfoDate, SelectCategoryIdByTree } from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';
 
-interface IFormProps extends FormComponentProps {
-  className?: string;
+interface IProps {
   item?: Category;
   categorys?: Category[];
   loading?: boolean;
+  className?: string;
 }
 
-type IProps = IFormProps & ITfn;
+export const CategoryInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
+  const { t } = useTranslation();
+  const [form] = Form.useForm();
 
-class CategoryInfoFormInner extends React.PureComponent<IProps> {
-  constructor(props: IProps) {
-    super(props);
-  }
+  const parentId = () => {
+    if (props.item) return props.item.parent_id;
 
-  render() {
-    const { t } = this.props;
+    const urlParams = queryString.parse(window.location.search);
 
-    const { props } = this;
-    const { getFieldDecorator } = this.props.form;
+    return urlParams.parent_id || undefined;
+  };
 
-    const parentId = () => {
-      if (props.item) return props.item.parent_id;
+  const onValidateForm = async (): IOnValidateFormResult<UpdateCategoryInput> => {
+    try {
+      return await form.validateFields();
+    } catch (error) {
+      return messageUtil.error(error.errorFields[0]?.errors[0]);
+    }
+  };
 
-      const urlParams = queryString.parse(window.location.search);
+  const onUpdateForm = (item?: Category) => {
+    if (!item) return undefined;
 
-      return urlParams.parent_id || undefined;
-    };
+    // if APIs return error, do not flush out edited data
+    if (form.getFieldValue('updated_at') && !item.updated_at) return undefined;
 
-    return (
-      <div className={cx(style['wrapper'], props.className)}>
-        <FormCard
-          title={t('_page:Category.categoryInfo')}
-          extra={<EntryInfoDate date={props.item && [props.item.created_at, props.item.updated_at]} />}
-        >
-          <Form className={cx('g-form--zero-margin-bottom', style['form-wrapper'])}>
-            <Row gutter={16} className={style['form-row']}>
-              <Col xs={24} sm={6}>
-                <Form.Item label={`${t('_lang:parent')} ID`}>
-                  {getFieldDecorator('parent_id', {
-                    initialValue: parentId(),
-                    rules: [{ required: true }],
-                    normalize: e => e && Number(e),
-                  })(<SelectCategoryIdByTree />)}
-                </Form.Item>
-              </Col>
+    // update was successful, keeping the form data and APIs in sync.
+    if (form.getFieldValue('updated_at') !== item.updated_at) {
+      form.setFieldsValue({
+        ...item,
+        parent_id: parentId(),
+      });
+    }
 
-              <Col xs={24} sm={6}>
-                <Form.Item label={t('_lang:name')}>
-                  {getFieldDecorator('name', {
-                    initialValue: props.item ? props.item.name : undefined,
-                    rules: [{ required: true }],
-                  })(<Input placeholder={t('_lang:name')} />)}
-                </Form.Item>
-              </Col>
+    return undefined;
+  };
 
-              <Col xs={24} sm={6}>
-                <Form.Item label={t('_lang:slug')}>
-                  {getFieldDecorator('slug', {
-                    initialValue: props.item ? props.item.slug : undefined,
-                    rules: [{ required: true }],
-                  })(<Input placeholder={t('_lang:slug')} />)}
-                </Form.Item>
-              </Col>
-            </Row>
+  useEffect(() => onUpdateForm(props.item), [form, props.item]);
+  useImperativeHandle(ref, () => ({ form, onValidateForm }));
 
-            <Row gutter={16} className={style['form-row']}>
-              <Col xs={24}>
-                <Form.Item label={t('_lang:description')}>
-                  {getFieldDecorator('description', {
-                    initialValue: props.item ? props.item.description : undefined,
-                    rules: [],
-                  })(<Input.TextArea rows={3} placeholder={t('_lang:description')} />)}
-                </Form.Item>
-              </Col>
-            </Row>
-          </Form>
-        </FormCard>
-      </div>
-    );
-  }
-}
+  return (
+    <div className={cx(style['wrapper'], props.className)}>
+      <FormCard
+        title={t('_page:Category.categoryInfo')}
+        extra={<EntryInfoDate date={props.item && [props.item.created_at, props.item.updated_at]} />}
+      >
+        <Form form={form} layout="vertical">
+          <Row gutter={16} className={style['form-row']}>
+            <Col xs={24} sm={6}>
+              <Form.Item
+                name="parent_id"
+                rules={[{ required: true }]}
+                normalize={e => e && Number(e)}
+                label={`${t('_lang:parent')} ID`}
+              >
+                <SelectCategoryIdByTree />
+              </Form.Item>
+            </Col>
 
-// @ts-ignore
-export const CategoryInfoForm = withTranslation()(Form.create<IFormProps>()(CategoryInfoFormInner));
+            <Col xs={24} sm={6}>
+              <Form.Item name="name" rules={[{ required: true }]} label={t('_lang:name')}>
+                <Input placeholder={t('_lang:name')} />
+              </Form.Item>
+            </Col>
+
+            <Col xs={24} sm={6}>
+              <Form.Item name="slug" rules={[{ required: true }]} label={t('_lang:slug')}>
+                <Input placeholder={t('_lang:slug')} />
+              </Form.Item>
+            </Col>
+          </Row>
+
+          <Row gutter={16} className={style['form-row']}>
+            <Col xs={24}>
+              <Form.Item name="description" rules={[]} label={t('_lang:description')}>
+                <Input.TextArea rows={2} placeholder={t('_lang:description')} />
+              </Form.Item>
+            </Col>
+          </Row>
+        </Form>
+      </FormCard>
+    </div>
+  );
+});

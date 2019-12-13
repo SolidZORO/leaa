@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Repository, FindOneOptions, In, getRepository, SelectQueryBuilder } from 'typeorm';
+import { Repository, FindOneOptions, In } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { Role, Permission, User } from '@leaa/common/src/entrys';
@@ -12,6 +12,7 @@ import {
 } from '@leaa/common/src/dtos/role';
 import { formatUtil, curdUtil, paginationUtil, errorUtil } from '@leaa/api/src/utils';
 import { PermissionService } from '@leaa/api/src/modules/permission/permission.service';
+import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 
 type IRolesArgs = RolesArgs & FindOneOptions<Role>;
 type IRoleArgs = RoleArgs & FindOneOptions<Role>;
@@ -24,22 +25,30 @@ export class RoleService {
     @InjectRepository(Role) private readonly roleRepository: Repository<Role>,
     @InjectRepository(Permission) private readonly permissionRepository: Repository<Permission>,
     private readonly permissionService: PermissionService,
+    private readonly configService: ConfigService,
   ) {}
 
   async roles(args: IRolesArgs): Promise<RolesWithPaginationObject | undefined> {
     const nextArgs = formatUtil.formatArgs(args);
 
-    const qb = getRepository(Role).createQueryBuilder();
+    const PRIMARY_TABLE = 'roles';
+    const qb = this.roleRepository.createQueryBuilder(PRIMARY_TABLE);
     qb.select().orderBy(nextArgs.orderBy || 'id', nextArgs.orderSort);
+
+    // relations
+    qb.leftJoinAndSelect(`${PRIMARY_TABLE}.permissions`, 'permissions');
 
     // q
     if (nextArgs.q) {
-      const aliasName = new SelectQueryBuilder(qb).alias;
+      const qLike = `%${nextArgs.q}%`;
 
       ['name', 'slug'].forEach(key => {
-        qb.orWhere(`${aliasName}.${key} LIKE :${key}`, { [key]: `%${nextArgs.q}%` });
+        qb.andWhere(`${PRIMARY_TABLE}.${key} LIKE :${key}`, { [key]: qLike });
       });
     }
+
+    // order
+    qb.orderBy(`${PRIMARY_TABLE}.${nextArgs.orderBy}`, nextArgs.orderSort);
 
     return paginationUtil.calcQueryBuilderPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
@@ -97,22 +106,19 @@ export class RoleService {
   async updateRole(id: number, args: UpdateRoleInput, user?: User): Promise<Role | undefined> {
     if (curdUtil.isOneField(args, 'status')) return curdUtil.commonUpdate(this.roleRepository, CLS_NAME, id, args);
 
-    if (
-      id === 1 &&
-      ((args.permissionIds && !args.permissionIds.toString()) ||
-        (args.permissionSlugs && !args.permissionSlugs.toString()))
-    )
+    if (this.configService.DEMO_MODE && id === 1) {
       return errorUtil.ERROR({ error: 'Default Role, PLEASE DONT', user });
+    }
 
     const relationArgs: { permissions?: Permission[] } = {};
 
     let permissionObjects;
 
-    if (typeof args.permissionIds !== 'undefined') {
+    if (args.permissionIds && Array.isArray(args.permissionIds)) {
       permissionObjects = await this.permissionRepository.findByIds(args.permissionIds);
     }
 
-    if (typeof args.permissionSlugs !== 'undefined') {
+    if (args.permissionIds && Array.isArray(args.permissionSlugs)) {
       const permissionId = await this.permissionService.permissionSlugsToIds(args.permissionSlugs);
       permissionObjects = await this.permissionRepository.findByIds(permissionId);
     }
@@ -127,7 +133,7 @@ export class RoleService {
   }
 
   async deleteRole(id: number, user?: User): Promise<Role | undefined> {
-    if (id <= 3) {
+    if (this.configService.DEMO_MODE && id <= 3) {
       return errorUtil.ERROR({ error: 'Default Role, PLEASE DONT', user });
     }
 

@@ -82,7 +82,7 @@ export class AttachmentService {
       moduleFilter.type_platform = nextArgs.typePlatform;
     }
 
-    const qb = getRepository(Attachment).createQueryBuilder();
+    const qb = this.attachmentRepository.createQueryBuilder();
     qb.select().orderBy(nextArgs.orderBy || 'created_at', nextArgs.orderSort);
     qb.where(moduleFilter);
 

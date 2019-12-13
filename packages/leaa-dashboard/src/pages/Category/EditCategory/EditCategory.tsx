@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, message } from 'antd';
 import { useQuery, useMutation } from '@apollo/react-hooks';
@@ -11,7 +11,7 @@ import {
   UpdateCategoryInput,
   CategoriesWithPaginationOrTreeObject,
 } from '@leaa/common/src/dtos/category';
-import { IPage, IKey } from '@leaa/dashboard/src/interfaces';
+import { IPage, IKey, ICommenFormRef, ISubmitData } from '@leaa/dashboard/src/interfaces';
 import { messageUtil } from '@leaa/dashboard/src/utils';
 
 import { HtmlMeta, PageCard, SubmitBar, Rcon } from '@leaa/dashboard/src/components';
@@ -25,7 +25,10 @@ export default (props: IPage) => {
   const { id } = props.match.params as { id: string };
 
   // ref
-  const [categoryInfoFormRef, setCategoryInfoFormRef] = useState<any>();
+  const infoFormRef = useRef<ICommenFormRef<UpdateCategoryInput>>(null);
+
+  // ref
+  // const [categoryInfoFormRef, setCategoryInfoFormRef] = useState<any>();
 
   // query
   const getCategoryVariables = { id: Number(id) };
@@ -53,16 +56,16 @@ export default (props: IPage) => {
   });
 
   const onSubmit = async () => {
-    categoryInfoFormRef.props.form.validateFieldsAndScroll(async (err: any, formData: Category) => {
-      if (err) {
-        message.error(err[Object.keys(err)[0]].errors[0].message);
+    const infoData: ISubmitData<UpdateCategoryInput> = await infoFormRef.current?.onValidateForm();
 
-        return;
-      }
+    if (!infoData) return;
 
-      await setSubmitVariables({ id: Number(id), category: formData });
-      await updateCategoryMutate();
-    });
+    const submitData: ISubmitData<UpdateCategoryInput> = {
+      ...infoData,
+    };
+
+    await setSubmitVariables({ id: Number(id), category: submitData });
+    await updateCategoryMutate();
   };
 
   return (
@@ -79,12 +82,10 @@ export default (props: IPage) => {
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
       <CategoryInfoForm
-        item={getCategoryQuery.data && getCategoryQuery.data.category}
-        categorys={
-          getCategoriesQuery.data && getCategoriesQuery.data.categories && getCategoriesQuery.data.categories.items
-        }
+        ref={infoFormRef}
+        item={getCategoryQuery.data?.category}
+        categorys={getCategoriesQuery.data?.categories?.items}
         loading={getCategoryQuery.loading}
-        wrappedComponentRef={(inst: unknown) => setCategoryInfoFormRef(inst)}
       />
 
       <SubmitBar>

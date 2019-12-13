@@ -23,6 +23,23 @@ const CLS_NAME = 'CategoryService';
 export class CategoryService {
   constructor(@InjectRepository(Category) private readonly categoryRepository: Repository<Category>) {}
 
+  rootCategory(children?: any[]) {
+    return {
+      key: '0-0-0-root',
+      id: 0,
+      parent_id: 0,
+      slug: 'root',
+      name: '----',
+      //
+      title: '----',
+      subtitle: 'Root',
+      value: 0,
+      expanded: true,
+      created_at: moment.unix(1318000000).toDate(),
+      children,
+    };
+  }
+
   categoriesByTrees(items: Category[], args?: ICategoriessArgs): CategoryTreeObject[] {
     const appendInfoToItem = (item: Category): Omit<CategoryTreeObject, 'children'> => ({
       ...item,
@@ -49,28 +66,13 @@ export class CategoryService {
 
     if (args && (args.parentId || args.parentSlug)) return result;
 
-    return [
-      {
-        key: '0-0-0-root',
-        id: 0,
-        parent_id: 0,
-        slug: 'root',
-        name: '----',
-        //
-        title: '----',
-        subtitle: 'Root',
-        value: 0,
-        expanded: true,
-        created_at: moment.unix(1318000000).toDate(),
-        children: result,
-      },
-    ];
+    return [this.rootCategory(result)];
   }
 
   async categories(args: ICategoriessArgs): Promise<CategoriesWithPaginationOrTreeObject | undefined> {
     const nextArgs: ICategoriessArgs = formatUtil.formatArgs(args);
 
-    const qb = getRepository(Category).createQueryBuilder();
+    const qb = this.categoryRepository.createQueryBuilder();
     qb.select().orderBy(nextArgs.orderBy || 'created_at', nextArgs.orderSort);
 
     if (nextArgs.q) {
@@ -156,7 +158,7 @@ export class CategoryService {
       if (parent) {
         nextArgs.parent = parent;
       } else {
-        nextArgs.parent = undefined;
+        nextArgs.parent = null;
         nextArgs.parent_id = 0;
       }
     }

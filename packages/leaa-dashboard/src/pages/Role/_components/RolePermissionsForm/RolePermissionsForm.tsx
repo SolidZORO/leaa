@@ -1,80 +1,104 @@
-import React from 'react';
 import cx from 'classnames';
-import { observable } from 'mobx';
-import { observer } from 'mobx-react';
-import { withTranslation } from 'react-i18next';
+import React, { useEffect, useState, forwardRef, useImperativeHandle } from 'react';
 import { Form } from 'antd';
-import { FormComponentProps } from 'antd/lib/form';
+import { CheckboxValueType } from 'antd/lib/checkbox/Group';
+
+import { useTranslation } from 'react-i18next';
 
 import { Role, Permission } from '@leaa/common/src/entrys';
-import { ITfn } from '@leaa/dashboard/src/interfaces';
+import { messageUtil } from '@leaa/dashboard/src/utils';
+import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
+import { UpdateRoleInput } from '@leaa/common/src/dtos/role';
 
-import { FormCard } from '@leaa/dashboard/src/components';
-
+import { FormCard, EntryInfoDate } from '@leaa/dashboard/src/components';
 import { RolePermissionsCheckbox } from '../RolePermissionsCheckbox/RolePermissionsCheckbox';
+import { RolePermissionLength } from '../RolePermissionLength/RolePermissionLength';
 
 import style from './style.module.less';
 
-interface IFormProps extends FormComponentProps {
-  className?: string;
-  item?: Role;
+interface IProps {
   permissions: Permission[];
+  item?: Role;
+  className?: string;
   loading?: boolean;
 }
 
-type IProps = IFormProps & ITfn;
+export const RolePermissionsForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
+  const { t } = useTranslation();
+  const [form] = Form.useForm();
 
-@observer
-class RolePermissionsFormInner extends React.PureComponent<IProps> {
-  @observable checkAll = false;
-  @observable indeterminate = false;
+  const [permissionLength, setPermissionLength] = useState(0);
 
-  constructor(props: IProps) {
-    super(props);
-  }
-
-  componentDidUpdate(prevProps: Readonly<IProps>): void {
-    if (prevProps.item && this.props.item && prevProps.item.permissions !== this.props.item.permissions) {
-      this.props.form.setFieldsValue({ permissionIds: this.getPermissionIds(this.props.item) });
-    }
-  }
-
-  getPermissionIds = (roleItem: Role | undefined): number[] => {
+  const getPermissionIds = (roleItem: Role | undefined): number[] => {
     const rolePermissions = roleItem && roleItem.permissions;
 
     return (rolePermissions && rolePermissions.map(r => r.id)) || [];
   };
 
-  render() {
-    const { props } = this;
+  const onValidateForm = async (): IOnValidateFormResult<UpdateRoleInput> => {
+    try {
+      return await form.validateFields();
+    } catch (error) {
+      return messageUtil.error(error.errorFields[0]?.errors[0]);
+    }
+  };
 
-    if (!props.item) return null;
-    if (!props.permissions) return null;
+  const onUpdateForm = (item?: Role) => {
+    if (!item) return undefined;
 
-    const { t } = props;
-    const { getFieldDecorator } = props.form;
+    // if APIs return error, do not flush out edited data
+    if (form.getFieldValue('updated_at') && !item.updated_at) return undefined;
 
-    return (
-      <div className={cx(style['wrapper'], props.className)}>
-        <FormCard title={t('_page:Role.rolePermissions')}>
-          <Form className={cx('g-form--zero-margin-bottom', style['form-wrapper'])}>
-            <div className={style['form-row']}>
-              {getFieldDecorator('permissionIds', {
-                validateTrigger: ['onBlur'],
-                initialValue: this.getPermissionIds(props.item),
-              })(
-                <RolePermissionsCheckbox
-                  permissionsFlat={(props.permissions && props.permissions.length > 0 && props.permissions) || []}
-                  onChangePermissionIds={permissionIds => props.form.setFieldsValue({ permissionIds })}
-                />,
-              )}
-            </div>
-          </Form>
-        </FormCard>
-      </div>
-    );
-  }
-}
+    // update was successful, keeping the form data and APIs in sync.
+    if (form.getFieldValue('updated_at') !== item.updated_at) {
+      const permissionIds = getPermissionIds(props.item);
 
-// @ts-ignore
-export const RolePermissionsForm = withTranslation()(Form.create<IFormProps>()(RolePermissionsFormInner));
+      form.setFieldsValue({
+        ...item,
+        permissionIds,
+      });
+
+      setPermissionLength(permissionIds.length);
+    }
+
+    return undefined;
+  };
+
+  const onChangePermissionIds = (permissionIds: Array<CheckboxValueType>) => {
+    form.setFieldsValue({ permissionIds });
+
+    setPermissionLength(permissionIds.length);
+  };
+
+  useEffect(() => onUpdateForm(props.item), [form, props.item]);
+
+  useImperativeHandle(ref, () => ({ form, onValidateForm }));
+
+  return (
+    <div className={cx(style['wrapper'], props.className)}>
+      <FormCard
+        title={
+          <span>
+            {t('_page:Role.roleInfo')}{' '}
+            <sup>
+              <RolePermissionLength
+                rolePermissionsLength={permissionLength}
+                allPermissionsLength={props.permissions.length}
+              />
+            </sup>
+          </span>
+        }
+        extra={<EntryInfoDate date={props.item && [props.item.created_at, props.item.updated_at]} />}
+      >
+        <Form form={form} layout="vertical">
+          <Form.Item name="permissionIds" rules={[]} validateTrigger={['onBlur']}>
+            <RolePermissionsCheckbox
+              permissionsFlat={(Array.isArray(props.permissions) && props.permissions) || []}
+              onChangePermissionIds={onChangePermissionIds}
+            />
+          </Form.Item>
+        </Form>
+      </FormCard>
+    </div>
+  );
+});

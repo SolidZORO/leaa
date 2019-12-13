@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, message } from 'antd';
+import { Button } from 'antd';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
 import { Permission } from '@leaa/common/src/entrys';
 import { GET_PERMISSION, UPDATE_PERMISSION } from '@leaa/common/src/graphqls';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { PermissionArgs, UpdatePermissionInput } from '@leaa/common/src/dtos/permission';
-import { IPage, IKey } from '@leaa/dashboard/src/interfaces';
+import { IPage, ICommenFormRef, ISubmitData } from '@leaa/dashboard/src/interfaces';
 import { messageUtil } from '@leaa/dashboard/src/utils';
 
-import { HtmlMeta, PageCard, SubmitBar, Rcon } from '@leaa/dashboard/src/components';
+import { PageCard, HtmlMeta, Rcon, SubmitBar } from '@leaa/dashboard/src/components';
 
 import { PermissionInfoForm } from '../_components/PermissionInfoForm/PermissionInfoForm';
 
@@ -21,7 +21,7 @@ export default (props: IPage) => {
   const { id } = props.match.params as { id: string };
 
   // ref
-  const [permissionInfoFormRef, setPermissionInfoFormRef] = useState<any>();
+  const infoFormRef = useRef<ICommenFormRef<UpdatePermissionInput>>(null);
 
   // query
   const getPermissionVariables = { id: Number(id) };
@@ -31,10 +31,7 @@ export default (props: IPage) => {
   });
 
   // mutation
-  const [submitVariables, setSubmitVariables] = useState<{ id: number; permission: UpdatePermissionInput }>({
-    id: Number(id),
-    permission: {},
-  });
+  const [submitVariables, setSubmitVariables] = useState<{ id: number; permission: UpdatePermissionInput }>();
   const [updatePermissionMutate, updatePermissionMutation] = useMutation<Permission>(UPDATE_PERMISSION, {
     variables: submitVariables,
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
@@ -43,31 +40,16 @@ export default (props: IPage) => {
   });
 
   const onSubmit = async () => {
-    let hasError = false;
-    let submitData: UpdatePermissionInput = {};
+    const infoData: ISubmitData<UpdatePermissionInput> = await infoFormRef.current?.onValidateForm();
 
-    permissionInfoFormRef.props.form.validateFieldsAndScroll((err: any, formData: Permission) => {
-      if (err) {
-        hasError = true;
-        message.error(err[Object.keys(err)[0]].errors[0].message);
+    if (!infoData) return;
 
-        return;
-      }
+    const submitData: ISubmitData<UpdatePermissionInput> = {
+      ...infoData,
+    };
 
-      submitData = formData;
-    });
-
-    if (hasError) {
-      return;
-    }
-
-    const nextSubmitData = { id: Number(id), permission: submitData };
-
-    await setSubmitVariables(nextSubmitData);
+    await setSubmitVariables({ id: Number(id), permission: submitData });
     await updatePermissionMutate();
-
-    // keep form fields consistent with API
-    permissionInfoFormRef.props.form.resetFields();
   };
 
   return (
@@ -84,9 +66,9 @@ export default (props: IPage) => {
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
       <PermissionInfoForm
-        item={getPermissionQuery.data && getPermissionQuery.data.permission}
+        ref={infoFormRef}
+        item={getPermissionQuery.data?.permission}
         loading={getPermissionQuery.loading}
-        wrappedComponentRef={(inst: unknown) => setPermissionInfoFormRef(inst)}
       />
 
       <SubmitBar>

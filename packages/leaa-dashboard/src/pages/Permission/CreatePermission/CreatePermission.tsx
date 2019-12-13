@@ -1,17 +1,15 @@
-import React, { useState } from 'react';
-import { Button, message } from 'antd';
+import React, { useState, useRef } from 'react';
+import { Button } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useMutation } from '@apollo/react-hooks';
 
 import { Permission } from '@leaa/common/src/entrys';
 import { CreatePermissionInput } from '@leaa/common/src/dtos/permission';
-import { IPage, IKey } from '@leaa/dashboard/src/interfaces';
-// eslint-disable-next-line max-len
+import { IPage, ICommenFormRef, ISubmitData } from '@leaa/dashboard/src/interfaces';
 import { CREATE_PERMISSION } from '@leaa/common/src/graphqls';
 import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { messageUtil } from '@leaa/dashboard/src/utils';
-
-import { PageCard, SubmitBar, Rcon } from '@leaa/dashboard/src/components';
+import { PageCard, SubmitBar, Rcon, HtmlMeta } from '@leaa/dashboard/src/components';
 
 import { PermissionInfoForm } from '../_components/PermissionInfoForm/PermissionInfoForm';
 
@@ -21,7 +19,7 @@ export default (props: IPage) => {
   const { t } = useTranslation();
 
   // ref
-  const [permissionInfoFormRef, setPermissionInfoFormRef] = useState<any>();
+  const infoFormRef = useRef<ICommenFormRef<CreatePermissionInput>>(null);
 
   // mutation
   const [submitVariables, setSubmitVariables] = useState<{ permission: CreatePermissionInput }>();
@@ -38,31 +36,15 @@ export default (props: IPage) => {
   );
 
   const onSubmit = async () => {
-    let hasError = false;
-    let submitData: CreatePermissionInput = {} as CreatePermissionInput;
+    const infoData: ISubmitData<CreatePermissionInput> = await infoFormRef.current?.onValidateForm();
 
-    permissionInfoFormRef.props.form.validateFieldsAndScroll(async (err: any, formData: CreatePermissionInput) => {
-      if (err) {
-        hasError = true;
-        message.error(err[Object.keys(err)[0]].errors[0].message);
+    if (!infoData) return;
 
-        return;
-      }
+    const submitData: ISubmitData<CreatePermissionInput> = {
+      ...infoData,
+    };
 
-      submitData = {
-        ...submitData,
-        ...formData,
-      };
-    });
-
-    if (hasError) {
-      return;
-    }
-
-    await setSubmitVariables({
-      ...submitVariables,
-      ...{ permission: submitData },
-    });
+    await setSubmitVariables({ permission: submitData });
     await createPermissionMutate();
   };
 
@@ -75,9 +57,11 @@ export default (props: IPage) => {
         </span>
       }
       className={style['wapper']}
-      loading={createPermissionMutation.loading}
+      loading={false}
     >
-      <PermissionInfoForm wrappedComponentRef={(inst: unknown) => setPermissionInfoFormRef(inst)} />
+      <HtmlMeta title={t(`${props.route.namei18n}`)} />
+
+      <PermissionInfoForm ref={infoFormRef} />
 
       <SubmitBar>
         <Button

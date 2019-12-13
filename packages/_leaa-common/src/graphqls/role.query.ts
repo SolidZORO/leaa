@@ -10,6 +10,10 @@ export const GET_ROLES = gql`
         slug
         created_at
         updated_at
+        permissions {
+          id
+          slug
+        }
       }
     }
   }

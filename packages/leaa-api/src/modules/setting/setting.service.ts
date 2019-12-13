@@ -26,7 +26,7 @@ export class SettingService {
   async settings(args: ISettingsArgs, user?: User): Promise<SettingsWithPaginationObject> {
     const nextArgs = formatUtil.formatArgs(args);
 
-    const qb = getRepository(Setting).createQueryBuilder();
+    const qb = this.settingRepository.createQueryBuilder();
     qb.select()
       .orderBy({ sort: 'ASC' })
       .addOrderBy('id', 'ASC');

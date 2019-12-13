@@ -30,7 +30,7 @@ export class TagService {
   async tags(args: ITagsArgs): Promise<TagsWithPaginationObject> {
     const nextArgs = formatUtil.formatArgs(args);
 
-    const qb = getRepository(Tag).createQueryBuilder();
+    const qb = this.tagRepository.createQueryBuilder();
     qb.select().orderBy(nextArgs.orderBy || 'created_at', nextArgs.orderSort);
 
     if (nextArgs.q) {

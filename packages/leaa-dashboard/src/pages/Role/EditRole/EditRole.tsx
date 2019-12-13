@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, message } from 'antd';
+import { Button } from 'antd';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
 import { Role } from '@leaa/common/src/entrys';
@@ -8,7 +8,7 @@ import { GET_PERMISSIONS, GET_ROLE, UPDATE_ROLE } from '@leaa/common/src/graphql
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { RoleArgs, UpdateRoleInput } from '@leaa/common/src/dtos/role';
 import { PermissionsWithPaginationObject, PermissionsArgs } from '@leaa/common/src/dtos/permission';
-import { IPage, IKey } from '@leaa/dashboard/src/interfaces';
+import { IPage, ICommenFormRef, ISubmitData } from '@leaa/dashboard/src/interfaces';
 import { messageUtil } from '@leaa/dashboard/src/utils';
 
 import { HtmlMeta, PageCard, SubmitBar, Rcon } from '@leaa/dashboard/src/components';
@@ -23,8 +23,8 @@ export default (props: IPage) => {
   const { id } = props.match.params as { id: string };
 
   // ref
-  const [roleInfoFormRef, setRoleInfoFormRef] = useState<any>();
-  const [rolePermissionsFormRef, setRolePermissionsFormRef] = useState<any>();
+  const infoFormRef = useRef<ICommenFormRef<UpdateRoleInput>>(null);
+  const permissionsRef = useRef<ICommenFormRef<UpdateRoleInput>>(null);
 
   // query
   const getRoleVariables = { id: Number(id) };
@@ -53,53 +53,19 @@ export default (props: IPage) => {
   });
 
   const onSubmit = async () => {
-    let hasError = false;
-    let submitData: UpdateRoleInput = { permissionIds: [] };
+    const infoData: ISubmitData<UpdateRoleInput> = await infoFormRef.current?.onValidateForm();
+    const permissionsData: ISubmitData<UpdateRoleInput> = await permissionsRef.current?.onValidateForm();
 
-    rolePermissionsFormRef.props.form.validateFieldsAndScroll((err: any, formData: { permissionIds: number[] }) => {
-      if (err) {
-        hasError = true;
-        message.error(err[Object.keys(err)[0]].errors[0].message);
+    if (!infoData) return;
+    if (!permissionsData || (permissionsData && !Array.isArray(permissionsData.permissionIds))) return;
 
-        return;
-      }
-
-      submitData.permissionIds = formData.permissionIds;
-    });
-
-    if (hasError) {
-      return;
-    }
-
-    roleInfoFormRef.props.form.validateFieldsAndScroll((err: any, formData: Role) => {
-      if (err) {
-        hasError = true;
-        message.error(err[Object.keys(err)[0]].errors[0].message);
-
-        return;
-      }
-
-      submitData = {
-        ...submitData,
-        ...formData,
-      };
-    });
-
-    if (hasError) {
-      return;
-    }
-
-    const nextSubmitData = {
-      ...submitVariables,
-      ...{ role: submitData },
+    const submitData: ISubmitData<UpdateRoleInput> = {
+      ...infoData,
+      ...permissionsData,
     };
 
-    await setSubmitVariables(nextSubmitData);
+    await setSubmitVariables({ id: Number(id), role: submitData });
     await updateRoleMutate();
-
-    // keep form fields consistent with API
-    roleInfoFormRef.props.form.resetFields();
-    rolePermissionsFormRef.props.form.resetFields();
   };
 
   return (
@@ -115,19 +81,13 @@ export default (props: IPage) => {
     >
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
-      <RoleInfoForm
-        item={getRoleQuery.data && getRoleQuery.data.role}
-        loading={getRoleQuery.loading}
-        wrappedComponentRef={(inst: unknown) => setRoleInfoFormRef(inst)}
-      />
+      <RoleInfoForm ref={infoFormRef} item={getRoleQuery.data?.role} loading={getRoleQuery.loading} />
 
       <RolePermissionsForm
-        item={getRoleQuery.data && getRoleQuery.data.role}
+        ref={permissionsRef}
+        item={getRoleQuery.data?.role}
         loading={getRoleQuery.loading}
-        permissions={
-          getPermissionsQuery.data && getPermissionsQuery.data.permissions && getPermissionsQuery.data.permissions.items
-        }
-        wrappedComponentRef={(inst: unknown) => setRolePermissionsFormRef(inst)}
+        permissions={getPermissionsQuery.data?.permissions?.items || []}
       />
 
       <SubmitBar full>
