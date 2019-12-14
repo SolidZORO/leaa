@@ -42,7 +42,10 @@ export default (props: IPage) => {
   const getPermissionsVariables = { ...tablePagination, q };
   const getPermissionsQuery = useQuery<{ permissions: PermissionsWithPaginationObject }, PermissionsArgs>(
     GET_PERMISSIONS,
-    { variables: getPermissionsVariables },
+    {
+      variables: getPermissionsVariables,
+      fetchPolicy: 'network-only',
+    },
   );
 
   // mutation

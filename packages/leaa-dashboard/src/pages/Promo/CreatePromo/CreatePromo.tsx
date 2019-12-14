@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { Button, message } from 'antd';
+import React, { useState, useRef } from 'react';
+import { Button } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useMutation } from '@apollo/react-hooks';
 
 import { Promo } from '@leaa/common/src/entrys';
 import { CreatePromoInput } from '@leaa/common/src/dtos/promo';
-import { IPage, IKey } from '@leaa/dashboard/src/interfaces';
+import { IPage, ICommenFormRef, ISubmitData } from '@leaa/dashboard/src/interfaces';
 import { CREATE_PROMO } from '@leaa/common/src/graphqls';
 import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { messageUtil } from '@leaa/dashboard/src/utils';
@@ -20,7 +20,7 @@ export default (props: IPage) => {
   const { t } = useTranslation();
 
   // ref
-  const [promoInfoFormRef, setPromoInfoFormRef] = useState<any>();
+  const infoFormRef = useRef<ICommenFormRef<CreatePromoInput>>(null);
 
   // mutation
   const [submitVariables, setSubmitVariables] = useState<{ promo: CreatePromoInput }>();
@@ -34,16 +34,17 @@ export default (props: IPage) => {
   });
 
   const onSubmit = async () => {
-    promoInfoFormRef.props.form.validateFieldsAndScroll(async (err: any, formData: CreatePromoInput) => {
-      if (err) {
-        message.error(err[Object.keys(err)[0]].errors[0].message);
+    const infoData: ISubmitData<CreatePromoInput> = await infoFormRef.current?.onValidateForm();
 
-        return;
-      }
+    if (!infoData) return;
 
-      await setSubmitVariables({ promo: formData });
-      await createPromoMutate();
-    });
+    console.log(infoData);
+    const submitData: ISubmitData<CreatePromoInput> = {
+      ...infoData,
+    };
+
+    await setSubmitVariables({ promo: submitData });
+    await createPromoMutate();
   };
 
   return (
@@ -55,11 +56,11 @@ export default (props: IPage) => {
         </span>
       }
       className={style['wapper']}
-      loading={createPromoMutation.loading}
+      loading={false}
     >
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
-      <PromoInfoForm wrappedComponentRef={(inst: unknown) => setPromoInfoFormRef(inst)} />
+      <PromoInfoForm ref={infoFormRef} />
 
       <SubmitBar>
         <Button

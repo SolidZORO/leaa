@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, message } from 'antd';
+import { Button } from 'antd';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
 import { Promo } from '@leaa/common/src/entrys';
 import { GET_PROMO, UPDATE_PROMO } from '@leaa/common/src/graphqls';
-import { UPDATE_BUTTON_ICON, PAGE_CARD_TITLE_CREATE_ICON } from '@leaa/dashboard/src/constants';
+import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { PromoArgs, UpdatePromoInput } from '@leaa/common/src/dtos/promo';
-import { IPage, IKey } from '@leaa/dashboard/src/interfaces';
+import { IPage, ICommenFormRef, ISubmitData } from '@leaa/dashboard/src/interfaces';
 import { messageUtil } from '@leaa/dashboard/src/utils';
 
 import { HtmlMeta, PageCard, SubmitBar, Rcon } from '@leaa/dashboard/src/components';
@@ -21,7 +21,7 @@ export default (props: IPage) => {
   const { id } = props.match.params as { id: string };
 
   // ref
-  const [promoInfoFormRef, setPromoInfoFormRef] = useState<any>();
+  const infoFormRef = useRef<ICommenFormRef<UpdatePromoInput>>(null);
 
   // query
   const getPromoVariables = { id: Number(id) };
@@ -40,22 +40,16 @@ export default (props: IPage) => {
   });
 
   const onSubmit = async () => {
-    let hasError = false;
-    let submitData: UpdatePromoInput = {};
+    const infoData: ISubmitData<UpdatePromoInput> = await infoFormRef.current?.onValidateForm();
 
-    promoInfoFormRef.props.form.validateFieldsAndScroll(async (err: any, formData: UpdatePromoInput) => {
-      if (err) {
-        hasError = true;
-        message.error(err[Object.keys(err)[0]].errors[0].message);
+    if (!infoData) return;
 
-        return;
-      }
+    const submitData: ISubmitData<UpdatePromoInput> = {
+      ...infoData,
+    };
 
-      submitData = formData;
-
-      await setSubmitVariables({ id: Number(id), promo: submitData });
-      await updatePromoMutate();
-    });
+    await setSubmitVariables({ id: Number(id), promo: submitData });
+    await updatePromoMutate();
   };
 
   return (
@@ -71,11 +65,7 @@ export default (props: IPage) => {
     >
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
-      <PromoInfoForm
-        item={getPromoQuery.data && getPromoQuery.data.promo}
-        loading={getPromoQuery.loading}
-        wrappedComponentRef={(inst: unknown) => setPromoInfoFormRef(inst)}
-      />
+      <PromoInfoForm ref={infoFormRef} item={getPromoQuery.data?.promo} loading={getPromoQuery.loading} />
 
       <SubmitBar>
         <Button

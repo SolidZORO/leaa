@@ -52,6 +52,7 @@ export default (props: IPage) => {
   const getProductsVariables = { ...tablePagination, q, tagName, styleId, brandId };
   const getProductsQuery = useQuery<{ products: ProductsWithPaginationObject }, ProductsArgs>(GET_PRODUCTS, {
     variables: getProductsVariables,
+    fetchPolicy: 'network-only',
   });
 
   // mutation

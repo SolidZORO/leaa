@@ -119,7 +119,7 @@ export class UserService {
   async updateUser(id: number, args: UpdateUserInput): Promise<User | undefined> {
     if (curdUtil.isOneField(args, 'status')) return curdUtil.commonUpdate(this.userRepository, CLS_NAME, id, args);
 
-    if (this.configService.DEMO_MODE && id === 1) {
+    if (this.configService.DEMO_MODE && !process.argv.includes('--nuke') && id === 1) {
       return errorUtil.ERROR({ error: 'Default User, PLEASE DONT' });
     }
 
@@ -152,7 +152,7 @@ export class UserService {
   }
 
   async deleteUser(id: number, user?: User): Promise<User | undefined> {
-    if (this.configService.DEMO_MODE && id <= 3) {
+    if (this.configService.DEMO_MODE && !process.argv.includes('--nuke') && id <= 3) {
       return errorUtil.ERROR({ error: 'Default User, PLEASE DONT', user });
     }
 

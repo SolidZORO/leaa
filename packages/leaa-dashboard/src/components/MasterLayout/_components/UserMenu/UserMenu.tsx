@@ -55,7 +55,7 @@ export const UserMenu = (props: IProps): JSX.Element => {
 
       <div className={style['footer']}>
         <Button className={style['logout-button']} block type="ghost" onClick={onLogout}>
-          <Rcon type="poweroff" /> {t('_comp:UserMenu.safelyLogout')}
+          <Rcon type="ri-logout-box-r-line" /> {t('_comp:UserMenu.safelyLogout')}
         </Button>
       </div>
     </div>

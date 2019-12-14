@@ -212,8 +212,9 @@ export const userAddRolesSeed = [
 
 // prettier-ignore
 export const categorySeed: CreateCategoryInput[] = [
-  { parent_id: 0, name: 'Article', description: '文章分类', slug: 'article' },
-  { parent_id: 0, name: 'Help', description: '帮助中心', slug: 'help' },
+  { parent_id: 0, name: 'Article', description: '文章分类', slug: 'articles' },
+  { parent_id: 0, name: 'Product', description: '商品分类', slug: 'products' },
+  { parent_id: 0, name: 'Bread', description: '品牌分类', slug: 'brands' },
 ];
 
 // prettier-ignore

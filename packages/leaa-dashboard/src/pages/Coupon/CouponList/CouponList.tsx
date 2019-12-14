@@ -50,6 +50,7 @@ export default (props: IPage) => {
   const getCouponsVariables = { ...tablePagination, q };
   const getCouponsQuery = useQuery<{ coupons: CouponsWithPaginationObject }, CouponsArgs>(GET_COUPONS, {
     variables: getCouponsVariables,
+    fetchPolicy: 'network-only',
   });
 
   // mutation

@@ -11,7 +11,7 @@ export class CreatePromoInput {
   @Field(() => Int)
   quantity!: number;
 
-  @IsNotEmpty()
+  @IsOptional()
   @Field(() => Int, { nullable: true })
   redeemed_quantity?: number;
 

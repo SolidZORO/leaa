@@ -45,6 +45,7 @@ export default (props: IPage) => {
   const getPromosVariables = { ...tablePagination, q };
   const getPromosQuery = useQuery<{ promos: PromosWithPaginationObject }, PromosArgs>(GET_PROMOS, {
     variables: getPromosVariables,
+    fetchPolicy: 'network-only',
   });
 
   // mutation

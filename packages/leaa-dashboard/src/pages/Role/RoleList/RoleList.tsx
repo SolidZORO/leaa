@@ -45,12 +45,16 @@ export default (props: IPage) => {
   const getRolesVariables = { ...tablePagination, q };
   const getRolesQuery = useQuery<{ roles: RolesWithPaginationObject }, RolesArgs>(GET_ROLES, {
     variables: getRolesVariables,
+    fetchPolicy: 'network-only',
   });
 
   const getPermissionsVariables = { pageSize: 9999 };
   const getPermissionsQuery = useQuery<{ permissions: PermissionsWithPaginationObject }, PermissionsArgs>(
     GET_PERMISSIONS,
-    { variables: getPermissionsVariables, fetchPolicy: 'network-only' },
+    {
+      variables: getPermissionsVariables,
+      fetchPolicy: 'network-only',
+    },
   );
 
   // mutation

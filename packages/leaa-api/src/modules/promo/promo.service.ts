@@ -53,7 +53,7 @@ export class PromoService {
     let nextArgs: IPromoArgs = {};
     if (args) nextArgs = args;
 
-    const whereQuery: { id: number; status?: number } = { id, status: 1 };
+    const whereQuery: { id: number; status?: number } = { id };
 
     // can
     if (!(user && authUtil.can(user, 'promo.item-read--all-status'))) {
@@ -75,6 +75,8 @@ export class PromoService {
 
   async createPromo(args: CreatePromoInput): Promise<Promo | undefined> {
     const nextArgs = formatUtil.formatDateRangeTime(args, 'start_time', 'expire_time');
+
+    console.log(nextArgs);
 
     return this.promoRepository.save({ ...nextArgs });
   }

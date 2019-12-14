@@ -8,7 +8,7 @@ type IFormatArgs = FindManyOptions & ItemsArgs;
 
 const formatArgs = <T>(args: T & IFormatArgs): T & IFormatArgs => {
   if (!args) {
-    throw Error('missing format args');
+    throw Error('Missing Format Args');
   }
 
   const nextArgs = {
@@ -40,7 +40,7 @@ const formatArgs = <T>(args: T & IFormatArgs): T & IFormatArgs => {
 
 const formatDateRangeTime = <T>(args: T, startField: string, expireField: string): T => {
   if (!args) {
-    throw Error('missing format args');
+    throw Error('Missing Format Args');
   }
 
   const nextArgs = {

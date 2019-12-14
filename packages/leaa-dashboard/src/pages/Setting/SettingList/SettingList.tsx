@@ -78,7 +78,10 @@ export default (props: IPage) => {
 
   // query
   const getSettingsQuery = useQuery<
-    { settings: SettingsWithPaginationObject; fetchPolicy: 'network-only' },
+    {
+      settings: SettingsWithPaginationObject;
+      fetchPolicy: 'network-only';
+    },
     SettingsArgs
   >(GET_SETTINGS);
 

@@ -40,21 +40,8 @@ export default (props: IPage) => {
   });
 
   useEffect(() => {
-    if (
-      getCategoriesQuery &&
-      getCategoriesQuery.data &&
-      getCategoriesQuery.data.categories &&
-      getCategoriesQuery.data.categories.trees
-    ) {
-      // setTreeData(JSON.parse(getCategoriesQuery.data.categories.treeByStringify));
-      setTreeData(getCategoriesQuery.data.categories.trees);
-    }
-  }, [
-    getCategoriesQuery &&
-      getCategoriesQuery.data &&
-      getCategoriesQuery.data.categories &&
-      getCategoriesQuery.data.categories.trees,
-  ]);
+    if (getCategoriesQuery?.data?.categories?.trees) setTreeData(getCategoriesQuery.data.categories.trees);
+  }, [getCategoriesQuery?.data?.categories?.trees]);
 
   return (
     <PageCard

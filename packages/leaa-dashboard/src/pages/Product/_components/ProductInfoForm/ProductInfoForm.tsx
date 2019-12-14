@@ -32,7 +32,7 @@ export const ProductInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =
   };
 
   const onUpdateForm = (item?: Product) => {
-    if (!item) return form.setFieldsValue({ status: 1 });
+    if (!item) return form.setFieldsValue({ status: 0 });
 
     // if APIs return error, do not flush out edited data
     if (form.getFieldValue('updated_at') && !item.updated_at) return undefined;

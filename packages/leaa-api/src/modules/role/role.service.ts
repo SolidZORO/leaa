@@ -106,7 +106,7 @@ export class RoleService {
   async updateRole(id: number, args: UpdateRoleInput, user?: User): Promise<Role | undefined> {
     if (curdUtil.isOneField(args, 'status')) return curdUtil.commonUpdate(this.roleRepository, CLS_NAME, id, args);
 
-    if (this.configService.DEMO_MODE && id === 1) {
+    if (this.configService.DEMO_MODE && !process.argv.includes('--nuke') && id === 1) {
       return errorUtil.ERROR({ error: 'Default Role, PLEASE DONT', user });
     }
 
@@ -118,7 +118,7 @@ export class RoleService {
       permissionObjects = await this.permissionRepository.findByIds(args.permissionIds);
     }
 
-    if (args.permissionIds && Array.isArray(args.permissionSlugs)) {
+    if (args.permissionSlugs && Array.isArray(args.permissionSlugs)) {
       const permissionId = await this.permissionService.permissionSlugsToIds(args.permissionSlugs);
       permissionObjects = await this.permissionRepository.findByIds(permissionId);
     }
@@ -126,6 +126,8 @@ export class RoleService {
     if (permissionObjects) {
       relationArgs.permissions = permissionObjects;
     } else {
+      if (process.argv.includes('--nuke')) return undefined;
+
       return errorUtil.ERROR({ error: 'Permissions Error', user });
     }
 
@@ -133,7 +135,7 @@ export class RoleService {
   }
 
   async deleteRole(id: number, user?: User): Promise<Role | undefined> {
-    if (this.configService.DEMO_MODE && id <= 3) {
+    if (this.configService.DEMO_MODE && !process.argv.includes('--nuke') && id <= 3) {
       return errorUtil.ERROR({ error: 'Default Role, PLEASE DONT', user });
     }
 

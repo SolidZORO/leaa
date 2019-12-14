@@ -42,6 +42,7 @@ export default (props: IPage) => {
   const getTagsVariables = { ...tablePagination, q };
   const getTagsQuery = useQuery<{ tags: TagsWithPaginationObject }, TagsArgs>(GET_TAGS, {
     variables: getTagsVariables,
+    fetchPolicy: 'network-only',
   });
 
   // mutation

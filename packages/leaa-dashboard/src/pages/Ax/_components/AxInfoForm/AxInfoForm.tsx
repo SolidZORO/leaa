@@ -15,8 +15,8 @@ import style from './style.module.less';
 
 interface IProps {
   item?: Ax;
-  className?: string;
   loading?: boolean;
+  className?: string;
 }
 
 export const AxInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) => {

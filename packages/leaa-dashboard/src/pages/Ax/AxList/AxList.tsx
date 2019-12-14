@@ -43,6 +43,7 @@ export default (props: IPage) => {
   const getAxsVariables = { ...tablePagination, q };
   const getAxsQuery = useQuery<{ axs: AxsWithPaginationObject }, AxsArgs>(GET_AXS, {
     variables: getAxsVariables,
+    fetchPolicy: 'network-only',
   });
 
   // mutation

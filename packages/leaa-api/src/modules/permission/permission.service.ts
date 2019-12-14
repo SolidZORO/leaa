@@ -81,7 +81,7 @@ export class PermissionService {
   }
 
   async updatePermission(id: number, args: UpdatePermissionInput): Promise<Permission | undefined> {
-    if (this.configService.DEMO_MODE && id <= 93) {
+    if (this.configService.DEMO_MODE && !process.argv.includes('--nuke') && id <= 93) {
       // eslint-disable-next-line no-param-reassign
       delete args.slug;
     }
@@ -94,7 +94,7 @@ export class PermissionService {
   }
 
   async deletePermission(id: number, user?: User): Promise<Permission | undefined> {
-    if (this.configService.DEMO_MODE && id <= 93) {
+    if (this.configService.DEMO_MODE && !process.argv.includes('--nuke') && id <= 93) {
       return errorUtil.ERROR({ error: 'Default Permission, PLEASE DONT', user });
     }
 

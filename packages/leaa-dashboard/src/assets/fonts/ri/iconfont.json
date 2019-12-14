@@ -13,6 +13,13 @@
       "unicode_decimal": 58885
     },
     {
+      "icon_id": "12124351",
+      "name": "ri-logout-circle-r-line",
+      "font_class": "ri-logout-circle-r-line",
+      "unicode": "edd8",
+      "unicode_decimal": 60888
+    },
+    {
       "icon_id": "12124384",
       "name": "ri-function-line",
       "font_class": "ri-function-line",
@@ -69,6 +76,13 @@
       "unicode_decimal": 61629
     },
     {
+      "icon_id": "12124720",
+      "name": "ri-logout-box-r-line",
+      "font_class": "ri-logout-box-r-line",
+      "unicode": "f0c7",
+      "unicode_decimal": 61639
+    },
+    {
       "icon_id": "12124773",
       "name": "ri-search-line",
       "font_class": "ri-search-line",
@@ -95,6 +109,13 @@
       "font_class": "ri-time-line",
       "unicode": "f195",
       "unicode_decimal": 61845
+    },
+    {
+      "icon_id": "12124981",
+      "name": "ri-checkbox-blank-line",
+      "font_class": "ri-checkbox-blank-line",
+      "unicode": "f1cc",
+      "unicode_decimal": 61900
     },
     {
       "icon_id": "12125012",
@@ -235,6 +256,13 @@
       "font_class": "ri-zoom-in-line",
       "unicode": "f3d3",
       "unicode_decimal": 62419
+    },
+    {
+      "icon_id": "12125557",
+      "name": "ri-checkbox-line",
+      "font_class": "ri-checkbox-line",
+      "unicode": "f40c",
+      "unicode_decimal": 62476
     },
     {
       "icon_id": "12125586",
