@@ -2,13 +2,12 @@ import cx from 'classnames';
 import moment from 'moment';
 import React, { useEffect, useState, forwardRef, useImperativeHandle } from 'react';
 import { Col, Form, Input, InputNumber, Row, DatePicker } from 'antd';
-import { RangePickerValue } from 'antd/lib/date-picker/interface';
 
 import { useTranslation } from 'react-i18next';
 
 import { Coupon } from '@leaa/common/src/entrys';
 import { messageUtil, dateUtil } from '@leaa/dashboard/src/utils';
-import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
+import { IOnValidateFormResult, IDateRange } from '@leaa/dashboard/src/interfaces';
 import { UpdateCouponInput } from '@leaa/common/src/dtos/coupon';
 
 import { FormCard, EntryInfoDate, SwitchNumber, IdTag } from '@leaa/dashboard/src/components';
@@ -23,12 +22,12 @@ interface IProps {
 
 const AVAILABLE_DATE_TIPS_FORMAT = 'YYYY-MM-DD (HH:mm:ss)';
 const currentDayZeroTime = moment();
-const defaultTimeRange: RangePickerValue = [currentDayZeroTime, moment(currentDayZeroTime).add(3, 'day')];
+const defaultTimeRange: IDateRange = [currentDayZeroTime, moment(currentDayZeroTime).add(3, 'day')];
 
 export const CouponInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
   const { t } = useTranslation();
   const [form] = Form.useForm();
-  const [timeRange, setTimeRange] = useState<any[]>(defaultTimeRange);
+  const [timeRange, setTimeRange] = useState<IDateRange>(defaultTimeRange);
 
   const onValidateForm = async (): IOnValidateFormResult<UpdateCouponInput> => {
     try {
@@ -47,12 +46,9 @@ export const CouponInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =>
         quantity: 1,
         redeemed_quantity: 0,
         status: 1,
+        start_time: defaultTimeRange[0],
+        expire_time: defaultTimeRange[1],
       });
-
-      form.setFields([
-        { name: 'start_time', value: defaultTimeRange[0] },
-        { name: 'expire_time', value: defaultTimeRange[1] },
-      ]);
 
       return undefined;
     }
@@ -65,19 +61,16 @@ export const CouponInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =>
       form.setFieldsValue({
         ...item,
         type: 'coupon',
+        start_time: props.item?.start_time,
+        expire_time: props.item?.expire_time,
       });
-
-      form.setFields([
-        { name: 'start_time', value: props.item?.start_time || defaultTimeRange[0] },
-        { name: 'expire_time', value: props.item?.expire_time || defaultTimeRange[1] },
-      ]);
     }
 
     return undefined;
   };
 
-  const updateTimeRange = (date: RangePickerValue) => {
-    let nextDate: RangePickerValue = defaultTimeRange;
+  const updateTimeRange = (date: IDateRange | any) => {
+    let nextDate: IDateRange = defaultTimeRange;
 
     if (date) nextDate = date;
 
@@ -184,7 +177,7 @@ export const CouponInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =>
                   </span>
                 }
               >
-                <DatePicker.RangePicker value={timeRange} onChange={updateTimeRange} />
+                <DatePicker.RangePicker value={timeRange as IDateRange} onChange={updateTimeRange} />
               </Form.Item>
             </Col>
           </Row>

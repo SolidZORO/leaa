@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-const formatDateTimeToDayStartOrEnd = (type: 'start' | 'end', dateTime: string): Date => {
+const formatDateTimeToDayStartOrEnd = (type: 'start' | 'end', dateTime: string | moment.Moment): Date => {
   const error = new Error('Type or Date-Time Error');
   if (!type || !dateTime) throw error;
 

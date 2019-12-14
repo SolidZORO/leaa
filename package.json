@@ -18,7 +18,8 @@
     ],
     "nohoist": [
       "**/module-alias",
-      "**/next-bundle-analyzer"
+      "**/next-bundle-analyzer",
+      "**/antd"
     ]
   },
   "command": {

@@ -55,7 +55,7 @@ describe('CategoryService', () => {
   describe('updateCategory', () => {
     const updateCategoryInput: UpdateCategoryInput = { name: 'update' };
 
-    const updatedCategory: Category = {
+    const updatedCategory: Category | any = {
       ...categoryObject,
       ...updateCategoryInput,
     };

@@ -2,13 +2,12 @@ import cx from 'classnames';
 import moment from 'moment';
 import React, { useEffect, useState, forwardRef, useImperativeHandle } from 'react';
 import { Col, Form, Input, InputNumber, Row, DatePicker } from 'antd';
-import { RangePickerValue } from 'antd/lib/date-picker/interface';
 
 import { useTranslation } from 'react-i18next';
 
 import { Promo } from '@leaa/common/src/entrys';
 import { messageUtil, dateUtil } from '@leaa/dashboard/src/utils';
-import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
+import { IOnValidateFormResult, IDateRange } from '@leaa/dashboard/src/interfaces';
 import { UpdatePromoInput } from '@leaa/common/src/dtos/promo';
 
 import { FormCard, EntryInfoDate, SwitchNumber } from '@leaa/dashboard/src/components';
@@ -23,7 +22,7 @@ interface IProps {
 
 const AVAILABLE_DATE_TIPS_FORMAT = 'YYYY-MM-DD (HH:mm:ss)';
 const currentDayZeroTime = moment();
-const defaultTimeRange: RangePickerValue = [currentDayZeroTime, moment(currentDayZeroTime).add(3, 'day')];
+const defaultTimeRange: IDateRange = [currentDayZeroTime, moment(currentDayZeroTime).add(3, 'day')];
 
 export const PromoInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
   const { t } = useTranslation();
@@ -74,8 +73,8 @@ export const PromoInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) => 
     return undefined;
   };
 
-  const updateTimeRange = (date: RangePickerValue) => {
-    let nextDate: RangePickerValue = defaultTimeRange;
+  const updateTimeRange = (date: IDateRange | any) => {
+    let nextDate: IDateRange = defaultTimeRange;
 
     if (date) nextDate = date;
 
@@ -170,7 +169,7 @@ export const PromoInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) => 
                   </span>
                 }
               >
-                <DatePicker.RangePicker value={timeRange} onChange={updateTimeRange} />
+                <DatePicker.RangePicker value={timeRange as IDateRange} onChange={updateTimeRange} />
               </Form.Item>
             </Col>
           </Row>
