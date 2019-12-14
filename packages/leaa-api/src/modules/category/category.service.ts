@@ -1,6 +1,6 @@
 import moment from 'moment';
 import { Injectable } from '@nestjs/common';
-import { Repository, FindOneOptions, getRepository, SelectQueryBuilder, getManager } from 'typeorm';
+import { Repository, FindOneOptions, SelectQueryBuilder, getManager } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { Category } from '@leaa/common/src/entrys';

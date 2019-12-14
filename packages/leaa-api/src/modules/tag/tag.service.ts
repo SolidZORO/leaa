@@ -2,7 +2,7 @@ import fs from 'fs';
 import xss from 'xss';
 import mkdirp from 'mkdirp';
 import { Injectable } from '@nestjs/common';
-import { Repository, FindOneOptions, getRepository, SelectQueryBuilder } from 'typeorm';
+import { Repository, FindOneOptions, SelectQueryBuilder } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { Tag, User } from '@leaa/common/src/entrys';

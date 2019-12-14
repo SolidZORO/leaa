@@ -19,7 +19,7 @@ import {
   CreateSettingInput,
   UpdateSettingsInput,
 } from '@leaa/common/src/dtos/setting';
-import { IPage, IKey } from '@leaa/dashboard/src/interfaces';
+import { IPage } from '@leaa/dashboard/src/interfaces';
 import { settingUtil, messageUtil } from '@leaa/dashboard/src/utils';
 
 import { HtmlMeta, PageCard, SubmitBar, Rcon } from '@leaa/dashboard/src/components';

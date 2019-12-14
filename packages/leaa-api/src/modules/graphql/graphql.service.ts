@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import { applyMiddleware } from 'graphql-middleware';
 import { Injectable } from '@nestjs/common';
 import { Request } from 'express';

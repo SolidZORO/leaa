@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, message } from 'antd';
+import { Button } from 'antd';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
 import { Category } from '@leaa/common/src/entrys';
@@ -11,7 +11,7 @@ import {
   UpdateCategoryInput,
   CategoriesWithPaginationOrTreeObject,
 } from '@leaa/common/src/dtos/category';
-import { IPage, IKey, ICommenFormRef, ISubmitData } from '@leaa/dashboard/src/interfaces';
+import { IPage, ICommenFormRef, ISubmitData } from '@leaa/dashboard/src/interfaces';
 import { messageUtil } from '@leaa/dashboard/src/utils';
 
 import { HtmlMeta, PageCard, SubmitBar, Rcon } from '@leaa/dashboard/src/components';

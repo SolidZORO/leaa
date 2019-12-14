@@ -5,7 +5,7 @@ import { useMutation } from '@apollo/react-hooks';
 
 import { Coupon } from '@leaa/common/src/entrys';
 import { CreateCouponInput } from '@leaa/common/src/dtos/coupon';
-import { IPage, IKey } from '@leaa/dashboard/src/interfaces';
+import { IPage } from '@leaa/dashboard/src/interfaces';
 import { CREATE_COUPON } from '@leaa/common/src/graphqls';
 import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { messageUtil } from '@leaa/dashboard/src/utils';

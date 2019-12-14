@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Repository, FindOneOptions, getRepository, In, SelectQueryBuilder } from 'typeorm';
+import { Repository, FindOneOptions, In, SelectQueryBuilder } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { Setting, User } from '@leaa/common/src/entrys';

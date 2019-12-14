@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { useQuery, useMutation, useLazyQuery } from '@apollo/react-hooks';
+import { useQuery, useMutation } from '@apollo/react-hooks';
 import { Button } from 'antd';
 import SortableTree, { TreeItem } from 'react-sortable-tree';
 
@@ -11,7 +11,7 @@ import { DELETE_CATEGORY, GET_CATEGORIES } from '@leaa/common/src/graphqls';
 import { Category } from '@leaa/common/src/entrys';
 import { CategoriesWithPaginationOrTreeObject, CategoriesArgs } from '@leaa/common/src/dtos/category';
 import { messageUtil } from '@leaa/dashboard/src/utils';
-import { IPage, IKey } from '@leaa/dashboard/src/interfaces';
+import { IPage } from '@leaa/dashboard/src/interfaces';
 
 import { HtmlMeta, PageCard, TableCard, TableColumnDeleteButton, Rcon } from '@leaa/dashboard/src/components';
 

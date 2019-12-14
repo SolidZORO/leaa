@@ -1,4 +1,3 @@
-import { Store } from 'rc-field-form/lib/interface';
 import { FormInstance } from 'rc-field-form/lib';
 
 // export type IonValidateFormResul<T> = Promise<T | Error | void>;

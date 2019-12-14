@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { Button } from 'antd';
 import { useTranslation } from 'react-i18next';
 
-import { IPage, IKey } from '@leaa/dashboard/src/interfaces';
+import { IPage } from '@leaa/dashboard/src/interfaces';
 import { IAttachmentBoxRef } from '@leaa/common/src/interfaces';
 
 import { HtmlMeta, AttachmentBox } from '@leaa/dashboard/src/components';

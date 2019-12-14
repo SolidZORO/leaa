@@ -11,8 +11,6 @@ import 'tui-editor/dist/tui-editor-extScrollSync';
 import 'tui-editor/dist/tui-editor-extTable';
 import 'codemirror/lib/codemirror.css';
 import 'tui-editor/dist/tui-editor.css';
-// import 'tui-editor/dist/tui-editor-contents.css';
-
 import { IAttachmentParams } from '@leaa/common/src/interfaces';
 import { attachmentUtil } from '@leaa/dashboard/src/utils';
 
@@ -21,6 +19,8 @@ import './tui-editor.less';
 import './editor.less';
 
 import style from './style.module.less';
+
+// import 'tui-editor/dist/tui-editor-contents.css';
 
 interface IProps {
   attachmentParams: IAttachmentParams;

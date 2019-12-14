@@ -1,7 +1,7 @@
 import fs from 'fs';
 import _ from 'lodash';
 import { Express } from 'express';
-import { Repository, FindOneOptions, In, getRepository, SelectQueryBuilder } from 'typeorm';
+import { Repository, FindOneOptions, In, SelectQueryBuilder } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Attachment, User } from '@leaa/common/src/entrys';

@@ -7,7 +7,7 @@ import { Tag } from '@leaa/common/src/entrys';
 import { GET_TAG, UPDATE_TAG } from '@leaa/common/src/graphqls';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { TagArgs, UpdateTagInput } from '@leaa/common/src/dtos/tag';
-import { IPage, IKey } from '@leaa/dashboard/src/interfaces';
+import { IPage } from '@leaa/dashboard/src/interfaces';
 import { messageUtil } from '@leaa/dashboard/src/utils';
 
 import { HtmlMeta, PageCard, SubmitBar, Rcon } from '@leaa/dashboard/src/components';

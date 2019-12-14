@@ -14,7 +14,7 @@ import { XYCoord } from 'dnd-core';
 import { Input, Button, Tooltip } from 'antd';
 import { useMutation } from '@apollo/react-hooks';
 import { useTranslation } from 'react-i18next';
-import { DeleteOutlined, LoadingOutlined, QuestionCircleOutlined } from '@ant-design/icons';
+import { DeleteOutlined } from '@ant-design/icons';
 
 import { DELETE_ATTACHMENT } from '@leaa/common/src/graphqls';
 import { Attachment } from '@leaa/common/src/entrys';

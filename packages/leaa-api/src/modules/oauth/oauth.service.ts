@@ -12,7 +12,7 @@ import { User, Oauth } from '@leaa/common/src/entrys';
 import { oauthConfig } from '@leaa/api/src/configs';
 import { IWechatDecryptUserInfo } from '@leaa/api/src/interfaces';
 import { CreateOauthInput } from '@leaa/common/src/dtos/oauth';
-import { loggerUtil, errorUtil } from '@leaa/api/src/utils';
+import { errorUtil } from '@leaa/api/src/utils';
 
 const CLS_NAME = 'OauthService';
 

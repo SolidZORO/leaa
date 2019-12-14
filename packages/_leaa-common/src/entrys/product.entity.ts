@@ -1,8 +1,7 @@
 import { Index, Entity, Column, ManyToMany, JoinTable } from 'typeorm';
 import { ObjectType, Field, Int, Float } from 'type-graphql';
 
-import { Base, Category, Tag, Attachment } from '@leaa/common/src/entrys';
-import { AxAttachmentsObject } from '@leaa/common/src/dtos/ax';
+import { Base, Category, Tag } from '@leaa/common/src/entrys';
 import { ProductAttachmentsObject } from '@leaa/common/src/dtos/product';
 
 @Entity('products')

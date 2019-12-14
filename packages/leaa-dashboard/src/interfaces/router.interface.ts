@@ -1,7 +1,7 @@
 import React from 'react';
 import { RouteProps } from 'react-router-dom';
 
-import { IPage, IKey } from '@leaa/dashboard/src/interfaces';
+import { IPage } from '@leaa/dashboard/src/interfaces';
 
 export interface IRouteItem extends RouteProps {
   name: string;

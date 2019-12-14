@@ -3,7 +3,6 @@ import cx from 'classnames';
 
 import { createFromIconfontCN } from '@ant-design/icons';
 import { IconBaseProps } from '@ant-design/icons/lib/components/Icon';
-
 // @ts-ignore
 import localIconfont from '@leaa/dashboard/src/assets/fonts/ri/iconfont';
 
