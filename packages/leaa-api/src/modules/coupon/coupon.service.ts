@@ -1,6 +1,6 @@
 import uuid from 'uuid';
 import { Injectable } from '@nestjs/common';
-import { Repository, FindOneOptions, getRepository, SelectQueryBuilder } from 'typeorm';
+import { Repository, FindOneOptions, SelectQueryBuilder } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { Coupon, User } from '@leaa/common/src/entrys';
@@ -12,7 +12,7 @@ import {
   UpdateCouponInput,
   RedeemCouponInput,
 } from '@leaa/common/src/dtos/coupon';
-import { formatUtil, curdUtil, paginationUtil, authUtil, errorUtil } from '@leaa/api/src/utils';
+import { argsUtil, curdUtil, paginationUtil, authUtil, errorUtil, dateUtil } from '@leaa/api/src/utils';
 
 import { CouponProperty } from '@leaa/api/src/modules/coupon/coupon.property';
 
@@ -36,7 +36,7 @@ export class CouponService {
   }
 
   async coupons(args: ICouponsArgs, user?: User): Promise<CouponsWithPaginationObject> {
-    const nextArgs: ICouponsArgs = formatUtil.formatArgs(args);
+    const nextArgs: ICouponsArgs = argsUtil.format(args);
     const qb = this.couponRepository.createQueryBuilder();
 
     qb.select().orderBy(nextArgs.orderBy || 'id', nextArgs.orderSort);
@@ -91,7 +91,7 @@ export class CouponService {
   }
 
   async createCoupon(args: CreateCouponInput): Promise<Coupon | undefined> {
-    const nextArgs = formatUtil.formatDateRangeTime(args, 'start_time', 'expire_time');
+    const nextArgs = dateUtil.formatDateRangeTime(args, 'start_time', 'expire_time');
     const couponInputs = [];
 
     for (let i = 0; i < nextArgs.quantity; i += 1) {
@@ -110,7 +110,7 @@ export class CouponService {
   async updateCoupon(id: number, args: UpdateCouponInput): Promise<Coupon | undefined> {
     if (curdUtil.isOneField(args, 'status')) return curdUtil.commonUpdate(this.couponRepository, CLS_NAME, id, args);
 
-    const nextArgs = formatUtil.formatDateRangeTime(args, 'start_time', 'expire_time');
+    const nextArgs = dateUtil.formatDateRangeTime(args, 'start_time', 'expire_time');
 
     return curdUtil.commonUpdate(this.couponRepository, CLS_NAME, id, nextArgs);
   }

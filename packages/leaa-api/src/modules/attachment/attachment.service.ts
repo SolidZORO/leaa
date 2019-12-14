@@ -21,7 +21,7 @@ import {
   IAttachmentParams,
 } from '@leaa/common/src/interfaces';
 import {
-  formatUtil,
+  argsUtil,
   loggerUtil,
   pathUtil,
   authUtil,
@@ -62,7 +62,7 @@ export class AttachmentService {
   }
 
   async attachments(args: IAttachmentsArgs, user?: User): Promise<AttachmentsWithPaginationObject> {
-    const nextArgs = formatUtil.formatArgs(args);
+    const nextArgs = argsUtil.format(args);
 
     const moduleFilter: IAttachmentDbFilterField = {};
 

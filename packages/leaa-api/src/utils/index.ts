@@ -1,5 +1,5 @@
 export { loggerUtil } from '@leaa/api/src/utils/logger.util';
-export { formatUtil } from '@leaa/api/src/utils/format.util';
+export { argsUtil } from '@leaa/api/src/utils/argsUtil';
 export { pathUtil } from '@leaa/api/src/utils/path.util';
 export { attachmentUtil } from '@leaa/api/src/utils/attachment.util';
 export { paginationUtil } from '@leaa/api/src/utils/pagination.util';
@@ -9,3 +9,5 @@ export { dictUtil } from '@leaa/api/src/utils/dict.util';
 export { authUtil } from '@leaa/api/src/utils/auth.util';
 export { errorUtil } from '@leaa/api/src/utils/error.util';
 export { cliUtil } from '@leaa/api/src/utils/cli.util';
+export { dateUtil } from '@leaa/api/src/utils/date.util';
+export { htmlUtil } from '@leaa/api/src/utils/html.util';

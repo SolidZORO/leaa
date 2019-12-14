@@ -13,7 +13,7 @@ import {
 } from '@leaa/common/src/dtos/user';
 import { RoleService } from '@leaa/api/src/modules/role/role.service';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
-import { formatUtil, curdUtil, paginationUtil, authUtil, errorUtil } from '@leaa/api/src/utils';
+import { argsUtil, curdUtil, paginationUtil, authUtil, errorUtil } from '@leaa/api/src/utils';
 import { JwtService } from '@nestjs/jwt';
 
 type IUsersArgs = UsersArgs & FindOneOptions<User>;
@@ -33,7 +33,7 @@ export class UserService {
   ) {}
 
   async users(args: IUsersArgs, user?: User): Promise<UsersWithPaginationObject> {
-    const nextArgs: IUsersArgs = formatUtil.formatArgs(args);
+    const nextArgs: IUsersArgs = argsUtil.format(args);
 
     const PRIMARY_TABLE = 'users';
     const qb = this.userRepository.createQueryBuilder(PRIMARY_TABLE);

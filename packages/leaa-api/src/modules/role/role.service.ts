@@ -10,7 +10,7 @@ import {
   CreateRoleInput,
   UpdateRoleInput,
 } from '@leaa/common/src/dtos/role';
-import { formatUtil, curdUtil, paginationUtil, errorUtil } from '@leaa/api/src/utils';
+import { argsUtil, curdUtil, paginationUtil, errorUtil } from '@leaa/api/src/utils';
 import { PermissionService } from '@leaa/api/src/modules/permission/permission.service';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 
@@ -29,7 +29,7 @@ export class RoleService {
   ) {}
 
   async roles(args: IRolesArgs): Promise<RolesWithPaginationObject | undefined> {
-    const nextArgs = formatUtil.formatArgs(args);
+    const nextArgs = argsUtil.format(args);
 
     const PRIMARY_TABLE = 'roles';
     const qb = this.roleRepository.createQueryBuilder(PRIMARY_TABLE);

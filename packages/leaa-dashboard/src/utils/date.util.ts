@@ -29,5 +29,5 @@ const formatDateRangeTime = (startField: string, expireField: string): { start: 
 
 export const dateUtil = {
   formatDateTimeToDayStartOrEnd,
-  formatDateRangeTime,
+  formatDateRangeTime: dateRangeTime,
 };

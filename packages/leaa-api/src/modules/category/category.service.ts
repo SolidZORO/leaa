@@ -12,7 +12,7 @@ import {
   UpdateCategoryInput,
   CategoryTreeObject,
 } from '@leaa/common/src/dtos/category';
-import { formatUtil, curdUtil, paginationUtil, errorUtil } from '@leaa/api/src/utils';
+import { argsUtil, curdUtil, paginationUtil, errorUtil } from '@leaa/api/src/utils';
 
 type ICategoriessArgs = CategoriesArgs & FindOneOptions<Category>;
 type ICategoryArgs = CategoryArgs & FindOneOptions<Category>;
@@ -70,7 +70,7 @@ export class CategoryService {
   }
 
   async categories(args: ICategoriessArgs): Promise<CategoriesWithPaginationOrTreeObject | undefined> {
-    const nextArgs: ICategoriessArgs = formatUtil.formatArgs(args);
+    const nextArgs: ICategoriessArgs = argsUtil.format(args);
 
     const qb = this.categoryRepository.createQueryBuilder();
     qb.select().orderBy(nextArgs.orderBy || 'created_at', nextArgs.orderSort);

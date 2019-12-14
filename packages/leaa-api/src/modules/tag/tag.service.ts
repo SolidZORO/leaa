@@ -15,7 +15,7 @@ import {
   SyncTagsToFileObject,
 } from '@leaa/common/src/dtos/tag';
 
-import { formatUtil, curdUtil, paginationUtil, loggerUtil, errorUtil } from '@leaa/api/src/utils';
+import { argsUtil, curdUtil, paginationUtil, loggerUtil, errorUtil } from '@leaa/api/src/utils';
 import { dictConfig } from '@leaa/api/src/configs';
 
 type ITagsArgs = TagsArgs & FindOneOptions<Tag>;
@@ -28,7 +28,7 @@ export class TagService {
   constructor(@InjectRepository(Tag) private readonly tagRepository: Repository<Tag>) {}
 
   async tags(args: ITagsArgs): Promise<TagsWithPaginationObject> {
-    const nextArgs = formatUtil.formatArgs(args);
+    const nextArgs = argsUtil.format(args);
 
     const qb = this.tagRepository.createQueryBuilder();
     qb.select().orderBy(nextArgs.orderBy || 'created_at', nextArgs.orderSort);

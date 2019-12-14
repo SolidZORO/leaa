@@ -10,7 +10,7 @@ import {
   CreatePermissionInput,
   UpdatePermissionInput,
 } from '@leaa/common/src/dtos/permission';
-import { formatUtil, curdUtil, paginationUtil, errorUtil } from '@leaa/api/src/utils';
+import { argsUtil, curdUtil, paginationUtil, errorUtil } from '@leaa/api/src/utils';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 
 type IPermissionsArgs = PermissionsArgs & FindOneOptions<Permission>;
@@ -26,7 +26,7 @@ export class PermissionService {
   ) {}
 
   async permissions(args: IPermissionsArgs): Promise<PermissionsWithPaginationObject> {
-    const nextArgs: IPermissionsArgs = formatUtil.formatArgs(args);
+    const nextArgs: IPermissionsArgs = argsUtil.format(args);
 
     const qb = this.permissionRepository.createQueryBuilder();
     qb.select().orderBy(nextArgs.orderBy || 'created_at', nextArgs.orderSort);

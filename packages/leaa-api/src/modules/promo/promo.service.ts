@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Repository, FindOneOptions, getRepository, SelectQueryBuilder } from 'typeorm';
+import { Repository, FindOneOptions, SelectQueryBuilder } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { Promo, User } from '@leaa/common/src/entrys';
@@ -11,7 +11,7 @@ import {
   UpdatePromoInput,
   RedeemPromoInput,
 } from '@leaa/common/src/dtos/promo';
-import { formatUtil, authUtil, curdUtil, paginationUtil, errorUtil } from '@leaa/api/src/utils';
+import { argsUtil, authUtil, curdUtil, paginationUtil, errorUtil, dateUtil } from '@leaa/api/src/utils';
 import { PromoProperty } from '@leaa/api/src/modules/promo/promo.property';
 
 type IPromosArgs = PromosArgs & FindOneOptions<Promo>;
@@ -27,7 +27,7 @@ export class PromoService {
   ) {}
 
   async promos(args: IPromosArgs, user?: User): Promise<PromosWithPaginationObject> {
-    const nextArgs: IPromosArgs = formatUtil.formatArgs(args);
+    const nextArgs: IPromosArgs = argsUtil.format(args);
 
     const qb = this.promoRepository.createQueryBuilder();
     qb.select().orderBy(nextArgs.orderBy || 'id', nextArgs.orderSort);
@@ -74,7 +74,7 @@ export class PromoService {
   }
 
   async createPromo(args: CreatePromoInput): Promise<Promo | undefined> {
-    const nextArgs = formatUtil.formatDateRangeTime(args, 'start_time', 'expire_time');
+    const nextArgs = dateUtil.formatDateRangeTime(args, 'start_time', 'expire_time');
 
     console.log(nextArgs);
 
@@ -84,7 +84,7 @@ export class PromoService {
   async updatePromo(id: number, args: UpdatePromoInput): Promise<Promo | undefined> {
     if (curdUtil.isOneField(args, 'status')) return curdUtil.commonUpdate(this.promoRepository, CLS_NAME, id, args);
 
-    const nextArgs = formatUtil.formatDateRangeTime(args, 'start_time', 'expire_time');
+    const nextArgs = dateUtil.formatDateRangeTime(args, 'start_time', 'expire_time');
 
     return curdUtil.commonUpdate(this.promoRepository, CLS_NAME, id, nextArgs);
   }

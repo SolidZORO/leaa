@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import { Injectable } from '@nestjs/common';
 import { Repository, FindOneOptions } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -11,7 +10,16 @@ import {
   CreateArticleInput,
   UpdateArticleInput,
 } from '@leaa/common/src/dtos/article';
-import { formatUtil, paginationUtil, curdUtil, stringUtil, dictUtil, errorUtil, authUtil } from '@leaa/api/src/utils';
+import {
+  argsUtil,
+  paginationUtil,
+  curdUtil,
+  stringUtil,
+  dictUtil,
+  errorUtil,
+  authUtil,
+  htmlUtil,
+} from '@leaa/api/src/utils';
 
 import { TagService } from '@leaa/api/src/modules/tag/tag.service';
 
@@ -30,7 +38,7 @@ export class ArticleService {
   ) {}
 
   async articles(args: IArticlesArgs, user?: User): Promise<ArticlesWithPaginationObject> {
-    const nextArgs: IArticlesArgs = formatUtil.formatArgs(args);
+    const nextArgs: IArticlesArgs = argsUtil.format(args);
 
     const PRIMARY_TABLE = 'articles';
     const qb = await this.articleRepository.createQueryBuilder(PRIMARY_TABLE);
@@ -141,7 +149,7 @@ export class ArticleService {
 
     // auto add tag from article content (by jieba)
     if (args.content && (!args.tagIds || (args.tagIds && args.tagIds.length === 0))) {
-      const allText = formatUtil.formatHtmlToText(args.content, args.title);
+      const allText = htmlUtil.formatHtmlToText(args.content, args.title);
 
       // batch create tags
       relationArgs.tags = await this.tagService.createTags(dictUtil.cutTags(allText));

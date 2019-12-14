@@ -4,7 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 import { Ax, User } from '@leaa/common/src/entrys';
 import { AxsArgs, AxsWithPaginationObject, AxArgs, CreateAxInput, UpdateAxInput } from '@leaa/common/src/dtos/ax';
-import { formatUtil, authUtil, curdUtil, paginationUtil, errorUtil } from '@leaa/api/src/utils';
+import { argsUtil, authUtil, curdUtil, paginationUtil, errorUtil } from '@leaa/api/src/utils';
 
 type IAxsArgs = AxsArgs & FindOneOptions<Ax>;
 type IAxArgs = AxArgs & FindOneOptions<Ax>;
@@ -16,7 +16,7 @@ export class AxService {
   constructor(@InjectRepository(Ax) private readonly axRepository: Repository<Ax>) {}
 
   async axs(args: IAxsArgs, user?: User): Promise<AxsWithPaginationObject> {
-    const nextArgs = formatUtil.formatArgs(args);
+    const nextArgs = argsUtil.format(args);
 
     const qb = this.axRepository.createQueryBuilder();
     qb.select().orderBy(nextArgs.orderBy || 'created_at', nextArgs.orderSort);

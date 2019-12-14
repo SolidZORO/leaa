@@ -10,7 +10,7 @@ import {
   CreateProductInput,
   UpdateProductInput,
 } from '@leaa/common/src/dtos/product';
-import { formatUtil, paginationUtil, curdUtil, authUtil } from '@leaa/api/src/utils';
+import { argsUtil, paginationUtil, curdUtil, authUtil } from '@leaa/api/src/utils';
 
 import { TagService } from '@leaa/api/src/modules/tag/tag.service';
 
@@ -30,7 +30,7 @@ export class ProductService {
   ) {}
 
   async products(args: IProductsArgs, user?: User): Promise<ProductsWithPaginationObject | undefined> {
-    const nextArgs: IProductsArgs = formatUtil.formatArgs(args);
+    const nextArgs: IProductsArgs = argsUtil.format(args);
 
     const PRIMARY_TABLE = 'products';
     const qb = await this.productRepository.createQueryBuilder(PRIMARY_TABLE);

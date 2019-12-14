@@ -12,7 +12,7 @@ import {
   UpdateSettingsInput,
   SettingsObject,
 } from '@leaa/common/src/dtos/setting';
-import { formatUtil, loggerUtil, curdUtil, paginationUtil, errorUtil, authUtil } from '@leaa/api/src/utils';
+import { argsUtil, loggerUtil, curdUtil, paginationUtil, errorUtil, authUtil } from '@leaa/api/src/utils';
 
 type ISettingsArgs = SettingsArgs & FindOneOptions<Setting>;
 type ISettingArgs = SettingArgs & FindOneOptions<Setting>;
@@ -24,7 +24,7 @@ export class SettingService {
   constructor(@InjectRepository(Setting) private readonly settingRepository: Repository<Setting>) {}
 
   async settings(args: ISettingsArgs, user?: User): Promise<SettingsWithPaginationObject> {
-    const nextArgs = formatUtil.formatArgs(args);
+    const nextArgs = argsUtil.format(args);
 
     const qb = this.settingRepository.createQueryBuilder();
     qb.select()
