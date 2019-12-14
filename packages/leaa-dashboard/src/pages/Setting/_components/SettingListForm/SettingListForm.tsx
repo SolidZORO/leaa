@@ -1,23 +1,35 @@
-import React from 'react';
 import cx from 'classnames';
-import { Button, Form, Input, Tooltip, Select } from 'antd';
-import { withTranslation } from 'react-i18next';
-import { FormComponentProps } from 'antd/lib/form';
+import React, { useEffect, forwardRef, useImperativeHandle } from 'react';
+import { Form, Input, Select, Tooltip, Button } from 'antd';
+
+import { useTranslation } from 'react-i18next';
 
 import { Setting } from '@leaa/common/src/entrys';
-import { ITfn } from '@leaa/dashboard/src/interfaces';
+import { messageUtil } from '@leaa/dashboard/src/utils';
+import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
+import { UpdateSettingsInput } from '@leaa/common/src/dtos/setting';
+
 import { FormCard, Rcon } from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';
 
-interface IFormProps extends FormComponentProps {
-  className?: string;
-  settings?: Setting[];
+interface IProps {
+  items?: Setting[];
   loading?: boolean;
   onClickLabelEditCallback: (setting: Setting) => void;
+  className?: string;
 }
 
-type IProps = IFormProps & ITfn;
+const formItemLayout = {
+  labelCol: {
+    xs: { span: 24 },
+    sm: { span: 5 },
+  },
+  wrapperCol: {
+    xs: { span: 24 },
+    sm: { span: 16 },
+  },
+};
 
 export const buildTypeDom = (setting: Pick<Setting, 'type' | 'name' | 'options'>) => {
   let dom = <span>----</span>;
@@ -31,7 +43,12 @@ export const buildTypeDom = (setting: Pick<Setting, 'type' | 'name' | 'options'>
   if (['radio'].includes(type)) {
     dom = (
       <Select>
-        {options && options.split(/[\n]/).map((option: string) => <Select.Option key={option}>{option}</Select.Option>)}
+        {options &&
+          options.split(/[\n]/).map((option: string) => (
+            <Select.Option key={option} value={option}>
+              {option}
+            </Select.Option>
+          ))}
       </Select>
     );
     // dom = <Input.TextArea placeholder={name} rows={3} />;
@@ -44,84 +61,75 @@ export const buildTypeDom = (setting: Pick<Setting, 'type' | 'name' | 'options'>
   return dom;
 };
 
-class SettingInfoFormInner extends React.PureComponent<IProps> {
-  constructor(props: IProps) {
-    super(props);
-  }
+export const SettingListForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
+  const { t } = useTranslation();
+  const [form] = Form.useForm();
 
-  render() {
-    const { props } = this;
-    const { getFieldDecorator } = this.props.form;
-
-    const formItemLayout = {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 5 },
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 16 },
-      },
-    };
-
-    const buildLabelDom = (setting: Setting) => {
-      return (
-        <span>
-          <Tooltip
-            title={
-              <>
-                <Rcon type="question-circle" /> {setting.description}
-              </>
-            }
-            trigger="hover"
-          >
-            <Button
-              size="small"
-              type="link"
-              onClick={() => props.onClickLabelEditCallback(setting)}
-              className={cx(style['label-button'])}
-            >
-              <Rcon type="edit" className={style['label-icon']} />
-              <strong className={cx(style['label-text'])}>
-                {setting.private ? <Rcon type="ri-lock-2-line" className={style['private-icon']} /> : null}
-                {setting.name}
-              </strong>
-            </Button>
-          </Tooltip>
-        </span>
-      );
-    };
-
+  const buildLabelDom = (setting: Setting) => {
     return (
-      <div className={cx(style['wrapper'], props.className)}>
-        <FormCard>
-          <Form
-            className={cx('g-form--zero-margin-bottom', style['form-wrapper'])}
-            hideRequiredMark
-            {...formItemLayout}
+      <span>
+        <Tooltip
+          title={
+            <>
+              <Rcon type="ri-question-line" /> {setting.description}
+            </>
+          }
+          trigger="hover"
+        >
+          <Button
+            size="small"
+            type="link"
+            onClick={() => props.onClickLabelEditCallback(setting)}
+            className={cx(style['label-button'])}
           >
-            {props.settings &&
-              props.settings.map((setting, i) => (
-                <div key={setting.id}>
-                  {getFieldDecorator(`settings[${i}].id`, {
-                    initialValue: setting.id || null,
-                    rules: [{ required: true }],
-                  })(<Input type="number" placeholder="ID" hidden />)}
-
-                  <Form.Item key={setting.id} label={buildLabelDom(setting)}>
-                    {getFieldDecorator(`settings[${i}].value`, {
-                      initialValue: setting.value || null,
-                      rules: [{ required: true }],
-                    })(buildTypeDom(setting))}
-                  </Form.Item>
-                </div>
-              ))}
-          </Form>
-        </FormCard>
-      </div>
+            <Rcon type="ri-edit-2-line" className={style['label-icon']} />
+            <strong className={cx(style['label-text'])}>
+              {setting.private ? <Rcon type="ri-lock-2-line" className={style['private-icon']} /> : null}
+              {setting.name}
+            </strong>
+          </Button>
+        </Tooltip>
+      </span>
     );
-  }
-}
+  };
 
-// @ts-ignore
-export const SettingListForm = withTranslation()(Form.create<IFormProps>()(SettingInfoFormInner));
+  const onValidateForm = async (): IOnValidateFormResult<UpdateSettingsInput[]> => {
+    try {
+      const result = await form.validateFields();
+
+      return Object.keys(result).map(k => ({ id: Number(k), value: result[k] }));
+    } catch (error) {
+      return messageUtil.error(error.errorFields[0]?.errors[0]);
+    }
+  };
+
+  const onUpdateForm = (items?: Setting[]) => {
+    if (!items) return undefined;
+
+    return items.forEach(item => {
+      form.setFields([{ name: item.id, value: item.value }]);
+    });
+  };
+
+  useEffect(() => {
+    onUpdateForm(props.items);
+  }, [props.items]);
+
+  useImperativeHandle(ref, () => ({ form, onValidateForm }));
+
+  return (
+    <div className={cx(style['wrapper'], props.className)}>
+      <FormCard>
+        <Form form={form} layout="vertical" hideRequiredMark {...formItemLayout}>
+          {props.items?.map(item => (
+            <div key={item.id}>
+              <Form.Item name={item.id} rules={[{ required: true }]} label={buildLabelDom(item)}>
+                {buildTypeDom(item)}
+              </Form.Item>
+            </div>
+          ))}
+        </Form>
+      </FormCard>
+    </div>
+  );
+});

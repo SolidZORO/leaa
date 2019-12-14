@@ -201,15 +201,14 @@ export default (props: IPage) => {
           </Link>
 
           <UserSearchBox
-            className={cx('g-extra-filter-bar--item', 'g-extra-filter-bar--q')}
+            className={cx('g-extra-filter-bar--item')}
             useOnBlur
             onSelectUserCallback={user => onFilter({ field: 'userId', value: user && user.id })}
-            style={{ width: 200 }}
             value={userId}
           />
 
           <SearchInput
-            className="g-page-card-extra-filter-bar-search"
+            className={cx('g-extra-filter-bar--item', 'g-extra-filter-bar--q')}
             value={q}
             onChange={v => onFilter({ field: 'q', value: v })}
           />

@@ -87,7 +87,7 @@ export class TagService {
     loggerUtil.log(`syncTagsToDictFile, ${total} tags`, CLS_NAME);
 
     return {
-      status: `sync successful ${total} tags`,
+      status: `Synced ${total} Tags`,
     };
   }
 

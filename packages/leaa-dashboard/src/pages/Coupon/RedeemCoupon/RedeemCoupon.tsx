@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { Button, message } from 'antd';
+import React, { useState, useRef } from 'react';
+import { Button } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useMutation } from '@apollo/react-hooks';
 
 import { Coupon } from '@leaa/common/src/entrys';
 import { RedeemCouponInput } from '@leaa/common/src/dtos/coupon';
-import { IPage } from '@leaa/dashboard/src/interfaces';
+import { IPage, ISubmitData } from '@leaa/dashboard/src/interfaces';
 import { REDEEM_COUPON } from '@leaa/common/src/graphqls';
 import { messageUtil } from '@leaa/dashboard/src/utils';
 
@@ -19,7 +19,7 @@ export default (props: IPage) => {
   const { t } = useTranslation();
 
   // ref
-  const [couponRedeemFormRef, setCouponRedeemFormRef] = useState<any>();
+  const couponRedeemRef = useRef<any>(null);
 
   // mutation
   const [submitVariables, setSubmitVariables] = useState<{ info: RedeemCouponInput }>();
@@ -28,22 +28,21 @@ export default (props: IPage) => {
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
     onCompleted(e) {
       messageUtil.gqlSuccess(t('_lang:createdSuccessfully'));
-      console.log(e);
       // props.history.push('/coupons');
     },
   });
 
   const onSubmit = async () => {
-    couponRedeemFormRef.props.form.validateFieldsAndScroll(async (err: any, formData: RedeemCouponInput) => {
-      if (err) {
-        message.error(err[Object.keys(err)[0]].errors[0].message);
+    const infoData: ISubmitData<RedeemCouponInput> = await couponRedeemRef.current?.onValidateForm();
 
-        return;
-      }
+    if (!infoData) return;
 
-      await setSubmitVariables({ info: formData });
-      await redeemCouponMutate();
-    });
+    const submitData: ISubmitData<RedeemCouponInput> = {
+      ...infoData,
+    };
+
+    await setSubmitVariables({ info: submitData });
+    await redeemCouponMutate();
   };
 
   return (
@@ -60,8 +59,8 @@ export default (props: IPage) => {
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
       <CouponRedeemForm
+        ref={couponRedeemRef}
         className={style['coupon-redeem-form-wrapper']}
-        wrappedComponentRef={(inst: unknown) => setCouponRedeemFormRef(inst)}
         submitButton={
           <Button
             type="primary"

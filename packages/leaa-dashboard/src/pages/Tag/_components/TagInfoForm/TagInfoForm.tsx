@@ -1,84 +1,96 @@
-import React from 'react';
 import cx from 'classnames';
+import React, { useEffect, forwardRef, useImperativeHandle } from 'react';
 import { Col, Form, Input, Row } from 'antd';
-import { withTranslation } from 'react-i18next';
-import { FormComponentProps } from 'antd/lib/form';
 
-import { Tag } from '@leaa/common/src/entrys';
-import { ITfn } from '@leaa/dashboard/src/interfaces';
+import { useTranslation } from 'react-i18next';
+
+import { Tag as TagEntry } from '@leaa/common/src/entrys';
+import { messageUtil } from '@leaa/dashboard/src/utils';
+import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
+import { UpdateTagInput } from '@leaa/common/src/dtos/tag';
 
 import { FormCard, EntryInfoDate } from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';
 
-interface IFormProps extends FormComponentProps {
-  className?: string;
-  item?: Tag;
+interface IProps {
+  item?: TagEntry;
   loading?: boolean;
+  className?: string;
 }
 
-type IProps = IFormProps & ITfn;
+export const TagInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
+  const { t } = useTranslation();
+  const [form] = Form.useForm();
 
-class TagInfoFormInner extends React.PureComponent<IProps> {
-  constructor(props: IProps) {
-    super(props);
-  }
+  const onValidateForm = async (): IOnValidateFormResult<UpdateTagInput> => {
+    try {
+      return await form.validateFields();
+    } catch (error) {
+      return messageUtil.error(error.errorFields[0]?.errors[0]);
+    }
+  };
 
-  render() {
-    const { t } = this.props;
+  const onUpdateForm = (item?: TagEntry) => {
+    if (!item) return undefined;
 
-    const { props } = this;
-    const { getFieldDecorator } = this.props.form;
+    // if APIs return error, do not flush out edited data
+    if (form.getFieldValue('updated_at') && !item.updated_at) return undefined;
 
-    return (
-      <div className={cx(style['wrapper'], props.className)}>
-        <FormCard
-          title={t('_page:Tag.tagInfo')}
-          extra={<EntryInfoDate date={props.item && [props.item.created_at, props.item.updated_at]} />}
-        >
-          <Form className={cx('g-form--zero-margin-bottom', style['form-wrapper'])}>
-            <Row gutter={16} className={style['form-row']}>
-              <Col xs={24} sm={10}>
-                <Form.Item label={t('_lang:name')}>
-                  {getFieldDecorator('name', {
-                    initialValue: props.item ? props.item.name : undefined,
-                    rules: [{ required: true, max: 30 }],
-                  })(<Input placeholder={t('_lang:name')} />)}
+    // update was successful, keeping the form data and APIs in sync.
+    if (form.getFieldValue('updated_at') !== item.updated_at) {
+      form.setFieldsValue({
+        ...item,
+      });
+    }
+
+    return undefined;
+  };
+
+  useEffect(() => {
+    onUpdateForm(props.item);
+  }, [props.item]);
+
+  useImperativeHandle(ref, () => ({ form, onValidateForm }));
+
+  return (
+    <div className={cx(style['wrapper'], props.className)}>
+      <FormCard
+        title={t('_page:Tag.tagInfo')}
+        extra={<EntryInfoDate date={props.item && [props.item.created_at, props.item.updated_at]} />}
+      >
+        <Form form={form} layout="vertical">
+          <Row gutter={16}>
+            <Col xs={24} sm={6}>
+              <Form.Item name="name" rules={[{ required: true }]} label={t('_lang:name')}>
+                <Input placeholder={t('_lang:name')} />
+              </Form.Item>
+            </Col>
+
+            <Col xs={24} sm={4}>
+              <Form.Item name="icon" rules={[]} label={t('_lang:icon')}>
+                <Input placeholder={t('_lang:icon')} />
+              </Form.Item>
+            </Col>
+
+            {props.item && props.item.count && (
+              <Col xs={24} sm={4}>
+                <Form.Item label={t('_page:Tag.count')}>
+                  <Input placeholder={t('_lang:count')} value={props.item.count} disabled />
                 </Form.Item>
               </Col>
+            )}
+          </Row>
 
-              <Col xs={24} sm={10}>
-                <Form.Item label={t('_lang:icon')}>
-                  {getFieldDecorator('icon', {
-                    initialValue: props.item ? props.item.icon : undefined,
-                    rules: [],
-                  })(<Input placeholder={t('_lang:icon')} />)}
-                </Form.Item>
-              </Col>
-
-              {props.item && props.item.icon && (
-                <Col xs={24} sm={4}>
-                  <Form.Item label={t('_page:Tag.count')}>
-                    <Input placeholder={t('_lang:count')} value={props.item.count} disabled />
-                  </Form.Item>
-                </Col>
-              )}
-
-              <Col xs={24}>
-                <Form.Item label={t('_lang:description')}>
-                  {getFieldDecorator('description', {
-                    initialValue: props.item ? props.item.description : undefined,
-                    rules: [],
-                  })(<Input.TextArea rows={4} placeholder={t('_lang:description')} />)}
-                </Form.Item>
-              </Col>
-            </Row>
-          </Form>
-        </FormCard>
-      </div>
-    );
-  }
-}
-
-// @ts-ignore
-export const TagInfoForm = withTranslation()(Form.create<IFormProps>()(TagInfoFormInner));
+          <Row gutter={16}>
+            <Col xs={24}>
+              <Form.Item name="description" rules={[]} label={t('_lang:description')}>
+                <Input.TextArea rows={4} placeholder={t('_lang:description')} />
+              </Form.Item>
+            </Col>
+          </Row>
+        </Form>
+      </FormCard>
+    </div>
+  );
+});

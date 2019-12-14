@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Button, message } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useMutation } from '@apollo/react-hooks';
 
 import { Role } from '@leaa/common/src/entrys';
 import { CreateRoleInput } from '@leaa/common/src/dtos/role';
-import { IPage } from '@leaa/dashboard/src/interfaces';
+import { IPage, ICommenFormRef, ISubmitData } from '@leaa/dashboard/src/interfaces';
 import { CREATE_ROLE } from '@leaa/common/src/graphqls';
 import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { messageUtil } from '@leaa/dashboard/src/utils';
@@ -20,7 +20,7 @@ export default (props: IPage) => {
   const { t } = useTranslation();
 
   // ref
-  const [roleInfoFormRef, setRoleInfoFormRef] = useState<any>();
+  const infoFormRef = useRef<ICommenFormRef<CreateRoleInput>>(null);
 
   // mutation
   const [submitVariables, setSubmitVariables] = useState<{ role: CreateRoleInput }>();
@@ -34,31 +34,15 @@ export default (props: IPage) => {
   });
 
   const onSubmit = async () => {
-    let hasError = false;
-    let submitData: CreateRoleInput = {} as CreateRoleInput;
+    const infoData: ISubmitData<CreateRoleInput> = await infoFormRef.current?.onValidateForm();
 
-    roleInfoFormRef.props.form.validateFieldsAndScroll(async (err: any, formData: CreateRoleInput) => {
-      if (err) {
-        hasError = true;
-        message.error(err[Object.keys(err)[0]].errors[0].message);
+    if (!infoData) return;
 
-        return;
-      }
+    const submitData: ISubmitData<CreateRoleInput> = {
+      ...infoData,
+    };
 
-      submitData = {
-        ...submitData,
-        ...formData,
-      };
-    });
-
-    if (hasError) {
-      return;
-    }
-
-    await setSubmitVariables({
-      ...submitVariables,
-      ...{ role: submitData },
-    });
+    await setSubmitVariables({ role: submitData });
     await createRoleMutate();
   };
 
@@ -75,7 +59,7 @@ export default (props: IPage) => {
     >
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
-      <RoleInfoForm wrappedComponentRef={(inst: unknown) => setRoleInfoFormRef(inst)} />
+      <RoleInfoForm ref={infoFormRef} />
 
       <SubmitBar>
         <Button

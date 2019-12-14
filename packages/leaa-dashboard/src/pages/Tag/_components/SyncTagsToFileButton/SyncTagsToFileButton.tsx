@@ -6,6 +6,7 @@ import { useMutation } from '@apollo/react-hooks';
 import { SyncTagsToFileObject } from '@leaa/common/src/dtos/tag';
 import { SYNC_TAGS_TO_FILE } from '@leaa/common/src/graphqls';
 import { messageUtil } from '@leaa/dashboard/src/utils';
+import { Rcon } from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';
 
@@ -30,7 +31,7 @@ export const SyncTagsToFileButton = (props: IProps) => {
     <Button
       className={cx(style['sync-button'], props.className)}
       type="link"
-      icon="sync"
+      icon={<Rcon type="ri-refresh-line" />}
       onClick={() => syncTagsToFileMutate()}
       loading={syncTagsToFileMution.loading}
     >

@@ -68,6 +68,7 @@ export const AxInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
                 <Input placeholder={t('_lang:slug')} />
               </Form.Item>
             </Col>
+
             <Col xs={24} sm={6}>
               <Form.Item
                 name="status"

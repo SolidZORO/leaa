@@ -1,177 +1,195 @@
-import React from 'react';
 import cx from 'classnames';
 import moment from 'moment';
+import React, { useEffect, useState, forwardRef, useImperativeHandle } from 'react';
 import { Col, Form, Input, InputNumber, Row, DatePicker } from 'antd';
-import { withTranslation } from 'react-i18next';
-import { FormComponentProps } from 'antd/lib/form';
+import { RangePickerValue } from 'antd/lib/date-picker/interface';
+
+import { useTranslation } from 'react-i18next';
 
 import { Coupon } from '@leaa/common/src/entrys';
-import { ITfn } from '@leaa/dashboard/src/interfaces';
+import { messageUtil, dateUtil } from '@leaa/dashboard/src/utils';
+import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
+import { UpdateCouponInput } from '@leaa/common/src/dtos/coupon';
 
-import { FormCard, SwitchNumber, IdTag, EntryInfoDate } from '@leaa/dashboard/src/components';
+import { FormCard, EntryInfoDate, SwitchNumber, IdTag } from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';
 
-interface IFormProps extends FormComponentProps {
-  className?: string;
+interface IProps {
   item?: Coupon;
   loading?: boolean;
+  className?: string;
 }
-
-type IProps = IFormProps & ITfn;
-type ITimeRange = [moment.Moment, moment.Moment];
-
-interface IState {
-  timeRange: ITimeRange;
-}
-
-const currentDayZeroTime = moment();
-const defaultTimeRange: ITimeRange = [currentDayZeroTime, moment(currentDayZeroTime).add(3, 'day')];
 
 const AVAILABLE_DATE_TIPS_FORMAT = 'YYYY-MM-DD (HH:mm:ss)';
+const currentDayZeroTime = moment();
+const defaultTimeRange: RangePickerValue = [currentDayZeroTime, moment(currentDayZeroTime).add(3, 'day')];
 
-class CouponInfoFormInner extends React.PureComponent<IProps, IState> {
-  constructor(props: IProps) {
-    super(props);
+export const CouponInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
+  const { t } = useTranslation();
+  const [form] = Form.useForm();
+  const [timeRange, setTimeRange] = useState<any[]>(defaultTimeRange);
 
-    this.state = { timeRange: defaultTimeRange };
-  }
-
-  componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>): void {
-    if (
-      this.props.item &&
-      this.props.item !== prevProps.item &&
-      this.props.item.start_time &&
-      this.props.item.expire_time
-    ) {
-      this.updateTimeRange([moment(this.props.item.start_time), moment(this.props.item.expire_time)]);
+  const onValidateForm = async (): IOnValidateFormResult<UpdateCouponInput> => {
+    try {
+      return await form.validateFields();
+    } catch (error) {
+      return messageUtil.error(error.errorFields[0]?.errors[0]);
     }
-  }
-
-  updateTimeRange = (timeRange: ITimeRange) => {
-    const nextTimeRange: ITimeRange = [moment(timeRange[0]), moment(timeRange[1])];
-
-    this.props.form.setFieldsValue({
-      start_time: nextTimeRange[0],
-      expire_time: nextTimeRange[1],
-    });
-
-    this.setState({ timeRange: nextTimeRange });
   };
 
-  render() {
-    const { t } = this.props;
+  const onUpdateForm = (item?: Coupon) => {
+    if (!item) {
+      form.setFieldsValue({
+        type: 'coupon',
+        amount: 0,
+        over_amount: 0,
+        quantity: 1,
+        redeemed_quantity: 0,
+        status: 1,
+      });
 
-    const { props } = this;
-    const { getFieldDecorator } = this.props.form;
+      form.setFields([
+        { name: 'start_time', value: defaultTimeRange[0] },
+        { name: 'expire_time', value: defaultTimeRange[1] },
+      ]);
 
-    return (
-      <div className={cx(style['wrapper'], props.className)}>
-        <FormCard
-          title={t('_page:Coupon.couponInfo')}
-          extra={<EntryInfoDate date={props.item && [props.item.created_at, props.item.updated_at]} />}
-        >
-          <Form className={cx('g-form--zero-margin-bottom', style['form-wrapper'])}>
-            <Row gutter={16} className={style['form-row']}>
-              {getFieldDecorator('type', {
-                // initialValue: props.item ? props.item.type : 'coupon',
-                // [type] is reserved field, for future expansion
-                initialValue: 'coupon',
-                rules: [{ required: true }],
-              })(<Input hidden placeholder={t('_lang:type')} />)}
+      return undefined;
+    }
 
-              <Col xs={24} sm={6}>
-                <Form.Item label={t('_lang:name')}>
-                  {getFieldDecorator('name', {
-                    initialValue: props.item ? props.item.name : undefined,
-                    rules: [{ required: true }],
-                  })(<Input placeholder={t('_lang:name')} />)}
-                </Form.Item>
-              </Col>
+    // if APIs return error, do not flush out edited data
+    if (form.getFieldValue('updated_at') && !item.updated_at) return undefined;
 
-              <Col xs={24} sm={3}>
-                <Form.Item label={t('_page:Coupon.amount')}>
-                  {getFieldDecorator('amount', {
-                    initialValue: props.item ? props.item.amount : 0,
-                    rules: [{ required: true }],
-                  })(<InputNumber placeholder={t('_lang:amount')} className="g-input-number" />)}
-                </Form.Item>
-              </Col>
+    // update was successful, keeping the form data and APIs in sync.
+    if (form.getFieldValue('updated_at') !== item.updated_at) {
+      form.setFieldsValue({
+        ...item,
+        type: 'coupon',
+      });
 
-              <Col xs={24} sm={3}>
-                <Form.Item label={t('_page:Coupon.overAmount')}>
-                  {getFieldDecorator('over_amount', {
-                    initialValue: props.item ? props.item.over_amount : 0,
-                    rules: [{ required: true }],
-                  })(<InputNumber placeholder={t('_lang:over_amount')} className="g-input-number" />)}
-                </Form.Item>
-              </Col>
+      form.setFields([
+        { name: 'start_time', value: props.item?.start_time || defaultTimeRange[0] },
+        { name: 'expire_time', value: props.item?.expire_time || defaultTimeRange[1] },
+      ]);
+    }
 
-              <Col xs={24} sm={2}>
-                <Form.Item label={t('_lang:status')}>
-                  {getFieldDecorator('status', {
-                    initialValue: props.item ? Number(props.item.status) : 1,
-                    rules: [{ required: true }],
-                  })(<SwitchNumber />)}
-                </Form.Item>
-              </Col>
+    return undefined;
+  };
 
+  const updateTimeRange = (date: RangePickerValue) => {
+    let nextDate: RangePickerValue = defaultTimeRange;
+
+    if (date) nextDate = date;
+
+    form.setFields([
+      { name: 'start_time', value: nextDate[0] },
+      { name: 'expire_time', value: nextDate[1] },
+    ]);
+
+    setTimeRange(nextDate);
+  };
+
+  useEffect(() => {
+    onUpdateForm(props.item);
+
+    if (props.item && props.item.start_time && props.item.expire_time) {
+      updateTimeRange([moment(props.item.start_time), moment(props.item.expire_time)]);
+    }
+  }, [props.item]);
+
+  useImperativeHandle(ref, () => ({ form, onValidateForm }));
+
+  return (
+    <div className={cx(style['wrapper'], props.className)}>
+      <FormCard
+        title={t('_page:Coupon.couponInfo')}
+        extra={<EntryInfoDate date={props.item && [props.item.created_at, props.item.updated_at]} />}
+      >
+        <Form form={form} layout="vertical">
+          <Row gutter={16}>
+            <div style={{ display: 'none' }}>
+              <Form.Item name="type" noStyle rules={[{ required: true }]} label={t('_lang:type')}>
+                <Input placeholder={t('_lang:type')} />
+              </Form.Item>
+            </div>
+
+            <Col xs={24} sm={6}>
+              <Form.Item name="name" rules={[{ required: true }]} label={t('_lang:name')}>
+                <Input placeholder={t('_lang:name')} />
+              </Form.Item>
+            </Col>
+
+            <Col xs={24} sm={4}>
+              <Form.Item name="amount" rules={[{ required: true }]} label={t('_page:Coupon.amount')}>
+                <InputNumber className="g-input-number" placeholder={t('_page:Coupon.amount')} />
+              </Form.Item>
+            </Col>
+
+            <Col xs={24} sm={4}>
+              <Form.Item name="over_amount" rules={[{ required: true }]} label={t('_page:Coupon.overAmount')}>
+                <InputNumber className="g-input-number" placeholder={t('_lang:over_amount')} />
+              </Form.Item>
+            </Col>
+
+            <Col xs={24} sm={3}>
+              <Form.Item
+                name="status"
+                normalize={e => e && Number(e)}
+                rules={[{ required: true }]}
+                label={t('_lang:status')}
+              >
+                <SwitchNumber />
+              </Form.Item>
+            </Col>
+
+            <Col xs={24} sm={3}>
               {props.item ? (
-                <Col xs={24} sm={2}>
-                  <Form.Item label={t('_page:Coupon.redeemUser')}>
-                    <IdTag id={props.item.user_id} link={`/users/${props.item.user_id}`} />
-                  </Form.Item>
-                </Col>
-              ) : (
-                <Col xs={24} sm={2}>
-                  <Form.Item label={t('_lang:quantity')}>
-                    {getFieldDecorator('quantity', {
-                      initialValue: 1,
-                      rules: [{ required: true }],
-                    })(<InputNumber placeholder={t('_lang:quantity')} className="g-input-number" />)}
-                  </Form.Item>
-                </Col>
-              )}
-            </Row>
-
-            <Row gutter={16} className={style['form-row']}>
-              <Col xs={24}>
-                {getFieldDecorator('start_time', {
-                  initialValue:
-                    props.item && props.item.start_time ? moment(this.state.timeRange[0]) : defaultTimeRange[0],
-                  rules: [{ required: true }],
-                })(<Input type="hidden" />)}
-                {getFieldDecorator('expire_time', {
-                  initialValue:
-                    props.item && props.item.expire_time ? moment(this.state.timeRange[1]) : defaultTimeRange[1],
-                  rules: [{ required: true }],
-                })(<Input type="hidden" />)}
-
-                <Form.Item
-                  colon={false}
-                  label={
-                    <span className={style['available-date-row']}>
-                      <strong>{t('_page:Coupon.availableDate')} : </strong>
-                      <em>
-                        {moment(this.state.timeRange[0]).format(AVAILABLE_DATE_TIPS_FORMAT)} ~{' '}
-                        {moment(this.state.timeRange[1]).format(AVAILABLE_DATE_TIPS_FORMAT)}
-                      </em>
-                    </span>
-                  }
-                >
-                  <DatePicker.RangePicker
-                    value={this.state.timeRange}
-                    onChange={e => this.updateTimeRange(e as ITimeRange)}
-                  />
+                <Form.Item label={t('_page:Coupon.redeemUser')}>
+                  <IdTag id={props.item?.user_id} link={`/users/${props.item?.user_id}`} />
                 </Form.Item>
-              </Col>
-            </Row>
-          </Form>
-        </FormCard>
-      </div>
-    );
-  }
-}
+              ) : (
+                <Form.Item name="quantity" rules={[{ required: true }]} label={t('_lang:quantity')}>
+                  <InputNumber placeholder={t('_lang:quantity')} className="g-input-number" />
+                </Form.Item>
+              )}
+            </Col>
+          </Row>
 
-// @ts-ignore
-export const CouponInfoForm = withTranslation()(Form.create<IFormProps>()(CouponInfoFormInner));
+          <Row gutter={16}>
+            <div style={{ display: 'none' }}>
+              <Form.Item name="start_time" noStyle rules={[{ required: true }]}>
+                <DatePicker />
+              </Form.Item>
+
+              <Form.Item name="expire_time" noStyle rules={[{ required: true }]}>
+                <DatePicker />
+              </Form.Item>
+            </div>
+
+            <Col xs={24}>
+              <Form.Item
+                colon={false}
+                label={
+                  <span className={style['available-date-row']}>
+                    <strong>{t('_page:Coupon.availableDate')} : </strong>
+                    <em>
+                      {moment(dateUtil.formatDateTimeToDayStartOrEnd('start', timeRange[0])).format(
+                        AVAILABLE_DATE_TIPS_FORMAT,
+                      )}
+                      ~
+                      {moment(dateUtil.formatDateTimeToDayStartOrEnd('end', timeRange[1])).format(
+                        AVAILABLE_DATE_TIPS_FORMAT,
+                      )}
+                    </em>
+                  </span>
+                }
+              >
+                <DatePicker.RangePicker value={timeRange} onChange={updateTimeRange} />
+              </Form.Item>
+            </Col>
+          </Row>
+        </Form>
+      </FormCard>
+    </div>
+  );
+});

@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Button, message } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useMutation } from '@apollo/react-hooks';
 
 import { Tag } from '@leaa/common/src/entrys';
 import { CreateTagInput } from '@leaa/common/src/dtos/tag';
-import { IPage } from '@leaa/dashboard/src/interfaces';
+import { IPage, ICommenFormRef, ISubmitData } from '@leaa/dashboard/src/interfaces';
 import { CREATE_TAG } from '@leaa/common/src/graphqls';
 import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { messageUtil } from '@leaa/dashboard/src/utils';
@@ -20,7 +20,7 @@ export default (props: IPage) => {
   const { t } = useTranslation();
 
   // ref
-  const [tagInfoFormRef, setTagInfoFormRef] = useState<any>();
+  const infoFormRef = useRef<ICommenFormRef<CreateTagInput>>(null);
 
   // mutation
   const [submitVariables, setSubmitVariables] = useState<{ tag: CreateTagInput }>();
@@ -34,16 +34,16 @@ export default (props: IPage) => {
   });
 
   const onSubmit = async () => {
-    tagInfoFormRef.props.form.validateFieldsAndScroll(async (err: any, formData: CreateTagInput) => {
-      if (err) {
-        message.error(err[Object.keys(err)[0]].errors[0].message);
+    const infoData: ISubmitData<CreateTagInput> = await infoFormRef.current?.onValidateForm();
 
-        return;
-      }
+    if (!infoData) return;
 
-      await setSubmitVariables({ tag: formData });
-      await createTagMutate();
-    });
+    const submitData: ISubmitData<CreateTagInput> = {
+      ...infoData,
+    };
+
+    await setSubmitVariables({ tag: submitData });
+    await createTagMutate();
   };
 
   return (
@@ -59,7 +59,7 @@ export default (props: IPage) => {
     >
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
-      <TagInfoForm wrappedComponentRef={(inst: unknown) => setTagInfoFormRef(inst)} />
+      <TagInfoForm ref={infoFormRef} />
 
       <SubmitBar>
         <Button

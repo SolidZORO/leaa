@@ -46,7 +46,6 @@ export const RoleInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
   };
 
   useEffect(() => onUpdateForm(props.item), [form, props.item]);
-
   useImperativeHandle(ref, () => ({ form, onValidateForm }));
 
   return (

@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, message } from 'antd';
+import { Button } from 'antd';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
 import { Tag } from '@leaa/common/src/entrys';
 import { GET_TAG, UPDATE_TAG } from '@leaa/common/src/graphqls';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { TagArgs, UpdateTagInput } from '@leaa/common/src/dtos/tag';
-import { IPage } from '@leaa/dashboard/src/interfaces';
+import { IPage, ICommenFormRef, ISubmitData } from '@leaa/dashboard/src/interfaces';
 import { messageUtil } from '@leaa/dashboard/src/utils';
 
 import { HtmlMeta, PageCard, SubmitBar, Rcon } from '@leaa/dashboard/src/components';
@@ -21,7 +21,7 @@ export default (props: IPage) => {
   const { id } = props.match.params as { id: string };
 
   // ref
-  const [tagInfoFormRef, setTagInfoFormRef] = useState<any>();
+  const infoFormRef = useRef<ICommenFormRef<UpdateTagInput>>(null);
 
   // query
   const getTagVariables = { id: Number(id) };
@@ -40,25 +40,16 @@ export default (props: IPage) => {
   });
 
   const onSubmit = async () => {
-    let hasError = false;
-    let submitData: UpdateTagInput = {};
+    const infoData: ISubmitData<UpdateTagInput> = await infoFormRef.current?.onValidateForm();
 
-    tagInfoFormRef.props.form.validateFieldsAndScroll(async (err: any, formData: Tag) => {
-      if (err) {
-        hasError = true;
-        message.error(err[Object.keys(err)[0]].errors[0].message);
+    if (!infoData) return;
 
-        return;
-      }
+    const submitData: ISubmitData<UpdateTagInput> = {
+      ...infoData,
+    };
 
-      submitData = formData;
-
-      await setSubmitVariables({ id: Number(id), tag: submitData });
-      await updateTagMutate();
-
-      // keep form fields consistent with API
-      tagInfoFormRef.props.form.resetFields();
-    });
+    await setSubmitVariables({ id: Number(id), tag: submitData });
+    await updateTagMutate();
   };
 
   return (
@@ -74,11 +65,7 @@ export default (props: IPage) => {
     >
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
-      <TagInfoForm
-        item={getTagQuery.data && getTagQuery.data.tag}
-        loading={getTagQuery.loading}
-        wrappedComponentRef={(inst: unknown) => setTagInfoFormRef(inst)}
-      />
+      <TagInfoForm ref={infoFormRef} item={getTagQuery.data?.tag} loading={getTagQuery.loading} />
 
       <SubmitBar>
         <Button

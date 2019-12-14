@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import cx from 'classnames';
+import React, { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { Button, Modal, message } from 'antd';
@@ -19,7 +20,7 @@ import {
   CreateSettingInput,
   UpdateSettingsInput,
 } from '@leaa/common/src/dtos/setting';
-import { IPage } from '@leaa/dashboard/src/interfaces';
+import { IPage, ICommenFormRef, ISubmitData } from '@leaa/dashboard/src/interfaces';
 import { settingUtil, messageUtil } from '@leaa/dashboard/src/utils';
 
 import { HtmlMeta, PageCard, SubmitBar, Rcon } from '@leaa/dashboard/src/components';
@@ -33,10 +34,13 @@ export default (props: IPage) => {
   const { t } = useTranslation();
 
   // ref
-  const [settingListFormRef, setSettingListFormRef] = useState<any>();
+  const settingListFormRef = useRef<ICommenFormRef<UpdateSettingsInput>>(null);
+  const settingModuleFormRef = useRef<ICommenFormRef<UpdateSettingInput>>(null);
+
+  // const [settingListFormRef, setSettingListFormRef] = useState<any>();
   const [settingInfoFormRef, setSettingInfoFormRef] = useState<any>();
 
-  const [modalData, setModalData] = useState<Setting | null>(null);
+  const [modalData, setModalData] = useState<Setting | undefined>();
   const [modalType, setModalType] = useState<'create' | 'update' | null>(null);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
 
@@ -57,14 +61,14 @@ export default (props: IPage) => {
   const onAfterCloseModalVisible = () => {
     onResetModalData();
     setModalType(null);
-    setModalData(null);
+    setModalData(undefined);
   };
 
   const onOpenCreateSetting = () => {
     onResetModalData();
 
     setModalType('create');
-    setModalData(null);
+    setModalData(undefined);
     setModalVisible(true);
   };
 
@@ -173,24 +177,15 @@ export default (props: IPage) => {
   };
 
   const onUpdateSettings = async () => {
-    settingListFormRef.props.form.validateFieldsAndScroll(
-      async (err: any, formData: { settings: UpdateSettingsInput }) => {
-        if (err) {
-          message.error(err[Object.keys(err)[0]].errors[0].message);
+    const submitData: ISubmitData<UpdateSettingsInput> = await settingListFormRef.current?.onValidateForm();
 
-          return;
-        }
+    if (!submitData) return;
 
-        await setUpdateSettingsVariables({ settings: formData.settings });
-        await updateSettingsMutate();
-
-        // keep form fields consistent with API
-        settingListFormRef.props.form.resetFields();
-      },
-    );
+    await setUpdateSettingsVariables({ settings: submitData });
+    await updateSettingsMutate();
   };
 
-  const onDeleteSettings = async (id: number | null) => {
+  const onDeleteSettings = async (id: number | undefined) => {
     if (!id) {
       message.error('ERROR');
 
@@ -207,7 +202,11 @@ export default (props: IPage) => {
         <span>
           <Rcon type={props.route.icon} />
           <strong>{t(`${props.route.namei18n}`)}</strong>
-          <Button className="page-card-create-button" onClick={onOpenCreateSetting} type="link">
+          <Button
+            className={cx('g-page-card-create-button', style['create-button'])}
+            onClick={onOpenCreateSetting}
+            type="link"
+          >
             <Rcon type={PAGE_CARD_TITLE_CREATE_ICON} />
           </Button>
         </span>
@@ -218,8 +217,8 @@ export default (props: IPage) => {
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
       <SettingListForm
-        settings={getSettingsQuery.data && getSettingsQuery.data.settings && getSettingsQuery.data.settings.items}
-        wrappedComponentRef={(inst: unknown) => setSettingListFormRef(inst)}
+        ref={settingListFormRef}
+        items={getSettingsQuery.data?.settings?.items}
         onClickLabelEditCallback={onOpenUpdateSetting}
       />
 
@@ -250,11 +249,11 @@ export default (props: IPage) => {
           <Button
             icon="delete"
             loading={deleteSettingMutation.loading}
-            onClick={() => onDeleteSettings(modalData && modalData.id)}
+            onClick={() => onDeleteSettings(modalData?.id)}
           />
         </div>
 
-        <SettingModalForm item={modalData} wrappedComponentRef={(inst: unknown) => setSettingInfoFormRef(inst)} />
+        <SettingModalForm ref={settingModuleFormRef} item={modalData} />
       </Modal>
     </PageCard>
   );

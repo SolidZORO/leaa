@@ -1,161 +1,151 @@
-import React from 'react';
 import cx from 'classnames';
-import { Col, Select, Form, Input, Row } from 'antd';
-import { withTranslation } from 'react-i18next';
-import { FormComponentProps } from 'antd/lib/form';
+import React, { useEffect, forwardRef, useState, useImperativeHandle } from 'react';
+import { Col, Form, Input, Row, Select } from 'antd';
+
+import { useTranslation } from 'react-i18next';
 
 import { Setting } from '@leaa/common/src/entrys';
-import { ITfn } from '@leaa/dashboard/src/interfaces';
-import { SwitchNumber, Rcon } from '@leaa/dashboard/src/components';
+import { messageUtil } from '@leaa/dashboard/src/utils';
+import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
+import { UpdateSettingInput } from '@leaa/common/src/dtos/setting';
 
+import { FormCard, EntryInfoDate, SwitchNumber, Rcon } from '@leaa/dashboard/src/components';
 import { buildTypeDom } from '../SettingListForm/SettingListForm';
 
 import style from './style.module.less';
 
-interface IFormProps extends FormComponentProps {
-  className?: string;
+interface IProps {
   item?: Setting;
   loading?: boolean;
+  className?: string;
 }
 
-type IProps = IFormProps & ITfn;
+export const SettingModalForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
+  const { t } = useTranslation();
+  const [form] = Form.useForm();
+  const [optionType, setOptionType] = useState(props.item?.type || 'input');
 
-class SettingInfoFormInner extends React.PureComponent<IProps> {
-  constructor(props: IProps) {
-    super(props);
-  }
+  const typeMapping: { [key: string]: string } = {
+    input: t('_lang:type_input'),
+    textarea: t('_lang:type_textarea'),
+    radio: t('_lang:type_radio'),
+    checkbox: t('_lang:type_checkbox'),
+  };
 
-  render() {
-    const { t } = this.props;
+  const onValidateForm = async (): IOnValidateFormResult<UpdateSettingInput> => {
+    try {
+      return await form.validateFields();
+    } catch (error) {
+      return messageUtil.error(error.errorFields[0]?.errors[0]);
+    }
+  };
 
-    const { props } = this;
-    const { getFieldDecorator } = this.props.form;
+  const onUpdateForm = (item?: Setting) => {
+    if (!item) return undefined;
 
-    const typeMapping: { [key: string]: string } = {
-      input: t('_lang:type_input'),
-      textarea: t('_lang:type_textarea'),
-      radio: t('_lang:type_radio'),
-      checkbox: t('_lang:type_checkbox'),
-    };
+    return form.setFieldsValue(item);
+  };
 
-    return (
-      <div className={cx(style['wrapper'], props.className)}>
-        <Form className={cx('g-form--zero-margin-bottom', style['form-wrapper'])}>
-          {props.item &&
-            getFieldDecorator('id', {
-              initialValue: props.item ? props.item.id : undefined,
-              rules: [{ required: true }],
-              normalize: e => e && Number(e),
-            })(<Input type="number" placeholder="ID" hidden />)}
+  useEffect(() => onUpdateForm(props.item), [form, props.item]);
+  useImperativeHandle(ref, () => ({ form, onValidateForm }));
 
-          <Row gutter={16} className={style['form-row']}>
-            <Col xs={24} sm={12}>
-              <Form.Item label={t('_lang:name')}>
-                {getFieldDecorator('name', {
-                  initialValue: props.item ? props.item.name : undefined,
-                  rules: [{ required: true }],
-                })(<Input placeholder={t('_lang:name')} />)}
-              </Form.Item>
-            </Col>
+  console.log(optionType);
 
-            <Col xs={24} sm={12}>
-              <Form.Item label={t('_lang:slug')}>
-                {getFieldDecorator('slug', {
-                  initialValue: props.item ? props.item.slug : undefined,
-                  rules: [{ required: true }],
-                })(<Input placeholder={t('_lang:slug')} />)}
-              </Form.Item>
-            </Col>
-          </Row>
-
+  return (
+    <div className={cx(style['wrapper'], props.className)}>
+      <FormCard
+        title={t('_page:Setting.settingInfo')}
+        extra={<EntryInfoDate date={props.item && [props.item.created_at, props.item.updated_at]} />}
+      >
+        <Form form={form} layout="vertical">
           <Row gutter={16} className={style['form-row']}>
             <Col xs={24} sm={6}>
-              <Form.Item label={t('_lang:type')}>
-                {getFieldDecorator('type', {
-                  initialValue: props.item ? props.item.type : undefined,
-                  rules: [{ required: true }],
-                })(
-                  <Select placeholder={t('_lang:type')}>
-                    {Object.keys(typeMapping).map((type: string) => (
-                      <Select.Option key={type}>{typeMapping[type]}</Select.Option>
-                    ))}
-                  </Select>,
-                )}
-              </Form.Item>
-            </Col>
-
-            <Col xs={24} sm={18}>
-              <Form.Item label={t('_lang:value')}>
-                {getFieldDecorator('value', {
-                  initialValue: props.item ? props.item.value : undefined,
-                  rules: [{ required: true }],
-                })(
-                  buildTypeDom({
-                    type: this.props.form.getFieldValue('type'),
-                    name: props.item ? props.item.name : '',
-                  }),
-                )}
-              </Form.Item>
-            </Col>
-          </Row>
-
-          <Row gutter={16} className={style['form-row']}>
-            <Col xs={24} sm={6}>
-              <Form.Item label={t('_lang:sort')}>
-                {getFieldDecorator('sort', {
-                  initialValue: props.item ? props.item.sort : 0,
-                  rules: [{ required: true }],
-                  normalize: e => e && Number(e),
-                })(<Input placeholder={t('_lang:sort')} />)}
+              <Form.Item name="id" rules={[{ required: true }]} normalize={e => e && Number(e)} label={t('_lang:id')}>
+                <Input placeholder={t('_lang:id')} />
               </Form.Item>
             </Col>
 
             <Col xs={24} sm={6}>
-              <Form.Item label={t('_lang:private')}>
-                {getFieldDecorator('private', {
-                  initialValue: props.item ? Number(props.item.private) : 0,
-                  rules: [],
-                })(<SwitchNumber />)}
+              <Form.Item name="name" rules={[{ required: true }]} label={t('_lang:name')}>
+                <Input placeholder={t('_lang:name')} />
+              </Form.Item>
+            </Col>
+
+            <Col xs={24} sm={6}>
+              <Form.Item name="slug" rules={[{ required: true }]} label={t('_lang:slug')}>
+                <Input placeholder={t('_lang:slug')} />
+              </Form.Item>
+            </Col>
+
+            <Col xs={24} sm={6}>
+              <Form.Item name="type" rules={[{ required: true }]} label={t('_lang:type')}>
+                <Select placeholder={t('_lang:type')} onChange={v => setOptionType(v as string)}>
+                  {Object.keys(typeMapping).map((type: string) => (
+                    <Select.Option key={type} value={type}>
+                      {typeMapping[type]}
+                    </Select.Option>
+                  ))}
+                </Select>
+              </Form.Item>
+            </Col>
+
+            <Col xs={24} sm={6}>
+              <Form.Item name="value" rules={[{ required: true }]} label={t('_lang:value')}>
+                {buildTypeDom({
+                  type: optionType,
+                  name: props.item ? props.item.name : '',
+                })}
               </Form.Item>
             </Col>
           </Row>
 
-          <Row gutter={16} className={style['form-row']}>
-            <Col xs={24} sm={12}>
+          <Row gutter={16}>
+            <Col xs={24} sm={6}>
               <Form.Item
-                label={
-                  <span>
-                    <Rcon type="question-circle" /> {t('_lang:options')}
-                  </span>
-                }
+                name="sort"
+                normalize={e => e && Number(e)}
+                rules={[{ required: true }]}
+                label={t('_lang:sort')}
               >
-                {getFieldDecorator('options', {
-                  initialValue: props.item ? props.item.options : undefined,
-                  rules: [],
-                })(<Input.TextArea rows={3} placeholder={t('_lang:options')} />)}
+                <Input placeholder={t('_lang:sort')} />
               </Form.Item>
             </Col>
 
-            <Col xs={24} sm={12}>
+            <Col xs={24} sm={6}>
               <Form.Item
+                name="private"
+                normalize={e => e && Number(e)}
+                rules={[{ required: true }]}
+                label={t('_lang:private')}
+              >
+                <SwitchNumber />
+              </Form.Item>
+            </Col>
+          </Row>
+
+          <Row gutter={16}>
+            <Col xs={24} sm={6}>
+              <Form.Item name="options" rules={[]} label={t('_lang:options')}>
+                <Input.TextArea rows={3} placeholder={t('_lang:options')} />
+              </Form.Item>
+            </Col>
+
+            <Col xs={24} sm={6}>
+              <Form.Item
+                name="description"
+                rules={[]}
                 label={
                   <span>
                     <Rcon type="question-circle" /> {t('_lang:tips')}
                   </span>
                 }
               >
-                {getFieldDecorator('description', {
-                  initialValue: props.item ? props.item.description : undefined,
-                  rules: [],
-                })(<Input.TextArea rows={3} placeholder={t('_lang:description')} />)}
+                <Input.TextArea rows={3} placeholder={t('_lang:description')} />
               </Form.Item>
             </Col>
           </Row>
         </Form>
-      </div>
-    );
-  }
-}
-
-// @ts-ignore
-export const SettingModalForm = withTranslation()(Form.create<IFormProps>()(SettingInfoFormInner));
+      </FormCard>
+    </div>
+  );
+});

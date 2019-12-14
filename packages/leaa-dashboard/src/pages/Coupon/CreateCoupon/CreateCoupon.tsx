@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { Button, message } from 'antd';
+import React, { useState, useRef } from 'react';
+import { Button } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useMutation } from '@apollo/react-hooks';
 
 import { Coupon } from '@leaa/common/src/entrys';
 import { CreateCouponInput } from '@leaa/common/src/dtos/coupon';
-import { IPage } from '@leaa/dashboard/src/interfaces';
+import { IPage, ICommenFormRef, ISubmitData } from '@leaa/dashboard/src/interfaces';
 import { CREATE_COUPON } from '@leaa/common/src/graphqls';
 import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { messageUtil } from '@leaa/dashboard/src/utils';
@@ -20,7 +20,7 @@ export default (props: IPage) => {
   const { t } = useTranslation();
 
   // ref
-  const [couponInfoFormRef, setCouponInfoFormRef] = useState<any>();
+  const infoFormRef = useRef<ICommenFormRef<CreateCouponInput>>(null);
 
   // mutation
   const [submitVariables, setSubmitVariables] = useState<{ coupon: CreateCouponInput }>();
@@ -34,16 +34,17 @@ export default (props: IPage) => {
   });
 
   const onSubmit = async () => {
-    couponInfoFormRef.props.form.validateFieldsAndScroll(async (err: any, formData: CreateCouponInput) => {
-      if (err) {
-        message.error(err[Object.keys(err)[0]].errors[0].message);
+    const infoData: ISubmitData<CreateCouponInput> = await infoFormRef.current?.onValidateForm();
 
-        return;
-      }
+    if (!infoData) return;
 
-      await setSubmitVariables({ coupon: formData });
-      await createCouponMutate();
-    });
+    console.log(infoData);
+    const submitData: ISubmitData<CreateCouponInput> = {
+      ...infoData,
+    };
+
+    await setSubmitVariables({ coupon: submitData });
+    await createCouponMutate();
   };
 
   return (
@@ -59,7 +60,7 @@ export default (props: IPage) => {
     >
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
-      <CouponInfoForm wrappedComponentRef={(inst: unknown) => setCouponInfoFormRef(inst)} />
+      <CouponInfoForm ref={infoFormRef} />
 
       <SubmitBar>
         <Button

@@ -13,7 +13,7 @@ import { GET_TAGS, DELETE_TAG } from '@leaa/common/src/graphqls';
 import { Tag as TagEntry } from '@leaa/common/src/entrys';
 import { TagsWithPaginationObject, TagsArgs } from '@leaa/common/src/dtos/tag';
 import { IPage, IKey, ITablePagination } from '@leaa/dashboard/src/interfaces';
-import { urlUtil, tableUtil, messageUtil } from '@leaa/dashboard/src/utils';
+import { urlUtil, tableUtil, messageUtil, authUtil } from '@leaa/dashboard/src/utils';
 
 import {
   Rcon,
@@ -25,6 +25,8 @@ import {
   TableColumnDate,
   TableColumnDeleteButton,
 } from '@leaa/dashboard/src/components';
+
+import { SyncTagsToFileButton } from '../_components/SyncTagsToFileButton/SyncTagsToFileButton';
 
 import style from './style.module.less';
 
@@ -157,6 +159,10 @@ export default (props: IPage) => {
       }
       extra={
         <div className="g-page-card-extra-filter-bar-wrapper">
+          {authUtil.getAuthInfo().flatPermissions.includes('tag.item-update') && (
+            <SyncTagsToFileButton className={style['sync-tags-to-file-button']} />
+          )}
+
           <SearchInput
             className={cx('g-extra-filter-bar--item', 'g-extra-filter-bar--q')}
             value={q}

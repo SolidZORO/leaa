@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, message } from 'antd';
+import { Button } from 'antd';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
 import { Coupon } from '@leaa/common/src/entrys';
 import { GET_COUPON, UPDATE_COUPON } from '@leaa/common/src/graphqls';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { CouponArgs, UpdateCouponInput } from '@leaa/common/src/dtos/coupon';
-import { IPage } from '@leaa/dashboard/src/interfaces';
+import { IPage, ICommenFormRef, ISubmitData } from '@leaa/dashboard/src/interfaces';
 import { messageUtil } from '@leaa/dashboard/src/utils';
 
 import { HtmlMeta, PageCard, SubmitBar, Rcon } from '@leaa/dashboard/src/components';
@@ -22,7 +22,7 @@ export default (props: IPage) => {
   const { id } = props.match.params as { id: string };
 
   // ref
-  const [couponInfoFormRef, setCouponInfoFormRef] = useState<any>();
+  const infoFormRef = useRef<ICommenFormRef<UpdateCouponInput>>(null);
 
   // query
   const getCouponVariables = { id: Number(id) };
@@ -41,22 +41,16 @@ export default (props: IPage) => {
   });
 
   const onSubmit = async () => {
-    let hasError = false;
-    let submitData: UpdateCouponInput = {};
+    const infoData: ISubmitData<UpdateCouponInput> = await infoFormRef.current?.onValidateForm();
 
-    couponInfoFormRef.props.form.validateFieldsAndScroll(async (err: any, formData: UpdateCouponInput) => {
-      if (err) {
-        hasError = true;
-        message.error(err[Object.keys(err)[0]].errors[0].message);
+    if (!infoData) return;
 
-        return;
-      }
+    const submitData: ISubmitData<UpdateCouponInput> = {
+      ...infoData,
+    };
 
-      submitData = formData;
-
-      await setSubmitVariables({ id: Number(id), coupon: submitData });
-      await updateCouponMutate();
-    });
+    await setSubmitVariables({ id: Number(id), coupon: submitData });
+    await updateCouponMutate();
   };
 
   return (
@@ -75,9 +69,9 @@ export default (props: IPage) => {
       <CouponCodeStatus item={getCouponQuery.data && getCouponQuery.data.coupon} loading={getCouponQuery.loading} />
 
       <CouponInfoForm
+        ref={infoFormRef}
         item={getCouponQuery.data && getCouponQuery.data.coupon}
         loading={getCouponQuery.loading}
-        wrappedComponentRef={(inst: unknown) => setCouponInfoFormRef(inst)}
       />
 
       <SubmitBar>

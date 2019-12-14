@@ -111,11 +111,25 @@
       "unicode_decimal": 61845
     },
     {
+      "icon_id": "12124934",
+      "name": "ri-repeat-fill",
+      "font_class": "ri-repeat-fill",
+      "unicode": "f19d",
+      "unicode_decimal": 61853
+    },
+    {
       "icon_id": "12124981",
       "name": "ri-checkbox-blank-line",
       "font_class": "ri-checkbox-blank-line",
       "unicode": "f1cc",
       "unicode_decimal": 61900
+    },
+    {
+      "icon_id": "12124998",
+      "name": "ri-question-line",
+      "font_class": "ri-question-line",
+      "unicode": "f1dd",
+      "unicode_decimal": 61917
     },
     {
       "icon_id": "12125012",
@@ -223,6 +237,13 @@
       "unicode_decimal": 62206
     },
     {
+      "icon_id": "12125334",
+      "name": "ri-refresh-line",
+      "font_class": "ri-refresh-line",
+      "unicode": "f32d",
+      "unicode_decimal": 62253
+    },
+    {
       "icon_id": "12125348",
       "name": "ri-search-eye-line",
       "font_class": "ri-search-eye-line",
@@ -277,6 +298,13 @@
       "font_class": "ri-arrow-left-s-line",
       "unicode": "f44d",
       "unicode_decimal": 62541
+    },
+    {
+      "icon_id": "12125631",
+      "name": "ri-restart-line",
+      "font_class": "ri-restart-line",
+      "unicode": "f456",
+      "unicode_decimal": 62550
     },
     {
       "icon_id": "12125661",
