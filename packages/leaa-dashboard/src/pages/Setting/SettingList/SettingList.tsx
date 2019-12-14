@@ -2,7 +2,8 @@ import cx from 'classnames';
 import React, { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { Button, Modal, message } from 'antd';
+import { Button, Modal, Popconfirm, message } from 'antd';
+import { DeleteOutlined, LoadingOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 
 import { UPDATE_BUTTON_ICON, PAGE_CARD_TITLE_CREATE_ICON } from '@leaa/dashboard/src/constants';
 import {
@@ -35,20 +36,11 @@ export default (props: IPage) => {
 
   // ref
   const settingListFormRef = useRef<ICommenFormRef<UpdateSettingsInput>>(null);
-  const settingModuleFormRef = useRef<ICommenFormRef<UpdateSettingInput>>(null);
-
-  // const [settingListFormRef, setSettingListFormRef] = useState<any>();
-  const [settingInfoFormRef, setSettingInfoFormRef] = useState<any>();
+  const settingModuleFormRef = useRef<ICommenFormRef<UpdateSettingInput | CreateSettingInput>>(null);
 
   const [modalData, setModalData] = useState<Setting | undefined>();
   const [modalType, setModalType] = useState<'create' | 'update' | null>(null);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
-
-  const onResetModalData = () => {
-    if (settingInfoFormRef && settingInfoFormRef.props) {
-      settingInfoFormRef.props.form.resetFields();
-    }
-  };
 
   const onRefreshSettings = () => {
     settingUtil.refreshLocalStorageSettings();
@@ -59,22 +51,19 @@ export default (props: IPage) => {
   };
 
   const onAfterCloseModalVisible = () => {
-    onResetModalData();
+    settingModuleFormRef.current?.form.resetFields();
+
     setModalType(null);
     setModalData(undefined);
   };
 
   const onOpenCreateSetting = () => {
-    onResetModalData();
-
     setModalType('create');
     setModalData(undefined);
     setModalVisible(true);
   };
 
   const onOpenUpdateSetting = (setting: Setting) => {
-    onResetModalData();
-
     setModalType('update');
     setModalVisible(true);
     setModalData(setting);
@@ -139,41 +128,26 @@ export default (props: IPage) => {
   });
 
   const onCreateSetting = async () => {
-    settingInfoFormRef.props.form.validateFieldsAndScroll(async (err: any, formData: CreateSettingInput) => {
-      if (err) {
-        message.error(err[Object.keys(err)[0]].errors[0].message);
+    const submitData: ISubmitData<any> = await settingModuleFormRef.current?.onValidateForm();
 
-        return;
-      }
+    if (!submitData) return;
 
-      await setCreateSettingVariables({ setting: formData });
-      await createSettingMutate();
-    });
+    await setCreateSettingVariables({ setting: submitData });
+    await createSettingMutate();
   };
 
   const onUpdateSetting = async () => {
-    let submitData: UpdateSettingInput;
+    const submitData: ISubmitData<UpdateSettingInput> = await settingModuleFormRef.current?.onValidateForm();
 
-    settingInfoFormRef.props.form.validateFieldsAndScroll(async (err: any, formData: Setting) => {
-      if (err) {
-        message.error(err[Object.keys(err)[0]].errors[0].message);
+    if (!submitData) return;
 
-        return;
-      }
+    // @ts-ignore
+    const id = Number(submitData?.id);
+    // @ts-ignore
+    delete submitData.id;
 
-      const id = Number(formData.id);
-
-      // eslint-disable-next-line no-param-reassign
-      delete formData.id;
-
-      submitData = {
-        ...formData,
-        sort: typeof formData.sort !== 'undefined' ? Number(formData.sort) : 0,
-      };
-
-      await setUpdateSettingVariables({ id, setting: submitData });
-      await updateSettingMutate();
-    });
+    await setUpdateSettingVariables({ id, setting: submitData });
+    await updateSettingMutate();
   };
 
   const onUpdateSettings = async () => {
@@ -236,7 +210,7 @@ export default (props: IPage) => {
       </SubmitBar>
 
       <Modal
-        title={t(`_lang:${modalType}`)}
+        title={`${t(`_lang:${modalType}`)}${modalData?.name ? `  ${modalData.name}` : ''}`}
         visible={modalVisible}
         // visible
         onOk={modalType === 'update' ? onUpdateSetting : onCreateSetting}
@@ -246,14 +220,21 @@ export default (props: IPage) => {
         afterClose={onAfterCloseModalVisible}
       >
         <div className={style['delete-button']}>
-          <Button
-            icon="delete"
-            loading={deleteSettingMutation.loading}
-            onClick={() => onDeleteSettings(modalData?.id)}
-          />
+          <Popconfirm
+            icon={deleteSettingMutation.loading ? <LoadingOutlined /> : <QuestionCircleOutlined />}
+            title={
+              <span>
+                {t('_page:Setting.confirmDelete')} {modalData?.name}?
+              </span>
+            }
+            placement="topRight"
+            onConfirm={() => onDeleteSettings(modalData?.id)}
+          >
+            <Button icon={<DeleteOutlined />} />
+          </Popconfirm>
         </div>
 
-        <SettingModalForm ref={settingModuleFormRef} item={modalData} />
+        <SettingModalForm ref={settingModuleFormRef} item={modalData} type={modalType} />
       </Modal>
     </PageCard>
   );

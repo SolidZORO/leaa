@@ -16,7 +16,7 @@
     "fix-js": "yarn run lint-js --fix",
     "fix": "yarn run fix-js",
     "---------------------------------------------------------------------- TEST ----": "----",
-    "test": "jest --verbose --config=jest.config.js",
+    "test": "NODE_ENV=test DEMO_MODE=false jest --verbose --config=jest.config.js",
     "test:codecov": "jest --coverage --detectOpenHandles --forceExit --config=jest.config.js",
     "test:watch": "jest --watch --verbose --config=jest.config.js",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",

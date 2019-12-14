@@ -55,8 +55,6 @@ export default (props: IPage) => {
     const infoData: ISubmitData<UpdateUserInput> = await infoFormRef.current?.onValidateForm();
     const userRolesData: ISubmitData<UpdateUserInput> = await userRolesFormRef.current?.onValidateForm();
 
-    console.log(userRolesData);
-
     if (!infoData) return;
     if (!userRolesData) return;
 
@@ -64,8 +62,6 @@ export default (props: IPage) => {
       ...infoData,
       ...userRolesData,
     };
-
-    console.log('ALL', submitData);
 
     await setSubmitVariables({ id: Number(id), user: submitData });
     await updateUserMutate();

@@ -28,6 +28,20 @@ export class RoleService {
     private readonly configService: ConfigService,
   ) {}
 
+  async PLEASE_DONT_MODIFY_DEMO_DATA(id?: number, user?: User): Promise<boolean> {
+    if (this.configService.DEMO_MODE && !process.argv.includes('--nuke')) {
+      if (!id) return true;
+
+      const role = await this.role(id, user);
+
+      if (role && role.slug && role.slug === 'admin') {
+        throw errorUtil.ERROR({ error: 'Default Demo Data, PLEASE DONT', user });
+      }
+    }
+
+    return true;
+  }
+
   async roles(args: IRolesArgs): Promise<RolesWithPaginationObject | undefined> {
     const nextArgs = argsUtil.format(args);
 
@@ -104,11 +118,9 @@ export class RoleService {
   }
 
   async updateRole(id: number, args: UpdateRoleInput, user?: User): Promise<Role | undefined> {
-    if (curdUtil.isOneField(args, 'status')) return curdUtil.commonUpdate(this.roleRepository, CLS_NAME, id, args);
+    if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id, user);
 
-    if (this.configService.DEMO_MODE && !process.argv.includes('--nuke') && id === 1) {
-      return errorUtil.ERROR({ error: 'Default Role, PLEASE DONT', user });
-    }
+    if (curdUtil.isOneField(args, 'status')) return curdUtil.commonUpdate(this.roleRepository, CLS_NAME, id, args);
 
     const relationArgs: { permissions?: Permission[] } = {};
 
@@ -135,9 +147,7 @@ export class RoleService {
   }
 
   async deleteRole(id: number, user?: User): Promise<Role | undefined> {
-    if (this.configService.DEMO_MODE && !process.argv.includes('--nuke') && id <= 3) {
-      return errorUtil.ERROR({ error: 'Default Role, PLEASE DONT', user });
-    }
+    if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id, user);
 
     return curdUtil.commonDelete(this.roleRepository, CLS_NAME, id);
   }

@@ -15,6 +15,7 @@ import { RoleService } from '@leaa/api/src/modules/role/role.service';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 import { argsUtil, curdUtil, paginationUtil, authUtil, errorUtil } from '@leaa/api/src/utils';
 import { JwtService } from '@nestjs/jwt';
+import { usersSeed } from '@leaa/api/src/modules/seed/seed.data';
 
 type IUsersArgs = UsersArgs & FindOneOptions<User>;
 type IUserArgs = UserArgs & FindOneOptions<User>;
@@ -31,6 +32,20 @@ export class UserService {
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
   ) {}
+
+  async PLEASE_DONT_MODIFY_DEMO_DATA(id?: number, user?: User): Promise<boolean> {
+    if (this.configService.DEMO_MODE && !process.argv.includes('--nuke')) {
+      if (!id) return true;
+
+      const u = await this.user(id, user);
+
+      if (u && u.email && u.is_admin && usersSeed.map(seed => seed.email).includes(u.email)) {
+        throw errorUtil.ERROR({ error: 'Default Demo Data, PLEASE DONT', user });
+      }
+    }
+
+    return true;
+  }
 
   async users(args: IUsersArgs, user?: User): Promise<UsersWithPaginationObject> {
     const nextArgs: IUsersArgs = argsUtil.format(args);
@@ -117,11 +132,9 @@ export class UserService {
   }
 
   async updateUser(id: number, args: UpdateUserInput): Promise<User | undefined> {
-    if (curdUtil.isOneField(args, 'status')) return curdUtil.commonUpdate(this.userRepository, CLS_NAME, id, args);
+    if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id);
 
-    if (this.configService.DEMO_MODE && !process.argv.includes('--nuke') && id === 1) {
-      return errorUtil.ERROR({ error: 'Default User, PLEASE DONT' });
-    }
+    if (curdUtil.isOneField(args, 'status')) return curdUtil.commonUpdate(this.userRepository, CLS_NAME, id, args);
 
     const nextArgs = args;
     const relationArgs: { roles?: Role[] } = {};
@@ -152,9 +165,7 @@ export class UserService {
   }
 
   async deleteUser(id: number, user?: User): Promise<User | undefined> {
-    if (this.configService.DEMO_MODE && !process.argv.includes('--nuke') && id <= 3) {
-      return errorUtil.ERROR({ error: 'Default User, PLEASE DONT', user });
-    }
+    if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id, user);
 
     return curdUtil.commonDelete(this.userRepository, CLS_NAME, id);
   }

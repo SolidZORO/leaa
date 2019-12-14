@@ -41,8 +41,7 @@ export class ErrorBoundary extends React.Component<IProps, IState> {
       });
     }
 
-    console.log('ALL-STACK:', info);
-    console.log('ALL-ERROR:', error);
+    console.log('---- ALL-STACK ----', info, error);
 
     this.setState({ errorInfo: error.message });
   }

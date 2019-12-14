@@ -14,6 +14,7 @@ export const GET_SETTINGS = gql`
         value
         sort
         private
+        updated_at
       }
     }
   }
@@ -27,6 +28,7 @@ export const GET_SETTINGS_FOR_WWW = gql`
         name
         slug
         value
+        updated_at
       }
     }
   }

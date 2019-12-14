@@ -5,6 +5,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { Setting } from '@leaa/common/src/entrys';
 import { CreateSettingInput, UpdateSettingInput } from '@leaa/common/src/dtos/setting';
 import { SettingService } from '@leaa/api/src/modules/setting/setting.service';
+import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 
 describe('SettingService', () => {
   let settingService: SettingService;
@@ -14,6 +15,7 @@ describe('SettingService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         SettingService,
+        ConfigService,
         {
           provide: getRepositoryToken(Setting),
           useValue: SETTING_REPOSITORY_MOCK,

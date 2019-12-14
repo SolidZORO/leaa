@@ -5,6 +5,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Ax, User } from '@leaa/common/src/entrys';
 import { AxsArgs, AxsWithPaginationObject, AxArgs, CreateAxInput, UpdateAxInput } from '@leaa/common/src/dtos/ax';
 import { argsUtil, authUtil, curdUtil, paginationUtil, errorUtil } from '@leaa/api/src/utils';
+import { ConfigService } from '@leaa/api/src/modules/config/config.service';
+import { axSeed } from '@leaa/api/src/modules/seed/seed.data';
 
 type IAxsArgs = AxsArgs & FindOneOptions<Ax>;
 type IAxArgs = AxArgs & FindOneOptions<Ax>;
@@ -13,7 +15,24 @@ const CLS_NAME = 'AxService';
 
 @Injectable()
 export class AxService {
-  constructor(@InjectRepository(Ax) private readonly axRepository: Repository<Ax>) {}
+  constructor(
+    @InjectRepository(Ax) private readonly axRepository: Repository<Ax>,
+    private readonly configService: ConfigService,
+  ) {}
+
+  async PLEASE_DONT_MODIFY_DEMO_DATA(id?: number, user?: User): Promise<boolean> {
+    if (this.configService.DEMO_MODE && !process.argv.includes('--nuke')) {
+      if (!id) return true;
+
+      const ax = await this.ax(id, user);
+
+      if (ax && ax.slug && axSeed.map(seed => seed.slug).includes(ax.slug)) {
+        throw errorUtil.ERROR({ error: 'Default Demo Data, PLEASE DONT', user });
+      }
+    }
+
+    return true;
+  }
 
   async axs(args: IAxsArgs, user?: User): Promise<AxsWithPaginationObject> {
     const nextArgs = argsUtil.format(args);
@@ -67,12 +86,16 @@ export class AxService {
   }
 
   async updateAx(id: number, args: UpdateAxInput): Promise<Ax | undefined> {
+    if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id);
+
     if (curdUtil.isOneField(args, 'status')) return curdUtil.commonUpdate(this.axRepository, CLS_NAME, id, args);
 
     return curdUtil.commonUpdate(this.axRepository, CLS_NAME, id, args);
   }
 
   async deleteAx(id: number): Promise<Ax | undefined> {
+    if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id);
+
     return curdUtil.commonDelete(this.axRepository, CLS_NAME, id);
   }
 }

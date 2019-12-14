@@ -13,6 +13,8 @@ import {
   SettingsObject,
 } from '@leaa/common/src/dtos/setting';
 import { argsUtil, loggerUtil, curdUtil, paginationUtil, errorUtil, authUtil } from '@leaa/api/src/utils';
+import { ConfigService } from '@leaa/api/src/modules/config/config.service';
+import { settingSeed } from '@leaa/api/src/modules/seed/seed.data';
 
 type ISettingsArgs = SettingsArgs & FindOneOptions<Setting>;
 type ISettingArgs = SettingArgs & FindOneOptions<Setting>;
@@ -21,7 +23,24 @@ const CLS_NAME = 'SettingService';
 
 @Injectable()
 export class SettingService {
-  constructor(@InjectRepository(Setting) private readonly settingRepository: Repository<Setting>) {}
+  constructor(
+    @InjectRepository(Setting) private readonly settingRepository: Repository<Setting>,
+    private readonly configService: ConfigService,
+  ) {}
+
+  async PLEASE_DONT_MODIFY_DEMO_DATA(id?: number, user?: User): Promise<boolean> {
+    if (this.configService.DEMO_MODE && !process.argv.includes('--nuke')) {
+      if (!id) return true;
+
+      const setting = await this.setting(id, user);
+
+      if (setting && setting.slug && settingSeed.map(seed => seed.slug).includes(setting.slug)) {
+        throw errorUtil.ERROR({ error: 'Default Demo Data, PLEASE DONT', user });
+      }
+    }
+
+    return true;
+  }
 
   async settings(args: ISettingsArgs, user?: User): Promise<SettingsWithPaginationObject> {
     const nextArgs = argsUtil.format(args);
@@ -103,6 +122,8 @@ export class SettingService {
   }
 
   async updateSetting(id: number, args: UpdateSettingInput & FindOneOptions): Promise<Setting | undefined> {
+    if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id);
+
     if (curdUtil.isOneField(args, 'status')) return curdUtil.commonUpdate(this.settingRepository, CLS_NAME, id, args);
 
     return curdUtil.commonUpdate(this.settingRepository, CLS_NAME, id, args);
@@ -129,9 +150,7 @@ export class SettingService {
   }
 
   async deleteSetting(id: number, user?: User): Promise<Setting | undefined> {
-    if (id <= 5) {
-      return errorUtil.ERROR({ error: 'Default Setting, PLEASE DONT', user });
-    }
+    if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id, user);
 
     return curdUtil.commonDelete(this.settingRepository, CLS_NAME, id);
   }

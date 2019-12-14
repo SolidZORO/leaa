@@ -12,6 +12,7 @@ import {
 } from '@leaa/common/src/dtos/permission';
 import { argsUtil, curdUtil, paginationUtil, errorUtil } from '@leaa/api/src/utils';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
+import { permissionsSeed } from '@leaa/api/src/modules/seed/seed.data';
 
 type IPermissionsArgs = PermissionsArgs & FindOneOptions<Permission>;
 type IPermissionArgs = PermissionArgs & FindOneOptions<Permission>;
@@ -24,6 +25,20 @@ export class PermissionService {
     @InjectRepository(Permission) private readonly permissionRepository: Repository<Permission>,
     private readonly configService: ConfigService,
   ) {}
+
+  async PLEASE_DONT_MODIFY_DEMO_DATA(id?: number, user?: User): Promise<boolean> {
+    if (this.configService.DEMO_MODE && !process.argv.includes('--nuke')) {
+      if (!id) return true;
+
+      const p = await this.permission(id, user);
+
+      if (p && p.slug && permissionsSeed.map(seed => seed.slug).includes(p.slug as any)) {
+        throw errorUtil.ERROR({ error: 'Default Demo Data, PLEASE DONT', user });
+      }
+    }
+
+    return true;
+  }
 
   async permissions(args: IPermissionsArgs): Promise<PermissionsWithPaginationObject> {
     const nextArgs: IPermissionsArgs = argsUtil.format(args);
@@ -81,10 +96,7 @@ export class PermissionService {
   }
 
   async updatePermission(id: number, args: UpdatePermissionInput): Promise<Permission | undefined> {
-    if (this.configService.DEMO_MODE && !process.argv.includes('--nuke') && id <= 93) {
-      // eslint-disable-next-line no-param-reassign
-      delete args.slug;
-    }
+    if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id);
 
     // prettier-ignore
     // eslint-disable-next-line max-len
@@ -94,9 +106,7 @@ export class PermissionService {
   }
 
   async deletePermission(id: number, user?: User): Promise<Permission | undefined> {
-    if (this.configService.DEMO_MODE && !process.argv.includes('--nuke') && id <= 93) {
-      return errorUtil.ERROR({ error: 'Default Permission, PLEASE DONT', user });
-    }
+    if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id, user);
 
     return curdUtil.commonDelete(this.permissionRepository, CLS_NAME, id);
   }

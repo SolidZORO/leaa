@@ -5,6 +5,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { Ax, Category } from '@leaa/common/src/entrys';
 import { CreateAxInput, UpdateAxInput } from '@leaa/common/src/dtos/ax';
 import { AxService } from '@leaa/api/src/modules/ax/ax.service';
+import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 
 describe('AxService', () => {
   let axService: AxService;
@@ -15,6 +16,7 @@ describe('AxService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         AxService,
+        ConfigService,
         {
           provide: getRepositoryToken(Ax),
           useValue: AX_REPOSITORY_MOCK,

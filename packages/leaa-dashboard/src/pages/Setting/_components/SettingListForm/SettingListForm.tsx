@@ -23,7 +23,7 @@ interface IProps {
 const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
-    sm: { span: 5 },
+    sm: { span: 4 },
   },
   wrapperCol: {
     xs: { span: 24 },
@@ -76,18 +76,23 @@ export const SettingListForm = forwardRef((props: IProps, ref: React.Ref<any>) =
           }
           trigger="hover"
         >
-          <Button
-            size="small"
-            type="link"
-            onClick={() => props.onClickLabelEditCallback(setting)}
-            className={cx(style['label-button'])}
-          >
-            <Rcon type="ri-edit-2-line" className={style['label-icon']} />
-            <strong className={cx(style['label-text'])}>
-              {setting.private ? <Rcon type="ri-lock-2-line" className={style['private-icon']} /> : null}
-              {setting.name}
-            </strong>
-          </Button>
+          <div className={cx(style['label-box'])}>
+            <Button
+              size="small"
+              type="link"
+              onClick={() => props.onClickLabelEditCallback(setting)}
+              className={cx(style['label-button'])}
+            >
+              <strong className={cx(style['label-text'])}>
+                {setting.private ? <Rcon type="ri-lock-2-line" className={style['private-icon']} /> : null}
+                {setting.name}
+              </strong>
+
+              <Rcon type="ri-edit-2-line" />
+            </Button>
+
+            <code>{setting.slug}</code>
+          </div>
         </Tooltip>
       </span>
     );
@@ -120,10 +125,10 @@ export const SettingListForm = forwardRef((props: IProps, ref: React.Ref<any>) =
   return (
     <div className={cx(style['wrapper'], props.className)}>
       <FormCard>
-        <Form form={form} layout="vertical" hideRequiredMark {...formItemLayout}>
+        <Form form={form} layout="horizontal" hideRequiredMark {...formItemLayout}>
           {props.items?.map(item => (
             <div key={item.id}>
-              <Form.Item name={item.id} rules={[{ required: true }]} label={buildLabelDom(item)}>
+              <Form.Item name={item.id} rules={[{ required: true }]} colon={false} label={buildLabelDom(item)}>
                 {buildTypeDom(item)}
               </Form.Item>
             </div>

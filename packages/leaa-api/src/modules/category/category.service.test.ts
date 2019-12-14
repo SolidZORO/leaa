@@ -5,6 +5,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { Category } from '@leaa/common/src/entrys';
 import { CreateCategoryInput, UpdateCategoryInput } from '@leaa/common/src/dtos/category';
 import { CategoryService } from '@leaa/api/src/modules/category/category.service';
+import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 
 describe('CategoryService', () => {
   let categoryService: CategoryService;
@@ -14,6 +15,7 @@ describe('CategoryService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         CategoryService,
+        ConfigService,
         {
           provide: getRepositoryToken(Category),
           useValue: CATEGORY_REPOSITORY_MOCK,

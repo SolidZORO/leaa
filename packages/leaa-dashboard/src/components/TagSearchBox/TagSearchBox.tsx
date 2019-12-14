@@ -94,8 +94,6 @@ export const TagSearchBox = forwardRef((props: IProps, ref: React.Ref<any>) => {
   const onSelect = (tagName: any) => {
     const tagObject = optionalTags.find(item => item.name === tagName);
 
-    console.log(tagObject);
-
     if (props.onSelectTagCallback && tagObject) {
       props.onSelectTagCallback(tagObject);
     }

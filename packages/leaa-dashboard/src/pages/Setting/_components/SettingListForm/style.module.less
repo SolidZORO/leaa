@@ -1,11 +1,5 @@
 @import '~@leaa/dashboard/src/styles/variables.less';
 
-:global {
-  .ant-form-item {
-    margin-bottom: 10px !important;
-  }
-}
-
 .wrapper {
 }
 
@@ -17,52 +11,63 @@
 }
 
 .form-item {
-  //display: block !important;
 }
 
 .label-text,
 .label-fn {
-  transition: all 0.1s;
-  font-style: normal;
-}
-
-.label-icon {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 2px;
-  margin-right: 3px;
-  opacity: 0;
   transition: all 0.3s;
-  color: @primary-color;
-  font-size: 120%;
-}
-
-.private-icon {
-  vertical-align: -1px;
-  margin-right: 3px;
-  font-weight: 400;
-}
-
-.label-button {
-  color: #000;
-
-  &:hover {
-    .label-icon {
-      transition: all 0.1s;
-      opacity: 1;
-    }
-
-    .label-text {
-      color: #000;
-      transition: all 0.1s;
-      opacity: 0.3;
-    }
-  }
+  font-style: normal;
 }
 
 .label-text {
 }
 
 .label-fn {
+}
+
+.label-button {
+  color: #111;
+
+  span {
+    margin-left: 5px;
+    transition: all 0.3s;
+    opacity: 0.1;
+  }
+
+  &:hover,
+  &:focus,
+  &:active {
+    color: #111;
+  }
+
+  &:hover {
+    span {
+      color: @primary-color;
+      transition: all 0.3s;
+      opacity: 1;
+    }
+  }
+}
+
+.private-icon {
+  opacity: 1 !important;
+  color: #111 !important;
+  vertical-align: -1px;
+  margin-right: 5px;
+  font-weight: 400;
+}
+
+.label-box {
+  line-height: 1;
+  margin-top: -9px;
+
+  code {
+    display: block;
+    margin-top: -1px;
+    font-size: 12px;
+    padding-right: 42px;
+    transform: scale(0.7);
+    transform-origin: right center;
+    color: #ddd;
+  }
 }

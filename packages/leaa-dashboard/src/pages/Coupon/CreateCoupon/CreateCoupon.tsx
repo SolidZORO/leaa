@@ -38,7 +38,6 @@ export default (props: IPage) => {
 
     if (!infoData) return;
 
-    console.log(infoData);
     const submitData: ISubmitData<CreateCouponInput> = {
       ...infoData,
     };

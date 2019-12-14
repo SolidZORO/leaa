@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { Repository, FindOneOptions, SelectQueryBuilder, getManager } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { Category } from '@leaa/common/src/entrys';
+import { Category, User } from '@leaa/common/src/entrys';
 import {
   CategoriesArgs,
   CategoriesWithPaginationOrTreeObject,
@@ -13,6 +13,8 @@ import {
   CategoryTreeObject,
 } from '@leaa/common/src/dtos/category';
 import { argsUtil, curdUtil, paginationUtil, errorUtil } from '@leaa/api/src/utils';
+import { ConfigService } from '@leaa/api/src/modules/config/config.service';
+import { categorySeed } from '@leaa/api/src/modules/seed/seed.data';
 
 type ICategoriessArgs = CategoriesArgs & FindOneOptions<Category>;
 type ICategoryArgs = CategoryArgs & FindOneOptions<Category>;
@@ -21,7 +23,24 @@ const CLS_NAME = 'CategoryService';
 
 @Injectable()
 export class CategoryService {
-  constructor(@InjectRepository(Category) private readonly categoryRepository: Repository<Category>) {}
+  constructor(
+    @InjectRepository(Category) private readonly categoryRepository: Repository<Category>,
+    private readonly configService: ConfigService,
+  ) {}
+
+  async PLEASE_DONT_MODIFY_DEMO_DATA(id?: number, user?: User): Promise<boolean> {
+    if (this.configService.DEMO_MODE && !process.argv.includes('--nuke')) {
+      if (!id) return true;
+
+      const c = await this.category(id, user);
+
+      if (c && c.slug && categorySeed.map(seed => seed.slug).includes(c.slug)) {
+        throw errorUtil.ERROR({ error: 'Default Demo Data, PLEASE DONT', user });
+      }
+    }
+
+    return true;
+  }
 
   rootCategory(children?: any[]) {
     return {
@@ -148,6 +167,8 @@ export class CategoryService {
   }
 
   async updateCategory(id: number, args: UpdateCategoryInput): Promise<Category | undefined> {
+    if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id);
+
     if (curdUtil.isOneField(args, 'status')) return curdUtil.commonUpdate(this.categoryRepository, CLS_NAME, id, args);
 
     const nextArgs = args;
@@ -167,9 +188,7 @@ export class CategoryService {
   }
 
   async deleteCategory(id: number): Promise<Category | undefined> {
-    if (id <= 2) {
-      return errorUtil.ERROR({ error: 'Default Category, PLEASE DONT' });
-    }
+    if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id);
 
     return curdUtil.commonDelete(this.categoryRepository, CLS_NAME, id);
   }
