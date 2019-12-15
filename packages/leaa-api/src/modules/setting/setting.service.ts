@@ -35,7 +35,7 @@ export class SettingService {
       const setting = await this.setting(id, user);
 
       if (setting && setting.slug && settingSeed.map(seed => seed.slug).includes(setting.slug)) {
-        throw errorUtil.ERROR({ error: 'Default Demo Data, PLEASE DONT', user });
+        throw errorUtil.ERROR({ error: 'PLEASE DONT MODIFY DEMO DATA', user });
       }
     }
 
@@ -122,8 +122,6 @@ export class SettingService {
   }
 
   async updateSetting(id: number, args: UpdateSettingInput & FindOneOptions): Promise<Setting | undefined> {
-    if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id);
-
     if (curdUtil.isOneField(args, 'status')) return curdUtil.commonUpdate(this.settingRepository, CLS_NAME, id, args);
 
     return curdUtil.commonUpdate(this.settingRepository, CLS_NAME, id, args);

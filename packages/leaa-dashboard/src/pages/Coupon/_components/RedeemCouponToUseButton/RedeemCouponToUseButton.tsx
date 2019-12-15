@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Popconfirm, Button } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useMutation } from '@apollo/react-hooks';
+import { LoadingOutlined } from '@ant-design/icons';
 
 import { Coupon } from '@leaa/common/src/entrys';
 
@@ -25,6 +26,7 @@ export const RedeemCouponToUseButton = (props: IProps) => {
   const { t, i18n } = useTranslation();
 
   const [userId, setUserId] = useState<number | undefined>();
+  const [visible, setVisible] = useState<boolean>(false);
 
   // mutation
   const [redeemCouponMutate, redeemCouponMutation] = useMutation<Coupon>(REDEEM_COUPON, {
@@ -32,6 +34,7 @@ export const RedeemCouponToUseButton = (props: IProps) => {
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
     onCompleted: () => {
       messageUtil.gqlSuccess(t('_lang:updatedSuccessfully'));
+      setVisible(false);
 
       if (props.onConvetCompletedCallback) {
         props.onConvetCompletedCallback();
@@ -44,7 +47,7 @@ export const RedeemCouponToUseButton = (props: IProps) => {
   if (props.item.user_id || !props.item.canRedeem || !authUtil.can('coupon.item-redeem--to-all-user-id')) {
     return (
       <code className={style['normal-status']}>
-        <IdTag id={props.item.user_id} link={`/users/${props.item.user_id}`} />
+        <IdTag id={props.item.user_id} link={`/users/${props.item.user_id}`} icon={<Rcon type="ri-user-3-line" />} />
       </code>
     );
   }
@@ -53,10 +56,20 @@ export const RedeemCouponToUseButton = (props: IProps) => {
     <div className={cx(style['wrapper'], props.className)} style={props.style}>
       <Popconfirm
         // visible
+        visible={visible}
         overlayClassName={style['redeem-popconfirm']}
         icon={null}
         title={
           <div className={style['redeem-popconfirm-container']}>
+            <Button
+              shape="circle"
+              type="dashed"
+              icon={<Rcon type="ri-close-line" />}
+              size="small"
+              onClick={() => setVisible(false)}
+              className={style['close-button']}
+            />
+
             <div className={style['title']}>{t('_page:Coupon.redeemToUser')} :</div>
 
             <div className={style['content']}>
@@ -71,11 +84,10 @@ export const RedeemCouponToUseButton = (props: IProps) => {
 
               <Button
                 className={cx(style['submit-redeem-button'])}
-                icon={<Rcon type="ri-swap-box-line" />}
+                icon={redeemCouponMutation.loading ? <LoadingOutlined /> : <Rcon type="ri-swap-box-line" />}
                 disabled={typeof userId === 'undefined'}
                 onClick={onSubmit}
                 type="primary"
-                loading={redeemCouponMutation.loading}
               >
                 {t('_page:Coupon.redeem')}
               </Button>
@@ -83,7 +95,13 @@ export const RedeemCouponToUseButton = (props: IProps) => {
           </div>
         }
       >
-        <Button className={cx(style['redeem-button'])} icon={<Rcon type="ri-swap-box-line" />} size="small" type="link">
+        <Button
+          onClick={() => setVisible(true)}
+          className={cx(style['redeem-button'])}
+          icon={<Rcon type="ri-swap-box-line" />}
+          size="small"
+          type="link"
+        >
           {t('_page:Coupon.redeem')}
         </Button>
       </Popconfirm>

@@ -7,6 +7,7 @@ export { HtmlMeta } from './HtmlMeta/HtmlMeta';
 export { PageCard } from './PageCard/PageCard';
 export { TableCard } from './TableCard/TableCard';
 export { ErrorCard } from './ErrorCard/ErrorCard';
+export { BuildInfo } from './BuildInfo/BuildInfo';
 export { SubmitBar } from './SubmitBar/SubmitBar';
 export { CouponItem } from './CouponItem/CouponItem';
 export { AuthLayout } from './AuthLayout/AuthLayout';

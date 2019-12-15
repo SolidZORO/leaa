@@ -10,6 +10,7 @@ interface IProps {
   className?: string;
   id: number | string | undefined;
   link?: string;
+  icon?: string | React.ReactNode;
   size?: 'small' | 'large';
   linkNormalColor?: boolean;
 }
@@ -17,6 +18,7 @@ interface IProps {
 export const IdTag = (props: IProps) => {
   const idDom = (
     <div className={style['id-tag-inner']}>
+      {props.icon}
       <sup className={style['id-tag-symbol']}>#</sup>
       <strong className={style['id-tag-text']}>{!props.id ? '_' : props.id}</strong>
     </div>

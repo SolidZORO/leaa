@@ -10,7 +10,15 @@
 }
 
 .redeem-popconfirm-container {
+  position: relative;
   //width: 500px;
+
+  .close-button {
+    color: #999;
+    position: absolute;
+    right: -18px;
+    top: -8px;
+  }
 
   .title {
     margin: 0;
@@ -18,7 +26,7 @@
   }
 
   .content {
-    margin-top: 5px;
+    margin-top: 8px;
     display: flex;
   }
 }
@@ -31,7 +39,7 @@
   :global {
     .ant-popover-message {
       margin: 0;
-      padding: 10px;
+      padding: 5px 10px 10px;
 
       .ant-popover-message-title {
         padding-left: 0;
@@ -45,6 +53,8 @@
 }
 
 .redeem-button {
+  padding: 0;
+
   span {
     margin-left: 4px !important;
     font-size: 80%;

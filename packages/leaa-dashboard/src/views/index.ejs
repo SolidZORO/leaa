@@ -2,7 +2,7 @@
 <html className="no-js" lang="zh-CN">
 <head>
   <meta charset="utf-8">
-  <title>-</title>
+  <title><%= htmlWebpackPlugin.options.title %></title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -14,5 +14,6 @@
 <div id="app"></div>
 <script id="__ENV_DATA__" type="application/json"><%= htmlWebpackPlugin.options.env %></script>
 <script id="__BUILD_DATA__" type="application/json"><%= htmlWebpackPlugin.options.build %></script>
+<%= htmlWebpackPlugin.options.analytics_code %>
 </body>
 </html>

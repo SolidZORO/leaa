@@ -10,7 +10,7 @@ import logo from '@leaa/dashboard/src/assets/images/logo/logo-black.svg';
 import { IPage, ICommenFormRef, IAuthInfo, ISubmitData } from '@leaa/dashboard/src/interfaces';
 import { authUtil, messageUtil } from '@leaa/dashboard/src/utils';
 import { LOGIN_REDIRECT_URL } from '@leaa/dashboard/src/constants';
-import { HtmlMeta, SwitchLanguage } from '@leaa/dashboard/src/components';
+import { HtmlMeta, SwitchLanguage, BuildInfo } from '@leaa/dashboard/src/components';
 import { AuthLoginInput } from '@leaa/common/src/dtos/auth';
 
 import { LoginForm } from './_components/LoginForm/LoginForm';
@@ -127,6 +127,8 @@ export default (props: IPage) => {
             </div>
           </Col>
         </Row>
+
+        <BuildInfo className={style['build-info']} />
       </div>
     </div>
   );

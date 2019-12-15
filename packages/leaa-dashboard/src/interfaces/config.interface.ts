@@ -5,6 +5,7 @@ export interface IDotEnv {
   BASE_HOST: string;
   API_HOST: string;
   GRAPHQL_ENDPOINT: string;
+  ANALYTICS_CODE: string;
 }
 
 export interface ISetting {

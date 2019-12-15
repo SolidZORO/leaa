@@ -5,8 +5,8 @@ import { RouteComponentProps } from 'react-router-dom';
 
 import { authUtil } from '@leaa/dashboard/src/utils';
 import { buildConfig } from '@leaa/dashboard/src/configs';
-import { Rcon } from '@leaa/dashboard/src/components';
 import { LOGOUT_REDIRECT_URL } from '@leaa/dashboard/src/constants';
+import { Rcon, BuildInfo } from '@leaa/dashboard/src/components';
 
 import avatar from '@leaa/dashboard/src/assets/images/avatar/avatar-line.svg';
 import style from './style.module.less';
@@ -35,27 +35,13 @@ export const UserMenu = (props: IProps): JSX.Element => {
       <div className={style['container']}>
         <Skeleton active />
 
-        <div className={style['build-list']}>
-          <div className={style['build-item']}>
-            <span>MODE:</span>
-            <strong>{buildConfig.MODE}</strong>
-          </div>
-
-          <div className={style['build-item']}>
-            <span>VERSION:</span>
-            <strong>{buildConfig.VERSION}</strong>
-          </div>
-
-          <div className={style['build-item']}>
-            <span>TIMESTAMP:</span>
-            <strong>{buildConfig.TIMESTAMP}</strong>
-          </div>
-        </div>
+        <BuildInfo />
       </div>
 
       <div className={style['footer']}>
         <Button className={style['logout-button']} block type="ghost" onClick={onLogout}>
-          <Rcon type="ri-logout-box-r-line" /> {t('_comp:UserMenu.safelyLogout')}
+          {t('_comp:UserMenu.safelyLogout')}{' '}
+          <Rcon type="ri-logout-box-r-line" className={style['safely-logout-button']} />
         </Button>
       </div>
     </div>

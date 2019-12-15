@@ -39,8 +39,8 @@ export class UserService {
 
       const u = await this.user(id, user);
 
-      if (u && u.email && u.is_admin && usersSeed.map(seed => seed.email).includes(u.email)) {
-        throw errorUtil.ERROR({ error: 'Default Demo Data, PLEASE DONT', user });
+      if (u && u.email && u.email === 'admin@leaa.com') {
+        throw errorUtil.ERROR({ error: 'PLEASE DONT MODIFY DEMO DATA', user });
       }
     }
 

@@ -83,7 +83,7 @@ export const UserRolesForm = forwardRef((props: IProps, ref: React.Ref<any>) => 
 
   return (
     <div className={cx(style['wrapper'], props.className)}>
-      <FormCard title={t('_page:User.roleIds')}>
+      <FormCard title={t('_page:User.userRoles')}>
         <Checkbox
           indeterminate={onClacIndeterminate()}
           checked={onClacChecked()}

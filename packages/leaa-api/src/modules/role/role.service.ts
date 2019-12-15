@@ -35,7 +35,7 @@ export class RoleService {
       const role = await this.role(id, user);
 
       if (role && role.slug && role.slug === 'admin') {
-        throw errorUtil.ERROR({ error: 'Default Demo Data, PLEASE DONT', user });
+        throw errorUtil.ERROR({ error: 'PLEASE DONT MODIFY DEMO DATA', user });
       }
     }
 

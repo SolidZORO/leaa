@@ -27,7 +27,7 @@ export class AxService {
       const ax = await this.ax(id, user);
 
       if (ax && ax.slug && axSeed.map(seed => seed.slug).includes(ax.slug)) {
-        throw errorUtil.ERROR({ error: 'Default Demo Data, PLEASE DONT', user });
+        throw errorUtil.ERROR({ error: 'PLEASE DONT MODIFY DEMO DATA', user });
       }
     }
 

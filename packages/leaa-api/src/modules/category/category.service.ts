@@ -35,7 +35,7 @@ export class CategoryService {
       const c = await this.category(id, user);
 
       if (c && c.slug && categorySeed.map(seed => seed.slug).includes(c.slug)) {
-        throw errorUtil.ERROR({ error: 'Default Demo Data, PLEASE DONT', user });
+        throw errorUtil.ERROR({ error: 'PLEASE DONT MODIFY DEMO DATA', user });
       }
     }
 

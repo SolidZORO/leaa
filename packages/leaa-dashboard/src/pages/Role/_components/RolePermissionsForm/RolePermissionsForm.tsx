@@ -79,7 +79,7 @@ export const RolePermissionsForm = forwardRef((props: IProps, ref: React.Ref<any
       <FormCard
         title={
           <span>
-            {t('_page:Role.roleInfo')}{' '}
+            {t('_page:Role.rolePermissions')}{' '}
             <sup>
               <RolePermissionLength
                 rolePermissionsLength={permissionLength}
@@ -88,7 +88,6 @@ export const RolePermissionsForm = forwardRef((props: IProps, ref: React.Ref<any
             </sup>
           </span>
         }
-        extra={<EntryInfoDate date={props.item && [props.item.created_at, props.item.updated_at]} />}
       >
         <Form form={form} layout="vertical">
           <Form.Item name="permissionIds" rules={[]} validateTrigger={['onBlur']}>

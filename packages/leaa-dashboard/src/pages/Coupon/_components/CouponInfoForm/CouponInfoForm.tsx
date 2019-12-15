@@ -10,7 +10,7 @@ import { messageUtil, dateUtil } from '@leaa/dashboard/src/utils';
 import { IOnValidateFormResult, IDateRange } from '@leaa/dashboard/src/interfaces';
 import { UpdateCouponInput } from '@leaa/common/src/dtos/coupon';
 
-import { FormCard, EntryInfoDate, SwitchNumber, IdTag } from '@leaa/dashboard/src/components';
+import { FormCard, EntryInfoDate, SwitchNumber, IdTag, Rcon } from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';
 
@@ -138,7 +138,11 @@ export const CouponInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =>
             <Col xs={24} sm={3}>
               {props.item ? (
                 <Form.Item label={t('_page:Coupon.redeemUser')}>
-                  <IdTag id={props.item?.user_id} link={`/users/${props.item?.user_id}`} />
+                  <IdTag
+                    id={props.item?.user_id}
+                    link={`/users/${props.item?.user_id}`}
+                    icon={<Rcon type="ri-user-3-line" />}
+                  />
                 </Form.Item>
               ) : (
                 <Form.Item name="quantity" rules={[{ required: true }]} label={t('_lang:quantity')}>

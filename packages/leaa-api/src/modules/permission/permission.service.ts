@@ -33,7 +33,7 @@ export class PermissionService {
       const p = await this.permission(id, user);
 
       if (p && p.slug && permissionsSeed.map(seed => seed.slug).includes(p.slug as any)) {
-        throw errorUtil.ERROR({ error: 'Default Demo Data, PLEASE DONT', user });
+        throw errorUtil.ERROR({ error: 'PLEASE DONT MODIFY DEMO DATA', user });
       }
     }
 
