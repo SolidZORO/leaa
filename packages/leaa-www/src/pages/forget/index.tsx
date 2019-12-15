@@ -1,7 +1,6 @@
 import React from 'react';
 import dynamic from 'next/dynamic';
-import { HtmlMeta } from '@leaa/www/src/components/HtmlMeta';
-import { PageCard } from '@leaa/www/src/components/PageCard';
+import { HtmlMeta, PageCard } from '@leaa/www/src/components';
 
 const Forget = dynamic(() => import('@leaa/www/src/pages/forget/_components/Forget/Forget'));
 

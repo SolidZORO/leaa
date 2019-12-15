@@ -6,9 +6,7 @@ import { Article } from '@leaa/common/src/entrys';
 import { IPageProps, IGetInitialProps } from '@leaa/www/src/interfaces';
 import { ArticleArgs } from '@leaa/common/src/dtos/article';
 import { GET_ARTICLE_BY_SLUG } from '@leaa/common/src/graphqls';
-import { ErrorCard } from '@leaa/www/src/components/ErrorCard';
-import { HtmlMeta } from '@leaa/www/src/components/HtmlMeta';
-import { PageCard } from '@leaa/www/src/components/PageCard';
+import { HtmlMeta, PageCard, ErrorCard } from '@leaa/www/src/components';
 
 const ArticleItem = dynamic(() => import('@leaa/www/src/pages/article/_components/ArticleItem/ArticleItem'));
 

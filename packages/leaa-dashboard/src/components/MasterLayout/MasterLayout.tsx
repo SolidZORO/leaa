@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
 import cx from 'classnames';
 import { RouteProps, RouteComponentProps } from 'react-router-dom';
-import { Layout } from 'antd';
 import animateScrollTo from 'animated-scroll-to';
+import { Layout, Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
+
 import { urlUtil, authUtil } from '@leaa/dashboard/src/utils';
 import { IRouteItem } from '@leaa/dashboard/src/interfaces';
-
 import { DefaultLayout } from '@leaa/dashboard/src/components';
 
 import { LayoutHeader } from './_components/LayoutHeader/LayoutHeader';
@@ -13,8 +14,10 @@ import { LayoutSidebar } from './_components/LayoutSidebar/LayoutSidebar';
 import { LayoutContent } from './_components/LayoutContent/LayoutContent';
 
 import '@leaa/dashboard/src/styles/global.less';
-import '@leaa/dashboard/src/assets/fonts/fi/iconfont.css';
 import style from './style.module.less';
+
+// Antd Component Indicator Reset
+Spin.setDefaultIndicator(<LoadingOutlined spin />);
 
 interface IProps extends RouteProps {
   component: any;

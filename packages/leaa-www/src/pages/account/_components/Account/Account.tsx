@@ -1,8 +1,8 @@
 import React from 'react';
 import cx from 'classnames';
 
-import { LogoutButton } from '@leaa/www/src/components/LogoutButton';
 import { IAuthInfo } from '@leaa/www/src/interfaces';
+import { LogoutButton } from '@leaa/www/src/components';
 
 import style from './style.module.less';
 

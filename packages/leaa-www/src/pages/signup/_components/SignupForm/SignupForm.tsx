@@ -1,33 +1,33 @@
-import React from 'react';
 import cx from 'classnames';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Button, Col, Form, Input, Row, message } from 'antd';
+import Router from 'next/router';
+import { Button, Col, Form, Input, Row } from 'antd';
 import { useMutation } from '@apollo/react-hooks';
-import { FormComponentProps } from 'antd/lib/form';
+
+import { User } from '@leaa/common/src/entrys';
 import { AuthSignupInput } from '@leaa/common/src/dtos/auth';
 import { SIGNUP_FOR_WWW } from '@leaa/common/src/graphqls';
-import { ErrorCard } from '@leaa/www/src/components/ErrorCard';
-import { User } from '@leaa/common/src/entrys';
-import { authUtil } from '@leaa/www/src/utils';
-import Router from 'next/router';
+import { authUtil, messageUtil } from '@leaa/www/src/utils';
 
 import style from './style.module.less';
 
-interface IProps extends FormComponentProps {
+interface IProps {
   urlQuery?: { [key: string]: string | string[] };
-  className?: string;
   onSignupedCallback?: () => void;
+  className?: string;
 }
 
-const SignupFormInner = (props: IProps) => {
-  const { className, form } = props;
-  const { getFieldDecorator } = form;
+export const SignupForm = (props: IProps) => {
+  const [form] = Form.useForm();
 
+  const [submitVariables, setSubmitVariables] = useState<{ user: AuthSignupInput; oid?: number }>();
   const [submitSignupMutate, submitSignupMutation] = useMutation<{
     signup: User;
   }>(SIGNUP_FOR_WWW, {
+    variables: submitVariables,
     onCompleted({ signup }) {
-      if (signup && signup.name) {
+      if (signup?.name) {
         const authInfo = {
           email: signup.email,
           name: signup.name,
@@ -36,7 +36,7 @@ const SignupFormInner = (props: IProps) => {
         authUtil.setAuthInfo(authInfo);
       }
 
-      if (signup && signup.authToken && signup.authExpiresIn) {
+      if (signup?.authToken && signup.authExpiresIn) {
         authUtil.setAuthToken(signup.authToken, signup.authExpiresIn);
 
         if (props.onSignupedCallback) {
@@ -49,64 +49,62 @@ const SignupFormInner = (props: IProps) => {
   });
 
   const onSubmit = async () => {
-    form.validateFieldsAndScroll(async (err: any, formData: AuthSignupInput) => {
-      if (err) {
-        message.error(err[Object.keys(err)[0]].errors[0].message);
+    let submitData: any;
 
-        return;
-      }
+    try {
+      submitData = await form.validateFields();
+    } catch (error) {
+      messageUtil.error(error.errorFields && error.errorFields[0]?.errors[0]);
+    }
 
-      const variables: { user: AuthSignupInput; oid?: number } = {
-        user: {
-          name: formData.name,
-          email: formData.email,
-          password: formData.password,
-        },
-        oid: (props.urlQuery && props.urlQuery.oid && Number(props.urlQuery.oid)) || undefined,
-      };
-
-      await submitSignupMutate({ variables });
+    await setSubmitVariables({
+      user: submitData,
+      oid: (props.urlQuery?.oid && Number(props.urlQuery.oid)) || undefined,
     });
+    await submitSignupMutate();
   };
 
+  const onUpdateForm = () => {
+    form.setFieldsValue({
+      name: `signup-${new Date().getTime()}`,
+      email: `signup-${new Date().getTime()}@leaa.com`,
+      password: `signup-${new Date().getTime()}@leaa.com`,
+    });
+
+    return undefined;
+  };
+
+  useEffect(() => onUpdateForm(), [form]);
+
   return (
-    <div className={cx(style['wrapper'], className)}>
-      {submitSignupMutation.error ? <ErrorCard error={submitSignupMutation.error} /> : null}
-
-      <Form labelAlign="left" hideRequiredMark>
+    <div className={cx(style['wrapper'], props.className)}>
+      <Form form={form} layout="vertical" hideRequiredMark>
         <Row gutter={16} className={style['form-row']}>
-          <Col xs={24} sm={24}>
-            <Form.Item label="Name">
-              {getFieldDecorator('name', {
-                validateTrigger: ['onBlur'],
-                initialValue: `random-${new Date().getTime()}`,
-                rules: [{ required: true }],
-              })(<Input size="large" placeholder="Name" />)}
+          <Col xs={24}>
+            <Form.Item name="name" rules={[{ required: true }]} validateTrigger={['onBlur']} label="Name">
+              <Input size="large" placeholder="Name" />
             </Form.Item>
           </Col>
 
-          <Col xs={24} sm={24}>
-            <Form.Item label="Email">
-              {getFieldDecorator('email', {
-                validateTrigger: ['onBlur'],
-                initialValue: `random-${new Date().getTime()}@leaa.com`,
-                rules: [{ required: true }, { type: 'email' }],
-              })(<Input size="large" placeholder="Email" />)}
+          <Col xs={24}>
+            <Form.Item
+              name="email"
+              rules={[{ required: true }, { type: 'email' }]}
+              validateTrigger={['onBlur']}
+              label="Email"
+            >
+              <Input size="large" placeholder="Email" />
             </Form.Item>
           </Col>
 
-          <Col xs={24} sm={24}>
-            <Form.Item label="Password">
-              {getFieldDecorator('password', {
-                validateTrigger: ['onBlur'],
-                initialValue: `random-${new Date().getTime()}`,
-                rules: [{ required: true }],
-              })(<Input size="large" type="password" placeholder="Password" />)}
+          <Col xs={24}>
+            <Form.Item name="password" rules={[{ required: true }]} validateTrigger={['onBlur']} label="Password">
+              <Input.Password size="large" placeholder="Password" />
             </Form.Item>
           </Col>
         </Row>
 
-        <Row className={style['button-row']}>
+        <Row gutter={16} className={style['button-row']}>
           <Col xs={24}>
             <Button
               className={style['button-login']}
@@ -121,15 +119,15 @@ const SignupFormInner = (props: IProps) => {
             </Button>
           </Col>
         </Row>
+      </Form>
 
+      <div className={style['toolsbar']}>
         <Row className={style['register-row']}>
           <Link href="/login" prefetch={false}>
             <a>Already have an account? Log In</a>
           </Link>
         </Row>
-      </Form>
+      </div>
     </div>
   );
 };
-
-export default Form.create<IProps>()(SignupFormInner);

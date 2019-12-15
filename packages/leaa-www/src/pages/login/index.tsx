@@ -7,8 +7,7 @@ import { IGetInitialProps } from '@leaa/www/src/interfaces';
 import { User } from '@leaa/common/src/entrys';
 import { authUtil, urlUtil } from '@leaa/www/src/utils';
 import { initApollo } from '@leaa/www/src/libs/init-apollo.lib';
-import { PageCard } from '@leaa/www/src/components/PageCard';
-import { HtmlMeta } from '@leaa/www/src/components/HtmlMeta';
+import { PageCard, HtmlMeta } from '@leaa/www/src/components';
 
 const Login = dynamic(() => import('@leaa/www/src/pages/login/_components/Login/Login'));
 

@@ -1,34 +1,32 @@
 import cx from 'classnames';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Router from 'next/router';
-
-import { Button, Col, Form, Input, Row, message } from 'antd';
+import { Button, Col, Form, Input, Row } from 'antd';
 import { useMutation } from '@apollo/react-hooks';
-import { FormComponentProps } from 'antd/lib/form';
+
+import { User } from '@leaa/common/src/entrys';
 import { AuthLoginInput } from '@leaa/common/src/dtos/auth';
 import { LOGIN_FOR_WWW } from '@leaa/common/src/graphqls';
-import { ErrorCard } from '@leaa/www/src/components/ErrorCard';
-import { User } from '@leaa/common/src/entrys';
-import { authUtil } from '@leaa/www/src/utils';
 
-import WechatLoginButton from '@leaa/www/src/pages/login/_components/WechatLoginButton/WechatLoginButton';
-import PhoneLoginButton from '@leaa/www/src/pages/login/_components/PhoneLoginButton/PhoneLoginButton';
+import { authUtil, messageUtil } from '@leaa/www/src/utils';
+
+import WechatLoginButton from '../WechatLoginButton/WechatLoginButton';
+import PhoneLoginButton from '../PhoneLoginButton/PhoneLoginButton';
 
 import style from './style.module.less';
 
-interface IProps extends FormComponentProps {
+interface IProps {
   className?: string;
   onLoginedCallback?: () => void;
 }
 
-const LoginFormInner = (props: IProps) => {
-  const { className, form } = props;
-  const { getFieldDecorator } = form;
+export const LoginForm = (props: IProps) => {
+  const [form] = Form.useForm();
 
-  const [submitLoginMutate, submitLoginMutation] = useMutation<{
-    login: User;
-  }>(LOGIN_FOR_WWW, {
+  const [submitVariables, setSubmitVariables] = useState<{ user: AuthLoginInput }>();
+  const [submitLoginMutate, submitLoginMutation] = useMutation<{ login: User }>(LOGIN_FOR_WWW, {
+    variables: submitVariables,
     onCompleted({ login }) {
       if (login && login.name) {
         const authInfo = {
@@ -53,52 +51,49 @@ const LoginFormInner = (props: IProps) => {
   });
 
   const onSubmit = async () => {
-    form.validateFieldsAndScroll(async (err: any, formData: AuthLoginInput) => {
-      if (err) {
-        message.error(err[Object.keys(err)[0]].errors[0].message);
+    let submitData: any;
 
-        return;
-      }
+    try {
+      submitData = await form.validateFields();
+    } catch (error) {
+      messageUtil.error(error.errorFields && error.errorFields[0]?.errors[0]);
+    }
 
-      const variables: { user: AuthLoginInput } = {
-        user: {
-          email: formData.email,
-          password: formData.password,
-        },
-      };
+    console.log(submitData);
 
-      await submitLoginMutate({ variables });
-    });
+    await setSubmitVariables({ user: submitData });
+    await submitLoginMutate();
   };
 
-  return (
-    <div className={cx(style['wrapper'], className)}>
-      {submitLoginMutation.error ? <ErrorCard error={submitLoginMutation.error} /> : null}
+  const onUpdateForm = () => {
+    form.setFieldsValue({
+      email: 'admin@leaa.com',
+      password: 'h8Hx9qvPKoHMLQgj',
+    });
 
-      <Form labelAlign="left" hideRequiredMark>
+    return undefined;
+  };
+
+  useEffect(() => onUpdateForm(), [form]);
+
+  return (
+    <div className={cx(style['wrapper'], props.className)}>
+      <Form form={form} layout="vertical" hideRequiredMark>
         <Row gutter={16} className={style['form-row']}>
-          <Col xs={24} sm={24}>
-            <Form.Item label="Email">
-              {getFieldDecorator('email', {
-                validateTrigger: ['onBlur'],
-                initialValue: 'admin@leaa.com',
-                rules: [{ required: true }],
-              })(<Input size="large" placeholder="Email" />)}
+          <Col xs={24}>
+            <Form.Item name="email" rules={[{ required: true }]} validateTrigger={['onBlur']} label="Email">
+              <Input size="large" placeholder="Email" />
             </Form.Item>
           </Col>
 
-          <Col xs={24} sm={24}>
-            <Form.Item label="Password">
-              {getFieldDecorator('password', {
-                validateTrigger: ['onBlur'],
-                initialValue: 'h8Hx9qvPKoHMLQgj',
-                rules: [{ required: true }],
-              })(<Input size="large" type="password" placeholder="Password" />)}
+          <Col xs={24}>
+            <Form.Item name="password" rules={[{ required: true }]} label="Password">
+              <Input.Password size="large" placeholder="Password" />
             </Form.Item>
           </Col>
         </Row>
 
-        <Row className={style['button-row']}>
+        <Row gutter={16} className={style['button-row']}>
           <Col xs={24}>
             <Button
               className={style['button-login']}
@@ -113,14 +108,16 @@ const LoginFormInner = (props: IProps) => {
             </Button>
           </Col>
         </Row>
+      </Form>
 
+      <div className={style['toolsbar']}>
         <Row className={style['forget-row']}>
           <Link href="/forget" prefetch={false}>
             <a>Forget password?</a>
           </Link>
         </Row>
 
-        <Row className={style['oauth-row']}>
+        <Row className={style['oauth-row']} justify="center">
           <Col className={cx(style['oauth-item'], style['oauth-item--wechat'])}>
             <WechatLoginButton />
           </Col>
@@ -129,14 +126,12 @@ const LoginFormInner = (props: IProps) => {
           </Col>
         </Row>
 
-        <Row className={style['signup-row']}>
+        <Row className={style['signup-row']} justify="center">
           <Link href="/signup" prefetch={false}>
             <a>Don’t have an account? Sign Up?</a>
           </Link>
         </Row>
-      </Form>
+      </div>
     </div>
   );
 };
-
-export default Form.create<IProps>()(LoginFormInner);

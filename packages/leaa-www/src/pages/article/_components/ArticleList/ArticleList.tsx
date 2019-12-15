@@ -3,8 +3,8 @@ import cx from 'classnames';
 import Link from 'next/link';
 import dayjs from 'dayjs';
 
-import { HtmlMeta } from '@leaa/www/src/components/HtmlMeta';
 import { ArticlesWithPaginationObject } from '@leaa/common/src/dtos/article';
+import { HtmlMeta } from '@leaa/www/src/components';
 
 import style from './style.module.less';
 

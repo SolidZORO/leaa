@@ -5,9 +5,8 @@ import Router from 'next/router';
 
 import { IPageProps } from '@leaa/www/src/interfaces';
 import { withApolloClient } from '@leaa/www/src/libs/with-apollo-client.lib';
-import { MasterLayout } from '@leaa/www/src/components/MasterLayout';
-import { ProgressLoading } from '@leaa/www/src/components/ProgressLoading';
 import { initStore, StoreProvider } from '@leaa/www/src/stores';
+import { MasterLayout, ProgressLoading } from '@leaa/www/src/components';
 
 const store = initStore();
 

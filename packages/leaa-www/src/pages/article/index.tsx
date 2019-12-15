@@ -4,9 +4,7 @@ import { useQuery } from '@apollo/react-hooks';
 
 import { GET_ARTICLES } from '@leaa/common/src/graphqls';
 import { ArticleArgs, ArticlesWithPaginationObject } from '@leaa/common/src/dtos/article';
-import { ErrorCard } from '@leaa/www/src/components/ErrorCard';
-import { HtmlMeta } from '@leaa/www/src/components/HtmlMeta';
-import { PageCard } from '@leaa/www/src/components/PageCard/PageCard';
+import { ErrorCard, HtmlMeta, PageCard } from '@leaa/www/src/components';
 
 const ArticleList = dynamic(() => import('@leaa/www/src/pages/article/_components/ArticleList/ArticleList'));
 

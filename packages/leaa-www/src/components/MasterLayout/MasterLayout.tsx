@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'classnames';
 import { useQuery } from '@apollo/react-hooks';
-import { Layout, message, Spin, Icon } from 'antd';
+import { Layout, message } from 'antd';
 
 import { urlUtil } from '@leaa/www/src/utils';
 import { IPageProps } from '@leaa/www/src/interfaces';
@@ -9,15 +9,14 @@ import { envConfig } from '@leaa/www/src/configs';
 import { SettingsWithPaginationObject, SettingArgs } from '@leaa/common/src/dtos/setting';
 import { GET_SETTINGS_FOR_WWW } from '@leaa/common/src/graphqls';
 import { useStore } from '@leaa/www/src/stores';
-import { ProgressLoading } from '@leaa/www/src/components/ProgressLoading';
+import { ProgressLoading } from '@leaa/www/src/components';
+
 import { LayoutContent } from './_components/LayoutContent/LayoutContent';
 import { LayoutHeader } from './_components/LayoutHeader/LayoutHeader';
 import { LayoutSimpleFooter } from './_components/LayoutSimpleFooter/LayoutSimpleFooter';
 
 import '@leaa/www/src/styles/global.less';
 import style from './style.module.less';
-
-Spin.setDefaultIndicator(<Icon type="loading" spin style={{ fontSize: '200%' }} />);
 
 interface IProps extends IPageProps {
   children: React.ReactNode;

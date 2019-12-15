@@ -22,7 +22,14 @@ export class PermissionsGuard implements CanActivate {
 
     const user = this.getUser(context);
 
+    console.log(user);
+
     if (!user) return errorUtil.ILLEGAL_USER();
+
+    // signup user
+    if (!user.is_admin && user.flatPermissions && user.flatPermissions.length === 0) return true;
+
+    // not is admin
     if (!user.flatPermissions || user.flatPermissions.length <= 0) return errorUtil.NOT_AUTH();
 
     return (

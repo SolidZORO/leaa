@@ -2,14 +2,16 @@ import cx from 'classnames';
 import React, { useState } from 'react';
 import { Button, message } from 'antd';
 
+import { Rcon } from '@leaa/www/src/components';
+
 import style from './style.module.less';
 
 export default () => {
-  const [type, setType] = useState<string>('mobile');
+  const [type, setType] = useState<string>('ri-smartphone-line');
 
   const onSubmitWechat = async () => {
     message.success('Coming Soon');
-    setType(type !== 'mail' ? 'mail' : 'mobile');
+    setType(type !== 'ri-mail-line' ? 'ri-mail-line' : 'ri-smartphone-line');
   };
 
   return (
@@ -22,7 +24,7 @@ export default () => {
           [style['mail-login-button']]: type === 'mail',
         })}
         onClick={onSubmitWechat}
-        icon={type}
+        icon={<Rcon type={type} />}
       />
     </div>
   );

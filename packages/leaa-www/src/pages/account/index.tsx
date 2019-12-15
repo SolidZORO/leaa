@@ -5,8 +5,7 @@ import { useQuery } from '@apollo/react-hooks';
 import { GET_USER_BY_TOKEN_FOR_WWW } from '@leaa/common/src/graphqls';
 import { IAuthInfo, IGetInitialProps } from '@leaa/www/src/interfaces';
 import { authUtil, urlUtil } from '@leaa/www/src/utils';
-import { HtmlMeta } from '@leaa/www/src/components/HtmlMeta';
-import { ErrorCard } from '@leaa/www/src/components/ErrorCard';
+import { HtmlMeta, ErrorCard } from '@leaa/www/src/components';
 
 const Account = dynamic(() => import('@leaa/www/src/pages/account/_components/Account/Account'));
 

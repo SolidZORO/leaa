@@ -29,18 +29,18 @@ export default (props: IPage) => {
       <SelectTagId selectedTagsMaxLength={5} />
       <br />
 
-      <h5>ALL</h5>
-      <SelectCategoryIdByTree componentProps={{ allowClear: true }} style={{ width: 200 }} />
+      {/* <h5>ALL</h5> */}
+      {/* <SelectCategoryIdByTree componentProps={{ allowClear: true }} style={{ width: 200 }} /> */}
 
       <br />
       <br />
-      <h5>ARTICLE</h5>
-      <SelectCategoryIdByTree componentProps={{ allowClear: true }} style={{ width: 200 }} parentSlug="article" />
+      <h5>ARTICLES</h5>
+      <SelectCategoryIdByTree componentProps={{ allowClear: true }} style={{ width: 200 }} parentSlug="articles" />
 
       <br />
       <br />
-      <h5>NOT THIS SLUG</h5>
-      <SelectCategoryIdByTree componentProps={{ allowClear: true }} style={{ width: 200 }} parentSlug="JUST-TEST" />
+      <h5>BRANDS</h5>
+      <SelectCategoryIdByTree componentProps={{ allowClear: true }} style={{ width: 200 }} parentSlug="brands" />
 
       <br />
       <br />

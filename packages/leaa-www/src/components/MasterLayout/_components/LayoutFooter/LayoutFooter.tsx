@@ -9,7 +9,7 @@ import style from './style.less';
 export const LayoutFooter = () => (
   <div className={style['full-layout-footer']}>
     <div className="g-full-container">
-      <Row gutter={16} type="flex" className={style['menu-row']}>
+      <Row gutter={16} className={style['menu-row']}>
         {__MENU_MOCK__.footerMenu.map(m => (
           <Col key={m.title}>
             <h2 className={style['menu-title']}>{m.title}</h2>

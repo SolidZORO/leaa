@@ -1,8 +1,10 @@
 import queryString from 'query-string';
 import React from 'react';
 import { Button } from 'antd';
+
 import { deviceUtil } from '@leaa/www/src/utils';
 import { envConfig } from '@leaa/www/src/configs';
+import { Rcon } from '@leaa/www/src/components';
 
 import style from './style.module.less';
 
@@ -37,7 +39,7 @@ export default (props: IProps) => {
         shape="circle"
         className={style['wechat-login-button']}
         onClick={onSubmitWechat}
-        icon="wechat"
+        icon={<Rcon type="ri-wechat-fill" />}
       />
     </div>
   );

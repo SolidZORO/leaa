@@ -4,7 +4,7 @@ import Link from 'next/link';
 import cx from 'classnames';
 
 import { Attachment } from '@leaa/common/src/entrys';
-import { RetinaImage } from '@leaa/www/src/components/RetinaImage';
+import { RetinaImage } from '@leaa/www/src/components';
 
 import style from './style.module.less';
 

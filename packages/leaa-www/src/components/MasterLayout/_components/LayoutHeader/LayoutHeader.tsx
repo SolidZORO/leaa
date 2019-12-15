@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import cx from 'classnames';
 import Headroom from 'react-headroom';
-import { Button, Icon, Drawer } from 'antd';
+import { Button, Drawer } from 'antd';
 
 import { __MENU_MOCK__ } from '@leaa/www/src/__mock__';
+import { Rcon } from '@leaa/www/src/components';
 
 import style from './style.less';
 
@@ -34,7 +35,7 @@ export const LayoutHeader = () => {
     <Button type="link" className={style['account-button']}>
       <Link href="/account" prefetch={false}>
         <a onClick={() => onSetVisible(false)}>
-          <Icon type="x-user" />
+          <Rcon type="x-user" />
         </a>
       </Link>
     </Button>

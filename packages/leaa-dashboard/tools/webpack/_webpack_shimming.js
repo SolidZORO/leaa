@@ -1,5 +1,5 @@
-const path = require('path');
-const webpackConst = require('./_webpack_const');
+// const path = require('path');
+// const webpackConst = require('./_webpack_const');
 
 // provide
 const provide = {
@@ -18,6 +18,9 @@ const resolve = {
     // '@': webpackConst.SRC_DIR,
     // '@ant-design/icons/lib/dist$': `${webpackConst.SRC_DIR}/assets/fonts/font_antd/@ant-design/icons/lib/dist`,
     // '@ant-design/icons/lib/dist$': `${webpackConst.SRC_DIR}/libs/antd-icon.lib`,
+    // '@ant-design/icons/lib$': `${webpackConst.SRC_DIR}/libs/antd-icon.lib`,
+    // '@ant-design/icons/lib/index$': `${webpackConst.SRC_DIR}/libs/antd-icon.lib`,
+    // '@ant-design/icons/lib/icons/index$': `${webpackConst.SRC_DIR}/libs/antd-icon.lib`,
   },
 };
 

@@ -1,6 +1,7 @@
 import React from 'react';
-import { Icon } from 'antd';
 import Link from 'next/link';
+
+import { Rcon } from '@leaa/www/src/components';
 
 import style from './style.less';
 
@@ -22,7 +23,7 @@ export const LayoutSimpleFooter = () => (
           <div className={style['link-item']}>
             <Link href="https://github.com/SolidZORO/leaa" prefetch={false}>
               <a className={style['link']} target="_blank">
-                <Icon type="github" />
+                <Rcon type="ri-github-fill" />
               </a>
             </Link>
           </div>
@@ -30,7 +31,7 @@ export const LayoutSimpleFooter = () => (
           <div className={style['link-item']}>
             <Link href="https://twitter.com/SolidZORO" prefetch={false}>
               <a className={style['link']} target="_blank">
-                <Icon type="twitter" />
+                <Rcon type="ri-twitter-fill" />
               </a>
             </Link>
           </div>
@@ -38,7 +39,7 @@ export const LayoutSimpleFooter = () => (
           <div className={style['link-item']}>
             <Link href="https://www.instagram.com/solidzoro/" prefetch={false}>
               <a className={style['link']} target="_blank">
-                <Icon type="instagram" />
+                <Rcon type="ri-instagram-line" />
               </a>
             </Link>
           </div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'classnames';
 
-import LoginForm from '@leaa/www/src/pages/login/_components/LoginForm/LoginForm';
+import { LoginForm } from '../LoginForm/LoginForm';
 
 import style from './style.module.less';
 

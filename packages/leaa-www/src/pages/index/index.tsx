@@ -5,9 +5,7 @@ import { useQuery } from '@apollo/react-hooks';
 import { Ax } from '@leaa/common/src/entrys';
 import { AxArgs } from '@leaa/common/src/dtos/ax';
 import { GET_AX_BY_SLUG } from '@leaa/common/src/graphqls';
-import { HtmlMeta } from '@leaa/www/src/components/HtmlMeta';
-import { PageCard } from '@leaa/www/src/components/PageCard';
-import { ErrorCard } from '@leaa/www/src/components/ErrorCard';
+import { HtmlMeta, PageCard, ErrorCard } from '@leaa/www/src/components';
 
 const Home = dynamic(() => import('@leaa/www/src/pages/index/_components/Home/Home'));
 

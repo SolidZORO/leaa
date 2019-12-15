@@ -36,7 +36,7 @@ export const SelectCategoryIdByTree = forwardRef((props: IProps, ref: React.Ref<
     GET_CATEGORIES,
     {
       variables: getCategoriesVariables,
-      // fetchPolicy: 'network-only',
+      fetchPolicy: 'network-only',
     },
   );
 

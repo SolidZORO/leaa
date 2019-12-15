@@ -1,9 +1,7 @@
 import React from 'react';
 import Document, { Head, Main, NextScript } from 'next/document';
-import { Spin, Icon } from 'antd';
 
-// Antd Component Indicator Reset
-Spin.setDefaultIndicator(<Icon type="loading" spin />);
+import { envConfig } from '@leaa/www/src/configs';
 
 export default class CustomDocument extends Document {
   render() {
@@ -19,6 +17,12 @@ export default class CustomDocument extends Document {
         <body>
           <Main />
           <NextScript />
+          {envConfig.MODE === 'production' && envConfig.ANALYTICS_CODE && (
+            <script
+              // eslint-disable-next-line react/no-danger
+              dangerouslySetInnerHTML={{ __html: envConfig.ANALYTICS_CODE }}
+            />
+          )}
         </body>
       </html>
     );
