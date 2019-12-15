@@ -21,7 +21,7 @@ interface IProps {
   onLoginedCallback?: () => void;
 }
 
-export const LoginForm = (props: IProps) => {
+export default (props: IProps) => {
   const [form] = Form.useForm();
 
   const [submitVariables, setSubmitVariables] = useState<{ user: AuthLoginInput }>();

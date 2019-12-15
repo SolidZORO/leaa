@@ -18,7 +18,7 @@ interface IProps {
   className?: string;
 }
 
-export const SignupForm = (props: IProps) => {
+export default (props: IProps) => {
   const [form] = Form.useForm();
 
   const [submitVariables, setSubmitVariables] = useState<{ user: AuthSignupInput; oid?: number }>();

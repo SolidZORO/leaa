@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'classnames';
 
-import { SignupForm } from '../SignupForm/SignupForm';
+import SignupForm from '../SignupForm/SignupForm';
 
 import style from './style.module.less';
 
