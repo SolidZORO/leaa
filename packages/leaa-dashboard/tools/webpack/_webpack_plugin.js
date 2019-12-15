@@ -40,14 +40,12 @@ if (webpackConst.IS_ANALYZER) {
   pluginList.push(new BundleAnalyzerPlugin(webpackAnalyzerConfig));
 }
 
-console.log(env);
-
 // OUTPUT HTML
 const outputHtmlOption = {
   title: `${process.env.SITE_NAME || '-'}`,
   env: Buffer.from(JSON.stringify(_.pick(env, Object.keys(env)))).toString('base64'),
   analytics_code:
-    ( env && env.ANALYTICS_CODE && `<script>${env.ANALYTICS_CODE}</script>`) || '',
+    (!webpackConst.__DEV__ && env && env.ANALYTICS_CODE && `<script>${env.ANALYTICS_CODE}</script>`) || '',
   build: Buffer.from(
     JSON.stringify({
       TIMESTAMP: moment().format('YYYYMMDD-HHmmss'),
