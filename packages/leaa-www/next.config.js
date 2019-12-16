@@ -1,7 +1,6 @@
 /* eslint-disable */
 const path = require('path');
 const webpack = require('webpack');
-// const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const FilterWarningsPlugin = require('webpack-filter-warnings-plugin');
 
 const withDotenv = require('@leaa/www/tools/next/next-dotenv');
@@ -17,7 +16,6 @@ if (typeof require !== 'undefined') {
 
 const webpackConfig = (config, options) => {
   config.plugins.push(
-    // new LodashModuleReplacementPlugin({ paths: true }),
     new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /zh-cn|en/),
     new webpack.NormalModuleReplacementPlugin(
       // ⚠️ fixed wechat HMR (replace mod eventsource.js)

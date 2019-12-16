@@ -14,12 +14,7 @@ interface IProps {
 
 export const PageCard = (props: IProps) => (
   <div className={cx(style['wrapper'], props.className)}>
-    <Spin
-      spinning={typeof props.loading !== 'undefined' ? props.loading : false}
-      className={style['spin']}
-      size="large"
-      delay={100}
-    >
+    <Spin spinning={typeof props.loading !== 'undefined' ? props.loading : false} className={style['spin']} delay={200}>
       <div className={style['container']}>{props.children}</div>
     </Spin>
   </div>

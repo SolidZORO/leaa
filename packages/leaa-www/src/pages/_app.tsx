@@ -1,12 +1,16 @@
 import React, { ErrorInfo } from 'react';
+import { Spin } from 'antd';
 import App from 'next/app';
 import { ApolloProvider } from '@apollo/react-hooks';
 import Router from 'next/router';
+import { LoadingOutlined } from '@ant-design/icons';
 
 import { IPageProps } from '@leaa/www/src/interfaces';
 import { withApolloClient } from '@leaa/www/src/libs/with-apollo-client.lib';
 import { initStore, StoreProvider } from '@leaa/www/src/stores';
 import { MasterLayout, ProgressLoading } from '@leaa/www/src/components';
+
+Spin.setDefaultIndicator(<LoadingOutlined spin style={{ fontSize: '180%', marginTop: 30 }} />);
 
 const store = initStore();
 
