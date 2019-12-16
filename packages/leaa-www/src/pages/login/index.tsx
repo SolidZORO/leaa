@@ -1,13 +1,14 @@
 import React from 'react';
 import dynamic from 'next/dynamic';
 import { FetchResult } from 'apollo-link';
+// import { ApolloClient } from 'apollo-client';
 
 import { LOGIN_BY_TICKET_FOR_WWW } from '@leaa/common/src/graphqls';
 import { IGetInitialProps } from '@leaa/www/src/interfaces';
 import { User } from '@leaa/common/src/entrys';
 import { authUtil, urlUtil } from '@leaa/www/src/utils';
-import { initApollo } from '@leaa/www/src/libs/init-apollo.lib';
 import { PageCard, HtmlMeta } from '@leaa/www/src/components';
+import { apolloClient } from '@leaa/www/src/libs';
 
 const Login = dynamic(() => import('@leaa/www/src/pages/login/_components/Login/Login'));
 
@@ -26,7 +27,7 @@ nextPage.getInitialProps = async (ctx: IGetInitialProps) => {
   const oid = ctx.query && ctx.query.oid;
 
   if (otk) {
-    const apolloClient = initApollo({});
+    // const apolloClient = apolloClient({});
 
     await apolloClient
       .mutate({

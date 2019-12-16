@@ -9,7 +9,7 @@ import { HtmlMeta } from '@leaa/www/src/components';
 import style from './style.module.less';
 
 interface IProps {
-  articles: ArticlesWithPaginationObject;
+  articles?: ArticlesWithPaginationObject;
 }
 
 export default (props: IProps) => {
@@ -19,7 +19,7 @@ export default (props: IProps) => {
         <HtmlMeta title="Article" />
 
         <div className={cx('g-container-card', style['container-card'])}>
-          {props.articles.items &&
+          {props.articles?.items &&
             props.articles.items.map(item => (
               <div key={item.id} className={style['item']}>
                 <h2 className={style['title']}>

@@ -4,7 +4,7 @@ import { renderToString } from 'react-dom/server';
 import { AppContext } from 'next/app';
 import { getMarkupFromTree } from '@apollo/react-ssr';
 
-import { initApollo } from '@leaa/www/src/libs/init-apollo.lib';
+import { apolloClientWithState } from './apollo-client.lib';
 
 const isServer = typeof window === 'undefined';
 
@@ -22,9 +22,6 @@ export const withApolloClient = (App: React.ComponentType<any> & { getInitialPro
         appProps = await App.getInitialProps(ctx);
       }
 
-      // Run all GraphQL queries in the component tree and extract the resulting data
-      const apollo = initApollo();
-
       if (isServer && router && router.route && router.route.includes('/logout')) {
         return Head.rewind();
       }
@@ -34,7 +31,16 @@ export const withApolloClient = (App: React.ComponentType<any> & { getInitialPro
           // Run all GraphQL queries
           await getMarkupFromTree({
             renderFunction: renderToString,
-            tree: <App {...appProps} Component={Component} router={router} apolloClient={apollo} isServer={isServer} />,
+            tree: (
+              <App
+                {...appProps}
+                Component={Component}
+                router={router}
+                // Run all GraphQL queries in the component tree and extract the resulting data
+                apolloClient={apolloClientWithState()}
+                isServer={isServer}
+              />
+            ),
           });
 
           // await getDataFromTree(
@@ -53,7 +59,7 @@ export const withApolloClient = (App: React.ComponentType<any> & { getInitialPro
       }
 
       // Extract query data from the Apollo store
-      const apolloState = apollo.cache.extract();
+      const apolloState = apolloClientWithState().cache.extract();
 
       return {
         ...appProps,
@@ -61,12 +67,12 @@ export const withApolloClient = (App: React.ComponentType<any> & { getInitialPro
       };
     }
 
-    apolloClient: any = null;
+    private readonly apolloClient: any = null;
 
     constructor(props: any) {
       super(props);
 
-      this.apolloClient = initApollo(props.apolloState);
+      this.apolloClient = apolloClientWithState(props.apolloState);
     }
 
     render() {

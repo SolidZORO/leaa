@@ -1,50 +1,55 @@
 import React from 'react';
 import dynamic from 'next/dynamic';
-import { useQuery } from '@apollo/react-hooks';
+import { GraphQLError } from 'graphql';
 
 import { Article } from '@leaa/common/src/entrys';
-import { IPageProps, IGetInitialProps } from '@leaa/www/src/interfaces';
-import { ArticleArgs } from '@leaa/common/src/dtos/article';
 import { GET_ARTICLE_BY_SLUG } from '@leaa/common/src/graphqls';
-import { HtmlMeta, PageCard, ErrorCard } from '@leaa/www/src/components';
 
-const ArticleItem = dynamic(() => import('@leaa/www/src/pages/article/_components/ArticleItem/ArticleItem'));
+import { IPageProps, IGetInitialProps } from '@leaa/www/src/interfaces';
+import { HtmlMeta, PageCard } from '@leaa/www/src/components';
+import { apolloClient } from '@leaa/www/src/libs';
+import { messageUtil } from '@leaa/www/src/utils';
+
+const ArticleItem = dynamic(() => import('./_components/ArticleItem/ArticleItem'));
 
 interface IProps extends IPageProps {
   pageProps: {
-    slug: string;
+    article?: Article;
+    articleError?: GraphQLError;
   };
 }
 
-const nextPage = ({ pageProps }: IProps) => {
-  const getArticleQuery = useQuery<{ articleBySlug: Article }, ArticleArgs>(GET_ARTICLE_BY_SLUG, {
-    variables: {
-      slug: pageProps.slug,
-    },
-  });
+const nextPage = (ctx: IProps) => {
+  const { article, articleError } = ctx.pageProps;
 
-  const article = getArticleQuery && getArticleQuery.data && getArticleQuery.data.articleBySlug;
+  if (articleError) messageUtil.gqlError(articleError?.message);
+  if (!article) return null;
 
   return (
-    <PageCard loading={getArticleQuery.loading}>
-      {getArticleQuery.error ? <ErrorCard error={getArticleQuery.error} /> : null}
-
-      {article && (
-        <>
-          <HtmlMeta
-            title={article.title}
-            description={article.description}
-            keywords={article.tags && article.tags.map(tag => tag.name).join(', ')}
-          />
-          <ArticleItem article={article} />
-        </>
-      )}
+    <PageCard>
+      <HtmlMeta
+        title={article.title}
+        description={article.description}
+        keywords={article.tags?.map((tag: any) => tag.name).join(', ')}
+      />
+      <ArticleItem article={article} />
     </PageCard>
   );
 };
 
 nextPage.getInitialProps = async (ctx: IGetInitialProps) => {
-  return ctx.query;
+  try {
+    const getArticleQuery = await apolloClient.query<{ articleBySlug: Article }>({
+      query: GET_ARTICLE_BY_SLUG,
+      variables: {
+        slug: ctx.query.slug,
+      },
+    });
+
+    return { article: getArticleQuery.data.articleBySlug };
+  } catch (e) {
+    return { articleError: e };
+  }
 };
 
 export default nextPage;

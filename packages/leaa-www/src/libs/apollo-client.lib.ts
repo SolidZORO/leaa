@@ -11,7 +11,7 @@ import { envConfig } from '@leaa/www/src/configs';
 
 const isServer = typeof window === 'undefined';
 
-let apolloClient: ApolloClient<NormalizedCacheObject>;
+let apolloClientLib: ApolloClient<NormalizedCacheObject>;
 
 if (isServer) {
   // @ts-ignore
@@ -43,7 +43,7 @@ function createApolloClient(initialState: NormalizedCacheObject, authToken?: str
       graphQLErrors.forEach(error => {
         console.error(`❌ [GraphQL error]: ${JSON.stringify(error)}`);
 
-        messageUtil.gqlError(error.message);
+        // messageUtil.gqlError(error.message);
       });
     }
   });
@@ -66,14 +66,16 @@ function createApolloClient(initialState: NormalizedCacheObject, authToken?: str
   });
 }
 
-export const initApollo = (initialState: any = {}, authToken?: string) => {
+export const apolloClientWithState = (initialState: any = {}, authToken?: string) => {
   if (isServer) {
     return createApolloClient(initialState, authToken);
   }
 
-  if (!apolloClient) {
-    apolloClient = createApolloClient(initialState, authToken);
+  if (!apolloClientLib) {
+    apolloClientLib = createApolloClient(initialState, authToken);
   }
 
-  return apolloClient;
+  return apolloClientLib;
 };
+
+export const apolloClient = apolloClientWithState({});
