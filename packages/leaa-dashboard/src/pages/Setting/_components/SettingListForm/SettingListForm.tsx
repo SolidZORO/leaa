@@ -23,11 +23,11 @@ interface IProps {
 const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
-    sm: { span: 4 },
+    sm: { span: 6 },
   },
   wrapperCol: {
     xs: { span: 24 },
-    sm: { span: 16 },
+    sm: { span: 14 },
   },
 };
 
@@ -125,13 +125,17 @@ export const SettingListForm = forwardRef((props: IProps, ref: React.Ref<any>) =
   return (
     <div className={cx(style['wrapper'], props.className)}>
       <FormCard>
-        <Form form={form} layout="horizontal" hideRequiredMark {...formItemLayout}>
+        <Form form={form} layout="horizontal" hideRequiredMark {...formItemLayout} className={style['form-wrapper']}>
           {props.items?.map(item => (
-            <div key={item.id}>
-              <Form.Item name={item.id} rules={[{ required: true }]} colon={false} label={buildLabelDom(item)}>
-                {buildTypeDom(item)}
-              </Form.Item>
-            </div>
+            <Form.Item
+              key={item.id}
+              name={item.id}
+              rules={[{ required: true }]}
+              colon={false}
+              label={buildLabelDom(item)}
+            >
+              {buildTypeDom(item)}
+            </Form.Item>
           ))}
         </Form>
       </FormCard>

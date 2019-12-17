@@ -6,10 +6,6 @@
 .form-row {
 }
 
-.form-wrapper {
-  background-color: transparent;
-}
-
 .form-item {
 }
 
@@ -69,5 +65,22 @@
     transform: scale(0.7);
     transform-origin: right center;
     color: #ddd;
+  }
+}
+
+.form-wrapper {
+  background-color: transparent;
+  padding: 20px 0;
+
+  :global {
+    .ant-form-item {
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    .ant-form-item-label > label.ant-form-item-no-colon::after {
+      display: none;
+    }
   }
 }

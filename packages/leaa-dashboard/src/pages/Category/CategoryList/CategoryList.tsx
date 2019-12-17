@@ -59,48 +59,46 @@ export default (props: IPage) => {
     >
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
-      <TableCard>
-        <div style={{ height: '70vh' }}>
-          <SortableTree
-            className={style['tree-wrapper']}
-            isVirtualized={false}
-            canDrag={false}
-            treeData={treeData}
-            onChange={e => setTreeData(e)}
-            generateNodeProps={({ node }) => ({
-              className: style['tree-item'],
-              title: [
-                <div className={style['tree-item-title']} key={`${node.id}`}>
-                  {node.id ? <Link to={`/categories/${node.id}`}>{node.title}</Link> : node.title}
-                </div>,
-              ],
-              subtitle: [
-                <div className={style['tree-item-sub-title']} key={`${node.id}`}>
-                  {node.slug}
-                  <small>#{node.id}</small>
-                </div>,
-              ],
-              buttons: [
-                <TableColumnDeleteButton
-                  key={`${node.id}`}
-                  size="small"
-                  id={node.id}
-                  fieldName={node.name}
-                  loading={deleteCategoryMutation.loading}
-                  onClick={async () => deleteCategoryMutate({ variables: { id: Number(node.id) } })}
-                  className={style['tree-item-delete-button']}
-                />,
-                <Button key={`${node.id}`} title={_.toString(node)} size="small">
-                  <Link to={`/categories/create?parent_id=${node.id}`}>
-                    <Rcon type={CREATE_BUTTON_ICON} />
-                  </Link>
-                </Button>,
-                <span key={`${node.id}`}>&nbsp;</span>,
-              ],
-            })}
-          />
-        </div>
-      </TableCard>
+      <div style={{ height: '70vh' }}>
+        <SortableTree
+          className={style['tree-wrapper']}
+          isVirtualized={false}
+          canDrag={false}
+          treeData={treeData}
+          onChange={e => setTreeData(e)}
+          generateNodeProps={({ node }) => ({
+            className: style['tree-item'],
+            title: [
+              <div className={style['tree-item-title']} key={`${node.id}`}>
+                {node.id ? <Link to={`/categories/${node.id}`}>{node.title}</Link> : node.title}
+              </div>,
+            ],
+            subtitle: [
+              <div className={style['tree-item-sub-title']} key={`${node.id}`}>
+                {node.slug}
+                <small>#{node.id}</small>
+              </div>,
+            ],
+            buttons: [
+              <TableColumnDeleteButton
+                key={`${node.id}`}
+                size="small"
+                id={node.id}
+                fieldName={node.name}
+                loading={deleteCategoryMutation.loading}
+                onClick={async () => deleteCategoryMutate({ variables: { id: Number(node.id) } })}
+                className={style['tree-item-delete-button']}
+              />,
+              <Button key={`${node.id}`} title={_.toString(node)} size="small">
+                <Link to={`/categories/create?parent_id=${node.id}`}>
+                  <Rcon type={CREATE_BUTTON_ICON} />
+                </Link>
+              </Button>,
+              <span key={`${node.id}`}>&nbsp;</span>,
+            ],
+          })}
+        />
+      </div>
     </PageCard>
   );
 };
