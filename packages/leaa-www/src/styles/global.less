@@ -1,5 +1,6 @@
 :global {
   @import '~@leaa/www/src/styles/variables.less';
+  @import '~@leaa/www/src/styles/mixin.less';
   @import '~@leaa/www/src/styles/libs/nprogress/nprogress.less';
   @import '~@leaa/www/src/styles/libs/swiper/swiper.less';
 
@@ -18,9 +19,10 @@
     width: 100%;
 
     @media (min-width: @screen-md) {
+      .g-box-shadow();
+
       width: 800px;
       border-radius: 4px;
-      box-shadow: 0 2px 16px 0 #ddd9;
       margin: 0 auto;
       background-color: #fff;
       padding: 20px 30px;
