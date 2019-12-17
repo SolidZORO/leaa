@@ -40,7 +40,9 @@ export default (props: IPage) => {
   const urlPagination = urlUtil.getPagination(urlParams);
 
   const [tablePagination, setTablePagination] = useState<ITablePagination>(urlUtil.initPaginationState(urlParams));
+  const [selectedRowKeys, setSelectedRowKeys] = useState<IKey[]>([]);
 
+  // filter
   const [q, setQ] = useState<string | undefined>(urlParams.q ? String(urlParams.q) : undefined);
   const [tagName, setTagName] = useState<string | undefined>(urlParams.tagName ? String(urlParams.tagName) : undefined);
   const [categoryId, setCategoryId] = useState<number | undefined>(
@@ -65,11 +67,11 @@ export default (props: IPage) => {
     setTablePagination({
       page: urlPagination.page,
       pageSize: urlPagination.pageSize,
-      selectedRowKeys: [],
       orderBy: undefined,
       orderSort: undefined,
     });
 
+    setSelectedRowKeys([]);
     setQ(undefined);
     setTagName(undefined);
     setCategoryId(undefined);
@@ -81,8 +83,8 @@ export default (props: IPage) => {
 
   const rowSelection = {
     columnWidth: 30,
-    onChange: (keys: IKey[]) => setTablePagination({ ...tablePagination, selectedRowKeys: keys }),
-    selectedRowKeys: tablePagination.selectedRowKeys,
+    onChange: (keys: IKey[]) => setSelectedRowKeys(keys),
+    selectedRowKeys,
   };
 
   const columns = [
@@ -233,7 +235,7 @@ export default (props: IPage) => {
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
       {getArticlesQuery?.data?.articles?.items && (
-        <TableCard selectedRowKeys={tablePagination.selectedRowKeys} totalLength={getArticlesQuery.data.articles.total}>
+        <TableCard selectedRowKeys={selectedRowKeys} totalLength={getArticlesQuery.data.articles.total}>
           <Table
             rowKey="id"
             size="small"
@@ -257,7 +259,6 @@ export default (props: IPage) => {
                 pageSize: pagination.pageSize,
                 orderBy: urlUtil.formatOrderBy(sorter.field),
                 orderSort: urlUtil.formatOrderSort(sorter.order),
-                selectedRowKeys: [],
               });
 
               urlUtil.mergeParamToUrlQuery({

@@ -24,6 +24,12 @@
               padding: 12px 10px;
             }
           }
+
+          th.ant-table-column-has-sorters {
+            &:hover {
+              background: @item-hover-bg;
+            }
+          }
         }
       }
     }
@@ -141,6 +147,7 @@
 
   .total {
     display: inline-block;
+    padding-left: 10px;
   }
 
   .tools {

@@ -38,7 +38,9 @@ export default (props: IPage) => {
   const urlPagination = urlUtil.getPagination(urlParams);
 
   const [tablePagination, setTablePagination] = useState<ITablePagination>(urlUtil.initPaginationState(urlParams));
+  const [selectedRowKeys, setSelectedRowKeys] = useState<IKey[]>([]);
 
+  // filter
   const [q, setQ] = useState<string | undefined>(urlParams.q ? String(urlParams.q) : undefined);
 
   // query
@@ -68,11 +70,11 @@ export default (props: IPage) => {
     setTablePagination({
       page: urlPagination.page,
       pageSize: urlPagination.pageSize,
-      selectedRowKeys: [],
       orderBy: undefined,
       orderSort: undefined,
     });
 
+    setSelectedRowKeys([]);
     setQ(undefined);
   };
 
@@ -82,8 +84,8 @@ export default (props: IPage) => {
 
   const rowSelection = {
     columnWidth: 30,
-    onChange: (keys: IKey[]) => setTablePagination({ ...tablePagination, selectedRowKeys: keys }),
-    selectedRowKeys: tablePagination.selectedRowKeys,
+    onChange: (keys: IKey[]) => setSelectedRowKeys(keys),
+    selectedRowKeys,
   };
 
   const columns = [
@@ -188,7 +190,7 @@ export default (props: IPage) => {
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
       {getRolesQuery?.data?.roles?.items && (
-        <TableCard selectedRowKeys={tablePagination.selectedRowKeys} totalLength={getRolesQuery.data.roles.total}>
+        <TableCard selectedRowKeys={selectedRowKeys} totalLength={getRolesQuery.data.roles.total}>
           <Table
             rowKey="id"
             size="small"
@@ -212,7 +214,6 @@ export default (props: IPage) => {
                 pageSize: pagination.pageSize,
                 orderBy: urlUtil.formatOrderBy(sorter.field),
                 orderSort: urlUtil.formatOrderSort(sorter.order),
-                selectedRowKeys: [],
               });
 
               urlUtil.mergeParamToUrlQuery({
