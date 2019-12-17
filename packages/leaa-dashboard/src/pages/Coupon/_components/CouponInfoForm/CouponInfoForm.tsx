@@ -10,7 +10,7 @@ import { messageUtil, dateUtil } from '@leaa/dashboard/src/utils';
 import { IOnValidateFormResult, IDateRange } from '@leaa/dashboard/src/interfaces';
 import { UpdateCouponInput } from '@leaa/common/src/dtos/coupon';
 
-import { FormCard, EntryInfoDate, SwitchNumber, IdTag, Rcon } from '@leaa/dashboard/src/components';
+import { FormCard, EntryInfoDate, SwitchNumber, IdTag, Rcon, PriceInput } from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';
 
@@ -114,13 +114,13 @@ export const CouponInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =>
 
             <Col xs={24} sm={4}>
               <Form.Item name="amount" rules={[{ required: true }]} label={t('_page:Coupon.amount')}>
-                <InputNumber className="g-input-number" placeholder={t('_page:Coupon.amount')} />
+                <PriceInput className="g-input-number" placeholder={t('_page:Coupon.amount')} />
               </Form.Item>
             </Col>
 
             <Col xs={24} sm={4}>
               <Form.Item name="over_amount" rules={[{ required: true }]} label={t('_page:Coupon.overAmount')}>
-                <InputNumber className="g-input-number" placeholder={t('_lang:over_amount')} />
+                <PriceInput className="g-input-number" placeholder={t('_lang:over_amount')} />
               </Form.Item>
             </Col>
 

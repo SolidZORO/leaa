@@ -10,6 +10,7 @@ export { ErrorCard } from './ErrorCard/ErrorCard';
 export { BuildInfo } from './BuildInfo/BuildInfo';
 export { SubmitBar } from './SubmitBar/SubmitBar';
 export { CouponItem } from './CouponItem/CouponItem';
+export { PriceInput } from './PriceInput/PriceInput';
 export { AuthLayout } from './AuthLayout/AuthLayout';
 export { FilterIcon } from './FilterIcon/FilterIcon';
 export { TagMiniSets } from './TagMiniSets/TagMiniSets';

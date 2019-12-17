@@ -10,7 +10,7 @@ import { messageUtil, dateUtil } from '@leaa/dashboard/src/utils';
 import { IOnValidateFormResult, IDateRange } from '@leaa/dashboard/src/interfaces';
 import { UpdatePromoInput } from '@leaa/common/src/dtos/promo';
 
-import { FormCard, EntryInfoDate, SwitchNumber } from '@leaa/dashboard/src/components';
+import { FormCard, EntryInfoDate, SwitchNumber, PriceInput } from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';
 
@@ -112,13 +112,13 @@ export const PromoInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) => 
 
             <Col xs={24} sm={4}>
               <Form.Item name="amount" rules={[{ required: true }]} label={t('_page:Promo.amount')}>
-                <InputNumber className="g-input-number" placeholder={t('_page:Promo.amount')} />
+                <PriceInput className="g-input-number" placeholder={t('_page:Promo.amount')} />
               </Form.Item>
             </Col>
 
             <Col xs={24} sm={4}>
               <Form.Item name="over_amount" rules={[{ required: true }]} label={t('_page:Promo.overAmount')}>
-                <InputNumber className="g-input-number" placeholder={t('_lang:over_amount')} />
+                <PriceInput className="g-input-number" placeholder={t('_lang:over_amount')} />
               </Form.Item>
             </Col>
 

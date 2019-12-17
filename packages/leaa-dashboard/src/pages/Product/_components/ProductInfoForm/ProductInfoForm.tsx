@@ -9,7 +9,13 @@ import { messageUtil } from '@leaa/dashboard/src/utils';
 import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
 import { UpdateProductInput } from '@leaa/common/src/dtos/product';
 
-import { FormCard, SwitchNumber, EntryInfoDate, SelectCategoryIdByTree } from '@leaa/dashboard/src/components';
+import {
+  FormCard,
+  SwitchNumber,
+  EntryInfoDate,
+  SelectCategoryIdByTree,
+  PriceInput,
+} from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';
 
@@ -94,19 +100,19 @@ export const ProductInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =
           <Row gutter={16} className={style['form-row']}>
             <Col xs={24} sm={4}>
               <Form.Item name="price" rules={[{ required: true }]} label={t('_page:Product.price')}>
-                <InputNumber className="g-input-number" placeholder={t('_lang:price')} />
+                <PriceInput className="g-input-number" placeholder={t('_lang:price')} />
               </Form.Item>
             </Col>
 
             <Col xs={24} sm={4}>
               <Form.Item name="cost_price" rules={[]} label={t('_page:Product.costPrice')}>
-                <InputNumber className="g-input-number" placeholder={t('_page:Product.costPrice')} />
+                <PriceInput className="g-input-number" placeholder={t('_page:Product.costPrice')} />
               </Form.Item>
             </Col>
 
             <Col xs={24} sm={4}>
               <Form.Item name="market_price" rules={[]} label={t('_page:Product.marketPrice')}>
-                <InputNumber className="g-input-number" placeholder={t('_page:Product.marketPrice')} />
+                <PriceInput className="g-input-number" placeholder={t('_page:Product.marketPrice')} />
               </Form.Item>
             </Col>
 
