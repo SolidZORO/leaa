@@ -220,7 +220,7 @@ export default (props: IPage) => {
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
       {getCouponsQuery?.data?.coupons?.items && (
-        <TableCard selectedRowKeys={tablePagination.selectedRowKeys}>
+        <TableCard selectedRowKeys={tablePagination.selectedRowKeys} totalLength={getCouponsQuery.data.coupons.total}>
           <Table
             rowKey="id"
             size="small"

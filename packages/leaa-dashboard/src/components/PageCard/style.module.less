@@ -6,10 +6,6 @@
   padding-bottom: 30px;
 
   :global {
-    .ant-table {
-      background: #fff;
-    }
-
     .ant-card {
       margin-bottom: 20px;
 
@@ -31,22 +27,26 @@
   justify-content: space-between;
 
   .title {
-    font-size: 140%;
     margin: 0;
     padding: 0 0 0 2px;
-    color: #333;
-    opacity: 0.9;
+    color: #26254b;
 
     :global {
       .anticon {
-        display: none;
+        //display: none;
         font-weight: 400;
         margin-right: 8px;
+        vertical-align: -3px;
+
+        svg {
+          font-size: 20px;
+        }
       }
 
       span {
         strong {
           font-weight: 500;
+          font-size: 18px;
           vertical-align: -1px;
         }
       }
@@ -110,7 +110,7 @@
 
 .container {
   background: transparent;
-  margin-bottom: 50px;
+  margin-bottom: 80px;
 }
 
 .spin {

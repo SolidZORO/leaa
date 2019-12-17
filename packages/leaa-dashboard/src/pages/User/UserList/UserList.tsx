@@ -196,7 +196,7 @@ export default (props: IPage) => {
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
       {getUsersQuery?.data?.users?.items && (
-        <TableCard selectedRowKeys={tablePagination.selectedRowKeys}>
+        <TableCard selectedRowKeys={tablePagination.selectedRowKeys} totalLength={getUsersQuery.data.users.total}>
           <Table
             rowKey="id"
             size="small"

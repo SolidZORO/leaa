@@ -4,7 +4,6 @@ import { Skeleton, Avatar, Popover, Button } from 'antd';
 import { RouteComponentProps } from 'react-router-dom';
 
 import { authUtil } from '@leaa/dashboard/src/utils';
-import { buildConfig } from '@leaa/dashboard/src/configs';
 import { LOGOUT_REDIRECT_URL } from '@leaa/dashboard/src/constants';
 import { Rcon, BuildInfo } from '@leaa/dashboard/src/components';
 
@@ -22,8 +21,9 @@ export const UserMenu = (props: IProps): JSX.Element => {
     }
 
     const messageText = t('_comp:UserMenu.logoutFaild');
+    console.log(messageText);
 
-    return console.log(messageText);
+    return undefined;
   };
 
   const user = authUtil.getAuthInfo();
@@ -50,8 +50,10 @@ export const UserMenu = (props: IProps): JSX.Element => {
   return (
     <div className={style['usermenu-wrapper']}>
       <Popover trigger="click" placement="bottomRight" content={menuDom}>
-        <Button type="ghost" shape="circle" className={style['usermenu-button']}>
+        <Button type="link" className={style['usermenu-button']}>
           <Avatar src={avatar} alt="Avatar" shape="circle" className={style['usermenu-avatar']} />
+          <span className={style['usermenu-name']}>{user.name}</span>
+          <Rcon type="ri-arrow-drop-down-fill" className={style['usermenu-name-icon']} />
         </Button>
       </Popover>
     </div>

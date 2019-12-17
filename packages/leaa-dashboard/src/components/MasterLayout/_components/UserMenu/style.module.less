@@ -3,6 +3,7 @@
 .usermenu-wrapper {
   position: relative;
   margin-right: 2px;
+  margin-left: 5px;
 }
 
 .usermenu-box {
@@ -35,6 +36,24 @@
 .usermenu-button {
   border: 0;
   box-shadow: none;
+  padding: 0;
+}
+
+@usermenu-name-color: #555;
+
+.usermenu-name {
+  padding-left: 7px;
+  color: @usermenu-name-color;
+  transition: all 0.3s;
+}
+
+.usermenu-name-icon {
+  display: inline-block;
+  color: @usermenu-name-color;
+  font-size: 22px;
+  margin: 0 !important;
+  position: relative;
+  top: 4px;
 }
 
 .usermenu-avatar {
@@ -44,4 +63,13 @@
 .safely-logout-button {
   top: 1px;
   position: relative;
+}
+
+.usermenu-wrapper {
+  &:hover {
+    .usermenu-name {
+      transition: all 0.3s;
+      color: #111;
+    }
+  }
 }

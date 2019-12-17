@@ -1,4 +1,5 @@
 @import '~@leaa/dashboard/src/styles/variables.less';
+@import '~@leaa/dashboard/src/styles/mixin.less';
 
 .full-layout-header {
   background: #fff;
@@ -6,6 +7,8 @@
   line-height: 1;
   height: auto;
   padding: 8px @page-card-padding-x;
+
+  .g-box-shadow(0.03);
 }
 
 .header-nav {

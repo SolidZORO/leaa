@@ -167,7 +167,10 @@ export default (props: IPage) => {
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
       {getPermissionsQuery?.data?.permissions?.items && (
-        <TableCard selectedRowKeys={tablePagination.selectedRowKeys}>
+        <TableCard
+          selectedRowKeys={tablePagination.selectedRowKeys}
+          totalLength={getPermissionsQuery.data.permissions.total}
+        >
           <Table
             rowKey="id"
             size="small"

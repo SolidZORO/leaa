@@ -180,7 +180,7 @@ export default (props: IPage) => {
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
       {getAxsQuery?.data?.axs?.items && (
-        <TableCard selectedRowKeys={tablePagination.selectedRowKeys}>
+        <TableCard selectedRowKeys={tablePagination.selectedRowKeys} totalLength={getAxsQuery.data.axs.total}>
           <Table
             rowKey="id"
             size="small"

@@ -13,6 +13,7 @@ interface IProps {
   loading?: boolean;
   selectedRowBar?: React.ReactNode;
   selectedRowKeys?: IKey[];
+  totalLength?: number;
 }
 
 export const TableCard = (props: IProps) => {
@@ -33,12 +34,14 @@ export const TableCard = (props: IProps) => {
           <div className={cx(style['selected-row-bar-wrapper'])}>
             <div className={style['selected-row-bar-container']}>
               <div className={style['total']}>
-                {props.selectedRowKeys.length} {t('_lang:selected')}
+                {t('_comp:TableCard.selectedItems', { length: props.selectedRowKeys.length })}
               </div>
               <div className={style['tools']}>{props.selectedRowBar}</div>
             </div>
           </div>
         )}
+
+        <div className={style['items-length']}>{t('_comp:TableCard.totalLength', { length: props.totalLength })}</div>
       </div>
     </div>
   );
