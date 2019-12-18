@@ -19,12 +19,12 @@ export default () => {
       <Button
         type="primary"
         shape="circle"
-        className={cx({
-          [style['mobile-login-button']]: type === 'mobile',
-          [style['mail-login-button']]: type === 'mail',
-        })}
         onClick={onSubmitWechat}
         icon={<Rcon type={type} />}
+        className={cx({
+          [style['mobile-login-button']]: type === 'ri-smartphone-line',
+          [style['mail-login-button']]: type === 'ri-mail-line',
+        })}
       />
     </div>
   );

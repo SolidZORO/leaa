@@ -33,11 +33,11 @@ webpackModule.rules = [
       {
         loader: 'css-loader',
         options: {
+          importLoaders: 2,
+          sourceMap: false,
           modules: {
             localIdentName: webpackConst.LOADER_CSS_LOADERR_LOCAL_IDENT_NAME,
           },
-          importLoaders: 2,
-          sourceMap: false,
         },
       },
       {
@@ -47,6 +47,7 @@ webpackModule.rules = [
         loader: 'less-loader',
         options: {
           javascriptEnabled: true,
+          modifyVars: antdModifyVars,
         },
       },
     ],

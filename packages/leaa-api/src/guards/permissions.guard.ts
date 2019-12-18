@@ -22,8 +22,6 @@ export class PermissionsGuard implements CanActivate {
 
     const user = this.getUser(context);
 
-    console.log(user);
-
     if (!user) return errorUtil.ILLEGAL_USER();
 
     // signup user
