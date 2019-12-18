@@ -60,30 +60,30 @@ module.exports = (nextConfig = {}) => ({
         }),
       });
 
-      // for antd less in server (yarn build)
-      // if (isServer) {
-      //   const rawExternals = [...config.externals];
-      //
-      //   config.externals = [
-      //     (context, request, callback) => {
-      //       if (request.match(ANTD_STYLE_REGX)) {
-      //         return callback();
-      //       }
-      //
-      //       if (typeof rawExternals[0] === 'function') {
-      //         rawExternals[0](context, request, callback);
-      //       } else {
-      //         callback();
-      //       }
-      //     },
-      //     ...(typeof rawExternals[0] === 'function' ? [] : rawExternals),
-      //   ];
-      //
-      //   config.module.rules.unshift({
-      //     test: ANTD_STYLE_REGX,
-      //     use: 'null-loader',
-      //   });
-      // }
+      // for antd less in server (yarn next build)
+      if (isServer) {
+        const rawExternals = [...config.externals];
+
+        config.externals = [
+          (context, request, callback) => {
+            if (request.match(ANTD_STYLE_REGX)) {
+              return callback();
+            }
+
+            if (typeof rawExternals[0] === 'function') {
+              rawExternals[0](context, request, callback);
+            } else {
+              callback();
+            }
+          },
+          ...(typeof rawExternals[0] === 'function' ? [] : rawExternals),
+        ];
+
+        config.module.rules.unshift({
+          test: ANTD_STYLE_REGX,
+          use: 'null-loader',
+        });
+      }
 
       if (typeof nextConfig.webpack === 'function') {
         return nextConfig.webpack(config, options);
