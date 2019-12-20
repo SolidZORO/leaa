@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 import { __MENU_MOCK__ } from '@leaa/www/src/__mock__';
 
-import style from './style.less';
+import style from './style.module.less';
 
 export const LayoutFooter = () => (
   <div className={style['full-layout-footer']}>

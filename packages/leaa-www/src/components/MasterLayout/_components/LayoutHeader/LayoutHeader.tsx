@@ -9,7 +9,7 @@ import { authUtil } from '@leaa/www/src/utils';
 
 import { __MENU_MOCK__ } from '@leaa/www/src/__mock__';
 
-import style from './style.less';
+import style from './style.module.less';
 
 export const LayoutHeader = () => {
   const headerMenu = [{ title: 'Home', link: '/' }].concat(__MENU_MOCK__.headerMenu);

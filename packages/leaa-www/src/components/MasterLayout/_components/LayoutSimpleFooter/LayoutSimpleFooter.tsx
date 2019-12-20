@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 import { Rcon } from '@leaa/www/src/components';
 
-import style from './style.less';
+import style from './style.module.less';
 
 export const LayoutSimpleFooter = () => (
   <div className={style['full-layout-simple-footer']}>

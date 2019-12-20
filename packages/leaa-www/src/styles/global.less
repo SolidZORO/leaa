@@ -1,31 +1,29 @@
-:global {
-  @import '~@leaa/www/src/styles/variables.less';
-  @import '~@leaa/www/src/styles/mixin.less';
-  @import '~@leaa/www/src/styles/libs/nprogress/nprogress.less';
-  @import '~@leaa/www/src/styles/libs/swiper/swiper.less';
+@import '~@leaa/www/src/styles/variables.less';
+@import '~@leaa/www/src/styles/mixin.less';
+@import '~@leaa/www/src/styles/libs/nprogress/nprogress.less';
+@import '~@leaa/www/src/styles/libs/swiper/swiper.less';
 
-  .g-full-container {
-    position: relative;
-    width: 100%;
-    margin: 0 auto;
-    padding: 0 @page-card-padding-x;
+.g-full-container {
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 @page-card-padding-x;
 
-    @media (min-width: @screen-md) {
-      max-width: 1032px; // fit is 1000px (1000 + 16 * 2 = 1032)
-    }
+  @media (min-width: @screen-md) {
+    max-width: 1032px; // fit is 1000px (1000 + 16 * 2 = 1032)
   }
+}
 
-  .g-container-card {
-    width: 100%;
+.g-container-card {
+  width: 100%;
 
-    @media (min-width: @screen-md) {
-      .g-box-shadow();
+  @media (min-width: @screen-md) {
+    .g-box-shadow();
 
-      width: 800px;
-      border-radius: 4px;
-      margin: 0 auto;
-      background-color: #fff;
-      padding: 20px 30px;
-    }
+    width: 800px;
+    border-radius: 4px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px 30px;
   }
 }

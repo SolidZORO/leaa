@@ -55,7 +55,7 @@
     "dayjs": "^1.8.17",
     "dotenv": "^8.0.0",
     "express": "^4.17.1",
-    "file-loader": "^5.0.2",
+    "extract-css-chunks-webpack-plugin": "^4.7.1",
     "graphql": "^14.5.4",
     "graphql-tag": "^2.10.1",
     "history": "^4.10.1",
@@ -63,6 +63,7 @@
     "js-cookie": "^2.2.1",
     "less": "^3.10.3",
     "lodash": "^4.17.15",
+    "mini-css-extract-plugin": "0.4.3",
     "mobx": "^5.15.1",
     "mobx-react": "6.1.4",
     "module-alias": "^2.2.2",
@@ -71,7 +72,6 @@
     "node-fetch": "^2.6.0",
     "nookies": "^2.0.8",
     "nprogress": "^0.2.0",
-    "null-loader": "^3.0.0",
     "prop-types": "^15.7.2",
     "query-string": "6.9.0",
     "react": "^16.8.0",
@@ -86,7 +86,6 @@
     "type-graphql": "^0.17.5",
     "typeorm": "^0.2.21",
     "ua-parser-js": "^0.7.20",
-    "url-loader": "^3.0.0",
     "vconsole": "^3.3.4",
     "webpack-filter-warnings-plugin": "^1.2.1"
   },
@@ -118,9 +117,17 @@
     "@types/ua-parser-js": "^0.7.33",
     "@typescript-eslint/eslint-plugin": "^2.11.0",
     "@typescript-eslint/parser": "^2.11.0",
-    "css-loader": "^3.3.2",
+    "css-loader": "1.0.0",
     "eslint-plugin-import": "^2.19.1",
     "eslint-plugin-prettier": "^3.1.2",
-    "terser-webpack-plugin": "2.3.0"
+    "extracted-loader": "1.0.4",
+    "file-loader": "^5.0.2",
+    "find-up": "^4.1.0",
+    "ignore-loader": "0.1.2",
+    "less-loader": "^4.1.0",
+    "null-loader": "^3.0.0",
+    "postcss-loader": "3.0.0",
+    "terser-webpack-plugin": "^2.3.1",
+    "url-loader": "^3.0.0"
   }
 }
