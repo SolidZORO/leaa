@@ -26,7 +26,6 @@ if (process.env.NODE_ENV !== 'production') {
     head.append(style);
 
     const chunks = document.querySelectorAll(`link[href*="${chunkFileName}"]`);
-    console.log(chunks);
 
     // delete all chunks css, except the last one. (delay 1s to keep the page from flickering)
     setTimeout(

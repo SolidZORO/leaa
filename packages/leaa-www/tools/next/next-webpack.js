@@ -35,7 +35,7 @@ module.exports = (config, options) => {
     // ),
     new FilterWarningsPlugin({
       // ignore ANTD chunk styles [mini-css-extract-plugin] warning
-      exclude: /Conflicting order between:/,
+      exclude: /Conflicting order/,
     }),
   );
 
@@ -63,19 +63,26 @@ module.exports = (config, options) => {
   config.module.rules.push({
     test: /\.less$/,
     exclude: /\.module\.less$/,
-    use: cssLoaderConfig(config, baseLessConfig),
+    // use: cssLoaderConfig(config, baseLessConfig),
+    use: cssLoaderConfig(config, {
+      ...baseLessConfig,
+      cssModules: false,
+      cssLoaderOptions: {
+        sourceMap: false,
+        importLoaders: 2,
+      },
+    }),
   });
 
   config.module.rules.push({
     test: /\.module\.less$/,
     use: cssLoaderConfig(config, {
       ...baseLessConfig,
+      cssModules: true,
       cssLoaderOptions: {
         sourceMap: false,
         importLoaders: 2,
-        modules: {
-          localIdentName: dev ? '[local]--[hash:4]' : '[local]--[hash:4]',
-        },
+        localIdentName: dev ? '[local]--[hash:4]' : '[local]--[hash:4]',
       },
     }),
   });

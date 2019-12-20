@@ -16,3 +16,7 @@ cp .env.example .env.production # for production
 yarn install
 yarn dev
 ```
+
+## **MEMO**
+
+in `package.json`, `css-loader` MUST KEEP  `^1.0.1`.
