@@ -56,7 +56,7 @@ export const CouponRedeemForm = forwardRef((props: IProps, ref: React.Ref<any>) 
   return (
     <div className={cx(style['wrapper'], props.className)}>
       <FormCard
-        title={t('_page:Coupon.couponInfo')}
+        title={`${t('_page:Coupon.couponInfo')} TEST`}
         extra={<EntryInfoDate date={props.item && [props.item.created_at, props.item.updated_at]} />}
       >
         <Form form={form} layout="vertical">
@@ -68,16 +68,14 @@ export const CouponRedeemForm = forwardRef((props: IProps, ref: React.Ref<any>) 
             </div>
 
             <Col xs={24} sm={6}>
-              <Form.Item name="userId" rules={[{ required: true }]} label={t('_lang:name')}>
-                <Input />
+              <Form.Item name="userId" rules={[{ required: true }]}>
+                <Input size="large" />
               </Form.Item>
             </Col>
 
             {props.submitButton && (
               <Col xs={24} sm={4}>
-                <Form.Item label={' '} colon={false}>
-                  {props.submitButton}
-                </Form.Item>
+                <Form.Item>{props.submitButton}</Form.Item>
               </Col>
             )}
           </Row>

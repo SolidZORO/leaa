@@ -204,7 +204,7 @@ You can click `demo` link online preview, all demos are deployed in `heroku` and
 
 本来说好写总结就不要不抱怨了，但现在看来多多少少还是有一些吐槽，Anywhere，从 `Docker` 到 `Api` 再到 `UI/UX`，写 `leaa` 过程的确让我学到很多，对软件架构、开闭原则有了更深的了解，以前写项目觉得「编码」与「建筑」其实是做着同一件事情， 这次算是更深刻的体会到了。
 
-目前 `leaa` 还有很多很多很多 bug，但这似乎不妨碍有需要的人通过 Github 上检索到 `leaa` 中对他们有用的代码，这也是我写 `leaa` 的东西，以上。 2019-09-17 17:01 @ Guangxi Hezhou
+目前 `leaa` 还有很多很多很多 bug，但这似乎不妨碍有需要的人通过 Github 上检索到 `leaa` 中对他们有用的代码，这也是我写 `leaa` 的初衷，以上。 2019-09-17 17:01 @ Guangxi Hezhou
 
 ## **DEV LOG**
 
