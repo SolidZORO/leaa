@@ -8,7 +8,7 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import { Table } from 'antd';
 
 import { DEFAULT_PAGE_SIZE_OPTIONS, PAGE_CARD_TITLE_CREATE_ICON } from '@leaa/dashboard/src/constants';
-import { GET_PERMISSIONS, DELETE_PERMISSION } from '@leaa/common/src/graphqls';
+import { GET_PERMISSIONS, DELETE_PERMISSION } from '@leaa/dashboard/src/graphqls';
 
 import { Permission } from '@leaa/common/src/entrys';
 import { PermissionsWithPaginationObject, PermissionsArgs } from '@leaa/common/src/dtos/permission';

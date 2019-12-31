@@ -8,7 +8,7 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import { Table } from 'antd';
 
 import { DEFAULT_PAGE_SIZE_OPTIONS, PAGE_CARD_TITLE_CREATE_ICON } from '@leaa/dashboard/src/constants';
-import { GET_AXS, DELETE_AX, UPDATE_AX } from '@leaa/common/src/graphqls';
+import { GET_AXS, DELETE_AX, UPDATE_AX } from '@leaa/dashboard/src/graphqls';
 
 import { Ax } from '@leaa/common/src/entrys';
 import { AxsWithPaginationObject, AxsArgs } from '@leaa/common/src/dtos/ax';

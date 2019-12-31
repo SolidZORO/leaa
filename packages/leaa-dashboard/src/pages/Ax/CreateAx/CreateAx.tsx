@@ -4,7 +4,7 @@ import { Button } from 'antd';
 import { useMutation } from '@apollo/react-hooks';
 
 import { Ax } from '@leaa/common/src/entrys';
-import { CREATE_AX } from '@leaa/common/src/graphqls';
+import { CREATE_AX } from '@leaa/dashboard/src/graphqls';
 import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { CreateAxInput } from '@leaa/common/src/dtos/ax';
 import { IPage, ICommenFormRef, ISubmitData } from '@leaa/dashboard/src/interfaces';

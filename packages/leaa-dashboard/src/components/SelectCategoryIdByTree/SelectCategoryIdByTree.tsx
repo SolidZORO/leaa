@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/react-hooks';
 import { TreeSelectProps } from 'antd/lib/tree-select';
 
-import { GET_CATEGORIES } from '@leaa/common/src/graphqls';
+import { GET_CATEGORIES } from '@leaa/dashboard/src/graphqls';
 import { CategoriesArgs, CategoriesWithPaginationOrTreeObject } from '@leaa/common/src/dtos/category';
 
 import style from './style.module.less';

@@ -5,7 +5,7 @@ import queryString from 'query-string';
 import { useMutation } from '@apollo/react-hooks';
 import { Row, Col, Button } from 'antd';
 
-import { LOGIN } from '@leaa/common/src/graphqls';
+import { LOGIN } from '@leaa/dashboard/src/graphqls';
 import logo from '@leaa/dashboard/src/assets/images/logo/logo-black.svg';
 import { IPage, ICommenFormRef, IAuthInfo, ISubmitData } from '@leaa/dashboard/src/interfaces';
 import { authUtil, messageUtil } from '@leaa/dashboard/src/utils';

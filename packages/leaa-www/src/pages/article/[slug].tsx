@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic';
 import { GraphQLError } from 'graphql';
 
 import { Article } from '@leaa/common/src/entrys';
-import { GET_ARTICLE_BY_SLUG } from '@leaa/common/src/graphqls';
+import { GET_ARTICLE_BY_SLUG } from '@leaa/www/src/graphqls';
 
 import { IPageProps, IGetInitialProps } from '@leaa/www/src/interfaces';
 import { HtmlMeta, PageCard } from '@leaa/www/src/components';

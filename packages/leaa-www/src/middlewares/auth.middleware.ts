@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import { GET_USER_BY_TOKEN } from '@leaa/common/src/graphqls/user.query';
+import { GET_USER_BY_TOKEN } from '@leaa/www/src/graphqls/user.query';
 import { AUTH_INFO, AUTH_TOKEN_NAME } from '@leaa/www/src/constants';
 import { IAuthInfo } from '@leaa/www/src/interfaces';
 import { apolloClientWithState } from '@leaa/www/src/libs/apollo-client.lib';

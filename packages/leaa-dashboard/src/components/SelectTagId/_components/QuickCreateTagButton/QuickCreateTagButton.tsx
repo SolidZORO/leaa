@@ -5,7 +5,7 @@ import { Button } from 'antd';
 import { useMutation } from '@apollo/react-hooks';
 
 import { Tag } from '@leaa/common/src/entrys';
-import { CREATE_TAG } from '@leaa/common/src/graphqls';
+import { CREATE_TAG } from '@leaa/dashboard/src/graphqls';
 
 import style from './style.module.less';
 

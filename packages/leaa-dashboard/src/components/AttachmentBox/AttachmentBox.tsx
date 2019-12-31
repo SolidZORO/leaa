@@ -4,7 +4,7 @@ import React, { useState, forwardRef, useImperativeHandle, useRef } from 'react'
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { Tooltip } from 'antd';
 
-import { GET_ATTACHMENTS, UPDATE_ATTACHMENTS } from '@leaa/common/src/graphqls';
+import { GET_ATTACHMENTS, UPDATE_ATTACHMENTS } from '@leaa/dashboard/src/graphqls';
 import { IAttachmentParams } from '@leaa/common/src/interfaces';
 
 import { Attachment } from '@leaa/common/src/entrys';

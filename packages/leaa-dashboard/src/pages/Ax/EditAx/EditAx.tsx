@@ -4,7 +4,7 @@ import { Button } from 'antd';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
 import { Ax } from '@leaa/common/src/entrys';
-import { GET_AX, UPDATE_AX } from '@leaa/common/src/graphqls';
+import { GET_AX, UPDATE_AX } from '@leaa/dashboard/src/graphqls';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { AxArgs, UpdateAxInput } from '@leaa/common/src/dtos/ax';
 import { IPage, ICommenFormRef, ISubmitData } from '@leaa/dashboard/src/interfaces';

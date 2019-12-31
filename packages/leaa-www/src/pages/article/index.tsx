@@ -2,7 +2,7 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 import { GraphQLError } from 'graphql';
 
-import { GET_ARTICLES } from '@leaa/common/src/graphqls';
+import { GET_ARTICLES } from '@leaa/www/src/graphqls';
 import { ArticlesWithPaginationObject } from '@leaa/common/src/dtos/article';
 import { HtmlMeta, PageCard } from '@leaa/www/src/components';
 import { IPageProps } from '@leaa/www/src/interfaces';

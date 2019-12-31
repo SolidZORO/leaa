@@ -4,7 +4,7 @@ import { Button } from 'antd';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
 import { Coupon } from '@leaa/common/src/entrys';
-import { GET_COUPON, UPDATE_COUPON } from '@leaa/common/src/graphqls';
+import { GET_COUPON, UPDATE_COUPON } from '@leaa/dashboard/src/graphqls';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { CouponArgs, UpdateCouponInput } from '@leaa/common/src/dtos/coupon';
 import { IPage, ICommenFormRef, ISubmitData } from '@leaa/dashboard/src/interfaces';

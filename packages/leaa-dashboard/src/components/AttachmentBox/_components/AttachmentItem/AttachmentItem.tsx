@@ -16,7 +16,7 @@ import { useMutation } from '@apollo/react-hooks';
 import { useTranslation } from 'react-i18next';
 import { DeleteOutlined } from '@ant-design/icons';
 
-import { DELETE_ATTACHMENT } from '@leaa/common/src/graphqls';
+import { DELETE_ATTACHMENT } from '@leaa/dashboard/src/graphqls';
 import { Attachment } from '@leaa/common/src/entrys';
 import { SwitchNumber, Rcon } from '@leaa/dashboard/src/components';
 import { messageUtil } from '@leaa/dashboard/src/utils';

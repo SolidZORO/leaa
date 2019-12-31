@@ -2,7 +2,7 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 import { GraphQLError } from 'graphql';
 
-import { GET_AX_BY_SLUG } from '@leaa/common/src/graphqls';
+import { GET_AX_BY_SLUG } from '@leaa/www/src/graphqls';
 import { Ax } from '@leaa/common/src/entrys';
 import { AxArgs } from '@leaa/common/src/dtos/ax';
 import { HtmlMeta, PageCard } from '@leaa/www/src/components';

@@ -4,7 +4,7 @@ import { useMutation } from '@apollo/react-hooks';
 import { Button } from 'antd';
 
 import { Product } from '@leaa/common/src/entrys';
-import { CREATE_PRODUCT } from '@leaa/common/src/graphqls';
+import { CREATE_PRODUCT } from '@leaa/dashboard/src/graphqls';
 import { CreateProductInput } from '@leaa/common/src/dtos/product';
 import { IPage, ISubmitData, ICommenFormRef } from '@leaa/dashboard/src/interfaces';
 import { messageUtil } from '@leaa/dashboard/src/utils';

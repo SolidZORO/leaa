@@ -12,7 +12,7 @@ import {
   UPDATE_SETTINGS,
   CREATE_SETTING,
   DELETE_SETTING,
-} from '@leaa/common/src/graphqls';
+} from '@leaa/dashboard/src/graphqls';
 import { Setting } from '@leaa/common/src/entrys';
 import {
   SettingsWithPaginationObject,

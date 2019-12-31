@@ -7,7 +7,7 @@ import { urlUtil } from '@leaa/www/src/utils';
 import { IPageProps } from '@leaa/www/src/interfaces';
 import { envConfig } from '@leaa/www/src/configs';
 import { SettingsWithPaginationObject, SettingArgs } from '@leaa/common/src/dtos/setting';
-import { GET_SETTINGS_FOR_WWW } from '@leaa/common/src/graphqls';
+import { GET_SETTINGS_FOR_WWW } from '@leaa/www/src/graphqls';
 import { useStore } from '@leaa/www/src/stores';
 import { ProgressLoading } from '@leaa/www/src/components';
 

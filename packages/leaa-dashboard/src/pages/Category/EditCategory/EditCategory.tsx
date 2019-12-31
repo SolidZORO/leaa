@@ -4,7 +4,7 @@ import { Button } from 'antd';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
 import { Category } from '@leaa/common/src/entrys';
-import { GET_CATEGORY, UPDATE_CATEGORY, GET_CATEGORIES } from '@leaa/common/src/graphqls';
+import { GET_CATEGORY, UPDATE_CATEGORY, GET_CATEGORIES } from '@leaa/dashboard/src/graphqls';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import {
   CategoryArgs,

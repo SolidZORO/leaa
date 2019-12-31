@@ -3,7 +3,7 @@ import React from 'react';
 import { History } from 'history';
 import { useQuery } from '@apollo/react-hooks';
 
-import { GET_USER_BY_TOKEN } from '@leaa/common/src/graphqls';
+import { GET_USER_BY_TOKEN } from '@leaa/dashboard/src/graphqls';
 import { LOGOUT_REDIRECT_URL } from '@leaa/dashboard/src/constants';
 import { authUtil } from '@leaa/dashboard/src/utils';
 import { IAuthInfo } from '@leaa/dashboard/src/interfaces';

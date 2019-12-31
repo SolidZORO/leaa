@@ -8,7 +8,7 @@ import { LoadingOutlined } from '@ant-design/icons';
 import { Coupon } from '@leaa/common/src/entrys';
 
 import { UserSearchBox, IdTag, Rcon } from '@leaa/dashboard/src/components';
-import { REDEEM_COUPON } from '@leaa/common/src/graphqls';
+import { REDEEM_COUPON } from '@leaa/dashboard/src/graphqls';
 import { langUtil, authUtil, messageUtil } from '@leaa/dashboard/src/utils';
 
 import style from './style.module.less';

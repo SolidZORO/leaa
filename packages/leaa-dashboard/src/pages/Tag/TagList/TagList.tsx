@@ -8,7 +8,7 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import { Table } from 'antd';
 
 import { DEFAULT_PAGE_SIZE_OPTIONS, PAGE_CARD_TITLE_CREATE_ICON } from '@leaa/dashboard/src/constants';
-import { GET_TAGS, DELETE_TAG } from '@leaa/common/src/graphqls';
+import { GET_TAGS, DELETE_TAG } from '@leaa/dashboard/src/graphqls';
 
 import { Tag as TagEntry } from '@leaa/common/src/entrys';
 import { TagsWithPaginationObject, TagsArgs } from '@leaa/common/src/dtos/tag';

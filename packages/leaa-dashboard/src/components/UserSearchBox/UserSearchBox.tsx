@@ -8,7 +8,7 @@ import { LoadingOutlined } from '@ant-design/icons';
 
 import { User as UserEntry, User } from '@leaa/common/src/entrys';
 import { UsersWithPaginationObject, UserArgs, UsersArgs } from '@leaa/common/src/dtos/user';
-import { GET_USERS, GET_USER } from '@leaa/common/src/graphqls';
+import { GET_USERS, GET_USER } from '@leaa/dashboard/src/graphqls';
 import { apolloClient } from '@leaa/dashboard/src/libs';
 
 import style from './style.module.less';

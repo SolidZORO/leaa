@@ -8,7 +8,7 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import { Table } from 'antd';
 
 import { DEFAULT_PAGE_SIZE_OPTIONS, PAGE_CARD_TITLE_CREATE_ICON } from '@leaa/dashboard/src/constants';
-import { GET_PROMOS, DELETE_PROMO, UPDATE_PROMO } from '@leaa/common/src/graphqls';
+import { GET_PROMOS, DELETE_PROMO, UPDATE_PROMO } from '@leaa/dashboard/src/graphqls';
 
 import { Promo } from '@leaa/common/src/entrys';
 import { PromosWithPaginationObject, PromosArgs } from '@leaa/common/src/dtos/promo';

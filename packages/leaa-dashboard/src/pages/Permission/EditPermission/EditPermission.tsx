@@ -4,7 +4,7 @@ import { Button } from 'antd';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
 import { Permission } from '@leaa/common/src/entrys';
-import { GET_PERMISSION, UPDATE_PERMISSION } from '@leaa/common/src/graphqls';
+import { GET_PERMISSION, UPDATE_PERMISSION } from '@leaa/dashboard/src/graphqls';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { PermissionArgs, UpdatePermissionInput } from '@leaa/common/src/dtos/permission';
 import { IPage, ICommenFormRef, ISubmitData } from '@leaa/dashboard/src/interfaces';

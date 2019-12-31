@@ -4,7 +4,7 @@ import { Button } from 'antd';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
 import { User } from '@leaa/common/src/entrys';
-import { GET_USER, GET_ROLES, UPDATE_USER } from '@leaa/common/src/graphqls';
+import { GET_USER, GET_ROLES, UPDATE_USER } from '@leaa/dashboard/src/graphqls';
 import { RolesWithPaginationObject, RolesArgs } from '@leaa/common/src/dtos/role';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { UserArgs, UpdateUserInput } from '@leaa/common/src/dtos/user';

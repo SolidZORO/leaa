@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic';
 import { FetchResult } from 'apollo-link';
 // import { ApolloClient } from 'apollo-client';
 
-import { LOGIN_BY_TICKET_FOR_WWW } from '@leaa/common/src/graphqls';
+import { LOGIN_BY_TICKET_FOR_WWW } from '@leaa/www/src/graphqls';
 import { IGetInitialProps } from '@leaa/www/src/interfaces';
 import { User } from '@leaa/common/src/entrys';
 import { authUtil, urlUtil } from '@leaa/www/src/utils';

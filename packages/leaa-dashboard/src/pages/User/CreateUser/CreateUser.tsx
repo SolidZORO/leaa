@@ -7,7 +7,7 @@ import { User } from '@leaa/common/src/entrys';
 import { CreateUserInput } from '@leaa/common/src/dtos/user';
 import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { IPage, ICommenFormRef, ISubmitData } from '@leaa/dashboard/src/interfaces';
-import { CREATE_USER } from '@leaa/common/src/graphqls';
+import { CREATE_USER } from '@leaa/dashboard/src/graphqls';
 import { messageUtil } from '@leaa/dashboard/src/utils';
 
 import { HtmlMeta, PageCard, SubmitBar, Rcon } from '@leaa/dashboard/src/components';

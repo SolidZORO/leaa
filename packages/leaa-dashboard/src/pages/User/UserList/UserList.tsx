@@ -8,7 +8,7 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import { Table, Tag } from 'antd';
 
 import { DEFAULT_PAGE_SIZE_OPTIONS, PAGE_CARD_TITLE_CREATE_ICON } from '@leaa/dashboard/src/constants';
-import { GET_USERS, DELETE_USER, UPDATE_USER } from '@leaa/common/src/graphqls';
+import { GET_USERS, DELETE_USER, UPDATE_USER } from '@leaa/dashboard/src/graphqls';
 
 import { User } from '@leaa/common/src/entrys';
 import { UsersWithPaginationObject, UsersArgs } from '@leaa/common/src/dtos/user';

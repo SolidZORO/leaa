@@ -7,7 +7,7 @@ import { useMutation } from '@apollo/react-hooks';
 
 import { User } from '@leaa/common/src/entrys';
 import { AuthSignupInput } from '@leaa/common/src/dtos/auth';
-import { SIGNUP_FOR_WWW } from '@leaa/common/src/graphqls';
+import { SIGNUP_FOR_WWW } from '@leaa/www/src/graphqls';
 import { authUtil, messageUtil } from '@leaa/www/src/utils';
 
 import style from './style.module.less';

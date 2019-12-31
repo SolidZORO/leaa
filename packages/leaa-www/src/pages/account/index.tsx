@@ -2,7 +2,7 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 import { useQuery } from '@apollo/react-hooks';
 
-import { GET_USER_BY_TOKEN_FOR_WWW } from '@leaa/common/src/graphqls';
+import { GET_USER_BY_TOKEN_FOR_WWW } from '@leaa/www/src/graphqls';
 import { IAuthInfo, IGetInitialProps } from '@leaa/www/src/interfaces';
 import { authUtil, urlUtil } from '@leaa/www/src/utils';
 import { HtmlMeta, ErrorCard } from '@leaa/www/src/components';

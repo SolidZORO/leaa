@@ -6,7 +6,7 @@ import { useMutation } from '@apollo/react-hooks';
 import { Promo } from '@leaa/common/src/entrys';
 import { CreatePromoInput } from '@leaa/common/src/dtos/promo';
 import { IPage, ICommenFormRef, ISubmitData } from '@leaa/dashboard/src/interfaces';
-import { CREATE_PROMO } from '@leaa/common/src/graphqls';
+import { CREATE_PROMO } from '@leaa/dashboard/src/graphqls';
 import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { messageUtil } from '@leaa/dashboard/src/utils';
 

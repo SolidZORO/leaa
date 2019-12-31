@@ -7,7 +7,7 @@ import { Button } from 'antd';
 import SortableTree, { TreeItem } from 'react-sortable-tree';
 
 import { PAGE_CARD_TITLE_CREATE_ICON, CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
-import { DELETE_CATEGORY, GET_CATEGORIES } from '@leaa/common/src/graphqls';
+import { DELETE_CATEGORY, GET_CATEGORIES } from '@leaa/dashboard/src/graphqls';
 import { Category } from '@leaa/common/src/entrys';
 import { CategoriesWithPaginationOrTreeObject, CategoriesArgs } from '@leaa/common/src/dtos/category';
 import { messageUtil } from '@leaa/dashboard/src/utils';
