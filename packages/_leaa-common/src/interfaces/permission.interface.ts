@@ -115,6 +115,15 @@ declare const permissionSlug: [
   'product.item-create',
   'product.item-update',
   'product.item-delete',
+  // --------------------
+  'address.list-read',
+  'address.list-read--all-users',
+  //
+  'address.item-read',
+  'address.item-read--all-users',
+  'address.item-create',
+  'address.item-update',
+  'address.item-delete',
 ];
 
 export declare type IPermissionSlug = typeof permissionSlug[number];

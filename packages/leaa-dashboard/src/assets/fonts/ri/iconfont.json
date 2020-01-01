@@ -62,6 +62,27 @@
       "unicode_decimal": 61436
     },
     {
+      "icon_id": "12124535",
+      "name": "ri-map-pin-line",
+      "font_class": "ri-map-pin-line",
+      "unicode": "f00e",
+      "unicode_decimal": 61454
+    },
+    {
+      "icon_id": "12124597",
+      "name": "ri-map-pin-user-line",
+      "font_class": "ri-map-pin-user-line",
+      "unicode": "f04c",
+      "unicode_decimal": 61516
+    },
+    {
+      "icon_id": "12124624",
+      "name": "ri-hard-drive-line",
+      "font_class": "ri-hard-drive-line",
+      "unicode": "f067",
+      "unicode_decimal": 61543
+    },
+    {
       "icon_id": "12124666",
       "name": "ri-filter-line",
       "font_class": "ri-filter-line",
@@ -81,6 +102,20 @@
       "font_class": "ri-logout-box-r-line",
       "unicode": "f0c7",
       "unicode_decimal": 61639
+    },
+    {
+      "icon_id": "12124727",
+      "name": "ri-map-pin-user-fill",
+      "font_class": "ri-map-pin-user-fill",
+      "unicode": "f0ce",
+      "unicode_decimal": 61646
+    },
+    {
+      "icon_id": "12124736",
+      "name": "ri-pin-distance-line",
+      "font_class": "ri-pin-distance-line",
+      "unicode": "f0d7",
+      "unicode_decimal": 61655
     },
     {
       "icon_id": "12124740",
@@ -109,6 +144,13 @@
       "font_class": "ri-t-shirt-line",
       "unicode": "f127",
       "unicode_decimal": 61735
+    },
+    {
+      "icon_id": "12124868",
+      "name": "ri-server-line",
+      "font_class": "ri-server-line",
+      "unicode": "f15b",
+      "unicode_decimal": 61787
     },
     {
       "icon_id": "12124926",
@@ -151,6 +193,13 @@
       "font_class": "ri-close-circle-line",
       "unicode": "f220",
       "unicode_decimal": 61984
+    },
+    {
+      "icon_id": "12125084",
+      "name": "ri-user-location-line",
+      "font_class": "ri-user-location-line",
+      "unicode": "f233",
+      "unicode_decimal": 62003
     },
     {
       "icon_id": "12125113",
@@ -389,6 +438,13 @@
       "font_class": "ri-user-3-line",
       "unicode": "efca",
       "unicode_decimal": 61386
+    },
+    {
+      "icon_id": "12127132",
+      "name": "ri-database-2-line",
+      "font_class": "ri-database-2-line",
+      "unicode": "ef3d",
+      "unicode_decimal": 61245
     },
     {
       "icon_id": "12127138",

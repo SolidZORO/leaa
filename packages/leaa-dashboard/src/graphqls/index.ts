@@ -37,3 +37,8 @@ export * from './promo.mutation';
 
 export * from './product.query';
 export * from './product.mutation';
+
+export * from './address.query';
+export * from './address.mutation';
+
+export * from './division.mutation';

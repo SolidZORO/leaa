@@ -19,6 +19,9 @@ const promo = '优惠码';
 const marketing = '营销';
 const content = '内容';
 const product = '商品';
+const address = '地址';
+const userAddress = '用户地址';
+const addressDivision = '地址数据';
 
 export default {
   home,
@@ -52,8 +55,8 @@ export default {
   //
   contentGroup: `${content}`,
   article,
-  createArticle: `${_lang.create}${article}`,
-  editArticle: `${_lang.edit}${article}`,
+  createDivision: `${_lang.create}${article}`,
+  editDivision: `${_lang.edit}${article}`,
   //
   ax,
   createAx: `${_lang.create}${ax}`,
@@ -84,4 +87,11 @@ export default {
   product,
   createProduct: `${_lang.create} ${product}`,
   editProduct: `${_lang.edit} ${product}`,
+  //
+  dataGroup: '数据',
+  userAddress,
+  addressDivision,
+  address,
+  createAddress: `${_lang.create} ${address}`,
+  editAddress: `${_lang.edit} ${address}`,
 };

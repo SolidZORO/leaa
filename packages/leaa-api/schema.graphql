@@ -3,6 +3,31 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+type Address {
+  id: Int
+  created_at: DateTime!
+  updated_at: DateTime
+  deleted_at: DateTime
+  address: String
+  province: String
+  city: String
+  area: String
+  consignee: String
+  zip: Int
+  phone: String
+  status: Int
+  user: User
+}
+
+type AddressesWithPaginationObject {
+  page: Int
+  pageSize: Int!
+  nextPage: Int
+  itemsCount: Int!
+  total: Int!
+  items: [Address!]!
+}
+
 type Article {
   id: Int
   created_at: DateTime!
@@ -197,6 +222,17 @@ type CouponsWithPaginationObject {
   items: [Coupon!]!
 }
 
+input CreateAddressInput {
+  address: String!
+  province: String!
+  city: String!
+  area: String
+  consignee: String
+  zip: Int
+  phone: String
+  status: Int
+}
+
 input CreateArticleInput {
   title: String!
   slug: String
@@ -257,6 +293,13 @@ input CreateCouponInput {
   start_time: DateTime!
   expire_time: DateTime!
   status: Int!
+}
+
+input CreateDivisionInput {
+  code: Int!
+  province_code: Int
+  city_code: Int
+  name: String!
 }
 
 input CreatePermissionInput {
@@ -335,6 +378,26 @@ type DeleteAttachmentsObject {
   items: [String!]!
 }
 
+type Division {
+  id: Int
+  created_at: DateTime!
+  updated_at: DateTime
+  deleted_at: DateTime
+  code: Int!
+  province_code: Int
+  city_code: Int
+  name: String!
+}
+
+type DivisionsWithPaginationObject {
+  page: Int
+  pageSize: Int!
+  nextPage: Int
+  itemsCount: Int!
+  total: Int!
+  items: [Division!]!
+}
+
 type Mutation {
   createRole(role: CreateRoleInput!): Role!
   updateRole(role: UpdateRoleInput!, id: Int!): Role!
@@ -380,6 +443,13 @@ type Mutation {
   createProduct(product: CreateProductInput!): Product!
   updateProduct(product: UpdateProductInput!, id: Int!): Product!
   deleteProduct(id: Int!): Product!
+  createAddress(address: CreateAddressInput!): Address!
+  updateAddress(address: UpdateAddressInput!, id: Int!): Address!
+  deleteAddress(id: Int!): Address!
+  createDivision(division: CreateDivisionInput!): Division!
+  syncDivisionToFile: SyncDivisionToFileObject!
+  updateDivision(division: UpdateDivisionInput!, id: Int!): Division!
+  deleteDivision(id: Int!): Division!
 }
 
 type Oauth {
@@ -532,6 +602,10 @@ type Query {
   tagByName(name: String!): Tag!
   products(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String, tagName: String, styleName: String, brandName: String, styleId: Int, brandId: Int): ProductsWithPaginationObject
   product(id: Int!): Product
+  addresses(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): AddressesWithPaginationObject!
+  address(id: Int!): Address!
+  divisions(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): DivisionsWithPaginationObject!
+  division(id: Int!): Division!
 }
 
 input RedeemCouponInput {
@@ -592,6 +666,10 @@ type SettingsWithPaginationObject {
   items: [Setting!]!
 }
 
+type SyncDivisionToFileObject {
+  status: String!
+}
+
 type SyncTagsToFileObject {
   status: String!
 }
@@ -614,6 +692,17 @@ type TagsWithPaginationObject {
   itemsCount: Int!
   total: Int!
   items: [Tag!]!
+}
+
+input UpdateAddressInput {
+  address: String
+  province: String
+  city: String
+  area: String
+  consignee: String
+  zip: Int
+  phone: String
+  status: Int
 }
 
 input UpdateArticleInput {
@@ -669,6 +758,13 @@ input UpdateCouponInput {
   start_time: DateTime
   expire_time: DateTime
   status: Int
+}
+
+input UpdateDivisionInput {
+  code: Int
+  province_code: Int
+  city_code: Int
+  name: String
 }
 
 input UpdatePermissionInput {
@@ -763,6 +859,7 @@ type User {
   lastLogin_ip: String
   lastLogin_at: DateTime
   roles: [Role!]
+  addresses: [Address!]
   permissions: [Permission!]
   flatPermissions: [String!]
   authToken: String

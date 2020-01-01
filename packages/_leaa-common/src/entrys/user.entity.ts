@@ -1,7 +1,7 @@
 import { Index, Entity, Column, JoinTable, ManyToMany } from 'typeorm';
 import { ObjectType, Field, Int } from 'type-graphql';
 
-import { Base, Role, Permission } from '@leaa/common/src/entrys';
+import { Base, Role, Permission, Address } from '@leaa/common/src/entrys';
 
 @Entity('users')
 // @Index('users_phone_unique', ['phone'], { unique: true })
@@ -47,6 +47,14 @@ export class User extends Base {
   @JoinTable()
   @Field(() => [Role], { nullable: true })
   roles?: Role[];
+
+  @ManyToMany(
+    () => Address,
+    address => address.address,
+  )
+  @JoinTable()
+  @Field(() => [Address], { nullable: true })
+  addresses?: Address[];
 
   // Virtual Field (not in DB)
   @Field(() => [Permission], { nullable: true })

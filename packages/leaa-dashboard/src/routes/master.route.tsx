@@ -436,6 +436,90 @@ export const masterRoutes: IRouteItem[] = [
     exact: true,
   },
   //
+  // -------- [Data Group] --------
+  //
+  {
+    name: 'Data Group',
+    namei18n: '_route:dataGroup',
+    permission: 'address.list-read',
+    path: '_data-group',
+    icon: 'ri-hard-drive-line',
+    children: [
+      // ---- Address ----
+      {
+        name: 'Create Address',
+        namei18n: '_route:createAddress',
+        permission: 'address.item-create',
+        path: '/addresses/create',
+        icon: 'ri-map-pin-user-line',
+        LazyComponent: React.lazy(() =>
+          import(/* webpackChunkName: 'CreateAddress' */ '../pages/Address/CreateAddress/CreateAddress'),
+        ),
+        exact: true,
+        isCreate: true,
+      },
+      {
+        name: 'Edit Address',
+        namei18n: '_route:editAddress',
+        permission: 'address.item-read',
+        path: '/addresses/:id(\\d+)',
+        icon: 'ri-map-pin-user-line',
+        LazyComponent: React.lazy(() =>
+          import(/* webpackChunkName: 'EditAddress' */ '../pages/Address/EditAddress/EditAddress'),
+        ),
+        exact: true,
+      },
+      {
+        name: 'Address',
+        namei18n: '_route:userAddress',
+        permission: 'address.list-read',
+        path: '/addresses',
+        icon: 'ri-map-pin-user-line',
+        LazyComponent: React.lazy(() =>
+          import(/* webpackChunkName: 'AddressList' */ '../pages/Address/AddressList/AddressList'),
+        ),
+        canCreate: true,
+        exact: true,
+      },
+      // ---- Division ----
+      {
+        name: 'Create Division',
+        namei18n: '_route:createDivision',
+        permission: 'address.item-create',
+        path: '/divisions/create',
+        icon: 'ri-map-pin-line',
+        LazyComponent: React.lazy(() =>
+          import(/* webpackChunkName: 'CreateDivision' */ '../pages/Division/CreateDivision/CreateDivision'),
+        ),
+        exact: true,
+        isCreate: true,
+      },
+      {
+        name: 'Edit Division',
+        namei18n: '_route:editDivision',
+        permission: 'address.item-read',
+        path: '/divisions/:id(\\d+)',
+        icon: 'ri-map-pin-line',
+        LazyComponent: React.lazy(() =>
+          import(/* webpackChunkName: 'EditDivision' */ '../pages/Division/EditDivision/EditDivision'),
+        ),
+        exact: true,
+      },
+      {
+        name: 'Division',
+        namei18n: '_route:addressDivision',
+        permission: 'address.list-read',
+        path: '/divisions',
+        icon: 'ri-map-pin-line',
+        LazyComponent: React.lazy(() =>
+          import(/* webpackChunkName: 'DivisionList' */ '../pages/Division/DivisionList/DivisionList'),
+        ),
+        canCreate: true,
+        exact: true,
+      },
+    ],
+  },
+  //
   // -------- [Debug Group] --------
   //
   {
@@ -443,7 +527,7 @@ export const masterRoutes: IRouteItem[] = [
     namei18n: '_route:debug',
     permission: 'lab.root',
     path: '_debug-group',
-    icon: 'ri-terminal-box-line',
+    icon: 'ri-code-s-slash-line',
     children: [
       {
         name: 'Test Any',

@@ -9,7 +9,7 @@ const user = 'User';
 const role = 'Role';
 const permission = 'Permission';
 const category = 'Category';
-const article = 'Article';
+const article = 'Division';
 const ax = 'Ad';
 const tag = 'Tag';
 const attachment = 'Attachment';
@@ -19,6 +19,9 @@ const promo = 'Promo';
 const marketing = 'Marketing';
 const content = 'Content';
 const product = 'Product';
+const address = 'Address';
+const userAddress = 'User Address';
+const addressDivision = 'Address Division';
 
 export default {
   home,
@@ -52,8 +55,8 @@ export default {
   //
   contentGroup: `${content}`,
   article,
-  createArticle: `${_lang.create} ${article}`,
-  editArticle: `${_lang.edit} ${article}`,
+  createDivision: `${_lang.create} ${article}`,
+  editDivision: `${_lang.edit} ${article}`,
   //
   ax,
   createAx: `${_lang.create} ${ax}`,
@@ -84,4 +87,11 @@ export default {
   product,
   createProduct: `${_lang.create} ${product}`,
   editProduct: `${_lang.edit} ${product}`,
+  //
+  dataGroup: 'Data',
+  userAddress,
+  addressDivision,
+  address,
+  createAddress: `${_lang.create} ${address}`,
+  editAddress: `${_lang.edit} ${address}`,
 };

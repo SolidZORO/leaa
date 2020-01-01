@@ -146,6 +146,14 @@ pQuery.product = allow;
 pMutation.createProduct = checkPermission('product.item-create');
 pMutation.updateProduct = checkPermission('product.item-update');
 pMutation.deleteProduct = checkPermission('product.item-delete');
+//
+// --------------------
+pQuery.addresses = allow;
+pQuery.address = allow;
+//
+pMutation.createAddress = checkPermission('address.item-create');
+pMutation.updateAddress = checkPermission('address.item-update');
+pMutation.deleteAddress = checkPermission('address.item-delete');
 
 // TIPS relation file: packages/leaa-api/src/modules/seed/seed.data.ts
 export const permissions = shield(

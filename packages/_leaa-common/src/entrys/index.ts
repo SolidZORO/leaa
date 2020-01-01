@@ -12,3 +12,5 @@ export { Tag } from './tag.entity';
 export { Coupon } from './coupon.entity';
 export { Promo } from './promo.entity';
 export { Product } from './product.entity';
+export { Address } from './address.entity';
+export { Division } from './division.entity';
