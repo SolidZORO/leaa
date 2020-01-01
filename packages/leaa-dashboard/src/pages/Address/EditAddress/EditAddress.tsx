@@ -5,7 +5,6 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 
 import { Address } from '@leaa/common/src/entrys';
 import { GET_ADDRESS, UPDATE_ADDRESS } from '@leaa/dashboard/src/graphqls';
-import { RolesWithPaginationObject, RolesArgs } from '@leaa/common/src/dtos/role';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { AddressArgs, UpdateAddressInput } from '@leaa/common/src/dtos/address';
 import { IPage, ICommenFormRef, ISubmitData } from '@leaa/dashboard/src/interfaces';
@@ -47,6 +46,9 @@ export default (props: IPage) => {
     const infoData: ISubmitData<UpdateAddressInput> = await infoFormRef.current?.onValidateForm();
 
     if (!infoData) return;
+
+    // @ts-ignore
+    delete infoData.addressSelect;
 
     const submitData: ISubmitData<UpdateAddressInput> = infoData;
 

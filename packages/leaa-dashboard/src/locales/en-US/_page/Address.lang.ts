@@ -4,6 +4,7 @@ export default {
   province: 'Province',
   city: 'City',
   area: 'Area',
+  areaLabel: 'Area',
   address: 'Address',
   consignee: 'Consignee',
   zip: 'Zip',

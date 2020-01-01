@@ -19,6 +19,7 @@ export { SelectTagId } from './SelectTagId/SelectTagId';
 export { MasterLayout } from './MasterLayout/MasterLayout';
 export { TagSearchBox } from './TagSearchBox/TagSearchBox';
 export { SwitchNumber } from './SwitchNumber/SwitchNumber';
+export { AddressSelect } from './AddressSelect/AddressSelect';
 export { ErrorBoundary } from './ErrorBoundary/ErrorBoundary';
 export { TableColumnId } from './TableColumnId/TableColumnId';
 export { WYSIWYGEditor } from './WYSIWYGEditor/WYSIWYGEditor';

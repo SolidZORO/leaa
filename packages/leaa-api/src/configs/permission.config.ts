@@ -155,6 +155,15 @@ pMutation.createAddress = checkPermission('address.item-create');
 pMutation.updateAddress = checkPermission('address.item-update');
 pMutation.deleteAddress = checkPermission('address.item-delete');
 
+//
+// --------------------
+pQuery.divisions = allow;
+pQuery.division = allow;
+//
+pMutation.createDivision = checkPermission('division.item-create');
+pMutation.updateDivision = checkPermission('division.item-update');
+pMutation.deleteDivision = checkPermission('division.item-delete');
+
 // TIPS relation file: packages/leaa-api/src/modules/seed/seed.data.ts
 export const permissions = shield(
   {

@@ -1,8 +1,8 @@
 import fs from 'fs';
-import xss from 'xss';
+import path from 'path';
 import mkdirp from 'mkdirp';
 import { Injectable } from '@nestjs/common';
-import { Repository, FindOneOptions } from 'typeorm';
+import { Repository, FindOneOptions, getConnection } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { Division, User } from '@leaa/common/src/entrys';
@@ -14,6 +14,7 @@ import {
   CreateDivisionInput,
 } from '@leaa/common/src/dtos/division';
 import { argsUtil, paginationUtil, curdUtil, loggerUtil } from '@leaa/api/src/utils';
+import { IDivisionSource } from '@leaa/common/src/interfaces';
 import { SyncTagsToFileObject } from '@leaa/common/src/dtos/tag';
 import { divisionConfig } from '@leaa/api/src/configs';
 
@@ -35,6 +36,14 @@ export class DivisionService {
     return paginationUtil.calcQueryBuilderPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
+  async divisionsMapping(): Promise<string | undefined> {
+    if (!fs.existsSync(divisionConfig.DIVISION_OF_CHINA_FILE_PATH)) {
+      await this.syncDivisionToFile();
+    }
+
+    return fs.readFileSync(divisionConfig.DIVISION_OF_CHINA_FILE_PATH, 'utf8');
+  }
+
   async division(id: number, args?: IDivisionArgs, user?: User): Promise<Division | undefined> {
     let nextArgs: IDivisionArgs = {};
 
@@ -43,6 +52,37 @@ export class DivisionService {
     }
 
     return this.divisionRepository.findOne(id, nextArgs);
+  }
+
+  async formatDivision(items: any[]) {
+    const provinces = items.filter(v => v.code && !v.province_code && !v.city_code);
+    const cities = items.filter(v => v.code && v.province_code && !v.city_code);
+    const areas = items.filter(v => v.code && v.province_code && v.city_code);
+
+    /* eslint-disable no-return-assign */
+    /* eslint-disable no-param-reassign */
+    provinces.forEach(pv => {
+      pv.value = pv.name;
+      pv.children = [];
+    });
+
+    cities.forEach(cv => {
+      cv.children = [];
+      cv.value = cv.name;
+    });
+
+    areas.forEach(av => cities.find(c => c.code === av.city_code).children.push({ value: av.name }));
+    cities.forEach(cv =>
+      provinces.find(p => p.code === cv.province_code).children.push({ value: cv.name, children: cv.children }),
+    );
+
+    provinces.forEach(pv => {
+      delete pv.code;
+      delete pv.city_code;
+      delete pv.province_code;
+    });
+
+    return fs.writeFileSync(divisionConfig.DIVISION_OF_CHINA_FILE_PATH, JSON.stringify(provinces));
   }
 
   async syncDivisionToFile(): Promise<SyncTagsToFileObject> {
@@ -54,17 +94,57 @@ export class DivisionService {
       );
     }
 
-    // const [items, total] = await this.tagRepository.findAndCount({ select: ['name'] });
+    let sqlRunResultMessage = 'Skip insert database';
 
-    // if (total) {
-    //   fs.writeFileSync(divisionConfig.TAGS_DICT_PATH, items.map(item => item.name).join('\n'));
-    // }
+    const divisionCount = await this.divisionRepository.count({ select: ['code'] });
 
-    // loggerUtil.log(`syncTagsToDictFile, ${total} tags`, CLS_NAME);
+    if (!divisionCount) {
+      /* eslint-disable no-restricted-syntax */
+      /* eslint-disable no-await-in-loop */
+
+      const DIVISION_SOURCE_DIR = path.resolve(__dirname, './source/china');
+
+      // prettier-ignore
+      // eslint-disable-next-line max-len
+      const provinces: IDivisionSource[] = await JSON.parse(fs.readFileSync(`${DIVISION_SOURCE_DIR}/provinces.json`, 'utf8'));
+      const cities: IDivisionSource[] = await JSON.parse(fs.readFileSync(`${DIVISION_SOURCE_DIR}/cities.json`, 'utf8'));
+      const areas: IDivisionSource[] = await JSON.parse(fs.readFileSync(`${DIVISION_SOURCE_DIR}/areas.json`, 'utf8'));
+
+      let sqlBody = '';
+
+      provinces.forEach(v => {
+        sqlBody += `(${Number(v.code)}, '${v.name}', NULL, NULL), `;
+      });
+
+      cities.forEach(v => {
+        sqlBody += `(${Number(v.code)}, '${v.name}', ${Number(v.provinceCode)}, NULL), `;
+      });
+
+      areas.forEach((v, i) => {
+        sqlBody += `(${Number(v.code)}, '${v.name}', ${Number(v.provinceCode)}, ${Number(v.cityCode)})${
+          i === areas.length - 1 ? ';' : ','
+        } `;
+      });
+
+      const insertSql = `
+      INSERT INTO \`divisions\` (\`code\`, \`name\`, \`province_code\`, \`city_code\`) VALUES ${sqlBody}
+    `;
+
+      const sqlRunResult = await getConnection().query(insertSql);
+
+      sqlRunResultMessage = sqlRunResult.message;
+
+      loggerUtil.log(`building division of china... ${sqlRunResultMessage}`, CLS_NAME);
+    }
+
+    const [items] = await this.divisionRepository.findAndCount({
+      select: ['code', 'name', 'province_code', 'city_code'],
+    });
+
+    await this.formatDivision(items);
 
     return {
-      // status: `Synced ${total} Tags`,
-      status: 'Synced',
+      status: `Synced. ${sqlRunResultMessage}.`,
     };
   }
 

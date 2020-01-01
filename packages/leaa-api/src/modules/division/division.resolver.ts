@@ -1,3 +1,4 @@
+import { UseGuards } from '@nestjs/common';
 import { Args, Query, Mutation, Resolver } from '@nestjs/graphql';
 import { Int } from 'type-graphql';
 
@@ -14,13 +15,14 @@ import { DivisionService } from '@leaa/api/src/modules/division/division.service
 import { CurrentUser, Permissions } from '@leaa/api/src/decorators';
 import { PermissionsGuard } from '@leaa/api/src/guards';
 import { SyncTagsToFileObject } from '@leaa/common/src/dtos/tag';
+import { IDivisionSource, IDivisionDist } from '@leaa/common/src/interfaces';
 
 @Resolver(() => Division)
 export class DivisionResolver {
   constructor(private readonly divisionService: DivisionService) {}
 
-  // @UseGuards(PermissionsGuard)
-  // @Permissions('division.list-read')
+  @UseGuards(PermissionsGuard)
+  @Permissions('division.list-read')
   // DO NOT CHECK PERMISSIONS
   @Query(() => DivisionsWithPaginationObject)
   async divisions(
@@ -30,9 +32,14 @@ export class DivisionResolver {
     return this.divisionService.divisions(args, user);
   }
 
-  // @UseGuards(PermissionsGuard)
-  // @Permissions('division.item-read')
   // DO NOT CHECK PERMISSIONS
+  @Query(() => String)
+  async divisionsMapping(): Promise<string | undefined> {
+    return this.divisionService.divisionsMapping();
+  }
+
+  @UseGuards(PermissionsGuard)
+  @Permissions('division.item-read')
   @Query(() => Division)
   async division(
     @Args({ name: 'id', type: () => Int }) id: number,
@@ -42,22 +49,22 @@ export class DivisionResolver {
     return this.divisionService.division(id, args, user);
   }
 
-  // @UseGuards(PermissionsGuard)
-  // @Permissions('division.item-create')
+  @UseGuards(PermissionsGuard)
+  @Permissions('division.item-create')
   @Mutation(() => Division)
   async createDivision(@Args('division') args: CreateDivisionInput): Promise<Division | undefined> {
     return this.divisionService.createDivision(args);
   }
 
-  // @UseGuards(PermissionsGuard)
-  // @Permissions('tag.item-update')
+  @UseGuards(PermissionsGuard)
+  @Permissions('division.item-update')
   @Mutation(() => SyncDivisionToFileObject)
   async syncDivisionToFile(): Promise<SyncDivisionToFileObject> {
     return this.divisionService.syncDivisionToFile();
   }
 
-  // @UseGuards(PermissionsGuard)
-  // @Permissions('division.item-update')
+  @UseGuards(PermissionsGuard)
+  @Permissions('division.item-update')
   @Mutation(() => Division)
   async updateDivision(
     @Args({ name: 'id', type: () => Int }) id: number,

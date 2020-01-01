@@ -1,6 +1,6 @@
 import cx from 'classnames';
 import React, { useEffect, forwardRef, useImperativeHandle } from 'react';
-import { Col, Form, Input, Row, Cascader } from 'antd';
+import { Col, Form, Input, Row } from 'antd';
 
 import { useTranslation } from 'react-i18next';
 
@@ -9,7 +9,7 @@ import { messageUtil } from '@leaa/dashboard/src/utils';
 import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
 import { UpdateAddressInput } from '@leaa/common/src/dtos/address';
 
-import { FormCard, EntryInfoDate, SwitchNumber, Rcon } from '@leaa/dashboard/src/components';
+import { FormCard, EntryInfoDate, SwitchNumber, AddressSelect } from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';
 
@@ -18,41 +18,6 @@ interface IProps {
   className?: string;
   loading?: boolean;
 }
-
-const options = [
-  {
-    value: 'zhejiang',
-    label: 'Zhejiang',
-    children: [
-      {
-        value: 'hangzhou',
-        label: 'Hangzhou',
-        children: [
-          {
-            value: 'xihu',
-            label: 'West Lake',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    value: 'jiangsu',
-    label: 'Jiangsu',
-    children: [
-      {
-        value: 'nanjing',
-        label: 'Nanjing',
-        children: [
-          {
-            value: 'zhonghuamen',
-            label: 'Zhong Hua Men',
-          },
-        ],
-      },
-    ],
-  },
-];
 
 export const AddressInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
   const { t } = useTranslation();
@@ -67,7 +32,7 @@ export const AddressInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =
   };
 
   const onUpdateForm = (item?: Address) => {
-    if (!item) return form.setFieldsValue({ status: 0 });
+    if (!item) return form.setFieldsValue({ status: 1 });
 
     // if APIs return error, do not flush out edited data
     if (form.getFieldValue('updated_at') && !item.updated_at) return undefined;
@@ -76,7 +41,7 @@ export const AddressInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =
     if (form.getFieldValue('updated_at') !== item.updated_at) {
       form.setFieldsValue({
         ...item,
-        addressx: ['jiangsu', 'nanjing', 'zhonghuamen'],
+        addressSelect: [item.province, item.city, item.area],
       });
     }
 
@@ -87,8 +52,13 @@ export const AddressInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =
 
   useImperativeHandle(ref, () => ({ form, onValidateForm }));
 
-  const onChange = (value: any) => {
-    console.log(value);
+  const onChange = (value: any[]) => {
+    form.setFieldsValue({
+      province: value[0],
+      city: value[1],
+      area: value[2],
+      addressSelect: value,
+    });
   };
 
   return (
@@ -100,18 +70,18 @@ export const AddressInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =
         <Form form={form} layout="vertical">
           <Row gutter={16} className={style['form-row']}>
             <Col xs={24} sm={6}>
-              <Form.Item name="address" rules={[{ required: true }]} label={t('_page:Address.address')}>
-                <Input placeholder={t('_lang:address')} />
+              <Form.Item name="consignee" rules={[{ required: true }]} label={t('_page:Address.consignee')}>
+                <Input placeholder={t('_page:Address.consignee')} />
               </Form.Item>
             </Col>
 
             <Col xs={24} sm={6}>
-              <Form.Item name="addressx" rules={[{ required: true }]} label={t('_page:Address.address')}>
-                <Cascader options={options} onChange={onChange} />
+              <Form.Item name="phone" rules={[{ required: true }]} label={t('_page:Address.phone')}>
+                <Input placeholder={t('_page:Address.phone')} type="phone" />
               </Form.Item>
             </Col>
 
-            <Col xs={24} sm={3}>
+            <Col xs={24} sm={2}>
               <Form.Item
                 name="status"
                 normalize={e => e && Number(e)}
@@ -119,6 +89,37 @@ export const AddressInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =
                 label={t('_lang:status')}
               >
                 <SwitchNumber />
+              </Form.Item>
+            </Col>
+          </Row>
+
+          <Row gutter={16} className={style['form-row']}>
+            <div style={{ display: 'none' }}>
+              <Form.Item name="province" noStyle rules={[{ required: true }]}>
+                <Input />
+              </Form.Item>
+
+              <Form.Item name="city" noStyle rules={[{ required: true }]}>
+                <Input />
+              </Form.Item>
+
+              <Form.Item name="area" noStyle rules={[{ required: true }]}>
+                <Input />
+              </Form.Item>
+            </div>
+
+            <Col xs={24} sm={10}>
+              <Form.Item name="addressSelect" rules={[{ required: true }]} label={t('_page:Address.areaLabel')}>
+                <AddressSelect
+                  onChangeCallback={onChange}
+                  defaultValue={props.item ? [props.item.province, props.item.city, props.item.area] : undefined}
+                />
+              </Form.Item>
+            </Col>
+
+            <Col xs={24} sm={14}>
+              <Form.Item name="address" rules={[{ required: true }]} label={t('_page:Address.address')}>
+                <Input placeholder={t('_page:Address.address')} />
               </Form.Item>
             </Col>
           </Row>

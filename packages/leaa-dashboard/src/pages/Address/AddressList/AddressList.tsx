@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import queryString from 'query-string';
 import { Link } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { Table, Tag } from 'antd';
+import { Table } from 'antd';
 
 import { DEFAULT_PAGE_SIZE_OPTIONS, PAGE_CARD_TITLE_CREATE_ICON } from '@leaa/dashboard/src/constants';
 import { GET_ADDRESSES, DELETE_ADDRESS, UPDATE_ADDRESS } from '@leaa/dashboard/src/graphqls';
@@ -22,7 +22,6 @@ import {
   TableCard,
   SearchInput,
   TableColumnId,
-  TableColumnDate,
   TableColumnDeleteButton,
   TableColumnStatusSwitch,
 } from '@leaa/dashboard/src/components';
@@ -95,6 +94,20 @@ export default (props: IPage) => {
           {record.province} - {record.city} - {record.area} - {record.address}
         </Link>
       ),
+    },
+    {
+      title: t('_page:Address.consignee'),
+      dataIndex: 'consignee',
+      sorter: true,
+      sortOrder: tableUtil.calcDefaultSortOrder(tablePagination.orderSort, tablePagination.orderBy, 'consignee'),
+      render: (text: string, record: Address) => record.consignee,
+    },
+    {
+      title: t('_page:Address.phone'),
+      dataIndex: 'phone',
+      sorter: true,
+      sortOrder: tableUtil.calcDefaultSortOrder(tablePagination.orderSort, tablePagination.orderBy, 'phone'),
+      render: (text: string, record: Address) => record.phone,
     },
     {
       title: t('_lang:status'),

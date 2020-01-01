@@ -41,4 +41,5 @@ export * from './product.mutation';
 export * from './address.query';
 export * from './address.mutation';
 
+export * from './division.query';
 export * from './division.mutation';

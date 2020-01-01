@@ -7,6 +7,8 @@
 /public/buildinfo.json
 /src/assets/dicts/*
 !/src/assets/dicts/.gitkeep
+/src/assets/divisions/*
+!/src/assets/divisions/.gitkeep
 
 # Compiled
 /.dist
