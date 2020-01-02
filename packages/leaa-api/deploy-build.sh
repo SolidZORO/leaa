@@ -40,6 +40,9 @@ if [[ $KEY = "" ]]; then
     cp -fr ./public/robots.txt ${API_DIR}/public
     cp -fr ./public/get-weixin-code.html ${API_DIR}/public
     cp -fr ./public/buildinfo.json ${API_DIR}/public
+
+    mkdir -p ${API_DIR}/public/assets/divisions
+    cp -fr ./public/assets/divisions/source ${API_DIR}/public/assets/divisions
 else
     echo "CANCEL"
 fi

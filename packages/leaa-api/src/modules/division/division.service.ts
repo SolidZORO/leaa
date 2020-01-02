@@ -1,5 +1,4 @@
 import fs from 'fs';
-import path from 'path';
 import mkdirp from 'mkdirp';
 import { Injectable } from '@nestjs/common';
 import { Repository, FindOneOptions, getConnection } from 'typeorm';
@@ -139,7 +138,7 @@ export class DivisionService {
       /* eslint-disable no-restricted-syntax */
       /* eslint-disable no-await-in-loop */
 
-      const DIVISION_SOURCE_DIR = path.resolve(__dirname, './source/china');
+      const DIVISION_SOURCE_DIR = `${divisionConfig.DIVISION_DIR}/source/china`;
 
       // prettier-ignore
       // eslint-disable-next-line max-len

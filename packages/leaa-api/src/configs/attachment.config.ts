@@ -6,7 +6,6 @@ import { envConfig } from '@leaa/api/src/modules/config/config.module';
 const dev = process.env.NODE_ENV !== 'production';
 
 const SAVE_SUB_DIR = moment().format('YYYY/MM');
-
 const SAVE_DIR_BY_DISK = path.join(`./${envConfig.PUBLIC_DIR}/${envConfig.ATTACHMENT_DIR}/${SAVE_SUB_DIR}`);
 const SAVE_DIR_BY_DB = `attachments/${SAVE_SUB_DIR}/`;
 
