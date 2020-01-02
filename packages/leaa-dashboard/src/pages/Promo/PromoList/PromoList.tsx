@@ -26,6 +26,7 @@ import {
   TableColumnDeleteButton,
   TableColumnStatusSwitch,
   CouponItem,
+  ExportButton,
 } from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';
@@ -183,6 +184,8 @@ export default (props: IPage) => {
             value={q}
             onChange={v => onFilter({ field: 'q', value: v })}
           />
+
+          <ExportButton moduleName="promo" params={getPromosVariables} />
         </div>
       }
       className={style['wapper']}

@@ -440,6 +440,13 @@
       "unicode_decimal": 61386
     },
     {
+      "icon_id": "12127131",
+      "name": "ri-download-2-line",
+      "font_class": "ri-download-2-line",
+      "unicode": "ef3c",
+      "unicode_decimal": 61244
+    },
+    {
       "icon_id": "12127132",
       "name": "ri-database-2-line",
       "font_class": "ri-database-2-line",
@@ -454,11 +461,39 @@
       "unicode_decimal": 61251
     },
     {
+      "icon_id": "12127145",
+      "name": "ri-download-2-fill",
+      "font_class": "ri-download-2-fill",
+      "unicode": "ef4a",
+      "unicode_decimal": 61258
+    },
+    {
+      "icon_id": "12127169",
+      "name": "ri-file-excel-2-line",
+      "font_class": "ri-file-excel-2-line",
+      "unicode": "ee8d",
+      "unicode_decimal": 61069
+    },
+    {
       "icon_id": "12127184",
       "name": "ri-file-list-2-line",
       "font_class": "ri-file-list-2-line",
       "unicode": "ef29",
       "unicode_decimal": 61225
+    },
+    {
+      "icon_id": "12127191",
+      "name": "ri-file-word-2-line",
+      "font_class": "ri-file-word-2-line",
+      "unicode": "ef30",
+      "unicode_decimal": 61232
+    },
+    {
+      "icon_id": "12127192",
+      "name": "ri-file-ppt-2-line",
+      "font_class": "ri-file-ppt-2-line",
+      "unicode": "ef31",
+      "unicode_decimal": 61233
     },
     {
       "icon_id": "12127240",

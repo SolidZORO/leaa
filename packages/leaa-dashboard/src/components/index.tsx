@@ -16,6 +16,7 @@ export { FilterIcon } from './FilterIcon/FilterIcon';
 export { TagMiniSets } from './TagMiniSets/TagMiniSets';
 export { SearchInput } from './SearchInput/SearchInput';
 export { SelectTagId } from './SelectTagId/SelectTagId';
+export { ExportButton } from './ExportButton/ExportButton';
 export { MasterLayout } from './MasterLayout/MasterLayout';
 export { TagSearchBox } from './TagSearchBox/TagSearchBox';
 export { SwitchNumber } from './SwitchNumber/SwitchNumber';

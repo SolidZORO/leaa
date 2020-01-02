@@ -3,8 +3,8 @@ import { Repository, FindOneOptions } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { Article, Category, Tag, User } from '@leaa/common/src/entrys';
+import { IArticlesArgs, IArticleArgs } from '@leaa/api/src/interfaces';
 import {
-  ArticlesArgs,
   ArticlesWithPaginationObject,
   ArticleArgs,
   CreateArticleInput,
@@ -24,9 +24,6 @@ import {
 import { TagService } from '@leaa/api/src/modules/tag/tag.service';
 
 const CLS_NAME = 'ArticleService';
-
-type IArticlesArgs = ArticlesArgs & FindOneOptions<Article>;
-type IArticleArgs = ArticleArgs & FindOneOptions<Article>;
 
 @Injectable()
 export class ArticleService {
@@ -71,7 +68,9 @@ export class ArticleService {
     }
 
     // order
-    qb.orderBy(`${PRIMARY_TABLE}.${nextArgs.orderBy}`, nextArgs.orderSort);
+    if (nextArgs.orderBy && nextArgs.orderSort) {
+      qb.orderBy(`${PRIMARY_TABLE}.${nextArgs.orderBy}`, nextArgs.orderSort);
+    }
 
     // can
     if (!user && !(user && authUtil.can(user, 'article.list-read--all-status'))) {

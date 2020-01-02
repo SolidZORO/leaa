@@ -58,7 +58,9 @@ export class ProductService {
     }
 
     // order
-    qb.orderBy(`${PRIMARY_TABLE}.${nextArgs.orderBy}`, nextArgs.orderSort);
+    if (nextArgs.orderBy && nextArgs.orderSort) {
+      qb.orderBy(`${PRIMARY_TABLE}.${nextArgs.orderBy}`, nextArgs.orderSort);
+    }
 
     // can
     if (!user && !(user && authUtil.can(user, 'product.list-read--all-status'))) {

@@ -5,9 +5,13 @@ import { useTranslation } from 'react-i18next';
 import queryString from 'query-string';
 import { Link } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { Table } from 'antd';
+import { Table, Button } from 'antd';
 
-import { DEFAULT_PAGE_SIZE_OPTIONS, PAGE_CARD_TITLE_CREATE_ICON } from '@leaa/dashboard/src/constants';
+import {
+  DEFAULT_PAGE_SIZE_OPTIONS,
+  PAGE_CARD_TITLE_CREATE_ICON,
+  UPDATE_BUTTON_ICON,
+} from '@leaa/dashboard/src/constants';
 import { GET_ARTICLES, DELETE_ARTICLE, UPDATE_ARTICLE } from '@leaa/dashboard/src/graphqls';
 
 import { Article, Tag as TagEntry } from '@leaa/common/src/entrys';
@@ -24,6 +28,7 @@ import {
   FilterIcon,
   TagMiniSets,
   TagSearchBox,
+  ExportButton,
   TableColumnId,
   TableColumnDate,
   SelectCategoryIdByTree,
@@ -227,6 +232,8 @@ export default (props: IPage) => {
             value={q}
             onChange={v => onFilter({ field: 'q', value: v })}
           />
+
+          <ExportButton moduleName="article" params={getArticlesVariables} />
         </div>
       }
       className={style['wapper']}

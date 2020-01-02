@@ -1,2 +1,5 @@
-export * from '@leaa/api/src/interfaces/config.interface';
-export * from '@leaa/api/src/interfaces/oauth.interface';
+export * from './config.interface';
+export * from './oauth.interface';
+export * from './express.interface';
+export * from './article.interface';
+export * from './promo.interface';

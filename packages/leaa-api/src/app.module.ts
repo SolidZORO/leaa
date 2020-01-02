@@ -30,6 +30,7 @@ import { PromoModule } from '@leaa/api/src/modules/promo/promo.module';
 import { ProductModule } from '@leaa/api/src/modules/product/product.module';
 import { AddressModule } from '@leaa/api/src/modules/address/address.module';
 import { DivisionModule } from '@leaa/api/src/modules/division/division.module';
+import { ExportModule } from '@leaa/api/src/modules/export/export.module';
 
 @Module({
   imports: [
@@ -63,6 +64,7 @@ import { DivisionModule } from '@leaa/api/src/modules/division/division.module';
     ProductModule,
     AddressModule,
     DivisionModule,
+    ExportModule,
   ],
   providers: [
     ConfigModule,

@@ -62,6 +62,7 @@ export default {
   search: 'Search',
   private: 'Private',
   public: 'Public',
+  export: 'Export',
   //
   select: 'Select',
   selected: 'Selected',

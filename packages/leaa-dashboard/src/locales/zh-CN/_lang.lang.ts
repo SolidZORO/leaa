@@ -65,6 +65,7 @@ export default {
   search: '搜索',
   private: '私有',
   public: '公开',
+  export: '导出',
   //
   select: '选择',
   selected: '选中',
