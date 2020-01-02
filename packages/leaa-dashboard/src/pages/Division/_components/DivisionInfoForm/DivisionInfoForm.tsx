@@ -1,64 +1,31 @@
 import cx from 'classnames';
+import queryString from 'query-string';
 import React, { useEffect, forwardRef, useImperativeHandle } from 'react';
-import { Col, Form, Input, Row, Cascader } from 'antd';
+import { Col, Form, Input, InputNumber, Row } from 'antd';
 
 import { useTranslation } from 'react-i18next';
 
-import { Address } from '@leaa/common/src/entrys';
+import { Division } from '@leaa/common/src/entrys';
 import { messageUtil } from '@leaa/dashboard/src/utils';
 import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
-import { UpdateAddressInput } from '@leaa/common/src/dtos/address';
+import { UpdateDivisionInput } from '@leaa/common/src/dtos/division';
 
-import { FormCard, EntryInfoDate, SwitchNumber, Rcon } from '@leaa/dashboard/src/components';
+import { FormCard, EntryInfoDate } from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';
 
 interface IProps {
-  item?: Address;
+  item?: Division;
   className?: string;
   loading?: boolean;
 }
 
-const options = [
-  {
-    value: 'zhejiang',
-    label: 'Zhejiang',
-    children: [
-      {
-        value: 'hangzhou',
-        label: 'Hangzhou',
-        children: [
-          {
-            value: 'xihu',
-            label: 'West Lake',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    value: 'jiangsu',
-    label: 'Jiangsu',
-    children: [
-      {
-        value: 'nanjing',
-        label: 'Nanjing',
-        children: [
-          {
-            value: 'zhonghuamen',
-            label: 'Zhong Hua Men',
-          },
-        ],
-      },
-    ],
-  },
-];
-
 export const DivisionInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
   const { t } = useTranslation();
   const [form] = Form.useForm();
+  const urlParams = queryString.parse(window.location.search);
 
-  const onValidateForm = async (): IOnValidateFormResult<UpdateAddressInput> => {
+  const onValidateForm = async (): IOnValidateFormResult<UpdateDivisionInput> => {
     try {
       return await form.validateFields();
     } catch (error) {
@@ -66,8 +33,12 @@ export const DivisionInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) 
     }
   };
 
-  const onUpdateForm = (item?: Address) => {
-    if (!item) return form.setFieldsValue({ status: 0 });
+  const onUpdateForm = (item?: Division) => {
+    if (!item)
+      return form.setFieldsValue({
+        province_code: urlParams.province_code ? Number(urlParams.province_code) : undefined,
+        city_code: urlParams.city_code ? Number(urlParams.city_code) : undefined,
+      });
 
     // if APIs return error, do not flush out edited data
     if (form.getFieldValue('updated_at') && !item.updated_at) return undefined;
@@ -76,7 +47,6 @@ export const DivisionInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) 
     if (form.getFieldValue('updated_at') !== item.updated_at) {
       form.setFieldsValue({
         ...item,
-        addressx: ['jiangsu', 'nanjing', 'zhonghuamen'],
       });
     }
 
@@ -87,38 +57,35 @@ export const DivisionInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) 
 
   useImperativeHandle(ref, () => ({ form, onValidateForm }));
 
-  const onChange = (value: any) => {
-    console.log(value);
-  };
-
   return (
     <div className={cx(style['wrapper'], props.className)}>
       <FormCard
-        title={t('_page:Address.addressInfo')}
+        title={t('_page:Division.divisionData')}
         extra={<EntryInfoDate date={props.item && [props.item.created_at, props.item.updated_at]} />}
       >
         <Form form={form} layout="vertical">
           <Row gutter={16} className={style['form-row']}>
             <Col xs={24} sm={6}>
-              <Form.Item name="address" rules={[{ required: true }]} label={t('_page:Address.address')}>
-                <Input placeholder={t('_lang:address')} />
+              <Form.Item name="name" rules={[{ required: true }]} label={t('_page:Division.name')}>
+                <Input placeholder={t('_page:Division.name')} />
               </Form.Item>
             </Col>
 
-            <Col xs={24} sm={6}>
-              <Form.Item name="addressx" rules={[{ required: true }]} label={t('_page:Address.address')}>
-                <Cascader options={options} onChange={onChange} />
+            <Col xs={24} sm={4}>
+              <Form.Item name="code" rules={[{ required: true }]} label={t('_page:Division.code')}>
+                <InputNumber className="g-input-number" placeholder={t('_page:Division.code')} />
               </Form.Item>
             </Col>
 
-            <Col xs={24} sm={3}>
-              <Form.Item
-                name="status"
-                normalize={e => e && Number(e)}
-                rules={[{ required: true }]}
-                label={t('_lang:status')}
-              >
-                <SwitchNumber />
+            <Col xs={24} sm={4}>
+              <Form.Item name="province_code" label={t('_page:Division.provinceCode')}>
+                <InputNumber className="g-input-number" placeholder={t('_page:Division.provinceCode')} />
+              </Form.Item>
+            </Col>
+
+            <Col xs={24} sm={4}>
+              <Form.Item name="city_code" label={t('_page:Division.cityCode')}>
+                <InputNumber className="g-input-number" placeholder={t('_page:Division.cityCode')} />
               </Form.Item>
             </Col>
           </Row>

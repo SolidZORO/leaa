@@ -2,9 +2,61 @@
 
 .wapper {
   background-color: transparent;
+  margin: 0;
+  padding: 0;
 }
 
-.title-route-icon {
-  font-size: 80%;
+.tree-wrapper {
+  background-color: transparent;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  //margin-bottom: 100px;
+
+  :global {
+    .rst__rowTitleWithSubtitle {
+      height: inherit;
+    }
+  }
+}
+
+.tree-item {
+  display: block;
+  //font-size: 12px;
+  line-height: 1;
+}
+
+.tree-item-title {
+  display: block;
+  line-height: 1;
+  font-size: 14px;
+  margin-bottom: 3px;
+}
+
+.tree-item-sub-title {
+  line-height: 1;
+  display: block;
+
+  small {
+    display: inline-block;
+    transform: scale(0.8);
+    transform-origin: 0;
+    text-align: left;
+    color: #ccc;
+  }
+}
+
+.tree-item-delete-button {
   margin-right: 10px;
+  opacity: 0.05;
+  transition: opacity 0.3s;
+
+  &:hover {
+    transition: opacity 0.3s;
+    opacity: 1;
+  }
+}
+
+.tree-item-edit-button {
+  margin-right: 5px;
 }

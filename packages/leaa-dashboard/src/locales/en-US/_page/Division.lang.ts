@@ -1,14 +1,13 @@
 // import _lang from '../_lang.lang';
 
 export default {
-  province: 'Province',
-  city: 'City',
-  area: 'Area',
-  address: 'Address',
-  consignee: 'Consignee',
-  zip: 'Zip',
-  phone: 'Phone',
-  status: 'Status',
+  name: 'Name',
+  provinceCode: 'Province Code',
+  cityCode: 'City Code',
+  areaCode: 'Area Code',
+  code: 'Code',
   //
-  addressInfo: 'Address Info',
+  divisionData: 'Division Data',
+  expandedAll: 'Expanded All',
+  collapseAll: 'Collapse All',
 };

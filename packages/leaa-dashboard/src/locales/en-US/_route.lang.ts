@@ -20,8 +20,7 @@ const marketing = 'Marketing';
 const content = 'Content';
 const product = 'Product';
 const address = 'Address';
-const userAddress = 'User Address';
-const addressDivision = 'Address Division';
+const division = 'Division';
 
 export default {
   home,
@@ -55,8 +54,8 @@ export default {
   //
   contentGroup: `${content}`,
   article,
-  createDivision: `${_lang.create} ${article}`,
-  editDivision: `${_lang.edit} ${article}`,
+  createArticle: `${_lang.create}${article}`,
+  editArticle: `${_lang.edit}${article}`,
   //
   ax,
   createAx: `${_lang.create} ${ax}`,
@@ -89,9 +88,12 @@ export default {
   editProduct: `${_lang.edit} ${product}`,
   //
   dataGroup: 'Data',
-  userAddress,
-  addressDivision,
+  //
   address,
   createAddress: `${_lang.create} ${address}`,
   editAddress: `${_lang.edit} ${address}`,
+  //
+  division,
+  createDivision: `${_lang.create} ${division}`,
+  editDivision: `${_lang.edit} ${division}`,
 };

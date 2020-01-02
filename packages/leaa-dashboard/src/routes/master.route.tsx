@@ -471,7 +471,7 @@ export const masterRoutes: IRouteItem[] = [
       },
       {
         name: 'Address',
-        namei18n: '_route:userAddress',
+        namei18n: '_route:address',
         permission: 'address.list-read',
         path: '/addresses',
         icon: 'ri-map-pin-user-line',
@@ -507,7 +507,7 @@ export const masterRoutes: IRouteItem[] = [
       },
       {
         name: 'Division',
-        namei18n: '_route:addressDivision',
+        namei18n: '_route:division',
         permission: 'address.list-read',
         path: '/divisions',
         icon: 'ri-map-pin-line',

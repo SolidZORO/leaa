@@ -3,11 +3,11 @@ import { Button } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useMutation } from '@apollo/react-hooks';
 
-import { User } from '@leaa/common/src/entrys';
-import { CreateUserInput } from '@leaa/common/src/dtos/user';
+import { Division } from '@leaa/common/src/entrys';
+import { CreateDivisionInput } from '@leaa/common/src/dtos/division';
 import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { IPage, ICommenFormRef, ISubmitData } from '@leaa/dashboard/src/interfaces';
-import { CREATE_USER } from '@leaa/dashboard/src/graphqls';
+import { CREATE_DIVISION } from '@leaa/dashboard/src/graphqls';
 import { messageUtil } from '@leaa/dashboard/src/utils';
 
 import { HtmlMeta, PageCard, SubmitBar, Rcon } from '@leaa/dashboard/src/components';
@@ -20,30 +20,30 @@ export default (props: IPage) => {
   const { t } = useTranslation();
 
   // ref
-  const infoFormRef = useRef<ICommenFormRef<CreateUserInput>>(null);
+  const infoFormRef = useRef<ICommenFormRef<CreateDivisionInput>>(null);
 
   // mutation
-  const [submitVariables, setSubmitVariables] = useState<{ user: CreateUserInput }>();
-  const [createUserMutate, createUserMutation] = useMutation<{ createUser: User }>(CREATE_USER, {
+  const [submitVariables, setSubmitVariables] = useState<{ division: CreateDivisionInput }>();
+  const [createDivisionMutate, createDivisionMutation] = useMutation<{ createDivision: Division }>(CREATE_DIVISION, {
     variables: submitVariables,
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
-    onCompleted({ createUser }) {
+    onCompleted({ createDivision }) {
       messageUtil.gqlSuccess(t('_lang:createdSuccessfully'));
-      props.history.push(`/users/${createUser.id}`);
+      props.history.push(`/divisions/${createDivision.id}`);
     },
   });
 
   const onSubmit = async () => {
-    const infoData: ISubmitData<CreateUserInput> = await infoFormRef.current?.onValidateForm();
+    const infoData: ISubmitData<CreateDivisionInput> = await infoFormRef.current?.onValidateForm();
 
     if (!infoData) return;
 
-    const submitData: ISubmitData<CreateUserInput> = {
+    const submitData: ISubmitData<CreateDivisionInput> = {
       ...infoData,
     };
 
-    await setSubmitVariables({ user: submitData });
-    await createUserMutate();
+    await setSubmitVariables({ division: submitData });
+    await createDivisionMutate();
   };
 
   return (
@@ -55,7 +55,7 @@ export default (props: IPage) => {
         </span>
       }
       className={style['wapper']}
-      loading={createUserMutation.loading}
+      loading={createDivisionMutation.loading}
     >
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
@@ -67,7 +67,7 @@ export default (props: IPage) => {
           size="large"
           icon={<Rcon type={CREATE_BUTTON_ICON} />}
           className="g-submit-bar-button"
-          loading={createUserMutation.loading}
+          loading={createDivisionMutation.loading}
           onClick={onSubmit}
         >
           {t('_lang:create')}

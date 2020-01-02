@@ -1,43 +1,46 @@
 import gql from 'graphql-tag';
 
-// export const CREATE_TAG = gql`
-//   mutation($tag: CreateTagInput!) {
-//     createTag(tag: $tag) {
-//       id
-//       name
-//       icon
-//       description
-//       created_at
-//       updated_at
-//     }
-//   }
-// `;
-//
-// export const UPDATE_TAG = gql`
-//   mutation($id: Int!, $tag: UpdateTagInput!) {
-//     updateTag(id: $id, tag: $tag) {
-//       id
-//       name
-//       icon
-//       description
-//       created_at
-//       updated_at
-//     }
-//   }
-// `;
-//
-// export const DELETE_TAG = gql`
-//   mutation($id: Int!) {
-//     deleteTag(id: $id) {
-//       id
-//       name
-//       icon
-//       description
-//       created_at
-//       updated_at
-//     }
-//   }
-// `;
+export const CREATE_DIVISION = gql`
+  mutation($division: CreateDivisionInput!) {
+    createDivision(division: $division) {
+      id
+      name
+      code
+      province_code
+      city_code
+      created_at
+      updated_at
+    }
+  }
+`;
+
+export const UPDATE_DIVISION = gql`
+  mutation($id: Int!, $division: UpdateDivisionInput!) {
+    updateDivision(id: $id, division: $division) {
+      id
+      name
+      code
+      province_code
+      city_code
+      created_at
+      updated_at
+    }
+  }
+`;
+
+export const DELETE_DIVISION = gql`
+  mutation($id: Int!) {
+    deleteDivision(id: $id) {
+      id
+      name
+      code
+      province_code
+      city_code
+      created_at
+      updated_at
+    }
+  }
+`;
 
 export const SYNC_DIVISION_TO_FILE = gql`
   mutation {

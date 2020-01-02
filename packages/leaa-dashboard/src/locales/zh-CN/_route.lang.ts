@@ -20,8 +20,7 @@ const marketing = '营销';
 const content = '内容';
 const product = '商品';
 const address = '地址';
-const userAddress = '用户地址';
-const addressDivision = '地址数据';
+const division = '地址源';
 
 export default {
   home,
@@ -55,8 +54,8 @@ export default {
   //
   contentGroup: `${content}`,
   article,
-  createDivision: `${_lang.create}${article}`,
-  editDivision: `${_lang.edit}${article}`,
+  createArticle: `${_lang.create}${article}`,
+  editArticle: `${_lang.edit}${article}`,
   //
   ax,
   createAx: `${_lang.create}${ax}`,
@@ -89,9 +88,12 @@ export default {
   editProduct: `${_lang.edit} ${product}`,
   //
   dataGroup: '数据',
-  userAddress,
-  addressDivision,
+  //
   address,
   createAddress: `${_lang.create} ${address}`,
   editAddress: `${_lang.edit} ${address}`,
+  //
+  division,
+  createDivision: `${_lang.create} ${division}`,
+  editDivision: `${_lang.edit} ${division}`,
 };

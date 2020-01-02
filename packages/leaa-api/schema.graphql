@@ -606,6 +606,7 @@ type Query {
   address(id: Int!): Address!
   divisions(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): DivisionsWithPaginationObject!
   divisionsMapping: String!
+  divisionsTree: String!
   division(id: Int!): Division!
 }
 

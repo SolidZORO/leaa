@@ -3,11 +3,10 @@ import { useTranslation } from 'react-i18next';
 import { Button } from 'antd';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
-import { Address } from '@leaa/common/src/entrys';
-import { GET_ADDRESS, UPDATE_ADDRESS } from '@leaa/dashboard/src/graphqls';
-import { RolesWithPaginationObject, RolesArgs } from '@leaa/common/src/dtos/role';
+import { Division } from '@leaa/common/src/entrys';
+import { GET_DIVISION, UPDATE_DIVISION } from '@leaa/dashboard/src/graphqls';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
-import { AddressArgs, UpdateAddressInput } from '@leaa/common/src/dtos/address';
+import { DivisionArgs, UpdateDivisionInput } from '@leaa/common/src/dtos/division';
 import { IPage, ICommenFormRef, ISubmitData } from '@leaa/dashboard/src/interfaces';
 import { messageUtil } from '@leaa/dashboard/src/utils';
 
@@ -22,36 +21,36 @@ export default (props: IPage) => {
   const { id } = props.match.params as { id: string };
 
   // ref
-  const infoFormRef = useRef<ICommenFormRef<UpdateAddressInput>>(null);
+  const infoFormRef = useRef<ICommenFormRef<UpdateDivisionInput>>(null);
 
   // query
-  const getAddressVariables = { id: Number(id) };
-  const getAddressQuery = useQuery<{ address: Address }, AddressArgs>(GET_ADDRESS, {
-    variables: getAddressVariables,
+  const getDivisionVariables = { id: Number(id) };
+  const getDivisionQuery = useQuery<{ division: Division }, DivisionArgs>(GET_DIVISION, {
+    variables: getDivisionVariables,
     fetchPolicy: 'network-only',
   });
 
   // mutation
-  const [submitVariables, setSubmitVariables] = useState<{ id: number; address: UpdateAddressInput }>({
+  const [submitVariables, setSubmitVariables] = useState<{ id: number; division: UpdateDivisionInput }>({
     id: Number(id),
-    address: {},
+    division: {},
   });
-  const [updateAddressMutate, updateAddressMutation] = useMutation<Address>(UPDATE_ADDRESS, {
+  const [updateDivisionMutate, updateDivisionMutation] = useMutation<Division>(UPDATE_DIVISION, {
     variables: submitVariables,
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
     onCompleted: () => messageUtil.gqlSuccess(t('_lang:updatedSuccessfully')),
-    refetchQueries: () => [{ query: GET_ADDRESS, variables: getAddressVariables }],
+    refetchQueries: () => [{ query: GET_DIVISION, variables: getDivisionVariables }],
   });
 
   const onSubmit = async () => {
-    const infoData: ISubmitData<UpdateAddressInput> = await infoFormRef.current?.onValidateForm();
+    const infoData: ISubmitData<UpdateDivisionInput> = await infoFormRef.current?.onValidateForm();
 
     if (!infoData) return;
 
-    const submitData: ISubmitData<UpdateAddressInput> = infoData;
+    const submitData: ISubmitData<UpdateDivisionInput> = infoData;
 
-    await setSubmitVariables({ id: Number(id), address: submitData });
-    await updateAddressMutate();
+    await setSubmitVariables({ id: Number(id), division: submitData });
+    await updateDivisionMutate();
   };
 
   return (
@@ -63,11 +62,11 @@ export default (props: IPage) => {
         </span>
       }
       className={style['wapper']}
-      loading={getAddressQuery.loading || updateAddressMutation.loading}
+      loading={getDivisionQuery.loading || updateDivisionMutation.loading}
     >
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
-      <DivisionInfoForm ref={infoFormRef} item={getAddressQuery.data?.address} loading={getAddressQuery.loading} />
+      <DivisionInfoForm ref={infoFormRef} item={getDivisionQuery.data?.division} loading={getDivisionQuery.loading} />
 
       <SubmitBar>
         <Button
@@ -75,7 +74,7 @@ export default (props: IPage) => {
           size="large"
           icon={<Rcon type={UPDATE_BUTTON_ICON} />}
           className="g-submit-bar-button"
-          loading={updateAddressMutation.loading}
+          loading={updateDivisionMutation.loading}
           onClick={onSubmit}
         >
           {t('_lang:update')}

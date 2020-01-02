@@ -14,8 +14,6 @@ import {
 import { DivisionService } from '@leaa/api/src/modules/division/division.service';
 import { CurrentUser, Permissions } from '@leaa/api/src/decorators';
 import { PermissionsGuard } from '@leaa/api/src/guards';
-import { SyncTagsToFileObject } from '@leaa/common/src/dtos/tag';
-import { IDivisionSource, IDivisionDist } from '@leaa/common/src/interfaces';
 
 @Resolver(() => Division)
 export class DivisionResolver {
@@ -23,19 +21,24 @@ export class DivisionResolver {
 
   @UseGuards(PermissionsGuard)
   @Permissions('division.list-read')
-  // DO NOT CHECK PERMISSIONS
   @Query(() => DivisionsWithPaginationObject)
   async divisions(
     @Args() args: DivisionsArgs,
     @CurrentUser() user?: User,
   ): Promise<DivisionsWithPaginationObject | undefined> {
-    return this.divisionService.divisions(args, user);
+    return this.divisionService.divisions(args);
   }
 
   // DO NOT CHECK PERMISSIONS
   @Query(() => String)
   async divisionsMapping(): Promise<string | undefined> {
     return this.divisionService.divisionsMapping();
+  }
+
+  // DO NOT CHECK PERMISSIONS
+  @Query(() => String)
+  async divisionsTree(): Promise<string | undefined | void> {
+    return this.divisionService.divisionsTree();
   }
 
   @UseGuards(PermissionsGuard)
@@ -46,7 +49,7 @@ export class DivisionResolver {
     @Args() args?: DivisionArgs,
     @CurrentUser() user?: User,
   ): Promise<Division | undefined> {
-    return this.divisionService.division(id, args, user);
+    return this.divisionService.division(id, args);
   }
 
   @UseGuards(PermissionsGuard)
@@ -73,8 +76,8 @@ export class DivisionResolver {
     return this.divisionService.updateDivision(id, args);
   }
 
-  // @UseGuards(PermissionsGuard)
-  // @Permissions('division.item-delete')
+  @UseGuards(PermissionsGuard)
+  @Permissions('division.item-delete')
   @Mutation(() => Division)
   async deleteDivision(@Args({ name: 'id', type: () => Int }) id: number): Promise<Division | undefined> {
     return this.divisionService.deleteDivision(id);

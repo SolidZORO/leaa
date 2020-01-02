@@ -5,7 +5,7 @@ import { Injectable } from '@nestjs/common';
 import { Repository, FindOneOptions, getConnection } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { Division, User } from '@leaa/common/src/entrys';
+import { Division } from '@leaa/common/src/entrys';
 import {
   DivisionsArgs,
   DivisionsWithPaginationObject,
@@ -27,7 +27,7 @@ type IDivisionArgs = DivisionArgs & FindOneOptions<Division>;
 export class DivisionService {
   constructor(@InjectRepository(Division) private readonly divisionRepository: Repository<Division>) {}
 
-  async divisions(args: IDivisionsArgs, user?: User): Promise<DivisionsWithPaginationObject> {
+  async divisions(args: IDivisionsArgs): Promise<DivisionsWithPaginationObject> {
     const nextArgs: IDivisionsArgs = argsUtil.format(args);
 
     const PRIMARY_TABLE = 'divisions';
@@ -44,7 +44,13 @@ export class DivisionService {
     return fs.readFileSync(divisionConfig.DIVISION_OF_CHINA_FILE_PATH, 'utf8');
   }
 
-  async division(id: number, args?: IDivisionArgs, user?: User): Promise<Division | undefined> {
+  async divisionsTree(): Promise<string | undefined | void> {
+    const [items] = await this.divisionRepository.findAndCount();
+
+    return this.formatDivision(items, 'tree');
+  }
+
+  async division(id: number, args?: IDivisionArgs): Promise<Division | undefined> {
     let nextArgs: IDivisionArgs = {};
 
     if (args) {
@@ -54,7 +60,7 @@ export class DivisionService {
     return this.divisionRepository.findOne(id, nextArgs);
   }
 
-  async formatDivision(items: any[]) {
+  formatDivision(items: any[], type: 'json' | 'tree' = 'json'): string | void {
     const provinces = items.filter(v => v.code && !v.province_code && !v.city_code);
     const cities = items.filter(v => v.code && v.province_code && !v.city_code);
     const areas = items.filter(v => v.code && v.province_code && v.city_code);
@@ -62,27 +68,58 @@ export class DivisionService {
     /* eslint-disable no-return-assign */
     /* eslint-disable no-param-reassign */
     provinces.forEach(pv => {
-      pv.value = pv.name;
+      pv.value = type === 'json' ? pv.name : undefined;
+      pv.title = type === 'tree' ? pv.name : undefined;
       pv.children = [];
     });
 
     cities.forEach(cv => {
+      cv.value = type === 'json' ? cv.name : undefined;
+      cv.title = type === 'tree' ? cv.name : undefined;
       cv.children = [];
-      cv.value = cv.name;
     });
 
-    areas.forEach(av => cities.find(c => c.code === av.city_code).children.push({ value: av.name }));
-    cities.forEach(cv =>
-      provinces.find(p => p.code === cv.province_code).children.push({ value: cv.name, children: cv.children }),
-    );
+    areas.forEach(av => {
+      const city = cities.find(c => c.code === av.city_code);
 
-    provinces.forEach(pv => {
-      delete pv.code;
-      delete pv.city_code;
-      delete pv.province_code;
+      if (city && city.children) {
+        city.children.push({
+          value: type === 'json' ? av.name : undefined,
+          title: type === 'tree' ? av.name : undefined,
+          id: type === 'tree' ? av.id : undefined,
+          province_code: type === 'tree' ? av.province_code : undefined,
+          city_code: type === 'tree' ? av.city_code : undefined,
+          code: type === 'tree' ? av.code : undefined,
+        });
+      }
     });
 
-    return fs.writeFileSync(divisionConfig.DIVISION_OF_CHINA_FILE_PATH, JSON.stringify(provinces));
+    cities.forEach(cv => {
+      const province = provinces.find(p => p.code === cv.province_code);
+
+      if (province && province.children) {
+        province.children.push({
+          children: cv.children,
+          value: type === 'json' ? cv.name : undefined,
+          title: type === 'tree' ? cv.name : undefined,
+          id: type === 'tree' ? cv.id : undefined,
+          province_code: type === 'tree' ? cv.province_code : undefined,
+          code: type === 'tree' ? cv.code : undefined,
+        });
+      }
+    });
+
+    if (type === 'json') {
+      provinces.forEach(pv => {
+        delete pv.code;
+        delete pv.city_code;
+        delete pv.province_code;
+      });
+
+      return fs.writeFileSync(divisionConfig.DIVISION_OF_CHINA_FILE_PATH, JSON.stringify(provinces));
+    }
+
+    return JSON.stringify(provinces);
   }
 
   async syncDivisionToFile(): Promise<SyncTagsToFileObject> {
@@ -138,10 +175,10 @@ export class DivisionService {
     }
 
     const [items] = await this.divisionRepository.findAndCount({
-      select: ['code', 'name', 'province_code', 'city_code'],
+      select: ['id', 'code', 'name', 'province_code', 'city_code'],
     });
 
-    await this.formatDivision(items);
+    await this.formatDivision(items, 'json');
 
     return {
       status: `Synced. ${sqlRunResultMessage}.`,
@@ -150,8 +187,13 @@ export class DivisionService {
 
   async createDivision(args: CreateDivisionInput): Promise<Division | undefined> {
     const relationArgs = {};
+    const result = await this.divisionRepository.save({ ...args, ...relationArgs });
 
-    return this.divisionRepository.save({ ...args, ...relationArgs });
+    if (result) {
+      this.syncDivisionToFile();
+    }
+
+    return result;
   }
 
   async updateDivision(id: number, args: UpdateDivisionInput): Promise<Division | undefined> {
@@ -161,7 +203,13 @@ export class DivisionService {
       ...args,
     };
 
-    return curdUtil.commonUpdate(this.divisionRepository, CLS_NAME, id, nextArgs);
+    const result = await curdUtil.commonUpdate(this.divisionRepository, CLS_NAME, id, nextArgs);
+
+    if (result) {
+      this.syncDivisionToFile();
+    }
+
+    return result;
   }
 
   async deleteDivision(id: number): Promise<Division | undefined> {

@@ -148,8 +148,8 @@ pMutation.updateProduct = checkPermission('product.item-update');
 pMutation.deleteProduct = checkPermission('product.item-delete');
 //
 // --------------------
-pQuery.addresses = allow;
-pQuery.address = allow;
+pQuery.addresses = checkPermission('address.list-read');
+pQuery.address = checkPermission('address.item-read');
 //
 pMutation.createAddress = checkPermission('address.item-create');
 pMutation.updateAddress = checkPermission('address.item-update');
@@ -157,8 +157,8 @@ pMutation.deleteAddress = checkPermission('address.item-delete');
 
 //
 // --------------------
-pQuery.divisions = allow;
-pQuery.division = allow;
+pQuery.divisions = checkPermission('division.list-read');
+pQuery.division = checkPermission('division.item-read');
 //
 pMutation.createDivision = checkPermission('division.item-create');
 pMutation.updateDivision = checkPermission('division.item-update');
