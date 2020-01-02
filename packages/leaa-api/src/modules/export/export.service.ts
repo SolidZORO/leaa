@@ -23,11 +23,7 @@ export class ExportService {
   async exportPromo(@Body() args: IPromosArgs, @Request() req: IRequest, @Response() res: IResponse) {
     const filenamePrefix = 'promo';
 
-    console.log(req.user);
-
     const promos = await this.promoService.promos({ ...args, pageSize: PAGE_SIZE }, req.user);
-
-    console.log(promos);
 
     const dataTitle = ['Name', 'Amount'];
     const dataBody = promos.items.map(i => [i.name, i.amount]);
