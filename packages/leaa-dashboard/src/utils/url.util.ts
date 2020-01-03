@@ -156,7 +156,6 @@ const initPaginationState = (urlParams: ParsedQuery): ITablePagination => {
   return {
     page: urlPagination.page,
     pageSize: urlPagination?.pageSize,
-    selectedRowKeys: [],
     orderBy: formatOrderBy(urlParams.orderBy),
     orderSort: formatOrderSort(urlParams.orderSort),
   };

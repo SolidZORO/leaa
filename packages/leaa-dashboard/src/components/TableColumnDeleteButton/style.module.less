@@ -4,6 +4,30 @@
   position: relative;
 }
 
+.popconfirm-wrapper {
+  :global {
+    .ant-popover-message-title {
+      padding-left: 0;
+    }
+  }
+}
+
 .icon-question {
-  color: #ff003d;
+  color: @error-color;
+  margin-right: 5px;
+}
+
+.title-wrapper {
+  @ppx: 30px;
+  @ppy: 40px;
+
+  display: block;
+  padding: @ppx @ppy (@ppx - 12) @ppy;
+
+  em {
+    display: inline-block;
+    margin: 0 2px;
+    font-style: normal;
+    border-bottom: 4px solid @error-color;
+  }
 }

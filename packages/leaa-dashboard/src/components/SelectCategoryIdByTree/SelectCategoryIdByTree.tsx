@@ -100,6 +100,7 @@ export const SelectCategoryIdByTree = forwardRef((props: IProps, ref: React.Ref<
         treeData={onCalcTreeData()}
         placeholder={props.placeholder || t('_lang:category')}
         onChange={onChange}
+        className={style['tree-select-wrapper']}
         style={props.style}
         {...props.componentProps}
       />

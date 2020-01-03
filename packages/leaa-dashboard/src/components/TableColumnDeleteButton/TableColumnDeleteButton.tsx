@@ -6,10 +6,12 @@ import cx from 'classnames';
 
 import { DeleteOutlined, LoadingOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 
+import { IdTag } from '../IdTag/IdTag';
+
 import style from './style.module.less';
 
 interface IProps {
-  id: React.ReactNode;
+  id: number | string | undefined;
   fieldName?: React.ReactNode;
   title?: React.ReactNode;
   extra?: React.ReactNode;
@@ -25,23 +27,17 @@ export const TableColumnDeleteButton = (props: IProps) => {
   return (
     <div className={cx(style['wrapper'], props.className)}>
       <Popconfirm
-        icon={
-          props.loading ? (
-            <LoadingOutlined className={style['icon-question']} />
-          ) : (
-            <QuestionCircleOutlined className={style['icon-question']} />
-          )
-        }
+        overlayClassName={style['popconfirm-wrapper']}
+        icon={null}
         title={
-          <span>
-            {t('_comp:TableColumnDeleteButton.confirmDeleteItem')}{' '}
-            {props.id && (
-              <>
-                <sup>#</sup>
-                {props.id}
-              </>
-            )}{' '}
-            {props.fieldName && <Tag color="geekblue">{props.fieldName}</Tag>} ?
+          <span className={style['title-wrapper']}>
+            {props.loading ? (
+              <LoadingOutlined className={style['icon-question']} />
+            ) : (
+              <QuestionCircleOutlined className={style['icon-question']} />
+            )}
+            {t('_comp:TableColumnDeleteButton.confirmDeleteItem')} {props.id && <IdTag id={props.id} />}{' '}
+            <em>{props.fieldName}</em> ?
           </span>
         }
         placement="topRight"
