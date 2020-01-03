@@ -36,12 +36,18 @@ export const ArticleExtForm = forwardRef((props: IProps, ref: React.Ref<any>) =>
     if (!item) return undefined;
 
     // if APIs return error, do not flush out edited data
-    if (form.getFieldValue('updated_at') && !item.updated_at) return undefined;
+    if (form.getFieldValue('updated_at') && !item.updated_at) {
+      form.resetFields();
+      return undefined;
+    }
 
     // update was successful, keeping the form data and APIs in sync.
     if (form.getFieldValue('updated_at') !== item.updated_at) {
-      form.setFieldsValue(item);
-      form.setFields([{ name: 'released_at', value: item.released_at ? moment(item.released_at) : null }]);
+      form.resetFields();
+      form.setFieldsValue({
+        description: item.description,
+        released_at: item.released_at ? moment(item.released_at) : null,
+      });
     }
 
     return undefined;

@@ -45,29 +45,33 @@ export const PromoInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) => 
         quantity: 1,
         redeemed_quantity: 0,
         status: 1,
+        //
+        start_time: defaultTimeRange[0],
+        expire_time: defaultTimeRange[1],
       });
-
-      form.setFields([
-        { name: 'start_time', value: defaultTimeRange[0] },
-        { name: 'expire_time', value: defaultTimeRange[1] },
-      ]);
 
       return undefined;
     }
 
     // if APIs return error, do not flush out edited data
-    if (form.getFieldValue('updated_at') && !item.updated_at) return undefined;
+    if (form.getFieldValue('updated_at') && !item.updated_at) {
+      form.resetFields();
+      return undefined;
+    }
 
     // update was successful, keeping the form data and APIs in sync.
     if (form.getFieldValue('updated_at') !== item.updated_at) {
+      form.resetFields();
       form.setFieldsValue({
-        ...item,
+        name: item.name,
+        amount: item.amount,
+        over_amount: item.over_amount,
+        quantity: item.quantity,
+        status: item.status,
+        //
+        start_time: item.start_time || defaultTimeRange[0],
+        expire_time: item.expire_time || defaultTimeRange[1],
       });
-
-      form.setFields([
-        { name: 'start_time', value: props.item?.start_time || defaultTimeRange[0] },
-        { name: 'expire_time', value: props.item?.expire_time || defaultTimeRange[1] },
-      ]);
     }
 
     return undefined;
@@ -78,10 +82,10 @@ export const PromoInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) => 
 
     if (date) nextDate = date;
 
-    form.setFields([
-      { name: 'start_time', value: nextDate[0] },
-      { name: 'expire_time', value: nextDate[1] },
-    ]);
+    form.setFieldsValue({
+      start_time: nextDate[0],
+      expire_time: nextDate[1],
+    });
 
     setTimeRange(nextDate);
   };

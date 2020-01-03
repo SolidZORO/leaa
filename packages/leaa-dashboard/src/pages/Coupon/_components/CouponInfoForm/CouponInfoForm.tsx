@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import cx from 'classnames';
 import moment from 'moment';
 import React, { useEffect, useState, forwardRef, useImperativeHandle } from 'react';
@@ -44,8 +45,8 @@ export const CouponInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =>
         amount: 0,
         over_amount: 0,
         quantity: 1,
-        redeemed_quantity: 0,
         status: 1,
+        //
         start_time: defaultTimeRange[0],
         expire_time: defaultTimeRange[1],
       });
@@ -54,15 +55,23 @@ export const CouponInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =>
     }
 
     // if APIs return error, do not flush out edited data
-    if (form.getFieldValue('updated_at') && !item.updated_at) return undefined;
+    if (form.getFieldValue('updated_at') && !item.updated_at) {
+      form.resetFields();
+      return undefined;
+    }
 
     // update was successful, keeping the form data and APIs in sync.
     if (form.getFieldValue('updated_at') !== item.updated_at) {
+      form.resetFields();
       form.setFieldsValue({
-        ...item,
         type: 'coupon',
-        start_time: props.item?.start_time,
-        expire_time: props.item?.expire_time,
+        name: item.name,
+        amount: item.amount,
+        over_amount: item.over_amount,
+        status: item.status,
+        //
+        start_time: item.start_time,
+        expire_time: item.expire_time,
       });
     }
 
@@ -74,10 +83,10 @@ export const CouponInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =>
 
     if (date) nextDate = date;
 
-    form.setFields([
-      { name: 'start_time', value: nextDate[0] },
-      { name: 'expire_time', value: nextDate[1] },
-    ]);
+    form.setFieldsValue({
+      start_time: nextDate[0],
+      expire_time: nextDate[1],
+    });
 
     setTimeRange(nextDate);
   };

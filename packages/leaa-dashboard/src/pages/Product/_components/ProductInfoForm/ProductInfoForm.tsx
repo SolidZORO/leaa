@@ -41,14 +41,18 @@ export const ProductInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =
     if (!item) return form.setFieldsValue({ status: 0 });
 
     // if APIs return error, do not flush out edited data
-    if (form.getFieldValue('updated_at') && !item.updated_at) return undefined;
+    if (form.getFieldValue('updated_at') && !item.updated_at) {
+      form.resetFields();
+      return undefined;
+    }
 
     // update was successful, keeping the form data and APIs in sync.
     if (form.getFieldValue('updated_at') !== item.updated_at) {
+      form.resetFields();
       form.setFieldsValue({
         ...item,
-        styleIds: item?.styles?.length ? item.styles[0].id : undefined,
-        brandIds: item?.brands?.length ? item.brands[0].id : undefined,
+        styleIds: item.styles?.length ? item.styles[0].id : undefined,
+        brandIds: item.brands?.length ? item.brands[0].id : undefined,
       });
     }
 

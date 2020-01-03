@@ -47,10 +47,14 @@ export const RolePermissionsForm = forwardRef((props: IProps, ref: React.Ref<any
     if (!item) return undefined;
 
     // if APIs return error, do not flush out edited data
-    if (form.getFieldValue('updated_at') && !item.updated_at) return undefined;
+    if (form.getFieldValue('updated_at') && !item.updated_at) {
+      form.resetFields();
+      return undefined;
+    }
 
     // update was successful, keeping the form data and APIs in sync.
     if (form.getFieldValue('updated_at') !== item.updated_at) {
+      form.resetFields();
       const permissionIds = getPermissionIds(props.item);
 
       form.setFieldsValue({

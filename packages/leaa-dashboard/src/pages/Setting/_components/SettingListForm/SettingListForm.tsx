@@ -112,7 +112,9 @@ export const SettingListForm = forwardRef((props: IProps, ref: React.Ref<any>) =
     if (!items) return undefined;
 
     return items.forEach(item => {
-      form.setFields([{ name: item.id, value: item.value }]);
+      form.setFieldsValue({
+        [item.id]: item.value,
+      });
     });
   };
 
