@@ -17,6 +17,7 @@ import {
   Product,
   Address,
   Division,
+  Zan,
 } from '@leaa/common/src/entrys';
 
 import { TagSubscriber } from '@leaa/api/src/subscribers';
@@ -60,6 +61,7 @@ export class TypeormService implements TypeOrmOptionsFactory {
         Product,
         Address,
         Division,
+        Zan,
       ],
       subscribers: [TagSubscriber],
     };

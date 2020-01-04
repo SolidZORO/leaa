@@ -43,3 +43,6 @@ export * from './address.mutation';
 
 export * from './division.query';
 export * from './division.mutation';
+
+export * from './zan.query';
+export * from './zan.mutation';

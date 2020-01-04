@@ -369,6 +369,13 @@ input CreateUserInput {
   is_admin: Int
 }
 
+input CreateZanInput {
+  title: String!
+  uuid: String!
+  status: Int!
+  description: String
+}
+
 """
 The javascript `Date` as string. Type represents date and time as the ISO Date string.
 """
@@ -450,6 +457,9 @@ type Mutation {
   syncDivisionToFile: SyncDivisionToFileObject!
   updateDivision(division: UpdateDivisionInput!, id: Int!): Division!
   deleteDivision(id: Int!): Division!
+  createZan(zan: CreateZanInput!): Zan!
+  updateZan(zan: UpdateZanInput!, id: Int!): Zan!
+  deleteZan(id: Int!): Zan!
 }
 
 type Oauth {
@@ -608,6 +618,8 @@ type Query {
   divisionsMapping: String!
   divisionsTree: String!
   division(id: Int!): Division!
+  zans(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): ZansWithPaginationObject!
+  zan(uuid: String!): Zan!
 }
 
 input RedeemCouponInput {
@@ -848,6 +860,12 @@ input UpdateUserInput {
   roleSlugs: [String!]
 }
 
+input UpdateZanInput {
+  title: String
+  status: Int
+  description: String
+}
+
 type User {
   id: Int
   created_at: DateTime!
@@ -875,4 +893,26 @@ type UsersWithPaginationObject {
   itemsCount: Int!
   total: Int!
   items: [User!]!
+}
+
+type Zan {
+  id: Int
+  created_at: DateTime!
+  updated_at: DateTime
+  deleted_at: DateTime
+  uuid: String!
+  title: String!
+  description: String
+  status: Int
+  views: Int
+  zan_users: [User!]
+}
+
+type ZansWithPaginationObject {
+  page: Int
+  pageSize: Int!
+  nextPage: Int
+  itemsCount: Int!
+  total: Int!
+  items: [Zan!]!
 }

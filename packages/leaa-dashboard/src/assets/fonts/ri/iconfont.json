@@ -132,6 +132,13 @@
       "unicode_decimal": 61692
     },
     {
+      "icon_id": "12124788",
+      "name": "ri-thumb-up-line",
+      "font_class": "ri-thumb-up-line",
+      "unicode": "f10b",
+      "unicode_decimal": 61707
+    },
+    {
       "icon_id": "12124800",
       "name": "ri-settings-line",
       "font_class": "ri-settings-line",
@@ -144,6 +151,13 @@
       "font_class": "ri-t-shirt-line",
       "unicode": "f127",
       "unicode_decimal": 61735
+    },
+    {
+      "icon_id": "12124865",
+      "name": "ri-thumb-down-line",
+      "font_class": "ri-thumb-down-line",
+      "unicode": "f158",
+      "unicode_decimal": 61784
     },
     {
       "icon_id": "12124868",

@@ -8,6 +8,7 @@ export default {
   'lang-code-zh-CN': 'CN',
   //
   id: 'ID',
+  uuid: 'UUID',
   category: '分类',
   user: '用户',
   role: '角色',
@@ -66,6 +67,7 @@ export default {
   private: '私有',
   public: '公开',
   export: '导出',
+  views: '浏览量',
   //
   select: '选择',
   selected: '选中',

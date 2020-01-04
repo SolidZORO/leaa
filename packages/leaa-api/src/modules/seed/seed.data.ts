@@ -174,6 +174,15 @@ export const permissionsSeed: { name: string; slug: IPermissionSlug }[] = [
   { name: 'Division Item Create', slug: 'division.item-create' },
   { name: 'Division Item Update', slug: 'division.item-update' },
   { name: 'Division Item Delete', slug: 'division.item-delete' },
+  //
+  // --------------------------------
+  //
+  { name: 'Zan List Read', slug: 'zan.list-read' },
+  //
+  { name: 'Zan Item Read', slug: 'zan.item-read' },
+  { name: 'Zan Item Create', slug: 'zan.item-create' },
+  { name: 'Zan Item Update', slug: 'zan.item-update' },
+  { name: 'Zan Item Delete', slug: 'zan.item-delete' },
 ];
 
 // prettier-ignore

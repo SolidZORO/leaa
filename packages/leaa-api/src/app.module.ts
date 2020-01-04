@@ -31,6 +31,7 @@ import { ProductModule } from '@leaa/api/src/modules/product/product.module';
 import { AddressModule } from '@leaa/api/src/modules/address/address.module';
 import { DivisionModule } from '@leaa/api/src/modules/division/division.module';
 import { ExportModule } from '@leaa/api/src/modules/export/export.module';
+import { ZanModule } from '@leaa/api/src/modules/zan/zan.module';
 
 @Module({
   imports: [
@@ -65,6 +66,7 @@ import { ExportModule } from '@leaa/api/src/modules/export/export.module';
     AddressModule,
     DivisionModule,
     ExportModule,
+    ZanModule,
   ],
   providers: [
     ConfigModule,

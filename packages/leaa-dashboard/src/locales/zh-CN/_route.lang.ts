@@ -21,6 +21,7 @@ const content = '内容';
 const product = '商品';
 const address = '地址';
 const division = '地址源';
+const zan = '集赞';
 
 export default {
   home,
@@ -96,4 +97,8 @@ export default {
   division,
   createDivision: `${_lang.create} ${division}`,
   editDivision: `${_lang.edit} ${division}`,
+  //
+  zan,
+  createZan: `${_lang.create} ${zan}`,
+  editZan: `${_lang.edit} ${zan}`,
 };

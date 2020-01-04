@@ -21,6 +21,7 @@ const content = 'Content';
 const product = 'Product';
 const address = 'Address';
 const division = 'Division';
+const zan = 'Collect Zan';
 
 export default {
   home,
@@ -96,4 +97,8 @@ export default {
   division,
   createDivision: `${_lang.create} ${division}`,
   editDivision: `${_lang.edit} ${division}`,
+  //
+  zan,
+  createZan: `${_lang.create} ${zan}`,
+  editZan: `${_lang.edit} ${zan}`,
 };

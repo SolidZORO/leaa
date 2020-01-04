@@ -12,6 +12,7 @@ import Promo from './Promo.lang';
 import Product from './Product.lang';
 import Address from './Address.lang';
 import Division from './Division.lang';
+import Zan from './Zan.lang';
 
 export default {
   Auth,
@@ -28,4 +29,5 @@ export default {
   Product,
   Address,
   Division,
+  Zan,
 };

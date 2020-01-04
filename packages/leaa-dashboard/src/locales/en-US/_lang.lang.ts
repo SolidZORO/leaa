@@ -8,6 +8,7 @@ export default {
   'lang-code-zh-CN': 'CN',
   //
   id: 'ID',
+  uuid: 'UUID',
   category: 'Category',
   user: 'User',
   role: 'Role',
@@ -63,6 +64,7 @@ export default {
   private: 'Private',
   public: 'Public',
   export: 'Export',
+  views: 'Views',
   //
   select: 'Select',
   selected: 'Selected',

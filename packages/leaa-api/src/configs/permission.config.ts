@@ -164,6 +164,15 @@ pMutation.createDivision = checkPermission('division.item-create');
 pMutation.updateDivision = checkPermission('division.item-update');
 pMutation.deleteDivision = checkPermission('division.item-delete');
 
+//
+// --------------------
+pQuery.zans = allow;
+pQuery.zan = allow;
+//
+pMutation.createZan = allow;
+pMutation.updateZan = checkPermission('zan.item-update');
+pMutation.deleteZan = checkPermission('zan.item-delete');
+
 // TIPS relation file: packages/leaa-api/src/modules/seed/seed.data.ts
 export const permissions = shield(
   {

@@ -131,6 +131,13 @@ declare const permissionSlug: [
   'division.item-create',
   'division.item-update',
   'division.item-delete',
+  // --------------------
+  'zan.list-read',
+  //
+  'zan.item-read',
+  'zan.item-create',
+  'zan.item-update',
+  'zan.item-delete',
 ];
 
 export declare type IPermissionSlug = typeof permissionSlug[number];
