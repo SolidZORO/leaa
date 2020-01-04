@@ -21,5 +21,5 @@ export class Tag extends Base {
 
   @Column({ type: 'int', default: 0 })
   @Field(() => Int, { nullable: true, defaultValue: 0 })
-  count?: number;
+  views?: number;
 }

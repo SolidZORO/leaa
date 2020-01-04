@@ -12,7 +12,7 @@ export const GET_TAGS = gql`
         name
         icon
         description
-        count
+        views
         created_at
         updated_at
       }
@@ -27,7 +27,7 @@ export const GET_TAG = gql`
       name
       icon
       description
-      count
+      views
       created_at
       updated_at
     }
@@ -41,7 +41,7 @@ export const GET_TAG_BY_NAME = gql`
       name
       icon
       description
-      count
+      views
       created_at
       updated_at
     }

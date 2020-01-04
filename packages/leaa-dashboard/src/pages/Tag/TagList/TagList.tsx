@@ -94,14 +94,25 @@ export default (props: IPage) => {
       render: (text: string, record: TagEntry) => <Link to={`${props.route.path}/${record.id}`}>{record.name}</Link>,
     },
     {
-      title: t('_page:Tag.count'),
-      dataIndex: 'count',
+      title: t('_lang:description'),
+      dataIndex: 'description',
       sorter: true,
-      width: 150,
-      sortOrder: tableUtil.calcDefaultSortOrder(tablePagination.orderSort, tablePagination.orderBy, 'count'),
+      sortOrder: tableUtil.calcDefaultSortOrder(tablePagination.orderSort, tablePagination.orderBy, 'description'),
       render: (text: string, record: TagEntry) => (
         <small>
-          <code>{record.count}</code>
+          <code>{record.description}</code>
+        </small>
+      ),
+    },
+    {
+      title: t('_lang:views'),
+      dataIndex: 'views',
+      sorter: true,
+      width: 150,
+      sortOrder: tableUtil.calcDefaultSortOrder(tablePagination.orderSort, tablePagination.orderBy, 'views'),
+      render: (text: string, record: TagEntry) => (
+        <small>
+          <code>{record.views}</code>
         </small>
       ),
     },

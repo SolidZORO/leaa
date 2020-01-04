@@ -14,12 +14,4 @@ export class UpdateTagInput {
   @IsOptional()
   @Field(() => String, { nullable: true })
   description?: string;
-
-  @IsOptional()
-  @Field(() => Int, { nullable: true })
-  read_count?: number;
-
-  @IsOptional()
-  @Field(() => Int, { nullable: true })
-  link_count?: number;
 }

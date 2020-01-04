@@ -10,8 +10,8 @@ export class TagSubscriber implements EntitySubscriberInterface<Tag> {
   }
 
   async afterLoad(entity: Tag, event: LoadEvent<Tag>): Promise<void> {
-    if (event.entity && typeof event.entity.count !== 'undefined') {
-      event.manager.getRepository(Tag).update(event.entity.id, { count: event.entity.count + 1 });
+    if (event.entity && typeof event.entity.views !== 'undefined') {
+      event.manager.getRepository(Tag).update(event.entity.id, { views: event.entity.views + 1 });
     }
   }
 

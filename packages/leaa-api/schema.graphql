@@ -696,7 +696,7 @@ type Tag {
   name: String
   icon: String
   description: String
-  count: Int
+  views: Int
 }
 
 type TagsWithPaginationObject {
@@ -845,8 +845,6 @@ input UpdateTagInput {
   name: String
   icon: String
   description: String
-  read_count: Int
-  link_count: Int
 }
 
 input UpdateUserInput {
