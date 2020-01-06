@@ -171,9 +171,17 @@ export class UserService {
     const nextUser = await curdUtil.commonUpdate(this.userRepository, CLS_NAME, id, nextArgs, relationArgs);
 
     // @ts-ignore
-    const diffObject: User = diff(prevUser, nextUser);
+    const diffObject = await diff(prevUser, nextUser);
 
-    if (diffObject && (diffObject.password || diffObject.is_admin || diffObject.status || diffObject.roles)) {
+    if (
+      // @ts-ignore
+      diffObject &&
+      (typeof diffObject.password !== 'undefined' ||
+        typeof diffObject.is_admin !== 'undefined' ||
+        typeof diffObject.status !== 'undefined' ||
+        typeof diffObject.roles !== 'undefined' ||
+        typeof diffObject.roleIds !== 'undefined')
+    ) {
       // TIPS: DONT use new Date(), server time and SQL time has diff
       await this.userRepository.update(id, { last_token_at: nextUser.updated_at });
     }

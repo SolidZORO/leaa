@@ -33,7 +33,7 @@ export class AuthService {
   ) {}
 
   async createToken(user: User): Promise<{ authExpiresIn: number; authToken: string }> {
-    const jwtPayload: IJwtPayload = { id: user.id };
+    const jwtPayload: IJwtPayload = { id: user.id, iattz: moment().toISOString() };
 
     // https://github.com/auth0/node-jsonwebtoken#jwtsignpayload-secretorprivatekey-options-callback
     const authExpiresIn = this.configService.SERVER_COOKIE_EXPIRES_SECOND;
@@ -82,7 +82,7 @@ export class AuthService {
     const user = authUtil.checkAvailableUser(findUser);
 
     // IMPORTANT! if user info is changed, Compare `iat` and `last_token_at`
-    if (moment.unix(payload.iat).isBefore(moment(user.last_token_at))) {
+    if (moment(payload.iattz).isBefore(moment(user.updated_at))) {
       return errorUtil.ERROR({ error: 'Your user info has been updated, Please login again' });
     }
 
