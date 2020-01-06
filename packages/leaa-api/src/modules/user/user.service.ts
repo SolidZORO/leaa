@@ -1,5 +1,6 @@
 import { diff } from 'jsondiffpatch';
 import bcryptjs from 'bcryptjs';
+import moment from 'moment';
 import { Injectable } from '@nestjs/common';
 import { Repository, FindOneOptions } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -168,10 +169,13 @@ export class UserService {
     }
 
     const nextUser = await curdUtil.commonUpdate(this.userRepository, CLS_NAME, id, nextArgs, relationArgs);
-    const diffObject = diff(prevUser, nextUser);
+
+    // @ts-ignore
+    const diffObject: User = diff(prevUser, nextUser);
 
     if (diffObject && (diffObject.password || diffObject.is_admin || diffObject.status || diffObject.roles)) {
-      await this.userRepository.update(id, { last_token_at: new Date() });
+      // TIPS: DONT use new Date(), server time and SQL time has diff
+      await this.userRepository.update(id, { last_token_at: nextUser.updated_at });
     }
 
     return nextUser;
