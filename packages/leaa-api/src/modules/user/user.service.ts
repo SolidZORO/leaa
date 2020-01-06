@@ -140,8 +140,6 @@ export class UserService {
 
     if (curdUtil.isOneField(args, 'status')) return curdUtil.commonUpdate(this.userRepository, CLS_NAME, id, args);
 
-    // const const diffObject = diff(prevItem, nextItem);
-
     const prevUser = await this.user(id, { relations: ['roles'] });
 
     const nextArgs = args;
