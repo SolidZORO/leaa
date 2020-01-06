@@ -877,8 +877,9 @@ type User {
   avatar_string: String
   status: Int!
   is_admin: Int!
-  lastLogin_ip: String
-  lastLogin_at: DateTime
+  last_login_ip: String
+  last_login_at: DateTime
+  last_token_at: DateTime
   roles: [Role!]
   addresses: [Address!]
   permissions: [Permission!]

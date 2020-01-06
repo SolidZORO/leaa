@@ -38,11 +38,15 @@ export class User extends Base {
 
   @Column({ type: 'varchar', length: 32, nullable: true })
   @Field(() => String, { nullable: true })
-  lastLogin_ip?: string;
+  last_login_ip?: string;
 
   @Column({ type: 'timestamp', nullable: true })
   @Field(() => Date, { nullable: true })
-  lastLogin_at?: Date;
+  last_login_at?: Date;
+
+  @Column({ type: 'timestamp', nullable: true })
+  @Field(() => Date, { nullable: true })
+  last_token_at?: Date;
 
   @ManyToMany(
     () => Role,

@@ -1,3 +1,4 @@
+import { diff } from 'jsondiffpatch';
 import bcryptjs from 'bcryptjs';
 import { Injectable } from '@nestjs/common';
 import { Repository, FindOneOptions } from 'typeorm';
@@ -139,6 +140,10 @@ export class UserService {
 
     if (curdUtil.isOneField(args, 'status')) return curdUtil.commonUpdate(this.userRepository, CLS_NAME, id, args);
 
+    // const const diffObject = diff(prevItem, nextItem);
+
+    const prevUser = await this.user(id, { relations: ['roles'] });
+
     const nextArgs = args;
     const relationArgs: { roles?: Role[] } = {};
 
@@ -164,7 +169,14 @@ export class UserService {
       nextArgs.password = await this.createPassword(args.password);
     }
 
-    return curdUtil.commonUpdate(this.userRepository, CLS_NAME, id, nextArgs, relationArgs);
+    const nextUser = await curdUtil.commonUpdate(this.userRepository, CLS_NAME, id, nextArgs, relationArgs);
+    const diffObject = diff(prevUser, nextUser);
+
+    if (diffObject && (diffObject.password || diffObject.is_admin || diffObject.status || diffObject.roles)) {
+      await this.userRepository.update(id, { last_token_at: new Date() });
+    }
+
+    return nextUser;
   }
 
   async deleteUser(id: number, user?: User): Promise<User | undefined> {
