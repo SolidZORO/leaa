@@ -1,10 +1,8 @@
 import cx from 'classnames';
 import React from 'react';
-
 import { useTranslation } from 'react-i18next';
 
 import { User, Zan } from '@leaa/common/src/entrys';
-
 import { FormCard, UserAvatar } from '@leaa/dashboard/src/components';
 
 import { ZanProgress } from '../ZanProgress/ZanProgress';
@@ -23,7 +21,7 @@ export const ZanUsersForm = (props: IProps) => {
 
   return (
     <div className={cx(style['wrapper'], props.className)}>
-      <FormCard title={t('_page:Zan.zanUser')}>
+      <FormCard title={t('_page:Zan.zanUserList')}>
         <ZanProgress item={props.item} />
 
         <div className={style['user-avatar-wrapper']}>

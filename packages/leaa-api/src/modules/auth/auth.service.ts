@@ -33,6 +33,7 @@ export class AuthService {
   ) {}
 
   async createToken(user: User): Promise<{ authExpiresIn: number; authToken: string }> {
+    // iattz = iat timezone
     const jwtPayload: IJwtPayload = { id: user.id, iattz: moment().toISOString() };
 
     // https://github.com/auth0/node-jsonwebtoken#jwtsignpayload-secretorprivatekey-options-callback
