@@ -1,13 +1,12 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Skeleton, Avatar, Popover, Button } from 'antd';
+import { Skeleton, Popover, Button } from 'antd';
 import { RouteComponentProps } from 'react-router-dom';
 
 import { authUtil } from '@leaa/dashboard/src/utils';
 import { LOGOUT_REDIRECT_URL } from '@leaa/dashboard/src/constants';
-import { Rcon, BuildInfo } from '@leaa/dashboard/src/components';
+import { Rcon, BuildInfo, UserAvatar } from '@leaa/dashboard/src/components';
 
-import avatar from '@leaa/dashboard/src/assets/images/avatar/avatar-line.svg';
 import style from './style.module.less';
 
 interface IProps extends RouteComponentProps {}
@@ -51,7 +50,7 @@ export const UserMenu = (props: IProps): JSX.Element => {
     <div className={style['usermenu-wrapper']}>
       <Popover trigger="click" placement="bottomRight" content={menuDom}>
         <Button type="link" className={style['usermenu-button']}>
-          <Avatar src={avatar} alt="Avatar" shape="circle" className={style['usermenu-avatar']} />
+          <UserAvatar avatarUrl="" />
           <span className={style['usermenu-name']}>{user.name}</span>
           <Rcon type="ri-arrow-drop-down-fill" className={style['usermenu-name-icon']} />
         </Button>

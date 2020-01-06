@@ -15,6 +15,7 @@ import { HtmlMeta, PageCard, SubmitBar, Rcon } from '@leaa/dashboard/src/compone
 
 import { UserInfoForm } from '../_components/UserInfoForm/UserInfoForm';
 import { UserRolesForm } from '../_components/UserRolesForm/UserRolesForm';
+import { UploadUserAvatar } from '../_components/UploadUserAvatar/UploadUserAvatar';
 
 import style from './style.module.less';
 
@@ -79,6 +80,8 @@ export default (props: IPage) => {
       loading={getUserQuery.loading || updateUserMutation.loading}
     >
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
+
+      <UploadUserAvatar item={getUserQuery.data?.user} loading={getUserQuery.loading} />
 
       <UserInfoForm ref={infoFormRef} item={getUserQuery.data?.user} loading={getUserQuery.loading} />
 

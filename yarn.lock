@@ -45,7 +45,7 @@
   resolved "https://registry.npm.taobao.org/@ant-design/icons-svg/download/@ant-design/icons-svg-4.0.0-alpha.5.tgz#292c235a9be73ccc6109becdd7cb385216cc7c3a"
   integrity sha1-KSwjWpvnPMxhCb7N18s4UhbMfDo=
 
-"@ant-design/icons@4.0.0-alpha.19", "@ant-design/icons@^4.0.0-alpha.16":
+"@ant-design/icons@4.0.0-alpha.19", "@ant-design/icons@^4.0.0-alpha.19":
   version "4.0.0-alpha.19"
   resolved "https://registry.npm.taobao.org/@ant-design/icons/download/@ant-design/icons-4.0.0-alpha.19.tgz#537198cb686cd7acb4103caed09fb69be0f54040"
   integrity sha1-U3GYy2hs16y0EDyu0J+2m+D1QEA=
@@ -4642,12 +4642,12 @@ ansi-styles@^4.1.0:
     "@types/color-name" "^1.1.1"
     color-convert "^2.0.1"
 
-antd@4.0.0-beta.1:
-  version "4.0.0-beta.1"
-  resolved "https://registry.npm.taobao.org/antd/download/antd-4.0.0-beta.1.tgz#135b054b5c2c229fe639279dbcbc405d7d67c336"
-  integrity sha1-E1sFS1wsIp/mOSedvLxAXX1nwzY=
+antd@4.0.0-rc.0:
+  version "4.0.0-rc.0"
+  resolved "https://registry.npm.taobao.org/antd/download/antd-4.0.0-rc.0.tgz#169877ba47cd278a06852bb9b13edab6acd7344c"
+  integrity sha1-Fph3ukfNJ4oGhSu5sT7atqzXNEw=
   dependencies:
-    "@ant-design/icons" "^4.0.0-alpha.16"
+    "@ant-design/icons" "^4.0.0-alpha.19"
     "@ant-design/react-slick" "~0.25.5"
     array-tree-filter "^2.1.0"
     classnames "~2.2.6"
@@ -4680,7 +4680,7 @@ antd@4.0.0-beta.1:
     rc-steps "~3.5.0"
     rc-switch "~1.9.0"
     rc-table "~7.0.0-alpha.20"
-    rc-tabs "~10.0.0-alpha.0"
+    rc-tabs "~10.0.0-alpha.1"
     rc-tooltip "~4.0.0-alpha.3"
     rc-tree "~3.0.0-alpha.37"
     rc-tree-select "~3.0.0-alpha.5"
@@ -16344,9 +16344,9 @@ rc-table@~7.0.0-alpha.20:
     react-lifecycles-compat "^3.0.2"
     shallowequal "^1.1.0"
 
-rc-tabs@~10.0.0-alpha.0:
+rc-tabs@~10.0.0-alpha.1:
   version "10.0.0-alpha.1"
-  resolved "https://registry.npm.taobao.org/rc-tabs/download/rc-tabs-10.0.0-alpha.1.tgz?cache=0&sync_timestamp=1577160942918&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Frc-tabs%2Fdownload%2Frc-tabs-10.0.0-alpha.1.tgz#adcae2435fd890bffbc9a7e4a7dac5c4fd7ee5f8"
+  resolved "https://registry.npm.taobao.org/rc-tabs/download/rc-tabs-10.0.0-alpha.1.tgz#adcae2435fd890bffbc9a7e4a7dac5c4fd7ee5f8"
   integrity sha1-rcriQ1/YkL/7yafkp9rFxP1+5fg=
   dependencies:
     babel-runtime "6.x"

@@ -1,7 +1,7 @@
 @import '~@leaa/dashboard/src/styles/variables.less';
 @import '../../style.shared.less';
 
-.wrapper {
+.attachment-list-wrapper {
   transition: all 0.3s;
   position: relative;
   display: block;
@@ -10,7 +10,7 @@
   overflow-y: auto;
 }
 
-.wrapper-inner {
+.attachment-list-wrapper-inner {
   padding: 0 10px;
 }
 
@@ -30,9 +30,13 @@
   top: 0;
   left: 0;
 
-  .wrapper-inner {
+  .attachment-list-wrapper-inner {
     padding: 0;
   }
+}
+
+.wrapper-list--circle {
+  background-color: transparent;
 }
 
 .wrapper-list--empty {

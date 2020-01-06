@@ -66,7 +66,7 @@ export const UserInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
         }
         extra={<EntryInfoDate date={props.item && [props.item.created_at, props.item.updated_at]} />}
       >
-        <Form form={form} layout="vertical">
+        <Form form={form} layout="vertical" className={style['form-wrapper']}>
           <Row gutter={16} className={style['form-row']}>
             <Col xs={24} sm={6}>
               <Form.Item

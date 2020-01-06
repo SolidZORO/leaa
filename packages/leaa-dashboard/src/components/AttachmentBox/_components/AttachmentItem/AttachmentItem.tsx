@@ -36,6 +36,7 @@ interface IProps {
   onChangeStatusCallback?: (attachment: Attachment) => void;
   type?: 'list' | 'card';
   cardHeight?: number;
+  circle?: boolean;
 }
 
 interface IAttachmentInstance {
@@ -99,10 +100,11 @@ const AttachmentItemInner = forwardRef((props: IProps, ref: React.Ref<any>) => {
 
   return (
     <div
-      className={cx(style['wrapper'], {
+      className={cx(style['attachmentItemWrapper'], {
         // Fucking!! Warning: Unsupported style property wrapperItem-card. Did you mean wrapperItemCard?
         [style['wrapperItemList']]: props.type === 'list',
         [style['wrapperItemCard']]: props.type === 'card',
+        [style['wrapperItemCircle']]: props.circle,
       })}
       style={{
         ...style,
@@ -122,7 +124,13 @@ const AttachmentItemInner = forwardRef((props: IProps, ref: React.Ref<any>) => {
         />
       </div>
 
-      <div ref={cardRef} className={cx(style['image'])} style={{ height: cardHeight }}>
+      <div
+        ref={cardRef}
+        className={cx(style['image'], {
+          [style['imageCircle']]: props.circle,
+        })}
+        style={{ height: cardHeight }}
+      >
         <Tooltip
           overlayClassName={style['imageTooltip']}
           title={

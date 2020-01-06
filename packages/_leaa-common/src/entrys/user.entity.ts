@@ -1,7 +1,7 @@
 import { Index, Entity, Column, JoinTable, ManyToMany } from 'typeorm';
 import { ObjectType, Field, Int } from 'type-graphql';
 
-import { Base, Role, Permission, Address } from '@leaa/common/src/entrys';
+import { Base, Role, Permission, Address, Attachment } from '@leaa/common/src/entrys';
 
 @Entity('users')
 // @Index('users_phone_unique', ['phone'], { unique: true })
@@ -20,6 +20,10 @@ export class User extends Base {
   @Column({ type: 'varchar', length: 64, unique: true })
   @Field(() => String)
   email!: string;
+
+  @Column({ type: 'text', nullable: true })
+  @Field(() => String, { nullable: true })
+  avatar_string?: string;
 
   @Column({ type: 'int', default: 0 })
   @Field(() => Int)
@@ -68,4 +72,7 @@ export class User extends Base {
 
   @Field(() => Int, { nullable: true })
   authExpiresIn?: number;
+
+  @Field(() => Attachment, { nullable: true })
+  avatar?: Attachment;
 }

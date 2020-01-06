@@ -1,14 +1,12 @@
 import { v4 } from 'uuid';
 import { Injectable } from '@nestjs/common';
-import { Repository, FindOneOptions, SelectQueryBuilder } from 'typeorm';
+import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { Zan, User } from '@leaa/common/src/entrys';
-import { ZansArgs, ZansWithPaginationObject, ZanArgs, CreateZanInput, UpdateZanInput } from '@leaa/common/src/dtos/zan';
+import { ZansWithPaginationObject, CreateZanInput, UpdateZanInput } from '@leaa/common/src/dtos/zan';
+import { IZansArgs, IZanArgs } from '@leaa/api/src/interfaces';
 import { argsUtil, curdUtil, paginationUtil, errorUtil } from '@leaa/api/src/utils';
-
-type IZansArgs = ZansArgs & FindOneOptions<Zan>;
-type IZanArgs = ZanArgs & FindOneOptions<Zan>;
 
 const CLS_NAME = 'ZanService';
 
@@ -19,16 +17,24 @@ export class ZanService {
   async zans(args: IZansArgs, user?: User): Promise<ZansWithPaginationObject> {
     const nextArgs = argsUtil.format(args);
 
-    const qb = this.zanRepository.createQueryBuilder();
-    qb.select().orderBy(nextArgs.orderBy || 'created_at', nextArgs.orderSort);
+    const PRIMARY_TABLE = 'zans';
+    const qb = this.zanRepository.createQueryBuilder(PRIMARY_TABLE);
+
+    // relations
+    qb.leftJoinAndSelect(`${PRIMARY_TABLE}.users`, 'users');
 
     // q
     if (nextArgs.q) {
-      const aliasName = new SelectQueryBuilder(qb).alias;
+      const qLike = `%${nextArgs.q}%`;
 
       ['title'].forEach(key => {
-        qb.orWhere(`${aliasName}.${key} = :${key}`, { [key]: `${nextArgs.q}` });
+        qb.orWhere(`${PRIMARY_TABLE}.${key} LIKE :${key}`, { [key]: qLike });
       });
+    }
+
+    // order
+    if (nextArgs.orderBy && nextArgs.orderSort) {
+      qb.orderBy(`${PRIMARY_TABLE}.${nextArgs.orderBy}`, nextArgs.orderSort);
     }
 
     return paginationUtil.calcQueryBuilderPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
@@ -36,7 +42,10 @@ export class ZanService {
 
   async zan(uuid: string, args?: IZanArgs, user?: User): Promise<Zan | undefined> {
     let nextArgs: IZanArgs = {};
-    if (args) nextArgs = args;
+    if (args) {
+      nextArgs = args;
+      nextArgs.relations = ['users'];
+    }
 
     const whereQuery: { uuid: string; status?: number } = { uuid };
 
@@ -64,5 +73,25 @@ export class ZanService {
 
   async deleteZan(id: number): Promise<Zan | undefined> {
     return curdUtil.commonDelete(this.zanRepository, CLS_NAME, id);
+  }
+
+  async likeZan(uuid: string, user?: User): Promise<Zan | undefined> {
+    let zan = await this.zanRepository.findOne({ uuid }, { relations: ['users'] });
+
+    if (!zan) return errorUtil.NOT_FOUND();
+    if (!user) return errorUtil.NOT_FOUND();
+
+    if (!zan.users?.map(u => u.id).includes(user.id)) {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      await zan.users!.push(user);
+    }
+
+    zan = await this.zanRepository.save({
+      ...zan,
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      current_zan_quantity: zan.users!.length,
+    });
+
+    return zan;
   }
 }

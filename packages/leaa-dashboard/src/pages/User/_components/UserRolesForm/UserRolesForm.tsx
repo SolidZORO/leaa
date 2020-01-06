@@ -99,7 +99,7 @@ export const UserRolesForm = forwardRef((props: IProps, ref: React.Ref<any>) => 
         </Checkbox>
 
         <Form form={form} layout="vertical">
-          <Form.Item name="roleIds" rules={[]}>
+          <Form.Item name="roleIds" rules={[]} className={style['check-role']}>
             <Checkbox.Group onChange={onChange}>
               <Row gutter={16}>
                 {props.roles.map(r => (

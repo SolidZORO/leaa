@@ -20,7 +20,7 @@ import {
   Zan,
 } from '@leaa/common/src/entrys';
 
-import { TagSubscriber } from '@leaa/api/src/subscribers';
+import { TagSubscriber, AttachmentSubscriber } from '@leaa/api/src/subscribers';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 
 const CLS_NAME = 'TypeormService';
@@ -63,7 +63,7 @@ export class TypeormService implements TypeOrmOptionsFactory {
         Division,
         Zan,
       ],
-      subscribers: [TagSubscriber],
+      subscribers: [TagSubscriber, AttachmentSubscriber],
     };
 
     if (this.configService.DB_TYPE === 'mysql') {

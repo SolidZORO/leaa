@@ -371,9 +371,9 @@ input CreateUserInput {
 
 input CreateZanInput {
   title: String!
-  uuid: String!
   status: Int!
   description: String
+  target_zan_quantity: Int
 }
 
 """
@@ -460,6 +460,7 @@ type Mutation {
   createZan(zan: CreateZanInput!): Zan!
   updateZan(zan: UpdateZanInput!, id: Int!): Zan!
   deleteZan(id: Int!): Zan!
+  likeZan(uuid: String!): Zan!
 }
 
 type Oauth {
@@ -862,6 +863,8 @@ input UpdateZanInput {
   title: String
   status: Int
   description: String
+  target_zan_quantity: Int
+  current_zan_quantity: Int
 }
 
 type User {
@@ -872,6 +875,7 @@ type User {
   name: String
   phone: String
   email: String!
+  avatar_string: String
   status: Int!
   is_admin: Int!
   lastLogin_ip: String
@@ -882,6 +886,7 @@ type User {
   flatPermissions: [String!]
   authToken: String
   authExpiresIn: Int
+  avatar: Attachment
 }
 
 type UsersWithPaginationObject {
@@ -903,7 +908,9 @@ type Zan {
   description: String
   status: Int
   views: Int
-  zan_users: [User!]
+  current_zan_quantity: Int
+  target_zan_quantity: Int
+  users: [User!]
 }
 
 type ZansWithPaginationObject {

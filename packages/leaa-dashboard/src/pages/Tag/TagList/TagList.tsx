@@ -110,11 +110,7 @@ export default (props: IPage) => {
       sorter: true,
       width: 150,
       sortOrder: tableUtil.calcDefaultSortOrder(tablePagination.orderSort, tablePagination.orderBy, 'views'),
-      render: (text: string, record: TagEntry) => (
-        <small>
-          <code>{record.views}</code>
-        </small>
-      ),
+      render: (text: string) => <small className="g-col-number">{text}</small>,
     },
     {
       title: t('_lang:createdAt'),

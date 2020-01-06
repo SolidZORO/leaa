@@ -1,6 +1,6 @@
 import cx from 'classnames';
 import React, { useEffect, forwardRef, useImperativeHandle } from 'react';
-import { Col, Form, Input, Row } from 'antd';
+import { Col, Form, Input, Row, InputNumber } from 'antd';
 
 import { useTranslation } from 'react-i18next';
 
@@ -9,7 +9,7 @@ import { messageUtil } from '@leaa/dashboard/src/utils';
 import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
 import { UpdateZanInput } from '@leaa/common/src/dtos/zan';
 
-import { FormCard, EntryInfoDate, SwitchNumber } from '@leaa/dashboard/src/components';
+import { FormCard, EntryInfoDate, SwitchNumber, IdTag } from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';
 
@@ -32,7 +32,7 @@ export const ZanInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
   };
 
   const onUpdateForm = (item?: Zan) => {
-    if (!item) return undefined;
+    if (!item) return form.setFieldsValue({ status: 1, target_zan_quantity: 1 });
 
     // if APIs return error, do not flush out edited data
     if (form.getFieldValue('updated_at') && !item.updated_at) {
@@ -47,6 +47,7 @@ export const ZanInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
         title: item.title,
         status: item.status,
         description: item.description,
+        target_zan_quantity: item.target_zan_quantity,
       });
     }
 
@@ -65,19 +66,32 @@ export const ZanInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
       >
         <Form form={form} layout="vertical">
           <Row gutter={16} className={style['form-row']}>
-            <Col xs={24} sm={10}>
-              <Form.Item label={t('_lang:uuid')}>
-                <Input placeholder={t('_lang:uuid')} value={props.item?.uuid} />
-              </Form.Item>
-            </Col>
-
-            <Col xs={24} sm={6}>
-              <Form.Item name="title" rules={[{ required: true }]} label={t('_lang:title')}>
+            <Col xs={24} sm={16}>
+              <Form.Item
+                name="title"
+                rules={[{ required: true }]}
+                label={
+                  <span>
+                    {t('_lang:title')} {props.item && <IdTag id={props.item?.uuid} className={style['uuid-tag']} />}
+                  </span>
+                }
+              >
                 <Input placeholder={t('_lang:title')} />
               </Form.Item>
             </Col>
 
-            <Col xs={24} sm={6}>
+            <Col xs={24} sm={3}>
+              <Form.Item
+                name="target_zan_quantity"
+                normalize={e => e && Number(e)}
+                rules={[{ required: true }]}
+                label={t('_page:Zan.targetZanQuantity')}
+              >
+                <InputNumber className="g-input-number" placeholder={t('_page:Zan.targetZanQuantity')} />
+              </Form.Item>
+            </Col>
+
+            <Col xs={24} sm={3}>
               <Form.Item
                 name="status"
                 normalize={e => e && Number(e)}
@@ -92,7 +106,7 @@ export const ZanInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
           <Row gutter={16} className={style['form-row']}>
             <Col xs={24}>
               <Form.Item name="description" rules={[]} label={t('_lang:description')}>
-                <Input.TextArea rows={2} placeholder={t('_lang:description')} />
+                <Input.TextArea rows={1} placeholder={t('_lang:description')} />
               </Form.Item>
             </Col>
           </Row>

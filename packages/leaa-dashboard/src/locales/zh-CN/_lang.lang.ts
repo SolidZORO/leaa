@@ -68,6 +68,7 @@ export default {
   public: '公开',
   export: '导出',
   views: '浏览量',
+  avatar: '头像',
   //
   select: '选择',
   selected: '选中',

@@ -15,7 +15,6 @@ import { RoleService } from '@leaa/api/src/modules/role/role.service';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 import { argsUtil, curdUtil, paginationUtil, authUtil, errorUtil } from '@leaa/api/src/utils';
 import { JwtService } from '@nestjs/jwt';
-import { usersSeed } from '@leaa/api/src/modules/seed/seed.data';
 
 type IUsersArgs = UsersArgs & FindOneOptions<User>;
 type IUserArgs = UserArgs & FindOneOptions<User>;
@@ -52,7 +51,6 @@ export class UserService {
 
     const PRIMARY_TABLE = 'users';
     const qb = this.userRepository.createQueryBuilder(PRIMARY_TABLE);
-    qb.select().orderBy(`${PRIMARY_TABLE}.${nextArgs.orderBy || 'id'}`, nextArgs.orderSort);
 
     // relations
     if (user && authUtil.can(user, 'role.list-read')) {
@@ -66,6 +64,11 @@ export class UserService {
       ['name', 'email'].forEach(key => {
         qb.orWhere(`${PRIMARY_TABLE}.${key} LIKE :${key}`, { [key]: qLike });
       });
+    }
+
+    // order
+    if (nextArgs.orderBy && nextArgs.orderSort) {
+      qb.orderBy(`${PRIMARY_TABLE}.${nextArgs.orderBy}`, nextArgs.orderSort);
     }
 
     // can

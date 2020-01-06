@@ -17,7 +17,6 @@ export class ZanResolver {
 
   // @UseGuards(PermissionsGuard)
   // @Permissions('zan.item-read')
-  // DO NOT CHECK PERMISSIONS
   @Query(() => ZansWithPaginationObject)
   async zans(@Args() args: ZansArgs, @CurrentUser() user?: User): Promise<ZansWithPaginationObject | undefined> {
     return this.zanService.zans(args, user);
@@ -25,7 +24,6 @@ export class ZanResolver {
 
   // @UseGuards(PermissionsGuard)
   // @Permissions('zan.item-read')
-  // DO NOT CHECK PERMISSIONS
   @Query(() => Zan)
   async zan(
     @Args({ name: 'uuid', type: () => String }) uuid: string,
@@ -57,5 +55,13 @@ export class ZanResolver {
   @Mutation(() => Zan)
   async deleteZan(@Args({ name: 'id', type: () => Int }) id: number): Promise<Zan | undefined> {
     return this.zanService.deleteZan(id);
+  }
+
+  @Mutation(() => Zan)
+  async likeZan(
+    @Args({ name: 'uuid', type: () => String }) uuid: string,
+    @CurrentUser() user?: User,
+  ): Promise<Zan | undefined> {
+    return this.zanService.likeZan(uuid, user);
   }
 }

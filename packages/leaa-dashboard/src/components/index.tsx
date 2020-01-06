@@ -13,6 +13,7 @@ export { CouponItem } from './CouponItem/CouponItem';
 export { PriceInput } from './PriceInput/PriceInput';
 export { AuthLayout } from './AuthLayout/AuthLayout';
 export { FilterIcon } from './FilterIcon/FilterIcon';
+export { UserAvatar } from './UserAvatar/UserAvatar';
 export { TagMiniSets } from './TagMiniSets/TagMiniSets';
 export { SearchInput } from './SearchInput/SearchInput';
 export { SelectTagId } from './SelectTagId/SelectTagId';

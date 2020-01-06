@@ -16,6 +16,7 @@ interface IProps {
   type?: 'list' | 'card';
   cardHeight?: number;
   attachments?: Attachment[];
+  circle?: boolean;
 }
 
 export const AttachmentDropzone = (props: IProps) => {
@@ -40,9 +41,10 @@ export const AttachmentDropzone = (props: IProps) => {
   return (
     <div
       {...getRootProps()}
-      className={cx(style['wrapper'], {
+      className={cx(style['attachment-dropzone-wrapper'], {
         [style['wrapper-drop--list']]: props.type === 'list',
         [style['wrapper-drop--card']]: props.type === 'card',
+        [style['wrapper-drop--circle']]: props.circle,
         [style['wrapper-drop--empty']]: isEmpty,
         'g-wrapper-drop--empty': isEmpty,
       })}

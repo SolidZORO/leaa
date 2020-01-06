@@ -10,7 +10,7 @@ import { Table, Tag } from 'antd';
 import { DEFAULT_PAGE_SIZE_OPTIONS, PAGE_CARD_TITLE_CREATE_ICON } from '@leaa/dashboard/src/constants';
 import { GET_USERS, DELETE_USER, UPDATE_USER } from '@leaa/dashboard/src/graphqls';
 
-import { User } from '@leaa/common/src/entrys';
+import { User, Attachment } from '@leaa/common/src/entrys';
 import { UsersWithPaginationObject, UsersArgs } from '@leaa/common/src/dtos/user';
 import { IPage, IKey, ITablePagination } from '@leaa/dashboard/src/interfaces';
 import { urlUtil, tableUtil, messageUtil } from '@leaa/dashboard/src/utils';
@@ -20,6 +20,7 @@ import {
   PageCard,
   HtmlMeta,
   TableCard,
+  UserAvatar,
   SearchInput,
   TableColumnId,
   TableColumnDate,
@@ -92,6 +93,12 @@ export default (props: IPage) => {
       sorter: true,
       sortOrder: tableUtil.calcDefaultSortOrder(tablePagination.orderSort, tablePagination.orderBy, 'is_admin'),
       render: (text: string, record: User) => (record.is_admin ? <Rcon type="ri-vip-crown-2-line" /> : null),
+    },
+    {
+      title: t('_lang:avatar'),
+      dataIndex: 'avatar',
+      width: 60,
+      render: (avatar: Attachment) => <UserAvatar avatarUrl={avatar?.url} />,
     },
     {
       title: t('_lang:email'),

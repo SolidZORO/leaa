@@ -1,7 +1,8 @@
 @import '~@leaa/dashboard/src/styles/variables.less';
 @import './style.shared.less';
 
-.wrapper {
+.attachment-box-wrapper {
+  background-color: transparent;
 }
 
 .title-code-tooltip {
@@ -81,6 +82,18 @@
       border-radius: 50px;
     }
   }
+}
+
+.wrapper-box--circle {
+  :global {
+    .g-form-card-wrapper {
+      padding-bottom: 0;
+      margin-bottom: 0;
+      border-radius: 100%;
+    }
+  }
+  //background: #f00;
+  //border-radius: 100%;
 }
 
 .wrapper-box--empty {

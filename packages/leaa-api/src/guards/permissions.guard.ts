@@ -14,7 +14,7 @@ export class PermissionsGuard implements CanActivate {
   protected getUser(context: ExecutionContext): User {
     const ctx = GqlExecutionContext.create(context).getContext();
 
-    return ctx && ctx.user;
+    return ctx?.user;
   }
 
   canActivate(context: ExecutionContext): boolean | Promise<boolean> {

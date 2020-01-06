@@ -10,7 +10,13 @@ export const GET_ZANS = gql`
         views
         title
         description
+        target_zan_quantity
+        current_zan_quantity
         status
+        users {
+          name
+          email
+        }
         created_at
         updated_at
       }
@@ -26,7 +32,13 @@ export const GET_ZAN = gql`
       views
       title
       description
+      target_zan_quantity
+      current_zan_quantity
       status
+      users {
+        name
+        email
+      }
       created_at
       updated_at
     }

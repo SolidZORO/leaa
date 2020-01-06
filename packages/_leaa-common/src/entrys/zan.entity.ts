@@ -27,8 +27,18 @@ export class Zan extends Base {
   @Field(() => Int, { nullable: true, defaultValue: 0 })
   views?: number;
 
+  @Column({ type: 'int', default: 0 })
+  @Field(() => Int, { nullable: true, defaultValue: 0 })
+  current_zan_quantity?: number;
+
+  @Column({ type: 'int', default: 0 })
+  @Field(() => Int, { nullable: true, defaultValue: 0 })
+  target_zan_quantity?: number;
+
+  //
+
   @ManyToMany(() => User)
   @JoinTable()
   @Field(() => [User], { nullable: true })
-  zan_users?: User[];
+  users?: User[];
 }

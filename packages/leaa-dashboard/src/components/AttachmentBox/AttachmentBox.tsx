@@ -32,6 +32,8 @@ interface IProps {
   disableMessage?: boolean;
   listHeight?: number;
   cardHeight?: number;
+  className?: string;
+  circle?: boolean;
 }
 
 export const AttachmentBox = forwardRef((props: IProps, ref: React.Ref<any>) => {
@@ -119,9 +121,10 @@ export const AttachmentBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
 
   return (
     <div
-      className={cx(style['wrapper'], {
+      className={cx(style['attachment-box-wrapper'], props.className, {
         [style['wrapper-box--list']]: type === 'list',
         [style['wrapper-box--card']]: type === 'card',
+        [style['wrapper-box--circle']]: props.circle,
       })}
       style={{ height: type === 'card' ? cardHeight : undefined }}
     >
@@ -158,6 +161,7 @@ export const AttachmentBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
           attachments={getAttachmentsQuery.data?.attachments?.items}
           type={type}
           cardHeight={cardHeight}
+          circle={props.circle}
         />
 
         <AttachmentList
@@ -169,6 +173,7 @@ export const AttachmentBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
           type={type}
           listHeight={listHeight}
           cardHeight={cardHeight}
+          circle={props.circle}
         />
       </FormCard>
     </div>

@@ -16,7 +16,7 @@ export class AxProperty {
     }
 
     const attachmentsResult = await this.attachmentService.attachments({ moduleName: 'ax', moduleId: ax.id });
-    const attachments: Attachment[] = (attachmentsResult && attachmentsResult.items) || [];
+    const attachments: Attachment[] = attachmentsResult?.items || [];
 
     return {
       bannerMbList: attachments.filter(a => a.type_name === 'banner' && a.type_platform === 'mb'),

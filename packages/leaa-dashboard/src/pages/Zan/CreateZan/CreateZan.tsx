@@ -29,12 +29,14 @@ export default (props: IPage) => {
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
     onCompleted({ createZan }) {
       messageUtil.gqlSuccess(t('_lang:createdSuccessfully'));
-      props.history.push(`/zans/${createZan.id}`);
+      props.history.push(`/zans/${createZan.uuid}`);
     },
   });
 
   const onSubmit = async () => {
     const infoData: ISubmitData<CreateZanInput> = await infoFormRef.current?.onValidateForm();
+
+    console.log(infoData);
 
     if (!infoData) return;
 
@@ -55,6 +57,7 @@ export default (props: IPage) => {
         </span>
       }
       className={style['wapper']}
+      loading={createZanMutation.loading}
     >
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 

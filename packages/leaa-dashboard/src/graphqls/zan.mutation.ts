@@ -33,3 +33,13 @@ export const DELETE_ZAN = gql`
     }
   }
 `;
+
+export const LIKE_ZAN = gql`
+  mutation($uuid: String!) {
+    likeZan(uuid: $uuid) {
+      id
+      uuid
+      title
+    }
+  }
+`;

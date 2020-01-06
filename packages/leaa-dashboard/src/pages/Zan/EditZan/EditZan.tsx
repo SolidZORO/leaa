@@ -13,6 +13,7 @@ import { messageUtil } from '@leaa/dashboard/src/utils';
 import { PageCard, HtmlMeta, Rcon, SubmitBar } from '@leaa/dashboard/src/components';
 
 import { ZanInfoForm } from '../_components/ZanInfoForm/ZanInfoForm';
+import { ZanUsersForm } from '../_components/ZanUsersForm/ZanUsersForm';
 
 import style from './style.module.less';
 
@@ -66,6 +67,7 @@ export default (props: IPage) => {
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
       <ZanInfoForm ref={infoFormRef} item={getZanQuery.data?.zan} loading={getZanQuery.loading} />
+      <ZanUsersForm users={getZanQuery.data?.zan.users} loading={getZanQuery.loading} />
 
       <SubmitBar full>
         <Button

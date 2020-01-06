@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import { User, Permission } from '@leaa/common/src/entrys';
+import { User, Permission, Attachment } from '@leaa/common/src/entrys';
 import { RoleService } from '@leaa/api/src/modules/role/role.service';
 
 // const CLS_NAME = 'UserProperty';
@@ -25,5 +25,13 @@ export class UserProperty {
     if (!permissions) return undefined;
 
     return [...new Set(permissions.map(permission => permission.slug))];
+  }
+
+  avatar(user: User | undefined): Attachment | null {
+    if (user?.avatar_string) {
+      return JSON.parse(user?.avatar_string);
+    }
+
+    return null;
   }
 }

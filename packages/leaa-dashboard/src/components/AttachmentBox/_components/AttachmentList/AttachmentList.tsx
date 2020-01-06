@@ -23,6 +23,7 @@ interface IProps {
   listHeight?: number;
   type?: 'list' | 'card';
   cardHeight?: number;
+  circle?: boolean;
 }
 
 export const AttachmentList = forwardRef((props: IProps, ref: React.Ref<any>) => {
@@ -105,6 +106,7 @@ export const AttachmentList = forwardRef((props: IProps, ref: React.Ref<any>) =>
           onChangeStatusCallback={onChangeStatus}
           type={props.type}
           cardHeight={props.cardHeight}
+          circle={props.circle}
         />
       ));
     }
@@ -123,14 +125,15 @@ export const AttachmentList = forwardRef((props: IProps, ref: React.Ref<any>) =>
   return (
     <div
       ref={ref}
-      className={cx(style['wrapper'], {
+      className={cx(style['attachment-list-wrapper'], {
         [style['wrapper-list--list']]: props.type === 'list',
         [style['wrapper-list--card']]: props.type === 'card',
+        [style['wrapper-list--circle']]: props.circle,
         [style['wrapper-list--empty']]: isEmpty,
       })}
       style={{ height: props.type === 'list' ? props.listHeight : undefined }}
     >
-      <div className={style['wrapper-inner']}>
+      <div className={style['attachment-list-wrapper-inner']}>
         <DndProvider backend={HTML5Backend}>{dndDom()}</DndProvider>
       </div>
     </div>

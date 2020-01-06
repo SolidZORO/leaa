@@ -34,7 +34,7 @@
     "@babel/polyfill": "7.7.0",
     "@toast-ui/react-editor": "^1.0.1",
     "animated-scroll-to": "^2.0.5",
-    "antd": "4.0.0-beta.1",
+    "antd": "4.0.0-rc.0",
     "apollo-cache-inmemory": "^1.6.5",
     "apollo-client": "^2.6.8",
     "apollo-link": "^1.2.13",

@@ -8,6 +8,10 @@ export const GET_USERS = gql`
         id
         name
         email
+        avatar {
+          url
+          urlAt2x
+        }
         status
         is_admin
         roles {
@@ -26,6 +30,10 @@ export const GET_USER = gql`
       id
       name
       email
+      avatar {
+        url
+        urlAt2x
+      }
       created_at
       updated_at
       status

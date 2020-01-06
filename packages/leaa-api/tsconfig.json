@@ -3,7 +3,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "module": "commonjs",
-    "target": "esnext",
+    "target": "es2018",
     "moduleResolution": "node",
     "sourceMap": false,
     "experimentalDecorators": true,

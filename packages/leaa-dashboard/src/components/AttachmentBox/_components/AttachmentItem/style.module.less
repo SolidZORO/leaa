@@ -1,7 +1,7 @@
 @import '~@leaa/dashboard/src/styles/variables.less';
 @import '../../style.shared.less';
 
-.wrapper {
+.attachmentItemWrapper {
   position: relative;
   display: flex;
   margin: 4px 0;
@@ -33,6 +33,14 @@
     .delete {
       opacity: 1;
     }
+  }
+}
+
+.imageCircle {
+  border-radius: 100%;
+
+  img {
+    border-radius: 100%;
   }
 }
 
@@ -170,4 +178,8 @@
       }
     }
   }
+}
+
+.wrapperItemCircle {
+  background-color: transparent;
 }

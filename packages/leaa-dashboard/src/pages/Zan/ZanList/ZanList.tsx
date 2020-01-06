@@ -98,6 +98,16 @@ export default (props: IPage) => {
       dataIndex: 'views',
       sorter: true,
       sortOrder: tableUtil.calcDefaultSortOrder(tablePagination.orderSort, tablePagination.orderBy, 'views'),
+      render: (text: string) => <small className="g-col-number">{text}</small>,
+    },
+    {
+      title: t('_page:Zan.currentTargetZanQuantity'),
+      dataIndex: 'target_zan_quantity',
+      render: (text: string, record: Zan) => (
+        <small className="g-col-number">
+          {record.current_zan_quantity} / {record.target_zan_quantity}
+        </small>
+      ),
     },
     {
       title: t('_lang:createdAt'),
