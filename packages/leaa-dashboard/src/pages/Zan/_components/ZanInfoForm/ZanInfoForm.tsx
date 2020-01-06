@@ -46,7 +46,6 @@ export const ZanInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
       form.setFieldsValue({
         title: item.title,
         status: item.status,
-        description: item.description,
         target_zan_quantity: item.target_zan_quantity,
       });
     }
@@ -66,7 +65,7 @@ export const ZanInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
       >
         <Form form={form} layout="vertical">
           <Row gutter={16} className={style['form-row']}>
-            <Col xs={24} sm={16}>
+            <Col xs={24} sm={18}>
               <Form.Item
                 name="title"
                 rules={[{ required: true }]}
@@ -99,14 +98,6 @@ export const ZanInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
                 label={t('_lang:status')}
               >
                 <SwitchNumber />
-              </Form.Item>
-            </Col>
-          </Row>
-
-          <Row gutter={16} className={style['form-row']}>
-            <Col xs={24}>
-              <Form.Item name="description" rules={[]} label={t('_lang:description')}>
-                <Input.TextArea rows={1} placeholder={t('_lang:description')} />
               </Form.Item>
             </Col>
           </Row>

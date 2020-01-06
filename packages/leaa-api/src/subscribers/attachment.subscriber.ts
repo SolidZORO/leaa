@@ -13,7 +13,14 @@ export class AttachmentSubscriber implements EntitySubscriberInterface<Attachmen
 
     if (entity && entity.module_name === 'user' && entity.type_name === 'avatar' && entity.module_id) {
       event.manager.getRepository(User).update(entity.module_id, {
-        avatar_string: JSON.stringify(event.entity),
+        avatar_string: JSON.stringify({
+          in_local: event.entity.in_local,
+          in_oss: event.entity.in_oss,
+          size: event.entity.size,
+          path: event.entity.path,
+          width: event.entity.width,
+          height: event.entity.height,
+        }),
       });
     }
   }

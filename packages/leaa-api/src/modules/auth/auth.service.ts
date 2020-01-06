@@ -120,7 +120,7 @@ export class AuthService {
 
   async login(args: AuthLoginInput): Promise<User | undefined> {
     const findUser = await this.userRepository.findOne({
-      select: ['id', 'email', 'name', 'status', 'password'],
+      select: ['id', 'email', 'name', 'status', 'password', 'avatar_string'],
       where: {
         email: xss.filterXSS(args.email.trim().toLowerCase()),
       },

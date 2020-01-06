@@ -98,21 +98,22 @@ export default (props: IPage) => {
       title: t('_lang:avatar'),
       dataIndex: 'avatar',
       width: 60,
-      render: (avatar: Attachment) => <UserAvatar avatarUrl={avatar?.url} />,
+      render: (avatar: Attachment) => <UserAvatar url={avatar?.url} />,
     },
     {
       title: t('_lang:email'),
-      width: 300,
+      width: 350,
       dataIndex: 'email',
       sorter: true,
       sortOrder: tableUtil.calcDefaultSortOrder(tablePagination.orderSort, tablePagination.orderBy, 'email'),
-      render: (text: string, record: User) => <Link to={`${props.route.path}/${record.id}`}>{record.email}</Link>,
-    },
-    {
-      title: t('_lang:name'),
-      dataIndex: 'name',
-      sorter: true,
-      sortOrder: tableUtil.calcDefaultSortOrder(tablePagination.orderSort, tablePagination.orderBy, 'name'),
+      render: (text: string, record: User) => (
+        <>
+          <div className={style['col-link']}>
+            <Link to={`${props.route.path}/${record.id}`}>{record.email}</Link>
+          </div>
+          <div className={style['col-name']}>{record.name}</div>
+        </>
+      ),
     },
     {
       title: t('_lang:role'),

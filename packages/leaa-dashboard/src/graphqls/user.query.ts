@@ -60,6 +60,10 @@ export const GET_USER_BY_TOKEN = gql`
       email
       is_admin
       authToken
+      avatar {
+        url
+        urlAt2x
+      }
       authExpiresIn
       flatPermissions
     }

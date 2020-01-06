@@ -14,8 +14,13 @@ export const GET_ZANS = gql`
         current_zan_quantity
         status
         users {
+          id
           name
           email
+          avatar {
+            url
+            urlAt2x
+          }
         }
         created_at
         updated_at
@@ -36,8 +41,13 @@ export const GET_ZAN = gql`
       current_zan_quantity
       status
       users {
+        id
         name
         email
+        avatar {
+          url
+          urlAt2x
+        }
       }
       created_at
       updated_at

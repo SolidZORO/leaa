@@ -27,6 +27,8 @@ import {
   TableColumnStatusSwitch,
 } from '@leaa/dashboard/src/components';
 
+import { ZanProgress } from '../_components/ZanProgress/ZanProgress';
+
 import style from './style.module.less';
 
 export default (props: IPage) => {
@@ -103,11 +105,7 @@ export default (props: IPage) => {
     {
       title: t('_page:Zan.currentTargetZanQuantity'),
       dataIndex: 'target_zan_quantity',
-      render: (text: string, record: Zan) => (
-        <small className="g-col-number">
-          {record.current_zan_quantity} / {record.target_zan_quantity}
-        </small>
-      ),
+      render: (text: string, record: Zan) => <ZanProgress item={record} size="small" />,
     },
     {
       title: t('_lang:createdAt'),

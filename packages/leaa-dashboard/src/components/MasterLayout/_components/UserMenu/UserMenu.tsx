@@ -50,7 +50,7 @@ export const UserMenu = (props: IProps): JSX.Element => {
     <div className={style['usermenu-wrapper']}>
       <Popover trigger="click" placement="bottomRight" content={menuDom}>
         <Button type="link" className={style['usermenu-button']}>
-          <UserAvatar avatarUrl="" />
+          <UserAvatar url={user.avatar?.url} />
           <span className={style['usermenu-name']}>{user.name}</span>
           <Rcon type="ri-arrow-drop-down-fill" className={style['usermenu-name-icon']} />
         </Button>

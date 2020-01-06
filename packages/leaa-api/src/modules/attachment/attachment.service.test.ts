@@ -62,7 +62,6 @@ describe('AttachmentService', () => {
       at2x: 0,
       in_local: 0,
       in_oss: 0,
-      category_id: null,
       user_id: null,
       sort: 0,
       status: 1,

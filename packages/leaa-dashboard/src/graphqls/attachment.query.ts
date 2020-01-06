@@ -40,7 +40,6 @@ export const GET_ATTACHMENTS = gql`
         width
         height
         description
-        category_id
         user_id
         module_name
         module_id
@@ -69,7 +68,6 @@ export const GET_ATTACHMENT = gql`
       width
       height
       description
-      category_id
       user_id
       module_name
       module_id

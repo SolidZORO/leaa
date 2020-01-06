@@ -100,10 +100,6 @@ export class Attachment extends Base {
 
   @Column({ type: 'int', nullable: true })
   @Field(() => Int, { nullable: true })
-  category_id?: number | null;
-
-  @Column({ type: 'int', nullable: true })
-  @Field(() => Int, { nullable: true })
   user_id?: number | null;
 
   @Column({ type: 'int', default: 0 })

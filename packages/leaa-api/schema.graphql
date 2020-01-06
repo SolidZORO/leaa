@@ -80,7 +80,6 @@ type Attachment {
   at2x: Int!
   in_local: Int!
   in_oss: Int!
-  category_id: Int
   user_id: Int
   sort: Int!
   status: Int!

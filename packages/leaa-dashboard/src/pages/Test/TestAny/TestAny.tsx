@@ -1,12 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IPage } from '@leaa/dashboard/src/interfaces';
 import { useStore } from '@leaa/dashboard/src/stores';
 import { useMutation } from '@apollo/react-hooks';
-import { Button } from 'antd';
+import { Button, Input } from 'antd';
 
 import { HtmlMeta, SelectTagId, SelectCategoryIdByTree, Rcon, SuspenseFallback } from '@leaa/dashboard/src/components';
-import { RedeemCouponInput } from '@leaa/common/src/dtos/coupon';
 import { Zan } from '@leaa/common/src/entrys';
 import { LIKE_ZAN } from '@leaa/dashboard/src/graphqls';
 import { messageUtil } from '@leaa/dashboard/src/utils';
@@ -17,6 +16,7 @@ import { messageUtil } from '@leaa/dashboard/src/utils';
 export default (props: IPage) => {
   const { t } = useTranslation();
 
+  const [zanUuid, setZanUuid] = useState('8e16fe20-bccd-4397-a8e3-13df431ca58e');
   const store = useStore();
   store.mapping.abcMapping = ['AAAAAAAAAAAAAAAAAA'];
 
@@ -30,7 +30,7 @@ export default (props: IPage) => {
 
   // mutation
   const [likeZanMutate, likeZanMutation] = useMutation<{ zan: Zan }>(LIKE_ZAN, {
-    variables: { uuid: 'fd959fa1-0a8f-4bc8-a39b-dbdada521bf5' },
+    variables: { uuid: zanUuid },
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
     onCompleted(e) {
       // messageUtil.gqlSuccess(t('_lang:createdSuccessfully'));
@@ -43,9 +43,12 @@ export default (props: IPage) => {
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
       <h2>ZAN</h2>
-      <Button onClick={() => likeZanMutate()} size="small">
-        Like!
-      </Button>
+      <div style={{ display: 'flex', width: 400 }}>
+        <Input size="small" value={zanUuid} onChange={v => setZanUuid(v.target.value)} />
+        <Button onClick={() => likeZanMutate()} size="small" style={{ marginLeft: 5 }}>
+          Like!
+        </Button>
+      </div>
       <br />
       <br />
 

@@ -40,6 +40,7 @@ export default (props: IPage) => {
           id: login.id,
           email: login.email,
           name: login.name,
+          avatar: login.avatar,
           flatPermissions: login.flatPermissions,
         };
 

@@ -5,6 +5,10 @@ export const LOGIN_FOR_WWW = gql`
     login(user: $user) {
       name
       email
+      avatar {
+        url
+        urlAt2x
+      }
       authToken
       authExpiresIn
     }
@@ -16,6 +20,10 @@ export const LOGIN_BY_TICKET_FOR_WWW = gql`
     loginByTicket(ticket: $ticket) {
       name
       email
+      avatar {
+        url
+        urlAt2x
+      }
       authToken
       authExpiresIn
     }

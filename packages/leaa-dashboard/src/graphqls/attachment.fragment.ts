@@ -27,7 +27,6 @@ export const ATTACHMENT_FRAGMENT = gql`
     at2x
     in_local
     in_oss
-    category_id
     user_id
     sort
     status

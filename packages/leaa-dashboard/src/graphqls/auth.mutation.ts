@@ -6,6 +6,10 @@ export const LOGIN = gql`
       id
       name
       email
+      avatar {
+        url
+        urlAt2x
+      }
       authToken
       authExpiresIn
       flatPermissions

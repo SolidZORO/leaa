@@ -26,9 +26,10 @@ export class MulterService implements MulterOptionsFactory {
     file: Express.Multer.File,
     cb: (error: Error | null, filename: string) => void,
   ): void => {
-    const at2x = attachmentUtil.isAt2x(file.originalname) ? '_2x' : '';
+    const filename = file.originalname.toLowerCase();
+    const at2x = attachmentUtil.isAt2x(filename) ? '_2x' : '';
 
-    cb(null, `${uuid.v4()}${at2x}${path.extname(file.originalname)}`);
+    cb(null, `${uuid.v4()}${at2x}${path.extname(filename)}`);
   };
 
   createMulterOptions(): MulterModuleOptions {

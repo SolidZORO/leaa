@@ -7,7 +7,6 @@ export const UPDATE_ATTACHMENT = gql`
       title
       type
       description
-      category_id
       user_id
       module_name
       module_id

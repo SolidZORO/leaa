@@ -67,7 +67,8 @@ export default (props: IPage) => {
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
       <ZanInfoForm ref={infoFormRef} item={getZanQuery.data?.zan} loading={getZanQuery.loading} />
-      <ZanUsersForm users={getZanQuery.data?.zan.users} loading={getZanQuery.loading} />
+
+      <ZanUsersForm item={getZanQuery.data?.zan} users={getZanQuery.data?.zan.users} loading={getZanQuery.loading} />
 
       <SubmitBar full>
         <Button
