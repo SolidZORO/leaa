@@ -5,8 +5,9 @@ import { Base } from '@leaa/common/src/entrys';
 
 export enum OauthPlatform {
   wechat = 'wechat',
-  weibo = 'weibo',
   wechatminiprogram = 'wechatminiprogram',
+  weibo = 'weibo',
+  github = 'github',
 }
 
 @Entity('oauths')
@@ -35,7 +36,7 @@ export class Oauth extends Base {
 
   @Column({ type: 'varchar', nullable: true })
   @Field(() => String, { nullable: true })
-  ticket?: string;
+  ticket?: string | null;
 
   @Column({ nullable: true })
   @Field(() => Date, { nullable: true })

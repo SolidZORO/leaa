@@ -12,9 +12,9 @@ import { UserResolver } from '@leaa/api/src/modules/user/user.resolver';
 import { UserService } from '@leaa/api/src/modules/user/user.service';
 import { RoleService } from '@leaa/api/src/modules/role/role.service';
 import { PermissionService } from '@leaa/api/src/modules/permission/permission.service';
-import { JwtStrategy } from '@leaa/api/src/strategies';
+import { JwtStrategy, GithubStrategy } from '@leaa/api/src/strategies';
 import { UserProperty } from '@leaa/api/src/modules/user/user.property';
-import { OauthService } from '@leaa/api/src/modules/oauth/oauth.service';
+import { OauthWechatService } from '@leaa/api/src/modules/oauth/oauth-wechat.service';
 import { AuthTokenModule } from '@leaa/api/src/modules/auth-token/auth-token.module';
 
 describe('AuthService', () => {
@@ -35,8 +35,9 @@ describe('AuthService', () => {
         RoleService,
         PermissionService,
         JwtStrategy,
+        GithubStrategy,
         UserProperty,
-        OauthService,
+        OauthWechatService,
         { provide: getRepositoryToken(User), useValue: USER_REPOSITORY_MOCK },
         { provide: getRepositoryToken(Oauth), useValue: OAUTH_REPOSITORY_MOCK },
         { provide: getRepositoryToken(Role), useValue: ROLE_REPOSITORY_MOCK },

@@ -173,6 +173,10 @@ pMutation.createZan = allow;
 pMutation.updateZan = checkPermission('zan.item-update');
 pMutation.deleteZan = checkPermission('zan.item-delete');
 
+//
+// --------------------
+pQuery.oauths = checkPermission('oauth.list-read');
+
 // TIPS relation file: packages/leaa-api/src/modules/seed/seed.data.ts
 export const permissions = shield(
   {

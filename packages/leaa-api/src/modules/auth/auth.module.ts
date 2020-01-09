@@ -9,11 +9,12 @@ import { RoleService } from '@leaa/api/src/modules/role/role.service';
 import { UserResolver } from '@leaa/api/src/modules/user/user.resolver';
 import { AuthTokenModule } from '@leaa/api/src/modules/auth-token/auth-token.module';
 import { PermissionService } from '@leaa/api/src/modules/permission/permission.service';
-import { JwtStrategy } from '@leaa/api/src/strategies';
+import { JwtStrategy, GithubStrategy } from '@leaa/api/src/strategies';
 
 import { AuthResolver } from '@leaa/api/src/modules/auth/auth.resolver';
 import { AuthService } from '@leaa/api/src/modules/auth/auth.service';
 import { OauthService } from '@leaa/api/src/modules/oauth/oauth.service';
+import { OauthWechatService } from '@leaa/api/src/modules/oauth/oauth-wechat.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User, Role, Permission, Oauth]), AuthTokenModule],
@@ -25,8 +26,10 @@ import { OauthService } from '@leaa/api/src/modules/oauth/oauth.service';
     RoleService,
     PermissionService,
     JwtStrategy,
+    GithubStrategy,
     UserProperty,
     OauthService,
+    OauthWechatService,
   ],
   exports: [AuthService],
 })

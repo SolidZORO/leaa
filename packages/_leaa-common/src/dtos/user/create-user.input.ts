@@ -29,4 +29,7 @@ export class CreateUserInput {
 
   @Field(() => Int, { nullable: true })
   is_admin?: number;
+
+  @Field(() => String, { nullable: true })
+  avatar_string?: string;
 }

@@ -6,6 +6,7 @@ import { User, Zan } from '@leaa/common/src/entrys';
 import { FormCard, UserAvatar } from '@leaa/dashboard/src/components';
 
 import { ZanProgress } from '../ZanProgress/ZanProgress';
+import { LikeZanButton } from '../LikeZanButton/LikeZanButton';
 
 import style from './style.module.less';
 
@@ -21,7 +22,14 @@ export const ZanUsersForm = (props: IProps) => {
 
   return (
     <div className={cx(style['wrapper'], props.className)}>
-      <FormCard title={t('_page:Zan.zanUserList')}>
+      <FormCard
+        title={
+          <>
+            <span>{t('_page:Zan.zanUserList')}</span>
+            <LikeZanButton uuid={props.item?.uuid} />
+          </>
+        }
+      >
         <ZanProgress item={props.item} />
 
         <div className={style['user-avatar-wrapper']}>

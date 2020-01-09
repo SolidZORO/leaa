@@ -517,7 +517,7 @@ export const masterRoutes: IRouteItem[] = [
         namei18n: '_route:createDivision',
         permission: 'address.item-create',
         path: '/divisions/create',
-        icon: 'ri-map-pin-line',
+        icon: 'ri-map-2-line',
         LazyComponent: React.lazy(() =>
           import(/* webpackChunkName: 'CreateDivision' */ '../pages/Division/CreateDivision/CreateDivision'),
         ),
@@ -529,7 +529,7 @@ export const masterRoutes: IRouteItem[] = [
         namei18n: '_route:editDivision',
         permission: 'address.item-read',
         path: '/divisions/:id(\\d+)',
-        icon: 'ri-map-pin-line',
+        icon: 'ri-map-2-line',
         LazyComponent: React.lazy(() =>
           import(/* webpackChunkName: 'EditDivision' */ '../pages/Division/EditDivision/EditDivision'),
         ),
@@ -540,11 +540,24 @@ export const masterRoutes: IRouteItem[] = [
         namei18n: '_route:division',
         permission: 'address.list-read',
         path: '/divisions',
-        icon: 'ri-map-pin-line',
+        icon: 'ri-map-2-line',
         LazyComponent: React.lazy(() =>
           import(/* webpackChunkName: 'DivisionList' */ '../pages/Division/DivisionList/DivisionList'),
         ),
         canCreate: true,
+        exact: true,
+      },
+      // ---- Oauth ----
+      {
+        name: 'Oauth',
+        namei18n: '_route:oauth',
+        permission: 'oauth.list-read',
+        path: '/oauths',
+        icon: 'ri-key-2-line',
+        LazyComponent: React.lazy(() =>
+          import(/* webpackChunkName: 'OauthList' */ '../pages/Oauth/OauthList/OauthList'),
+        ),
+        canCreate: false,
         exact: true,
       },
     ],

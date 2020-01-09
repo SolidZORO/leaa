@@ -7,4 +7,6 @@ export default {
   targetZanQuantity: '目标点赞数',
   currentZanQuantity: '当前点赞数',
   currentTargetZanQuantity: '当前 / 目标',
+  like: '赞',
+  liked: '已赞',
 };

@@ -16,7 +16,7 @@ import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 import { errorUtil, authUtil } from '@leaa/api/src/utils';
 import { UserService } from '@leaa/api/src/modules/user/user.service';
 import { permissionConfig } from '@leaa/api/src/configs';
-import { OauthService } from '@leaa/api/src/modules/oauth/oauth.service';
+import { OauthWechatService } from '@leaa/api/src/modules/oauth/oauth-wechat.service';
 import { UserProperty } from '@leaa/api/src/modules/user/user.property';
 
 const CLS_NAME = 'AuthService';
@@ -28,7 +28,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
     private readonly userService: UserService,
-    private readonly oauthService: OauthService,
+    private readonly oauthService: OauthWechatService,
     private readonly userProperty: UserProperty,
   ) {}
 
@@ -139,6 +139,7 @@ export class AuthService {
     return this.addTokenTouser(user);
   }
 
+  // TIPS: domain.com/login?otk=901d4862-0a44-xxxx-xxxx-56a9c45 (otk = oauth ticket)
   async loginByTicket(ticket: string): Promise<User | undefined> {
     const user = await this.oauthService.getUserByTicket(ticket);
 

@@ -22,6 +22,7 @@ const product = '商品';
 const address = '地址';
 const division = '地址源';
 const zan = '集赞';
+const oauth = '开放授权';
 
 export default {
   home,
@@ -101,4 +102,6 @@ export default {
   zan,
   createZan: `${_lang.create} ${zan}`,
   editZan: `${_lang.edit} ${zan}`,
+  //
+  oauth,
 };

@@ -16,6 +16,8 @@ interface IProps {
 export const UploadUserAvatar = (props: IProps) => {
   const { t } = useTranslation();
 
+  console.log(props.item);
+
   return (
     <div className={cx(style['user-avatar-wrapper'], props.className)}>
       <AttachmentBox

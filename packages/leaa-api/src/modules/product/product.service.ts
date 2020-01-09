@@ -1,23 +1,15 @@
 import { Injectable } from '@nestjs/common';
-import { Repository, FindOneOptions } from 'typeorm';
+import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { Product, Category, Tag, User, Attachment } from '@leaa/common/src/entrys';
-import {
-  ProductsArgs,
-  ProductsWithPaginationObject,
-  ProductArgs,
-  CreateProductInput,
-  UpdateProductInput,
-} from '@leaa/common/src/dtos/product';
+import { ProductsWithPaginationObject, CreateProductInput, UpdateProductInput } from '@leaa/common/src/dtos/product';
 import { argsUtil, paginationUtil, curdUtil, authUtil } from '@leaa/api/src/utils';
+import { IProductsArgs, IProductArgs } from '@leaa/api/src/interfaces';
 
 import { TagService } from '@leaa/api/src/modules/tag/tag.service';
 
 const CLS_NAME = 'ProductService';
-
-type IProductsArgs = ProductsArgs & FindOneOptions<Product>;
-type IProductArgs = ProductArgs & FindOneOptions<Product>;
 
 @Injectable()
 export class ProductService {
@@ -78,8 +70,6 @@ export class ProductService {
     qb.leftJoinAndSelect(`${PRIMARY_TABLE}.styles`, 'styles');
     qb.leftJoinAndSelect(`${PRIMARY_TABLE}.brands`, 'brands');
     qb.leftJoinAndSelect(`${PRIMARY_TABLE}.tags`, 'tags');
-
-    qb.where({ id }).getOne();
 
     return qb.where({ id }).getOne();
   }

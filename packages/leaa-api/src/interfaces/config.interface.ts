@@ -36,7 +36,11 @@ export interface IDotEnv {
   OAUTH_WECHAT_MINIPROGRAM_APP_ID?: string;
   OAUTH_WECHAT_MINIPROGRAM_APP_SECRET?: string;
   OAUTH_WECHAT_TOKEN?: string;
-  OAUTH_WECHAT_REDIRECT_URL?: string;
+  OAUTH_WECHAT_CALLBACK_URL?: string;
+
+  OAUTH_GITHUB_CLIENT_ID?: string;
+  OAUTH_GITHUB_CLIENT_SECRET?: string;
+  OAUTH_GITHUB_CALLBACK_URL?: string;
 }
 
 export interface IBuild {

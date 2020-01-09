@@ -90,6 +90,13 @@
       "unicode_decimal": 61585
     },
     {
+      "icon_id": "12124688",
+      "name": "ri-key-line",
+      "font_class": "ri-key-line",
+      "unicode": "f0a7",
+      "unicode_decimal": 61607
+    },
+    {
       "icon_id": "12124710",
       "name": "ri-links-line",
       "font_class": "ri-links-line",
@@ -515,6 +522,20 @@
       "font_class": "ri-lock-2-line",
       "unicode": "ef01",
       "unicode_decimal": 61185
+    },
+    {
+      "icon_id": "12127252",
+      "name": "ri-map-2-line",
+      "font_class": "ri-map-2-line",
+      "unicode": "ef0d",
+      "unicode_decimal": 61197
+    },
+    {
+      "icon_id": "12127263",
+      "name": "ri-key-2-line",
+      "font_class": "ri-key-2-line",
+      "unicode": "ef18",
+      "unicode_decimal": 61208
     },
     {
       "icon_id": "12127408",

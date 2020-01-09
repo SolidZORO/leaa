@@ -4,7 +4,7 @@ export const wechat = {
   appId: envConfig.OAUTH_WECHAT_APP_ID,
   appSecret: envConfig.OAUTH_WECHAT_APP_SECRET,
   wechatToken: envConfig.OAUTH_WECHAT_TOKEN,
-  wechatRedirectUrl: envConfig.OAUTH_WECHAT_REDIRECT_URL,
+  wechatRedirectUrl: envConfig.OAUTH_WECHAT_CALLBACK_URL,
   // card: false,
   // payment: false,
   // merchantId: '',

@@ -29,6 +29,10 @@ export class ConfigService {
     return this.envConfig.BASE_HOST;
   }
 
+  get API_URL(): string {
+    return `${this.envConfig.PROTOCOL}://${this.envConfig.BASE_HOST}:${this.envConfig.PORT}`;
+  }
+
   get PUBLIC_DIR(): string {
     return this.envConfig.PUBLIC_DIR;
   }
@@ -143,8 +147,22 @@ export class ConfigService {
     return this.envConfig.OAUTH_WECHAT_TOKEN || '';
   }
 
-  get OAUTH_WECHAT_REDIRECT_URL(): string {
-    return this.envConfig.OAUTH_WECHAT_REDIRECT_URL || '';
+  get OAUTH_WECHAT_CALLBACK_URL(): string {
+    return this.envConfig.OAUTH_WECHAT_CALLBACK_URL || '';
+  }
+
+  //
+
+  get OAUTH_GITHUB_CLIENT_ID(): string {
+    return this.envConfig.OAUTH_GITHUB_CLIENT_ID || '';
+  }
+
+  get OAUTH_GITHUB_CLIENT_SECRET(): string {
+    return this.envConfig.OAUTH_GITHUB_CLIENT_SECRET || '';
+  }
+
+  get OAUTH_GITHUB_CALLBACK_URL(): string {
+    return this.envConfig.OAUTH_GITHUB_CALLBACK_URL || '';
   }
 
   private validate(dotEnvPath: string): IDotEnv {
@@ -174,19 +192,6 @@ export class ConfigService {
       JWT_SECRET_KEY: envalid.str(),
       CLIENT_COOKIE_EXPIRES_SECOND: envalid.num(),
       SERVER_COOKIE_EXPIRES_SECOND: envalid.num(),
-      //
-      // OSS_ALIYUN_BUCKET: envalid.str(),
-      // OSS_ALIYUN_AK_SECRET: envalid.str(),
-      // OSS_ALIYUN_AK_ID: envalid.str(),
-      // OSS_ALIYUN_REGION: envalid.str(),
-      // OSS_ALIYUN_ASSUME_ROLE: envalid.str(),
-      //
-      // OAUTH_WECHAT_APP_ID: envalid.str(),
-      // OAUTH_WECHAT_APP_SECRET: envalid.str(),
-      // OAUTH_WECHAT_MINIPROGRAM_APP_ID: envalid.str(),
-      // OAUTH_WECHAT_MINIPROGRAM_APP_SECRET: envalid.str(),
-      // OAUTH_WECHAT_TOKEN: envalid.str(),
-      // OAUTH_WECHAT_REDIRECT_URL: envalid.str(),
     };
 
     return envalid.cleanEnv(process.env, rule, { dotEnvPath });

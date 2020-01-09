@@ -22,6 +22,7 @@ const product = 'Product';
 const address = 'Address';
 const division = 'Division';
 const zan = 'Collect Zan';
+const oauth = 'Oauth';
 
 export default {
   home,
@@ -101,4 +102,6 @@ export default {
   zan,
   createZan: `${_lang.create} ${zan}`,
   editZan: `${_lang.edit} ${zan}`,
+  //
+  oauth,
 };
