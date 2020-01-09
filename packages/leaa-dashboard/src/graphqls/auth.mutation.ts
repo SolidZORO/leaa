@@ -16,3 +16,19 @@ export const LOGIN = gql`
     }
   }
 `;
+
+export const LOGIN_BY_TICKET = gql`
+  mutation($ticket: String!) {
+    loginByTicket(ticket: $ticket) {
+      name
+      email
+      avatar {
+        url
+        urlAt2x
+      }
+      authToken
+      authExpiresIn
+      flatPermissions
+    }
+  }
+`;

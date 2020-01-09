@@ -1,3 +1,4 @@
+export * from './auth.query';
 export * from './auth.mutation';
 
 export * from './user.query';
@@ -46,5 +47,3 @@ export * from './division.mutation';
 
 export * from './zan.query';
 export * from './zan.mutation';
-
-export * from './oauth.query';

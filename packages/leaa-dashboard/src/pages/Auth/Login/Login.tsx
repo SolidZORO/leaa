@@ -5,13 +5,13 @@ import queryString from 'query-string';
 import { useMutation } from '@apollo/react-hooks';
 import { Row, Col, Button } from 'antd';
 
-import { LOGIN } from '@leaa/dashboard/src/graphqls';
+import { LOGIN, LOGIN_BY_TICKET } from '@leaa/dashboard/src/graphqls';
 import logo from '@leaa/dashboard/src/assets/images/logo/logo-black.svg';
 import { IPage, ICommenFormRef, IAuthInfo, ISubmitData } from '@leaa/dashboard/src/interfaces';
 import { authUtil, messageUtil } from '@leaa/dashboard/src/utils';
-import { LOGIN_REDIRECT_URL } from '@leaa/dashboard/src/constants';
-import { HtmlMeta, SwitchLanguage, BuildInfo } from '@leaa/dashboard/src/components';
+import { LOGIN_REDIRECT_URL, LOGOUT_REDIRECT_URL } from '@leaa/dashboard/src/constants';
 import { AuthLoginInput } from '@leaa/common/src/dtos/auth';
+import { HtmlMeta, SwitchLanguage, BuildInfo, AuthGithubButton } from '@leaa/dashboard/src/components';
 
 import { LoginForm } from './_components/LoginForm/LoginForm';
 
@@ -24,38 +24,61 @@ export default (props: IPage) => {
   // ref
   const loginFormRef = useRef<ICommenFormRef<AuthLoginInput>>(null);
 
+  const qs = queryString.parse(window.location.search);
+
+  const setLogin = (login: any) => {
+    console.log(login);
+
+    if (login?.name && login.flatPermissions?.length === 0) {
+      messageUtil.gqlSuccess(t('_page:Auth.Login.notPermissions'));
+
+      return;
+    }
+
+    if (login?.name && login.flatPermissions) {
+      const authInfo = {
+        id: login.id,
+        email: login.email,
+        name: login.name,
+        avatar: login.avatar,
+        flatPermissions: login.flatPermissions,
+      };
+
+      authUtil.setAuthInfo(authInfo);
+    }
+
+    if (login?.authToken && login.authExpiresIn) {
+      authUtil.setAuthToken(login.authToken, login.authExpiresIn);
+
+      if (urlParams.redirect) {
+        props.history.push(`${urlParams.redirect}`);
+      } else {
+        props.history.push(LOGIN_REDIRECT_URL);
+      }
+    }
+  };
+
+  // mutation
   const [submitLoginMutate, submitLoginMutation] = useMutation<{
     login: IAuthInfo;
   }>(LOGIN, {
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
     onCompleted({ login }) {
-      if (login?.name && login.flatPermissions?.length === 0) {
-        messageUtil.gqlSuccess(t('_page:Auth.Login.notPermissions'));
+      setLogin(login);
+    },
+  });
 
-        return;
-      }
+  const [submitLoginByTicketMutate, submitLoginByTicketMutation] = useMutation<{
+    loginByTicket: IAuthInfo;
+  }>(LOGIN_BY_TICKET, {
+    // apollo-link-error onError: e => messageUtil.gqlError(e.message),
+    onCompleted({ loginByTicket }) {
+      setLogin(loginByTicket);
+    },
+    onError: e => {
+      props.history.push('/login');
 
-      if (login?.name && login.flatPermissions) {
-        const authInfo = {
-          id: login.id,
-          email: login.email,
-          name: login.name,
-          avatar: login.avatar,
-          flatPermissions: login.flatPermissions,
-        };
-
-        authUtil.setAuthInfo(authInfo);
-      }
-
-      if (login?.authToken && login.authExpiresIn) {
-        authUtil.setAuthToken(login.authToken, login.authExpiresIn);
-
-        if (urlParams.redirect) {
-          props.history.push(`${urlParams.redirect}`);
-        } else {
-          props.history.push(LOGIN_REDIRECT_URL);
-        }
-      }
+      return messageUtil.gqlError(e.message);
     },
   });
 
@@ -66,6 +89,18 @@ export default (props: IPage) => {
       props.history.push('/');
     }
   }, []);
+
+  useEffect(() => {
+    console.log(qs.ticket);
+
+    if (qs.ticket) {
+      (async () => {
+        await submitLoginByTicketMutate({
+          variables: { ticket: qs.ticket },
+        });
+      })();
+    }
+  }, [qs.ticket]);
 
   const onSubmit = async () => {
     const submitData: ISubmitData<AuthLoginInput> = await loginFormRef.current?.onValidateForm();
@@ -105,22 +140,28 @@ export default (props: IPage) => {
                 <LoginForm ref={loginFormRef} />
               </div>
 
-              <Row className={style['button-row']}>
-                <Button
-                  className={style['button-login']}
-                  loading={submitLoginMutation.loading}
-                  size="large"
-                  type="primary"
-                  htmlType="submit"
-                  onClick={onSubmit}
-                >
-                  {t('_page:Auth.Login.login')}
-                </Button>
+              <div className={style['local-button']}>
+                <Row className={style['button-row']}>
+                  <Button
+                    className={style['button-login']}
+                    loading={submitLoginMutation.loading}
+                    size="large"
+                    type="primary"
+                    htmlType="submit"
+                    onClick={onSubmit}
+                  >
+                    {t('_page:Auth.Login.login')}
+                  </Button>
 
-                <Button className={style['button-back']} size="large" onClick={onBack}>
-                  {t('_page:Auth.Login.back')}
-                </Button>
-              </Row>
+                  <Button className={style['button-back']} size="large" onClick={onBack}>
+                    {t('_page:Auth.Login.back')}
+                  </Button>
+                </Row>
+              </div>
+
+              <div className={style['auth-button']}>
+                <AuthGithubButton />
+              </div>
 
               <div className={style['switch-language']}>
                 <SwitchLanguage placement="topRight" />

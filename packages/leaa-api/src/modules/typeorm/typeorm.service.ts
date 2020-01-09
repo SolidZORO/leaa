@@ -10,7 +10,7 @@ import {
   Attachment,
   Ax,
   Setting,
-  Oauth,
+  Auth,
   Tag,
   Coupon,
   Promo,
@@ -46,7 +46,7 @@ export class TypeormService implements TypeOrmOptionsFactory {
         // `${__dirname}/**/*.entity{.js,.ts}`,
         //
         // for @zeit/ncc import
-        Oauth,
+        Auth,
         User,
         Permission,
         Role,

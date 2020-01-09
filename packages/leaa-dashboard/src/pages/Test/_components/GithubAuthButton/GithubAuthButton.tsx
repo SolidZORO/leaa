@@ -17,21 +17,21 @@ interface IProps {
   zanInputWidth?: number;
 }
 
-export const OauthGithubButton = (props: IProps) => {
+export const GithubAuthButton = (props: IProps) => {
   const { t } = useTranslation();
 
   const oauthGithub = async () => {
-    // const oauthGithubResult = await axios.get(`${envConfig.API_HOST}/oauth/github/login`);
+    // const oauthGithubResult = await axios.get(`${envConfig.API_HOST}/auth/github/login`);
 
-    window.open(`${envConfig.API_HOST}/oauth/github/login`);
+    window.open(`${envConfig.API_HOST}/auth/github/login`);
 
     // console.log('oauthGithubResult', oauthGithubResult);
   };
 
   return (
     <div className={cx(style['wrapper'], props.className)}>
-      <Button size="small" className={style['like-button']} href={`${envConfig.API_HOST}/oauth/github/login`}>
-        Oauth Github
+      <Button size="small" className={style['like-button']} href={`${envConfig.API_HOST}/auth/github/login`}>
+        Auth Github
       </Button>
     </div>
   );

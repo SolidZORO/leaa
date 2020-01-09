@@ -8,8 +8,8 @@ import { useQuery } from '@apollo/react-hooks';
 import { Table } from 'antd';
 
 import { DEFAULT_PAGE_SIZE_OPTIONS, PAGE_CARD_TITLE_CREATE_ICON } from '@leaa/dashboard/src/constants';
-import { GET_OAUTHS } from '@leaa/dashboard/src/graphqls';
-import { OauthsWithPaginationObject, OauthsArgs } from '@leaa/common/src/dtos/oauth';
+import { GET_AUTHS } from '@leaa/dashboard/src/graphqls';
+import { AuthsWithPaginationObject, AuthsArgs } from '@leaa/common/src/dtos/auth';
 import { IPage, IKey, ITablePagination } from '@leaa/dashboard/src/interfaces';
 import { urlUtil, tableUtil } from '@leaa/dashboard/src/utils';
 
@@ -39,9 +39,9 @@ export default (props: IPage) => {
   const [q, setQ] = useState<string | undefined>(urlParams.q ? String(urlParams.q) : undefined);
 
   // query
-  const getOauthesVariables = { ...tablePagination, q };
-  const getOauthesQuery = useQuery<{ oauths: OauthsWithPaginationObject }, OauthsArgs>(GET_OAUTHS, {
-    variables: getOauthesVariables,
+  const getAuthesVariables = { ...tablePagination, q };
+  const getAuthesQuery = useQuery<{ auths: AuthsWithPaginationObject }, AuthsArgs>(GET_AUTHS, {
+    variables: getAuthesVariables,
     fetchPolicy: 'network-only',
   });
 
@@ -82,29 +82,29 @@ export default (props: IPage) => {
       render: (avatar: string) => <UserAvatar url={avatar} />,
     },
     {
-      title: t('_page:Oauth.nickname'),
+      title: t('_page:Auth.nickname'),
       dataIndex: 'nickname',
       width: 100,
       sorter: true,
       sortOrder: tableUtil.calcDefaultSortOrder(tablePagination.orderSort, tablePagination.orderBy, 'nickname'),
     },
     {
-      title: t('_page:Oauth.platform'),
+      title: t('_page:Auth.platform'),
       width: 100,
       dataIndex: 'platform',
       sorter: true,
       sortOrder: tableUtil.calcDefaultSortOrder(tablePagination.orderSort, tablePagination.orderBy, 'platform'),
     },
     {
-      title: t('_page:Oauth.openId'),
+      title: t('_page:Auth.openId'),
       dataIndex: 'open_id',
       sorter: true,
       sortOrder: tableUtil.calcDefaultSortOrder(tablePagination.orderSort, tablePagination.orderBy, 'open_id'),
       render: (openId: string) => <span>{openId}</span>,
     },
     {
-      title: t('_page:Oauth.lastOauthAt'),
-      dataIndex: 'last_oauth_at',
+      title: t('_page:Auth.lastAuthAt'),
+      dataIndex: 'last_auth_at',
       width: 120,
       render: (text: string) => <TableColumnDate date={text} size="small" />,
     },
@@ -150,22 +150,22 @@ export default (props: IPage) => {
         </div>
       }
       className={style['wapper']}
-      loading={getOauthesQuery.loading}
+      loading={getAuthesQuery.loading}
     >
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
-      {getOauthesQuery?.data?.oauths?.items && (
-        <TableCard selectedRowKeys={selectedRowKeys} totalLength={getOauthesQuery.data.oauths.total}>
+      {getAuthesQuery?.data?.auths?.items && (
+        <TableCard selectedRowKeys={selectedRowKeys} totalLength={getAuthesQuery.data.auths.total}>
           <Table
             rowKey="id"
             size="small"
             rowSelection={rowSelection}
             columns={columns as any}
-            dataSource={getOauthesQuery.data.oauths.items}
+            dataSource={getAuthesQuery.data.auths.items}
             pagination={{
               defaultCurrent: tablePagination.page,
               defaultPageSize: tablePagination.pageSize,
-              total: getOauthesQuery.data.oauths.total,
+              total: getAuthesQuery.data.auths.total,
               current: tablePagination.page,
               pageSize: tablePagination.pageSize,
               //

@@ -1,9 +1,9 @@
 import { FindOneOptions } from 'typeorm';
-import { OauthsArgs, OauthArgs } from '@leaa/common/src/dtos/oauth';
-import { Oauth } from '@leaa/common/src/entrys';
+import { AuthsArgs, AuthArgs } from '@leaa/common/src/dtos/auth';
+import { Auth } from '@leaa/common/src/entrys';
 
-export type IOauthsArgs = OauthsArgs & FindOneOptions<Oauth>;
-export type IOauthArgs = OauthArgs & FindOneOptions<Oauth>;
+export type IAuthsArgs = AuthsArgs & FindOneOptions<Auth>;
+export type IAuthArgs = AuthArgs & FindOneOptions<Auth>;
 
 export interface IWechatDecryptUserInfo {
   openId: string;

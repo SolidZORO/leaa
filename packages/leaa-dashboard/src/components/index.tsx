@@ -33,6 +33,7 @@ export { RefreshSetting } from './RefreshSetting/RefreshSetting';
 export { SwitchLanguage } from './SwitchLanguage/SwitchLanguage';
 export { TableColumnDate } from './TableColumnDate/TableColumnDate';
 export { SuspenseFallback } from './SuspenseFallback/SuspenseFallback';
+export { AuthGithubButton } from './AuthGithubButton/AuthGithubButton';
 export { TableColumnImage } from './TableColumnImage/TableColumnImage';
 export { SelectCategoryIdByTree } from './SelectCategoryIdByTree/SelectCategoryIdByTree';
 export { RefreshflatPermissions } from './RefreshflatPermissions/RefreshflatPermissions';

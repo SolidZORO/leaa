@@ -1,6 +1,5 @@
 import { diff } from 'jsondiffpatch';
 import bcryptjs from 'bcryptjs';
-import moment from 'moment';
 import { Injectable } from '@nestjs/common';
 import { Repository, FindOneOptions } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';

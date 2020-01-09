@@ -3,17 +3,17 @@ import { ObjectType, Field, Int } from 'type-graphql';
 
 import { Base } from '@leaa/common/src/entrys';
 
-export enum OauthPlatform {
+export enum AuthPlatform {
   wechat = 'wechat',
   wechatminiprogram = 'wechatminiprogram',
   weibo = 'weibo',
   github = 'github',
 }
 
-@Entity('oauths')
-@Index('oauths_open_id_unique', ['open_id'], { unique: true })
+@Entity('auths')
+@Index('auths_open_id_unique', ['open_id'], { unique: true })
 @ObjectType()
-export class Oauth extends Base {
+export class Auth extends Base {
   @Column({ type: 'varchar', length: 64, unique: true })
   @Field(() => String)
   open_id!: string;
@@ -30,7 +30,7 @@ export class Oauth extends Base {
   @Field(() => Int)
   user_id?: number;
 
-  @Column({ type: 'enum', enum: OauthPlatform })
+  @Column({ type: 'enum', enum: AuthPlatform })
   @Field(() => String)
   platform!: string;
 
@@ -76,5 +76,5 @@ export class Oauth extends Base {
 
   @Column({ nullable: true })
   @Field(() => Date, { nullable: true })
-  last_oauth_at?: Date;
+  last_auth_at?: Date;
 }

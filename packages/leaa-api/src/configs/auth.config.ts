@@ -18,6 +18,6 @@ export const wechat = {
   },
 };
 
-export const oauthConfig = {
+export const authConfig = {
   wechat,
 };

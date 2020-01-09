@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
 
-export const GET_OAUTHS = gql`
+export const GET_AUTHS = gql`
   query($page: Int, $pageSize: Int, $orderBy: String, $orderSort: String, $q: String) {
-    oauths(page: $page, pageSize: $pageSize, orderBy: $orderBy, orderSort: $orderSort, q: $q) {
+    auths(page: $page, pageSize: $pageSize, orderBy: $orderBy, orderSort: $orderSort, q: $q) {
       total
       items {
         id
@@ -21,7 +21,7 @@ export const GET_OAUTHS = gql`
         province
         country
         avatar_url
-        last_oauth_at
+        last_auth_at
         created_at
         updated_at
       }

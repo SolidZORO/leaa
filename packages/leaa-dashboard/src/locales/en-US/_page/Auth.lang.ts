@@ -12,4 +12,10 @@ export default {
     notPermissions: 'Not Premissions',
     backTips: 'here is not back now ; >',
   },
+  //
+  openId: 'Open Id',
+  unionId: 'Union Id',
+  platform: 'Platform',
+  nickname: 'Nickname',
+  lastAuthAt: 'Last Auth At',
 };

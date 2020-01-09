@@ -14,7 +14,7 @@ interface IState {
   errorInfo: {};
 }
 
-const CATCH_HAS_REFRESH_URL_PARAM = '____catch-has-refresh';
+const CATCH_HAS_REFRESH_URL_PARAM = '____CATCH';
 
 export class ErrorBoundary extends React.Component<IProps, IState> {
   constructor(props: IProps) {

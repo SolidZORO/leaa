@@ -98,6 +98,29 @@ type AttachmentsWithPaginationObject {
   items: [Attachment!]!
 }
 
+type Auth {
+  id: Int
+  created_at: DateTime!
+  updated_at: DateTime
+  deleted_at: DateTime
+  open_id: String!
+  union_id: String
+  app_id: String!
+  user_id: Int!
+  platform: String!
+  ticket: String
+  ticket_at: DateTime
+  access_token: String
+  refresh_token: String
+  nickname: String!
+  sex: Int!
+  city: String!
+  province: String!
+  country: String!
+  avatar_url: String!
+  last_auth_at: DateTime
+}
+
 input AuthLoginInput {
   email: String!
   password: String!
@@ -107,6 +130,15 @@ input AuthSignupInput {
   email: String!
   name: String!
   password: String!
+}
+
+type AuthsWithPaginationObject {
+  page: Int
+  pageSize: Int!
+  nextPage: Int
+  itemsCount: Int!
+  total: Int!
+  items: [Auth!]!
 }
 
 type Ax {
@@ -267,6 +299,25 @@ input CreateAttachmentInput {
   status: Int!
 }
 
+input CreateAuthInput {
+  open_id: String!
+  union_id: String
+  app_id: String!
+  user_id: Int!
+  platform: String!
+  ticket: String
+  ticket_at: DateTime
+  access_token: String
+  refresh_token: String
+  nickname: String!
+  sex: Int!
+  city: String!
+  province: String!
+  country: String!
+  avatar_url: String!
+  last_auth_at: DateTime
+}
+
 input CreateAxInput {
   title: String!
   slug: String!
@@ -299,25 +350,6 @@ input CreateDivisionInput {
   province_code: Int
   city_code: Int
   name: String!
-}
-
-input CreateOauthInput {
-  open_id: String!
-  union_id: String
-  app_id: String!
-  user_id: Int!
-  platform: String!
-  ticket: String
-  ticket_at: DateTime
-  access_token: String
-  refresh_token: String
-  nickname: String!
-  sex: Int!
-  city: String!
-  province: String!
-  country: String!
-  avatar_url: String!
-  last_oauth_at: DateTime
 }
 
 input CreatePermissionInput {
@@ -482,38 +514,6 @@ type Mutation {
   likeZan(uuid: String!): Zan!
 }
 
-type Oauth {
-  id: Int
-  created_at: DateTime!
-  updated_at: DateTime
-  deleted_at: DateTime
-  open_id: String!
-  union_id: String
-  app_id: String!
-  user_id: Int!
-  platform: String!
-  ticket: String
-  ticket_at: DateTime
-  access_token: String
-  refresh_token: String
-  nickname: String!
-  sex: Int!
-  city: String!
-  province: String!
-  country: String!
-  avatar_url: String!
-  last_oauth_at: DateTime
-}
-
-type OauthsWithPaginationObject {
-  page: Int
-  pageSize: Int!
-  nextPage: Int
-  itemsCount: Int!
-  total: Int!
-  items: [Oauth!]!
-}
-
 type PaginationObject {
   page: Int
   pageSize: Int!
@@ -636,7 +636,7 @@ type Query {
   promos(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): PromosWithPaginationObject!
   promo(id: Int!): Promo!
   promoByCode(code: String!): Promo!
-  oauths(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): OauthsWithPaginationObject
+  auths(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): AuthsWithPaginationObject
   tags(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): TagsWithPaginationObject!
   tag(id: Int!): Tag!
   tagByName(name: String!): Tag!
@@ -778,6 +778,15 @@ input UpdateAttachmentsInput {
   uuid: String!
 }
 
+input UpdateAuthInput {
+  union_id: String
+  ticket: String
+  access_token: String
+  refresh_token: String
+  last_auth_at: DateTime
+  ticket_at: DateTime
+}
+
 input UpdateAxInput {
   title: String
   slug: String
@@ -809,15 +818,6 @@ input UpdateDivisionInput {
   province_code: Int
   city_code: Int
   name: String
-}
-
-input UpdateOauthInput {
-  union_id: String
-  ticket: String
-  access_token: String
-  refresh_token: String
-  last_oauth_at: DateTime
-  ticket_at: DateTime
 }
 
 input UpdatePermissionInput {

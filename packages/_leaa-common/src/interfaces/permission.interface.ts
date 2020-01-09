@@ -139,7 +139,7 @@ declare const permissionSlug: [
   'zan.item-update',
   'zan.item-delete',
   // --------------------
-  'oauth.list-read',
+  'auth.list-read',
 ];
 
 export declare type IPermissionSlug = typeof permissionSlug[number];

@@ -3,7 +3,7 @@ import { Repository } from 'typeorm';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 
-import { User, Role, Permission, Oauth } from '@leaa/common/src/entrys';
+import { User, Role, Permission, Auth } from '@leaa/common/src/entrys';
 import { AuthLoginInput, AuthSignupInput } from '@leaa/common/src/dtos/auth';
 
 import { AuthResolver } from '@leaa/api/src/modules/auth/auth.resolver';
@@ -14,13 +14,13 @@ import { RoleService } from '@leaa/api/src/modules/role/role.service';
 import { PermissionService } from '@leaa/api/src/modules/permission/permission.service';
 import { JwtStrategy, GithubStrategy } from '@leaa/api/src/strategies';
 import { UserProperty } from '@leaa/api/src/modules/user/user.property';
-import { OauthWechatService } from '@leaa/api/src/modules/oauth/oauth-wechat.service';
+import { AuthWechatService } from '@leaa/api/src/modules/auth/auth-wechat.service';
 import { AuthTokenModule } from '@leaa/api/src/modules/auth-token/auth-token.module';
 
 describe('AuthService', () => {
   let authService: AuthService;
   const USER_REPOSITORY_MOCK: Repository<User> = new Repository<User>();
-  const OAUTH_REPOSITORY_MOCK: Repository<Oauth> = new Repository<Oauth>();
+  const OAUTH_REPOSITORY_MOCK: Repository<Auth> = new Repository<Auth>();
   const ROLE_REPOSITORY_MOCK: Repository<Role> = new Repository<Role>();
   const PERMISSION_REPOSITORY_MOCK: Repository<Permission> = new Repository<Permission>();
 
@@ -37,9 +37,9 @@ describe('AuthService', () => {
         JwtStrategy,
         GithubStrategy,
         UserProperty,
-        OauthWechatService,
+        AuthWechatService,
         { provide: getRepositoryToken(User), useValue: USER_REPOSITORY_MOCK },
-        { provide: getRepositoryToken(Oauth), useValue: OAUTH_REPOSITORY_MOCK },
+        { provide: getRepositoryToken(Auth), useValue: OAUTH_REPOSITORY_MOCK },
         { provide: getRepositoryToken(Role), useValue: ROLE_REPOSITORY_MOCK },
         { provide: getRepositoryToken(Permission), useValue: PERMISSION_REPOSITORY_MOCK },
       ],

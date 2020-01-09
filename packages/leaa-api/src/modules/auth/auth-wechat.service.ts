@@ -7,59 +7,31 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Wechat, MiniProgram, OAuth } from 'wechat-jssdk';
 
-import { User, Oauth } from '@leaa/common/src/entrys';
-import { oauthConfig } from '@leaa/api/src/configs';
+import { Auth } from '@leaa/common/src/entrys';
+import { authConfig } from '@leaa/api/src/configs';
 import { IWechatDecryptUserInfo } from '@leaa/api/src/interfaces';
-import { CreateOauthInput } from '@leaa/common/src/dtos/oauth';
+import { CreateAuthInput } from '@leaa/common/src/dtos/auth';
 import { errorUtil } from '@leaa/api/src/utils';
 
-const CLS_NAME = 'OauthWechatService';
+import { AuthService } from './auth.service';
+
+const CLS_NAME = 'AuthWechatService';
 
 @Injectable()
-export class OauthWechatService {
+export class AuthWechatService {
   constructor(
-    @InjectRepository(User) private readonly userRepository: Repository<User>,
-    @InjectRepository(Oauth) private readonly oauthRepository: Repository<Oauth>,
+    @InjectRepository(Auth) private readonly authRepository: Repository<Auth>,
+    private readonly authService: AuthService,
   ) {}
 
   // prettier-ignore
   // eslint-disable-next-line max-len
-  private checkMiniProgramConfig = () => oauthConfig.wechat.miniProgram && oauthConfig.wechat.miniProgram.appId && oauthConfig.wechat.miniProgram.appSecret;
-  private checkWechatConfig = () => oauthConfig.wechat.appId && oauthConfig.wechat.appSecret;
+  private checkMiniProgramConfig = () => authConfig.wechat.miniProgram && authConfig.wechat.miniProgram.appId && authConfig.wechat.miniProgram.appSecret;
+  private checkWechatConfig = () => authConfig.wechat.appId && authConfig.wechat.appSecret;
 
-  private wechat = this.checkWechatConfig() && new Wechat(oauthConfig.wechat);
-  private wechatOAuth = this.checkWechatConfig() && new OAuth(oauthConfig.wechat);
-  private miniProgram = this.checkMiniProgramConfig() && new MiniProgram(oauthConfig.wechat);
-
-  async bindUserIdToOauth(user: User, oid: number): Promise<any> {
-    if (!oid || typeof Number(oid) !== 'number') return errorUtil.ERROR({ error: `Nout Found oid ${oid}`, user });
-
-    const oauth = await this.oauthRepository.findOne({ id: Number(oid) });
-    if (!oauth) return errorUtil.ERROR({ error: `Not Found Oauth ${oid}`, user });
-
-    const result = await this.oauthRepository.update(Number(oid), { user_id: user.id });
-    if (!result) return errorUtil.ERROR({ error: `Binding ${oid} Failed`, user });
-
-    return result;
-  }
-
-  async clearTicket(oauthId: number): Promise<void> {
-    await this.oauthRepository.update(oauthId, { ticket: null, ticket_at: '' });
-  }
-
-  async getUserByTicket(ticket: string): Promise<User> {
-    if (!ticket) return errorUtil.ERROR({ error: 'Not Found Ticket' });
-
-    const oauth = await this.oauthRepository.findOne({ ticket });
-    if (!oauth) return errorUtil.ERROR({ error: 'Not Found Oauth' });
-
-    const user = await this.userRepository.findOne({ id: oauth.user_id });
-    if (!user) return errorUtil.ERROR({ error: 'Not Found User' });
-
-    await this.clearTicket(oauth.id);
-
-    return user;
-  }
+  private wechat = this.checkWechatConfig() && new Wechat(authConfig.wechat);
+  private wechatOAuth = this.checkWechatConfig() && new OAuth(authConfig.wechat);
+  private miniProgram = this.checkMiniProgramConfig() && new MiniProgram(authConfig.wechat);
 
   async verifySignature(req: Request): Promise<string | null> {
     const signature = await this.wechat.jssdk.verifySignature(req.query);
@@ -86,7 +58,7 @@ export class OauthWechatService {
     if (body.encryptedData && body.iv && body.sessionKey) {
       const decryptData = await this.miniProgram.decryptData(body.encryptedData, body.iv, body.sessionKey);
 
-      return this.getOrCreateOauth(body.platform, decryptData);
+      return this.getOrCreateAuth(body.platform, decryptData);
       // return decryptData;
     }
 
@@ -104,40 +76,36 @@ export class OauthWechatService {
     const nextStateParams = JSON.stringify(stateParams);
 
     // eslint-disable-next-line max-len
-    const url = `/get-weixin-code.html?appid=${oauthConfig.wechat.appId}&scope=${nextScope}&state=${nextStateParams}&redirect_uri=${oauthConfig.wechat.wechatRedirectUrl}`;
+    const url = `/get-weixin-code.html?appid=${authConfig.wechat.appId}&scope=${nextScope}&state=${nextStateParams}&redirect_uri=${authConfig.wechat.wechatRedirectUrl}`;
 
     res.redirect(url);
   }
 
-  async getOauthByOpenId(openId: string): Promise<Oauth | undefined> {
-    return this.oauthRepository.findOne({ open_id: openId });
-  }
+  async getOrCreateAuth(platform: string, authInput: IWechatDecryptUserInfo): Promise<Auth | undefined> {
+    const auth = await this.authService.auth(authInput.openId, 'wechat');
 
-  async getOrCreateOauth(platform: string, oauthInput: IWechatDecryptUserInfo): Promise<Oauth | undefined> {
-    const oauth = await this.getOauthByOpenId(oauthInput.openId);
-
-    if (oauth) {
-      return oauth;
+    if (auth) {
+      return auth;
     }
 
-    const nextOauthInput = {
-      app_id: oauthInput.watermark.appid,
-      open_id: oauthInput.openId,
+    const nextAuthInput = {
+      app_id: authInput.watermark.appid,
+      open_id: authInput.openId,
       platform,
-      nickname: oauthInput.nickName,
-      sex: oauthInput.gender,
-      city: oauthInput.city,
-      province: oauthInput.province,
-      country: oauthInput.country,
-      avatar_url: oauthInput.avatarUrl,
-      last_oauth_at: new Date(),
+      nickname: authInput.nickName,
+      sex: authInput.gender,
+      city: authInput.city,
+      province: authInput.province,
+      country: authInput.country,
+      avatar_url: authInput.avatarUrl,
+      last_auth_at: new Date(),
       // ticket: uuid.v4(),
       // ticket_at: new Date(),
       ticket: '',
       ticket_at: '',
     };
 
-    return this.oauthRepository.save(nextOauthInput);
+    return this.authRepository.save(nextAuthInput);
   }
 
   async wechatCallback(req: Request, res: Response): Promise<void | string> {
@@ -154,8 +122,8 @@ export class OauthWechatService {
 
     const wechatInfo = await this.wechatOAuth.getUserInfo(req.query.code);
 
-    const oauthInput: CreateOauthInput = {
-      app_id: oauthConfig.wechat.appId,
+    const authInput: CreateAuthInput = {
+      app_id: authConfig.wechat.appId,
       open_id: wechatInfo.openid,
       platform: query.platform as string,
       nickname: wechatInfo.nickname,
@@ -164,12 +132,12 @@ export class OauthWechatService {
       province: wechatInfo.province,
       country: wechatInfo.country,
       avatar_url: wechatInfo.headimgurl,
-      last_oauth_at: new Date(),
+      last_auth_at: new Date(),
       ticket: uuid.v4(),
       ticket_at: new Date(),
     };
 
-    const oauth = await this.oauthRepository.findOne({ open_id: wechatInfo.openid });
+    const auth = await this.authRepository.findOne({ open_id: wechatInfo.openid });
 
     let oid = '';
     let otk = ''; // Tips: `otk` Avoid wechat keyword `ticket` conflicts
@@ -183,14 +151,14 @@ export class OauthWechatService {
     // Has-OAuth
     //     | --> return [ticket] --> client get [ticket] --> POST [ticket] exchange [jwt] token --> DONE!
 
-    if (oauth && oauth.user_id) {
+    if (auth && auth.user_id) {
       if (
-        oauth &&
-        oauth.ticket_at &&
+        auth &&
+        auth.ticket_at &&
         // prettier-ignore
-        moment(oauth.ticket_at).valueOf() - moment(new Date()).add(60, 'seconds').valueOf() <= 0
+        moment(auth.ticket_at).valueOf() - moment(new Date()).add(60, 'seconds').valueOf() <= 0
       ) {
-        await this.clearTicket(oauth.id);
+        await this.authService.clearTicket(auth.id);
 
         res.redirect(url);
 
@@ -198,14 +166,14 @@ export class OauthWechatService {
       }
 
       const ticket = uuid.v4();
-      await this.oauthRepository.update(oauth.id, { ticket });
+      await this.authRepository.update(auth.id, { ticket });
 
       otk = ticket;
-    } else if (oauth) {
-      oid = String(oauth.id);
+    } else if (auth) {
+      oid = String(auth.id);
     } else {
-      const newOauth = await this.oauthRepository.save(oauthInput);
-      oid = String(newOauth.id);
+      const newAuth = await this.authRepository.save(authInput);
+      oid = String(newAuth.id);
     }
 
     delete query.platform;

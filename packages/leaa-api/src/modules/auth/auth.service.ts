@@ -5,19 +5,24 @@ import jwt from 'jsonwebtoken';
 import bcryptjs from 'bcryptjs';
 import { Request } from 'express';
 import { Injectable } from '@nestjs/common';
-import { Repository } from 'typeorm';
 import { JwtService } from '@nestjs/jwt';
+import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { User } from '@leaa/common/src/entrys';
-import { AuthLoginInput, AuthSignupInput } from '@leaa/common/src/dtos/auth';
+import { User, Auth } from '@leaa/common/src/entrys';
+import {
+  AuthLoginInput,
+  AuthSignupInput,
+  AuthsWithPaginationObject,
+  CreateAuthInput,
+} from '@leaa/common/src/dtos/auth';
 import { IJwtPayload } from '@leaa/common/src/interfaces';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
-import { errorUtil, authUtil } from '@leaa/api/src/utils';
+import { errorUtil, authUtil, argsUtil, paginationUtil } from '@leaa/api/src/utils';
 import { UserService } from '@leaa/api/src/modules/user/user.service';
 import { permissionConfig } from '@leaa/api/src/configs';
-import { OauthWechatService } from '@leaa/api/src/modules/oauth/oauth-wechat.service';
 import { UserProperty } from '@leaa/api/src/modules/user/user.property';
+import { IAuthsArgs } from '@leaa/api/src/interfaces';
 
 const CLS_NAME = 'AuthService';
 
@@ -25,12 +30,52 @@ const CLS_NAME = 'AuthService';
 export class AuthService {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
+    @InjectRepository(Auth) private readonly authRepository: Repository<Auth>,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
     private readonly userService: UserService,
-    private readonly oauthService: OauthWechatService,
     private readonly userProperty: UserProperty,
   ) {}
+
+  async auths(args: IAuthsArgs, user?: User): Promise<AuthsWithPaginationObject | undefined> {
+    const nextArgs: IAuthsArgs = argsUtil.format(args);
+
+    const PRIMARY_TABLE = 'auths';
+    const qb = await this.authRepository.createQueryBuilder(PRIMARY_TABLE);
+
+    // q
+    if (nextArgs.q) {
+      const qLike = `%${nextArgs.q}%`;
+
+      ['nickname'].forEach(key => {
+        qb.andWhere(`${PRIMARY_TABLE}.${key} LIKE :${key}`, { [key]: qLike });
+      });
+    }
+
+    // order
+    if (nextArgs.orderBy && nextArgs.orderSort) {
+      qb.orderBy(`${PRIMARY_TABLE}.${nextArgs.orderBy}`, nextArgs.orderSort);
+    }
+
+    return paginationUtil.calcQueryBuilderPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
+  }
+
+  async auth(id: number): Promise<Auth | undefined> {
+    return this.authRepository.findOne(id);
+  }
+
+  async authByOpenId(openId: string, platform: string): Promise<Auth | undefined> {
+    const qb = await this.authRepository.createQueryBuilder();
+
+    return qb.where({ open_id: openId, platform }).getOne();
+  }
+
+  async createAuth(args: CreateAuthInput): Promise<Auth | undefined> {
+    return this.authRepository.save({ ...args });
+  }
+
+  //
+  //
 
   async createToken(user: User): Promise<{ authExpiresIn: number; authToken: string }> {
     // iattz = iat timezone
@@ -139,11 +184,25 @@ export class AuthService {
     return this.addTokenTouser(user);
   }
 
-  // TIPS: domain.com/login?otk=901d4862-0a44-xxxx-xxxx-56a9c45 (otk = oauth ticket)
+  // TIPS: domain.com/login?otk=901d4862-0a44-xxxx-xxxx-56a9c45 (otk = auth ticket)
   async loginByTicket(ticket: string): Promise<User | undefined> {
-    const user = await this.oauthService.getUserByTicket(ticket);
+    const user = await this.getUserByTicket(ticket);
 
     return this.addTokenTouser(user);
+  }
+
+  async getUserByTicket(ticket: string): Promise<User> {
+    if (!ticket) return errorUtil.ERROR({ error: 'Not Found Ticket' });
+
+    const auth = await this.authRepository.findOne({ ticket });
+    if (!auth) return errorUtil.ERROR({ error: 'Not Found Auth' });
+
+    const user = await this.userService.user(auth.user_id || 0, { relations: ['roles'] });
+    if (!user) return errorUtil.ERROR({ error: 'Not Found User' });
+
+    await this.clearTicket(auth.id);
+
+    return user;
   }
 
   async signup(args: AuthSignupInput, oid?: number): Promise<User | undefined> {
@@ -168,13 +227,29 @@ export class AuthService {
       });
 
       if (oid) {
-        await this.oauthService.bindUserIdToOauth(newUser, oid);
-        await this.oauthService.clearTicket(oid);
+        await this.bindUserIdToAuth(newUser, oid);
+        await this.clearTicket(oid);
       }
     } catch (error) {
       return errorUtil.ERROR({ error: 'Sign Up Fail' });
     }
 
     return this.addTokenTouser(newUser);
+  }
+
+  async clearTicket(authId: number): Promise<void> {
+    await this.authRepository.update(authId, { ticket: null, ticket_at: '' });
+  }
+
+  async bindUserIdToAuth(user: User, oid: number): Promise<any> {
+    if (!oid || typeof Number(oid) !== 'number') return errorUtil.ERROR({ error: `Nout Found oid ${oid}`, user });
+
+    const auth = await this.authRepository.findOne({ id: Number(oid) });
+    if (!auth) return errorUtil.ERROR({ error: `Not Found Auth ${oid}`, user });
+
+    const result = await this.authRepository.update(Number(oid), { user_id: user.id });
+    if (!result) return errorUtil.ERROR({ error: `Binding ${oid} Failed`, user });
+
+    return result;
   }
 }

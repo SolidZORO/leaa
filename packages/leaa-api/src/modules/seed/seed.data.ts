@@ -186,7 +186,7 @@ export const permissionsSeed: { name: string; slug: IPermissionSlug }[] = [
   //
   // --------------------------------
   //
-  { name: 'Oauth List Read', slug: 'oauth.list-read' },
+  { name: 'Auth List Read', slug: 'auth.list-read' },
 ];
 
 // prettier-ignore

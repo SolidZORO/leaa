@@ -2,7 +2,7 @@ import { IsOptional } from 'class-validator';
 import { Field, InputType, Int } from 'type-graphql';
 
 @InputType()
-export class CreateOauthInput {
+export class CreateAuthInput {
   @Field(() => String)
   open_id!: string;
 
@@ -56,5 +56,5 @@ export class CreateOauthInput {
 
   @IsOptional()
   @Field(() => Date, { nullable: true })
-  last_oauth_at?: Date;
+  last_auth_at?: Date;
 }

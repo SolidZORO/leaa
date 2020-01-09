@@ -4,4 +4,4 @@ export * from './article.interface';
 export * from './promo.interface';
 export * from './zan.interface';
 export * from './product.interface';
-export * from './oauth.interface';
+export * from './auth.interface';

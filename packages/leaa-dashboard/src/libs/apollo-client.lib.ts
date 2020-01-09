@@ -8,6 +8,8 @@ import { OperationDefinitionNode } from 'graphql';
 
 import { envConfig } from '@leaa/dashboard/src/configs';
 
+const ignoreErrorPath = ['loginByTicket', 'userByToken'];
+
 const httpLink = new HttpLink({
   uri: envConfig.GRAPHQL_ENDPOINT,
   // credentials: 'same-origin',
@@ -31,7 +33,9 @@ const errorLink = onError(({ graphQLErrors }) => {
     graphQLErrors.forEach(error => {
       console.error(`❌ [GraphQL error]: ${JSON.stringify(error)}`);
 
-      messageUtil.gqlError(error.message);
+      if (!ignoreErrorPath.includes(`${error.path}`)) {
+        messageUtil.gqlError(error.message);
+      }
     });
   }
 });

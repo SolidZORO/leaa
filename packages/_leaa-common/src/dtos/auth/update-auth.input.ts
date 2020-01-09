@@ -2,7 +2,7 @@ import { IsOptional } from 'class-validator';
 import { Field, InputType } from 'type-graphql';
 
 @InputType()
-export class UpdateOauthInput {
+export class UpdateAuthInput {
   @IsOptional()
   @Field(() => String, { nullable: true })
   union_id?: string;
@@ -21,7 +21,7 @@ export class UpdateOauthInput {
 
   @IsOptional()
   @Field(() => Date, { nullable: true })
-  last_oauth_at?: Date;
+  last_auth_at?: Date;
 
   @IsOptional()
   @Field(() => Date, { nullable: true })

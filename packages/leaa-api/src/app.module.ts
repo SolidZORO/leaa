@@ -23,7 +23,6 @@ import { AuthTokenModule } from '@leaa/api/src/modules/auth-token/auth-token.mod
 import { AttachmentModule } from '@leaa/api/src/modules/attachment/attachment.module';
 import { PermissionModule } from '@leaa/api/src/modules/permission/permission.module';
 import { SettingModule } from '@leaa/api/src/modules/setting/setting.module';
-import { OauthModule } from '@leaa/api/src/modules/oauth/oauth.module';
 import { TagModule } from '@leaa/api/src/modules/tag/tag.module';
 import { CouponModule } from '@leaa/api/src/modules/coupon/coupon.module';
 import { PromoModule } from '@leaa/api/src/modules/promo/promo.module';
@@ -58,7 +57,6 @@ import { ZanModule } from '@leaa/api/src/modules/zan/zan.module';
     AxModule,
     AuthTokenModule,
     SettingModule,
-    OauthModule,
     TagModule,
     CouponModule,
     PromoModule,

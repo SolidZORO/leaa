@@ -14,7 +14,7 @@ interface IProps {
 
 export default (props: IProps) => {
   const onSubmitWechat = async () => {
-    const wechatLoginApiUrl = `${envConfig.OAUTH_WECHAT_BASE_URL}/oauth/wechat/login`;
+    const wechatLoginApiUrl = `${envConfig.OAUTH_WECHAT_BASE_URL}/auth/wechat/login`;
 
     const { url, query } = queryString.parseUrl(window.location.href);
     const nextUrl = `${url}?${queryString.stringify({

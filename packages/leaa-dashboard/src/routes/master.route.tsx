@@ -547,16 +547,14 @@ export const masterRoutes: IRouteItem[] = [
         canCreate: true,
         exact: true,
       },
-      // ---- Oauth ----
+      // ---- Auth ----
       {
-        name: 'Oauth',
-        namei18n: '_route:oauth',
-        permission: 'oauth.list-read',
-        path: '/oauths',
+        name: 'Auth',
+        namei18n: '_route:auth',
+        permission: 'auth.list-read',
+        path: '/auths',
         icon: 'ri-key-2-line',
-        LazyComponent: React.lazy(() =>
-          import(/* webpackChunkName: 'OauthList' */ '../pages/Oauth/OauthList/OauthList'),
-        ),
+        LazyComponent: React.lazy(() => import(/* webpackChunkName: 'AuthList' */ '../pages/Auth/AuthList/AuthList')),
         canCreate: false,
         exact: true,
       },

@@ -6,7 +6,7 @@ import { useStore } from '@leaa/dashboard/src/stores';
 import { HtmlMeta, SelectTagId, SelectCategoryIdByTree, Rcon, SuspenseFallback } from '@leaa/dashboard/src/components';
 import { LikeZanButton } from '@leaa/dashboard/src/pages/Zan/_components/LikeZanButton/LikeZanButton';
 
-import { OauthGithubButton } from '../_components/OauthGithubButton/OauthGithubButton';
+import { GithubAuthButton } from '../_components/GithubAuthButton/GithubAuthButton';
 // import { Icon } from 'antd';
 
 // import { MessageOutlined, createFromIconfontCN } from '@ant-design/icons';
@@ -29,8 +29,8 @@ export default (props: IPage) => {
     <div>
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
-      <h2>Oauth Github</h2>
-      <OauthGithubButton />
+      <h2>Auth Github</h2>
+      <GithubAuthButton />
       <br />
       <br />
 

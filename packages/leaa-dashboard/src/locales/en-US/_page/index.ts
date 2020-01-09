@@ -13,7 +13,6 @@ import Product from './Product.lang';
 import Address from './Address.lang';
 import Division from './Division.lang';
 import Zan from './Zan.lang';
-import Oauth from './Oauth.lang';
 
 export default {
   Auth,
@@ -31,5 +30,4 @@ export default {
   Address,
   Division,
   Zan,
-  Oauth,
 };

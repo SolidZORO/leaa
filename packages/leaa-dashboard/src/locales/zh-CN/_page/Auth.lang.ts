@@ -12,4 +12,10 @@ export default {
     notPermissions: '无权限',
     backTips: '目前还没有返回 ; >',
   },
+  //
+  openId: 'Open Id',
+  unionId: 'Union Id',
+  platform: '平台',
+  nickname: '昵称',
+  lastAuthAt: '最后授权于',
 };
