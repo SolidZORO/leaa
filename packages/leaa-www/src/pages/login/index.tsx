@@ -21,21 +21,17 @@ const nextPage = () => {
   );
 };
 
-// for Sign Up Redirect
 nextPage.getInitialProps = async (ctx: IGetInitialProps) => {
-  const otk = ctx.query && ctx.query.otk;
-  const oid = ctx.query && ctx.query.oid;
+  const ticket = ctx.query?.ticket;
 
-  if (otk) {
-    // const apolloClient = apolloClient({});
-
+  if (ticket) {
     await apolloClient
       .mutate({
         mutation: LOGIN_BY_TICKET_FOR_WWW,
-        variables: { ticket: otk },
+        variables: { ticket },
       })
       .then((response: FetchResult<{ loginByTicket: User }>) => {
-        if (response.data && response.data.loginByTicket) {
+        if (response.data?.loginByTicket) {
           const { loginByTicket } = response.data;
 
           if (loginByTicket && loginByTicket.name) {
@@ -62,11 +58,7 @@ nextPage.getInitialProps = async (ctx: IGetInitialProps) => {
       });
   }
 
-  if (oid) {
-    return urlUtil.redirect(`/signup?oid=${oid}`, ctx.res);
-  }
-
-  return { oid, otk };
+  return { ticket };
 };
 
 export default nextPage;

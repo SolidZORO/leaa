@@ -8,6 +8,7 @@ import { AuthLoginInput, AuthSignupInput } from '@leaa/common/src/dtos/auth';
 
 import { AuthResolver } from '@leaa/api/src/modules/auth/auth.resolver';
 import { AuthService } from '@leaa/api/src/modules/auth/auth.service';
+import { AuthLocalService } from '@leaa/api/src/modules/auth/auth-local.service';
 import { UserResolver } from '@leaa/api/src/modules/user/user.resolver';
 import { UserService } from '@leaa/api/src/modules/user/user.service';
 import { RoleService } from '@leaa/api/src/modules/role/role.service';
@@ -16,9 +17,11 @@ import { JwtStrategy, GithubStrategy } from '@leaa/api/src/strategies';
 import { UserProperty } from '@leaa/api/src/modules/user/user.property';
 import { AuthWechatService } from '@leaa/api/src/modules/auth/auth-wechat.service';
 import { AuthTokenModule } from '@leaa/api/src/modules/auth-token/auth-token.module';
+import { AuthGithubService } from '@leaa/api/src/modules/auth/auth-github.service';
 
 describe('AuthService', () => {
   let authService: AuthService;
+  let authLocalService: AuthLocalService;
   const USER_REPOSITORY_MOCK: Repository<User> = new Repository<User>();
   const OAUTH_REPOSITORY_MOCK: Repository<Auth> = new Repository<Auth>();
   const ROLE_REPOSITORY_MOCK: Repository<Role> = new Repository<Role>();
@@ -29,15 +32,17 @@ describe('AuthService', () => {
       imports: [AuthTokenModule],
       providers: [
         AuthResolver,
-        AuthService,
         UserResolver,
         UserService,
+        UserProperty,
         RoleService,
         PermissionService,
+        AuthService,
         JwtStrategy,
-        GithubStrategy,
-        UserProperty,
+        AuthLocalService,
         AuthWechatService,
+        AuthGithubService,
+        GithubStrategy,
         { provide: getRepositoryToken(User), useValue: USER_REPOSITORY_MOCK },
         { provide: getRepositoryToken(Auth), useValue: OAUTH_REPOSITORY_MOCK },
         { provide: getRepositoryToken(Role), useValue: ROLE_REPOSITORY_MOCK },
@@ -46,6 +51,7 @@ describe('AuthService', () => {
     }).compile();
 
     authService = module.get<AuthService>(AuthService);
+    authLocalService = module.get<AuthLocalService>(AuthLocalService);
   });
 
   it('should be server defined', () => {
@@ -132,8 +138,8 @@ describe('AuthService', () => {
     const loginResult = userObject;
 
     it('should login', async () => {
-      jest.spyOn(authService, 'login').mockImplementation(async () => loginResult);
-      const result = await authService.login(authLoginInput);
+      jest.spyOn(authLocalService, 'login').mockImplementation(async () => loginResult);
+      const result = await authLocalService.login(authLoginInput);
 
       expect(result).toBe(loginResult);
     });
@@ -160,8 +166,8 @@ describe('AuthService', () => {
     const signupResult = userObject;
 
     it('should signup', async () => {
-      jest.spyOn(authService, 'signup').mockImplementation(async () => signupResult);
-      const result = await authService.signup(authSignupInput);
+      jest.spyOn(authLocalService, 'signup').mockImplementation(async () => signupResult);
+      const result = await authLocalService.signup(authSignupInput);
 
       expect(result).toBe(signupResult);
     });

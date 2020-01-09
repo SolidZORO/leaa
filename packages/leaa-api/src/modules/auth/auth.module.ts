@@ -15,6 +15,7 @@ import { AuthResolver } from '@leaa/api/src/modules/auth/auth.resolver';
 import { AuthService } from '@leaa/api/src/modules/auth/auth.service';
 import { AuthWechatService } from '@leaa/api/src/modules/auth/auth-wechat.service';
 import { AuthGithubService } from '@leaa/api/src/modules/auth/auth-github.service';
+import { AuthLocalService } from '@leaa/api/src/modules/auth/auth-local.service';
 import { AuthController } from '@leaa/api/src/modules/auth/auth.controller';
 
 import { GithubStrategy } from '@leaa/api/src/strategies';
@@ -30,6 +31,7 @@ import { GithubStrategy } from '@leaa/api/src/strategies';
     RoleService,
     PermissionService,
     AuthService,
+    AuthLocalService,
     AuthWechatService,
     AuthGithubService,
     GithubStrategy,

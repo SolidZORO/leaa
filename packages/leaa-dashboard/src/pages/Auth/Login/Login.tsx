@@ -27,8 +27,6 @@ export default (props: IPage) => {
   const qs = queryString.parse(window.location.search);
 
   const setLogin = (login: any) => {
-    console.log(login);
-
     if (login?.name && login.flatPermissions?.length === 0) {
       messageUtil.gqlSuccess(t('_page:Auth.Login.notPermissions'));
 
@@ -91,8 +89,6 @@ export default (props: IPage) => {
   }, []);
 
   useEffect(() => {
-    console.log(qs.ticket);
-
     if (qs.ticket) {
       (async () => {
         await submitLoginByTicketMutate({

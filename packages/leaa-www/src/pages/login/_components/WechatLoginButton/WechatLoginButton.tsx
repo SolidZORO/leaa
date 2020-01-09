@@ -20,8 +20,7 @@ export default (props: IProps) => {
     const nextUrl = `${url}?${queryString.stringify({
       ...query,
       platform: 'wechat',
-      otk: undefined,
-      oid: undefined,
+      ticket: undefined,
     })}`;
 
     const wechatLoginUrlParams = {
