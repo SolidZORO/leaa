@@ -10,7 +10,7 @@ import { User, Auth } from '@leaa/common/src/entrys';
 import { AuthsWithPaginationObject, CreateAuthInput } from '@leaa/common/src/dtos/auth';
 import { IJwtPayload } from '@leaa/common/src/interfaces';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
-import { errorUtil, authUtil, argsUtil, paginationUtil } from '@leaa/api/src/utils';
+import { errorUtil, authUtil, argsUtil, paginationUtil, curdUtil } from '@leaa/api/src/utils';
 import { UserService } from '@leaa/api/src/modules/user/user.service';
 import { permissionConfig } from '@leaa/api/src/configs';
 import { UserProperty } from '@leaa/api/src/modules/user/user.property';
@@ -64,6 +64,10 @@ export class AuthService {
 
   async createAuth(args: CreateAuthInput): Promise<Auth | undefined> {
     return this.authRepository.save({ ...args });
+  }
+
+  async deleteAuth(id: number): Promise<Auth | undefined> {
+    return curdUtil.commonDelete(this.authRepository, CLS_NAME, id);
   }
 
   //

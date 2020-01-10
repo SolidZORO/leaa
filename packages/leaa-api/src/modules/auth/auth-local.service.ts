@@ -41,7 +41,7 @@ export class AuthLocalService {
     return this.authService.addTokenToUser(user);
   }
 
-  async signup(args: AuthSignupInput, oid?: number): Promise<User | undefined> {
+  async signup(args: AuthSignupInput, uid?: number): Promise<User | undefined> {
     const nextArgs: AuthSignupInput = { name: '', password: '', email: '' };
 
     _.forEach(args, (v, i) => {
@@ -62,9 +62,9 @@ export class AuthLocalService {
         status: 1,
       });
 
-      if (oid) {
-        await this.authService.bindUserIdToAuth(newUser, oid);
-        await this.authService.clearTicket(oid);
+      if (uid) {
+        await this.authService.bindUserIdToAuth(newUser, uid);
+        await this.authService.clearTicket(uid);
       }
     } catch (error) {
       return errorUtil.ERROR({ error: 'Sign Up Fail' });

@@ -201,9 +201,11 @@ export default (props: IPage) => {
         <span>
           <Rcon type={props.route.icon} />
           <strong>{t(`${props.route.namei18n}`)}</strong>
-          <Link className="g-page-card-create-link" to={`${props.route.path}/create`}>
-            <Rcon type={PAGE_CARD_TITLE_CREATE_ICON} />
-          </Link>
+          {props.route.canCreate && (
+            <Link className="g-page-card-create-link" to={`${props.route.path}/create`}>
+              <Rcon type={PAGE_CARD_TITLE_CREATE_ICON} />
+            </Link>
+          )}
         </span>
       }
       extra={

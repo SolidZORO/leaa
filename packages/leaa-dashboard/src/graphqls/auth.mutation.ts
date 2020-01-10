@@ -26,3 +26,12 @@ export const LOGIN_BY_TICKET = gql`
     }
   }
 `;
+
+export const DELETE_AUTH = gql`
+  mutation($id: Int!) {
+    deleteAuth(id: $id) {
+      id
+      open_id
+    }
+  }
+`;

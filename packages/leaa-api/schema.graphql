@@ -469,6 +469,10 @@ type Mutation {
   updateAttachment(attachment: UpdateAttachmentInput!, uuid: String!): Attachment!
   updateAttachments(attachments: [UpdateAttachmentsInput!]!): AttachmentsObject!
   deleteAttachments(uuid: [String!]!): DeleteAttachmentsObject!
+  deleteAuth(id: Int!): Auth!
+  login(user: AuthLoginInput!): User!
+  loginByTicket(ticket: String!): User!
+  signup(uid: Int, user: AuthSignupInput!): User!
   createArticle(article: CreateArticleInput!): Article!
   updateArticle(article: UpdateArticleInput!, id: Int!): Article!
   deleteArticle(id: Int!): Article!
@@ -490,9 +494,6 @@ type Mutation {
   updatePromo(promo: UpdatePromoInput!, id: Int!): Promo!
   deletePromo(id: Int!): Promo!
   redeemPromo(info: RedeemPromoInput!): Promo!
-  login(user: AuthLoginInput!): User!
-  loginByTicket(ticket: String!): User!
-  signup(oid: Int, user: AuthSignupInput!): User!
   createTag(tag: CreateTagInput!): Tag!
   createTags(tagNames: [String!]!): Tag!
   syncTagsToDictFile: SyncTagsToFileObject!
@@ -620,6 +621,7 @@ type Query {
   userByToken(token: String): User!
   attachments(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String, type: String, moduleName: String, moduleId: Int, typeName: String, typePlatform: String, categoryId: Int, userId: Int, refreshHash: Int): AttachmentsWithPaginationObject!
   attachment(uuid: String!): Attachment!
+  auths(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): AuthsWithPaginationObject
   articles(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String, tagName: String, categoryName: String, categoryId: Int): ArticlesWithPaginationObject!
   article(id: Int!): Article!
   articleBySlug(slug: String!): Article!
@@ -637,7 +639,6 @@ type Query {
   promos(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): PromosWithPaginationObject!
   promo(id: Int!): Promo!
   promoByCode(code: String!): Promo!
-  auths(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): AuthsWithPaginationObject
   tags(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): TagsWithPaginationObject!
   tag(id: Int!): Tag!
   tagByName(name: String!): Tag!

@@ -14,6 +14,7 @@ export default {
   },
   //
   openId: 'Open Id',
+  userId: 'User Id',
   unionId: 'Union Id',
   platform: 'Platform',
   nickname: 'Nickname',

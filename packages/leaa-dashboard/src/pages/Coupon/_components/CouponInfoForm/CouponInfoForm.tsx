@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import cx from 'classnames';
 import moment from 'moment';
 import React, { useEffect, useState, forwardRef, useImperativeHandle } from 'react';

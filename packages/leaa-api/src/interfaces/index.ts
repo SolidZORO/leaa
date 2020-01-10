@@ -5,3 +5,4 @@ export * from './promo.interface';
 export * from './zan.interface';
 export * from './product.interface';
 export * from './auth.interface';
+export * from './user.interface';

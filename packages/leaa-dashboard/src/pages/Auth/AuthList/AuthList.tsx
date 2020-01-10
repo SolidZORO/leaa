@@ -4,14 +4,15 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import queryString from 'query-string';
 import { Link } from 'react-router-dom';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery, useMutation } from '@apollo/react-hooks';
 import { Table } from 'antd';
 
+import { User, Auth } from '@leaa/common/src/entrys';
 import { DEFAULT_PAGE_SIZE_OPTIONS, PAGE_CARD_TITLE_CREATE_ICON } from '@leaa/dashboard/src/constants';
-import { GET_AUTHS } from '@leaa/dashboard/src/graphqls';
+import { GET_AUTHS, DELETE_USER, GET_USERS, DELETE_AUTH } from '@leaa/dashboard/src/graphqls';
 import { AuthsWithPaginationObject, AuthsArgs } from '@leaa/common/src/dtos/auth';
 import { IPage, IKey, ITablePagination } from '@leaa/dashboard/src/interfaces';
-import { urlUtil, tableUtil } from '@leaa/dashboard/src/utils';
+import { urlUtil, tableUtil, messageUtil } from '@leaa/dashboard/src/utils';
 
 import {
   Rcon,
@@ -22,6 +23,8 @@ import {
   TableColumnId,
   UserAvatar,
   TableColumnDate,
+  TableColumnDeleteButton,
+  IdTag,
 } from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';
@@ -43,6 +46,13 @@ export default (props: IPage) => {
   const getAuthesQuery = useQuery<{ auths: AuthsWithPaginationObject }, AuthsArgs>(GET_AUTHS, {
     variables: getAuthesVariables,
     fetchPolicy: 'network-only',
+  });
+
+  // mutation
+  const [deleteAuthMutate, deleteAuthMutation] = useMutation<Auth>(DELETE_AUTH, {
+    // apollo-link-error onError: e => messageUtil.gqlError(e.message),
+    onCompleted: () => messageUtil.gqlSuccess(t('_lang:deletedSuccessfully')),
+    refetchQueries: () => [{ query: GET_AUTHS, variables: getAuthesVariables }],
   });
 
   const resetUrlParams = () => {
@@ -103,10 +113,30 @@ export default (props: IPage) => {
       render: (openId: string) => <span>{openId}</span>,
     },
     {
+      title: t('_page:Auth.userId'),
+      dataIndex: 'user_id',
+      sorter: true,
+      sortOrder: tableUtil.calcDefaultSortOrder(tablePagination.orderSort, tablePagination.orderBy, 'user_id'),
+      render: (userId: string) => <IdTag id={userId} link={`/users/${userId}`} icon={<Rcon type="ri-user-3-line" />} />,
+    },
+    {
       title: t('_page:Auth.lastAuthAt'),
       dataIndex: 'last_auth_at',
       width: 120,
       render: (text: string) => <TableColumnDate date={text} size="small" />,
+    },
+    {
+      title: t('_lang:action'),
+      dataIndex: 'operation',
+      width: 60,
+      render: (text: string, record: Auth) => (
+        <TableColumnDeleteButton
+          id={record.id}
+          fieldName={`${record.nickname}`}
+          loading={deleteAuthMutation.loading}
+          onClick={async () => deleteAuthMutate({ variables: { id: Number(record.id) } })}
+        />
+      ),
     },
   ];
 
@@ -135,9 +165,11 @@ export default (props: IPage) => {
         <span>
           <Rcon type={props.route.icon} />
           <strong>{t(`${props.route.namei18n}`)}</strong>
-          <Link className="g-page-card-create-link" to={`${props.route.path}/create`}>
-            <Rcon type={PAGE_CARD_TITLE_CREATE_ICON} />
-          </Link>
+          {props.route.canCreate && (
+            <Link className="g-page-card-create-link" to={`${props.route.path}/create`}>
+              <Rcon type={PAGE_CARD_TITLE_CREATE_ICON} />
+            </Link>
+          )}
         </span>
       }
       extra={

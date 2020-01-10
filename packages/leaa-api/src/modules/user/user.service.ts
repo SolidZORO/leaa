@@ -1,25 +1,18 @@
 import { diff } from 'jsondiffpatch';
 import bcryptjs from 'bcryptjs';
 import { Injectable } from '@nestjs/common';
-import { Repository, FindOneOptions } from 'typeorm';
+import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { User, Role, Permission } from '@leaa/common/src/entrys';
-import {
-  UsersArgs,
-  UsersWithPaginationObject,
-  UserArgs,
-  CreateUserInput,
-  UpdateUserInput,
-} from '@leaa/common/src/dtos/user';
+import { User, Role, Auth } from '@leaa/common/src/entrys';
+import { UsersWithPaginationObject, CreateUserInput, UpdateUserInput } from '@leaa/common/src/dtos/user';
 import { RoleService } from '@leaa/api/src/modules/role/role.service';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 import { AttachmentService } from '@leaa/api/src/modules/attachment/attachment.service';
 import { argsUtil, curdUtil, paginationUtil, authUtil, errorUtil, loggerUtil } from '@leaa/api/src/utils';
 import { JwtService } from '@nestjs/jwt';
-
-type IUsersArgs = UsersArgs & FindOneOptions<User>;
-type IUserArgs = UserArgs & FindOneOptions<User>;
+import { AuthService } from '@leaa/api/src/modules/auth/auth.service';
+import { IUsersArgs, IUserArgs } from '@leaa/api/src/interfaces';
 
 const CLS_NAME = 'UserService';
 
@@ -28,7 +21,7 @@ export class UserService {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
     @InjectRepository(Role) private readonly roleRepository: Repository<Role>,
-    @InjectRepository(Permission) private readonly permissionRepository: Repository<Permission>,
+    @InjectRepository(Auth) private readonly authRepository: Repository<Auth>,
     private readonly roleService: RoleService,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
@@ -216,9 +209,26 @@ export class UserService {
     return nextUser;
   }
 
+  async deleteUserAllAuth(id: number): Promise<void> {
+    const auths = await this.authRepository.find({ where: { user_id: id } });
+    const deleteAuths = await this.authRepository.remove(auths);
+
+    loggerUtil.log(`Delete User All Auth, ${JSON.stringify(deleteAuths)}`, CLS_NAME);
+  }
+
   async deleteUser(id: number, user?: User): Promise<User | undefined> {
     if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id, user);
 
-    return curdUtil.commonDelete(this.userRepository, CLS_NAME, id);
+    const deleteUser = await curdUtil.commonDelete(this.userRepository, CLS_NAME, id);
+
+    if (deleteUser) {
+      try {
+        await this.deleteUserAllAuth(id);
+      } catch (err) {
+        throw Error(err);
+      }
+    }
+
+    return deleteUser;
   }
 }
