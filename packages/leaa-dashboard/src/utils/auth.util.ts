@@ -34,7 +34,7 @@ const getAuthInfo = (): Required<IAuthInfo> => {
     id: 0,
     email: '',
     name: '',
-    avatar: { url: null, urlAt2x: null },
+    avatar_url: null,
     flatPermissions: [],
   };
 

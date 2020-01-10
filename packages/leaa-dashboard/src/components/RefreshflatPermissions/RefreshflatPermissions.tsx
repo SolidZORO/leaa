@@ -32,7 +32,7 @@ export const RefreshflatPermissions = (props: IProps) => {
         }
 
         if (data && data.userByToken && data.userByToken.flatPermissions) {
-          authUtil.setAuthInfo(_.pick(data.userByToken, ['id', 'name', 'email', 'flatPermissions', 'avatar']));
+          authUtil.setAuthInfo(_.pick(data.userByToken, ['id', 'name', 'email', 'flatPermissions', 'avatar_url']));
         }
       },
     });

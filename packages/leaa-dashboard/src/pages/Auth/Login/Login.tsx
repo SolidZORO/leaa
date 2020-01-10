@@ -38,7 +38,7 @@ export default (props: IPage) => {
         id: login.id,
         email: login.email,
         name: login.name,
-        avatar: login.avatar,
+        avatar_url: login.avatar_url,
         flatPermissions: login.flatPermissions,
       };
 

@@ -1,4 +1,5 @@
 @import '~@leaa/dashboard/src/styles/variables.less';
+@import '~@leaa/dashboard/src/styles/mixin.less';
 
 .user-avatar-wrapper {
   display: flex;
@@ -16,14 +17,59 @@
 .form-wrapper {
 }
 
+@avatar-width: 120px;
+
 .avatar-box {
-  width: 120px;
+  z-index: 9;
+  width: @avatar-width;
+  height: @avatar-width;
   border-radius: 100%;
   //text-align: center;
 
   :global {
     .g-form-card-title {
       display: none;
+    }
+  }
+}
+
+.avatar-box--avatar-url {
+  position: relative;
+  //margin-right: 20px;
+
+  .g-box-shadow();
+
+  img {
+    border: 1px solid #aaa5;
+    border-radius: 100%;
+    width: @avatar-width;
+    height: @avatar-width;
+    object-fit: cover;
+  }
+}
+
+.avatar-toolbar {
+  position: absolute;
+  top: -14px;
+  left: -10px;
+
+  .avatar-delete {
+    @height: 16px;
+
+    transform: scale(0.8);
+    background-color: lighten(@primary-color, 37%);
+    border-color: lighten(@primary-color, 30%);
+    opacity: 0.9;
+    font-size: 12px !important;
+    line-height: 1.2;
+    height: @height !important;
+    width: @height !important;
+    color: @primary-color;
+    border-radius: 100px !important;
+
+    &:hover {
+      color: #fff;
+      background: @error-color;
     }
   }
 }

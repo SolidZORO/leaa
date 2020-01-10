@@ -17,10 +17,7 @@ export const GET_ZANS = gql`
           id
           name
           email
-          avatar {
-            url
-            urlAt2x
-          }
+          avatar_url
         }
         created_at
         updated_at
@@ -44,10 +41,7 @@ export const GET_ZAN = gql`
         id
         name
         email
-        avatar {
-          url
-          urlAt2x
-        }
+        avatar_url
       }
       created_at
       updated_at

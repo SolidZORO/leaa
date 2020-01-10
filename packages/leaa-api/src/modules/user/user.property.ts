@@ -26,12 +26,4 @@ export class UserProperty {
 
     return [...new Set(permissions.map(permission => permission.slug))];
   }
-
-  avatar(user: User | undefined): Attachment | null {
-    if (user?.avatar_string) {
-      return JSON.parse(user?.avatar_string);
-    }
-
-    return null;
-  }
 }

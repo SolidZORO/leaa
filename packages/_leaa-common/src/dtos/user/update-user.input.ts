@@ -25,6 +25,10 @@ export class UpdateUserInput {
   password?: string;
 
   @IsOptional()
+  @Field(() => String, { nullable: true })
+  avatar_url?: string | null;
+
+  @IsOptional()
   @Field(() => Int, { nullable: true })
   status?: number;
 

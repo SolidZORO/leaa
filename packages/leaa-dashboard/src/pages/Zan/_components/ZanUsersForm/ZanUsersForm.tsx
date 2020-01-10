@@ -34,7 +34,7 @@ export const ZanUsersForm = (props: IProps) => {
 
         <div className={style['user-avatar-wrapper']}>
           {props.users?.map(user => (
-            <UserAvatar key={user.id} url={user.avatar?.url} id={user.id} size={64} className={style['user-avatar']} />
+            <UserAvatar key={user.id} url={user.avatar_url} id={user.id} size={64} className={style['user-avatar']} />
           ))}
         </div>
       </FormCard>

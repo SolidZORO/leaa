@@ -6,10 +6,7 @@ export const LOGIN = gql`
       id
       name
       email
-      avatar {
-        url
-        urlAt2x
-      }
+      avatar_url
       authToken
       authExpiresIn
       flatPermissions
@@ -22,10 +19,7 @@ export const LOGIN_BY_TICKET = gql`
     loginByTicket(ticket: $ticket) {
       name
       email
-      avatar {
-        url
-        urlAt2x
-      }
+      avatar_url
       authToken
       authExpiresIn
       flatPermissions

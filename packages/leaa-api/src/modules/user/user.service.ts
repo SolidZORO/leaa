@@ -14,7 +14,8 @@ import {
 } from '@leaa/common/src/dtos/user';
 import { RoleService } from '@leaa/api/src/modules/role/role.service';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
-import { argsUtil, curdUtil, paginationUtil, authUtil, errorUtil } from '@leaa/api/src/utils';
+import { AttachmentService } from '@leaa/api/src/modules/attachment/attachment.service';
+import { argsUtil, curdUtil, paginationUtil, authUtil, errorUtil, loggerUtil } from '@leaa/api/src/utils';
 import { JwtService } from '@nestjs/jwt';
 
 type IUsersArgs = UsersArgs & FindOneOptions<User>;
@@ -31,6 +32,7 @@ export class UserService {
     private readonly roleService: RoleService,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
+    private readonly attachmentService: AttachmentService,
   ) {}
 
   async PLEASE_DONT_MODIFY_DEMO_DATA(id?: number, user?: User): Promise<boolean> {
@@ -139,6 +141,32 @@ export class UserService {
     if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id);
 
     if (curdUtil.isOneField(args, 'status')) return curdUtil.commonUpdate(this.userRepository, CLS_NAME, id, args);
+
+    if (curdUtil.isOneField(args, 'avatar_url')) {
+      // sync avatar
+      if (args.avatar_url === null) {
+        const avatarParams = {
+          moduleName: 'user',
+          typeName: 'avatar',
+          moduleId: id,
+        };
+
+        const attachments = await this.attachmentService.attachments(avatarParams);
+
+        if (attachments?.items) {
+          const uuids = attachments.items.map(a => a.uuid);
+
+          loggerUtil.log(
+            `Update User Delete Avatar, PARAMS: ${JSON.stringify(avatarParams)}, UUIDS: ${JSON.stringify(uuids)}`,
+            CLS_NAME,
+          );
+
+          await this.attachmentService.deleteAttachments(uuids);
+        }
+      }
+
+      return curdUtil.commonUpdate(this.userRepository, CLS_NAME, id, args);
+    }
 
     const prevUser = await this.user(id, { relations: ['roles'] });
 

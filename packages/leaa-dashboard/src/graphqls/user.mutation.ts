@@ -6,6 +6,7 @@ export const CREATE_USER = gql`
       id
       name
       email
+      avatar_url
       is_admin
     }
   }
@@ -17,6 +18,7 @@ export const UPDATE_USER = gql`
       id
       name
       email
+      avatar_url
       is_admin
     }
   }
@@ -28,6 +30,7 @@ export const DELETE_USER = gql`
       id
       name
       email
+      avatar_url
     }
   }
 `;

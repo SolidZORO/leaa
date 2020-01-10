@@ -34,7 +34,7 @@ export class AuthMiniprogramService {
       name: data.user.userInfo.nickName,
       status: 1,
       is_admin: 0,
-      avatar_string: JSON.stringify({ external_url: data.user.userInfo.avatarUrl }),
+      avatar_url: data.user.userInfo.avatarUrl,
     });
 
     const newAuthData: CreateAuthInput = {

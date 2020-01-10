@@ -78,7 +78,7 @@ export class AuthWechatService {
       name: profile.nickname,
       status: 1,
       is_admin: 0,
-      avatar_string: JSON.stringify({ external_url: profile.headimgurl }),
+      avatar_url: profile.headimgurl,
     });
 
     const newAuthData: CreateAuthInput = {

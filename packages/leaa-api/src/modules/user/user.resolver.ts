@@ -29,11 +29,7 @@ export class UserResolver {
     return this.userProperty.permissions(user);
   }
 
-  @ResolveProperty(() => [Attachment], { nullable: true })
-  avatar(@Parent() user: User | undefined): Attachment | null {
-    return this.userProperty.avatar(user);
-  }
-
+  //
   //
 
   // fot Test GraphQL

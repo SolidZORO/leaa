@@ -120,7 +120,7 @@ export class AuthService {
     const user = authUtil.checkAvailableUser(findUser);
 
     // IMPORTANT! if user info is changed, Compare `iat` and `last_token_at`
-    if (moment(payload.iattz).isBefore(moment(user.updated_at))) {
+    if (moment(payload.iattz).isBefore(moment(user.last_token_at))) {
       return errorUtil.ERROR({ error: 'Your user info has been updated, Please login again' });
     }
 

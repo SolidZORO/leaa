@@ -23,7 +23,7 @@ export class AuthLocalService {
 
   async login(args: AuthLoginInput): Promise<User | undefined> {
     const findUser = await this.userRepository.findOne({
-      select: ['id', 'email', 'name', 'status', 'password', 'avatar_string'],
+      select: ['id', 'email', 'name', 'status', 'password', 'avatar_url'],
       where: {
         email: xss.filterXSS(args.email.trim().toLowerCase()),
       },

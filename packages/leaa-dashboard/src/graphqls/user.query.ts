@@ -8,10 +8,7 @@ export const GET_USERS = gql`
         id
         name
         email
-        avatar {
-          url
-          urlAt2x
-        }
+        avatar_url
         status
         is_admin
         roles {
@@ -30,10 +27,7 @@ export const GET_USER = gql`
       id
       name
       email
-      avatar {
-        url
-        urlAt2x
-      }
+      avatar_url
       created_at
       updated_at
       status
@@ -60,10 +54,7 @@ export const GET_USER_BY_TOKEN = gql`
       email
       is_admin
       authToken
-      avatar {
-        url
-        urlAt2x
-      }
+      avatar_url
       authExpiresIn
       flatPermissions
     }

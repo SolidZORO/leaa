@@ -19,10 +19,11 @@ import { AuthGithubService } from '@leaa/api/src/modules/auth/auth-github.servic
 import { AuthLocalService } from '@leaa/api/src/modules/auth/auth-local.service';
 import { AuthController } from '@leaa/api/src/modules/auth/auth.controller';
 
-import { GithubStrategy } from '@leaa/api/src/strategies';
+import { GithubStrategy, JwtStrategy } from '@leaa/api/src/strategies';
+import { AttachmentModule } from '@leaa/api/src/modules/attachment/attachment.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User, Role, Permission, Auth]), AuthTokenModule],
+  imports: [TypeOrmModule.forFeature([User, Role, Permission, Auth]), AuthTokenModule, AttachmentModule],
   controllers: [AuthController],
   providers: [
     AuthResolver,
@@ -37,7 +38,8 @@ import { GithubStrategy } from '@leaa/api/src/strategies';
     AuthMiniprogramService,
     AuthGithubService,
     GithubStrategy,
+    JwtStrategy,
   ],
-  exports: [AuthService, AuthWechatService, AuthGithubService],
+  exports: [AuthService, AuthLocalService, AuthWechatService, AuthMiniprogramService, AuthGithubService, JwtStrategy],
 })
 export class AuthModule {}

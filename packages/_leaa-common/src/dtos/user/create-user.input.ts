@@ -31,5 +31,5 @@ export class CreateUserInput {
   is_admin?: number;
 
   @Field(() => String, { nullable: true })
-  avatar_string?: string;
+  avatar_url?: string;
 }

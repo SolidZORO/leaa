@@ -36,7 +36,7 @@ export class AuthGithubService {
       is_admin: 0,
       // @ts-ignore
       // eslint-disable-next-line no-underscore-dangle
-      avatar_string: JSON.stringify({ external_url: profile._json && profile._json.avatar_url }),
+      avatar_url: profile._json && profile._json.avatar_url,
     });
 
     const newAuthData: CreateAuthInput = {

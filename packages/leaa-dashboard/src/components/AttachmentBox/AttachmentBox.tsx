@@ -34,6 +34,8 @@ interface IProps {
   cardHeight?: number;
   className?: string;
   circle?: boolean;
+  onDeleteAttachmentCallback?: (uuid: string | number) => void;
+  onUploadedCallback?: (uploaded?: any) => void;
 }
 
 export const AttachmentBox = forwardRef((props: IProps, ref: React.Ref<any>) => {
@@ -73,7 +75,7 @@ export const AttachmentBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
     refetchQueries: () => [{ query: GET_ATTACHMENTS, variables: getAttachmentsVariables }],
   });
 
-  const refreshAttachments = () => {
+  const refreshAttachments = (uuid: string | number) => {
     // TODO here can save prev AttachmentList and then refresh
     // <code...>
 
@@ -83,6 +85,14 @@ export const AttachmentBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
       orderSort: 'ASC',
       refreshHash: new Date().getMilliseconds(),
     });
+
+    if (props.onDeleteAttachmentCallback) {
+      props.onDeleteAttachmentCallback(uuid);
+    }
+
+    if (props.onUploadedCallback) {
+      props.onUploadedCallback(uuid);
+    }
   };
 
   const pickAttachments = (attachments: Attachment[]): UpdateAttachmentsInput[] =>
@@ -157,7 +167,7 @@ export const AttachmentBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
       >
         <AttachmentDropzone
           attachmentParams={props.attachmentParams && { ...props.attachmentParams }}
-          onUploadedCallback={refreshAttachments}
+          onUploadedCallback={uuid => refreshAttachments(uuid)}
           attachments={getAttachmentsQuery.data?.attachments?.items}
           type={type}
           cardHeight={cardHeight}
@@ -169,7 +179,7 @@ export const AttachmentBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
           attachmentParams={props.attachmentParams && { ...props.attachmentParams }}
           attachments={getAttachmentsQuery.data?.attachments?.items}
           onChangeAttachmentsCallback={onChangeAttachments}
-          onDeleteAttachmentCallback={refreshAttachments}
+          onDeleteAttachmentCallback={uuid => refreshAttachments(uuid)}
           type={type}
           listHeight={listHeight}
           cardHeight={cardHeight}

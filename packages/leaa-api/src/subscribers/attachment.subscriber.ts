@@ -1,6 +1,7 @@
 import { EventSubscriber, EntitySubscriberInterface, InsertEvent, RemoveEvent } from 'typeorm';
 
 import { Attachment, User } from '@leaa/common/src/entrys';
+import { buildUrl } from '@leaa/api/src/modules/attachment/attachment.property';
 
 @EventSubscriber()
 export class AttachmentSubscriber implements EntitySubscriberInterface<Attachment> {
@@ -12,16 +13,7 @@ export class AttachmentSubscriber implements EntitySubscriberInterface<Attachmen
     const { entity } = event;
 
     if (entity && entity.module_name === 'user' && entity.type_name === 'avatar' && entity.module_id) {
-      event.manager.getRepository(User).update(entity.module_id, {
-        avatar_string: JSON.stringify({
-          in_local: event.entity.in_local,
-          in_oss: event.entity.in_oss,
-          size: event.entity.size,
-          path: event.entity.path,
-          width: event.entity.width,
-          height: event.entity.height,
-        }),
-      });
+      event.manager.getRepository(User).update(entity.module_id, { avatar_url: buildUrl(entity) });
     }
   }
 
@@ -29,7 +21,7 @@ export class AttachmentSubscriber implements EntitySubscriberInterface<Attachmen
     const { entity } = event;
 
     if (entity && entity.module_name === 'user' && entity.type_name === 'avatar' && entity.module_id) {
-      event.manager.getRepository(User).update(entity.module_id, { avatar_string: '' });
+      event.manager.getRepository(User).update(entity.module_id, { avatar_url: null });
     }
   }
 }

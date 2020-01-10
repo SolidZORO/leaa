@@ -23,7 +23,7 @@ export class User extends Base {
 
   @Column({ type: 'text', nullable: true })
   @Field(() => String, { nullable: true })
-  avatar_string?: string;
+  avatar_url?: string | null;
 
   @Column({ type: 'int', default: 0 })
   @Field(() => Int)
