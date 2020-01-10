@@ -1,5 +1,4 @@
 import cx from 'classnames';
-import axios from 'axios';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from 'antd';
@@ -20,7 +19,7 @@ export const AuthGithubButton = (props: IProps) => {
   return (
     <div className={cx(style['wrapper'], props.className)}>
       <Button size="small" href={`${envConfig.API_HOST}/auth/github/login`}>
-        Auth Github
+        Github
       </Button>
     </div>
   );

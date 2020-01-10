@@ -38,8 +38,15 @@ export class UserResolver {
 
   // fot Test GraphQL
   @Query(() => Float)
-  async ram(): Promise<number> {
+  ram(): number {
     return Math.random();
+  }
+
+  @UseGuards(PermissionsGuard)
+  @Permissions('user.list-read')
+  @Query(() => String)
+  ramWithAuth(@CurrentUser() user?: User): string {
+    return `${Math.random()} - ${user?.email}`;
   }
 
   @UseGuards(PermissionsGuard)

@@ -146,7 +146,7 @@ export class AuthService {
     return this.validateUserByPayload(payload);
   }
 
-  async addTokenTouser(user: User): Promise<User> {
+  async addTokenToUser(user: User): Promise<User> {
     const nextUser = user;
     const userAuthInfo = await this.createToken(user);
 
@@ -160,7 +160,7 @@ export class AuthService {
   async loginByTicket(ticket: string): Promise<User | undefined> {
     const user = await this.getUserByTicket(ticket);
 
-    return this.addTokenTouser(user);
+    return this.addTokenToUser(user);
   }
 
   async getUserByTicket(ticket: string): Promise<User> {

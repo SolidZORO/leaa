@@ -5,7 +5,7 @@ import { Base } from '@leaa/common/src/entrys';
 
 export enum AuthPlatform {
   wechat = 'wechat',
-  wechatminiprogram = 'wechatminiprogram',
+  miniprogram = 'miniprogram',
   weibo = 'weibo',
   github = 'github',
 }

@@ -14,6 +14,7 @@ import { PermissionService } from '@leaa/api/src/modules/permission/permission.s
 import { AuthResolver } from '@leaa/api/src/modules/auth/auth.resolver';
 import { AuthService } from '@leaa/api/src/modules/auth/auth.service';
 import { AuthWechatService } from '@leaa/api/src/modules/auth/auth-wechat.service';
+import { AuthMiniprogramService } from '@leaa/api/src/modules/auth/auth-miniprogram.service';
 import { AuthGithubService } from '@leaa/api/src/modules/auth/auth-github.service';
 import { AuthLocalService } from '@leaa/api/src/modules/auth/auth-local.service';
 import { AuthController } from '@leaa/api/src/modules/auth/auth.controller';
@@ -33,6 +34,7 @@ import { GithubStrategy } from '@leaa/api/src/strategies';
     AuthService,
     AuthLocalService,
     AuthWechatService,
+    AuthMiniprogramService,
     AuthGithubService,
     GithubStrategy,
   ],

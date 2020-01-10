@@ -2,13 +2,15 @@ import { Request, Response } from 'express';
 import { Controller, Get, Post, Req, Res, Body, HttpCode, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthWechatService } from '@leaa/api/src/modules/auth/auth-wechat.service';
+import { AuthMiniprogramService } from '@leaa/api/src/modules/auth/auth-miniprogram.service';
 import { AuthGithubService } from '@leaa/api/src/modules/auth/auth-github.service';
-import { IResponse, IRequestGithubCallback } from '@leaa/api/src/interfaces';
+import { IResponse, IRequestGithubCallback, IMiniprogramCloudFnResult } from '@leaa/api/src/interfaces';
 
 @Controller('/auth')
 export class AuthController {
   constructor(
     private readonly authWechatService: AuthWechatService,
+    private readonly authMiniprogramService: AuthMiniprogramService,
     private readonly authGithubService: AuthGithubService,
   ) {}
 
@@ -42,6 +44,14 @@ export class AuthController {
   @Get('/wechat/callback')
   async wechatCallback(@Req() req: Request, @Res() res: Response): Promise<any> {
     return this.authWechatService.wechatCallback(req, res);
+  }
+
+  //
+  // miniprogram
+  @HttpCode(200)
+  @Post('/miniprogram/login')
+  async miniprogramLogin(@Body() data: IMiniprogramCloudFnResult): Promise<any> {
+    return this.authMiniprogramService.miniprogramLogin(data);
   }
 
   //

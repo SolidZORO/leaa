@@ -38,3 +38,35 @@ export interface IWechatInfo {
   headimgurl: string;
   privilege: any[];
 }
+
+export interface IMiniprogramCloudFnAuthInfo {
+  APPID: string;
+  OPENID: string;
+  CLIENTIP: string;
+  CLIENTIPV6: string;
+  ENV: string;
+  SOURCE: string;
+}
+
+export interface IMiniprogramCloudFnUserInfo {
+  errMsg: string;
+  rawData: string;
+  userInfo: {
+    nickName: string;
+    gender: number;
+    language: string;
+    city: string;
+    province: string;
+    country: string;
+    avatarUrl: string;
+  };
+  signature: string;
+  encryptedData: string;
+  iv: string;
+  cloudID: string;
+}
+
+export interface IMiniprogramCloudFnResult {
+  auth: IMiniprogramCloudFnAuthInfo;
+  user: IMiniprogramCloudFnUserInfo;
+}

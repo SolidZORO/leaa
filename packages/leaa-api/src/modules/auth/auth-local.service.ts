@@ -38,7 +38,7 @@ export class AuthLocalService {
 
     if (user.password) delete user.password;
 
-    return this.authService.addTokenTouser(user);
+    return this.authService.addTokenToUser(user);
   }
 
   async signup(args: AuthSignupInput, oid?: number): Promise<User | undefined> {
@@ -70,6 +70,6 @@ export class AuthLocalService {
       return errorUtil.ERROR({ error: 'Sign Up Fail' });
     }
 
-    return this.authService.addTokenTouser(newUser);
+    return this.authService.addTokenToUser(newUser);
   }
 }

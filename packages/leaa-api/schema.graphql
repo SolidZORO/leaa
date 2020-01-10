@@ -614,6 +614,7 @@ type Query {
   permissions(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): PermissionsWithPaginationObject!
   permission(id: Int!): Permission!
   ram: Float!
+  ramWithAuth: String!
   users(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): UsersWithPaginationObject!
   user(id: Int!): User!
   userByToken(token: String): User!

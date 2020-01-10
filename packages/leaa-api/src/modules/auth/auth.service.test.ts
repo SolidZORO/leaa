@@ -118,14 +118,14 @@ describe('AuthService', () => {
     });
   });
 
-  describe('addTokenTouser', () => {
-    const addTokenTouserResult = userObject;
+  describe('addTokenToUser', () => {
+    const addTokenToUserResult = userObject;
 
     it('should add token to user', async () => {
-      jest.spyOn(authService, 'addTokenTouser').mockImplementation(async () => addTokenTouserResult);
-      const result = await authService.addTokenTouser(userObject);
+      jest.spyOn(authService, 'addTokenToUser').mockImplementation(async () => addTokenToUserResult);
+      const result = await authService.addTokenToUser(userObject);
 
-      expect(result).toBe(addTokenTouserResult);
+      expect(result).toBe(addTokenToUserResult);
     });
   });
 
