@@ -11,7 +11,6 @@ import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 import { AttachmentService } from '@leaa/api/src/modules/attachment/attachment.service';
 import { argsUtil, curdUtil, paginationUtil, authUtil, errorUtil, loggerUtil } from '@leaa/api/src/utils';
 import { JwtService } from '@nestjs/jwt';
-import { AuthService } from '@leaa/api/src/modules/auth/auth.service';
 import { IUsersArgs, IUserArgs } from '@leaa/api/src/interfaces';
 
 const CLS_NAME = 'UserService';

@@ -8,6 +8,6 @@ import { SettingService } from '@leaa/api/src/modules/setting/setting.service';
 @Module({
   imports: [TypeOrmModule.forFeature([Setting]), CacheModule.register()],
   providers: [SettingResolver, SettingService],
-  exports: [SettingService],
+  exports: [SettingResolver, SettingService],
 })
 export class SettingModule {}

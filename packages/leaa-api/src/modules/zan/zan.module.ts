@@ -10,6 +10,6 @@ import { AuthTokenModule } from '@leaa/api/src/modules/auth-token/auth-token.mod
 @Module({
   imports: [TypeOrmModule.forFeature([Zan, Attachment]), AuthTokenModule, AttachmentModule],
   providers: [ZanResolver, ZanService],
-  exports: [ZanService],
+  exports: [ZanResolver, ZanService],
 })
 export class ZanModule {}

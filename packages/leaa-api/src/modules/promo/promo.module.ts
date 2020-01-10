@@ -9,6 +9,6 @@ import { PromoProperty } from '@leaa/api/src/modules/promo/promo.property';
 @Module({
   imports: [TypeOrmModule.forFeature([Promo])],
   providers: [PromoProperty, PromoResolver, PromoService],
-  exports: [PromoService],
+  exports: [PromoProperty, PromoResolver, PromoService],
 })
 export class PromoModule {}

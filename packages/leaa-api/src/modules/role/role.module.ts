@@ -9,6 +9,6 @@ import { RoleService } from '@leaa/api/src/modules/role/role.service';
 @Module({
   imports: [TypeOrmModule.forFeature([Role, Permission])],
   providers: [RoleResolver, RoleService, PermissionService],
-  exports: [RoleService],
+  exports: [RoleResolver, RoleService, PermissionService],
 })
 export class RoleModule {}
