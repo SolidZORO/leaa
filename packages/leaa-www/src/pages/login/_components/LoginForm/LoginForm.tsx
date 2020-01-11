@@ -67,7 +67,7 @@ export default (props: IProps) => {
 
   const onUpdateForm = () => {
     form.setFieldsValue({
-      email: 'admin@leaa.com',
+      email: 'admin@local.com',
       password: 'h8Hx9qvPKoHMLQgj',
     });
 

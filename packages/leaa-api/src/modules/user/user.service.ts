@@ -33,7 +33,7 @@ export class UserService {
 
       const u = await this.user(id, user);
 
-      if (u && u.email && u.email === 'admin@leaa.com') {
+      if (u && u.email && u.email === 'admin@local.com') {
         throw errorUtil.ERROR({ error: 'PLEASE DONT MODIFY DEMO DATA', user });
       }
     }

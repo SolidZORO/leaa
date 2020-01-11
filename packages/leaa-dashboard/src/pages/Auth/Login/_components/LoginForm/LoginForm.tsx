@@ -24,7 +24,7 @@ export const LoginForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
   };
 
   const initialValues = {
-    email: 'admin@leaa.com',
+    email: 'admin@local.com',
     password: 'h8Hx9qvPKoHMLQgj',
   };
 

@@ -198,18 +198,18 @@ export const rolesSeed = [
 
 // prettier-ignore
 export const usersSeed = [
-  { email: 'admin@leaa.com', name: 'Admin', password: 'h8Hx9qvPKoHMLQgj', status: 1, is_admin: 1 },
-  { email: 'staff@leaa.com', name: 'Staff', password: '7PkQGjvHMMkoo4RZ', status: 1, is_admin: 1 },
-  { email: 'disabled@leaa.com', name: 'Disabled', password: 'uUB3YGrdL3gJZYij', status: 1, is_admin: 1 },
-  { email: 'empty-en@leaa.com', name: 'Empty User', password: 'uUB3YGrdL3gJZYi1', status: 1 },
-  { email: 'empty-cn@leaa.com', name: '空号用户', password: 'uUB3YGrdL3gJZYi2', status: 1 },
-  { email: 'empty-jp@leaa.com', name: '空のユーザー', password: 'uUB3YGrdL3gJZYi3', status: 1 },
-  { email: 'ram-01@leaa.com', name: 'RAM-01', password: 'uUB3YGrdL3gJZYi3', status: 1 },
-  { email: 'ram-02@leaa.com', name: 'RAM-02', password: 'uUB3YGrdL3gJZYi3', status: 1 },
-  { email: 'ram-03@leaa.com', name: 'RAM-03', password: 'uUB3YGrdL3gJZYi3', status: 1 },
-  { email: 'ram-04@leaa.com', name: 'RAM-04', password: 'uUB3YGrdL3gJZYi3', status: 1 },
-  { email: 'ram-05@leaa.com', name: 'RAM-05', password: 'uUB3YGrdL3gJZYi3', status: 1 },
-  { email: 'ram-06@leaa.com', name: 'RAM-06', password: 'uUB3YGrdL3gJZYi3', status: 1 },
+  { email: 'admin@local.com', name: 'Admin', password: 'h8Hx9qvPKoHMLQgj', status: 1, is_admin: 1 },
+  { email: 'staff@local.com', name: 'Staff', password: '7PkQGjvHMMkoo4RZ', status: 1, is_admin: 1 },
+  { email: 'disabled@local.com', name: 'Disabled', password: 'uUB3YGrdL3gJZYij', status: 1, is_admin: 1 },
+  { email: 'empty-en@local.com', name: 'Empty User', password: 'uUB3YGrdL3gJZYi1', status: 1 },
+  { email: 'empty-cn@local.com', name: '空号用户', password: 'uUB3YGrdL3gJZYi2', status: 1 },
+  { email: 'empty-jp@local.com', name: '空のユーザー', password: 'uUB3YGrdL3gJZYi3', status: 1 },
+  { email: 'ram-01@local.com', name: 'RAM-01', password: 'uUB3YGrdL3gJZYi3', status: 1 },
+  { email: 'ram-02@local.com', name: 'RAM-02', password: 'uUB3YGrdL3gJZYi3', status: 1 },
+  { email: 'ram-03@local.com', name: 'RAM-03', password: 'uUB3YGrdL3gJZYi3', status: 1 },
+  { email: 'ram-04@local.com', name: 'RAM-04', password: 'uUB3YGrdL3gJZYi3', status: 1 },
+  { email: 'ram-05@local.com', name: 'RAM-05', password: 'uUB3YGrdL3gJZYi3', status: 1 },
+  { email: 'ram-06@local.com', name: 'RAM-06', password: 'uUB3YGrdL3gJZYi3', status: 1 },
 ];
 
 const randomSersSeedData = [];
@@ -238,8 +238,8 @@ export const roleAddPermissionsSeed = [
 
 // prettier-ignore
 export const userAddRolesSeed = [
-  { userEmail: 'admin@leaa.com', roleSlugs: ['admin', 'staff', 'attachment-manager'] },
-  { userEmail: 'staff@leaa.com', roleSlugs: ['staff', 'attachment-manager'] },
+  { userEmail: 'admin@local.com', roleSlugs: ['admin', 'staff', 'attachment-manager'] },
+  { userEmail: 'staff@local.com', roleSlugs: ['staff', 'attachment-manager'] },
 ];
 
 // prettier-ignore

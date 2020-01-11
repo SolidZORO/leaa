@@ -67,8 +67,8 @@ export default (props: IProps) => {
   const onUpdateForm = () => {
     form.setFieldsValue({
       name: `signup-${new Date().getTime()}`,
-      email: `signup-${new Date().getTime()}@leaa.com`,
-      password: `signup-${new Date().getTime()}@leaa.com`,
+      email: `signup-${new Date().getTime()}@local.com`,
+      password: `signup-${new Date().getTime()}@local.com`,
     });
 
     return undefined;
