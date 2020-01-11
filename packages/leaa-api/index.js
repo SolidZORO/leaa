@@ -1,5 +1,7 @@
 const moduleAlias = require('module-alias');
 
+// console.log(`\n__dirname: ${__dirname} ----\n`);
+
 moduleAlias.addPath(__dirname);
 moduleAlias.addAliases({
   '@leaa/common': '_dist/_leaa-common',

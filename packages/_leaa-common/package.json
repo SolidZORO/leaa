@@ -15,6 +15,6 @@
     "fix-js": "yarn run lint-js --fix",
     "lint": "yarn run lint-js",
     "fix": "yarn run fix-js",
-    "tsc-check": "tsc --noEmit"
+    "tsc-check": "tsc -v && tsc --noEmit"
   }
 }

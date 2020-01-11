@@ -17,7 +17,7 @@
     "fix-css": "yarn run lint-css --fix",
     "lint": "yarn run lint-js && yarn run lint-css",
     "fix": "yarn run fix-js && yarn run fix-css",
-    "tsc-check": "tsc --noEmit",
+    "tsc-check": "tsc -v && tsc --noEmit",
     "---------------------------------------------------------------------- DEV ----": "----",
     "dev-tsnodedev": "NODE_ENV=development ts-node-dev --respawn --transpileOnly --ignore-watch node_modules --ignore-watch .next --compiler-options '{\"module\":\"commonjs\"}' -r tsconfig-paths/register server.ts",
     "dev": "NODE_ENV=development yarn dev-tsnodedev",

@@ -2,13 +2,9 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "_dist",
-    "module": "commonjs",
-    "target": "es2018",
     "isolatedModules": false,
-    "sourceMap": false,
     "declaration": false,
-    "noEmit": false,
-    "skipLibCheck": true
+    "noEmit": false
   }
 }
 
