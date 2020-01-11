@@ -145,7 +145,7 @@ export class UserService {
 
         const attachments = await this.attachmentService.attachments(avatarParams);
 
-        if (attachments?.items) {
+        if (attachments?.items && attachments?.items.length !== 0) {
           const uuids = attachments.items.map(a => a.uuid);
 
           loggerUtil.log(

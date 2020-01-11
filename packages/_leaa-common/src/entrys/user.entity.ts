@@ -21,7 +21,7 @@ export class User extends Base {
   @Field(() => String)
   email!: string;
 
-  @Column({ type: 'text', nullable: true })
+  @Column({ type: 'varchar', nullable: true, default: null })
   @Field(() => String, { nullable: true })
   avatar_url?: string | null;
 

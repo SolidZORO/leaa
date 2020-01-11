@@ -31,8 +31,8 @@ export const LOGIN_BY_TICKET_FOR_WWW = gql`
 `;
 
 export const SIGNUP_FOR_WWW = gql`
-  mutation($user: AuthSignupInput!, $oid: Int) {
-    signup(user: $user, oid: $oid) {
+  mutation($user: AuthSignupInput!, $uid: Int) {
+    signup(user: $user, uid: $uid) {
       id
       name
       email

@@ -7,7 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 import { User } from '@leaa/common/src/entrys';
 import { AuthLoginInput, AuthSignupInput } from '@leaa/common/src/dtos/auth';
-import { errorUtil, authUtil } from '@leaa/api/src/utils';
+import { errorUtil, authUtil, loggerUtil } from '@leaa/api/src/utils';
 import { UserService } from '@leaa/api/src/modules/user/user.service';
 import { AuthService } from '@leaa/api/src/modules/auth/auth.service';
 
@@ -32,11 +32,18 @@ export class AuthLocalService {
     });
 
     const user = authUtil.checkAvailableUser(findUser);
-
     const passwordIsMatch = await bcryptjs.compareSync(args.password, user.password);
-    if (!passwordIsMatch) return errorUtil.ERROR({ error: `User (${args.email}) Info Not Match` });
+
+    if (!passwordIsMatch) {
+      const errorMessage = `User (${args.email}) Info Not Match`;
+      loggerUtil.log(errorMessage, CLS_NAME);
+
+      return errorUtil.ERROR({ error: errorMessage });
+    }
 
     if (user.password) delete user.password;
+
+    loggerUtil.log(`Local Login Auth, ${JSON.stringify(user)}`, CLS_NAME);
 
     return this.authService.addTokenToUser(user);
   }
@@ -62,11 +69,15 @@ export class AuthLocalService {
         status: 1,
       });
 
+      loggerUtil.log(`Local Singup Success, ${JSON.stringify({ ...newUser, password: '******' })}`, CLS_NAME);
+
       if (uid) {
         await this.authService.bindUserIdToAuth(newUser, uid);
         await this.authService.clearTicket(uid);
       }
     } catch (error) {
+      loggerUtil.log(`Local Singup Error, ${JSON.stringify(error)}`, CLS_NAME);
+
       return errorUtil.ERROR({ error: 'Sign Up Fail' });
     }
 

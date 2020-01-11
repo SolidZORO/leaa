@@ -1,4 +1,3 @@
-// import { EventSubscriber, EntitySubscriberInterface, InsertEvent, UpdateEvent, UpdateDateColumn } from 'typeorm';
 import { EventSubscriber, EntitySubscriberInterface } from 'typeorm';
 import { LoadEvent } from 'typeorm/subscriber/event/LoadEvent';
 import { Tag } from '@leaa/common/src/entrys';
@@ -10,8 +9,8 @@ export class TagSubscriber implements EntitySubscriberInterface<Tag> {
   }
 
   async afterLoad(entity: Tag, event: LoadEvent<Tag>): Promise<void> {
-    if (event.entity && typeof event.entity.views !== 'undefined') {
-      event.manager.getRepository(Tag).update(event.entity.id, { views: event.entity.views + 1 });
+    if (entity && typeof entity.views !== 'undefined') {
+      event.manager.getRepository(Tag).update(entity.id, { views: entity.views + 1 });
     }
   }
 

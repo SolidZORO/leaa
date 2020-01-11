@@ -17,7 +17,7 @@
 .form-wrapper {
 }
 
-@avatar-width: 120px;
+@avatar-width: 80px;
 
 .avatar-box {
   z-index: 9;
@@ -45,6 +45,7 @@
     width: @avatar-width;
     height: @avatar-width;
     object-fit: cover;
+    box-sizing: content-box;
   }
 }
 
@@ -57,14 +58,14 @@
     @height: 16px;
 
     transform: scale(0.8);
-    background-color: lighten(@primary-color, 37%);
-    border-color: lighten(@primary-color, 30%);
+    background-color: lighten(@error-color, 44%);
+    border-color: lighten(@error-color, 30%);
     opacity: 0.9;
     font-size: 12px !important;
     line-height: 1.2;
     height: @height !important;
     width: @height !important;
-    color: @primary-color;
+    color: @error-color;
     border-radius: 100px !important;
 
     &:hover {

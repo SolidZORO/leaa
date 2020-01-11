@@ -75,7 +75,7 @@ export const UploadUserAvatar = (props: IProps) => {
           title={t('_lang:avatar')}
           disableMessage
           attachmentParams={avatarParams}
-          cardHeight={120}
+          cardHeight={80}
           className={style['avatar-box']}
           circle
         />

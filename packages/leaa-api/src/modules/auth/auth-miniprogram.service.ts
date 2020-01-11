@@ -67,8 +67,6 @@ export class AuthMiniprogramService {
       const hasAuth = await this.authService.authByOpenId(data.auth.OPENID, platform);
 
       if (hasAuth) {
-        // await this.authRepository.update(hasAuth.id, this.nextTicket);
-
         userInfo = await this.userService.user(Number(hasAuth?.user_id));
         userAuth = { ...hasAuth };
       } else {
@@ -78,9 +76,9 @@ export class AuthMiniprogramService {
         userAuth = newAuth;
       }
 
-      loggerUtil.log(`Wechat Callback Auth, ${JSON.stringify(userAuth)}`, CLS_NAME);
+      loggerUtil.log(`Miniprogram Login Auth, ${JSON.stringify(userAuth)}`, CLS_NAME);
     } catch (err) {
-      loggerUtil.error('Wechat Callback Error', CLS_NAME, err);
+      loggerUtil.error('Miniprogram Login Error', CLS_NAME, err);
     }
 
     if (userInfo) {

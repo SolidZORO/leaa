@@ -8,6 +8,7 @@ import { CreateSettingInput } from '@leaa/common/src/dtos/setting';
 import { CreateCouponInput } from '@leaa/common/src/dtos/coupon';
 import { CreatePromoInput } from '@leaa/common/src/dtos/promo';
 import { IPermissionSlug } from '@leaa/common/src/interfaces';
+import { CreateUserInput } from '@leaa/common/src/dtos/user';
 
 // TIPS relation file: packages/leaa-api/src/configs/permission.config.ts
 export const permissionsSeed: { name: string; slug: IPermissionSlug }[] = [
@@ -197,8 +198,8 @@ export const rolesSeed = [
 ];
 
 // prettier-ignore
-export const usersSeed = [
-  { email: 'admin@local.com', name: 'Admin', password: 'h8Hx9qvPKoHMLQgj', status: 1, is_admin: 1 },
+export const usersSeed: CreateUserInput[] = [
+  { email: 'admin@local.com', name: 'Admin', password: 'h8Hx9qvPKoHMLQgj', status: 1, is_admin: 1, avatar_url: '' },
   { email: 'staff@local.com', name: 'Staff', password: '7PkQGjvHMMkoo4RZ', status: 1, is_admin: 1 },
   { email: 'disabled@local.com', name: 'Disabled', password: 'uUB3YGrdL3gJZYij', status: 1, is_admin: 1 },
   { email: 'empty-en@local.com', name: 'Empty User', password: 'uUB3YGrdL3gJZYi1', status: 1 },
