@@ -7,7 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Auth, User } from '@leaa/common/src/entrys';
 import { ICreateAuthAndUserResult, IMiniprogramCloudFnResult } from '@leaa/api/src/interfaces';
 import { CreateAuthInput } from '@leaa/common/src/dtos/auth';
-import { loggerUtil } from '@leaa/api/src/utils';
+import { loggerUtil, stringUtil } from '@leaa/api/src/utils';
 import { UserService } from '@leaa/api/src/modules/user/user.service';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 
@@ -25,7 +25,7 @@ export class AuthMiniprogramService {
     private readonly configService: ConfigService,
   ) {}
 
-  private nextTicket = { ticket: uuid.v4(), ticket_at: new Date() };
+  private nextTicket = { ticket: stringUtil.random(), ticket_at: new Date() };
 
   async createUserAndAuth(platform: string, data: IMiniprogramCloudFnResult): Promise<ICreateAuthAndUserResult> {
     const newUser = await this.userService.createUser({

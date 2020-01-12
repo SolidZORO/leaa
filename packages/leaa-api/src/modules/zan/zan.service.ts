@@ -6,7 +6,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Zan, User } from '@leaa/common/src/entrys';
 import { ZansWithPaginationObject, CreateZanInput, UpdateZanInput } from '@leaa/common/src/dtos/zan';
 import { IZansArgs, IZanArgs } from '@leaa/api/src/interfaces';
-import { argsUtil, curdUtil, paginationUtil, errorUtil } from '@leaa/api/src/utils';
+import { argsUtil, curdUtil, paginationUtil, errorUtil, stringUtil } from '@leaa/api/src/utils';
 
 const CLS_NAME = 'ZanService';
 
@@ -61,7 +61,7 @@ export class ZanService {
   async createZan(args: CreateZanInput): Promise<Zan | undefined> {
     return this.zanRepository.save({
       ...args,
-      uuid: v4(),
+      uuid: stringUtil.uuid(),
     });
   }
 

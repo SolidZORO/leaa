@@ -1,21 +1,18 @@
 import { Injectable } from '@nestjs/common';
-import { Repository, FindOneOptions, SelectQueryBuilder } from 'typeorm';
+import { Repository, SelectQueryBuilder } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { Promo, User } from '@leaa/common/src/entrys';
 import {
-  PromosArgs,
   PromosWithPaginationObject,
-  PromoArgs,
   CreatePromoInput,
   UpdatePromoInput,
   RedeemPromoInput,
 } from '@leaa/common/src/dtos/promo';
 import { argsUtil, authUtil, curdUtil, paginationUtil, errorUtil, dateUtil } from '@leaa/api/src/utils';
-import { PromoProperty } from '@leaa/api/src/modules/promo/promo.property';
+import { IPromosArgs, IPromoArgs } from '@leaa/api/src/interfaces';
 
-type IPromosArgs = PromosArgs & FindOneOptions<Promo>;
-type IPromoArgs = PromoArgs & FindOneOptions<Promo>;
+import { PromoProperty } from './promo.property';
 
 const CLS_NAME = 'PromoService';
 

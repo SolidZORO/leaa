@@ -1,23 +1,19 @@
 import uuid from 'uuid';
 import { Injectable } from '@nestjs/common';
-import { Repository, FindOneOptions, SelectQueryBuilder } from 'typeorm';
+import { Repository, SelectQueryBuilder } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { Coupon, User } from '@leaa/common/src/entrys';
 import {
-  CouponsArgs,
   CouponsWithPaginationObject,
-  CouponArgs,
   CreateCouponInput,
   UpdateCouponInput,
   RedeemCouponInput,
 } from '@leaa/common/src/dtos/coupon';
-import { argsUtil, curdUtil, paginationUtil, authUtil, errorUtil, dateUtil } from '@leaa/api/src/utils';
+import { argsUtil, curdUtil, paginationUtil, authUtil, errorUtil, dateUtil, stringUtil } from '@leaa/api/src/utils';
+import { ICouponsArgs, ICouponArgs } from '@leaa/api/src/interfaces';
 
 import { CouponProperty } from '@leaa/api/src/modules/coupon/coupon.property';
-
-type ICouponsArgs = CouponsArgs & FindOneOptions<Coupon>;
-type ICouponArgs = CouponArgs & FindOneOptions<Coupon>;
 
 const CLS_NAME = 'CouponService';
 
@@ -29,10 +25,7 @@ export class CouponService {
   ) {}
 
   generateCouponCode(prefix: string): string {
-    return `${prefix}${uuid
-      .v4()
-      .replace(/-/g, '')
-      .slice(0, 15)}`.toUpperCase();
+    return `${prefix}${stringUtil.random().slice(0, 15)}`.toUpperCase();
   }
 
   async coupons(args: ICouponsArgs, user?: User): Promise<CouponsWithPaginationObject> {

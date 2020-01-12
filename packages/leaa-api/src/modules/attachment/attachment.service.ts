@@ -30,11 +30,9 @@ import {
   errorUtil,
 } from '@leaa/api/src/utils';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
+import { IAttachmentsArgs, IAttachmentArgs } from '@leaa/api/src/interfaces';
 import { SaveInOssService } from '@leaa/api/src/modules/attachment/save-in-oss.service';
 import { SaveInLocalService } from '@leaa/api/src/modules/attachment/save-in-local.service';
-
-type IAttachmentsArgs = AttachmentsArgs & FindOneOptions<Attachment>;
-type IAttachmentArgs = AttachmentArgs & FindOneOptions<Attachment>;
 
 const CLS_NAME = 'AttachmentService';
 

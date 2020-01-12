@@ -1,4 +1,3 @@
-import uuid from 'uuid';
 import path from 'path';
 import mkdirp from 'mkdirp';
 import multer from 'multer';
@@ -6,7 +5,7 @@ import { Express } from 'express';
 import { Injectable } from '@nestjs/common';
 import { MulterModuleOptions, MulterOptionsFactory } from '@nestjs/platform-express';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
-import { attachmentUtil } from '@leaa/api/src/utils';
+import { attachmentUtil, stringUtil } from '@leaa/api/src/utils';
 import { attachmentConfig } from '@leaa/api/src/configs';
 
 @Injectable()
@@ -29,7 +28,7 @@ export class MulterService implements MulterOptionsFactory {
     const filename = file.originalname.toLowerCase();
     const at2x = attachmentUtil.isAt2x(filename) ? '_2x' : '';
 
-    cb(null, `${uuid.v4()}${at2x}${path.extname(filename)}`);
+    cb(null, `${stringUtil.uuid()}${at2x}${path.extname(filename)}`);
   };
 
   createMulterOptions(): MulterModuleOptions {

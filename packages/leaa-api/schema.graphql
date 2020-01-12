@@ -436,6 +436,12 @@ type DeleteAttachmentsObject {
   items: [String!]!
 }
 
+type DemoDataObject {
+  loginAccountByAdmin: LoginAccount
+  loginAccountByStaff: LoginAccount
+  signupAccountByRandom: SignupAccount
+}
+
 type Division {
   id: Int
   created_at: DateTime!
@@ -454,6 +460,11 @@ type DivisionsWithPaginationObject {
   itemsCount: Int!
   total: Int!
   items: [Division!]!
+}
+
+type LoginAccount {
+  email: String!
+  password: String!
 }
 
 type Mutation {
@@ -652,6 +663,7 @@ type Query {
   division(id: Int!): Division!
   zans(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): ZansWithPaginationObject!
   zan(uuid: String!): Zan!
+  demoData: DemoDataObject!
 }
 
 input RedeemCouponInput {
@@ -710,6 +722,12 @@ type SettingsWithPaginationObject {
   itemsCount: Int!
   total: Int!
   items: [Setting!]!
+}
+
+type SignupAccount {
+  email: String!
+  password: String!
+  name: String!
 }
 
 type SyncDivisionToFileObject {

@@ -16,6 +16,7 @@ const checkPermission = (permissionSlug: IPermissionSlug) => {
 
 export const notValidateUserQuerys = [
   'ram',
+  'demoData',
   //
   'login',
   'loginByTicket',

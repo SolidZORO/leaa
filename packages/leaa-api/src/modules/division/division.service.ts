@@ -1,14 +1,12 @@
 import fs from 'fs';
 import mkdirp from 'mkdirp';
 import { Injectable } from '@nestjs/common';
-import { Repository, FindOneOptions, getConnection } from 'typeorm';
+import { Repository, getConnection } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { Division } from '@leaa/common/src/entrys';
 import {
-  DivisionsArgs,
   DivisionsWithPaginationObject,
-  DivisionArgs,
   UpdateDivisionInput,
   CreateDivisionInput,
 } from '@leaa/common/src/dtos/division';
@@ -16,11 +14,9 @@ import { argsUtil, paginationUtil, curdUtil, loggerUtil } from '@leaa/api/src/ut
 import { IDivisionSource } from '@leaa/common/src/interfaces';
 import { SyncTagsToFileObject } from '@leaa/common/src/dtos/tag';
 import { divisionConfig } from '@leaa/api/src/configs';
+import { IDivisionsArgs, IDivisionArgs } from '@leaa/api/src/interfaces';
 
 const CLS_NAME = 'DivisionService';
-
-type IDivisionsArgs = DivisionsArgs & FindOneOptions<Division>;
-type IDivisionArgs = DivisionArgs & FindOneOptions<Division>;
 
 @Injectable()
 export class DivisionService {

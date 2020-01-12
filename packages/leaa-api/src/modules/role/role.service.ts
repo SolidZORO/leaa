@@ -1,21 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { Repository, FindOneOptions, In } from 'typeorm';
+import { Repository, In } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { Role, Permission, User } from '@leaa/common/src/entrys';
-import {
-  RolesArgs,
-  RoleArgs,
-  RolesWithPaginationObject,
-  CreateRoleInput,
-  UpdateRoleInput,
-} from '@leaa/common/src/dtos/role';
+import { RolesWithPaginationObject, CreateRoleInput, UpdateRoleInput } from '@leaa/common/src/dtos/role';
 import { argsUtil, curdUtil, paginationUtil, errorUtil } from '@leaa/api/src/utils';
+import { IRolesArgs, IRoleArgs } from '@leaa/api/src/interfaces';
 import { PermissionService } from '@leaa/api/src/modules/permission/permission.service';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
-
-type IRolesArgs = RolesArgs & FindOneOptions<Role>;
-type IRoleArgs = RoleArgs & FindOneOptions<Role>;
 
 const CLS_NAME = 'RoleService';
 

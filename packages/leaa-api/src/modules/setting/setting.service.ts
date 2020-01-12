@@ -4,20 +4,16 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 import { Setting, User } from '@leaa/common/src/entrys';
 import {
-  SettingsArgs,
   SettingsWithPaginationObject,
-  SettingArgs,
   CreateSettingInput,
   UpdateSettingInput,
   UpdateSettingsInput,
   SettingsObject,
 } from '@leaa/common/src/dtos/setting';
 import { argsUtil, loggerUtil, curdUtil, paginationUtil, errorUtil, authUtil } from '@leaa/api/src/utils';
+import { ISettingsArgs, ISettingArgs } from '@leaa/api/src/interfaces';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 import { settingSeed } from '@leaa/api/src/modules/seed/seed.data';
-
-type ISettingsArgs = SettingsArgs & FindOneOptions<Setting>;
-type ISettingArgs = SettingArgs & FindOneOptions<Setting>;
 
 const CLS_NAME = 'SettingService';
 

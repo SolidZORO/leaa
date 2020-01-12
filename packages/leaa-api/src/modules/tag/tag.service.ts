@@ -2,24 +2,20 @@ import fs from 'fs';
 import xss from 'xss';
 import mkdirp from 'mkdirp';
 import { Injectable } from '@nestjs/common';
-import { Repository, FindOneOptions, SelectQueryBuilder } from 'typeorm';
+import { Repository, SelectQueryBuilder } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { Tag, User } from '@leaa/common/src/entrys';
 import {
-  TagsArgs,
   TagsWithPaginationObject,
-  TagArgs,
   CreateTagInput,
   UpdateTagInput,
   SyncTagsToFileObject,
 } from '@leaa/common/src/dtos/tag';
 
 import { argsUtil, curdUtil, paginationUtil, loggerUtil, errorUtil } from '@leaa/api/src/utils';
+import { ITagsArgs, ITagArgs } from '@leaa/api/src/interfaces';
 import { dictConfig } from '@leaa/api/src/configs';
-
-type ITagsArgs = TagsArgs & FindOneOptions<Tag>;
-type ITagArgs = TagArgs & FindOneOptions<Tag>;
 
 const CLS_NAME = 'TagService';
 

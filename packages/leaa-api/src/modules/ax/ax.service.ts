@@ -1,15 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { Repository, FindOneOptions, SelectQueryBuilder } from 'typeorm';
+import { Repository, SelectQueryBuilder } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { Ax, User } from '@leaa/common/src/entrys';
-import { AxsArgs, AxsWithPaginationObject, AxArgs, CreateAxInput, UpdateAxInput } from '@leaa/common/src/dtos/ax';
+import { AxsWithPaginationObject, CreateAxInput, UpdateAxInput } from '@leaa/common/src/dtos/ax';
 import { argsUtil, authUtil, curdUtil, paginationUtil, errorUtil } from '@leaa/api/src/utils';
+import { IAxsArgs, IAxArgs } from '@leaa/api/src/interfaces';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 import { axSeed } from '@leaa/api/src/modules/seed/seed.data';
-
-type IAxsArgs = AxsArgs & FindOneOptions<Ax>;
-type IAxArgs = AxArgs & FindOneOptions<Ax>;
 
 const CLS_NAME = 'AxService';
 

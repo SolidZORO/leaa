@@ -1,21 +1,17 @@
 import { Injectable } from '@nestjs/common';
-import { Repository, FindOneOptions, In, SelectQueryBuilder } from 'typeorm';
+import { Repository, In, SelectQueryBuilder } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { Permission, User } from '@leaa/common/src/entrys';
 import {
-  PermissionsArgs,
   PermissionsWithPaginationObject,
-  PermissionArgs,
   CreatePermissionInput,
   UpdatePermissionInput,
 } from '@leaa/common/src/dtos/permission';
 import { argsUtil, curdUtil, paginationUtil, errorUtil } from '@leaa/api/src/utils';
+import { IPermissionsArgs, IPermissionArgs } from '@leaa/api/src/interfaces';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 import { permissionsSeed } from '@leaa/api/src/modules/seed/seed.data';
-
-type IPermissionsArgs = PermissionsArgs & FindOneOptions<Permission>;
-type IPermissionArgs = PermissionArgs & FindOneOptions<Permission>;
 
 const CLS_NAME = 'PermissionService';
 

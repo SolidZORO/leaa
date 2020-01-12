@@ -96,7 +96,7 @@ export class ArticleService {
     return this.articleRepository.findOne(id, nextArgs);
   }
 
-  async articleBySlug(slug: string, args?: ArticleArgs & FindOneOptions<Article>): Promise<Article | undefined> {
+  async articleBySlug(slug: string, args?: IArticleArgs): Promise<Article | undefined> {
     const article = await this.articleRepository.findOne({ where: { slug } });
     if (!article) return errorUtil.NOT_FOUND();
 

@@ -1,19 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { Repository, FindOneOptions } from 'typeorm';
+import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { Address, Permission, User } from '@leaa/common/src/entrys';
-import {
-  AddressesArgs,
-  AddressArgs,
-  AddressesWithPaginationObject,
-  CreateAddressInput,
-  UpdateAddressInput,
-} from '@leaa/common/src/dtos/address';
+import { AddressesWithPaginationObject, CreateAddressInput, UpdateAddressInput } from '@leaa/common/src/dtos/address';
 import { argsUtil, curdUtil, paginationUtil } from '@leaa/api/src/utils';
-
-type IAddresssArgs = AddressesArgs & FindOneOptions<Address>;
-type IAddressArgs = AddressArgs & FindOneOptions<Address>;
+import { IAddresssArgs, IAddressArgs } from '@leaa/api/src/interfaces';
 
 const CLS_NAME = 'AddressService';
 

@@ -1,4 +1,3 @@
-import uuid from 'uuid';
 import bcryptjs from 'bcryptjs';
 import { Injectable } from '@nestjs/common';
 import { Profile } from 'passport-github';
@@ -11,7 +10,7 @@ import { CreateAuthInput } from '@leaa/common/src/dtos/auth';
 import { AuthService } from '@leaa/api/src/modules/auth/auth.service';
 import { UserService } from '@leaa/api/src/modules/user/user.service';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
-import { loggerUtil } from '@leaa/api/src/utils';
+import { loggerUtil, stringUtil } from '@leaa/api/src/utils';
 
 const CLS_NAME = 'AuthGithubService';
 const PLATFORM_NAME = 'github';
@@ -25,7 +24,7 @@ export class AuthGithubService {
     private readonly configService: ConfigService,
   ) {}
 
-  private nextTicket = { ticket: uuid.v4(), ticket_at: new Date() };
+  private nextTicket = { ticket: stringUtil.random(), ticket_at: new Date() };
 
   async createUserAndAuth(req: IRequest, profile: Profile): Promise<ICreateAuthAndUserResult> {
     const newUser = await this.userService.createUser({

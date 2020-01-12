@@ -1,23 +1,19 @@
 import moment from 'moment';
 import { Injectable } from '@nestjs/common';
-import { Repository, FindOneOptions, SelectQueryBuilder, getManager } from 'typeorm';
+import { Repository, SelectQueryBuilder, getManager } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { Category, User } from '@leaa/common/src/entrys';
 import {
-  CategoriesArgs,
   CategoriesWithPaginationOrTreeObject,
-  CategoryArgs,
   CreateCategoryInput,
   UpdateCategoryInput,
   CategoryTreeObject,
 } from '@leaa/common/src/dtos/category';
 import { argsUtil, curdUtil, paginationUtil, errorUtil } from '@leaa/api/src/utils';
+import { ICategoriesArgs, ICategoryArgs } from '@leaa/api/src/interfaces';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 import { categorySeed } from '@leaa/api/src/modules/seed/seed.data';
-
-type ICategoriessArgs = CategoriesArgs & FindOneOptions<Category>;
-type ICategoryArgs = CategoryArgs & FindOneOptions<Category>;
 
 const CLS_NAME = 'CategoryService';
 
@@ -59,7 +55,7 @@ export class CategoryService {
     };
   }
 
-  categoriesByTrees(items: Category[], args?: ICategoriessArgs): CategoryTreeObject[] {
+  categoriesByTrees(items: Category[], args?: ICategoriesArgs): CategoryTreeObject[] {
     const appendInfoToItem = (item: Category): Omit<CategoryTreeObject, 'children'> => ({
       ...item,
       key: `${item.parent_id}-${item.id}-${item.slug}`,
@@ -88,8 +84,8 @@ export class CategoryService {
     return [this.rootCategory(result)];
   }
 
-  async categories(args: ICategoriessArgs): Promise<CategoriesWithPaginationOrTreeObject | undefined> {
-    const nextArgs: ICategoriessArgs = argsUtil.format(args);
+  async categories(args: ICategoriesArgs): Promise<CategoriesWithPaginationOrTreeObject | undefined> {
+    const nextArgs: ICategoriesArgs = argsUtil.format(args);
 
     const qb = this.categoryRepository.createQueryBuilder();
     qb.select().orderBy(nextArgs.orderBy || 'created_at', nextArgs.orderSort);
