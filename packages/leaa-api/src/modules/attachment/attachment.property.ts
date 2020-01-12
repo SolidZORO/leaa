@@ -46,18 +46,10 @@ export class AttachmentProperty {
   constructor(@InjectRepository(Attachment) private readonly attachmentRepository: Repository<Attachment>) {}
 
   url(attachment: IAttachment): string | null {
-    if (attachment.external_url) {
-      return attachment.external_url;
-    }
-
     return buildUrl(attachment);
   }
 
   urlAt2x(attachment: Attachment): string | null {
-    if (attachment.external_url) {
-      return attachment.external_url;
-    }
-
     return buildUrlAt2x(attachment);
   }
 }

@@ -13,7 +13,7 @@ type StrictUnionHelper<T, TAll> = T extends any ? T & Partial<Record<Exclude<Uni
 type StrictUnion<T> = StrictUnionHelper<T, T>;
 
 interface IBase {
-  attachmentList: Attachment[];
+  attachmentList?: Attachment[];
   className?: string;
   lazy?: boolean;
 }
@@ -22,7 +22,7 @@ interface INormalMode extends IBase {}
 
 interface ICenterMode extends IBase {
   centerMode: boolean;
-  height: number;
+  height?: number;
 }
 
 type IProps = StrictUnion<ICenterMode | INormalMode>;
@@ -42,8 +42,8 @@ export const SwiperImage = (props: IProps) => {
   };
 
   return (
-    <div className={style['wrapper']}>
-      {props.attachmentList.length > 0 && (
+    <div className={cx(style['swiper-image-wrapper'], props.className)}>
+      {props.attachmentList && props.attachmentList.length > 0 && (
         <Swiper
           {...{
             autoplay: {
@@ -69,7 +69,7 @@ export const SwiperImage = (props: IProps) => {
               className={cx(style['swiper-slide'], {
                 [style['swiper-slide--center-model']]: props.centerMode,
               })}
-              style={{ height: props.height }}
+              style={{ height: props.height || 'auto' }}
             >
               {a.link ? (
                 <Link href={a.link} prefetch={false}>

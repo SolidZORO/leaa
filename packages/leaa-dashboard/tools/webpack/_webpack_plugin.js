@@ -38,7 +38,9 @@ class WebpackCallbackPlugin {
         console.log('\n> 📮 ENVDATA');
         console.log('     - NAME             ', `${env.SITE_NAME}`);
         console.log('     - VERSION          ', `v${pkg.version}`);
+        console.log('');
         console.log('     - GRAPHQL_ENDPOINT ', `${env.GRAPHQL_ENDPOINT}`);
+        console.log('     - API_HOST         ', `${env.API_HOST}`);
         console.log('');
         console.log('     - DEV_PREFIX       ', `${webpackConst.DEV_PREFIX}`);
         console.log('     - CHUNK_HASH       ', `${webpackConst.CHUNK_HASH}`);

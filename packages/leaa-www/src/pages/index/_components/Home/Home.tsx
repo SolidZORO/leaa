@@ -11,15 +11,14 @@ interface IProps {
 
 export default (props: IProps) => {
   return (
-    <div className={style['wrapper']}>
-      {props.ax?.attachments?.bannerMbList && props.ax.attachments.bannerMbList.length !== 0 && (
-        <SwiperImage
-          lazy
-          attachmentList={props.ax?.attachments?.bannerMbList}
-          centerMode
-          height={props.ax.attachments.bannerMbList[0].height}
-        />
-      )}
+    <div className={style['home-wrapper']}>
+      <SwiperImage
+        className={style['home-swiper']}
+        lazy
+        attachmentList={props.ax?.attachments?.galleryMbList}
+        centerMode
+        height={props.ax?.attachments?.galleryMbList[0]?.height}
+      />
     </div>
   );
 };

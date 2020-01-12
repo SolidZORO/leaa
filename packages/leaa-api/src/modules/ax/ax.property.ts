@@ -15,7 +15,10 @@ export class AxProperty {
       return undefined;
     }
 
-    const attachmentsResult = await this.attachmentService.attachments({ moduleName: 'ax', moduleId: ax.id });
+    const attachmentsResult = await this.attachmentService.attachments({
+      moduleName: 'ax',
+      moduleId: ax.id,
+    });
     const attachments: Attachment[] = attachmentsResult?.items || [];
 
     return {

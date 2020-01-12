@@ -12,7 +12,7 @@ const app = next({ dev, dir: dev ? './' : './_dist/leaa-www' });
 const handle = app.getRequestHandler();
 
 (async () => {
-  const { PROTOCOL, PORT, BASE_HOST, SITE_NAME, DEBUG_MODE, DEMO_MODE } = envConfig;
+  const { PROTOCOL, PORT, BASE_HOST, SITE_NAME, DEBUG_MODE, DEMO_MODE, GRAPHQL_ENDPOINT, API_HOST } = envConfig;
 
   await app.prepare();
   const server = express();
@@ -40,7 +40,10 @@ const handle = app.getRequestHandler();
   console.log(`\n\n> ${nodeEnv} / ${urlWithEmoji}`);
 
   console.log('\n> 📮 ENVDATA');
-  console.log('     - NAME    ', SITE_NAME);
-  console.log('     - VERSION ', `v${pkg.version}`);
+  console.log('     - NAME             ', SITE_NAME);
+  console.log('     - VERSION          ', `v${pkg.version}`);
+  console.log('');
+  console.log('     - GRAPHQL_ENDPOINT ', GRAPHQL_ENDPOINT);
+  console.log('     - API_HOST         ', API_HOST);
   console.log('\n\n\n');
 })();

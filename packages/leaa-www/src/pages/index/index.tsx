@@ -38,12 +38,13 @@ nextPage.getInitialProps = async () => {
   try {
     const getAxBySlugQuery = await apolloClient.query<{ axBySlug: Ax }, AxArgs>({
       query: GET_AX_BY_SLUG,
-      variables: { slug: 'index-swiper' },
+      variables: { slug: 'index-swiper', orderBy: 'sort' },
+      // fetchPolicy: 'network-only',
     });
 
-    return { ax: getAxBySlugQuery?.data.axBySlug };
-  } catch (e) {
-    return { axError: e };
+    return { ax: getAxBySlugQuery?.data?.axBySlug };
+  } catch (err) {
+    return { axError: err };
   }
 };
 
