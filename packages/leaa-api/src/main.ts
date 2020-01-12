@@ -9,7 +9,7 @@ import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 import { TagService } from '@leaa/api/src/modules/tag/tag.service';
 import { AppModule } from '@leaa/api/src/app.module';
 
-const pkg = require('../package.json');
+import pkg from '@leaa/api/package.json';
 
 (async function bootstrap() {
   const logger = new Logger('App-Log');
