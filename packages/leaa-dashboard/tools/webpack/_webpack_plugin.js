@@ -27,7 +27,24 @@ class WebpackCallbackPlugin {
           process.env.NODE_ENV || 'NOT-ENV'
         ).toUpperCase()}`;
 
-        console.log(`\n\n> ${serverEnv} / URL ${serverBaseByEmoji}\n`);
+        console.log(
+          `\n\n\n\n> 🌈 DEBUG ${env.DEBUG_MODE === 'true' ? '✅' : '➖'} / DEMO ${
+            env.DEMO_MODE === 'true' ? '✅' : '➖'
+          }`,
+        );
+
+        console.log(`\n\n> ${serverEnv} / URL ${serverBaseByEmoji}`);
+
+        console.log('\n> 📮 ENVDATA');
+        console.log('     - NAME             ', `${env.SITE_NAME}`);
+        console.log('     - VERSION          ', `v${pkg.version}`);
+        console.log('     - GRAPHQL_ENDPOINT ', `${env.GRAPHQL_ENDPOINT}`);
+        console.log('');
+        console.log('     - DEV_PREFIX       ', `${webpackConst.DEV_PREFIX}`);
+        console.log('     - CHUNK_HASH       ', `${webpackConst.CHUNK_HASH}`);
+        console.log('     - PUBLIC_DIR       ', `${webpackConst.PUBLIC_DIR}`);
+        console.log('     - BUILD_DIR        ', `${webpackConst.BUILD_DIR}`);
+        console.log('\n\n\n');
       }
     });
   }

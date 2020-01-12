@@ -9,6 +9,8 @@ import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 import { TagService } from '@leaa/api/src/modules/tag/tag.service';
 import { AppModule } from '@leaa/api/src/app.module';
 
+const pkg = require('../package.json');
+
 (async function bootstrap() {
   const logger = new Logger('App-Log');
   logger.log('App Launcher...', ' 🚀 ');
@@ -41,13 +43,16 @@ import { AppModule } from '@leaa/api/src/app.module';
   const tagService = await app.get(TagService);
   await tagService.syncTagsToDictFile();
 
-  cliUtil.emoji({
+  cliUtil.envInfo({
     PROTOCOL: configService.PROTOCOL,
     PORT: configService.PORT,
     BASE_HOST: configService.BASE_HOST,
     NODE_ENV: process.env.NODE_ENV,
     showGraphql: true,
+    publicPath,
+    DEMO_MODE: configService.DEMO_MODE,
+    DEBUG_MODE: configService.DEBUG_MODE,
+    DIRNAME: __dirname,
+    VERSION: pkg.version,
   });
-
-  console.log(`> 📮 PUBLIC-PATH ${publicPath}\n\n`);
 })();
