@@ -2,15 +2,17 @@ import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import queryString from 'query-string';
 
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation, useQuery } from '@apollo/react-hooks';
 import { Row, Col, Button } from 'antd';
 
-import { LOGIN, LOGIN_BY_TICKET } from '@leaa/dashboard/src/graphqls';
+import { LOGIN, LOGIN_BY_TICKET, GET_DEMO_DATA } from '@leaa/dashboard/src/graphqls';
 import logo from '@leaa/dashboard/src/assets/images/logo/logo-black.svg';
 import { IPage, ICommenFormRef, IAuthInfo, ISubmitData } from '@leaa/dashboard/src/interfaces';
 import { authUtil, messageUtil } from '@leaa/dashboard/src/utils';
-import { LOGIN_REDIRECT_URL, LOGOUT_REDIRECT_URL } from '@leaa/dashboard/src/constants';
+import { LOGIN_REDIRECT_URL } from '@leaa/dashboard/src/constants';
 import { AuthLoginInput } from '@leaa/common/src/dtos/auth';
+import { DemoDataObject } from '@leaa/common/src/dtos/demo';
+import { envConfig } from '@leaa/dashboard/src/configs';
 import { HtmlMeta, SwitchLanguage, BuildInfo, AuthGithubButton } from '@leaa/dashboard/src/components';
 
 import { LoginForm } from './_components/LoginForm/LoginForm';
@@ -19,12 +21,10 @@ import style from './style.module.less';
 
 export default (props: IPage) => {
   const { t } = useTranslation();
-  const urlParams = queryString.parse(window.location.search);
+  const qs = queryString.parse(window.location.search);
 
   // ref
   const loginFormRef = useRef<ICommenFormRef<AuthLoginInput>>(null);
-
-  const qs = queryString.parse(window.location.search);
 
   const setLogin = (login: any) => {
     if (login?.name && login.flatPermissions?.length === 0) {
@@ -48,13 +48,20 @@ export default (props: IPage) => {
     if (login?.authToken && login.authExpiresIn) {
       authUtil.setAuthToken(login.authToken, login.authExpiresIn);
 
-      if (urlParams.redirect) {
-        props.history.push(`${urlParams.redirect}`);
+      if (qs.redirect) {
+        props.history.push(`${qs.redirect}`);
       } else {
         props.history.push(LOGIN_REDIRECT_URL);
       }
     }
   };
+
+  // query
+  const getDemoDataQuery = envConfig.DEMO_MODE
+    ? useQuery<{ demoData: DemoDataObject }>(GET_DEMO_DATA, {
+        fetchPolicy: 'network-only',
+      })
+    : undefined;
 
   // mutation
   const [submitLoginMutate, submitLoginMutation] = useMutation<{
@@ -66,7 +73,7 @@ export default (props: IPage) => {
     },
   });
 
-  const [submitLoginByTicketMutate, submitLoginByTicketMutation] = useMutation<{
+  const [submitLoginByTicketMutate] = useMutation<{
     loginByTicket: IAuthInfo;
   }>(LOGIN_BY_TICKET, {
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
@@ -133,7 +140,7 @@ export default (props: IPage) => {
               <div className={style['description']}>{t('_page:Auth.Login.subTitle')}</div>
 
               <div className={style['login-form']}>
-                <LoginForm ref={loginFormRef} />
+                <LoginForm ref={loginFormRef} initialValues={getDemoDataQuery?.data?.demoData?.loginAccountByAdmin} />
               </div>
 
               <div className={style['local-button']}>

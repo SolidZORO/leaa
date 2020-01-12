@@ -1,14 +1,17 @@
 import cx from 'classnames';
-import React, { forwardRef, useImperativeHandle } from 'react';
+import React, { useState, useEffect, forwardRef, useImperativeHandle } from 'react';
 import { Col, Form, Input, Row, Checkbox } from 'antd';
 
 import { useTranslation } from 'react-i18next';
+
+import { LoginAccount } from '@leaa/common/src/dtos/demo';
 
 import style from './style.module.less';
 
 interface IProps {
   className?: string;
   loading?: boolean;
+  initialValues?: LoginAccount;
 }
 
 export const LoginForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
@@ -23,16 +26,17 @@ export const LoginForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
     }
   };
 
-  const initialValues = {
-    email: 'admin@local.com',
-    password: 'h8Hx9qvPKoHMLQgj',
-  };
+  useEffect(() => {
+    if (props.initialValues) {
+      form.setFieldsValue(props.initialValues);
+    }
+  }, [form, props.initialValues]);
 
   useImperativeHandle(ref, () => ({ form, onValidateForm }));
 
   return (
     <div className={cx(style['wrapper'], props.className)}>
-      <Form form={form} layout="vertical" initialValues={initialValues}>
+      <Form form={form} layout="vertical" initialValues={props.initialValues}>
         <Row gutter={16} className={style['form-row']}>
           <Col xs={24} sm={12}>
             <Form.Item

@@ -8,7 +8,7 @@ import { OperationDefinitionNode } from 'graphql';
 
 import { envConfig } from '@leaa/dashboard/src/configs';
 
-const ignoreErrorPath = ['loginByTicket', 'userByToken'];
+const ignoreErrorPath = ['loginByTicket', 'userByToken', 'demoData'];
 
 const httpLink = new HttpLink({
   uri: envConfig.GRAPHQL_ENDPOINT,
@@ -31,9 +31,8 @@ const authLink = new ApolloLink((operation, forward) => {
 const errorLink = onError(({ graphQLErrors }) => {
   if (graphQLErrors) {
     graphQLErrors.forEach(error => {
-      console.error(`❌ [GraphQL error]: ${JSON.stringify(error)}`);
-
       if (!ignoreErrorPath.includes(`${error.path}`)) {
+        console.error(`❌ [GraphQL error]: ${JSON.stringify(error)}`);
         messageUtil.gqlError(error.message);
       }
     });

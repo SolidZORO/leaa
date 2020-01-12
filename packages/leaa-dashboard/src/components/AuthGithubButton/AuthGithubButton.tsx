@@ -18,7 +18,7 @@ export const AuthGithubButton = (props: IProps) => {
 
   return (
     <div className={cx(style['wrapper'], props.className)}>
-      <Button size="small" href={`${envConfig.API_HOST}/auth/github/login?KKKKKKKKKKKKK=1111111111111111111`}>
+      <Button size="small" href={`${envConfig.API_HOST}/auth/github/login`}>
         Github
       </Button>
     </div>

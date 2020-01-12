@@ -1,4 +1,6 @@
 export interface IDotEnv {
+  DEMO_MODE: boolean;
+  DEBUG_MODE: boolean;
   SITE_NAME: string;
   PROTOCOL: 'http' | 'https';
   PORT: number;

@@ -47,3 +47,5 @@ export * from './division.mutation';
 
 export * from './zan.query';
 export * from './zan.mutation';
+
+export * from './demo.query';
