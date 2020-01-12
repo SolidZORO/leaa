@@ -63,7 +63,7 @@ export const ArticleExtForm = forwardRef((props: IProps, ref: React.Ref<any>) =>
         title={null}
         extra={<EntryInfoDate date={props.item && [props.item.created_at, props.item.updated_at]} />}
       >
-        <Form form={form} layout="vertical">
+        <Form form={form} name="article-ext" layout="vertical">
           <Row gutter={16} className={style['form-row']}>
             <Col xs={24}>
               <Form.Item name="description" rules={[]} label={t('_lang:description')}>

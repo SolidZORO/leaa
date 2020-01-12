@@ -63,7 +63,7 @@ export const CouponRedeemForm = forwardRef((props: IProps, ref: React.Ref<any>) 
         title={`${t('_page:Coupon.couponInfo')} TEST`}
         extra={<EntryInfoDate date={props.item && [props.item.created_at, props.item.updated_at]} />}
       >
-        <Form form={form} layout="vertical">
+        <Form form={form} name="coupon-redeem" layout="vertical">
           <Row gutter={16}>
             <div style={{ display: 'none' }}>
               <Form.Item name="code" noStyle rules={[{ required: true }]} label={t('_page:Coupon.code')}>

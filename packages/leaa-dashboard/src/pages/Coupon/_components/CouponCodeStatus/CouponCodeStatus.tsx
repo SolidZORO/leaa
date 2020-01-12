@@ -34,7 +34,11 @@ export const CouponCodeStatus = (props: IProps) => {
           </div>
         }
       >
-        <Form className={cx('g-form--zero-margin-bottom', style['form-wrapper'])} layout="inline">
+        <Form
+          name="coupon-code-status"
+          className={cx('g-form--zero-margin-bottom', style['form-wrapper'])}
+          layout="inline"
+        >
           <Row gutter={16} className={style['form-row']}>
             <Col xs={24} sm={12}>
               <CouponItem type="coupon" item={props.item} />

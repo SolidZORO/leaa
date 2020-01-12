@@ -5,18 +5,18 @@ import { GraphQLError } from 'graphql';
 import { GET_ARTICLES } from '@leaa/www/src/graphqls';
 import { ArticlesWithPaginationObject } from '@leaa/common/src/dtos/article';
 import { HtmlMeta, PageCard } from '@leaa/www/src/components';
-import { IPageProps } from '@leaa/www/src/interfaces';
+import { IBasePageProps, IGetInitialProps } from '@leaa/www/src/interfaces';
 import { apolloClient } from '@leaa/www/src/libs';
 import { messageUtil } from '@leaa/www/src/utils';
 
 const ArticleList = dynamic(() => import('./_components/ArticleList/ArticleList'));
 
-interface IProps extends IPageProps {
-  pageProps: {
-    articles?: ArticlesWithPaginationObject;
-    articlesError?: GraphQLError;
-  };
+interface IPageProps {
+  articles?: ArticlesWithPaginationObject;
+  articlesError?: GraphQLError;
 }
+
+interface IProps extends IBasePageProps<IPageProps> {}
 
 const nextPage = (ctx: IProps) => {
   const { articles, articlesError } = ctx.pageProps;
@@ -32,7 +32,7 @@ const nextPage = (ctx: IProps) => {
   );
 };
 
-nextPage.getInitialProps = async () => {
+nextPage.getInitialProps = async (ctx: IGetInitialProps): Promise<IPageProps> => {
   try {
     const getArticlesQuery = await apolloClient.query<{ articles: ArticlesWithPaginationObject }>({
       query: GET_ARTICLES,
@@ -45,8 +45,8 @@ nextPage.getInitialProps = async () => {
     });
 
     return { articles: getArticlesQuery?.data.articles };
-  } catch (e) {
-    return { articlesError: e };
+  } catch (err) {
+    return { articlesError: err };
   }
 };
 

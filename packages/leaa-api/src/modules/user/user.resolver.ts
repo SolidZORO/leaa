@@ -63,8 +63,6 @@ export class UserResolver {
     return this.userService.user(id, args, user);
   }
 
-  @UseGuards(PermissionsGuard)
-  @Permissions('user.item-read')
   @Query(() => User)
   async userByToken(
     @Args({ name: 'token', type: () => String, nullable: true }) token?: string,

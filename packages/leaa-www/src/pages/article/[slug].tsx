@@ -5,19 +5,19 @@ import { GraphQLError } from 'graphql';
 import { Article } from '@leaa/common/src/entrys';
 import { GET_ARTICLE_BY_SLUG } from '@leaa/www/src/graphqls';
 
-import { IPageProps, IGetInitialProps } from '@leaa/www/src/interfaces';
+import { IBasePageProps, IGetInitialProps } from '@leaa/www/src/interfaces';
 import { HtmlMeta, PageCard } from '@leaa/www/src/components';
 import { apolloClient } from '@leaa/www/src/libs';
 import { messageUtil } from '@leaa/www/src/utils';
 
 const ArticleItem = dynamic(() => import('./_components/ArticleItem/ArticleItem'));
 
-interface IProps extends IPageProps {
-  pageProps: {
-    article?: Article;
-    articleError?: GraphQLError;
-  };
+interface IPageProps {
+  article?: Article;
+  articleError?: GraphQLError;
 }
+
+interface IProps extends IBasePageProps<IPageProps> {}
 
 const nextPage = (ctx: IProps) => {
   const { article, articleError } = ctx.pageProps;
@@ -37,7 +37,9 @@ const nextPage = (ctx: IProps) => {
   );
 };
 
-nextPage.getInitialProps = async (ctx: IGetInitialProps) => {
+nextPage.getInitialProps = async (ctx: IGetInitialProps): Promise<IPageProps> => {
+  // console.log('SLUG', ctx);
+
   try {
     const getArticleQuery = await apolloClient.query<{ articleBySlug: Article }>({
       query: GET_ARTICLE_BY_SLUG,
@@ -47,8 +49,8 @@ nextPage.getInitialProps = async (ctx: IGetInitialProps) => {
     });
 
     return { article: getArticleQuery.data.articleBySlug };
-  } catch (e) {
-    return { articleError: e };
+  } catch (err) {
+    return { articleError: err };
   }
 };
 

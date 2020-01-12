@@ -1,14 +1,10 @@
 import React from 'react';
 import cx from 'classnames';
-import { useQuery } from '@apollo/react-hooks';
-import { Layout, message } from 'antd';
+import { Layout } from 'antd';
 
 import { urlUtil } from '@leaa/www/src/utils';
-import { IPageProps } from '@leaa/www/src/interfaces';
+import { IBasePageProps } from '@leaa/www/src/interfaces';
 import { envConfig } from '@leaa/www/src/configs';
-import { SettingsWithPaginationObject, SettingArgs } from '@leaa/common/src/dtos/setting';
-import { GET_SETTINGS_FOR_WWW } from '@leaa/www/src/graphqls';
-import { useStore } from '@leaa/www/src/stores';
 import { ProgressLoading } from '@leaa/www/src/components';
 
 import { LayoutContent } from './_components/LayoutContent/LayoutContent';
@@ -18,7 +14,7 @@ import { LayoutSimpleFooter } from './_components/LayoutSimpleFooter/LayoutSimpl
 import '@leaa/www/src/styles/global.less';
 import style from './style.module.less';
 
-interface IProps extends IPageProps {
+interface IProps extends IBasePageProps {
   children: React.ReactNode;
   disableSidebar?: boolean;
   disableHeader?: boolean;
@@ -40,27 +36,6 @@ export const MasterLayout = (props: IProps) => {
       }
     };
   }
-
-  const store = useStore();
-
-  const getSettings = (): void => {
-    const getSettingsQuery = useQuery<{ settings: SettingsWithPaginationObject }, SettingArgs>(GET_SETTINGS_FOR_WWW);
-
-    if (getSettingsQuery.error) {
-      message.error(getSettingsQuery.error);
-    }
-
-    store.setting.globalSettings =
-      getSettingsQuery &&
-      getSettingsQuery.data &&
-      getSettingsQuery.data.settings &&
-      getSettingsQuery.data.settings.items
-        ? getSettingsQuery.data.settings.items
-        : [];
-  };
-
-  // just once query setting
-  getSettings();
 
   return (
     <div

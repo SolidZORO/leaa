@@ -1,8 +1,13 @@
 import { AppProps } from 'next/app';
 import { ApolloClient } from 'apollo-client';
+import { Store } from '@leaa/www/src/stores';
 
-export interface IPageProps extends AppProps {
+export interface IBasePageProps<T = {}> extends AppProps {
+  storeState: Store;
+  //
+  apolloState: ApolloClient<any>;
   apolloClient: ApolloClient<any>;
+  //
   isServer: boolean;
-  pageProps: any;
+  pageProps: T;
 }

@@ -3,11 +3,12 @@ import cx from 'classnames';
 
 import { IAuthInfo } from '@leaa/www/src/interfaces';
 import { LogoutButton } from '@leaa/www/src/components';
+import { User } from '@leaa/common/src/entrys';
 
 import style from './style.module.less';
 
 interface IProps {
-  user: IAuthInfo;
+  user: User;
 }
 
 export default (props: IProps) => {

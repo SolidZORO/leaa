@@ -67,7 +67,7 @@ export const DivisionInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) 
         title={t('_page:Division.divisionData')}
         extra={<EntryInfoDate date={props.item && [props.item.created_at, props.item.updated_at]} />}
       >
-        <Form form={form} layout="vertical">
+        <Form form={form} name="division-info" layout="vertical">
           <Row gutter={16} className={style['form-row']}>
             <Col xs={24} sm={6}>
               <Form.Item name="name" rules={[{ required: true }]} label={t('_page:Division.name')}>

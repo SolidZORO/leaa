@@ -9,6 +9,6 @@ export class SettingStore {
   @observable globalSettings: IGlobalSetting[] = [];
 
   constructor(initData?: IMappingStore) {
-    this.globalSettings = initData && initData.globalSettings ? initData.globalSettings : this.globalSettings;
+    this.globalSettings = (initData && initData.globalSettings) || this.globalSettings;
   }
 }

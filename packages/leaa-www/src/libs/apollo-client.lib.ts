@@ -11,7 +11,7 @@ import { envConfig } from '@leaa/www/src/configs';
 
 const isServer = typeof window === 'undefined';
 
-let apolloClientLib: ApolloClient<NormalizedCacheObject>;
+let apolloClientLib: ApolloClient<NormalizedCacheObject> | null = null;
 
 if (isServer) {
   // @ts-ignore
@@ -66,7 +66,7 @@ function createApolloClient(initialState: NormalizedCacheObject, authToken?: str
   });
 }
 
-export const apolloClientWithState = (initialState: any = {}, authToken?: string) => {
+export const apolloClientWithState = (initialState: NormalizedCacheObject = {}, authToken?: string) => {
   if (isServer) {
     return createApolloClient(initialState, authToken);
   }
@@ -78,4 +78,4 @@ export const apolloClientWithState = (initialState: any = {}, authToken?: string
   return apolloClientLib;
 };
 
-export const apolloClient = apolloClientWithState({});
+export const apolloClient = apolloClientWithState();

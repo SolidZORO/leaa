@@ -22,6 +22,12 @@ const nextPage = () => {
 };
 
 nextPage.getInitialProps = async (ctx: IGetInitialProps) => {
+  const authToken = authUtil.getAuthToken(ctx);
+
+  if (authToken) {
+    urlUtil.redirect('/account', ctx.res);
+  }
+
   const ticket = ctx.query?.ticket;
 
   if (ticket) {

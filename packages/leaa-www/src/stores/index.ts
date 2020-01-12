@@ -1,5 +1,5 @@
 import { configure } from 'mobx';
-import { useStaticRendering } from 'mobx-react';
+import { useStaticRendering } from 'mobx-react-lite';
 import { createContext, useContext } from 'react';
 
 import { IMappingStore, SettingStore } from './setting.store';
@@ -16,16 +16,17 @@ useStaticRendering(isServer);
 export class Store {
   setting: SettingStore;
 
-  constructor(initData: IStore = {}) {
-    this.setting = new SettingStore(initData && initData.setting);
+  constructor(initData: IStore) {
+    this.setting = new SettingStore(initData?.setting);
   }
 }
 
 let store: Store;
 
-export const initStore = (storeData: IStore = {}): Store => {
+export const initStore = (storeData: IStore): Store => {
   if (isServer) {
     store = new Store(storeData);
+
     return store;
   }
 
@@ -34,11 +35,11 @@ export const initStore = (storeData: IStore = {}): Store => {
   }
 
   store = new Store(storeData);
+
   return store;
 };
 
-export const StoreContext = createContext({});
+export const StoreContext = createContext({} as Store);
 export const StoreProvider = StoreContext.Provider;
 
-// @ts-ignore
 export const useStore = (): Store => useContext(StoreContext);

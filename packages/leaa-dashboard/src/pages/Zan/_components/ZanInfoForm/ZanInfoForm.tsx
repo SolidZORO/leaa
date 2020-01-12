@@ -63,7 +63,7 @@ export const ZanInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
         title={t('_page:Zan.zanInfo')}
         extra={<EntryInfoDate date={props.item && [props.item.created_at, props.item.updated_at]} />}
       >
-        <Form form={form} layout="vertical">
+        <Form form={form} name="zan-info" layout="vertical">
           <Row gutter={16} className={style['form-row']}>
             <Col xs={24} sm={18}>
               <Form.Item

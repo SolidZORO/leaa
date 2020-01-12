@@ -71,7 +71,7 @@ export const AddressInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =
         title={t('_page:Address.addressInfo')}
         extra={<EntryInfoDate date={props.item && [props.item.created_at, props.item.updated_at]} />}
       >
-        <Form form={form} layout="vertical">
+        <Form form={form} name="address-info" layout="vertical">
           <Row gutter={16} className={style['form-row']}>
             <Col xs={24} sm={6}>
               <Form.Item name="consignee" rules={[{ required: true }]} label={t('_page:Address.consignee')}>

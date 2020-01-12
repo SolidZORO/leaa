@@ -1,22 +1,29 @@
 import React from 'react';
 import Head from 'next/head';
 import { renderToString } from 'react-dom/server';
-import { AppContext } from 'next/app';
+import NextApp, { AppContext, AppProps } from 'next/app';
 import { getMarkupFromTree } from '@apollo/react-ssr';
+import { InMemoryCache, NormalizedCacheObject } from 'apollo-cache-inmemory';
 
 import { apolloClientWithState } from './apollo-client.lib';
 
+interface Props {
+  apolloState: NormalizedCacheObject;
+}
+
 const isServer = typeof window === 'undefined';
 
-export const withApolloClient = (App: React.ComponentType<any> & { getInitialProps?: Function }) => {
-  return class Apollo extends React.Component {
+export const withApolloClient = (App: typeof NextApp) => {
+  return class Apollo extends React.Component<Props & AppProps> {
     // eslint-disable-next-line react/static-property-placement
     static displayName = 'withApollo(App)';
 
     static async getInitialProps(ctx: AppContext) {
       const { Component, router } = ctx;
 
-      let appProps = {};
+      let appProps = {
+        pageProps: {},
+      };
 
       if (App.getInitialProps) {
         appProps = await App.getInitialProps(ctx);
@@ -25,6 +32,8 @@ export const withApolloClient = (App: React.ComponentType<any> & { getInitialPro
       if (isServer && router && router.route && router.route.includes('/logout')) {
         return Head.rewind();
       }
+
+      const apollo = apolloClientWithState();
 
       if (isServer) {
         try {
@@ -37,7 +46,7 @@ export const withApolloClient = (App: React.ComponentType<any> & { getInitialPro
                 Component={Component}
                 router={router}
                 // Run all GraphQL queries in the component tree and extract the resulting data
-                apolloClient={apolloClientWithState()}
+                apolloClient={apollo}
                 isServer={isServer}
               />
             ),
@@ -59,7 +68,7 @@ export const withApolloClient = (App: React.ComponentType<any> & { getInitialPro
       }
 
       // Extract query data from the Apollo store
-      const apolloState = apolloClientWithState().cache.extract();
+      const apolloState = apollo.cache.extract();
 
       return {
         ...appProps,

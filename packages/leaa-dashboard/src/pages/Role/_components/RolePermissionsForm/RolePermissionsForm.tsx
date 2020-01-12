@@ -93,7 +93,7 @@ export const RolePermissionsForm = forwardRef((props: IProps, ref: React.Ref<any
           </span>
         }
       >
-        <Form form={form} layout="vertical">
+        <Form form={form} name="role-permissions" layout="vertical">
           <Form.Item name="permissionIds" rules={[]} validateTrigger={['onBlur']}>
             <RolePermissionsCheckbox
               permissionsFlat={(Array.isArray(props.permissions) && props.permissions) || []}

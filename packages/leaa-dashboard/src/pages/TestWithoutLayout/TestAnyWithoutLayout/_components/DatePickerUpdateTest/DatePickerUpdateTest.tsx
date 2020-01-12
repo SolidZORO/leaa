@@ -13,7 +13,7 @@ export const DatePickerUpdateTest = () => {
 
   return (
     <div style={{ padding: 20 }}>
-      <Form form={form} layout="vertical">
+      <Form form={form} name="date-picker-update" layout="vertical">
         <Form.Item name="time" rules={[]} label="TIME">
           <DatePicker showTime />
         </Form.Item>

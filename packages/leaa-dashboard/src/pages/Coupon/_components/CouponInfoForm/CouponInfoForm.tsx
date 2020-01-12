@@ -106,7 +106,7 @@ export const CouponInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =>
         title={t('_page:Coupon.couponInfo')}
         extra={<EntryInfoDate date={props.item && [props.item.created_at, props.item.updated_at]} />}
       >
-        <Form form={form} layout="vertical">
+        <Form form={form} name="coupon-info" layout="vertical">
           <Row gutter={16}>
             <div style={{ display: 'none' }}>
               <Form.Item name="type" noStyle rules={[{ required: true }]} label={t('_lang:type')}>

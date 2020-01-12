@@ -100,6 +100,8 @@ export class UserService {
       nextArgs.relations = ['roles'];
     }
 
+    console.log(token);
+
     // @ts-ignore
     const userDecode: { id: any } = this.jwtService.decode(token);
     if (!userDecode || !userDecode.id) return errorUtil.ERROR({ error: 'Token Error' });

@@ -7,18 +7,18 @@ import { Ax } from '@leaa/common/src/entrys';
 import { AxArgs } from '@leaa/common/src/dtos/ax';
 import { HtmlMeta, PageCard } from '@leaa/www/src/components';
 
-import { IPageProps } from '@leaa/www/src/interfaces';
+import { IBasePageProps, IGetInitialProps } from '@leaa/www/src/interfaces';
 import { apolloClient } from '@leaa/www/src/libs';
 import { messageUtil } from '@leaa/www/src/utils';
 
 const Home = dynamic(() => import('./_components/Home/Home'));
 
-interface IProps extends IPageProps {
-  pageProps: {
-    ax?: Ax;
-    axError?: GraphQLError;
-  };
+interface IPageProps {
+  ax?: Ax;
+  axError?: GraphQLError;
 }
+
+interface IProps extends IBasePageProps<IPageProps> {}
 
 const nextPage = (ctx: IProps) => {
   const { ax, axError } = ctx.pageProps;
@@ -34,7 +34,7 @@ const nextPage = (ctx: IProps) => {
   );
 };
 
-nextPage.getInitialProps = async () => {
+nextPage.getInitialProps = async (ctx: IGetInitialProps): Promise<IPageProps> => {
   try {
     const getAxBySlugQuery = await apolloClient.query<{ axBySlug: Ax }, AxArgs>({
       query: GET_AX_BY_SLUG,

@@ -79,7 +79,7 @@ export const SettingModalForm = forwardRef((props: IProps, ref: React.Ref<any>) 
 
   return (
     <div className={cx(style['wrapper'], props.className)}>
-      <Form form={form} layout="vertical">
+      <Form form={form} name="setting-modal" layout="vertical">
         <Row gutter={16}>
           {props.type !== 'create' && (
             <div style={{ display: 'none' }}>

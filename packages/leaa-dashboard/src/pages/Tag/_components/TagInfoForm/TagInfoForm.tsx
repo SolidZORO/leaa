@@ -65,7 +65,7 @@ export const TagInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
         title={t('_page:Tag.tagInfo')}
         extra={<EntryInfoDate date={props.item && [props.item.created_at, props.item.updated_at]} />}
       >
-        <Form form={form} layout="vertical">
+        <Form form={form} name="tag-info" layout="vertical">
           <Row gutter={16}>
             <Col xs={24} sm={6}>
               <Form.Item name="name" rules={[{ required: true }]} label={t('_lang:name')}>

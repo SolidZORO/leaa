@@ -71,7 +71,7 @@ export const CategoryInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) 
         title={t('_page:Category.categoryInfo')}
         extra={<EntryInfoDate date={props.item && [props.item.created_at, props.item.updated_at]} />}
       >
-        <Form form={form} layout="vertical">
+        <Form form={form} name="category-info" layout="vertical">
           <Row gutter={16} className={style['form-row']}>
             <Col xs={24} sm={6}>
               <Form.Item

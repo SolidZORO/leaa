@@ -127,7 +127,14 @@ export const SettingListForm = forwardRef((props: IProps, ref: React.Ref<any>) =
   return (
     <div className={cx(style['wrapper'], props.className)}>
       <FormCard>
-        <Form form={form} layout="horizontal" hideRequiredMark {...formItemLayout} className={style['form-wrapper']}>
+        <Form
+          form={form}
+          name="setting-list"
+          layout="horizontal"
+          hideRequiredMark
+          {...formItemLayout}
+          className={style['form-wrapper']}
+        >
           {props.items?.map(item => (
             <Form.Item
               key={item.id}
