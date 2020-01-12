@@ -114,6 +114,8 @@ export class AuthWechatService {
     // eslint-disable-next-line max-len
     const url = `/get-weixin-code.html?appid=${authConfig.wechat.appId}&scope=${nextScope}&state=${nextStateParams}&redirect_uri=${authConfig.wechat.wechatRedirectUrl}`;
 
+    loggerUtil.log(`Wechat Login URL, ${url}`, CLS_NAME);
+
     res.redirect(url);
   }
 
@@ -169,7 +171,7 @@ export class AuthWechatService {
 
     const redirectUrl = `${url}?${queryString.stringify(nextQuery)}`;
 
-    loggerUtil.log(`Wechat Redirect Url, ${redirectUrl}`, CLS_NAME);
+    loggerUtil.log(`Wechat Redirect URL, ${redirectUrl}`, CLS_NAME);
 
     res.redirect(redirectUrl);
   }

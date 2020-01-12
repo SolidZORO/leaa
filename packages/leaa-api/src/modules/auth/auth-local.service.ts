@@ -69,7 +69,7 @@ export class AuthLocalService {
         status: 1,
       });
 
-      loggerUtil.log(`Local Singup Success, ${JSON.stringify({ ...newUser, password: '******' })}`, CLS_NAME);
+      loggerUtil.log(`Local Singup Succeed, ${JSON.stringify({ ...newUser, password: '******' })}`, CLS_NAME);
 
       if (uid) {
         await this.authService.bindUserIdToAuth(newUser, uid);

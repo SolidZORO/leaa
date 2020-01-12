@@ -62,6 +62,8 @@ export class AuthGithubService {
   }
 
   async githubValidate(req: IRequest, accessToken: string, refreshToken: string, profile: Profile, done: any) {
+    console.log(profile);
+
     let userInfo: User | undefined;
     let userAuth: Auth | undefined;
 
@@ -85,12 +87,16 @@ export class AuthGithubService {
         userAuth,
       });
     } catch (err) {
-      loggerUtil.error('githubValidate', CLS_NAME, err);
+      loggerUtil.error(`Github Validate, ${JSON.stringify(err)}`, CLS_NAME, err);
       done(err, false);
     }
   }
 
   async githubCallback(req: IRequestGithubCallback, res: IResponse): Promise<void | string> {
-    res.redirect(`http://localhost:7777/login?ticket=${req.user?.userAuth?.ticket}`);
+    const url = `${req.headers.referer}login?ticket=${req.user?.userAuth?.ticket}`;
+
+    loggerUtil.log(`Github Callback URL, ${url}`, CLS_NAME);
+
+    res.redirect(url);
   }
 }
