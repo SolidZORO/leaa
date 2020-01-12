@@ -1,4 +1,3 @@
-const _ = require('lodash');
 const path = require('path');
 const dotenv = require('dotenv');
 
@@ -10,7 +9,10 @@ const dotEnvPath = dev ? `${rootPath}/.env` : `${rootPath}/.env.production`;
 dotenv.config({ path: dotEnvPath });
 
 module.exports = {
-  NAME: process.env.NAME,
+  DEMO_MODE: Boolean(process.env.DEMO_MODE === 'true'),
+  DEBUG_MODE: Boolean(process.env.DEBUG_MODE === 'true'),
+
+  SITE_NAME: process.env.SITE_NAME,
   MODE: process.env.MODE,
   PROTOCOL: process.env.PROTOCOL,
   PORT: process.env.PORT,

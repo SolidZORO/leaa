@@ -27,8 +27,6 @@ export const envInfo = ({
   const serverGraphqlByEmoji = `✨✨ \x1b[00;41;9m${serverBaseByText}/graphql\x1b[0m ✨✨`;
   const serverEnv = `${NODE_ENV !== 'production' ? '🚀' : '🔰'} ${(NODE_ENV || 'NOT-ENV').toUpperCase()}`;
 
-  // const SPACES = 17;
-
   console.log(`\n\n> 🌈 DEBUG ${DEBUG_MODE ? '✅' : '➖'} / DEMO ${DEMO_MODE ? '✅' : '➖'}`);
 
   console.log(`\n\n> ${serverEnv} /     URL`, serverBaseByEmoji);

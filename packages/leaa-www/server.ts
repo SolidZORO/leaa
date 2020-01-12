@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser';
 
 import { envConfig } from '@leaa/www/src/configs';
 import { authMiddleware } from '@leaa/www/src/middlewares';
+import pkg from '@leaa/www/package.json';
 
 const dev = process.env.NODE_ENV !== 'production';
 
@@ -11,7 +12,7 @@ const app = next({ dev, dir: dev ? './' : './_dist/leaa-www' });
 const handle = app.getRequestHandler();
 
 (async () => {
-  const { PROTOCOL, PORT, BASE_HOST, NAME } = envConfig;
+  const { PROTOCOL, PORT, BASE_HOST, SITE_NAME, DEBUG_MODE, DEMO_MODE } = envConfig;
 
   await app.prepare();
   const server = express();
@@ -30,9 +31,16 @@ const handle = app.getRequestHandler();
 
   await server.listen(PORT);
 
+  // emoji for CLI
   const url = `${PROTOCOL}://${BASE_HOST}:${PORT}`;
   const urlWithEmoji = `✨✨ \x1b[00;47;9m\x1b[30m${url}\x1b[0m ✨✨`;
   const nodeEnv = `${dev ? '🚀' : '🔰'} ${(process.env.NODE_ENV || 'development').toUpperCase()}`;
 
-  console.log(`\n> ${nodeEnv} / ${NAME} / ${urlWithEmoji}\n`);
+  console.log(`\n\n\n> 🌈 DEBUG ${DEBUG_MODE ? '✅' : '➖'} / DEMO ${DEMO_MODE ? '✅' : '➖'}`);
+  console.log(`\n\n> ${nodeEnv} / ${urlWithEmoji}`);
+
+  console.log('\n> 📮 ENVDATA');
+  console.log('     - NAME    ', SITE_NAME);
+  console.log('     - VERSION ', `v${pkg.version}`);
+  console.log('\n\n\n');
 })();

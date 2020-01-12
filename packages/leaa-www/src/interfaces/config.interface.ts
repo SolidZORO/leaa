@@ -1,5 +1,8 @@
 export interface IDotEnvClient {
-  NAME?: string;
+  DEMO_MODE?: boolean;
+  DEBUG_MODE?: boolean;
+
+  SITE_NAME?: string;
   MODE?: 'production' | 'development' | 'test' | 'demo';
   NODE_ENV?: string;
   PROTOCOL?: string;
