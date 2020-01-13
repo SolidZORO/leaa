@@ -3,7 +3,7 @@ import Head from 'next/head';
 import { renderToString } from 'react-dom/server';
 import NextApp, { AppContext, AppProps } from 'next/app';
 import { getMarkupFromTree } from '@apollo/react-ssr';
-import { InMemoryCache, NormalizedCacheObject } from 'apollo-cache-inmemory';
+import { NormalizedCacheObject } from 'apollo-cache-inmemory';
 
 import { apolloClientWithState } from './apollo-client.lib';
 

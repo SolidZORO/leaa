@@ -38,8 +38,6 @@ const nextPage = (ctx: IProps) => {
 };
 
 nextPage.getInitialProps = async (ctx: IGetInitialProps): Promise<IPageProps> => {
-  // console.log('SLUG', ctx);
-
   try {
     const getArticleQuery = await apolloClient.query<{ articleBySlug: Article }>({
       query: GET_ARTICLE_BY_SLUG,

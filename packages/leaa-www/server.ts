@@ -4,7 +4,6 @@ import cookieParser from 'cookie-parser';
 
 import { envConfig } from '@leaa/www/src/configs';
 import { authMiddleware } from '@leaa/www/src/middlewares';
-import pkg from '@leaa/www/package.json';
 
 const dev = process.env.NODE_ENV !== 'production';
 
@@ -41,7 +40,6 @@ const handle = app.getRequestHandler();
 
   console.log('\n> 📮 ENVDATA');
   console.log('     - NAME             ', SITE_NAME);
-  console.log('     - VERSION          ', `v${pkg.version}`);
   console.log('');
   console.log('     - GRAPHQL_ENDPOINT ', GRAPHQL_ENDPOINT);
   console.log('     - API_HOST         ', API_HOST);

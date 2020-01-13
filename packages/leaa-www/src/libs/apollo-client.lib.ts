@@ -6,7 +6,7 @@ import { onError } from 'apollo-link-error';
 import { OperationDefinitionNode } from 'graphql';
 import { InMemoryCache, NormalizedCacheObject } from 'apollo-cache-inmemory';
 
-import { authUtil, messageUtil } from '@leaa/www/src/utils';
+import { authUtil } from '@leaa/www/src/utils';
 import { envConfig } from '@leaa/www/src/configs';
 
 const isServer = typeof window === 'undefined';

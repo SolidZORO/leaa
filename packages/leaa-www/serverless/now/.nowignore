@@ -10,3 +10,4 @@ designs/
 /packages/*
 !/packages/_leaa-common
 !/packages/leaa-www
+!/packages/leaa-www/.env.production
