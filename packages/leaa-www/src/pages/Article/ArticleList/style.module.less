@@ -1,0 +1,37 @@
+@import '~@leaa/www/src/styles/variables.less';
+
+.article-list-wrapper {
+  margin: 40px 0;
+
+  .full-container {
+    background-color: transparent;
+  }
+
+  .container-card {
+    width: 100%;
+
+    @media (min-width: @screen-md) {
+      width: 720px;
+      padding: 40px 60px;
+    }
+  }
+}
+
+.item {
+  margin-bottom: 35px;
+
+  .title {
+    font-size: 120%;
+    margin: 0;
+
+    .link {
+      color: #333;
+    }
+  }
+
+  .date {
+    display: inline-block;
+    font-size: 80%;
+    color: #999;
+  }
+}

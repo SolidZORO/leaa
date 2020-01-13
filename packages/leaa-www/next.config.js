@@ -9,6 +9,8 @@ if (typeof require !== 'undefined') {
 const nextConfig = {
   env,
   target: 'server',
+  useFileSystemPublicRoutes: false,
+  poweredByHeader: false,
 };
 
 module.exports = { ...nextConfig, webpack: withWebpack };

@@ -2,24 +2,45 @@ import express from 'express';
 import next from 'next';
 import cookieParser from 'cookie-parser';
 
+import { cliUtil } from '@leaa/www/src/utils';
 import { envConfig } from '@leaa/www/src/configs';
 import { authMiddleware } from '@leaa/www/src/middlewares';
 
 const dev = process.env.NODE_ENV !== 'production';
+const dir = dev ? '.' : './_dist/leaa-www';
 
-const app = next({ dev, dir: dev ? './' : './_dist/leaa-www' });
+const app = next({ dev, dir });
 const handle = app.getRequestHandler();
 
-(async () => {
-  const { PROTOCOL, PORT, BASE_HOST, SITE_NAME, DEBUG_MODE, DEMO_MODE, GRAPHQL_ENDPOINT, API_HOST } = envConfig;
+const { PORT } = envConfig;
 
-  await app.prepare();
+app.prepare().then(() => {
   const server = express();
 
   server.use(cookieParser());
-  // server.use('/static', express.static('static'));
+  server.use(express.static('public'));
+
+  // middleware
   server.get(/^\/(?!static|login|register|signup|_next)/, authMiddleware);
 
+  // routes
+  server.get('/', (req, res) => app.render(req, res, '/Home/Home'));
+  server.get('/login', (req, res) => app.render(req, res, '/Auth/Login/Login'));
+  server.get('/signup', (req, res) => app.render(req, res, '/Auth/Signup/Signup'));
+  server.get('/logout', (req, res) => app.render(req, res, '/Auth/Logout/Logout'));
+  server.get('/forget', (req, res) => app.render(req, res, '/Auth/Forget/Forget'));
+  //
+  server.get('/account', (req, res) => app.render(req, res, '/Account/Account'));
+  //
+  server.get('/hello', (req, res) => app.render(req, res, '/Hello/HelloList/HelloList'));
+  server.get('/hello/:name', (req, res) => app.render(req, res, '/Hello/HelloName/HelloName', { ...req.params }));
+  //
+  server.get('/article', (req, res) => app.render(req, res, '/Article/ArticleList/ArticleList'));
+  server.get('/article/:slug', (req, res) =>
+    app.render(req, res, '/Article/ArticleItem/ArticleItem', { ...req.params }),
+  );
+
+  // user-agent and static
   server.get('*', (req, res) => {
     // @ts-ignore
     // eslint-disable-next-line no-underscore-dangle
@@ -28,20 +49,48 @@ const handle = app.getRequestHandler();
     return handle(req, res);
   });
 
-  await server.listen(PORT);
+  server.listen(PORT);
 
-  // emoji for CLI
-  const url = `${PROTOCOL}://${BASE_HOST}:${PORT}`;
-  const urlWithEmoji = `✨✨ \x1b[00;47;9m\x1b[30m${url}\x1b[0m ✨✨`;
-  const nodeEnv = `${dev ? '🚀' : '🔰'} ${(process.env.NODE_ENV || 'development').toUpperCase()}`;
+  cliUtil.envInfo({ dev });
+});
 
-  console.log(`\n\n\n> 🌈 DEBUG ${DEBUG_MODE ? '✅' : '➖'} / DEMO ${DEMO_MODE ? '✅' : '➖'}`);
-  console.log(`\n\n> ${nodeEnv} / ${urlWithEmoji}`);
-
-  console.log('\n> 📮 ENVDATA');
-  console.log('     - NAME             ', SITE_NAME);
-  console.log('');
-  console.log('     - GRAPHQL_ENDPOINT ', GRAPHQL_ENDPOINT);
-  console.log('     - API_HOST         ', API_HOST);
-  console.log('\n\n\n');
-})();
+// await app.prepare();
+// const server = express();
+//
+// server.use(cookieParser());
+// server.use(express.static('public'));
+//
+// // middleware
+// server.get(/^\/(?!static|login|register|signup|_next)/, authMiddleware);
+//
+// // routes
+// server.get('/', (req, res) => app.render(req, res, '/Home/Home'));
+// server.get('/login', (req, res) => app.render(req, res, '/Auth/Login/Login'));
+// server.get('/signup', (req, res) => app.render(req, res, '/Auth/Signup/Signup'));
+// server.get('/logout', (req, res) => app.render(req, res, '/Auth/Logout/Logout'));
+// server.get('/forget', (req, res) => app.render(req, res, '/Auth/Forget/Forget'));
+// //
+// server.get('/account', (req, res) => app.render(req, res, '/Account/Account'));
+// //
+// server.get('/hello', (req, res) => app.render(req, res, '/Hello/HelloList/HelloList'));
+// server.get('/hello/:name', (req, res) => app.render(req, res, '/Hello/HelloName/HelloName', { ...req.params }));
+// //
+// server.get('/article', (req, res) => app.render(req, res, '/Article/ArticleList/ArticleList'));
+// server.get('/article/:slug', (req, res) =>
+//   app.render(req, res, '/Article/ArticleItem/ArticleItem', { ...req.params }),
+// );
+//
+// // user-agent and static
+// server.get('*', (req, res) => {
+//   // @ts-ignore
+//   // eslint-disable-next-line no-underscore-dangle
+//   global.__SERVER_USER_AGENT__ = req.headers['user-agent'];
+//
+//   return handle(req, res);
+// });
+//
+// await server.listen(PORT);
+//
+// cliUtil.envInfo({ dev });
+// (async () => {
+// })();

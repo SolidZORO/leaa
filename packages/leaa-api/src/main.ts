@@ -9,8 +9,6 @@ import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 import { TagService } from '@leaa/api/src/modules/tag/tag.service';
 import { AppModule } from '@leaa/api/src/app.module';
 
-import pkg from '@leaa/api/package.json';
-
 (async function bootstrap() {
   const logger = new Logger('App-Log');
   logger.log('App Launcher...', ' 🚀 ');
@@ -44,15 +42,9 @@ import pkg from '@leaa/api/package.json';
   await tagService.syncTagsToDictFile();
 
   cliUtil.envInfo({
-    PROTOCOL: configService.PROTOCOL,
-    PORT: configService.PORT,
-    BASE_HOST: configService.BASE_HOST,
+    config: configService,
     NODE_ENV: process.env.NODE_ENV,
-    showGraphql: true,
-    publicPath,
-    DEMO_MODE: configService.DEMO_MODE,
-    DEBUG_MODE: configService.DEBUG_MODE,
+    PUBLIC_PATH: publicPath,
     DIRNAME: __dirname,
-    VERSION: pkg.version,
   });
 })();

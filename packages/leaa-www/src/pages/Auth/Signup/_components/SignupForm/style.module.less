@@ -1,0 +1,55 @@
+@import '../../~@leaa/www/src/styles/variables.less';
+
+@element-hegith: 45px;
+
+.wrapper {
+  .form-row {
+    input {
+      height: @element-hegith;
+    }
+  }
+
+  .button-row {
+    button {
+      height: @element-hegith;
+      margin-right: 16px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+      span {
+        @widht: 40px;
+
+        padding-left: @widht;
+        padding-right: @widht;
+      }
+    }
+
+    .button-login {
+    }
+  }
+
+  .toolsbar {
+  }
+
+  .forget-row {
+    margin-top: 15px;
+    text-align: center;
+    color: #888;
+    font-size: 80%;
+
+    a {
+      color: #aaa;
+    }
+  }
+
+  .register-row {
+    margin-top: 70px;
+    text-align: center;
+    font-size: 90%;
+  }
+
+  .toolsbar {
+  }
+}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Swiper from 'react-id-swiper';
 import Link from 'next/link';
 import cx from 'classnames';
@@ -28,6 +28,14 @@ interface ICenterMode extends IBase {
 type IProps = StrictUnion<ICenterMode | INormalMode>;
 
 export const SwiperImage = (props: IProps) => {
+  const [attachmentList, setAttachmentList] = useState<Attachment[]>(props.attachmentList || []);
+
+  useEffect(() => {
+    if (props.attachmentList) {
+      setAttachmentList(props.attachmentList);
+    }
+  }, [props.attachmentList]);
+
   const buildImgDom = (a: Attachment) => {
     if (props.lazy) {
       return (
@@ -43,45 +51,43 @@ export const SwiperImage = (props: IProps) => {
 
   return (
     <div className={cx(style['swiper-image-wrapper'], props.className)}>
-      {props.attachmentList && props.attachmentList.length > 0 && (
-        <Swiper
-          {...{
-            autoplay: {
-              delay: 5000,
-            },
-            keyboard: true,
-            loop: true,
-            speed: 400,
-            lazy: props.lazy
-              ? {
-                  loadPrevNext: true,
-                }
-              : false,
-            pagination: {
-              el: '.swiper-pagination',
-              clickable: true,
-            },
-          }}
-        >
-          {props.attachmentList.map(a => (
-            <div
-              key={a.uuid}
-              className={cx(style['swiper-slide'], {
-                [style['swiper-slide--center-model']]: props.centerMode,
-              })}
-              style={{ height: props.height || 'auto' }}
-            >
-              {a.link ? (
-                <Link href={a.link} prefetch={false}>
-                  <a>{buildImgDom(a)}</a>
-                </Link>
-              ) : (
-                buildImgDom(a)
-              )}
-            </div>
-          ))}
-        </Swiper>
-      )}
+      <Swiper
+        {...{
+          autoplay: {
+            delay: 5000,
+          },
+          keyboard: true,
+          loop: true,
+          speed: 400,
+          lazy: props.lazy
+            ? {
+                loadPrevNext: true,
+              }
+            : false,
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+          },
+        }}
+      >
+        {attachmentList.map(a => (
+          <div
+            key={a.uuid}
+            className={cx(style['swiper-slide'], {
+              [style['swiper-slide--center-model']]: props.centerMode,
+            })}
+            style={{ height: props.height || 'auto' }}
+          >
+            {a.link ? (
+              <Link href={a.link} prefetch={false}>
+                <a>{buildImgDom(a)}</a>
+              </Link>
+            ) : (
+              buildImgDom(a)
+            )}
+          </div>
+        ))}
+      </Swiper>
     </div>
   );
 };

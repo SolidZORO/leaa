@@ -1,44 +1,34 @@
+import { IDotEnv } from '@leaa/api/src/interfaces';
+
+import pkg from '@leaa/api/package.json';
+
 export const envInfo = ({
-  PROTOCOL,
-  PORT,
-  BASE_HOST,
+  config,
   NODE_ENV,
-  showGraphql,
-  publicPath,
-  DEMO_MODE,
-  DEBUG_MODE,
+  PUBLIC_PATH,
   DIRNAME,
-  VERSION,
 }: {
-  PROTOCOL: string;
-  PORT: number;
-  BASE_HOST: string;
+  config: IDotEnv | any;
   NODE_ENV?: string;
-  showGraphql?: boolean;
-  publicPath?: string;
-  DEMO_MODE?: string | boolean;
-  DEBUG_MODE?: string | boolean;
+  PUBLIC_PATH?: string;
   DIRNAME?: string;
-  VERSION?: string;
 }) => {
   // emoji for CLI
-  const serverBaseByText = `${PROTOCOL}://${BASE_HOST}:${PORT}`;
+  const serverBaseByText = `${config.PROTOCOL}://${config.BASE_HOST}:${config.PORT}`;
   const serverBaseByEmoji = `✨✨ \x1b[00;44;9m${serverBaseByText}\x1b[0m ✨✨`;
   const serverGraphqlByEmoji = `✨✨ \x1b[00;41;9m${serverBaseByText}/graphql\x1b[0m ✨✨`;
   const serverEnv = `${NODE_ENV !== 'production' ? '🚀' : '🔰'} ${(NODE_ENV || 'NOT-ENV').toUpperCase()}`;
 
-  console.log(`\n\n> 🌈 DEBUG ${DEBUG_MODE ? '✅' : '➖'} / DEMO ${DEMO_MODE ? '✅' : '➖'}`);
+  console.log(`\n\n> 🌈 DEBUG ${config.DEBUG_MODE ? '✅' : '➖'} / DEMO ${config.DEMO_MODE ? '✅' : '➖'}`);
 
   console.log(`\n\n> ${serverEnv} /     URL`, serverBaseByEmoji);
 
-  if (showGraphql) {
-    console.log(`\n> ${serverEnv} / GRAPHQL`, serverGraphqlByEmoji);
-  }
+  console.log(`\n> ${serverEnv} / GRAPHQL`, serverGraphqlByEmoji);
 
   console.log('\n> 📮 ENVDATA');
-  console.log('     - VERSION ', `v${VERSION}`);
+  console.log('     - VERSION ', `v${pkg.version}`);
   console.log('     - DIRNAME ', DIRNAME);
-  console.log('     - PUBLIC  ', publicPath);
+  console.log('     - PUBLIC  ', PUBLIC_PATH);
   console.log('\n\n');
 };
 

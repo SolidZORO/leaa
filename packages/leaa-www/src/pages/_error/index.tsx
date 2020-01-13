@@ -6,7 +6,7 @@ function CustomError({ statusCode }: any) {
   return (
     <div className={style['error-wrapper']}>
       <p className={style['error-message']}>
-        {statusCode ? `An error ${statusCode} occurred on server!` : 'An error occurred on client!'}
+        {statusCode ? `AN ERROR ${statusCode} OCCURRED ON 🤖️SERVER!` : 'AN ERROR OCCURRED ON 🌍CLIENT!'}
       </p>
     </div>
   );
