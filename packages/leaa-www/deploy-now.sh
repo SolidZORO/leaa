@@ -19,6 +19,7 @@ read -p "${CONFIRM_MESSAGE}" -n 1 -r KEY
 MONOREPO_ROOT_DIR="../../"
 
 if [[ $KEY = "" ]]; then
+    node ./serverless/now/gen-now-dotenv.js
     cp -fr ./serverless/now/.nowignore ${MONOREPO_ROOT_DIR}
     cd ${MONOREPO_ROOT_DIR} || exit
     pwd

@@ -37,3 +37,6 @@ logs
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+.now
+now-www.json

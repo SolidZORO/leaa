@@ -7,7 +7,7 @@ const Forget = dynamic(() => import('@leaa/www/src/pages/forget/_components/Forg
 export default () => {
   return (
     <PageCard>
-      <HtmlMeta title="Register" />
+      <HtmlMeta title="Forget" />
 
       <Forget />
     </PageCard>

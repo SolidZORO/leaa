@@ -1,7 +1,0 @@
-{
-  "name": "test-leaa-www",
-  "version": 2,
-  "env": { "NODE_ENV": "production" },
-  "builds": [{ "src": "/packages/leaa-www/package.json", "use": "@now/next" }],
-  "routes": [{ "src": "/(.*)", "dest": "/packages/leaa-www/$1", "continue": true }]
-}
