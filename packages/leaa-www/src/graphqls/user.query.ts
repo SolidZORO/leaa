@@ -8,6 +8,7 @@ export const GET_USERS = gql`
         id
         name
         email
+        avatar_url
         status
         is_admin
         roles {
@@ -26,6 +27,7 @@ export const GET_USER = gql`
       id
       name
       email
+      avatar_url
       created_at
       updated_at
       status
@@ -50,6 +52,7 @@ export const GET_USER_BY_TOKEN = gql`
       id
       name
       email
+      avatar_url
       is_admin
       authToken
       authExpiresIn
@@ -63,6 +66,7 @@ export const GET_USER_BY_TOKEN_FOR_WWW = gql`
     userByToken(token: $token) {
       name
       email
+      avatar_url
     }
   }
 `;

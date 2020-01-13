@@ -35,7 +35,7 @@ export const LayoutHeader = () => {
 
   const authButtonDom = (
     <Button type="link" className={style['account-button']}>
-      <Link href={authUtil.checkAuthIsAvailably() ? '/account' : '/login'} prefetch={false}>
+      <Link href="/account">
         <a onClick={() => onSetVisible(false)}>
           <Rcon type="x-user" />
         </a>

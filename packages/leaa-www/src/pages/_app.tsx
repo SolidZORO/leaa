@@ -5,7 +5,7 @@ import { ApolloProvider } from '@apollo/react-hooks';
 import Router from 'next/router';
 import { LoadingOutlined } from '@ant-design/icons';
 
-import { IBasePageProps } from '@leaa/www/src/interfaces';
+import { IBasePageProps, IGetInitialPropsCtx } from '@leaa/www/src/interfaces';
 import { withApolloClient } from '@leaa/www/src/libs/with-apollo-client.lib';
 import { initStore, StoreProvider, Store } from '@leaa/www/src/stores';
 import { MasterLayout, ProgressLoading } from '@leaa/www/src/components';
@@ -53,7 +53,7 @@ class CustomApp extends App<IProps, IState> {
     store: new Store({}),
   };
 
-  static async getInitialProps(appContext: any) {
+  static async getInitialProps(appContext: IGetInitialPropsCtx | any) {
     const appProps = await App.getInitialProps(appContext);
 
     // get setting for global

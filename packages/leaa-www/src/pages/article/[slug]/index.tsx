@@ -5,7 +5,7 @@ import { GraphQLError } from 'graphql';
 import { Article } from '@leaa/common/src/entrys';
 import { GET_ARTICLE_BY_SLUG } from '@leaa/www/src/graphqls';
 
-import { IBasePageProps, IGetInitialProps } from '@leaa/www/src/interfaces';
+import { IBasePageProps, IGetInitialPropsCtx } from '@leaa/www/src/interfaces';
 import { HtmlMeta, PageCard } from '@leaa/www/src/components';
 import { apolloClient } from '@leaa/www/src/libs';
 import { messageUtil } from '@leaa/www/src/utils';
@@ -50,7 +50,7 @@ const nextPage = (props: IProps) => {
   );
 };
 
-nextPage.getInitialProps = async (ctx: IGetInitialProps): Promise<IPageProps> => {
+nextPage.getInitialProps = async (ctx: IGetInitialPropsCtx): Promise<IPageProps> => {
   try {
     const getArticleQuery = await apolloClient.query<{ articleBySlug: Article }>({
       query: GET_ARTICLE_BY_SLUG,

@@ -3,12 +3,11 @@ import { GraphQLError } from 'graphql';
 import cx from 'classnames';
 import Link from 'next/link';
 import dayjs from 'dayjs';
-import { Button } from 'antd';
 
 import { GET_ARTICLES } from '@leaa/www/src/graphqls';
 import { ArticlesWithPaginationObject } from '@leaa/common/src/dtos/article';
 import { HtmlMeta, PageCard } from '@leaa/www/src/components';
-import { IBasePageProps, IGetInitialProps } from '@leaa/www/src/interfaces';
+import { IBasePageProps, IGetInitialPropsCtx } from '@leaa/www/src/interfaces';
 import { apolloClient } from '@leaa/www/src/libs';
 import { messageUtil } from '@leaa/www/src/utils';
 
@@ -39,7 +38,7 @@ const nextPage = (props: IProps) => {
               articles.items.map(item => (
                 <div key={item.id} className={style['item']}>
                   <h2 className={style['title']}>
-                    <Link href={`/article/${item.slug}`} as={`/article/${item.slug}`}>
+                    <Link href={`/article/${item.slug}`}>
                       <a className={style['link']}>{item.title}</a>
                     </Link>
                   </h2>
@@ -53,7 +52,7 @@ const nextPage = (props: IProps) => {
   );
 };
 
-nextPage.getInitialProps = async (ctx: IGetInitialProps): Promise<IPageProps> => {
+nextPage.getInitialProps = async (ctx: IGetInitialPropsCtx): Promise<IPageProps> => {
   try {
     const getArticlesQuery = await apolloClient.query<{ articles: ArticlesWithPaginationObject }>({
       query: GET_ARTICLES,

@@ -33,6 +33,7 @@ export default (props: IProps) => {
           id: login.id,
           email: login.email,
           name: login.name,
+          avatar_url: login.avatar_url,
         };
 
         authUtil.setAuthInfo(authInfo);

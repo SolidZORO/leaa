@@ -6,7 +6,7 @@ import { Ax } from '@leaa/common/src/entrys';
 import { AxArgs } from '@leaa/common/src/dtos/ax';
 import { HtmlMeta, PageCard, SwiperImage } from '@leaa/www/src/components';
 
-import { IBasePageProps, IGetInitialProps } from '@leaa/www/src/interfaces';
+import { IBasePageProps, IGetInitialPropsCtx } from '@leaa/www/src/interfaces';
 import { apolloClient } from '@leaa/www/src/libs';
 import { messageUtil } from '@leaa/www/src/utils';
 
@@ -40,7 +40,7 @@ const nextPage = (ctx: IProps) => {
   );
 };
 
-nextPage.getInitialProps = async (ctx: IGetInitialProps): Promise<IPageProps> => {
+nextPage.getInitialProps = async (ctx: IGetInitialPropsCtx): Promise<IPageProps> => {
   try {
     const getAxBySlugQuery = await apolloClient.query<{ axBySlug: Ax }, AxArgs>({
       query: GET_AX_BY_SLUG,

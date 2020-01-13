@@ -2,7 +2,7 @@ import React from 'react';
 import cx from 'classnames';
 import { FetchResult } from 'apollo-link';
 import { LOGIN_BY_TICKET_FOR_WWW } from '@leaa/www/src/graphqls';
-import { IGetInitialProps } from '@leaa/www/src/interfaces';
+import { IGetInitialPropsCtx } from '@leaa/www/src/interfaces';
 import { User } from '@leaa/common/src/entrys';
 import { authUtil, urlUtil } from '@leaa/www/src/utils';
 import { PageCard, HtmlMeta } from '@leaa/www/src/components';
@@ -30,7 +30,7 @@ const nextPage = () => {
   );
 };
 
-nextPage.getInitialProps = async (ctx: IGetInitialProps) => {
+nextPage.getInitialProps = async (ctx: IGetInitialPropsCtx) => {
   const authToken = authUtil.getAuthToken(ctx);
 
   if (authToken) {
@@ -54,6 +54,7 @@ nextPage.getInitialProps = async (ctx: IGetInitialProps) => {
               id: loginByTicket.id,
               email: loginByTicket.email,
               name: loginByTicket.name,
+              avatar_url: loginByTicket.avatar_url,
             };
 
             authUtil.setAuthInfo(authInfo, ctx);

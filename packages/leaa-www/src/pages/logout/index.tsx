@@ -1,5 +1,5 @@
 import React from 'react';
-import { IGetInitialProps } from '@leaa/www/src/interfaces';
+import { IGetInitialPropsCtx } from '@leaa/www/src/interfaces';
 import { urlUtil, authUtil } from '@leaa/www/src/utils';
 
 const LOGOUTED_REDIRECT_TO_URL = '/';
@@ -11,7 +11,7 @@ const nextPage = () => {
   return null;
 };
 
-nextPage.getInitialProps = async (ctx: IGetInitialProps) => {
+nextPage.getInitialProps = async (ctx: IGetInitialPropsCtx) => {
   authUtil.removeAuth(ctx);
   urlUtil.redirect(LOGOUTED_REDIRECT_TO_URL, ctx.res);
 

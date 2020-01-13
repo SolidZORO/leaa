@@ -1,6 +1,6 @@
 import { NextPageContext } from 'next';
 import { AUTH_TOKEN_NAME, AUTH_INFO } from '@leaa/www/src/constants';
-import { IAuthInfo } from '@leaa/www/src/interfaces';
+import { IAuthInfo, IGetInitialPropsCtx } from '@leaa/www/src/interfaces';
 import Cookies from 'js-cookie';
 import nookies from 'nookies';
 
@@ -21,7 +21,7 @@ const setAuthToken = (token: string, expiresIn: number, ctx?: NextPageContext) =
   }
 };
 
-const getAuthToken = (ctx?: NextPageContext): string | undefined => {
+const getAuthToken = (ctx?: IGetInitialPropsCtx): string | undefined => {
   let authToken;
 
   if (isServer) {
@@ -102,8 +102,8 @@ const removeAuth = (ctx?: NextPageContext): boolean => {
   return removedAuthToken && removedAuthInfo;
 };
 
-const checkAuthIsAvailably = (): boolean => {
-  const authToken = getAuthToken();
+const checkAuthIsAvailably = (ctx?: IGetInitialPropsCtx): boolean => {
+  const authToken = getAuthToken(ctx);
 
   if (!authToken) {
     removeAuth();

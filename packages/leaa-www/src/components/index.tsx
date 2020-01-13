@@ -4,6 +4,7 @@ export { RetinaBg } from './RetinaBg/RetinaBg';
 export { HtmlMeta } from './HtmlMeta/HtmlMeta';
 export { PageCard } from './PageCard/PageCard';
 export { ErrorCard } from './ErrorCard/ErrorCard';
+export { UserAvatar } from './UserAvatar/UserAvatar';
 export { RetinaImage } from './RetinaImage/RetinaImage';
 export { SwiperImage } from './SwiperImage/SwiperImage';
 export { LogoutButton } from './LogoutButton/LogoutButton';

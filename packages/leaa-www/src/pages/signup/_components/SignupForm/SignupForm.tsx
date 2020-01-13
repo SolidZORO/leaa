@@ -31,6 +31,7 @@ export default (props: IProps) => {
         const authInfo = {
           email: signup.email,
           name: signup.name,
+          avatar_url: signup.avatar_url,
         };
 
         authUtil.setAuthInfo(authInfo);

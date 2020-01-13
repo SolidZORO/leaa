@@ -3,12 +3,12 @@ import React from 'react';
 import { GraphQLError } from 'graphql';
 
 import { GET_USER_BY_TOKEN_FOR_WWW } from '@leaa/www/src/graphqls';
-import { IGetInitialProps, IBasePageProps } from '@leaa/www/src/interfaces';
+import { IGetInitialPropsCtx, IBasePageProps } from '@leaa/www/src/interfaces';
 import { authUtil, urlUtil, messageUtil } from '@leaa/www/src/utils';
 import { User } from '@leaa/common/src/entrys';
 import { apolloClient } from '@leaa/www/src/libs';
 
-import { HtmlMeta, PageCard, LogoutButton } from '@leaa/www/src/components';
+import { HtmlMeta, PageCard, LogoutButton, UserAvatar } from '@leaa/www/src/components';
 
 import style from './style.module.less';
 
@@ -21,8 +21,8 @@ interface IProps extends IBasePageProps<IPageProps> {}
 
 const NOT_TOKEN_REDIRECT_TO_URL = '/login';
 
-const nextPage = (ctx: IProps) => {
-  const { user, userError } = ctx.pageProps;
+const nextPage = (props: IProps) => {
+  const { user, userError } = props.pageProps;
 
   if (userError) messageUtil.gqlError(userError?.message);
   if (!user) return null;
@@ -36,6 +36,8 @@ const nextPage = (ctx: IProps) => {
             <h1 className={style['title']}>Account</h1>
 
             <div className={style['account-info']}>
+              <UserAvatar url={user?.avatar_url} size={48} className={style['avatar']} />
+
               <h3>Name: {user.name}</h3>
               <h3>Email: {user.email}</h3>
             </div>
@@ -50,12 +52,16 @@ const nextPage = (ctx: IProps) => {
   );
 };
 
-nextPage.getInitialProps = async (ctx: IGetInitialProps): Promise<IPageProps> => {
+nextPage.getInitialProps = async (ctx: IGetInitialPropsCtx): Promise<IPageProps> => {
+  if (!authUtil.checkAuthIsAvailably(ctx)) {
+    urlUtil.redirect(NOT_TOKEN_REDIRECT_TO_URL, ctx.res);
+
+    return { user: undefined };
+  }
+
   const authToken = authUtil.getAuthToken(ctx);
 
-  if (!authToken) {
-    urlUtil.redirect(NOT_TOKEN_REDIRECT_TO_URL, ctx.res);
-  }
+  if (!authToken) return { user: undefined };
 
   try {
     const getUserByTokenQuery = await apolloClient.query<{ userByToken: User }, { token?: string }>({
@@ -65,7 +71,6 @@ nextPage.getInitialProps = async (ctx: IGetInitialProps): Promise<IPageProps> =>
 
     return { user: getUserByTokenQuery.data.userByToken };
   } catch (err) {
-    console.log(err);
     return { userError: err };
   }
 };
