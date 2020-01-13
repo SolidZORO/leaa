@@ -621,3 +621,17 @@ RN 的生态是真不好，也没人交流。国内外几大 RN 社区人气也�
 刚想动缓存用户 flatPermissions 的时候想到，如果我 DB 字段 flatPermissions 存了比如 `coupon.item-read, coupon.list-read` 等我删除了 `coupon.list-read` 权限之后，那么所有有这两个的用户 flatPermissions 都需要批量更新，或者说我更新了 `coupon.list-read` 相关 role 之后，所有用户的 flatPermissions 也需要更新，这不但是在 user update 的时候简单刷新一下 flatPermissions 那么简单的时间。
 
 如果 user 不多还好，超过 1w 的时候我觉得遍历更新所有 user flatPermissions 字段肯定会慢到夸张，结合其他语言的 role lib 来看他们都没有做 permissions 的缓存。所以，我还是放弃 DB 直接存这个想法，后面会用缓存（cache）的方式优化一下。
+
+### 2020-01-13 18:25
+
+时间来到 2020 啦，第一次在新的一年写 log 哈哈，最近偶尔给 leaa 加一些功能，大部分都是优化，主要时间其实还是在弄小程序的一些事情。今天捡起 next.js 来，发现 pages 下大量的 index.tsx 有点难受，主要是 cmd+p 想要直达文件比较困难，所以想着能不能 custom server 自定义路由来搞定这个事情。
+
+按官方说法 `useFileSystemPublicRoutes: false;` 一下就好了。我试了下的确好了，但只是 server 那边好了，client 这边需要自己处理，不然就会出现你请求 `/user/1` 但此时他对应的组件为 `UserItem` 的时候 client 会去拉一个不存在的 js 文件 `/user/1.js` 这个比较烦人，还有更佳烦人的是……
+
+无论点任何 Link，页面都刷新了！对！都！刷！新！了！这就完全没有了 SSR+SPA 的优势啦！那这还叫 next.js 吗？我这个时候当然不死心，看了大量的 issues，官方的说法比较消极，他们不想管，就问你为什么不用 file-system based router……
+
+好吧，zeit 的开闭原则一项都是比较迷的，就像前两天把 now.sh 部署中的 .env* 给禁止上传到 serverless 上，理由是 zero config，而且没有过度方案，好吧，既然是人家的免费 serverless 我也只好遵循啊。
+
+解决办法最后是把 now-cli 降到了 16.2，对于我这种新版本控这肯定接受不了，只是现在没时间，回头再研究了，实在不行就用官方推荐的 -secret 命令好了，再说把。
+
+不过今天也再一次证明了 zeit 的东西很吊，但用起来总有这哪的小问题，不是特别舒服，可能人家就是面向 light user 去做产品的吧，不适合用于太深度的定制。
