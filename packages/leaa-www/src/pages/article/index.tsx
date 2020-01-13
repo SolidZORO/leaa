@@ -38,7 +38,7 @@ const nextPage = (props: IProps) => {
               articles.items.map(item => (
                 <div key={item.id} className={style['item']}>
                   <h2 className={style['title']}>
-                    <Link href={`/article/${item.slug}`} prefetch={false}>
+                    <Link href="/article/[slug]" as={`/article/${item.slug}`} prefetch={false}>
                       <a className={style['link']}>{item.title}</a>
                     </Link>
                   </h2>
