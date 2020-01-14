@@ -53,10 +53,10 @@ const mapping: IMapping = {
 };
 
 const ERROR = ({ error, user }: IHeaderErrorParams) => {
-  const userText = user ? `#${user.id} - ${user.name} (${user.email})` : 'NOT-USER';
+  const userText = user ? `#${user.id} - ${user.name} (${user.email})` : 'Not User';
   const errorText = typeof error === 'string' ? error : JSON.stringify(error);
 
-  loggerUtil.error(`${errorText} / ${userText}`, (error && typeof error === 'object' && error.CLS_NAME) || 'ErrorUtil');
+  loggerUtil.error(`${errorText} / <${userText}>`, (error && typeof error === 'object' && error.CLS_NAME) || 'ErrUtil');
 
   throw Error(errorText);
 };
