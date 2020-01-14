@@ -24,10 +24,14 @@ export class GraphqlService implements GqlOptionsFactory {
       tracing: dev,
       playground: dev,
       transformSchema: (schema: any): any => applyMiddleware(schema, permissionConfig.permissions),
-      context: async (ctx: { req: Request }) => ({
-        ...ctx,
-        user: await this.authService.validateUserByReq(ctx.req),
-      }),
+      context: async (ctx: { req: Request }) => {
+        // console.log('CTX------------', ctx.req.headers);
+
+        return {
+          ...ctx,
+          user: await this.authService.validateUserByReq(ctx.req),
+        };
+      },
       formatError(error: any) {
         const nextMessage = error.message.replace(/(GraphQL error:|Context creation failed:)\s?/, '');
         const errMapping: any = _.find(errUtil.mapping, { text: nextMessage });
