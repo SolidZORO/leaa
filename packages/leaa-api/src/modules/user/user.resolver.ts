@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Query, Mutation, Resolver, Parent, ResolveProperty } from '@nestjs/graphql';
-import { Int, Float } from 'type-graphql';
+import { Int } from 'type-graphql';
 
 import { User, Permission } from '@leaa/common/src/entrys';
 import {
@@ -31,19 +31,6 @@ export class UserResolver {
 
   //
   //
-
-  // fot Test GraphQL
-  @Query(() => Float)
-  ram(): number {
-    return Math.random();
-  }
-
-  @UseGuards(PermissionsGuard)
-  @Permissions('user.list-read')
-  @Query(() => String)
-  ramWithAuth(@CurrentUser() user?: User): string {
-    return `${Math.random()} - ${user?.email}`;
-  }
 
   @UseGuards(PermissionsGuard)
   @Permissions('user.list-read')

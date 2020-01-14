@@ -625,8 +625,6 @@ type Query {
   role(id: Int!): Role!
   permissions(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): PermissionsWithPaginationObject!
   permission(id: Int!): Permission!
-  ram: Float!
-  ramWithAuth: String!
   users(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): UsersWithPaginationObject!
   user(id: Int!): User!
   userByToken(token: String): User!
@@ -664,6 +662,9 @@ type Query {
   zans(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): ZansWithPaginationObject!
   zan(uuid: String!): Zan!
   demoData: DemoDataObject!
+  test: Float!
+  testWithAuth: String!
+  i18n: String!
 }
 
 input RedeemCouponInput {
