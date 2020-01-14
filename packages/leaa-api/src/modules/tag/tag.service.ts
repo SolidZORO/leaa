@@ -13,7 +13,7 @@ import {
   SyncTagsToFileObject,
 } from '@leaa/common/src/dtos/tag';
 
-import { argsUtil, curdUtil, paginationUtil, loggerUtil, errorUtil } from '@leaa/api/src/utils';
+import { argsUtil, curdUtil, paginationUtil, loggerUtil, errUtil } from '@leaa/api/src/utils';
 import { ITagsArgs, ITagArgs } from '@leaa/api/src/interfaces';
 import { dictConfig } from '@leaa/api/src/configs';
 
@@ -45,7 +45,7 @@ export class TagService {
     if (args) nextArgs = args;
 
     const tag = this.tagRepository.findOne(id, nextArgs);
-    if (!tag) return errorUtil.NOT_FOUND({ user });
+    if (!tag) return errUtil.ERROR({ error: errUtil.mapping.NOT_FOUND_ITEM.text, user });
 
     return tag;
   }

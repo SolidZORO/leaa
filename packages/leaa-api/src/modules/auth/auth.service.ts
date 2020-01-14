@@ -10,7 +10,7 @@ import { User, Auth } from '@leaa/common/src/entrys';
 import { AuthsWithPaginationObject, CreateAuthInput } from '@leaa/common/src/dtos/auth';
 import { IJwtPayload } from '@leaa/common/src/interfaces';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
-import { errorUtil, authUtil, argsUtil, paginationUtil, curdUtil } from '@leaa/api/src/utils';
+import { errUtil, authUtil, argsUtil, paginationUtil, curdUtil } from '@leaa/api/src/utils';
 import { UserService } from '@leaa/api/src/modules/user/user.service';
 import { permissionConfig } from '@leaa/api/src/configs';
 import { UserProperty } from '@leaa/api/src/modules/user/user.property';
@@ -88,14 +88,14 @@ export class AuthService {
   }
 
   getUserPayload(token?: string): IJwtPayload {
-    if (!token) return errorUtil.ERROR({ error: 'Not Found Token' });
+    if (!token) return errUtil.ERROR({ error: errUtil.mapping.TOKEN_NOT_FOUND.text });
 
     let tokenWithoutBearer = token;
 
     if (token.slice(0, 6) === 'Bearer') {
       tokenWithoutBearer = token.slice(7);
     } else {
-      return errorUtil.ERROR({ error: 'Header include incorrect Bearer prefix' });
+      return errUtil.ERROR({ error: errUtil.mapping.TOKEN_NOT_PREFIX.text });
     }
 
     let payload;
@@ -103,20 +103,20 @@ export class AuthService {
     try {
       payload = jwt.verify(tokenWithoutBearer, this.configService.JWT_SECRET_KEY) as IJwtPayload | undefined;
     } catch (error) {
-      if (error instanceof jwt.NotBeforeError) return errorUtil.ERROR({ error: 'Your Token Has Not Before' });
-      if (error instanceof jwt.TokenExpiredError) return errorUtil.ERROR({ error: 'Your Token Has Expired' });
-      if (error instanceof jwt.JsonWebTokenError) return errorUtil.ERROR({ error: 'Your Token Has Error' });
+      if (error instanceof jwt.NotBeforeError) return errUtil.ERROR({ error: errUtil.mapping.TOKEN_NOT_BEFORE.text });
+      if (error instanceof jwt.TokenExpiredError) return errUtil.ERROR({ error: errUtil.mapping.TOKEN_EXPIRED.text });
+      if (error instanceof jwt.JsonWebTokenError) return errUtil.ERROR({ error: errUtil.mapping.TOKEN_ERROR.text });
     }
 
-    return payload || errorUtil.ERROR({ error: 'Your Token Verify Faild' });
+    return payload || errUtil.ERROR({ error: errUtil.mapping.TOKEN_VERIFY_FAILD.text });
   }
 
   // MUST DO minimal cost query
   async validateUserByPayload(payload: IJwtPayload): Promise<User | undefined> {
-    if (!payload) return errorUtil.ERROR({ error: 'Not Found Validate Info' });
+    if (!payload) return errUtil.ERROR({ error: errUtil.mapping.NOT_FOUND_INFO.text });
 
     if (!payload.iat || !payload.exp || !payload.id) {
-      return errorUtil.ERROR({ error: 'Not Found Validate Info Details' });
+      return errUtil.ERROR({ error: errUtil.mapping.NOT_FOUND_INFO.text });
     }
 
     const findUser = await this.userRepository.findOne({ relations: ['roles'], where: { id: payload.id } });
@@ -125,7 +125,7 @@ export class AuthService {
 
     // IMPORTANT! if user info is changed, Compare `iat` and `last_token_at`
     if (moment(payload.iattz).isBefore(moment(user.last_token_at))) {
-      return errorUtil.ERROR({ error: 'Your user info has been updated, Please login again' });
+      return errUtil.ERROR({ error: errUtil.mapping.USER_HAS_BEEN_UPDATED.text });
     }
 
     const flatPermissions = await this.userProperty.flatPermissions(user);
@@ -168,13 +168,13 @@ export class AuthService {
   }
 
   async getUserByTicket(ticket: string): Promise<User> {
-    if (!ticket) return errorUtil.ERROR({ error: 'Not Found Ticket' });
+    if (!ticket) return errUtil.ERROR({ error: errUtil.mapping.NOT_FOUND_TICKET.text });
 
     const auth = await this.authRepository.findOne({ ticket });
-    if (!auth) return errorUtil.ERROR({ error: 'Not Found Auth' });
+    if (!auth) return errUtil.ERROR({ error: errUtil.mapping.NOT_FOUND_AUTH.text });
 
     const user = await this.userService.user(auth.user_id || 0, { relations: ['roles'] });
-    if (!user) return errorUtil.ERROR({ error: 'Not Found User' });
+    if (!user) return errUtil.ERROR({ error: errUtil.mapping.NOT_FOUND_USER.text });
 
     await this.clearTicket(auth.id);
 
@@ -186,13 +186,15 @@ export class AuthService {
   }
 
   async bindUserIdToAuth(user: User, oid: number): Promise<any> {
-    if (!oid || typeof Number(oid) !== 'number') return errorUtil.ERROR({ error: `Nout Found oid ${oid}`, user });
+    if (!oid || typeof Number(oid) !== 'number') {
+      return errUtil.ERROR({ error: errUtil.mapping.NOT_FOUND_ID.text, user });
+    }
 
     const auth = await this.authRepository.findOne({ id: Number(oid) });
-    if (!auth) return errorUtil.ERROR({ error: `Not Found Auth ${oid}`, user });
+    if (!auth) return errUtil.ERROR({ error: errUtil.mapping.NOT_FOUND_AUTH.text, user });
 
     const result = await this.authRepository.update(Number(oid), { user_id: user.id });
-    if (!result) return errorUtil.ERROR({ error: `Binding ${oid} Failed`, user });
+    if (!result) return errUtil.ERROR({ error: errUtil.mapping.BINDING_FAILED.text, user });
 
     return result;
   }

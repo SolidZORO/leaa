@@ -7,7 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 import { User } from '@leaa/common/src/entrys';
 import { AuthLoginInput, AuthSignupInput } from '@leaa/common/src/dtos/auth';
-import { errorUtil, authUtil, loggerUtil } from '@leaa/api/src/utils';
+import { errUtil, authUtil, loggerUtil } from '@leaa/api/src/utils';
 import { UserService } from '@leaa/api/src/modules/user/user.service';
 import { AuthService } from '@leaa/api/src/modules/auth/auth.service';
 
@@ -38,7 +38,7 @@ export class AuthLocalService {
       const errorMessage = `User (${args.email}) Info Not Match`;
       loggerUtil.log(errorMessage, CLS_NAME);
 
-      return errorUtil.ERROR({ error: errorMessage });
+      return errUtil.ERROR({ error: errorMessage });
     }
 
     if (user.password) delete user.password;
@@ -78,7 +78,7 @@ export class AuthLocalService {
     } catch (error) {
       loggerUtil.log(`Local Singup Error, ${JSON.stringify(error)}`, CLS_NAME);
 
-      return errorUtil.ERROR({ error: 'Sign Up Fail' });
+      return errUtil.ERROR({ error: 'Sign Up Fail' });
     }
 
     return this.authService.addTokenToUser(newUser);

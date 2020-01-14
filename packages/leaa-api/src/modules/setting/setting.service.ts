@@ -10,7 +10,7 @@ import {
   UpdateSettingsInput,
   SettingsObject,
 } from '@leaa/common/src/dtos/setting';
-import { argsUtil, loggerUtil, curdUtil, paginationUtil, errorUtil, authUtil } from '@leaa/api/src/utils';
+import { argsUtil, loggerUtil, curdUtil, paginationUtil, errUtil, authUtil } from '@leaa/api/src/utils';
 import { ISettingsArgs, ISettingArgs } from '@leaa/api/src/interfaces';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 import { settingSeed } from '@leaa/api/src/modules/seed/seed.data';
@@ -31,7 +31,7 @@ export class SettingService {
       const setting = await this.setting(id, user);
 
       if (setting && setting.slug && settingSeed.map(seed => seed.slug).includes(setting.slug)) {
-        throw errorUtil.ERROR({ error: 'PLEASE DONT MODIFY DEMO DATA', user });
+        throw errUtil.ERROR({ error: errUtil.mapping.PLEASE_DONT_MODIFY.text, user });
       }
     }
 
@@ -135,7 +135,7 @@ export class SettingService {
         items = await this.settingRepository.find({ id: In(settings.map(s => s.id)) });
       })
       .catch(() => {
-        return errorUtil.ERROR({ error: `updateSettings faild, args: ${JSON.stringify(settings)}`, user });
+        return errUtil.ERROR({ error: `Update Settings Faild, Args: ${JSON.stringify(settings)}`, user });
       });
 
     return {

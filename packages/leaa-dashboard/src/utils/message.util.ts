@@ -2,7 +2,10 @@ import { message } from 'antd';
 import { ERROR_MESSAGE, SUCCESS_MESSAGE, GQL_ERROR_MESSAGE, GQL_SUCCESS_MESSAGE } from '@leaa/dashboard/src/constants';
 
 const formatGqlmessage = (str: string): string => {
-  return str.replace(/(GraphQL error:|Context creation failed:)\s?/, '');
+  return str;
+
+  // TIPS: unified to deal with api format
+  // return str.replace(/(GraphQL error:|Context creation failed:)\s?/, '');
 };
 
 const error = (msg: string): void => {

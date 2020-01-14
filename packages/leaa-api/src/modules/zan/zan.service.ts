@@ -6,7 +6,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Zan, User } from '@leaa/common/src/entrys';
 import { ZansWithPaginationObject, CreateZanInput, UpdateZanInput } from '@leaa/common/src/dtos/zan';
 import { IZansArgs, IZanArgs } from '@leaa/api/src/interfaces';
-import { argsUtil, curdUtil, paginationUtil, errorUtil, stringUtil } from '@leaa/api/src/utils';
+import { argsUtil, curdUtil, paginationUtil, errUtil, stringUtil } from '@leaa/api/src/utils';
 
 const CLS_NAME = 'ZanService';
 
@@ -50,7 +50,7 @@ export class ZanService {
     const whereQuery: { uuid: string; status?: number } = { uuid };
 
     const zan = await this.zanRepository.findOne({ ...nextArgs, where: whereQuery });
-    if (!zan) return errorUtil.NOT_FOUND({ user });
+    if (!zan) return errUtil.ERROR({ error: errUtil.mapping.NOT_FOUND_ITEM.text, user });
 
     const views = zan.views ? zan.views + 1 : 1;
     await this.zanRepository.update(zan.id, { views });
@@ -78,8 +78,8 @@ export class ZanService {
   async likeZan(uuid: string, user?: User): Promise<Zan | undefined> {
     let zan = await this.zanRepository.findOne({ uuid }, { relations: ['users'] });
 
-    if (!zan) return errorUtil.NOT_FOUND();
-    if (!user) return errorUtil.NOT_FOUND();
+    if (!zan) return errUtil.ERROR({ error: errUtil.mapping.NOT_FOUND_ITEM.text, user });
+    if (!user) return errUtil.ERROR({ error: errUtil.mapping.NOT_FOUND_USER.text, user });
 
     if (!zan.users?.map(u => u.id).includes(user.id)) {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion

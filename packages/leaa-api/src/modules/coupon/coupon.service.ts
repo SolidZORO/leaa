@@ -10,7 +10,7 @@ import {
   UpdateCouponInput,
   RedeemCouponInput,
 } from '@leaa/common/src/dtos/coupon';
-import { argsUtil, curdUtil, paginationUtil, authUtil, errorUtil, dateUtil, stringUtil } from '@leaa/api/src/utils';
+import { argsUtil, curdUtil, paginationUtil, authUtil, errUtil, dateUtil, stringUtil } from '@leaa/api/src/utils';
 import { ICouponsArgs, ICouponArgs } from '@leaa/api/src/interfaces';
 
 import { CouponProperty } from '@leaa/api/src/modules/coupon/coupon.property';
@@ -71,14 +71,14 @@ export class CouponService {
     }
 
     const coupon = await this.couponRepository.findOne({ ...nextArgs, where: whereQuery });
-    if (!coupon) return errorUtil.NOT_FOUND({ user });
+    if (!coupon) return errUtil.ERROR({ error: errUtil.mapping.NOT_FOUND_ITEM.text, user });
 
     return coupon;
   }
 
   async couponByCode(code: string, args?: ICouponArgs, user?: User): Promise<Coupon | undefined> {
     const coupon = await this.couponRepository.findOne({ where: { code } });
-    if (!coupon) return errorUtil.NOT_FOUND({ user });
+    if (!coupon) return errUtil.ERROR({ error: errUtil.mapping.NOT_FOUND_ITEM.text, user });
 
     return this.coupon(coupon.id, args, user);
   }
@@ -114,11 +114,11 @@ export class CouponService {
 
   async redeemCoupon(info: RedeemCouponInput, user?: User): Promise<Coupon | undefined> {
     const coupon = await this.couponByCode(info.code, undefined, user);
-    if (!coupon) return errorUtil.NOT_FOUND({ user });
+    if (!coupon) return errUtil.ERROR({ error: errUtil.mapping.NOT_FOUND_ITEM.text, user });
 
-    if (!this.couponProperty.available(coupon)) return errorUtil.ERROR({ error: 'Coupon Unavailable', user });
-    if (!this.couponProperty.canRedeem(coupon)) return errorUtil.ERROR({ error: 'Coupon Irredeemable', user });
-    if (coupon.user_id) return errorUtil.ERROR({ error: 'Coupon Already redeemed', user });
+    if (!this.couponProperty.available(coupon)) return errUtil.ERROR({ error: 'Coupon Unavailable', user });
+    if (!this.couponProperty.canRedeem(coupon)) return errUtil.ERROR({ error: 'Coupon Irredeemable', user });
+    if (coupon.user_id) return errUtil.ERROR({ error: 'Coupon Already redeemed', user });
 
     // [token user]
     let nextCoupon = { ...coupon, user_id: user && user.id };

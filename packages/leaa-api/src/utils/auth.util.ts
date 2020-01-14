@@ -1,20 +1,20 @@
 import { User } from '@leaa/common/src/entrys';
 import { IPermissionSlug } from '@leaa/common/src/interfaces';
-import { loggerUtil, errorUtil } from '@leaa/api/src/utils';
+import { loggerUtil, errUtil } from '@leaa/api/src/utils';
 
 const checkAvailableUser = (user?: User): User => {
   if (!user) {
-    const message = 'NOT FOUND USER';
+    const message = errUtil.mapping.NOT_FOUND_USER.text;
 
     loggerUtil.warn(`${message}: ${JSON.stringify(user)}`, 'AuthUtil');
-    return errorUtil.ERROR({ error: message });
+    return errUtil.ERROR({ error: message });
   }
 
   if (user && user.status !== 1) {
-    const message = 'INVALID USER';
+    const message = errUtil.mapping.INVALID_USER.text;
 
     loggerUtil.warn(`${message}: ${JSON.stringify(user)}`, 'AuthUtil');
-    return errorUtil.ERROR({ error: message });
+    return errUtil.ERROR({ error: message });
   }
 
   return user;

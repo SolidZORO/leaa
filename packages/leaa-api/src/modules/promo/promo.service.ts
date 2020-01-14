@@ -9,7 +9,7 @@ import {
   UpdatePromoInput,
   RedeemPromoInput,
 } from '@leaa/common/src/dtos/promo';
-import { argsUtil, authUtil, curdUtil, paginationUtil, errorUtil, dateUtil } from '@leaa/api/src/utils';
+import { argsUtil, authUtil, curdUtil, paginationUtil, errUtil, dateUtil } from '@leaa/api/src/utils';
 import { IPromosArgs, IPromoArgs } from '@leaa/api/src/interfaces';
 
 import { PromoProperty } from './promo.property';
@@ -58,14 +58,14 @@ export class PromoService {
     }
 
     const promo = await this.promoRepository.findOne({ ...nextArgs, where: whereQuery });
-    if (!promo) return errorUtil.NOT_FOUND({ user });
+    if (!promo) return errUtil.ERROR({ error: errUtil.mapping.NOT_FOUND_ITEM.text, user });
 
     return promo;
   }
 
   async promoByCode(code: string, args?: IPromoArgs, user?: User): Promise<Promo | undefined> {
     const promo = await this.promoRepository.findOne({ where: { code } });
-    if (!promo) return errorUtil.NOT_FOUND({ user });
+    if (!promo) return errUtil.ERROR({ error: errUtil.mapping.NOT_FOUND_ITEM.text, user });
 
     return this.promo(promo.id, args, user);
   }
@@ -92,9 +92,9 @@ export class PromoService {
 
   async redeemPromo(info: RedeemPromoInput, user?: User): Promise<Promo | undefined> {
     const promo = await this.promoByCode(info.code, user);
-    if (!promo) return errorUtil.NOT_FOUND({ user });
+    if (!promo) return errUtil.ERROR({ error: errUtil.mapping.NOT_FOUND_ITEM.text, user });
 
-    if (!this.promoProperty.available(promo)) return errorUtil.ERROR({ error: 'Promo Unavailable', user });
+    if (!this.promoProperty.available(promo)) return errUtil.ERROR({ error: 'Promo Unavailable', user });
 
     // [token user]
     let nextPromo = { ...promo, user_id: user && user.id };

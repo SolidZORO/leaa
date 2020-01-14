@@ -51,7 +51,7 @@ const getAuthInfo = (): Required<IAuthInfo> => {
 
 const removeAuthToken = (): boolean => {
   if (!getAuthToken) {
-    console.log('Not found auth token.');
+    console.log('Not Found Auth Token');
 
     return false;
   }
@@ -64,7 +64,7 @@ const removeAuthToken = (): boolean => {
 
 const removeAuthInfo = (): boolean => {
   if (!getAuthInfo()) {
-    console.log('Not found auth info.');
+    console.log('Not Found Auth Info');
 
     return false;
   }

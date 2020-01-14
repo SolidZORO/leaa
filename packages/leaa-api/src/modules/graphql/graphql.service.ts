@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { applyMiddleware } from 'graphql-middleware';
 import { Injectable } from '@nestjs/common';
 import { Request } from 'express';
@@ -5,7 +6,7 @@ import { GqlOptionsFactory, GqlModuleOptions } from '@nestjs/graphql';
 
 import { AuthService } from '@leaa/api/src/modules/auth/auth.service';
 import { permissionConfig } from '@leaa/api/src/configs';
-import { loggerUtil } from '@leaa/api/src/utils';
+import { loggerUtil, errUtil } from '@leaa/api/src/utils';
 
 const CLS_NAME = 'GraphqlService';
 
@@ -28,13 +29,16 @@ export class GraphqlService implements GqlOptionsFactory {
         user: await this.authService.validateUserByReq(ctx.req),
       }),
       formatError(error: any) {
-        loggerUtil.error(`${JSON.stringify(error)}\n`, CLS_NAME);
+        const nextMessage = error.message.replace(/(GraphQL error:|Context creation failed:)\s?/, '');
+        const errMapping: any = _.find(errUtil.mapping, { text: nextMessage });
 
-        if (error.message && error.message.error) {
-          return new Error(error.message.error);
-        }
+        loggerUtil.error(`${nextMessage} / ${JSON.stringify(error)}\n`, CLS_NAME);
 
-        return error;
+        return {
+          ...error,
+          message: nextMessage,
+          code: errMapping?.code || undefined,
+        };
       },
     };
   }

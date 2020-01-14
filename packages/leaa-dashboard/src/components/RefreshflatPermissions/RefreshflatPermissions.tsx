@@ -24,7 +24,6 @@ export const RefreshflatPermissions = (props: IProps) => {
         }
 
         return false;
-        // return messageUtil.gqlError(e.message);
       },
       onCompleted: data => {
         if (data && data.userByToken.flatPermissions && data.userByToken.flatPermissions.length === 0) {

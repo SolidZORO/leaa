@@ -7,6 +7,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import { OperationDefinitionNode } from 'graphql';
 
 import { envConfig } from '@leaa/dashboard/src/configs';
+import { LOGOUT_REDIRECT_URL } from '@leaa/dashboard/src/constants';
 
 const ignoreErrorPath = ['loginByTicket', 'userByToken', 'demoData'];
 
@@ -24,7 +25,6 @@ const authLink = new ApolloLink((operation, forward) => {
     },
   });
 
-  // @ts-ignore
   return forward(operation);
 });
 
@@ -34,6 +34,16 @@ const errorLink = onError(({ graphQLErrors }) => {
       if (!ignoreErrorPath.includes(`${error.path}`)) {
         console.error(`❌ [GraphQL error]: ${JSON.stringify(error)}`);
         messageUtil.gqlError(error.message);
+      }
+
+      // TIPS: @see /leaa-api/src/utils/err.util.ts mapping code
+      // @ts-ignore
+      if (error.code === 401) {
+        const removed = authUtil.removeAuth();
+
+        if (removed) {
+          window.location.href = LOGOUT_REDIRECT_URL;
+        }
       }
     });
   }

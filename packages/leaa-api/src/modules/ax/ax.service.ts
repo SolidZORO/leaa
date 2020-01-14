@@ -4,7 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 import { Ax, User } from '@leaa/common/src/entrys';
 import { AxsWithPaginationObject, CreateAxInput, UpdateAxInput } from '@leaa/common/src/dtos/ax';
-import { argsUtil, authUtil, curdUtil, paginationUtil, errorUtil } from '@leaa/api/src/utils';
+import { argsUtil, authUtil, curdUtil, paginationUtil, errUtil } from '@leaa/api/src/utils';
 import { IAxsArgs, IAxArgs } from '@leaa/api/src/interfaces';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 import { axSeed } from '@leaa/api/src/modules/seed/seed.data';
@@ -25,7 +25,7 @@ export class AxService {
       const ax = await this.ax(id, user);
 
       if (ax?.slug && axSeed.map(seed => seed.slug).includes(ax.slug)) {
-        throw errorUtil.ERROR({ error: 'PLEASE DONT MODIFY DEMO DATA', user });
+        throw errUtil.ERROR({ error: errUtil.mapping.PLEASE_DONT_MODIFY.text, user });
       }
     }
 
@@ -67,14 +67,14 @@ export class AxService {
     }
 
     const ax = await this.axRepository.findOne({ ...nextArgs, where: whereQuery });
-    if (!ax) return errorUtil.NOT_FOUND({ user });
+    if (!ax) return errUtil.ERROR({ error: errUtil.mapping.NOT_FOUND_ITEM.text, user });
 
     return ax;
   }
 
   async axBySlug(slug: string, args?: IAxArgs, user?: User): Promise<Ax | undefined> {
     const ax = await this.axRepository.findOne({ where: { slug } });
-    if (!ax) return errorUtil.NOT_FOUND({ user });
+    if (!ax) return errUtil.ERROR({ error: errUtil.mapping.NOT_FOUND_ITEM.text, user });
 
     return this.ax(ax.id, args, user);
   }

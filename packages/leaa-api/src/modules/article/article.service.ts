@@ -16,7 +16,7 @@ import {
   curdUtil,
   stringUtil,
   dictUtil,
-  errorUtil,
+  errUtil,
   authUtil,
   htmlUtil,
 } from '@leaa/api/src/utils';
@@ -98,7 +98,7 @@ export class ArticleService {
 
   async articleBySlug(slug: string, args?: IArticleArgs): Promise<Article | undefined> {
     const article = await this.articleRepository.findOne({ where: { slug } });
-    if (!article) return errorUtil.NOT_FOUND();
+    if (!article) return errUtil.ERROR({ error: errUtil.mapping.NOT_FOUND.text });
 
     return this.article(article.id, args);
   }

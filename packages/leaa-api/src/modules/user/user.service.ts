@@ -9,7 +9,7 @@ import { UsersWithPaginationObject, CreateUserInput, UpdateUserInput } from '@le
 import { RoleService } from '@leaa/api/src/modules/role/role.service';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 import { AttachmentService } from '@leaa/api/src/modules/attachment/attachment.service';
-import { argsUtil, curdUtil, paginationUtil, authUtil, errorUtil, loggerUtil } from '@leaa/api/src/utils';
+import { argsUtil, curdUtil, paginationUtil, authUtil, errUtil, loggerUtil } from '@leaa/api/src/utils';
 import { JwtService } from '@nestjs/jwt';
 import { IUsersArgs, IUserArgs } from '@leaa/api/src/interfaces';
 
@@ -34,7 +34,7 @@ export class UserService {
       const u = await this.user(id, user);
 
       if (u && u.email && u.email === 'admin@local.com') {
-        throw errorUtil.ERROR({ error: 'PLEASE DONT MODIFY DEMO DATA', user });
+        throw errUtil.ERROR({ error: errUtil.mapping.PLEASE_DONT_MODIFY.text, user });
       }
     }
 
@@ -85,7 +85,7 @@ export class UserService {
     const whereQuery: { id: number; status?: number } = { id };
 
     const user = await this.userRepository.findOne({ ...nextArgs, where: whereQuery });
-    if (!user) return errorUtil.NOT_FOUND({ user: reqUser });
+    if (!user) return errUtil.ERROR({ error: errUtil.mapping.NOT_FOUND_ITEM.text, user: reqUser });
 
     return user;
   }
@@ -93,7 +93,7 @@ export class UserService {
   async userByToken(token?: string, args?: IUserArgs): Promise<User | undefined> {
     let nextArgs: IUserArgs = {};
 
-    if (!token) return errorUtil.ERROR({ error: 'Not Found Token' });
+    if (!token) return errUtil.ERROR({ error: errUtil.mapping.TOKEN_NOT_FOUND.text });
 
     if (args) {
       nextArgs = args;
@@ -104,7 +104,7 @@ export class UserService {
 
     // @ts-ignore
     const userDecode: { id: any } = this.jwtService.decode(token);
-    if (!userDecode || !userDecode.id) return errorUtil.ERROR({ error: 'Token Error' });
+    if (!userDecode || !userDecode.id) return errUtil.ERROR({ error: errUtil.mapping.TOKEN_ERROR.text });
 
     return this.userRepository.findOne(userDecode.id, nextArgs);
   }

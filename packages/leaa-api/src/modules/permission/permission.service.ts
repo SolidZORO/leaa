@@ -8,7 +8,7 @@ import {
   CreatePermissionInput,
   UpdatePermissionInput,
 } from '@leaa/common/src/dtos/permission';
-import { argsUtil, curdUtil, paginationUtil, errorUtil } from '@leaa/api/src/utils';
+import { argsUtil, curdUtil, paginationUtil, errUtil } from '@leaa/api/src/utils';
 import { IPermissionsArgs, IPermissionArgs } from '@leaa/api/src/interfaces';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 import { permissionsSeed } from '@leaa/api/src/modules/seed/seed.data';
@@ -29,7 +29,7 @@ export class PermissionService {
       const p = await this.permission(id, user);
 
       if (p && p.slug && permissionsSeed.map(seed => seed.slug).includes(p.slug as any)) {
-        throw errorUtil.ERROR({ error: 'PLEASE DONT MODIFY DEMO DATA', user });
+        throw errUtil.ERROR({ error: errUtil.mapping.PLEASE_DONT_MODIFY.text, user });
       }
     }
 

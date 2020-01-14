@@ -4,7 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 import { Role, Permission, User } from '@leaa/common/src/entrys';
 import { RolesWithPaginationObject, CreateRoleInput, UpdateRoleInput } from '@leaa/common/src/dtos/role';
-import { argsUtil, curdUtil, paginationUtil, errorUtil } from '@leaa/api/src/utils';
+import { argsUtil, curdUtil, paginationUtil, errUtil } from '@leaa/api/src/utils';
 import { IRolesArgs, IRoleArgs } from '@leaa/api/src/interfaces';
 import { PermissionService } from '@leaa/api/src/modules/permission/permission.service';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
@@ -27,7 +27,7 @@ export class RoleService {
       const role = await this.role(id, user);
 
       if (role && role.slug && role.slug === 'admin') {
-        throw errorUtil.ERROR({ error: 'PLEASE DONT MODIFY DEMO DATA', user });
+        throw errUtil.ERROR({ error: errUtil.mapping.PLEASE_DONT_MODIFY.text, user });
       }
     }
 
@@ -134,7 +134,7 @@ export class RoleService {
     } else {
       if (process.argv.includes('--nuke')) return undefined;
 
-      return errorUtil.ERROR({ error: 'Permissions Error', user });
+      return errUtil.ERROR({ error: 'Permissions Error', user });
     }
 
     return curdUtil.commonUpdate(this.roleRepository, CLS_NAME, id, args, relationArgs);

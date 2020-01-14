@@ -10,7 +10,7 @@ import {
   UpdateCategoryInput,
   CategoryTreeObject,
 } from '@leaa/common/src/dtos/category';
-import { argsUtil, curdUtil, paginationUtil, errorUtil } from '@leaa/api/src/utils';
+import { argsUtil, curdUtil, paginationUtil, errUtil } from '@leaa/api/src/utils';
 import { ICategoriesArgs, ICategoryArgs } from '@leaa/api/src/interfaces';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 import { categorySeed } from '@leaa/api/src/modules/seed/seed.data';
@@ -31,7 +31,7 @@ export class CategoryService {
       const c = await this.category(id, user);
 
       if (c && c.slug && categorySeed.map(seed => seed.slug).includes(c.slug)) {
-        throw errorUtil.ERROR({ error: 'PLEASE DONT MODIFY DEMO DATA', user });
+        throw errUtil.ERROR({ error: errUtil.mapping.PLEASE_DONT_MODIFY.text, user });
       }
     }
 
@@ -141,7 +141,7 @@ export class CategoryService {
   }
 
   async createCategory(args: CreateCategoryInput): Promise<Category | undefined> {
-    if (!args || (args && !args.slug)) return errorUtil.ERROR({ error: 'Not Found Slug' });
+    if (!args || (args && !args.slug)) return errUtil.ERROR({ error: errUtil.mapping.NOT_FOUND_FIELD.text });
 
     const manager = getManager();
     const newCategory = new Category();

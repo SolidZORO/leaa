@@ -18,15 +18,7 @@ import {
   ISaveInLocalSignature,
   IAttachmentParams,
 } from '@leaa/common/src/interfaces';
-import {
-  argsUtil,
-  loggerUtil,
-  pathUtil,
-  authUtil,
-  attachmentUtil,
-  paginationUtil,
-  errorUtil,
-} from '@leaa/api/src/utils';
+import { argsUtil, loggerUtil, pathUtil, authUtil, attachmentUtil, paginationUtil, errUtil } from '@leaa/api/src/utils';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 import { IAttachmentsArgs, IAttachmentArgs } from '@leaa/api/src/interfaces';
 import { SaveInOssService } from '@leaa/api/src/modules/attachment/save-in-oss.service';
@@ -128,10 +120,10 @@ export class AttachmentService {
   }
 
   async updateAttachment(uuid: string, args: UpdateAttachmentInput): Promise<Attachment | undefined> {
-    if (!args) return errorUtil.ERROR({ error: `Not Found Args by ${uuid}` });
+    if (!args) return errUtil.ERROR({ error: errUtil.mapping.NOT_FOUND_ARGS.text });
 
     let prevItem = await this.attachmentRepository.findOne({ uuid });
-    if (!prevItem) return errorUtil.ERROR({ error: `Not Found Item ${uuid}` });
+    if (!prevItem) return errUtil.ERROR({ error: errUtil.mapping.NOT_FOUND_ITEM.text });
 
     prevItem = { ...prevItem, ...args };
     const nextItem = await this.attachmentRepository.save(prevItem);
@@ -142,7 +134,7 @@ export class AttachmentService {
   }
 
   async updateAttachments(attachments: UpdateAttachmentsInput[]): Promise<AttachmentsObject> {
-    if (!attachments) return errorUtil.ERROR({ error: 'Not Found attachments' });
+    if (!attachments) return errUtil.ERROR({ error: errUtil.mapping.NOT_FOUND_ITEMS.text });
 
     const batchUpdate = attachments.map(async attachment => {
       await this.attachmentRepository.update({ uuid: attachment.uuid }, _.omit(attachment, ['uuid']));
@@ -167,10 +159,10 @@ export class AttachmentService {
 
   async deleteAttachments(uuid: string[]): Promise<DeleteAttachmentsObject | undefined> {
     const prevItems = await this.attachmentRepository.find({ uuid: In(uuid) });
-    if (!prevItems) return errorUtil.ERROR({ error: `Not Found Item ${uuid}` });
+    if (!prevItems) return errUtil.ERROR({ error: errUtil.mapping.NOT_FOUND_ITEM.text });
 
     const nextItem = await this.attachmentRepository.remove(prevItems);
-    if (!nextItem) return errorUtil.ERROR({ error: `Delete Item ${uuid} Faild` });
+    if (!nextItem) return errUtil.ERROR({ error: errUtil.mapping.DELETE_ITEM_FAILED.text });
 
     prevItems.forEach(i => {
       if (i.at2x) {
