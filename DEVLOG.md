@@ -317,7 +317,10 @@ Promise.prototype.finally =
     finally(fn) {
       const onFinally = cb => Promise.resolve(fn()).then(cb);
 
-      return this.then(result => onFinally(() => result), reason => onFinally(() => Promise.reject(reason)));
+      return this.then(
+        result => onFinally(() => result),
+        reason => onFinally(() => Promise.reject(reason)),
+      );
     },
   }.finally;
 ```
@@ -630,8 +633,20 @@ RN 的生态是真不好，也没人交流。国内外几大 RN 社区人气也�
 
 无论点任何 Link，页面都刷新了！对！都！刷！新！了！这就完全没有了 SSR+SPA 的优势啦！那这还叫 next.js 吗？我这个时候当然不死心，看了大量的 issues，官方的说法比较消极，他们不想管，就问你为什么不用 file-system based router……
 
-好吧，zeit 的开闭原则一项都是比较迷的，就像前两天把 now.sh 部署中的 .env* 给禁止上传到 serverless 上，理由是 zero config，而且没有过度方案，好吧，既然是人家的免费 serverless 我也只好遵循啊。
+好吧，zeit 的开闭原则一项都是比较迷的，就像前两天把 now.sh 部署中的 .env\* 给禁止上传到 serverless 上，理由是 zero config，而且没有过度方案，好吧，既然是人家的免费 serverless 我也只好遵循啊。
 
 解决办法最后是把 now-cli 降到了 16.2，对于我这种新版本控这肯定接受不了，只是现在没时间，回头再研究了，实在不行就用官方推荐的 -secret 命令好了，再说把。
 
 不过今天也再一次证明了 zeit 的东西很吊，但用起来总有这哪的小问题，不是特别舒服，可能人家就是面向 light user 去做产品的吧，不适合用于太深度的定制。
+
+### 2020-01-15 22:20
+
+后端 API 目前加上了 `i18n` 用的是 `i18next` 方案。开始的时候蛮棘手的，真的不知道怎么写，graphql 没有什么好的方式去拿到用户发来的 `lang`，后来想了下，既然 jwt 可以放 header，那 lang 也放吧，于是很轻松的扩展了 `graphql.service.ts` 就把 lang 传到了 ctx。
+
+想到之前也是用同样方式去拿 user 的，干脆 user 也别拿了，统一改成 ctx，把 user 和 lang 都丢到到 ctx 去，因为 ctx 到处都是，我怕不好辨认便取名叫 gqlCtx，还写了一个叫 `@GqlCtx` 的修饰符，几乎每个 `Resolver` 我都修饰了，这样一个 gqlCtx 就可以拿到所有我想拿的东西，包括未来的一些扩展，而且不用改代码，想想也是不错。
+
+另外之前用的 `errUtil`，这次也因 `i18n` 的关系改名成 `msgUtil`，写法更加简单，而且支持了多语言，还是非常不错的，总之这个 `v1.0.4` 版本改动挺大的，但总是朝着好的方面去了。
+
+前段时间就一直想给 API 支持多语言，开始真的不敢想，因为和传统的 restful API 相比，在 graphql 上实现 `i18n` 简直一个孤岛，资料非常非常少，而且看起来都很 trick，一点头绪都没有，没想到写起来还蛮简单的。GitHub 上很多代码参考，但是都及其复杂，各种依赖比 `i18next-express-middleware` 之类的库，但是我写下来发现，根本没必要。其实就简简单单声明一个 module 声明一下，往里面灌配置，安排一下语言包就好了。
+
+写完这个还蛮开心的，感觉一颗大石落地，终于 `dashboard` 和 `api` 端都 `i18n` 多语言了， `www` 端那边我倒是不急（笑），回头肯定要写，但还不是时候，而且也没有太难，再说啦～

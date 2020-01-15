@@ -25,4 +25,10 @@ yarn dev
 
 ## **TIPS**
 
-N/A
+starting from `v1.0.4`, the api also supports `i18n`.
+
+the currently available languages are 🇺🇸 English (en-US) and 🇨🇳 Chinese (zh-CN). The default is English.
+
+to request Chinese, please set req.header.lang, e.g. `req.heard.lang = 'zh-CN'`
+
+more config @see `leaa-api/src/modules/i18n/i18n.service.ts`
