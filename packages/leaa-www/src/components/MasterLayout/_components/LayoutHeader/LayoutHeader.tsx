@@ -5,7 +5,6 @@ import Headroom from 'react-headroom';
 import { Button, Drawer } from 'antd';
 
 import { Rcon } from '@leaa/www/src/components';
-import { authUtil } from '@leaa/www/src/utils';
 
 import { __MENU_MOCK__ } from '@leaa/www/src/__mock__';
 

@@ -3,10 +3,9 @@ import cx from 'classnames';
 
 import { createFromIconfontCN } from '@ant-design/icons';
 import { IconBaseProps } from '@ant-design/icons/lib/components/Icon';
+import style from './style.module.less';
 // @ts-ignore
 // import localIconfont from '@leaa/www/src/assets/fonts/ri/iconfont';
-
-import style from './style.module.less';
 
 interface IProps extends IconBaseProps {
   type: string | undefined;
