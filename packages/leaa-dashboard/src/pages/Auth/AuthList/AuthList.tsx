@@ -7,9 +7,9 @@ import { Link } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { Table } from 'antd';
 
-import { User, Auth } from '@leaa/common/src/entrys';
+import { Auth } from '@leaa/common/src/entrys';
 import { DEFAULT_PAGE_SIZE_OPTIONS, PAGE_CARD_TITLE_CREATE_ICON } from '@leaa/dashboard/src/constants';
-import { GET_AUTHS, DELETE_USER, GET_USERS, DELETE_AUTH } from '@leaa/dashboard/src/graphqls';
+import { GET_AUTHS, DELETE_AUTH } from '@leaa/dashboard/src/graphqls';
 import { AuthsWithPaginationObject, AuthsArgs } from '@leaa/common/src/dtos/auth';
 import { IPage, IKey, ITablePagination } from '@leaa/dashboard/src/interfaces';
 import { urlUtil, tableUtil, msgUtil } from '@leaa/dashboard/src/utils';

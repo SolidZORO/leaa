@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Button, message } from 'antd';
+import { Button } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useMutation } from '@apollo/react-hooks';
 

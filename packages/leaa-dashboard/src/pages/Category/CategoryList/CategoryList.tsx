@@ -13,7 +13,7 @@ import { CategoriesWithPaginationOrTreeObject, CategoriesArgs } from '@leaa/comm
 import { msgUtil } from '@leaa/dashboard/src/utils';
 import { IPage } from '@leaa/dashboard/src/interfaces';
 
-import { HtmlMeta, PageCard, TableCard, TableColumnDeleteButton, Rcon } from '@leaa/dashboard/src/components';
+import { HtmlMeta, PageCard, TableColumnDeleteButton, Rcon } from '@leaa/dashboard/src/components';
 
 import 'react-sortable-tree/style.css';
 import style from './style.module.less';

@@ -10,7 +10,7 @@ import { msgUtil } from '@leaa/dashboard/src/utils';
 import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
 import { UpdateRoleInput } from '@leaa/common/src/dtos/role';
 
-import { FormCard, EntryInfoDate } from '@leaa/dashboard/src/components';
+import { FormCard } from '@leaa/dashboard/src/components';
 import { RolePermissionsCheckbox } from '../RolePermissionsCheckbox/RolePermissionsCheckbox';
 import { RolePermissionLength } from '../RolePermissionLength/RolePermissionLength';
 

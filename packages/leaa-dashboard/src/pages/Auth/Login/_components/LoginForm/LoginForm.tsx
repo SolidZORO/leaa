@@ -1,5 +1,5 @@
 import cx from 'classnames';
-import React, { useState, useEffect, forwardRef, useImperativeHandle } from 'react';
+import React, { useEffect, forwardRef, useImperativeHandle } from 'react';
 import { Col, Form, Input, Row, Checkbox } from 'antd';
 
 import { useTranslation } from 'react-i18next';
