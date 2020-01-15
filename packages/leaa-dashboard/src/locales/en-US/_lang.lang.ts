@@ -1,5 +1,5 @@
 export default {
-  test: '0x00EN',
+  test: '0x00 EN',
   langen: 'English',
   langcn: 'Chinese',
   'lang-en-US': 'English',

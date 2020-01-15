@@ -664,7 +664,7 @@ type Query {
   demoData: DemoDataObject!
   test: Float!
   testWithAuth: String!
-  i18n: String!
+  testI18n(x: Int): String!
 }
 
 input RedeemCouponInput {

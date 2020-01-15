@@ -1,4 +1,3 @@
-export { errUtil } from './err.util';
 export { msgUtil } from './msg.util';
 export { cliUtil } from './cli.util';
 export { argsUtil } from './argsUtil';

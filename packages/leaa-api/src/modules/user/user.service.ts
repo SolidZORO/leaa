@@ -1,7 +1,5 @@
 import { diff } from 'jsondiffpatch';
 import bcryptjs from 'bcryptjs';
-// @ts-ignore
-import i18next, { t } from 'i18next';
 import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -11,7 +9,7 @@ import { UsersWithPaginationObject, CreateUserInput, UpdateUserInput } from '@le
 import { RoleService } from '@leaa/api/src/modules/role/role.service';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 import { AttachmentService } from '@leaa/api/src/modules/attachment/attachment.service';
-import { argsUtil, curdUtil, paginationUtil, authUtil, errUtil, loggerUtil, msgUtil } from '@leaa/api/src/utils';
+import { argsUtil, curdUtil, paginationUtil, authUtil, loggerUtil, msgUtil } from '@leaa/api/src/utils';
 import { JwtService } from '@nestjs/jwt';
 import { IUsersArgs, IUserArgs, IGqlCtx } from '@leaa/api/src/interfaces';
 

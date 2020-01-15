@@ -1,8 +1,8 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
-import enUs from '@leaa/dashboard/src/locales/en-US';
-import zhCn from '@leaa/dashboard/src/locales/zh-CN';
+
+import { enUs, zhCn } from '@leaa/dashboard/src/locales';
 
 i18n
   .use(initReactI18next)
@@ -17,10 +17,10 @@ i18n
       zh: zhCn,
       us: enUs,
     },
-    fallbackLng: 'zh-CN',
+    fallbackLng: 'en-US',
     saveMissing: true,
-    // debug: true,
     debug: false,
+    // debug: true,
   });
 
 export default i18n;

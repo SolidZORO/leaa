@@ -1,5 +1,5 @@
 export default {
-  test: '0x00 EN',
+  test: 'This is a message from the API (en-US / English)',
   //
   unauthorized: 'Unauthorized',
   forbidden: 'Forbidden',

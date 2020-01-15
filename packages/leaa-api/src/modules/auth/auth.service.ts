@@ -129,7 +129,7 @@ export class AuthService {
 
     const findUser = await this.userRepository.findOne({ relations: ['roles'], where: { id: payload.id } });
 
-    const user = authUtil.checkAvailableUser(findUser);
+    const user = authUtil.checkAvailableUser(findUser, gqlCtx);
 
     // IMPORTANT! if user info is changed, Compare `iat` and `last_token_at`
     if (moment(payload.iattz).isBefore(moment(user.last_token_at))) {

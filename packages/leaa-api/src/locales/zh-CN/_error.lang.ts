@@ -1,5 +1,5 @@
 export default {
-  test: '0x00 中文',
+  test: '这是一条从 API 发来的消息 (zh-CN / 中文)',
   //
   unauthorized: '未授权',
   forbidden: '禁止访问',

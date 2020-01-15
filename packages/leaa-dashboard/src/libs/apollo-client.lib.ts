@@ -2,7 +2,7 @@ import { HttpLink } from 'apollo-link-http';
 import { onError } from 'apollo-link-error';
 import { ApolloLink, split } from 'apollo-link';
 import { ApolloClient } from 'apollo-client';
-import { authUtil, messageUtil } from '@leaa/dashboard/src/utils';
+import { authUtil, messageUtil, langUtil } from '@leaa/dashboard/src/utils';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { OperationDefinitionNode } from 'graphql';
 
@@ -22,6 +22,7 @@ const authLink = new ApolloLink((operation, forward) => {
   operation.setContext({
     headers: {
       Authorization: token ? `Bearer ${token}` : '',
+      lang: langUtil.getCurrentLang(),
     },
   });
 

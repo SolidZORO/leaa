@@ -1,13 +1,13 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import i18next from 'i18next';
 
-import enUs from '@leaa/api/src/locales/en-US';
-import zhCn from '@leaa/api/src/locales/zh-CN';
+import { enUs, zhCn } from '@leaa/api/src/locales';
 
 @Injectable()
 export class I18nService implements OnModuleInit {
   onModuleInit() {
     return i18next.init({
+      whitelist: ['en-US', 'zh-CN', 'zh', 'en'],
       resources: {
         'en-US': enUs,
         'zh-CN': zhCn,
@@ -20,9 +20,6 @@ export class I18nService implements OnModuleInit {
       saveMissing: true,
       debug: false,
       // debug: true,
-      // detection: {
-      //   lookupQuerystring: 'lang',
-      // },
     });
   }
 }

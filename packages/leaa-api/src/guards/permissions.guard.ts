@@ -3,7 +3,7 @@ import { GqlExecutionContext } from '@nestjs/graphql';
 import { ExecutionContext, CanActivate, Injectable } from '@nestjs/common';
 
 import { User } from '@leaa/common/src/entrys';
-import { errUtil } from '@leaa/api/src/utils';
+import { msgUtil } from '@leaa/api/src/utils';
 import { IPermissionSlug } from '@leaa/common/src/interfaces';
 import { PermissionsMetadataKey } from '@leaa/api/src/decorators';
 
@@ -11,25 +11,20 @@ import { PermissionsMetadataKey } from '@leaa/api/src/decorators';
 export class PermissionsGuard implements CanActivate {
   constructor(private readonly reflector: Reflector) {}
 
-  protected getUser(context: ExecutionContext): User {
-    const ctx = GqlExecutionContext.create(context).getContext();
-
-    return ctx?.user;
-  }
-
   canActivate(context: ExecutionContext): boolean | Promise<boolean> {
     const permissions = this.reflector.get<IPermissionSlug[]>(PermissionsMetadataKey, context.getHandler());
+    const gqlCtx = GqlExecutionContext.create(context).getContext();
 
-    const user = this.getUser(context);
+    const user: User | undefined = gqlCtx?.user;
 
-    if (!user) return errUtil.ERROR({ error: errUtil.mapping.UNAUTHORIZED.text });
+    if (!user) return msgUtil.error({ t: ['_error:unauthorized'], gqlCtx });
 
     // signup user
     if (!user.is_admin && user.flatPermissions && user.flatPermissions.length === 0) return true;
 
     // not is admin
     if (!user.flatPermissions || user.flatPermissions.length <= 0) {
-      return errUtil.ERROR({ error: errUtil.mapping.FORBIDDEN.text });
+      return msgUtil.error({ t: ['_error:forbidden'], gqlCtx });
     }
 
     return (

@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
-import { Query, Resolver } from '@nestjs/graphql';
-import { Float } from 'type-graphql';
+import { Query, Resolver, Args } from '@nestjs/graphql';
+import { Float, Int } from 'type-graphql';
 
 import { TestService } from '@leaa/api/src/modules/test/test.service';
 import { PermissionsGuard } from '@leaa/api/src/guards';
@@ -23,7 +23,7 @@ export class TestResolver {
   }
 
   @Query(() => String)
-  async i18n(@GqlCtx() gqlCtx: IGqlCtx): Promise<string> {
-    return this.testService.i18n(gqlCtx);
+  testI18n(@Args({ name: 'x', type: () => Int, nullable: true }) x?: number, @GqlCtx() gqlCtx?: IGqlCtx): string {
+    return this.testService.testI18n(x, gqlCtx);
   }
 }

@@ -32,7 +32,7 @@ export class AuthLocalService {
       relations: ['roles'],
     });
 
-    const user = authUtil.checkAvailableUser(findUser);
+    const user = authUtil.checkAvailableUser(findUser, gqlCtx);
     const passwordIsMatch = await bcryptjs.compareSync(args.password, user.password);
 
     if (!passwordIsMatch) {

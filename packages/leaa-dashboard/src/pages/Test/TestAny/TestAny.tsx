@@ -7,9 +7,6 @@ import { HtmlMeta, SelectTagId, SelectCategoryIdByTree, Rcon, SuspenseFallback }
 import { LikeZanButton } from '@leaa/dashboard/src/pages/Zan/_components/LikeZanButton/LikeZanButton';
 
 import { GithubAuthButton } from '../_components/GithubAuthButton/GithubAuthButton';
-// import { Icon } from 'antd';
-
-// import { MessageOutlined, createFromIconfontCN } from '@ant-design/icons';
 
 export default (props: IPage) => {
   const { t } = useTranslation();

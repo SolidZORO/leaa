@@ -3,6 +3,7 @@ import { CacheInterceptor, ExecutionContext, Injectable } from '@nestjs/common';
 @Injectable()
 export class HttpCacheInterceptor extends CacheInterceptor {
   trackBy(context: ExecutionContext): string | undefined {
+    return undefined;
     // const request = context.switchToHttp().getRequest();
     // const { httpAdapter } = this.httpAdapterHost;
     // const httpServer = httpAdapter.getHttpServer();
@@ -16,7 +17,6 @@ export class HttpCacheInterceptor extends CacheInterceptor {
 
     // console.log('----------------------');
     // return 'key';
-    return undefined;
     // const isGetRequest = httpServer.getRequestMethod(request) === 'GET';
     // const excludePaths: string[] = ['login'];
     //

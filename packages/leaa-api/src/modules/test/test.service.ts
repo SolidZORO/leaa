@@ -7,9 +7,13 @@ const CLS_NAME = 'TestService';
 
 @Injectable()
 export class TestService {
-  async i18n(gqlCtx: IGqlCtx): Promise<string> {
-    console.log(CLS_NAME);
+  testI18n(x?: number, gqlCtx?: IGqlCtx): string {
+    console.log(CLS_NAME, x, gqlCtx?.lang);
 
-    return msgUtil.error({ t: ['_error:test'], gqlCtx });
+    if (typeof x !== 'undefined' && x > 0) {
+      return msgUtil.error({ t: ['_error:test'], gqlCtx });
+    }
+
+    return msgUtil.message({ t: ['_error:test'], gqlCtx });
   }
 }
