@@ -8,7 +8,7 @@ import { HtmlMeta, PageCard, SwiperImage } from '@leaa/www/src/components';
 
 import { IBasePageProps, IGetInitialPropsCtx } from '@leaa/www/src/interfaces';
 import { apolloClient } from '@leaa/www/src/libs';
-import { messageUtil } from '@leaa/www/src/utils';
+import { msgUtil } from '@leaa/www/src/utils';
 
 import style from './style.module.less';
 
@@ -22,7 +22,7 @@ interface IProps extends IBasePageProps<IPageProps> {}
 const nextPage = (ctx: IProps) => {
   const { ax, axError } = ctx.pageProps;
 
-  if (axError) messageUtil.gqlError(axError?.message);
+  if (axError) msgUtil.error(axError?.message);
 
   return (
     <PageCard>

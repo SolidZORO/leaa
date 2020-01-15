@@ -9,7 +9,7 @@ import { User } from '@leaa/common/src/entrys';
 import { AuthLoginInput } from '@leaa/common/src/dtos/auth';
 import { LOGIN_FOR_WWW } from '@leaa/www/src/graphqls';
 
-import { authUtil, messageUtil } from '@leaa/www/src/utils';
+import { authUtil, msgUtil } from '@leaa/www/src/utils';
 
 import WechatLoginButton from '../WechatLoginButton/WechatLoginButton';
 import PhoneLoginButton from '../PhoneLoginButton/PhoneLoginButton';
@@ -57,7 +57,7 @@ export default (props: IProps) => {
     try {
       submitData = await form.validateFields();
     } catch (error) {
-      messageUtil.error(error.errorFields && error.errorFields[0]?.errors[0]);
+      msgUtil.error(error.errorFields && error.errorFields[0]?.errors[0]);
     }
 
     console.log(submitData);

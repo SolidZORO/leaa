@@ -9,7 +9,7 @@ import { ArticlesWithPaginationObject } from '@leaa/common/src/dtos/article';
 import { HtmlMeta, PageCard } from '@leaa/www/src/components';
 import { IBasePageProps, IGetInitialPropsCtx } from '@leaa/www/src/interfaces';
 import { apolloClient } from '@leaa/www/src/libs';
-import { messageUtil } from '@leaa/www/src/utils';
+import { msgUtil } from '@leaa/www/src/utils';
 
 import style from './style.module.less';
 
@@ -23,7 +23,7 @@ interface IProps extends IBasePageProps<IPageProps> {}
 const nextPage = (props: IProps) => {
   const { articles, articlesError } = props.pageProps;
 
-  if (articlesError) messageUtil.gqlError(articlesError?.message);
+  if (articlesError) msgUtil.error(articlesError?.message);
   if (!articles) return null;
 
   return (

@@ -8,7 +8,7 @@ import { useMutation } from '@apollo/react-hooks';
 import { User } from '@leaa/common/src/entrys';
 import { AuthSignupInput } from '@leaa/common/src/dtos/auth';
 import { SIGNUP_FOR_WWW } from '@leaa/www/src/graphqls';
-import { authUtil, messageUtil } from '@leaa/www/src/utils';
+import { authUtil, msgUtil } from '@leaa/www/src/utils';
 
 import style from './style.module.less';
 
@@ -55,7 +55,7 @@ export default (props: IProps) => {
     try {
       submitData = await form.validateFields();
     } catch (error) {
-      messageUtil.error(error.errorFields && error.errorFields[0]?.errors[0]);
+      msgUtil.error(error.errorFields && error.errorFields[0]?.errors[0]);
     }
 
     await setSubmitVariables({

@@ -8,7 +8,7 @@ import { GET_ARTICLE_BY_SLUG } from '@leaa/www/src/graphqls';
 import { IBasePageProps, IGetInitialPropsCtx } from '@leaa/www/src/interfaces';
 import { HtmlMeta, PageCard } from '@leaa/www/src/components';
 import { apolloClient } from '@leaa/www/src/libs';
-import { messageUtil } from '@leaa/www/src/utils';
+import { msgUtil } from '@leaa/www/src/utils';
 
 import style from './style.module.less';
 
@@ -22,7 +22,7 @@ interface IProps extends IBasePageProps<IPageProps> {}
 const nextPage = (props: IProps) => {
   const { article, articleError } = props.pageProps;
 
-  if (articleError) messageUtil.gqlError(articleError?.message);
+  if (articleError) msgUtil.error(articleError?.message);
   if (!article) return null;
 
   return (

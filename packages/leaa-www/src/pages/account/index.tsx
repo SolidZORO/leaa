@@ -4,7 +4,7 @@ import { GraphQLError } from 'graphql';
 
 import { GET_USER_BY_TOKEN_FOR_WWW } from '@leaa/www/src/graphqls';
 import { IGetInitialPropsCtx, IBasePageProps } from '@leaa/www/src/interfaces';
-import { authUtil, urlUtil, messageUtil } from '@leaa/www/src/utils';
+import { authUtil, urlUtil, msgUtil } from '@leaa/www/src/utils';
 import { User } from '@leaa/common/src/entrys';
 import { apolloClient } from '@leaa/www/src/libs';
 
@@ -24,7 +24,7 @@ const NOT_TOKEN_REDIRECT_TO_URL = '/login';
 const nextPage = (props: IProps) => {
   const { user, userError } = props.pageProps;
 
-  if (userError) messageUtil.gqlError(userError?.message);
+  if (userError) msgUtil.error(userError?.message);
   if (!user) return null;
 
   return (
