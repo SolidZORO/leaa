@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import { User, Permission, Attachment } from '@leaa/common/src/entrys';
+import { User, Permission } from '@leaa/common/src/entrys';
 import { RoleService } from '@leaa/api/src/modules/role/role.service';
 
 // const CLS_NAME = 'UserProperty';

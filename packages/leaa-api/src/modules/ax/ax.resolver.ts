@@ -2,7 +2,7 @@ import { UseGuards } from '@nestjs/common';
 import { Args, Query, Mutation, Resolver, ResolveProperty, Parent } from '@nestjs/graphql';
 import { Int } from 'type-graphql';
 
-import { Ax, User } from '@leaa/common/src/entrys';
+import { Ax } from '@leaa/common/src/entrys';
 import {
   AxsArgs,
   AxsWithPaginationObject,
@@ -11,7 +11,7 @@ import {
   UpdateAxInput,
   AxAttachmentsObject,
 } from '@leaa/common/src/dtos/ax';
-import { CurrentUser, Permissions, GqlCtx } from '@leaa/api/src/decorators';
+import { Permissions, GqlCtx } from '@leaa/api/src/decorators';
 import { AxService } from '@leaa/api/src/modules/ax/ax.service';
 import { AxProperty } from '@leaa/api/src/modules/ax/ax.property';
 import { PermissionsGuard } from '@leaa/api/src/guards';
