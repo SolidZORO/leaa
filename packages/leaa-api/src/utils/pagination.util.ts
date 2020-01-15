@@ -46,5 +46,5 @@ const calcQueryBuilderPageInfo = async ({
 };
 
 export const paginationUtil = {
-  calcQueryBuilderPageInfo,
+  calcQbPageInfo: calcQueryBuilderPageInfo,
 };

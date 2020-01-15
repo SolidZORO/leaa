@@ -7,9 +7,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 import { User } from '@leaa/common/src/entrys';
 import { AuthLoginInput, AuthSignupInput } from '@leaa/common/src/dtos/auth';
-import { errUtil, authUtil, loggerUtil } from '@leaa/api/src/utils';
+import { authUtil, loggerUtil, msgUtil } from '@leaa/api/src/utils';
 import { UserService } from '@leaa/api/src/modules/user/user.service';
 import { AuthService } from '@leaa/api/src/modules/auth/auth.service';
+import { IGqlCtx } from '@leaa/api/src/interfaces';
 
 const CLS_NAME = 'AuthLocalService';
 
@@ -21,7 +22,7 @@ export class AuthLocalService {
     private readonly authService: AuthService,
   ) {}
 
-  async login(args: AuthLoginInput): Promise<User | undefined> {
+  async login(args: AuthLoginInput, gqlCtx?: IGqlCtx): Promise<User | undefined> {
     const findUser = await this.userRepository.findOne({
       select: ['id', 'email', 'name', 'status', 'password', 'avatar_url'],
       where: {
@@ -38,7 +39,7 @@ export class AuthLocalService {
       const errorMessage = `User (${args.email}) Info Not Match`;
       loggerUtil.log(errorMessage, CLS_NAME);
 
-      return errUtil.ERROR({ error: errorMessage });
+      return msgUtil.error({ t: ['_error:userInfoNotMatch'], gqlCtx });
     }
 
     if (user.password) delete user.password;
@@ -48,7 +49,7 @@ export class AuthLocalService {
     return this.authService.addTokenToUser(user);
   }
 
-  async signup(args: AuthSignupInput, uid?: number): Promise<User | undefined> {
+  async signup(args: AuthSignupInput, uid?: number, gqlCtx?: IGqlCtx): Promise<User | undefined> {
     const nextArgs: AuthSignupInput = { name: '', password: '', email: '' };
 
     _.forEach(args, (v, i) => {
@@ -72,13 +73,13 @@ export class AuthLocalService {
       loggerUtil.log(`Local Singup Succeed, ${JSON.stringify({ ...newUser, password: '******' })}`, CLS_NAME);
 
       if (uid) {
-        await this.authService.bindUserIdToAuth(newUser, uid);
+        await this.authService.bindUserIdToAuth(newUser, uid, gqlCtx);
         await this.authService.clearTicket(uid);
       }
     } catch (error) {
       loggerUtil.log(`Local Singup Error, ${JSON.stringify(error)}`, CLS_NAME);
 
-      return errUtil.ERROR({ error: 'Sign Up Fail' });
+      return msgUtil.error({ t: ['_error:signupFailed'], gqlCtx });
     }
 
     return this.authService.addTokenToUser(newUser);

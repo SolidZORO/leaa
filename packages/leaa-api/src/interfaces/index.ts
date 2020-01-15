@@ -19,3 +19,4 @@ export * from './coupon.interface';
 export * from './promo.interface';
 export * from './tag.interface';
 export * from './i18n.interfaces';
+export * from './decorator.interface';

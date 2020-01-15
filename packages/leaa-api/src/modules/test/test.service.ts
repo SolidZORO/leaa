@@ -1,13 +1,15 @@
 import { Injectable } from '@nestjs/common';
-import i18next from 'i18next';
 
-import { IRequest } from '@leaa/api/src/interfaces';
+import { IGqlCtx } from '@leaa/api/src/interfaces';
+import { msgUtil } from '@leaa/api/src/utils';
 
 const CLS_NAME = 'TestService';
 
 @Injectable()
 export class TestService {
-  async i18n(req: IRequest): Promise<string> {
-    return i18next.t('_lang:hello');
+  async i18n(gqlCtx: IGqlCtx): Promise<string> {
+    console.log(CLS_NAME);
+
+    return msgUtil.error({ t: ['_error:test'], gqlCtx });
   }
 }

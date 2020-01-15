@@ -5,6 +5,7 @@ import { Injectable, Request, Response, Body } from '@nestjs/common';
 import { IRequest, IResponse, IArticleArgs, IPromosArgs } from '@leaa/api/src/interfaces';
 import { ArticleService } from '@leaa/api/src/modules/article/article.service';
 import { PromoService } from '@leaa/api/src/modules/promo/promo.service';
+import { httpUtil } from '@leaa/api/src/utils';
 
 const CLS_NAME = 'ExportService';
 
@@ -23,7 +24,8 @@ export class ExportService {
   async exportPromo(@Body() args: IPromosArgs, @Request() req: IRequest, @Response() res: IResponse) {
     const filenamePrefix = 'promo';
 
-    const promos = await this.promoService.promos({ ...args, pageSize: PAGE_SIZE }, req.user);
+    const gqlCtx = httpUtil.getGqlCtxFromReq(req);
+    const promos = await this.promoService.promos({ ...args, pageSize: PAGE_SIZE }, gqlCtx);
 
     const dataTitle = ['Name', 'Amount'];
     const dataBody = promos.items.map(i => [i.name, i.amount]);
@@ -46,7 +48,8 @@ export class ExportService {
   async exportArticle(@Body() args: IArticleArgs, @Request() req: IRequest, @Response() res: IResponse) {
     const filenamePrefix = 'article';
 
-    const articles = await this.articleService.articles({ ...args, pageSize: PAGE_SIZE }, req.user);
+    const gqlCtx = httpUtil.getGqlCtxFromReq(req);
+    const articles = await this.articleService.articles({ ...args, pageSize: PAGE_SIZE }, gqlCtx);
 
     const options = { '!cols': [{ wch: 12 }, { wch: 24 }, { wch: 50 }] };
     const dataTitle = ['ID', 'Title', 'Slug'];

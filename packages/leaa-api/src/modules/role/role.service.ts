@@ -2,10 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { Repository, In } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { Role, Permission, User } from '@leaa/common/src/entrys';
+import { Role, Permission } from '@leaa/common/src/entrys';
 import { RolesWithPaginationObject, CreateRoleInput, UpdateRoleInput } from '@leaa/common/src/dtos/role';
-import { argsUtil, curdUtil, paginationUtil, errUtil } from '@leaa/api/src/utils';
-import { IRolesArgs, IRoleArgs } from '@leaa/api/src/interfaces';
+import { argsUtil, curdUtil, paginationUtil, msgUtil } from '@leaa/api/src/utils';
+import { IRolesArgs, IRoleArgs, IGqlCtx } from '@leaa/api/src/interfaces';
 import { PermissionService } from '@leaa/api/src/modules/permission/permission.service';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 
@@ -20,14 +20,14 @@ export class RoleService {
     private readonly configService: ConfigService,
   ) {}
 
-  async PLEASE_DONT_MODIFY_DEMO_DATA(id?: number, user?: User): Promise<boolean> {
+  async PLEASE_DONT_MODIFY_DEMO_DATA(id?: number, gqlCtx?: IGqlCtx): Promise<boolean> {
     if (this.configService.DEMO_MODE && !process.argv.includes('--nuke')) {
       if (!id) return true;
 
-      const role = await this.role(id, user);
+      const role = await this.role(id);
 
       if (role && role.slug && role.slug === 'admin') {
-        throw errUtil.ERROR({ error: errUtil.mapping.PLEASE_DONT_MODIFY.text, user });
+        throw msgUtil.error({ t: ['_error:pleaseDontModify'], gqlCtx });
       }
     }
 
@@ -58,7 +58,7 @@ export class RoleService {
       qb.orderBy(`${PRIMARY_TABLE}.${nextArgs.orderBy}`, nextArgs.orderSort);
     }
 
-    return paginationUtil.calcQueryBuilderPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
+    return paginationUtil.calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
   async role(id: number, args?: IRoleArgs): Promise<Role | undefined> {
@@ -111,8 +111,8 @@ export class RoleService {
     return this.roleRepository.save({ ...args });
   }
 
-  async updateRole(id: number, args: UpdateRoleInput, user?: User): Promise<Role | undefined> {
-    if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id, user);
+  async updateRole(id: number, args: UpdateRoleInput, gqlCtx?: IGqlCtx): Promise<Role | undefined> {
+    if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id, gqlCtx);
 
     if (curdUtil.isOneField(args, 'status')) return curdUtil.commonUpdate(this.roleRepository, CLS_NAME, id, args);
 
@@ -134,14 +134,14 @@ export class RoleService {
     } else {
       if (process.argv.includes('--nuke')) return undefined;
 
-      return errUtil.ERROR({ error: 'Permissions Error', user });
+      throw msgUtil.error({ t: ['_error:notFound'], gqlCtx });
     }
 
     return curdUtil.commonUpdate(this.roleRepository, CLS_NAME, id, args, relationArgs);
   }
 
-  async deleteRole(id: number, user?: User): Promise<Role | undefined> {
-    if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id, user);
+  async deleteRole(id: number, gqlCtx?: IGqlCtx): Promise<Role | undefined> {
+    if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id, gqlCtx);
 
     return curdUtil.commonDelete(this.roleRepository, CLS_NAME, id);
   }

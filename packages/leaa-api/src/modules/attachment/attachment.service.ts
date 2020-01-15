@@ -4,7 +4,7 @@ import { Express } from 'express';
 import { Repository, In, SelectQueryBuilder } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Attachment, User } from '@leaa/common/src/entrys';
+import { Attachment } from '@leaa/common/src/entrys';
 import {
   AttachmentsWithPaginationObject,
   UpdateAttachmentInput,
@@ -18,9 +18,9 @@ import {
   ISaveInLocalSignature,
   IAttachmentParams,
 } from '@leaa/common/src/interfaces';
-import { argsUtil, loggerUtil, pathUtil, authUtil, attachmentUtil, paginationUtil, errUtil } from '@leaa/api/src/utils';
+import { argsUtil, loggerUtil, pathUtil, authUtil, attachmentUtil, paginationUtil, msgUtil } from '@leaa/api/src/utils';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
-import { IAttachmentsArgs, IAttachmentArgs } from '@leaa/api/src/interfaces';
+import { IAttachmentsArgs, IAttachmentArgs, IGqlCtx } from '@leaa/api/src/interfaces';
 import { SaveInOssService } from '@leaa/api/src/modules/attachment/save-in-oss.service';
 import { SaveInLocalService } from '@leaa/api/src/modules/attachment/save-in-local.service';
 
@@ -49,7 +49,7 @@ export class AttachmentService {
     return null;
   }
 
-  async attachments(args: IAttachmentsArgs, user?: User): Promise<AttachmentsWithPaginationObject> {
+  async attachments(args: IAttachmentsArgs, gqlCtx?: IGqlCtx): Promise<AttachmentsWithPaginationObject> {
     const nextArgs = argsUtil.format(args);
 
     const moduleFilter: IAttachmentDbFilterField = {};
@@ -82,7 +82,7 @@ export class AttachmentService {
       });
     }
 
-    if (!user || (user && !authUtil.can(user, 'attachment.list-read--all-status'))) {
+    if (!gqlCtx?.user || (gqlCtx.user && !authUtil.can(gqlCtx.user, 'attachment.list-read--all-status'))) {
       qb.andWhere('status = :status', { status: 1 });
     }
 
@@ -92,17 +92,17 @@ export class AttachmentService {
       qb.orderBy({ sort: 'ASC' }).addOrderBy('created_at', 'ASC');
     }
 
-    return paginationUtil.calcQueryBuilderPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
+    return paginationUtil.calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
-  async attachment(uuid: string, args?: IAttachmentArgs, user?: User): Promise<Attachment | undefined> {
+  async attachment(uuid: string, args?: IAttachmentArgs, gqlCtx?: IGqlCtx): Promise<Attachment | undefined> {
     let nextArgs: IAttachmentArgs = {};
 
     if (args) nextArgs = args;
 
     const whereQuery: { uuid: string; status?: number } = { uuid };
 
-    if (!user || (user && !authUtil.can(user, 'attachment.item-read--all-status'))) {
+    if (!gqlCtx?.user || (gqlCtx.user && !authUtil.can(gqlCtx.user, 'attachment.item-read--all-status'))) {
       whereQuery.status = 1;
     }
 
@@ -119,11 +119,11 @@ export class AttachmentService {
     return this.saveInLocalServer.createAttachmentByLocal(body, file);
   }
 
-  async updateAttachment(uuid: string, args: UpdateAttachmentInput): Promise<Attachment | undefined> {
-    if (!args) return errUtil.ERROR({ error: errUtil.mapping.NOT_FOUND_ARGS.text });
+  async updateAttachment(uuid: string, args: UpdateAttachmentInput, gqlCtx?: IGqlCtx): Promise<Attachment | undefined> {
+    if (!args) return msgUtil.error({ t: ['_error:notFoundArgs'], gqlCtx });
 
     let prevItem = await this.attachmentRepository.findOne({ uuid });
-    if (!prevItem) return errUtil.ERROR({ error: errUtil.mapping.NOT_FOUND_ITEM.text });
+    if (!prevItem) return msgUtil.error({ t: ['_error:notFoundItem'], gqlCtx });
 
     prevItem = { ...prevItem, ...args };
     const nextItem = await this.attachmentRepository.save(prevItem);
@@ -133,8 +133,8 @@ export class AttachmentService {
     return nextItem;
   }
 
-  async updateAttachments(attachments: UpdateAttachmentsInput[]): Promise<AttachmentsObject> {
-    if (!attachments) return errUtil.ERROR({ error: errUtil.mapping.NOT_FOUND_ITEMS.text });
+  async updateAttachments(attachments: UpdateAttachmentsInput[], gqlCtx?: IGqlCtx): Promise<AttachmentsObject> {
+    if (!attachments) return msgUtil.error({ t: ['_error:notFoundItems'], gqlCtx });
 
     const batchUpdate = attachments.map(async attachment => {
       await this.attachmentRepository.update({ uuid: attachment.uuid }, _.omit(attachment, ['uuid']));
@@ -157,12 +157,12 @@ export class AttachmentService {
     };
   }
 
-  async deleteAttachments(uuid: string[]): Promise<DeleteAttachmentsObject | undefined> {
+  async deleteAttachments(uuid: string[], gqlCtx?: IGqlCtx): Promise<DeleteAttachmentsObject | undefined> {
     const prevItems = await this.attachmentRepository.find({ uuid: In(uuid) });
-    if (!prevItems) return errUtil.ERROR({ error: errUtil.mapping.NOT_FOUND_ITEM.text });
+    if (!prevItems) return msgUtil.error({ t: ['_error:notFoundItem'], gqlCtx });
 
     const nextItem = await this.attachmentRepository.remove(prevItems);
-    if (!nextItem) return errUtil.ERROR({ error: errUtil.mapping.DELETE_ITEM_FAILED.text });
+    if (!nextItem) return msgUtil.error({ t: ['_error:deleteItemFailed'], gqlCtx });
 
     prevItems.forEach(i => {
       if (i.at2x) {

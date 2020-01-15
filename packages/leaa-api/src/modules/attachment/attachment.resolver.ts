@@ -1,6 +1,7 @@
 import { Args, Query, Mutation, Resolver, ResolveProperty, Parent } from '@nestjs/graphql';
 
-import { Attachment, User } from '@leaa/common/src/entrys';
+import { Attachment } from '@leaa/common/src/entrys';
+import { IGqlCtx } from '@leaa/api/src/interfaces';
 import {
   AttachmentsArgs,
   AttachmentsWithPaginationObject,
@@ -12,7 +13,7 @@ import {
 } from '@leaa/common/src/dtos/attachment';
 import { AttachmentService } from '@leaa/api/src/modules/attachment/attachment.service';
 import { AttachmentProperty } from '@leaa/api/src/modules/attachment/attachment.property';
-import { CurrentUser } from '@leaa/api/src/decorators';
+import { GqlCtx } from '@leaa/api/src/decorators';
 
 @Resolver(() => Attachment)
 export class AttachmentResolver {
@@ -37,39 +38,42 @@ export class AttachmentResolver {
   @Query(() => AttachmentsWithPaginationObject)
   async attachments(
     @Args() args: AttachmentsArgs,
-    @CurrentUser() user?: User,
+    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<AttachmentsWithPaginationObject | undefined> {
-    return this.attachmentService.attachments(args, user);
+    return this.attachmentService.attachments(args, gqlCtx);
   }
 
   @Query(() => Attachment)
   async attachment(
     @Args({ name: 'uuid', type: () => String }) uuid: string,
     @Args() args?: AttachmentArgs,
-    @CurrentUser() user?: User,
+    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Attachment | undefined> {
-    return this.attachmentService.attachment(uuid, args, user);
+    return this.attachmentService.attachment(uuid, args, gqlCtx);
   }
 
   @Mutation(() => Attachment)
   async updateAttachment(
     @Args({ name: 'uuid', type: () => String }) uuid: string,
     @Args('attachment') args: UpdateAttachmentInput,
+    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Attachment | undefined> {
-    return this.attachmentService.updateAttachment(uuid, args);
+    return this.attachmentService.updateAttachment(uuid, args, gqlCtx);
   }
 
   @Mutation(() => AttachmentsObject)
   async updateAttachments(
     @Args({ name: 'attachments', type: () => [UpdateAttachmentsInput] }) attachments: UpdateAttachmentsInput[],
+    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<AttachmentsObject> {
-    return this.attachmentService.updateAttachments(attachments);
+    return this.attachmentService.updateAttachments(attachments, gqlCtx);
   }
 
   @Mutation(() => DeleteAttachmentsObject)
   async deleteAttachments(
     @Args({ name: 'uuid', type: () => [String] }) uuid: string[],
+    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<DeleteAttachmentsObject | undefined> {
-    return this.attachmentService.deleteAttachments(uuid);
+    return this.attachmentService.deleteAttachments(uuid, gqlCtx);
   }
 }

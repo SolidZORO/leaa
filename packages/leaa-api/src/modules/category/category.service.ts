@@ -3,15 +3,15 @@ import { Injectable } from '@nestjs/common';
 import { Repository, SelectQueryBuilder, getManager } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { Category, User } from '@leaa/common/src/entrys';
+import { Category } from '@leaa/common/src/entrys';
 import {
   CategoriesWithPaginationOrTreeObject,
   CreateCategoryInput,
   UpdateCategoryInput,
   CategoryTreeObject,
 } from '@leaa/common/src/dtos/category';
-import { argsUtil, curdUtil, paginationUtil, errUtil } from '@leaa/api/src/utils';
-import { ICategoriesArgs, ICategoryArgs } from '@leaa/api/src/interfaces';
+import { argsUtil, curdUtil, paginationUtil, msgUtil } from '@leaa/api/src/utils';
+import { ICategoriesArgs, ICategoryArgs, IGqlCtx } from '@leaa/api/src/interfaces';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 import { categorySeed } from '@leaa/api/src/modules/seed/seed.data';
 
@@ -24,14 +24,14 @@ export class CategoryService {
     private readonly configService: ConfigService,
   ) {}
 
-  async PLEASE_DONT_MODIFY_DEMO_DATA(id?: number, user?: User): Promise<boolean> {
+  async PLEASE_DONT_MODIFY_DEMO_DATA(id?: number, gqlCtx?: IGqlCtx): Promise<boolean> {
     if (this.configService.DEMO_MODE && !process.argv.includes('--nuke')) {
       if (!id) return true;
 
-      const c = await this.category(id, user);
+      const c = await this.category(id);
 
       if (c && c.slug && categorySeed.map(seed => seed.slug).includes(c.slug)) {
-        throw errUtil.ERROR({ error: errUtil.mapping.PLEASE_DONT_MODIFY.text, user });
+        throw msgUtil.error({ t: ['_error:pleaseDontModify'], gqlCtx });
       }
     }
 
@@ -126,7 +126,7 @@ export class CategoryService {
       return { trees: this.categoriesByTrees(trees, nextArgs) };
     }
 
-    return paginationUtil.calcQueryBuilderPageInfo({
+    return paginationUtil.calcQbPageInfo({
       qb,
       page: nextArgs.page,
       pageSize: nextArgs.pageSize,
@@ -140,8 +140,8 @@ export class CategoryService {
     return this.categoryRepository.findOne(id, nextArgs);
   }
 
-  async createCategory(args: CreateCategoryInput): Promise<Category | undefined> {
-    if (!args || (args && !args.slug)) return errUtil.ERROR({ error: errUtil.mapping.NOT_FOUND_FIELD.text });
+  async createCategory(args: CreateCategoryInput, gqlCtx?: IGqlCtx): Promise<Category | undefined> {
+    if (!args || (args && !args.slug)) return msgUtil.error({ t: ['_error:notFoundField'], gqlCtx });
 
     const manager = getManager();
     const newCategory = new Category();
@@ -162,8 +162,8 @@ export class CategoryService {
     return manager.save(newCategory);
   }
 
-  async updateCategory(id: number, args: UpdateCategoryInput): Promise<Category | undefined> {
-    if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id);
+  async updateCategory(id: number, args: UpdateCategoryInput, gqlCtx?: IGqlCtx): Promise<Category | undefined> {
+    if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id, gqlCtx);
 
     if (curdUtil.isOneField(args, 'status')) return curdUtil.commonUpdate(this.categoryRepository, CLS_NAME, id, args);
 
@@ -183,8 +183,8 @@ export class CategoryService {
     return curdUtil.commonUpdate(this.categoryRepository, CLS_NAME, id, nextArgs);
   }
 
-  async deleteCategory(id: number): Promise<Category | undefined> {
-    if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id);
+  async deleteCategory(id: number, gqlCtx?: IGqlCtx): Promise<Category | undefined> {
+    if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id, gqlCtx);
 
     return curdUtil.commonDelete(this.categoryRepository, CLS_NAME, id);
   }

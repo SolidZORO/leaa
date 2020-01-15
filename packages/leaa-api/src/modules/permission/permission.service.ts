@@ -2,14 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { Repository, In, SelectQueryBuilder } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { Permission, User } from '@leaa/common/src/entrys';
+import { Permission } from '@leaa/common/src/entrys';
 import {
   PermissionsWithPaginationObject,
   CreatePermissionInput,
   UpdatePermissionInput,
 } from '@leaa/common/src/dtos/permission';
-import { argsUtil, curdUtil, paginationUtil, errUtil } from '@leaa/api/src/utils';
-import { IPermissionsArgs, IPermissionArgs } from '@leaa/api/src/interfaces';
+import { argsUtil, curdUtil, paginationUtil, msgUtil } from '@leaa/api/src/utils';
+import { IPermissionsArgs, IPermissionArgs, IGqlCtx } from '@leaa/api/src/interfaces';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 import { permissionsSeed } from '@leaa/api/src/modules/seed/seed.data';
 
@@ -22,14 +22,14 @@ export class PermissionService {
     private readonly configService: ConfigService,
   ) {}
 
-  async PLEASE_DONT_MODIFY_DEMO_DATA(id?: number, user?: User): Promise<boolean> {
+  async PLEASE_DONT_MODIFY_DEMO_DATA(id?: number, gqlCtx?: IGqlCtx): Promise<boolean> {
     if (this.configService.DEMO_MODE && !process.argv.includes('--nuke')) {
       if (!id) return true;
 
-      const p = await this.permission(id, user);
+      const p = await this.permission(id);
 
       if (p && p.slug && permissionsSeed.map(seed => seed.slug).includes(p.slug as any)) {
-        throw errUtil.ERROR({ error: errUtil.mapping.PLEASE_DONT_MODIFY.text, user });
+        throw msgUtil.error({ t: ['_error:pleaseDontModify'], gqlCtx });
       }
     }
 
@@ -51,7 +51,7 @@ export class PermissionService {
       });
     }
 
-    const pageInfo = await paginationUtil.calcQueryBuilderPageInfo({
+    const pageInfo = await paginationUtil.calcQbPageInfo({
       qb,
       page: nextArgs.page,
       pageSize: nextArgs.pageSize,
@@ -91,8 +91,8 @@ export class PermissionService {
     return this.permissionRepository.save({ ...args });
   }
 
-  async updatePermission(id: number, args: UpdatePermissionInput): Promise<Permission | undefined> {
-    if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id);
+  async updatePermission(id: number, args: UpdatePermissionInput, gqlCtx?: IGqlCtx): Promise<Permission | undefined> {
+    if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id, gqlCtx);
 
     // prettier-ignore
     // eslint-disable-next-line max-len
@@ -101,8 +101,8 @@ export class PermissionService {
     return curdUtil.commonUpdate(this.permissionRepository, CLS_NAME, id, args);
   }
 
-  async deletePermission(id: number, user?: User): Promise<Permission | undefined> {
-    if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id, user);
+  async deletePermission(id: number, gqlCtx?: IGqlCtx): Promise<Permission | undefined> {
+    if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id, gqlCtx);
 
     return curdUtil.commonDelete(this.permissionRepository, CLS_NAME, id);
   }

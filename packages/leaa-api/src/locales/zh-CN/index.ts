@@ -1,3 +1,4 @@
-import _lang from './_lang.lang';
+import _error from './_error.lang';
+import _module from './_module.lang';
 
-export default { _lang };
+export default { _error, _module };

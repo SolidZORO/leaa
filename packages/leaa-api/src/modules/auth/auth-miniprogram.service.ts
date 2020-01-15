@@ -1,4 +1,3 @@
-import uuid from 'uuid';
 import bcryptjs from 'bcryptjs';
 import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';

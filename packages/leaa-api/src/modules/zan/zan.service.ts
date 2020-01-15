@@ -1,12 +1,11 @@
-import { v4 } from 'uuid';
 import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { Zan, User } from '@leaa/common/src/entrys';
+import { Zan } from '@leaa/common/src/entrys';
 import { ZansWithPaginationObject, CreateZanInput, UpdateZanInput } from '@leaa/common/src/dtos/zan';
-import { IZansArgs, IZanArgs } from '@leaa/api/src/interfaces';
-import { argsUtil, curdUtil, paginationUtil, errUtil, stringUtil } from '@leaa/api/src/utils';
+import { IZansArgs, IZanArgs, IGqlCtx } from '@leaa/api/src/interfaces';
+import { argsUtil, curdUtil, paginationUtil, stringUtil, msgUtil } from '@leaa/api/src/utils';
 
 const CLS_NAME = 'ZanService';
 
@@ -14,7 +13,7 @@ const CLS_NAME = 'ZanService';
 export class ZanService {
   constructor(@InjectRepository(Zan) private readonly zanRepository: Repository<Zan>) {}
 
-  async zans(args: IZansArgs, user?: User): Promise<ZansWithPaginationObject> {
+  async zans(args: IZansArgs, gqlCtx?: IGqlCtx): Promise<ZansWithPaginationObject> {
     const nextArgs = argsUtil.format(args);
 
     const PRIMARY_TABLE = 'zans';
@@ -37,10 +36,10 @@ export class ZanService {
       qb.orderBy(`${PRIMARY_TABLE}.${nextArgs.orderBy}`, nextArgs.orderSort);
     }
 
-    return paginationUtil.calcQueryBuilderPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
+    return paginationUtil.calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
-  async zan(uuid: string, args?: IZanArgs, user?: User): Promise<Zan | undefined> {
+  async zan(uuid: string, args?: IZanArgs, gqlCtx?: IGqlCtx): Promise<Zan | undefined> {
     let nextArgs: IZanArgs = {};
     if (args) {
       nextArgs = args;
@@ -48,9 +47,9 @@ export class ZanService {
     }
 
     const whereQuery: { uuid: string; status?: number } = { uuid };
-
     const zan = await this.zanRepository.findOne({ ...nextArgs, where: whereQuery });
-    if (!zan) return errUtil.ERROR({ error: errUtil.mapping.NOT_FOUND_ITEM.text, user });
+
+    if (!zan) return msgUtil.error({ t: ['_error:notFoundItem'], gqlCtx });
 
     const views = zan.views ? zan.views + 1 : 1;
     await this.zanRepository.update(zan.id, { views });
@@ -58,32 +57,32 @@ export class ZanService {
     return zan;
   }
 
-  async createZan(args: CreateZanInput): Promise<Zan | undefined> {
+  async createZan(args: CreateZanInput, gqlCtx?: IGqlCtx): Promise<Zan | undefined> {
     return this.zanRepository.save({
       ...args,
       uuid: stringUtil.uuid(),
     });
   }
 
-  async updateZan(id: number, args: UpdateZanInput): Promise<Zan | undefined> {
+  async updateZan(id: number, args: UpdateZanInput, gqlCtx?: IGqlCtx): Promise<Zan | undefined> {
     if (curdUtil.isOneField(args, 'status')) return curdUtil.commonUpdate(this.zanRepository, CLS_NAME, id, args);
 
     return curdUtil.commonUpdate(this.zanRepository, CLS_NAME, id, args);
   }
 
-  async deleteZan(id: number): Promise<Zan | undefined> {
+  async deleteZan(id: number, gqlCtx?: IGqlCtx): Promise<Zan | undefined> {
     return curdUtil.commonDelete(this.zanRepository, CLS_NAME, id);
   }
 
-  async likeZan(uuid: string, user?: User): Promise<Zan | undefined> {
+  async likeZan(uuid: string, gqlCtx?: IGqlCtx): Promise<Zan | undefined> {
     let zan = await this.zanRepository.findOne({ uuid }, { relations: ['users'] });
 
-    if (!zan) return errUtil.ERROR({ error: errUtil.mapping.NOT_FOUND_ITEM.text, user });
-    if (!user) return errUtil.ERROR({ error: errUtil.mapping.NOT_FOUND_USER.text, user });
+    if (!zan) return msgUtil.error({ t: ['_error:notFoundItem'], gqlCtx });
+    if (!gqlCtx?.user) return msgUtil.error({ t: ['_error:notFoundUser'], gqlCtx });
 
-    if (!zan.users?.map(u => u.id).includes(user.id)) {
+    if (gqlCtx?.user && !zan.users?.map(u => u.id).includes(gqlCtx?.user?.id)) {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      await zan.users!.push(user);
+      await zan.users!.push(gqlCtx?.user);
     }
 
     zan = await this.zanRepository.save({

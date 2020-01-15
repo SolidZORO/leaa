@@ -2,7 +2,7 @@ import { UseGuards } from '@nestjs/common';
 import { Args, Query, Mutation, Resolver } from '@nestjs/graphql';
 import { Int } from 'type-graphql';
 
-import { Article, User } from '@leaa/common/src/entrys';
+import { Article } from '@leaa/common/src/entrys';
 import {
   ArticlesArgs,
   ArticlesWithPaginationObject,
@@ -12,7 +12,8 @@ import {
 } from '@leaa/common/src/dtos/article';
 import { ArticleService } from '@leaa/api/src/modules/article/article.service';
 import { PermissionsGuard } from '@leaa/api/src/guards';
-import { Permissions, CurrentUser } from '@leaa/api/src/decorators';
+import { Permissions, GqlCtx } from '@leaa/api/src/decorators';
+import { IGqlCtx } from '@leaa/api/src/interfaces';
 
 @Resolver(() => Article)
 export class ArticleResolver {
@@ -24,9 +25,9 @@ export class ArticleResolver {
   @Query(() => ArticlesWithPaginationObject)
   async articles(
     @Args() args: ArticlesArgs,
-    @CurrentUser() user?: User,
+    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<ArticlesWithPaginationObject | undefined> {
-    return this.articleService.articles(args, user);
+    return this.articleService.articles(args, gqlCtx);
   }
 
   // @UseGuards(PermissionsGuard)
@@ -36,9 +37,9 @@ export class ArticleResolver {
   async article(
     @Args({ name: 'id', type: () => Int }) id: number,
     @Args() args?: ArticleArgs,
-    @CurrentUser() user?: User,
+    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Article | undefined> {
-    return this.articleService.article(id, args, user);
+    return this.articleService.article(id, args, gqlCtx);
   }
 
   // @UseGuards(PermissionsGuard)
@@ -48,8 +49,9 @@ export class ArticleResolver {
   async articleBySlug(
     @Args({ name: 'slug', type: () => String }) slug: string,
     @Args() args?: ArticleArgs,
+    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Article | undefined> {
-    return this.articleService.articleBySlug(slug, args);
+    return this.articleService.articleBySlug(slug, args, gqlCtx);
   }
 
   @UseGuards(PermissionsGuard)

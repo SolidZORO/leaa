@@ -1,17 +1,16 @@
-import uuid from 'uuid';
 import { Injectable } from '@nestjs/common';
 import { Repository, SelectQueryBuilder } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { Coupon, User } from '@leaa/common/src/entrys';
+import { Coupon } from '@leaa/common/src/entrys';
 import {
   CouponsWithPaginationObject,
   CreateCouponInput,
   UpdateCouponInput,
   RedeemCouponInput,
 } from '@leaa/common/src/dtos/coupon';
-import { argsUtil, curdUtil, paginationUtil, authUtil, errUtil, dateUtil, stringUtil } from '@leaa/api/src/utils';
-import { ICouponsArgs, ICouponArgs } from '@leaa/api/src/interfaces';
+import { argsUtil, curdUtil, paginationUtil, authUtil, dateUtil, stringUtil, msgUtil } from '@leaa/api/src/utils';
+import { ICouponsArgs, ICouponArgs, IGqlCtx } from '@leaa/api/src/interfaces';
 
 import { CouponProperty } from '@leaa/api/src/modules/coupon/coupon.property';
 
@@ -28,7 +27,7 @@ export class CouponService {
     return `${prefix}${stringUtil.random().slice(0, 15)}`.toUpperCase();
   }
 
-  async coupons(args: ICouponsArgs, user?: User): Promise<CouponsWithPaginationObject> {
+  async coupons(args: ICouponsArgs, gqlCtx?: IGqlCtx): Promise<CouponsWithPaginationObject> {
     const nextArgs: ICouponsArgs = argsUtil.format(args);
     const qb = this.couponRepository.createQueryBuilder();
 
@@ -44,46 +43,46 @@ export class CouponService {
     }
 
     // can
-    if (!(user && authUtil.can(user, 'coupon.list-read--all-status'))) {
+    if (!gqlCtx?.user || (gqlCtx.user && !authUtil.can(gqlCtx.user, 'coupon.list-read--all-status'))) {
       qb.andWhere('status = :status', { status: 1 });
     }
 
-    if (!(user && authUtil.can(user, 'coupon.list-read--all-user-id'))) {
-      qb.andWhere('user_id = :user_id', { user_id: user && user.id });
+    if (!gqlCtx?.user || (gqlCtx.user && !authUtil.can(gqlCtx.user, 'coupon.list-read--all-user-id'))) {
+      qb.andWhere('user_id = :user_id', { user_id: gqlCtx?.user?.id });
     }
 
-    return paginationUtil.calcQueryBuilderPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
+    return paginationUtil.calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
-  async coupon(id: number, args?: ICouponArgs, user?: User): Promise<Coupon | undefined> {
+  async coupon(id: number, args?: ICouponArgs, gqlCtx?: IGqlCtx): Promise<Coupon | undefined> {
     let nextArgs: ICouponArgs = {};
     if (args) nextArgs = args;
 
     const whereQuery: { id: number; status?: number; user_id?: number } = { id };
 
     // can
-    if (!(user && authUtil.can(user, 'coupon.item-read--all-status'))) {
+    if (!gqlCtx?.user || (gqlCtx.user && !authUtil.can(gqlCtx.user, 'coupon.item-read--all-status'))) {
       whereQuery.status = 1;
     }
 
-    if (!(user && authUtil.can(user, 'coupon.item-read--all-user-id'))) {
-      whereQuery.user_id = user && user.id;
+    if (!gqlCtx?.user || (gqlCtx.user && !authUtil.can(gqlCtx.user, 'coupon.item-read--all-user-id'))) {
+      whereQuery.user_id = gqlCtx?.user?.id;
     }
 
     const coupon = await this.couponRepository.findOne({ ...nextArgs, where: whereQuery });
-    if (!coupon) return errUtil.ERROR({ error: errUtil.mapping.NOT_FOUND_ITEM.text, user });
+    if (!coupon) return msgUtil.error({ t: ['_error:notFoundItem'], gqlCtx });
 
     return coupon;
   }
 
-  async couponByCode(code: string, args?: ICouponArgs, user?: User): Promise<Coupon | undefined> {
+  async couponByCode(code: string, args?: ICouponArgs, gqlCtx?: IGqlCtx): Promise<Coupon | undefined> {
     const coupon = await this.couponRepository.findOne({ where: { code } });
-    if (!coupon) return errUtil.ERROR({ error: errUtil.mapping.NOT_FOUND_ITEM.text, user });
+    if (!coupon) return msgUtil.error({ t: ['_error:notFoundItem'], gqlCtx });
 
-    return this.coupon(coupon.id, args, user);
+    return this.coupon(coupon.id, args, gqlCtx);
   }
 
-  async createCoupon(args: CreateCouponInput): Promise<Coupon | undefined> {
+  async createCoupon(args: CreateCouponInput, gqlCtx?: IGqlCtx): Promise<Coupon | undefined> {
     const nextArgs = dateUtil.formatDateRangeTime(args, 'start_time', 'expire_time');
     const couponInputs = [];
 
@@ -100,7 +99,7 @@ export class CouponService {
     return result && result[0];
   }
 
-  async updateCoupon(id: number, args: UpdateCouponInput): Promise<Coupon | undefined> {
+  async updateCoupon(id: number, args: UpdateCouponInput, gqlCtx?: IGqlCtx): Promise<Coupon | undefined> {
     if (curdUtil.isOneField(args, 'status')) return curdUtil.commonUpdate(this.couponRepository, CLS_NAME, id, args);
 
     const nextArgs = dateUtil.formatDateRangeTime(args, 'start_time', 'expire_time');
@@ -108,22 +107,22 @@ export class CouponService {
     return curdUtil.commonUpdate(this.couponRepository, CLS_NAME, id, nextArgs);
   }
 
-  async deleteCoupon(id: number): Promise<Coupon | undefined> {
+  async deleteCoupon(id: number, gqlCtx?: IGqlCtx): Promise<Coupon | undefined> {
     return curdUtil.commonDelete(this.couponRepository, CLS_NAME, id);
   }
 
-  async redeemCoupon(info: RedeemCouponInput, user?: User): Promise<Coupon | undefined> {
-    const coupon = await this.couponByCode(info.code, undefined, user);
-    if (!coupon) return errUtil.ERROR({ error: errUtil.mapping.NOT_FOUND_ITEM.text, user });
+  async redeemCoupon(info: RedeemCouponInput, gqlCtx?: IGqlCtx): Promise<Coupon | undefined> {
+    const coupon = await this.couponByCode(info.code, undefined, gqlCtx);
+    if (!coupon) return msgUtil.error({ t: ['_error:notFoundItem'], gqlCtx });
 
-    if (!this.couponProperty.available(coupon)) return errUtil.ERROR({ error: 'Coupon Unavailable', user });
-    if (!this.couponProperty.canRedeem(coupon)) return errUtil.ERROR({ error: 'Coupon Irredeemable', user });
-    if (coupon.user_id) return errUtil.ERROR({ error: 'Coupon Already redeemed', user });
+    if (!this.couponProperty.available(coupon)) return msgUtil.error({ t: ['_module:coupon.unavailable'], gqlCtx });
+    if (!this.couponProperty.canRedeem(coupon)) return msgUtil.error({ t: ['_module:coupon.irredeemable'], gqlCtx });
+    if (coupon.user_id) return msgUtil.error({ t: ['_module:coupon.alreadyRedeemed'], gqlCtx });
 
     // [token user]
-    let nextCoupon = { ...coupon, user_id: user && user.id };
+    let nextCoupon = { ...coupon, user_id: gqlCtx?.user?.id };
 
-    if (info.userId && user && authUtil.can(user, 'coupon.item-redeem--to-all-user-id')) {
+    if (!gqlCtx?.user || (gqlCtx.user && !authUtil.can(gqlCtx.user, 'coupon.item-redeem--to-all-user-id'))) {
       nextCoupon = { ...coupon, user_id: info.userId };
     }
 

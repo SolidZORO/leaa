@@ -2,7 +2,7 @@ import { UseGuards } from '@nestjs/common';
 import { Args, Query, Mutation, Resolver, ResolveProperty, Parent } from '@nestjs/graphql';
 import { Int } from 'type-graphql';
 
-import { Promo, User } from '@leaa/common/src/entrys';
+import { Promo } from '@leaa/common/src/entrys';
 import {
   PromosArgs,
   PromosWithPaginationObject,
@@ -11,10 +11,11 @@ import {
   UpdatePromoInput,
   RedeemPromoInput,
 } from '@leaa/common/src/dtos/promo';
-import { CurrentUser, Permissions } from '@leaa/api/src/decorators';
+import { Permissions, GqlCtx } from '@leaa/api/src/decorators';
 import { PromoService } from '@leaa/api/src/modules/promo/promo.service';
 import { PromoProperty } from '@leaa/api/src/modules/promo/promo.property';
 import { PermissionsGuard } from '@leaa/api/src/guards';
+import { IGqlCtx } from '@leaa/api/src/interfaces';
 
 @Resolver(() => Promo)
 export class PromoResolver {
@@ -30,8 +31,8 @@ export class PromoResolver {
   @UseGuards(PermissionsGuard)
   @Permissions('promo.list-read')
   @Query(() => PromosWithPaginationObject)
-  async promos(@Args() args: PromosArgs, @CurrentUser() user?: User): Promise<PromosWithPaginationObject | undefined> {
-    return this.promoService.promos(args, user);
+  async promos(@Args() args: PromosArgs, @GqlCtx() gqlCtx?: IGqlCtx): Promise<PromosWithPaginationObject | undefined> {
+    return this.promoService.promos(args, gqlCtx);
   }
 
   @UseGuards(PermissionsGuard)
@@ -40,9 +41,9 @@ export class PromoResolver {
   async promo(
     @Args({ name: 'id', type: () => Int }) id: number,
     @Args() args?: PromoArgs,
-    @CurrentUser() user?: User,
+    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Promo | undefined> {
-    return this.promoService.promo(id, args, user);
+    return this.promoService.promo(id, args, gqlCtx);
   }
 
   @Query(() => Promo)
@@ -50,16 +51,16 @@ export class PromoResolver {
   async promoByCode(
     @Args({ name: 'code', type: () => String }) code: string,
     @Args() args?: PromoArgs,
-    @CurrentUser() user?: User,
+    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Promo | undefined> {
-    return this.promoService.promoByCode(code, args, user);
+    return this.promoService.promoByCode(code, args, gqlCtx);
   }
 
   @UseGuards(PermissionsGuard)
   @Permissions('promo.item-create')
   @Mutation(() => Promo)
-  async createPromo(@Args('promo') args: CreatePromoInput): Promise<Promo | undefined> {
-    return this.promoService.createPromo(args);
+  async createPromo(@Args('promo') args: CreatePromoInput, @GqlCtx() gqlCtx?: IGqlCtx): Promise<Promo | undefined> {
+    return this.promoService.createPromo(args, gqlCtx);
   }
 
   @UseGuards(PermissionsGuard)
@@ -68,19 +69,23 @@ export class PromoResolver {
   async updatePromo(
     @Args({ name: 'id', type: () => Int }) id: number,
     @Args('promo') args: UpdatePromoInput,
+    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Promo | undefined> {
-    return this.promoService.updatePromo(id, args);
+    return this.promoService.updatePromo(id, args, gqlCtx);
   }
 
   @UseGuards(PermissionsGuard)
   @Permissions('promo.item-delete')
   @Mutation(() => Promo)
-  async deletePromo(@Args({ name: 'id', type: () => Int }) id: number): Promise<Promo | undefined> {
-    return this.promoService.deletePromo(id);
+  async deletePromo(
+    @Args({ name: 'id', type: () => Int }) id: number,
+    @GqlCtx() gqlCtx?: IGqlCtx,
+  ): Promise<Promo | undefined> {
+    return this.promoService.deletePromo(id, gqlCtx);
   }
 
   @Mutation(() => Promo)
-  async redeemPromo(@Args('info') info: RedeemPromoInput, @CurrentUser() user?: User): Promise<Promo | undefined> {
-    return this.promoService.redeemPromo(info, user);
+  async redeemPromo(@Args('info') info: RedeemPromoInput, @GqlCtx() gqlCtx?: IGqlCtx): Promise<Promo | undefined> {
+    return this.promoService.redeemPromo(info, gqlCtx);
   }
 }

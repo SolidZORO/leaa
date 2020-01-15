@@ -1,24 +1,19 @@
 import { Injectable } from '@nestjs/common';
-import { Repository, FindOneOptions } from 'typeorm';
+import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { Article, Category, Tag, User } from '@leaa/common/src/entrys';
-import { IArticlesArgs, IArticleArgs } from '@leaa/api/src/interfaces';
-import {
-  ArticlesWithPaginationObject,
-  ArticleArgs,
-  CreateArticleInput,
-  UpdateArticleInput,
-} from '@leaa/common/src/dtos/article';
+import { Article, Category, Tag } from '@leaa/common/src/entrys';
+import { IArticlesArgs, IArticleArgs, IGqlCtx } from '@leaa/api/src/interfaces';
+import { ArticlesWithPaginationObject, CreateArticleInput, UpdateArticleInput } from '@leaa/common/src/dtos/article';
 import {
   argsUtil,
   paginationUtil,
   curdUtil,
   stringUtil,
   dictUtil,
-  errUtil,
   authUtil,
   htmlUtil,
+  msgUtil,
 } from '@leaa/api/src/utils';
 
 import { TagService } from '@leaa/api/src/modules/tag/tag.service';
@@ -34,7 +29,7 @@ export class ArticleService {
     private readonly tagService: TagService,
   ) {}
 
-  async articles(args: IArticlesArgs, user?: User): Promise<ArticlesWithPaginationObject> {
+  async articles(args: IArticlesArgs, gqlCtx?: IGqlCtx): Promise<ArticlesWithPaginationObject> {
     const nextArgs: IArticlesArgs = argsUtil.format(args);
 
     const PRIMARY_TABLE = 'articles';
@@ -73,14 +68,14 @@ export class ArticleService {
     }
 
     // can
-    if (!user && !(user && authUtil.can(user, 'article.list-read--all-status'))) {
+    if (!gqlCtx?.user || (gqlCtx.user && !authUtil.can(gqlCtx.user, 'article.list-read--all-status'))) {
       qb.andWhere('status = :status', { status: 1 });
     }
 
-    return paginationUtil.calcQueryBuilderPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
+    return paginationUtil.calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
-  async article(id: number, args?: IArticleArgs, user?: User): Promise<Article | undefined> {
+  async article(id: number, args?: IArticleArgs, gqlCtx?: IGqlCtx): Promise<Article | undefined> {
     let nextArgs: IArticleArgs = {};
 
     if (args) {
@@ -89,18 +84,18 @@ export class ArticleService {
     }
 
     // can
-    if (!(user && authUtil.can(user, 'article.item-read--all-status'))) {
+    if (!gqlCtx?.user || (gqlCtx.user && !authUtil.can(gqlCtx.user, 'article.item-read--all-status'))) {
       nextArgs.where = { status: 1 };
     }
 
     return this.articleRepository.findOne(id, nextArgs);
   }
 
-  async articleBySlug(slug: string, args?: IArticleArgs): Promise<Article | undefined> {
+  async articleBySlug(slug: string, args?: IArticleArgs, gqlCtx?: IGqlCtx): Promise<Article | undefined> {
     const article = await this.articleRepository.findOne({ where: { slug } });
-    if (!article) return errUtil.ERROR({ error: errUtil.mapping.NOT_FOUND.text });
+    if (!article) return msgUtil.error({ t: ['_error:notFoundItem'], gqlCtx });
 
-    return this.article(article.id, args);
+    return this.article(article.id, args, gqlCtx);
   }
 
   async createArticle(args: CreateArticleInput): Promise<Article | undefined> {

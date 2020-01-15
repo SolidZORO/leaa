@@ -10,9 +10,10 @@ import {
   CreateUserInput,
   UpdateUserInput,
 } from '@leaa/common/src/dtos/user';
+import { IGqlCtx } from '@leaa/api/src/interfaces';
 import { UserService } from '@leaa/api/src/modules/user/user.service';
 import { UserProperty } from '@leaa/api/src/modules/user/user.property';
-import { CurrentUser, Permissions } from '@leaa/api/src/decorators';
+import { Permissions, GqlCtx } from '@leaa/api/src/decorators';
 import { PermissionsGuard } from '@leaa/api/src/guards';
 
 @Resolver(() => User)
@@ -35,8 +36,8 @@ export class UserResolver {
   @UseGuards(PermissionsGuard)
   @Permissions('user.list-read')
   @Query(() => UsersWithPaginationObject)
-  async users(@Args() args: UsersArgs, @CurrentUser() user?: User): Promise<UsersWithPaginationObject | undefined> {
-    return this.userService.users(args, user);
+  async users(@Args() args: UsersArgs, @GqlCtx() gqlCtx?: IGqlCtx): Promise<UsersWithPaginationObject | undefined> {
+    return this.userService.users(args, gqlCtx);
   }
 
   @UseGuards(PermissionsGuard)
@@ -45,23 +46,24 @@ export class UserResolver {
   async user(
     @Args({ name: 'id', type: () => Int }) id: number,
     @Args() args?: UserArgs,
-    @CurrentUser() user?: User,
+    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<User | undefined> {
-    return this.userService.user(id, args, user);
+    return this.userService.user(id, args, gqlCtx);
   }
 
   @Query(() => User)
   async userByToken(
     @Args({ name: 'token', type: () => String, nullable: true }) token?: string,
     @Args() args?: UserArgs,
+    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<User | undefined> {
-    return this.userService.userByToken(token, args);
+    return this.userService.userByToken(token, args, gqlCtx);
   }
 
   @UseGuards(PermissionsGuard)
   @Permissions('user.item-create')
   @Mutation(() => User)
-  async createUser(@Args('user') args: CreateUserInput, @CurrentUser() user?: User): Promise<User | undefined> {
+  async createUser(@Args('user') args: CreateUserInput): Promise<User | undefined> {
     return this.userService.createUser(args);
   }
 
@@ -71,9 +73,9 @@ export class UserResolver {
   async updateUser(
     @Args({ name: 'id', type: () => Int }) id: number,
     @Args('user') args: UpdateUserInput,
-    @CurrentUser() user?: User,
+    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<User | undefined> {
-    return this.userService.updateUser(id, args);
+    return this.userService.updateUser(id, args, gqlCtx);
   }
 
   @UseGuards(PermissionsGuard)
@@ -81,8 +83,8 @@ export class UserResolver {
   @Mutation(() => User)
   async deleteUser(
     @Args({ name: 'id', type: () => Int }) id: number,
-    @CurrentUser() user?: User,
+    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<User | undefined> {
-    return this.userService.deleteUser(id, user);
+    return this.userService.deleteUser(id, gqlCtx);
   }
 }

@@ -28,7 +28,7 @@ export class DivisionService {
     const PRIMARY_TABLE = 'divisions';
     const qb = await this.divisionRepository.createQueryBuilder(PRIMARY_TABLE);
 
-    return paginationUtil.calcQueryBuilderPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
+    return paginationUtil.calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
   async divisionsMapping(): Promise<string | undefined> {

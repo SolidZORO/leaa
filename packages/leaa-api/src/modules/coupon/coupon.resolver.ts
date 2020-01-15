@@ -2,7 +2,7 @@ import { UseGuards } from '@nestjs/common';
 import { Args, Query, Mutation, Resolver, ResolveProperty, Parent } from '@nestjs/graphql';
 import { Int } from 'type-graphql';
 
-import { Coupon, User } from '@leaa/common/src/entrys';
+import { Coupon } from '@leaa/common/src/entrys';
 import {
   CouponsArgs,
   CouponsWithPaginationObject,
@@ -11,10 +11,11 @@ import {
   UpdateCouponInput,
   RedeemCouponInput,
 } from '@leaa/common/src/dtos/coupon';
-import { CurrentUser, Permissions } from '@leaa/api/src/decorators';
+import { Permissions, GqlCtx } from '@leaa/api/src/decorators';
 import { CouponService } from '@leaa/api/src/modules/coupon/coupon.service';
 import { CouponProperty } from '@leaa/api/src/modules/coupon/coupon.property';
 import { PermissionsGuard } from '@leaa/api/src/guards';
+import { IGqlCtx } from '@leaa/api/src/interfaces';
 
 @Resolver(() => Coupon)
 export class CouponResolver {
@@ -37,9 +38,9 @@ export class CouponResolver {
   @Query(() => CouponsWithPaginationObject)
   async coupons(
     @Args() args: CouponsArgs,
-    @CurrentUser() user?: User,
+    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<CouponsWithPaginationObject | undefined> {
-    return this.couponService.coupons(args, user);
+    return this.couponService.coupons(args, gqlCtx);
   }
 
   @UseGuards(PermissionsGuard)
@@ -48,9 +49,9 @@ export class CouponResolver {
   async coupon(
     @Args({ name: 'id', type: () => Int }) id: number,
     @Args() args?: CouponArgs,
-    @CurrentUser() user?: User,
+    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Coupon | undefined> {
-    return this.couponService.coupon(id, args, user);
+    return this.couponService.coupon(id, args, gqlCtx);
   }
 
   @UseGuards(PermissionsGuard)
@@ -59,16 +60,16 @@ export class CouponResolver {
   async couponByCode(
     @Args({ name: 'code', type: () => String }) code: string,
     @Args() args?: CouponArgs,
-    @CurrentUser() user?: User,
+    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Coupon | undefined> {
-    return this.couponService.couponByCode(code, args, user);
+    return this.couponService.couponByCode(code, args, gqlCtx);
   }
 
   @UseGuards(PermissionsGuard)
   @Permissions('coupon.item-create')
   @Mutation(() => Coupon)
-  async createCoupon(@Args('coupon') args: CreateCouponInput): Promise<Coupon | undefined> {
-    return this.couponService.createCoupon(args);
+  async createCoupon(@Args('coupon') args: CreateCouponInput, @GqlCtx() gqlCtx?: IGqlCtx): Promise<Coupon | undefined> {
+    return this.couponService.createCoupon(args, gqlCtx);
   }
 
   @UseGuards(PermissionsGuard)
@@ -77,19 +78,23 @@ export class CouponResolver {
   async updateCoupon(
     @Args({ name: 'id', type: () => Int }) id: number,
     @Args('coupon') args: UpdateCouponInput,
+    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Coupon | undefined> {
-    return this.couponService.updateCoupon(id, args);
+    return this.couponService.updateCoupon(id, args, gqlCtx);
   }
 
   @UseGuards(PermissionsGuard)
   @Permissions('coupon.item-delete')
   @Mutation(() => Coupon)
-  async deleteCoupon(@Args({ name: 'id', type: () => Int }) id: number): Promise<Coupon | undefined> {
-    return this.couponService.deleteCoupon(id);
+  async deleteCoupon(
+    @Args({ name: 'id', type: () => Int }) id: number,
+    @GqlCtx() gqlCtx?: IGqlCtx,
+  ): Promise<Coupon | undefined> {
+    return this.couponService.deleteCoupon(id, gqlCtx);
   }
 
   @Mutation(() => Coupon)
-  async redeemCoupon(@Args('info') info: RedeemCouponInput, @CurrentUser() user?: User): Promise<Coupon | undefined> {
-    return this.couponService.redeemCoupon(info, user);
+  async redeemCoupon(@Args('info') info: RedeemCouponInput, @GqlCtx() gqlCtx?: IGqlCtx): Promise<Coupon | undefined> {
+    return this.couponService.redeemCoupon(info, gqlCtx);
   }
 }

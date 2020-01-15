@@ -2,15 +2,15 @@ import { Injectable } from '@nestjs/common';
 import { Repository, SelectQueryBuilder } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { Promo, User } from '@leaa/common/src/entrys';
+import { Promo } from '@leaa/common/src/entrys';
 import {
   PromosWithPaginationObject,
   CreatePromoInput,
   UpdatePromoInput,
   RedeemPromoInput,
 } from '@leaa/common/src/dtos/promo';
-import { argsUtil, authUtil, curdUtil, paginationUtil, errUtil, dateUtil } from '@leaa/api/src/utils';
-import { IPromosArgs, IPromoArgs } from '@leaa/api/src/interfaces';
+import { argsUtil, authUtil, curdUtil, paginationUtil, dateUtil, msgUtil } from '@leaa/api/src/utils';
+import { IPromosArgs, IPromoArgs, IGqlCtx } from '@leaa/api/src/interfaces';
 
 import { PromoProperty } from './promo.property';
 
@@ -23,7 +23,7 @@ export class PromoService {
     private readonly promoProperty: PromoProperty,
   ) {}
 
-  async promos(args: IPromosArgs, user?: User): Promise<PromosWithPaginationObject> {
+  async promos(args: IPromosArgs, gqlCtx?: IGqlCtx): Promise<PromosWithPaginationObject> {
     const nextArgs: IPromosArgs = argsUtil.format(args);
 
     const qb = this.promoRepository.createQueryBuilder();
@@ -39,46 +39,44 @@ export class PromoService {
     }
 
     // can
-    if (!(user && authUtil.can(user, 'promo.list-read--all-status'))) {
+    if (!gqlCtx?.user || (gqlCtx.user && !authUtil.can(gqlCtx.user, 'promo.list-read--all-status'))) {
       qb.andWhere('status = :status', { status: 1 });
     }
 
-    return paginationUtil.calcQueryBuilderPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
+    return paginationUtil.calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
-  async promo(id: number, args?: IPromoArgs, user?: User): Promise<Promo | undefined> {
+  async promo(id: number, args?: IPromoArgs, gqlCtx?: IGqlCtx): Promise<Promo | undefined> {
     let nextArgs: IPromoArgs = {};
     if (args) nextArgs = args;
 
     const whereQuery: { id: number; status?: number } = { id };
 
     // can
-    if (!(user && authUtil.can(user, 'promo.item-read--all-status'))) {
+    if (!gqlCtx?.user || (gqlCtx.user && !authUtil.can(gqlCtx.user, 'promo.item-read--all-status'))) {
       whereQuery.status = 1;
     }
 
     const promo = await this.promoRepository.findOne({ ...nextArgs, where: whereQuery });
-    if (!promo) return errUtil.ERROR({ error: errUtil.mapping.NOT_FOUND_ITEM.text, user });
+    if (!promo) return msgUtil.error({ t: ['_error:notFoundItem'], gqlCtx });
 
     return promo;
   }
 
-  async promoByCode(code: string, args?: IPromoArgs, user?: User): Promise<Promo | undefined> {
+  async promoByCode(code: string, args?: IPromoArgs, gqlCtx?: IGqlCtx): Promise<Promo | undefined> {
     const promo = await this.promoRepository.findOne({ where: { code } });
-    if (!promo) return errUtil.ERROR({ error: errUtil.mapping.NOT_FOUND_ITEM.text, user });
+    if (!promo) return msgUtil.error({ t: ['_error:notFoundItem'], gqlCtx });
 
-    return this.promo(promo.id, args, user);
+    return this.promo(promo.id, args, gqlCtx);
   }
 
-  async createPromo(args: CreatePromoInput): Promise<Promo | undefined> {
+  async createPromo(args: CreatePromoInput, gqlCtx?: IGqlCtx): Promise<Promo | undefined> {
     const nextArgs = dateUtil.formatDateRangeTime(args, 'start_time', 'expire_time');
-
-    console.log(nextArgs);
 
     return this.promoRepository.save({ ...nextArgs });
   }
 
-  async updatePromo(id: number, args: UpdatePromoInput): Promise<Promo | undefined> {
+  async updatePromo(id: number, args: UpdatePromoInput, gqlCtx?: IGqlCtx): Promise<Promo | undefined> {
     if (curdUtil.isOneField(args, 'status')) return curdUtil.commonUpdate(this.promoRepository, CLS_NAME, id, args);
 
     const nextArgs = dateUtil.formatDateRangeTime(args, 'start_time', 'expire_time');
@@ -86,21 +84,24 @@ export class PromoService {
     return curdUtil.commonUpdate(this.promoRepository, CLS_NAME, id, nextArgs);
   }
 
-  async deletePromo(id: number): Promise<Promo | undefined> {
+  async deletePromo(id: number, gqlCtx?: IGqlCtx): Promise<Promo | undefined> {
     return curdUtil.commonDelete(this.promoRepository, CLS_NAME, id);
   }
 
-  async redeemPromo(info: RedeemPromoInput, user?: User): Promise<Promo | undefined> {
-    const promo = await this.promoByCode(info.code, user);
-    if (!promo) return errUtil.ERROR({ error: errUtil.mapping.NOT_FOUND_ITEM.text, user });
+  async redeemPromo(info: RedeemPromoInput, gqlCtx?: IGqlCtx): Promise<Promo | undefined> {
+    const promo = await this.promoByCode(info.code, undefined, gqlCtx);
+    if (!promo) return msgUtil.error({ t: ['_error:notFoundItem'], gqlCtx });
 
-    if (!this.promoProperty.available(promo)) return errUtil.ERROR({ error: 'Promo Unavailable', user });
+    if (!this.promoProperty.available(promo)) return msgUtil.error({ t: ['_module:promo.unavailable'], gqlCtx });
 
     // [token user]
-    let nextPromo = { ...promo, user_id: user && user.id };
+    let nextPromo = { ...promo, user_id: gqlCtx?.user?.id };
 
     // can
-    if (user && authUtil.can(user, 'promo.item-redeem--to-all-user-id') && info.userId) {
+    if (
+      !gqlCtx?.user ||
+      (gqlCtx.user && !authUtil.can(gqlCtx.user, 'promo.item-redeem--to-all-user-id') && info.userId)
+    ) {
       nextPromo = { ...promo, user_id: info.userId };
     }
 

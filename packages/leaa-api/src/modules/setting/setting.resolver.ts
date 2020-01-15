@@ -2,7 +2,7 @@ import { UseGuards } from '@nestjs/common';
 import { Args, Query, Mutation, Resolver } from '@nestjs/graphql';
 import { Int } from 'type-graphql';
 
-import { Setting, User } from '@leaa/common/src/entrys';
+import { Setting } from '@leaa/common/src/entrys';
 import {
   SettingsArgs,
   SettingsWithPaginationObject,
@@ -14,7 +14,8 @@ import {
 } from '@leaa/common/src/dtos/setting';
 import { SettingService } from '@leaa/api/src/modules/setting/setting.service';
 import { PermissionsGuard } from '@leaa/api/src/guards';
-import { Permissions, CurrentUser } from '@leaa/api/src/decorators';
+import { Permissions, GqlCtx } from '@leaa/api/src/decorators';
+import { IGqlCtx } from '@leaa/api/src/interfaces';
 
 @Resolver(() => Setting)
 export class SettingResolver {
@@ -26,9 +27,9 @@ export class SettingResolver {
   @Query(() => SettingsWithPaginationObject)
   async settings(
     @Args() args: SettingsArgs,
-    @CurrentUser() user?: User,
+    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<SettingsWithPaginationObject | undefined> {
-    return this.settingService.settings(args, user);
+    return this.settingService.settings(args, gqlCtx);
   }
 
   // @UseGuards(PermissionsGuard)
@@ -38,9 +39,9 @@ export class SettingResolver {
   async setting(
     @Args({ name: 'id', type: () => Int }) id: number,
     @Args() args?: SettingArgs,
-    @CurrentUser() user?: User,
+    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Setting | undefined> {
-    return this.settingService.setting(id, args, user);
+    return this.settingService.setting(id, args, gqlCtx);
   }
 
   // @UseGuards(PermissionsGuard)
@@ -50,9 +51,9 @@ export class SettingResolver {
   async settingBySlug(
     @Args({ name: 'slug', type: () => String }) slug: string,
     @Args() args?: SettingArgs,
-    @CurrentUser() user?: User,
+    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Setting | undefined> {
-    return this.settingService.settingBySlug(slug, args, user);
+    return this.settingService.settingBySlug(slug, args, gqlCtx);
   }
 
   @UseGuards(PermissionsGuard)
@@ -68,8 +69,9 @@ export class SettingResolver {
   async updateSetting(
     @Args({ name: 'id', type: () => Int }) id: number,
     @Args('setting') args: UpdateSettingInput,
+    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Setting | undefined> {
-    return this.settingService.updateSetting(id, args);
+    return this.settingService.updateSetting(id, args, gqlCtx);
   }
 
   @UseGuards(PermissionsGuard)
@@ -77,9 +79,9 @@ export class SettingResolver {
   @Mutation(() => SettingsObject)
   async updateSettings(
     @Args({ name: 'settings', type: () => [UpdateSettingsInput] }) settings: UpdateSettingsInput[],
-    @CurrentUser() user?: User,
+    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<SettingsObject> {
-    return this.settingService.updateSettings(settings, user);
+    return this.settingService.updateSettings(settings, gqlCtx);
   }
 
   @UseGuards(PermissionsGuard)
@@ -87,8 +89,8 @@ export class SettingResolver {
   @Mutation(() => Setting)
   async deleteSetting(
     @Args({ name: 'id', type: () => Int }) id: number,
-    @CurrentUser() user?: User,
+    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Setting | undefined> {
-    return this.settingService.deleteSetting(id, user);
+    return this.settingService.deleteSetting(id, gqlCtx);
   }
 }

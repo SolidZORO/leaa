@@ -11,8 +11,9 @@ import {
   UpdatePermissionInput,
 } from '@leaa/common/src/dtos/permission';
 import { PermissionService } from '@leaa/api/src/modules/permission/permission.service';
-import { CurrentUser, Permissions } from '@leaa/api/src/decorators';
+import { CurrentUser, Permissions, GqlCtx } from '@leaa/api/src/decorators';
 import { PermissionsGuard } from '@leaa/api/src/guards';
+import { IGqlCtx } from '@leaa/api/src/interfaces';
 
 @Resolver(() => Permission)
 export class PermissionResolver {
@@ -48,8 +49,9 @@ export class PermissionResolver {
   async updatePermission(
     @Args({ name: 'id', type: () => Int }) id: number,
     @Args('permission') args: UpdatePermissionInput,
+    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Permission | undefined> {
-    return this.permissionService.updatePermission(id, args);
+    return this.permissionService.updatePermission(id, args, gqlCtx);
   }
 
   @UseGuards(PermissionsGuard)
@@ -57,8 +59,8 @@ export class PermissionResolver {
   @Mutation(() => Permission)
   async deletePermission(
     @Args({ name: 'id', type: () => Int }) id: number,
-    @CurrentUser() user?: User,
+    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Permission | undefined> {
-    return this.permissionService.deletePermission(id, user);
+    return this.permissionService.deletePermission(id, gqlCtx);
   }
 }

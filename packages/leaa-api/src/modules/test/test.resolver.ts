@@ -1,12 +1,11 @@
-import { Req, UseGuards } from '@nestjs/common';
+import { UseGuards } from '@nestjs/common';
 import { Query, Resolver } from '@nestjs/graphql';
 import { Float } from 'type-graphql';
 
 import { TestService } from '@leaa/api/src/modules/test/test.service';
 import { PermissionsGuard } from '@leaa/api/src/guards';
-import { CurrentUser } from '@leaa/api/src/decorators';
-import { User } from '@leaa/common/src/entrys';
-import { IRequest } from '@leaa/api/src/interfaces';
+import { GqlCtx } from '@leaa/api/src/decorators';
+import { IGqlCtx } from '@leaa/api/src/interfaces';
 
 @Resolver()
 export class TestResolver {
@@ -19,12 +18,12 @@ export class TestResolver {
 
   @UseGuards(PermissionsGuard)
   @Query(() => String)
-  testWithAuth(@CurrentUser() user?: User): string {
-    return `${Math.random()} - ${user?.email}`;
+  testWithAuth(@GqlCtx() ctx: IGqlCtx): string {
+    return `${Math.random()} - ${ctx.user?.email}`;
   }
 
   @Query(() => String)
-  async i18n(@Req() req: IRequest): Promise<string> {
-    return this.testService.i18n(req);
+  async i18n(@GqlCtx() gqlCtx: IGqlCtx): Promise<string> {
+    return this.testService.i18n(gqlCtx);
   }
 }

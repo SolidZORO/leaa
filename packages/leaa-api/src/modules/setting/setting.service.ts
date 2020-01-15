@@ -10,8 +10,8 @@ import {
   UpdateSettingsInput,
   SettingsObject,
 } from '@leaa/common/src/dtos/setting';
-import { argsUtil, loggerUtil, curdUtil, paginationUtil, errUtil, authUtil } from '@leaa/api/src/utils';
-import { ISettingsArgs, ISettingArgs } from '@leaa/api/src/interfaces';
+import { argsUtil, loggerUtil, curdUtil, paginationUtil, authUtil, msgUtil } from '@leaa/api/src/utils';
+import { ISettingsArgs, ISettingArgs, IGqlCtx } from '@leaa/api/src/interfaces';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 import { settingSeed } from '@leaa/api/src/modules/seed/seed.data';
 
@@ -24,21 +24,21 @@ export class SettingService {
     private readonly configService: ConfigService,
   ) {}
 
-  async PLEASE_DONT_MODIFY_DEMO_DATA(id?: number, user?: User): Promise<boolean> {
+  async PLEASE_DONT_MODIFY_DEMO_DATA(id?: number, gqlCtx?: IGqlCtx): Promise<boolean> {
     if (this.configService.DEMO_MODE && !process.argv.includes('--nuke')) {
       if (!id) return true;
 
-      const setting = await this.setting(id, user);
+      const setting = await this.setting(id);
 
       if (setting && setting.slug && settingSeed.map(seed => seed.slug).includes(setting.slug)) {
-        throw errUtil.ERROR({ error: errUtil.mapping.PLEASE_DONT_MODIFY.text, user });
+        throw msgUtil.error({ t: ['_error:pleaseDontModify'], gqlCtx });
       }
     }
 
     return true;
   }
 
-  async settings(args: ISettingsArgs, user?: User): Promise<SettingsWithPaginationObject> {
+  async settings(args: ISettingsArgs, gqlCtx?: IGqlCtx): Promise<SettingsWithPaginationObject> {
     const nextArgs = argsUtil.format(args);
 
     const qb = this.settingRepository.createQueryBuilder();
@@ -55,14 +55,14 @@ export class SettingService {
     }
 
     // can
-    if (!(user && authUtil.can(user, 'setting.list-read--private'))) {
+    if (!gqlCtx?.user || (gqlCtx.user && !authUtil.can(gqlCtx.user, 'setting.list-read--private'))) {
       qb.andWhere('private = :private', { private: 0 });
     }
 
-    return paginationUtil.calcQueryBuilderPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
+    return paginationUtil.calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
-  async setting(id: number, args?: ISettingArgs, user?: User): Promise<Setting | undefined> {
+  async setting(id: number, args?: ISettingArgs, gqlCtx?: IGqlCtx): Promise<Setting | undefined> {
     let nextArgs: ISettingArgs = {};
 
     if (args) {
@@ -72,7 +72,7 @@ export class SettingService {
     const whereQuery: { id: number; private?: number } = { id };
 
     // can
-    if (!(user && authUtil.can(user, 'setting.list-read--private'))) {
+    if (!gqlCtx?.user || (gqlCtx.user && !authUtil.can(gqlCtx.user, 'setting.list-read--private'))) {
       whereQuery.private = 0;
     }
 
@@ -92,11 +92,11 @@ export class SettingService {
     return setting;
   }
 
-  async settingBySlug(slug: string, args?: ISettingArgs, user?: User): Promise<Setting | undefined> {
+  async settingBySlug(slug: string, args?: ISettingArgs, gqlCtx?: IGqlCtx): Promise<Setting | undefined> {
     const whereQuery: { slug: string; private?: number } = { slug };
 
     // can
-    if (!(user && authUtil.can(user, 'setting.list-read--private'))) {
+    if (!gqlCtx?.user || (gqlCtx.user && !authUtil.can(gqlCtx.user, 'setting.list-read--private'))) {
       whereQuery.private = 0;
     }
 
@@ -110,20 +110,24 @@ export class SettingService {
       return undefined;
     }
 
-    return this.setting(setting.id, args);
+    return this.setting(setting.id, args, gqlCtx);
   }
 
   async createSetting(args: CreateSettingInput): Promise<Setting | undefined> {
     return this.settingRepository.save({ ...args });
   }
 
-  async updateSetting(id: number, args: UpdateSettingInput & FindOneOptions): Promise<Setting | undefined> {
+  async updateSetting(
+    id: number,
+    args: UpdateSettingInput & FindOneOptions,
+    gqlCtx?: IGqlCtx,
+  ): Promise<Setting | undefined> {
     if (curdUtil.isOneField(args, 'status')) return curdUtil.commonUpdate(this.settingRepository, CLS_NAME, id, args);
 
     return curdUtil.commonUpdate(this.settingRepository, CLS_NAME, id, args);
   }
 
-  async updateSettings(settings: UpdateSettingsInput[], user?: User): Promise<SettingsObject> {
+  async updateSettings(settings: UpdateSettingsInput[], gqlCtx?: IGqlCtx): Promise<SettingsObject> {
     const batchUpdate = settings.map(async setting => {
       await this.updateSetting(setting.id, setting);
     });
@@ -135,7 +139,7 @@ export class SettingService {
         items = await this.settingRepository.find({ id: In(settings.map(s => s.id)) });
       })
       .catch(() => {
-        return errUtil.ERROR({ error: `Update Settings Faild, Args: ${JSON.stringify(settings)}`, user });
+        return msgUtil.error({ t: ['_error:updateItemFailed'], gqlCtx });
       });
 
     return {
@@ -143,8 +147,8 @@ export class SettingService {
     };
   }
 
-  async deleteSetting(id: number, user?: User): Promise<Setting | undefined> {
-    if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id, user);
+  async deleteSetting(id: number, gqlCtx?: IGqlCtx): Promise<Setting | undefined> {
+    if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id, gqlCtx);
 
     return curdUtil.commonDelete(this.settingRepository, CLS_NAME, id);
   }

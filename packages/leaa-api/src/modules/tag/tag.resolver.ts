@@ -2,7 +2,7 @@ import { UseGuards } from '@nestjs/common';
 import { Args, Query, Mutation, Resolver } from '@nestjs/graphql';
 import { Int } from 'type-graphql';
 
-import { Tag, User } from '@leaa/common/src/entrys';
+import { Tag } from '@leaa/common/src/entrys';
 import {
   TagsArgs,
   TagsWithPaginationObject,
@@ -13,7 +13,8 @@ import {
 } from '@leaa/common/src/dtos/tag';
 import { TagService } from '@leaa/api/src/modules/tag/tag.service';
 import { PermissionsGuard } from '@leaa/api/src/guards';
-import { Permissions, CurrentUser } from '@leaa/api/src/decorators';
+import { Permissions, GqlCtx } from '@leaa/api/src/decorators';
+import { IGqlCtx } from '@leaa/api/src/interfaces';
 
 @Resolver(() => Tag)
 export class TagResolver {
@@ -23,8 +24,8 @@ export class TagResolver {
   // @Permissions('tag.list-read')
   // DO NOT CHECK PERMISSIONS
   @Query(() => TagsWithPaginationObject)
-  async tags(@Args() args: TagsArgs): Promise<TagsWithPaginationObject | undefined> {
-    return this.tagService.tags(args);
+  async tags(@Args() args: TagsArgs, @GqlCtx() gqlCtx?: IGqlCtx): Promise<TagsWithPaginationObject | undefined> {
+    return this.tagService.tags(args, gqlCtx);
   }
 
   // @UseGuards(PermissionsGuard)
@@ -34,9 +35,9 @@ export class TagResolver {
   async tag(
     @Args({ name: 'id', type: () => Int }) id: number,
     @Args() args?: TagArgs,
-    @CurrentUser() user?: User,
+    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Tag | undefined> {
-    return this.tagService.tag(id, args, user);
+    return this.tagService.tag(id, args, gqlCtx);
   }
 
   @UseGuards(PermissionsGuard)
@@ -45,22 +46,26 @@ export class TagResolver {
   async tagByName(
     @Args({ name: 'name', type: () => String }) name: string,
     @Args() args?: TagArgs,
+    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Tag | undefined> {
-    return this.tagService.tagByName(name, args);
+    return this.tagService.tagByName(name, args, gqlCtx);
   }
 
   @UseGuards(PermissionsGuard)
   @Permissions('tag.item-create')
   @Mutation(() => Tag)
-  async createTag(@Args('tag') args: CreateTagInput): Promise<Tag | undefined> {
-    return this.tagService.createTag(args);
+  async createTag(@Args('tag') args: CreateTagInput, @GqlCtx() gqlCtx?: IGqlCtx): Promise<Tag | undefined> {
+    return this.tagService.createTag(args, gqlCtx);
   }
 
   @UseGuards(PermissionsGuard)
   @Permissions('tag.item-create')
   @Mutation(() => Tag)
-  async createTags(@Args({ name: 'tagNames', type: () => [String] }) tagNames: string[]): Promise<Tag[] | undefined> {
-    return this.tagService.createTags(tagNames);
+  async createTags(
+    @Args({ name: 'tagNames', type: () => [String] }) tagNames: string[],
+    @GqlCtx() gqlCtx?: IGqlCtx,
+  ): Promise<Tag[] | undefined> {
+    return this.tagService.createTags(tagNames, gqlCtx);
   }
 
   @UseGuards(PermissionsGuard)
@@ -76,14 +81,18 @@ export class TagResolver {
   async updateTag(
     @Args({ name: 'id', type: () => Int }) id: number,
     @Args('tag') args: UpdateTagInput,
+    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Tag | undefined> {
-    return this.tagService.updateTag(id, args);
+    return this.tagService.updateTag(id, args, gqlCtx);
   }
 
   @UseGuards(PermissionsGuard)
   @Permissions('tag.item-delete')
   @Mutation(() => Tag)
-  async deleteTag(@Args({ name: 'id', type: () => Int }) id: number): Promise<Tag | undefined> {
-    return this.tagService.deleteTag(id);
+  async deleteTag(
+    @Args({ name: 'id', type: () => Int }) id: number,
+    @GqlCtx() gqlCtx?: IGqlCtx,
+  ): Promise<Tag | undefined> {
+    return this.tagService.deleteTag(id, gqlCtx);
   }
 }

@@ -1,5 +1,7 @@
 import { diff } from 'jsondiffpatch';
 import bcryptjs from 'bcryptjs';
+// @ts-ignore
+import i18next, { t } from 'i18next';
 import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -9,46 +11,46 @@ import { UsersWithPaginationObject, CreateUserInput, UpdateUserInput } from '@le
 import { RoleService } from '@leaa/api/src/modules/role/role.service';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 import { AttachmentService } from '@leaa/api/src/modules/attachment/attachment.service';
-import { argsUtil, curdUtil, paginationUtil, authUtil, errUtil, loggerUtil } from '@leaa/api/src/utils';
+import { argsUtil, curdUtil, paginationUtil, authUtil, errUtil, loggerUtil, msgUtil } from '@leaa/api/src/utils';
 import { JwtService } from '@nestjs/jwt';
-import { IUsersArgs, IUserArgs } from '@leaa/api/src/interfaces';
+import { IUsersArgs, IUserArgs, IGqlCtx } from '@leaa/api/src/interfaces';
 
 const CLS_NAME = 'UserService';
 
 @Injectable()
 export class UserService {
   constructor(
-    @InjectRepository(User) private readonly userRepository: Repository<User>,
-    @InjectRepository(Role) private readonly roleRepository: Repository<Role>,
-    @InjectRepository(Auth) private readonly authRepository: Repository<Auth>,
     private readonly roleService: RoleService,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
     private readonly attachmentService: AttachmentService,
+    @InjectRepository(User) private readonly userRepository: Repository<User>,
+    @InjectRepository(Role) private readonly roleRepository: Repository<Role>,
+    @InjectRepository(Auth) private readonly authRepository: Repository<Auth>,
   ) {}
 
-  async PLEASE_DONT_MODIFY_DEMO_DATA(id?: number, user?: User): Promise<boolean> {
+  async PLEASE_DONT_MODIFY_DEMO_DATA(id?: number, gqlCtx?: IGqlCtx): Promise<boolean> {
     if (this.configService.DEMO_MODE && !process.argv.includes('--nuke')) {
       if (!id) return true;
 
-      const u = await this.user(id, user);
+      const u = await this.user(id);
 
       if (u && u.email && u.email === 'admin@local.com') {
-        throw errUtil.ERROR({ error: errUtil.mapping.PLEASE_DONT_MODIFY.text, user });
+        throw msgUtil.error({ t: ['_error:pleaseDontModify'], gqlCtx });
       }
     }
 
     return true;
   }
 
-  async users(args: IUsersArgs, user?: User): Promise<UsersWithPaginationObject> {
+  async users(args: IUsersArgs, gqlCtx?: IGqlCtx): Promise<UsersWithPaginationObject> {
     const nextArgs: IUsersArgs = argsUtil.format(args);
 
     const PRIMARY_TABLE = 'users';
     const qb = this.userRepository.createQueryBuilder(PRIMARY_TABLE);
 
     // relations
-    if (user && authUtil.can(user, 'role.list-read')) {
+    if (gqlCtx?.user && authUtil.can(gqlCtx.user, 'role.list-read')) {
       qb.leftJoinAndSelect(`${PRIMARY_TABLE}.roles`, 'roles');
     }
 
@@ -67,14 +69,14 @@ export class UserService {
     }
 
     // can
-    if (!(user && authUtil.can(user, 'user.list-read--all-status'))) {
+    if (!(gqlCtx?.user && authUtil.can(gqlCtx.user, 'user.list-read--all-status'))) {
       qb.andWhere('status = :status', { status: 1 });
     }
 
-    return paginationUtil.calcQueryBuilderPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
+    return paginationUtil.calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
-  async user(id: number, args?: IUserArgs, reqUser?: User): Promise<User | undefined> {
+  async user(id: number, args?: IUserArgs, gqlCtx?: IGqlCtx): Promise<User | undefined> {
     let nextArgs: IUserArgs = {};
 
     if (args) {
@@ -85,26 +87,25 @@ export class UserService {
     const whereQuery: { id: number; status?: number } = { id };
 
     const user = await this.userRepository.findOne({ ...nextArgs, where: whereQuery });
-    if (!user) return errUtil.ERROR({ error: errUtil.mapping.NOT_FOUND_ITEM.text, user: reqUser });
+
+    if (!user) return msgUtil.error({ t: ['_error:notFoundItem'], gqlCtx });
 
     return user;
   }
 
-  async userByToken(token?: string, args?: IUserArgs): Promise<User | undefined> {
+  async userByToken(token?: string, args?: IUserArgs, gqlCtx?: IGqlCtx): Promise<User | undefined> {
     let nextArgs: IUserArgs = {};
 
-    if (!token) return errUtil.ERROR({ error: errUtil.mapping.TOKEN_NOT_FOUND.text });
+    if (!token) return msgUtil.error({ t: ['_error:tokenNotFound'], gqlCtx });
 
     if (args) {
       nextArgs = args;
       nextArgs.relations = ['roles'];
     }
 
-    console.log(token);
-
     // @ts-ignore
     const userDecode: { id: any } = this.jwtService.decode(token);
-    if (!userDecode || !userDecode.id) return errUtil.ERROR({ error: errUtil.mapping.TOKEN_ERROR.text });
+    if (!userDecode || !userDecode.id) return msgUtil.error({ t: ['_error:tokenError'], gqlCtx });
 
     return this.userRepository.findOne(userDecode.id, nextArgs);
   }
@@ -131,8 +132,8 @@ export class UserService {
     return this.userRepository.save({ ...nextArgs });
   }
 
-  async updateUser(id: number, args: UpdateUserInput): Promise<User | undefined> {
-    if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id);
+  async updateUser(id: number, args: UpdateUserInput, gqlCtx?: IGqlCtx): Promise<User | undefined> {
+    if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id, gqlCtx);
 
     if (curdUtil.isOneField(args, 'status')) return curdUtil.commonUpdate(this.userRepository, CLS_NAME, id, args);
 
@@ -217,8 +218,8 @@ export class UserService {
     loggerUtil.log(`Delete User All Auth, ${JSON.stringify(deleteAuths)}`, CLS_NAME);
   }
 
-  async deleteUser(id: number, user?: User): Promise<User | undefined> {
-    if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id, user);
+  async deleteUser(id: number, gqlCtx?: IGqlCtx): Promise<User | undefined> {
+    if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id, gqlCtx);
 
     const deleteUser = await curdUtil.commonDelete(this.userRepository, CLS_NAME, id);
 

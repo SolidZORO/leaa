@@ -2,10 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { Product, Category, Tag, User, Attachment } from '@leaa/common/src/entrys';
+import { Product, Category, Tag, Attachment } from '@leaa/common/src/entrys';
 import { ProductsWithPaginationObject, CreateProductInput, UpdateProductInput } from '@leaa/common/src/dtos/product';
 import { argsUtil, paginationUtil, curdUtil, authUtil } from '@leaa/api/src/utils';
-import { IProductsArgs, IProductArgs } from '@leaa/api/src/interfaces';
+import { IProductsArgs, IProductArgs, IGqlCtx } from '@leaa/api/src/interfaces';
 
 import { TagService } from '@leaa/api/src/modules/tag/tag.service';
 
@@ -21,7 +21,7 @@ export class ProductService {
     private readonly tagService: TagService,
   ) {}
 
-  async products(args: IProductsArgs, user?: User): Promise<ProductsWithPaginationObject | undefined> {
+  async products(args: IProductsArgs, gqlCtx?: IGqlCtx): Promise<ProductsWithPaginationObject | undefined> {
     const nextArgs: IProductsArgs = argsUtil.format(args);
 
     const PRIMARY_TABLE = 'products';
@@ -55,14 +55,14 @@ export class ProductService {
     }
 
     // can
-    if (!user && !(user && authUtil.can(user, 'product.list-read--all-status'))) {
+    if (!gqlCtx?.user || (gqlCtx.user && !authUtil.can(gqlCtx.user, 'product.list-read--all-status'))) {
       qb.andWhere('status = :status', { status: 1 });
     }
 
-    return paginationUtil.calcQueryBuilderPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
+    return paginationUtil.calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
-  async product(id: number, args?: IProductArgs, user?: User): Promise<Product | undefined> {
+  async product(id: number, args?: IProductArgs, gqlCtx?: IGqlCtx): Promise<Product | undefined> {
     const PRIMARY_TABLE = 'products';
     const qb = await this.productRepository.createQueryBuilder(PRIMARY_TABLE);
 
@@ -114,13 +114,13 @@ export class ProductService {
     };
   }
 
-  async createProduct(args: CreateProductInput): Promise<Product | undefined> {
+  async createProduct(args: CreateProductInput, gqlCtx?: IGqlCtx): Promise<Product | undefined> {
     const { nextRelation, nextArgs } = await this.formatArgs(args);
 
     return this.productRepository.save({ ...nextArgs, ...nextRelation });
   }
 
-  async updateProduct(id: number, args: UpdateProductInput): Promise<Product | undefined> {
+  async updateProduct(id: number, args: UpdateProductInput, gqlCtx?: IGqlCtx): Promise<Product | undefined> {
     if (curdUtil.isOneField(args, 'status')) return curdUtil.commonUpdate(this.productRepository, CLS_NAME, id, args);
 
     const { nextRelation, nextArgs } = await this.formatArgs(args);
@@ -135,7 +135,7 @@ export class ProductService {
     return curdUtil.commonUpdate(this.productRepository, CLS_NAME, id, nextArgs, nextRelation);
   }
 
-  async deleteProduct(id: number): Promise<Product | undefined> {
+  async deleteProduct(id: number, gqlCtx?: IGqlCtx): Promise<Product | undefined> {
     return curdUtil.commonDelete(this.productRepository, CLS_NAME, id);
   }
 }

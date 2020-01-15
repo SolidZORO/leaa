@@ -12,7 +12,8 @@ import {
 } from '@leaa/common/src/dtos/category';
 import { CategoryService } from '@leaa/api/src/modules/category/category.service';
 import { PermissionsGuard } from '@leaa/api/src/guards';
-import { Permissions } from '@leaa/api/src/decorators';
+import { Permissions, GqlCtx } from '@leaa/api/src/decorators';
+import { IGqlCtx } from '@leaa/api/src/interfaces';
 
 @Resolver(() => Category)
 export class CategoryResolver {
@@ -40,8 +41,11 @@ export class CategoryResolver {
   @UseGuards(PermissionsGuard)
   @Permissions('category.item-create')
   @Mutation(() => Category)
-  async createCategory(@Args('category') args: CreateCategoryInput): Promise<Category | undefined> {
-    return this.categoryService.createCategory(args);
+  async createCategory(
+    @Args('category') args: CreateCategoryInput,
+    @GqlCtx() gqlCtx?: IGqlCtx,
+  ): Promise<Category | undefined> {
+    return this.categoryService.createCategory(args, gqlCtx);
   }
 
   @UseGuards(PermissionsGuard)
@@ -50,14 +54,18 @@ export class CategoryResolver {
   async updateCategory(
     @Args({ name: 'id', type: () => Int }) id: number,
     @Args('category') args: UpdateCategoryInput,
+    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Category | undefined> {
-    return this.categoryService.updateCategory(id, args);
+    return this.categoryService.updateCategory(id, args, gqlCtx);
   }
 
   @UseGuards(PermissionsGuard)
   @Permissions('category.item-delete')
   @Mutation(() => Category)
-  async deleteCategory(@Args({ name: 'id', type: () => Int }) id: number): Promise<Category | undefined> {
-    return this.categoryService.deleteCategory(id);
+  async deleteCategory(
+    @Args({ name: 'id', type: () => Int }) id: number,
+    @GqlCtx() gqlCtx?: IGqlCtx,
+  ): Promise<Category | undefined> {
+    return this.categoryService.deleteCategory(id, gqlCtx);
   }
 }

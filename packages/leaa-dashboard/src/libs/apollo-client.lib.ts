@@ -38,7 +38,7 @@ const errorLink = onError(({ graphQLErrors }) => {
 
       // TIPS: @see /leaa-api/src/utils/err.util.ts mapping code
       // @ts-ignore
-      if (error.code === 401) {
+      if (error.statusCode === 401) {
         const removed = authUtil.removeAuth();
 
         if (removed) {

@@ -2,7 +2,7 @@ import { UseGuards } from '@nestjs/common';
 import { Args, Query, Mutation, Resolver } from '@nestjs/graphql';
 import { Int } from 'type-graphql';
 
-import { Role, User } from '@leaa/common/src/entrys';
+import { Role } from '@leaa/common/src/entrys';
 import {
   RolesArgs,
   RolesWithPaginationObject,
@@ -11,8 +11,9 @@ import {
   UpdateRoleInput,
 } from '@leaa/common/src/dtos/role';
 import { RoleService } from '@leaa/api/src/modules/role/role.service';
-import { CurrentUser, Permissions } from '@leaa/api/src/decorators';
+import { Permissions, GqlCtx } from '@leaa/api/src/decorators';
 import { PermissionsGuard } from '@leaa/api/src/guards';
+import { IGqlCtx } from '@leaa/api/src/interfaces';
 
 @Resolver(() => Role)
 export class RoleResolver {
@@ -45,9 +46,9 @@ export class RoleResolver {
   async updateRole(
     @Args({ name: 'id', type: () => Int }) id: number,
     @Args('role') args: UpdateRoleInput,
-    @CurrentUser() user?: User,
+    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Role | undefined> {
-    return this.roleService.updateRole(id, args, user);
+    return this.roleService.updateRole(id, args, gqlCtx);
   }
 
   @UseGuards(PermissionsGuard)
@@ -55,8 +56,8 @@ export class RoleResolver {
   @Mutation(() => Role)
   async deleteRole(
     @Args({ name: 'id', type: () => Int }) id: number,
-    @CurrentUser() user?: User,
+    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Role | undefined> {
-    return this.roleService.deleteRole(id, user);
+    return this.roleService.deleteRole(id, gqlCtx);
   }
 }
