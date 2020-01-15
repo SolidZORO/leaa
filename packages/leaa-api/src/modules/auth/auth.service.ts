@@ -103,7 +103,7 @@ export class AuthService {
     if (token.slice(0, 6) === 'Bearer') {
       tokenWithoutBearer = token.slice(7);
     } else {
-      throw msgUtil.error({ t: ['_error:tokenNotPrefix'], gqlCtx });
+      throw msgUtil.error({ t: ['_error:tokenNotPrefix'], gqlCtx, statusCode: 401 });
     }
 
     let payload;
@@ -111,14 +111,22 @@ export class AuthService {
     try {
       payload = jwt.verify(tokenWithoutBearer, this.configService.JWT_SECRET_KEY) as IJwtPayload | undefined;
     } catch (error) {
-      if (error instanceof jwt.NotBeforeError) throw msgUtil.error({ t: ['_error:tokenNotBefore'], gqlCtx });
-      if (error instanceof jwt.TokenExpiredError) throw msgUtil.error({ t: ['_error:tokenExpired'], gqlCtx });
-      if (error instanceof jwt.JsonWebTokenError) throw msgUtil.error({ t: ['_error:tokenError'], gqlCtx });
+      if (error instanceof jwt.NotBeforeError) {
+        throw msgUtil.error({ t: ['_error:tokenNotBefore'], gqlCtx, statusCode: 401 });
+      }
+
+      if (error instanceof jwt.TokenExpiredError) {
+        throw msgUtil.error({ t: ['_error:tokenExpired'], gqlCtx, statusCode: 401 });
+      }
+
+      if (error instanceof jwt.JsonWebTokenError) {
+        throw msgUtil.error({ t: ['_error:tokenError'], gqlCtx, statusCode: 401 });
+      }
     }
 
     if (payload) return payload;
 
-    throw msgUtil.error({ t: ['_error:tokenVerifyFaild'], gqlCtx });
+    throw msgUtil.error({ t: ['_error:tokenVerifyFaild'], gqlCtx, statusCode: 401 });
   }
 
   // MUST DO minimal cost query

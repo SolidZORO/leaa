@@ -47,7 +47,7 @@ const log = (
   let result = context ? `[${context}] ${message}` : `[ / ] ${message}`;
 
   if (trace) {
-    result += `📍[ERROR-TRACE] ${trace}\n`;
+    result += `\n\n📍[ERROR-TRACE] ${trace}\n\n`;
   }
 
   return winstonLogger.log(type, result);
