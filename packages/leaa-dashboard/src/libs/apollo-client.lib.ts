@@ -2,7 +2,7 @@ import { HttpLink } from 'apollo-link-http';
 import { onError } from 'apollo-link-error';
 import { ApolloLink, split } from 'apollo-link';
 import { ApolloClient } from 'apollo-client';
-import { authUtil, messageUtil, langUtil } from '@leaa/dashboard/src/utils';
+import { authUtil, msgUtil, langUtil } from '@leaa/dashboard/src/utils';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { OperationDefinitionNode } from 'graphql';
 
@@ -34,7 +34,7 @@ const errorLink = onError(({ graphQLErrors }) => {
     graphQLErrors.forEach(error => {
       if (!ignoreErrorPath.includes(`${error.path}`)) {
         console.error(`❌ [GraphQL error]: ${JSON.stringify(error)}`);
-        messageUtil.gqlError(error.message);
+        msgUtil.error(error.message);
       }
 
       // TIPS: @see /leaa-api/src/utils/err.util.ts mapping code

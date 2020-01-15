@@ -12,7 +12,7 @@ import { DEFAULT_PAGE_SIZE_OPTIONS, PAGE_CARD_TITLE_CREATE_ICON } from '@leaa/da
 import { GET_AUTHS, DELETE_USER, GET_USERS, DELETE_AUTH } from '@leaa/dashboard/src/graphqls';
 import { AuthsWithPaginationObject, AuthsArgs } from '@leaa/common/src/dtos/auth';
 import { IPage, IKey, ITablePagination } from '@leaa/dashboard/src/interfaces';
-import { urlUtil, tableUtil, messageUtil } from '@leaa/dashboard/src/utils';
+import { urlUtil, tableUtil, msgUtil } from '@leaa/dashboard/src/utils';
 
 import {
   Rcon,
@@ -51,7 +51,7 @@ export default (props: IPage) => {
   // mutation
   const [deleteAuthMutate, deleteAuthMutation] = useMutation<Auth>(DELETE_AUTH, {
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
-    onCompleted: () => messageUtil.gqlSuccess(t('_lang:deletedSuccessfully')),
+    onCompleted: () => msgUtil.message(t('_lang:deletedSuccessfully')),
     refetchQueries: () => [{ query: GET_AUTHS, variables: getAuthesVariables }],
   });
 

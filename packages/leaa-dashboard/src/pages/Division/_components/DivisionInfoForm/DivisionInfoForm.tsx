@@ -6,7 +6,7 @@ import { Col, Form, Input, InputNumber, Row } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 import { Division } from '@leaa/common/src/entrys';
-import { messageUtil } from '@leaa/dashboard/src/utils';
+import { msgUtil } from '@leaa/dashboard/src/utils';
 import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
 import { UpdateDivisionInput } from '@leaa/common/src/dtos/division';
 
@@ -29,7 +29,7 @@ export const DivisionInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) 
     try {
       return await form.validateFields();
     } catch (error) {
-      return messageUtil.error(error.errorFields[0]?.errors[0]);
+      return msgUtil.error(error.errorFields[0]?.errors[0]);
     }
   };
 

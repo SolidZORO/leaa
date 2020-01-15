@@ -6,7 +6,7 @@ import { CheckboxValueType } from 'antd/lib/checkbox/Group';
 import { useTranslation } from 'react-i18next';
 
 import { Role, Permission } from '@leaa/common/src/entrys';
-import { messageUtil } from '@leaa/dashboard/src/utils';
+import { msgUtil } from '@leaa/dashboard/src/utils';
 import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
 import { UpdateRoleInput } from '@leaa/common/src/dtos/role';
 
@@ -39,7 +39,7 @@ export const RolePermissionsForm = forwardRef((props: IProps, ref: React.Ref<any
     try {
       return await form.validateFields();
     } catch (error) {
-      return messageUtil.error(error.errorFields[0]?.errors[0]);
+      return msgUtil.error(error.errorFields[0]?.errors[0]);
     }
   };
 

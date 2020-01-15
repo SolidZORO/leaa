@@ -5,7 +5,7 @@ import { Col, Form, Input, Row } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 import { Permission } from '@leaa/common/src/entrys';
-import { messageUtil } from '@leaa/dashboard/src/utils';
+import { msgUtil } from '@leaa/dashboard/src/utils';
 import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
 import { UpdatePermissionInput } from '@leaa/common/src/dtos/permission';
 
@@ -27,7 +27,7 @@ export const PermissionInfoForm = forwardRef((props: IProps, ref: React.Ref<any>
     try {
       return await form.validateFields();
     } catch (error) {
-      return messageUtil.error(error.errorFields[0]?.errors[0]);
+      return msgUtil.error(error.errorFields[0]?.errors[0]);
     }
   };
 

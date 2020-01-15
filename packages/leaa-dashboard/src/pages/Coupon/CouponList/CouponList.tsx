@@ -13,7 +13,7 @@ import { GET_COUPONS, DELETE_COUPON, UPDATE_COUPON } from '@leaa/dashboard/src/g
 import { Coupon } from '@leaa/common/src/entrys';
 import { CouponsWithPaginationObject, CouponsArgs } from '@leaa/common/src/dtos/coupon';
 import { IPage, IKey, ITablePagination } from '@leaa/dashboard/src/interfaces';
-import { urlUtil, tableUtil, messageUtil } from '@leaa/dashboard/src/utils';
+import { urlUtil, tableUtil, msgUtil } from '@leaa/dashboard/src/utils';
 
 import {
   Rcon,
@@ -57,7 +57,7 @@ export default (props: IPage) => {
   // mutation
   const [deleteCouponMutate, deleteCouponMutation] = useMutation<Coupon>(DELETE_COUPON, {
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
-    onCompleted: () => messageUtil.gqlSuccess(t('_lang:deletedSuccessfully')),
+    onCompleted: () => msgUtil.message(t('_lang:deletedSuccessfully')),
     refetchQueries: () => [{ query: GET_COUPONS, variables: getCouponsVariables }],
   });
 

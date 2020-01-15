@@ -13,7 +13,7 @@ import { GET_ARTICLES, DELETE_ARTICLE, UPDATE_ARTICLE } from '@leaa/dashboard/sr
 import { Article, Tag as TagEntry } from '@leaa/common/src/entrys';
 import { ArticlesWithPaginationObject, ArticlesArgs } from '@leaa/common/src/dtos/article';
 import { IPage, IKey, ITablePagination } from '@leaa/dashboard/src/interfaces';
-import { urlUtil, tableUtil, messageUtil } from '@leaa/dashboard/src/utils';
+import { urlUtil, tableUtil, msgUtil } from '@leaa/dashboard/src/utils';
 
 import {
   Rcon,
@@ -60,7 +60,7 @@ export default (props: IPage) => {
   // mutation
   const [deleteArticleMutate, deleteArticleMutation] = useMutation<Article>(DELETE_ARTICLE, {
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
-    onCompleted: () => messageUtil.gqlSuccess(t('_lang:deletedSuccessfully')),
+    onCompleted: () => msgUtil.message(t('_lang:deletedSuccessfully')),
     refetchQueries: () => [{ query: GET_ARTICLES, variables: getArticlesVariables }],
   });
 

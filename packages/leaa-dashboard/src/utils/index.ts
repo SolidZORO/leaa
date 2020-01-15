@@ -4,7 +4,7 @@ export { tableUtil } from './table.util';
 export { langUtil } from './lang.util';
 export { deviceUtil } from './device.util';
 export { attachmentUtil } from './attachment.util';
-export { messageUtil } from './message.util';
+export { msgUtil } from './msg.util';
 export { priceUtil } from './price.util';
 export { settingUtil } from './setting.util';
 export { dateUtil } from './date.util';

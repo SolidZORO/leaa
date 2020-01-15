@@ -13,7 +13,7 @@ import { GET_PROMOS, DELETE_PROMO, UPDATE_PROMO } from '@leaa/dashboard/src/grap
 import { Promo } from '@leaa/common/src/entrys';
 import { PromosWithPaginationObject, PromosArgs } from '@leaa/common/src/dtos/promo';
 import { IPage, IKey, ITablePagination } from '@leaa/dashboard/src/interfaces';
-import { urlUtil, tableUtil, messageUtil } from '@leaa/dashboard/src/utils';
+import { urlUtil, tableUtil, msgUtil } from '@leaa/dashboard/src/utils';
 
 import {
   Rcon,
@@ -53,7 +53,7 @@ export default (props: IPage) => {
   // mutation
   const [deletePromoMutate, deletePromoMutation] = useMutation<Promo>(DELETE_PROMO, {
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
-    onCompleted: () => messageUtil.gqlSuccess(t('_lang:deletedSuccessfully')),
+    onCompleted: () => msgUtil.message(t('_lang:deletedSuccessfully')),
     refetchQueries: () => [{ query: GET_PROMOS, variables: getPromosVariables }],
   });
 

@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { Switch, message } from 'antd';
 import { SwitchSize } from 'antd/lib/switch';
 
-import { messageUtil } from '@leaa/dashboard/src/utils';
+import { msgUtil } from '@leaa/dashboard/src/utils';
 import { apolloClient } from '@leaa/dashboard/src/libs';
 
 import style from './style.module.less';
@@ -47,7 +47,7 @@ export const TableColumnStatusSwitch = (props: IProps) => {
         );
 
         // TODO add status tips
-        // messageUtil.gqlSuccess(
+        // messageUtil.message(
         //   t('_comp:TableColumnStatusSwitch.updatedSuccessfully', {
         //     id: props.id,
         //     status: (e && t('_comp:TableColumnStatusSwitch.true')) || <p>xxxx</p>,
@@ -55,7 +55,7 @@ export const TableColumnStatusSwitch = (props: IProps) => {
         // );
       })
       .catch((error: Error) => {
-        messageUtil.gqlError(error.message);
+        msgUtil.error(error.message);
       })
       .finally(() => setSwitchLoading(false));
   };

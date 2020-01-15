@@ -8,7 +8,7 @@ import { Row, Col, Button } from 'antd';
 import { LOGIN, LOGIN_BY_TICKET, GET_DEMO_DATA } from '@leaa/dashboard/src/graphqls';
 import logo from '@leaa/dashboard/src/assets/images/logo/logo-black.svg';
 import { IPage, ICommenFormRef, IAuthInfo, ISubmitData } from '@leaa/dashboard/src/interfaces';
-import { authUtil, messageUtil } from '@leaa/dashboard/src/utils';
+import { authUtil, msgUtil } from '@leaa/dashboard/src/utils';
 import { LOGIN_REDIRECT_URL } from '@leaa/dashboard/src/constants';
 import { AuthLoginInput } from '@leaa/common/src/dtos/auth';
 import { DemoDataObject } from '@leaa/common/src/dtos/demo';
@@ -28,7 +28,7 @@ export default (props: IPage) => {
 
   const setLogin = (login: any) => {
     if (login?.name && login.flatPermissions?.length === 0) {
-      messageUtil.gqlSuccess(t('_page:Auth.Login.notPermissions'));
+      msgUtil.message(t('_page:Auth.Login.notPermissions'));
 
       return;
     }
@@ -83,7 +83,7 @@ export default (props: IPage) => {
     onError: e => {
       props.history.push('/login');
 
-      return messageUtil.gqlError(e.message);
+      return msgUtil.error(e.message);
     },
   });
 
@@ -121,7 +121,7 @@ export default (props: IPage) => {
   };
 
   const onBack = () => {
-    messageUtil.gqlSuccess(t('_page:Auth.Login.backTips'));
+    msgUtil.message(t('_page:Auth.Login.backTips'));
   };
 
   return (

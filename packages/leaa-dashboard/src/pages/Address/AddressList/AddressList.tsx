@@ -13,7 +13,7 @@ import { GET_ADDRESSES, DELETE_ADDRESS, UPDATE_ADDRESS } from '@leaa/dashboard/s
 import { Address } from '@leaa/common/src/entrys';
 import { AddressesWithPaginationObject, AddressesArgs } from '@leaa/common/src/dtos/address';
 import { IPage, IKey, ITablePagination } from '@leaa/dashboard/src/interfaces';
-import { urlUtil, tableUtil, messageUtil } from '@leaa/dashboard/src/utils';
+import { urlUtil, tableUtil, msgUtil } from '@leaa/dashboard/src/utils';
 
 import {
   Rcon,
@@ -50,7 +50,7 @@ export default (props: IPage) => {
   // mutation
   const [deleteAddressMutate, deleteAddressMutation] = useMutation<Address>(DELETE_ADDRESS, {
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
-    onCompleted: () => messageUtil.gqlSuccess(t('_lang:deletedSuccessfully')),
+    onCompleted: () => msgUtil.message(t('_lang:deletedSuccessfully')),
     refetchQueries: () => [{ query: GET_ADDRESSES, variables: getAddressesVariables }],
   });
 

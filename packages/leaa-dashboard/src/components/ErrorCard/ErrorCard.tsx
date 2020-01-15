@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { notification } from 'antd';
 import { ApolloError } from 'apollo-client';
-import { messageUtil } from '@leaa/dashboard/src/utils';
+import { msgUtil } from '@leaa/dashboard/src/utils';
 
 import style from './style.module.less';
 
@@ -23,7 +23,7 @@ export const ErrorCard = (props: IProps) => {
 
   useEffect(() => {
     if (message) {
-      notification.error({ message: messageUtil.formatGqlmessage(message), className: style['container'] });
+      notification.error({ message: msgUtil.formatGqlmessage(message), className: style['container'] });
     }
   }, [message]);
 

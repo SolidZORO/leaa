@@ -13,7 +13,7 @@ import { GET_PRODUCTS, DELETE_PRODUCT, UPDATE_PRODUCT } from '@leaa/dashboard/sr
 import { Product, Tag as TagEntry } from '@leaa/common/src/entrys';
 import { ProductsWithPaginationObject, ProductsArgs } from '@leaa/common/src/dtos/product';
 import { IPage, IKey, ITablePagination } from '@leaa/dashboard/src/interfaces';
-import { urlUtil, tableUtil, messageUtil } from '@leaa/dashboard/src/utils';
+import { urlUtil, tableUtil, msgUtil } from '@leaa/dashboard/src/utils';
 
 import {
   Rcon,
@@ -60,7 +60,7 @@ export default (props: IPage) => {
   // mutation
   const [deleteProductMutate, deleteProductMutation] = useMutation<Product>(DELETE_PRODUCT, {
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
-    onCompleted: () => messageUtil.gqlSuccess(t('_lang:deletedSuccessfully')),
+    onCompleted: () => msgUtil.message(t('_lang:deletedSuccessfully')),
     refetchQueries: () => [{ query: GET_PRODUCTS, variables: getProductsVariables }],
   });
 

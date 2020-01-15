@@ -19,7 +19,7 @@ import { DeleteOutlined } from '@ant-design/icons';
 import { DELETE_ATTACHMENT } from '@leaa/dashboard/src/graphqls';
 import { Attachment } from '@leaa/common/src/entrys';
 import { SwitchNumber, Rcon } from '@leaa/dashboard/src/components';
-import { messageUtil } from '@leaa/dashboard/src/utils';
+import { msgUtil } from '@leaa/dashboard/src/utils';
 
 import style from './style.module.less';
 
@@ -86,7 +86,7 @@ const AttachmentItemInner = forwardRef((props: IProps, ref: React.Ref<any>) => {
   const [deleteAttachmentsMutate, deleteAttachmentsMutation] = useMutation<{ uuid: string[] }>(DELETE_ATTACHMENT, {
     variables: deleteAttachmentsVariables,
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
-    onCompleted: () => messageUtil.gqlSuccess(t('_lang:deletedSuccessfully')),
+    onCompleted: () => msgUtil.message(t('_lang:deletedSuccessfully')),
   });
 
   const onDelete = async (uuid: string) => {

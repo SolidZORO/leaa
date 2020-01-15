@@ -6,7 +6,7 @@ import { Button } from 'antd';
 import SortableTree, { TreeItem, toggleExpandedForAll } from 'react-sortable-tree';
 
 import { Division } from '@leaa/common/src/entrys';
-import { messageUtil } from '@leaa/dashboard/src/utils';
+import { msgUtil } from '@leaa/dashboard/src/utils';
 import { PAGE_CARD_TITLE_CREATE_ICON, CREATE_BUTTON_ICON, UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { GET_DIVISIONS_TREE, DELETE_DIVISION } from '@leaa/dashboard/src/graphqls';
 import { IPage } from '@leaa/dashboard/src/interfaces';
@@ -27,7 +27,7 @@ export default (props: IPage) => {
   // mutation
   const [deleteDivisionMutate, deleteDivisionMutation] = useMutation<Division>(DELETE_DIVISION, {
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
-    onCompleted: () => messageUtil.gqlSuccess(t('_lang:deletedSuccessfully')),
+    onCompleted: () => msgUtil.message(t('_lang:deletedSuccessfully')),
     refetchQueries: () => [{ query: GET_DIVISIONS_TREE }],
   });
 

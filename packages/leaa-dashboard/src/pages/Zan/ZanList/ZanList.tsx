@@ -13,7 +13,7 @@ import { GET_ZANS, DELETE_ZAN, UPDATE_ZAN } from '@leaa/dashboard/src/graphqls';
 import { Zan } from '@leaa/common/src/entrys';
 import { ZansWithPaginationObject, ZansArgs } from '@leaa/common/src/dtos/zan';
 import { IPage, IKey, ITablePagination } from '@leaa/dashboard/src/interfaces';
-import { urlUtil, tableUtil, messageUtil } from '@leaa/dashboard/src/utils';
+import { urlUtil, tableUtil, msgUtil } from '@leaa/dashboard/src/utils';
 
 import {
   Rcon,
@@ -53,7 +53,7 @@ export default (props: IPage) => {
   // mutation
   const [deleteZanMutate, deleteZanMutation] = useMutation<Zan>(DELETE_ZAN, {
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
-    onCompleted: () => messageUtil.gqlSuccess(t('_lang:deletedSuccessfully')),
+    onCompleted: () => msgUtil.message(t('_lang:deletedSuccessfully')),
     refetchQueries: () => [{ query: GET_ZANS, variables: getZansVariables }],
   });
 

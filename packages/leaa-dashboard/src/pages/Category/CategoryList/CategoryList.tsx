@@ -10,7 +10,7 @@ import { PAGE_CARD_TITLE_CREATE_ICON, CREATE_BUTTON_ICON } from '@leaa/dashboard
 import { DELETE_CATEGORY, GET_CATEGORIES } from '@leaa/dashboard/src/graphqls';
 import { Category } from '@leaa/common/src/entrys';
 import { CategoriesWithPaginationOrTreeObject, CategoriesArgs } from '@leaa/common/src/dtos/category';
-import { messageUtil } from '@leaa/dashboard/src/utils';
+import { msgUtil } from '@leaa/dashboard/src/utils';
 import { IPage } from '@leaa/dashboard/src/interfaces';
 
 import { HtmlMeta, PageCard, TableCard, TableColumnDeleteButton, Rcon } from '@leaa/dashboard/src/components';
@@ -35,7 +35,7 @@ export default (props: IPage) => {
   // mutation
   const [deleteCategoryMutate, deleteCategoryMutation] = useMutation<Category>(DELETE_CATEGORY, {
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
-    onCompleted: () => messageUtil.gqlSuccess(t('_lang:deletedSuccessfully')),
+    onCompleted: () => msgUtil.message(t('_lang:deletedSuccessfully')),
     refetchQueries: () => [{ query: GET_CATEGORIES, variables: getCategoriesVariables }],
   });
 

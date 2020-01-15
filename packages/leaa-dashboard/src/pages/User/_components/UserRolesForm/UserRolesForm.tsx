@@ -7,7 +7,7 @@ import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import { useTranslation } from 'react-i18next';
 
 import { User, Role } from '@leaa/common/src/entrys';
-import { messageUtil } from '@leaa/dashboard/src/utils';
+import { msgUtil } from '@leaa/dashboard/src/utils';
 import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
 import { UpdateUserInput } from '@leaa/common/src/dtos/user';
 
@@ -36,7 +36,7 @@ export const UserRolesForm = forwardRef((props: IProps, ref: React.Ref<any>) => 
     try {
       return await form.validateFields();
     } catch (error) {
-      return messageUtil.error(error.errorFields[0]?.errors[0]);
+      return msgUtil.error(error.errorFields[0]?.errors[0]);
     }
   };
 

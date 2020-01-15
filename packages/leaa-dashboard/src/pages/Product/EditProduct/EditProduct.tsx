@@ -8,7 +8,7 @@ import { GET_PRODUCT, UPDATE_PRODUCT } from '@leaa/dashboard/src/graphqls';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { ProductArgs, UpdateProductInput } from '@leaa/common/src/dtos/product';
 import { IPage, ICommenFormRef, ISubmitData } from '@leaa/dashboard/src/interfaces';
-import { messageUtil } from '@leaa/dashboard/src/utils';
+import { msgUtil } from '@leaa/dashboard/src/utils';
 
 import { PageCard, HtmlMeta, SelectTagId, SubmitBar, Rcon } from '@leaa/dashboard/src/components';
 
@@ -40,7 +40,7 @@ export default (props: IPage) => {
   const [updateProductMutate, updateProductMutation] = useMutation<Product>(UPDATE_PRODUCT, {
     variables: submitVariables,
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
-    onCompleted: () => messageUtil.gqlSuccess(t('_lang:updatedSuccessfully')),
+    onCompleted: () => msgUtil.message(t('_lang:updatedSuccessfully')),
     refetchQueries: () => [{ query: GET_PRODUCT, variables: getProductVariables }],
   });
 

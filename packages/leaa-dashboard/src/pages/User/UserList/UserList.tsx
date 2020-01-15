@@ -13,7 +13,7 @@ import { GET_USERS, DELETE_USER, UPDATE_USER } from '@leaa/dashboard/src/graphql
 import { User } from '@leaa/common/src/entrys';
 import { UsersWithPaginationObject, UsersArgs } from '@leaa/common/src/dtos/user';
 import { IPage, IKey, ITablePagination } from '@leaa/dashboard/src/interfaces';
-import { urlUtil, tableUtil, messageUtil } from '@leaa/dashboard/src/utils';
+import { urlUtil, tableUtil, msgUtil } from '@leaa/dashboard/src/utils';
 
 import {
   Rcon,
@@ -52,7 +52,7 @@ export default (props: IPage) => {
   // mutation
   const [deleteUserMutate, deleteUserMutation] = useMutation<User>(DELETE_USER, {
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
-    onCompleted: () => messageUtil.gqlSuccess(t('_lang:deletedSuccessfully')),
+    onCompleted: () => msgUtil.message(t('_lang:deletedSuccessfully')),
     refetchQueries: () => [{ query: GET_USERS, variables: getUsersVariables }],
   });
 
