@@ -45,7 +45,7 @@ export class TagService {
     if (args) nextArgs = args;
 
     const tag = this.tagRepository.findOne(id, nextArgs);
-    if (!tag) return msgUtil.error({ t: ['_error:notFoundItem'], gqlCtx });
+    if (!tag) throw msgUtil.error({ t: ['_error:notFoundItem'], gqlCtx });
 
     return tag;
   }

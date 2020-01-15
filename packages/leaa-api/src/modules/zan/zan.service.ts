@@ -49,7 +49,7 @@ export class ZanService {
     const whereQuery: { uuid: string; status?: number } = { uuid };
     const zan = await this.zanRepository.findOne({ ...nextArgs, where: whereQuery });
 
-    if (!zan) return msgUtil.error({ t: ['_error:notFoundItem'], gqlCtx });
+    if (!zan) throw msgUtil.error({ t: ['_error:notFoundItem'], gqlCtx });
 
     const views = zan.views ? zan.views + 1 : 1;
     await this.zanRepository.update(zan.id, { views });
@@ -77,8 +77,8 @@ export class ZanService {
   async likeZan(uuid: string, gqlCtx?: IGqlCtx): Promise<Zan | undefined> {
     let zan = await this.zanRepository.findOne({ uuid }, { relations: ['users'] });
 
-    if (!zan) return msgUtil.error({ t: ['_error:notFoundItem'], gqlCtx });
-    if (!gqlCtx?.user) return msgUtil.error({ t: ['_error:notFoundUser'], gqlCtx });
+    if (!zan) throw msgUtil.error({ t: ['_error:notFoundItem'], gqlCtx });
+    if (!gqlCtx?.user) throw msgUtil.error({ t: ['_error:notFoundUser'], gqlCtx });
 
     if (gqlCtx?.user && !zan.users?.map(u => u.id).includes(gqlCtx?.user?.id)) {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion

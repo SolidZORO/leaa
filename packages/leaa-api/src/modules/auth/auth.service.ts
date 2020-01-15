@@ -51,7 +51,7 @@ export class AuthService {
 
     const items = await paginationUtil.calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
 
-    if (!items) return msgUtil.error({ t: ['_error:tokenNotBefore'], gqlCtx });
+    if (!items) throw msgUtil.error({ t: ['_error:tokenNotBefore'], gqlCtx });
 
     return items;
   }
@@ -73,7 +73,7 @@ export class AuthService {
   async deleteAuth(id: number, gqlCtx?: IGqlCtx): Promise<Auth | undefined> {
     const item = await curdUtil.commonDelete(this.authRepository, CLS_NAME, id);
 
-    if (!item) return msgUtil.error({ t: ['_error:deleteItemFailed'], gqlCtx });
+    if (!item) throw msgUtil.error({ t: ['_error:deleteItemFailed'], gqlCtx });
 
     return item;
   }
@@ -96,14 +96,14 @@ export class AuthService {
   }
 
   getUserPayload(token?: string, gqlCtx?: IGqlCtx): IJwtPayload {
-    if (!token) return msgUtil.error({ t: ['_error:tokenNotFound'], gqlCtx });
+    if (!token) throw msgUtil.error({ t: ['_error:tokenNotFound'], gqlCtx });
 
     let tokenWithoutBearer = token;
 
     if (token.slice(0, 6) === 'Bearer') {
       tokenWithoutBearer = token.slice(7);
     } else {
-      return msgUtil.error({ t: ['_error:tokenNotPrefix'], gqlCtx });
+      throw msgUtil.error({ t: ['_error:tokenNotPrefix'], gqlCtx });
     }
 
     let payload;
@@ -111,20 +111,22 @@ export class AuthService {
     try {
       payload = jwt.verify(tokenWithoutBearer, this.configService.JWT_SECRET_KEY) as IJwtPayload | undefined;
     } catch (error) {
-      if (error instanceof jwt.NotBeforeError) return msgUtil.error({ t: ['_error:tokenNotBefore'], gqlCtx });
-      if (error instanceof jwt.TokenExpiredError) return msgUtil.error({ t: ['_error:tokenExpired'], gqlCtx });
-      if (error instanceof jwt.JsonWebTokenError) return msgUtil.error({ t: ['_error:tokenError'], gqlCtx });
+      if (error instanceof jwt.NotBeforeError) throw msgUtil.error({ t: ['_error:tokenNotBefore'], gqlCtx });
+      if (error instanceof jwt.TokenExpiredError) throw msgUtil.error({ t: ['_error:tokenExpired'], gqlCtx });
+      if (error instanceof jwt.JsonWebTokenError) throw msgUtil.error({ t: ['_error:tokenError'], gqlCtx });
     }
 
-    return payload || msgUtil.error({ t: ['_error:tokenVerifyFaild'], gqlCtx });
+    if (payload) return payload;
+
+    throw msgUtil.error({ t: ['_error:tokenVerifyFaild'], gqlCtx });
   }
 
   // MUST DO minimal cost query
   async validateUserByPayload(payload: IJwtPayload, gqlCtx?: IGqlCtx): Promise<User | undefined> {
-    if (!payload) return msgUtil.error({ t: ['_error:notFoundInfo'], gqlCtx });
+    if (!payload) throw msgUtil.error({ t: ['_error:notFoundInfo'], gqlCtx });
 
     if (!payload.iat || !payload.exp || !payload.id) {
-      return msgUtil.error({ t: ['_error:notFoundInfo'], gqlCtx });
+      throw msgUtil.error({ t: ['_error:notFoundInfo'], gqlCtx });
     }
 
     const findUser = await this.userRepository.findOne({ relations: ['roles'], where: { id: payload.id } });
@@ -133,7 +135,7 @@ export class AuthService {
 
     // IMPORTANT! if user info is changed, Compare `iat` and `last_token_at`
     if (moment(payload.iattz).isBefore(moment(user.last_token_at))) {
-      return msgUtil.error({ t: ['_error:userHasBeenUpdated'], gqlCtx });
+      throw msgUtil.error({ t: ['_error:userHasBeenUpdated'], gqlCtx });
     }
 
     const flatPermissions = await this.userProperty.flatPermissions(user);
@@ -178,13 +180,13 @@ export class AuthService {
   }
 
   async getUserByTicket(ticket: string, gqlCtx?: IGqlCtx): Promise<User> {
-    if (!ticket) return msgUtil.error({ t: ['_error:notFoundTicket'], gqlCtx });
+    if (!ticket) throw msgUtil.error({ t: ['_error:notFoundTicket'], gqlCtx });
 
     const auth = await this.authRepository.findOne({ ticket });
-    if (!auth) return msgUtil.error({ t: ['_error:notFoundAuth'], gqlCtx });
+    if (!auth) throw msgUtil.error({ t: ['_error:notFoundAuth'], gqlCtx });
 
     const user = await this.userService.user(auth.user_id || 0, { relations: ['roles'] });
-    if (!user) return msgUtil.error({ t: ['_error:notFoundUser'], gqlCtx });
+    if (!user) throw msgUtil.error({ t: ['_error:notFoundUser'], gqlCtx });
 
     await this.clearTicket(auth.id);
 
@@ -197,7 +199,7 @@ export class AuthService {
 
   async bindUserIdToAuth(user: User, oid: number, gqlCtx?: IGqlCtx): Promise<any> {
     if (!oid || typeof Number(oid) !== 'number') {
-      return msgUtil.error({ t: ['_error:notFoundId'], gqlCtx });
+      throw msgUtil.error({ t: ['_error:notFoundId'], gqlCtx });
     }
 
     const auth = await this.authRepository.findOne({ id: Number(oid) });

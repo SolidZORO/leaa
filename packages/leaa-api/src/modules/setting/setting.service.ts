@@ -139,7 +139,7 @@ export class SettingService {
         items = await this.settingRepository.find({ id: In(settings.map(s => s.id)) });
       })
       .catch(() => {
-        return msgUtil.error({ t: ['_error:updateItemFailed'], gqlCtx });
+        throw msgUtil.error({ t: ['_error:updateItemFailed'], gqlCtx });
       });
 
     return {

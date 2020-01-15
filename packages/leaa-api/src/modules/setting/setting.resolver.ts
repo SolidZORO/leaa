@@ -21,9 +21,6 @@ import { IGqlCtx } from '@leaa/api/src/interfaces';
 export class SettingResolver {
   constructor(private readonly settingService: SettingService) {}
 
-  // @UseGuards(PermissionsGuard)
-  // @Permissions('setting.list-read')
-  // DO NOT CHECK PERMISSIONS
   @Query(() => SettingsWithPaginationObject)
   async settings(
     @Args() args: SettingsArgs,
@@ -32,9 +29,6 @@ export class SettingResolver {
     return this.settingService.settings(args, gqlCtx);
   }
 
-  // @UseGuards(PermissionsGuard)
-  // @Permissions('setting.item-read')
-  // DO NOT CHECK PERMISSIONS
   @Query(() => Setting)
   async setting(
     @Args({ name: 'id', type: () => Int }) id: number,

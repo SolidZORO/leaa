@@ -120,10 +120,10 @@ export class AttachmentService {
   }
 
   async updateAttachment(uuid: string, args: UpdateAttachmentInput, gqlCtx?: IGqlCtx): Promise<Attachment | undefined> {
-    if (!args) return msgUtil.error({ t: ['_error:notFoundArgs'], gqlCtx });
+    if (!args) throw msgUtil.error({ t: ['_error:notFoundArgs'], gqlCtx });
 
     let prevItem = await this.attachmentRepository.findOne({ uuid });
-    if (!prevItem) return msgUtil.error({ t: ['_error:notFoundItem'], gqlCtx });
+    if (!prevItem) throw msgUtil.error({ t: ['_error:notFoundItem'], gqlCtx });
 
     prevItem = { ...prevItem, ...args };
     const nextItem = await this.attachmentRepository.save(prevItem);
@@ -134,7 +134,7 @@ export class AttachmentService {
   }
 
   async updateAttachments(attachments: UpdateAttachmentsInput[], gqlCtx?: IGqlCtx): Promise<AttachmentsObject> {
-    if (!attachments) return msgUtil.error({ t: ['_error:notFoundItems'], gqlCtx });
+    if (!attachments) throw msgUtil.error({ t: ['_error:notFoundItems'], gqlCtx });
 
     const batchUpdate = attachments.map(async attachment => {
       await this.attachmentRepository.update({ uuid: attachment.uuid }, _.omit(attachment, ['uuid']));
@@ -159,10 +159,10 @@ export class AttachmentService {
 
   async deleteAttachments(uuid: string[], gqlCtx?: IGqlCtx): Promise<DeleteAttachmentsObject | undefined> {
     const prevItems = await this.attachmentRepository.find({ uuid: In(uuid) });
-    if (!prevItems) return msgUtil.error({ t: ['_error:notFoundItem'], gqlCtx });
+    if (!prevItems) throw msgUtil.error({ t: ['_error:notFoundItem'], gqlCtx });
 
     const nextItem = await this.attachmentRepository.remove(prevItems);
-    if (!nextItem) return msgUtil.error({ t: ['_error:deleteItemFailed'], gqlCtx });
+    if (!nextItem) throw msgUtil.error({ t: ['_error:deleteItemFailed'], gqlCtx });
 
     prevItems.forEach(i => {
       if (i.at2x) {

@@ -93,7 +93,7 @@ export class ArticleService {
 
   async articleBySlug(slug: string, args?: IArticleArgs, gqlCtx?: IGqlCtx): Promise<Article | undefined> {
     const article = await this.articleRepository.findOne({ where: { slug } });
-    if (!article) return msgUtil.error({ t: ['_error:notFoundItem'], gqlCtx });
+    if (!article) throw msgUtil.error({ t: ['_error:notFoundItem'], gqlCtx });
 
     return this.article(article.id, args, gqlCtx);
   }

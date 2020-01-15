@@ -67,14 +67,14 @@ export class AxService {
     }
 
     const ax = await this.axRepository.findOne({ ...nextArgs, where: whereQuery });
-    if (!ax) return msgUtil.error({ t: ['_error:notFoundItem'], gqlCtx });
+    if (!ax) throw msgUtil.error({ t: ['_error:notFoundItem'], gqlCtx });
 
     return ax;
   }
 
   async axBySlug(slug: string, args?: IAxArgs, gqlCtx?: IGqlCtx): Promise<Ax | undefined> {
     const ax = await this.axRepository.findOne({ where: { slug } });
-    if (!ax) return msgUtil.error({ t: ['_error:notFoundItem'], gqlCtx });
+    if (!ax) throw msgUtil.error({ t: ['_error:notFoundItem'], gqlCtx });
 
     return this.ax(ax.id, args, gqlCtx);
   }

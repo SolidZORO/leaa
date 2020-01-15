@@ -11,7 +11,7 @@ export class TestService {
     console.log(CLS_NAME, x, gqlCtx?.lang);
 
     if (typeof x !== 'undefined' && x > 0) {
-      return msgUtil.error({ t: ['_error:test'], gqlCtx });
+      throw msgUtil.error({ t: ['_error:test'], gqlCtx });
     }
 
     return msgUtil.message({ t: ['_error:test'], gqlCtx });

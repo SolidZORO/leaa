@@ -86,7 +86,7 @@ export class UserService {
 
     const user = await this.userRepository.findOne({ ...nextArgs, where: whereQuery });
 
-    if (!user) return msgUtil.error({ t: ['_error:notFoundItem'], gqlCtx });
+    if (!user) throw msgUtil.error({ t: ['_error:notFoundItem'], gqlCtx });
 
     return user;
   }
@@ -94,7 +94,7 @@ export class UserService {
   async userByToken(token?: string, args?: IUserArgs, gqlCtx?: IGqlCtx): Promise<User | undefined> {
     let nextArgs: IUserArgs = {};
 
-    if (!token) return msgUtil.error({ t: ['_error:tokenNotFound'], gqlCtx });
+    if (!token) throw msgUtil.error({ t: ['_error:tokenNotFound'], gqlCtx });
 
     if (args) {
       nextArgs = args;
@@ -103,7 +103,7 @@ export class UserService {
 
     // @ts-ignore
     const userDecode: { id: any } = this.jwtService.decode(token);
-    if (!userDecode || !userDecode.id) return msgUtil.error({ t: ['_error:tokenError'], gqlCtx });
+    if (!userDecode || !userDecode.id) throw msgUtil.error({ t: ['_error:tokenError'], gqlCtx });
 
     return this.userRepository.findOne(userDecode.id, nextArgs);
   }

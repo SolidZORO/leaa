@@ -39,7 +39,7 @@ export class AuthLocalService {
       const errorMessage = `User (${args.email}) Info Not Match`;
       loggerUtil.log(errorMessage, CLS_NAME);
 
-      return msgUtil.error({ t: ['_error:userInfoNotMatch'], gqlCtx });
+      throw msgUtil.error({ t: ['_error:userInfoNotMatch'], gqlCtx });
     }
 
     if (user.password) delete user.password;
@@ -79,7 +79,7 @@ export class AuthLocalService {
     } catch (error) {
       loggerUtil.log(`Local Singup Error, ${JSON.stringify(error)}`, CLS_NAME);
 
-      return msgUtil.error({ t: ['_error:signupFailed'], gqlCtx });
+      throw msgUtil.error({ t: ['_error:signupFailed'], gqlCtx });
     }
 
     return this.authService.addTokenToUser(newUser);

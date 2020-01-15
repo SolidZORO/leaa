@@ -17,14 +17,14 @@ export class PermissionsGuard implements CanActivate {
 
     const user: User | undefined = gqlCtx?.user;
 
-    if (!user) return msgUtil.error({ t: ['_error:unauthorized'], gqlCtx });
+    if (!user) throw msgUtil.error({ t: ['_error:unauthorized'], gqlCtx });
 
     // signup user
     if (!user.is_admin && user.flatPermissions && user.flatPermissions.length === 0) return true;
 
     // not is admin
     if (!user.flatPermissions || user.flatPermissions.length <= 0) {
-      return msgUtil.error({ t: ['_error:forbidden'], gqlCtx });
+      throw msgUtil.error({ t: ['_error:forbidden'], gqlCtx });
     }
 
     return (

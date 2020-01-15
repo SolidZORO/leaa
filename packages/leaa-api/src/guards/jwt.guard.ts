@@ -9,7 +9,7 @@ export class JwtGuard extends AuthGuard('jwt') {
   }
 
   handleRequest(err: Error, user: any) {
-    if (err || !user) return msgUtil.error({ t: ['_error:unauthorized'] });
+    if (err || !user) throw msgUtil.error({ t: ['_error:unauthorized'] });
 
     return user;
   }

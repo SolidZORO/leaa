@@ -70,14 +70,14 @@ export class CouponService {
     }
 
     const coupon = await this.couponRepository.findOne({ ...nextArgs, where: whereQuery });
-    if (!coupon) return msgUtil.error({ t: ['_error:notFoundItem'], gqlCtx });
+    if (!coupon) throw msgUtil.error({ t: ['_error:notFoundItem'], gqlCtx });
 
     return coupon;
   }
 
   async couponByCode(code: string, args?: ICouponArgs, gqlCtx?: IGqlCtx): Promise<Coupon | undefined> {
     const coupon = await this.couponRepository.findOne({ where: { code } });
-    if (!coupon) return msgUtil.error({ t: ['_error:notFoundItem'], gqlCtx });
+    if (!coupon) throw msgUtil.error({ t: ['_error:notFoundItem'], gqlCtx });
 
     return this.coupon(coupon.id, args, gqlCtx);
   }
@@ -113,11 +113,11 @@ export class CouponService {
 
   async redeemCoupon(info: RedeemCouponInput, gqlCtx?: IGqlCtx): Promise<Coupon | undefined> {
     const coupon = await this.couponByCode(info.code, undefined, gqlCtx);
-    if (!coupon) return msgUtil.error({ t: ['_error:notFoundItem'], gqlCtx });
+    if (!coupon) throw msgUtil.error({ t: ['_error:notFoundItem'], gqlCtx });
 
-    if (!this.couponProperty.available(coupon)) return msgUtil.error({ t: ['_module:coupon.unavailable'], gqlCtx });
-    if (!this.couponProperty.canRedeem(coupon)) return msgUtil.error({ t: ['_module:coupon.irredeemable'], gqlCtx });
-    if (coupon.user_id) return msgUtil.error({ t: ['_module:coupon.alreadyRedeemed'], gqlCtx });
+    if (!this.couponProperty.available(coupon)) throw msgUtil.error({ t: ['_module:coupon.unavailable'], gqlCtx });
+    if (!this.couponProperty.canRedeem(coupon)) throw msgUtil.error({ t: ['_module:coupon.irredeemable'], gqlCtx });
+    if (coupon.user_id) throw msgUtil.error({ t: ['_module:coupon.alreadyRedeemed'], gqlCtx });
 
     // [token user]
     let nextCoupon = { ...coupon, user_id: gqlCtx?.user?.id };

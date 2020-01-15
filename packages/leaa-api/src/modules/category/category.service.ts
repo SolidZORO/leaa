@@ -141,7 +141,7 @@ export class CategoryService {
   }
 
   async createCategory(args: CreateCategoryInput, gqlCtx?: IGqlCtx): Promise<Category | undefined> {
-    if (!args || (args && !args.slug)) return msgUtil.error({ t: ['_error:notFoundField'], gqlCtx });
+    if (!args || (args && !args.slug)) throw msgUtil.error({ t: ['_error:notFoundField'], gqlCtx });
 
     const manager = getManager();
     const newCategory = new Category();

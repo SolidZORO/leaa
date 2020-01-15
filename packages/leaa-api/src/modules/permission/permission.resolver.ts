@@ -2,7 +2,7 @@ import { UseGuards } from '@nestjs/common';
 import { Args, Query, Mutation, Resolver } from '@nestjs/graphql';
 import { Int } from 'type-graphql';
 
-import { Permission, User } from '@leaa/common/src/entrys';
+import { Permission } from '@leaa/common/src/entrys';
 import {
   PermissionsArgs,
   PermissionsWithPaginationObject,
@@ -11,7 +11,7 @@ import {
   UpdatePermissionInput,
 } from '@leaa/common/src/dtos/permission';
 import { PermissionService } from '@leaa/api/src/modules/permission/permission.service';
-import { CurrentUser, Permissions, GqlCtx } from '@leaa/api/src/decorators';
+import { Permissions, GqlCtx } from '@leaa/api/src/decorators';
 import { PermissionsGuard } from '@leaa/api/src/guards';
 import { IGqlCtx } from '@leaa/api/src/interfaces';
 
