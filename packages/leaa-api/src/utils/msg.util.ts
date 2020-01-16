@@ -1,5 +1,4 @@
 import { loggerUtil } from '@leaa/api/src/utils/logger.util';
-import { User } from '@leaa/common/src/entrys';
 import i18next, { TFunctionKeys, InitOptions } from 'i18next';
 import { IGqlCtx } from '@leaa/api/src/interfaces';
 
@@ -7,7 +6,6 @@ interface IHandleMessageParams {
   type: 'error' | 'message';
   text?: string;
   t?: [TFunctionKeys | TFunctionKeys[], InitOptions | { [key: string]: any }] | [TFunctionKeys | TFunctionKeys[]];
-  user?: User;
   statusCode?: number;
   gqlCtx?: IGqlCtx;
   CLS_NAME?: string;
@@ -16,19 +14,15 @@ interface IHandleMessageParams {
 type IErrorParams = Omit<IHandleMessageParams, 'type'>;
 type IMessageParams = Omit<IHandleMessageParams, 'type'>;
 
-const handleMessage = ({ type, t, text, statusCode, user, gqlCtx, CLS_NAME }: IHandleMessageParams) => {
+const handleMessage = ({ type, t, text, statusCode, gqlCtx, CLS_NAME }: IHandleMessageParams) => {
   const ctxLang = gqlCtx?.lang;
   const ctxUser = gqlCtx?.user;
 
   let message = '';
   let userText = 'Not Found User';
 
-  if (user || ctxUser) {
-    const u = user || ctxUser;
-
-    if (u) {
-      userText = `#${u.id} - ${u.name} (${u.email})`;
-    }
+  if (ctxUser) {
+    userText = `#${ctxUser.id} - ${ctxUser.name} (${ctxUser.email})`;
   }
 
   if (t) {
@@ -57,11 +51,11 @@ const handleMessage = ({ type, t, text, statusCode, user, gqlCtx, CLS_NAME }: IH
   return message;
 };
 
-const error = ({ t, text, statusCode, user, gqlCtx, CLS_NAME }: IErrorParams) =>
-  handleMessage({ type: 'error', t, text, statusCode, user, gqlCtx, CLS_NAME });
+const error = ({ t, text, statusCode, gqlCtx, CLS_NAME }: IErrorParams) =>
+  handleMessage({ type: 'error', t, text, statusCode, gqlCtx, CLS_NAME });
 
-const message = ({ t, text, statusCode, user, gqlCtx, CLS_NAME }: IMessageParams) =>
-  handleMessage({ type: 'message', t, text, statusCode, user, gqlCtx, CLS_NAME });
+const message = ({ t, text, statusCode, gqlCtx, CLS_NAME }: IMessageParams) =>
+  handleMessage({ type: 'message', t, text, statusCode, gqlCtx, CLS_NAME });
 
 export const msgUtil = {
   error,
