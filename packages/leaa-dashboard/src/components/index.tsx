@@ -35,6 +35,7 @@ export { TableColumnDate } from './TableColumnDate/TableColumnDate';
 export { SuspenseFallback } from './SuspenseFallback/SuspenseFallback';
 export { AuthGithubButton } from './AuthGithubButton/AuthGithubButton';
 export { TableColumnImage } from './TableColumnImage/TableColumnImage';
+export { ConfirmDeleteButton } from './ConfirmDeleteButton/ConfirmDeleteButton';
 export { SelectCategoryIdByTree } from './SelectCategoryIdByTree/SelectCategoryIdByTree';
 export { RefreshflatPermissions } from './RefreshflatPermissions/RefreshflatPermissions';
 export { TableColumnDeleteButton } from './TableColumnDeleteButton/TableColumnDeleteButton';

@@ -1,0 +1,76 @@
+@import '~@leaa/dashboard/src/styles/variables.less';
+
+.delete {
+  @height: 16px;
+
+  transform: scale(0.8);
+  background-color: #fff5f5;
+  border-color: #ffd8d8;
+  //opacity: 0.9;
+  font-size: 12px !important;
+  line-height: 1.2;
+  height: @height !important;
+  width: @height !important;
+  color: @error-color;
+  border-radius: 100px !important;
+  opacity: 0.6;
+
+  &:hover,
+  &:active,
+  &:focus {
+    color: #fff;
+    background: @error-color;
+  }
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.delete-need--confirm,
+.delete-need--confirm:hover,
+.delete-need--confirm:active,
+.delete-need--confirm:focus {
+  color: #fff;
+  border-color: darken(@error-color, 32%);
+  background: darken(@error-color, 28%);
+}
+
+//.delete-need--confirm {
+//  opacity: 0.4;
+//
+//  &:hover {
+//    opacity: 1;
+//  }
+//}
+
+.delete-tooltip-wrapper {
+  //background: @error-color;
+
+  :global {
+    .ant-tooltip-inner {
+      color: #fff;
+      font-size: 90%;
+      background-color: @error-color;
+    }
+
+    .ant-tooltip-arrow {
+      &:before {
+        background-color: @error-color;
+      }
+    }
+  }
+}
+
+.delete-icon {
+  border: 1px solid #fff;
+  padding: 2px 6px;
+  border-radius: 100px;
+  position: relative;
+  top: -2px;
+  margin-left: 3px;
+
+  svg {
+    font-size: 70%;
+  }
+}

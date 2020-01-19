@@ -11,14 +11,13 @@ import {
   DragSourceConnector,
 } from 'react-dnd';
 import { XYCoord } from 'dnd-core';
-import { Input, Button, Tooltip } from 'antd';
+import { Input, Tooltip } from 'antd';
 import { useMutation } from '@apollo/react-hooks';
 import { useTranslation } from 'react-i18next';
-import { DeleteOutlined } from '@ant-design/icons';
 
 import { DELETE_ATTACHMENT } from '@leaa/dashboard/src/graphqls';
 import { Attachment } from '@leaa/common/src/entrys';
-import { SwitchNumber, Rcon } from '@leaa/dashboard/src/components';
+import { SwitchNumber, Rcon, ConfirmDeleteButton } from '@leaa/dashboard/src/components';
 import { msgUtil } from '@leaa/dashboard/src/utils';
 
 import style from './style.module.less';
@@ -113,15 +112,7 @@ const AttachmentItemInner = forwardRef((props: IProps, ref: React.Ref<any>) => {
       }}
     >
       <div className={cx(style['toolbar'])} ref={cardRef} style={{ height: cardHeight }}>
-        <Button
-          type="link"
-          size="small"
-          shape="circle"
-          icon={<DeleteOutlined />}
-          className={style['delete']}
-          loading={deleteAttachmentsMutation.loading}
-          onClick={() => onDelete(attachment.uuid)}
-        />
+        <ConfirmDeleteButton loading={deleteAttachmentsMutation.loading} onClick={() => onDelete(attachment.uuid)} />
       </div>
 
       <div

@@ -6,7 +6,7 @@ import { useMutation } from '@apollo/react-hooks';
 import { Button, Tooltip } from 'antd';
 
 import { User } from '@leaa/common/src/entrys';
-import { AttachmentBox } from '@leaa/dashboard/src/components';
+import { AttachmentBox, ConfirmDeleteButton } from '@leaa/dashboard/src/components';
 import { UPDATE_USER } from '@leaa/dashboard/src/graphqls';
 
 import style from './style.module.less';
@@ -52,17 +52,12 @@ export const UploadUserAvatar = (props: IProps) => {
       {aurl && (
         <div className={cx(style['avatar-box'], style['avatar-box--avatar-url'])}>
           <div className={cx(style['avatar-toolbar'])}>
-            <Tooltip title={t('_page:User.deleteAuthAvatar')}>
-              <Button
-                type="link"
-                size="small"
-                shape="circle"
-                icon={<DeleteOutlined />}
-                className={style['avatar-delete']}
-                onClick={deleteAvatar}
-                loading={updateUserMutation.loading}
-              />
-            </Tooltip>
+            <ConfirmDeleteButton
+              opacity={1}
+              loading={updateUserMutation.loading}
+              onClick={deleteAvatar}
+              title={t('_page:User.deleteAuthAvatar')}
+            />
           </div>
 
           <img alt="" src={aurl || ''} />
