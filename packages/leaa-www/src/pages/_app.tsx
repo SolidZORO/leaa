@@ -13,6 +13,8 @@ import { apolloClient } from '@leaa/www/src/libs';
 import { GET_SETTINGS_FOR_WWW } from '@leaa/www/src/graphqls';
 import { SettingsWithPaginationObject } from '@leaa/common/src/dtos/setting';
 
+import '@leaa/www/src/styles/global.less';
+
 Spin.setDefaultIndicator(<LoadingOutlined spin style={{ fontSize: '180%', marginTop: 30 }} />);
 
 // force refresh style.chunk.css (ONLY for dev mode)

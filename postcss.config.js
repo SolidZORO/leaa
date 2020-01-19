@@ -1,9 +1,9 @@
 /* eslint-disable global-require */
 
 module.exports = {
-  plugins: [
-    require('autoprefixer')({
+  plugins: {
+    autoprefixer: {
       flexbox: 'no-2009',
-    }),
-  ],
+    },
+  },
 };

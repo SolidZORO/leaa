@@ -1,4 +1,5 @@
 const path = require('path');
+const findUp = require('find-up');
 
 const webpackConst = {};
 
@@ -68,8 +69,6 @@ webpackConst.REGX_FONT = /\.(woff2|woff|svg|ttf|eot)$/;
 
 // ETC
 // eslint-disable-next-line no-underscore-dangle
-webpackConst._G_STYLE_FILE = path.resolve(`${webpackConst.SRC_DIR}/styles/_G.less`);
 webpackConst.PACKAGE_FILE = path.resolve(`${webpackConst.ROOT_DIR}/package.json`);
-webpackConst.TIPS_SPACE = 17;
 
 module.exports = webpackConst;
