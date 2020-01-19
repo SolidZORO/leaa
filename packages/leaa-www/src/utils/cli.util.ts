@@ -13,6 +13,7 @@ export const envInfo = ({ dev }: { dev: boolean }): void => {
 
   console.log('\n> 📮 ENVDATA');
   console.log('     - NAME             ', SITE_NAME);
+  console.log('     - VERSION          ', `v${process.env.npm_package_version}`);
   console.log('');
   console.log('     - GRAPHQL_ENDPOINT ', GRAPHQL_ENDPOINT);
   console.log('     - API_HOST         ', API_HOST);

@@ -19,5 +19,5 @@ export interface ISetting {
 export interface IBuild {
   MODE: string;
   VERSION: string;
-  TIMESTAMP: string;
+  BUILDTIME: string;
 }

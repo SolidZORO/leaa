@@ -37,7 +37,7 @@ class WebpackCallbackPlugin {
 
         console.log('\n> 📮 ENVDATA');
         console.log('     - NAME             ', `${env.SITE_NAME}`);
-        console.log('     - VERSION          ', `v${pkg.version}`);
+        console.log('     - VERSION          ', `v${process.env.npm_package_version}`);
         console.log('');
         console.log('     - GRAPHQL_ENDPOINT ', `${env.GRAPHQL_ENDPOINT}`);
         console.log('     - API_HOST         ', `${env.API_HOST}`);
@@ -67,8 +67,8 @@ const outputHtmlOption = {
     (!webpackConst.__DEV__ && env && env.ANALYTICS_CODE && `<script>${env.ANALYTICS_CODE}</script>`) || '',
   build: Buffer.from(
     JSON.stringify({
-      TIMESTAMP: moment().format('YYYYMMDD-HHmmss'),
-      VERSION: pkg.version,
+      BUILDTIME: moment().format('YYYYMMDD-HHmmss'),
+      VERSION: `v${process.env.npm_package_version}`,
       MODE: webpackConst.MODE,
     }),
   ).toString('base64'),

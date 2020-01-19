@@ -3660,7 +3660,7 @@
   resolved "https://registry.npm.taobao.org/@types/asap/download/@types/asap-2.0.0.tgz?cache=0&sync_timestamp=1567533293530&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fasap%2Fdownload%2F%40types%2Fasap-2.0.0.tgz#d529e9608c83499a62ae08c871c5e62271aa2963"
   integrity sha1-1SnpYIyDSZpirgjIccXmInGqKWM=
 
-"@types/autoprefixer@9.6.1":
+"@types/autoprefixer@^9.6.1":
   version "9.6.1"
   resolved "https://registry.npm.taobao.org/@types/autoprefixer/download/@types/autoprefixer-9.6.1.tgz#8bfaf43d18f5cd59a269b7a2364e690cadcdf210"
   integrity sha1-i/r0PRj1zVmiabeiNk5pDK3N8hA=
@@ -5788,7 +5788,7 @@ autoprefixer@^9.7.3:
 
 autoprefixer@^9.7.4:
   version "9.7.4"
-  resolved "https://registry.npm.taobao.org/autoprefixer/download/autoprefixer-9.7.4.tgz#f8bf3e06707d047f0641d87aee8cfb174b2a5378"
+  resolved "https://registry.npm.taobao.org/autoprefixer/download/autoprefixer-9.7.4.tgz?cache=0&sync_timestamp=1579035650463&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fautoprefixer%2Fdownload%2Fautoprefixer-9.7.4.tgz#f8bf3e06707d047f0641d87aee8cfb174b2a5378"
   integrity sha1-+L8+BnB9BH8GQdh67oz7F0sqU3g=
   dependencies:
     browserslist "^4.8.3"

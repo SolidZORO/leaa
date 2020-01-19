@@ -24,8 +24,8 @@ export const BuildInfo = (props: IProps) => {
         </div>
 
         <div className={style['build-item']}>
-          <span>TIMESTAMP:</span>
-          <strong>{buildConfig.TIMESTAMP}</strong>
+          <span>BUILDTIME:</span>
+          <strong>{buildConfig.BUILDTIME}</strong>
         </div>
       </div>
     </div>

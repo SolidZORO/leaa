@@ -13,7 +13,7 @@ export class IndexController {
     const BUILDINFO_PATH = path.resolve(__dirname, `../../../${this.configService.PUBLIC_DIR}/buildinfo.json`);
 
     const defaultBuildInfo: IBuild = {
-      TIMESTAMP: 'DEV',
+      BUILDTIME: 'DEV',
       VERSION: 'DEV',
     };
 
@@ -80,8 +80,8 @@ export class IndexController {
           </div>
           
           <div class="build-item">
-            <span>TIMESTAMP:</span>
-            <strong>${buildInfo.TIMESTAMP}</strong>
+            <span>BUILDTIME:</span>
+            <strong>${buildInfo.BUILDTIME}</strong>
           </div>
         </div>
       </div>
