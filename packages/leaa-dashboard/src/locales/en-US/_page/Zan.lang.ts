@@ -9,4 +9,5 @@ export default {
   currentTargetZanQuantity: 'Current / Target',
   like: 'Like',
   liked: 'Liked',
+  deletedLikeUser: 'Deleted Like User',
 };

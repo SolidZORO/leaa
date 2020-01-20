@@ -68,7 +68,7 @@ export default (props: IPage) => {
 
       <ZanInfoForm ref={infoFormRef} item={getZanQuery.data?.zan} loading={getZanQuery.loading} />
 
-      <ZanUsersForm item={getZanQuery.data?.zan} users={getZanQuery.data?.zan.users} loading={getZanQuery.loading} />
+      <ZanUsersForm item={getZanQuery.data?.zan} loading={getZanQuery.loading} />
 
       <SubmitBar full>
         <Button

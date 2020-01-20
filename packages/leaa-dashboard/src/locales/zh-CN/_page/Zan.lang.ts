@@ -9,4 +9,5 @@ export default {
   currentTargetZanQuantity: '当前 / 目标',
   like: '赞',
   liked: '已赞',
+  deletedLikeUser: '已删除点赞用户',
 };

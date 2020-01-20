@@ -66,6 +66,7 @@ export default {
   export: 'Export',
   views: 'Views',
   avatar: 'Avatar',
+  creator: 'Creator',
   //
   select: 'Select',
   selected: 'Selected',

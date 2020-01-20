@@ -173,6 +173,7 @@ pQuery.zan = allow;
 pMutation.createZan = allow;
 pMutation.updateZan = checkPermission('zan.item-update');
 pMutation.deleteZan = checkPermission('zan.item-delete');
+pMutation.deleteZanUser = checkPermission('zan.item-user-delete');
 
 //
 // --------------------

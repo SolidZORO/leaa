@@ -43,3 +43,13 @@ export const LIKE_ZAN = gql`
     }
   }
 `;
+
+export const DELETE_ZAN_USER = gql`
+  mutation($uuid: String!, $userId: Int!) {
+    deleteZanUser(uuid: $uuid, userId: $userId) {
+      id
+      uuid
+      title
+    }
+  }
+`;

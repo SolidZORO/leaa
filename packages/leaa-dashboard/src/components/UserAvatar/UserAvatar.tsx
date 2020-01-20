@@ -13,6 +13,7 @@ import style from './style.module.less';
 interface IProps extends AvatarProps {
   url?: string | null;
   id?: number;
+  border?: number;
 }
 
 export const UserAvatar = (props: IProps) => {
@@ -23,6 +24,7 @@ export const UserAvatar = (props: IProps) => {
       shape="circle"
       {...props}
       className={cx(style['avatar'], props.className)}
+      style={{ borderWidth: props.border || 0 }}
     />
   );
 

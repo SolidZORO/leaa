@@ -184,10 +184,12 @@ export const permissionsSeed: { name: string; slug: IPermissionSlug }[] = [
   { name: 'Zan Item Create', slug: 'zan.item-create' },
   { name: 'Zan Item Update', slug: 'zan.item-update' },
   { name: 'Zan Item Delete', slug: 'zan.item-delete' },
+  { name: 'Zan Item User Delete', slug: 'zan.item-user-delete' },
   //
   // --------------------------------
   //
   { name: 'Auth List Read', slug: 'auth.list-read' },
+  { name: 'Auth Item Delete', slug: 'auth.item-delete' },
 ];
 
 // prettier-ignore

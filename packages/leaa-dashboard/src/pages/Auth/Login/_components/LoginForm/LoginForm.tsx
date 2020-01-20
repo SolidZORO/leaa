@@ -12,6 +12,7 @@ interface IProps {
   className?: string;
   loading?: boolean;
   initialValues?: LoginAccount;
+  onPressSubmitCallback?: () => void;
 }
 
 export const LoginForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
@@ -56,7 +57,11 @@ export const LoginForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
               validateTrigger={['onBlur']}
               label={t('_page:Auth.Login.password')}
             >
-              <Input.Password size="large" placeholder={t('_page:Auth.Login.password')} />
+              <Input.Password
+                size="large"
+                placeholder={t('_page:Auth.Login.password')}
+                onPressEnter={props.onPressSubmitCallback}
+              />
             </Form.Item>
           </Col>
         </Row>

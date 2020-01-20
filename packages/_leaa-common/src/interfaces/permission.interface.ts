@@ -138,6 +138,7 @@ declare const permissionSlug: [
   'zan.item-create',
   'zan.item-update',
   'zan.item-delete',
+  'zan.item-user-delete',
   // --------------------
   'auth.list-read',
   'auth.item-delete',

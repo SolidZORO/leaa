@@ -1,4 +1,4 @@
-import { Index, Entity, Column, ManyToMany, JoinTable } from 'typeorm';
+import { Index, Entity, Column, ManyToMany, JoinTable, ManyToOne } from 'typeorm';
 import { ObjectType, Field, Int } from 'type-graphql';
 
 import { Base, User } from '@leaa/common/src/entrys';
@@ -11,7 +11,7 @@ export class Zan extends Base {
   @Field(() => String)
   uuid!: string;
 
-  @Column({ type: 'varchar', length: 32, unique: true })
+  @Column({ type: 'varchar', length: 256 })
   @Field(() => String)
   title!: string;
 
@@ -19,7 +19,7 @@ export class Zan extends Base {
   @Field(() => String, { nullable: true })
   description?: string;
 
-  @Column({ type: 'int', default: 0 })
+  @Column({ type: 'int', default: 1 })
   @Field(() => Int, { nullable: true })
   status?: number;
 
@@ -37,7 +37,11 @@ export class Zan extends Base {
 
   //
 
-  @ManyToMany(() => User)
+  @ManyToOne(() => User, { onDelete: 'CASCADE' })
+  @Field(() => User, { nullable: true })
+  creator?: User;
+
+  @ManyToMany(() => User, { onDelete: 'CASCADE' })
   @JoinTable()
   @Field(() => [User], { nullable: true })
   users?: User[];

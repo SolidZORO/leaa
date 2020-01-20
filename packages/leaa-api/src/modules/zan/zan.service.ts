@@ -21,6 +21,7 @@ export class ZanService {
 
     // relations
     qb.leftJoinAndSelect(`${PRIMARY_TABLE}.users`, 'users');
+    qb.leftJoinAndSelect(`${PRIMARY_TABLE}.creator`, 'creator');
 
     // q
     if (nextArgs.q) {
@@ -43,7 +44,7 @@ export class ZanService {
     let nextArgs: IZanArgs = {};
     if (args) {
       nextArgs = args;
-      nextArgs.relations = ['users'];
+      nextArgs.relations = ['users', 'creator'];
     }
 
     const whereQuery: { uuid: string; status?: number } = { uuid };
@@ -58,9 +59,18 @@ export class ZanService {
   }
 
   async createZan(args: CreateZanInput, gqlCtx?: IGqlCtx): Promise<Zan | undefined> {
+    const zan = await this.zanRepository.findOne({ title: args.title }, { relations: ['users', 'creator'] });
+
+    console.log('QQQQQQQQQ', zan?.creator?.id, gqlCtx?.user?.id);
+
+    if (zan?.creator?.id === gqlCtx?.user?.id) {
+      return zan;
+    }
+
     return this.zanRepository.save({
       ...args,
       uuid: stringUtil.uuid(),
+      creator: gqlCtx?.user,
     });
   }
 
@@ -77,13 +87,38 @@ export class ZanService {
   async likeZan(uuid: string, gqlCtx?: IGqlCtx): Promise<Zan | undefined> {
     let zan = await this.zanRepository.findOne({ uuid }, { relations: ['users'] });
 
+    console.log(1111111111111);
     if (!zan) throw msgUtil.error({ t: ['_error:notFoundItem'], gqlCtx });
-    if (!gqlCtx?.user) throw msgUtil.error({ t: ['_error:notFoundUser'], gqlCtx });
+
+    console.log(222222222);
+    if (!gqlCtx?.user) throw msgUtil.error({ t: ['_error:notFoundAuth'], gqlCtx, statusCode: 401 });
 
     if (gqlCtx?.user && !zan.users?.map(u => u.id).includes(gqlCtx?.user?.id)) {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       await zan.users!.push(gqlCtx?.user);
     }
+
+    zan = await this.zanRepository.save({
+      ...zan,
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      current_zan_quantity: zan.users!.length,
+    });
+
+    return zan;
+  }
+
+  async deleteZanUser(uuid: string, userId: number, gqlCtx?: IGqlCtx): Promise<Zan | undefined> {
+    if (!userId) throw msgUtil.error({ t: ['_error:notFoundUser'], gqlCtx });
+
+    let zan = await this.zanRepository.findOne({ uuid }, { relations: ['users'] });
+
+    if (!zan) throw msgUtil.error({ t: ['_error:notFoundItem'], gqlCtx });
+    if (!zan.users || zan.users.length <= 0 || !zan.users?.map(u => u.id).includes(userId)) {
+      throw msgUtil.error({ t: ['_error:notFoundUser'], gqlCtx });
+    }
+
+    // @ts-ignore
+    zan.users = zan.users.filter(u => u.id !== userId);
 
     zan = await this.zanRepository.save({
       ...zan,

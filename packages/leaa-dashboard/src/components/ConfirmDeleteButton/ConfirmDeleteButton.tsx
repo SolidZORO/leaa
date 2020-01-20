@@ -18,25 +18,25 @@ export const ConfirmDeleteButton = (props: IProps) => {
   const [confirm, setConfirm] = useState<boolean>(false);
 
   return (
-    <Tooltip
-      title={props.title || <span>{t('_comp:ConfirmDeleteButton.confirmDeleteMessage')}</span>}
-      visible={confirm}
-      mouseLeaveDelay={0.5}
-      overlayClassName={style['delete-tooltip-wrapper']}
-      onVisibleChange={e => !e && setConfirm(false)}
-    >
-      <Button
-        type={props.type || 'link'}
-        size={props.size || 'small'}
-        shape={props.shape || 'circle'}
-        icon={props.icon || <DeleteOutlined />}
-        className={cx(style['delete'], {
-          [style['delete-need--confirm']]: confirm,
-        })}
-        style={{ ...props.style, opacity: props.opacity }}
-        {...props}
-        onClick={confirm ? props.onClick : () => setConfirm(true)}
-      />
-    </Tooltip>
+    <div className={props.className}>
+      <Tooltip
+        title={props.title || <span>{t('_comp:ConfirmDeleteButton.confirmDeleteMessage')}</span>}
+        visible={confirm}
+        mouseLeaveDelay={0.5}
+        overlayClassName={style['delete-tooltip-wrapper']}
+        onVisibleChange={e => !e && setConfirm(false)}
+      >
+        <Button
+          type={props.type || 'link'}
+          size={props.size || 'small'}
+          shape={props.shape || 'circle'}
+          icon={props.icon || <DeleteOutlined />}
+          {...props}
+          className={cx(style['delete'], { [style['delete-need--confirm']]: confirm })}
+          style={{ ...props.style, opacity: props.opacity }}
+          onClick={confirm ? props.onClick : () => setConfirm(true)}
+        />
+      </Tooltip>
+    </div>
   );
 };

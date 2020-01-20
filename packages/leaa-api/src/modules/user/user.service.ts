@@ -211,9 +211,11 @@ export class UserService {
 
   async deleteUserAllAuth(id: number): Promise<void> {
     const auths = await this.authRepository.find({ where: { user_id: id } });
-    const deleteAuths = await this.authRepository.remove(auths);
 
-    loggerUtil.log(`Delete User All Auth, ${JSON.stringify(deleteAuths)}`, CLS_NAME);
+    if (auths) {
+      const deleteAuths = await this.authRepository.remove(auths);
+      loggerUtil.log(`Delete User All Auth, ${JSON.stringify(deleteAuths)}`, CLS_NAME);
+    }
   }
 
   async deleteUser(id: number, gqlCtx?: IGqlCtx): Promise<User | undefined> {

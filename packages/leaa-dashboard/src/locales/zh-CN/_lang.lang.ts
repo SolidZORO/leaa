@@ -69,6 +69,7 @@ export default {
   export: '导出',
   views: '浏览量',
   avatar: '头像',
+  creator: '创建人',
   //
   select: '选择',
   selected: '选中',

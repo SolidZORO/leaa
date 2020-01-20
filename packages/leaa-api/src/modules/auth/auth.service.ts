@@ -131,10 +131,11 @@ export class AuthService {
 
   // MUST DO minimal cost query
   async validateUserByPayload(payload: IJwtPayload, gqlCtx?: IGqlCtx): Promise<User | undefined> {
+    // gqlCtx in here ONLY for check `lang`
     if (!payload) throw msgUtil.error({ t: ['_error:notFoundInfo'], gqlCtx });
 
     if (!payload.iat || !payload.exp || !payload.id) {
-      throw msgUtil.error({ t: ['_error:notFoundInfo'], gqlCtx });
+      throw msgUtil.error({ t: ['_error:notFoundInfo'], gqlCtx, statusCode: 401 });
     }
 
     const findUser = await this.userRepository.findOne({ relations: ['roles'], where: { id: payload.id } });
@@ -143,7 +144,7 @@ export class AuthService {
 
     // IMPORTANT! if user info is changed, Compare `iat` and `last_token_at`
     if (moment(payload.iattz).isBefore(moment(user.last_token_at))) {
-      throw msgUtil.error({ t: ['_error:userHasBeenUpdated'], gqlCtx });
+      throw msgUtil.error({ t: ['_error:userHasBeenUpdated'], gqlCtx, statusCode: 401 });
     }
 
     const flatPermissions = await this.userProperty.flatPermissions(user);
@@ -164,7 +165,6 @@ export class AuthService {
     }
 
     const gqlCtx = { lang: req.headers?.lang as string };
-
     const payload = this.getUserPayload(req.headers.authorization, gqlCtx);
 
     return this.validateUserByPayload(payload, gqlCtx);

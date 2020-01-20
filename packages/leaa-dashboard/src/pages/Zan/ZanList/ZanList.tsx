@@ -10,7 +10,7 @@ import { Table } from 'antd';
 import { DEFAULT_PAGE_SIZE_OPTIONS, PAGE_CARD_TITLE_CREATE_ICON } from '@leaa/dashboard/src/constants';
 import { GET_ZANS, DELETE_ZAN, UPDATE_ZAN } from '@leaa/dashboard/src/graphqls';
 
-import { Zan } from '@leaa/common/src/entrys';
+import { Zan, User } from '@leaa/common/src/entrys';
 import { ZansWithPaginationObject, ZansArgs } from '@leaa/common/src/dtos/zan';
 import { IPage, IKey, ITablePagination } from '@leaa/dashboard/src/interfaces';
 import { urlUtil, tableUtil, msgUtil } from '@leaa/dashboard/src/utils';
@@ -25,6 +25,7 @@ import {
   TableColumnDate,
   TableColumnDeleteButton,
   TableColumnStatusSwitch,
+  UserAvatar,
 } from '@leaa/dashboard/src/components';
 
 import { ZanProgress } from '../_components/ZanProgress/ZanProgress';
@@ -86,7 +87,7 @@ export default (props: IPage) => {
       width: 60,
       sorter: true,
       sortOrder: tableUtil.calcDefaultSortOrder(tablePagination.orderSort, tablePagination.orderBy, 'id'),
-      render: (id: string) => <TableColumnId id={id} link={`${props.route.path}/${id}`} />,
+      render: (id: string, zan: Zan) => <TableColumnId id={id} link={`${props.route.path}/${zan.uuid}`} />,
     },
     {
       title: t('_lang:title'),
@@ -96,16 +97,22 @@ export default (props: IPage) => {
       render: (text: string, record: Zan) => <Link to={`${props.route.path}/${record.uuid}`}>{record.title}</Link>,
     },
     {
-      title: t('_lang:views'),
-      dataIndex: 'views',
-      sorter: true,
-      sortOrder: tableUtil.calcDefaultSortOrder(tablePagination.orderSort, tablePagination.orderBy, 'views'),
-      render: (text: string) => <small className="g-col-number">{text}</small>,
+      title: t('_lang:creator'),
+      dataIndex: 'creator',
+      width: 70,
+      render: (creator: User) => <UserAvatar url={creator?.avatar_url || ''} id={creator?.id} />,
     },
     {
       title: t('_page:Zan.currentTargetZanQuantity'),
       dataIndex: 'target_zan_quantity',
       render: (text: string, record: Zan) => <ZanProgress item={record} size="small" />,
+    },
+    {
+      title: t('_lang:views'),
+      dataIndex: 'views',
+      sorter: true,
+      sortOrder: tableUtil.calcDefaultSortOrder(tablePagination.orderSort, tablePagination.orderBy, 'views'),
+      render: (text: string) => <small className="g-col-number">{text}</small>,
     },
     {
       title: t('_lang:createdAt'),

@@ -140,7 +140,11 @@ export default (props: IPage) => {
               <div className={style['description']}>{t('_page:Auth.Login.subTitle')}</div>
 
               <div className={style['login-form']}>
-                <LoginForm ref={loginFormRef} initialValues={getDemoDataQuery?.data?.demoData?.loginAccountByAdmin} />
+                <LoginForm
+                  ref={loginFormRef}
+                  initialValues={getDemoDataQuery?.data?.demoData?.loginAccountByAdmin}
+                  onPressSubmitCallback={onSubmit}
+                />
               </div>
 
               <div className={style['local-button']}>

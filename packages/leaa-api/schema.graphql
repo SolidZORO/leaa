@@ -422,7 +422,7 @@ input CreateUserInput {
 
 input CreateZanInput {
   title: String!
-  status: Int!
+  status: Int
   description: String
   target_zan_quantity: Int
 }
@@ -524,6 +524,7 @@ type Mutation {
   updateZan(zan: UpdateZanInput!, id: Int!): Zan!
   deleteZan(id: Int!): Zan!
   likeZan(uuid: String!): Zan!
+  deleteZanUser(userId: Int!, uuid: String!): Zan!
 }
 
 type PaginationObject {
@@ -971,6 +972,7 @@ type Zan {
   views: Int
   current_zan_quantity: Int
   target_zan_quantity: Int
+  creator: User
   users: [User!]
 }
 

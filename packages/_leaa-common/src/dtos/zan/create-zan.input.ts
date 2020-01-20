@@ -7,9 +7,9 @@ export class CreateZanInput {
   @Field(() => String)
   title!: string;
 
-  @IsNotEmpty()
-  @Field(() => Int)
-  status!: number;
+  @IsOptional()
+  @Field(() => Int, { nullable: true })
+  status?: number;
 
   @IsOptional()
   @Field(() => String, { nullable: true })
