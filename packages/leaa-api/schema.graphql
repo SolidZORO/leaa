@@ -5,6 +5,7 @@
 
 type Address {
   id: Int
+  hashId: String
   created_at: DateTime!
   updated_at: DateTime
   deleted_at: DateTime
@@ -30,6 +31,7 @@ type AddressesWithPaginationObject {
 
 type Article {
   id: Int
+  hashId: String
   created_at: DateTime!
   updated_at: DateTime
   deleted_at: DateTime
@@ -55,6 +57,7 @@ type ArticlesWithPaginationObject {
 
 type Attachment {
   id: Int
+  hashId: String
   created_at: DateTime!
   updated_at: DateTime
   deleted_at: DateTime
@@ -100,6 +103,7 @@ type AttachmentsWithPaginationObject {
 
 type Auth {
   id: Int
+  hashId: String
   created_at: DateTime!
   updated_at: DateTime
   deleted_at: DateTime
@@ -143,6 +147,7 @@ type AuthsWithPaginationObject {
 
 type Ax {
   id: Int
+  hashId: String
   created_at: DateTime!
   updated_at: DateTime
   deleted_at: DateTime
@@ -171,6 +176,7 @@ type AxsWithPaginationObject {
 
 type Base {
   id: Int
+  hashId: String
   created_at: DateTime!
   updated_at: DateTime
   deleted_at: DateTime
@@ -188,6 +194,7 @@ type CategoriesWithPaginationOrTreeObject {
 
 type Category {
   id: Int
+  hashId: String
   created_at: DateTime!
   updated_at: DateTime
   deleted_at: DateTime
@@ -202,6 +209,7 @@ type Category {
 
 type CategoryTreeObject {
   id: Int
+  hashId: String
   created_at: DateTime!
   updated_at: DateTime
   deleted_at: DateTime
@@ -220,6 +228,7 @@ type CategoryTreeObject {
 
 type Coupon {
   id: Int
+  hashId: String
   created_at: DateTime!
   updated_at: DateTime
   deleted_at: DateTime
@@ -444,6 +453,7 @@ type DemoDataObject {
 
 type Division {
   id: Int
+  hashId: String
   created_at: DateTime!
   updated_at: DateTime
   deleted_at: DateTime
@@ -521,10 +531,10 @@ type Mutation {
   updateDivision(division: UpdateDivisionInput!, id: Int!): Division!
   deleteDivision(id: Int!): Division!
   createZan(zan: CreateZanInput!): Zan!
-  updateZan(zan: UpdateZanInput!, id: Int!): Zan!
-  deleteZan(id: Int!): Zan!
-  likeZan(uuid: String!): Zan!
-  deleteZanUser(userId: Int!, uuid: String!): Zan!
+  updateZan(zan: UpdateZanInput!, hashId: String!): Zan!
+  deleteZan(hashId: String!): Zan!
+  likeZan(hashId: String!): Zan!
+  deleteZanUser(userId: Int!, hashId: String!): Zan!
 }
 
 type PaginationObject {
@@ -537,6 +547,7 @@ type PaginationObject {
 
 type Permission {
   id: Int
+  hashId: String
   created_at: DateTime!
   updated_at: DateTime
   deleted_at: DateTime
@@ -557,6 +568,7 @@ type PermissionsWithPaginationObject {
 
 type Product {
   id: Int
+  hashId: String
   created_at: DateTime!
   updated_at: DateTime
   deleted_at: DateTime
@@ -595,6 +607,7 @@ type ProductsWithPaginationObject {
 
 type Promo {
   id: Int
+  hashId: String
   created_at: DateTime!
   updated_at: DateTime
   deleted_at: DateTime
@@ -661,7 +674,7 @@ type Query {
   divisionsTree: String!
   division(id: Int!): Division!
   zans(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): ZansWithPaginationObject!
-  zan(uuid: String!): Zan!
+  zan(hashId: String!): Zan!
   demoData: DemoDataObject!
   test: Float!
   testWithAuth: String!
@@ -680,6 +693,7 @@ input RedeemPromoInput {
 
 type Role {
   id: Int
+  hashId: String
   created_at: DateTime!
   updated_at: DateTime
   deleted_at: DateTime
@@ -700,6 +714,7 @@ type RolesWithPaginationObject {
 
 type Setting {
   id: Int
+  hashId: String
   created_at: DateTime!
   updated_at: DateTime
   deleted_at: DateTime
@@ -742,6 +757,7 @@ type SyncTagsToFileObject {
 
 type Tag {
   id: Int
+  hashId: String
   created_at: DateTime!
   updated_at: DateTime
   deleted_at: DateTime
@@ -930,6 +946,7 @@ input UpdateZanInput {
 
 type User {
   id: Int
+  hashId: String
   created_at: DateTime!
   updated_at: DateTime
   deleted_at: DateTime
@@ -962,10 +979,10 @@ type UsersWithPaginationObject {
 
 type Zan {
   id: Int
+  hashId: String
   created_at: DateTime!
   updated_at: DateTime
   deleted_at: DateTime
-  uuid: String!
   title: String!
   description: String
   status: Int

@@ -22,6 +22,7 @@ export interface IDotEnv {
 
   TRUST_PROXY: string;
   JWT_SECRET_KEY: string;
+  HASHIDS_SALT: string;
   CLIENT_COOKIE_EXPIRES_SECOND: number;
   SERVER_COOKIE_EXPIRES_SECOND: number;
 

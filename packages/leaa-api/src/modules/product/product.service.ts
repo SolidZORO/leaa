@@ -22,7 +22,7 @@ export class ProductService {
   ) {}
 
   async products(args: IProductsArgs, gqlCtx?: IGqlCtx): Promise<ProductsWithPaginationObject | undefined> {
-    const nextArgs: IProductsArgs = argsUtil.format(args);
+    const nextArgs: IProductsArgs = argsUtil.format(args, gqlCtx);
 
     const PRIMARY_TABLE = 'products';
     const qb = await this.productRepository.createQueryBuilder(PRIMARY_TABLE);

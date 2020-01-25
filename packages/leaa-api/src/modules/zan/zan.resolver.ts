@@ -20,11 +20,11 @@ export class ZanResolver {
 
   @Query(() => Zan)
   async zan(
-    @Args({ name: 'uuid', type: () => String }) uuid: string,
+    @Args({ name: 'hashId', type: () => String }) hashId: string,
     @Args() args?: ZanArgs,
     @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Zan | undefined> {
-    return this.zanService.zan(uuid, args, gqlCtx);
+    return this.zanService.zan(hashId, args, gqlCtx);
   }
 
   @Mutation(() => Zan)
@@ -36,37 +36,37 @@ export class ZanResolver {
   @Permissions('zan.item-update')
   @Mutation(() => Zan)
   async updateZan(
-    @Args({ name: 'id', type: () => Int }) id: number,
+    @Args({ name: 'hashId', type: () => String }) hashId: string,
     @Args('zan') args: UpdateZanInput,
     @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Zan | undefined> {
-    return this.zanService.updateZan(id, args, gqlCtx);
+    return this.zanService.updateZan(hashId, args, gqlCtx);
   }
 
   @UseGuards(PermissionsGuard)
   @Permissions('zan.item-delete')
   @Mutation(() => Zan)
   async deleteZan(
-    @Args({ name: 'id', type: () => Int }) id: number,
+    @Args({ name: 'hashId', type: () => String }) hashId: string,
     @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Zan | undefined> {
-    return this.zanService.deleteZan(id, gqlCtx);
+    return this.zanService.deleteZan(hashId, gqlCtx);
   }
 
   @Mutation(() => Zan)
   async likeZan(
-    @Args({ name: 'uuid', type: () => String }) uuid: string,
+    @Args({ name: 'hashId', type: () => String }) hashId: string,
     @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Zan | undefined> {
-    return this.zanService.likeZan(uuid, gqlCtx);
+    return this.zanService.likeZan(hashId, gqlCtx);
   }
 
   @Mutation(() => Zan)
   async deleteZanUser(
-    @Args({ name: 'uuid', type: () => String }) uuid: string,
+    @Args({ name: 'hashId', type: () => String }) hashId: string,
     @Args({ name: 'userId', type: () => Int }) userId: number,
     @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Zan | undefined> {
-    return this.zanService.deleteZanUser(uuid, userId, gqlCtx);
+    return this.zanService.deleteZanUser(hashId, userId, gqlCtx);
   }
 }

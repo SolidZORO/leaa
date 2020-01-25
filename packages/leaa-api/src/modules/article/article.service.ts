@@ -30,7 +30,7 @@ export class ArticleService {
   ) {}
 
   async articles(args: IArticlesArgs, gqlCtx?: IGqlCtx): Promise<ArticlesWithPaginationObject> {
-    const nextArgs: IArticlesArgs = argsUtil.format(args);
+    const nextArgs: IArticlesArgs = argsUtil.format(args, gqlCtx);
 
     const PRIMARY_TABLE = 'articles';
     const qb = await this.articleRepository.createQueryBuilder(PRIMARY_TABLE);

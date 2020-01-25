@@ -37,6 +37,8 @@ export const notValidateUserQuerys = [
   'setting',
   'tags',
   'tag',
+  //
+  'zan',
 ];
 
 const pQuery = {} as any;

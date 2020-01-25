@@ -6,7 +6,7 @@ export const GET_ZANS = gql`
       total
       items {
         id
-        uuid
+        hashId
         views
         title
         description
@@ -33,10 +33,10 @@ export const GET_ZANS = gql`
 `;
 
 export const GET_ZAN = gql`
-  query($uuid: String!) {
-    zan(uuid: $uuid) {
+  query($hashId: String!) {
+    zan(hashId: $hashId) {
       id
-      uuid
+      hashId
       views
       title
       description

@@ -71,6 +71,7 @@
     "graphql-shield": "^7.0.7",
     "graphql-tag": "^2.10.1",
     "graphql-tools": "^4.0.6",
+    "hashids": "^2.1.0",
     "html-to-text": "^5.1.1",
     "i18next": "^19.0.3",
     "image-size": "^0.8.3",

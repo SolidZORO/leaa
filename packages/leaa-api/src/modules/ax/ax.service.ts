@@ -33,7 +33,7 @@ export class AxService {
   }
 
   async axs(args: IAxsArgs, gqlCtx?: IGqlCtx): Promise<AxsWithPaginationObject> {
-    const nextArgs = argsUtil.format(args);
+    const nextArgs = argsUtil.format(args, gqlCtx);
 
     const qb = this.axRepository.createQueryBuilder();
     qb.select().orderBy(nextArgs.orderBy || 'created_at', nextArgs.orderSort);

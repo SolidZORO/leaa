@@ -30,7 +30,7 @@ export class AuthService {
   ) {}
 
   async auths(args: IAuthsArgs, gqlCtx?: IGqlCtx): Promise<AuthsWithPaginationObject | undefined> {
-    const nextArgs: IAuthsArgs = argsUtil.format(args);
+    const nextArgs: IAuthsArgs = argsUtil.format(args, gqlCtx);
 
     const PRIMARY_TABLE = 'auths';
     const qb = await this.authRepository.createQueryBuilder(PRIMARY_TABLE);

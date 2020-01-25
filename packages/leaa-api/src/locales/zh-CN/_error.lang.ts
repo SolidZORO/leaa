@@ -21,7 +21,7 @@ export default {
   notFoundItem: '未找到条目',
   notFoundItems: '未找到条目列表',
   notFoundUser: '未找到用户',
-  notFoundId: '未找到 #ID',
+  notFoundId: '未找到 ID',
   notFoundTicket: '未找到 Ticket',
   notFoundInfo: '未找到信息',
   //
@@ -32,10 +32,13 @@ export default {
   //
   illegalUser: '非法用户',
   invalidUser: '无效用户',
+  invalidId: '无效 ID',
   //
   userInfoNotMatch: '用户信息不匹配',
   bindingFailed: '绑定失败',
   signupFailed: '注册失败',
   userHasBeenUpdated: '用户信息已更新，请重新登录',
   pleaseDontModify: '请勿修改',
+  //
+  missingFormatArgs: '缺少格式化参数',
 };

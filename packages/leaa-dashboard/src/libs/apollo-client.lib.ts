@@ -33,7 +33,7 @@ const errorLink = onError(({ graphQLErrors }) => {
   if (graphQLErrors) {
     graphQLErrors.forEach(error => {
       if (!ignoreErrorPath.includes(`${error.path}`)) {
-        console.error(`❌ [GraphQL error]: ${JSON.stringify(error)}`);
+        console.error('❌ ERROR >>>>', error, '📌 STACKTRACE >>>>', error.extensions?.exception?.stacktrace);
         msgUtil.error(error.message);
       }
 

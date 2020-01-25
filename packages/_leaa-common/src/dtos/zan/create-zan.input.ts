@@ -1,6 +1,8 @@
 import { IsNotEmpty, IsOptional } from 'class-validator';
 import { Field, InputType, Int } from 'type-graphql';
 
+import { User } from '@leaa/common/src/entrys';
+
 @InputType()
 export class CreateZanInput {
   @IsNotEmpty()
@@ -18,4 +20,7 @@ export class CreateZanInput {
   @IsOptional()
   @Field(() => Int, { nullable: true })
   target_zan_quantity?: number;
+
+  @IsOptional()
+  creator?: User;
 }

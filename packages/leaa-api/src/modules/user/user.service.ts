@@ -42,7 +42,7 @@ export class UserService {
   }
 
   async users(args: IUsersArgs, gqlCtx?: IGqlCtx): Promise<UsersWithPaginationObject> {
-    const nextArgs: IUsersArgs = argsUtil.format(args);
+    const nextArgs: IUsersArgs = argsUtil.format(args, gqlCtx);
 
     const PRIMARY_TABLE = 'users';
     const qb = this.userRepository.createQueryBuilder(PRIMARY_TABLE);

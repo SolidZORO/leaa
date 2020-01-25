@@ -50,7 +50,7 @@ export class AttachmentService {
   }
 
   async attachments(args: IAttachmentsArgs, gqlCtx?: IGqlCtx): Promise<AttachmentsWithPaginationObject> {
-    const nextArgs = argsUtil.format(args);
+    const nextArgs = argsUtil.format(args, gqlCtx);
 
     const moduleFilter: IAttachmentDbFilterField = {};
 

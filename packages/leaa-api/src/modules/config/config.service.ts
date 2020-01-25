@@ -88,11 +88,15 @@ export class ConfigService {
   //
 
   get TRUST_PROXY(): string {
-    return this.envConfig.DB_DATABASE;
+    return this.envConfig.TRUST_PROXY;
   }
 
   get JWT_SECRET_KEY(): string {
-    return this.envConfig.DB_DATABASE;
+    return this.envConfig.JWT_SECRET_KEY;
+  }
+
+  get HASHIDS_SALT(): string {
+    return this.envConfig.HASHIDS_SALT;
   }
 
   get CLIENT_COOKIE_EXPIRES_SECOND(): number {
@@ -190,6 +194,7 @@ export class ConfigService {
       //
       TRUST_PROXY: envalid.str(),
       JWT_SECRET_KEY: envalid.str(),
+      HASHIDS_SALT: envalid.str(),
       CLIENT_COOKIE_EXPIRES_SECOND: envalid.num(),
       SERVER_COOKIE_EXPIRES_SECOND: envalid.num(),
     };

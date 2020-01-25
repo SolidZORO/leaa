@@ -1,16 +1,11 @@
-import { Index, Entity, Column, ManyToMany, JoinTable, ManyToOne } from 'typeorm';
+import { Entity, Column, ManyToMany, JoinTable, ManyToOne } from 'typeorm';
 import { ObjectType, Field, Int } from 'type-graphql';
 
 import { Base, User } from '@leaa/common/src/entrys';
 
 @Entity('zans')
-@Index('zans_uuid_unique', ['uuid'], { unique: true })
 @ObjectType()
 export class Zan extends Base {
-  @Column({ type: 'varchar', length: 48, unique: true })
-  @Field(() => String)
-  uuid!: string;
-
   @Column({ type: 'varchar', length: 256 })
   @Field(() => String)
   title!: string;

@@ -11007,6 +11007,11 @@ hash.js@^1.0.0, hash.js@^1.0.3:
     inherits "^2.0.3"
     minimalistic-assert "^1.0.1"
 
+hashids@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.npm.taobao.org/hashids/download/hashids-2.1.0.tgz#96eec6de3081a76dcd839650a6a26e6081e729d3"
+  integrity sha1-lu7G3jCBp23Ng5ZQpqJuYIHnKdM=
+
 he@1.2.x, he@^1.2.0:
   version "1.2.0"
   resolved "https://registry.npm.taobao.org/he/download/he-1.2.0.tgz#84ae65fa7eafb165fddb61566ae14baf05664f0f"

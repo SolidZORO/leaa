@@ -24,7 +24,7 @@ export class TagService {
   constructor(@InjectRepository(Tag) private readonly tagRepository: Repository<Tag>) {}
 
   async tags(args: ITagsArgs, gqlCtx?: IGqlCtx): Promise<TagsWithPaginationObject> {
-    const nextArgs = argsUtil.format(args);
+    const nextArgs = argsUtil.format(args, gqlCtx);
 
     const qb = this.tagRepository.createQueryBuilder();
     qb.select().orderBy(nextArgs.orderBy || 'created_at', nextArgs.orderSort);

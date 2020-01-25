@@ -1,8 +1,50 @@
 import _ from 'lodash';
 import { Repository } from 'typeorm';
-import { loggerUtil } from '@leaa/api/src/utils';
+import { loggerUtil, stringUtil } from '@leaa/api/src/utils';
+import { IGqlCtx } from '@leaa/api/src/interfaces';
 
 const isOneField = (args: {}, fieldName: string) => _.keys(args).length === 1 && _.has(args, fieldName);
+
+interface ICommonCreate<Entity, CreateInput> {
+  CLS_NAME?: string;
+  rp: Repository<Entity>;
+  args: CreateInput;
+  extArgs?: Partial<CreateInput>;
+  relationArgs?: any;
+  gqlCtx?: IGqlCtx;
+}
+
+const commonCreate = async <Entity, CreateInput>({
+  rp,
+  CLS_NAME,
+  args,
+  extArgs,
+  gqlCtx,
+}: ICommonCreate<Entity, CreateInput>): Promise<any | undefined> => {
+  if (!args) {
+    const message = 'Not Found Args';
+
+    loggerUtil.warn(message, CLS_NAME);
+
+    return undefined;
+  }
+
+  let nextArgs = args;
+
+  if (extArgs) {
+    nextArgs = { ...args, ...nextArgs };
+  }
+
+  const item: Entity = await rp.save(nextArgs);
+
+  // @ts-ignore
+  const hashId = stringUtil.encodeId(item.id, gqlCtx);
+
+  // @ts-ignore
+  await rp.update(item.id, { hashId });
+
+  return { ...item, hashId };
+};
 
 const commonUpdate = async (
   repository: Repository<any>,
@@ -70,8 +112,35 @@ const commonDelete = async (repository: Repository<any>, CLS_NAME: string, id: n
   };
 };
 
+interface IIncrement<Entity> {
+  CLS_NAME?: string;
+  rp: Repository<Entity>;
+  id: number;
+  amount: number;
+  field: string;
+  gqlCtx?: IGqlCtx;
+}
+
+// const increment = async <Entity>({
+//                            rp,
+//   id,
+//   amount,
+//   field: string,
+//
+//                            CLS_NAME,
+//                            gqlCtx,
+//                          }: IIncrement<Entity>): Promise<any | undefined> => {
+//
+//   const views = zan.views ? zan.views + 1 : 1;
+//   await rp.update(id, { views });
+//
+// }
+//
+// };
+
 export const curdUtil = {
   isOneField,
+  commonCreate,
   commonUpdate,
   commonDelete,
 };

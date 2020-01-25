@@ -39,7 +39,7 @@ export class SettingService {
   }
 
   async settings(args: ISettingsArgs, gqlCtx?: IGqlCtx): Promise<SettingsWithPaginationObject> {
-    const nextArgs = argsUtil.format(args);
+    const nextArgs = argsUtil.format(args, gqlCtx);
 
     const qb = this.settingRepository.createQueryBuilder();
     qb.select()

@@ -1,12 +1,14 @@
 import { FindManyOptions } from 'typeorm';
 
 import { ItemsArgs } from '@leaa/common/src/dtos/_common';
+import { msgUtil } from '@leaa/api/src/utils/msg.util';
+import { IGqlCtx } from '@leaa/api/src/interfaces';
 
 type IFormatArgs = FindManyOptions & ItemsArgs;
 
-const format = <T>(args: T & IFormatArgs): T & IFormatArgs => {
+const format = <T>(args: T & IFormatArgs, gqlCtx?: IGqlCtx): T & IFormatArgs => {
   if (!args) {
-    throw Error('Missing Format Args');
+    throw msgUtil.error({ t: ['_error:notFoundUser'], gqlCtx });
   }
 
   const nextArgs = {

@@ -21,7 +21,7 @@ export default {
   notFoundItem: 'Not Found Item',
   notFoundItems: 'Not Found Items',
   notFoundUser: 'Not Found User',
-  notFoundId: 'Not Found #ID',
+  notFoundId: 'Not Found ID',
   notFoundTicket: 'Not Found Ticket',
   notFoundInfo: 'Not Found Info',
   //
@@ -32,10 +32,13 @@ export default {
   //
   illegalUser: 'Illegal User',
   invalidUser: 'Invalid User',
+  invalidId: 'Invalid ID',
   //
   userInfoNotMatch: 'User Info Not Match',
   bindingFailed: 'Binding Failed',
   signupFailed: 'Signup Failed',
   userHasBeenUpdated: 'User Has Been Updated, Please Login Again',
   pleaseDontModify: 'PLEASE DONT MODIFY',
+  //
+  missingFormatArgs: 'Missing Format Args',
 };

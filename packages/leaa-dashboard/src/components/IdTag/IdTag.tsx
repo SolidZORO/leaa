@@ -8,7 +8,7 @@ import style from './style.module.less';
 
 interface IProps {
   className?: string;
-  id: number | string | undefined;
+  id: number | string | undefined | any;
   link?: string;
   icon?: string | React.ReactNode;
   size?: 'small' | 'large';

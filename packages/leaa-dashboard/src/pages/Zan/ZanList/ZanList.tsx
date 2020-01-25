@@ -87,14 +87,14 @@ export default (props: IPage) => {
       width: 60,
       sorter: true,
       sortOrder: tableUtil.calcDefaultSortOrder(tablePagination.orderSort, tablePagination.orderBy, 'id'),
-      render: (id: string, zan: Zan) => <TableColumnId id={id} link={`${props.route.path}/${zan.uuid}`} />,
+      render: (id: string, zan: Zan) => <TableColumnId id={id} link={`${props.route.path}/${zan.hashId}`} />,
     },
     {
       title: t('_lang:title'),
       dataIndex: 'title',
       sorter: true,
       sortOrder: tableUtil.calcDefaultSortOrder(tablePagination.orderSort, tablePagination.orderBy, 'title'),
-      render: (text: string, record: Zan) => <Link to={`${props.route.path}/${record.uuid}`}>{record.title}</Link>,
+      render: (text: string, record: Zan) => <Link to={`${props.route.path}/${record.hashId}`}>{record.title}</Link>,
     },
     {
       title: t('_lang:creator'),
@@ -143,10 +143,10 @@ export default (props: IPage) => {
       width: 60,
       render: (text: string, record: Zan) => (
         <TableColumnDeleteButton
-          id={record.id}
+          hashid={record.hashId}
           fieldName={record.title}
           loading={deleteZanMutation.loading}
-          onClick={async () => deleteZanMutate({ variables: { id: Number(record.id) } })}
+          onClick={async () => deleteZanMutate({ variables: { hashId: record.hashId } })}
         />
       ),
     },

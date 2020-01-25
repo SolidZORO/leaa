@@ -29,7 +29,7 @@ export default (props: IPage) => {
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
     onCompleted({ createZan }) {
       msgUtil.message(t('_lang:createdSuccessfully'));
-      props.history.push(`/zans/${createZan.uuid}`);
+      props.history.push(`/zans/${createZan.hashId}`);
     },
   });
 

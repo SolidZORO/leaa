@@ -24,7 +24,7 @@ export class PromoService {
   ) {}
 
   async promos(args: IPromosArgs, gqlCtx?: IGqlCtx): Promise<PromosWithPaginationObject> {
-    const nextArgs: IPromosArgs = argsUtil.format(args);
+    const nextArgs: IPromosArgs = argsUtil.format(args, gqlCtx);
 
     const qb = this.promoRepository.createQueryBuilder();
     qb.select().orderBy(nextArgs.orderBy || 'id', nextArgs.orderSort);

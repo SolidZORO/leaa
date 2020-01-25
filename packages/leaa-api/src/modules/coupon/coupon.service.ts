@@ -28,7 +28,7 @@ export class CouponService {
   }
 
   async coupons(args: ICouponsArgs, gqlCtx?: IGqlCtx): Promise<CouponsWithPaginationObject> {
-    const nextArgs: ICouponsArgs = argsUtil.format(args);
+    const nextArgs: ICouponsArgs = argsUtil.format(args, gqlCtx);
     const qb = this.couponRepository.createQueryBuilder();
 
     qb.select().orderBy(nextArgs.orderBy || 'id', nextArgs.orderSort);

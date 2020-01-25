@@ -3,9 +3,14 @@ import { ObjectType, Field, Int } from 'type-graphql';
 
 @ObjectType()
 export class Base {
+  // `id` possible be hidden
   @PrimaryGeneratedColumn()
   @Field(() => Int, { nullable: true })
   id!: number;
+
+  @Column({ type: 'varchar', length: 32, nullable: true })
+  @Field(() => String, { nullable: true })
+  hashId!: string;
 
   //
 
