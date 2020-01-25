@@ -71,7 +71,7 @@ export class ZanService {
     }
 
     return curdUtil.commonCreate<Zan, CreateZanInput>({
-      rp: this.zanRepository,
+      repository: this.zanRepository,
       args,
       extArgs: { creator: gqlCtx?.user },
       CLS_NAME,

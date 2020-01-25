@@ -7,7 +7,7 @@ const isOneField = (args: {}, fieldName: string) => _.keys(args).length === 1 &&
 
 interface ICommonCreate<Entity, CreateInput> {
   CLS_NAME?: string;
-  rp: Repository<Entity>;
+  repository: Repository<Entity>;
   args: CreateInput;
   extArgs?: Partial<CreateInput>;
   relationArgs?: any;
@@ -15,7 +15,7 @@ interface ICommonCreate<Entity, CreateInput> {
 }
 
 const commonCreate = async <Entity, CreateInput>({
-  rp,
+  repository,
   CLS_NAME,
   args,
   extArgs,
@@ -35,7 +35,7 @@ const commonCreate = async <Entity, CreateInput>({
     nextArgs = { ...args, ...nextArgs };
   }
 
-  const item: Entity = await rp.save(nextArgs);
+  const item: Entity = await repository.save(nextArgs);
 
   // @ts-ignore
   const hashId = stringUtil.encodeId(item.id, gqlCtx);
@@ -111,32 +111,6 @@ const commonDelete = async (repository: Repository<any>, CLS_NAME: string, id: n
     id: prevId,
   };
 };
-
-interface IIncrement<Entity> {
-  CLS_NAME?: string;
-  rp: Repository<Entity>;
-  id: number;
-  amount: number;
-  field: string;
-  gqlCtx?: IGqlCtx;
-}
-
-// const increment = async <Entity>({
-//                            rp,
-//   id,
-//   amount,
-//   field: string,
-//
-//                            CLS_NAME,
-//                            gqlCtx,
-//                          }: IIncrement<Entity>): Promise<any | undefined> => {
-//
-//   const views = zan.views ? zan.views + 1 : 1;
-//   await rp.update(id, { views });
-//
-// }
-//
-// };
 
 export const curdUtil = {
   isOneField,
