@@ -113,7 +113,9 @@ export class ArticleService {
   }
 
   async updateArticle(id: number, args: UpdateArticleInput): Promise<Article | undefined> {
-    if (curdUtil.isOneField(args, 'status')) return curdUtil.commonUpdate(this.articleRepository, CLS_NAME, id, args);
+    if (curdUtil.isOneField(args, 'status')) {
+      return curdUtil.commonUpdate({ repository: this.articleRepository, CLS_NAME, id, args });
+    }
 
     const relationArgs: { tags?: Tag[]; categories?: Category[] } = {};
     const trimSlug = args.slug ? args.slug.trim().toLowerCase() : args.slug;
@@ -153,10 +155,16 @@ export class ArticleService {
       await this.tagService.syncTagsToDictFile();
     }
 
-    return curdUtil.commonUpdate(this.articleRepository, CLS_NAME, id, nextArgs, relationArgs);
+    return curdUtil.commonUpdate({
+      repository: this.articleRepository,
+      CLS_NAME,
+      id,
+      args: nextArgs,
+      relation: relationArgs,
+    });
   }
 
   async deleteArticle(id: number): Promise<Article | undefined> {
-    return curdUtil.commonDelete(this.articleRepository, CLS_NAME, id);
+    return curdUtil.commonDelete({ repository: this.articleRepository, CLS_NAME, id });
   }
 }

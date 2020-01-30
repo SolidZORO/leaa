@@ -133,7 +133,9 @@ export class UserService {
   async updateUser(id: number, args: UpdateUserInput, gqlCtx?: IGqlCtx): Promise<User | undefined> {
     if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id, gqlCtx);
 
-    if (curdUtil.isOneField(args, 'status')) return curdUtil.commonUpdate(this.userRepository, CLS_NAME, id, args);
+    if (curdUtil.isOneField(args, 'status')) {
+      return curdUtil.commonUpdate({ repository: this.userRepository, CLS_NAME, id, args });
+    }
 
     if (curdUtil.isOneField(args, 'avatar_url')) {
       // sync avatar
@@ -158,7 +160,7 @@ export class UserService {
         }
       }
 
-      return curdUtil.commonUpdate(this.userRepository, CLS_NAME, id, args);
+      return curdUtil.commonUpdate({ repository: this.userRepository, CLS_NAME, id, args });
     }
 
     const prevUser = await this.user(id, { relations: ['roles'] });
@@ -188,7 +190,13 @@ export class UserService {
       nextArgs.password = await this.createPassword(args.password);
     }
 
-    const nextUser = await curdUtil.commonUpdate(this.userRepository, CLS_NAME, id, nextArgs, relationArgs);
+    const nextUser = await curdUtil.commonUpdate({
+      repository: this.userRepository,
+      CLS_NAME,
+      id,
+      args: nextArgs,
+      relation: relationArgs,
+    });
 
     // @ts-ignore
     const diffObject = await diff(prevUser, nextUser);
@@ -221,7 +229,7 @@ export class UserService {
   async deleteUser(id: number, gqlCtx?: IGqlCtx): Promise<User | undefined> {
     if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id, gqlCtx);
 
-    const deleteUser = await curdUtil.commonDelete(this.userRepository, CLS_NAME, id);
+    const deleteUser = await curdUtil.commonDelete({ repository: this.userRepository, CLS_NAME, id });
 
     if (deleteUser) {
       try {

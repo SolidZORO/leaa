@@ -86,14 +86,16 @@ export class AxService {
   async updateAx(id: number, args: UpdateAxInput, gqlCtx?: IGqlCtx): Promise<Ax | undefined> {
     if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id, gqlCtx);
 
-    if (curdUtil.isOneField(args, 'status')) return curdUtil.commonUpdate(this.axRepository, CLS_NAME, id, args);
+    if (curdUtil.isOneField(args, 'status')) {
+      return curdUtil.commonUpdate({ repository: this.axRepository, CLS_NAME, id, args });
+    }
 
-    return curdUtil.commonUpdate(this.axRepository, CLS_NAME, id, args);
+    return curdUtil.commonUpdate({ repository: this.axRepository, CLS_NAME, id, args });
   }
 
   async deleteAx(id: number, gqlCtx?: IGqlCtx): Promise<Ax | undefined> {
     if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id, gqlCtx);
 
-    return curdUtil.commonDelete(this.axRepository, CLS_NAME, id);
+    return curdUtil.commonDelete({ repository: this.axRepository, CLS_NAME, id });
   }
 }

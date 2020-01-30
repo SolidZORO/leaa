@@ -165,7 +165,9 @@ export class CategoryService {
   async updateCategory(id: number, args: UpdateCategoryInput, gqlCtx?: IGqlCtx): Promise<Category | undefined> {
     if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id, gqlCtx);
 
-    if (curdUtil.isOneField(args, 'status')) return curdUtil.commonUpdate(this.categoryRepository, CLS_NAME, id, args);
+    if (curdUtil.isOneField(args, 'status')) {
+      return curdUtil.commonUpdate({ repository: this.categoryRepository, CLS_NAME, id, args });
+    }
 
     const nextArgs = args;
 
@@ -180,12 +182,12 @@ export class CategoryService {
       }
     }
 
-    return curdUtil.commonUpdate(this.categoryRepository, CLS_NAME, id, nextArgs);
+    return curdUtil.commonUpdate({ repository: this.categoryRepository, CLS_NAME, id, args: nextArgs });
   }
 
   async deleteCategory(id: number, gqlCtx?: IGqlCtx): Promise<Category | undefined> {
     if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id, gqlCtx);
 
-    return curdUtil.commonDelete(this.categoryRepository, CLS_NAME, id);
+    return curdUtil.commonDelete({ repository: this.categoryRepository, CLS_NAME, id });
   }
 }

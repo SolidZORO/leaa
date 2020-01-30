@@ -121,7 +121,9 @@ export class ProductService {
   }
 
   async updateProduct(id: number, args: UpdateProductInput, gqlCtx?: IGqlCtx): Promise<Product | undefined> {
-    if (curdUtil.isOneField(args, 'status')) return curdUtil.commonUpdate(this.productRepository, CLS_NAME, id, args);
+    if (curdUtil.isOneField(args, 'status')) {
+      return curdUtil.commonUpdate({ repository: this.productRepository, CLS_NAME, id, args });
+    }
 
     const { nextRelation, nextArgs } = await this.formatArgs(args);
 
@@ -132,10 +134,16 @@ export class ProductService {
       await this.tagService.syncTagsToDictFile();
     }
 
-    return curdUtil.commonUpdate(this.productRepository, CLS_NAME, id, nextArgs, nextRelation);
+    return curdUtil.commonUpdate({
+      repository: this.productRepository,
+      CLS_NAME,
+      id,
+      args: nextArgs,
+      relation: nextRelation,
+    });
   }
 
   async deleteProduct(id: number, gqlCtx?: IGqlCtx): Promise<Product | undefined> {
-    return curdUtil.commonDelete(this.productRepository, CLS_NAME, id);
+    return curdUtil.commonDelete({ repository: this.productRepository, CLS_NAME, id });
   }
 }

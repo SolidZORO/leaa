@@ -122,9 +122,11 @@ export class SettingService {
     args: UpdateSettingInput & FindOneOptions,
     gqlCtx?: IGqlCtx,
   ): Promise<Setting | undefined> {
-    if (curdUtil.isOneField(args, 'status')) return curdUtil.commonUpdate(this.settingRepository, CLS_NAME, id, args);
+    if (curdUtil.isOneField(args, 'status')) {
+      return curdUtil.commonUpdate({ repository: this.settingRepository, CLS_NAME, id, args });
+    }
 
-    return curdUtil.commonUpdate(this.settingRepository, CLS_NAME, id, args);
+    return curdUtil.commonUpdate({ repository: this.settingRepository, CLS_NAME, id, args });
   }
 
   async updateSettings(settings: UpdateSettingsInput[], gqlCtx?: IGqlCtx): Promise<SettingsObject> {
@@ -150,6 +152,6 @@ export class SettingService {
   async deleteSetting(id: number, gqlCtx?: IGqlCtx): Promise<Setting | undefined> {
     if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id, gqlCtx);
 
-    return curdUtil.commonDelete(this.settingRepository, CLS_NAME, id);
+    return curdUtil.commonDelete({ repository: this.settingRepository, CLS_NAME, id });
   }
 }

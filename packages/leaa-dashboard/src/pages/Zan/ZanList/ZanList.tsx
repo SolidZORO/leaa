@@ -47,7 +47,7 @@ export default (props: IPage) => {
   // query
   const getZansVariables = { ...tablePagination, q };
   const getZansQuery = useQuery<{ zans: ZansWithPaginationObject }, ZansArgs>(GET_ZANS, {
-    variables: getZansVariables,
+    // variables: getZansVariables,
     fetchPolicy: 'network-only',
   });
 
@@ -82,6 +82,12 @@ export default (props: IPage) => {
 
   const columns = [
     {
+      title: 'Hash',
+      dataIndex: 'hashId',
+      width: 60,
+      render: (hashId: string) => <span>{hashId}</span>,
+    },
+    {
       title: 'ID',
       dataIndex: 'id',
       width: 60,
@@ -100,7 +106,7 @@ export default (props: IPage) => {
       title: t('_lang:creator'),
       dataIndex: 'creator',
       width: 70,
-      render: (creator: User) => <UserAvatar url={creator?.avatar_url || ''} id={creator?.id} />,
+      render: (creator: User) => <UserAvatar url={creator?.avatar_url} id={creator?.id} />,
     },
     {
       title: t('_page:Zan.currentTargetZanQuantity'),
@@ -198,45 +204,43 @@ export default (props: IPage) => {
     >
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
-      {getZansQuery?.data?.zans?.items && (
-        <TableCard selectedRowKeys={selectedRowKeys} totalLength={getZansQuery.data.zans.total}>
-          <Table
-            rowKey="id"
-            size="small"
-            rowSelection={rowSelection}
-            columns={columns as any}
-            dataSource={getZansQuery.data.zans.items}
-            pagination={{
-              defaultCurrent: tablePagination.page,
-              defaultPageSize: tablePagination.pageSize,
-              total: getZansQuery.data.zans.total,
-              current: tablePagination.page,
-              pageSize: tablePagination.pageSize,
-              //
-              pageSizeOptions: DEFAULT_PAGE_SIZE_OPTIONS,
-              showSizeChanger: true,
-            }}
-            onChange={(pagination, filters, sorter: any) => {
-              setTablePagination({
-                ...tablePagination,
-                page: pagination.current,
-                pageSize: pagination.pageSize,
-                orderBy: urlUtil.formatOrderBy(sorter.field),
-                orderSort: urlUtil.formatOrderSort(sorter.order),
-              });
+      <TableCard selectedRowKeys={selectedRowKeys} totalLength={getZansQuery?.data?.zans?.total}>
+        <Table
+          rowKey="hashId"
+          size="small"
+          rowSelection={rowSelection}
+          columns={columns as any}
+          dataSource={getZansQuery?.data?.zans?.items}
+          pagination={{
+            defaultCurrent: tablePagination.page,
+            defaultPageSize: tablePagination.pageSize,
+            total: getZansQuery?.data?.zans?.total,
+            current: tablePagination.page,
+            pageSize: tablePagination.pageSize,
+            //
+            pageSizeOptions: DEFAULT_PAGE_SIZE_OPTIONS,
+            showSizeChanger: true,
+          }}
+          onChange={(pagination, filters, sorter: any) => {
+            setTablePagination({
+              ...tablePagination,
+              page: pagination.current,
+              pageSize: pagination.pageSize,
+              orderBy: urlUtil.formatOrderBy(sorter.field),
+              orderSort: urlUtil.formatOrderSort(sorter.order),
+            });
 
-              urlUtil.mergeParamToUrlQuery({
-                window,
-                params: {
-                  ...urlUtil.pickPagination(pagination),
-                  ...urlUtil.pickOrder(sorter),
-                },
-                replace: true,
-              });
-            }}
-          />
-        </TableCard>
-      )}
+            urlUtil.mergeParamToUrlQuery({
+              window,
+              params: {
+                ...urlUtil.pickPagination(pagination),
+                ...urlUtil.pickOrder(sorter),
+              },
+              replace: true,
+            });
+          }}
+        />
+      </TableCard>
     </PageCard>
   );
 };

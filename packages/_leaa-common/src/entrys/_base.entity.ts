@@ -8,9 +8,9 @@ export class Base {
   @Field(() => Int, { nullable: true })
   id!: number;
 
-  @Column({ type: 'varchar', length: 32, nullable: true })
-  @Field(() => String, { nullable: true })
-  hashId!: string;
+  // @Column({ type: 'varchar', length: 16, nullable: true })
+  // @Field(() => String, { nullable: true })
+  // hashId?: string;
 
   //
 

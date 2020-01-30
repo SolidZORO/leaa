@@ -94,16 +94,16 @@ export class PermissionService {
   async updatePermission(id: number, args: UpdatePermissionInput, gqlCtx?: IGqlCtx): Promise<Permission | undefined> {
     if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id, gqlCtx);
 
-    // prettier-ignore
-    // eslint-disable-next-line max-len
-    if (curdUtil.isOneField(args, 'status')) return curdUtil.commonUpdate(this.permissionRepository, CLS_NAME, id, args);
+    if (curdUtil.isOneField(args, 'status')) {
+      return curdUtil.commonUpdate({ repository: this.permissionRepository, CLS_NAME, id, args });
+    }
 
-    return curdUtil.commonUpdate(this.permissionRepository, CLS_NAME, id, args);
+    return curdUtil.commonUpdate({ repository: this.permissionRepository, CLS_NAME, id, args });
   }
 
   async deletePermission(id: number, gqlCtx?: IGqlCtx): Promise<Permission | undefined> {
     if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id, gqlCtx);
 
-    return curdUtil.commonDelete(this.permissionRepository, CLS_NAME, id);
+    return curdUtil.commonDelete({ repository: this.permissionRepository, CLS_NAME, id });
   }
 }

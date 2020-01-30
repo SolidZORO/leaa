@@ -4,6 +4,7 @@ export interface IPageInfoFromQueryBuilder {
   qb: SelectQueryBuilder<any>;
   pageSize?: number;
   page?: number;
+  deleteFields?: string[] | boolean;
 }
 
 export interface IPageInfoResult {
@@ -25,7 +26,8 @@ const calcQueryBuilderPageInfo = async ({
   // prevent skip negative numbers (e.g. skip -30)
   const skipSize = calcPage - 1 < 0 ? 0 : (calcPage - 1) * calcPageSize;
 
-  const [items, total] = await qb
+  // eslint-disable-next-line prefer-const
+  let [items, total] = await qb
     .skip(skipSize)
     .take(calcPageSize)
     .getManyAndCount();

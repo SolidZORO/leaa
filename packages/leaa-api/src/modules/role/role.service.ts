@@ -114,7 +114,9 @@ export class RoleService {
   async updateRole(id: number, args: UpdateRoleInput, gqlCtx?: IGqlCtx): Promise<Role | undefined> {
     if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id, gqlCtx);
 
-    if (curdUtil.isOneField(args, 'status')) return curdUtil.commonUpdate(this.roleRepository, CLS_NAME, id, args);
+    if (curdUtil.isOneField(args, 'status')) {
+      return curdUtil.commonUpdate({ repository: this.roleRepository, CLS_NAME, id, args });
+    }
 
     const relationArgs: { permissions?: Permission[] } = {};
 
@@ -137,12 +139,12 @@ export class RoleService {
       throw msgUtil.error({ t: ['_error:notFound'], gqlCtx });
     }
 
-    return curdUtil.commonUpdate(this.roleRepository, CLS_NAME, id, args, relationArgs);
+    return curdUtil.commonUpdate({ repository: this.roleRepository, CLS_NAME, id, args, relation: relationArgs });
   }
 
   async deleteRole(id: number, gqlCtx?: IGqlCtx): Promise<Role | undefined> {
     if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id, gqlCtx);
 
-    return curdUtil.commonDelete(this.roleRepository, CLS_NAME, id);
+    return curdUtil.commonDelete({ repository: this.roleRepository, CLS_NAME, id });
   }
 }

@@ -77,15 +77,17 @@ export class PromoService {
   }
 
   async updatePromo(id: number, args: UpdatePromoInput, gqlCtx?: IGqlCtx): Promise<Promo | undefined> {
-    if (curdUtil.isOneField(args, 'status')) return curdUtil.commonUpdate(this.promoRepository, CLS_NAME, id, args);
+    if (curdUtil.isOneField(args, 'status')) {
+      return curdUtil.commonUpdate({ repository: this.promoRepository, CLS_NAME, id, args });
+    }
 
     const nextArgs = dateUtil.formatDateRangeTime(args, 'start_time', 'expire_time');
 
-    return curdUtil.commonUpdate(this.promoRepository, CLS_NAME, id, nextArgs);
+    return curdUtil.commonUpdate({ repository: this.promoRepository, CLS_NAME, id, args: nextArgs });
   }
 
   async deletePromo(id: number, gqlCtx?: IGqlCtx): Promise<Promo | undefined> {
-    return curdUtil.commonDelete(this.promoRepository, CLS_NAME, id);
+    return curdUtil.commonDelete({ repository: this.promoRepository, CLS_NAME, id });
   }
 
   async redeemPromo(info: RedeemPromoInput, gqlCtx?: IGqlCtx): Promise<Promo | undefined> {

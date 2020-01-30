@@ -37,7 +37,17 @@ export class ZanService {
       qb.orderBy(`${PRIMARY_TABLE}.${nextArgs.orderBy}`, nextArgs.orderSort);
     }
 
-    return paginationUtil.calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
+    const result = await paginationUtil.calcQbPageInfo({
+      qb,
+      page: nextArgs.page,
+      pageSize: nextArgs.pageSize,
+    });
+
+    if (!authUtil.isAdmin(gqlCtx)) {
+      result.items = await curdUtil.deleteFields({ data: result.items, fields: ['id', 'users.id', 'creator.id'] });
+    }
+
+    return result;
   }
 
   async zan(hashId: string, args?: IZanArgs, gqlCtx?: IGqlCtx): Promise<Zan | undefined> {
@@ -57,8 +67,7 @@ export class ZanService {
 
     await this.zanRepository.increment({ id }, 'views', 1);
 
-    // hide id
-    if (!authUtil.isAdmin()) delete zan.id;
+    if (!authUtil.isAdmin(gqlCtx)) delete zan.id;
 
     return zan;
   }
@@ -81,15 +90,17 @@ export class ZanService {
   async updateZan(hashId: string, args: UpdateZanInput, gqlCtx?: IGqlCtx): Promise<Zan | undefined> {
     const id = stringUtil.decodeId(hashId, gqlCtx);
 
-    if (curdUtil.isOneField(args, 'status')) return curdUtil.commonUpdate(this.zanRepository, CLS_NAME, id, args);
+    if (curdUtil.isOneField(args, 'status')) {
+      return curdUtil.commonUpdate({ repository: this.zanRepository, CLS_NAME, id, args });
+    }
 
-    return curdUtil.commonUpdate(this.zanRepository, CLS_NAME, id, args);
+    return curdUtil.commonUpdate({ repository: this.zanRepository, CLS_NAME, id, args });
   }
 
   async deleteZan(hashId: string, gqlCtx?: IGqlCtx): Promise<Zan | undefined> {
     const id = stringUtil.decodeId(hashId, gqlCtx);
 
-    return curdUtil.commonDelete(this.zanRepository, CLS_NAME, id);
+    return curdUtil.commonDelete({ repository: this.zanRepository, CLS_NAME, id });
   }
 
   async likeZan(hashId: string, gqlCtx?: IGqlCtx): Promise<Zan | undefined> {
@@ -98,15 +109,13 @@ export class ZanService {
     if (!zan) throw msgUtil.error({ t: ['_error:notFoundItem'], gqlCtx });
     if (!gqlCtx?.user) throw msgUtil.error({ t: ['_error:notFoundAuth'], gqlCtx, statusCode: 401 });
 
-    if (gqlCtx?.user && !zan.users?.map(u => u.id).includes(gqlCtx?.user?.id)) {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      await zan.users!.push(gqlCtx?.user);
+    if (gqlCtx?.user && zan.users && !zan.users?.map(u => u.id).includes(gqlCtx?.user?.id)) {
+      await zan.users.push(gqlCtx?.user);
     }
 
     zan = await this.zanRepository.save({
       ...zan,
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      current_zan_quantity: zan.users!.length,
+      current_zan_quantity: zan?.users ? zan?.users.length : 0,
     });
 
     return zan;
@@ -127,8 +136,7 @@ export class ZanService {
 
     zan = await this.zanRepository.save({
       ...zan,
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      current_zan_quantity: zan.users!.length,
+      current_zan_quantity: zan?.users ? zan?.users.length : 0,
     });
 
     return zan;

@@ -23,7 +23,7 @@ const can = (user: User, permissionName: IPermissionSlug): boolean => {
   return user && user.flatPermissions && user.flatPermissions.includes(permissionName);
 };
 
-const isAdmin = (gqlCtx?: IGqlCtx): boolean => Boolean(gqlCtx?.user?.is_admin);
+const isAdmin = (gqlCtx?: IGqlCtx): boolean => gqlCtx?.user?.is_admin === 1;
 
 export const authUtil = {
   checkAvailableUser,

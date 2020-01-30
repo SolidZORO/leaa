@@ -192,13 +192,15 @@ export class DivisionService {
   }
 
   async updateDivision(id: number, args: UpdateDivisionInput): Promise<Division | undefined> {
-    if (curdUtil.isOneField(args, 'status')) return curdUtil.commonUpdate(this.divisionRepository, CLS_NAME, id, args);
+    if (curdUtil.isOneField(args, 'status')) {
+      return curdUtil.commonUpdate({ repository: this.divisionRepository, CLS_NAME, id, args });
+    }
 
     const nextArgs = {
       ...args,
     };
 
-    const result = await curdUtil.commonUpdate(this.divisionRepository, CLS_NAME, id, nextArgs);
+    const result = await curdUtil.commonUpdate({ repository: this.divisionRepository, CLS_NAME, id, args: nextArgs });
 
     if (result) {
       this.syncDivisionToFile();
@@ -208,6 +210,6 @@ export class DivisionService {
   }
 
   async deleteDivision(id: number): Promise<Division | undefined> {
-    return curdUtil.commonDelete(this.divisionRepository, CLS_NAME, id);
+    return curdUtil.commonDelete({ repository: this.divisionRepository, CLS_NAME, id });
   }
 }

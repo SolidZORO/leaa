@@ -100,15 +100,17 @@ export class CouponService {
   }
 
   async updateCoupon(id: number, args: UpdateCouponInput, gqlCtx?: IGqlCtx): Promise<Coupon | undefined> {
-    if (curdUtil.isOneField(args, 'status')) return curdUtil.commonUpdate(this.couponRepository, CLS_NAME, id, args);
+    if (curdUtil.isOneField(args, 'status')) {
+      return curdUtil.commonUpdate({ repository: this.couponRepository, CLS_NAME, id, args });
+    }
 
     const nextArgs = dateUtil.formatDateRangeTime(args, 'start_time', 'expire_time');
 
-    return curdUtil.commonUpdate(this.couponRepository, CLS_NAME, id, nextArgs);
+    return curdUtil.commonUpdate({ repository: this.couponRepository, CLS_NAME, id, args: nextArgs });
   }
 
   async deleteCoupon(id: number, gqlCtx?: IGqlCtx): Promise<Coupon | undefined> {
-    return curdUtil.commonDelete(this.couponRepository, CLS_NAME, id);
+    return curdUtil.commonDelete({ repository: this.couponRepository, CLS_NAME, id });
   }
 
   async redeemCoupon(info: RedeemCouponInput, gqlCtx?: IGqlCtx): Promise<Coupon | undefined> {

@@ -55,10 +55,10 @@ export class AddressService {
   async updateAddress(id: number, args: UpdateAddressInput, user?: User): Promise<Address | undefined> {
     const relationArgs: { permissions?: Permission[] } = {};
 
-    return curdUtil.commonUpdate(this.addressRepository, CLS_NAME, id, args, relationArgs);
+    return curdUtil.commonUpdate({ repository: this.addressRepository, CLS_NAME, id, args, relation: relationArgs });
   }
 
   async deleteAddress(id: number, user?: User): Promise<Address | undefined> {
-    return curdUtil.commonDelete(this.addressRepository, CLS_NAME, id);
+    return curdUtil.commonDelete({ repository: this.addressRepository, CLS_NAME, id });
   }
 }

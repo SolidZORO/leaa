@@ -71,7 +71,7 @@ export class AuthService {
   }
 
   async deleteAuth(id: number, gqlCtx?: IGqlCtx): Promise<Auth | undefined> {
-    const item = await curdUtil.commonDelete(this.authRepository, CLS_NAME, id);
+    const item = await curdUtil.commonDelete({ repository: this.authRepository, CLS_NAME, id });
 
     if (!item) throw msgUtil.error({ t: ['_error:deleteItemFailed'], gqlCtx });
 

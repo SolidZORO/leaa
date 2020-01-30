@@ -117,7 +117,8 @@ export class TagService {
   }
 
   async updateTag(id: number, args: UpdateTagInput, gqlCtx?: IGqlCtx): Promise<Tag | undefined> {
-    if (curdUtil.isOneField(args, 'status')) return curdUtil.commonUpdate(this.tagRepository, CLS_NAME, id, args);
+    if (curdUtil.isOneField(args, 'status'))
+      return curdUtil.commonUpdate({ repository: this.tagRepository, CLS_NAME, id, args });
 
     let nextArgs: UpdateTagInput = args;
 
@@ -125,10 +126,10 @@ export class TagService {
       nextArgs = { ...args, name: this.formatTag(args.name) };
     }
 
-    return curdUtil.commonUpdate(this.tagRepository, CLS_NAME, id, nextArgs);
+    return curdUtil.commonUpdate({ repository: this.tagRepository, CLS_NAME, id, args: nextArgs });
   }
 
   async deleteTag(id: number, gqlCtx?: IGqlCtx): Promise<Tag | undefined> {
-    return curdUtil.commonDelete(this.tagRepository, CLS_NAME, id);
+    return curdUtil.commonDelete({ repository: this.tagRepository, CLS_NAME, id });
   }
 }
