@@ -45,17 +45,17 @@ const handleMessage = ({ type, t, text, statusCode, gqlCtx, CLS_NAME }: IHandleM
 
   if (type === 'error') {
     loggerUtil.error(`${message} / <${userText}>`, CLS_NAME || 'msgUtil');
-    throw Error(message);
+    return Error(message);
   }
 
   return message;
 };
 
-const error = ({ t, text, statusCode, gqlCtx, CLS_NAME }: IErrorParams) =>
-  handleMessage({ type: 'error', t, text, statusCode, gqlCtx, CLS_NAME });
+const error = ({ t, text, statusCode, gqlCtx, CLS_NAME }: IErrorParams): Error =>
+  handleMessage({ type: 'error', t, text, statusCode, gqlCtx, CLS_NAME }) as Error;
 
-const message = ({ t, text, statusCode, gqlCtx, CLS_NAME }: IMessageParams) =>
-  handleMessage({ type: 'message', t, text, statusCode, gqlCtx, CLS_NAME });
+const message = ({ t, text, statusCode, gqlCtx, CLS_NAME }: IMessageParams): string =>
+  handleMessage({ type: 'message', t, text, statusCode, gqlCtx, CLS_NAME }) as string;
 
 export const msgUtil = {
   error,

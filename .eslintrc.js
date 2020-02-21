@@ -66,7 +66,7 @@ module.exports = {
     '@typescript-eslint/no-parameter-properties': 0,
     '@typescript-eslint/no-empty-function': 0,
     '@typescript-eslint/no-useless-constructor': 0,
-    '@typescript-eslint/no-throw-literal': 0,
+    // '@typescript-eslint/no-throw-literal': 0,
     //
     // NEST.JS
     'no-useless-constructor': 0,
