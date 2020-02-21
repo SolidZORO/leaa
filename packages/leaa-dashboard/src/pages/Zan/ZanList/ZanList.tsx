@@ -10,7 +10,7 @@ import { Table } from 'antd';
 import { DEFAULT_PAGE_SIZE_OPTIONS, PAGE_CARD_TITLE_CREATE_ICON } from '@leaa/dashboard/src/constants';
 import { GET_ZANS, DELETE_ZAN, UPDATE_ZAN } from '@leaa/dashboard/src/graphqls';
 
-import { Zan, User } from '@leaa/common/src/entrys';
+import { Zan } from '@leaa/common/src/entrys';
 import { ZansWithPaginationObject, ZansArgs } from '@leaa/common/src/dtos/zan';
 import { IPage, IKey, ITablePagination } from '@leaa/dashboard/src/interfaces';
 import { urlUtil, tableUtil, msgUtil } from '@leaa/dashboard/src/utils';
@@ -25,7 +25,6 @@ import {
   TableColumnDate,
   TableColumnDeleteButton,
   TableColumnStatusSwitch,
-  UserAvatar,
 } from '@leaa/dashboard/src/components';
 
 import { ZanProgress } from '../_components/ZanProgress/ZanProgress';
@@ -47,7 +46,7 @@ export default (props: IPage) => {
   // query
   const getZansVariables = { ...tablePagination, q };
   const getZansQuery = useQuery<{ zans: ZansWithPaginationObject }, ZansArgs>(GET_ZANS, {
-    // variables: getZansVariables,
+    variables: getZansVariables,
     fetchPolicy: 'network-only',
   });
 
@@ -82,36 +81,19 @@ export default (props: IPage) => {
 
   const columns = [
     {
-      title: 'Hash',
-      dataIndex: 'hashId',
-      width: 60,
-      render: (hashId: string) => <span>{hashId}</span>,
-    },
-    {
       title: 'ID',
       dataIndex: 'id',
       width: 60,
       sorter: true,
       sortOrder: tableUtil.calcDefaultSortOrder(tablePagination.orderSort, tablePagination.orderBy, 'id'),
-      render: (id: string, zan: Zan) => <TableColumnId id={id} link={`${props.route.path}/${zan.hashId}`} />,
+      render: (id: string) => <TableColumnId id={id} />,
     },
     {
       title: t('_lang:title'),
       dataIndex: 'title',
       sorter: true,
       sortOrder: tableUtil.calcDefaultSortOrder(tablePagination.orderSort, tablePagination.orderBy, 'title'),
-      render: (text: string, record: Zan) => <Link to={`${props.route.path}/${record.hashId}`}>{record.title}</Link>,
-    },
-    {
-      title: t('_lang:creator'),
-      dataIndex: 'creator',
-      width: 70,
-      render: (creator: User) => <UserAvatar url={creator?.avatar_url} id={creator?.id} />,
-    },
-    {
-      title: t('_page:Zan.currentTargetZanQuantity'),
-      dataIndex: 'target_zan_quantity',
-      render: (text: string, record: Zan) => <ZanProgress item={record} size="small" />,
+      render: (text: string, record: Zan) => <Link to={`${props.route.path}/${record.uuid}`}>{record.title}</Link>,
     },
     {
       title: t('_lang:views'),
@@ -119,6 +101,11 @@ export default (props: IPage) => {
       sorter: true,
       sortOrder: tableUtil.calcDefaultSortOrder(tablePagination.orderSort, tablePagination.orderBy, 'views'),
       render: (text: string) => <small className="g-col-number">{text}</small>,
+    },
+    {
+      title: t('_page:Zan.currentTargetZanQuantity'),
+      dataIndex: 'target_zan_quantity',
+      render: (text: string, record: Zan) => <ZanProgress item={record} size="small" />,
     },
     {
       title: t('_lang:createdAt'),
@@ -149,10 +136,10 @@ export default (props: IPage) => {
       width: 60,
       render: (text: string, record: Zan) => (
         <TableColumnDeleteButton
-          hashid={record.hashId}
+          id={record.id}
           fieldName={record.title}
           loading={deleteZanMutation.loading}
-          onClick={async () => deleteZanMutate({ variables: { hashId: record.hashId } })}
+          onClick={async () => deleteZanMutate({ variables: { id: Number(record.id) } })}
         />
       ),
     },
@@ -204,43 +191,45 @@ export default (props: IPage) => {
     >
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
-      <TableCard selectedRowKeys={selectedRowKeys} totalLength={getZansQuery?.data?.zans?.total}>
-        <Table
-          rowKey="hashId"
-          size="small"
-          rowSelection={rowSelection}
-          columns={columns as any}
-          dataSource={getZansQuery?.data?.zans?.items}
-          pagination={{
-            defaultCurrent: tablePagination.page,
-            defaultPageSize: tablePagination.pageSize,
-            total: getZansQuery?.data?.zans?.total,
-            current: tablePagination.page,
-            pageSize: tablePagination.pageSize,
-            //
-            pageSizeOptions: DEFAULT_PAGE_SIZE_OPTIONS,
-            showSizeChanger: true,
-          }}
-          onChange={(pagination, filters, sorter: any) => {
-            setTablePagination({
-              ...tablePagination,
-              page: pagination.current,
-              pageSize: pagination.pageSize,
-              orderBy: urlUtil.formatOrderBy(sorter.field),
-              orderSort: urlUtil.formatOrderSort(sorter.order),
-            });
+      {getZansQuery?.data?.zans?.items && (
+        <TableCard selectedRowKeys={selectedRowKeys} totalLength={getZansQuery.data.zans.total}>
+          <Table
+            rowKey="id"
+            size="small"
+            rowSelection={rowSelection}
+            columns={columns as any}
+            dataSource={getZansQuery.data.zans.items}
+            pagination={{
+              defaultCurrent: tablePagination.page,
+              defaultPageSize: tablePagination.pageSize,
+              total: getZansQuery.data.zans.total,
+              current: tablePagination.page,
+              pageSize: tablePagination.pageSize,
+              //
+              pageSizeOptions: DEFAULT_PAGE_SIZE_OPTIONS,
+              showSizeChanger: true,
+            }}
+            onChange={(pagination, filters, sorter: any) => {
+              setTablePagination({
+                ...tablePagination,
+                page: pagination.current,
+                pageSize: pagination.pageSize,
+                orderBy: urlUtil.formatOrderBy(sorter.field),
+                orderSort: urlUtil.formatOrderSort(sorter.order),
+              });
 
-            urlUtil.mergeParamToUrlQuery({
-              window,
-              params: {
-                ...urlUtil.pickPagination(pagination),
-                ...urlUtil.pickOrder(sorter),
-              },
-              replace: true,
-            });
-          }}
-        />
-      </TableCard>
+              urlUtil.mergeParamToUrlQuery({
+                window,
+                params: {
+                  ...urlUtil.pickPagination(pagination),
+                  ...urlUtil.pickOrder(sorter),
+                },
+                replace: true,
+              });
+            }}
+          />
+        </TableCard>
+      )}
     </PageCard>
   );
 };

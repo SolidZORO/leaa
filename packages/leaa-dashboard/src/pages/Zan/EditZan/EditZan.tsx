@@ -19,20 +19,20 @@ import style from './style.module.less';
 
 export default (props: IPage) => {
   const { t } = useTranslation();
-  const { hashId } = props.match.params as { hashId: string };
+  const { uuid } = props.match.params as { uuid: string };
 
   // ref
   const infoFormRef = useRef<ICommenFormRef<UpdateZanInput>>(null);
 
   // query
-  const getZanVariables = { hashId };
+  const getZanVariables = { uuid };
   const getZanQuery = useQuery<{ zan: Zan }, ZanArgs>(GET_ZAN, {
     variables: getZanVariables,
     fetchPolicy: 'network-only',
   });
 
   // mutation
-  const [submitVariables, setSubmitVariables] = useState<{ hashId?: string | null; zan: UpdateZanInput }>();
+  const [submitVariables, setSubmitVariables] = useState<{ uuid?: string | null; zan: UpdateZanInput }>();
   const [updateZanMutate, updateZanMutation] = useMutation<Zan>(UPDATE_ZAN, {
     variables: submitVariables,
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
@@ -49,7 +49,7 @@ export default (props: IPage) => {
       ...infoData,
     };
 
-    await setSubmitVariables({ hashId: getZanQuery?.data?.zan?.hashId, zan: submitData });
+    await setSubmitVariables({ uuid: getZanQuery?.data?.zan?.uuid, zan: submitData });
     await updateZanMutate();
   };
 

@@ -33,6 +33,7 @@ export default {
   illegalUser: 'Illegal User',
   invalidUser: 'Invalid User',
   invalidId: 'Invalid ID',
+  invalidHashId: 'Invalid Hash ID',
   //
   userInfoNotMatch: 'User Info Not Match',
   bindingFailed: 'Binding Failed',

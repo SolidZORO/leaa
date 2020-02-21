@@ -385,7 +385,7 @@ export const masterRoutes: IRouteItem[] = [
         name: 'Edit Zan',
         namei18n: '_route:editZan',
         permission: 'zan.item-read',
-        path: '/zans/:hashId',
+        path: '/zans/:uuid',
         icon: 'ri-thumb-up-line',
         LazyComponent: React.lazy(() => import(/* webpackChunkName: 'EditZan' */ '../pages/Zan/EditZan/EditZan')),
         exact: true,

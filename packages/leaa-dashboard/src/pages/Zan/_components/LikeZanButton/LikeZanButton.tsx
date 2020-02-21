@@ -13,7 +13,7 @@ import { msgUtil } from '@leaa/dashboard/src/utils';
 import style from './style.module.less';
 
 interface IProps {
-  hashId?: string;
+  uuid?: string;
   loading?: boolean;
   className?: string;
   showInput?: boolean;
@@ -24,18 +24,18 @@ interface IProps {
 export const LikeZanButton = (props: IProps) => {
   const { t } = useTranslation();
 
-  const [zanUuid, setZanUuid] = useState<string | undefined>(props.hashId);
+  const [zanUuid, setZanUuid] = useState<string | undefined>(props.uuid);
 
-  useEffect(() => setZanUuid(props.hashId), [props.hashId]);
+  useEffect(() => setZanUuid(props.uuid), [props.uuid]);
 
   // mutation
   const [likeZanMutate, likeZanMutation] = useMutation<{ zan: Zan }>(LIKE_ZAN, {
-    variables: { hashId: zanUuid },
+    variables: { uuid: zanUuid },
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
     onCompleted(e) {
       msgUtil.message(t('_page:Zan.liked'));
     },
-    refetchQueries: () => [{ query: GET_ZAN, variables: { hashId: zanUuid } }],
+    refetchQueries: () => [{ query: GET_ZAN, variables: { uuid: zanUuid } }],
   });
 
   const buttonSize = props.size || 'small';

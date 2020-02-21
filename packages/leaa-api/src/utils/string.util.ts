@@ -45,21 +45,23 @@ const md5 = (str: string): string => {
 const hashids = new Hashids(envConfig.HASHIDS_SALT, 8, 'abcdefghijkmnpqrstuvwxyz123456789');
 
 const encodeId = (n: number, gqlCtx?: IGqlCtx): string => {
+  console.log('encodeId-encodeId-encodeId-encodeId-encodeId');
   if (typeof n === 'undefined') throw msgUtil.error({ t: ['_error:notFoundId'], gqlCtx });
 
   const result = hashids.encode(n);
 
-  if (!result) throw msgUtil.error({ t: ['_error:invalidId'], gqlCtx });
+  if (!result) throw msgUtil.error({ t: ['_error:invalidHashId'], gqlCtx });
 
   return result;
 };
 
 const decodeId = (s: string, gqlCtx?: IGqlCtx): number => {
+  console.log('decodeId-decodeId-decodeId-decodeId-decodeId');
   if (typeof s === 'undefined') throw msgUtil.error({ t: ['_error:notFoundId'], gqlCtx });
 
   const result = Number(hashids.decode(s));
 
-  if (Number.isNaN(result) || result === 0) throw msgUtil.error({ t: ['_error:invalidId'], gqlCtx });
+  if (Number.isNaN(result) || result === 0) throw msgUtil.error({ t: ['_error:invalidHashId'], gqlCtx });
 
   return result;
 };

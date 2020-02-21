@@ -11,8 +11,7 @@ import { IdTag } from '../IdTag/IdTag';
 import style from './style.module.less';
 
 interface IProps {
-  hashid?: number | string | undefined | any;
-  id?: number | string | undefined;
+  id: number | string | undefined;
   fieldName?: React.ReactNode;
   title?: React.ReactNode;
   extra?: React.ReactNode;
@@ -37,7 +36,7 @@ export const TableColumnDeleteButton = (props: IProps) => {
             ) : (
               <QuestionCircleOutlined className={style['icon-question']} />
             )}
-            {t('_comp:TableColumnDeleteButton.confirmDeleteItem')} {props.hashid && <IdTag id={props.hashid} />}{' '}
+            {t('_comp:TableColumnDeleteButton.confirmDeleteItem')} {props.id && <IdTag id={props.id} />}{' '}
             <em>{props.fieldName}</em> ?
           </span>
         }

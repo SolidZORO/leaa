@@ -33,6 +33,7 @@ export default {
   illegalUser: '非法用户',
   invalidUser: '无效用户',
   invalidId: '无效 ID',
+  invalidHashId: '无效 Hash ID',
   //
   userInfoNotMatch: '用户信息不匹配',
   bindingFailed: '绑定失败',

@@ -3,7 +3,8 @@ import gql from 'graphql-tag';
 export const CREATE_ZAN = gql`
   mutation($zan: CreateZanInput!) {
     createZan(zan: $zan) {
-      hashId
+      id
+      uuid
       title
       description
       status
@@ -12,9 +13,10 @@ export const CREATE_ZAN = gql`
 `;
 
 export const UPDATE_ZAN = gql`
-  mutation($hashId: String!, $zan: UpdateZanInput!) {
-    updateZan(hashId: $hashId, zan: $zan) {
-      hashId
+  mutation($id: Int!, $zan: UpdateZanInput!) {
+    updateZan(id: $id, zan: $zan) {
+      id
+      uuid
       title
       description
       status
@@ -23,27 +25,30 @@ export const UPDATE_ZAN = gql`
 `;
 
 export const DELETE_ZAN = gql`
-  mutation($hashId: String!) {
-    deleteZan(hashId: $hashId) {
-      hashId
+  mutation($id: Int!) {
+    deleteZan(id: $id) {
+      id
+      uuid
       title
     }
   }
 `;
 
 export const LIKE_ZAN = gql`
-  mutation($hashId: String!) {
-    likeZan(hashId: $hashId) {
-      hashId
+  mutation($uuid: String!) {
+    likeZan(uuid: $uuid) {
+      id
+      uuid
       title
     }
   }
 `;
 
 export const DELETE_ZAN_USER = gql`
-  mutation($hashId: String!, $userId: Int!) {
-    deleteZanUser(hashId: $hashId, userId: $userId) {
-      hashId
+  mutation($uuid: String!, $userId: Int!) {
+    deleteZanUser(uuid: $uuid, userId: $userId) {
+      id
+      uuid
       title
     }
   }

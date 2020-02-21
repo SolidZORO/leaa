@@ -23,8 +23,8 @@ export const ZanUsersForm = (props: IProps) => {
   const { t } = useTranslation();
 
   // mutation
-  const [submitVariables, setSubmitVariables] = useState<{ hashId?: string; userId?: number }>({
-    hashId: props.item?.hashId,
+  const [submitVariables, setSubmitVariables] = useState<{ uuid?: string; userId?: number }>({
+    uuid: props.item?.uuid,
     userId: 0,
   });
   const [likeZanMutate, likeZanMutation] = useMutation<{ zan: Zan }>(DELETE_ZAN_USER, {
@@ -33,12 +33,12 @@ export const ZanUsersForm = (props: IProps) => {
     onCompleted(e) {
       msgUtil.message(t('_page:Zan.deletedLikeUser'));
     },
-    refetchQueries: () => [{ query: GET_ZAN, variables: { hashId: props.item?.hashId } }],
+    refetchQueries: () => [{ query: GET_ZAN, variables: { uuid: props.item?.uuid } }],
   });
 
   const deleteZanUser = async (userId: number) => {
     await setSubmitVariables({
-      hashId: props.item?.hashId,
+      uuid: props.item?.uuid,
       userId,
     });
     await likeZanMutate();
@@ -50,7 +50,7 @@ export const ZanUsersForm = (props: IProps) => {
         title={
           <>
             <span>{t('_page:Zan.zanUserList')}</span>
-            <LikeZanButton hashId={props.item?.hashId} />
+            <LikeZanButton uuid={props.item?.uuid} />
 
             <div className={style['creator-info']}>
               <small>{t('_lang:creator')}</small>
@@ -60,6 +60,20 @@ export const ZanUsersForm = (props: IProps) => {
         }
       >
         <ZanProgress item={props.item} />
+
+        <div className={style['user-avatar-list']}>
+          {props.item?.users?.map(user => (
+            <div key={user.id} className={style['user-avatar-item']}>
+              <ConfirmDeleteButton
+                opacity={1}
+                loading={likeZanMutation.loading}
+                onClick={() => deleteZanUser(user.id)}
+                className={style['delete-user']}
+              />
+              <UserAvatar url={user.avatar_url} id={user.id} size={64} border={2} className={style['user-avatar']} />
+            </div>
+          ))}
+        </div>
       </FormCard>
     </div>
   );

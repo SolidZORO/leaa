@@ -71,7 +71,7 @@ export const ZanInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
                 rules={[{ required: true }]}
                 label={
                   <span>
-                    {t('_lang:title')} {props.item && <IdTag id={props.item?.hashId} className={style['hashid-tag']} />}
+                    {t('_lang:title')} {props.item && <IdTag id={props.item?.uuid} className={style['uuid-tag']} />}
                   </span>
                 }
               >

@@ -1,9 +1,12 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Injectable } from '@nestjs/common';
 import { stringUtil } from '@leaa/api/src/utils';
+import { Zan } from '@leaa/common/src/entrys';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Controller('/test')
 export class TestController {
-  constructor() {}
+  constructor(@InjectRepository(Zan) private readonly zanRepository: Repository<Zan>) {}
 
   @Get('/hashids')
   async hashids() {
@@ -14,5 +17,12 @@ export class TestController {
     }
 
     return `<code>${hashidsArr.join(' ')}</code>`;
+  }
+
+  @Get('/metadata')
+  async metadata() {
+    console.log(Object.keys(this.zanRepository.metadata.propertiesMap));
+
+    return 'metadata';
   }
 }

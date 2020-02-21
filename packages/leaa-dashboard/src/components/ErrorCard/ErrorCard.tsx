@@ -23,7 +23,8 @@ export const ErrorCard = (props: IProps) => {
 
   useEffect(() => {
     if (message) {
-      notification.error({ message: msgUtil.formatGqlmessage(message), className: style['container'] });
+      // @ts-ignore
+      notification.error({ message: msgUtil.error(message), className: style['container'] });
     }
   }, [message]);
 

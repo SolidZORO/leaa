@@ -97,6 +97,7 @@ describe('AttachmentService', () => {
     };
 
     it('should upload attachment _1x', async () => {
+      // @ts-ignore
       const file: Express.Multer.File = {
         ...fileBase,
         originalname: 'test_1x.png',
@@ -123,6 +124,7 @@ describe('AttachmentService', () => {
     });
 
     it('should upload attachment _2x', async () => {
+      // @ts-ignore
       const file: Express.Multer.File = {
         ...fileBase,
         originalname: 'test_2x.png',
