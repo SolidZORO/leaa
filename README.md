@@ -11,8 +11,8 @@ Leaa is a monorepo CMS (Content Management System) built with Nest.js, Next.js, 
 
 - [x] **\_leaa-common**
 - [x] **leaa-api** ([demo](https://test-leaa-api.herokuapp.com)) / backend (Nest.js + TypeGraphQL + MySQL + Docker Compose)
-- [x] **leaa-dashboard** ([demo](https://test-leaa-dashboard.solidzoro.now.sh)) / dashboard (React.js + Antd + MobX + Apollo / GraphQL)
-- [x] **leaa-www** ([demo](https://test-leaa-www.solidzoro.now.sh)) / website (Next.js + GraphQL)
+- [x] **leaa-dashboard** ([demo](https://leaa-dashboard.now.sh)) / dashboard (React.js + Antd + MobX + Apollo / GraphQL)
+- [x] **leaa-www** ([demo](https://leaa-www.now.sh)) / website (Next.js + GraphQL)
 - [x] **leaa-miniprogram** ([independence-repo](https://github.com/SolidZORO/leaa-miniprogram)) / wechat-miniprogram (Taro.js + Taro-ui + GraphQL)
 - [x] **leaa-app** ([independence-repo](https://github.com/SolidZORO/leaa-app)) / iOS and Android (expo + GraphQL)
 
@@ -26,7 +26,7 @@ View the `README.md` of each sub-directory in `packages`. You may need to look a
 
 You can click `demo` link online preview, all demos are deployed in `heroku` and `now.sh`, but the response is very SLOW, please be patient. all demos support responsive web design.
 
-### Dashboard ([demo](https://test-leaa-dashboard.solidzoro.now.sh))
+### Dashboard ([demo](https://leaa-dashboard.now.sh))
 
 ##### dashboard-login
 
@@ -36,7 +36,7 @@ You can click `demo` link online preview, all demos are deployed in `heroku` and
 
 ![dashboard-user-edit](https://raw.githubusercontent.com/SolidZORO/leaa/master/designs/ui/dashboard-user-edit.png)
 
-### WWW ([demo](https://test-leaa-www.solidzoro.now.sh))
+### WWW ([demo](https://leaa-www.now.sh))
 
 ##### www-index
 
@@ -75,7 +75,7 @@ You can click `demo` link online preview, all demos are deployed in `heroku` and
   - [x] Logger
   - [x] Seed
   - [x] Setting
-- [x] **leaa-dashboard** ([demo](https://test-leaa-dashboard.solidzoro.now.sh)) / dashboard (React.js + Antd + MobX + Apollo / GraphQL)
+- [x] **leaa-dashboard** ([demo](https://leaa-dashboard.now.sh)) / dashboard (React.js + Antd + MobX + Apollo / GraphQL)
   - [x] Auth
   - [x] User
   - [x] Role
@@ -93,7 +93,7 @@ You can click `demo` link online preview, all demos are deployed in `heroku` and
   - [x] Error Boundary
   - [x] Responsive Design
   - [x] i18n
-- [x] **leaa-www** ([demo](https://test-leaa-www.solidzoro.now.sh)) / website (Next.js + GraphQL)
+- [x] **leaa-www** ([demo](https://leaa-www.now.sh)) / website (Next.js + GraphQL)
   - [x] Home
   - [x] Account
     - [x] Login
