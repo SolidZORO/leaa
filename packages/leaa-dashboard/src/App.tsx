@@ -10,9 +10,9 @@ import enUS from 'antd/lib/locale-provider/en_US';
 
 import { apolloClient, history } from '@leaa/dashboard/src/libs';
 // cannot use deconstruction components dir in here (App.tsx)
-import { ErrorBoundary } from '@leaa/dashboard/src/components/ErrorBoundary';
-import { RefreshflatPermissions } from '@leaa/dashboard/src/components/RefreshflatPermissions';
-import { RefreshSetting } from '@leaa/dashboard/src/components/RefreshSetting';
+import { ErrorBoundary } from '@leaa/dashboard/src/components/ErrorBoundary/ErrorBoundary';
+import { RefreshflatPermissions } from '@leaa/dashboard/src/components/RefreshflatPermissions/RefreshflatPermissions';
+import { RefreshSetting } from '@leaa/dashboard/src/components/RefreshSetting/RefreshSetting';
 
 import { masterRoute, authRoute, otherRoute, testWithoutLayoutRoute } from '@leaa/dashboard/src/routes';
 import { initStore, StoreProvider } from '@leaa/dashboard/src/stores';

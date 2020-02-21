@@ -1,1 +1,0 @@
-export { EntryInfoDate } from './EntryInfoDate';

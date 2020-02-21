@@ -1,1 +1,0 @@
-export { CouponItem } from './CouponItem';

@@ -1,1 +1,0 @@
-export { IdTag } from './IdTag';

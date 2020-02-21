@@ -1,1 +1,0 @@
-export { ErrorCard } from './ErrorCard';
