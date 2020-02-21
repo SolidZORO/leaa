@@ -69,9 +69,10 @@ export class TagService {
     if (!fs.existsSync(dictConfig.TAGS_DICT_PATH)) {
       loggerUtil.log(`syncTagsToDictFile, not exists ${dictConfig.DICT_DIR}`, CLS_NAME);
 
-      mkdirp(dictConfig.DICT_DIR, err =>
-        loggerUtil.log(`syncTagsToDictFile, mkdirp ${dictConfig.DICT_DIR} ${JSON.stringify(err)}`, CLS_NAME),
-      );
+      // @ts-ignore
+      await mkdirp(dictConfig.DICT_DIR, (err: any): any => {
+        return loggerUtil.log(`syncTagsToDictFile, mkdirp ${dictConfig.DICT_DIR} ${JSON.stringify(err)}`, CLS_NAME);
+      });
     }
 
     const [items, total] = await this.tagRepository.findAndCount({ select: ['name'] });
