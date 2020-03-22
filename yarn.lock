@@ -3379,19 +3379,6 @@
   dependencies:
     defer-to-connect "^1.0.1"
 
-"@toast-ui/editor@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.npm.taobao.org/@toast-ui/editor/download/@toast-ui/editor-2.0.0.tgz#f793a0337560e03a0eb92ae1a42697a4b9d464d5"
-  dependencies:
-    "@types/codemirror" "0.0.71"
-    codemirror "^5.48.4"
-
-"@toast-ui/react-editor@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.npm.taobao.org/@toast-ui/react-editor/download/@toast-ui/react-editor-2.0.0.tgz#4d15f5e9babd797a94e35b764f8f4a86e5e212be"
-  dependencies:
-    "@toast-ui/editor" "^2.0.0"
-
 "@tootallnate/once@1":
   version "1.0.0"
   resolved "https://registry.npm.taobao.org/@tootallnate/once/download/@tootallnate/once-1.0.0.tgz#9c13c2574c92d4503b005feca8f2e16cc1611506"
@@ -3510,12 +3497,6 @@
   resolved "https://registry.npm.taobao.org/@types/clean-css/download/@types/clean-css-4.2.1.tgz#cb0134241ec5e6ede1b5344bc829668fd9871a8d"
   dependencies:
     "@types/node" "*"
-
-"@types/codemirror@0.0.71":
-  version "0.0.71"
-  resolved "https://registry.npm.taobao.org/@types/codemirror/download/@types/codemirror-0.0.71.tgz#861f1bcb3100c0a064567c5400f2981cf4ae8ca7"
-  dependencies:
-    "@types/tern" "*"
 
 "@types/codemirror@^0.0.88":
   version "0.0.88"
@@ -3670,6 +3651,12 @@
     "@types/fs-capacitor" "*"
     "@types/koa" "*"
     graphql "^14.5.3"
+
+"@types/hashids@^1.0.30":
+  version "1.0.30"
+  resolved "https://registry.npm.taobao.org/@types/hashids/download/@types/hashids-1.0.30.tgz#c0a056b25c5b13c80bf330fb8d379ac4d4049999"
+  dependencies:
+    "@types/node" "*"
 
 "@types/history@*":
   version "4.7.3"
@@ -3827,9 +3814,9 @@
   version "1.2.0"
   resolved "https://registry.npm.taobao.org/@types/minimist/download/@types/minimist-1.2.0.tgz#69a23a3ad29caf0097f06eda59b361ee2f0639f6"
 
-"@types/mkdirp@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.npm.taobao.org/@types/mkdirp/download/@types/mkdirp-1.0.0.tgz#16ce0eabe4a9a3afe64557ad0ee6886ec3d32927"
+"@types/mkdirp@0.5.2":
+  version "0.5.2"
+  resolved "https://registry.npm.taobao.org/@types/mkdirp/download/@types/mkdirp-0.5.2.tgz#503aacfe5cc2703d5484326b1b27efa67a339c1f"
   dependencies:
     "@types/node" "*"
 
@@ -6724,10 +6711,6 @@ codecov@^3.6.5:
     js-yaml "3.13.1"
     teeny-request "6.0.1"
     urlgrey "0.4.4"
-
-codemirror@^5.48.4:
-  version "5.49.2"
-  resolved "https://registry.npm.taobao.org/codemirror/download/codemirror-5.49.2.tgz?cache=0&sync_timestamp=1571638982850&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fcodemirror%2Fdownload%2Fcodemirror-5.49.2.tgz#c84fdaf11b19803f828b0c67060c7bc6d154ccad"
 
 codemirror@^5.52.2:
   version "5.52.2"
