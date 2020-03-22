@@ -1,5 +1,5 @@
 import { Index, Entity, Column } from 'typeorm';
-import { ObjectType, Field, Int } from 'type-graphql';
+import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { AxAttachmentsObject } from '@leaa/common/src/dtos/ax';
 
 import { Base } from '@leaa/common/src/entrys';

@@ -1,4 +1,4 @@
-import { Field, InputType } from 'type-graphql';
+import { Field, InputType } from '@nestjs/graphql';
 
 import { UpdateAttachmentInput } from './update-attachment.input';
 

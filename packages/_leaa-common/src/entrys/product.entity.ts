@@ -1,5 +1,5 @@
 import { Index, Entity, Column, ManyToMany, JoinTable } from 'typeorm';
-import { ObjectType, Field, Int, Float } from 'type-graphql';
+import { ObjectType, Field, Int, Float } from '@nestjs/graphql';
 
 import { Base, Category, Tag } from '@leaa/common/src/entrys';
 import { ProductAttachmentsObject } from '@leaa/common/src/dtos/product';

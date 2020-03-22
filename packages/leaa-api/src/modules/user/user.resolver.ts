@@ -1,6 +1,5 @@
 import { UseGuards } from '@nestjs/common';
-import { Args, Query, Mutation, Resolver, Parent, ResolveProperty } from '@nestjs/graphql';
-import { Int } from 'type-graphql';
+import { Args, Query, Mutation, Resolver, Parent, ResolveProperty, Int } from '@nestjs/graphql';
 
 import { User, Permission } from '@leaa/common/src/entrys';
 import {

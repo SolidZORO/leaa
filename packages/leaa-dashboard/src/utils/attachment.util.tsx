@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React from 'react';
 import axios from 'axios';
-import uuid from 'uuid';
+import * as uuid from 'uuid';
 import { message } from 'antd';
 import { Translation } from 'react-i18next';
 

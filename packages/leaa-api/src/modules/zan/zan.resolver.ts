@@ -1,6 +1,5 @@
 import { UseGuards } from '@nestjs/common';
-import { Args, Query, Mutation, Resolver } from '@nestjs/graphql';
-import { Int } from 'type-graphql';
+import { Args, Query, Mutation, Resolver, Int } from '@nestjs/graphql';
 
 import { Zan } from '@leaa/common/src/entrys';
 import { ZansArgs, ZansWithPaginationObject, ZanArgs, CreateZanInput, UpdateZanInput } from '@leaa/common/src/dtos/zan';

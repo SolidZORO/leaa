@@ -1,5 +1,5 @@
 import { IsNotEmpty, IsOptional } from 'class-validator';
-import { Field, InputType, Int, Float } from 'type-graphql';
+import { Field, InputType, Int, Float } from '@nestjs/graphql';
 
 @InputType()
 export class CreateProductInput {

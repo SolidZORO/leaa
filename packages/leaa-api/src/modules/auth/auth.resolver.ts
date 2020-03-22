@@ -1,6 +1,5 @@
 import { UseGuards } from '@nestjs/common';
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { Int } from 'type-graphql';
+import { Args, Mutation, Query, Resolver, Int } from '@nestjs/graphql';
 
 import { Auth, User } from '@leaa/common/src/entrys';
 import { PermissionsGuard } from '@leaa/api/src/guards';

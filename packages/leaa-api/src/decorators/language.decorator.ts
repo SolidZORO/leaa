@@ -1,7 +1,7 @@
-import { createParamDecorator } from '@nestjs/common';
+import { createParamDecorator, ExecutionContext } from '@nestjs/common';
 
-export const Language = createParamDecorator((data, req) => {
-  const [, , ctx] = req;
+export const Language = createParamDecorator((data: unknown, executionCtx: ExecutionContext) => {
+  const [, , ctx] = executionCtx.getArgs();
 
-  return ctx.req.headers.lang;
+  return ctx?.headers?.lang;
 });

@@ -1,7 +1,7 @@
-import { createParamDecorator } from '@nestjs/common';
+import { createParamDecorator, ExecutionContext } from '@nestjs/common';
 
-export const CurrentUser = createParamDecorator((data, req) => {
-  const [, , ctx] = req;
+export const CurrentUser = createParamDecorator((data: unknown, executionCtx: ExecutionContext) => {
+  const [, , ctx] = executionCtx.getArgs();
 
-  return ctx.user;
+  return ctx?.user;
 });

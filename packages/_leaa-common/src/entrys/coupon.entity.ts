@@ -1,5 +1,5 @@
 import { Index, Entity, Column } from 'typeorm';
-import { ObjectType, Field, Int, Float } from 'type-graphql';
+import { ObjectType, Field, Int, Float } from '@nestjs/graphql';
 
 import { Base } from '@leaa/common/src/entrys';
 

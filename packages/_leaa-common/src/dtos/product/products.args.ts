@@ -1,4 +1,4 @@
-import { ArgsType, Field, Int } from 'type-graphql';
+import { ArgsType, Field, Int } from '@nestjs/graphql';
 
 import { ItemsArgs } from '@leaa/common/src/dtos/_common';
 

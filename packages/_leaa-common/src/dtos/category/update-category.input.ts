@@ -1,5 +1,5 @@
 import { IsOptional } from 'class-validator';
-import { Field, InputType, Int } from 'type-graphql';
+import { Field, InputType, Int } from '@nestjs/graphql';
 
 import { Category } from '@leaa/common/src/entrys';
 

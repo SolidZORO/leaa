@@ -1,4 +1,4 @@
-import { ArgsType, Field, Int } from 'type-graphql';
+import { ArgsType, Field, Int } from '@nestjs/graphql';
 
 export type IOrderSort = 'ASC' | 'DESC' | undefined;
 
