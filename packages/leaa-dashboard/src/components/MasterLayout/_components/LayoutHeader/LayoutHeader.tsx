@@ -16,17 +16,15 @@ interface IProps extends RouteComponentProps {
 
 export const LayoutHeader = (props: IProps) => (
   <Layout.Header className={style['full-layout-header']}>
-    <Row justify="space-between" align="middle">
-      <Col className={cx(style['full-layout-breadcrumb'], 'g-full-layout-breadcrumb')}>
-        <Breadcrumb {...props} />
-      </Col>
+    <div className={cx(style['full-layout-breadcrumb'], 'g-full-layout-breadcrumb')}>
+      <Breadcrumb {...props} />
+    </div>
 
-      <Col className={cx(style['full-layout-toolsbar'], 'g-full-layout-toolsbar')}>
-        <div className={cx(style['switch-language-wrapper'], 'switch-language-wrapper')}>
-          <SwitchLanguage className={style['switch-language']} placement="topLeft" />
-        </div>
-        <UserMenu {...props} />
-      </Col>
-    </Row>
+    <div className={cx(style['full-layout-toolsbar'], 'g-full-layout-toolsbar')}>
+      <div className={cx(style['switch-language-wrapper'], 'switch-language-wrapper')}>
+        <SwitchLanguage className={style['switch-language']} placement="topLeft" />
+      </div>
+      <UserMenu {...props} />
+    </div>
   </Layout.Header>
 );

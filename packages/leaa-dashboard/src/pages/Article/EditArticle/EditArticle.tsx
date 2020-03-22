@@ -67,18 +67,13 @@ export default (props: IPage) => {
       ...extData,
     };
 
-    if (
-      articleContentRef.current?.getInstance()?.getHtml() &&
-      typeof articleContentRef.current.getInstance().getHtml() !== 'undefined'
-    ) {
-      submitData.content = articleContentRef.current.getInstance().getHtml();
-    }
+    submitData.content = articleContentRef.current?.props.value;
 
     if (typeof submitData.categoryIds === 'undefined') {
       submitData.categoryIds = null;
     }
 
-    submitData.tagIds = articleTags?.length ? articleTags.map(item => Number(item.id)) : null;
+    submitData.tagIds = articleTags?.length ? articleTags.map((item) => Number(item.id)) : null;
 
     await setSubmitVariables({ id: Number(id), article: submitData });
     await updateArticleMutate();

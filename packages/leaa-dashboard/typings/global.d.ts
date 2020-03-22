@@ -8,7 +8,7 @@ declare namespace NodeJS {
 
 // declare module '@ant-design/icons';
 declare module 'to-mark';
-declare module '@toast-ui/react-editor';
+// declare module '@toast-ui/react-editor';
 // declare module '@toast-ui/react-editor' {
 //   export default tuiEditor.Editor;
 // }

@@ -56,26 +56,26 @@ export class DivisionService {
   }
 
   formatDivision(items: any[], type: 'json' | 'tree' = 'json'): string | void {
-    const provinces = items.filter(v => v.code && !v.province_code && !v.city_code);
-    const cities = items.filter(v => v.code && v.province_code && !v.city_code);
-    const areas = items.filter(v => v.code && v.province_code && v.city_code);
+    const provinces = items.filter((v) => v.code && !v.province_code && !v.city_code);
+    const cities = items.filter((v) => v.code && v.province_code && !v.city_code);
+    const areas = items.filter((v) => v.code && v.province_code && v.city_code);
 
     /* eslint-disable no-return-assign */
     /* eslint-disable no-param-reassign */
-    provinces.forEach(pv => {
+    provinces.forEach((pv) => {
       pv.value = type === 'json' ? pv.name : undefined;
       pv.title = type === 'tree' ? pv.name : undefined;
       pv.children = [];
     });
 
-    cities.forEach(cv => {
+    cities.forEach((cv) => {
       cv.value = type === 'json' ? cv.name : undefined;
       cv.title = type === 'tree' ? cv.name : undefined;
       cv.children = [];
     });
 
-    areas.forEach(av => {
-      const city = cities.find(c => c.code === av.city_code);
+    areas.forEach((av) => {
+      const city = cities.find((c) => c.code === av.city_code);
 
       if (city && city.children) {
         city.children.push({
@@ -89,8 +89,8 @@ export class DivisionService {
       }
     });
 
-    cities.forEach(cv => {
-      const province = provinces.find(p => p.code === cv.province_code);
+    cities.forEach((cv) => {
+      const province = provinces.find((p) => p.code === cv.province_code);
 
       if (province && province.children) {
         province.children.push({
@@ -105,7 +105,7 @@ export class DivisionService {
     });
 
     if (type === 'json') {
-      provinces.forEach(pv => {
+      provinces.forEach((pv) => {
         delete pv.code;
         delete pv.city_code;
         delete pv.province_code;
@@ -121,7 +121,7 @@ export class DivisionService {
     if (!fs.existsSync(divisionConfig.DIVISION_OF_CHINA_FILE_PATH)) {
       loggerUtil.log(`syncDivisionToFile, not exists ${divisionConfig.DIVISION_OF_CHINA_FILE_PATH}`, CLS_NAME);
 
-      mkdirp(divisionConfig.DIVISION_DIR, err =>
+      mkdirp(divisionConfig.DIVISION_DIR, (err) =>
         loggerUtil.log(`syncTagsToDictFile, mkdirp ${divisionConfig.DIVISION_DIR} ${JSON.stringify(err)}`, CLS_NAME),
       );
     }
@@ -144,11 +144,11 @@ export class DivisionService {
 
       let sqlBody = '';
 
-      provinces.forEach(v => {
+      provinces.forEach((v) => {
         sqlBody += `(${Number(v.code)}, '${v.name}', NULL, NULL), `;
       });
 
-      cities.forEach(v => {
+      cities.forEach((v) => {
         sqlBody += `(${Number(v.code)}, '${v.name}', ${Number(v.provinceCode)}, NULL), `;
       });
 
