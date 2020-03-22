@@ -23,7 +23,7 @@ const getSaveFilename = (originalname: string): string => {
 };
 
 const getSignature = async () => {
-  const signatureResult: ISignatureResult = await axios.get(`${envConfig.API_HOST}/attachments/signature`);
+  const signatureResult: ISignatureResult = await axios.get(`${envConfig.API_URL}/attachments/signature`);
 
   if (!signatureResult || !signatureResult.data || !signatureResult.data || !signatureResult.data.uploadEndPoint) {
     message.error(<Translation>{t => t('_lang:uploadError')}</Translation>);

@@ -1,42 +1,53 @@
-const webpackStats = require('./_webpack_stats');
-const webpackConst = require('./_webpack_const');
-const webpackModule = require('./_webpack_module');
-const webpackPlugin = require('./_webpack_plugin');
-const webpackShimming = require('./_webpack_shimming');
-const webpackServerConfig = require('./_webpack_server');
-const webpackOptimization = require('./_webpack_optimization');
+const { WPCONST } = require('./_const');
+const { modules } = require('./_modules');
+const { plugins } = require('./_plugins');
+//
+const { stats } = require('./_stats');
+const { resolve } = require('./_resolve');
+const { externals } = require('./_externals');
+const { devServer } = require('./_devServer');
+const { optimization } = require('./_optimization');
+const { showEnvInfo } = require('./_fn');
 
-// console.log(webpackConst);
-// console.log('\n\n');
-
+// @see https://webpack.docschina.org/configuration/devtool/
 const webpackConfig = {
   entry: { index: './src/index.tsx' },
-  mode: webpackConst.MODE,
-  context: webpackConst.ROOT_DIR,
-  cache: webpackConst.__DEV__,
-  bail: true,
-  watch: webpackConst.IS_SERVER,
-  devServer: webpackServerConfig,
-  stats: webpackStats,
-  resolve: webpackShimming.resolve,
-  module: webpackModule,
-  plugins: webpackPlugin,
-  externals: webpackShimming.externals,
+  context: WPCONST.ROOT_DIR,
+  mode: WPCONST.MODE,
+  watch: WPCONST.IS_SERVER,
+  devtool: WPCONST.DEVTOOL,
+  cache: WPCONST.__DEV__,
+  //
+  stats,
+  devServer,
+  resolve,
+  module: modules,
+  plugins,
+  externals,
+  optimization,
   output: {
     pathinfo: true,
-    path: webpackConst.BUILD_STATICS_DIR,
-    publicPath: webpackConst.CDN_STATICS_DIR_URL,
-    filename: webpackConst.OUTPUT_SCRIPT_FILENAME,
-    chunkFilename: webpackConst.OUTPUT_SCRIPT_CHUNK_FILENAME,
-    sourceMapFilename: webpackConst.OUTPUT_SCRIPT_SOURCEMAP_FILENAME,
+    path: WPCONST.BUILD_STATICS_DIR,
+    publicPath: WPCONST.CDN_DIR_PATH,
+    //
+    // # for PROJECT
+    filename: WPCONST.OUTPUT_SCRIPT_FILENAME,
+    chunkFilename: WPCONST.OUTPUT_SCRIPT_CHUNK_FILENAME,
+    sourceMapFilename: WPCONST.OUTPUT_SCRIPT_SOURCEMAP_FILENAME,
+    //
+    // # for LIBS
+    // filename: 'x.js',
+    // library: 'X',
+    // libraryTarget: 'umd',
+    // libraryExport: 'default',
+    // umdNamedDefine: true,
   },
-  // https://webpack.docschina.org/configuration/devtool/
-  devtool: webpackConst.DEVTOOL,
-  optimization: webpackOptimization,
   node: {
     fs: 'empty',
     path: 'empty',
   },
 };
+
+showEnvInfo();
 
 module.exports = webpackConfig;

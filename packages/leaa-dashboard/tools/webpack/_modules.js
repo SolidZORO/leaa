@@ -2,47 +2,42 @@ const fs = require('fs');
 const lessToJS = require('less-vars-to-js');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-const webpackConst = require('./_webpack_const');
+const { WPCONST } = require('./_const');
 
-const antdModifyVars = lessToJS(fs.readFileSync(`${webpackConst.SRC_DIR}/styles/variables.less`, 'utf8'));
+const antdModifyVars = lessToJS(fs.readFileSync(`${WPCONST.SRC_DIR}/styles/variables.less`, 'utf8'));
 
-// REQUIRE
-const webpackModule = {
+const modules = {
   strictExportPresence: false,
 };
 
-webpackModule.rules = [
+modules.rules = [
   {
-    test: webpackConst.REGX_TS,
-    include: webpackConst.SRC_DIR,
+    test: WPCONST.REGX_TS,
+    include: WPCONST.SRC_DIR,
     exclude: /node_modules/,
-    rules: [
-      {
-        loader: 'babel-loader?cacheDirectory',
-      },
-    ],
+    rules: [{ loader: 'babel-loader?cacheDirectory' }],
+  },
+  {
+    test: WPCONST.REGX_SCRIPT_MAP,
+    rules: [{ loader: 'file-loader' }],
   },
   //
-  // FOR MODULE STYLE
+  // for MODULE STYLE
   {
-    test: webpackConst.REGX_MODULE_STYLE,
+    test: WPCONST.REGX_MODULE_STYLE,
     rules: [
-      {
-        loader: webpackConst.__DEV__ ? 'style-loader' : MiniCssExtractPlugin.loader,
-      },
+      { loader: WPCONST.__DEV__ ? 'style-loader' : MiniCssExtractPlugin.loader },
       {
         loader: 'css-loader',
         options: {
           importLoaders: 2,
           sourceMap: false,
           modules: {
-            localIdentName: webpackConst.LOADER_CSS_LOADERR_LOCAL_IDENT_NAME,
+            localIdentName: WPCONST.LOADER_CSS_LOADERR_LOCAL_IDENT_NAME,
           },
         },
       },
-      {
-        loader: 'postcss-loader',
-      },
+      { loader: 'postcss-loader' },
       {
         loader: 'less-loader',
         options: {
@@ -53,14 +48,12 @@ webpackModule.rules = [
     ],
   },
   //
-  // FOR STYLE
+  // for STYLE
   {
-    test: webpackConst.REGX_STYLE,
-    exclude: webpackConst.REGX_MODULE_STYLE,
+    test: WPCONST.REGX_STYLE,
+    exclude: [WPCONST.REGX_MODULE_STYLE],
     use: [
-      {
-        loader: webpackConst.__DEV__ ? 'style-loader' : MiniCssExtractPlugin.loader,
-      },
+      { loader: WPCONST.__DEV__ ? 'style-loader' : MiniCssExtractPlugin.loader },
       {
         loader: 'css-loader',
         options: {
@@ -68,9 +61,7 @@ webpackModule.rules = [
           sourceMap: false,
         },
       },
-      {
-        loader: 'postcss-loader',
-      },
+      { loader: 'postcss-loader' },
       {
         loader: 'less-loader',
         options: {
@@ -83,15 +74,14 @@ webpackModule.rules = [
   //
   // IMAGE
   {
-    test: webpackConst.REGX_IMAGE,
-    exclude: /src[\\/]assets[\\/]fonts/,
+    test: WPCONST.REGX_IMAGE,
+    exclude: [/src[\\/]assets[\\/]fonts/],
     use: [
       {
         loader: 'url-loader',
         options: {
-          // limit: 8192,
-          limit: 1024,
-          name: `images/${webpackConst.STATIC_ASSET_NAME}`,
+          limit: 8192,
+          name: `images/${WPCONST.STATIC_ASSET_NAME}`,
         },
       },
     ],
@@ -99,8 +89,8 @@ webpackModule.rules = [
   //
   // FONT
   {
-    test: webpackConst.REGX_FONT,
-    include: /src[\\/]assets[\\/]fonts/,
+    test: WPCONST.REGX_FONT,
+    // include: /src[\\/]assets[\\/]fonts/,
     use: [
       {
         loader: 'url-loader',
@@ -113,4 +103,4 @@ webpackModule.rules = [
   },
 ];
 
-module.exports = webpackModule;
+module.exports = { modules };

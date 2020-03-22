@@ -5,7 +5,22 @@
 
 /_documents
 /public
-/_build
+
+/.cache
+/_cache
+/cache
+
 /.build
+/_build
+/build
+
+/.dist
+/_dist
+/dist
+
+/.deploy
+/_deploy
+/deploy
+
 /tools/webpack
 /src/assets/fonts/**/*.js

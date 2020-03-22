@@ -2,10 +2,10 @@ export interface IDotEnv {
   DEMO_MODE: boolean;
   DEBUG_MODE: boolean;
   SITE_NAME: string;
-  PROTOCOL: 'http' | 'https';
-  PORT: number;
-  BASE_HOST: string;
-  API_HOST: string;
+  SERVER_PROTOCOL: 'http' | 'https';
+  SERVER_PORT: number;
+  SERVER_HOST: string;
+  API_URL: string;
   GRAPHQL_ENDPOINT: string;
   ANALYTICS_CODE: string;
 }

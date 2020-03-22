@@ -18,5 +18,5 @@
 /public/assets
 
 /tools/module-alias
-/tools/webpack
+/packages/leaa-dashboard/tools/webpack2
 /src/assets/fonts/**/*.js

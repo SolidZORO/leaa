@@ -18,5 +18,23 @@
     }
   },
   "include": ["src/**/*", "typings/*"],
-  "exclude": ["node_modules", "dist", "_dist"]
+  "exclude": [
+    "node_modules",
+    //
+    "/.cache",
+    "/_cache",
+    "/cache",
+    //
+    "/.build",
+    "/_build",
+    "/build",
+    //
+    "/.dist",
+    "/_dist",
+    "/dist",
+    //
+    "/.deploy",
+    "/_deploy",
+    "/deploy"
+  ]
 }

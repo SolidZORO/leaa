@@ -80,7 +80,7 @@ export default (props: IPage) => {
     onCompleted({ loginByTicket }) {
       setLogin(loginByTicket);
     },
-    onError: e => {
+    onError: (e) => {
       props.history.push('/login');
 
       return msgUtil.error(e.message);
