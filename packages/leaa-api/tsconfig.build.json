@@ -1,7 +1,7 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "_dist",
+    "outDir": "_build",
     "isolatedModules": false,
     "declaration": false,
     "noEmit": false

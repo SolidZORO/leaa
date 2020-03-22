@@ -1,5 +1,5 @@
 {
-  "name": "test-leaa-dashboard",
+  "name": "leaa-dashboard",
   "version": 2,
   "env": { "NODE_ENV": "production" },
   "builds": [{ "src": "**", "use": "@now/static" }],

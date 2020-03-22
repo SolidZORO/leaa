@@ -19,7 +19,7 @@ DEPLOY_COMMIT="update AUTO-DEPLOY ${DEPLOY_HEROKU_APP_NAME} @ ${LOCAL_TIME}"
 CONFIRM_MESSAGE=$(printf "<%s> \n\n🤖 DEPLOY %s? \n\n(Enter/Esc)" "$(pwd)" "$DEPLOY_HEROKU_APP_NAME")
 
 DEPLOY_DIR="./_deploy"
-DIST_DIR="./${DEPLOY_DIR}/_dist"
+DIST_DIR="./${DEPLOY_DIR}/_build"
 WWW_DIR="./${DIST_DIR}/leaa-www"
 
 read -p "${CONFIRM_MESSAGE}" -n 1 -r KEY
@@ -30,7 +30,7 @@ if [[ $KEY = "" ]]; then
 
     yarn build
 
-    cp -fr ./_dist ${DEPLOY_DIR}
+    cp -fr ./_build ${DEPLOY_DIR}
     cp -fr ./package.json ${DEPLOY_DIR}
     cp -fr ./index.js ${DEPLOY_DIR}
 

@@ -2,7 +2,7 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "baseUrl": ".",
-    "outDir": "_dist",
+    "outDir": "_build",
     "allowJs": true,
     "jsx": "preserve",
     "target": "es2018",
@@ -25,5 +25,23 @@
     }
   },
   "include": ["src/**/*", "typings/*", "server.ts"],
-  "exclude": ["node_modules", "_dist"]
+  "exclude": [
+    "node_modules",
+    //
+    "/.cache",
+    "/_cache",
+    "/cache",
+    //
+    "/.build",
+    "/_build",
+    "/build",
+    //
+    "/.dist",
+    "/_dist",
+    "/dist",
+    //
+    "/.deploy",
+    "/_deploy",
+    "/deploy"
+  ]
 }

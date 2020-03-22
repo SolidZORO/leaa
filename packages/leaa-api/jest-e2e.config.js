@@ -21,6 +21,7 @@ module.exports = {
     '!**/node_modules/**',
     '!**/vendor/**',
     '!**/dist/**',
+    '!**/_build/**',
     '!**/_dist/**',
     '!**/_deploy/**',
   ],

@@ -3,7 +3,7 @@
 cd "$(dirname "$0")" || exit
 
 DEPLOY_DIR="./_deploy"
-DIST_DIR="./${DEPLOY_DIR}/_dist"
+DIST_DIR="./${DEPLOY_DIR}/_build"
 API_DIR="./${DIST_DIR}/leaa-api"
 
 # ROOT DIR
@@ -11,7 +11,7 @@ rm -fr ${DEPLOY_DIR} && mkdir -p ${DEPLOY_DIR}
 
 yarn build
 
-cp -fr ./_dist ${DEPLOY_DIR}
+cp -fr ./_build ${DEPLOY_DIR}
 
 cp -fr ./index.js ${DEPLOY_DIR}
 cp -fr ./.env ${DEPLOY_DIR}/.env.production

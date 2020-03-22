@@ -21,7 +21,7 @@
     "---------------------------------------------------------------------- DEV ----": "----",
     "dev-server": "NODE_ENV=development cross-env webpack-dev-server --config ./tools/webpack/webpack.config.js -r dotenv/config --progress --hot --inline --server --host 0.0.0.0",
     "dev": "NODE_ENV=development yarn dev-server",
-    "clear": "cross-env rimraf _dist",
+    "clear": "cross-env rimraf _build",
     "---------------------------------------------------------------------- PROD ----": "----",
     "build": "yarn clear && NODE_ENV=production cross-env webpack --config ./tools/webpack/webpack.config.js --progress --release",
     "---------------------------------------------------------------------- ALIAS ----": "----",

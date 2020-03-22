@@ -14,11 +14,11 @@ module.exports = {
 
   SITE_NAME: process.env.SITE_NAME,
   MODE: process.env.MODE,
-  PROTOCOL: process.env.PROTOCOL,
-  PORT: process.env.PORT,
-  BASE_HOST: process.env.BASE_HOST,
+  SERVER_PROTOCOL: process.env.SERVER_PROTOCOL,
+  SERVER_PORT: process.env.SERVER_PORT,
+  SERVER_HOST: process.env.SERVER_HOST,
   //
-  API_HOST: process.env.API_HOST,
+  API_URL: process.env.API_URL,
   GRAPHQL_ENDPOINT: process.env.GRAPHQL_ENDPOINT,
   //
   ANALYTICS_CODE: process.env.ANALYTICS_CODE,

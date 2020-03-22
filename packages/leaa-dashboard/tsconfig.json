@@ -2,7 +2,7 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "baseUrl": ".",
-    "outDir": "_dist",
+    "outDir": "_build",
     "allowJs": false,
     "jsx": "react",
     "target": "es6",

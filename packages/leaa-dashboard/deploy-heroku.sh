@@ -28,7 +28,7 @@ if [[ $KEY = "" ]]; then
 
     yarn build
 
-    cp -fr ./_dist/* ${DEPLOY_DIR}
+    cp -fr ./_build/* ${DEPLOY_DIR}
 
     cp -fr ./serverless/heroku/* ${DEPLOY_DIR}
     # cp -fr ./serverless/netlify/* ${DEPLOY_DIR}

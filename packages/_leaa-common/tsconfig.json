@@ -1,7 +1,7 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "_dist",
+    "outDir": "_build",
     "baseUrl": ".",
     //
     "module": "commonjs",
@@ -16,5 +16,23 @@
     }
   },
   "include": ["src/**/*", "typings/*"],
-  "exclude": ["node_modules", "_dist"]
+  "exclude": [
+    "node_modules",
+    //
+    "/.cache",
+    "/_cache",
+    "/cache",
+    //
+    "/.build",
+    "/_build",
+    "/build",
+    //
+    "/.dist",
+    "/_dist",
+    "/dist",
+    //
+    "/.deploy",
+    "/_deploy",
+    "/deploy"
+  ]
 }

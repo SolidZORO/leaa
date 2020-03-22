@@ -15,12 +15,13 @@ module.exports = {
   // 🔰 Tips, if `tsconfig.json`, here will be open
   moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>/' }),
   //
-  modulePathIgnorePatterns: ['<rootDir>/_dist/', '<rootDir>/_deploy/'],
+  modulePathIgnorePatterns: ['<rootDir>/.cache/', '<rootDir>/_build/', '<rootDir>/_deploy/'],
   testRegex: 'src.*\\.(test|spec).(ts|tsx|js)$',
   collectCoverageFrom: [
     'src/**/*.{js,jsx,tsx,ts}',
     '!**/node_modules/**',
     '!**/vendor/**',
+    '!**/_build/**',
     '!**/dist/**',
     '!**/_dist/**',
     '!**/_deploy/**',

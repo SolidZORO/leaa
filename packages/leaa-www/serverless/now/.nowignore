@@ -1,6 +1,7 @@
 node_modules
 dist/
 deploy/
+_build/
 _dist/
 _deploy/
 .next/

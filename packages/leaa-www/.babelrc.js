@@ -14,5 +14,27 @@ module.exports = {
       },
     ],
   ],
-  ignore: ['node_modules', 'logs', '_build', '_deploy', '_tsc', '_dist', '.docker'],
+  ignore: [
+    "node_modules",
+    //
+    "/.cache",
+    "/_cache",
+    "/cache",
+    //
+    "/.build",
+    "/_build",
+    "/build",
+    //
+    "/.dist",
+    "/_dist",
+    "/dist",
+    //
+    "/.deploy",
+    "/_deploy",
+    "/deploy",
+    //
+    'logs',
+    '_tsc',
+    '.docker'
+  ],
 };

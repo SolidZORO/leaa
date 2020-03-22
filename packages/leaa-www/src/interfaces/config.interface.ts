@@ -5,11 +5,11 @@ export interface IDotEnvClient {
   SITE_NAME?: string;
   MODE?: 'production' | 'development' | 'test' | 'demo';
   NODE_ENV?: string;
-  PROTOCOL?: string;
-  PORT?: number;
+  SERVER_PROTOCOL?: string;
+  SERVER_PORT?: number;
 
-  BASE_HOST?: string;
-  API_HOST?: string;
+  SERVER_HOST?: string;
+  API_URL?: string;
   GRAPHQL_ENDPOINT?: string;
 
   OAUTH_WECHAT_BASE_URL?: string;

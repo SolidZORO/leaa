@@ -14,12 +14,21 @@
 !/src/assets/divisions/.gitkeep
 
 # Compiled
+/.cache
+/_cache
+/cache
+
+/.build
+/_build
+/build
+
 /.dist
-/dist
 /_dist
+/dist
+
 /.deploy
-/deploy
 /_deploy
+/deploy
 
 node_modules
 docker_data

@@ -4,12 +4,12 @@ const moduleAlias = require('module-alias');
 
 moduleAlias.addPath(__dirname);
 moduleAlias.addAliases({
-  '@leaa/common': '_dist/_leaa-common',
-  '@leaa/api': '_dist/leaa-api',
+  '@leaa/common': '_build/_leaa-common',
+  '@leaa/api': '_build/leaa-api',
 });
 
 moduleAlias({});
 
 console.log('\n\n\n\n---- hello, leaa-api-server. ----\n\n');
 
-require('./_dist/leaa-api/src/main');
+require('./_build/leaa-api/src/main');

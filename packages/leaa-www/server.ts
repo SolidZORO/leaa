@@ -7,12 +7,12 @@ import { envConfig } from '@leaa/www/src/configs';
 import { authMiddleware } from '@leaa/www/src/middlewares';
 
 const dev = process.env.NODE_ENV !== 'production';
-const dir = dev ? '.' : './_dist/leaa-www';
+const dir = dev ? '.' : './_build/leaa-www';
 
 const app = next({ dev, dir });
 const handle = app.getRequestHandler();
 
-const { PORT } = envConfig;
+const { SERVER_PORT } = envConfig;
 
 app.prepare().then(() => {
   const server = express();
@@ -32,7 +32,7 @@ app.prepare().then(() => {
     return handle(req, res);
   });
 
-  server.listen(PORT);
+  server.listen(SERVER_PORT);
 
   cliUtil.envInfo({ dev });
 });
