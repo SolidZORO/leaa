@@ -1,4 +1,4 @@
 module.exports = {
-  'packages/**/*.ts?(x)': ['prettier --write', 'eslint', 'git add'],
+  'packages/**/*.ts?(x)': ['prettier --write', 'eslint'],
   // 'packages/**/*.(css|less)': ['prettier --write', 'stylelint"', 'git add'],
 };
