@@ -68,7 +68,7 @@
     lodash "^4.17.15"
     resize-observer-polyfill "^1.5.0"
 
-"@apollo/federation@^0.13.0", "@apollo/federation@^0.13.2":
+"@apollo/federation@^0.13.2":
   version "0.13.2"
   resolved "https://registry.npm.taobao.org/@apollo/federation/download/@apollo/federation-0.13.2.tgz#a9f842abd1619fe5cd732c56cfbc45dab0ae784a"
   dependencies:
@@ -77,7 +77,7 @@
     core-js "^3.4.0"
     lodash.xorby "^4.7.0"
 
-"@apollo/gateway@^0.13.0":
+"@apollo/gateway@^0.13.2":
   version "0.13.2"
   resolved "https://registry.npm.taobao.org/@apollo/gateway/download/@apollo/gateway-0.13.2.tgz#b97ebf48c6491256f05ce0c12ddbe9c536036e68"
   dependencies:
@@ -3138,18 +3138,18 @@
     call-me-maybe "^1.0.1"
     glob-to-regexp "^0.3.0"
 
-"@nestjs/common@^7.0.4":
-  version "7.0.4"
-  resolved "https://registry.npm.taobao.org/@nestjs/common/download/@nestjs/common-7.0.4.tgz#4660df7eb1912fd2fdc037d9e49c248b322c2984"
+"@nestjs/common@^7.0.5":
+  version "7.0.5"
+  resolved "https://registry.npm.taobao.org/@nestjs/common/download/@nestjs/common-7.0.5.tgz#244069292d4bbdc338a6700e86e7775f2168260d"
   dependencies:
     axios "0.19.2"
     cli-color "2.0.0"
     tslib "1.11.1"
     uuid "7.0.2"
 
-"@nestjs/core@^7.0.4":
-  version "7.0.4"
-  resolved "https://registry.npm.taobao.org/@nestjs/core/download/@nestjs/core-7.0.4.tgz#5172737dbb160dad961611320c16135d8e05846a"
+"@nestjs/core@^7.0.5":
+  version "7.0.5"
+  resolved "https://registry.npm.taobao.org/@nestjs/core/download/@nestjs/core-7.0.5.tgz#6fc07527f7b1434cac088322c231539c8a41a416"
   dependencies:
     "@nuxtjs/opencollective" "0.2.2"
     fast-safe-stringify "2.0.7"
@@ -3159,9 +3159,9 @@
     tslib "1.11.1"
     uuid "7.0.2"
 
-"@nestjs/graphql@^7.0.12":
-  version "7.0.12"
-  resolved "https://registry.npm.taobao.org/@nestjs/graphql/download/@nestjs/graphql-7.0.12.tgz#c3334222aa31367ae53ec6c5bbbecc27e53db564"
+"@nestjs/graphql@^7.0.13":
+  version "7.0.13"
+  resolved "https://registry.npm.taobao.org/@nestjs/graphql/download/@nestjs/graphql-7.0.13.tgz#ad24e0a00370f130b23b6c9e9665b3dc40131fbe"
   dependencies:
     chokidar "3.3.1"
     fast-glob "3.2.2"
@@ -3173,10 +3173,9 @@
     tslib "1.11.1"
     uuid "7.0.2"
   optionalDependencies:
-    "@apollo/federation" "^0.13.0"
-    "@apollo/gateway" "^0.13.0"
+    "@apollo/federation" "^0.13.2"
+    "@apollo/gateway" "^0.13.2"
     ts-morph "^7.0.0"
-    type-graphql "^0.17.3"
 
 "@nestjs/jwt@^7.0.0":
   version "7.0.0"
@@ -3189,9 +3188,9 @@
   version "7.0.0"
   resolved "https://registry.npm.taobao.org/@nestjs/passport/download/@nestjs/passport-7.0.0.tgz#c59617779b7e5888a0c72039a6980e28fd659518"
 
-"@nestjs/platform-express@^7.0.4":
-  version "7.0.4"
-  resolved "https://registry.npm.taobao.org/@nestjs/platform-express/download/@nestjs/platform-express-7.0.4.tgz#78cbc3e850ee21d20d853ce882896d829d191e5c"
+"@nestjs/platform-express@^7.0.5":
+  version "7.0.5"
+  resolved "https://registry.npm.taobao.org/@nestjs/platform-express/download/@nestjs/platform-express-7.0.5.tgz#0c84487b0daa006b4062e60a404227cb911806a3"
   dependencies:
     body-parser "1.19.0"
     cors "2.8.5"
@@ -3199,9 +3198,9 @@
     multer "1.4.2"
     tslib "1.11.1"
 
-"@nestjs/testing@^7.0.4":
-  version "7.0.4"
-  resolved "https://registry.npm.taobao.org/@nestjs/testing/download/@nestjs/testing-7.0.4.tgz#8f2c02da4a193c6c93050063077a51011f8b4a24"
+"@nestjs/testing@^7.0.5":
+  version "7.0.5"
+  resolved "https://registry.npm.taobao.org/@nestjs/testing/download/@nestjs/testing-7.0.5.tgz#b6d6ee4de31669e87e231d18b73f2f76e358719c"
   dependencies:
     optional "0.1.4"
     tslib "1.11.1"
@@ -3857,7 +3856,7 @@
   version "13.1.2"
   resolved "https://registry.npm.taobao.org/@types/node/download/@types/node-13.1.2.tgz#fe94285bf5e0782e1a9e5a8c482b1c34465fa385"
 
-"@types/node@>=6", "@types/node@^12.6.2":
+"@types/node@>=6":
   version "12.11.7"
   resolved "https://registry.npm.taobao.org/@types/node/download/@types/node-12.11.7.tgz#57682a9771a3f7b09c2497f28129a0462966524a"
 
@@ -3865,9 +3864,9 @@
   version "10.17.0"
   resolved "https://registry.npm.taobao.org/@types/node/download/@types/node-10.17.0.tgz#537c61a1df699a8331c79dab2ccc2c8799873c66"
 
-"@types/node@^13.9.2":
-  version "13.9.2"
-  resolved "https://registry.npm.taobao.org/@types/node/download/@types/node-13.9.2.tgz#ace1880c03594cc3e80206d96847157d8e7fa349"
+"@types/node@^13.9.3":
+  version "13.9.3"
+  resolved "https://registry.npm.taobao.org/@types/node/download/@types/node-13.9.3.tgz?cache=0&sync_timestamp=1584884115169&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-13.9.3.tgz#6356df2647de9eac569f9a52eda3480fa9e70b4d"
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"
@@ -3936,9 +3935,9 @@
   dependencies:
     "@types/express" "*"
 
-"@types/prettier@^1.19.0":
-  version "1.19.0"
-  resolved "https://registry.npm.taobao.org/@types/prettier/download/@types/prettier-1.19.0.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fprettier%2Fdownload%2F%40types%2Fprettier-1.19.0.tgz#a2502fb7ce9b6626fdbfc2e2a496f472de1bdd05"
+"@types/prettier@^1.19.1":
+  version "1.19.1"
+  resolved "https://registry.npm.taobao.org/@types/prettier/download/@types/prettier-1.19.1.tgz?cache=0&sync_timestamp=1584917414364&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fprettier%2Fdownload%2F%40types%2Fprettier-1.19.1.tgz#33509849f8e679e4add158959fdb086440e9553f"
 
 "@types/prop-types@*", "@types/prop-types@15.7.3", "@types/prop-types@^15.7.3":
   version "15.7.3"
@@ -4037,10 +4036,6 @@
   dependencies:
     "@types/glob" "*"
     "@types/node" "*"
-
-"@types/semver@^6.0.1":
-  version "6.0.2"
-  resolved "https://registry.npm.taobao.org/@types/semver/download/@types/semver-6.0.2.tgz#5e8b09f0e4af53034b1d0fb9977a277847836205"
 
 "@types/serve-static@*":
   version "1.13.3"
@@ -4697,9 +4692,9 @@ ansi-styles@^4.0.0, ansi-styles@^4.1.0:
     "@types/color-name" "^1.1.1"
     color-convert "^2.0.1"
 
-antd@4.0.3:
-  version "4.0.3"
-  resolved "https://registry.npm.taobao.org/antd/download/antd-4.0.3.tgz#b27e5c40fa00f0e60c72f3673c32257293c2540d"
+antd@4.0.4:
+  version "4.0.4"
+  resolved "https://registry.npm.taobao.org/antd/download/antd-4.0.4.tgz?cache=0&sync_timestamp=1584939449514&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fantd%2Fdownload%2Fantd-4.0.4.tgz#fe7bf58151e069226941a4febe429f1e2f6c596f"
   dependencies:
     "@ant-design/icons" "^4.0.0"
     "@ant-design/react-slick" "~0.25.5"
@@ -6544,14 +6539,6 @@ class-utils@^0.3.5:
     isobject "^3.0.0"
     static-extend "^0.1.1"
 
-class-validator@>=0.9.1:
-  version "0.10.2"
-  resolved "https://registry.npm.taobao.org/class-validator/download/class-validator-0.10.2.tgz#361409d7f393df79f602b9a18ebd3e0e51abe320"
-  dependencies:
-    "@types/validator" "10.11.3"
-    google-libphonenumber "^3.1.6"
-    validator "11.1.0"
-
 class-validator@^0.11.1:
   version "0.11.1"
   resolved "https://registry.npm.taobao.org/class-validator/download/class-validator-0.11.1.tgz?cache=0&sync_timestamp=1584526651618&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fclass-validator%2Fdownload%2Fclass-validator-0.11.1.tgz#9033b9ebdc3883e826dfc0c545a45935e3298553"
@@ -8390,9 +8377,9 @@ eslint-config-airbnb@18.1.0, eslint-config-airbnb@^18.1.0:
     object.assign "^4.1.0"
     object.entries "^1.1.1"
 
-eslint-config-prettier@^6.10.0:
-  version "6.10.0"
-  resolved "https://registry.npm.taobao.org/eslint-config-prettier/download/eslint-config-prettier-6.10.0.tgz?cache=0&sync_timestamp=1580196937615&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Feslint-config-prettier%2Fdownload%2Feslint-config-prettier-6.10.0.tgz#7b15e303bf9c956875c948f6b21500e48ded6a7f"
+eslint-config-prettier@^6.10.1:
+  version "6.10.1"
+  resolved "https://registry.npm.taobao.org/eslint-config-prettier/download/eslint-config-prettier-6.10.1.tgz?cache=0&sync_timestamp=1584871515582&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Feslint-config-prettier%2Fdownload%2Feslint-config-prettier-6.10.1.tgz#129ef9ec575d5ddc0e269667bf09defcd898642a"
   dependencies:
     get-stdin "^6.0.0"
 
@@ -8638,6 +8625,20 @@ execa@^1.0.0:
     p-finally "^1.0.0"
     signal-exit "^3.0.0"
     strip-eof "^1.0.0"
+
+execa@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.npm.taobao.org/execa/download/execa-2.1.0.tgz?cache=0&sync_timestamp=1576749101742&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fexeca%2Fdownload%2Fexeca-2.1.0.tgz#e5d3ecd837d2a60ec50f3da78fd39767747bbe99"
+  dependencies:
+    cross-spawn "^7.0.0"
+    get-stream "^5.0.0"
+    is-stream "^2.0.0"
+    merge-stream "^2.0.0"
+    npm-run-path "^3.0.0"
+    onetime "^5.1.0"
+    p-finally "^2.0.0"
+    signal-exit "^3.0.2"
+    strip-final-newline "^2.0.0"
 
 execa@^3.2.0, execa@^3.4.0:
   version "3.4.0"
@@ -9587,12 +9588,6 @@ graphql-middleware@^4.0.2:
   dependencies:
     graphql-tools "^4.0.5"
 
-graphql-query-complexity@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.npm.taobao.org/graphql-query-complexity/download/graphql-query-complexity-0.3.0.tgz#71a44e124b7591a185d9d8cde55205aa57680c5d"
-  dependencies:
-    lodash.get "^4.4.2"
-
 graphql-shield@^7.2.1:
   version "7.2.1"
   resolved "https://registry.npm.taobao.org/graphql-shield/download/graphql-shield-7.2.1.tgz#baca0c31a19593ede41a4bb4d476f9edd1d0eb78"
@@ -9601,7 +9596,7 @@ graphql-shield@^7.2.1:
     object-hash "^2.0.3"
     yup "^0.28.3"
 
-graphql-subscriptions@^1.0.0, graphql-subscriptions@^1.1.0:
+graphql-subscriptions@^1.0.0:
   version "1.1.0"
   resolved "https://registry.npm.taobao.org/graphql-subscriptions/download/graphql-subscriptions-1.1.0.tgz#5f2fa4233eda44cf7570526adfcf3c16937aef11"
   dependencies:
@@ -10069,7 +10064,7 @@ humanize-ms@^1.2.0, humanize-ms@^1.2.1:
 
 husky@^4.2.3:
   version "4.2.3"
-  resolved "https://registry.npm.taobao.org/husky/download/husky-4.2.3.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fhusky%2Fdownload%2Fhusky-4.2.3.tgz#3b18d2ee5febe99e27f2983500202daffbc3151e"
+  resolved "https://registry.npm.taobao.org/husky/download/husky-4.2.3.tgz#3b18d2ee5febe99e27f2983500202daffbc3151e"
   dependencies:
     chalk "^3.0.0"
     ci-info "^2.0.0"
@@ -12551,6 +12546,10 @@ mquery@3.2.2:
     safe-buffer "5.1.2"
     sliced "1.0.1"
 
+mri@^1.1.4:
+  version "1.1.4"
+  resolved "https://registry.npm.taobao.org/mri/download/mri-1.1.4.tgz#7cb1dd1b9b40905f1fac053abe25b6720f44744a"
+
 ms@2.0.0:
   version "2.0.0"
   resolved "https://registry.npm.taobao.org/ms/download/ms-2.0.0.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fms%2Fdownload%2Fms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
@@ -13036,6 +13035,12 @@ npm-run-path@^2.0.0:
   resolved "https://registry.npm.taobao.org/npm-run-path/download/npm-run-path-2.0.2.tgz?cache=0&sync_timestamp=1577053500910&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fnpm-run-path%2Fdownload%2Fnpm-run-path-2.0.2.tgz#35a9232dfa35d7067b4cb2ddf2357b1871536c5f"
   dependencies:
     path-key "^2.0.0"
+
+npm-run-path@^3.0.0:
+  version "3.1.0"
+  resolved "https://registry.npm.taobao.org/npm-run-path/download/npm-run-path-3.1.0.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fnpm-run-path%2Fdownload%2Fnpm-run-path-3.1.0.tgz#7f91be317f6a466efed3c9f2980ad8a4ee8b0fa5"
+  dependencies:
+    path-key "^3.0.0"
 
 npm-run-path@^4.0.0:
   version "4.0.1"
@@ -14612,6 +14617,17 @@ pretty-format@^25.1.0:
     ansi-regex "^5.0.0"
     ansi-styles "^4.0.0"
     react-is "^16.12.0"
+
+pretty-quick@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.npm.taobao.org/pretty-quick/download/pretty-quick-2.0.1.tgz#417ee605ade98ecc686e72f63b5d28a2c35b43e9"
+  dependencies:
+    chalk "^2.4.2"
+    execa "^2.1.0"
+    find-up "^4.1.0"
+    ignore "^5.1.4"
+    mri "^1.1.4"
+    multimatch "^4.0.0"
 
 printj@~1.1.0, printj@~1.1.2:
   version "1.1.2"
@@ -17750,20 +17766,6 @@ type-fest@^0.8.1:
   version "0.8.1"
   resolved "https://registry.npm.taobao.org/type-fest/download/type-fest-0.8.1.tgz?cache=0&sync_timestamp=1582188531679&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Ftype-fest%2Fdownload%2Ftype-fest-0.8.1.tgz#09e249ebde851d3b1e48d27c105444667f17b83d"
 
-type-graphql@^0.17.3:
-  version "0.17.5"
-  resolved "https://registry.npm.taobao.org/type-graphql/download/type-graphql-0.17.5.tgz#7f2f189ff7b9faef33537291ef333ff9adbee21c"
-  dependencies:
-    "@types/glob" "^7.1.1"
-    "@types/node" "^12.6.2"
-    "@types/semver" "^6.0.1"
-    class-validator ">=0.9.1"
-    glob "^7.1.4"
-    graphql-query-complexity "^0.3.0"
-    graphql-subscriptions "^1.1.0"
-    semver "^6.2.0"
-    tslib "^1.10.0"
-
 type-is@^1.6.16, type-is@^1.6.4, type-is@~1.6.17, type-is@~1.6.18:
   version "1.6.18"
   resolved "https://registry.npm.taobao.org/type-is/download/type-is-1.6.18.tgz#4e552cd05df09467dcbc4ef739de89f2cf37c131"
@@ -18180,10 +18182,6 @@ validate-npm-package-name@^3.0.0:
   resolved "https://registry.npm.taobao.org/validate-npm-package-name/download/validate-npm-package-name-3.0.0.tgz#5fa912d81eb7d0c74afc140de7317f0ca7df437e"
   dependencies:
     builtins "^1.0.3"
-
-validator@11.1.0:
-  version "11.1.0"
-  resolved "https://registry.npm.taobao.org/validator/download/validator-11.1.0.tgz#ac18cac42e0aa5902b603d7a5d9b7827e2346ac4"
 
 validator@12.0.0, validator@^12.0.0:
   version "12.0.0"
