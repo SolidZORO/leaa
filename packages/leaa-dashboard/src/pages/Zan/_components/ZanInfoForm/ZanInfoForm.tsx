@@ -82,7 +82,7 @@ export const ZanInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
             <Col xs={24} sm={3}>
               <Form.Item
                 name="target_zan_quantity"
-                normalize={e => e && Number(e)}
+                normalize={(e) => e && Number(e)}
                 rules={[{ required: true }]}
                 label={t('_page:Zan.targetZanQuantity')}
               >
@@ -93,7 +93,7 @@ export const ZanInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
             <Col xs={24} sm={3}>
               <Form.Item
                 name="status"
-                normalize={e => e && Number(e)}
+                normalize={(e) => e && Number(e)}
                 rules={[{ required: true }]}
                 label={t('_lang:status')}
               >

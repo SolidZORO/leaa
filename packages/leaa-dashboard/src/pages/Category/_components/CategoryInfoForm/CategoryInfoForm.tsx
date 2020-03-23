@@ -77,7 +77,7 @@ export const CategoryInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) 
               <Form.Item
                 name="parent_id"
                 rules={[{ required: true }]}
-                normalize={e => e && Number(e)}
+                normalize={(e) => e && Number(e)}
                 label={`${t('_lang:parent')} ID`}
               >
                 <SelectCategoryIdByTree />

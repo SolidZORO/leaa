@@ -145,21 +145,21 @@ const AttachmentItemInner = forwardRef((props: IProps, ref: React.Ref<any>) => {
           <Input
             className={style['title']}
             value={attachment.title}
-            onChange={e => onChangeAttachment('title', e)}
+            onChange={(e) => onChangeAttachment('title', e)}
             placeholder={t('_lang:title')}
           />
 
           <Input
             className={style['link']}
             value={attachment.link || undefined}
-            onChange={e => onChangeAttachment('link', e)}
+            onChange={(e) => onChangeAttachment('link', e)}
             placeholder={t('_lang:link')}
           />
 
           <Input
             className={style['sort']}
             value={attachment.sort}
-            onChange={e => onChangeAttachment('sort', e)}
+            onChange={(e) => onChangeAttachment('sort', e)}
             placeholder={t('_lang:sort')}
           />
 

@@ -27,7 +27,7 @@ export const SelectTagId = forwardRef((props: IProps, ref: React.Ref<any>) => {
   const [tagName, setTagName] = useState<string | undefined>();
 
   const onRemoveTag = (tag: TagEntry) => {
-    setSelectedTags(selectedTags.filter(i => i.name !== tag.name));
+    setSelectedTags(selectedTags.filter((i) => i.name !== tag.name));
 
     return false;
   };
@@ -35,7 +35,7 @@ export const SelectTagId = forwardRef((props: IProps, ref: React.Ref<any>) => {
   const onSelectTag = (tag: TagEntry) => {
     setSelectTag(tag);
 
-    if (tag && !selectedTags.map(item => item.name).includes(tag.name)) {
+    if (tag && !selectedTags.map((item) => item.name).includes(tag.name)) {
       setSelectTag(undefined);
       setSelectedTags(selectedTags.concat(tag));
     }
@@ -62,7 +62,7 @@ export const SelectTagId = forwardRef((props: IProps, ref: React.Ref<any>) => {
     <div className={cx(style['wrapper'])}>
       <div className={style['tag-selected-wrapper']} ref={ref}>
         {selectedTags &&
-          selectedTags.map(tag => (
+          selectedTags.map((tag) => (
             <Tag
               key={tag.name}
               closable

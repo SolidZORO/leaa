@@ -96,7 +96,7 @@ export const AttachmentBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
   };
 
   const pickAttachments = (attachments: Attachment[]): UpdateAttachmentsInput[] =>
-    attachments.map(a => ({
+    attachments.map((a) => ({
       uuid: a.uuid,
       title: a.title,
       link: a.link || undefined,
@@ -167,7 +167,7 @@ export const AttachmentBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
       >
         <AttachmentDropzone
           attachmentParams={props.attachmentParams && { ...props.attachmentParams }}
-          onUploadedCallback={uuid => refreshAttachments(uuid)}
+          onUploadedCallback={(uuid) => refreshAttachments(uuid)}
           attachments={getAttachmentsQuery.data?.attachments?.items}
           type={type}
           cardHeight={cardHeight}
@@ -179,7 +179,7 @@ export const AttachmentBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
           attachmentParams={props.attachmentParams && { ...props.attachmentParams }}
           attachments={getAttachmentsQuery.data?.attachments?.items}
           onChangeAttachmentsCallback={onChangeAttachments}
-          onDeleteAttachmentCallback={uuid => refreshAttachments(uuid)}
+          onDeleteAttachmentCallback={(uuid) => refreshAttachments(uuid)}
           type={type}
           listHeight={listHeight}
           cardHeight={cardHeight}

@@ -20,7 +20,7 @@ export const LayoutHeader = () => {
 
   const menuListDom = (
     <ul className={style['menu-list']}>
-      {headerMenu.map(m => (
+      {headerMenu.map((m) => (
         <li key={m.title} className={style['menu-item']}>
           <Link href={m.link} prefetch={false}>
             <a className={style['link']} onClick={() => onSetVisible(false)}>

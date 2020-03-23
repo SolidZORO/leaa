@@ -87,7 +87,7 @@ export const SettingModalForm = forwardRef((props: IProps, ref: React.Ref<any>) 
                 name="id"
                 noStyle
                 rules={[{ required: true }]}
-                normalize={e => e && Number(e)}
+                normalize={(e) => e && Number(e)}
                 label={t('_lang:id')}
               >
                 <Input placeholder={t('_lang:id')} />
@@ -133,7 +133,12 @@ export const SettingModalForm = forwardRef((props: IProps, ref: React.Ref<any>) 
 
         <Row gutter={16}>
           <Col xs={24} sm={6}>
-            <Form.Item name="sort" normalize={e => e && Number(e)} rules={[{ required: true }]} label={t('_lang:sort')}>
+            <Form.Item
+              name="sort"
+              normalize={(e) => e && Number(e)}
+              rules={[{ required: true }]}
+              label={t('_lang:sort')}
+            >
               <InputNumber className="g-input-number" placeholder={t('_lang:sort')} />
             </Form.Item>
           </Col>
@@ -141,7 +146,7 @@ export const SettingModalForm = forwardRef((props: IProps, ref: React.Ref<any>) 
           <Col xs={24} sm={6}>
             <Form.Item
               name="private"
-              normalize={e => e && Number(e)}
+              normalize={(e) => e && Number(e)}
               rules={[{ required: true }]}
               label={t('_lang:private')}
             >

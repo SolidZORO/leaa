@@ -33,7 +33,7 @@ export class PromoService {
     if (nextArgs.q) {
       const aliasName = new SelectQueryBuilder(qb).alias;
 
-      ['name'].forEach(key => {
+      ['name'].forEach((key) => {
         qb.orWhere(`${aliasName}.${key} = :${key}`, { [key]: `${nextArgs.q}` });
       });
     }

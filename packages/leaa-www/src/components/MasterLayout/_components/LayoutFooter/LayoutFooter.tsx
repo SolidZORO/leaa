@@ -10,11 +10,11 @@ export const LayoutFooter = () => (
   <div className={style['full-layout-footer']}>
     <div className="g-full-container">
       <Row gutter={16} className={style['menu-row']}>
-        {__MENU_MOCK__.footerMenu.map(m => (
+        {__MENU_MOCK__.footerMenu.map((m) => (
           <Col key={m.title}>
             <h2 className={style['menu-title']}>{m.title}</h2>
             <ul className={style['menu-list']}>
-              {m.chlidren.map(mc => (
+              {m.chlidren.map((mc) => (
                 <li key={mc.title} className={style['menu-item']}>
                   <Link href={mc.link} prefetch={false}>
                     <a className={style['link']}>{mc.title}</a>

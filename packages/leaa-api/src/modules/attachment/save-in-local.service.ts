@@ -46,10 +46,7 @@ export class SaveInLocalService {
     // TODO jpg Error: marker was not found
     Jimp.read(file.path)
       .then((image: any) => {
-        image
-          .resize(width, height)
-          .quality(95)
-          .write(pathAt1x);
+        image.resize(width, height).quality(95).write(pathAt1x);
       })
       .catch((err: Error) => {
         console.error('SAVE 2X --> 1X ERROR', err);

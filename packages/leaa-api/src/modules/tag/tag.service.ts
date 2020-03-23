@@ -32,7 +32,7 @@ export class TagService {
     if (nextArgs.q) {
       const aliasName = new SelectQueryBuilder(qb).alias;
 
-      ['name'].forEach(q => {
+      ['name'].forEach((q) => {
         qb.orWhere(`${aliasName}.${q} LIKE :${q}`, { [q]: `%${nextArgs.q}%` });
       });
     }
@@ -78,7 +78,7 @@ export class TagService {
     const [items, total] = await this.tagRepository.findAndCount({ select: ['name'] });
 
     if (total) {
-      fs.writeFileSync(dictConfig.TAGS_DICT_PATH, items.map(item => item.name).join('\n'));
+      fs.writeFileSync(dictConfig.TAGS_DICT_PATH, items.map((item) => item.name).join('\n'));
     }
 
     loggerUtil.log(`syncTagsToDictFile, ${total} tags`, CLS_NAME);
@@ -102,12 +102,12 @@ export class TagService {
     let tags: Tag[] = [];
     const batchUpdatePromise: Promise<any>[] = [];
 
-    await tagNames.forEach(tagName => {
+    await tagNames.forEach((tagName) => {
       batchUpdatePromise.push(this.createTag({ name: tagName }));
     });
 
     await Promise.all(batchUpdatePromise)
-      .then(data => {
+      .then((data) => {
         tags = data;
       })
       .catch(() => {

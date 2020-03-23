@@ -32,7 +32,7 @@ export const RolePermissionsForm = forwardRef((props: IProps, ref: React.Ref<any
   const getPermissionIds = (roleItem: Role | undefined): number[] => {
     const rolePermissions = roleItem && roleItem.permissions;
 
-    return (rolePermissions && rolePermissions.map(r => r.id)) || [];
+    return (rolePermissions && rolePermissions.map((r) => r.id)) || [];
   };
 
   const onValidateForm = async (): IOnValidateFormResult<UpdateRoleInput> => {

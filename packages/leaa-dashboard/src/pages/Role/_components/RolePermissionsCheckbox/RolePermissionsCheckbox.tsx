@@ -22,7 +22,7 @@ export const RolePermissionsCheckbox = forwardRef((props: IProps, ref: React.Ref
   const [value, setValue] = useState(props.value || []);
 
   const onCheckedAll = (event: CheckboxChangeEvent) => {
-    const ids = event.target.checked ? props.permissionsFlat.map(p => p.id) : [];
+    const ids = event.target.checked ? props.permissionsFlat.map((p) => p.id) : [];
 
     setValue(ids);
     if (props.onChangePermissionIds) {

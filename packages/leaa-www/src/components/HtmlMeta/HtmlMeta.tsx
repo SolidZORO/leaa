@@ -30,7 +30,7 @@ const cutTextLength = (rawText: string, cutLength = 140): string => {
 export const HtmlMeta = (props: IProps) => {
   const store = useStore();
 
-  const settingSiteName = store?.setting?.globalSettings.find(s => s.slug === 'site_name');
+  const settingSiteName = store?.setting?.globalSettings.find((s) => s.slug === 'site_name');
 
   let storeSiteName = 'NOT-SITE-NAME';
 

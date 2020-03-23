@@ -14,10 +14,7 @@ const getAt2xPath = (filepath: string | null): string | null => {
   */
   const dir = path.dirname(filepath);
   const basename = path.basename(filepath);
-  const filename = basename
-    .split('.')
-    .slice(0, -1)
-    .join('.');
+  const filename = basename.split('.').slice(0, -1).join('.');
   const ext = path.extname(filepath);
 
   // console.log(`${dir}/${filename}@2x${ext}`);

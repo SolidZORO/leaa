@@ -28,7 +28,7 @@ export const UserRolesForm = forwardRef((props: IProps, ref: React.Ref<any>) => 
 
   const [form] = Form.useForm();
 
-  const getRoleIds = (roles: Role[] | undefined): number[] => roles?.map(r => r.id) || [];
+  const getRoleIds = (roles: Role[] | undefined): number[] => roles?.map((r) => r.id) || [];
 
   const [roleIds, setRoleIds] = useState<number[]>(getRoleIds(props.item?.roles));
 
@@ -41,14 +41,14 @@ export const UserRolesForm = forwardRef((props: IProps, ref: React.Ref<any>) => 
   };
 
   const onCheckedAll = (event: CheckboxChangeEvent): void => {
-    const ids = event.target.checked ? props.roles.map(r => r.id) : [];
+    const ids = event.target.checked ? props.roles.map((r) => r.id) : [];
 
     setRoleIds(ids);
     form.setFieldsValue({ roleIds: ids });
   };
 
   const onChange = (value: CheckboxValueType[]): void => {
-    const ids = value.map(v => Number(v));
+    const ids = value.map((v) => Number(v));
 
     setRoleIds(ids);
     form.setFieldsValue({ roleIds: ids });
@@ -79,7 +79,7 @@ export const UserRolesForm = forwardRef((props: IProps, ref: React.Ref<any>) => 
   const onClacChecked = () => rolesLength > 0 && roleIds.length === rolesLength;
 
   useEffect(() => {
-    if (props.item?.roles) setRoleIds(props.item?.roles?.map(r => r.id));
+    if (props.item?.roles) setRoleIds(props.item?.roles?.map((r) => r.id));
   }, [props.item]);
 
   useEffect(() => onUpdateForm(props.item), [form, props.item]);
@@ -102,7 +102,7 @@ export const UserRolesForm = forwardRef((props: IProps, ref: React.Ref<any>) => 
           <Form.Item name="roleIds" rules={[]} className={style['check-role']}>
             <Checkbox.Group onChange={onChange}>
               <Row gutter={16}>
-                {props.roles.map(r => (
+                {props.roles.map((r) => (
                   <Col key={r.id}>
                     <Checkbox value={r.id}>{r.name}</Checkbox>
                   </Col>

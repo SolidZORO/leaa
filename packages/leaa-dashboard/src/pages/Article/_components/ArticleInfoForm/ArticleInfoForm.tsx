@@ -79,7 +79,7 @@ export const ArticleInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =
         <div className={style['block--category-and-status']}>
           <Form.Item
             name="categoryIds"
-            normalize={e => e && Number(e)}
+            normalize={(e) => e && Number(e)}
             rules={[]}
             label={t('_lang:category')}
             colon={false}
@@ -90,7 +90,7 @@ export const ArticleInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =
 
           <Form.Item
             name="status"
-            normalize={e => e && Number(e)}
+            normalize={(e) => e && Number(e)}
             rules={[{ required: true }]}
             label={t('_lang:status')}
             colon={false}

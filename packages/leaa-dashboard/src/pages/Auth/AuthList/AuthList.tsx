@@ -177,7 +177,7 @@ export default (props: IPage) => {
           <SearchInput
             className={cx('g-extra-filter-bar--item', 'g-extra-filter-bar--q')}
             value={q}
-            onChange={v => onFilter({ field: 'q', value: v })}
+            onChange={(v) => onFilter({ field: 'q', value: v })}
           />
         </div>
       }

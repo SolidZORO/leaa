@@ -48,7 +48,7 @@ export const LikeZanButton = (props: IProps) => {
           className={style['zan-input']}
           value={zanUuid}
           style={{ width: props.zanInputWidth || 320 }}
-          onChange={v => setZanUuid(v.target.value)}
+          onChange={(v) => setZanUuid(v.target.value)}
           placeholder="Zan UUID"
         />
       )}

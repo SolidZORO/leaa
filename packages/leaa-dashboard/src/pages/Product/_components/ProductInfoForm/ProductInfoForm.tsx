@@ -92,7 +92,7 @@ export const ProductInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =
             <Col xs={24} sm={2}>
               <Form.Item
                 name="status"
-                normalize={e => e && Number(e)}
+                normalize={(e) => e && Number(e)}
                 rules={[{ required: true }]}
                 label={t('_page:Product.putOnSale')}
               >
@@ -123,7 +123,7 @@ export const ProductInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =
             <Col xs={24} sm={6}>
               <Form.Item
                 name="styleIds"
-                normalize={e => e && Number(e)}
+                normalize={(e) => e && Number(e)}
                 rules={[{ required: true }]}
                 label={t('_page:Product.style')}
               >
@@ -134,7 +134,7 @@ export const ProductInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =
             <Col xs={24} sm={6}>
               <Form.Item
                 name="brandIds"
-                normalize={e => e && Number(e)}
+                normalize={(e) => e && Number(e)}
                 rules={[{ required: true }]}
                 label={t('_page:Product.brand')}
               >

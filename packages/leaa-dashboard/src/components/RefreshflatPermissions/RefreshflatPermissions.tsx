@@ -25,7 +25,7 @@ export const RefreshflatPermissions = (props: IProps) => {
 
         return false;
       },
-      onCompleted: data => {
+      onCompleted: (data) => {
         if (data && data.userByToken.flatPermissions && data.userByToken.flatPermissions.length === 0) {
           authUtil.removeAuth();
         }

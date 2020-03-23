@@ -62,7 +62,7 @@ export const ZanUsersForm = (props: IProps) => {
         <ZanProgress item={props.item} />
 
         <div className={style['user-avatar-list']}>
-          {props.item?.users?.map(user => (
+          {props.item?.users?.map((user) => (
             <div key={user.id} className={style['user-avatar-item']}>
               <ConfirmDeleteButton
                 opacity={1}

@@ -112,7 +112,7 @@ export const UserSearchBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
   }, [props.value]);
 
   const onSelect = (userId: string) => {
-    const userObject = optionalUsers.find(item => item.id === Number(userId));
+    const userObject = optionalUsers.find((item) => item.id === Number(userId));
 
     setInputKey(makeUserLabel(userObject));
 
@@ -143,7 +143,7 @@ export const UserSearchBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
     }
   };
 
-  const options = optionalUsers.map(user => ({
+  const options = optionalUsers.map((user) => ({
     label: makeUserLabel(user),
     value: `${user.id}`,
   }));

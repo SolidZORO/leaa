@@ -35,7 +35,7 @@ const nextPage = (props: IProps) => {
 
           <div className={cx('g-container-card', style['container-card'])}>
             {articles?.items &&
-              articles.items.map(item => (
+              articles.items.map((item) => (
                 <div key={item.id} className={style['item']}>
                   <h2 className={style['title']}>
                     <Link href="/article/[slug]" as={`/article/${item.slug}`} prefetch={false}>

@@ -44,7 +44,7 @@ export class ProductService {
     if (nextArgs.q) {
       const qLike = `%${nextArgs.q}%`;
 
-      ['name'].forEach(key => {
+      ['name'].forEach((key) => {
         qb.andWhere(`${PRIMARY_TABLE}.${key} LIKE :${key}`, { [key]: qLike });
       });
     }

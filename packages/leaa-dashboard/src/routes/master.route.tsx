@@ -605,7 +605,7 @@ export const masterRoutes: IRouteItem[] = [
 
 const routerDom: ReactNode[] = [];
 const parseRoutes = (routeList: IRouteItem[]) => {
-  routeList.forEach(item => {
+  routeList.forEach((item) => {
     if (item.children) {
       parseRoutes(item.children);
     }
@@ -629,7 +629,7 @@ const parseRoutes = (routeList: IRouteItem[]) => {
 
 const flateRoutes: IRouteItem[] = [];
 const parseFlatRoutes = (routeList: IRouteItem[], groupName?: string) => {
-  routeList.forEach(item => {
+  routeList.forEach((item) => {
     const nextItem = _.omit(item, 'LazyComponent');
 
     if (nextItem.children) {

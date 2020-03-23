@@ -48,7 +48,7 @@ export class RoleService {
     if (nextArgs.q) {
       const qLike = `%${nextArgs.q}%`;
 
-      ['name', 'slug'].forEach(key => {
+      ['name', 'slug'].forEach((key) => {
         qb.andWhere(`${PRIMARY_TABLE}.${key} LIKE :${key}`, { [key]: qLike });
       });
     }
@@ -84,7 +84,7 @@ export class RoleService {
 
     let nextPermissions: Permission[] = [];
 
-    roles.forEach(r => {
+    roles.forEach((r) => {
       if (r.permissions && r.permissions.length > 0) {
         nextPermissions = nextPermissions.concat(r.permissions);
       }
@@ -101,7 +101,7 @@ export class RoleService {
     });
 
     if (roles && roles.length > 0) {
-      roleIds = roles.map(p => p.id);
+      roleIds = roles.map((p) => p.id);
     }
 
     return roleIds;

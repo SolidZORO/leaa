@@ -14,7 +14,7 @@ const buildInfo = {
 if (!fs.existsSync(DIST_PUBLIC_DIR)) {
   console.log(`NEED mkdirp ----> ${DIST_PUBLIC_DIR}`);
 
-  mkdirp(DIST_PUBLIC_DIR, err => err && console.log(JSON.stringify(err)));
+  mkdirp(DIST_PUBLIC_DIR, (err) => err && console.log(JSON.stringify(err)));
 }
 
 fs.writeFileSync(BUILDINFO_PATH, JSON.stringify(buildInfo));

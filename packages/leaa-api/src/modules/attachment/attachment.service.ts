@@ -77,7 +77,7 @@ export class AttachmentService {
     if (nextArgs.q) {
       const aliasName = new SelectQueryBuilder(qb).alias;
 
-      ['title', 'slug'].forEach(q => {
+      ['title', 'slug'].forEach((q) => {
         qb.orWhere(`${aliasName}.${q} LIKE :${q}`, { [q]: `%${nextArgs.q}%` });
       });
     }
@@ -136,7 +136,7 @@ export class AttachmentService {
   async updateAttachments(attachments: UpdateAttachmentsInput[], gqlCtx?: IGqlCtx): Promise<AttachmentsObject> {
     if (!attachments) throw msgUtil.error({ t: ['_error:notFoundItems'], gqlCtx });
 
-    const batchUpdate = attachments.map(async attachment => {
+    const batchUpdate = attachments.map(async (attachment) => {
       await this.attachmentRepository.update({ uuid: attachment.uuid }, _.omit(attachment, ['uuid']));
     });
 
@@ -146,7 +146,7 @@ export class AttachmentService {
       .then(async () => {
         loggerUtil.log(JSON.stringify(attachments), CLS_NAME);
 
-        items = await this.attachmentRepository.find({ uuid: In(attachments.map(a => a.uuid)) });
+        items = await this.attachmentRepository.find({ uuid: In(attachments.map((a) => a.uuid)) });
       })
       .catch(() => {
         loggerUtil.error(JSON.stringify(attachments), CLS_NAME);
@@ -164,7 +164,7 @@ export class AttachmentService {
     const nextItem = await this.attachmentRepository.remove(prevItems);
     if (!nextItem) throw msgUtil.error({ t: ['_error:deleteItemFailed'], gqlCtx });
 
-    prevItems.forEach(i => {
+    prevItems.forEach((i) => {
       if (i.at2x) {
         try {
           // delete local
@@ -202,7 +202,7 @@ export class AttachmentService {
     loggerUtil.log(`delete all-file ${uuid} successful: ${JSON.stringify(nextItem)}\n\n`, CLS_NAME);
 
     return {
-      items: nextItem.map(i => i.uuid),
+      items: nextItem.map((i) => i.uuid),
     };
   }
 }

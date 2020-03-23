@@ -92,7 +92,7 @@ export const TagSearchBox = forwardRef((props: IProps, ref: React.Ref<any>) => {
   };
 
   const onSelect = (tagName: any) => {
-    const tagObject = optionalTags.find(item => item.name === tagName);
+    const tagObject = optionalTags.find((item) => item.name === tagName);
 
     if (props.onSelectTagCallback && tagObject) {
       props.onSelectTagCallback(tagObject);
@@ -123,7 +123,7 @@ export const TagSearchBox = forwardRef((props: IProps, ref: React.Ref<any>) => {
           onSearch={onSearch}
           onChange={onChange}
           onSelect={onSelect}
-          options={optionalTags.map(tag => ({
+          options={optionalTags.map((tag) => ({
             label: tag.name,
             value: tag.name,
           }))}

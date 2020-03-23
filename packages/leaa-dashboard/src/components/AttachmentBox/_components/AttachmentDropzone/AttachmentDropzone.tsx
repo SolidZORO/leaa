@@ -27,12 +27,12 @@ export const AttachmentDropzone = (props: IProps) => {
 
     fileList.forEach((file: File) =>
       attachmentUtil.uploadFile(file, signature, props.attachmentParams, {
-        onUploadSuccess: e => props.onUploadedCallback && props.onUploadedCallback(e),
+        onUploadSuccess: (e) => props.onUploadedCallback && props.onUploadedCallback(e),
       }),
     );
   };
 
-  const onDrop = useCallback(async acceptedFiles => onUploadFileList(acceptedFiles), []);
+  const onDrop = useCallback(async (acceptedFiles) => onUploadFileList(acceptedFiles), []);
 
   const { getRootProps, getInputProps } = useDropzone({ onDrop, accept: 'image/*' });
   const isEmpty = props.attachments && props.attachments.length === 0;

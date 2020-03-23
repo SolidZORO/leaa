@@ -102,7 +102,7 @@ export const SettingListForm = forwardRef((props: IProps, ref: React.Ref<any>) =
     try {
       const result = await form.validateFields();
 
-      return Object.keys(result).map(k => ({ id: Number(k), value: result[k] }));
+      return Object.keys(result).map((k) => ({ id: Number(k), value: result[k] }));
     } catch (error) {
       return msgUtil.error(error.errorFields[0]?.errors[0]);
     }
@@ -111,7 +111,7 @@ export const SettingListForm = forwardRef((props: IProps, ref: React.Ref<any>) =
   const onUpdateForm = (items?: Setting[]) => {
     if (!items) return undefined;
 
-    return items.forEach(item => {
+    return items.forEach((item) => {
       form.setFieldsValue({
         [item.id]: item.value,
       });
@@ -135,7 +135,7 @@ export const SettingListForm = forwardRef((props: IProps, ref: React.Ref<any>) =
           {...formItemLayout}
           className={style['form-wrapper']}
         >
-          {props.items?.map(item => (
+          {props.items?.map((item) => (
             <Form.Item
               key={item.id}
               name={item.id}

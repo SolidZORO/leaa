@@ -223,9 +223,7 @@ for (let i = 0; i < 50; i += 1) {
   randomSersSeedData.push({
     email: `${name}@RRRR.com`,
     name,
-    password: Math.random()
-      .toString(36)
-      .slice(-8),
+    password: Math.random().toString(36).slice(-8),
     status: 1,
   });
 }
@@ -281,7 +279,7 @@ export const articleSeed: CreateArticleInput[] = [
   {
     title: '<script>alert(\'hello, leaa.\')</script>',
     slug: 'alert-test',
-    status: 1 ,
+    status: 1,
     description: '<script>alert(\'hello, leaa.\')</script>',
     categoryIds: [4],
     content: '<p>&lt;script&gt;alert(&#x27;hello, leaa.&#x27;)&lt;/script&gt;</p>',

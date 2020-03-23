@@ -39,7 +39,7 @@ export const SwitchLanguage = (props: IProps): JSX.Element => {
           overlayClassName={cx(style['switch-language-popover'], 'switch-language-popover')}
           content={
             <>
-              {langs.map(lang => (
+              {langs.map((lang) => (
                 <Button
                   key={lang}
                   type="link"

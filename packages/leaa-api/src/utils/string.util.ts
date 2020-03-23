@@ -33,10 +33,7 @@ const random = (): string => {
 const uuid = (): string => v4();
 
 const md5 = (str: string): string => {
-  return crypto
-    .createHash('md5')
-    .update(str)
-    .digest('hex');
+  return crypto.createHash('md5').update(str).digest('hex');
 };
 
 // ABCDEFGHIJKLMNOPQRSTUVWXYZ - ABCDEFGHIJKMNPQRSTUVWXY

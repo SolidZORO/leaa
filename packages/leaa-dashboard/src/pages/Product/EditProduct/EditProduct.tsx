@@ -32,7 +32,7 @@ export default (props: IPage) => {
   const getProductQuery = useQuery<{ product: Product }, ProductArgs>(GET_PRODUCT, {
     variables: getProductVariables,
     fetchPolicy: 'network-only',
-    onCompleted: data => !data.product && props.history.push('/products'),
+    onCompleted: (data) => !data.product && props.history.push('/products'),
   });
 
   // mutation
@@ -49,7 +49,7 @@ export default (props: IPage) => {
 
     if (!submitData) return;
 
-    submitData.tagIds = productTags?.length ? productTags.map(item => Number(item.id)) : null;
+    submitData.tagIds = productTags?.length ? productTags.map((item) => Number(item.id)) : null;
 
     await setSubmitVariables({ id: Number(id), product: submitData });
     await updateProductMutate();

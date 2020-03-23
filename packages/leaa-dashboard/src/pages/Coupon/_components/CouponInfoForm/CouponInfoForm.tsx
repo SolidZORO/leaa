@@ -135,7 +135,7 @@ export const CouponInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =>
             <Col xs={24} sm={3}>
               <Form.Item
                 name="status"
-                normalize={e => e && Number(e)}
+                normalize={(e) => e && Number(e)}
                 rules={[{ required: true }]}
                 label={t('_lang:status')}
               >

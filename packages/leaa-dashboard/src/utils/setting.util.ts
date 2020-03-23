@@ -42,7 +42,7 @@ const getSetting = (params: { key: string; disableNotification?: boolean }): ISe
   const settingsByLs = localStorage.getItem('settings');
   const settings = settingsByLs ? (JSON.parse(settingsByLs) as ISetting[]) : settingsByEmpty;
 
-  const setting = settings.find(t => t.slug === params.key);
+  const setting = settings.find((t) => t.slug === params.key);
 
   if (!setting) {
     if (!params.disableNotification) {

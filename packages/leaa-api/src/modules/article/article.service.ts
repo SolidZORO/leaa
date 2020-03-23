@@ -43,7 +43,7 @@ export class ArticleService {
     if (nextArgs.q) {
       const qLike = `%${nextArgs.q}%`;
 
-      ['title', 'slug'].forEach(key => {
+      ['title', 'slug'].forEach((key) => {
         qb.orWhere(`${PRIMARY_TABLE}.${key} LIKE :${key}`, { [key]: qLike });
       });
     }

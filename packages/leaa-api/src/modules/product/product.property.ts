@@ -19,10 +19,10 @@ export class ProductProperty {
     const attachments: Attachment[] = (attachmentsResult && attachmentsResult.items) || [];
 
     return {
-      bannerMbList: attachments.filter(a => a.type_name === 'banner' && a.type_platform === 'mb'),
-      bannerPcList: attachments.filter(a => a.type_name === 'banner' && a.type_platform === 'pc'),
-      galleryMbList: attachments.filter(a => a.type_name === 'gallery' && a.type_platform === 'mb'),
-      galleryPcList: attachments.filter(a => a.type_name === 'gallery' && a.type_platform === 'pc'),
+      bannerMbList: attachments.filter((a) => a.type_name === 'banner' && a.type_platform === 'mb'),
+      bannerPcList: attachments.filter((a) => a.type_name === 'banner' && a.type_platform === 'pc'),
+      galleryMbList: attachments.filter((a) => a.type_name === 'gallery' && a.type_platform === 'mb'),
+      galleryPcList: attachments.filter((a) => a.type_name === 'gallery' && a.type_platform === 'pc'),
     };
   }
 }

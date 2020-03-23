@@ -11,9 +11,7 @@ const formatDateRangeTime = <T>(args: T, startField: string, expireField: string
 
   if (startField) {
     // @ts-ignore
-    nextArgs[startField] = moment(args[startField])
-      .startOf('day')
-      .toDate();
+    nextArgs[startField] = moment(args[startField]).startOf('day').toDate();
   }
 
   if (expireField) {

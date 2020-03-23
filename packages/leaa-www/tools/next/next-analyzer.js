@@ -11,7 +11,7 @@ const analyzerConfig = {
   logLevel: 'info',
 };
 
-module.exports = nextConfig =>
+module.exports = (nextConfig) =>
   withBundleAnalyzer({
     analyzeServer: ['server', 'both'].includes(process.env.BUNDLE_ANALYZE),
     analyzeBrowser: ['browser', 'both'].includes(process.env.BUNDLE_ANALYZE),

@@ -56,7 +56,7 @@ export class UserService {
     if (nextArgs.q) {
       const qLike = `%${nextArgs.q}%`;
 
-      ['name', 'email'].forEach(key => {
+      ['name', 'email'].forEach((key) => {
         qb.orWhere(`${PRIMARY_TABLE}.${key} LIKE :${key}`, { [key]: qLike });
       });
     }
@@ -149,7 +149,7 @@ export class UserService {
         const attachments = await this.attachmentService.attachments(avatarParams);
 
         if (attachments?.items && attachments?.items.length !== 0) {
-          const uuids = attachments.items.map(a => a.uuid);
+          const uuids = attachments.items.map((a) => a.uuid);
 
           loggerUtil.log(
             `Update User Delete Avatar, PARAMS: ${JSON.stringify(avatarParams)}, UUIDS: ${JSON.stringify(uuids)}`,

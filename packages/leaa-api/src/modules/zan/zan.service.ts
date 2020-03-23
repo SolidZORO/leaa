@@ -27,7 +27,7 @@ export class ZanService {
     if (nextArgs.q) {
       const qLike = `%${nextArgs.q}%`;
 
-      ['title'].forEach(key => {
+      ['title'].forEach((key) => {
         qb.orWhere(`${PRIMARY_TABLE}.${key} LIKE :${key}`, { [key]: qLike });
       });
     }
@@ -93,7 +93,7 @@ export class ZanService {
 
     if (!gqlCtx?.user) throw msgUtil.error({ t: ['_error:notFoundAuth'], gqlCtx, statusCode: 401 });
 
-    if (gqlCtx?.user && !zan.users?.map(u => u.id).includes(gqlCtx?.user?.id)) {
+    if (gqlCtx?.user && !zan.users?.map((u) => u.id).includes(gqlCtx?.user?.id)) {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       await zan.users!.push(gqlCtx?.user);
     }
@@ -113,12 +113,12 @@ export class ZanService {
     let zan = await this.zanRepository.findOne({ uuid }, { relations: ['users'] });
 
     if (!zan) throw msgUtil.error({ t: ['_error:notFoundItem'], gqlCtx });
-    if (!zan.users || zan.users.length <= 0 || !zan.users?.map(u => u.id).includes(userId)) {
+    if (!zan.users || zan.users.length <= 0 || !zan.users?.map((u) => u.id).includes(userId)) {
       throw msgUtil.error({ t: ['_error:notFoundUser'], gqlCtx });
     }
 
     // @ts-ignore
-    zan.users = zan.users.filter(u => u.id !== userId);
+    zan.users = zan.users.filter((u) => u.id !== userId);
 
     zan = await this.zanRepository.save({
       ...zan,

@@ -16,7 +16,6 @@ services:
       - TZ=Asia/Shanghai
     volumes:
       - ${DOCKER_DATA_DIR}/mysql:/var/lib/mysql:rw,cached
-
 #  adminer:
 #    container_name: leaa-adminer
 #    image: adminer:4.7.1-standalone

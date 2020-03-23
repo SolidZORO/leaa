@@ -13,10 +13,7 @@ export class UserSubscriber implements EntitySubscriberInterface<User> {
     const { entity } = event;
 
     if (entity && entity.avatar_url === null) {
-      const emailHash = crypto
-        .createHash('md5')
-        .update(entity.email)
-        .digest('hex');
+      const emailHash = crypto.createHash('md5').update(entity.email).digest('hex');
 
       const avatarParams = 's=160&d=monsterid';
       const avatarUrl = `//secure.gravatar.com/avatar/${emailHash}?${avatarParams}`;

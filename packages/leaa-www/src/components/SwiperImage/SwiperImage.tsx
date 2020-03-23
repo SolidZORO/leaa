@@ -70,7 +70,7 @@ export const SwiperImage = (props: IProps) => {
           },
         }}
       >
-        {attachmentList.map(a => (
+        {attachmentList.map((a) => (
           <div
             key={a.uuid}
             className={cx(style['swiper-slide'], {

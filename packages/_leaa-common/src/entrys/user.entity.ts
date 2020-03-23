@@ -48,18 +48,12 @@ export class User extends Base {
   @Field(() => Date, { nullable: true })
   last_token_at?: Date;
 
-  @ManyToMany(
-    () => Role,
-    role => role.user,
-  )
+  @ManyToMany(() => Role, (role) => role.user)
   @JoinTable()
   @Field(() => [Role], { nullable: true })
   roles?: Role[];
 
-  @ManyToMany(
-    () => Address,
-    address => address.address,
-  )
+  @ManyToMany(() => Address, (address) => address.address)
   @JoinTable()
   @Field(() => [Address], { nullable: true })
   addresses?: Address[];

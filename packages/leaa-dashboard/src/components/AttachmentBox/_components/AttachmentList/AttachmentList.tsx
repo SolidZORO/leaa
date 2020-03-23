@@ -73,7 +73,7 @@ export const AttachmentList = forwardRef((props: IProps, ref: React.Ref<any>) =>
 
   const onChangeAttachment = (newAttachment: any) => {
     if (attachments && attachments?.length > 0) {
-      const aIndex = attachments.findIndex(a => a.uuid === newAttachment.uuid);
+      const aIndex = attachments.findIndex((a) => a.uuid === newAttachment.uuid);
 
       if (typeof aIndex !== 'undefined') {
         attachments[aIndex] = newAttachment;

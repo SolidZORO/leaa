@@ -30,7 +30,7 @@ export class SettingService {
 
       const setting = await this.setting(id);
 
-      if (setting && setting.slug && settingSeed.map(seed => seed.slug).includes(setting.slug)) {
+      if (setting && setting.slug && settingSeed.map((seed) => seed.slug).includes(setting.slug)) {
         throw msgUtil.error({ t: ['_error:pleaseDontModify'], gqlCtx });
       }
     }
@@ -42,14 +42,12 @@ export class SettingService {
     const nextArgs = argsUtil.format(args, gqlCtx);
 
     const qb = this.settingRepository.createQueryBuilder();
-    qb.select()
-      .orderBy({ sort: 'ASC' })
-      .addOrderBy('id', 'ASC');
+    qb.select().orderBy({ sort: 'ASC' }).addOrderBy('id', 'ASC');
 
     if (nextArgs.q) {
       const aliasName = new SelectQueryBuilder(qb).alias;
 
-      ['name', 'slug'].forEach(q => {
+      ['name', 'slug'].forEach((q) => {
         qb.orWhere(`${aliasName}.${q} LIKE :${q}`, { [q]: `%${nextArgs.q}%` });
       });
     }
@@ -130,7 +128,7 @@ export class SettingService {
   }
 
   async updateSettings(settings: UpdateSettingsInput[], gqlCtx?: IGqlCtx): Promise<SettingsObject> {
-    const batchUpdate = settings.map(async setting => {
+    const batchUpdate = settings.map(async (setting) => {
       await this.updateSetting(setting.id, setting);
     });
 
@@ -138,7 +136,7 @@ export class SettingService {
 
     await Promise.all(batchUpdate)
       .then(async () => {
-        items = await this.settingRepository.find({ id: In(settings.map(s => s.id)) });
+        items = await this.settingRepository.find({ id: In(settings.map((s) => s.id)) });
       })
       .catch(() => {
         throw msgUtil.error({ t: ['_error:updateItemFailed'], gqlCtx });

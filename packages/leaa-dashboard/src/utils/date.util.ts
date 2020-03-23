@@ -5,18 +5,11 @@ const formatDateTimeToDayStartOrEnd = (type: 'start' | 'end', dateTime: string |
   if (!type || !dateTime) throw error;
 
   if (type === 'start') {
-    return moment(dateTime)
-      .startOf('day')
-      .toDate();
+    return moment(dateTime).startOf('day').toDate();
   }
 
   if (type === 'end') {
-    return moment(dateTime)
-      .startOf('day')
-      .add(23, 'hour')
-      .add(59, 'minute')
-      .add(59, 'second')
-      .toDate();
+    return moment(dateTime).startOf('day').add(23, 'hour').add(59, 'minute').add(59, 'second').toDate();
   }
 
   throw error;

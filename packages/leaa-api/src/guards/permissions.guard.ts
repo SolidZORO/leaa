@@ -29,7 +29,7 @@ export class PermissionsGuard implements CanActivate {
 
     return (
       user.flatPermissions &&
-      user.flatPermissions.some(permission => permissions && permissions.includes(permission as IPermissionSlug))
+      user.flatPermissions.some((permission) => permissions && permissions.includes(permission as IPermissionSlug))
     );
   }
 }

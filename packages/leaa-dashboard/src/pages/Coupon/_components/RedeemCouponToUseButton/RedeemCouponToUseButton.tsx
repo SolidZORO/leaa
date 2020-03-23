@@ -75,8 +75,8 @@ export const RedeemCouponToUseButton = (props: IProps) => {
             <div className={style['content']}>
               <UserSearchBox
                 useOnBlur
-                onSelectUserCallback={user => setUserId(user && user.id)}
-                onEnterCallback={v => setUserId(v)}
+                onSelectUserCallback={(user) => setUserId(user && user.id)}
+                onEnterCallback={(v) => setUserId(v)}
                 // value={tagName}
                 placeholder={langUtil.removeSpace(`${t('_lang:search')} ${t('_lang:user')}`, i18n.language)}
                 style={{ width: 250 }}

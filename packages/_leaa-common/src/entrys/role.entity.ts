@@ -16,18 +16,12 @@ export class Role extends Base {
   @Field(() => String)
   slug!: string;
 
-  @ManyToMany(
-    () => Permission,
-    permission => permission.roles,
-  )
+  @ManyToMany(() => Permission, (permission) => permission.roles)
   @JoinTable()
   @Field(() => [Permission], { nullable: true })
   permissions?: Permission[];
 
-  @ManyToMany(
-    () => User,
-    user => user.roles,
-  )
+  @ManyToMany(() => User, (user) => user.roles)
   @Field(() => User, { nullable: true })
   user?: User;
 }

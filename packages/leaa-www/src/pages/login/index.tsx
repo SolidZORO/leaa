@@ -67,7 +67,7 @@ nextPage.getInitialProps = async (ctx: IGetInitialPropsCtx) => {
           urlUtil.redirect('/account', ctx.res);
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.error('login getInitialProps LOGIN_BY_TICKET_FOR_WWW / ERROR', error);
 
         urlUtil.redirect('/', ctx.res);

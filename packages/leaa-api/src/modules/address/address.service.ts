@@ -24,7 +24,7 @@ export class AddressService {
     if (nextArgs.q) {
       const qLike = `%${nextArgs.q}%`;
 
-      ['address', 'consignee'].forEach(key => {
+      ['address', 'consignee'].forEach((key) => {
         qb.orWhere(`${PRIMARY_TABLE}.${key} LIKE :${key}`, { [key]: qLike });
       });
     }

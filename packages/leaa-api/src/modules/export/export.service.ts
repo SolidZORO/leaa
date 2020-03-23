@@ -28,7 +28,7 @@ export class ExportService {
     const promos = await this.promoService.promos({ ...args, pageSize: PAGE_SIZE }, gqlCtx);
 
     const dataTitle = ['Name', 'Amount'];
-    const dataBody = promos.items.map(i => [i.name, i.amount]);
+    const dataBody = promos.items.map((i) => [i.name, i.amount]);
 
     const buffer = xlsx.build([
       {
@@ -53,7 +53,7 @@ export class ExportService {
 
     const options = { '!cols': [{ wch: 12 }, { wch: 24 }, { wch: 50 }] };
     const dataTitle = ['ID', 'Title', 'Slug'];
-    const dataBody = articles.items.map(i => [i.id, i.title, i.slug]);
+    const dataBody = articles.items.map((i) => [i.id, i.title, i.slug]);
 
     const buffer = xlsx.build(
       [

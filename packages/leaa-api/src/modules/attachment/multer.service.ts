@@ -17,7 +17,7 @@ export class MulterService implements MulterOptionsFactory {
     file: Express.Multer.File,
     cb: (error: Error | null, destination: string) => void,
   ): void => {
-    mkdirp(attachmentConfig.SAVE_DIR_BY_DISK, err => cb(err, attachmentConfig.SAVE_DIR_BY_DISK));
+    mkdirp(attachmentConfig.SAVE_DIR_BY_DISK, (err) => cb(err, attachmentConfig.SAVE_DIR_BY_DISK));
   };
 
   filename = (

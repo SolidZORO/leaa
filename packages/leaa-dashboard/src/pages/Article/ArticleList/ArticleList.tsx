@@ -212,7 +212,7 @@ export default (props: IPage) => {
             className={cx('g-extra-filter-bar--item', 'g-extra-filter-bar--tag')}
             useOnBlur
             onSelectTagCallback={(v: TagEntry) => onFilter({ field: 'tagName', value: v.name })}
-            onEnterCallback={v => onFilter({ field: 'tagName', value: v })}
+            onEnterCallback={(v) => onFilter({ field: 'tagName', value: v })}
             value={tagName}
             placeholder={t('_lang:tag')}
           />
@@ -220,7 +220,7 @@ export default (props: IPage) => {
           <SelectCategoryIdByTree
             className={cx('g-extra-filter-bar--item', 'g-extra-filter-bar--category')}
             componentProps={{ allowClear: true }}
-            onChange={v => onFilter({ field: 'categoryId', value: v })}
+            onChange={(v) => onFilter({ field: 'categoryId', value: v })}
             value={categoryId || undefined}
             parentSlug="articles"
           />
@@ -228,7 +228,7 @@ export default (props: IPage) => {
           <SearchInput
             className={cx('g-extra-filter-bar--item', 'g-extra-filter-bar--q')}
             value={q}
-            onChange={v => onFilter({ field: 'q', value: v })}
+            onChange={(v) => onFilter({ field: 'q', value: v })}
           />
 
           <ExportButton moduleName="article" params={getArticlesVariables} />

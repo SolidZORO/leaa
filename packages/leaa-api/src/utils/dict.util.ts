@@ -19,7 +19,7 @@ const cutTags = (text: string, limit = 5): string[] => {
   const jiebaAllTags = nodejieba.tagWordsToStr(nodejieba.tag(text));
   const jiebaExtractTags: { word: string; weight: number }[] = nodejieba.extractWithWords(jiebaAllTags, limit);
 
-  return jiebaExtractTags.map(tag => tag.word);
+  return jiebaExtractTags.map((tag) => tag.word);
 };
 
 export const dictUtil = {

@@ -14,8 +14,8 @@ export class DemoService {
   async demoData(): Promise<DemoDataObject | undefined> {
     if (!this.configService.DEMO_MODE) return {};
 
-    const loginAccountByAdmin = usersSeed.find(u => u.email === 'admin@local.com');
-    const loginAccountByStaff = usersSeed.find(u => u.email === 'staff@local.com');
+    const loginAccountByAdmin = usersSeed.find((u) => u.email === 'admin@local.com');
+    const loginAccountByStaff = usersSeed.find((u) => u.email === 'staff@local.com');
 
     const n = new Date().valueOf();
     const signupAccountByRandom: SignupAccount = {

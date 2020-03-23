@@ -60,10 +60,7 @@ export class SaveInOssService {
 
     const policy = Buffer.from(policyJson).toString('base64');
 
-    const signature = crypto
-      .createHmac('sha1', OSSAccessKeySecret)
-      .update(policy)
-      .digest('base64');
+    const signature = crypto.createHmac('sha1', OSSAccessKeySecret).update(policy).digest('base64');
 
     /* eslint-disable no-template-curly-in-string */
     const callbackBody =
@@ -112,7 +109,7 @@ export class SaveInOssService {
     let result = null;
 
     await axios({ url: fileUrl, responseType: 'stream' }).then(
-      response =>
+      (response) =>
         new Promise((resolve, reject) => {
           response.data
             .pipe(fs.createWriteStream(tempFile))
@@ -133,15 +130,15 @@ export class SaveInOssService {
   async saveAt2xToAt1xByOss(filename: string): Promise<OSS.PutObjectResult | null> {
     const at1xUrl = `${this.uploadEndPoint}/${filename}?x-oss-process=image/resize,p_50`;
 
-    return this.downloadFile(at1xUrl, file => this.client.put(filename.replace('_2x', ''), file));
+    return this.downloadFile(at1xUrl, (file) => this.client.put(filename.replace('_2x', ''), file));
   }
 
   async saveOssToLocal(
     attachment: Pick<Attachment, 'filename' | 'url' | 'urlAt2x' | 'at2x'>,
   ): Promise<'success' | Error> {
-    await this.downloadFile(attachment.url || '', file => {
+    await this.downloadFile(attachment.url || '', (file) => {
       try {
-        mkdirp(attachmentConfig.SAVE_DIR_BY_DISK, err => loggerUtil.error(JSON.stringify(err), CLS_NAME));
+        mkdirp(attachmentConfig.SAVE_DIR_BY_DISK, (err) => loggerUtil.error(JSON.stringify(err), CLS_NAME));
 
         fs.writeFileSync(`${attachmentConfig.SAVE_DIR_BY_DISK}/${attachment.filename}`, file);
       } catch (e) {
@@ -150,7 +147,7 @@ export class SaveInOssService {
     });
 
     if (attachment.at2x) {
-      await this.downloadFile(attachment.urlAt2x || '', file => {
+      await this.downloadFile(attachment.urlAt2x || '', (file) => {
         try {
           fs.writeFileSync(
             `${attachmentConfig.SAVE_DIR_BY_DISK}/${attachmentUtil.filenameAt1xToAt2x(attachment.filename)}`,

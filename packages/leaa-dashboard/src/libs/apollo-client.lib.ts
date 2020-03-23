@@ -31,7 +31,7 @@ const authLink = new ApolloLink((operation, forward) => {
 
 const errorLink = onError(({ graphQLErrors }) => {
   if (graphQLErrors) {
-    graphQLErrors.forEach(error => {
+    graphQLErrors.forEach((error) => {
       if (!ignoreErrorPath.includes(`${error.path}`)) {
         console.error('❌ ERROR >>>>', error, '📌 STACKTRACE >>>>', error.extensions?.exception?.stacktrace);
         msgUtil.error(error.message);
@@ -52,7 +52,7 @@ const errorLink = onError(({ graphQLErrors }) => {
 
 const terminatingLink = split(
   ({ query: { definitions } }) =>
-    definitions.some(node => {
+    definitions.some((node) => {
       const { kind } = node as OperationDefinitionNode;
 
       return kind === 'OperationDefinition';

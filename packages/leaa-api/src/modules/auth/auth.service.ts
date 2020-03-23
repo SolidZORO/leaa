@@ -39,7 +39,7 @@ export class AuthService {
     if (nextArgs.q) {
       const qLike = `%${nextArgs.q}%`;
 
-      ['nickname'].forEach(key => {
+      ['nickname'].forEach((key) => {
         qb.andWhere(`${PRIMARY_TABLE}.${key} LIKE :${key}`, { [key]: qLike });
       });
     }
@@ -160,7 +160,7 @@ export class AuthService {
 
     const isGuest = req.headers && !req.headers.authorization;
 
-    if (req.body && isGuest && permissionConfig.notValidateUserQuerys.some(item => req.body.query.includes(item))) {
+    if (req.body && isGuest && permissionConfig.notValidateUserQuerys.some((item) => req.body.query.includes(item))) {
       return undefined;
     }
 

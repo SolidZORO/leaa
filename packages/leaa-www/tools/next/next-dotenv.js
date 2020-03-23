@@ -1,6 +1,6 @@
 const dotenvObject = require('./next-dotenv-object');
 
-module.exports = nextConfig => ({
+module.exports = (nextConfig) => ({
   ...nextConfig,
   // publicRuntimeConfig: dotenvObject,
   // serverRuntimeConfig: dotenvObject,

@@ -38,10 +38,7 @@ export class Address extends Base {
   @Field(() => Int, { nullable: true })
   status?: number;
 
-  @ManyToMany(
-    () => User,
-    user => user.addresses,
-  )
+  @ManyToMany(() => User, (user) => user.addresses)
   @Field(() => User, { nullable: true })
   user?: User;
 }

@@ -26,7 +26,7 @@ const getSignature = async () => {
   const signatureResult: ISignatureResult = await axios.get(`${envConfig.API_URL}/attachments/signature`);
 
   if (!signatureResult || !signatureResult.data || !signatureResult.data || !signatureResult.data.uploadEndPoint) {
-    message.error(<Translation>{t => t('_lang:uploadError')}</Translation>);
+    message.error(<Translation>{(t) => t('_lang:uploadError')}</Translation>);
   }
 
   return signatureResult;
@@ -76,13 +76,13 @@ const uploadFile = (
   return axios
     .post(signatureResult.data.uploadEndPoint, formData, {
       headers: { Authorization: token ? `Bearer ${token}` : '' },
-      onUploadProgress: e => {
+      onUploadProgress: (e) => {
         if (onCallback && onCallback.onUploadProgress) {
           onCallback.onUploadProgress(e);
         }
       },
     })
-    .then(response => {
+    .then((response) => {
       if (response.status === 203) {
         message.error('Callback Failed');
 
@@ -99,7 +99,7 @@ const uploadFile = (
         return;
       }
 
-      message.success(<Translation>{t => t('_lang:uploadSuccessfully')}</Translation>);
+      message.success(<Translation>{(t) => t('_lang:uploadSuccessfully')}</Translation>);
 
       if (onCallback && onCallback.onUploadSuccess) {
         onCallback.onUploadSuccess(response);

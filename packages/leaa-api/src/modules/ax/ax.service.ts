@@ -24,7 +24,7 @@ export class AxService {
 
       const ax = await this.ax(id, {}, gqlCtx);
 
-      if (ax?.slug && axSeed.map(seed => seed.slug).includes(ax.slug)) {
+      if (ax?.slug && axSeed.map((seed) => seed.slug).includes(ax.slug)) {
         throw msgUtil.error({ t: ['_error:pleaseDontModify'], gqlCtx });
       }
     }
@@ -42,7 +42,7 @@ export class AxService {
     if (nextArgs.q) {
       const aliasName = new SelectQueryBuilder(qb).alias;
 
-      ['title', 'slug'].forEach(key => {
+      ['title', 'slug'].forEach((key) => {
         qb.orWhere(`${aliasName}.${key} = :${key}`, { [key]: `${nextArgs.q}` });
       });
     }

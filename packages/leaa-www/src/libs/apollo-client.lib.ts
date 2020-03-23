@@ -40,7 +40,7 @@ function createApolloClient(initialState: NormalizedCacheObject, authToken?: str
 
   const errorLink = onError(({ graphQLErrors }) => {
     if (graphQLErrors) {
-      graphQLErrors.forEach(error => {
+      graphQLErrors.forEach((error) => {
         console.error(`❌ [GraphQL error]: ${JSON.stringify(error)}`);
 
         // messageUtil.gqlError(error.message);
@@ -50,7 +50,7 @@ function createApolloClient(initialState: NormalizedCacheObject, authToken?: str
 
   const terminatingLink = split(
     ({ query: { definitions } }) =>
-      definitions.some(node => {
+      definitions.some((node) => {
         const { kind } = node as OperationDefinitionNode;
 
         return kind === 'OperationDefinition';

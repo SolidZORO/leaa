@@ -30,7 +30,7 @@ export class CategoryService {
 
       const c = await this.category(id);
 
-      if (c && c.slug && categorySeed.map(seed => seed.slug).includes(c.slug)) {
+      if (c && c.slug && categorySeed.map((seed) => seed.slug).includes(c.slug)) {
         throw msgUtil.error({ t: ['_error:pleaseDontModify'], gqlCtx });
       }
     }
@@ -67,7 +67,7 @@ export class CategoryService {
     });
 
     const recursiveItems = (categories: Category[]) => {
-      return categories.map(category => {
+      return categories.map((category) => {
         if (category.children && Array.isArray(category.children) && category.children.length > 0) {
           // eslint-disable-next-line no-param-reassign
           category.children = recursiveItems(category.children);
@@ -93,7 +93,7 @@ export class CategoryService {
     if (nextArgs.q) {
       const aliasName = new SelectQueryBuilder(qb).alias;
 
-      ['name', 'slug'].forEach(q => {
+      ['name', 'slug'].forEach((q) => {
         qb.orWhere(`${aliasName}.${q} LIKE :${q}`, { [q]: `%${nextArgs.q}%` });
       });
     }

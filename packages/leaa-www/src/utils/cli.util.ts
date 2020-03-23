@@ -1,7 +1,16 @@
 import { envConfig } from '@leaa/www/src/configs';
 
 export const envInfo = ({ dev }: { dev: boolean }): void => {
-  const { SERVER_PROTOCOL, SERVER_PORT, SERVER_HOST, SITE_NAME, DEBUG_MODE, DEMO_MODE, GRAPHQL_ENDPOINT, API_URL } = envConfig;
+  const {
+    SERVER_PROTOCOL,
+    SERVER_PORT,
+    SERVER_HOST,
+    SITE_NAME,
+    DEBUG_MODE,
+    DEMO_MODE,
+    GRAPHQL_ENDPOINT,
+    API_URL,
+  } = envConfig;
 
   // emoji for CLI
   const url = `${SERVER_PROTOCOL}://${SERVER_HOST}:${SERVER_PORT}`;

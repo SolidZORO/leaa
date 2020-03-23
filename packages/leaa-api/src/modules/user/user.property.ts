@@ -12,7 +12,7 @@ export class UserProperty {
   async permissions(user: User | undefined): Promise<Permission[] | undefined> {
     if (!user || !user.roles) return undefined;
 
-    const roleIds = user.roles.map(r => r.id);
+    const roleIds = user.roles.map((r) => r.id);
     const permissions = await this.roleService.rolePermissionsByRoleIds(roleIds);
     if (!permissions) return undefined;
 
@@ -24,6 +24,6 @@ export class UserProperty {
 
     if (!permissions) return undefined;
 
-    return [...new Set(permissions.map(permission => permission.slug))];
+    return [...new Set(permissions.map((permission) => permission.slug))];
   }
 }

@@ -119,7 +119,7 @@ export default (props: IPage) => {
       title: t('_lang:role'),
       dataIndex: 'role',
       render: (text: string, record: User) => (
-        <div>{record.roles && record.roles.map(r => <Tag key={r.name}>{r.name}</Tag>)}</div>
+        <div>{record.roles && record.roles.map((r) => <Tag key={r.name}>{r.name}</Tag>)}</div>
       ),
     },
     {
@@ -197,7 +197,7 @@ export default (props: IPage) => {
           <SearchInput
             className={cx('g-extra-filter-bar--item', 'g-extra-filter-bar--q')}
             value={q}
-            onChange={v => onFilter({ field: 'q', value: v })}
+            onChange={(v) => onFilter({ field: 'q', value: v })}
           />
         </div>
       }

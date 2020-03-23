@@ -19,15 +19,11 @@ describe('AppController (e2e)', () => {
     await app.init();
   });
 
-  it('/ (GET)', done => {
-    return request(server)
-      .get('/')
-      .expect(200)
-      .expect('<code>-- EOF --</code>')
-      .end(done);
+  it('/ (GET)', (done) => {
+    return request(server).get('/').expect(200).expect('<code>-- EOF --</code>').end(done);
   });
 
-  it('/attachments (GET) Unauthorized', done => {
+  it('/attachments (GET) Unauthorized', (done) => {
     return request(server)
       .get('/attachments')
       .expect(401)
@@ -38,7 +34,7 @@ describe('AppController (e2e)', () => {
       .end(done);
   });
 
-  it('/attachments (GET) Authorized', done => {
+  it('/attachments (GET) Authorized', (done) => {
     // eslint-disable-next-line max-len
     const authToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxNTY0NjUwMDk3LCJleHAiOjE1ODAyMDIwOTd9.6rrQ6qkFWIujvEYvQDye_zxo7Ox4cnDl6Hbns3eyYQI'; // prettier-ignore
 

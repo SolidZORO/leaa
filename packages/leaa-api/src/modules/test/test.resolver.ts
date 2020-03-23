@@ -1,6 +1,5 @@
 import { UseGuards } from '@nestjs/common';
-import { Query, Resolver, Args } from '@nestjs/graphql';
-import { Float, Int } from '@nestjs/graphql';
+import { Query, Resolver, Args, Float, Int } from '@nestjs/graphql';
 
 import { TestService } from '@leaa/api/src/modules/test/test.service';
 import { PermissionsGuard } from '@leaa/api/src/guards';

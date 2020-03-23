@@ -28,7 +28,7 @@ export class PermissionService {
 
       const p = await this.permission(id);
 
-      if (p && p.slug && permissionsSeed.map(seed => seed.slug).includes(p.slug as any)) {
+      if (p && p.slug && permissionsSeed.map((seed) => seed.slug).includes(p.slug as any)) {
         throw msgUtil.error({ t: ['_error:pleaseDontModify'], gqlCtx });
       }
     }
@@ -46,7 +46,7 @@ export class PermissionService {
     if (nextArgs.q) {
       const aliasName = new SelectQueryBuilder(qb).alias;
 
-      ['name', 'slug'].forEach(key => {
+      ['name', 'slug'].forEach((key) => {
         qb.orWhere(`${aliasName}.${key} LIKE :${key}`, { [key]: `%${nextArgs.q}%` });
       });
     }
@@ -59,7 +59,7 @@ export class PermissionService {
 
     return {
       ...pageInfo,
-      items: pageInfo.items.map(i => ({
+      items: pageInfo.items.map((i) => ({
         ...i,
         slugGroup: i.slug.split('.')[0],
       })),
@@ -81,7 +81,7 @@ export class PermissionService {
     });
 
     if (permissions && permissions.length > 0) {
-      permissionIds = permissions.map(p => p.id);
+      permissionIds = permissions.map((p) => p.id);
     }
 
     return permissionIds;

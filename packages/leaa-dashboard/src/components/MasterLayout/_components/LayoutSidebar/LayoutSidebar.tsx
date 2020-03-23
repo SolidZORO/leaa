@@ -38,8 +38,8 @@ const checkPermission = (permission: string) => {
   if (permission.includes('|')) {
     return permission
       .split('|')
-      .map(p => p.trim())
-      .some(k => flatPermissions.includes(k));
+      .map((p) => p.trim())
+      .some((k) => flatPermissions.includes(k));
   }
 
   return flatPermissions.includes(permission);
@@ -95,7 +95,7 @@ const makeFlatMenu = (menu: IRouteItem): React.ReactNode => {
 
 // group
 const makeFlatMenus = (menus: IRouteItem[]): React.ReactNode => {
-  return menus.map(menu => {
+  return menus.map((menu) => {
     if (menu.children && (checkPermission(menu.permission) || menu.permission === ALLOW_PERMISSION)) {
       return (
         <Menu.SubMenu
@@ -108,7 +108,7 @@ const makeFlatMenus = (menus: IRouteItem[]): React.ReactNode => {
             </span>
           }
         >
-          {menu.children.map(subMenu => makeFlatMenu(subMenu))}
+          {menu.children.map((subMenu) => makeFlatMenu(subMenu))}
         </Menu.SubMenu>
       );
     }
@@ -121,7 +121,7 @@ export const LayoutSidebar = (props: IProps) => {
   const pathWithoutParams = props.match.path.replace(/(^.*)\/.*/, '$1') || props.match.path;
   const [selectedKeys, setSelectedKeys] = useState<string>(pathWithoutParams);
 
-  const curremtSelectedKey = flateMasterRoutes.find(r => r.path === props.match.path);
+  const curremtSelectedKey = flateMasterRoutes.find((r) => r.path === props.match.path);
   const uiOpenKeys = curremtSelectedKey ? curremtSelectedKey.groupName || '' : '';
 
   const collapsedLs = localStorage.getItem(SIDERBAR_COLLAPSED_SL_KEY);

@@ -24,7 +24,7 @@ export const ConfirmDeleteButton = (props: IProps) => {
         visible={confirm}
         mouseLeaveDelay={0.5}
         overlayClassName={style['delete-tooltip-wrapper']}
-        onVisibleChange={e => !e && setConfirm(false)}
+        onVisibleChange={(e) => !e && setConfirm(false)}
       >
         <Button
           type={props.type || 'link'}

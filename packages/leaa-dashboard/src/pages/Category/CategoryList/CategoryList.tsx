@@ -67,7 +67,7 @@ export default (props: IPage) => {
           isVirtualized={false}
           canDrag={false}
           treeData={treeData}
-          onChange={e => setTreeData(e)}
+          onChange={(e) => setTreeData(e)}
           generateNodeProps={({ node }) => ({
             className: style['tree-item'],
             title: [

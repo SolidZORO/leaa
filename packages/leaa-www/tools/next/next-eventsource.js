@@ -13,7 +13,7 @@ function EventSourceWrapper(options) {
   }
 
   init();
-  let timer = setInterval(function() {
+  let timer = setInterval(function () {
     if (new Date() - lastActivity > options.timeout) {
       handleDisconnect();
     }
@@ -43,7 +43,7 @@ function EventSourceWrapper(options) {
         return;
       }
 
-      eventCallbacks.forEach(cb => cb(event));
+      eventCallbacks.forEach((cb) => cb(event));
     }
   }
 
@@ -67,7 +67,7 @@ function EventSourceWrapper(options) {
 function getEventSourceWrapper(options) {
   if (!options.ondemand) {
     return {
-      addMessageListener: cb => {
+      addMessageListener: (cb) => {
         eventCallbacks.push(cb);
       },
     };

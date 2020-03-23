@@ -25,10 +25,7 @@ const calcQueryBuilderPageInfo = async ({
   // prevent skip negative numbers (e.g. skip -30)
   const skipSize = calcPage - 1 < 0 ? 0 : (calcPage - 1) * calcPageSize;
 
-  const [items, total] = await qb
-    .skip(skipSize)
-    .take(calcPageSize)
-    .getManyAndCount();
+  const [items, total] = await qb.skip(skipSize).take(calcPageSize).getManyAndCount();
 
   let calcNextPage: number | null = calcPage + 1;
 
