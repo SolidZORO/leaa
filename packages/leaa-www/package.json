@@ -69,7 +69,7 @@
     "mobx-react-lite": "^1.5.2",
     "module-alias": "^2.2.2",
     "moment": "^2.24.0",
-    "next": "9.3.1",
+    "next": "9.3.2",
     "node-fetch": "^2.6.0",
     "nookies": "^2.2.0",
     "nprogress": "^0.2.0",
