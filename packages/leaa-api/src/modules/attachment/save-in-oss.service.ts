@@ -135,8 +135,6 @@ export class SaveInOssService {
 
   async saveOssToLocal(
     attachment: Pick<Attachment, 'filename' | 'url' | 'urlAt2x' | 'at2x'>,
-
-
   ): Promise<'success' | Error> {
     await this.downloadFile(attachment.url || '', (file) => {
       try {
