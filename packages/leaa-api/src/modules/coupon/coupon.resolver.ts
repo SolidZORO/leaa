@@ -1,5 +1,5 @@
 import { UseGuards } from '@nestjs/common';
-import { Args, Query, Mutation, Resolver, ResolveProperty, Parent, Int } from '@nestjs/graphql';
+import { Args, Query, Mutation, Resolver, ResolveField, Parent, Int } from '@nestjs/graphql';
 
 import { Coupon } from '@leaa/common/src/entrys';
 import {
@@ -20,12 +20,12 @@ import { IGqlCtx } from '@leaa/api/src/interfaces';
 export class CouponResolver {
   constructor(private readonly couponService: CouponService, private readonly couponProperty: CouponProperty) {}
 
-  @ResolveProperty(() => Boolean)
+  @ResolveField(() => Boolean)
   available(@Parent() coupon: Coupon): boolean {
     return this.couponProperty.available(coupon);
   }
 
-  @ResolveProperty(() => Boolean)
+  @ResolveField(() => Boolean)
   canRedeem(@Parent() coupon: Coupon): boolean {
     return this.couponProperty.canRedeem(coupon);
   }

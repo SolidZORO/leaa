@@ -1,5 +1,5 @@
 import { UseGuards } from '@nestjs/common';
-import { Args, Query, Mutation, Resolver, ResolveProperty, Parent, Int } from '@nestjs/graphql';
+import { Args, Query, Mutation, Resolver, ResolveField, Parent, Int } from '@nestjs/graphql';
 
 import { Promo } from '@leaa/common/src/entrys';
 import {
@@ -20,7 +20,7 @@ import { IGqlCtx } from '@leaa/api/src/interfaces';
 export class PromoResolver {
   constructor(private readonly promoService: PromoService, private readonly promoProperty: PromoProperty) {}
 
-  @ResolveProperty(() => Boolean)
+  @ResolveField(() => Boolean)
   async available(@Parent() promo: Promo): Promise<boolean> {
     return this.promoProperty.available(promo);
   }

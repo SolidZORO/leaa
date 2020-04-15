@@ -1,5 +1,5 @@
 import { UseGuards } from '@nestjs/common';
-import { Args, Query, Mutation, Resolver, Parent, ResolveProperty, Int } from '@nestjs/graphql';
+import { Args, Query, Mutation, Resolver, Parent, ResolveField, Int } from '@nestjs/graphql';
 
 import { User, Permission } from '@leaa/common/src/entrys';
 import {
@@ -19,12 +19,12 @@ import { PermissionsGuard } from '@leaa/api/src/guards';
 export class UserResolver {
   constructor(private readonly userService: UserService, private readonly userProperty: UserProperty) {}
 
-  @ResolveProperty(() => [String], { nullable: true })
+  @ResolveField(() => [String], { nullable: true })
   async flatPermissions(@Parent() user: User | undefined): Promise<string[] | undefined> {
     return this.userProperty.flatPermissions(user);
   }
 
-  @ResolveProperty(() => [Permission], { nullable: true })
+  @ResolveField(() => [Permission], { nullable: true })
   async permissions(@Parent() user: User | undefined): Promise<Permission[] | undefined> {
     return this.userProperty.permissions(user);
   }

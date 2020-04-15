@@ -1,4 +1,4 @@
-import { Args, Query, Mutation, Resolver, ResolveProperty, Parent } from '@nestjs/graphql';
+import { Args, Query, Mutation, Resolver, ResolveField, Parent } from '@nestjs/graphql';
 
 import { Attachment } from '@leaa/common/src/entrys';
 import { IGqlCtx } from '@leaa/api/src/interfaces';
@@ -22,12 +22,12 @@ export class AttachmentResolver {
     private readonly attachmentProperty: AttachmentProperty,
   ) {}
 
-  @ResolveProperty(() => String, { nullable: true })
+  @ResolveField(() => String, { nullable: true })
   url(@Parent() attachment: Attachment): string | null {
     return this.attachmentProperty.url(attachment);
   }
 
-  @ResolveProperty(() => String, { nullable: true })
+  @ResolveField(() => String, { nullable: true })
   urlAt2x(@Parent() attachment: Attachment): string | null {
     return this.attachmentProperty.urlAt2x(attachment);
   }

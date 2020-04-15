@@ -1,5 +1,5 @@
 import { UseGuards } from '@nestjs/common';
-import { Args, Query, Mutation, Resolver, ResolveProperty, Parent, Int } from '@nestjs/graphql';
+import { Args, Query, Mutation, Resolver, ResolveField, Parent, Int } from '@nestjs/graphql';
 
 import { Product } from '@leaa/common/src/entrys';
 import {
@@ -20,7 +20,7 @@ import { IGqlCtx } from '@leaa/api/src/interfaces';
 export class ProductResolver {
   constructor(private readonly productService: ProductService, private readonly productProperty: ProductProperty) {}
 
-  @ResolveProperty(() => ProductAttachmentsObject)
+  @ResolveField(() => ProductAttachmentsObject)
   async attachments(@Parent() product: Product | undefined): Promise<ProductAttachmentsObject | undefined> {
     return this.productProperty.attachments(product);
   }

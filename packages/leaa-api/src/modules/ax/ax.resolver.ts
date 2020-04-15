@@ -1,5 +1,5 @@
 import { UseGuards } from '@nestjs/common';
-import { Args, Query, Mutation, Resolver, ResolveProperty, Parent, Int } from '@nestjs/graphql';
+import { Args, Query, Mutation, Resolver, ResolveField, Parent, Int } from '@nestjs/graphql';
 
 import { Ax } from '@leaa/common/src/entrys';
 import {
@@ -20,7 +20,7 @@ import { IGqlCtx } from '@leaa/api/src/interfaces';
 export class AxResolver {
   constructor(private readonly axService: AxService, private readonly axProperty: AxProperty) {}
 
-  @ResolveProperty(() => AxAttachmentsObject)
+  @ResolveField(() => AxAttachmentsObject)
   async attachments(@Parent() ax: Ax | undefined): Promise<AxAttachmentsObject | undefined> {
     return this.axProperty.attachments(ax);
   }
