@@ -1,11 +1,10 @@
-import { Request, Response } from 'express';
+import { IRequest, IResponse, IAuthInfo } from '@leaa/www/src/interfaces';
 
 import { GET_USER_BY_TOKEN } from '@leaa/www/src/graphqls/user.query';
 import { AUTH_INFO, AUTH_TOKEN_NAME } from '@leaa/www/src/constants';
-import { IAuthInfo } from '@leaa/www/src/interfaces';
 import { apolloClientWithState } from '@leaa/www/src/libs/apollo-client.lib';
 
-export const authMiddleware = async (req: Request, res: Response, next: Function) => {
+export const authMiddleware = async (req: IRequest, res: IResponse, next: Function) => {
   const { authToken, authInfo } = req.cookies;
 
   const removeAuth = () => {

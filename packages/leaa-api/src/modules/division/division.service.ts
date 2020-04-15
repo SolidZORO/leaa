@@ -121,9 +121,12 @@ export class DivisionService {
     if (!fs.existsSync(divisionConfig.DIVISION_OF_CHINA_FILE_PATH)) {
       loggerUtil.log(`syncDivisionToFile, not exists ${divisionConfig.DIVISION_OF_CHINA_FILE_PATH}`, CLS_NAME);
 
-      mkdirp(divisionConfig.DIVISION_DIR, (err) =>
-        loggerUtil.log(`syncTagsToDictFile, mkdirp ${divisionConfig.DIVISION_DIR} ${JSON.stringify(err)}`, CLS_NAME),
-      );
+      try {
+        mkdirp.sync(divisionConfig.DIVISION_DIR);
+      } catch (err) {
+        loggerUtil.error(JSON.stringify(err), CLS_NAME);
+        throw Error(err.message);
+      }
     }
 
     let sqlRunResultMessage = 'Skip insert database';
