@@ -5,7 +5,7 @@ import { Express } from 'express';
 import { Injectable } from '@nestjs/common';
 import { MulterModuleOptions, MulterOptionsFactory } from '@nestjs/platform-express';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
-import { attachmentUtil, stringUtil } from '@leaa/api/src/utils';
+import { attachmentUtil, stringUtil, loggerUtil } from '@leaa/api/src/utils';
 import { attachmentConfig } from '@leaa/api/src/configs';
 
 @Injectable()
@@ -13,18 +13,22 @@ export class MulterService implements MulterOptionsFactory {
   constructor(private readonly configService: ConfigService) {}
 
   destination = (
-    req: Express.Request,
+    // req: IRequest,
+    req: any,
     file: Express.Multer.File,
     cb: (error: Error | null, destination: string) => void,
   ): void => {
-    mkdirp(attachmentConfig.SAVE_DIR_BY_DISK, (err) => cb(err, attachmentConfig.SAVE_DIR_BY_DISK));
+    try {
+      mkdirp.sync(attachmentConfig.SAVE_DIR_BY_DISK);
+      cb(null, attachmentConfig.SAVE_DIR_BY_DISK);
+    } catch (err) {
+      loggerUtil.log(`MulterService [destination],
+      mkdirp ${attachmentConfig.SAVE_DIR_BY_DISK} ${JSON.stringify(err)}`);
+      throw Error(err.message);
+    }
   };
 
-  filename = (
-    req: Express.Request,
-    file: Express.Multer.File,
-    cb: (error: Error | null, filename: string) => void,
-  ): void => {
+  filename = (req: any, file: Express.Multer.File, cb: (error: Error | null, filename: string) => void): void => {
     const filename = file.originalname.toLowerCase();
     const at2x = attachmentUtil.isAt2x(filename) ? '_2x' : '';
 

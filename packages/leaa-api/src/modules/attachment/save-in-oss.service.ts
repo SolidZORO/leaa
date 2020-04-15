@@ -138,11 +138,12 @@ export class SaveInOssService {
   ): Promise<'success' | Error> {
     await this.downloadFile(attachment.url || '', (file) => {
       try {
-        mkdirp(attachmentConfig.SAVE_DIR_BY_DISK, (err) => loggerUtil.error(JSON.stringify(err), CLS_NAME));
+        mkdirp.sync(attachmentConfig.SAVE_DIR_BY_DISK);
 
         fs.writeFileSync(`${attachmentConfig.SAVE_DIR_BY_DISK}/${attachment.filename}`, file);
-      } catch (e) {
-        throw Error(e.message);
+      } catch (err) {
+        loggerUtil.error(JSON.stringify(err), CLS_NAME);
+        throw Error(err.message);
       }
     });
 

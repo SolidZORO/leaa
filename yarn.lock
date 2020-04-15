@@ -2532,7 +2532,7 @@
     "@jimp/utils" "^0.10.2"
     core-js "^3.4.1"
 
-"@jimp/plugin-rotate@^0.10.2":
+"@jimp/plugin-rotate@^0.10.1", "@jimp/plugin-rotate@^0.10.2":
   version "0.10.1"
   resolved "https://registry.npm.taobao.org/@jimp/plugin-rotate/download/@jimp/plugin-rotate-0.10.1.tgz#4e0315cc582afdde90a4f8b56434046c49da015f"
   integrity sha1-TgMVzFgq/d6QpPi1ZDQEbEnaAV8=
@@ -3988,7 +3988,7 @@
   version "1.2.0"
   resolved "https://registry.npm.taobao.org/@types/minimist/download/@types/minimist-1.2.0.tgz#69a23a3ad29caf0097f06eda59b361ee2f0639f6"
 
-"@types/mkdirp@1.0.0":
+"@types/mkdirp@^1.0.0":
   version "1.0.0"
   resolved "https://registry.npm.taobao.org/@types/mkdirp/download/@types/mkdirp-1.0.0.tgz#16ce0eabe4a9a3afe64557ad0ee6886ec3d32927"
   integrity sha1-Fs4Oq+Spo6/mRVetDuaIbsPTKSc=
