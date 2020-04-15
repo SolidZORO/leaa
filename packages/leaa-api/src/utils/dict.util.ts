@@ -15,9 +15,7 @@ const cutTags = (text: string, limit = 5): string[] => {
     });
   }
 
-  // @ts-ignore
-  const jiebaAllTags = nodejieba.tagWordsToStr(nodejieba.tag(text));
-  const jiebaExtractTags: { word: string; weight: number }[] = nodejieba.extractWithWords(jiebaAllTags, limit);
+  const jiebaExtractTags: { word: string; weight: number }[] = nodejieba.extract(text, limit);
 
   return jiebaExtractTags.map((tag) => tag.word);
 };

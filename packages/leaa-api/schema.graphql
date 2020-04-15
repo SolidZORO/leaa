@@ -2,29 +2,68 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Address {
+type User {
   id: Int
   created_at: DateTime!
   updated_at: DateTime
   deleted_at: DateTime
-  address: String
-  province: String
-  city: String
-  area: String
-  consignee: String
-  zip: Int
+  name: String
   phone: String
-  status: Int
+  email: String!
+  avatar_url: String
+  status: Int!
+  is_admin: Int!
+  last_login_ip: String
+  last_login_at: DateTime
+  last_token_at: DateTime
+  roles: [Role!]
+  addresses: [Address!]
+  permissions: [Permission!]
+  flatPermissions: [String!]
+  authToken: String
+  authExpiresIn: Int
+  avatar: Attachment
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Role {
+  id: Int
+  created_at: DateTime!
+  updated_at: DateTime
+  deleted_at: DateTime
+  name: String!
+  slug: String!
+  permissions: [Permission!]
   user: User
 }
 
-type AddressesWithPaginationObject {
-  page: Int
-  pageSize: Int!
-  nextPage: Int
-  itemsCount: Int!
-  total: Int!
-  items: [Address!]!
+type Permission {
+  id: Int
+  created_at: DateTime!
+  updated_at: DateTime
+  deleted_at: DateTime
+  name: String!
+  slug: String!
+  slugGroup: String!
+  roles: [Role!]
+}
+
+type Category {
+  id: Int
+  created_at: DateTime!
+  updated_at: DateTime
+  deleted_at: DateTime
+  name: String
+  slug: String
+  parent_id: Int
+  description: String
+  children: [Category!]
+  parent: Category
+  key: String
 }
 
 type Article {
@@ -41,15 +80,6 @@ type Article {
   categories: [Category!]
   tags: [Tag!]
   released_at: DateTime
-}
-
-type ArticlesWithPaginationObject {
-  page: Int
-  pageSize: Int!
-  nextPage: Int
-  itemsCount: Int!
-  total: Int!
-  items: [Article!]!
 }
 
 type Attachment {
@@ -84,17 +114,47 @@ type Attachment {
   status: Int!
 }
 
-type AttachmentsObject {
-  items: [Attachment!]!
-}
-
-type AttachmentsWithPaginationObject {
+type AxsWithPaginationObject {
   page: Int
   pageSize: Int!
   nextPage: Int
   itemsCount: Int!
   total: Int!
-  items: [Attachment!]!
+  items: [Ax!]!
+}
+
+type AxAttachmentsObject {
+  bannerMbList: [Attachment!]!
+  bannerPcList: [Attachment!]!
+  galleryMbList: [Attachment!]!
+  galleryPcList: [Attachment!]!
+}
+
+type Ax {
+  id: Int
+  created_at: DateTime!
+  updated_at: DateTime
+  deleted_at: DateTime
+  title: String!
+  slug: String
+  description: String
+  status: Int
+  attachments: AxAttachmentsObject
+}
+
+type Setting {
+  id: Int
+  created_at: DateTime!
+  updated_at: DateTime
+  deleted_at: DateTime
+  name: String!
+  slug: String
+  type: String
+  description: String
+  options: String
+  value: String
+  sort: Int!
+  private: Int!
 }
 
 type Auth {
@@ -120,94 +180,15 @@ type Auth {
   last_auth_at: DateTime
 }
 
-input AuthLoginInput {
-  email: String!
-  password: String!
-}
-
-input AuthSignupInput {
-  email: String!
-  name: String!
-  password: String!
-}
-
-type AuthsWithPaginationObject {
-  page: Int
-  pageSize: Int!
-  nextPage: Int
-  itemsCount: Int!
-  total: Int!
-  items: [Auth!]!
-}
-
-type Ax {
-  id: Int
-  created_at: DateTime!
-  updated_at: DateTime
-  deleted_at: DateTime
-  title: String!
-  slug: String
-  description: String
-  status: Int
-  attachments: AxAttachmentsObject
-}
-
-type AxAttachmentsObject {
-  bannerMbList: [Attachment!]!
-  bannerPcList: [Attachment!]!
-  galleryMbList: [Attachment!]!
-  galleryPcList: [Attachment!]!
-}
-
-type AxsWithPaginationObject {
-  page: Int
-  pageSize: Int!
-  nextPage: Int
-  itemsCount: Int!
-  total: Int!
-  items: [Ax!]!
-}
-
-type CategoriesWithPaginationOrTreeObject {
-  page: Int
-  pageSize: Int
-  nextPage: Int
-  itemsCount: Int
-  total: Int
-  items: [Category!]
-  trees: [CategoryTreeObject!]
-}
-
-type Category {
+type Tag {
   id: Int
   created_at: DateTime!
   updated_at: DateTime
   deleted_at: DateTime
   name: String
-  slug: String
-  parent_id: Int
+  icon: String
   description: String
-  children: [Category!]
-  parent: Category
-  key: String
-}
-
-type CategoryTreeObject {
-  id: Int
-  created_at: DateTime!
-  updated_at: DateTime
-  deleted_at: DateTime
-  name: String
-  slug: String
-  parent_id: Int
-  description: String
-  children: [CategoryTreeObject!]
-  parent: Category
-  key: String!
-  value: Int!
-  title: String
-  subtitle: String
-  expanded: Boolean
+  views: Int
 }
 
 type Coupon {
@@ -236,79 +217,49 @@ type Coupon {
   canRedeem: Boolean!
 }
 
-type CouponsWithPaginationObject {
+type Promo {
+  id: Int
+  created_at: DateTime!
+  updated_at: DateTime
+  deleted_at: DateTime
+  name: String!
+  amount: Float!
+  quantity: Int!
+  redeemed_quantity: Int!
+  over_amount: Float!
+  available_product_ids: String
+  unavailable_product_ids: String
+  start_time: DateTime
+  expire_time: DateTime
+  creator_id: Int!
+  status: Int
+  available: Boolean!
+}
+
+type ProductAttachmentsObject {
+  bannerMbList: [Attachment!]!
+  bannerPcList: [Attachment!]!
+  galleryMbList: [Attachment!]!
+  galleryPcList: [Attachment!]!
+}
+
+type ProductsWithPaginationObject {
   page: Int
   pageSize: Int!
   nextPage: Int
   itemsCount: Int!
   total: Int!
-  items: [Coupon!]!
+  items: [Product!]!
 }
 
-input CreateAddressInput {
-  address: String!
-  province: String!
-  city: String!
-  area: String
-  consignee: String
-  zip: Int
-  phone: String
-  status: Int
-}
-
-input CreateArticleInput {
-  title: String!
-  slug: String
-  categoryIds: [Int!]
-  user_id: Int
-  description: String
-  content: String
-  status: Int!
-}
-
-input CreateAxInput {
-  title: String!
-  slug: String!
-  status: Int!
-  description: String
-}
-
-input CreateCategoryInput {
-  name: String!
-  slug: String!
-  parent_id: Int
-  description: String
-}
-
-input CreateCouponInput {
-  type: String!
-  name: String!
-  quantity: Int!
-  amount: Float!
-  over_amount: Float
-  available_product_ids: String
-  unavailable_product_ids: String
-  start_time: DateTime!
-  expire_time: DateTime!
-  status: Int!
-}
-
-input CreateDivisionInput {
-  code: Int!
-  province_code: Int
-  city_code: Int
-  name: String!
-}
-
-input CreatePermissionInput {
-  name: String!
-  slug: String!
-}
-
-input CreateProductInput {
+type Product {
+  id: Int
+  created_at: DateTime!
+  updated_at: DateTime
+  deleted_at: DateTime
   name: String!
   fullname: String
-  serial: String!
+  serial: String
   price: Float!
   cost_price: Float
   market_price: Float
@@ -317,71 +268,26 @@ input CreateProductInput {
   sort: Int
   description: String
   content: String
-  brandIds: [Int!]
-  styleIds: [Int!]
-  tagIds: [Int!]
-  bannerIds: [Int!]
+  brands: [Category!]
+  styles: [Category!]
+  tags: [Tag!]
+  attachments: ProductAttachmentsObject
 }
 
-input CreatePromoInput {
-  name: String!
-  quantity: Int!
-  redeemed_quantity: Int
-  amount: Float!
-  over_amount: Float
-  available_product_ids: String
-  unavailable_product_ids: String
-  start_time: DateTime!
-  expire_time: DateTime!
-  status: Int!
-}
-
-input CreateRoleInput {
-  name: String!
-  slug: String!
-}
-
-input CreateSettingInput {
-  name: String!
-  slug: String!
-  value: String!
-  type: String!
-  description: String
-  options: String
-  private: Int
-  sort: Int = 0
-}
-
-input CreateTagInput {
-  name: String!
-  icon: String
-  description: String
-}
-
-input CreateUserInput {
+type Address {
+  id: Int
+  created_at: DateTime!
+  updated_at: DateTime
+  deleted_at: DateTime
+  address: String
+  province: String
+  city: String
+  area: String
+  consignee: String
+  zip: Int
   phone: String
-  email: String!
-  name: String
-  password: String!
   status: Int
-  is_admin: Int
-  avatar_url: String
-}
-
-input CreateZanInput {
-  title: String!
-  status: Int
-  description: String
-  target_zan_quantity: Int
-}
-
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
-
-type DeleteAttachmentsObject {
-  items: [String!]!
+  user: User
 }
 
 type Division {
@@ -395,6 +301,165 @@ type Division {
   name: String!
 }
 
+type Zan {
+  id: Int
+  created_at: DateTime!
+  updated_at: DateTime
+  deleted_at: DateTime
+  uuid: String!
+  title: String!
+  description: String
+  status: Int
+  views: Int
+  current_zan_quantity: Int
+  target_zan_quantity: Int
+  creator: User
+  users: [User!]
+}
+
+type RolesWithPaginationObject {
+  page: Int
+  pageSize: Int!
+  nextPage: Int
+  itemsCount: Int!
+  total: Int!
+  items: [Role!]!
+}
+
+type PermissionsWithPaginationObject {
+  page: Int
+  pageSize: Int!
+  nextPage: Int
+  itemsCount: Int!
+  total: Int!
+  items: [Permission!]!
+}
+
+type UsersWithPaginationObject {
+  page: Int
+  pageSize: Int!
+  nextPage: Int
+  itemsCount: Int!
+  total: Int!
+  items: [User!]!
+}
+
+type AttachmentsWithPaginationObject {
+  page: Int
+  pageSize: Int!
+  nextPage: Int
+  itemsCount: Int!
+  total: Int!
+  items: [Attachment!]!
+}
+
+type AttachmentsObject {
+  items: [Attachment!]!
+}
+
+type DeleteAttachmentsObject {
+  items: [String!]!
+}
+
+type AuthsWithPaginationObject {
+  page: Int
+  pageSize: Int!
+  nextPage: Int
+  itemsCount: Int!
+  total: Int!
+  items: [Auth!]!
+}
+
+type ArticlesWithPaginationObject {
+  page: Int
+  pageSize: Int!
+  nextPage: Int
+  itemsCount: Int!
+  total: Int!
+  items: [Article!]!
+}
+
+type CategoryTreeObject {
+  id: Int
+  created_at: DateTime!
+  updated_at: DateTime
+  deleted_at: DateTime
+  name: String
+  slug: String
+  parent_id: Int
+  description: String
+  children: [CategoryTreeObject!]
+  parent: Category
+  key: String!
+  value: Int!
+  title: String
+  subtitle: String
+  expanded: Boolean
+}
+
+type CategoriesWithPaginationOrTreeObject {
+  page: Int
+  pageSize: Int
+  nextPage: Int
+  itemsCount: Int
+  total: Int
+  items: [Category!]
+  trees: [CategoryTreeObject!]
+}
+
+type SettingsObject {
+  items: [Setting!]!
+}
+
+type SettingsWithPaginationObject {
+  page: Int
+  pageSize: Int!
+  nextPage: Int
+  itemsCount: Int!
+  total: Int!
+  items: [Setting!]!
+}
+
+type CouponsWithPaginationObject {
+  page: Int
+  pageSize: Int!
+  nextPage: Int
+  itemsCount: Int!
+  total: Int!
+  items: [Coupon!]!
+}
+
+type PromosWithPaginationObject {
+  page: Int
+  pageSize: Int!
+  nextPage: Int
+  itemsCount: Int!
+  total: Int!
+  items: [Promo!]!
+}
+
+type TagsWithPaginationObject {
+  page: Int
+  pageSize: Int!
+  nextPage: Int
+  itemsCount: Int!
+  total: Int!
+  items: [Tag!]!
+}
+
+type SyncTagsToFileObject {
+  status: String!
+}
+
+type AddressesWithPaginationObject {
+  page: Int
+  pageSize: Int!
+  nextPage: Int
+  itemsCount: Int!
+  total: Int!
+  items: [Address!]!
+}
+
 type DivisionsWithPaginationObject {
   page: Int
   pageSize: Int!
@@ -404,9 +469,74 @@ type DivisionsWithPaginationObject {
   items: [Division!]!
 }
 
+type SyncDivisionToFileObject {
+  status: String!
+}
+
+type ZansWithPaginationObject {
+  page: Int
+  pageSize: Int!
+  nextPage: Int
+  itemsCount: Int!
+  total: Int!
+  items: [Zan!]!
+}
+
 type LoginAccount {
   email: String!
   password: String!
+}
+
+type SignupAccount {
+  email: String!
+  password: String!
+  name: String!
+}
+
+type Query {
+  roles(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): RolesWithPaginationObject!
+  role(id: Int!): Role!
+  permissions(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): PermissionsWithPaginationObject!
+  permission(id: Int!): Permission!
+  users(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): UsersWithPaginationObject!
+  user(id: Int!): User!
+  userByToken(token: String): User!
+  attachments(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String, type: String, moduleName: String, moduleId: Int, typeName: String, typePlatform: String, categoryId: Int, userId: Int, refreshHash: Int): AttachmentsWithPaginationObject!
+  attachment(uuid: String!): Attachment!
+  auths(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): AuthsWithPaginationObject
+  articles(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String, tagName: String, categoryName: String, categoryId: Int): ArticlesWithPaginationObject!
+  article(id: Int!): Article!
+  articleBySlug(slug: String!): Article!
+  categories(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String, expanded: Boolean, listType: Boolean, treeType: Boolean, parentSlug: String, parentId: Int, includeParent: Boolean): CategoriesWithPaginationOrTreeObject!
+  category(id: Int!): Category!
+  axs(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): AxsWithPaginationObject!
+  ax(id: Int!): Ax!
+  axBySlug(slug: String!): Ax!
+  settings(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): SettingsWithPaginationObject!
+  setting(id: Int!): Setting!
+  settingBySlug(slug: String!): Setting!
+  coupons(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): CouponsWithPaginationObject!
+  coupon(id: Int!): Coupon!
+  couponByCode(code: String!): Coupon!
+  promos(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): PromosWithPaginationObject!
+  promo(id: Int!): Promo!
+  promoByCode(code: String!): Promo!
+  tags(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): TagsWithPaginationObject!
+  tag(id: Int!): Tag!
+  tagByName(name: String!): Tag!
+  products(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String, tagName: String, styleName: String, brandName: String, styleId: Int, brandId: Int): ProductsWithPaginationObject
+  product(id: Int!): Product
+  addresses(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): AddressesWithPaginationObject!
+  address(id: Int!): Address!
+  divisions(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): DivisionsWithPaginationObject!
+  divisionsMapping: String!
+  divisionsTree: String!
+  division(id: Int!): Division!
+  zans(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): ZansWithPaginationObject!
+  zan(uuid: String!): Zan!
+  test: Float!
+  testWithAuth: String!
+  testI18n(x: Int): String!
 }
 
 type Mutation {
@@ -469,369 +599,48 @@ type Mutation {
   deleteZanUser(userId: Int!, uuid: String!): Zan!
 }
 
-type Permission {
-  id: Int
-  created_at: DateTime!
-  updated_at: DateTime
-  deleted_at: DateTime
+input CreateRoleInput {
   name: String!
   slug: String!
-  slugGroup: String!
-  roles: [Role!]
 }
 
-type PermissionsWithPaginationObject {
-  page: Int
-  pageSize: Int!
-  nextPage: Int
-  itemsCount: Int!
-  total: Int!
-  items: [Permission!]!
-}
-
-type Product {
-  id: Int
-  created_at: DateTime!
-  updated_at: DateTime
-  deleted_at: DateTime
-  name: String!
-  fullname: String
-  serial: String
-  price: Float!
-  cost_price: Float
-  market_price: Float
-  status: Int!
-  stock: Int!
-  sort: Int
-  description: String
-  content: String
-  brands: [Category!]
-  styles: [Category!]
-  tags: [Tag!]
-  attachments: ProductAttachmentsObject
-}
-
-type ProductAttachmentsObject {
-  bannerMbList: [Attachment!]!
-  bannerPcList: [Attachment!]!
-  galleryMbList: [Attachment!]!
-  galleryPcList: [Attachment!]!
-}
-
-type ProductsWithPaginationObject {
-  page: Int
-  pageSize: Int!
-  nextPage: Int
-  itemsCount: Int!
-  total: Int!
-  items: [Product!]!
-}
-
-type Promo {
-  id: Int
-  created_at: DateTime!
-  updated_at: DateTime
-  deleted_at: DateTime
-  name: String!
-  amount: Float!
-  quantity: Int!
-  redeemed_quantity: Int!
-  over_amount: Float!
-  available_product_ids: String
-  unavailable_product_ids: String
-  start_time: DateTime
-  expire_time: DateTime
-  creator_id: Int!
-  status: Int
-  available: Boolean!
-}
-
-type PromosWithPaginationObject {
-  page: Int
-  pageSize: Int!
-  nextPage: Int
-  itemsCount: Int!
-  total: Int!
-  items: [Promo!]!
-}
-
-type Query {
-  roles(
-    page: Int = 1
-    pageSize: Int = 30
-    orderBy: String = "id"
-    orderSort: String = "DESC"
-    q: String
-  ): RolesWithPaginationObject!
-  role(id: Int!): Role!
-  permissions(
-    page: Int = 1
-    pageSize: Int = 30
-    orderBy: String = "id"
-    orderSort: String = "DESC"
-    q: String
-  ): PermissionsWithPaginationObject!
-  permission(id: Int!): Permission!
-  users(
-    page: Int = 1
-    pageSize: Int = 30
-    orderBy: String = "id"
-    orderSort: String = "DESC"
-    q: String
-  ): UsersWithPaginationObject!
-  user(id: Int!): User!
-  userByToken(token: String): User!
-  attachments(
-    page: Int = 1
-    pageSize: Int = 30
-    orderBy: String = "id"
-    orderSort: String = "DESC"
-    q: String
-    type: String
-    moduleName: String
-    moduleId: Int
-    typeName: String
-    typePlatform: String
-    categoryId: Int
-    userId: Int
-    refreshHash: Int
-  ): AttachmentsWithPaginationObject!
-  attachment(uuid: String!): Attachment!
-  auths(
-    page: Int = 1
-    pageSize: Int = 30
-    orderBy: String = "id"
-    orderSort: String = "DESC"
-    q: String
-  ): AuthsWithPaginationObject
-  articles(
-    page: Int = 1
-    pageSize: Int = 30
-    orderBy: String = "id"
-    orderSort: String = "DESC"
-    q: String
-    tagName: String
-    categoryName: String
-    categoryId: Int
-  ): ArticlesWithPaginationObject!
-  article(id: Int!): Article!
-  articleBySlug(slug: String!): Article!
-  categories(
-    page: Int = 1
-    pageSize: Int = 30
-    orderBy: String = "id"
-    orderSort: String = "DESC"
-    q: String
-    expanded: Boolean
-    listType: Boolean
-    treeType: Boolean
-    parentSlug: String
-    parentId: Int
-    includeParent: Boolean
-  ): CategoriesWithPaginationOrTreeObject!
-  category(id: Int!): Category!
-  axs(
-    page: Int = 1
-    pageSize: Int = 30
-    orderBy: String = "id"
-    orderSort: String = "DESC"
-    q: String
-  ): AxsWithPaginationObject!
-  ax(id: Int!): Ax!
-  axBySlug(slug: String!): Ax!
-  settings(
-    page: Int = 1
-    pageSize: Int = 30
-    orderBy: String = "id"
-    orderSort: String = "DESC"
-    q: String
-  ): SettingsWithPaginationObject!
-  setting(id: Int!): Setting!
-  settingBySlug(slug: String!): Setting!
-  coupons(
-    page: Int = 1
-    pageSize: Int = 30
-    orderBy: String = "id"
-    orderSort: String = "DESC"
-    q: String
-  ): CouponsWithPaginationObject!
-  coupon(id: Int!): Coupon!
-  couponByCode(code: String!): Coupon!
-  promos(
-    page: Int = 1
-    pageSize: Int = 30
-    orderBy: String = "id"
-    orderSort: String = "DESC"
-    q: String
-  ): PromosWithPaginationObject!
-  promo(id: Int!): Promo!
-  promoByCode(code: String!): Promo!
-  tags(
-    page: Int = 1
-    pageSize: Int = 30
-    orderBy: String = "id"
-    orderSort: String = "DESC"
-    q: String
-  ): TagsWithPaginationObject!
-  tag(id: Int!): Tag!
-  tagByName(name: String!): Tag!
-  products(
-    page: Int = 1
-    pageSize: Int = 30
-    orderBy: String = "id"
-    orderSort: String = "DESC"
-    q: String
-    tagName: String
-    styleName: String
-    brandName: String
-    styleId: Int
-    brandId: Int
-  ): ProductsWithPaginationObject
-  product(id: Int!): Product
-  addresses(
-    page: Int = 1
-    pageSize: Int = 30
-    orderBy: String = "id"
-    orderSort: String = "DESC"
-    q: String
-  ): AddressesWithPaginationObject!
-  address(id: Int!): Address!
-  divisions(
-    page: Int = 1
-    pageSize: Int = 30
-    orderBy: String = "id"
-    orderSort: String = "DESC"
-    q: String
-  ): DivisionsWithPaginationObject!
-  divisionsMapping: String!
-  divisionsTree: String!
-  division(id: Int!): Division!
-  zans(
-    page: Int = 1
-    pageSize: Int = 30
-    orderBy: String = "id"
-    orderSort: String = "DESC"
-    q: String
-  ): ZansWithPaginationObject!
-  zan(uuid: String!): Zan!
-  test: Float!
-  testWithAuth: String!
-  testI18n(x: Int): String!
-}
-
-input RedeemCouponInput {
-  code: String!
-  userId: Int
-}
-
-input RedeemPromoInput {
-  code: String!
-  userId: Int
-}
-
-type Role {
-  id: Int
-  created_at: DateTime!
-  updated_at: DateTime
-  deleted_at: DateTime
-  name: String!
-  slug: String!
-  permissions: [Permission!]
-  user: User
-}
-
-type RolesWithPaginationObject {
-  page: Int
-  pageSize: Int!
-  nextPage: Int
-  itemsCount: Int!
-  total: Int!
-  items: [Role!]!
-}
-
-type Setting {
-  id: Int
-  created_at: DateTime!
-  updated_at: DateTime
-  deleted_at: DateTime
-  name: String!
-  slug: String
-  type: String
-  description: String
-  options: String
-  value: String
-  sort: Int!
-  private: Int!
-}
-
-type SettingsObject {
-  items: [Setting!]!
-}
-
-type SettingsWithPaginationObject {
-  page: Int
-  pageSize: Int!
-  nextPage: Int
-  itemsCount: Int!
-  total: Int!
-  items: [Setting!]!
-}
-
-type SignupAccount {
-  email: String!
-  password: String!
-  name: String!
-}
-
-type SyncDivisionToFileObject {
-  status: String!
-}
-
-type SyncTagsToFileObject {
-  status: String!
-}
-
-type Tag {
-  id: Int
-  created_at: DateTime!
-  updated_at: DateTime
-  deleted_at: DateTime
+input UpdateRoleInput {
   name: String
-  icon: String
-  description: String
-  views: Int
-}
-
-type TagsWithPaginationObject {
-  page: Int
-  pageSize: Int!
-  nextPage: Int
-  itemsCount: Int!
-  total: Int!
-  items: [Tag!]!
-}
-
-input UpdateAddressInput {
-  address: String
-  province: String
-  city: String
-  area: String
-  consignee: String
-  zip: Int
-  phone: String
-  status: Int
-}
-
-input UpdateArticleInput {
-  title: String
   slug: String
-  user_id: Int
-  description: String
-  content: String
+  permissionIds: [Int!]
+  permissionSlugs: [String!]
+}
+
+input CreatePermissionInput {
+  name: String!
+  slug: String!
+}
+
+input UpdatePermissionInput {
+  name: String
+  slug: String
+}
+
+input CreateUserInput {
+  phone: String
+  email: String!
+  name: String
+  password: String!
   status: Int
-  released_at: DateTime
-  categoryIds: [Int!]
-  tagIds: [Int!]
+  is_admin: Int
+  avatar_url: String
+}
+
+input UpdateUserInput {
+  phone: String
+  email: String
+  name: String
+  password: String
+  avatar_url: String
+  status: Int
+  is_admin: Int
+  roleIds: [Int!]
+  roleSlugs: [String!]
 }
 
 input UpdateAttachmentInput {
@@ -851,10 +660,43 @@ input UpdateAttachmentsInput {
   uuid: String!
 }
 
-input UpdateAxInput {
+input AuthLoginInput {
+  email: String!
+  password: String!
+}
+
+input AuthSignupInput {
+  email: String!
+  name: String!
+  password: String!
+}
+
+input CreateArticleInput {
+  title: String!
+  slug: String
+  categoryIds: [Int!]
+  user_id: Int
+  description: String
+  content: String
+  status: Int!
+}
+
+input UpdateArticleInput {
   title: String
   slug: String
+  user_id: Int
+  description: String
+  content: String
   status: Int
+  released_at: DateTime
+  categoryIds: [Int!]
+  tagIds: [Int!]
+}
+
+input CreateCategoryInput {
+  name: String!
+  slug: String!
+  parent_id: Int
   description: String
 }
 
@@ -863,6 +705,60 @@ input UpdateCategoryInput {
   slug: String!
   parent_id: Int
   description: String
+}
+
+input CreateAxInput {
+  title: String!
+  slug: String!
+  status: Int!
+  description: String
+}
+
+input UpdateAxInput {
+  title: String
+  slug: String
+  status: Int
+  description: String
+}
+
+input CreateSettingInput {
+  name: String!
+  slug: String!
+  value: String!
+  type: String!
+  description: String
+  options: String
+  private: Int
+  sort: Int = 0
+}
+
+input UpdateSettingInput {
+  name: String
+  slug: String
+  type: String
+  description: String
+  value: String
+  options: String
+  private: Int
+  sort: Int
+}
+
+input UpdateSettingsInput {
+  id: Int!
+  value: String!
+}
+
+input CreateCouponInput {
+  type: String!
+  name: String!
+  quantity: Int!
+  amount: Float!
+  over_amount: Float
+  available_product_ids: String
+  unavailable_product_ids: String
+  start_time: DateTime!
+  expire_time: DateTime!
+  status: Int!
 }
 
 input UpdateCouponInput {
@@ -877,16 +773,71 @@ input UpdateCouponInput {
   status: Int
 }
 
-input UpdateDivisionInput {
-  code: Int
-  province_code: Int
-  city_code: Int
-  name: String
+input RedeemCouponInput {
+  code: String!
+  userId: Int
 }
 
-input UpdatePermissionInput {
+input CreatePromoInput {
+  name: String!
+  quantity: Int!
+  redeemed_quantity: Int
+  amount: Float!
+  over_amount: Float
+  available_product_ids: String
+  unavailable_product_ids: String
+  start_time: DateTime!
+  expire_time: DateTime!
+  status: Int!
+}
+
+input UpdatePromoInput {
+  type: String
   name: String
-  slug: String
+  quantity: Int
+  redeemed_quantity: Int
+  amount: Float
+  over_amount: Float
+  available_product_ids: String
+  unavailable_product_ids: String
+  start_time: DateTime
+  expire_time: DateTime
+  status: Int
+}
+
+input RedeemPromoInput {
+  code: String!
+  userId: Int
+}
+
+input CreateTagInput {
+  name: String!
+  icon: String
+  description: String
+}
+
+input UpdateTagInput {
+  name: String
+  icon: String
+  description: String
+}
+
+input CreateProductInput {
+  name: String!
+  fullname: String
+  serial: String!
+  price: Float!
+  cost_price: Float
+  market_price: Float
+  status: Int!
+  stock: Int!
+  sort: Int
+  description: String
+  content: String
+  brandIds: [Int!]
+  styleIds: [Int!]
+  tagIds: [Int!]
+  bannerIds: [Int!]
 }
 
 input UpdateProductInput {
@@ -907,59 +858,47 @@ input UpdateProductInput {
   bannerIds: [Int!]
 }
 
-input UpdatePromoInput {
-  type: String
-  name: String
-  quantity: Int
-  redeemed_quantity: Int
-  amount: Float
-  over_amount: Float
-  available_product_ids: String
-  unavailable_product_ids: String
-  start_time: DateTime
-  expire_time: DateTime
-  status: Int
-}
-
-input UpdateRoleInput {
-  name: String
-  slug: String
-  permissionIds: [Int!]
-  permissionSlugs: [String!]
-}
-
-input UpdateSettingInput {
-  name: String
-  slug: String
-  type: String
-  description: String
-  value: String
-  options: String
-  private: Int
-  sort: Int
-}
-
-input UpdateSettingsInput {
-  id: Int!
-  value: String!
-}
-
-input UpdateTagInput {
-  name: String
-  icon: String
-  description: String
-}
-
-input UpdateUserInput {
+input CreateAddressInput {
+  address: String!
+  province: String!
+  city: String!
+  area: String
+  consignee: String
+  zip: Int
   phone: String
-  email: String
-  name: String
-  password: String
-  avatar_url: String
   status: Int
-  is_admin: Int
-  roleIds: [Int!]
-  roleSlugs: [String!]
+}
+
+input UpdateAddressInput {
+  address: String
+  province: String
+  city: String
+  area: String
+  consignee: String
+  zip: Int
+  phone: String
+  status: Int
+}
+
+input CreateDivisionInput {
+  code: Int!
+  province_code: Int
+  city_code: Int
+  name: String!
+}
+
+input UpdateDivisionInput {
+  code: Int
+  province_code: Int
+  city_code: Int
+  name: String
+}
+
+input CreateZanInput {
+  title: String!
+  status: Int
+  description: String
+  target_zan_quantity: Int
 }
 
 input UpdateZanInput {
@@ -968,61 +907,4 @@ input UpdateZanInput {
   description: String
   target_zan_quantity: Int
   current_zan_quantity: Int
-}
-
-type User {
-  id: Int
-  created_at: DateTime!
-  updated_at: DateTime
-  deleted_at: DateTime
-  name: String
-  phone: String
-  email: String!
-  avatar_url: String
-  status: Int!
-  is_admin: Int!
-  last_login_ip: String
-  last_login_at: DateTime
-  last_token_at: DateTime
-  roles: [Role!]
-  addresses: [Address!]
-  permissions: [Permission!]
-  flatPermissions: [String!]
-  authToken: String
-  authExpiresIn: Int
-  avatar: Attachment
-}
-
-type UsersWithPaginationObject {
-  page: Int
-  pageSize: Int!
-  nextPage: Int
-  itemsCount: Int!
-  total: Int!
-  items: [User!]!
-}
-
-type Zan {
-  id: Int
-  created_at: DateTime!
-  updated_at: DateTime
-  deleted_at: DateTime
-  uuid: String!
-  title: String!
-  description: String
-  status: Int
-  views: Int
-  current_zan_quantity: Int
-  target_zan_quantity: Int
-  creator: User
-  users: [User!]
-}
-
-type ZansWithPaginationObject {
-  page: Int
-  pageSize: Int!
-  nextPage: Int
-  itemsCount: Int!
-  total: Int!
-  items: [Zan!]!
 }

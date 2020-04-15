@@ -1,6 +1,5 @@
 import moment from 'moment';
 import jwt from 'jsonwebtoken';
-import { Request } from 'express';
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Repository } from 'typeorm';
@@ -14,7 +13,7 @@ import { authUtil, argsUtil, paginationUtil, curdUtil, msgUtil } from '@leaa/api
 import { UserService } from '@leaa/api/src/modules/user/user.service';
 import { permissionConfig } from '@leaa/api/src/configs';
 import { UserProperty } from '@leaa/api/src/modules/user/user.property';
-import { IAuthsArgs, IGqlCtx } from '@leaa/api/src/interfaces';
+import { IAuthsArgs, IGqlCtx, IRequest } from '@leaa/api/src/interfaces';
 
 const CLS_NAME = 'AuthService';
 
@@ -152,7 +151,7 @@ export class AuthService {
     return { ...user, flatPermissions };
   }
 
-  async validateUserByReq(req: Request): Promise<User | undefined | boolean> {
+  async validateUserByReq(req: IRequest): Promise<User | undefined | boolean> {
     // Graphql Playground IntrospectionQuery DOT NOT Validate
     if (req.body.query.includes('IntrospectionQuery')) {
       return true;

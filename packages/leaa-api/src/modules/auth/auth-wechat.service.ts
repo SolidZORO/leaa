@@ -1,6 +1,5 @@
 import bcryptjs from 'bcryptjs';
 import queryString from 'query-string';
-import { Request, Response } from 'express';
 import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -8,7 +7,7 @@ import { Wechat, MiniProgram, OAuth } from 'wechat-jssdk';
 
 import { Auth } from '@leaa/common/src/entrys';
 import { authConfig } from '@leaa/api/src/configs';
-import { IWechatInfo, ICreateAuthAndUserResult } from '@leaa/api/src/interfaces';
+import { IWechatInfo, ICreateAuthAndUserResult, IRequest, IResponse } from '@leaa/api/src/interfaces';
 import { CreateAuthInput } from '@leaa/common/src/dtos/auth';
 import { loggerUtil, stringUtil, msgUtil } from '@leaa/api/src/utils';
 import { UserService } from '@leaa/api/src/modules/user/user.service';
@@ -38,7 +37,7 @@ export class AuthWechatService {
   private miniProgram = this.checkMiniProgramConfig() && new MiniProgram(authConfig.wechat);
   private nextTicket = { ticket: stringUtil.random(), ticket_at: new Date() };
 
-  async verifySignature(req: Request): Promise<string | null> {
+  async verifySignature(req: IRequest): Promise<string | null> {
     const signature = await this.wechat.jssdk.verifySignature(req.query);
 
     if (signature) {
@@ -48,7 +47,7 @@ export class AuthWechatService {
     return 'NOT-SIGNATURE-ECHOSTR';
   }
 
-  async getMiniProgramSession(req: Request, body: { code: string }): Promise<string | null> {
+  async getMiniProgramSession(req: IRequest, body: { code: string }): Promise<string | null> {
     if (body.code) {
       return this.miniProgram.getSession(body.code);
     }
@@ -57,7 +56,7 @@ export class AuthWechatService {
   }
 
   async wechatDecryptData(
-    req: Request,
+    req: IRequest,
     body: { encryptedData: string; iv: string; sessionKey: string; platform: string },
   ): Promise<any | string> {
     if (body.encryptedData && body.iv && body.sessionKey) {
@@ -100,7 +99,7 @@ export class AuthWechatService {
     return { newUser, newAuth };
   }
 
-  async wechatLogin(req: Request, res: Response): Promise<void> {
+  async wechatLogin(req: IRequest, res: IResponse): Promise<void> {
     const { jumpUrl, scope } = req.query;
 
     const stateParams: { jumpUrl: string } = {
@@ -118,7 +117,7 @@ export class AuthWechatService {
     res.redirect(url);
   }
 
-  async wechatCallback(req: Request, res: Response): Promise<void | string> {
+  async wechatCallback(req: IRequest, res: IResponse): Promise<void | string> {
     if (!req.query.state || !req.query.code) {
       msgUtil.error({ text: 'Wechat Callback Error' });
     }

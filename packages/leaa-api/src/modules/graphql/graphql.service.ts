@@ -1,11 +1,11 @@
 import { applyMiddleware } from 'graphql-middleware';
 import { Injectable } from '@nestjs/common';
-import { Request } from 'express';
 import { GqlOptionsFactory, GqlModuleOptions } from '@nestjs/graphql';
 
 import { AuthService } from '@leaa/api/src/modules/auth/auth.service';
 import { permissionConfig } from '@leaa/api/src/configs';
 import { loggerUtil } from '@leaa/api/src/utils';
+import { IRequest } from '@leaa/api/src/interfaces';
 
 const CLS_NAME = 'GraphqlService';
 
@@ -23,7 +23,7 @@ export class GraphqlService implements GqlOptionsFactory {
       tracing: dev,
       playground: dev,
       transformSchema: (schema: any): any => applyMiddleware(schema, permissionConfig.permissions),
-      context: async (ctx: { req: Request }) => {
+      context: async (ctx: { req: IRequest }) => {
         return {
           ...ctx,
           user: await this.authService.validateUserByReq(ctx.req),
