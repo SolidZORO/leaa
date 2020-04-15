@@ -1,6 +1,5 @@
 import fs from 'fs';
 import path from 'path';
-import Jimp from 'jimp';
 import ImageSize from 'image-size';
 import { Express } from 'express';
 import { Injectable } from '@nestjs/common';
@@ -42,17 +41,10 @@ export class SaveInLocalService {
     const height = Math.round(rawHeight / 2);
 
     const pathAt1x = file.path.replace('_2x', '');
+    console.log('@1x w/h', width, height);
 
-    // TODO jpg Error: marker was not found
-    Jimp.read(file.path)
-      .then((image: any) => {
-        image.resize(width, height).quality(95).write(pathAt1x);
-      })
-      .catch((err: Error) => {
-        console.error('SAVE 2X --> 1X ERROR', err);
-
-        fs.copyFileSync(file.path, pathAt1x);
-      });
+    // TODO MUST load a image lib resize
+    fs.copyFileSync(file.path, pathAt1x);
   }
 
   async createAttachmentByLocal(
