@@ -84,7 +84,9 @@ module.exports = (config, options) => {
       cssLoaderOptions: {
         sourceMap: false,
         importLoaders: 2,
-        localIdentName: dev ? '[local]--[hash:4]' : '[local]--[hash:4]',
+        modules: {
+          localIdentName: dev ? '[local]--[hash:4]' : '[local]--[hash:4]',
+        },
       },
     }),
   });
