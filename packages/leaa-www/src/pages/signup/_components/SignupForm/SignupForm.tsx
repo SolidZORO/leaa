@@ -1,5 +1,6 @@
 import cx from 'classnames';
 import React, { useEffect, useState } from 'react';
+import { ParsedUrlQuery } from 'querystring';
 import Link from 'next/link';
 import Router from 'next/router';
 import { Button, Col, Form, Input, Row } from 'antd';
@@ -13,7 +14,7 @@ import { authUtil, msgUtil } from '@leaa/www/src/utils';
 import style from './style.module.less';
 
 interface IProps {
-  urlQuery?: { [key: string]: string | string[] };
+  urlQuery?: ParsedUrlQuery;
   onSignupedCallback?: () => void;
   className?: string;
 }

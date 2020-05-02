@@ -19,4 +19,4 @@ yarn dev
 
 ## **MEMO**
 
-in `package.json`, `css-loader` MUST KEEP  `1.0.1`.
+N/A

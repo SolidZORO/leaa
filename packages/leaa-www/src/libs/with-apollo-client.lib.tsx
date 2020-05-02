@@ -13,7 +13,7 @@ interface Props {
 
 const isServer = typeof window === 'undefined';
 
-export const withApolloClient = (App: typeof NextApp) => {
+export const withApolloClient: any = (App: typeof NextApp) => {
   return class Apollo extends React.Component<Props & AppProps> {
     // eslint-disable-next-line react/static-property-placement
     static displayName = 'withApollo(App)';

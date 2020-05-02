@@ -3,7 +3,7 @@ const withWebpack = require('./tools/next/next-webpack');
 
 // fix: prevents error when .less files are required by node
 if (typeof require !== 'undefined') {
-  require.extensions['.less'] = (file) => {};
+  require.extensions['.less'] = () => {};
 }
 
 const nextConfig = {

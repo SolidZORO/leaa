@@ -1,3 +1,6 @@
+/*
+ running on severless (now.sh)
+ */
 const moduleAlias = require('module-alias');
 
 moduleAlias.addPath(__dirname);

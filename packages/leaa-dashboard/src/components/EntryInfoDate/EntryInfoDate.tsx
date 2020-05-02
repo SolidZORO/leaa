@@ -37,7 +37,7 @@ export const EntryInfoDate = (props: IProps) => {
 
     return (
       <Tooltip title={`${tipsLabel}  ${moment(date).format(FORMAT_DATA_TIME)}`}>
-        {moment(date).format(props.format || FORMAT_DATA)}
+        <>{moment(date).format(props.format || FORMAT_DATA)}</>
       </Tooltip>
     );
   };

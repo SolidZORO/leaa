@@ -20,8 +20,12 @@ module.exports = (config, options) => {
   const { dev, isServer } = options;
 
   // comstom antd icon
-  // config.resolve.alias['@ant-design/icons/lib/dist$'] = path.resolve(__dirname, './tools/next/next-antd-icon');
-  config.resolve.alias['swiper$'] = 'swiper/js/swiper.js';
+  config.resolve.alias = {
+    ...config.resolve.alias,
+    swiper$: 'swiper/js/swiper.js',
+    moment$: 'moment/moment.js',
+  };
+
   config.node = { fs: 'empty' };
 
   //

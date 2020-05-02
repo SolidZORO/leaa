@@ -42,7 +42,7 @@ export default (props: IPage) => {
       <Button type="primary" onClick={() => getTestI18nQuery()}>
         {t('_page:Test.getApiMessage')}
       </Button>{' '}
-      <Button type="danger" onClick={() => getTestI18nQuery({ variables: { x: 2 } })}>
+      <Button type="primary" onClick={() => getTestI18nQuery({ variables: { x: 2 } })}>
         {t('_page:Test.getApiError')}
       </Button>
     </>

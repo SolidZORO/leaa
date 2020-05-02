@@ -37,8 +37,8 @@ module.exports = (
       new MiniCssExtractPlugin({
         // Options similar to the same options in webpackOptions.output
         // both options are optional
-        filename: dev ? 'static/css/[name].css' : 'static/css/[name].[contenthash:8].css',
-        chunkFilename: dev ? 'static/css/[name].chunk.css' : 'static/css/[name].[contenthash:8].chunk.css',
+        filename: dev ? 'static/css/[name].css' : 'static/css/[name].[contenthash:4].css',
+        chunkFilename: dev ? 'static/css/[name].chunk.css' : 'static/css/[name].[contenthash:4].chunk.css',
       }),
     );
     extractCssInitialized = true;
