@@ -24,10 +24,12 @@ export const TableColumnDate = (props: IProps) => {
       })}
     >
       {props.date ? (
-        <Tooltip title={moment(props.date).format(FORMAT_DATA_TIME)}>
-          {props.prefix}
-          {moment(props.date).format(props.format || FORMAT_DATA)}
-          {props.suffix}
+        <Tooltip title={props.date ? moment(props.date).format(FORMAT_DATA_TIME) : ''}>
+          <>
+            {props.prefix}
+            {moment(props.date).format(props.format || FORMAT_DATA)}
+            {props.suffix}
+          </>
         </Tooltip>
       ) : (
         <span>N/A</span>

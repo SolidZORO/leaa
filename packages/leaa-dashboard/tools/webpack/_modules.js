@@ -41,8 +41,10 @@ modules.rules = [
       {
         loader: 'less-loader',
         options: {
-          javascriptEnabled: true,
-          modifyVars: antdModifyVars,
+          lessOptions: {
+            javascriptEnabled: true,
+            modifyVars: antdModifyVars,
+          },
         },
       },
     ],
@@ -65,8 +67,10 @@ modules.rules = [
       {
         loader: 'less-loader',
         options: {
-          javascriptEnabled: true,
-          modifyVars: antdModifyVars,
+          lessOptions: {
+            javascriptEnabled: true,
+            modifyVars: antdModifyVars,
+          },
         },
       },
     ],

@@ -48,8 +48,10 @@ module.exports = (config, options) => {
       {
         loader: 'less-loader',
         options: {
-          javascriptEnabled: true,
-          modifyVars: antdModifyVars,
+          lessOptions: {
+            javascriptEnabled: true,
+            modifyVars: antdModifyVars,
+          },
         },
       },
     ],
