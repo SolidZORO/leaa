@@ -1,15 +1,75 @@
 {
   "compilerOptions": {
-    "experimentalDecorators": true,
-    "strict": true,
-    "pretty": true,
-    "removeComments": true,
+    "baseUrl": ".",
+    "outDir": "_build",
+
+    /* Basic Operations */
+    "module": "ES2020",
+    "target": "ES6",
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "declaration": true,
+    "declarationMap": true,
+
+    "sourceMap": false,
+    "allowJs": false,
+    // "inlineSourceMap": true,
+    // "jsx": "react",
+
+    /* Strict Type-Checking Options */
+    "strict": true /* Enable all strict type-checking options. */,
+    "noImplicitAny": true /* Raise error on expressions and declarations with an implied 'any' type. */,
+    "strictNullChecks": true /* Enable strict null checks. */,
+    "strictFunctionTypes": true /* Enable strict checking of function types. */,
+    "strictBindCallApply": true /* Enable strict 'bind', 'call', and 'apply' methods on functions. */,
+    "strictPropertyInitialization": true /* Enable strict checking of property initialization in classes. */,
+    "noImplicitThis": true /* Raise error on 'this' expressions with an implied 'any' type. */,
+    "alwaysStrict": true /* Parse in strict mode and emit "use strict" for each source file. */,
+
+    /* Additional Checks */
+    // "noUnusedLocals": true,                /* Report errors on unused locals. */
+    // "noUnusedParameters": true,            /* Report errors on unused parameters. */
+    "noImplicitReturns": true /* Report error when not all code paths in function return a value. */,
+    "noFallthroughCasesInSwitch": true /* Report errors for fallthrough cases in switch statement. */,
+
+    /* Module Resolution Options */
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "noImplicitReturns": true,
+    "skipLibCheck": true,
+
+    "paths": {
+      "@starter/*": ["packages/*/src"]
+    },
+
+    /* Advanced Options */
     "resolveJsonModule": true,
     "forceConsistentCasingInFileNames": true,
-    "baseUrl": "."
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "removeComments": true,
+    "pretty": true
   },
   "compileOnSave": false,
-  "exclude": ["node_modules", "__mocks__"]
+  "include": ["packages/*/src", "packages/*/typings"],
+  "exclude": [
+    "node_modules",
+    "**/__mocks__/**/*",
+    "**/__tests__/**/*",
+    //
+    "**/.cache/**/*",
+    "**/_cache/**/*",
+    "**/cache/**/*",
+    //
+    "**/.build/**/*",
+    "**/_build/**/*",
+    "**/build/**/*",
+    //
+    "**/.dist/**/*",
+    "**/_dist/**/*",
+    "**/dist/**/*",
+    //
+    "**/.deploy/**/*",
+    "**/_deploy/**/*",
+    "**/deplo/**/*y"
+  ]
 }

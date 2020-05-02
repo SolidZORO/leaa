@@ -8,12 +8,13 @@ const { compilerOptions } = require('./tsconfig');
 module.exports = {
   transform: {
     ...tsjPreset.transform,
-    '^.+\\.(t|j)s$': 'ts-jest',
+    '^.+\\.(t|j)sx?$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'json'],
   //
   // 🔰 Tips, if `tsconfig.json`, here will be open
   moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>/' }),
+  modulePathIgnorePatterns: ['<rootDir>/.cache/', '<rootDir>/_build/', '<rootDir>/_deploy/'],
   //
   testRegex: '.e2e-(test|spec).ts$',
   collectCoverageFrom: [
@@ -21,6 +22,7 @@ module.exports = {
     '!**/node_modules/**',
     '!**/vendor/**',
     '!**/dist/**',
+    '!**/.cache/**',
     '!**/_build/**',
     '!**/_dist/**',
     '!**/_deploy/**',

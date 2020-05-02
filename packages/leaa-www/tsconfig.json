@@ -1,50 +1,24 @@
 {
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "strict": true,
-    "pretty": true,
-    "removeComments": true,
-    "noImplicitReturns": true,
     "baseUrl": ".",
     "outDir": "_build",
-    "allowJs": true,
-    "jsx": "preserve",
-    "target": "es2018",
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "sourceMap": false,
-    "isolatedModules": true,
+
+    "module": "ESNext",
+    "target": "ES2018",
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "jsx": "react",
+    "allowJs": false,
     "noEmit": true,
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "skipLibCheck": true,
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "types": ["node", "jest"],
+
+    "moduleResolution": "node",
+    "isolatedModules": true,
+
     "paths": {
       "@leaa/common/*": ["../_leaa-common/*"],
       "@leaa/www/*": ["./*"]
-    }
+    },
+    "types": ["node", "jest"]
   },
-  "include": ["src/**/*", "typings/*", "server.ts"],
-  "exclude": [
-    "node_modules",
-    //
-    "/.cache",
-    "/_cache",
-    "/cache",
-    //
-    "/.build",
-    "/_build",
-    "/build",
-    //
-    "/.dist",
-    "/_dist",
-    "/dist",
-    //
-    "/.deploy",
-    "/_deploy",
-    "/deploy"
-  ]
+  "include": ["src", "test", "typings", "index.ts", "index.js", "server.ts", "server.js"]
 }

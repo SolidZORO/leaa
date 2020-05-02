@@ -8,21 +8,22 @@ const { compilerOptions } = require('./tsconfig');
 module.exports = {
   transform: {
     ...tsjPreset.transform,
-    '^.+\\.tsx?$': 'ts-jest',
+    '^.+\\.(t|j)s$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'js'],
   //
   // 🔰 Tips, if `tsconfig.json`, here will be open
   moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>/' }),
+  modulePathIgnorePatterns: ['<rootDir>/.cache/', '<rootDir>/_build/', '<rootDir>/_dist/', '<rootDir>/_deploy/'],
   //
-  modulePathIgnorePatterns: ['<rootDir>/.cache/', '<rootDir>/_build/', '<rootDir>/_deploy/'],
-  testRegex: 'src.*\\.(test|spec).(ts|tsx|js)$',
+  testRegex: '.*\\.test.(t|j)s$',
   collectCoverageFrom: [
     'src/**/*.{js,jsx,tsx,ts}',
     '!**/node_modules/**',
     '!**/vendor/**',
-    '!**/_build/**',
     '!**/dist/**',
+    '!**/.cache/**',
+    '!**/_build/**',
     '!**/_dist/**',
     '!**/_deploy/**',
   ],

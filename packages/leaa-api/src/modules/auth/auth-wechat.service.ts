@@ -60,10 +60,10 @@ export class AuthWechatService {
     body: { encryptedData: string; iv: string; sessionKey: string; platform: string },
   ): Promise<any | string> {
     if (body.encryptedData && body.iv && body.sessionKey) {
-      const decryptData = await this.miniProgram.decryptData(body.encryptedData, body.iv, body.sessionKey);
+      return this.miniProgram.decryptData(body.encryptedData, body.iv, body.sessionKey);
 
       // return this.createUserAndAuth(body.platform, decryptData);
-      return decryptData;
+      // return decryptData;
     }
 
     return 'DECRYPT-ERROR';

@@ -1,44 +1,17 @@
 {
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "strict": true,
-    "pretty": true,
-    "removeComments": true,
-    "esModuleInterop": true,
-    "noImplicitReturns": true,
-    "resolveJsonModule": true,
-    "forceConsistentCasingInFileNames": true,
-    "outDir": "_build",
     "baseUrl": ".",
-    //
-    "module": "commonjs",
-    "target": "es2018",
+    "outDir": "_build",
+
+    "module": "CommonJS",
+    "target": "ES6",
+
     "moduleResolution": "node",
-    "sourceMap": false,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "skipLibCheck": true,
+
     "paths": {
       "@leaa/common/*": ["./*"]
     }
   },
-  "include": ["src/**/*", "typings/*"],
-  "exclude": [
-    "node_modules",
-    //
-    "/.cache",
-    "/_cache",
-    "/cache",
-    //
-    "/.build",
-    "/_build",
-    "/build",
-    //
-    "/.dist",
-    "/_dist",
-    "/dist",
-    //
-    "/.deploy",
-    "/_deploy",
-    "/deploy"
-  ]
+  "include": ["src"]
 }
