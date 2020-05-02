@@ -1,6 +1,9 @@
 {
-  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
+    "strict": true,
+    "pretty": true,
+    "removeComments": true,
+    "noImplicitReturns": true,
     "baseUrl": ".",
     "outDir": "_build",
     "allowJs": true,

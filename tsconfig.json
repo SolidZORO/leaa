@@ -1,4 +1,15 @@
 {
-  "compilerOptions": { "experimentalDecorators": true },
-  "extends": "./tsconfig.base.json"
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "strict": true,
+    "pretty": true,
+    "removeComments": true,
+    "esModuleInterop": true,
+    "noImplicitReturns": true,
+    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": "."
+  },
+  "compileOnSave": false,
+  "exclude": ["node_modules", "__mocks__"]
 }

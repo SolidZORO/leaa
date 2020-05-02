@@ -1,13 +1,17 @@
 {
   "name": "@leaa/monorepo",
   "author": "solidzoro@live.com",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": true,
   "sideEffect": false,
   "license": "BSD-3-Clause-Clear",
   "engines": {
     "node": ">=10.13.0",
     "npm": ">=6.4.0"
+  },
+  "homepage": "https://github.com/SolidZORO/leaa",
+  "bugs": {
+    "url": "https://github.com/SolidZORO/leaa/issues"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
@@ -32,7 +36,17 @@
     "fix": "lerna run fix",
     "nuke": "yarn clean && yarn bootstrap",
     "tsc-check": "yarn workspaces run tsc-check",
-    "u": "yarn upgrade-interactive --latest"
+    "u": "yarn upgrade-interactive --latest",
+    "---------------------------------------------------------------------- LINE ----": "----",
+    "versionup": "lerna version --conventional-commits --no-git-tag-version",
+    "versionup:patch": "lerna version patch --conventional-commits --no-git-tag-version",
+    "versionup:minor": "lerna version minor --conventional-commits --no-git-tag-version",
+    "versionup:major": "lerna version major --conventional-commits --no-git-tag-version",
+    "postversionup": "npm run commit-version",
+    "postversionup:patch": "npm run commit-version",
+    "postversionup:minor": "npm run commit-version",
+    "postversionup:major": "npm run commit-version",
+    "commit-version": "git add . && git commit -m \"chore(release): publish `node -p 'require(\"./lerna.json\").version'`\""
   },
   "dependencies": {},
   "devDependencies": {
