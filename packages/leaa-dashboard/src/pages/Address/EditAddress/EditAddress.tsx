@@ -24,7 +24,7 @@ export default (props: IPage) => {
   const infoFormRef = useRef<ICommenFormRef<UpdateAddressInput>>(null);
 
   // query
-  const getAddressVariables = { id: id };
+  const getAddressVariables = { id };
   const getAddressQuery = useQuery<{ address: Address }, AddressArgs>(GET_ADDRESS, {
     variables: getAddressVariables,
     fetchPolicy: 'network-only',
@@ -32,7 +32,7 @@ export default (props: IPage) => {
 
   // mutation
   const [submitVariables, setSubmitVariables] = useState<{ id: string; address: UpdateAddressInput }>({
-    id: id,
+    id,
     address: {},
   });
   const [updateAddressMutate, updateAddressMutation] = useMutation<Address>(UPDATE_ADDRESS, {
@@ -52,7 +52,7 @@ export default (props: IPage) => {
 
     const submitData: ISubmitData<UpdateAddressInput> = infoData;
 
-    await setSubmitVariables({ id: id, address: submitData });
+    await setSubmitVariables({ id, address: submitData });
     await updateAddressMutate();
   };
 

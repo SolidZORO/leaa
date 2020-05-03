@@ -63,7 +63,7 @@ export class ZanResolver {
   @Mutation(() => Zan)
   async deleteZanUser(
     @Args({ name: 'id', type: () => String }) id: string,
-    @Args({ name: 'userId', type: () => Int }) userId: string,
+    @Args({ name: 'userId', type: () => String }) userId: string,
     @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Zan | undefined> {
     return this.zanService.deleteZanUser(id, userId, gqlCtx);

@@ -1,5 +1,5 @@
 import { UseGuards } from '@nestjs/common';
-import { Args, Query, Mutation, Resolver, Int } from '@nestjs/graphql';
+import { Args, Query, Mutation, Resolver } from '@nestjs/graphql';
 
 import { Article } from '@leaa/common/src/entrys';
 import {
@@ -73,7 +73,7 @@ export class ArticleResolver {
   @UseGuards(PermissionsGuard)
   @Permissions('article.item-delete')
   @Mutation(() => Article)
-  async deleteArticle(@Args({ name: 'id', type: () => Int }) id: string): Promise<Article | undefined> {
+  async deleteArticle(@Args({ name: 'id', type: () => String }) id: string): Promise<Article | undefined> {
     return this.articleService.deleteArticle(id);
   }
 }

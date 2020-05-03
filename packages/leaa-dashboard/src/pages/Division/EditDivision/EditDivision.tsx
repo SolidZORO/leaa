@@ -24,7 +24,7 @@ export default (props: IPage) => {
   const infoFormRef = useRef<ICommenFormRef<UpdateDivisionInput>>(null);
 
   // query
-  const getDivisionVariables = { id: id };
+  const getDivisionVariables = { id };
   const getDivisionQuery = useQuery<{ division: Division }, DivisionArgs>(GET_DIVISION, {
     variables: getDivisionVariables,
     fetchPolicy: 'network-only',
@@ -32,7 +32,7 @@ export default (props: IPage) => {
 
   // mutation
   const [submitVariables, setSubmitVariables] = useState<{ id: string; division: UpdateDivisionInput }>({
-    id: id,
+    id,
     division: {},
   });
   const [updateDivisionMutate, updateDivisionMutation] = useMutation<Division>(UPDATE_DIVISION, {
@@ -49,7 +49,7 @@ export default (props: IPage) => {
 
     const submitData: ISubmitData<UpdateDivisionInput> = infoData;
 
-    await setSubmitVariables({ id: id, division: submitData });
+    await setSubmitVariables({ id, division: submitData });
     await updateDivisionMutate();
   };
 

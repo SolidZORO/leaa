@@ -1,5 +1,6 @@
 import fs from 'fs';
 import mkdirp from 'mkdirp';
+import * as uuid from 'uuid';
 import { Injectable } from '@nestjs/common';
 import { Repository, getConnection } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -148,21 +149,21 @@ export class DivisionService {
       let sqlBody = '';
 
       provinces.forEach((v) => {
-        sqlBody += `(${Number(v.code)}, '${v.name}', NULL, NULL), `;
+        sqlBody += `('${uuid.v4()}', ${Number(v.code)}, '${v.name}', NULL, NULL), `;
       });
 
       cities.forEach((v) => {
-        sqlBody += `(${Number(v.code)}, '${v.name}', ${Number(v.provinceCode)}, NULL), `;
+        sqlBody += `('${uuid.v4()}', ${Number(v.code)}, '${v.name}', ${Number(v.provinceCode)}, NULL), `;
       });
 
       areas.forEach((v, i) => {
-        sqlBody += `(${Number(v.code)}, '${v.name}', ${Number(v.provinceCode)}, ${Number(v.cityCode)})${
+        sqlBody += `('${uuid.v4()}', ${Number(v.code)}, '${v.name}', ${Number(v.provinceCode)}, ${Number(v.cityCode)})${
           i === areas.length - 1 ? ';' : ','
         } `;
       });
 
       const insertSql = `
-      INSERT INTO \`divisions\` (\`code\`, \`name\`, \`province_code\`, \`city_code\`) VALUES ${sqlBody}
+      INSERT INTO \`divisions\` (\`id\`, \`code\`, \`name\`, \`province_code\`, \`city_code\`) VALUES ${sqlBody}
     `;
 
       const sqlRunResult = await getConnection().query(insertSql);
@@ -188,7 +189,7 @@ export class DivisionService {
     const result = await this.divisionRepository.save({ ...args, ...relationArgs });
 
     if (result) {
-      this.syncDivisionToFile();
+      await this.syncDivisionToFile();
     }
 
     return result;
@@ -206,7 +207,7 @@ export class DivisionService {
     const result = await curdUtil.commonUpdate({ repository: this.divisionRepository, CLS_NAME, id, args: nextArgs });
 
     if (result) {
-      this.syncDivisionToFile();
+      await this.syncDivisionToFile();
     }
 
     return result;

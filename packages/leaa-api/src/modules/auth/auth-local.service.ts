@@ -49,7 +49,7 @@ export class AuthLocalService {
     return this.authService.addTokenToUser(user);
   }
 
-  async signup(args: AuthSignupInput, uid?: number, gqlCtx?: IGqlCtx): Promise<User | undefined> {
+  async signup(args: AuthSignupInput, uid?: string, gqlCtx?: IGqlCtx): Promise<User | undefined> {
     const nextArgs: AuthSignupInput = { name: '', password: '', email: '' };
 
     _.forEach(args, (v, i) => {

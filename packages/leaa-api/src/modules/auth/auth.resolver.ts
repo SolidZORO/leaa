@@ -50,7 +50,7 @@ export class AuthResolver {
   @Mutation(() => User)
   async signup(
     @Args('user') args: AuthSignupInput,
-    @Args({ name: 'uid', type: () => Int, nullable: true }) uid?: number,
+    @Args({ name: 'uid', type: () => String, nullable: true }) uid?: string,
     @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<User | undefined> {
     return this.authLocalService.signup(args, uid, gqlCtx);

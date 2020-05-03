@@ -116,7 +116,7 @@ export const AddressInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =
               <Form.Item name="addressSelect" rules={[{ required: true }]} label={t('_page:Address.areaLabel')}>
                 <AddressSelect
                   onChangeCallback={onChange}
-                  defaultValue={props.item ? [props.item.province, props.item.city, props.item.area] : undefined}
+                  initialValues={props.item ? [props.item.province, props.item.city, props.item.area] : undefined}
                 />
               </Form.Item>
             </Col>

@@ -78,7 +78,7 @@ export class DivisionResolver {
   @UseGuards(PermissionsGuard)
   @Permissions('division.item-delete')
   @Mutation(() => Division)
-  async deleteDivision(@Args({ name: 'id', type: () => Int }) id: string): Promise<Division | undefined> {
+  async deleteDivision(@Args({ name: 'id', type: () => String }) id: string): Promise<Division | undefined> {
     return this.divisionService.deleteDivision(id);
   }
 }

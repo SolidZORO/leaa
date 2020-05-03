@@ -11,7 +11,7 @@ import style from './style.module.less';
 
 interface IProps {
   onChangeCallback: (v: any) => void;
-  defaultValue?: any[];
+  initialValues?: any[];
 }
 
 export const AddressSelect = (props: IProps) => {
@@ -21,7 +21,7 @@ export const AddressSelect = (props: IProps) => {
   const getDivisionMappingQuery = useQuery<{ divisionsMapping: string }>(GET_DIVISIONS_MAPPING);
 
   const [divisionsMapping, setDivisionsMapping] = useState<IDivisionDist[]>();
-  const [value, setValue] = useState<string[] | undefined>(props.defaultValue);
+  const [value, setValue] = useState<string[] | undefined>(props.initialValues);
 
   useEffect(() => {
     if (getDivisionMappingQuery?.data?.divisionsMapping) {
@@ -30,14 +30,16 @@ export const AddressSelect = (props: IProps) => {
   }, [getDivisionMappingQuery?.data?.divisionsMapping]);
 
   useEffect(() => {
-    setValue(props.defaultValue);
-  }, [props.defaultValue]);
+    setValue(props.initialValues);
+  }, [props.initialValues]);
 
   const onChange = (v: any[]) => {
-    setValue(v);
+    const nextV = v;
+
+    setValue(nextV);
 
     if (props.onChangeCallback) {
-      props.onChangeCallback(v);
+      props.onChangeCallback(nextV);
     }
   };
 

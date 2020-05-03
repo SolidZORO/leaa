@@ -673,10 +673,10 @@ type Mutation {
   deleteAuth(id: String!): Auth!
   login(user: AuthLoginInput!): User!
   loginByTicket(ticket: String!): User!
-  signup(uid: Int, user: AuthSignupInput!): User!
+  signup(uid: String, user: AuthSignupInput!): User!
   createArticle(article: CreateArticleInput!): Article!
   updateArticle(article: UpdateArticleInput!, id: String!): Article!
-  deleteArticle(id: Int!): Article!
+  deleteArticle(id: String!): Article!
   createCategory(category: CreateCategoryInput!): Category!
   updateCategory(category: UpdateCategoryInput!, id: String!): Category!
   deleteCategory(id: String!): Category!
@@ -709,12 +709,12 @@ type Mutation {
   createDivision(division: CreateDivisionInput!): Division!
   syncDivisionToFile: SyncDivisionToFileObject!
   updateDivision(division: UpdateDivisionInput!, id: String!): Division!
-  deleteDivision(id: Int!): Division!
+  deleteDivision(id: String!): Division!
   createZan(zan: CreateZanInput!): Zan!
   updateZan(zan: UpdateZanInput!, id: String!): Zan!
   deleteZan(id: String!): Zan!
   likeZan(id: String!): Zan!
-  deleteZanUser(userId: Int!, id: String!): Zan!
+  deleteZanUser(userId: String!, id: String!): Zan!
 }
 
 input CreateRoleInput {
