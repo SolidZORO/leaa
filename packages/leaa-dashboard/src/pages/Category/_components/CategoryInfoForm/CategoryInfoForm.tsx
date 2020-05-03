@@ -67,7 +67,6 @@ export const CategoryInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) 
 
   return (
     <div className={cx(style['wrapper'], props.className)}>
-      JJJ {getParentId()}
       <FormCard
         title={t('_page:Category.categoryInfo')}
         extra={<EntryInfoDate date={props.item && [props.item.created_at, props.item.updated_at]} />}
