@@ -268,7 +268,7 @@ const distDirPath = './src';
 
 const symlinkPaths = ['graphqls'];
 
-symlinkPaths.forEach(path => {
+symlinkPaths.forEach((path) => {
   const sourcePath = `${sourceDirPath}/${path}`;
   const distPath = `${distDirPath}/${path}`;
 
@@ -315,11 +315,11 @@ Promise.prototype.finally =
   Promise.prototype.finally ||
   {
     finally(fn) {
-      const onFinally = cb => Promise.resolve(fn()).then(cb);
+      const onFinally = (cb) => Promise.resolve(fn()).then(cb);
 
       return this.then(
-        result => onFinally(() => result),
-        reason => onFinally(() => Promise.reject(reason)),
+        (result) => onFinally(() => result),
+        (reason) => onFinally(() => Promise.reject(reason)),
       );
     },
   }.finally;
@@ -650,3 +650,7 @@ RN 的生态是真不好，也没人交流。国内外几大 RN 社区人气也�
 前段时间就一直想给 API 支持多语言，开始真的不敢想，因为和传统的 `restful API` 相比，在 `graphql` 上实现 `i18n` 简直是一个孤岛，资料非常非常少，而且看起来都很 trick，一点头绪都没有，没想到写起来还蛮简单的。GitHub 上很多代码参考，但是都及其复杂，各种依赖比 `i18next-express-middleware` 之类的库，但是我写下来发现，根本没必要。其实就简简单单声明一个 module 配置一下，往里面灌配置，安排一下语言包就好了。
 
 写完这个还蛮开心的，感觉一颗大石落地，终于 `dashboard` 和 `api` 端都 `i18n` 多语言了， `www` 端那边我倒是不急（笑），回头肯定要写，但还不是时候，而且也没有太难，再说啦～
+
+### 2020-05-02 23:03
+
+Next.js，用你真的很累，很累。
