@@ -12,7 +12,7 @@ export class TestController {
   async hashids() {
     const hashidsArr = [];
 
-    for (let i = 9988; i < 9999; i += 1) {
+    for (let i = 9988; i < 99991; i += 1) {
       hashidsArr.push(stringUtil.encodeId(i));
     }
 
