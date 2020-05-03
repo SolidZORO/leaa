@@ -28,12 +28,19 @@
   "command": {
     "bootstrap": {
       "hoist": true
-    }
+    },
+    "version": {
+      "conventionalCommits": true
+    },
+    "ignoreChanges": [
+      "**/*.md"
+    ]
   },
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "clean": "lerna clean",
     "fix": "lerna run fix",
+    "commit": "git-cz",
     "nuke": "yarn clean && yarn bootstrap",
     "tsc-check": "yarn workspaces run tsc-check",
     "u": "yarn upgrade-interactive --latest",
@@ -57,7 +64,9 @@
     "@typescript-eslint/eslint-plugin": "^2.30.0",
     "@typescript-eslint/parser": "^2.30.0",
     "codecov": "^3.6.5",
+    "commitizen": "^4.0.5",
     "cross-env": "^7.0.2",
+    "cz-conventional-changelog": "^3.1.0",
     "eslint": "6.8.0",
     "eslint-config-airbnb": "18.1.0",
     "eslint-config-airbnb-typescript": "^7.2.1",
