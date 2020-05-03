@@ -13,7 +13,7 @@ export const CREATE_AX = gql`
 `;
 
 export const UPDATE_AX = gql`
-  mutation($id: Int!, $ax: UpdateAxInput!) {
+  mutation($id: String!, $ax: UpdateAxInput!) {
     updateAx(id: $id, ax: $ax) {
       id
       title
@@ -25,7 +25,7 @@ export const UPDATE_AX = gql`
 `;
 
 export const DELETE_AX = gql`
-  mutation($id: Int!) {
+  mutation($id: String!) {
     deleteAx(id: $id) {
       id
       title

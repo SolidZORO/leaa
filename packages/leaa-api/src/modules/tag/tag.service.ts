@@ -40,7 +40,7 @@ export class TagService {
     return paginationUtil.calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
-  async tag(id: number, args?: ITagArgs, gqlCtx?: IGqlCtx): Promise<Tag | undefined> {
+  async tag(id: string, args?: ITagArgs, gqlCtx?: IGqlCtx): Promise<Tag | undefined> {
     let nextArgs: ITagArgs = {};
     if (args) nextArgs = args;
 
@@ -119,7 +119,7 @@ export class TagService {
     return tags;
   }
 
-  async updateTag(id: number, args: UpdateTagInput, gqlCtx?: IGqlCtx): Promise<Tag | undefined> {
+  async updateTag(id: string, args: UpdateTagInput, gqlCtx?: IGqlCtx): Promise<Tag | undefined> {
     if (curdUtil.isOneField(args, 'status'))
       return curdUtil.commonUpdate({ repository: this.tagRepository, CLS_NAME, id, args });
 
@@ -132,7 +132,7 @@ export class TagService {
     return curdUtil.commonUpdate({ repository: this.tagRepository, CLS_NAME, id, args: nextArgs });
   }
 
-  async deleteTag(id: number, gqlCtx?: IGqlCtx): Promise<Tag | undefined> {
+  async deleteTag(id: string, gqlCtx?: IGqlCtx): Promise<Tag | undefined> {
     return curdUtil.commonDelete({ repository: this.tagRepository, CLS_NAME, id });
   }
 }

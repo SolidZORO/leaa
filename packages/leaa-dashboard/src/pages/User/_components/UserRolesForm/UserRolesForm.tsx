@@ -28,9 +28,9 @@ export const UserRolesForm = forwardRef((props: IProps, ref: React.Ref<any>) => 
 
   const [form] = Form.useForm();
 
-  const getRoleIds = (roles: Role[] | undefined): number[] => roles?.map((r) => r.id) || [];
+  const getRoleIds = (roles: Role[] | undefined): string[] => roles?.map((r) => r.id) || [];
 
-  const [roleIds, setRoleIds] = useState<number[]>(getRoleIds(props.item?.roles));
+  const [roleIds, setRoleIds] = useState<CheckboxValueType[]>(getRoleIds(props.item?.roles));
 
   const onValidateForm = async (): IOnValidateFormResult<UpdateUserInput> => {
     try {
@@ -48,7 +48,7 @@ export const UserRolesForm = forwardRef((props: IProps, ref: React.Ref<any>) => 
   };
 
   const onChange = (value: CheckboxValueType[]): void => {
-    const ids = value.map((v) => Number(v));
+    const ids = value.map((v) => v);
 
     setRoleIds(ids);
     form.setFieldsValue({ roleIds: ids });

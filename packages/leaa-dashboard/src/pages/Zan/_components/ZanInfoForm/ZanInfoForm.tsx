@@ -66,15 +66,7 @@ export const ZanInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
         <Form form={form} name="zan-info" layout="vertical">
           <Row gutter={16} className={style['form-row']}>
             <Col xs={24} sm={18}>
-              <Form.Item
-                name="title"
-                rules={[{ required: true }]}
-                label={
-                  <span>
-                    {t('_lang:title')} {props.item && <IdTag id={props.item?.uuid} className={style['uuid-tag']} />}
-                  </span>
-                }
-              >
+              <Form.Item name="title" rules={[{ required: true }]} label={t('_lang:title')}>
                 <Input placeholder={t('_lang:title')} />
               </Form.Item>
             </Col>

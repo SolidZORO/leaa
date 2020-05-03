@@ -22,7 +22,7 @@ export const GET_USERS = gql`
 `;
 
 export const GET_USER = gql`
-  query($id: Int!) {
+  query($id: String!) {
     user(id: $id) {
       id
       name

@@ -25,14 +25,14 @@ export default (props: IPage) => {
   const infoFormRef = useRef<ICommenFormRef<UpdateCouponInput>>(null);
 
   // query
-  const getCouponVariables = { id: Number(id) };
+  const getCouponVariables = { id };
   const getCouponQuery = useQuery<{ coupon: Coupon }, CouponArgs>(GET_COUPON, {
     variables: getCouponVariables,
     fetchPolicy: 'network-only',
   });
 
   // mutation
-  const [submitVariables, setSubmitVariables] = useState<{ id: number; coupon: UpdateCouponInput }>();
+  const [submitVariables, setSubmitVariables] = useState<{ id: string; coupon: UpdateCouponInput }>();
   const [updateCouponMutate, updateCouponMutation] = useMutation<Coupon>(UPDATE_COUPON, {
     variables: submitVariables,
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
@@ -49,7 +49,7 @@ export default (props: IPage) => {
       ...infoData,
     };
 
-    await setSubmitVariables({ id: Number(id), coupon: submitData });
+    await setSubmitVariables({ id, coupon: submitData });
     await updateCouponMutate();
   };
 
@@ -66,13 +66,9 @@ export default (props: IPage) => {
     >
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
-      <CouponCodeStatus item={getCouponQuery.data && getCouponQuery.data.coupon} loading={getCouponQuery.loading} />
+      <CouponCodeStatus item={getCouponQuery.data?.coupon} loading={getCouponQuery.loading} />
 
-      <CouponInfoForm
-        ref={infoFormRef}
-        item={getCouponQuery.data && getCouponQuery.data.coupon}
-        loading={getCouponQuery.loading}
-      />
+      <CouponInfoForm ref={infoFormRef} item={getCouponQuery.data?.coupon} loading={getCouponQuery.loading} />
 
       <SubmitBar>
         <Button

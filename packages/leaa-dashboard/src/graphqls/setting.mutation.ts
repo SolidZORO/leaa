@@ -12,7 +12,7 @@ export const CREATE_SETTING = gql`
 `;
 
 export const UPDATE_SETTING = gql`
-  mutation($id: Int!, $setting: UpdateSettingInput!) {
+  mutation($id: String!, $setting: UpdateSettingInput!) {
     updateSetting(id: $id, setting: $setting) {
       ...SETTING_FRAGMENT
     }
@@ -32,7 +32,7 @@ export const UPDATE_SETTINGS = gql`
 `;
 
 export const DELETE_SETTING = gql`
-  mutation($id: Int!) {
+  mutation($id: String!) {
     deleteSetting(id: $id) {
       id
       name

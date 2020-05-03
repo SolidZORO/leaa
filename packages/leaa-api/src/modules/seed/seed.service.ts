@@ -102,7 +102,18 @@ export class SeedService {
 
   async insertCategory() {
     for (const i of categorySeed) {
-      const item = await this.categoryService.createCategory(i);
+      let parentId = '';
+
+      if (i.seedParentSlug) {
+        const category = await this.categoryService.categoryBySlug(i.seedParentSlug);
+        parentId = category?.id || '';
+      }
+
+      // const parent_id = await this.categoryService.createCategory(i);
+      const item = await this.categoryService.createCategory({
+        ...i,
+        parent_id: parentId,
+      });
 
       console.log(item);
     }

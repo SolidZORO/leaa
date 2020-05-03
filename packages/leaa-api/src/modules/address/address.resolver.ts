@@ -28,7 +28,7 @@ export class AddressResolver {
   @Permissions('address.item-read')
   @Query(() => Address)
   async address(
-    @Args({ name: 'id', type: () => Int }) id: number,
+    @Args({ name: 'id', type: () => String }) id: string,
     @Args() args?: AddressArgs,
   ): Promise<Address | undefined> {
     return this.addressService.address(id, args);
@@ -45,7 +45,7 @@ export class AddressResolver {
   @Permissions('address.item-update')
   @Mutation(() => Address)
   async updateAddress(
-    @Args({ name: 'id', type: () => Int }) id: number,
+    @Args({ name: 'id', type: () => String }) id: string,
     @Args('address') args: UpdateAddressInput,
     @CurrentUser() user?: User,
   ): Promise<Address | undefined> {
@@ -56,7 +56,7 @@ export class AddressResolver {
   @Permissions('address.item-delete')
   @Mutation(() => Address)
   async deleteAddress(
-    @Args({ name: 'id', type: () => Int }) id: number,
+    @Args({ name: 'id', type: () => String }) id: string,
     @CurrentUser() user?: User,
   ): Promise<Address | undefined> {
     return this.addressService.deleteAddress(id, user);

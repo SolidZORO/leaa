@@ -45,7 +45,7 @@ export class DivisionService {
     return this.formatDivision(items, 'tree');
   }
 
-  async division(id: number, args?: IDivisionArgs): Promise<Division | undefined> {
+  async division(id: string, args?: IDivisionArgs): Promise<Division | undefined> {
     let nextArgs: IDivisionArgs = {};
 
     if (args) {
@@ -194,7 +194,7 @@ export class DivisionService {
     return result;
   }
 
-  async updateDivision(id: number, args: UpdateDivisionInput): Promise<Division | undefined> {
+  async updateDivision(id: string, args: UpdateDivisionInput): Promise<Division | undefined> {
     if (curdUtil.isOneField(args, 'status')) {
       return curdUtil.commonUpdate({ repository: this.divisionRepository, CLS_NAME, id, args });
     }
@@ -212,7 +212,7 @@ export class DivisionService {
     return result;
   }
 
-  async deleteDivision(id: number): Promise<Division | undefined> {
+  async deleteDivision(id: string): Promise<Division | undefined> {
     return curdUtil.commonDelete({ repository: this.divisionRepository, CLS_NAME, id });
   }
 }

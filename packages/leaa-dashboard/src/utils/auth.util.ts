@@ -31,7 +31,7 @@ const getAuthInfo = (): Required<IAuthInfo> => {
   const authInfo = localStorage.getItem(AUTH_INFO);
 
   const nextAuthInfo: IAuthInfo = {
-    id: 0,
+    id: '',
     email: '',
     name: '',
     avatar_url: null,

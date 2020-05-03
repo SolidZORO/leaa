@@ -46,7 +46,7 @@ export const ProductImage = forwardRef((props: IProps, ref: React.Ref<any>) => {
               ref={bannerMbRef}
               attachmentParams={{
                 type: 'image',
-                moduleId: Number(props.item?.id),
+                moduleId: props.item?.id,
                 moduleName: 'product',
                 typeName: 'banner',
                 typePlatform: 'mb',
@@ -62,7 +62,7 @@ export const ProductImage = forwardRef((props: IProps, ref: React.Ref<any>) => {
               ref={galleryMbRef}
               attachmentParams={{
                 type: 'image',
-                moduleId: Number(props.item?.id),
+                moduleId: props.item?.id,
                 moduleName: 'product',
                 typeName: 'gallery',
                 typePlatform: 'mb',
@@ -80,7 +80,7 @@ export const ProductImage = forwardRef((props: IProps, ref: React.Ref<any>) => {
               ref={bannerPcRef}
               attachmentParams={{
                 type: 'image',
-                moduleId: Number(props.item?.id),
+                moduleId: props.item?.id,
                 moduleName: 'product',
                 typeName: 'banner',
                 typePlatform: 'pc',
@@ -96,7 +96,7 @@ export const ProductImage = forwardRef((props: IProps, ref: React.Ref<any>) => {
               ref={galleryPcRef}
               attachmentParams={{
                 type: 'image',
-                moduleId: Number(props.item?.id),
+                moduleId: props.item?.id,
                 moduleName: 'product',
                 typeName: 'gallery',
                 typePlatform: 'pc',

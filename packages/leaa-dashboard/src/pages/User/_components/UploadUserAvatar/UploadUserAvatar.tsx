@@ -1,9 +1,7 @@
 import cx from 'classnames';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { DeleteOutlined } from '@ant-design/icons';
 import { useMutation } from '@apollo/react-hooks';
-import { Button, Tooltip } from 'antd';
 
 import { User } from '@leaa/common/src/entrys';
 import { AttachmentBox, ConfirmDeleteButton } from '@leaa/dashboard/src/components';
@@ -23,7 +21,7 @@ export const UploadUserAvatar = (props: IProps) => {
 
   const avatarParams = {
     type: 'image',
-    moduleId: Number(props.item?.id),
+    moduleId: props.item?.id,
     moduleName: 'user',
     typeName: 'avatar',
   };

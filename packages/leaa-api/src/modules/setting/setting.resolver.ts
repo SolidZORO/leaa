@@ -30,7 +30,7 @@ export class SettingResolver {
 
   @Query(() => Setting)
   async setting(
-    @Args({ name: 'id', type: () => Int }) id: number,
+    @Args({ name: 'id', type: () => String }) id: string,
     @Args() args?: SettingArgs,
     @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Setting | undefined> {
@@ -60,7 +60,7 @@ export class SettingResolver {
   @Permissions('setting.item-update')
   @Mutation(() => Setting)
   async updateSetting(
-    @Args({ name: 'id', type: () => Int }) id: number,
+    @Args({ name: 'id', type: () => String }) id: string,
     @Args('setting') args: UpdateSettingInput,
     @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Setting | undefined> {
@@ -81,7 +81,7 @@ export class SettingResolver {
   @Permissions('setting.item-delete')
   @Mutation(() => Setting)
   async deleteSetting(
-    @Args({ name: 'id', type: () => Int }) id: number,
+    @Args({ name: 'id', type: () => String }) id: string,
     @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Setting | undefined> {
     return this.settingService.deleteSetting(id, gqlCtx);

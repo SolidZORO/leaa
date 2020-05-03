@@ -25,12 +25,12 @@ export const CategoryInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) 
   const { t } = useTranslation();
   const [form] = Form.useForm();
 
-  const parentId = () => {
-    if (props.item) return props.item.parent_id;
+  const getParentId = () => {
+    // for Editor
+    if (props.item?.parent_id) return props.item.parent_id;
 
-    const urlParams = queryString.parse(window.location.search);
-
-    return urlParams.parent_id || undefined;
+    // for Create
+    return queryString.parse(window.location.search)?.parent_id;
   };
 
   const onValidateForm = async (): IOnValidateFormResult<UpdateCategoryInput> => {
@@ -55,7 +55,7 @@ export const CategoryInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) 
       form.resetFields();
       form.setFieldsValue({
         ...item,
-        parent_id: parentId(),
+        parent_id: getParentId(),
       });
     }
 
@@ -67,6 +67,7 @@ export const CategoryInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) 
 
   return (
     <div className={cx(style['wrapper'], props.className)}>
+      JJJ {getParentId()}
       <FormCard
         title={t('_page:Category.categoryInfo')}
         extra={<EntryInfoDate date={props.item && [props.item.created_at, props.item.updated_at]} />}
@@ -74,13 +75,8 @@ export const CategoryInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) 
         <Form form={form} name="category-info" layout="vertical">
           <Row gutter={16} className={style['form-row']}>
             <Col xs={24} sm={6}>
-              <Form.Item
-                name="parent_id"
-                rules={[{ required: true }]}
-                normalize={(e) => e && Number(e)}
-                label={`${t('_lang:parent')} ID`}
-              >
-                <SelectCategoryIdByTree />
+              <Form.Item name="parent_id" rules={[{ required: true }]} label={`${t('_lang:parent')} ID`}>
+                <SelectCategoryIdByTree initialValues={getParentId()} />
               </Form.Item>
             </Col>
 

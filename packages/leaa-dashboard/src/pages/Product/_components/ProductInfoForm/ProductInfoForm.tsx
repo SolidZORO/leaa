@@ -121,23 +121,13 @@ export const ProductInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =
             </Col>
 
             <Col xs={24} sm={6}>
-              <Form.Item
-                name="styleIds"
-                normalize={(e) => e && Number(e)}
-                rules={[{ required: true }]}
-                label={t('_page:Product.style')}
-              >
+              <Form.Item name="styleIds" rules={[{ required: true }]} label={t('_page:Product.style')}>
                 <SelectCategoryIdByTree parentSlug="products" />
               </Form.Item>
             </Col>
 
             <Col xs={24} sm={6}>
-              <Form.Item
-                name="brandIds"
-                normalize={(e) => e && Number(e)}
-                rules={[{ required: true }]}
-                label={t('_page:Product.brand')}
-              >
+              <Form.Item name="brandIds" rules={[{ required: true }]} label={t('_page:Product.brand')}>
                 <SelectCategoryIdByTree parentSlug="brands" />
               </Form.Item>
             </Col>

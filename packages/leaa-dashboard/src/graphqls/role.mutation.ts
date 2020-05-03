@@ -11,7 +11,7 @@ export const CREATE_ROLE = gql`
 `;
 
 export const UPDATE_ROLE = gql`
-  mutation($id: Int!, $role: UpdateRoleInput!) {
+  mutation($id: String!, $role: UpdateRoleInput!) {
     updateRole(id: $id, role: $role) {
       id
       name
@@ -21,7 +21,7 @@ export const UPDATE_ROLE = gql`
 `;
 
 export const DELETE_ROLE = gql`
-  mutation($id: Int!) {
+  mutation($id: String!) {
     deleteRole(id: $id) {
       id
       name

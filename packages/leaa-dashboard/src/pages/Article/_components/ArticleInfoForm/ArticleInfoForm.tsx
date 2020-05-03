@@ -79,7 +79,6 @@ export const ArticleInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =
         <div className={style['block--category-and-status']}>
           <Form.Item
             name="categoryIds"
-            normalize={(e) => e && Number(e)}
             rules={[]}
             label={t('_lang:category')}
             colon={false}

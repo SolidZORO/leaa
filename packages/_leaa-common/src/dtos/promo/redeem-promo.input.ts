@@ -8,6 +8,6 @@ export class RedeemPromoInput {
   code!: string;
 
   @IsOptional()
-  @Field(() => Int, { nullable: true })
-  userId?: number;
+  @Field(() => String, { nullable: true })
+  userId?: string;
 }

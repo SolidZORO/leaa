@@ -41,7 +41,7 @@ export class AxResolver {
   // DO NOT CHECK PERMISSIONS
   @Query(() => Ax)
   async ax(
-    @Args({ name: 'id', type: () => Int }) id: number,
+    @Args({ name: 'id', type: () => String }) id: string,
     @Args() args?: AxArgs,
     @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Ax | undefined> {
@@ -71,7 +71,7 @@ export class AxResolver {
   @Permissions('ax.item-update')
   @Mutation(() => Ax)
   async updateAx(
-    @Args({ name: 'id', type: () => Int }) id: number,
+    @Args({ name: 'id', type: () => String }) id: string,
     @Args('ax') args: UpdateAxInput,
     @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Ax | undefined> {
@@ -82,7 +82,7 @@ export class AxResolver {
   @Permissions('ax.item-delete')
   @Mutation(() => Ax)
   async deleteAx(
-    @Args({ name: 'id', type: () => Int }) id: number,
+    @Args({ name: 'id', type: () => String }) id: string,
     @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Ax | undefined> {
     return this.axService.deleteAx(id, gqlCtx);

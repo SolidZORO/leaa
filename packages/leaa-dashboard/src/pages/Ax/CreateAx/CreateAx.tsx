@@ -55,6 +55,7 @@ export default (props: IPage) => {
         </span>
       }
       className={style['wapper']}
+      loading={createAxMutation.loading}
     >
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 

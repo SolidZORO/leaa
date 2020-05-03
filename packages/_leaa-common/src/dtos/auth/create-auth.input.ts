@@ -14,8 +14,8 @@ export class CreateAuthInput {
   app_id!: string;
 
   @IsOptional()
-  @Field(() => Int)
-  user_id?: number;
+  @Field(() => String)
+  user_id?: string;
 
   @Field(() => String)
   platform!: string;

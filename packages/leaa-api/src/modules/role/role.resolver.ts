@@ -28,7 +28,7 @@ export class RoleResolver {
   @UseGuards(PermissionsGuard)
   @Permissions('role.item-read')
   @Query(() => Role)
-  async role(@Args({ name: 'id', type: () => Int }) id: number, @Args() args?: RoleArgs): Promise<Role | undefined> {
+  async role(@Args({ name: 'id', type: () => String }) id: string, @Args() args?: RoleArgs): Promise<Role | undefined> {
     return this.roleService.role(id, args);
   }
 
@@ -43,7 +43,7 @@ export class RoleResolver {
   @Permissions('role.item-update')
   @Mutation(() => Role)
   async updateRole(
-    @Args({ name: 'id', type: () => Int }) id: number,
+    @Args({ name: 'id', type: () => String }) id: string,
     @Args('role') args: UpdateRoleInput,
     @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Role | undefined> {
@@ -54,7 +54,7 @@ export class RoleResolver {
   @Permissions('role.item-delete')
   @Mutation(() => Role)
   async deleteRole(
-    @Args({ name: 'id', type: () => Int }) id: number,
+    @Args({ name: 'id', type: () => String }) id: string,
     @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Role | undefined> {
     return this.roleService.deleteRole(id, gqlCtx);

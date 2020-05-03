@@ -34,7 +34,7 @@ export class ArticleResolver {
   // DO NOT CHECK PERMISSIONS
   @Query(() => Article)
   async article(
-    @Args({ name: 'id', type: () => Int }) id: number,
+    @Args({ name: 'id', type: () => String }) id: string,
     @Args() args?: ArticleArgs,
     @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Article | undefined> {
@@ -64,7 +64,7 @@ export class ArticleResolver {
   @Permissions('article.item-update')
   @Mutation(() => Article)
   async updateArticle(
-    @Args({ name: 'id', type: () => Int }) id: number,
+    @Args({ name: 'id', type: () => String }) id: string,
     @Args('article') args: UpdateArticleInput,
   ): Promise<Article | undefined> {
     return this.articleService.updateArticle(id, args);
@@ -73,7 +73,7 @@ export class ArticleResolver {
   @UseGuards(PermissionsGuard)
   @Permissions('article.item-delete')
   @Mutation(() => Article)
-  async deleteArticle(@Args({ name: 'id', type: () => Int }) id: number): Promise<Article | undefined> {
+  async deleteArticle(@Args({ name: 'id', type: () => Int }) id: string): Promise<Article | undefined> {
     return this.articleService.deleteArticle(id);
   }
 }

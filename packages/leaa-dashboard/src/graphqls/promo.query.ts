@@ -26,7 +26,7 @@ export const GET_PROMOS = gql`
 `;
 
 export const GET_PROMO = gql`
-  query($id: Int!) {
+  query($id: String!) {
     promo(id: $id) {
       id
       name

@@ -49,9 +49,9 @@ export class Promo extends Base {
   @Field(() => Date, { nullable: true })
   expire_time?: Date;
 
-  @Column({ type: 'int', default: 0 })
-  @Field(() => Int)
-  creator_id?: number;
+  @Column({ type: 'varchar', nullable: true })
+  @Field(() => String, { nullable: true })
+  creator_id?: string;
 
   @Column({ type: 'int', default: 0 })
   @Field(() => Int, { nullable: true })

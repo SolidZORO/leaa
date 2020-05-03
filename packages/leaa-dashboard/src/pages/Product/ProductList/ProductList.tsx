@@ -47,8 +47,8 @@ export default (props: IPage) => {
   // filter
   const [q, setQ] = useState<string | undefined>(urlParams.q ? String(urlParams.q) : undefined);
   const [tagName, setTagName] = useState<string | undefined>(urlParams.tagName ? String(urlParams.tagName) : undefined);
-  const [styleId, setStyleId] = useState<number | undefined>(urlParams.styleId ? Number(urlParams.styleId) : undefined);
-  const [brandId, setBrandId] = useState<number | undefined>(urlParams.brandId ? Number(urlParams.brandId) : undefined);
+  const [styleId, setStyleId] = useState<string | undefined>(urlParams.styleId ? String(urlParams.styleId) : undefined);
+  const [brandId, setBrandId] = useState<string | undefined>(urlParams.brandId ? String(urlParams.brandId) : undefined);
 
   // query
   const getProductsVariables = { ...tablePagination, q, tagName, styleId, brandId };
@@ -92,7 +92,7 @@ export default (props: IPage) => {
     {
       title: 'ID',
       dataIndex: 'id',
-      width: 60,
+      width: 75, // ID
       sorter: true,
       sortOrder: tableUtil.calcDefaultSortOrder(tablePagination.orderSort, tablePagination.orderBy, 'id'),
       render: (id: string) => <TableColumnId id={id} link={`${props.route.path}/${id}`} />,
@@ -160,7 +160,7 @@ export default (props: IPage) => {
       sortOrder: tableUtil.calcDefaultSortOrder(tablePagination.orderSort, tablePagination.orderBy, 'status'),
       render: (text: string, record: Product) => (
         <TableColumnStatusSwitch
-          id={Number(record.id)}
+          id={record.id}
           value={Number(record.status)}
           size="small"
           variablesField="product"
@@ -178,16 +178,16 @@ export default (props: IPage) => {
           id={record.id}
           fieldName={record.name}
           loading={deleteProductMutation.loading}
-          onClick={async () => deleteProductMutate({ variables: { id: Number(record.id) } })}
+          onClick={async () => deleteProductMutate({ variables: { id: record.id } })}
         />
       ),
     },
   ];
 
-  const onFilter = (params: { field: string; value?: string | number | number[] }) => {
+  const onFilter = (params: { field: string; value?: string | string[] | null }) => {
     setTablePagination({ ...tablePagination, page: 1 });
 
-    const filterParams: { q?: string; styleId?: number; brandId?: number; tagName?: string } = {};
+    const filterParams: { q?: string; styleId?: string; brandId?: string; tagName?: string } = {};
 
     if (params.field === 'q') {
       const result = params.value ? String(params.value) : undefined;
@@ -204,19 +204,17 @@ export default (props: IPage) => {
     }
 
     if (params.field === 'styleId') {
-      const num = Number(params.value);
-      const result = Number.isNaN(num) ? undefined : num;
+      const id = String(params.value);
 
-      setStyleId(result);
-      filterParams.styleId = result;
+      setStyleId(id);
+      filterParams.styleId = id;
     }
 
     if (params.field === 'brandId') {
-      const num = Number(params.value);
-      const result = Number.isNaN(num) ? undefined : num;
+      const id = String(params.value);
 
-      setBrandId(result);
-      filterParams.brandId = result;
+      setBrandId(id);
+      filterParams.brandId = id;
     }
 
     urlUtil.mergeParamToUrlQuery({
@@ -255,7 +253,7 @@ export default (props: IPage) => {
           <SelectCategoryIdByTree
             className={cx('g-extra-filter-bar--item', 'g-extra-filter-bar--category')}
             componentProps={{ allowClear: true }}
-            onChange={(v) => onFilter({ field: 'styleId', value: v })}
+            onChange={(v) => onFilter({ field: 'styleId', value: String(v) })}
             value={styleId || undefined}
             parentSlug="products"
             placeholder={t('_page:Product.style')}
@@ -264,7 +262,7 @@ export default (props: IPage) => {
           <SelectCategoryIdByTree
             className={cx('g-extra-filter-bar--item', 'g-extra-filter-bar--category')}
             componentProps={{ allowClear: true }}
-            onChange={(v: number | number[]) => onFilter({ field: 'brandId', value: v })}
+            onChange={(v?: string | string[] | null) => onFilter({ field: 'brandId', value: String(v) })}
             value={brandId || undefined}
             parentSlug="brands"
             placeholder={t('_page:Product.brand')}

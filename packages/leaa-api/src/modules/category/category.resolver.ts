@@ -31,10 +31,22 @@ export class CategoryResolver {
   // DO NOT CHECK PERMISSIONS
   @Query(() => Category)
   async category(
-    @Args({ name: 'id', type: () => Int }) id: number,
+    @Args({ name: 'id', type: () => String }) id: string,
     @Args() args?: CategoryArgs,
   ): Promise<Category | undefined> {
     return this.categoryService.category(id, args);
+  }
+
+  // @UseGuards(PermissionsGuard)
+  // @Permissions('category.item-read')
+  // DO NOT CHECK PERMISSIONS
+  @Query(() => Category)
+  async categoryBySlug(
+    @Args({ name: 'slug', type: () => String }) slug: string,
+    @Args() args?: CategoryArgs,
+    @GqlCtx() gqlCtx?: IGqlCtx,
+  ): Promise<CategoryArgs | undefined> {
+    return this.categoryService.categoryBySlug(slug, args, gqlCtx);
   }
 
   @UseGuards(PermissionsGuard)
@@ -51,7 +63,7 @@ export class CategoryResolver {
   @Permissions('category.item-update')
   @Mutation(() => Category)
   async updateCategory(
-    @Args({ name: 'id', type: () => Int }) id: number,
+    @Args({ name: 'id', type: () => String }) id: string,
     @Args('category') args: UpdateCategoryInput,
     @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Category | undefined> {
@@ -62,7 +74,7 @@ export class CategoryResolver {
   @Permissions('category.item-delete')
   @Mutation(() => Category)
   async deleteCategory(
-    @Args({ name: 'id', type: () => Int }) id: number,
+    @Args({ name: 'id', type: () => String }) id: string,
     @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Category | undefined> {
     return this.categoryService.deleteCategory(id, gqlCtx);

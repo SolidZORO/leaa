@@ -7,8 +7,8 @@ export class CategoryTreeObject extends Category {
   @Field(() => String)
   readonly key!: string;
 
-  @Field(() => Int)
-  readonly value!: number;
+  @Field(() => String)
+  readonly value!: string;
 
   @Field(() => String, { nullable: true })
   readonly title?: string;

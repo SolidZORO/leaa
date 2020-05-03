@@ -14,7 +14,7 @@ interface IProps {
   className?: string;
   loading?: boolean;
   size?: SwitchSize;
-  id: number;
+  id: string;
   value: number;
   variablesField: string;
   mutation: DocumentNode;
@@ -32,7 +32,7 @@ export const TableColumnStatusSwitch = (props: IProps) => {
     apolloClient
       .mutate<any>({
         mutation: props.mutation,
-        variables: { id: Number(props.id), [props.variablesField]: { status: Number(e) } },
+        variables: { id: props.id, [props.variablesField]: { status: Number(e) } },
         fetchPolicy: 'no-cache',
         refetchQueries: props.refetchQueries,
       })

@@ -26,14 +26,14 @@ export default (props: IPage) => {
   const imageRef = useRef<{ onUpdateAllAttachments: () => void }>(null);
 
   // query
-  const getAxVariables = { id: Number(id) };
+  const getAxVariables = { id };
   const getAxQuery = useQuery<{ ax: Ax }, AxArgs>(GET_AX, {
     variables: getAxVariables,
     fetchPolicy: 'network-only',
   });
 
   // mutation
-  const [submitVariables, setSubmitVariables] = useState<{ id: number; ax: UpdateAxInput }>();
+  const [submitVariables, setSubmitVariables] = useState<{ id: string; ax: UpdateAxInput }>();
   const [updateAxMutate, updateAxMutation] = useMutation<Ax>(UPDATE_AX, {
     variables: submitVariables,
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
@@ -50,7 +50,7 @@ export default (props: IPage) => {
       ...infoData,
     };
 
-    await setSubmitVariables({ id: Number(id), ax: submitData });
+    await setSubmitVariables({ id, ax: submitData });
     await updateAxMutate();
 
     // attachments

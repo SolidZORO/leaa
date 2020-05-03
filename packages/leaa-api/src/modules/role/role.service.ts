@@ -20,7 +20,7 @@ export class RoleService {
     private readonly configService: ConfigService,
   ) {}
 
-  async PLEASE_DONT_MODIFY_DEMO_DATA(id?: number, gqlCtx?: IGqlCtx): Promise<boolean> {
+  async PLEASE_DONT_MODIFY_DEMO_DATA(id?: string, gqlCtx?: IGqlCtx): Promise<boolean> {
     if (this.configService.DEMO_MODE && !process.argv.includes('--nuke')) {
       if (!id) return true;
 
@@ -61,7 +61,7 @@ export class RoleService {
     return paginationUtil.calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
-  async role(id: number, args?: IRoleArgs): Promise<Role | undefined> {
+  async role(id: string, args?: IRoleArgs): Promise<Role | undefined> {
     let nextArgs: IRoleArgs = {};
 
     if (args) {
@@ -79,7 +79,7 @@ export class RoleService {
     });
   }
 
-  async rolePermissionsByRoleIds(roleIds: number[]): Promise<Permission[] | undefined> {
+  async rolePermissionsByRoleIds(roleIds: string[]): Promise<Permission[] | undefined> {
     const roles = await this.roleRepository.findByIds(roleIds, { relations: ['permissions'] });
 
     let nextPermissions: Permission[] = [];
@@ -93,8 +93,8 @@ export class RoleService {
     return nextPermissions;
   }
 
-  async roleSlugsToIds(slugs: string[]): Promise<number[]> {
-    let roleIds: number[] = [];
+  async roleSlugsToIds(slugs: string[]): Promise<string[]> {
+    let roleIds: string[] = [];
 
     const roles = await this.roleRepository.find({
       slug: In(slugs),
@@ -111,7 +111,7 @@ export class RoleService {
     return this.roleRepository.save({ ...args });
   }
 
-  async updateRole(id: number, args: UpdateRoleInput, gqlCtx?: IGqlCtx): Promise<Role | undefined> {
+  async updateRole(id: string, args: UpdateRoleInput, gqlCtx?: IGqlCtx): Promise<Role | undefined> {
     if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id, gqlCtx);
 
     if (curdUtil.isOneField(args, 'status')) {
@@ -142,7 +142,7 @@ export class RoleService {
     return curdUtil.commonUpdate({ repository: this.roleRepository, CLS_NAME, id, args, relation: relationArgs });
   }
 
-  async deleteRole(id: number, gqlCtx?: IGqlCtx): Promise<Role | undefined> {
+  async deleteRole(id: string, gqlCtx?: IGqlCtx): Promise<Role | undefined> {
     if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id, gqlCtx);
 
     return curdUtil.commonDelete({ repository: this.roleRepository, CLS_NAME, id });

@@ -12,8 +12,8 @@ export class UpdateRoleInput {
   slug?: string;
 
   @IsOptional()
-  @Field(() => [Int], { nullable: true })
-  permissionIds?: number[];
+  @Field(() => [String], { nullable: true })
+  permissionIds?: string[];
 
   @IsOptional()
   @Field(() => [String], { nullable: true })

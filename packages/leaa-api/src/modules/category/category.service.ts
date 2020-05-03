@@ -24,7 +24,7 @@ export class CategoryService {
     private readonly configService: ConfigService,
   ) {}
 
-  async PLEASE_DONT_MODIFY_DEMO_DATA(id?: number, gqlCtx?: IGqlCtx): Promise<boolean> {
+  async PLEASE_DONT_MODIFY_DEMO_DATA(id?: string, gqlCtx?: IGqlCtx): Promise<boolean> {
     if (this.configService.DEMO_MODE && !process.argv.includes('--nuke')) {
       if (!id) return true;
 
@@ -41,14 +41,14 @@ export class CategoryService {
   rootCategory(children?: any[]) {
     return {
       key: '0-0-0-root',
-      id: 0,
-      parent_id: 0,
-      slug: 'root',
+      id: '----',
+      parent_id: null,
+      slug: '----',
       name: '----',
       //
       title: '----',
-      subtitle: 'Root',
-      value: 0,
+      subtitle: 'root',
+      value: '',
       expanded: true,
       created_at: moment.unix(1318000000).toDate(),
       children,
@@ -133,11 +133,18 @@ export class CategoryService {
     });
   }
 
-  async category(id: number, args?: ICategoryArgs): Promise<Category | undefined> {
+  async category(id: string, args?: ICategoryArgs): Promise<Category | undefined> {
     let nextArgs: ICategoryArgs = {};
     if (args) nextArgs = args;
 
     return this.categoryRepository.findOne(id, nextArgs);
+  }
+
+  async categoryBySlug(slug: string, args?: ICategoryArgs, gqlCtx?: IGqlCtx): Promise<Category | undefined> {
+    const category = await this.categoryRepository.findOne({ where: { slug } });
+    if (!category) throw msgUtil.error({ t: ['_error:notFoundItem'], gqlCtx });
+
+    return this.category(category.id, args);
   }
 
   async createCategory(args: CreateCategoryInput, gqlCtx?: IGqlCtx): Promise<Category | undefined> {
@@ -149,7 +156,7 @@ export class CategoryService {
     newCategory.name = args.name;
     newCategory.slug = args.slug;
     newCategory.description = args.description;
-    newCategory.parent_id = args.parent_id || 0;
+    newCategory.parent_id = args.parent_id || null;
 
     if (args.parent_id) {
       const parent = await this.category(args.parent_id);
@@ -162,7 +169,7 @@ export class CategoryService {
     return manager.save(newCategory);
   }
 
-  async updateCategory(id: number, args: UpdateCategoryInput, gqlCtx?: IGqlCtx): Promise<Category | undefined> {
+  async updateCategory(id: string, args: UpdateCategoryInput, gqlCtx?: IGqlCtx): Promise<Category | undefined> {
     if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id, gqlCtx);
 
     if (curdUtil.isOneField(args, 'status')) {
@@ -172,20 +179,20 @@ export class CategoryService {
     const nextArgs = args;
 
     if (typeof args.parent_id !== 'undefined') {
-      const parent = await this.category(args.parent_id);
+      const parent = await this.category(args.parent_id || '');
 
       if (parent) {
         nextArgs.parent = parent;
       } else {
         nextArgs.parent = null;
-        nextArgs.parent_id = 0;
+        nextArgs.parent_id = null;
       }
     }
 
     return curdUtil.commonUpdate({ repository: this.categoryRepository, CLS_NAME, id, args: nextArgs });
   }
 
-  async deleteCategory(id: number, gqlCtx?: IGqlCtx): Promise<Category | undefined> {
+  async deleteCategory(id: string, gqlCtx?: IGqlCtx): Promise<Category | undefined> {
     if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id, gqlCtx);
 
     return curdUtil.commonDelete({ repository: this.categoryRepository, CLS_NAME, id });

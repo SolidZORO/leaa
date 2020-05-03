@@ -62,7 +62,7 @@ export class ProductService {
     return paginationUtil.calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
-  async product(id: number, args?: IProductArgs, gqlCtx?: IGqlCtx): Promise<Product | undefined> {
+  async product(id: string, args?: IProductArgs, gqlCtx?: IGqlCtx): Promise<Product | undefined> {
     const PRIMARY_TABLE = 'products';
     const qb = await this.productRepository.createQueryBuilder(PRIMARY_TABLE);
 
@@ -86,6 +86,7 @@ export class ProductService {
 
     // tags
     let tags;
+
     if (args.tagIds && args.tagIds.length > 0) {
       tags = await this.tagRepository.findByIds(args.tagIds);
     }
@@ -120,7 +121,7 @@ export class ProductService {
     return this.productRepository.save({ ...nextArgs, ...nextRelation });
   }
 
-  async updateProduct(id: number, args: UpdateProductInput, gqlCtx?: IGqlCtx): Promise<Product | undefined> {
+  async updateProduct(id: string, args: UpdateProductInput, gqlCtx?: IGqlCtx): Promise<Product | undefined> {
     if (curdUtil.isOneField(args, 'status')) {
       return curdUtil.commonUpdate({ repository: this.productRepository, CLS_NAME, id, args });
     }
@@ -143,7 +144,7 @@ export class ProductService {
     });
   }
 
-  async deleteProduct(id: number, gqlCtx?: IGqlCtx): Promise<Product | undefined> {
+  async deleteProduct(id: string, gqlCtx?: IGqlCtx): Promise<Product | undefined> {
     return curdUtil.commonDelete({ repository: this.productRepository, CLS_NAME, id });
   }
 }

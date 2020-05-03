@@ -14,7 +14,7 @@ export const CREATE_TAG = gql`
 `;
 
 export const UPDATE_TAG = gql`
-  mutation($id: Int!, $tag: UpdateTagInput!) {
+  mutation($id: String!, $tag: UpdateTagInput!) {
     updateTag(id: $id, tag: $tag) {
       id
       name
@@ -27,7 +27,7 @@ export const UPDATE_TAG = gql`
 `;
 
 export const DELETE_TAG = gql`
-  mutation($id: Int!) {
+  mutation($id: String!) {
     deleteTag(id: $id) {
       id
       name

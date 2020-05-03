@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 export const GET_DIVISION = gql`
-  query($id: Int!) {
+  query($id: String!) {
     division(id: $id) {
       id
       name

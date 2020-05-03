@@ -4,7 +4,6 @@ export const CREATE_ZAN = gql`
   mutation($zan: CreateZanInput!) {
     createZan(zan: $zan) {
       id
-      uuid
       title
       description
       status
@@ -13,10 +12,9 @@ export const CREATE_ZAN = gql`
 `;
 
 export const UPDATE_ZAN = gql`
-  mutation($id: Int!, $zan: UpdateZanInput!) {
+  mutation($id: String!, $zan: UpdateZanInput!) {
     updateZan(id: $id, zan: $zan) {
       id
-      uuid
       title
       description
       status
@@ -25,30 +23,27 @@ export const UPDATE_ZAN = gql`
 `;
 
 export const DELETE_ZAN = gql`
-  mutation($id: Int!) {
+  mutation($id: String!) {
     deleteZan(id: $id) {
       id
-      uuid
       title
     }
   }
 `;
 
 export const LIKE_ZAN = gql`
-  mutation($uuid: String!) {
-    likeZan(uuid: $uuid) {
+  mutation($id: String!) {
+    likeZan(id: $id) {
       id
-      uuid
       title
     }
   }
 `;
 
 export const DELETE_ZAN_USER = gql`
-  mutation($uuid: String!, $userId: Int!) {
-    deleteZanUser(uuid: $uuid, userId: $userId) {
+  mutation($id: String!, $userId: String!) {
+    deleteZanUser(id: $id, userId: $userId) {
       id
-      uuid
       title
     }
   }

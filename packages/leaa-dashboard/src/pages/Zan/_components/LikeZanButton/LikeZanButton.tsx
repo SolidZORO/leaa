@@ -13,7 +13,7 @@ import { msgUtil } from '@leaa/dashboard/src/utils';
 import style from './style.module.less';
 
 interface IProps {
-  uuid?: string;
+  id?: string;
   loading?: boolean;
   className?: string;
   showInput?: boolean;
@@ -24,18 +24,18 @@ interface IProps {
 export const LikeZanButton = (props: IProps) => {
   const { t } = useTranslation();
 
-  const [zanUuid, setZanUuid] = useState<string | undefined>(props.uuid);
+  const [zanId, setZanId] = useState<string | undefined>(props.id);
 
-  useEffect(() => setZanUuid(props.uuid), [props.uuid]);
+  useEffect(() => setZanId(props.id), [props.id]);
 
   // mutation
   const [likeZanMutate, likeZanMutation] = useMutation<{ zan: Zan }>(LIKE_ZAN, {
-    variables: { uuid: zanUuid },
+    variables: { id: zanId },
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
     onCompleted(e) {
       msgUtil.message(t('_page:Zan.liked'));
     },
-    refetchQueries: () => [{ query: GET_ZAN, variables: { uuid: zanUuid } }],
+    refetchQueries: () => [{ query: GET_ZAN, variables: { id: zanId } }],
   });
 
   const buttonSize = props.size || 'small';
@@ -46,9 +46,9 @@ export const LikeZanButton = (props: IProps) => {
         <Input
           size={buttonSize}
           className={style['zan-input']}
-          value={zanUuid}
+          value={zanId}
           style={{ width: props.zanInputWidth || 320 }}
-          onChange={(v) => setZanUuid(v.target.value)}
+          onChange={(v) => setZanId(v.target.value)}
           placeholder="Zan UUID"
         />
       )}

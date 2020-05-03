@@ -24,14 +24,14 @@ export default (props: IPage) => {
   const infoFormRef = useRef<ICommenFormRef<UpdatePromoInput>>(null);
 
   // query
-  const getPromoVariables = { id: Number(id) };
+  const getPromoVariables = { id: id };
   const getPromoQuery = useQuery<{ promo: Promo }, PromoArgs>(GET_PROMO, {
     variables: getPromoVariables,
     fetchPolicy: 'network-only',
   });
 
   // mutation
-  const [submitVariables, setSubmitVariables] = useState<{ id: number; promo: UpdatePromoInput }>();
+  const [submitVariables, setSubmitVariables] = useState<{ id: string; promo: UpdatePromoInput }>();
   const [updatePromoMutate, updatePromoMutation] = useMutation<Promo>(UPDATE_PROMO, {
     variables: submitVariables,
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
@@ -48,7 +48,7 @@ export default (props: IPage) => {
       ...infoData,
     };
 
-    await setSubmitVariables({ id: Number(id), promo: submitData });
+    await setSubmitVariables({ id: id, promo: submitData });
     await updatePromoMutate();
   };
 

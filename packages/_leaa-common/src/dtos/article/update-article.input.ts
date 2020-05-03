@@ -12,8 +12,8 @@ export class UpdateArticleInput {
   slug?: string;
 
   @IsOptional()
-  @Field(() => Int, { nullable: true })
-  user_id?: number;
+  @Field(() => String, { nullable: true })
+  user_id?: string;
 
   @IsOptional()
   @Field(() => String, { nullable: true })
@@ -32,10 +32,10 @@ export class UpdateArticleInput {
   released_at?: Date;
 
   @IsOptional()
-  @Field(() => [Int], { nullable: true })
-  categoryIds?: number[] | null;
+  @Field(() => [String], { nullable: true })
+  categoryIds?: string[] | null;
 
   @IsOptional()
-  @Field(() => [Int], { nullable: true })
-  tagIds?: number[] | null;
+  @Field(() => [String], { nullable: true })
+  tagIds?: string[] | null;
 }

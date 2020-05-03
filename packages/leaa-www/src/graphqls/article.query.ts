@@ -8,7 +8,7 @@ export const GET_ARTICLES = gql`
     $orderSort: String
     $q: String
     $tagName: String
-    $categoryId: Int
+    $categoryId: String
     $categoryName: String
   ) {
     articles(

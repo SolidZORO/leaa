@@ -32,7 +32,7 @@ export class TagResolver {
   // DO NOT CHECK PERMISSIONS
   @Query(() => Tag)
   async tag(
-    @Args({ name: 'id', type: () => Int }) id: number,
+    @Args({ name: 'id', type: () => String }) id: string,
     @Args() args?: TagArgs,
     @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Tag | undefined> {
@@ -78,7 +78,7 @@ export class TagResolver {
   @Permissions('tag.item-update')
   @Mutation(() => Tag)
   async updateTag(
-    @Args({ name: 'id', type: () => Int }) id: number,
+    @Args({ name: 'id', type: () => String }) id: string,
     @Args('tag') args: UpdateTagInput,
     @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Tag | undefined> {
@@ -89,7 +89,7 @@ export class TagResolver {
   @Permissions('tag.item-delete')
   @Mutation(() => Tag)
   async deleteTag(
-    @Args({ name: 'id', type: () => Int }) id: number,
+    @Args({ name: 'id', type: () => String }) id: string,
     @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Tag | undefined> {
     return this.tagService.deleteTag(id, gqlCtx);

@@ -43,7 +43,7 @@ export class UserResolver {
   @Permissions('user.item-read')
   @Query(() => User)
   async user(
-    @Args({ name: 'id', type: () => Int }) id: number,
+    @Args({ name: 'id', type: () => String }) id: string,
     @Args() args?: UserArgs,
     @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<User | undefined> {
@@ -70,7 +70,7 @@ export class UserResolver {
   @Permissions('user.item-update')
   @Mutation(() => User)
   async updateUser(
-    @Args({ name: 'id', type: () => Int }) id: number,
+    @Args({ name: 'id', type: () => String }) id: string,
     @Args('user') args: UpdateUserInput,
     @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<User | undefined> {
@@ -81,7 +81,7 @@ export class UserResolver {
   @Permissions('user.item-delete')
   @Mutation(() => User)
   async deleteUser(
-    @Args({ name: 'id', type: () => Int }) id: number,
+    @Args({ name: 'id', type: () => String }) id: string,
     @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<User | undefined> {
     return this.userService.deleteUser(id, gqlCtx);

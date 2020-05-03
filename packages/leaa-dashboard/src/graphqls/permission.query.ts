@@ -17,7 +17,7 @@ export const GET_PERMISSIONS = gql`
 `;
 
 export const GET_PERMISSION = gql`
-  query($id: Int!) {
+  query($id: String!) {
     permission(id: $id) {
       id
       name

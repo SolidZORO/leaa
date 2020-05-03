@@ -38,7 +38,7 @@ export class PromoResolver {
   @Permissions('promo.item-read')
   @Query(() => Promo)
   async promo(
-    @Args({ name: 'id', type: () => Int }) id: number,
+    @Args({ name: 'id', type: () => String }) id: string,
     @Args() args?: PromoArgs,
     @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Promo | undefined> {
@@ -66,7 +66,7 @@ export class PromoResolver {
   @Permissions('promo.item-update')
   @Mutation(() => Promo)
   async updatePromo(
-    @Args({ name: 'id', type: () => Int }) id: number,
+    @Args({ name: 'id', type: () => String }) id: string,
     @Args('promo') args: UpdatePromoInput,
     @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Promo | undefined> {
@@ -77,7 +77,7 @@ export class PromoResolver {
   @Permissions('promo.item-delete')
   @Mutation(() => Promo)
   async deletePromo(
-    @Args({ name: 'id', type: () => Int }) id: number,
+    @Args({ name: 'id', type: () => String }) id: string,
     @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Promo | undefined> {
     return this.promoService.deletePromo(id, gqlCtx);

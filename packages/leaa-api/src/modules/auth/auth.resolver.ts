@@ -25,7 +25,7 @@ export class AuthResolver {
   @Permissions('auth.item-delete')
   @Mutation(() => Auth)
   async deleteAuth(
-    @Args({ name: 'id', type: () => Int }) id: number,
+    @Args({ name: 'id', type: () => String }) id: string,
     @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Auth | undefined> {
     return this.authService.deleteAuth(id, gqlCtx);

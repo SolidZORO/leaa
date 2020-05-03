@@ -91,7 +91,7 @@ export default (props: IPage) => {
     refetchQueries: () => [{ query: GET_SETTINGS }],
   });
 
-  const [updateSettingVariables, setUpdateSettingVariables] = useState<{ id: number; setting: UpdateSettingInput }>();
+  const [updateSettingVariables, setUpdateSettingVariables] = useState<{ id: string; setting: UpdateSettingInput }>();
   const [updateSettingMutate, updateSettingMutation] = useMutation<Setting>(UPDATE_SETTING, {
     variables: updateSettingVariables,
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
@@ -115,7 +115,7 @@ export default (props: IPage) => {
     refetchQueries: () => [{ query: GET_SETTINGS }],
   });
 
-  const [deleteSettingVariables, setDeleteSettingVariables] = useState<{ id: number }>();
+  const [deleteSettingVariables, setDeleteSettingVariables] = useState<{ id: string }>();
   const [deleteSettingMutate, deleteSettingMutation] = useMutation<Setting[]>(DELETE_SETTING, {
     variables: deleteSettingVariables,
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
@@ -142,7 +142,7 @@ export default (props: IPage) => {
     if (!submitData) return;
 
     // @ts-ignore
-    const id = Number(submitData?.id);
+    const id = submitData?.id;
     // @ts-ignore
     delete submitData.id;
 
@@ -159,7 +159,7 @@ export default (props: IPage) => {
     await updateSettingsMutate();
   };
 
-  const onDeleteSettings = async (id: number | undefined) => {
+  const onDeleteSettings = async (id: string | undefined) => {
     if (!id) {
       message.error('ERROR');
 

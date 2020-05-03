@@ -79,7 +79,7 @@ export default (props: IPage) => {
     {
       title: 'ID',
       dataIndex: 'id',
-      width: 60,
+      width: 75, // ID
       sorter: true,
       sortOrder: tableUtil.calcDefaultSortOrder(tablePagination.orderSort, tablePagination.orderBy, 'id'),
       render: (id: string) => <TableColumnId id={id} link={`${props.route.path}/${id}`} />,
@@ -115,7 +115,7 @@ export default (props: IPage) => {
       width: 60,
       render: (text: string, record: Address) => (
         <TableColumnStatusSwitch
-          id={Number(record.id)}
+          id={record.id}
           value={Number(record.status)}
           size="small"
           variablesField="address"
@@ -133,7 +133,7 @@ export default (props: IPage) => {
           id={record.id}
           fieldName={record.address}
           loading={deleteAddressMutation.loading}
-          onClick={async () => deleteAddressMutate({ variables: { id: Number(record.id) } })}
+          onClick={async () => deleteAddressMutate({ variables: { id: record.id } })}
         />
       ),
     },

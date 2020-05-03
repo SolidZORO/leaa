@@ -24,14 +24,14 @@ export default (props: IPage) => {
   const infoFormRef = useRef<ICommenFormRef<UpdatePermissionInput>>(null);
 
   // query
-  const getPermissionVariables = { id: Number(id) };
+  const getPermissionVariables = { id: id };
   const getPermissionQuery = useQuery<{ permission: Permission }, PermissionArgs>(GET_PERMISSION, {
     variables: getPermissionVariables,
     fetchPolicy: 'network-only',
   });
 
   // mutation
-  const [submitVariables, setSubmitVariables] = useState<{ id: number; permission: UpdatePermissionInput }>();
+  const [submitVariables, setSubmitVariables] = useState<{ id: string; permission: UpdatePermissionInput }>();
   const [updatePermissionMutate, updatePermissionMutation] = useMutation<Permission>(UPDATE_PERMISSION, {
     variables: submitVariables,
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
@@ -48,7 +48,7 @@ export default (props: IPage) => {
       ...infoData,
     };
 
-    await setSubmitVariables({ id: Number(id), permission: submitData });
+    await setSubmitVariables({ id: id, permission: submitData });
     await updatePermissionMutate();
   };
 

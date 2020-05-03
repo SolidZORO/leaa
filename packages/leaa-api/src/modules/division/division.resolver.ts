@@ -44,7 +44,7 @@ export class DivisionResolver {
   @Permissions('division.item-read')
   @Query(() => Division)
   async division(
-    @Args({ name: 'id', type: () => Int }) id: number,
+    @Args({ name: 'id', type: () => String }) id: string,
     @Args() args?: DivisionArgs,
     @CurrentUser() user?: User,
   ): Promise<Division | undefined> {
@@ -69,7 +69,7 @@ export class DivisionResolver {
   @Permissions('division.item-update')
   @Mutation(() => Division)
   async updateDivision(
-    @Args({ name: 'id', type: () => Int }) id: number,
+    @Args({ name: 'id', type: () => String }) id: string,
     @Args('division') args: UpdateDivisionInput,
   ): Promise<Division | undefined> {
     return this.divisionService.updateDivision(id, args);
@@ -78,7 +78,7 @@ export class DivisionResolver {
   @UseGuards(PermissionsGuard)
   @Permissions('division.item-delete')
   @Mutation(() => Division)
-  async deleteDivision(@Args({ name: 'id', type: () => Int }) id: number): Promise<Division | undefined> {
+  async deleteDivision(@Args({ name: 'id', type: () => Int }) id: string): Promise<Division | undefined> {
     return this.divisionService.deleteDivision(id);
   }
 }

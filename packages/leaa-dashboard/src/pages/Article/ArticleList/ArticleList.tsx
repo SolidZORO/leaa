@@ -46,8 +46,8 @@ export default (props: IPage) => {
   // filter
   const [q, setQ] = useState<string | undefined>(urlParams.q ? String(urlParams.q) : undefined);
   const [tagName, setTagName] = useState<string | undefined>(urlParams.tagName ? String(urlParams.tagName) : undefined);
-  const [categoryId, setCategoryId] = useState<number | undefined>(
-    urlParams.categoryId ? Number(urlParams.categoryId) : undefined,
+  const [categoryId, setCategoryId] = useState<string | undefined>(
+    urlParams.categoryId ? String(urlParams.categoryId) : undefined,
   );
 
   // query
@@ -92,7 +92,7 @@ export default (props: IPage) => {
     {
       title: 'ID',
       dataIndex: 'id',
-      width: 60,
+      width: 75, // ID
       sorter: true,
       sortOrder: tableUtil.calcDefaultSortOrder(tablePagination.orderSort, tablePagination.orderBy, 'id'),
       render: (id: string) => <TableColumnId id={id} link={`${props.route.path}/${id}`} />,
@@ -133,7 +133,7 @@ export default (props: IPage) => {
       width: 60,
       render: (text: string, record: Article) => (
         <TableColumnStatusSwitch
-          id={Number(record.id)}
+          id={record.id}
           value={Number(record.status)}
           size="small"
           variablesField="article"
@@ -151,16 +151,16 @@ export default (props: IPage) => {
           id={record.id}
           fieldName={record.title}
           loading={deleteArticleMutation.loading}
-          onClick={async () => deleteArticleMutate({ variables: { id: Number(record.id) } })}
+          onClick={async () => deleteArticleMutate({ variables: { id: record.id } })}
         />
       ),
     },
   ];
 
-  const onFilter = (params: { field: string; value?: string | number | number[] }) => {
+  const onFilter = (params: { field: string; value?: string | string[] | null }) => {
     setTablePagination({ ...tablePagination, page: 1 });
 
-    const filterParams: { q?: string; categoryId?: number; brandId?: number; tagName?: string } = {};
+    const filterParams: { q?: string; categoryId?: string; brandId?: string; tagName?: string } = {};
 
     if (params.field === 'q') {
       const result = params.value ? String(params.value) : undefined;
@@ -177,8 +177,7 @@ export default (props: IPage) => {
     }
 
     if (params.field === 'categoryId') {
-      const num = Number(params.value);
-      const result = Number.isNaN(num) ? undefined : num;
+      const result = params.value ? String(params.value) : undefined;
 
       setCategoryId(result);
       filterParams.categoryId = result;

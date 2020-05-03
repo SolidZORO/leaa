@@ -10,7 +10,7 @@ export const CREATE_ADDRESS = gql`
 `;
 
 export const UPDATE_ADDRESS = gql`
-  mutation($id: Int!, $address: UpdateAddressInput!) {
+  mutation($id: String!, $address: UpdateAddressInput!) {
     updateAddress(id: $id, address: $address) {
       id
       address
@@ -19,7 +19,7 @@ export const UPDATE_ADDRESS = gql`
 `;
 
 export const DELETE_ADDRESS = gql`
-  mutation($id: Int!) {
+  mutation($id: String!) {
     deleteAddress(id: $id) {
       id
       address

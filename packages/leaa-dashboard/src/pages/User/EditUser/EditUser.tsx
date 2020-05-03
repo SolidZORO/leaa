@@ -28,7 +28,7 @@ export default (props: IPage) => {
   const userRolesFormRef = useRef<ICommenFormRef<UpdateUserInput>>(null);
 
   // query
-  const getUserVariables = { id: Number(id) };
+  const getUserVariables = { id: id };
   const getUserQuery = useQuery<{ user: User }, UserArgs>(GET_USER, {
     variables: getUserVariables,
     fetchPolicy: 'network-only',
@@ -41,8 +41,8 @@ export default (props: IPage) => {
   });
 
   // mutation
-  const [submitVariables, setSubmitVariables] = useState<{ id: number; user: UpdateUserInput }>({
-    id: Number(id),
+  const [submitVariables, setSubmitVariables] = useState<{ id: string; user: UpdateUserInput }>({
+    id: id,
     user: {},
   });
   const [updateUserMutate, updateUserMutation] = useMutation<User>(UPDATE_USER, {
@@ -64,7 +64,7 @@ export default (props: IPage) => {
       ...userRolesData,
     };
 
-    await setSubmitVariables({ id: Number(id), user: submitData });
+    await setSubmitVariables({ id: id, user: submitData });
     await updateUserMutate();
   };
 

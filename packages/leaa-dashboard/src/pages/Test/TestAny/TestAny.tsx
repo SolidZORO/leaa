@@ -32,7 +32,7 @@ export default (props: IPage) => {
       <br />
 
       <h2>ZAN</h2>
-      <LikeZanButton showInput uuid="a1307a74-cd18-4594-b67a-3a687cd577ed" />
+      <LikeZanButton showInput id="a1307a74-cd18-4594-b67a-3a687cd577ed" />
       <br />
       <br />
 

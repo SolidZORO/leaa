@@ -22,7 +22,7 @@ export const GET_ADDRESSES = gql`
 `;
 
 export const GET_ADDRESS = gql`
-  query($id: Int!) {
+  query($id: String!) {
     address(id: $id) {
       id
       province

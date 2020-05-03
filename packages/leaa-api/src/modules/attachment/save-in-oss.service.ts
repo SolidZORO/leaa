@@ -220,7 +220,7 @@ export class SaveInOssService {
       filename,
       // DB use snakeCase, e.g. module_abc --> moduleAbc
       module_name: req.moduleName,
-      module_id: typeof req.moduleId !== 'undefined' ? Number(req.moduleId) : 0,
+      module_id: typeof req.moduleId !== 'undefined' ? req.moduleId : '0',
       type_name: req.typeName,
       type_platform: req.typePlatform,
       //

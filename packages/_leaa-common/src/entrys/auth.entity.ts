@@ -26,9 +26,9 @@ export class Auth extends Base {
   @Field(() => String)
   app_id!: string;
 
-  @Column({ type: 'int', default: 0 })
-  @Field(() => Int)
-  user_id?: number;
+  @Column({ type: 'varchar', nullable: true })
+  @Field(() => String, { nullable: true })
+  user_id?: string;
 
   @Column({ type: 'enum', enum: AuthPlatform })
   @Field(() => String)

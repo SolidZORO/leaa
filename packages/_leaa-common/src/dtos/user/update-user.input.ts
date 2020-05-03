@@ -37,8 +37,8 @@ export class UpdateUserInput {
   is_admin?: number;
 
   @IsOptional()
-  @Field(() => [Int], { nullable: true })
-  roleIds?: number[];
+  @Field(() => [String], { nullable: true })
+  roleIds?: string[];
 
   @IsOptional()
   @Field(() => [String], { nullable: true })

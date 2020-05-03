@@ -1,5 +1,5 @@
 import { UseGuards } from '@nestjs/common';
-import { Args, Query, Mutation, Resolver, ResolveField, Parent, Int } from '@nestjs/graphql';
+import { Args, Query, Mutation, Resolver, ResolveField, Parent } from '@nestjs/graphql';
 
 import { Coupon } from '@leaa/common/src/entrys';
 import {
@@ -46,7 +46,7 @@ export class CouponResolver {
   @Permissions('coupon.item-read')
   @Query(() => Coupon)
   async coupon(
-    @Args({ name: 'id', type: () => Int }) id: number,
+    @Args({ name: 'id', type: () => String }) id: string,
     @Args() args?: CouponArgs,
     @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Coupon | undefined> {
@@ -75,7 +75,7 @@ export class CouponResolver {
   @Permissions('coupon.item-update')
   @Mutation(() => Coupon)
   async updateCoupon(
-    @Args({ name: 'id', type: () => Int }) id: number,
+    @Args({ name: 'id', type: () => String }) id: string,
     @Args('coupon') args: UpdateCouponInput,
     @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Coupon | undefined> {
@@ -86,7 +86,7 @@ export class CouponResolver {
   @Permissions('coupon.item-delete')
   @Mutation(() => Coupon)
   async deleteCoupon(
-    @Args({ name: 'id', type: () => Int }) id: number,
+    @Args({ name: 'id', type: () => String }) id: string,
     @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Coupon | undefined> {
     return this.couponService.deleteCoupon(id, gqlCtx);

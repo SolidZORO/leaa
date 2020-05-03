@@ -102,7 +102,7 @@ export const SettingListForm = forwardRef((props: IProps, ref: React.Ref<any>) =
     try {
       const result = await form.validateFields();
 
-      return Object.keys(result).map((k) => ({ id: Number(k), value: result[k] }));
+      return Object.keys(result).map((k) => ({ id: k, value: result[k] }));
     } catch (error) {
       return msgUtil.error(error.errorFields[0]?.errors[0]);
     }

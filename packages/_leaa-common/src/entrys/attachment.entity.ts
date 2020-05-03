@@ -35,9 +35,9 @@ export class Attachment extends Base {
   @Field(() => String, { nullable: true })
   link?: string | null;
 
-  @Column({ type: 'int' })
-  @Field(() => Int)
-  module_id!: number;
+  @Column({ type: 'varchar' })
+  @Field(() => String)
+  module_id!: string;
 
   @Column({ type: 'varchar', length: 64, comment: 'e.g. product' })
   @Field(() => String)
@@ -98,9 +98,9 @@ export class Attachment extends Base {
   @Field(() => Int)
   in_oss!: number;
 
-  @Column({ type: 'int', nullable: true })
-  @Field(() => Int, { nullable: true })
-  user_id?: number | null;
+  @Column({ type: 'varchar', nullable: true })
+  @Field(() => String, { nullable: true })
+  user_id?: string | null;
 
   @Column({ type: 'int', default: 0 })
   @Field(() => Int)

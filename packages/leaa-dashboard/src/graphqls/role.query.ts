@@ -20,7 +20,7 @@ export const GET_ROLES = gql`
 `;
 
 export const GET_ROLE = gql`
-  query($id: Int!) {
+  query($id: String!) {
     role(id: $id) {
       id
       name

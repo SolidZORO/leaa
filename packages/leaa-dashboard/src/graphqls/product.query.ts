@@ -9,9 +9,9 @@ export const GET_PRODUCTS = gql`
     $q: String
     $tagName: String
     $brandName: String
-    $brandId: Int
+    $brandId: String
     $styleName: String
-    $styleId: Int
+    $styleId: String
   ) {
     products(
       page: $page
@@ -68,7 +68,7 @@ export const GET_PRODUCTS = gql`
 `;
 
 export const GET_PRODUCT = gql`
-  query($id: Int!) {
+  query($id: String!) {
     product(id: $id) {
       id
       name

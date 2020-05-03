@@ -25,7 +25,7 @@ interface IProps {
 export const RedeemCouponToUseButton = (props: IProps) => {
   const { t, i18n } = useTranslation();
 
-  const [userId, setUserId] = useState<number | undefined>();
+  const [userId, setUserId] = useState<string | undefined>();
   const [visible, setVisible] = useState<boolean>(false);
 
   // mutation

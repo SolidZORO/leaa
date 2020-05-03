@@ -72,7 +72,7 @@ export class AuthGithubService {
       if (hasAuth) {
         await this.authRepository.update(hasAuth.id, this.nextTicket);
 
-        userInfo = await this.userService.user(Number(hasAuth?.user_id));
+        userInfo = await this.userService.user(hasAuth?.user_id);
         userAuth = { ...hasAuth, ...this.nextTicket };
       } else {
         const { newUser, newAuth } = await this.createUserAndAuth(req, profile);

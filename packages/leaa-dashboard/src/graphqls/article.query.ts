@@ -8,7 +8,7 @@ export const GET_ARTICLES = gql`
     $orderSort: String
     $q: String
     $tagName: String
-    $categoryId: Int
+    $categoryId: String
     $categoryName: String
   ) {
     articles(
@@ -51,7 +51,7 @@ export const GET_ARTICLES = gql`
 `;
 
 export const GET_ARTICLE = gql`
-  query($id: Int!) {
+  query($id: String!) {
     article(id: $id) {
       id
       title

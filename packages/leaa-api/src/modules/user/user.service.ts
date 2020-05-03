@@ -27,7 +27,7 @@ export class UserService {
     @InjectRepository(Auth) private readonly authRepository: Repository<Auth>,
   ) {}
 
-  async PLEASE_DONT_MODIFY_DEMO_DATA(id?: number, gqlCtx?: IGqlCtx): Promise<boolean> {
+  async PLEASE_DONT_MODIFY_DEMO_DATA(id?: string, gqlCtx?: IGqlCtx): Promise<boolean> {
     if (this.configService.DEMO_MODE && !process.argv.includes('--nuke')) {
       if (!id) return true;
 
@@ -74,7 +74,7 @@ export class UserService {
     return paginationUtil.calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
-  async user(id: number, args?: IUserArgs, gqlCtx?: IGqlCtx): Promise<User | undefined> {
+  async user(id: string, args?: IUserArgs, gqlCtx?: IGqlCtx): Promise<User | undefined> {
     let nextArgs: IUserArgs = {};
 
     if (args) {
@@ -82,7 +82,7 @@ export class UserService {
       nextArgs.relations = ['roles'];
     }
 
-    const whereQuery: { id: number; status?: number } = { id };
+    const whereQuery: { id: string; status?: number } = { id };
 
     const user = await this.userRepository.findOne({ ...nextArgs, where: whereQuery });
 
@@ -130,7 +130,7 @@ export class UserService {
     return this.userRepository.save({ ...nextArgs });
   }
 
-  async updateUser(id: number, args: UpdateUserInput, gqlCtx?: IGqlCtx): Promise<User | undefined> {
+  async updateUser(id: string, args: UpdateUserInput, gqlCtx?: IGqlCtx): Promise<User | undefined> {
     if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id, gqlCtx);
 
     if (curdUtil.isOneField(args, 'status')) {
@@ -217,7 +217,7 @@ export class UserService {
     return nextUser;
   }
 
-  async deleteUserAllAuth(id: number): Promise<void> {
+  async deleteUserAllAuth(id: string): Promise<void> {
     const auths = await this.authRepository.find({ where: { user_id: id } });
 
     if (auths) {
@@ -226,7 +226,7 @@ export class UserService {
     }
   }
 
-  async deleteUser(id: number, gqlCtx?: IGqlCtx): Promise<User | undefined> {
+  async deleteUser(id: string, gqlCtx?: IGqlCtx): Promise<User | undefined> {
     if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id, gqlCtx);
 
     const deleteUser = await curdUtil.commonDelete({ repository: this.userRepository, CLS_NAME, id });

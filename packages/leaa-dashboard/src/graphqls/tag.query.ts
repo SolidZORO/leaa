@@ -21,7 +21,7 @@ export const GET_TAGS = gql`
 `;
 
 export const GET_TAG = gql`
-  query($id: Int!) {
+  query($id: String!) {
     tag(id: $id) {
       id
       name

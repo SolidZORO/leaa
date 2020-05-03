@@ -83,13 +83,7 @@ export const SettingModalForm = forwardRef((props: IProps, ref: React.Ref<any>) 
         <Row gutter={16}>
           {props.type !== 'create' && (
             <div style={{ display: 'none' }}>
-              <Form.Item
-                name="id"
-                noStyle
-                rules={[{ required: true }]}
-                normalize={(e) => e && Number(e)}
-                label={t('_lang:id')}
-              >
+              <Form.Item name="id" noStyle rules={[{ required: true }]} label={t('_lang:id')}>
                 <Input placeholder={t('_lang:id')} />
               </Form.Item>
             </div>

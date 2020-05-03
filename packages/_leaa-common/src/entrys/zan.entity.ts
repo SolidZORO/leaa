@@ -4,13 +4,8 @@ import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { Base, User } from '@leaa/common/src/entrys';
 
 @Entity('zans')
-@Index('zans_uuid_unique', ['uuid'], { unique: true })
 @ObjectType()
 export class Zan extends Base {
-  @Column({ type: 'varchar', length: 48, unique: true })
-  @Field(() => String)
-  uuid!: string;
-
   @Column({ type: 'varchar', length: 256 })
   @Field(() => String)
   title!: string;

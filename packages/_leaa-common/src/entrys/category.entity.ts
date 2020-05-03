@@ -1,4 +1,4 @@
-import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { ObjectType, Field } from '@nestjs/graphql';
 
 import { Index, Entity, Tree, Column, TreeChildren, TreeParent } from 'typeorm';
 
@@ -12,29 +12,29 @@ import { Base } from '@leaa/common/src/entrys';
 export class Category extends Base {
   @Column({ type: 'varchar', length: 32, unique: true })
   @Field(() => String, { nullable: true })
-  name!: string;
+  name!: string | null;
 
   @Column({ type: 'varchar', length: 32, unique: true })
-  @Field(() => String, { nullable: true })
+  @Field(() => String)
   slug!: string;
 
-  @Column({ type: 'int', default: 0 })
-  @Field(() => Int, { nullable: true })
-  parent_id!: number;
+  @Column({ type: 'varchar', nullable: true })
+  @Field(() => String, { nullable: true })
+  parent_id!: string | null;
 
   @Column({ type: 'text', nullable: true })
   @Field(() => String, { nullable: true })
-  description?: string;
+  description?: string | null;
 
   @TreeChildren()
   @Field(() => [Category], { nullable: true })
-  children?: Category[];
+  children?: Category[] | null;
 
   @TreeParent()
   @Field(() => Category, { nullable: true })
-  parent?: Category;
+  parent?: Category | null;
 
   // Virtual Field (not in DB)
   @Field(() => String, { nullable: true })
-  key?: string;
+  key?: string | null;
 }

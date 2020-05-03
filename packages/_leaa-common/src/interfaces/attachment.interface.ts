@@ -21,7 +21,7 @@ export interface IMediaItem {
 
 export interface IAttachmentParams {
   type: string;
-  moduleId: number;
+  moduleId?: string;
   moduleName: string;
   typeName: string;
   typePlatform?: string;

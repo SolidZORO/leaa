@@ -11,7 +11,7 @@ export const CREATE_PERMISSION = gql`
 `;
 
 export const UPDATE_PERMISSION = gql`
-  mutation($id: Int!, $permission: UpdatePermissionInput!) {
+  mutation($id: String!, $permission: UpdatePermissionInput!) {
     updatePermission(id: $id, permission: $permission) {
       id
       name
@@ -21,7 +21,7 @@ export const UPDATE_PERMISSION = gql`
 `;
 
 export const DELETE_PERMISSION = gql`
-  mutation($id: Int!) {
+  mutation($id: String!) {
     deletePermission(id: $id) {
       id
       name

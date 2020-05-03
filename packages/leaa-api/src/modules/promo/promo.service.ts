@@ -46,11 +46,11 @@ export class PromoService {
     return paginationUtil.calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
-  async promo(id: number, args?: IPromoArgs, gqlCtx?: IGqlCtx): Promise<Promo | undefined> {
+  async promo(id: string, args?: IPromoArgs, gqlCtx?: IGqlCtx): Promise<Promo | undefined> {
     let nextArgs: IPromoArgs = {};
     if (args) nextArgs = args;
 
-    const whereQuery: { id: number; status?: number } = { id };
+    const whereQuery: { id: string; status?: number } = { id };
 
     // can
     if (!gqlCtx?.user || (gqlCtx.user && !authUtil.can(gqlCtx.user, 'promo.item-read--all-status'))) {
@@ -76,7 +76,7 @@ export class PromoService {
     return this.promoRepository.save({ ...nextArgs });
   }
 
-  async updatePromo(id: number, args: UpdatePromoInput, gqlCtx?: IGqlCtx): Promise<Promo | undefined> {
+  async updatePromo(id: string, args: UpdatePromoInput, gqlCtx?: IGqlCtx): Promise<Promo | undefined> {
     if (curdUtil.isOneField(args, 'status')) {
       return curdUtil.commonUpdate({ repository: this.promoRepository, CLS_NAME, id, args });
     }
@@ -86,7 +86,7 @@ export class PromoService {
     return curdUtil.commonUpdate({ repository: this.promoRepository, CLS_NAME, id, args: nextArgs });
   }
 
-  async deletePromo(id: number, gqlCtx?: IGqlCtx): Promise<Promo | undefined> {
+  async deletePromo(id: string, gqlCtx?: IGqlCtx): Promise<Promo | undefined> {
     return curdUtil.commonDelete({ repository: this.promoRepository, CLS_NAME, id });
   }
 

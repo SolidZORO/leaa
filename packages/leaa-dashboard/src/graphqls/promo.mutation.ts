@@ -18,7 +18,7 @@ export const CREATE_PROMO = gql`
 `;
 
 export const UPDATE_PROMO = gql`
-  mutation($id: Int!, $promo: UpdatePromoInput!) {
+  mutation($id: String!, $promo: UpdatePromoInput!) {
     updatePromo(id: $id, promo: $promo) {
       id
       name
@@ -30,7 +30,7 @@ export const UPDATE_PROMO = gql`
 `;
 
 export const DELETE_PROMO = gql`
-  mutation($id: Int!) {
+  mutation($id: String!) {
     deletePromo(id: $id) {
       id
       name

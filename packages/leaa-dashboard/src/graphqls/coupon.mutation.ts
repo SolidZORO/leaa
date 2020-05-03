@@ -16,7 +16,7 @@ export const CREATE_COUPON = gql`
 `;
 
 export const UPDATE_COUPON = gql`
-  mutation($id: Int!, $coupon: UpdateCouponInput!) {
+  mutation($id: String!, $coupon: UpdateCouponInput!) {
     updateCoupon(id: $id, coupon: $coupon) {
       id
       name
@@ -38,7 +38,7 @@ export const REDEEM_COUPON = gql`
 `;
 
 export const DELETE_COUPON = gql`
-  mutation($id: Int!) {
+  mutation($id: String!) {
     deleteCoupon(id: $id) {
       id
       name

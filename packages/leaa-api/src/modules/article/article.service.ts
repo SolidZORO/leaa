@@ -75,7 +75,7 @@ export class ArticleService {
     return paginationUtil.calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
-  async article(id: number, args?: IArticleArgs, gqlCtx?: IGqlCtx): Promise<Article | undefined> {
+  async article(id: string, args?: IArticleArgs, gqlCtx?: IGqlCtx): Promise<Article | undefined> {
     let nextArgs: IArticleArgs = {};
 
     if (args) {
@@ -112,7 +112,7 @@ export class ArticleService {
     return this.articleRepository.save({ ...args, ...relationArgs });
   }
 
-  async updateArticle(id: number, args: UpdateArticleInput): Promise<Article | undefined> {
+  async updateArticle(id: string, args: UpdateArticleInput): Promise<Article | undefined> {
     if (curdUtil.isOneField(args, 'status')) {
       return curdUtil.commonUpdate({ repository: this.articleRepository, CLS_NAME, id, args });
     }
@@ -164,7 +164,7 @@ export class ArticleService {
     });
   }
 
-  async deleteArticle(id: number): Promise<Article | undefined> {
+  async deleteArticle(id: string): Promise<Article | undefined> {
     return curdUtil.commonDelete({ repository: this.articleRepository, CLS_NAME, id });
   }
 }

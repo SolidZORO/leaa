@@ -83,7 +83,7 @@ export default (props: IPage) => {
     {
       title: 'ID',
       dataIndex: 'id',
-      width: 60,
+      width: 75, // ID
       sorter: true,
       sortOrder: tableUtil.calcDefaultSortOrder(tablePagination.orderSort, tablePagination.orderBy, 'id'),
       render: (id: string) => <TableColumnId id={id} />,
@@ -93,7 +93,7 @@ export default (props: IPage) => {
       dataIndex: 'title',
       sorter: true,
       sortOrder: tableUtil.calcDefaultSortOrder(tablePagination.orderSort, tablePagination.orderBy, 'title'),
-      render: (text: string, record: Zan) => <Link to={`${props.route.path}/${record.uuid}`}>{record.title}</Link>,
+      render: (text: string, record: Zan) => <Link to={`${props.route.path}/${record.id}`}>{record.title}</Link>,
     },
     {
       title: t('_lang:views'),
@@ -121,7 +121,7 @@ export default (props: IPage) => {
       width: 60,
       render: (text: string, record: Zan) => (
         <TableColumnStatusSwitch
-          id={Number(record.id)}
+          id={record.id}
           value={Number(record.status)}
           size="small"
           variablesField="zan"
@@ -139,7 +139,7 @@ export default (props: IPage) => {
           id={record.id}
           fieldName={record.title}
           loading={deleteZanMutation.loading}
-          onClick={async () => deleteZanMutate({ variables: { id: Number(record.id) } })}
+          onClick={async () => deleteZanMutate({ variables: { id: record.id } })}
         />
       ),
     },
@@ -148,7 +148,7 @@ export default (props: IPage) => {
   const onFilter = (params: { field: string; value?: string | number | number[] }) => {
     setTablePagination({ ...tablePagination, page: 1 });
 
-    const filterParams: { q?: string; categoryId?: number; brandId?: number; tagName?: string } = {};
+    const filterParams: { q?: string; categoryId?: string; brandId?: string; tagName?: string } = {};
 
     if (params.field === 'q') {
       const result = params.value ? String(params.value) : undefined;

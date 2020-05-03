@@ -38,7 +38,7 @@ export class ProductResolver {
 
   @Query(() => Product, { nullable: true })
   async product(
-    @Args({ name: 'id', type: () => Int }) id: number,
+    @Args({ name: 'id', type: () => String }) id: string,
     @Args() args?: ProductArgs,
     @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Product | undefined> {
@@ -59,7 +59,7 @@ export class ProductResolver {
   @Permissions('product.item-update')
   @Mutation(() => Product)
   async updateProduct(
-    @Args({ name: 'id', type: () => Int }) id: number,
+    @Args({ name: 'id', type: () => String }) id: string,
     @Args('product') args: UpdateProductInput,
     @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Product | undefined> {
@@ -70,7 +70,7 @@ export class ProductResolver {
   @Permissions('product.item-delete')
   @Mutation(() => Product)
   async deleteProduct(
-    @Args({ name: 'id', type: () => Int }) id: number,
+    @Args({ name: 'id', type: () => String }) id: string,
     @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Product | undefined> {
     return this.productService.deleteProduct(id, gqlCtx);

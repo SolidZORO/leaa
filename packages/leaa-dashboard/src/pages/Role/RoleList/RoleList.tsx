@@ -92,7 +92,7 @@ export default (props: IPage) => {
     {
       title: 'ID',
       dataIndex: 'id',
-      width: 60,
+      width: 75, // ID
       sorter: true,
       sortOrder: tableUtil.calcDefaultSortOrder(tablePagination.orderSort, tablePagination.orderBy, 'id'),
       render: (id: string) => <TableColumnId id={id} link={`${props.route.path}/${id}`} />,
@@ -139,7 +139,7 @@ export default (props: IPage) => {
           id={record.id}
           fieldName={record.name}
           loading={deleteRoleMutation.loading}
-          onClick={async () => deleteRoleMutate({ variables: { id: Number(record.id) } })}
+          onClick={async () => deleteRoleMutate({ variables: { id: record.id } })}
         />
       ),
     },

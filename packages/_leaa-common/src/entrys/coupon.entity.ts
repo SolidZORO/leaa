@@ -23,9 +23,9 @@ export class Coupon extends Base {
   @Field(() => Float)
   amount?: number;
 
-  @Column({ type: 'int', nullable: true })
-  @Field(() => Int, { nullable: true })
-  promo_id?: number;
+  @Column({ type: 'varchar', nullable: true })
+  @Field(() => String, { nullable: true })
+  promo_id?: string;
 
   @Column({ type: 'varchar', nullable: true })
   @Field(() => String, { nullable: true })
@@ -41,13 +41,13 @@ export class Coupon extends Base {
   @Field(() => Float)
   over_amount?: number;
 
-  @Column({ type: 'int', default: 0 })
-  @Field(() => Int)
-  user_id?: number;
+  @Column({ type: 'varchar', default: null })
+  @Field(() => String, { nullable: true })
+  user_id?: string;
 
-  @Column({ type: 'int', nullable: true })
-  @Field(() => Int, { nullable: true })
-  order_id?: number;
+  @Column({ type: 'varchar', nullable: true })
+  @Field(() => String, { nullable: true })
+  order_id?: string;
 
   @Column({ type: 'varchar', nullable: true })
   @Field(() => String, { nullable: true })
@@ -73,9 +73,9 @@ export class Coupon extends Base {
   @Field(() => String, { nullable: true })
   redeem_method?: string;
 
-  @Column({ type: 'int', default: 0 })
-  @Field(() => Int)
-  creator_id?: number;
+  @Column({ type: 'varchar', default: null })
+  @Field(() => String, { nullable: true })
+  creator_id?: string;
 
   @Column({ type: 'int', default: 0 })
   @Field(() => Int, { nullable: true })

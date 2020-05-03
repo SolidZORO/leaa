@@ -55,7 +55,7 @@ export class AuthService {
     return items;
   }
 
-  async auth(id: number): Promise<Auth | undefined> {
+  async auth(id: string): Promise<Auth | undefined> {
     return this.authRepository.findOne(id);
   }
 
@@ -69,7 +69,7 @@ export class AuthService {
     return this.authRepository.save({ ...args });
   }
 
-  async deleteAuth(id: number, gqlCtx?: IGqlCtx): Promise<Auth | undefined> {
+  async deleteAuth(id: string, gqlCtx?: IGqlCtx): Promise<Auth | undefined> {
     const item = await curdUtil.commonDelete({ repository: this.authRepository, CLS_NAME, id });
 
     if (!item) throw msgUtil.error({ t: ['_error:deleteItemFailed'], gqlCtx });
@@ -192,7 +192,7 @@ export class AuthService {
     const auth = await this.authRepository.findOne({ ticket });
     if (!auth) throw msgUtil.error({ t: ['_error:notFoundAuth'], gqlCtx });
 
-    const user = await this.userService.user(auth.user_id || 0, { relations: ['roles'] });
+    const user = await this.userService.user(auth.user_id || '0', { relations: ['roles'] });
     if (!user) throw msgUtil.error({ t: ['_error:notFoundUser'], gqlCtx });
 
     await this.clearTicket(auth.id);
@@ -200,16 +200,16 @@ export class AuthService {
     return user;
   }
 
-  async clearTicket(authId: number): Promise<void> {
+  async clearTicket(authId: string): Promise<void> {
     await this.authRepository.update(authId, { ticket: null, ticket_at: '' });
   }
 
-  async bindUserIdToAuth(user: User, oid: number, gqlCtx?: IGqlCtx): Promise<any> {
+  async bindUserIdToAuth(user: User, oid: string, gqlCtx?: IGqlCtx): Promise<any> {
     if (!oid || typeof Number(oid) !== 'number') {
       throw msgUtil.error({ t: ['_error:notFoundId'], gqlCtx });
     }
 
-    const auth = await this.authRepository.findOne({ id: Number(oid) });
+    const auth = await this.authRepository.findOne({ id: oid });
     if (!auth) msgUtil.error({ t: ['_error:notFoundAuth'], gqlCtx });
 
     const result = await this.authRepository.update(Number(oid), { user_id: user.id });

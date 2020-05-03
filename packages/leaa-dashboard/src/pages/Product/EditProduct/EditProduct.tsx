@@ -28,7 +28,7 @@ export default (props: IPage) => {
   const [productTags, setProductTags] = useState<Tag[]>();
 
   // query
-  const getProductVariables = { id: Number(id) };
+  const getProductVariables = { id };
   const getProductQuery = useQuery<{ product: Product }, ProductArgs>(GET_PRODUCT, {
     variables: getProductVariables,
     fetchPolicy: 'network-only',
@@ -36,7 +36,7 @@ export default (props: IPage) => {
   });
 
   // mutation
-  const [submitVariables, setSubmitVariables] = useState<{ id: number; product: UpdateProductInput }>();
+  const [submitVariables, setSubmitVariables] = useState<{ id: string; product: UpdateProductInput }>();
   const [updateProductMutate, updateProductMutation] = useMutation<Product>(UPDATE_PRODUCT, {
     variables: submitVariables,
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
@@ -49,9 +49,9 @@ export default (props: IPage) => {
 
     if (!submitData) return;
 
-    submitData.tagIds = productTags?.length ? productTags.map((item) => Number(item.id)) : null;
+    submitData.tagIds = productTags?.length ? productTags.map((item) => item.id) : null;
 
-    await setSubmitVariables({ id: Number(id), product: submitData });
+    await setSubmitVariables({ id, product: submitData });
     await updateProductMutate();
 
     await imageRef.current?.onUpdateAllAttachments();

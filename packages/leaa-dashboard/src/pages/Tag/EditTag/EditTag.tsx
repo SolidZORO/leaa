@@ -24,14 +24,14 @@ export default (props: IPage) => {
   const infoFormRef = useRef<ICommenFormRef<UpdateTagInput>>(null);
 
   // query
-  const getTagVariables = { id: Number(id) };
+  const getTagVariables = { id: id };
   const getTagQuery = useQuery<{ tag: Tag }, TagArgs>(GET_TAG, {
     variables: getTagVariables,
     fetchPolicy: 'network-only',
   });
 
   // mutation
-  const [submitVariables, setSubmitVariables] = useState<{ id: number; tag: UpdateTagInput }>();
+  const [submitVariables, setSubmitVariables] = useState<{ id: string; tag: UpdateTagInput }>();
   const [updateTagMutate, updateTagMutation] = useMutation<Tag>(UPDATE_TAG, {
     variables: submitVariables,
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
@@ -48,7 +48,7 @@ export default (props: IPage) => {
       ...infoData,
     };
 
-    await setSubmitVariables({ id: Number(id), tag: submitData });
+    await setSubmitVariables({ id: id, tag: submitData });
     await updateTagMutate();
   };
 

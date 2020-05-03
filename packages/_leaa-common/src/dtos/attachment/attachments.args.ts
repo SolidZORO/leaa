@@ -14,8 +14,8 @@ export class AttachmentsArgs extends ItemsArgs {
   moduleName?: string;
 
   @IsOptional()
-  @Field(() => Int, { nullable: true })
-  moduleId?: number;
+  @Field(() => String, { nullable: true })
+  moduleId?: string;
 
   @IsOptional()
   @Field(() => String, { nullable: true })
@@ -26,12 +26,12 @@ export class AttachmentsArgs extends ItemsArgs {
   typePlatform?: string;
 
   @IsOptional()
-  @Field(() => Int, { nullable: true })
-  categoryId?: number;
+  @Field(() => String, { nullable: true })
+  categoryId?: string;
 
   @IsOptional()
-  @Field(() => Int, { nullable: true })
-  userId?: number;
+  @Field(() => String, { nullable: true })
+  userId?: string;
 
   @IsOptional()
   @Field(() => Int, { nullable: true })

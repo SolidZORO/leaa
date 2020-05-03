@@ -22,7 +22,7 @@ export class PermissionService {
     private readonly configService: ConfigService,
   ) {}
 
-  async PLEASE_DONT_MODIFY_DEMO_DATA(id?: number, gqlCtx?: IGqlCtx): Promise<boolean> {
+  async PLEASE_DONT_MODIFY_DEMO_DATA(id?: string, gqlCtx?: IGqlCtx): Promise<boolean> {
     if (this.configService.DEMO_MODE && !process.argv.includes('--nuke')) {
       if (!id) return true;
 
@@ -66,15 +66,15 @@ export class PermissionService {
     };
   }
 
-  async permission(id: number, args?: IPermissionArgs): Promise<Permission | undefined> {
+  async permission(id: string, args?: IPermissionArgs): Promise<Permission | undefined> {
     let nextArgs: IPermissionArgs = {};
     if (args) nextArgs = args;
 
     return this.permissionRepository.findOne(id, nextArgs);
   }
 
-  async permissionSlugsToIds(slugs: string[]): Promise<number[]> {
-    let permissionIds: number[] = [];
+  async permissionSlugsToIds(slugs: string[]): Promise<string[]> {
+    let permissionIds: string[] = [];
 
     const permissions = await this.permissionRepository.find({
       slug: In(slugs),
@@ -91,7 +91,7 @@ export class PermissionService {
     return this.permissionRepository.save({ ...args });
   }
 
-  async updatePermission(id: number, args: UpdatePermissionInput, gqlCtx?: IGqlCtx): Promise<Permission | undefined> {
+  async updatePermission(id: string, args: UpdatePermissionInput, gqlCtx?: IGqlCtx): Promise<Permission | undefined> {
     if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id, gqlCtx);
 
     if (curdUtil.isOneField(args, 'status')) {
@@ -101,7 +101,7 @@ export class PermissionService {
     return curdUtil.commonUpdate({ repository: this.permissionRepository, CLS_NAME, id, args });
   }
 
-  async deletePermission(id: number, gqlCtx?: IGqlCtx): Promise<Permission | undefined> {
+  async deletePermission(id: string, gqlCtx?: IGqlCtx): Promise<Permission | undefined> {
     if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id, gqlCtx);
 
     return curdUtil.commonDelete({ repository: this.permissionRepository, CLS_NAME, id });

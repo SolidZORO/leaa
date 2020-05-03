@@ -102,7 +102,7 @@ export class SaveInLocalService {
       filename,
       // module_abc --> moduleAbc
       module_name: body.moduleName,
-      module_id: typeof body.moduleId !== 'undefined' ? Number(body.moduleId) : 0,
+      module_id: typeof body.moduleId !== 'undefined' ? body.moduleId : '0',
       type_name: body.typeName,
       type_platform: body.typePlatform,
       //

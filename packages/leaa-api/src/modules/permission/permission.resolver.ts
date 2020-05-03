@@ -29,7 +29,7 @@ export class PermissionResolver {
   @Permissions('permission.item-read')
   @Query(() => Permission)
   async permission(
-    @Args({ name: 'id', type: () => Int }) id: number,
+    @Args({ name: 'id', type: () => String }) id: string,
     @Args() args: PermissionArgs,
   ): Promise<Permission | undefined> {
     return this.permissionService.permission(id, args);
@@ -46,7 +46,7 @@ export class PermissionResolver {
   @Permissions('permission.item-update')
   @Mutation(() => Permission)
   async updatePermission(
-    @Args({ name: 'id', type: () => Int }) id: number,
+    @Args({ name: 'id', type: () => String }) id: string,
     @Args('permission') args: UpdatePermissionInput,
     @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Permission | undefined> {
@@ -57,7 +57,7 @@ export class PermissionResolver {
   @Permissions('permission.item-delete')
   @Mutation(() => Permission)
   async deletePermission(
-    @Args({ name: 'id', type: () => Int }) id: number,
+    @Args({ name: 'id', type: () => String }) id: string,
     @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Permission | undefined> {
     return this.permissionService.deletePermission(id, gqlCtx);

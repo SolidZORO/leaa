@@ -3,7 +3,7 @@
 # ------------------------------------------------------
 
 type User {
-  id: Int
+  id: String
   created_at: DateTime!
   updated_at: DateTime
   deleted_at: DateTime
@@ -31,7 +31,7 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 scalar DateTime
 
 type Role {
-  id: Int
+  id: String
   created_at: DateTime!
   updated_at: DateTime
   deleted_at: DateTime
@@ -42,7 +42,7 @@ type Role {
 }
 
 type Permission {
-  id: Int
+  id: String
   created_at: DateTime!
   updated_at: DateTime
   deleted_at: DateTime
@@ -53,13 +53,13 @@ type Permission {
 }
 
 type Category {
-  id: Int
+  id: String
   created_at: DateTime!
   updated_at: DateTime
   deleted_at: DateTime
   name: String
-  slug: String
-  parent_id: Int
+  slug: String!
+  parent_id: String
   description: String
   children: [Category!]
   parent: Category
@@ -67,13 +67,13 @@ type Category {
 }
 
 type Article {
-  id: Int
+  id: String
   created_at: DateTime!
   updated_at: DateTime
   deleted_at: DateTime
   title: String!
   slug: String
-  user_id: Int
+  user_id: String
   description: String
   content: String
   status: Int
@@ -83,7 +83,7 @@ type Article {
 }
 
 type Attachment {
-  id: Int
+  id: String
   created_at: DateTime!
   updated_at: DateTime
   deleted_at: DateTime
@@ -94,7 +94,7 @@ type Attachment {
   filename: String!
   description: String
   link: String
-  module_id: Int!
+  module_id: String!
   module_name: String!
   type_name: String!
   type_platform: String
@@ -109,7 +109,7 @@ type Attachment {
   at2x: Int!
   in_local: Int!
   in_oss: Int!
-  user_id: Int
+  user_id: String
   sort: Int!
   status: Int!
 }
@@ -131,7 +131,7 @@ type AxAttachmentsObject {
 }
 
 type Ax {
-  id: Int
+  id: String
   created_at: DateTime!
   updated_at: DateTime
   deleted_at: DateTime
@@ -143,7 +143,7 @@ type Ax {
 }
 
 type Setting {
-  id: Int
+  id: String
   created_at: DateTime!
   updated_at: DateTime
   deleted_at: DateTime
@@ -158,14 +158,14 @@ type Setting {
 }
 
 type Auth {
-  id: Int
+  id: String
   created_at: DateTime!
   updated_at: DateTime
   deleted_at: DateTime
   open_id: String!
   union_id: String
   app_id: String!
-  user_id: Int!
+  user_id: String
   platform: String!
   ticket: String
   ticket_at: DateTime
@@ -181,7 +181,7 @@ type Auth {
 }
 
 type Tag {
-  id: Int
+  id: String
   created_at: DateTime!
   updated_at: DateTime
   deleted_at: DateTime
@@ -192,7 +192,7 @@ type Tag {
 }
 
 type Coupon {
-  id: Int
+  id: String
   created_at: DateTime!
   updated_at: DateTime
   deleted_at: DateTime
@@ -200,25 +200,25 @@ type Coupon {
   type: String!
   name: String!
   amount: Float!
-  promo_id: Int
+  promo_id: String
   promo_code: String
   over_amount: Float!
-  user_id: Int!
-  order_id: Int
+  user_id: String
+  order_id: String
   order_serial: String
   available_product_ids: String
   unavailable_product_ids: String
   start_time: DateTime
   expire_time: DateTime
   redeem_method: String
-  creator_id: Int!
+  creator_id: String
   status: Int
   available: Boolean!
   canRedeem: Boolean!
 }
 
 type Promo {
-  id: Int
+  id: String
   created_at: DateTime!
   updated_at: DateTime
   deleted_at: DateTime
@@ -231,7 +231,7 @@ type Promo {
   unavailable_product_ids: String
   start_time: DateTime
   expire_time: DateTime
-  creator_id: Int!
+  creator_id: String
   status: Int
   available: Boolean!
 }
@@ -253,7 +253,7 @@ type ProductsWithPaginationObject {
 }
 
 type Product {
-  id: Int
+  id: String
   created_at: DateTime!
   updated_at: DateTime
   deleted_at: DateTime
@@ -275,7 +275,7 @@ type Product {
 }
 
 type Address {
-  id: Int
+  id: String
   created_at: DateTime!
   updated_at: DateTime
   deleted_at: DateTime
@@ -291,7 +291,7 @@ type Address {
 }
 
 type Division {
-  id: Int
+  id: String
   created_at: DateTime!
   updated_at: DateTime
   deleted_at: DateTime
@@ -302,11 +302,10 @@ type Division {
 }
 
 type Zan {
-  id: Int
+  id: String
   created_at: DateTime!
   updated_at: DateTime
   deleted_at: DateTime
-  uuid: String!
   title: String!
   description: String
   status: Int
@@ -380,18 +379,18 @@ type ArticlesWithPaginationObject {
 }
 
 type CategoryTreeObject {
-  id: Int
+  id: String
   created_at: DateTime!
   updated_at: DateTime
   deleted_at: DateTime
   name: String
-  slug: String
-  parent_id: Int
+  slug: String!
+  parent_id: String
   description: String
   children: [CategoryTreeObject!]
   parent: Category
   key: String!
-  value: Int!
+  value: String!
   title: String
   subtitle: String
   expanded: Boolean
@@ -494,46 +493,165 @@ type SignupAccount {
 }
 
 type Query {
-  roles(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): RolesWithPaginationObject!
-  role(id: Int!): Role!
-  permissions(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): PermissionsWithPaginationObject!
-  permission(id: Int!): Permission!
-  users(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): UsersWithPaginationObject!
-  user(id: Int!): User!
+  roles(
+    page: Int = 1
+    pageSize: Int = 30
+    orderBy: String = "id"
+    orderSort: String = "DESC"
+    q: String
+  ): RolesWithPaginationObject!
+  role(id: String!): Role!
+  permissions(
+    page: Int = 1
+    pageSize: Int = 30
+    orderBy: String = "id"
+    orderSort: String = "DESC"
+    q: String
+  ): PermissionsWithPaginationObject!
+  permission(id: String!): Permission!
+  users(
+    page: Int = 1
+    pageSize: Int = 30
+    orderBy: String = "id"
+    orderSort: String = "DESC"
+    q: String
+  ): UsersWithPaginationObject!
+  user(id: String!): User!
   userByToken(token: String): User!
-  attachments(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String, type: String, moduleName: String, moduleId: Int, typeName: String, typePlatform: String, categoryId: Int, userId: Int, refreshHash: Int): AttachmentsWithPaginationObject!
+  attachments(
+    page: Int = 1
+    pageSize: Int = 30
+    orderBy: String = "id"
+    orderSort: String = "DESC"
+    q: String
+    type: String
+    moduleName: String
+    moduleId: String
+    typeName: String
+    typePlatform: String
+    categoryId: String
+    userId: String
+    refreshHash: Int
+  ): AttachmentsWithPaginationObject!
   attachment(uuid: String!): Attachment!
-  auths(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): AuthsWithPaginationObject
-  articles(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String, tagName: String, categoryName: String, categoryId: Int): ArticlesWithPaginationObject!
-  article(id: Int!): Article!
+  auths(
+    page: Int = 1
+    pageSize: Int = 30
+    orderBy: String = "id"
+    orderSort: String = "DESC"
+    q: String
+  ): AuthsWithPaginationObject
+  articles(
+    page: Int = 1
+    pageSize: Int = 30
+    orderBy: String = "id"
+    orderSort: String = "DESC"
+    q: String
+    tagName: String
+    categoryName: String
+    categoryId: String
+  ): ArticlesWithPaginationObject!
+  article(id: String!): Article!
   articleBySlug(slug: String!): Article!
-  categories(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String, expanded: Boolean, listType: Boolean, treeType: Boolean, parentSlug: String, parentId: Int, includeParent: Boolean): CategoriesWithPaginationOrTreeObject!
-  category(id: Int!): Category!
-  axs(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): AxsWithPaginationObject!
-  ax(id: Int!): Ax!
+  categories(
+    page: Int = 1
+    pageSize: Int = 30
+    orderBy: String = "id"
+    orderSort: String = "DESC"
+    q: String
+    expanded: Boolean
+    listType: Boolean
+    treeType: Boolean
+    parentSlug: String
+    parentId: String
+    includeParent: Boolean
+  ): CategoriesWithPaginationOrTreeObject!
+  category(id: String!): Category!
+  categoryBySlug(slug: String!): Category!
+  axs(
+    page: Int = 1
+    pageSize: Int = 30
+    orderBy: String = "id"
+    orderSort: String = "DESC"
+    q: String
+  ): AxsWithPaginationObject!
+  ax(id: String!): Ax!
   axBySlug(slug: String!): Ax!
-  settings(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): SettingsWithPaginationObject!
-  setting(id: Int!): Setting!
+  settings(
+    page: Int = 1
+    pageSize: Int = 30
+    orderBy: String = "id"
+    orderSort: String = "DESC"
+    q: String
+  ): SettingsWithPaginationObject!
+  setting(id: String!): Setting!
   settingBySlug(slug: String!): Setting!
-  coupons(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): CouponsWithPaginationObject!
-  coupon(id: Int!): Coupon!
+  coupons(
+    page: Int = 1
+    pageSize: Int = 30
+    orderBy: String = "id"
+    orderSort: String = "DESC"
+    q: String
+  ): CouponsWithPaginationObject!
+  coupon(id: String!): Coupon!
   couponByCode(code: String!): Coupon!
-  promos(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): PromosWithPaginationObject!
-  promo(id: Int!): Promo!
+  promos(
+    page: Int = 1
+    pageSize: Int = 30
+    orderBy: String = "id"
+    orderSort: String = "DESC"
+    q: String
+  ): PromosWithPaginationObject!
+  promo(id: String!): Promo!
   promoByCode(code: String!): Promo!
-  tags(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): TagsWithPaginationObject!
-  tag(id: Int!): Tag!
+  tags(
+    page: Int = 1
+    pageSize: Int = 30
+    orderBy: String = "id"
+    orderSort: String = "DESC"
+    q: String
+  ): TagsWithPaginationObject!
+  tag(id: String!): Tag!
   tagByName(name: String!): Tag!
-  products(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String, tagName: String, styleName: String, brandName: String, styleId: Int, brandId: Int): ProductsWithPaginationObject
-  product(id: Int!): Product
-  addresses(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): AddressesWithPaginationObject!
-  address(id: Int!): Address!
-  divisions(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): DivisionsWithPaginationObject!
+  products(
+    page: Int = 1
+    pageSize: Int = 30
+    orderBy: String = "id"
+    orderSort: String = "DESC"
+    q: String
+    tagName: String
+    styleName: String
+    brandName: String
+    styleId: String
+    brandId: String
+  ): ProductsWithPaginationObject
+  product(id: String!): Product
+  addresses(
+    page: Int = 1
+    pageSize: Int = 30
+    orderBy: String = "id"
+    orderSort: String = "DESC"
+    q: String
+  ): AddressesWithPaginationObject!
+  address(id: String!): Address!
+  divisions(
+    page: Int = 1
+    pageSize: Int = 30
+    orderBy: String = "id"
+    orderSort: String = "DESC"
+    q: String
+  ): DivisionsWithPaginationObject!
   divisionsMapping: String!
   divisionsTree: String!
-  division(id: Int!): Division!
-  zans(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): ZansWithPaginationObject!
-  zan(uuid: String!): Zan!
+  division(id: String!): Division!
+  zans(
+    page: Int = 1
+    pageSize: Int = 30
+    orderBy: String = "id"
+    orderSort: String = "DESC"
+    q: String
+  ): ZansWithPaginationObject!
+  zan(id: String!): Zan!
   test: Float!
   testWithAuth: String!
   testI18n(x: Int): String!
@@ -541,62 +659,62 @@ type Query {
 
 type Mutation {
   createRole(role: CreateRoleInput!): Role!
-  updateRole(role: UpdateRoleInput!, id: Int!): Role!
-  deleteRole(id: Int!): Role!
+  updateRole(role: UpdateRoleInput!, id: String!): Role!
+  deleteRole(id: String!): Role!
   createPermission(permission: CreatePermissionInput!): Permission!
-  updatePermission(permission: UpdatePermissionInput!, id: Int!): Permission!
-  deletePermission(id: Int!): Permission!
+  updatePermission(permission: UpdatePermissionInput!, id: String!): Permission!
+  deletePermission(id: String!): Permission!
   createUser(user: CreateUserInput!): User!
-  updateUser(user: UpdateUserInput!, id: Int!): User!
-  deleteUser(id: Int!): User!
+  updateUser(user: UpdateUserInput!, id: String!): User!
+  deleteUser(id: String!): User!
   updateAttachment(attachment: UpdateAttachmentInput!, uuid: String!): Attachment!
   updateAttachments(attachments: [UpdateAttachmentsInput!]!): AttachmentsObject!
   deleteAttachments(uuid: [String!]!): DeleteAttachmentsObject!
-  deleteAuth(id: Int!): Auth!
+  deleteAuth(id: String!): Auth!
   login(user: AuthLoginInput!): User!
   loginByTicket(ticket: String!): User!
   signup(uid: Int, user: AuthSignupInput!): User!
   createArticle(article: CreateArticleInput!): Article!
-  updateArticle(article: UpdateArticleInput!, id: Int!): Article!
+  updateArticle(article: UpdateArticleInput!, id: String!): Article!
   deleteArticle(id: Int!): Article!
   createCategory(category: CreateCategoryInput!): Category!
-  updateCategory(category: UpdateCategoryInput!, id: Int!): Category!
-  deleteCategory(id: Int!): Category!
+  updateCategory(category: UpdateCategoryInput!, id: String!): Category!
+  deleteCategory(id: String!): Category!
   createAx(ax: CreateAxInput!): Ax!
-  updateAx(ax: UpdateAxInput!, id: Int!): Ax!
-  deleteAx(id: Int!): Ax!
+  updateAx(ax: UpdateAxInput!, id: String!): Ax!
+  deleteAx(id: String!): Ax!
   createSetting(setting: CreateSettingInput!): Setting!
-  updateSetting(setting: UpdateSettingInput!, id: Int!): Setting!
+  updateSetting(setting: UpdateSettingInput!, id: String!): Setting!
   updateSettings(settings: [UpdateSettingsInput!]!): SettingsObject!
-  deleteSetting(id: Int!): Setting!
+  deleteSetting(id: String!): Setting!
   createCoupon(coupon: CreateCouponInput!): Coupon!
-  updateCoupon(coupon: UpdateCouponInput!, id: Int!): Coupon!
-  deleteCoupon(id: Int!): Coupon!
+  updateCoupon(coupon: UpdateCouponInput!, id: String!): Coupon!
+  deleteCoupon(id: String!): Coupon!
   redeemCoupon(info: RedeemCouponInput!): Coupon!
   createPromo(promo: CreatePromoInput!): Promo!
-  updatePromo(promo: UpdatePromoInput!, id: Int!): Promo!
-  deletePromo(id: Int!): Promo!
+  updatePromo(promo: UpdatePromoInput!, id: String!): Promo!
+  deletePromo(id: String!): Promo!
   redeemPromo(info: RedeemPromoInput!): Promo!
   createTag(tag: CreateTagInput!): Tag!
   createTags(tagNames: [String!]!): Tag!
   syncTagsToDictFile: SyncTagsToFileObject!
-  updateTag(tag: UpdateTagInput!, id: Int!): Tag!
-  deleteTag(id: Int!): Tag!
+  updateTag(tag: UpdateTagInput!, id: String!): Tag!
+  deleteTag(id: String!): Tag!
   createProduct(product: CreateProductInput!): Product!
-  updateProduct(product: UpdateProductInput!, id: Int!): Product!
-  deleteProduct(id: Int!): Product!
+  updateProduct(product: UpdateProductInput!, id: String!): Product!
+  deleteProduct(id: String!): Product!
   createAddress(address: CreateAddressInput!): Address!
-  updateAddress(address: UpdateAddressInput!, id: Int!): Address!
-  deleteAddress(id: Int!): Address!
+  updateAddress(address: UpdateAddressInput!, id: String!): Address!
+  deleteAddress(id: String!): Address!
   createDivision(division: CreateDivisionInput!): Division!
   syncDivisionToFile: SyncDivisionToFileObject!
-  updateDivision(division: UpdateDivisionInput!, id: Int!): Division!
+  updateDivision(division: UpdateDivisionInput!, id: String!): Division!
   deleteDivision(id: Int!): Division!
   createZan(zan: CreateZanInput!): Zan!
-  updateZan(zan: UpdateZanInput!, id: Int!): Zan!
-  deleteZan(id: Int!): Zan!
-  likeZan(uuid: String!): Zan!
-  deleteZanUser(userId: Int!, uuid: String!): Zan!
+  updateZan(zan: UpdateZanInput!, id: String!): Zan!
+  deleteZan(id: String!): Zan!
+  likeZan(id: String!): Zan!
+  deleteZanUser(userId: Int!, id: String!): Zan!
 }
 
 input CreateRoleInput {
@@ -607,7 +725,7 @@ input CreateRoleInput {
 input UpdateRoleInput {
   name: String
   slug: String
-  permissionIds: [Int!]
+  permissionIds: [String!]
   permissionSlugs: [String!]
 }
 
@@ -639,7 +757,7 @@ input UpdateUserInput {
   avatar_url: String
   status: Int
   is_admin: Int
-  roleIds: [Int!]
+  roleIds: [String!]
   roleSlugs: [String!]
 }
 
@@ -674,8 +792,8 @@ input AuthSignupInput {
 input CreateArticleInput {
   title: String!
   slug: String
-  categoryIds: [Int!]
-  user_id: Int
+  categoryIds: [String!]
+  user_id: String
   description: String
   content: String
   status: Int!
@@ -684,26 +802,26 @@ input CreateArticleInput {
 input UpdateArticleInput {
   title: String
   slug: String
-  user_id: Int
+  user_id: String
   description: String
   content: String
   status: Int
   released_at: DateTime
-  categoryIds: [Int!]
-  tagIds: [Int!]
+  categoryIds: [String!]
+  tagIds: [String!]
 }
 
 input CreateCategoryInput {
   name: String!
   slug: String!
-  parent_id: Int
+  parent_id: String
   description: String
 }
 
 input UpdateCategoryInput {
   name: String!
   slug: String!
-  parent_id: Int
+  parent_id: String
   description: String
 }
 
@@ -744,7 +862,7 @@ input UpdateSettingInput {
 }
 
 input UpdateSettingsInput {
-  id: Int!
+  id: String!
   value: String!
 }
 
@@ -775,7 +893,7 @@ input UpdateCouponInput {
 
 input RedeemCouponInput {
   code: String!
-  userId: Int
+  userId: String
 }
 
 input CreatePromoInput {
@@ -807,7 +925,7 @@ input UpdatePromoInput {
 
 input RedeemPromoInput {
   code: String!
-  userId: Int
+  userId: String
 }
 
 input CreateTagInput {
@@ -834,10 +952,10 @@ input CreateProductInput {
   sort: Int
   description: String
   content: String
-  brandIds: [Int!]
-  styleIds: [Int!]
-  tagIds: [Int!]
-  bannerIds: [Int!]
+  brandIds: [String!]
+  styleIds: [String!]
+  tagIds: [String!]
+  bannerIds: [String!]
 }
 
 input UpdateProductInput {
@@ -852,10 +970,10 @@ input UpdateProductInput {
   sort: Int
   description: String
   content: String
-  brandIds: [Int!]
-  styleIds: [Int!]
-  tagIds: [Int!]
-  bannerIds: [Int!]
+  brandIds: [String!]
+  styleIds: [String!]
+  tagIds: [String!]
+  bannerIds: [String!]
 }
 
 input CreateAddressInput {

@@ -10,6 +10,6 @@ export class ArticlesArgs extends ItemsArgs {
   @Field(() => String, { nullable: true })
   categoryName?: string;
 
-  @Field(() => Int, { nullable: true })
-  categoryId?: number;
+  @Field(() => String, { nullable: true })
+  categoryId?: string;
 }

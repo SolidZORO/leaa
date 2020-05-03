@@ -1,5 +1,5 @@
 export interface IJwtPayload {
-  id: number;
+  id: string;
   iat?: number;
   exp?: number;
   iattz?: string;

@@ -40,14 +40,14 @@ export default (props: IPage) => {
   const [articleTags, setArticleTags] = useState<Tag[]>();
 
   // query
-  const getArticleVariables = { id: Number(id) };
+  const getArticleVariables = { id };
   const getArticleQuery = useQuery<{ article: Article }, ArticleArgs>(GET_ARTICLE, {
     variables: getArticleVariables,
     fetchPolicy: 'network-only',
   });
 
   // mutation
-  const [submitVariables, setSubmitVariables] = useState<{ id: number; article: UpdateArticleInput }>();
+  const [submitVariables, setSubmitVariables] = useState<{ id: string; article: UpdateArticleInput }>();
   const [updateArticleMutate, updateArticleMutation] = useMutation<Article>(UPDATE_ARTICLE, {
     variables: submitVariables,
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
@@ -73,9 +73,9 @@ export default (props: IPage) => {
       submitData.categoryIds = null;
     }
 
-    submitData.tagIds = articleTags?.length ? articleTags.map((item) => Number(item.id)) : null;
+    submitData.tagIds = articleTags?.length ? articleTags.map((item) => item.id) : null;
 
-    await setSubmitVariables({ id: Number(id), article: submitData });
+    await setSubmitVariables({ id, article: submitData });
     await updateArticleMutate();
 
     // attachments
@@ -102,7 +102,7 @@ export default (props: IPage) => {
         content={getArticleQuery.data?.article?.content}
         attachmentParams={{
           type: 'image',
-          moduleId: Number(id),
+          moduleId: id,
           moduleName: 'article',
           typeName: 'editor',
         }}
@@ -127,7 +127,7 @@ export default (props: IPage) => {
             listHeight={229}
             attachmentParams={{
               type: 'image',
-              moduleId: Number(id),
+              moduleId: id,
               moduleName: 'article',
               typeName: 'banner',
             }}

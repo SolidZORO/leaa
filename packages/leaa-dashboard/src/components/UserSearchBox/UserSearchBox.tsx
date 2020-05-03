@@ -20,7 +20,7 @@ interface IProps extends AutoCompleteProps {
   value?: string;
   autoFocus?: boolean;
   onSelectUserCallback?: (user: UserEntry | undefined) => void;
-  onEnterCallback?: (userId: number | undefined) => void;
+  onEnterCallback?: (userId: string | undefined) => void;
   onChangeUserNameCallback?: (user: string | undefined) => void;
   placeholder?: string;
   style?: React.CSSProperties;
@@ -61,7 +61,7 @@ export const UserSearchBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
   const onQueryUsers = (q: string) => queryUsers.current(q);
 
   // query user
-  const onQueryUser = (userId: number) =>
+  const onQueryUser = (userId: string) =>
     apolloClient
       .query<{ user: User }, UserArgs>({
         query: GET_USER,
@@ -104,7 +104,7 @@ export const UserSearchBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
   useEffect(() => {
     init();
 
-    if (props.value) onQueryUser(Number(props.value)).then();
+    if (props.value) onQueryUser(props.value).then();
   }, []);
 
   useEffect(() => {
@@ -112,7 +112,7 @@ export const UserSearchBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
   }, [props.value]);
 
   const onSelect = (userId: string) => {
-    const userObject = optionalUsers.find((item) => item.id === Number(userId));
+    const userObject = optionalUsers.find((item) => item.id === userId);
 
     setInputKey(makeUserLabel(userObject));
 

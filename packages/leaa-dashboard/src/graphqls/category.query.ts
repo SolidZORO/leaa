@@ -13,7 +13,7 @@ export const GET_CATEGORIES = gql`
     $listType: Boolean
     $expanded: Boolean
     $parentSlug: String
-    $parentId: Int
+    $parentId: String
   ) {
     categories(
       page: $page
@@ -91,7 +91,7 @@ export const GET_CATEGORIES = gql`
 `;
 
 export const GET_CATEGORY = gql`
-  query($id: Int!) {
+  query($id: String!) {
     category(id: $id) {
       id
       name

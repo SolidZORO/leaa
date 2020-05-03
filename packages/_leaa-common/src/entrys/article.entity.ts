@@ -16,9 +16,9 @@ export class Article extends Base {
   @Field(() => String, { nullable: true })
   slug?: string;
 
-  @Column({ type: 'int', nullable: true })
-  @Field(() => Int, { nullable: true })
-  user_id?: number;
+  @Column({ type: 'varchar', nullable: true })
+  @Field(() => String, { nullable: true })
+  user_id?: string;
 
   @Column({ type: 'text', nullable: true })
   @Field(() => String, { nullable: true })

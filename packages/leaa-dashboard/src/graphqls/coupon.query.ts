@@ -33,7 +33,7 @@ export const GET_COUPONS = gql`
 `;
 
 export const GET_COUPON = gql`
-  query($id: Int!) {
+  query($id: String!) {
     coupon(id: $id) {
       id
       code

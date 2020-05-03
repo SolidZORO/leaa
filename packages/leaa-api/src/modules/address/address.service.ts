@@ -37,7 +37,7 @@ export class AddressService {
     return paginationUtil.calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
-  async address(id: number, args?: IAddressArgs): Promise<Address | undefined> {
+  async address(id: string, args?: IAddressArgs): Promise<Address | undefined> {
     let nextArgs: IAddressArgs = {};
 
     if (args) {
@@ -52,13 +52,13 @@ export class AddressService {
     return this.addressRepository.save({ ...args });
   }
 
-  async updateAddress(id: number, args: UpdateAddressInput, user?: User): Promise<Address | undefined> {
+  async updateAddress(id: string, args: UpdateAddressInput, user?: User): Promise<Address | undefined> {
     const relationArgs: { permissions?: Permission[] } = {};
 
     return curdUtil.commonUpdate({ repository: this.addressRepository, CLS_NAME, id, args, relation: relationArgs });
   }
 
-  async deleteAddress(id: number, user?: User): Promise<Address | undefined> {
+  async deleteAddress(id: string, user?: User): Promise<Address | undefined> {
     return curdUtil.commonDelete({ repository: this.addressRepository, CLS_NAME, id });
   }
 }

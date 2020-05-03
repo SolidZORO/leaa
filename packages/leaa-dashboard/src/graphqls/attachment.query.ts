@@ -9,11 +9,11 @@ export const GET_ATTACHMENTS = gql`
     $q: String
     $type: String
     $moduleName: String
-    $moduleId: Int
+    $moduleId: String
     $typeName: String
     $typePlatform: String
-    $categoryId: Int
-    $userId: Int
+    $categoryId: String
+    $userId: String
     $refreshHash: Int
   ) {
     attachments(

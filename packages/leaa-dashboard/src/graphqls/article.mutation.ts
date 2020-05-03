@@ -14,7 +14,7 @@ export const CREATE_ARTICLE = gql`
 `;
 
 export const UPDATE_ARTICLE = gql`
-  mutation($id: Int!, $article: UpdateArticleInput!) {
+  mutation($id: String!, $article: UpdateArticleInput!) {
     updateArticle(id: $id, article: $article) {
       id
       title
@@ -27,7 +27,7 @@ export const UPDATE_ARTICLE = gql`
 `;
 
 export const UPDATE_ARTICLE_STATUS = gql`
-  mutation($id: Int!, $article: UpdateArticleInput!) {
+  mutation($id: String!, $article: UpdateArticleInput!) {
     updateArticle(id: $id, article: $article) {
       id
       title
@@ -41,7 +41,7 @@ export const UPDATE_ARTICLE_STATUS = gql`
 `;
 
 export const DELETE_ARTICLE = gql`
-  mutation($id: Int!) {
+  mutation($id: String!) {
     deleteArticle(id: $id) {
       id
       title

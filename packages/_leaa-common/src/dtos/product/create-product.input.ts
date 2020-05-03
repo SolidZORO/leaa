@@ -48,18 +48,18 @@ export class CreateProductInput {
   content?: string;
 
   @IsOptional()
-  @Field(() => [Int], { nullable: true })
-  brandIds?: number[] | null;
+  @Field(() => [String], { nullable: true })
+  brandIds?: string[] | null;
 
   @IsOptional()
-  @Field(() => [Int], { nullable: true })
-  styleIds?: number[] | null;
+  @Field(() => [String], { nullable: true })
+  styleIds?: string[] | null;
 
   @IsOptional()
-  @Field(() => [Int], { nullable: true })
-  tagIds?: number[] | null;
+  @Field(() => [String], { nullable: true })
+  tagIds?: string[] | null;
 
   @IsOptional()
-  @Field(() => [Int], { nullable: true })
-  bannerIds?: number[] | null;
+  @Field(() => [String], { nullable: true })
+  bannerIds?: string[] | null;
 }

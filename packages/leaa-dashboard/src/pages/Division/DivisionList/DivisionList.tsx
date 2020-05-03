@@ -107,7 +107,7 @@ export default (props: IPage) => {
                   id={node.id}
                   fieldName={node.name}
                   loading={deleteDivisionMutation.loading}
-                  onClick={async () => deleteDivisionMutate({ variables: { id: Number(node.id) } })}
+                  onClick={async () => deleteDivisionMutate({ variables: { id: node.id } })}
                   className={style['tree-item-delete-button']}
                 />,
                 <Button key={`${node.id}`} size="small" className={style['tree-item-edit-button']}>

@@ -19,11 +19,11 @@ export class ZanResolver {
 
   @Query(() => Zan)
   async zan(
-    @Args({ name: 'uuid', type: () => String }) uuid: string,
+    @Args({ name: 'id', type: () => String }) id: string,
     @Args() args?: ZanArgs,
     @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Zan | undefined> {
-    return this.zanService.zan(uuid, args, gqlCtx);
+    return this.zanService.zan(id, args, gqlCtx);
   }
 
   @Mutation(() => Zan)
@@ -35,7 +35,7 @@ export class ZanResolver {
   @Permissions('zan.item-update')
   @Mutation(() => Zan)
   async updateZan(
-    @Args({ name: 'id', type: () => Int }) id: number,
+    @Args({ name: 'id', type: () => String }) id: string,
     @Args('zan') args: UpdateZanInput,
     @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Zan | undefined> {
@@ -46,7 +46,7 @@ export class ZanResolver {
   @Permissions('zan.item-delete')
   @Mutation(() => Zan)
   async deleteZan(
-    @Args({ name: 'id', type: () => Int }) id: number,
+    @Args({ name: 'id', type: () => String }) id: string,
     @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Zan | undefined> {
     return this.zanService.deleteZan(id, gqlCtx);
@@ -54,18 +54,18 @@ export class ZanResolver {
 
   @Mutation(() => Zan)
   async likeZan(
-    @Args({ name: 'uuid', type: () => String }) uuid: string,
+    @Args({ name: 'id', type: () => String }) id: string,
     @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Zan | undefined> {
-    return this.zanService.likeZan(uuid, gqlCtx);
+    return this.zanService.likeZan(id, gqlCtx);
   }
 
   @Mutation(() => Zan)
   async deleteZanUser(
-    @Args({ name: 'uuid', type: () => String }) uuid: string,
-    @Args({ name: 'userId', type: () => Int }) userId: number,
+    @Args({ name: 'id', type: () => String }) id: string,
+    @Args({ name: 'userId', type: () => Int }) userId: string,
     @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Zan | undefined> {
-    return this.zanService.deleteZanUser(uuid, userId, gqlCtx);
+    return this.zanService.deleteZanUser(id, userId, gqlCtx);
   }
 }

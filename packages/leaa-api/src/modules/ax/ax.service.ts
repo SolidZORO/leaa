@@ -18,7 +18,7 @@ export class AxService {
     private readonly configService: ConfigService,
   ) {}
 
-  async PLEASE_DONT_MODIFY_DEMO_DATA(id?: number, gqlCtx?: IGqlCtx): Promise<boolean> {
+  async PLEASE_DONT_MODIFY_DEMO_DATA(id?: string, gqlCtx?: IGqlCtx): Promise<boolean> {
     if (this.configService.DEMO_MODE && !process.argv.includes('--nuke')) {
       if (!id) return true;
 
@@ -55,11 +55,11 @@ export class AxService {
     return paginationUtil.calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
-  async ax(id: number, args?: IAxArgs, gqlCtx?: IGqlCtx): Promise<Ax | undefined> {
+  async ax(id: string, args?: IAxArgs, gqlCtx?: IGqlCtx): Promise<Ax | undefined> {
     let nextArgs: IAxArgs = {};
     if (args) nextArgs = args;
 
-    const whereQuery: { id: number; status?: number } = { id };
+    const whereQuery: { id: string; status?: number } = { id };
 
     // can
     if (!gqlCtx?.user || (gqlCtx.user && !authUtil.can(gqlCtx.user, 'ax.item-read--all-status'))) {
@@ -83,7 +83,7 @@ export class AxService {
     return this.axRepository.save({ ...args });
   }
 
-  async updateAx(id: number, args: UpdateAxInput, gqlCtx?: IGqlCtx): Promise<Ax | undefined> {
+  async updateAx(id: string, args: UpdateAxInput, gqlCtx?: IGqlCtx): Promise<Ax | undefined> {
     if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id, gqlCtx);
 
     if (curdUtil.isOneField(args, 'status')) {
@@ -93,7 +93,7 @@ export class AxService {
     return curdUtil.commonUpdate({ repository: this.axRepository, CLS_NAME, id, args });
   }
 
-  async deleteAx(id: number, gqlCtx?: IGqlCtx): Promise<Ax | undefined> {
+  async deleteAx(id: string, gqlCtx?: IGqlCtx): Promise<Ax | undefined> {
     if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id, gqlCtx);
 
     return curdUtil.commonDelete({ repository: this.axRepository, CLS_NAME, id });

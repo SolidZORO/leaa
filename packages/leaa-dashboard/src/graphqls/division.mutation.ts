@@ -15,7 +15,7 @@ export const CREATE_DIVISION = gql`
 `;
 
 export const UPDATE_DIVISION = gql`
-  mutation($id: Int!, $division: UpdateDivisionInput!) {
+  mutation($id: String!, $division: UpdateDivisionInput!) {
     updateDivision(id: $id, division: $division) {
       id
       name
@@ -29,7 +29,7 @@ export const UPDATE_DIVISION = gql`
 `;
 
 export const DELETE_DIVISION = gql`
-  mutation($id: Int!) {
+  mutation($id: String!) {
     deleteDivision(id: $id) {
       id
       name

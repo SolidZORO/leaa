@@ -243,19 +243,23 @@ export const userAddRolesSeed = [
   { userEmail: 'staff@local.com', roleSlugs: ['staff', 'attachment-manager'] },
 ];
 
+interface ICreateCategoryInput extends CreateCategoryInput {
+  seedParentSlug: string;
+}
+
 // prettier-ignore
-export const categorySeed: CreateCategoryInput[] = [
-  { parent_id: 0, name: 'Articles', description: '文章分类', slug: 'articles' },
-  { parent_id: 0, name: 'Products', description: '商品分类', slug: 'products' },
-  { parent_id: 0, name: 'Brands', description: '品牌分类', slug: 'brands' },
+export const categorySeed: ICreateCategoryInput[] = [
+  {  name: 'Articles', description: '文章分类', slug: 'articles', seedParentSlug: '----' },
+  {  name: 'Products', description: '商品分类', slug: 'products', seedParentSlug: '----' },
+  {  name: 'Brands', description: '品牌分类', slug: 'brands', seedParentSlug: '----' },
   //
-  { parent_id: 1, name: 'Frontend', slug: 'frontend' },
-  { parent_id: 1, name: 'Backend', slug: 'backend' },
-  { parent_id: 1, name: 'Help', slug: 'help' },
-  { parent_id: 2, name: 'Digit', slug: 'digit' },
-  { parent_id: 2, name: 'Home Appliance', slug: 'home-appliance' },
-  { parent_id: 3, name: 'Apple', slug: 'apple' },
-  { parent_id: 3, name: 'FILCO', slug: 'filco' },
+  {  name: 'Frontend', slug: 'frontend', seedParentSlug: 'articles' },
+  {  name: 'Backend', slug: 'backend', seedParentSlug: 'articles' },
+  {  name: 'Help', slug: 'help', seedParentSlug: 'articles' },
+  {  name: 'Digit', slug: 'digit', seedParentSlug: 'products' },
+  {  name: 'Home Appliance', slug: 'home-appliance', seedParentSlug: 'products' },
+  {  name: 'Apple', slug: 'apple', seedParentSlug: 'brands' },
+  {  name: 'FILCO', slug: 'filco', seedParentSlug: 'brands' },
 ];
 
 // prettier-ignore

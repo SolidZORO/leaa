@@ -12,7 +12,7 @@ import style from './style.module.less';
 // @ts-ignore
 interface IProps extends AvatarProps {
   url?: string | null;
-  id?: number;
+  id?: string;
   border?: number;
 }
 

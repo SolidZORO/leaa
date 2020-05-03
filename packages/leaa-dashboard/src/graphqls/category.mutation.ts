@@ -13,7 +13,7 @@ export const CREATE_CATEGORY = gql`
 `;
 
 export const UPDATE_CATEGORY = gql`
-  mutation($id: Int!, $category: UpdateCategoryInput!) {
+  mutation($id: String!, $category: UpdateCategoryInput!) {
     updateCategory(id: $id, category: $category) {
       id
       name
@@ -25,7 +25,7 @@ export const UPDATE_CATEGORY = gql`
 `;
 
 export const DELETE_CATEGORY = gql`
-  mutation($id: Int!) {
+  mutation($id: String!) {
     deleteCategory(id: $id) {
       id
       name

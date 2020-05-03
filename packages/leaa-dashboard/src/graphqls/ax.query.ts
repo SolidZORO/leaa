@@ -20,7 +20,7 @@ export const GET_AXS = gql`
 `;
 
 export const GET_AX = gql`
-  query($id: Int!) {
+  query($id: String!) {
     ax(id: $id) {
       id
       title

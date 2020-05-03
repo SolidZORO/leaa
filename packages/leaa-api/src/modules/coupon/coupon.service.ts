@@ -54,11 +54,11 @@ export class CouponService {
     return paginationUtil.calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
-  async coupon(id: number, args?: ICouponArgs, gqlCtx?: IGqlCtx): Promise<Coupon | undefined> {
+  async coupon(id: string, args?: ICouponArgs, gqlCtx?: IGqlCtx): Promise<Coupon | undefined> {
     let nextArgs: ICouponArgs = {};
     if (args) nextArgs = args;
 
-    const whereQuery: { id: number; status?: number; user_id?: number } = { id };
+    const whereQuery: { id: string; status?: number; user_id?: string } = { id };
 
     // can
     if (!gqlCtx?.user || (gqlCtx.user && !authUtil.can(gqlCtx.user, 'coupon.item-read--all-status'))) {
@@ -99,7 +99,7 @@ export class CouponService {
     return result && result[0];
   }
 
-  async updateCoupon(id: number, args: UpdateCouponInput, gqlCtx?: IGqlCtx): Promise<Coupon | undefined> {
+  async updateCoupon(id: string, args: UpdateCouponInput, gqlCtx?: IGqlCtx): Promise<Coupon | undefined> {
     if (curdUtil.isOneField(args, 'status')) {
       return curdUtil.commonUpdate({ repository: this.couponRepository, CLS_NAME, id, args });
     }
@@ -109,7 +109,7 @@ export class CouponService {
     return curdUtil.commonUpdate({ repository: this.couponRepository, CLS_NAME, id, args: nextArgs });
   }
 
-  async deleteCoupon(id: number, gqlCtx?: IGqlCtx): Promise<Coupon | undefined> {
+  async deleteCoupon(id: string, gqlCtx?: IGqlCtx): Promise<Coupon | undefined> {
     return curdUtil.commonDelete({ repository: this.couponRepository, CLS_NAME, id });
   }
 

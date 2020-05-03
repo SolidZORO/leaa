@@ -13,7 +13,7 @@ export const CREATE_USER = gql`
 `;
 
 export const UPDATE_USER = gql`
-  mutation($id: Int!, $user: UpdateUserInput!) {
+  mutation($id: String!, $user: UpdateUserInput!) {
     updateUser(id: $id, user: $user) {
       id
       name
@@ -25,7 +25,7 @@ export const UPDATE_USER = gql`
 `;
 
 export const DELETE_USER = gql`
-  mutation($id: Int!) {
+  mutation($id: String!) {
     deleteUser(id: $id) {
       id
       name

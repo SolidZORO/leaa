@@ -82,7 +82,7 @@ export default (props: IPage) => {
     {
       title: 'ID',
       dataIndex: 'id',
-      width: 60,
+      width: 75, // ID
       sorter: true,
       sortOrder: tableUtil.calcDefaultSortOrder(tablePagination.orderSort, tablePagination.orderBy, 'id'),
       render: (id: string) => <TableColumnId id={id} link={`${props.route.path}/${id}`} />,
@@ -117,7 +117,7 @@ export default (props: IPage) => {
           id={record.id}
           fieldName={record.name}
           loading={deletePermissionMutation.loading}
-          onClick={async () => deletePermissionMutate({ variables: { id: Number(record.id) } })}
+          onClick={async () => deletePermissionMutate({ variables: { id: record.id } })}
         />
       ),
     },
@@ -126,7 +126,7 @@ export default (props: IPage) => {
   const onFilter = (params: { field: string; value?: string | number | number[] }) => {
     setTablePagination({ ...tablePagination, page: 1 });
 
-    const filterParams: { q?: string; categoryId?: number; brandId?: number; tagName?: string } = {};
+    const filterParams: { q?: string; categoryId?: string; brandId?: string; tagName?: string } = {};
 
     if (params.field === 'q') {
       const result = params.value ? String(params.value) : undefined;

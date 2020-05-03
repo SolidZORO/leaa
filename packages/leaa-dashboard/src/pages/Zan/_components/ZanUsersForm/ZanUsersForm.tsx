@@ -23,9 +23,9 @@ export const ZanUsersForm = (props: IProps) => {
   const { t } = useTranslation();
 
   // mutation
-  const [submitVariables, setSubmitVariables] = useState<{ uuid?: string; userId?: number }>({
-    uuid: props.item?.uuid,
-    userId: 0,
+  const [submitVariables, setSubmitVariables] = useState<{ id?: string; userId?: string | null }>({
+    id: props.item?.id,
+    userId: null,
   });
   const [likeZanMutate, likeZanMutation] = useMutation<{ zan: Zan }>(DELETE_ZAN_USER, {
     variables: submitVariables,
@@ -33,12 +33,12 @@ export const ZanUsersForm = (props: IProps) => {
     onCompleted(e) {
       msgUtil.message(t('_page:Zan.deletedLikeUser'));
     },
-    refetchQueries: () => [{ query: GET_ZAN, variables: { uuid: props.item?.uuid } }],
+    refetchQueries: () => [{ query: GET_ZAN, variables: { id: props.item?.id } }],
   });
 
-  const deleteZanUser = async (userId: number) => {
+  const deleteZanUser = async (userId: string) => {
     await setSubmitVariables({
-      uuid: props.item?.uuid,
+      id: props.item?.id,
       userId,
     });
     await likeZanMutate();
@@ -50,7 +50,7 @@ export const ZanUsersForm = (props: IProps) => {
         title={
           <>
             <span>{t('_page:Zan.zanUserList')}</span>
-            <LikeZanButton uuid={props.item?.uuid} />
+            <LikeZanButton id={props.item?.id} />
 
             <div className={style['creator-info']}>
               <small>{t('_lang:creator')}</small>

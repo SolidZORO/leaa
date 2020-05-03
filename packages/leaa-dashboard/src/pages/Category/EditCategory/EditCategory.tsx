@@ -31,7 +31,7 @@ export default (props: IPage) => {
   // const [categoryInfoFormRef, setCategoryInfoFormRef] = useState<any>();
 
   // query
-  const getCategoryVariables = { id: Number(id) };
+  const getCategoryVariables = { id };
   const getCategoryQuery = useQuery<{ category: Category }, CategoryArgs>(GET_CATEGORY, {
     variables: getCategoryVariables,
     fetchPolicy: 'network-only',
@@ -47,7 +47,7 @@ export default (props: IPage) => {
   );
 
   // mutation
-  const [submitVariables, setSubmitVariables] = useState<{ id: number; category: UpdateCategoryInput }>();
+  const [submitVariables, setSubmitVariables] = useState<{ id: string; category: UpdateCategoryInput }>();
   const [updateCategoryMutate, updateCategoryMutation] = useMutation<Category>(UPDATE_CATEGORY, {
     variables: submitVariables,
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
@@ -64,7 +64,7 @@ export default (props: IPage) => {
       ...infoData,
     };
 
-    await setSubmitVariables({ id: Number(id), category: submitData });
+    await setSubmitVariables({ id, category: submitData });
     await updateCategoryMutate();
   };
 

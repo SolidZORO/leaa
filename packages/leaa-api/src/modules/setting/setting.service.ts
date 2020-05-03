@@ -24,7 +24,7 @@ export class SettingService {
     private readonly configService: ConfigService,
   ) {}
 
-  async PLEASE_DONT_MODIFY_DEMO_DATA(id?: number, gqlCtx?: IGqlCtx): Promise<boolean> {
+  async PLEASE_DONT_MODIFY_DEMO_DATA(id?: string, gqlCtx?: IGqlCtx): Promise<boolean> {
     if (this.configService.DEMO_MODE && !process.argv.includes('--nuke')) {
       if (!id) return true;
 
@@ -60,14 +60,14 @@ export class SettingService {
     return paginationUtil.calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
-  async setting(id: number, args?: ISettingArgs, gqlCtx?: IGqlCtx): Promise<Setting | undefined> {
+  async setting(id: string, args?: ISettingArgs, gqlCtx?: IGqlCtx): Promise<Setting | undefined> {
     let nextArgs: ISettingArgs = {};
 
     if (args) {
       nextArgs = args;
     }
 
-    const whereQuery: { id: number; private?: number } = { id };
+    const whereQuery: { id: string; private?: number } = { id };
 
     // can
     if (!gqlCtx?.user || (gqlCtx.user && !authUtil.can(gqlCtx.user, 'setting.list-read--private'))) {
@@ -116,7 +116,7 @@ export class SettingService {
   }
 
   async updateSetting(
-    id: number,
+    id: string,
     args: UpdateSettingInput & FindOneOptions,
     gqlCtx?: IGqlCtx,
   ): Promise<Setting | undefined> {
@@ -147,7 +147,7 @@ export class SettingService {
     };
   }
 
-  async deleteSetting(id: number, gqlCtx?: IGqlCtx): Promise<Setting | undefined> {
+  async deleteSetting(id: string, gqlCtx?: IGqlCtx): Promise<Setting | undefined> {
     if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id, gqlCtx);
 
     return curdUtil.commonDelete({ repository: this.settingRepository, CLS_NAME, id });

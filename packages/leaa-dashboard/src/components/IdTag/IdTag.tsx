@@ -16,11 +16,12 @@ interface IProps {
 }
 
 export const IdTag = (props: IProps) => {
+  const idStr = typeof props.id === 'string' ? props.id.substr(0, 6) : props.id;
   const idInnerDom = (
     <div className={style['id-tag-inner']}>
       {props.icon}
       <sup className={style['id-tag-symbol']}>#</sup>
-      <strong className={style['id-tag-text']}>{!props.id ? '_' : props.id}</strong>
+      <strong className={style['id-tag-text']}>{!props.id ? '_' : idStr}</strong>
     </div>
   );
   const idDom = () => {
@@ -28,9 +29,7 @@ export const IdTag = (props: IProps) => {
       return <Link to={props.link}>{idInnerDom}</Link>;
     }
 
-    if (props.id) {
-      return idInnerDom;
-    }
+    if (props.id) return idInnerDom;
 
     return <NullTag opacity={0.4} />;
   };

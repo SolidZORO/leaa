@@ -12,12 +12,12 @@ export class CreateArticleInput {
   slug?: string;
 
   @IsOptional()
-  @Field(() => [Int], { nullable: true })
-  categoryIds?: number[] | null;
+  @Field(() => [String], { nullable: true })
+  categoryIds?: string[] | null;
 
   @IsOptional()
-  @Field(() => Int, { nullable: true })
-  user_id?: number;
+  @Field(() => String, { nullable: true })
+  user_id?: string;
 
   @IsOptional()
   @Field(() => String, { nullable: true })

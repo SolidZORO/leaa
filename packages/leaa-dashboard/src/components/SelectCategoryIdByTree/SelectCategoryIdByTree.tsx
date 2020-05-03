@@ -1,5 +1,5 @@
 import cx from 'classnames';
-import React, { useState, useEffect, forwardRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TreeSelect } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/react-hooks';
@@ -11,18 +11,19 @@ import { CategoriesArgs, CategoriesWithPaginationOrTreeObject } from '@leaa/comm
 import style from './style.module.less';
 
 interface IProps {
-  value?: number | number[] | undefined;
+  value?: string | string[] | null;
+  initialValues?: string | string[] | null;
   className?: string;
-  onChange?: (value: number | number[]) => void;
+  onChange?: (value?: string | string[] | null) => void;
   multipleSelect?: boolean;
   componentProps?: TreeSelectProps<any>;
-  parentId?: number;
+  parentId?: string;
   parentSlug?: string;
   style?: React.CSSProperties;
   placeholder?: string;
 }
 
-export const SelectCategoryIdByTree = forwardRef((props: IProps, ref: React.Ref<any>) => {
+export const SelectCategoryIdByTree = (props: IProps) => {
   const { t } = useTranslation();
 
   // query
@@ -32,6 +33,7 @@ export const SelectCategoryIdByTree = forwardRef((props: IProps, ref: React.Ref<
     parentId: props.parentId,
     parentSlug: props.parentSlug,
   };
+
   const getCategoriesQuery = useQuery<{ categories: CategoriesWithPaginationOrTreeObject }, CategoriesArgs>(
     GET_CATEGORIES,
     {
@@ -40,28 +42,21 @@ export const SelectCategoryIdByTree = forwardRef((props: IProps, ref: React.Ref<
     },
   );
 
-  const getValue = (value: number | number[] | undefined) => {
-    if (typeof value === 'undefined') return value;
-    if (!props.multipleSelect) return Number(value);
+  const [value, setValue] = useState<string | string[] | undefined | null>(props.value || props.initialValues);
 
-    return value;
+  const onChange = (v?: string | string[] | null) => {
+    setValue(v);
+
+    if (props.onChange) props.onChange(v);
   };
-
-  const [value, setValue] = useState<number | number[] | undefined>(getValue(props.value));
 
   useEffect(() => {
-    setValue(getValue(props.value));
-  }, [props.value]);
-
-  const onChange = (v: number | number[]) => {
-    const nextV = typeof v === 'number' ? Number(v) : v;
-
-    setValue(nextV);
-
-    if (props.onChange) {
-      props.onChange(nextV);
+    if (props.initialValues) {
+      onChange(props.value || props.initialValues);
+    } else {
+      setValue(props.value || props.initialValues);
     }
-  };
+  }, [props.value]);
 
   const multipleSelectOption = props.multipleSelect
     ? {
@@ -70,14 +65,6 @@ export const SelectCategoryIdByTree = forwardRef((props: IProps, ref: React.Ref<
         // multiple: true,
       }
     : {};
-
-  const onCalcValue = () => {
-    if (getCategoriesQuery.data?.categories?.trees?.length) {
-      return value;
-    }
-
-    return undefined;
-  };
 
   const onCalcTreeData = () => {
     if (getCategoriesQuery.data?.categories?.trees?.length) {
@@ -90,11 +77,10 @@ export const SelectCategoryIdByTree = forwardRef((props: IProps, ref: React.Ref<
   return (
     <div className={cx(style['wrapper'], props.className)}>
       <TreeSelect
-        ref={ref}
         {...multipleSelectOption}
         loading={getCategoriesQuery.loading}
         // TIPS: waiting data then select (fix only show number)
-        value={onCalcValue()}
+        value={value || '----'}
         treeDefaultExpandAll
         dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
         treeData={onCalcTreeData()}
@@ -106,4 +92,4 @@ export const SelectCategoryIdByTree = forwardRef((props: IProps, ref: React.Ref<
       />
     </div>
   );
-});
+};
