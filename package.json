@@ -19,10 +19,6 @@
   "workspaces": {
     "packages": [
       "packages/*"
-    ],
-    "nohoist": [
-      "**/module-alias",
-      "**/next-bundle-analyzer"
     ]
   },
   "command": {
