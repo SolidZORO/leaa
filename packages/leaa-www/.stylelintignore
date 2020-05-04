@@ -1,9 +1,0 @@
-_deploy/
-_dist/
-.next/
-src/assets/
-public/assets/
-**/*.tsx
-**/*.ts
-**/*.js
-**/*.jx
