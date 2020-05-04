@@ -73,11 +73,6 @@ module.exports = {
     'no-empty-function': 0,
     'class-methods-use-this': 0,
     //
-    // NEXT.JS
-    'jsx-a11y/anchor-is-valid': 0,
-    'jsx-a11y/no-static-element-interactions': 0,
-    'jsx-a11y/click-events-have-key-events': 0,
-    //
     // MONOREPO
     'prettier/prettier': 'error',
     'import/no-extraneous-dependencies': 0,
