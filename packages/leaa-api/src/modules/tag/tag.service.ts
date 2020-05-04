@@ -41,6 +41,8 @@ export class TagService {
   }
 
   async tag(id: string, args?: ITagArgs, gqlCtx?: IGqlCtx): Promise<Tag | undefined> {
+    if (!id) throw msgUtil.error({ t: ['_error:notFoundId'], gqlCtx });
+
     let nextArgs: ITagArgs = {};
     if (args) nextArgs = args;
 

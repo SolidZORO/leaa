@@ -4,7 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 import { Product, Category, Tag, Attachment } from '@leaa/common/src/entrys';
 import { ProductsWithPaginationObject, CreateProductInput, UpdateProductInput } from '@leaa/common/src/dtos/product';
-import { argsUtil, paginationUtil, curdUtil, authUtil } from '@leaa/api/src/utils';
+import { argsUtil, paginationUtil, curdUtil, authUtil, msgUtil } from '@leaa/api/src/utils';
 import { IProductsArgs, IProductArgs, IGqlCtx } from '@leaa/api/src/interfaces';
 
 import { TagService } from '@leaa/api/src/modules/tag/tag.service';
@@ -63,6 +63,8 @@ export class ProductService {
   }
 
   async product(id: string, args?: IProductArgs, gqlCtx?: IGqlCtx): Promise<Product | undefined> {
+    if (!id) throw msgUtil.error({ t: ['_error:notFoundId'] });
+
     const PRIMARY_TABLE = 'products';
     const qb = await this.productRepository.createQueryBuilder(PRIMARY_TABLE);
 

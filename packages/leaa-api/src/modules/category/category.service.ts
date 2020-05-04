@@ -134,6 +134,8 @@ export class CategoryService {
   }
 
   async category(id: string, args?: ICategoryArgs): Promise<Category | undefined> {
+    if (!id) throw msgUtil.error({ t: ['_error:notFoundId'] });
+
     let nextArgs: ICategoryArgs = {};
     if (args) nextArgs = args;
 

@@ -76,6 +76,8 @@ export class ArticleService {
   }
 
   async article(id: string, args?: IArticleArgs, gqlCtx?: IGqlCtx): Promise<Article | undefined> {
+    if (!id) throw msgUtil.error({ t: ['_error:notFoundId'], gqlCtx });
+
     let nextArgs: IArticleArgs = {};
 
     if (args) {

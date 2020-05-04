@@ -7,6 +7,9 @@ import { CreatePromoInput, UpdatePromoInput } from '@leaa/common/src/dtos/promo'
 import { PromoService } from '@leaa/api/src/modules/promo/promo.service';
 import { PromoProperty } from '@leaa/api/src/modules/promo/promo.property';
 
+// MOCK ID
+const PROMO_ID = 'ffffffff-ffff-ffff-ffff-00000000000a';
+
 describe('PromoService', () => {
   let promoService: PromoService;
   const PROMO_REPOSITORY_MOCK: Repository<Promo> = new Repository<Promo>();
@@ -45,7 +48,7 @@ describe('PromoService', () => {
 
     promoObject = {
       ...createPromoInput,
-      id: 1,
+      id: PROMO_ID,
       created_at: new Date(),
     };
 
@@ -67,7 +70,7 @@ describe('PromoService', () => {
 
     it('should update promo', async () => {
       jest.spyOn(promoService, 'updatePromo').mockImplementation(async () => updatedPromo);
-      const result = await promoService.updatePromo(1, updatePromoInput);
+      const result = await promoService.updatePromo(PROMO_ID, updatePromoInput);
 
       expect(result).toBe(updatedPromo);
     });
@@ -90,14 +93,14 @@ describe('PromoService', () => {
 
     it('should return promo', async () => {
       jest.spyOn(promoService, 'promo').mockImplementation(async () => promoObject);
-      const result = await promoService.promo(1);
+      const result = await promoService.promo(PROMO_ID);
 
       expect(result).toBe(promoObject);
     });
 
     it('should return promo (undefined)', async () => {
       jest.spyOn(promoService, 'promo').mockImplementation(async () => undefined);
-      const result = await promoService.promo(2);
+      const result = await promoService.promo(PROMO_ID);
 
       expect(result).toBe(undefined);
     });
@@ -108,7 +111,7 @@ describe('PromoService', () => {
 
     it('should delete promo', async () => {
       jest.spyOn(promoService, 'deletePromo').mockImplementation(async () => deletedPromo);
-      const result = await promoService.deletePromo(1);
+      const result = await promoService.deletePromo(PROMO_ID);
 
       expect(result).toBe(deletedPromo);
     });

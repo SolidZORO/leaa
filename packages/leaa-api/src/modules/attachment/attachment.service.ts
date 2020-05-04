@@ -96,6 +96,8 @@ export class AttachmentService {
   }
 
   async attachment(uuid: string, args?: IAttachmentArgs, gqlCtx?: IGqlCtx): Promise<Attachment | undefined> {
+    if (!uuid) throw msgUtil.error({ t: ['_error:notFoundId'], gqlCtx });
+
     let nextArgs: IAttachmentArgs = {};
 
     if (args) nextArgs = args;

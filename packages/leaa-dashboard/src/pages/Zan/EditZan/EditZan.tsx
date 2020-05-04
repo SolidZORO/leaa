@@ -10,7 +10,7 @@ import { ZanArgs, UpdateZanInput } from '@leaa/common/src/dtos/zan';
 import { IPage, ICommenFormRef, ISubmitData } from '@leaa/dashboard/src/interfaces';
 import { msgUtil } from '@leaa/dashboard/src/utils';
 
-import { PageCard, HtmlMeta, Rcon, SubmitBar, IdTag } from '@leaa/dashboard/src/components';
+import { PageCard, HtmlMeta, Rcon, SubmitBar } from '@leaa/dashboard/src/components';
 
 import { ZanInfoForm } from '../_components/ZanInfoForm/ZanInfoForm';
 import { ZanUsersForm } from '../_components/ZanUsersForm/ZanUsersForm';
@@ -59,9 +59,6 @@ export default (props: IPage) => {
         <span>
           <Rcon type={props.route.icon} />
           <strong>{t(`${props.route.namei18n}`)}</strong>
-          <strong>
-            <IdTag id={getZanQuery?.data?.zan?.id} size="small" />
-          </strong>
         </span>
       }
       className={style['wapper']}

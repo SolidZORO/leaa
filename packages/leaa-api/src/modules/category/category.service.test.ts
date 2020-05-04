@@ -7,6 +7,9 @@ import { CreateCategoryInput, UpdateCategoryInput } from '@leaa/common/src/dtos/
 import { CategoryService } from '@leaa/api/src/modules/category/category.service';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 
+// MOCK ID
+const CATEGORY_ID = 'ffffffff-ffff-ffff-ffff-00000000000a';
+
 describe('CategoryService', () => {
   let categoryService: CategoryService;
   const CATEGORY_REPOSITORY_MOCK: Repository<Category> = new Repository<Category>();
@@ -41,8 +44,8 @@ describe('CategoryService', () => {
 
     categoryObject = {
       ...createCategoryInput,
-      id: 1,
-      parent_id: 0,
+      id: CATEGORY_ID,
+      parent_id: CATEGORY_ID,
       created_at: new Date(),
     };
 
@@ -64,7 +67,7 @@ describe('CategoryService', () => {
 
     it('should update category', async () => {
       jest.spyOn(categoryService, 'updateCategory').mockImplementation(async () => updatedCategory);
-      const result = await categoryService.updateCategory(1, updateCategoryInput);
+      const result = await categoryService.updateCategory(CATEGORY_ID, updateCategoryInput);
 
       expect(result).toBe(updatedCategory);
     });
@@ -87,14 +90,14 @@ describe('CategoryService', () => {
 
     it('should return category', async () => {
       jest.spyOn(categoryService, 'category').mockImplementation(async () => categoryObject);
-      const result = await categoryService.category(1);
+      const result = await categoryService.category(CATEGORY_ID);
 
       expect(result).toBe(categoryObject);
     });
 
     it('should return category (undefined)', async () => {
       jest.spyOn(categoryService, 'category').mockImplementation(async () => undefined);
-      const result = await categoryService.category(2);
+      const result = await categoryService.category(CATEGORY_ID);
 
       expect(result).toBe(undefined);
     });
@@ -105,7 +108,7 @@ describe('CategoryService', () => {
 
     it('should delete category', async () => {
       jest.spyOn(categoryService, 'deleteCategory').mockImplementation(async () => deletedCategory);
-      const result = await categoryService.deleteCategory(1);
+      const result = await categoryService.deleteCategory(CATEGORY_ID);
 
       expect(result).toBe(deletedCategory);
     });

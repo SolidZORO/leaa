@@ -56,6 +56,8 @@ export class AxService {
   }
 
   async ax(id: string, args?: IAxArgs, gqlCtx?: IGqlCtx): Promise<Ax | undefined> {
+    if (!id) throw msgUtil.error({ t: ['_error:notFoundId'], gqlCtx });
+
     let nextArgs: IAxArgs = {};
     if (args) nextArgs = args;
 

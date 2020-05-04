@@ -9,7 +9,7 @@ import { msgUtil } from '@leaa/dashboard/src/utils';
 import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
 import { UpdateZanInput } from '@leaa/common/src/dtos/zan';
 
-import { FormCard, EntryInfoDate, SwitchNumber, IdTag } from '@leaa/dashboard/src/components';
+import { FormCard, EntryInfoDate, SwitchNumber } from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';
 

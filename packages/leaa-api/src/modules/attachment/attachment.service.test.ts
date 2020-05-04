@@ -14,6 +14,10 @@ import { AttachmentResolver } from '@leaa/api/src/modules/attachment/attachment.
 import { SaveInOssService } from '@leaa/api/src/modules/attachment/save-in-oss.service';
 import { SaveInLocalService } from '@leaa/api/src/modules/attachment/save-in-local.service';
 
+// MOCK ID
+const ATTACHMENT_ID = 'ffffffff-ffff-ffff-ffff-00000000000a';
+const MODULE_ID = 'ffffffff-ffff-ffff-ffff-00000000000a';
+
 describe('AttachmentService', () => {
   let attachmentService: AttachmentService;
   let multerService: MulterService;
@@ -70,14 +74,14 @@ describe('AttachmentService', () => {
     const createAttachmentInput: CreateAttachmentInput = {
       ...createAttachmentBase,
       moduleName: 'ax',
-      moduleId: 1,
+      moduleId: MODULE_ID,
       typeName: 'banner',
       typePlatform: 'mb',
     };
 
     attachmentObject = {
       ...createAttachmentBase,
-      id: 1,
+      id: ATTACHMENT_ID,
       module_id: createAttachmentInput.moduleId,
       module_name: createAttachmentInput.moduleName,
       type_name: createAttachmentInput.typeName,

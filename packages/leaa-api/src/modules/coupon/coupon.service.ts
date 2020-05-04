@@ -55,6 +55,8 @@ export class CouponService {
   }
 
   async coupon(id: string, args?: ICouponArgs, gqlCtx?: IGqlCtx): Promise<Coupon | undefined> {
+    if (!id) throw msgUtil.error({ t: ['_error:notFoundId'], gqlCtx });
+
     let nextArgs: ICouponArgs = {};
     if (args) nextArgs = args;
 

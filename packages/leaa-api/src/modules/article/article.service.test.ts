@@ -7,6 +7,11 @@ import { CreateArticleInput, UpdateArticleInput } from '@leaa/common/src/dtos/ar
 import { ArticleService } from '@leaa/api/src/modules/article/article.service';
 import { TagService } from '@leaa/api/src/modules/tag/tag.service';
 
+// MOCK ID
+const USER_ID = 'ffffffff-ffff-ffff-ffff-00000000000a';
+const ARTICLE_ID = 'ffffffff-ffff-ffff-ffff-00000000000b';
+const CATEGORY_ID = 'ffffffff-ffff-ffff-ffff-00000000000c';
+
 describe('ArticleService', () => {
   let articleService: ArticleService;
   const ARTICLE_REPOSITORY_MOCK: Repository<Article> = new Repository<Article>();
@@ -46,8 +51,8 @@ describe('ArticleService', () => {
     const createArticleInput: CreateArticleInput = {
       title: 'title',
       slug: 'slug',
-      categoryIds: [1],
-      user_id: 1,
+      categoryIds: [CATEGORY_ID],
+      user_id: USER_ID,
       description: 'description',
       content: '<p>content</p>',
       status: 1,
@@ -55,7 +60,7 @@ describe('ArticleService', () => {
 
     articleObject = {
       ...createArticleInput,
-      id: 1,
+      id: ARTICLE_ID,
       created_at: new Date(),
     };
 
@@ -77,7 +82,7 @@ describe('ArticleService', () => {
 
     it('should update article', async () => {
       jest.spyOn(articleService, 'updateArticle').mockImplementation(async () => updatedArticle);
-      const result = await articleService.updateArticle(1, updateArticleInput);
+      const result = await articleService.updateArticle(ARTICLE_ID, updateArticleInput);
 
       expect(result).toBe(updatedArticle);
     });
@@ -100,14 +105,14 @@ describe('ArticleService', () => {
 
     it('should return article', async () => {
       jest.spyOn(articleService, 'article').mockImplementation(async () => articleObject);
-      const result = await articleService.article(1);
+      const result = await articleService.article(ARTICLE_ID);
 
       expect(result).toBe(articleObject);
     });
 
     it('should return article (undefined)', async () => {
       jest.spyOn(articleService, 'article').mockImplementation(async () => undefined);
-      const result = await articleService.article(2);
+      const result = await articleService.article(ARTICLE_ID);
 
       expect(result).toBe(undefined);
     });
@@ -118,7 +123,7 @@ describe('ArticleService', () => {
 
     it('should delete article', async () => {
       jest.spyOn(articleService, 'deleteArticle').mockImplementation(async () => deletedArticle);
-      const result = await articleService.deleteArticle(1);
+      const result = await articleService.deleteArticle(ARTICLE_ID);
 
       expect(result).toBe(deletedArticle);
     });

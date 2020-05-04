@@ -41,6 +41,8 @@ export class ZanService {
   }
 
   async zan(id: string, args?: IZanArgs, gqlCtx?: IGqlCtx): Promise<Zan | undefined> {
+    if (!id) throw msgUtil.error({ t: ['_error:notFoundId'], gqlCtx });
+
     let nextArgs: IZanArgs = {};
     if (args) {
       nextArgs = args;

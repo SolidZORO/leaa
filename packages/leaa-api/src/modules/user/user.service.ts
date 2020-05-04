@@ -75,6 +75,8 @@ export class UserService {
   }
 
   async user(id: string, args?: IUserArgs, gqlCtx?: IGqlCtx): Promise<User | undefined> {
+    if (!id) throw msgUtil.error({ t: ['_error:notFoundId'], gqlCtx });
+
     let nextArgs: IUserArgs = {};
 
     if (args) {

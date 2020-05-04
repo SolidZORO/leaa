@@ -7,6 +7,9 @@ import { CreateAxInput, UpdateAxInput } from '@leaa/common/src/dtos/ax';
 import { AxService } from '@leaa/api/src/modules/ax/ax.service';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 
+// MOCK ID
+const AX_ID = 'ffffffff-ffff-ffff-ffff-00000000000a';
+
 describe('AxService', () => {
   let axService: AxService;
   const AX_REPOSITORY_MOCK: Repository<Ax> = new Repository<Ax>();
@@ -47,7 +50,7 @@ describe('AxService', () => {
 
     axObject = {
       ...createAxInput,
-      id: 1,
+      id: AX_ID,
       created_at: new Date(),
     };
 
@@ -69,7 +72,7 @@ describe('AxService', () => {
 
     it('should update ax', async () => {
       jest.spyOn(axService, 'updateAx').mockImplementation(async () => updatedAx);
-      const result = await axService.updateAx(1, updateAxInput);
+      const result = await axService.updateAx(AX_ID, updateAxInput);
 
       expect(result).toBe(updatedAx);
     });
@@ -92,14 +95,14 @@ describe('AxService', () => {
 
     it('should return ax', async () => {
       jest.spyOn(axService, 'ax').mockImplementation(async () => axObject);
-      const result = await axService.ax(1);
+      const result = await axService.ax(AX_ID);
 
       expect(result).toBe(axObject);
     });
 
     it('should return ax (undefined)', async () => {
       jest.spyOn(axService, 'ax').mockImplementation(async () => undefined);
-      const result = await axService.ax(2);
+      const result = await axService.ax(AX_ID);
 
       expect(result).toBe(undefined);
     });
@@ -110,7 +113,7 @@ describe('AxService', () => {
 
     it('should delete ax', async () => {
       jest.spyOn(axService, 'deleteAx').mockImplementation(async () => deletedAx);
-      const result = await axService.deleteAx(1);
+      const result = await axService.deleteAx(AX_ID);
 
       expect(result).toBe(deletedAx);
     });

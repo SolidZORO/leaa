@@ -7,6 +7,9 @@ import { CreateSettingInput, UpdateSettingInput } from '@leaa/common/src/dtos/se
 import { SettingService } from '@leaa/api/src/modules/setting/setting.service';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 
+// MOCK ID
+const SETTING_ID = 'ffffffff-ffff-ffff-ffff-00000000000a';
+
 describe('SettingService', () => {
   let settingService: SettingService;
   const SETTING_REPOSITORY_MOCK: Repository<Setting> = new Repository<Setting>();
@@ -45,7 +48,7 @@ describe('SettingService', () => {
 
     settingObject = {
       ...createSettingInput,
-      id: 1,
+      id: SETTING_ID,
       private: 0,
       created_at: new Date(),
     };
@@ -68,7 +71,7 @@ describe('SettingService', () => {
 
     it('should update setting', async () => {
       jest.spyOn(settingService, 'updateSetting').mockImplementation(async () => updatedSetting);
-      const result = await settingService.updateSetting(1, updateSettingInput);
+      const result = await settingService.updateSetting(SETTING_ID, updateSettingInput);
 
       expect(result).toBe(updatedSetting);
     });
@@ -91,14 +94,14 @@ describe('SettingService', () => {
 
     it('should return setting', async () => {
       jest.spyOn(settingService, 'setting').mockImplementation(async () => settingObject);
-      const result = await settingService.setting(1);
+      const result = await settingService.setting(SETTING_ID);
 
       expect(result).toBe(settingObject);
     });
 
     it('should return setting (undefined)', async () => {
       jest.spyOn(settingService, 'setting').mockImplementation(async () => undefined);
-      const result = await settingService.setting(-1);
+      const result = await settingService.setting(SETTING_ID);
 
       expect(result).toBe(undefined);
     });
@@ -123,7 +126,7 @@ describe('SettingService', () => {
 
     it('should delete setting', async () => {
       jest.spyOn(settingService, 'deleteSetting').mockImplementation(async () => deletedSetting);
-      const result = await settingService.deleteSetting(1);
+      const result = await settingService.deleteSetting(SETTING_ID);
 
       expect(result).toBe(deletedSetting);
     });

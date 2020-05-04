@@ -13,10 +13,11 @@ interface IProps {
   icon?: string | React.ReactNode;
   size?: 'small' | 'large';
   linkNormalColor?: boolean;
+  width?: number; // show id width
 }
 
 export const IdTag = (props: IProps) => {
-  const idStr = typeof props.id === 'string' ? props.id.substr(0, 6) : props.id;
+  const idStr = typeof props.id === 'string' && props.width ? props.id.substr(0, props.width || 4) : props.id;
   const idInnerDom = (
     <div className={style['id-tag-inner']}>
       {props.icon}

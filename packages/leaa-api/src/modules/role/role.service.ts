@@ -62,6 +62,8 @@ export class RoleService {
   }
 
   async role(id: string, args?: IRoleArgs): Promise<Role | undefined> {
+    if (!id) throw msgUtil.error({ t: ['_error:notFoundId'] });
+
     let nextArgs: IRoleArgs = {};
 
     if (args) {

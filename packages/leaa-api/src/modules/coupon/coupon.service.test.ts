@@ -7,6 +7,9 @@ import { CreateCouponInput, UpdateCouponInput } from '@leaa/common/src/dtos/coup
 import { CouponService } from '@leaa/api/src/modules/coupon/coupon.service';
 import { CouponProperty } from '@leaa/api/src/modules/coupon/coupon.property';
 
+// MOCK ID
+const COUPON_ID = 'ffffffff-ffff-ffff-ffff-00000000000a';
+
 describe('CouponService', () => {
   let couponService: CouponService;
   const COUPON_REPOSITORY_MOCK: Repository<Coupon> = new Repository<Coupon>();
@@ -46,7 +49,7 @@ describe('CouponService', () => {
 
     couponObject = {
       ...createCouponInput,
-      id: 1,
+      id: COUPON_ID,
       created_at: new Date(),
     };
 
@@ -68,7 +71,7 @@ describe('CouponService', () => {
 
     it('should update coupon', async () => {
       jest.spyOn(couponService, 'updateCoupon').mockImplementation(async () => updatedCoupon);
-      const result = await couponService.updateCoupon(1, updateCouponInput);
+      const result = await couponService.updateCoupon(COUPON_ID, updateCouponInput);
 
       expect(result).toBe(updatedCoupon);
     });
@@ -91,7 +94,7 @@ describe('CouponService', () => {
 
     it('should return coupon', async () => {
       jest.spyOn(couponService, 'coupon').mockImplementation(async () => couponObject);
-      const result = await couponService.coupon(1);
+      const result = await couponService.coupon(COUPON_ID);
 
       expect(result).toBe(couponObject);
     });
@@ -105,7 +108,7 @@ describe('CouponService', () => {
 
     it('should return coupon (undefined)', async () => {
       jest.spyOn(couponService, 'coupon').mockImplementation(async () => undefined);
-      const result = await couponService.coupon(2);
+      const result = await couponService.coupon(COUPON_ID);
 
       expect(result).toBe(undefined);
     });
@@ -125,7 +128,7 @@ describe('CouponService', () => {
 
     it('should delete coupon', async () => {
       jest.spyOn(couponService, 'deleteCoupon').mockImplementation(async () => deletedCoupon);
-      const result = await couponService.deleteCoupon(1);
+      const result = await couponService.deleteCoupon(COUPON_ID);
 
       expect(result).toBe(deletedCoupon);
     });

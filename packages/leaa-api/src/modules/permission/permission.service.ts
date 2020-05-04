@@ -67,6 +67,8 @@ export class PermissionService {
   }
 
   async permission(id: string, args?: IPermissionArgs): Promise<Permission | undefined> {
+    if (!id) throw msgUtil.error({ t: ['_error:notFoundId'] });
+
     let nextArgs: IPermissionArgs = {};
     if (args) nextArgs = args;
 

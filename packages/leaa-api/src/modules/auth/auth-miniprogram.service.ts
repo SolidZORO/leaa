@@ -65,8 +65,8 @@ export class AuthMiniprogramService {
     try {
       const hasAuth = await this.authService.authByOpenId(data.auth.OPENID, platform);
 
-      if (hasAuth) {
-        userInfo = await this.userService.user(Number(hasAuth?.user_id));
+      if (hasAuth?.user_id) {
+        userInfo = await this.userService.user(hasAuth.user_id);
         userAuth = { ...hasAuth };
       } else {
         const { newAuth, newUser } = await this.createUserAndAuth(platform, data);

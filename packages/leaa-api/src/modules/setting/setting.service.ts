@@ -61,6 +61,8 @@ export class SettingService {
   }
 
   async setting(id: string, args?: ISettingArgs, gqlCtx?: IGqlCtx): Promise<Setting | undefined> {
+    if (!id) throw msgUtil.error({ t: ['_error:notFoundId'], gqlCtx });
+
     let nextArgs: ISettingArgs = {};
 
     if (args) {

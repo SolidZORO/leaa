@@ -11,7 +11,7 @@ import {
   UpdateDivisionInput,
   CreateDivisionInput,
 } from '@leaa/common/src/dtos/division';
-import { argsUtil, paginationUtil, curdUtil, loggerUtil } from '@leaa/api/src/utils';
+import { argsUtil, paginationUtil, curdUtil, loggerUtil, msgUtil } from '@leaa/api/src/utils';
 import { IDivisionSource } from '@leaa/common/src/interfaces';
 import { SyncTagsToFileObject } from '@leaa/common/src/dtos/tag';
 import { divisionConfig } from '@leaa/api/src/configs';
@@ -47,6 +47,8 @@ export class DivisionService {
   }
 
   async division(id: string, args?: IDivisionArgs): Promise<Division | undefined> {
+    if (!id) throw msgUtil.error({ t: ['_error:notFoundId'] });
+
     let nextArgs: IDivisionArgs = {};
 
     if (args) {
