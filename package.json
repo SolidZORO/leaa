@@ -45,7 +45,7 @@
     "versionup:patch": "lerna version patch --conventional-commits --no-git-tag-version",
     "versionup:minor": "lerna version minor --conventional-commits --no-git-tag-version",
     "versionup:major": "lerna version major --conventional-commits --no-git-tag-version",
-    "postversionup": "npm run commit-version",
+    "postversionup": "yarn commit-version",
     "postversionup:patch": "npm run commit-version",
     "postversionup:minor": "npm run commit-version",
     "postversionup:major": "npm run commit-version",
