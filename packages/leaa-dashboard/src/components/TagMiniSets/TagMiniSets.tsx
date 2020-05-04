@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Tag } from 'antd';
-import { AutoCompleteProps } from 'antd/lib/auto-complete';
+import { AutoCompleteProps } from 'antd/es/auto-complete';
 
 import { Tag as TagEntry } from '@leaa/common/src/entrys';
 

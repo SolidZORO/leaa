@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import _ from 'lodash-es';
 import React, { ReactNode } from 'react';
 import { Route } from 'react-router-dom';
 

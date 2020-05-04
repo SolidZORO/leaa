@@ -3,7 +3,7 @@ import cx from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { DeleteOutlined } from '@ant-design/icons';
 import { Tooltip, Button } from 'antd';
-import { ButtonProps } from 'antd/lib/button';
+import { ButtonProps } from 'antd/es/button';
 
 import style from './style.module.less';
 

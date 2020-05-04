@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import _ from 'lodash-es';
 import React from 'react';
 import { History } from 'history';
 import { useQuery } from '@apollo/react-hooks';

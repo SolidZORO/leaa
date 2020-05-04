@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Breadcrumb as AntdBreadcrumb } from 'antd';
-import { Route } from 'antd/lib/breadcrumb/Breadcrumb';
+import { Route } from 'antd/es/breadcrumb/Breadcrumb';
 
 import { Link, RouteComponentProps } from 'react-router-dom';
 

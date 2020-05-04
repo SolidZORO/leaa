@@ -493,164 +493,46 @@ type SignupAccount {
 }
 
 type Query {
-  roles(
-    page: Int = 1
-    pageSize: Int = 30
-    orderBy: String = "id"
-    orderSort: String = "DESC"
-    q: String
-  ): RolesWithPaginationObject!
+  roles(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): RolesWithPaginationObject!
   role(id: String!): Role!
-  permissions(
-    page: Int = 1
-    pageSize: Int = 30
-    orderBy: String = "id"
-    orderSort: String = "DESC"
-    q: String
-  ): PermissionsWithPaginationObject!
+  permissions(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): PermissionsWithPaginationObject!
   permission(id: String!): Permission!
-  users(
-    page: Int = 1
-    pageSize: Int = 30
-    orderBy: String = "id"
-    orderSort: String = "DESC"
-    q: String
-  ): UsersWithPaginationObject!
+  users(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): UsersWithPaginationObject!
   user(id: String!): User!
   userByToken(token: String): User!
-  attachments(
-    page: Int = 1
-    pageSize: Int = 30
-    orderBy: String = "id"
-    orderSort: String = "DESC"
-    q: String
-    type: String
-    moduleName: String
-    moduleId: String
-    typeName: String
-    typePlatform: String
-    categoryId: String
-    userId: String
-    refreshHash: Int
-  ): AttachmentsWithPaginationObject!
+  attachments(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String, type: String, moduleName: String, moduleId: String, typeName: String, typePlatform: String, categoryId: String, userId: String, refreshHash: Int): AttachmentsWithPaginationObject!
   attachment(uuid: String!): Attachment!
-  auths(
-    page: Int = 1
-    pageSize: Int = 30
-    orderBy: String = "id"
-    orderSort: String = "DESC"
-    q: String
-  ): AuthsWithPaginationObject
-  articles(
-    page: Int = 1
-    pageSize: Int = 30
-    orderBy: String = "id"
-    orderSort: String = "DESC"
-    q: String
-    tagName: String
-    categoryName: String
-    categoryId: String
-  ): ArticlesWithPaginationObject!
+  auths(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): AuthsWithPaginationObject
+  articles(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String, tagName: String, categoryName: String, categoryId: String): ArticlesWithPaginationObject!
   article(id: String!): Article!
   articleBySlug(slug: String!): Article!
-  categories(
-    page: Int = 1
-    pageSize: Int = 30
-    orderBy: String = "id"
-    orderSort: String = "DESC"
-    q: String
-    expanded: Boolean
-    listType: Boolean
-    treeType: Boolean
-    parentSlug: String
-    parentId: String
-    includeParent: Boolean
-  ): CategoriesWithPaginationOrTreeObject!
+  categories(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String, expanded: Boolean, listType: Boolean, treeType: Boolean, parentSlug: String, parentId: String, includeParent: Boolean): CategoriesWithPaginationOrTreeObject!
   category(id: String!): Category!
   categoryBySlug(slug: String!): Category!
-  axs(
-    page: Int = 1
-    pageSize: Int = 30
-    orderBy: String = "id"
-    orderSort: String = "DESC"
-    q: String
-  ): AxsWithPaginationObject!
+  axs(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): AxsWithPaginationObject!
   ax(id: String!): Ax!
   axBySlug(slug: String!): Ax!
-  settings(
-    page: Int = 1
-    pageSize: Int = 30
-    orderBy: String = "id"
-    orderSort: String = "DESC"
-    q: String
-  ): SettingsWithPaginationObject!
+  settings(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): SettingsWithPaginationObject!
   setting(id: String!): Setting!
   settingBySlug(slug: String!): Setting!
-  coupons(
-    page: Int = 1
-    pageSize: Int = 30
-    orderBy: String = "id"
-    orderSort: String = "DESC"
-    q: String
-  ): CouponsWithPaginationObject!
+  coupons(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): CouponsWithPaginationObject!
   coupon(id: String!): Coupon!
   couponByCode(code: String!): Coupon!
-  promos(
-    page: Int = 1
-    pageSize: Int = 30
-    orderBy: String = "id"
-    orderSort: String = "DESC"
-    q: String
-  ): PromosWithPaginationObject!
+  promos(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): PromosWithPaginationObject!
   promo(id: String!): Promo!
   promoByCode(code: String!): Promo!
-  tags(
-    page: Int = 1
-    pageSize: Int = 30
-    orderBy: String = "id"
-    orderSort: String = "DESC"
-    q: String
-  ): TagsWithPaginationObject!
+  tags(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): TagsWithPaginationObject!
   tag(id: String!): Tag!
   tagByName(name: String!): Tag!
-  products(
-    page: Int = 1
-    pageSize: Int = 30
-    orderBy: String = "id"
-    orderSort: String = "DESC"
-    q: String
-    tagName: String
-    styleName: String
-    brandName: String
-    styleId: String
-    brandId: String
-  ): ProductsWithPaginationObject
+  products(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String, tagName: String, styleName: String, brandName: String, styleId: String, brandId: String): ProductsWithPaginationObject
   product(id: String!): Product
-  addresses(
-    page: Int = 1
-    pageSize: Int = 30
-    orderBy: String = "id"
-    orderSort: String = "DESC"
-    q: String
-  ): AddressesWithPaginationObject!
+  addresses(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): AddressesWithPaginationObject!
   address(id: String!): Address!
-  divisions(
-    page: Int = 1
-    pageSize: Int = 30
-    orderBy: String = "id"
-    orderSort: String = "DESC"
-    q: String
-  ): DivisionsWithPaginationObject!
+  divisions(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): DivisionsWithPaginationObject!
   divisionsMapping: String!
   divisionsTree: String!
   division(id: String!): Division!
-  zans(
-    page: Int = 1
-    pageSize: Int = 30
-    orderBy: String = "id"
-    orderSort: String = "DESC"
-    q: String
-  ): ZansWithPaginationObject!
+  zans(page: Int = 1, pageSize: Int = 30, orderBy: String = "id", orderSort: String = "DESC", q: String): ZansWithPaginationObject!
   zan(id: String!): Zan!
   test: Float!
   testWithAuth: String!

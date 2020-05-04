@@ -1,7 +1,7 @@
 import cx from 'classnames';
 import React from 'react';
 import { Button } from 'antd';
-import { ButtonSize } from 'antd/lib/button';
+import { ButtonSize } from 'antd/es/button';
 
 import { envConfig } from '@leaa/dashboard/src/configs';
 

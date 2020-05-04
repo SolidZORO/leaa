@@ -1,8 +1,8 @@
-import _ from 'lodash';
+import _ from 'lodash-es';
 import animateScrollTo from 'animated-scroll-to';
 import queryString, { ParsedQuery } from 'query-string';
-import { PaginationProps } from 'antd/lib/pagination';
-import { SortOrder } from 'antd/lib/table/interface';
+import { PaginationProps } from 'antd/es/pagination';
+import { SortOrder } from 'antd/es/table/interface';
 
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from '@leaa/dashboard/src/constants';
 import { ITablePagination } from '@leaa/dashboard/src/interfaces';

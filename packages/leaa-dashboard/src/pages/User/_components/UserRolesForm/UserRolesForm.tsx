@@ -1,8 +1,8 @@
 import cx from 'classnames';
 import React, { useEffect, useState, forwardRef, useImperativeHandle } from 'react';
 import { Col, Form, Row, Checkbox } from 'antd';
-import { CheckboxValueType } from 'antd/lib/checkbox/Group';
-import { CheckboxChangeEvent } from 'antd/lib/checkbox';
+import { CheckboxValueType } from 'antd/es/checkbox/Group';
+import { CheckboxChangeEvent } from 'antd/es/checkbox';
 
 import { useTranslation } from 'react-i18next';
 

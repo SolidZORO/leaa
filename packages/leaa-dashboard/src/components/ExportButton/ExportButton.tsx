@@ -4,7 +4,7 @@ import cx from 'classnames';
 import moment from 'moment';
 
 import { Button, message } from 'antd';
-import { ButtonSize } from 'antd/lib/button';
+import { ButtonSize } from 'antd/es/button';
 import { useTranslation } from 'react-i18next';
 
 import { Rcon } from '@leaa/dashboard/src/components';

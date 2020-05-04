@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useMutation } from '@apollo/react-hooks';
 import { Button, Input } from 'antd';
-import { ButtonSize } from 'antd/lib/button';
+import { ButtonSize } from 'antd/es/button';
 
 import { Zan } from '@leaa/common/src/entrys';
 import { LIKE_ZAN, GET_ZAN } from '@leaa/dashboard/src/graphqls';

@@ -2,7 +2,7 @@ import React from 'react';
 import cx from 'classnames';
 import { Button, Popover, ConfigProvider } from 'antd';
 import { useTranslation } from 'react-i18next';
-import { TooltipPlacement } from 'antd/lib/tooltip';
+import { TooltipPlacement } from 'antd/es/tooltip';
 
 import { CheckCircleOutlined } from '@ant-design/icons';
 

@@ -6,6 +6,7 @@ module.exports = {
         modules: false,
         useBuiltIns: 'usage',
         corejs: 3,
+        targets: { node: true },
       },
     ],
     ['@babel/preset-react'],
@@ -27,7 +28,7 @@ module.exports = {
       'import',
       {
         libraryName: 'antd',
-        // libraryDirectory: 'lib',
+        libraryDirectory: 'es',
         style: true,
       },
     ],

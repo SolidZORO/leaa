@@ -1,9 +1,13 @@
 const dotenv = require('dotenv');
+const childProcess = require('child_process');
 
 const { WPCONST } = require('./_const');
 
 const envPath = `${WPCONST.ROOT_DIR}/${WPCONST.__DEV__ ? '.env' : '.env.production'}`;
 const env = dotenv.config({ path: envPath }).parsed;
+
+const getGitVersion = (childProcess.execSync('git rev-parse HEAD') || '').toString().substr(0, 4);
+const getVersion = `v${process.env.npm_package_version} (${getGitVersion})`;
 
 const showEnvInfo = () => {
   // emoji for CLI
@@ -21,7 +25,7 @@ const showEnvInfo = () => {
 
   console.log('\n> 📮 ENVDATA');
   console.log('     - NAME             ', `${env.SITE_NAME}`);
-  console.log('     - VERSION          ', `v${process.env.npm_package_version}`);
+  console.log('     - VERSION          ', getVersion);
   console.log('');
   console.log('     - API_URL         ', `${env.API_URL}`);
   console.log('');
@@ -32,4 +36,4 @@ const showEnvInfo = () => {
   console.log('\n\n\n');
 };
 
-module.exports = { showEnvInfo };
+module.exports = { showEnvInfo, getVersion };

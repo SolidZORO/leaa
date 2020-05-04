@@ -2,7 +2,7 @@ import React, { useState, forwardRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import cx from 'classnames';
 import { Tag, Button, Popover } from 'antd';
-import { TooltipPlacement } from 'antd/lib/tooltip';
+import { TooltipPlacement } from 'antd/es/tooltip';
 
 import { Tag as TagEntry } from '@leaa/common/src/entrys';
 import { TagSearchBox, Rcon } from '@leaa/dashboard/src/components';

@@ -6,6 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WriteFilePlugin = require('write-file-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
 const { WPCONST } = require('./_const');
 const { analyzer } = require('./_analyzer');
@@ -45,11 +46,12 @@ const outputHtmlOption = {
 };
 
 plugins.push(
-  new WriteFilePlugin(),
-  // new WriteFilePlugin({ test: /(favicon\.ico$|index\.html$|robots\.|\/assets\/|\/libs\/)/, useHashIndex: true }),
+  // new WriteFilePlugin(),
+  new WriteFilePlugin({ test: /(favicon\.ico$|index\.html$|robots\.|\/assets\/|\/libs\/)/, useHashIndex: true }),
   new webpack.ProvidePlugin(provide),
-  new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /zh-cn|zh-hk|en/),
+  new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /zh-cn/),
   new HtmlWebpackPlugin(outputHtmlOption),
+  new LodashModuleReplacementPlugin(),
 );
 
 if (WPCONST.__DEV__) {

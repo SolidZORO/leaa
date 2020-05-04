@@ -1,9 +1,9 @@
 import React, { useState, useEffect, forwardRef } from 'react';
-import _ from 'lodash';
+import _ from 'lodash-es';
 import { useTranslation } from 'react-i18next';
 import { Row, Col, Checkbox } from 'antd';
-import { CheckboxValueType } from 'antd/lib/checkbox/Group';
-import { CheckboxChangeEvent } from 'antd/lib/checkbox';
+import { CheckboxValueType } from 'antd/es/checkbox/Group';
+import { CheckboxChangeEvent } from 'antd/es/checkbox';
 
 import style from './style.module.less';
 

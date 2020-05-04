@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { DocumentNode } from 'graphql';
 import { useTranslation } from 'react-i18next';
 import { Switch, message } from 'antd';
-import { SwitchSize } from 'antd/lib/switch';
+import { SwitchSize } from 'antd/es/switch';
 
 import { msgUtil } from '@leaa/dashboard/src/utils';
 import { apolloClient } from '@leaa/dashboard/src/libs';

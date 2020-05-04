@@ -2,7 +2,7 @@ import cx from 'classnames';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from 'antd';
-import { ButtonSize } from 'antd/lib/button';
+import { ButtonSize } from 'antd/es/button';
 import { envConfig } from '@leaa/dashboard/src/configs';
 
 import style from './style.module.less';

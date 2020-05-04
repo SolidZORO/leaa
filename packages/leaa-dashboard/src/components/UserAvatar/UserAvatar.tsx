@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import React from 'react';
 import { Avatar } from 'antd';
-import { AvatarProps } from 'antd/lib/avatar';
+import { AvatarProps } from 'antd/es/avatar';
 
 import avatar from '@leaa/dashboard/src/assets/images/avatar/avatar-line-w.svg';
 

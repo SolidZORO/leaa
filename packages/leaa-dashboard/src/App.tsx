@@ -5,8 +5,8 @@ import { Router, Switch } from 'react-router-dom';
 import { I18nextProvider } from 'react-i18next';
 import { HelmetProvider } from 'react-helmet-async';
 import { LoadingOutlined } from '@ant-design/icons';
-import zhCN from 'antd/lib/locale-provider/zh_CN';
-import enUS from 'antd/lib/locale-provider/en_US';
+import zhCN from 'antd/es/locale-provider/zh_CN';
+import enUS from 'antd/es/locale-provider/en_US';
 
 import { apolloClient, history } from '@leaa/dashboard/src/libs';
 // cannot use deconstruction components dir in here (App.tsx)

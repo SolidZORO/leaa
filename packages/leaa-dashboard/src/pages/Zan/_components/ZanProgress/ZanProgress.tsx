@@ -1,7 +1,7 @@
 import cx from 'classnames';
 import React from 'react';
 import { Progress } from 'antd';
-import { ProgressProps } from 'antd/lib/progress';
+import { ProgressProps } from 'antd/es/progress';
 
 import { Zan } from '@leaa/common/src/entrys';
 

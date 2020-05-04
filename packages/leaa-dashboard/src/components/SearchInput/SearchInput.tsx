@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import cx from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { Input } from 'antd';
-import { InputProps } from 'antd/lib/input';
+import { InputProps } from 'antd/es/input';
 import { SearchOutlined } from '@ant-design/icons';
 
 import style from './style.module.less';

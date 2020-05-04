@@ -2,7 +2,7 @@ import React from 'react';
 import cx from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { InputNumber } from 'antd';
-import { InputNumberProps } from 'antd/lib/input-number';
+import { InputNumberProps } from 'antd/es/input-number';
 
 import { settingUtil } from '@leaa/dashboard/src/utils';
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, forwardRef } from 'react';
 import { Switch } from 'antd';
-import { SwitchProps } from 'antd/lib/switch';
+import { SwitchProps } from 'antd/es/switch';
 
 interface IProps extends SwitchProps {
   value?: number | undefined;

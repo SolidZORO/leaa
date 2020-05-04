@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import _ from 'lodash-es';
 import { Repository } from 'typeorm';
 
 import { loggerUtil, msgUtil } from '@leaa/api/src/utils';
