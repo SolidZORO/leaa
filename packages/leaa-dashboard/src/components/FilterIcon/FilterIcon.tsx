@@ -1,5 +1,5 @@
 import React from 'react';
-import _ from 'lodash-es';
+import _ from 'lodash';
 import cx from 'classnames';
 import { Options } from 'currency.js';
 import { ParsedQuery } from 'query-string';

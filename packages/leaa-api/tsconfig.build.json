@@ -2,6 +2,7 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "_build",
+
     "isolatedModules": false,
     "declaration": false,
     "noEmit": false

@@ -1,4 +1,4 @@
-import _ from 'lodash-es';
+import _ from 'lodash';
 import xss from 'xss';
 import bcryptjs from 'bcryptjs';
 import { Injectable } from '@nestjs/common';

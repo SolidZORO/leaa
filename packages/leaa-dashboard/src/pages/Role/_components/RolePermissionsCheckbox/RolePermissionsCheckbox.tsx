@@ -1,5 +1,5 @@
 import React, { useState, useEffect, forwardRef } from 'react';
-import _ from 'lodash-es';
+import _ from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { Row, Col, Checkbox } from 'antd';
 import { CheckboxValueType } from 'antd/es/checkbox/Group';

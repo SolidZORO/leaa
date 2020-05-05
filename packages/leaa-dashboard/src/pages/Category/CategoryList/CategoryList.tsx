@@ -1,4 +1,4 @@
-import _ from 'lodash-es';
+import _ from 'lodash';
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';

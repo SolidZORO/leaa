@@ -1,5 +1,5 @@
 import fs from 'fs';
-import _ from 'lodash-es';
+import _ from 'lodash';
 import { Express } from 'express';
 import { Repository, In, SelectQueryBuilder } from 'typeorm';
 import { Injectable } from '@nestjs/common';

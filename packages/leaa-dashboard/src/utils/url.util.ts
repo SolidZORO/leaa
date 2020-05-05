@@ -1,4 +1,4 @@
-import _ from 'lodash-es';
+import _ from 'lodash';
 import animateScrollTo from 'animated-scroll-to';
 import queryString, { ParsedQuery } from 'query-string';
 import { PaginationProps } from 'antd/es/pagination';

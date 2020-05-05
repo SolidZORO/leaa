@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import cx from 'classnames';
-import _ from 'lodash-es';
+import _ from 'lodash';
 import { AutoComplete, Input } from 'antd';
 import { AutoCompleteProps } from 'antd/es/auto-complete';
 import { LoadingOutlined } from '@ant-design/icons';

@@ -1,4 +1,4 @@
-import _ from 'lodash-es';
+import _ from 'lodash';
 import React from 'react';
 import axios from 'axios';
 import * as uuid from 'uuid';
