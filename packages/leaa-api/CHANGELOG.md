@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.7](https://github.com/SolidZORO/leaa/compare/v2.0.6...v2.0.7) (2020-05-05)
+
+**Note:** Version bump only for package @leaa/api
+
 # [2.0.0](https://github.com/SolidZORO/leaa/compare/v1.1.0...v2.0.0) (2020-05-04)
 
 ### Bug Fixes
