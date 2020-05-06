@@ -31,8 +31,6 @@ export default (props: IPage) => {
   const clearGuestInfo = () => {
     setLoginErrorCount(0);
     authUtil.removeGuestToken();
-
-    console.log('clearGuestInfoclearGuestInfoclearGuestInfo');
   };
 
   const setLogin = (login: any) => {
