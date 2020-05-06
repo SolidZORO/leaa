@@ -142,6 +142,13 @@ declare const permissionSlug: [
   // --------------------
   'auth.list-read',
   'auth.item-delete',
+  // --------------------
+  'action.list-read',
+  //
+  'action.item-read',
+  'action.item-create',
+  'action.item-delete',
+  // --------------------
 ];
 
 export declare type IPermissionSlug = typeof permissionSlug[number];

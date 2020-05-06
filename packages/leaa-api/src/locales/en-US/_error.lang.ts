@@ -4,6 +4,7 @@ export default {
   unauthorized: 'Unauthorized',
   forbidden: 'Forbidden',
   badRequest: 'Bad Request',
+  tooManyRequest: 'Too Many Request',
   //
   tokenNotFound: 'Token Not Found',
   tokenError: 'Token Error',
@@ -22,7 +23,9 @@ export default {
   notFoundItems: 'Not Found Items',
   notFoundUser: 'Not Found User',
   notFoundId: 'Not Found ID',
+  notFoundIp: 'Not Found IP',
   notFoundTicket: 'Not Found Ticket',
+  notFoundToken: 'Not Found Token',
   notFoundInfo: 'Not Found Info',
   //
   createItemFailed: 'Create Item Failed',
@@ -33,6 +36,7 @@ export default {
   illegalUser: 'Illegal User',
   invalidUser: 'Invalid User',
   invalidId: 'Invalid ID',
+  invalidIp: 'Invalid IP',
   invalidHashId: 'Invalid Hash ID',
   //
   userInfoNotMatch: 'User Info Not Match',
@@ -40,6 +44,8 @@ export default {
   signupFailed: 'Signup Failed',
   userHasBeenUpdated: 'User Has Been Updated, Please Login Again',
   pleaseDontModify: 'PLEASE DONT MODIFY',
+  usernameOrPasswordNotMatch: 'Username Or Password Not Match',
+  verifyCodeNotMatch: 'Verify Code Not Match',
   //
   missingFormatArgs: 'Missing Format Args',
 };

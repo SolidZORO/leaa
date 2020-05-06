@@ -7,5 +7,6 @@ export const GqlCtx = createParamDecorator((data: unknown, executionCtx: Executi
   return {
     user: ctx?.user,
     lang: ctx?.lang,
+    req: ctx?.req,
   };
 });

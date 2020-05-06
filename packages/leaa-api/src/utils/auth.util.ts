@@ -5,7 +5,7 @@ import { IGqlCtx } from '@leaa/api/src/interfaces';
 
 const checkAvailableUser = (user?: User, gqlCtx?: IGqlCtx): User => {
   if (!user) {
-    throw msgUtil.error({ t: ['_error:notFoundUser'], gqlCtx, statusCode: 401 });
+    throw msgUtil.error({ t: ['_error:usernameOrPasswordNotMatch'], gqlCtx, statusCode: 401 });
   }
 
   if (user && user.status !== 1) {

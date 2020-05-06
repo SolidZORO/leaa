@@ -1,5 +1,5 @@
 import { IPermissionSlug } from '@leaa/common/src/interfaces';
-import { AUTH_TOKEN_NAME, AUTH_EXPIRES_IN_NAME, AUTH_INFO } from '@leaa/dashboard/src/constants';
+import { AUTH_TOKEN_NAME, AUTH_EXPIRES_IN_NAME, AUTH_INFO, GUEST_TOKEN_NAME } from '@leaa/dashboard/src/constants';
 import { IAuthInfo } from '@leaa/dashboard/src/interfaces';
 
 const setAuthToken = (token: string, expiresIn: number) => {
@@ -97,6 +97,34 @@ const checkAuthIsAvailably = (): boolean => {
   return true;
 };
 
+const setGuestToken = (token: string) => localStorage.setItem(GUEST_TOKEN_NAME, token);
+
+const getGuestToken = (options = { onlyToken: false }): string | null => {
+  const guestToken = localStorage.getItem(GUEST_TOKEN_NAME) || null;
+
+  if (guestToken && options.onlyToken) {
+    return guestToken.replace(/^Bearer\s/, '');
+  }
+
+  return guestToken;
+};
+
+const removeGuestToken = (): boolean => {
+  if (!getGuestToken) {
+    console.log('Not Found Guest Token');
+
+    return false;
+  }
+
+  localStorage.removeItem(GUEST_TOKEN_NAME);
+
+  return true;
+};
+
+const checkGuestIsAvailably = (): boolean => {
+  return !!getGuestToken();
+};
+
 const can = (permissionName: IPermissionSlug): boolean => {
   const authInfoString = localStorage.getItem(AUTH_INFO);
 
@@ -135,4 +163,9 @@ export const authUtil = {
   removeAuth,
   checkAuthIsAvailably,
   can,
+  //
+  getGuestToken,
+  setGuestToken,
+  removeGuestToken,
+  checkGuestIsAvailably,
 };

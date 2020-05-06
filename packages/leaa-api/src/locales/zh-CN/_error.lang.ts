@@ -4,6 +4,7 @@ export default {
   unauthorized: '未授权',
   forbidden: '禁止访问',
   badRequest: '请求错误',
+  tooManyRequest: '请求次数过多',
   //
   tokenNotFound: '未找到 Token',
   tokenError: 'Token 错误',
@@ -22,7 +23,9 @@ export default {
   notFoundItems: '未找到条目列表',
   notFoundUser: '未找到用户',
   notFoundId: '未找到 ID',
+  notFoundIp: '未找到 IP',
   notFoundTicket: '未找到 Ticket',
+  notFoundToken: '未找到 Token',
   notFoundInfo: '未找到信息',
   //
   createItemFailed: '创建条目失败',
@@ -33,6 +36,7 @@ export default {
   illegalUser: '非法用户',
   invalidUser: '无效用户',
   invalidId: '无效 ID',
+  invalidIp: '无效 IP',
   invalidHashId: '无效 Hash ID',
   //
   userInfoNotMatch: '用户信息不匹配',
@@ -40,6 +44,8 @@ export default {
   signupFailed: '注册失败',
   userHasBeenUpdated: '用户信息已更新，请重新登录',
   pleaseDontModify: '请勿修改',
+  usernameOrPasswordNotMatch: '用户名或密码不正确',
+  verifyCodeNotMatch: '验证码不正确',
   //
   missingFormatArgs: '缺少格式化参数',
 };

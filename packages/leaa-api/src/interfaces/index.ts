@@ -20,3 +20,4 @@ export * from './promo.interface';
 export * from './tag.interface';
 export * from './i18n.interfaces';
 export * from './decorator.interface';
+export * from './action.interface';

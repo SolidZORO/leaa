@@ -28,3 +28,12 @@ export const GET_AUTHS = gql`
     }
   }
 `;
+
+export const GET_GUEST = gql`
+  query($token: String) {
+    guest(token: $token) {
+      token
+      captcha
+    }
+  }
+`;

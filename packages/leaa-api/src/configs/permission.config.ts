@@ -23,6 +23,7 @@ export const notValidateUserQuerys = [
   'register',
   'signup',
   'userByToken',
+  'guest',
   //
   'ax',
   'axs',

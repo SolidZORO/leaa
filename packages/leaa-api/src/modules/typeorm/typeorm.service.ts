@@ -18,6 +18,8 @@ import {
   Address,
   Division,
   Zan,
+  Verification,
+  Action,
 } from '@leaa/common/src/entrys';
 
 import { TagSubscriber, AttachmentSubscriber, UserSubscriber } from '@leaa/api/src/subscribers';
@@ -62,6 +64,8 @@ export class TypeormService implements TypeOrmOptionsFactory {
         Address,
         Division,
         Zan,
+        Verification,
+        Action,
       ],
       subscribers: [TagSubscriber, AttachmentSubscriber, UserSubscriber],
     };

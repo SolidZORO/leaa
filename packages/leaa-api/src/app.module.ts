@@ -18,7 +18,6 @@ import { UserModule } from '@leaa/api/src/modules/user/user.module';
 import { AuthModule } from '@leaa/api/src/modules/auth/auth.module';
 import { RoleModule } from '@leaa/api/src/modules/role/role.module';
 import { CategoryModule } from '@leaa/api/src/modules/category/category.module';
-import { ArticleModule } from '@leaa/api/src/modules/article/article.module';
 import { AuthTokenModule } from '@leaa/api/src/modules/auth-token/auth-token.module';
 import { AttachmentModule } from '@leaa/api/src/modules/attachment/attachment.module';
 import { PermissionModule } from '@leaa/api/src/modules/permission/permission.module';
@@ -34,6 +33,7 @@ import { ZanModule } from '@leaa/api/src/modules/zan/zan.module';
 import { DemoModule } from '@leaa/api/src/modules/demo/demo.module';
 import { TestModule } from '@leaa/api/src/modules/test/test.module';
 import { I18nModule } from '@leaa/api/src/modules/i18n/i18n.module';
+import { ActionModule } from '@leaa/api/src/modules/action/action.module';
 
 const imports = [
   CacheModule.register(),
@@ -54,7 +54,7 @@ const imports = [
   PermissionModule,
   RoleModule,
   CategoryModule,
-  ArticleModule,
+  ActionModule,
   AttachmentModule,
   AxModule,
   AuthTokenModule,
@@ -69,6 +69,7 @@ const imports = [
   ZanModule,
   TestModule,
   I18nModule,
+  ActionModule,
 ];
 
 if (envConfig.DEMO_MODE) {

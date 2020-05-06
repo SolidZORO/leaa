@@ -1,7 +1,7 @@
 import { UseGuards } from '@nestjs/common';
-import { Args, Mutation, Query, Resolver, Int } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 
-import { Auth, User } from '@leaa/common/src/entrys';
+import { Auth, User, Verification } from '@leaa/common/src/entrys';
 import { PermissionsGuard } from '@leaa/api/src/guards';
 import { Permissions, GqlCtx } from '@leaa/api/src/decorators';
 import { AuthsWithPaginationObject, AuthsArgs, AuthLoginInput, AuthSignupInput } from '@leaa/common/src/dtos/auth';
@@ -19,6 +19,15 @@ export class AuthResolver {
   @Query(() => AuthsWithPaginationObject, { nullable: true })
   async auths(@Args() args: AuthsArgs, @GqlCtx() gqlCtx?: IGqlCtx): Promise<AuthsWithPaginationObject | undefined> {
     return this.authService.auths(args, gqlCtx);
+  }
+
+  // in permission.config.ts - notValidateUserQuerys
+  @Query(() => Verification)
+  async guest(
+    @Args({ name: 'token', type: () => String, nullable: true }) token?: string,
+    @GqlCtx() gqlCtx?: IGqlCtx,
+  ): Promise<Verification | undefined> {
+    return this.authLocalService.guest(token, gqlCtx);
   }
 
   @UseGuards(PermissionsGuard)

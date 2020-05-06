@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import queryString from 'query-string';
 
@@ -6,7 +6,6 @@ import { useMutation, useQuery } from '@apollo/react-hooks';
 import { Row, Col, Button } from 'antd';
 
 import { LOGIN, LOGIN_BY_TICKET, GET_DEMO_DATA } from '@leaa/dashboard/src/graphqls';
-import logo from '@leaa/dashboard/src/assets/images/logo/logo-black.svg';
 import { IPage, ICommenFormRef, IAuthInfo, ISubmitData } from '@leaa/dashboard/src/interfaces';
 import { authUtil, msgUtil } from '@leaa/dashboard/src/utils';
 import { LOGIN_REDIRECT_URL } from '@leaa/dashboard/src/constants';
@@ -15,6 +14,8 @@ import { DemoDataObject } from '@leaa/common/src/dtos/demo';
 import { envConfig } from '@leaa/dashboard/src/configs';
 import { HtmlMeta, SwitchLanguage, BuildInfo, AuthGithubButton } from '@leaa/dashboard/src/components';
 
+import logo from '@leaa/dashboard/src/assets/images/logo/logo-black.svg';
+
 import { LoginForm } from './_components/LoginForm/LoginForm';
 
 import style from './style.module.less';
@@ -22,9 +23,17 @@ import style from './style.module.less';
 export default (props: IPage) => {
   const { t } = useTranslation();
   const qs = queryString.parse(window.location.search);
+  const [loginErrorCount, setLoginErrorCount] = useState<number>(0);
 
   // ref
   const loginFormRef = useRef<ICommenFormRef<AuthLoginInput>>(null);
+
+  const clearGuestInfo = () => {
+    setLoginErrorCount(0);
+    authUtil.removeGuestToken();
+
+    console.log('clearGuestInfoclearGuestInfoclearGuestInfo');
+  };
 
   const setLogin = (login: any) => {
     if (login?.name && login.flatPermissions?.length === 0) {
@@ -69,7 +78,11 @@ export default (props: IPage) => {
   }>(LOGIN, {
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
     onCompleted({ login }) {
+      clearGuestInfo();
       setLogin(login);
+    },
+    onError: () => {
+      setLoginErrorCount((prev) => prev + 1);
     },
   });
 
@@ -78,12 +91,13 @@ export default (props: IPage) => {
   }>(LOGIN_BY_TICKET, {
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
     onCompleted({ loginByTicket }) {
+      clearGuestInfo();
       setLogin(loginByTicket);
     },
     onError: (e) => {
-      props.history.push('/login');
+      msgUtil.error(e.message);
 
-      return msgUtil.error(e.message);
+      return props.history.push('/login');
     },
   });
 
@@ -91,6 +105,7 @@ export default (props: IPage) => {
     const authIsAvailably = authUtil.checkAuthIsAvailably();
 
     if (authIsAvailably) {
+      clearGuestInfo();
       props.history.push('/');
     }
   }, []);
@@ -115,6 +130,8 @@ export default (props: IPage) => {
         user: {
           email: submitData.email && submitData.email.trim(),
           password: submitData.password,
+          captcha: submitData.captcha,
+          guestToken: authUtil.getGuestToken(),
         },
       },
     });
@@ -144,6 +161,7 @@ export default (props: IPage) => {
                   ref={loginFormRef}
                   initialValues={getDemoDataQuery?.data?.demoData?.loginAccountByAdmin}
                   onPressSubmitCallback={onSubmit}
+                  loginErrorCount={loginErrorCount}
                 />
               </div>
 

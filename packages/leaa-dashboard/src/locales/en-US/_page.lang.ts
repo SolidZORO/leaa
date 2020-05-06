@@ -8,10 +8,11 @@ export default {
       email: 'Email',
       password: _lang.password,
       login: _lang.login,
-      rememberMe: 'Remember me',
+      rememberPassword: 'Remember Password',
       back: 'Back',
       notPermissions: 'Not Premissions',
       backTips: 'here is not back now ; >',
+      captcha: 'Captcha',
     },
     //
     openId: 'Open Id',

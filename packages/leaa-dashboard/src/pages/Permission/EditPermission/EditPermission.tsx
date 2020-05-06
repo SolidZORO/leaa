@@ -24,7 +24,7 @@ export default (props: IPage) => {
   const infoFormRef = useRef<ICommenFormRef<UpdatePermissionInput>>(null);
 
   // query
-  const getPermissionVariables = { id: id };
+  const getPermissionVariables = { id };
   const getPermissionQuery = useQuery<{ permission: Permission }, PermissionArgs>(GET_PERMISSION, {
     variables: getPermissionVariables,
     fetchPolicy: 'network-only',

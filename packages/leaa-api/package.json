@@ -96,6 +96,7 @@
     "rimraf": "^3.0.2",
     "rxjs": "^6.5.5",
     "supertest": "^4.0.2",
+    "svg-captcha": "^1.4.0",
     "typeorm": "^0.2.24",
     "uuid": "^8.0.0",
     "wechat-jssdk": "^5.0.4",

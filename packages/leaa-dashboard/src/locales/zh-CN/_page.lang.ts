@@ -8,10 +8,11 @@ export default {
       email: 'Email',
       password: _lang.password,
       login: _lang.login,
-      rememberMe: '记住我',
+      rememberPassword: '记住密码',
       back: '返回',
       notPermissions: '无权限',
       backTips: '目前还没有返回 ; >',
+      captcha: '验证码',
     },
     //
     openId: 'Open Id',

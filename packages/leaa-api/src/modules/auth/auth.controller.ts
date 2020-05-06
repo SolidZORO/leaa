@@ -3,11 +3,13 @@ import { AuthGuard } from '@nestjs/passport';
 import { AuthWechatService } from '@leaa/api/src/modules/auth/auth-wechat.service';
 import { AuthMiniprogramService } from '@leaa/api/src/modules/auth/auth-miniprogram.service';
 import { AuthGithubService } from '@leaa/api/src/modules/auth/auth-github.service';
+import { AuthLocalService } from '@leaa/api/src/modules/auth/auth-local.service';
 import { IResponse, IRequestGithubCallback, IMiniprogramCloudFnResult, IRequest } from '@leaa/api/src/interfaces';
 
 @Controller('/auth')
 export class AuthController {
   constructor(
+    private readonly authLocalService: AuthLocalService,
     private readonly authWechatService: AuthWechatService,
     private readonly authMiniprogramService: AuthMiniprogramService,
     private readonly authGithubService: AuthGithubService,

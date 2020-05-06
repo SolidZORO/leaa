@@ -15,3 +15,5 @@ export { Product } from './product.entity';
 export { Address } from './address.entity';
 export { Division } from './division.entity';
 export { Zan } from './zan.entity';
+export { Verification } from './verification.entity';
+export { Action } from './action.entity';

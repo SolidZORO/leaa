@@ -12,3 +12,4 @@ export { loggerUtil } from './logger.util';
 export { stringUtil } from './string.util';
 export { attachmentUtil } from './attachment.util';
 export { paginationUtil } from './pagination.util';
+export * from './orm.util';

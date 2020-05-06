@@ -5,7 +5,7 @@ import { JwtService } from '@nestjs/jwt';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { User, Auth } from '@leaa/common/src/entrys';
+import { User, Auth, Verification } from '@leaa/common/src/entrys';
 import { AuthsWithPaginationObject, CreateAuthInput } from '@leaa/common/src/dtos/auth';
 import { IJwtPayload } from '@leaa/common/src/interfaces';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
@@ -22,6 +22,7 @@ export class AuthService {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
     @InjectRepository(Auth) private readonly authRepository: Repository<Auth>,
+    @InjectRepository(Verification) private readonly verificationRepository: Repository<Verification>,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
     private readonly userService: UserService,

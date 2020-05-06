@@ -42,7 +42,7 @@ const errorLink = onError(({ graphQLErrors }) => {
       if (error.statusCode === 401) {
         const removed = authUtil.removeAuth();
 
-        if (removed) {
+        if (removed && window.location.pathname !== LOGOUT_REDIRECT_URL) {
           window.location.href = LOGOUT_REDIRECT_URL;
         }
       }
