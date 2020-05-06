@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.1](https://github.com/SolidZORO/leaa/compare/v2.0.6...v2.1.1) (2020-05-06)
+
+### Bug Fixes
+
+- update login logic, not token will set 'NO-TOKEN' ([f32e216](https://github.com/SolidZORO/leaa/commit/f32e216ded0a5d48d2917202e308d117507d4675))
+
+### Features
+
+- auth login add Captcha (not display by default, auto tigger) ([a068b54](https://github.com/SolidZORO/leaa/commit/a068b543e81c65b235cb85a8430d4ca27285219f))
+
 # [2.1.0](https://github.com/SolidZORO/leaa/compare/v2.0.6...v2.1.0) (2020-05-06)
 
 ### Features
