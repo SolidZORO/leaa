@@ -5,7 +5,7 @@ import xss from 'xss';
 import bcryptjs from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
 import { Injectable } from '@nestjs/common';
-import { Repository, Between, In } from 'typeorm';
+import { Repository, Between, In, IsNull } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { User, Verification, Action } from '@leaa/common/src/entrys';
@@ -54,7 +54,7 @@ export class AuthLocalService {
       ip: gqlCtx?.req?.ip,
       module: 'auth',
       action: 'login',
-      token: args.guestToken,
+      token: args.guestToken || 'NO-TOKEN',
       account,
     });
 
@@ -112,7 +112,11 @@ export class AuthLocalService {
   }
 
   async clearLoginActionAndVerification({ token }: { token?: string }) {
-    await this.actionRepository.delete({ module: 'auth', action: In(['login', 'guest']), token: In([token, null]) });
+    await this.actionRepository.delete({
+      module: 'auth',
+      action: In(['login', 'guest']),
+      token: In([token, 'NO-TOKEN']),
+    });
     await this.verificationRepository.delete({ token });
   }
 
@@ -189,6 +193,7 @@ export class AuthLocalService {
         ip: gqlCtx?.req?.ip,
         module: 'auth',
         action: 'login',
+        token: token || 'NO-TOKEN',
         created_at: Between(moment().subtract(CHECK_GUEST_COUNT_BEFORE_MINUTE, 'minute').toDate(), moment().toDate()),
       },
     });
@@ -200,7 +205,7 @@ export class AuthLocalService {
       ip: gqlCtx?.req?.ip,
       module: 'auth',
       action: 'guest',
-      token,
+      token: token || 'NO-TOKEN',
     });
 
     const captcha = svgCaptcha.create(captchaConfig.SVG_CAPTCHA);
