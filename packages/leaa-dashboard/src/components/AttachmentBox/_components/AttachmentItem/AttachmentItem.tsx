@@ -18,7 +18,7 @@ import { useTranslation } from 'react-i18next';
 import { DELETE_ATTACHMENT } from '@leaa/dashboard/src/graphqls';
 import { Attachment } from '@leaa/common/src/entrys';
 import { SwitchNumber, Rcon, ConfirmDeleteButton } from '@leaa/dashboard/src/components';
-import { msgMessage, msgError } from '@leaa/dashboard/src/utils';
+import { msgMessage } from '@leaa/dashboard/src/utils';
 
 import style from './style.module.less';
 

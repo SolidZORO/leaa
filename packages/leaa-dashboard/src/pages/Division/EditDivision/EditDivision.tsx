@@ -8,7 +8,7 @@ import { GET_DIVISION, UPDATE_DIVISION } from '@leaa/dashboard/src/graphqls';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { DivisionArgs, UpdateDivisionInput } from '@leaa/common/src/dtos/division';
 import { IPage, ICommenFormRef, ISubmitData } from '@leaa/dashboard/src/interfaces';
-import { msgMessage, msgError } from '@leaa/dashboard/src/utils';
+import { msgMessage } from '@leaa/dashboard/src/utils';
 
 import { HtmlMeta, PageCard, SubmitBar, Rcon } from '@leaa/dashboard/src/components';
 

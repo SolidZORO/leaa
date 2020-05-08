@@ -9,7 +9,7 @@ import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { RoleArgs, UpdateRoleInput } from '@leaa/common/src/dtos/role';
 import { PermissionsWithPaginationObject, PermissionsArgs } from '@leaa/common/src/dtos/permission';
 import { IPage, ICommenFormRef, ISubmitData } from '@leaa/dashboard/src/interfaces';
-import { msgMessage, msgError } from '@leaa/dashboard/src/utils';
+import { msgMessage } from '@leaa/dashboard/src/utils';
 
 import { HtmlMeta, PageCard, SubmitBar, Rcon } from '@leaa/dashboard/src/components';
 

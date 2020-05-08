@@ -22,7 +22,7 @@ import {
   UpdateSettingsInput,
 } from '@leaa/common/src/dtos/setting';
 import { IPage, ICommenFormRef, ISubmitData } from '@leaa/dashboard/src/interfaces';
-import { refreshLocalStorageSettings, msgMessage, msgError } from '@leaa/dashboard/src/utils';
+import { refreshLocalStorageSettings, msgMessage } from '@leaa/dashboard/src/utils';
 
 import { HtmlMeta, PageCard, SubmitBar, Rcon } from '@leaa/dashboard/src/components';
 

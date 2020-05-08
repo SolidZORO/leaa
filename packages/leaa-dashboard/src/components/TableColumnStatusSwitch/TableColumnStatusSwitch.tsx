@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { Switch, message } from 'antd';
 import { SwitchSize } from 'antd/es/switch';
 
-import { msgMessage, msgError } from '@leaa/dashboard/src/utils';
+import { msgError } from '@leaa/dashboard/src/utils';
 import { apolloClient } from '@leaa/dashboard/src/libs';
 
 import style from './style.module.less';

@@ -8,7 +8,7 @@ import { CREATE_ZAN } from '@leaa/dashboard/src/graphqls';
 import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { CreateZanInput } from '@leaa/common/src/dtos/zan';
 import { IPage, ICommenFormRef, ISubmitData } from '@leaa/dashboard/src/interfaces';
-import { msgMessage, msgError } from '@leaa/dashboard/src/utils';
+import { msgMessage } from '@leaa/dashboard/src/utils';
 
 import { PageCard, HtmlMeta, Rcon, SubmitBar } from '@leaa/dashboard/src/components';
 

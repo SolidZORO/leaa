@@ -8,7 +8,7 @@ import { GET_ADDRESS, UPDATE_ADDRESS } from '@leaa/dashboard/src/graphqls';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { AddressArgs, UpdateAddressInput } from '@leaa/common/src/dtos/address';
 import { IPage, ICommenFormRef, ISubmitData } from '@leaa/dashboard/src/interfaces';
-import { msgMessage, msgError } from '@leaa/dashboard/src/utils';
+import { msgMessage } from '@leaa/dashboard/src/utils';
 
 import { HtmlMeta, PageCard, SubmitBar, Rcon } from '@leaa/dashboard/src/components';
 

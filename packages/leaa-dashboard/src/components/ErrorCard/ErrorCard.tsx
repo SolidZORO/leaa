@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { notification } from 'antd';
 import { ApolloError } from 'apollo-client';
-import { msgMessage, msgError } from '@leaa/dashboard/src/utils';
+import { msgError } from '@leaa/dashboard/src/utils';
 
 import style from './style.module.less';
 

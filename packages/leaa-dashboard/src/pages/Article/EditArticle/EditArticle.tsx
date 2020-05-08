@@ -9,7 +9,7 @@ import { GET_ARTICLE, UPDATE_ARTICLE } from '@leaa/dashboard/src/graphqls';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { ArticleArgs, UpdateArticleInput } from '@leaa/common/src/dtos/article';
 import { IPage, ICommenFormRef, ISubmitData } from '@leaa/dashboard/src/interfaces';
-import { msgMessage, msgError } from '@leaa/dashboard/src/utils';
+import { msgMessage } from '@leaa/dashboard/src/utils';
 
 import {
   PageCard,

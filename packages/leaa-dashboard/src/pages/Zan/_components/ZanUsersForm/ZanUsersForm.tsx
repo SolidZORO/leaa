@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 import { Zan } from '@leaa/common/src/entrys';
 import { FormCard, UserAvatar, ConfirmDeleteButton } from '@leaa/dashboard/src/components';
-import { msgMessage, msgError } from '@leaa/dashboard/src/utils';
+import { msgMessage } from '@leaa/dashboard/src/utils';
 import { DELETE_ZAN_USER, GET_ZAN } from '@leaa/dashboard/src/graphqls';
 
 import { ZanProgress } from '../ZanProgress/ZanProgress';

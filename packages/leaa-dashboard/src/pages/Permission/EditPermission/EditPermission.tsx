@@ -8,7 +8,7 @@ import { GET_PERMISSION, UPDATE_PERMISSION } from '@leaa/dashboard/src/graphqls'
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { PermissionArgs, UpdatePermissionInput } from '@leaa/common/src/dtos/permission';
 import { IPage, ICommenFormRef, ISubmitData } from '@leaa/dashboard/src/interfaces';
-import { msgMessage, msgError } from '@leaa/dashboard/src/utils';
+import { msgMessage } from '@leaa/dashboard/src/utils';
 
 import { PageCard, HtmlMeta, Rcon, SubmitBar } from '@leaa/dashboard/src/components';
 

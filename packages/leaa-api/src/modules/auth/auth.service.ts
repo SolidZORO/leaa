@@ -9,15 +9,7 @@ import { User, Auth, Verification } from '@leaa/common/src/entrys';
 import { AuthsWithPaginationObject, CreateAuthInput } from '@leaa/common/src/dtos/auth';
 import { IJwtPayload } from '@leaa/common/src/interfaces';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
-import {
-  checkAvailableUser,
-  argsFormat,
-  calcQbPageInfo,
-  commonUpdate,
-  commonDelete,
-  isOneField,
-  msgError,
-} from '@leaa/api/src/utils';
+import { checkAvailableUser, argsFormat, calcQbPageInfo, commonDelete, msgError } from '@leaa/api/src/utils';
 import { UserService } from '@leaa/api/src/modules/user/user.service';
 import { permissionConfig } from '@leaa/api/src/configs';
 import { UserProperty } from '@leaa/api/src/modules/user/user.property';

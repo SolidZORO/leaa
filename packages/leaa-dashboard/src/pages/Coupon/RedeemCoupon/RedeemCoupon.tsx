@@ -7,7 +7,7 @@ import { Coupon } from '@leaa/common/src/entrys';
 import { RedeemCouponInput } from '@leaa/common/src/dtos/coupon';
 import { IPage, ISubmitData } from '@leaa/dashboard/src/interfaces';
 import { REDEEM_COUPON } from '@leaa/dashboard/src/graphqls';
-import { msgMessage, msgError } from '@leaa/dashboard/src/utils';
+import { msgMessage } from '@leaa/dashboard/src/utils';
 
 import { HtmlMeta, PageCard, Rcon } from '@leaa/dashboard/src/components';
 

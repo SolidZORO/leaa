@@ -5,7 +5,7 @@ import { Col, Form, Input, Row, Select, InputNumber } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 import { Setting } from '@leaa/common/src/entrys';
-import { msgMessage, msgError } from '@leaa/dashboard/src/utils';
+import { msgError } from '@leaa/dashboard/src/utils';
 import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
 import { UpdateSettingInput } from '@leaa/common/src/dtos/setting';
 

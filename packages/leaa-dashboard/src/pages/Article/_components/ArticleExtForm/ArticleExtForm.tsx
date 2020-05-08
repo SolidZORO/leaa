@@ -6,7 +6,7 @@ import { Col, Form, Input, Row, DatePicker } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 import { Article } from '@leaa/common/src/entrys';
-import { msgMessage, msgError } from '@leaa/dashboard/src/utils';
+import { msgError } from '@leaa/dashboard/src/utils';
 import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
 import { UpdateArticleInput } from '@leaa/common/src/dtos/article';
 

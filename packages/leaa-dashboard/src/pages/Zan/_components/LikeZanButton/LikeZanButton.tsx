@@ -8,7 +8,7 @@ import { ButtonSize } from 'antd/es/button';
 import { Zan } from '@leaa/common/src/entrys';
 import { LIKE_ZAN, GET_ZAN } from '@leaa/dashboard/src/graphqls';
 import { Rcon } from '@leaa/dashboard/src/components';
-import { msgMessage, msgError } from '@leaa/dashboard/src/utils';
+import { msgMessage } from '@leaa/dashboard/src/utils';
 
 import style from './style.module.less';
 

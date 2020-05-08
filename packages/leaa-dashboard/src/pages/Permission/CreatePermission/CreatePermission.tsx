@@ -8,7 +8,7 @@ import { CreatePermissionInput } from '@leaa/common/src/dtos/permission';
 import { IPage, ICommenFormRef, ISubmitData } from '@leaa/dashboard/src/interfaces';
 import { CREATE_PERMISSION } from '@leaa/dashboard/src/graphqls';
 import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
-import { msgMessage, msgError } from '@leaa/dashboard/src/utils';
+import { msgMessage } from '@leaa/dashboard/src/utils';
 import { PageCard, SubmitBar, Rcon, HtmlMeta } from '@leaa/dashboard/src/components';
 
 import { PermissionInfoForm } from '../_components/PermissionInfoForm/PermissionInfoForm';

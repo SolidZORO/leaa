@@ -8,7 +8,7 @@ import { IPage } from '@leaa/dashboard/src/interfaces';
 import { HtmlMeta } from '@leaa/dashboard/src/components';
 
 import gql from 'graphql-tag';
-import { msgMessage, msgError } from '@leaa/dashboard/src/utils';
+import { msgMessage } from '@leaa/dashboard/src/utils';
 
 export const GET_TESTI18N = gql`
   query($x: Int) {

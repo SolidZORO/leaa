@@ -6,7 +6,7 @@ import { Col, Form, Input, InputNumber, Row, DatePicker } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 import { Promo } from '@leaa/common/src/entrys';
-import { msgMessage, msgError, formatDateTimeToDayStartOrEnd } from '@leaa/dashboard/src/utils';
+import { msgError, formatDateTimeToDayStartOrEnd } from '@leaa/dashboard/src/utils';
 import { IOnValidateFormResult, IDateRange } from '@leaa/dashboard/src/interfaces';
 import { UpdatePromoInput } from '@leaa/common/src/dtos/promo';
 

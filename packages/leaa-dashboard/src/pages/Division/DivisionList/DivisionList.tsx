@@ -6,7 +6,7 @@ import { Button } from 'antd';
 import SortableTree, { TreeItem, toggleExpandedForAll } from 'react-sortable-tree';
 
 import { Division } from '@leaa/common/src/entrys';
-import { msgMessage, msgError } from '@leaa/dashboard/src/utils';
+import { msgMessage } from '@leaa/dashboard/src/utils';
 import { PAGE_CARD_TITLE_CREATE_ICON, CREATE_BUTTON_ICON, UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { GET_DIVISIONS_TREE, DELETE_DIVISION } from '@leaa/dashboard/src/graphqls';
 import { IPage } from '@leaa/dashboard/src/interfaces';

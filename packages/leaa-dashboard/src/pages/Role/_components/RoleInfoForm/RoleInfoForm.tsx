@@ -5,7 +5,7 @@ import { Col, Form, Input, Row } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 import { Role } from '@leaa/common/src/entrys';
-import { msgMessage, msgError } from '@leaa/dashboard/src/utils';
+import { msgError } from '@leaa/dashboard/src/utils';
 import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
 import { UpdateRoleInput } from '@leaa/common/src/dtos/role';
 
