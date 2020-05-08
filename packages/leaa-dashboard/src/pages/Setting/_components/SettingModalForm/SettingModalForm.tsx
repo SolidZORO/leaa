@@ -5,7 +5,7 @@ import { Col, Form, Input, Row, Select, InputNumber } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 import { Setting } from '@leaa/common/src/entrys';
-import { msgError } from '@leaa/dashboard/src/utils';
+import { errorMessage } from '@leaa/dashboard/src/utils';
 import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
 import { UpdateSettingInput } from '@leaa/common/src/dtos/setting';
 
@@ -36,8 +36,8 @@ export const SettingModalForm = forwardRef((props: IProps, ref: React.Ref<any>) 
   const onValidateForm = async (): IOnValidateFormResult<UpdateSettingInput> => {
     try {
       return await form.validateFields();
-    } catch (error) {
-      return msgError(error.errorFields[0]?.errors[0]);
+    } catch (err) {
+      return errorMessage(err.errorFields[0]?.errors[0]);
     }
   };
 

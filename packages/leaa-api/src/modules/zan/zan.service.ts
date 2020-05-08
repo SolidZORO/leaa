@@ -12,7 +12,7 @@ import {
   isOneField,
   calcQbPageInfo,
   uuid,
-  msgError,
+  errorMessage,
 } from '@leaa/api/src/utils';
 
 const CLS_NAME = 'ZanService';
@@ -49,7 +49,7 @@ export class ZanService {
   }
 
   async zan(id: string, args?: IZanArgs, gqlCtx?: IGqlCtx): Promise<Zan | undefined> {
-    if (!id) throw msgError({ t: ['_error:notFoundId'], gqlCtx });
+    if (!id) throw errorMessage({ t: ['_error:notFoundId'], gqlCtx });
 
     let nextArgs: IZanArgs = {};
     if (args) {
@@ -60,7 +60,7 @@ export class ZanService {
     const whereQuery: { id: string; status?: number } = { id };
     const zan = await this.zanRepository.findOne({ ...nextArgs, where: whereQuery });
 
-    if (!zan) throw msgError({ t: ['_error:notFoundItem'], gqlCtx });
+    if (!zan) throw errorMessage({ t: ['_error:notFoundItem'], gqlCtx });
 
     const views = zan.views ? zan.views + 1 : 1;
     await this.zanRepository.update(zan.id, { views });
@@ -97,9 +97,9 @@ export class ZanService {
   async likeZan(id: string, gqlCtx?: IGqlCtx): Promise<Zan | undefined> {
     let zan = await this.zanRepository.findOne({ id }, { relations: ['users'] });
 
-    if (!zan) throw msgError({ t: ['_error:notFoundItem'], gqlCtx });
+    if (!zan) throw errorMessage({ t: ['_error:notFoundItem'], gqlCtx });
 
-    if (!gqlCtx?.user) throw msgError({ t: ['_error:notFoundAuth'], gqlCtx, statusCode: 401 });
+    if (!gqlCtx?.user) throw errorMessage({ t: ['_error:notFoundAuth'], gqlCtx, statusCode: 401 });
 
     if (gqlCtx?.user && !zan.users?.map((u) => u.id).includes(gqlCtx?.user?.id)) {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -116,13 +116,13 @@ export class ZanService {
   }
 
   async deleteZanUser(id: string, userId: string, gqlCtx?: IGqlCtx): Promise<Zan | undefined> {
-    if (!userId) throw msgError({ t: ['_error:notFoundUser'], gqlCtx });
+    if (!userId) throw errorMessage({ t: ['_error:notFoundUser'], gqlCtx });
 
     let zan = await this.zanRepository.findOne({ id }, { relations: ['users'] });
 
-    if (!zan) throw msgError({ t: ['_error:notFoundItem'], gqlCtx });
+    if (!zan) throw errorMessage({ t: ['_error:notFoundItem'], gqlCtx });
     if (!zan.users || zan.users.length <= 0 || !zan.users?.map((u) => u.id).includes(userId)) {
-      throw msgError({ t: ['_error:notFoundUser'], gqlCtx });
+      throw errorMessage({ t: ['_error:notFoundUser'], gqlCtx });
     }
 
     // @ts-ignore

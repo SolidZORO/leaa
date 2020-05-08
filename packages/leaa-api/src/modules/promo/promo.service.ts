@@ -17,7 +17,7 @@ import {
   isOneField,
   calcQbPageInfo,
   formatDateRangeTime,
-  msgError,
+  errorMessage,
 } from '@leaa/api/src/utils';
 import { IPromosArgs, IPromoArgs, IGqlCtx } from '@leaa/api/src/interfaces';
 
@@ -67,14 +67,14 @@ export class PromoService {
     }
 
     const promo = await this.promoRepository.findOne({ ...nextArgs, where: whereQuery });
-    if (!promo) throw msgError({ t: ['_error:notFoundItem'], gqlCtx });
+    if (!promo) throw errorMessage({ t: ['_error:notFoundItem'], gqlCtx });
 
     return promo;
   }
 
   async promoByCode(code: string, args?: IPromoArgs, gqlCtx?: IGqlCtx): Promise<Promo | undefined> {
     const promo = await this.promoRepository.findOne({ where: { code } });
-    if (!promo) throw msgError({ t: ['_error:notFoundItem'], gqlCtx });
+    if (!promo) throw errorMessage({ t: ['_error:notFoundItem'], gqlCtx });
 
     return this.promo(promo.id, args, gqlCtx);
   }
@@ -101,9 +101,9 @@ export class PromoService {
 
   async redeemPromo(info: RedeemPromoInput, gqlCtx?: IGqlCtx): Promise<Promo | undefined> {
     const promo = await this.promoByCode(info.code, undefined, gqlCtx);
-    if (!promo) throw msgError({ t: ['_error:notFoundItem'], gqlCtx });
+    if (!promo) throw errorMessage({ t: ['_error:notFoundItem'], gqlCtx });
 
-    if (!this.promoProperty.available(promo)) throw msgError({ t: ['_module:promo.unavailable'], gqlCtx });
+    if (!this.promoProperty.available(promo)) throw errorMessage({ t: ['_module:promo.unavailable'], gqlCtx });
 
     // [token user]
     let nextPromo = { ...promo, user_id: gqlCtx?.user?.id };

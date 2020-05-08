@@ -22,7 +22,7 @@ import {
   formatOrderByByUrl,
   initPaginationStateByUrl,
   calcTableDefaultSortOrder,
-  msgMessage,
+  successMessage,
   getAuthInfo,
 } from '@leaa/dashboard/src/utils';
 
@@ -63,7 +63,7 @@ export default (props: IPage) => {
   // mutation
   const [deleteTagMutate, deleteTagMutation] = useMutation<TagEntry>(DELETE_TAG, {
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
-    onCompleted: () => msgMessage(t('_lang:deletedSuccessfully')),
+    onCompleted: () => successMessage(t('_lang:deletedSuccessfully')),
     refetchQueries: () => [{ query: GET_TAGS, variables: getTagsVariables }],
   });
 

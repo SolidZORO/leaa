@@ -15,7 +15,7 @@ import {
   cutTags,
   can,
   formatHtmlToText,
-  msgError,
+  errorMessage,
 } from '@leaa/api/src/utils';
 
 import { TagService } from '@leaa/api/src/modules/tag/tag.service';
@@ -78,7 +78,7 @@ export class ArticleService {
   }
 
   async article(id: string, args?: IArticleArgs, gqlCtx?: IGqlCtx): Promise<Article | undefined> {
-    if (!id) throw msgError({ t: ['_error:notFoundId'], gqlCtx });
+    if (!id) throw errorMessage({ t: ['_error:notFoundId'], gqlCtx });
 
     let nextArgs: IArticleArgs = {};
 
@@ -97,7 +97,7 @@ export class ArticleService {
 
   async articleBySlug(slug: string, args?: IArticleArgs, gqlCtx?: IGqlCtx): Promise<Article | undefined> {
     const article = await this.articleRepository.findOne({ where: { slug } });
-    if (!article) throw msgError({ t: ['_error:notFoundItem'], gqlCtx });
+    if (!article) throw errorMessage({ t: ['_error:notFoundItem'], gqlCtx });
 
     return this.article(article.id, args, gqlCtx);
   }

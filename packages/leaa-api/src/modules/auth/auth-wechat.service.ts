@@ -9,7 +9,7 @@ import { Auth } from '@leaa/common/src/entrys';
 import { authConfig } from '@leaa/api/src/configs';
 import { IWechatInfo, ICreateAuthAndUserResult, IRequest, IResponse } from '@leaa/api/src/interfaces';
 import { CreateAuthInput } from '@leaa/common/src/dtos/auth';
-import { logger, randomString, msgError } from '@leaa/api/src/utils';
+import { logger, randomString, errorMessage } from '@leaa/api/src/utils';
 import { UserService } from '@leaa/api/src/modules/user/user.service';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 
@@ -119,14 +119,14 @@ export class AuthWechatService {
 
   async wechatCallback(req: IRequest, res: IResponse): Promise<void | string> {
     if (!req.query.state || !req.query.code) {
-      msgError({ text: 'Wechat Callback Error' });
+      errorMessage({ text: 'Wechat Callback Error' });
     }
 
     const { jumpUrl } = JSON.parse(decodeURIComponent(req.query.state));
     const { url, query } = queryString.parseUrl(jumpUrl);
 
     if (!query || !query.platform || !['wechat', 'weibo'].includes(query.platform as string)) {
-      msgError({ text: 'Wechat Callback Invalid Platform' });
+      errorMessage({ text: 'Wechat Callback Invalid Platform' });
     }
 
     const platform = (query.platform as string) || PLATFORM_NAME;

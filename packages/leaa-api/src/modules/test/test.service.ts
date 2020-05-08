@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
 import { IGqlCtx } from '@leaa/api/src/interfaces';
-import { msgError, msgMessage } from '@leaa/api/src/utils';
+import { errorMessage, successMessage } from '@leaa/api/src/utils';
 
 const CLS_NAME = 'TestService';
 
@@ -11,9 +11,9 @@ export class TestService {
     console.log('CLS_NAME', CLS_NAME, 'X(NUMBER)', x, 'LANG', gqlCtx?.lang, 'GQLCTX', gqlCtx);
 
     if (typeof x !== 'undefined' && x > 0) {
-      throw msgError({ t: ['_error:test'], gqlCtx });
+      throw errorMessage({ t: ['_error:test'], gqlCtx });
     }
 
-    return msgMessage({ t: ['_error:test'], gqlCtx });
+    return successMessage({ t: ['_error:test'], gqlCtx });
   }
 }

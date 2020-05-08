@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { notification } from 'antd';
 import { ApolloError } from 'apollo-client';
-import { msgError } from '@leaa/dashboard/src/utils';
+import { errorMessage } from '@leaa/dashboard/src/utils';
 
 import style from './style.module.less';
 
@@ -24,7 +24,7 @@ export const ErrorCard = (props: IProps) => {
   useEffect(() => {
     if (message) {
       // @ts-ignore
-      notification.error({ message: msgError(message), className: style['container'] });
+      notification.error({ message: errorMessage(message), className: style['container'] });
     }
   }, [message]);
 

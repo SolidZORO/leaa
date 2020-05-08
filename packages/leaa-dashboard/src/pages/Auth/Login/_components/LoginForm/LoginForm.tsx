@@ -37,7 +37,7 @@ export const LoginForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
   const onValidateForm = async () => {
     try {
       return await form.validateFields();
-    } catch (error) {
+    } catch (err) {
       return false;
     }
   };

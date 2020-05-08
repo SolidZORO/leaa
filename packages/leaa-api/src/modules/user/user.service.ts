@@ -17,7 +17,7 @@ import {
   calcQbPageInfo,
   can,
   logger,
-  msgError,
+  errorMessage,
 } from '@leaa/api/src/utils';
 import { JwtService } from '@nestjs/jwt';
 import { IUsersArgs, IUserArgs, IGqlCtx } from '@leaa/api/src/interfaces';
@@ -43,7 +43,7 @@ export class UserService {
       const u = await this.user(id);
 
       if (u && u.email && u.email === 'admin@local.com') {
-        throw msgError({ t: ['_error:pleaseDontModify'], gqlCtx });
+        throw errorMessage({ t: ['_error:pleaseDontModify'], gqlCtx });
       }
     }
 
@@ -84,7 +84,7 @@ export class UserService {
   }
 
   async user(id: string, args?: IUserArgs, gqlCtx?: IGqlCtx): Promise<User | undefined> {
-    if (!id) throw msgError({ t: ['_error:notFoundId'], gqlCtx });
+    if (!id) throw errorMessage({ t: ['_error:notFoundId'], gqlCtx });
 
     let nextArgs: IUserArgs = {};
 
@@ -97,7 +97,7 @@ export class UserService {
 
     const user = await this.userRepository.findOne({ ...nextArgs, where: whereQuery });
 
-    if (!user) throw msgError({ t: ['_error:notFoundItem'], gqlCtx });
+    if (!user) throw errorMessage({ t: ['_error:notFoundItem'], gqlCtx });
 
     return user;
   }
@@ -105,7 +105,7 @@ export class UserService {
   async userByToken(token?: string, args?: IUserArgs, gqlCtx?: IGqlCtx): Promise<User | undefined> {
     let nextArgs: IUserArgs = {};
 
-    if (!token) throw msgError({ t: ['_error:tokenNotFound'], gqlCtx });
+    if (!token) throw errorMessage({ t: ['_error:tokenNotFound'], gqlCtx });
 
     if (args) {
       nextArgs = args;
@@ -114,7 +114,7 @@ export class UserService {
 
     // @ts-ignore
     const userDecode: { id: any } = this.jwtService.decode(token);
-    if (!userDecode || !userDecode.id) throw msgError({ t: ['_error:tokenError'], gqlCtx });
+    if (!userDecode || !userDecode.id) throw errorMessage({ t: ['_error:tokenError'], gqlCtx });
 
     return this.userRepository.findOne(userDecode.id, nextArgs);
   }

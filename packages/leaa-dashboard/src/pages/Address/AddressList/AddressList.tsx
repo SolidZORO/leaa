@@ -22,7 +22,7 @@ import {
   formatOrderByByUrl,
   initPaginationStateByUrl,
   calcTableDefaultSortOrder,
-  msgMessage,
+  successMessage,
 } from '@leaa/dashboard/src/utils';
 
 import {
@@ -60,7 +60,7 @@ export default (props: IPage) => {
   // mutation
   const [deleteAddressMutate, deleteAddressMutation] = useMutation<Address>(DELETE_ADDRESS, {
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
-    onCompleted: () => msgMessage(t('_lang:deletedSuccessfully')),
+    onCompleted: () => successMessage(t('_lang:deletedSuccessfully')),
     refetchQueries: () => [{ query: GET_ADDRESSES, variables: getAddressesVariables }],
   });
 

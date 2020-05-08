@@ -9,7 +9,7 @@ import { User, Auth, Verification } from '@leaa/common/src/entrys';
 import { AuthsWithPaginationObject, CreateAuthInput } from '@leaa/common/src/dtos/auth';
 import { IJwtPayload } from '@leaa/common/src/interfaces';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
-import { checkAvailableUser, argsFormat, calcQbPageInfo, commonDelete, msgError } from '@leaa/api/src/utils';
+import { checkAvailableUser, argsFormat, calcQbPageInfo, commonDelete, errorMessage } from '@leaa/api/src/utils';
 import { UserService } from '@leaa/api/src/modules/user/user.service';
 import { permissionConfig } from '@leaa/api/src/configs';
 import { UserProperty } from '@leaa/api/src/modules/user/user.property';
@@ -51,7 +51,7 @@ export class AuthService {
 
     const items = await calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
 
-    if (!items) throw msgError({ t: ['_error:tokenNotBefore'], gqlCtx });
+    if (!items) throw errorMessage({ t: ['_error:tokenNotBefore'], gqlCtx });
 
     return items;
   }
@@ -73,7 +73,7 @@ export class AuthService {
   async deleteAuth(id: string, gqlCtx?: IGqlCtx): Promise<Auth | undefined> {
     const item = await commonDelete({ repository: this.authRepository, CLS_NAME, id });
 
-    if (!item) throw msgError({ t: ['_error:deleteItemFailed'], gqlCtx });
+    if (!item) throw errorMessage({ t: ['_error:deleteItemFailed'], gqlCtx });
 
     return item;
   }
@@ -96,46 +96,46 @@ export class AuthService {
   }
 
   getUserPayload(token?: string, gqlCtx?: IGqlCtx): IJwtPayload {
-    if (!token) throw msgError({ t: ['_error:tokenNotFound'], gqlCtx });
+    if (!token) throw errorMessage({ t: ['_error:tokenNotFound'], gqlCtx });
 
     let tokenWithoutBearer = token;
 
     if (token.slice(0, 6) === 'Bearer') {
       tokenWithoutBearer = token.slice(7);
     } else {
-      throw msgError({ t: ['_error:tokenNotPrefix'], gqlCtx, statusCode: 401 });
+      throw errorMessage({ t: ['_error:tokenNotPrefix'], gqlCtx, statusCode: 401 });
     }
 
     let payload;
 
     try {
       payload = jwt.verify(tokenWithoutBearer, this.configService.JWT_SECRET_KEY) as IJwtPayload | undefined;
-    } catch (error) {
-      if (error instanceof jwt.NotBeforeError) {
-        throw msgError({ t: ['_error:tokenNotBefore'], gqlCtx, statusCode: 401 });
+    } catch (err) {
+      if (err instanceof jwt.NotBeforeError) {
+        throw errorMessage({ t: ['_error:tokenNotBefore'], gqlCtx, statusCode: 401 });
       }
 
-      if (error instanceof jwt.TokenExpiredError) {
-        throw msgError({ t: ['_error:tokenExpired'], gqlCtx, statusCode: 401 });
+      if (err instanceof jwt.TokenExpiredError) {
+        throw errorMessage({ t: ['_error:tokenExpired'], gqlCtx, statusCode: 401 });
       }
 
-      if (error instanceof jwt.JsonWebTokenError) {
-        throw msgError({ t: ['_error:tokenError'], gqlCtx, statusCode: 401 });
+      if (err instanceof jwt.JsonWebTokenError) {
+        throw errorMessage({ t: ['_error:tokenError'], gqlCtx, statusCode: 401 });
       }
     }
 
     if (payload) return payload;
 
-    throw msgError({ t: ['_error:tokenVerifyFaild'], gqlCtx, statusCode: 401 });
+    throw errorMessage({ t: ['_error:tokenVerifyFaild'], gqlCtx, statusCode: 401 });
   }
 
   // MUST DO minimal cost query
   async validateUserByPayload(payload: IJwtPayload, gqlCtx?: IGqlCtx): Promise<User | undefined> {
     // gqlCtx in here ONLY for check `lang`
-    if (!payload) throw msgError({ t: ['_error:notFoundInfo'], gqlCtx });
+    if (!payload) throw errorMessage({ t: ['_error:notFoundInfo'], gqlCtx });
 
     if (!payload.iat || !payload.exp || !payload.id) {
-      throw msgError({ t: ['_error:notFoundInfo'], gqlCtx, statusCode: 401 });
+      throw errorMessage({ t: ['_error:notFoundInfo'], gqlCtx, statusCode: 401 });
     }
 
     const findUser = await this.userRepository.findOne({ relations: ['roles'], where: { id: payload.id } });
@@ -144,7 +144,7 @@ export class AuthService {
 
     // IMPORTANT! if user info is changed, Compare `iat` and `last_token_at`
     if (moment(payload.iattz).isBefore(moment(user.last_token_at))) {
-      throw msgError({ t: ['_error:userHasBeenUpdated'], gqlCtx, statusCode: 401 });
+      throw errorMessage({ t: ['_error:userHasBeenUpdated'], gqlCtx, statusCode: 401 });
     }
 
     const flatPermissions = await this.userProperty.flatPermissions(user);
@@ -188,13 +188,13 @@ export class AuthService {
   }
 
   async getUserByTicket(ticket: string, gqlCtx?: IGqlCtx): Promise<User> {
-    if (!ticket) throw msgError({ t: ['_error:notFoundTicket'], gqlCtx });
+    if (!ticket) throw errorMessage({ t: ['_error:notFoundTicket'], gqlCtx });
 
     const auth = await this.authRepository.findOne({ ticket });
-    if (!auth) throw msgError({ t: ['_error:notFoundAuth'], gqlCtx });
+    if (!auth) throw errorMessage({ t: ['_error:notFoundAuth'], gqlCtx });
 
     const user = await this.userService.user(auth.user_id || '0', { relations: ['roles'] });
-    if (!user) throw msgError({ t: ['_error:notFoundUser'], gqlCtx });
+    if (!user) throw errorMessage({ t: ['_error:notFoundUser'], gqlCtx });
 
     await this.clearTicket(auth.id);
 
@@ -207,14 +207,14 @@ export class AuthService {
 
   async bindUserIdToAuth(user: User, oid: string, gqlCtx?: IGqlCtx): Promise<any> {
     if (!oid || typeof Number(oid) !== 'number') {
-      throw msgError({ t: ['_error:notFoundId'], gqlCtx });
+      throw errorMessage({ t: ['_error:notFoundId'], gqlCtx });
     }
 
     const auth = await this.authRepository.findOne({ id: oid });
-    if (!auth) msgError({ t: ['_error:notFoundAuth'], gqlCtx });
+    if (!auth) errorMessage({ t: ['_error:notFoundAuth'], gqlCtx });
 
     const result = await this.authRepository.update(Number(oid), { user_id: user.id });
-    if (!result) msgError({ t: ['_error:bindingFailed'], gqlCtx });
+    if (!result) errorMessage({ t: ['_error:bindingFailed'], gqlCtx });
 
     return result;
   }

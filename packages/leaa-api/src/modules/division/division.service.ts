@@ -18,7 +18,7 @@ import {
   commonDelete,
   isOneField,
   logger,
-  msgError,
+  errorMessage,
 } from '@leaa/api/src/utils';
 import { IDivisionSource } from '@leaa/common/src/interfaces';
 import { SyncTagsToFileObject } from '@leaa/common/src/dtos/tag';
@@ -55,7 +55,7 @@ export class DivisionService {
   }
 
   async division(id: string, args?: IDivisionArgs): Promise<Division | undefined> {
-    if (!id) throw msgError({ t: ['_error:notFoundId'] });
+    if (!id) throw errorMessage({ t: ['_error:notFoundId'] });
 
     let nextArgs: IDivisionArgs = {};
 

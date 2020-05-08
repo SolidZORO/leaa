@@ -25,7 +25,7 @@ import {
   can,
   filenameAt1xToAt2x,
   calcQbPageInfo,
-  msgError,
+  errorMessage,
 } from '@leaa/api/src/utils';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 import { IAttachmentsArgs, IAttachmentArgs, IGqlCtx } from '@leaa/api/src/interfaces';
@@ -104,7 +104,7 @@ export class AttachmentService {
   }
 
   async attachment(uuid: string, args?: IAttachmentArgs, gqlCtx?: IGqlCtx): Promise<Attachment | undefined> {
-    if (!uuid) throw msgError({ t: ['_error:notFoundId'], gqlCtx });
+    if (!uuid) throw errorMessage({ t: ['_error:notFoundId'], gqlCtx });
 
     let nextArgs: IAttachmentArgs = {};
 
@@ -130,10 +130,10 @@ export class AttachmentService {
   }
 
   async updateAttachment(uuid: string, args: UpdateAttachmentInput, gqlCtx?: IGqlCtx): Promise<Attachment | undefined> {
-    if (!args) throw msgError({ t: ['_error:notFoundArgs'], gqlCtx });
+    if (!args) throw errorMessage({ t: ['_error:notFoundArgs'], gqlCtx });
 
     let prevItem = await this.attachmentRepository.findOne({ uuid });
-    if (!prevItem) throw msgError({ t: ['_error:notFoundItem'], gqlCtx });
+    if (!prevItem) throw errorMessage({ t: ['_error:notFoundItem'], gqlCtx });
 
     prevItem = { ...prevItem, ...args };
     const nextItem = await this.attachmentRepository.save(prevItem);
@@ -144,7 +144,7 @@ export class AttachmentService {
   }
 
   async updateAttachments(attachments: UpdateAttachmentsInput[], gqlCtx?: IGqlCtx): Promise<AttachmentsObject> {
-    if (!attachments) throw msgError({ t: ['_error:notFoundItems'], gqlCtx });
+    if (!attachments) throw errorMessage({ t: ['_error:notFoundItems'], gqlCtx });
 
     const batchUpdate = attachments.map(async (attachment) => {
       await this.attachmentRepository.update({ uuid: attachment.uuid }, _.omit(attachment, ['uuid']));
@@ -169,10 +169,10 @@ export class AttachmentService {
 
   async deleteAttachments(uuid: string[], gqlCtx?: IGqlCtx): Promise<DeleteAttachmentsObject | undefined> {
     const prevItems = await this.attachmentRepository.find({ uuid: In(uuid) });
-    if (!prevItems) throw msgError({ t: ['_error:notFoundItem'], gqlCtx });
+    if (!prevItems) throw errorMessage({ t: ['_error:notFoundItem'], gqlCtx });
 
     const nextItem = await this.attachmentRepository.remove(prevItems);
-    if (!nextItem) throw msgError({ t: ['_error:deleteItemFailed'], gqlCtx });
+    if (!nextItem) throw errorMessage({ t: ['_error:deleteItemFailed'], gqlCtx });
 
     prevItems.forEach((i) => {
       if (i.at2x) {

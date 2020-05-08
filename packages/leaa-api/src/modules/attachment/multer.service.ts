@@ -16,7 +16,7 @@ export class MulterService implements MulterOptionsFactory {
     // req: IRequest,
     req: any,
     file: Express.Multer.File,
-    cb: (error: Error | null, destination: string) => void,
+    cb: (err: Error | null, destination: string) => void,
   ): void => {
     try {
       mkdirp.sync(attachmentConfig.SAVE_DIR_BY_DISK);
@@ -28,7 +28,7 @@ export class MulterService implements MulterOptionsFactory {
     }
   };
 
-  filename = (req: any, file: Express.Multer.File, cb: (error: Error | null, filename: string) => void): void => {
+  filename = (req: any, file: Express.Multer.File, cb: (err: Error | null, filename: string) => void): void => {
     const filename = file.originalname.toLowerCase();
     const at2x = isAt2x(filename) ? '_2x' : '';
 

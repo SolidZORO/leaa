@@ -30,15 +30,15 @@ export class GraphqlService implements GqlOptionsFactory {
           lang: ctx.req.headers.lang,
         };
       },
-      formatError(error: any) {
-        if (typeof error.message === 'object') {
-          return error.message;
+      formatError(err: any) {
+        if (typeof err.message === 'object') {
+          return err.message;
         }
 
-        let nextMessage = error.message;
+        let nextMessage = err.message;
         let statusCode;
 
-        const messageInfo = error.message.split('__STATUS_CODE__');
+        const messageInfo = err.message.split('__STATUS_CODE__');
 
         if (messageInfo && messageInfo[0]) {
           nextMessage = messageInfo[0].replace(/(GraphQL error:|Context creation failed:)\s?/, '');
@@ -52,10 +52,10 @@ export class GraphqlService implements GqlOptionsFactory {
           statusCode = Number(messageInfo[1]);
         }
 
-        logger.error(`${nextMessage} / ${JSON.stringify(error)}\n`, CLS_NAME);
+        logger.error(`${nextMessage} / ${JSON.stringify(err)}\n`, CLS_NAME);
 
         return {
-          ...error,
+          ...err,
           message: nextMessage,
           statusCode,
         };

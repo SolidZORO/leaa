@@ -105,11 +105,11 @@ export const uploadFile = (
         onCallback.onUploadSuccess(response);
       }
     })
-    .catch((error: Error) => {
-      message.info(error.message);
+    .catch((err: Error) => {
+      message.info(err.message);
 
       if (onCallback && onCallback.onUploadCatch) {
-        onCallback.onUploadCatch(error);
+        onCallback.onUploadCatch(err);
       }
     });
 };

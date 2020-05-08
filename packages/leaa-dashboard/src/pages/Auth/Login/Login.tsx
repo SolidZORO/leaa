@@ -13,8 +13,8 @@ import {
   checkAuthIsAvailably,
   getGuestToken,
   removeGuestToken,
-  msgMessage,
-  msgError,
+  successMessage,
+  errorMessage,
 } from '@leaa/dashboard/src/utils';
 import { LOGIN_REDIRECT_URL } from '@leaa/dashboard/src/constants';
 import { AuthLoginInput } from '@leaa/common/src/dtos/auth';
@@ -43,7 +43,7 @@ export default (props: IPage) => {
 
   const setLogin = (login: any) => {
     if (login?.name && login.flatPermissions?.length === 0) {
-      msgMessage(t('_page:Auth.Login.notPermissions'));
+      successMessage(t('_page:Auth.Login.notPermissions'));
 
       return;
     }
@@ -101,7 +101,7 @@ export default (props: IPage) => {
       setLogin(loginByTicket);
     },
     onError: (e) => {
-      msgError(e.message);
+      errorMessage(e.message);
 
       return props.history.push('/login');
     },
@@ -144,7 +144,7 @@ export default (props: IPage) => {
   };
 
   const onBack = () => {
-    msgMessage(t('_page:Auth.Login.backTips'));
+    successMessage(t('_page:Auth.Login.backTips'));
   };
 
   return (

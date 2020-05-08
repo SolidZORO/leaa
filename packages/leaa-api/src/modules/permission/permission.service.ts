@@ -8,7 +8,7 @@ import {
   CreatePermissionInput,
   UpdatePermissionInput,
 } from '@leaa/common/src/dtos/permission';
-import { argsFormat, commonUpdate, commonDelete, isOneField, calcQbPageInfo, msgError } from '@leaa/api/src/utils';
+import { argsFormat, commonUpdate, commonDelete, isOneField, calcQbPageInfo, errorMessage } from '@leaa/api/src/utils';
 import { IPermissionsArgs, IPermissionArgs, IGqlCtx } from '@leaa/api/src/interfaces';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 import { permissionsSeed } from '@leaa/api/src/modules/seed/seed.data';
@@ -29,7 +29,7 @@ export class PermissionService {
       const p = await this.permission(id);
 
       if (p && p.slug && permissionsSeed.map((seed) => seed.slug).includes(p.slug as any)) {
-        throw msgError({ t: ['_error:pleaseDontModify'], gqlCtx });
+        throw errorMessage({ t: ['_error:pleaseDontModify'], gqlCtx });
       }
     }
 
@@ -67,7 +67,7 @@ export class PermissionService {
   }
 
   async permission(id: string, args?: IPermissionArgs): Promise<Permission | undefined> {
-    if (!id) throw msgError({ t: ['_error:notFoundId'] });
+    if (!id) throw errorMessage({ t: ['_error:notFoundId'] });
 
     let nextArgs: IPermissionArgs = {};
     if (args) nextArgs = args;

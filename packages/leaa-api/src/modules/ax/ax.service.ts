@@ -4,7 +4,15 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 import { Ax } from '@leaa/common/src/entrys';
 import { AxsWithPaginationObject, CreateAxInput, UpdateAxInput } from '@leaa/common/src/dtos/ax';
-import { argsFormat, can, commonUpdate, commonDelete, isOneField, calcQbPageInfo, msgError } from '@leaa/api/src/utils';
+import {
+  argsFormat,
+  can,
+  commonUpdate,
+  commonDelete,
+  isOneField,
+  calcQbPageInfo,
+  errorMessage,
+} from '@leaa/api/src/utils';
 import { IAxsArgs, IAxArgs, IGqlCtx } from '@leaa/api/src/interfaces';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 import { axSeed } from '@leaa/api/src/modules/seed/seed.data';
@@ -25,7 +33,7 @@ export class AxService {
       const ax = await this.ax(id, {}, gqlCtx);
 
       if (ax?.slug && axSeed.map((seed) => seed.slug).includes(ax.slug)) {
-        throw msgError({ t: ['_error:pleaseDontModify'], gqlCtx });
+        throw errorMessage({ t: ['_error:pleaseDontModify'], gqlCtx });
       }
     }
 
@@ -56,7 +64,7 @@ export class AxService {
   }
 
   async ax(id: string, args?: IAxArgs, gqlCtx?: IGqlCtx): Promise<Ax | undefined> {
-    if (!id) throw msgError({ t: ['_error:notFoundId'], gqlCtx });
+    if (!id) throw errorMessage({ t: ['_error:notFoundId'], gqlCtx });
 
     let nextArgs: IAxArgs = {};
     if (args) nextArgs = args;
@@ -69,14 +77,14 @@ export class AxService {
     }
 
     const ax = await this.axRepository.findOne({ ...nextArgs, where: whereQuery });
-    if (!ax) throw msgError({ t: ['_error:notFoundItem'], gqlCtx });
+    if (!ax) throw errorMessage({ t: ['_error:notFoundItem'], gqlCtx });
 
     return ax;
   }
 
   async axBySlug(slug: string, args?: IAxArgs, gqlCtx?: IGqlCtx): Promise<Ax | undefined> {
     const ax = await this.axRepository.findOne({ where: { slug } });
-    if (!ax) throw msgError({ t: ['_error:notFoundItem'], gqlCtx });
+    if (!ax) throw errorMessage({ t: ['_error:notFoundItem'], gqlCtx });
 
     return this.ax(ax.id, args, gqlCtx);
   }

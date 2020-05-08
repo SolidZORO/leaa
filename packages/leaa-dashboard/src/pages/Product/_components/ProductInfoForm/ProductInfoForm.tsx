@@ -5,7 +5,7 @@ import { Col, Form, Input, InputNumber, Row } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 import { Product } from '@leaa/common/src/entrys';
-import { msgError } from '@leaa/dashboard/src/utils';
+import { errorMessage } from '@leaa/dashboard/src/utils';
 import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
 import { UpdateProductInput } from '@leaa/common/src/dtos/product';
 
@@ -32,8 +32,8 @@ export const ProductInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =
   const onValidateForm = async (): IOnValidateFormResult<UpdateProductInput> => {
     try {
       return await form.validateFields();
-    } catch (error) {
-      return msgError(error.errorFields[0]?.errors[0]);
+    } catch (err) {
+      return errorMessage(err.errorFields[0]?.errors[0]);
     }
   };
 

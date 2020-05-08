@@ -4,15 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 import { Address, Permission, User } from '@leaa/common/src/entrys';
 import { AddressesWithPaginationObject, CreateAddressInput, UpdateAddressInput } from '@leaa/common/src/dtos/address';
-import {
-  argsFormat,
-  commonUpdate,
-  commonDelete,
-  isOneField,
-  calcQbPageInfo,
-  msgError,
-  msgMessage,
-} from '@leaa/api/src/utils';
+import { argsFormat, commonUpdate, commonDelete, calcQbPageInfo, errorMessage } from '@leaa/api/src/utils';
 import { IAddresssArgs, IAddressArgs } from '@leaa/api/src/interfaces';
 
 const CLS_NAME = 'AddressService';
@@ -46,7 +38,7 @@ export class AddressService {
   }
 
   async address(id: string, args?: IAddressArgs): Promise<Address | undefined> {
-    if (!id) throw msgError({ t: ['_error:notFoundId'] });
+    if (!id) throw errorMessage({ t: ['_error:notFoundId'] });
 
     let nextArgs: IAddressArgs = {};
 

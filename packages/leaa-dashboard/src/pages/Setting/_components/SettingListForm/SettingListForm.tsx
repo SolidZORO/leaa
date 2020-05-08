@@ -5,7 +5,7 @@ import { Form, Input, Select, Tooltip, Button } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 import { Setting } from '@leaa/common/src/entrys';
-import { msgError } from '@leaa/dashboard/src/utils';
+import { errorMessage } from '@leaa/dashboard/src/utils';
 import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
 import { UpdateSettingsInput } from '@leaa/common/src/dtos/setting';
 
@@ -103,8 +103,8 @@ export const SettingListForm = forwardRef((props: IProps, ref: React.Ref<any>) =
       const result = await form.validateFields();
 
       return Object.keys(result).map((k) => ({ id: k, value: result[k] }));
-    } catch (error) {
-      return msgError(error.errorFields[0]?.errors[0]);
+    } catch (err) {
+      return errorMessage(err.errorFields[0]?.errors[0]);
     }
   };
 

@@ -8,7 +8,7 @@ import { IPage } from '@leaa/dashboard/src/interfaces';
 import { HtmlMeta } from '@leaa/dashboard/src/components';
 
 import gql from 'graphql-tag';
-import { msgMessage } from '@leaa/dashboard/src/utils';
+import { successMessage } from '@leaa/dashboard/src/utils';
 
 export const GET_TESTI18N = gql`
   query($x: Int) {
@@ -25,7 +25,7 @@ export default (props: IPage) => {
 
   useEffect(() => {
     if (getTestI18nResult.data?.testI18n) {
-      msgMessage(getTestI18nResult.data?.testI18n);
+      successMessage(getTestI18nResult.data?.testI18n);
     }
   }, [getTestI18nResult.data]);
 

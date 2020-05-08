@@ -1,20 +1,11 @@
-import moment from 'moment';
 import { Injectable } from '@nestjs/common';
-import { Repository, Between } from 'typeorm';
+import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { Action } from '@leaa/common/src/entrys';
 import { IActionsArgs, IActionArgs, IGqlCtx } from '@leaa/api/src/interfaces';
 import { ActionsWithPaginationObject, CreateActionInput, UpdateActionInput } from '@leaa/common/src/dtos/action';
-import {
-  argsFormat,
-  calcQbPageInfo,
-  commonUpdate,
-  commonDelete,
-  isOneField,
-  msgError,
-  msgMessage,
-} from '@leaa/api/src/utils';
+import { argsFormat, calcQbPageInfo, commonUpdate, commonDelete, errorMessage } from '@leaa/api/src/utils';
 
 const CLS_NAME = 'ActionService';
 
@@ -46,7 +37,7 @@ export class ActionService {
   }
 
   async action(id: string, args?: IActionArgs, gqlCtx?: IGqlCtx): Promise<Action | undefined> {
-    if (!id) throw msgError({ t: ['_error:notFoundId'], gqlCtx });
+    if (!id) throw errorMessage({ t: ['_error:notFoundId'], gqlCtx });
 
     let nextArgs: IActionArgs = {};
 

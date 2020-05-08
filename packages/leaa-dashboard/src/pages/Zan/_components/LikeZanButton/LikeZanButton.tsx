@@ -8,7 +8,7 @@ import { ButtonSize } from 'antd/es/button';
 import { Zan } from '@leaa/common/src/entrys';
 import { LIKE_ZAN, GET_ZAN } from '@leaa/dashboard/src/graphqls';
 import { Rcon } from '@leaa/dashboard/src/components';
-import { msgMessage } from '@leaa/dashboard/src/utils';
+import { successMessage } from '@leaa/dashboard/src/utils';
 
 import style from './style.module.less';
 
@@ -33,7 +33,7 @@ export const LikeZanButton = (props: IProps) => {
     variables: { id: zanId },
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
     onCompleted(e) {
-      msgMessage(t('_page:Zan.liked'));
+      successMessage(t('_page:Zan.liked'));
     },
     refetchQueries: () => [{ query: GET_ZAN, variables: { id: zanId } }],
   });

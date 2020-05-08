@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { Article } from '@leaa/common/src/entrys';
 import { UpdateArticleInput } from '@leaa/common/src/dtos/article';
 import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
-import { msgError } from '@leaa/dashboard/src/utils';
+import { errorMessage } from '@leaa/dashboard/src/utils';
 
 import { SwitchNumber, SelectCategoryIdByTree, Rcon } from '@leaa/dashboard/src/components';
 
@@ -26,8 +26,8 @@ export const ArticleInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =
   const onValidateForm = async (): IOnValidateFormResult<UpdateArticleInput> => {
     try {
       return await form.validateFields();
-    } catch (error) {
-      return msgError(error.errorFields[0]?.errors[0]);
+    } catch (err) {
+      return errorMessage(err.errorFields[0]?.errors[0]);
     }
   };
 

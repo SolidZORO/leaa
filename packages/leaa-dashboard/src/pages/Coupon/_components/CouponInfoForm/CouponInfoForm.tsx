@@ -6,7 +6,7 @@ import { Col, Form, Input, InputNumber, Row, DatePicker } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 import { Coupon } from '@leaa/common/src/entrys';
-import { msgError, formatDateTimeToDayStartOrEnd } from '@leaa/dashboard/src/utils';
+import { errorMessage, formatDateTimeToDayStartOrEnd } from '@leaa/dashboard/src/utils';
 import { IOnValidateFormResult, IDateRange } from '@leaa/dashboard/src/interfaces';
 import { UpdateCouponInput } from '@leaa/common/src/dtos/coupon';
 
@@ -32,8 +32,8 @@ export const CouponInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =>
   const onValidateForm = async (): IOnValidateFormResult<UpdateCouponInput> => {
     try {
       return await form.validateFields();
-    } catch (error) {
-      return msgError(error.errorFields[0]?.errors[0]);
+    } catch (err) {
+      return errorMessage(err.errorFields[0]?.errors[0]);
     }
   };
 

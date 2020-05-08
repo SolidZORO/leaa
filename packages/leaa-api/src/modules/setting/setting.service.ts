@@ -18,7 +18,7 @@ import {
   isOneField,
   calcQbPageInfo,
   can,
-  msgError,
+  errorMessage,
 } from '@leaa/api/src/utils';
 import { ISettingsArgs, ISettingArgs, IGqlCtx } from '@leaa/api/src/interfaces';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
@@ -40,7 +40,7 @@ export class SettingService {
       const setting = await this.setting(id);
 
       if (setting && setting.slug && settingSeed.map((seed) => seed.slug).includes(setting.slug)) {
-        throw msgError({ t: ['_error:pleaseDontModify'], gqlCtx });
+        throw errorMessage({ t: ['_error:pleaseDontModify'], gqlCtx });
       }
     }
 
@@ -70,7 +70,7 @@ export class SettingService {
   }
 
   async setting(id: string, args?: ISettingArgs, gqlCtx?: IGqlCtx): Promise<Setting | undefined> {
-    if (!id) throw msgError({ t: ['_error:notFoundId'], gqlCtx });
+    if (!id) throw errorMessage({ t: ['_error:notFoundId'], gqlCtx });
 
     let nextArgs: ISettingArgs = {};
 
@@ -150,7 +150,7 @@ export class SettingService {
         items = await this.settingRepository.find({ id: In(settings.map((s) => s.id)) });
       })
       .catch(() => {
-        throw msgError({ t: ['_error:updateItemFailed'], gqlCtx });
+        throw errorMessage({ t: ['_error:updateItemFailed'], gqlCtx });
       });
 
     return {

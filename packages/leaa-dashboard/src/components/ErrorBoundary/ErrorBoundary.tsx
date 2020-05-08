@@ -29,7 +29,7 @@ export class ErrorBoundary extends React.Component<IProps, IState> {
     return { hasError: true };
   }
 
-  componentDidCatch(error: Error, info: {}) {
+  componentDidCatch(err: Error, info: {}) {
     // TIPS: Many times DidCatch is because the JS file can't be retrieved, so refresh it first.
     const qs = queryString.parse(window.location.search);
 
@@ -41,9 +41,9 @@ export class ErrorBoundary extends React.Component<IProps, IState> {
       });
     }
 
-    console.log('---- ALL-STACK ----', info, error);
+    console.log('---- ALL-STACK ----', info, err);
 
-    this.setState({ errorInfo: error.message });
+    this.setState({ errorInfo: err.message });
   }
 
   onGoToHome = () => {

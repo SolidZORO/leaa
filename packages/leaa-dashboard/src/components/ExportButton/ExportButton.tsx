@@ -49,8 +49,8 @@ export const ExportButton = (props: IProps) => {
 
         setLoading(false);
       })
-      .catch((error: Error) => {
-        message.info(error.message);
+      .catch((err: Error) => {
+        message.info(err.message);
 
         setLoading(false);
       })

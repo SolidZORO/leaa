@@ -20,7 +20,7 @@ import {
   isOneField,
   calcQbPageInfo,
   logger,
-  msgError,
+  errorMessage,
 } from '@leaa/api/src/utils';
 import { ITagsArgs, ITagArgs, IGqlCtx } from '@leaa/api/src/interfaces';
 import { dictConfig } from '@leaa/api/src/configs';
@@ -49,13 +49,13 @@ export class TagService {
   }
 
   async tag(id: string, args?: ITagArgs, gqlCtx?: IGqlCtx): Promise<Tag | undefined> {
-    if (!id) throw msgError({ t: ['_error:notFoundId'], gqlCtx });
+    if (!id) throw errorMessage({ t: ['_error:notFoundId'], gqlCtx });
 
     let nextArgs: ITagArgs = {};
     if (args) nextArgs = args;
 
     const tag = this.tagRepository.findOne(id, nextArgs);
-    if (!tag) throw msgError({ t: ['_error:notFoundItem'], gqlCtx });
+    if (!tag) throw errorMessage({ t: ['_error:notFoundItem'], gqlCtx });
 
     return tag;
   }

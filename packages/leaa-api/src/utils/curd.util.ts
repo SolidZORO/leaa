@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { Repository } from 'typeorm';
 
-import { logger, msgError } from '@leaa/api/src/utils';
+import { logger, errorMessage } from '@leaa/api/src/utils';
 import { IGqlCtx } from '@leaa/api/src/interfaces';
 
 export const isOneField = (args: {}, fieldName: string) => _.keys(args).length === 1 && _.has(args, fieldName);
@@ -25,14 +25,14 @@ export const commonUpdate = async <Entity, UpdateInput>({
 }: ICommonUpdate<Entity, UpdateInput>): Promise<any | undefined> => {
   if (!args) {
     logger.warn(`Not Found Args by #${id} (Update)`, CLS_NAME);
-    throw msgError({ t: ['_error:notFoundArgs'], gqlCtx });
+    throw errorMessage({ t: ['_error:notFoundArgs'], gqlCtx });
   }
 
   const prevItem = await repository.findOne(id);
 
   if (!prevItem) {
     logger.warn(`Not Found Item #${id} (Update)`, CLS_NAME);
-    throw msgError({ t: ['_error:notFoundItem'], gqlCtx });
+    throw errorMessage({ t: ['_error:notFoundItem'], gqlCtx });
   }
 
   const nextItem = await repository.save({
@@ -69,14 +69,14 @@ export const commonDelete = async <Entity, UpdateInput>({
 
   if (!prevItem) {
     logger.warn(`Not Found Item #${id} (Delete)`, CLS_NAME);
-    throw msgError({ t: ['_error:notFoundItem'], gqlCtx });
+    throw errorMessage({ t: ['_error:notFoundItem'], gqlCtx });
   }
 
   const nextItem = await repository.remove(prevItem);
 
   if (!nextItem) {
     logger.warn(`Delete Item #${id} Failed`, CLS_NAME);
-    throw msgError({ t: ['_error:deleteItemFailed'], gqlCtx });
+    throw errorMessage({ t: ['_error:deleteItemFailed'], gqlCtx });
   }
 
   logger.warn(`Delete Item #${id} Successful: ${JSON.stringify(nextItem)}\n\n`, CLS_NAME);

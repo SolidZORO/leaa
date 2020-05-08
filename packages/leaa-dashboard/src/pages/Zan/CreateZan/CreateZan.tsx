@@ -8,7 +8,7 @@ import { CREATE_ZAN } from '@leaa/dashboard/src/graphqls';
 import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { CreateZanInput } from '@leaa/common/src/dtos/zan';
 import { IPage, ICommenFormRef, ISubmitData } from '@leaa/dashboard/src/interfaces';
-import { msgMessage } from '@leaa/dashboard/src/utils';
+import { successMessage } from '@leaa/dashboard/src/utils';
 
 import { PageCard, HtmlMeta, Rcon, SubmitBar } from '@leaa/dashboard/src/components';
 
@@ -28,7 +28,7 @@ export default (props: IPage) => {
     variables: submitVariables,
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
     onCompleted({ createZan }) {
-      msgMessage(t('_lang:createdSuccessfully'));
+      successMessage(t('_lang:createdSuccessfully'));
       props.history.push(`/zans/${createZan.id}`);
     },
   });

@@ -44,15 +44,15 @@ const handleMessage = ({ type, t, text, statusCode, gqlCtx, CLS_NAME }: IHandleM
   }
 
   if (type === 'error') {
-    logger.error(`${message} / <${userText}>`, CLS_NAME || 'msgError');
+    logger.error(`${message} / <${userText}>`, CLS_NAME || 'errorMessage');
     return Error(message);
   }
 
   return message;
 };
 
-export const msgError = ({ t, text, statusCode, gqlCtx, CLS_NAME }: IErrorParams): Error =>
+export const errorMessage = ({ t, text, statusCode, gqlCtx, CLS_NAME }: IErrorParams): Error =>
   handleMessage({ type: 'error', t, text, statusCode, gqlCtx, CLS_NAME }) as Error;
 
-export const msgMessage = ({ t, text, statusCode, gqlCtx, CLS_NAME }: IMessageParams): string =>
+export const successMessage = ({ t, text, statusCode, gqlCtx, CLS_NAME }: IMessageParams): string =>
   handleMessage({ type: 'message', t, text, statusCode, gqlCtx, CLS_NAME }) as string;

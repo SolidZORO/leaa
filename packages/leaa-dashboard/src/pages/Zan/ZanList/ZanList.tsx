@@ -22,7 +22,7 @@ import {
   formatOrderByByUrl,
   initPaginationStateByUrl,
   calcTableDefaultSortOrder,
-  msgMessage,
+  successMessage,
 } from '@leaa/dashboard/src/utils';
 
 import {
@@ -63,7 +63,7 @@ export default (props: IPage) => {
   // mutation
   const [deleteZanMutate, deleteZanMutation] = useMutation<Zan>(DELETE_ZAN, {
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
-    onCompleted: () => msgMessage(t('_lang:deletedSuccessfully')),
+    onCompleted: () => successMessage(t('_lang:deletedSuccessfully')),
     refetchQueries: () => [{ query: GET_ZANS, variables: getZansVariables }],
   });
 
