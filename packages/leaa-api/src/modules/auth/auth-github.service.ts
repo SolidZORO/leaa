@@ -10,7 +10,7 @@ import { CreateAuthInput } from '@leaa/common/src/dtos/auth';
 import { AuthService } from '@leaa/api/src/modules/auth/auth.service';
 import { UserService } from '@leaa/api/src/modules/user/user.service';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
-import { loggerUtil, stringUtil } from '@leaa/api/src/utils';
+import { logger, randomString } from '@leaa/api/src/utils';
 
 const CLS_NAME = 'AuthGithubService';
 const PLATFORM_NAME = 'github';
@@ -24,7 +24,7 @@ export class AuthGithubService {
     private readonly configService: ConfigService,
   ) {}
 
-  private nextTicket = { ticket: stringUtil.random(), ticket_at: new Date() };
+  private nextTicket = { ticket: randomString(), ticket_at: new Date() };
 
   async createUserAndAuth(req: IRequest, profile: Profile): Promise<ICreateAuthAndUserResult> {
     const newUser = await this.userService.createUser({
@@ -86,7 +86,7 @@ export class AuthGithubService {
         userAuth,
       });
     } catch (err) {
-      loggerUtil.error(`Github Validate, ${JSON.stringify(err)}`, CLS_NAME, err);
+      logger.error(`Github Validate, ${JSON.stringify(err)}`, CLS_NAME, err);
       done(err, false);
     }
   }
@@ -94,7 +94,7 @@ export class AuthGithubService {
   async githubCallback(req: IRequestGithubCallback, res: IResponse): Promise<void | string> {
     const url = `${req.headers.referer}login?ticket=${req.user?.userAuth?.ticket}`;
 
-    loggerUtil.log(`Github Callback URL, ${url}`, CLS_NAME);
+    logger.log(`Github Callback URL, ${url}`, CLS_NAME);
 
     res.redirect(url);
   }

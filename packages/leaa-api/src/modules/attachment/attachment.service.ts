@@ -18,7 +18,15 @@ import {
   ISaveInLocalSignature,
   IAttachmentParams,
 } from '@leaa/common/src/interfaces';
-import { argsUtil, loggerUtil, pathUtil, authUtil, attachmentUtil, paginationUtil, msgUtil } from '@leaa/api/src/utils';
+import {
+  argsFormat,
+  logger,
+  getAt2xPath,
+  can,
+  filenameAt1xToAt2x,
+  calcQbPageInfo,
+  msgError,
+} from '@leaa/api/src/utils';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 import { IAttachmentsArgs, IAttachmentArgs, IGqlCtx } from '@leaa/api/src/interfaces';
 import { SaveInOssService } from '@leaa/api/src/modules/attachment/save-in-oss.service';
@@ -44,13 +52,13 @@ export class AttachmentService {
       return this.saveInLocalServer.getSignature();
     }
 
-    loggerUtil.warn('Signature Missing SAVE_IN... Params', CLS_NAME);
+    logger.warn('Signature Missing SAVE_IN... Params', CLS_NAME);
 
     return null;
   }
 
   async attachments(args: IAttachmentsArgs, gqlCtx?: IGqlCtx): Promise<AttachmentsWithPaginationObject> {
-    const nextArgs = argsUtil.format(args, gqlCtx);
+    const nextArgs = argsFormat(args, gqlCtx);
 
     const moduleFilter: IAttachmentDbFilterField = {};
 
@@ -82,7 +90,7 @@ export class AttachmentService {
       });
     }
 
-    if (!gqlCtx?.user || (gqlCtx.user && !authUtil.can(gqlCtx.user, 'attachment.list-read--all-status'))) {
+    if (!gqlCtx?.user || (gqlCtx.user && !can(gqlCtx.user, 'attachment.list-read--all-status'))) {
       qb.andWhere('status = :status', { status: 1 });
     }
 
@@ -92,11 +100,11 @@ export class AttachmentService {
       qb.orderBy({ sort: 'ASC' }).addOrderBy('created_at', 'ASC');
     }
 
-    return paginationUtil.calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
+    return calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
   async attachment(uuid: string, args?: IAttachmentArgs, gqlCtx?: IGqlCtx): Promise<Attachment | undefined> {
-    if (!uuid) throw msgUtil.error({ t: ['_error:notFoundId'], gqlCtx });
+    if (!uuid) throw msgError({ t: ['_error:notFoundId'], gqlCtx });
 
     let nextArgs: IAttachmentArgs = {};
 
@@ -104,7 +112,7 @@ export class AttachmentService {
 
     const whereQuery: { uuid: string; status?: number } = { uuid };
 
-    if (!gqlCtx?.user || (gqlCtx.user && !authUtil.can(gqlCtx.user, 'attachment.item-read--all-status'))) {
+    if (!gqlCtx?.user || (gqlCtx.user && !can(gqlCtx.user, 'attachment.item-read--all-status'))) {
       whereQuery.status = 1;
     }
 
@@ -122,21 +130,21 @@ export class AttachmentService {
   }
 
   async updateAttachment(uuid: string, args: UpdateAttachmentInput, gqlCtx?: IGqlCtx): Promise<Attachment | undefined> {
-    if (!args) throw msgUtil.error({ t: ['_error:notFoundArgs'], gqlCtx });
+    if (!args) throw msgError({ t: ['_error:notFoundArgs'], gqlCtx });
 
     let prevItem = await this.attachmentRepository.findOne({ uuid });
-    if (!prevItem) throw msgUtil.error({ t: ['_error:notFoundItem'], gqlCtx });
+    if (!prevItem) throw msgError({ t: ['_error:notFoundItem'], gqlCtx });
 
     prevItem = { ...prevItem, ...args };
     const nextItem = await this.attachmentRepository.save(prevItem);
 
-    loggerUtil.updateLog({ id: uuid, prevItem, nextItem, constructorName: CLS_NAME });
+    logger.updateLog({ id: uuid, prevItem, nextItem, constructorName: CLS_NAME });
 
     return nextItem;
   }
 
   async updateAttachments(attachments: UpdateAttachmentsInput[], gqlCtx?: IGqlCtx): Promise<AttachmentsObject> {
-    if (!attachments) throw msgUtil.error({ t: ['_error:notFoundItems'], gqlCtx });
+    if (!attachments) throw msgError({ t: ['_error:notFoundItems'], gqlCtx });
 
     const batchUpdate = attachments.map(async (attachment) => {
       await this.attachmentRepository.update({ uuid: attachment.uuid }, _.omit(attachment, ['uuid']));
@@ -146,12 +154,12 @@ export class AttachmentService {
 
     await Promise.all(batchUpdate)
       .then(async () => {
-        loggerUtil.log(JSON.stringify(attachments), CLS_NAME);
+        logger.log(JSON.stringify(attachments), CLS_NAME);
 
         items = await this.attachmentRepository.find({ uuid: In(attachments.map((a) => a.uuid)) });
       })
       .catch(() => {
-        loggerUtil.error(JSON.stringify(attachments), CLS_NAME);
+        logger.error(JSON.stringify(attachments), CLS_NAME);
       });
 
     return {
@@ -161,47 +169,47 @@ export class AttachmentService {
 
   async deleteAttachments(uuid: string[], gqlCtx?: IGqlCtx): Promise<DeleteAttachmentsObject | undefined> {
     const prevItems = await this.attachmentRepository.find({ uuid: In(uuid) });
-    if (!prevItems) throw msgUtil.error({ t: ['_error:notFoundItem'], gqlCtx });
+    if (!prevItems) throw msgError({ t: ['_error:notFoundItem'], gqlCtx });
 
     const nextItem = await this.attachmentRepository.remove(prevItems);
-    if (!nextItem) throw msgUtil.error({ t: ['_error:deleteItemFailed'], gqlCtx });
+    if (!nextItem) throw msgError({ t: ['_error:deleteItemFailed'], gqlCtx });
 
     prevItems.forEach((i) => {
       if (i.at2x) {
         try {
           // delete local
-          fs.unlinkSync(`${this.configService.PUBLIC_DIR}${pathUtil.getAt2xPath(i.path)}`);
+          fs.unlinkSync(`${this.configService.PUBLIC_DIR}${getAt2xPath(i.path)}`);
 
           // delete oss
-          loggerUtil.log(`delete local 2x file ${i.path}\n\n`, CLS_NAME);
+          logger.log(`delete local 2x file ${i.path}\n\n`, CLS_NAME);
 
           if (i.in_oss) {
-            this.saveInOssServer.client.delete(attachmentUtil.filenameAt1xToAt2x(i.path.substr(1)));
+            this.saveInOssServer.client.delete(filenameAt1xToAt2x(i.path.substr(1)));
 
-            loggerUtil.log(`delete oss 2x file ${i.path}\n\n`, CLS_NAME);
+            logger.log(`delete oss 2x file ${i.path}\n\n`, CLS_NAME);
           }
         } catch (err) {
-          loggerUtil.error(`delete _2x item ${i.path} fail: ${JSON.stringify(i)}\n\n`, CLS_NAME, err);
+          logger.error(`delete _2x item ${i.path} fail: ${JSON.stringify(i)}\n\n`, CLS_NAME, err);
         }
       }
 
       try {
         // delete local
         fs.unlinkSync(`${this.configService.PUBLIC_DIR}${i.path}`);
-        loggerUtil.log(`delete local 1x file ${i.path}\n\n`, CLS_NAME);
+        logger.log(`delete local 1x file ${i.path}\n\n`, CLS_NAME);
 
         // delete oss
         if (i.in_oss) {
           this.saveInOssServer.client.delete(i.path.substr(1));
 
-          loggerUtil.log(`delete oss 1x file ${i.path}\n\n`, CLS_NAME);
+          logger.log(`delete oss 1x file ${i.path}\n\n`, CLS_NAME);
         }
       } catch (err) {
-        loggerUtil.error(`delete file ${i.path} fail: ${JSON.stringify(i)}\n\n`, CLS_NAME, err);
+        logger.error(`delete file ${i.path} fail: ${JSON.stringify(i)}\n\n`, CLS_NAME, err);
       }
     });
 
-    loggerUtil.log(`delete all-file ${uuid} successful: ${JSON.stringify(nextItem)}\n\n`, CLS_NAME);
+    logger.log(`delete all-file ${uuid} successful: ${JSON.stringify(nextItem)}\n\n`, CLS_NAME);
 
     return {
       items: nextItem.map((i) => i.uuid),

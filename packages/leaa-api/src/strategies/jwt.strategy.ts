@@ -6,7 +6,7 @@ import { JwtService } from '@nestjs/jwt';
 import { IJwtPayload } from '@leaa/common/src/interfaces';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 import { AuthService } from '@leaa/api/src/modules/auth/auth.service';
-import { authUtil } from '@leaa/api/src/utils';
+import { checkAvailableUser } from '@leaa/api/src/utils';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
@@ -27,6 +27,6 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
   async validate(payload: IJwtPayload) {
     const user = await this.authService.validateUserByPayload(payload);
 
-    return user && authUtil.checkAvailableUser(user);
+    return user && checkAvailableUser(user);
   }
 }

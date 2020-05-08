@@ -10,7 +10,16 @@ import {
   UpdateSettingsInput,
   SettingsObject,
 } from '@leaa/common/src/dtos/setting';
-import { argsUtil, loggerUtil, curdUtil, paginationUtil, authUtil, msgUtil } from '@leaa/api/src/utils';
+import {
+  argsFormat,
+  logger,
+  commonUpdate,
+  commonDelete,
+  isOneField,
+  calcQbPageInfo,
+  can,
+  msgError,
+} from '@leaa/api/src/utils';
 import { ISettingsArgs, ISettingArgs, IGqlCtx } from '@leaa/api/src/interfaces';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 import { settingSeed } from '@leaa/api/src/modules/seed/seed.data';
@@ -31,7 +40,7 @@ export class SettingService {
       const setting = await this.setting(id);
 
       if (setting && setting.slug && settingSeed.map((seed) => seed.slug).includes(setting.slug)) {
-        throw msgUtil.error({ t: ['_error:pleaseDontModify'], gqlCtx });
+        throw msgError({ t: ['_error:pleaseDontModify'], gqlCtx });
       }
     }
 
@@ -39,7 +48,7 @@ export class SettingService {
   }
 
   async settings(args: ISettingsArgs, gqlCtx?: IGqlCtx): Promise<SettingsWithPaginationObject> {
-    const nextArgs = argsUtil.format(args, gqlCtx);
+    const nextArgs = argsFormat(args, gqlCtx);
 
     const qb = this.settingRepository.createQueryBuilder();
     qb.select().orderBy({ sort: 'ASC' }).addOrderBy('id', 'ASC');
@@ -53,15 +62,15 @@ export class SettingService {
     }
 
     // can
-    if (!gqlCtx?.user || (gqlCtx.user && !authUtil.can(gqlCtx.user, 'setting.list-read--private'))) {
+    if (!gqlCtx?.user || (gqlCtx.user && !can(gqlCtx.user, 'setting.list-read--private'))) {
       qb.andWhere('private = :private', { private: 0 });
     }
 
-    return paginationUtil.calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
+    return calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
   async setting(id: string, args?: ISettingArgs, gqlCtx?: IGqlCtx): Promise<Setting | undefined> {
-    if (!id) throw msgUtil.error({ t: ['_error:notFoundId'], gqlCtx });
+    if (!id) throw msgError({ t: ['_error:notFoundId'], gqlCtx });
 
     let nextArgs: ISettingArgs = {};
 
@@ -72,7 +81,7 @@ export class SettingService {
     const whereQuery: { id: string; private?: number } = { id };
 
     // can
-    if (!gqlCtx?.user || (gqlCtx.user && !authUtil.can(gqlCtx.user, 'setting.list-read--private'))) {
+    if (!gqlCtx?.user || (gqlCtx.user && !can(gqlCtx.user, 'setting.list-read--private'))) {
       whereQuery.private = 0;
     }
 
@@ -84,7 +93,7 @@ export class SettingService {
     if (!setting) {
       const message = 'Not Found Setting';
 
-      loggerUtil.warn(message, CLS_NAME);
+      logger.warn(message, CLS_NAME);
 
       return undefined;
     }
@@ -96,7 +105,7 @@ export class SettingService {
     const whereQuery: { slug: string; private?: number } = { slug };
 
     // can
-    if (!gqlCtx?.user || (gqlCtx.user && !authUtil.can(gqlCtx.user, 'setting.list-read--private'))) {
+    if (!gqlCtx?.user || (gqlCtx.user && !can(gqlCtx.user, 'setting.list-read--private'))) {
       whereQuery.private = 0;
     }
 
@@ -105,7 +114,7 @@ export class SettingService {
     if (!setting) {
       const message = 'Not Found SettingBySlug';
 
-      loggerUtil.warn(message, CLS_NAME);
+      logger.warn(message, CLS_NAME);
 
       return undefined;
     }
@@ -122,11 +131,11 @@ export class SettingService {
     args: UpdateSettingInput & FindOneOptions,
     gqlCtx?: IGqlCtx,
   ): Promise<Setting | undefined> {
-    if (curdUtil.isOneField(args, 'status')) {
-      return curdUtil.commonUpdate({ repository: this.settingRepository, CLS_NAME, id, args });
+    if (isOneField(args, 'status')) {
+      return commonUpdate({ repository: this.settingRepository, CLS_NAME, id, args });
     }
 
-    return curdUtil.commonUpdate({ repository: this.settingRepository, CLS_NAME, id, args });
+    return commonUpdate({ repository: this.settingRepository, CLS_NAME, id, args });
   }
 
   async updateSettings(settings: UpdateSettingsInput[], gqlCtx?: IGqlCtx): Promise<SettingsObject> {
@@ -141,7 +150,7 @@ export class SettingService {
         items = await this.settingRepository.find({ id: In(settings.map((s) => s.id)) });
       })
       .catch(() => {
-        throw msgUtil.error({ t: ['_error:updateItemFailed'], gqlCtx });
+        throw msgError({ t: ['_error:updateItemFailed'], gqlCtx });
       });
 
     return {
@@ -152,6 +161,6 @@ export class SettingService {
   async deleteSetting(id: string, gqlCtx?: IGqlCtx): Promise<Setting | undefined> {
     if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id, gqlCtx);
 
-    return curdUtil.commonDelete({ repository: this.settingRepository, CLS_NAME, id });
+    return commonDelete({ repository: this.settingRepository, CLS_NAME, id });
   }
 }

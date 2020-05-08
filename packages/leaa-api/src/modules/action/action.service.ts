@@ -6,7 +6,15 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Action } from '@leaa/common/src/entrys';
 import { IActionsArgs, IActionArgs, IGqlCtx } from '@leaa/api/src/interfaces';
 import { ActionsWithPaginationObject, CreateActionInput, UpdateActionInput } from '@leaa/common/src/dtos/action';
-import { argsUtil, paginationUtil, curdUtil, msgUtil } from '@leaa/api/src/utils';
+import {
+  argsFormat,
+  calcQbPageInfo,
+  commonUpdate,
+  commonDelete,
+  isOneField,
+  msgError,
+  msgMessage,
+} from '@leaa/api/src/utils';
 
 const CLS_NAME = 'ActionService';
 
@@ -15,7 +23,7 @@ export class ActionService {
   constructor(@InjectRepository(Action) private readonly actionRepository: Repository<Action>) {}
 
   async actions(args: IActionsArgs, gqlCtx?: IGqlCtx): Promise<ActionsWithPaginationObject> {
-    const nextArgs: IActionsArgs = argsUtil.format(args, gqlCtx);
+    const nextArgs: IActionsArgs = argsFormat(args, gqlCtx);
 
     const PRIMARY_TABLE = 'actions';
     const qb = await this.actionRepository.createQueryBuilder(PRIMARY_TABLE);
@@ -34,11 +42,11 @@ export class ActionService {
       qb.orderBy(`${PRIMARY_TABLE}.${nextArgs.orderBy}`, nextArgs.orderSort);
     }
 
-    return paginationUtil.calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
+    return calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
   async action(id: string, args?: IActionArgs, gqlCtx?: IGqlCtx): Promise<Action | undefined> {
-    if (!id) throw msgUtil.error({ t: ['_error:notFoundId'], gqlCtx });
+    if (!id) throw msgError({ t: ['_error:notFoundId'], gqlCtx });
 
     let nextArgs: IActionArgs = {};
 
@@ -54,7 +62,7 @@ export class ActionService {
   }
 
   async updateAction(id: number, args: UpdateActionInput): Promise<Action | undefined> {
-    return curdUtil.commonUpdate({
+    return commonUpdate({
       repository: this.actionRepository,
       CLS_NAME,
       id,
@@ -63,6 +71,6 @@ export class ActionService {
   }
 
   async deleteAction(id: string): Promise<Action | undefined> {
-    return curdUtil.commonDelete({ repository: this.actionRepository, CLS_NAME, id });
+    return commonDelete({ repository: this.actionRepository, CLS_NAME, id });
   }
 }

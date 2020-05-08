@@ -1,4 +1,4 @@
-import { loggerUtil } from '@leaa/api/src/utils/logger.util';
+import { logger } from '@leaa/api/src/utils/logger.util';
 import i18next, { TFunctionKeys, InitOptions } from 'i18next';
 import { IGqlCtx } from '@leaa/api/src/interfaces';
 
@@ -44,20 +44,15 @@ const handleMessage = ({ type, t, text, statusCode, gqlCtx, CLS_NAME }: IHandleM
   }
 
   if (type === 'error') {
-    loggerUtil.error(`${message} / <${userText}>`, CLS_NAME || 'msgUtil');
+    logger.error(`${message} / <${userText}>`, CLS_NAME || 'msgError');
     return Error(message);
   }
 
   return message;
 };
 
-const error = ({ t, text, statusCode, gqlCtx, CLS_NAME }: IErrorParams): Error =>
+export const msgError = ({ t, text, statusCode, gqlCtx, CLS_NAME }: IErrorParams): Error =>
   handleMessage({ type: 'error', t, text, statusCode, gqlCtx, CLS_NAME }) as Error;
 
-const message = ({ t, text, statusCode, gqlCtx, CLS_NAME }: IMessageParams): string =>
+export const msgMessage = ({ t, text, statusCode, gqlCtx, CLS_NAME }: IMessageParams): string =>
   handleMessage({ type: 'message', t, text, statusCode, gqlCtx, CLS_NAME }) as string;
-
-export const msgUtil = {
-  error,
-  message,
-};

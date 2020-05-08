@@ -9,7 +9,16 @@ import { UsersWithPaginationObject, CreateUserInput, UpdateUserInput } from '@le
 import { RoleService } from '@leaa/api/src/modules/role/role.service';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 import { AttachmentService } from '@leaa/api/src/modules/attachment/attachment.service';
-import { argsUtil, curdUtil, paginationUtil, authUtil, loggerUtil, msgUtil } from '@leaa/api/src/utils';
+import {
+  argsFormat,
+  commonUpdate,
+  commonDelete,
+  isOneField,
+  calcQbPageInfo,
+  can,
+  logger,
+  msgError,
+} from '@leaa/api/src/utils';
 import { JwtService } from '@nestjs/jwt';
 import { IUsersArgs, IUserArgs, IGqlCtx } from '@leaa/api/src/interfaces';
 
@@ -34,7 +43,7 @@ export class UserService {
       const u = await this.user(id);
 
       if (u && u.email && u.email === 'admin@local.com') {
-        throw msgUtil.error({ t: ['_error:pleaseDontModify'], gqlCtx });
+        throw msgError({ t: ['_error:pleaseDontModify'], gqlCtx });
       }
     }
 
@@ -42,13 +51,13 @@ export class UserService {
   }
 
   async users(args: IUsersArgs, gqlCtx?: IGqlCtx): Promise<UsersWithPaginationObject> {
-    const nextArgs: IUsersArgs = argsUtil.format(args, gqlCtx);
+    const nextArgs: IUsersArgs = argsFormat(args, gqlCtx);
 
     const PRIMARY_TABLE = 'users';
     const qb = this.userRepository.createQueryBuilder(PRIMARY_TABLE);
 
     // relations
-    if (gqlCtx?.user && authUtil.can(gqlCtx.user, 'role.list-read')) {
+    if (gqlCtx?.user && can(gqlCtx.user, 'role.list-read')) {
       qb.leftJoinAndSelect(`${PRIMARY_TABLE}.roles`, 'roles');
     }
 
@@ -67,15 +76,15 @@ export class UserService {
     }
 
     // can
-    if (!(gqlCtx?.user && authUtil.can(gqlCtx.user, 'user.list-read--all-status'))) {
+    if (!(gqlCtx?.user && can(gqlCtx.user, 'user.list-read--all-status'))) {
       qb.andWhere('status = :status', { status: 1 });
     }
 
-    return paginationUtil.calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
+    return calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
   async user(id: string, args?: IUserArgs, gqlCtx?: IGqlCtx): Promise<User | undefined> {
-    if (!id) throw msgUtil.error({ t: ['_error:notFoundId'], gqlCtx });
+    if (!id) throw msgError({ t: ['_error:notFoundId'], gqlCtx });
 
     let nextArgs: IUserArgs = {};
 
@@ -88,7 +97,7 @@ export class UserService {
 
     const user = await this.userRepository.findOne({ ...nextArgs, where: whereQuery });
 
-    if (!user) throw msgUtil.error({ t: ['_error:notFoundItem'], gqlCtx });
+    if (!user) throw msgError({ t: ['_error:notFoundItem'], gqlCtx });
 
     return user;
   }
@@ -96,7 +105,7 @@ export class UserService {
   async userByToken(token?: string, args?: IUserArgs, gqlCtx?: IGqlCtx): Promise<User | undefined> {
     let nextArgs: IUserArgs = {};
 
-    if (!token) throw msgUtil.error({ t: ['_error:tokenNotFound'], gqlCtx });
+    if (!token) throw msgError({ t: ['_error:tokenNotFound'], gqlCtx });
 
     if (args) {
       nextArgs = args;
@@ -105,7 +114,7 @@ export class UserService {
 
     // @ts-ignore
     const userDecode: { id: any } = this.jwtService.decode(token);
-    if (!userDecode || !userDecode.id) throw msgUtil.error({ t: ['_error:tokenError'], gqlCtx });
+    if (!userDecode || !userDecode.id) throw msgError({ t: ['_error:tokenError'], gqlCtx });
 
     return this.userRepository.findOne(userDecode.id, nextArgs);
   }
@@ -135,11 +144,11 @@ export class UserService {
   async updateUser(id: string, args: UpdateUserInput, gqlCtx?: IGqlCtx): Promise<User | undefined> {
     if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id, gqlCtx);
 
-    if (curdUtil.isOneField(args, 'status')) {
-      return curdUtil.commonUpdate({ repository: this.userRepository, CLS_NAME, id, args });
+    if (isOneField(args, 'status')) {
+      return commonUpdate({ repository: this.userRepository, CLS_NAME, id, args });
     }
 
-    if (curdUtil.isOneField(args, 'avatar_url')) {
+    if (isOneField(args, 'avatar_url')) {
       // sync avatar
       if (args.avatar_url === null) {
         const avatarParams = {
@@ -153,7 +162,7 @@ export class UserService {
         if (attachments?.items && attachments?.items.length !== 0) {
           const uuids = attachments.items.map((a) => a.uuid);
 
-          loggerUtil.log(
+          logger.log(
             `Update User Delete Avatar, PARAMS: ${JSON.stringify(avatarParams)}, UUIDS: ${JSON.stringify(uuids)}`,
             CLS_NAME,
           );
@@ -162,7 +171,7 @@ export class UserService {
         }
       }
 
-      return curdUtil.commonUpdate({ repository: this.userRepository, CLS_NAME, id, args });
+      return commonUpdate({ repository: this.userRepository, CLS_NAME, id, args });
     }
 
     const prevUser = await this.user(id, { relations: ['roles'] });
@@ -192,7 +201,7 @@ export class UserService {
       nextArgs.password = await this.createPassword(args.password);
     }
 
-    const nextUser = await curdUtil.commonUpdate({
+    const nextUser = await commonUpdate({
       repository: this.userRepository,
       CLS_NAME,
       id,
@@ -224,14 +233,14 @@ export class UserService {
 
     if (auths) {
       const deleteAuths = await this.authRepository.remove(auths);
-      loggerUtil.log(`Delete User All Auth, ${JSON.stringify(deleteAuths)}`, CLS_NAME);
+      logger.log(`Delete User All Auth, ${JSON.stringify(deleteAuths)}`, CLS_NAME);
     }
   }
 
   async deleteUser(id: string, gqlCtx?: IGqlCtx): Promise<User | undefined> {
     if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id, gqlCtx);
 
-    const deleteUser = await curdUtil.commonDelete({ repository: this.userRepository, CLS_NAME, id });
+    const deleteUser = await commonDelete({ repository: this.userRepository, CLS_NAME, id });
 
     if (deleteUser) {
       try {

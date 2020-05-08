@@ -3,7 +3,7 @@ import nodejieba from 'nodejieba';
 
 import { dictConfig } from '@leaa/api/src/configs';
 
-const cutTags = (text: string, limit = 5): string[] => {
+export const cutTags = (text: string, limit = 5): string[] => {
   if (fs.existsSync(dictConfig.TAGS_DICT_PATH)) {
     nodejieba.load({
       // dict: nodejieba.DEFAULT_DICT,
@@ -18,8 +18,4 @@ const cutTags = (text: string, limit = 5): string[] => {
   const jiebaExtractTags: { word: string; weight: number }[] = nodejieba.extract(text, limit);
 
   return jiebaExtractTags.map((tag) => tag.word);
-};
-
-export const dictUtil = {
-  cutTags,
 };

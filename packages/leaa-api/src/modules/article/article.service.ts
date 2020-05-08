@@ -6,14 +6,16 @@ import { Article, Category, Tag } from '@leaa/common/src/entrys';
 import { IArticlesArgs, IArticleArgs, IGqlCtx } from '@leaa/api/src/interfaces';
 import { ArticlesWithPaginationObject, CreateArticleInput, UpdateArticleInput } from '@leaa/common/src/dtos/article';
 import {
-  argsUtil,
-  paginationUtil,
-  curdUtil,
-  stringUtil,
-  dictUtil,
-  authUtil,
-  htmlUtil,
-  msgUtil,
+  argsFormat,
+  calcQbPageInfo,
+  commonUpdate,
+  commonDelete,
+  isOneField,
+  getSlug,
+  cutTags,
+  can,
+  formatHtmlToText,
+  msgError,
 } from '@leaa/api/src/utils';
 
 import { TagService } from '@leaa/api/src/modules/tag/tag.service';
@@ -30,7 +32,7 @@ export class ArticleService {
   ) {}
 
   async articles(args: IArticlesArgs, gqlCtx?: IGqlCtx): Promise<ArticlesWithPaginationObject> {
-    const nextArgs: IArticlesArgs = argsUtil.format(args, gqlCtx);
+    const nextArgs: IArticlesArgs = argsFormat(args, gqlCtx);
 
     const PRIMARY_TABLE = 'articles';
     const qb = await this.articleRepository.createQueryBuilder(PRIMARY_TABLE);
@@ -68,15 +70,15 @@ export class ArticleService {
     }
 
     // can
-    if (!gqlCtx?.user || (gqlCtx.user && !authUtil.can(gqlCtx.user, 'article.list-read--all-status'))) {
+    if (!gqlCtx?.user || (gqlCtx.user && !can(gqlCtx.user, 'article.list-read--all-status'))) {
       qb.andWhere('status = :status', { status: 1 });
     }
 
-    return paginationUtil.calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
+    return calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
   async article(id: string, args?: IArticleArgs, gqlCtx?: IGqlCtx): Promise<Article | undefined> {
-    if (!id) throw msgUtil.error({ t: ['_error:notFoundId'], gqlCtx });
+    if (!id) throw msgError({ t: ['_error:notFoundId'], gqlCtx });
 
     let nextArgs: IArticleArgs = {};
 
@@ -86,7 +88,7 @@ export class ArticleService {
     }
 
     // can
-    if (!gqlCtx?.user || (gqlCtx.user && !authUtil.can(gqlCtx.user, 'article.item-read--all-status'))) {
+    if (!gqlCtx?.user || (gqlCtx.user && !can(gqlCtx.user, 'article.item-read--all-status'))) {
       nextArgs.where = { status: 1 };
     }
 
@@ -95,7 +97,7 @@ export class ArticleService {
 
   async articleBySlug(slug: string, args?: IArticleArgs, gqlCtx?: IGqlCtx): Promise<Article | undefined> {
     const article = await this.articleRepository.findOne({ where: { slug } });
-    if (!article) throw msgUtil.error({ t: ['_error:notFoundItem'], gqlCtx });
+    if (!article) throw msgError({ t: ['_error:notFoundItem'], gqlCtx });
 
     return this.article(article.id, args, gqlCtx);
   }
@@ -115,8 +117,8 @@ export class ArticleService {
   }
 
   async updateArticle(id: string, args: UpdateArticleInput): Promise<Article | undefined> {
-    if (curdUtil.isOneField(args, 'status')) {
-      return curdUtil.commonUpdate({ repository: this.articleRepository, CLS_NAME, id, args });
+    if (isOneField(args, 'status')) {
+      return commonUpdate({ repository: this.articleRepository, CLS_NAME, id, args });
     }
 
     const relationArgs: { tags?: Tag[]; categories?: Category[] } = {};
@@ -141,23 +143,23 @@ export class ArticleService {
 
     const nextArgs = {
       ...args,
-      slug: !args.slug && args.title ? stringUtil.getSlug(args.title, args.title) : trimSlug,
+      slug: !args.slug && args.title ? getSlug(args.title, args.title) : trimSlug,
       description: trimDescription,
     };
 
     // auto add tag from article content (by jieba)
     if (args.content && (!args.tagIds || (args.tagIds && args.tagIds.length === 0))) {
-      const allText = htmlUtil.formatHtmlToText(args.content, args.title);
+      const allText = formatHtmlToText(args.content, args.title);
 
       // batch create tags
-      relationArgs.tags = await this.tagService.createTags(dictUtil.cutTags(allText));
+      relationArgs.tags = await this.tagService.createTags(cutTags(allText));
 
       // ⚠️ sync tags
       // execute only once when the article has no tag, reducing server pressure
       await this.tagService.syncTagsToDictFile();
     }
 
-    return curdUtil.commonUpdate({
+    return commonUpdate({
       repository: this.articleRepository,
       CLS_NAME,
       id,
@@ -167,6 +169,6 @@ export class ArticleService {
   }
 
   async deleteArticle(id: string): Promise<Article | undefined> {
-    return curdUtil.commonDelete({ repository: this.articleRepository, CLS_NAME, id });
+    return commonDelete({ repository: this.articleRepository, CLS_NAME, id });
   }
 }

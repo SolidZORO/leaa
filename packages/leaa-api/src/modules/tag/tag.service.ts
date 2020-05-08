@@ -13,7 +13,15 @@ import {
   SyncTagsToFileObject,
 } from '@leaa/common/src/dtos/tag';
 
-import { argsUtil, curdUtil, paginationUtil, loggerUtil, msgUtil } from '@leaa/api/src/utils';
+import {
+  argsFormat,
+  commonUpdate,
+  commonDelete,
+  isOneField,
+  calcQbPageInfo,
+  logger,
+  msgError,
+} from '@leaa/api/src/utils';
 import { ITagsArgs, ITagArgs, IGqlCtx } from '@leaa/api/src/interfaces';
 import { dictConfig } from '@leaa/api/src/configs';
 
@@ -24,7 +32,7 @@ export class TagService {
   constructor(@InjectRepository(Tag) private readonly tagRepository: Repository<Tag>) {}
 
   async tags(args: ITagsArgs, gqlCtx?: IGqlCtx): Promise<TagsWithPaginationObject> {
-    const nextArgs = argsUtil.format(args, gqlCtx);
+    const nextArgs = argsFormat(args, gqlCtx);
 
     const qb = this.tagRepository.createQueryBuilder();
     qb.select().orderBy(nextArgs.orderBy || 'created_at', nextArgs.orderSort);
@@ -37,17 +45,17 @@ export class TagService {
       });
     }
 
-    return paginationUtil.calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
+    return calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
   async tag(id: string, args?: ITagArgs, gqlCtx?: IGqlCtx): Promise<Tag | undefined> {
-    if (!id) throw msgUtil.error({ t: ['_error:notFoundId'], gqlCtx });
+    if (!id) throw msgError({ t: ['_error:notFoundId'], gqlCtx });
 
     let nextArgs: ITagArgs = {};
     if (args) nextArgs = args;
 
     const tag = this.tagRepository.findOne(id, nextArgs);
-    if (!tag) throw msgUtil.error({ t: ['_error:notFoundItem'], gqlCtx });
+    if (!tag) throw msgError({ t: ['_error:notFoundItem'], gqlCtx });
 
     return tag;
   }
@@ -69,12 +77,12 @@ export class TagService {
 
   async syncTagsToDictFile(): Promise<SyncTagsToFileObject> {
     if (!fs.existsSync(dictConfig.TAGS_DICT_PATH)) {
-      loggerUtil.log(`syncTagsToDictFile, not exists ${dictConfig.DICT_DIR}`, CLS_NAME);
+      logger.log(`syncTagsToDictFile, not exists ${dictConfig.DICT_DIR}`, CLS_NAME);
 
       try {
         mkdirp.sync(dictConfig.DICT_DIR);
       } catch (err) {
-        loggerUtil.log(`syncTagsToDictFile, mkdirp ${dictConfig.DICT_DIR} ${JSON.stringify(err)}`, CLS_NAME);
+        logger.log(`syncTagsToDictFile, mkdirp ${dictConfig.DICT_DIR} ${JSON.stringify(err)}`, CLS_NAME);
         throw Error(err.message);
       }
     }
@@ -85,7 +93,7 @@ export class TagService {
       fs.writeFileSync(dictConfig.TAGS_DICT_PATH, items.map((item) => item.name).join('\n'));
     }
 
-    loggerUtil.log(`syncTagsToDictFile, ${total} tags`, CLS_NAME);
+    logger.log(`syncTagsToDictFile, ${total} tags`, CLS_NAME);
 
     return {
       status: `Synced ${total} Tags`,
@@ -115,15 +123,14 @@ export class TagService {
         tags = data;
       })
       .catch(() => {
-        loggerUtil.error(`Create Tags Faild: ${JSON.stringify(tags)}`, CLS_NAME);
+        logger.error(`Create Tags Faild: ${JSON.stringify(tags)}`, CLS_NAME);
       });
 
     return tags;
   }
 
   async updateTag(id: string, args: UpdateTagInput, gqlCtx?: IGqlCtx): Promise<Tag | undefined> {
-    if (curdUtil.isOneField(args, 'status'))
-      return curdUtil.commonUpdate({ repository: this.tagRepository, CLS_NAME, id, args });
+    if (isOneField(args, 'status')) return commonUpdate({ repository: this.tagRepository, CLS_NAME, id, args });
 
     let nextArgs: UpdateTagInput = args;
 
@@ -131,10 +138,10 @@ export class TagService {
       nextArgs = { ...args, name: this.formatTag(args.name) };
     }
 
-    return curdUtil.commonUpdate({ repository: this.tagRepository, CLS_NAME, id, args: nextArgs });
+    return commonUpdate({ repository: this.tagRepository, CLS_NAME, id, args: nextArgs });
   }
 
   async deleteTag(id: string, gqlCtx?: IGqlCtx): Promise<Tag | undefined> {
-    return curdUtil.commonDelete({ repository: this.tagRepository, CLS_NAME, id });
+    return commonDelete({ repository: this.tagRepository, CLS_NAME, id });
   }
 }

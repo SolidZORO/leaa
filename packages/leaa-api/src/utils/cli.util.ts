@@ -2,7 +2,7 @@ import { IDotEnv } from '@leaa/api/src/interfaces';
 
 import pkg from '@leaa/api/package.json';
 
-export const envInfo = ({
+export const envInfoForCli = ({
   config,
   NODE_ENV,
   PUBLIC_PATH,
@@ -30,8 +30,4 @@ export const envInfo = ({
   console.log('     - DIRNAME ', DIRNAME);
   console.log('     - PUBLIC  ', PUBLIC_PATH);
   console.log('\n\n');
-};
-
-export const cliUtil = {
-  envInfo,
 };

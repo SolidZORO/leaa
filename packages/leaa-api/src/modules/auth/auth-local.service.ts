@@ -10,7 +10,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 import { User, Verification, Action } from '@leaa/common/src/entrys';
 import { AuthLoginInput, AuthSignupInput } from '@leaa/common/src/dtos/auth';
-import { authUtil, loggerUtil, msgUtil } from '@leaa/api/src/utils';
+import { checkAvailableUser, logger, msgError } from '@leaa/api/src/utils';
 import { UserService } from '@leaa/api/src/modules/user/user.service';
 import { AuthService } from '@leaa/api/src/modules/auth/auth.service';
 import { ActionService } from '@leaa/api/src/modules/action/action.service';
@@ -36,7 +36,7 @@ export class AuthLocalService {
   ) {}
 
   async login(args: AuthLoginInput, gqlCtx?: IGqlCtx): Promise<User | undefined> {
-    if (!gqlCtx || !gqlCtx.req?.ip) throw msgUtil.error({ t: ['_error:notFoundIp'], gqlCtx });
+    if (!gqlCtx || !gqlCtx.req?.ip) throw msgError({ t: ['_error:notFoundIp'], gqlCtx });
 
     const account = xss.filterXSS(args.email.trim().toLowerCase());
 
@@ -58,7 +58,7 @@ export class AuthLocalService {
       account,
     });
 
-    const user = authUtil.checkAvailableUser(findUser, gqlCtx);
+    const user = checkAvailableUser(findUser, gqlCtx);
 
     // log with user_id
     if (loginAction?.id) await this.actionService.updateAction(loginAction.id, { user_id: user.id });
@@ -81,10 +81,10 @@ export class AuthLocalService {
     // check Captcha
     // `SHOW_CAPTCHA_BY_LOGIN_ERROR_COUNT` MUST + 2, becuse user has not seen the verify code now.
     if (loginCount >= SHOW_CAPTCHA_BY_LOGIN_ERROR_COUNT + 2) {
-      if (!args.guestToken) throw msgUtil.error({ t: ['_error:notFoundToken'], gqlCtx });
+      if (!args.guestToken) throw msgError({ t: ['_error:notFoundToken'], gqlCtx });
 
       const captcha = await this.verificationRepository.findOne({ token: args.guestToken, code: args.captcha });
-      if (!captcha) throw msgUtil.error({ t: ['_error:verifyCodeNotMatch'], gqlCtx });
+      if (!captcha) throw msgError({ t: ['_error:verifyCodeNotMatch'], gqlCtx });
     }
 
     //
@@ -96,14 +96,14 @@ export class AuthLocalService {
 
     if (!passwordIsMatch) {
       const errorMessage = `User (${account}) Info Not Match`;
-      loggerUtil.log(errorMessage, CLS_NAME);
+      logger.log(errorMessage, CLS_NAME);
 
-      throw msgUtil.error({ t: ['_error:userInfoNotMatch'], gqlCtx });
+      throw msgError({ t: ['_error:userInfoNotMatch'], gqlCtx });
     }
 
     if (user.password) delete user.password;
 
-    loggerUtil.log(`Local Login Auth, ${JSON.stringify(user)}`, CLS_NAME);
+    logger.log(`Local Login Auth, ${JSON.stringify(user)}`, CLS_NAME);
 
     // last, clear Action and Verification
     await this.clearLoginActionAndVerification({ token: args.guestToken });
@@ -141,16 +141,16 @@ export class AuthLocalService {
         status: 1,
       });
 
-      loggerUtil.log(`Local Singup Succeed, ${JSON.stringify({ ...newUser, password: '******' })}`, CLS_NAME);
+      logger.log(`Local Singup Succeed, ${JSON.stringify({ ...newUser, password: '******' })}`, CLS_NAME);
 
       if (uid) {
         await this.authService.bindUserIdToAuth(newUser, uid, gqlCtx);
         await this.authService.clearTicket(uid);
       }
     } catch (error) {
-      loggerUtil.log(`Local Singup Error, ${JSON.stringify(error)}`, CLS_NAME);
+      logger.log(`Local Singup Error, ${JSON.stringify(error)}`, CLS_NAME);
 
-      throw msgUtil.error({ t: ['_error:signupFailed'], gqlCtx });
+      throw msgError({ t: ['_error:signupFailed'], gqlCtx });
     }
 
     return this.authService.addTokenToUser(newUser);
@@ -172,7 +172,7 @@ export class AuthLocalService {
   }
 
   async guest(token?: string, gqlCtx?: IGqlCtx): Promise<Verification | undefined> {
-    if (!gqlCtx || !gqlCtx.req?.ip) throw msgUtil.error({ t: ['_error:notFoundIp'], gqlCtx });
+    if (!gqlCtx || !gqlCtx.req?.ip) throw msgError({ t: ['_error:notFoundIp'], gqlCtx });
 
     // Prevent hacking ( 30min - MAX - 100req)
     const guestCount = await this.actionRepository.count({
@@ -184,7 +184,7 @@ export class AuthLocalService {
       },
     });
 
-    if (guestCount >= SHOW_TOO_MANY_REQUEST_COUNT) throw msgUtil.error({ t: ['_error:tooManyRequest'], gqlCtx });
+    if (guestCount >= SHOW_TOO_MANY_REQUEST_COUNT) throw msgError({ t: ['_error:tooManyRequest'], gqlCtx });
 
     // Controller Captcha Show (for Dashboard)
     // Just showCaptcha, but whether login depends on the `account` at Table `actions`

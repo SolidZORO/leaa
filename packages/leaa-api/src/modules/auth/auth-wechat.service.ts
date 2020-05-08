@@ -9,7 +9,7 @@ import { Auth } from '@leaa/common/src/entrys';
 import { authConfig } from '@leaa/api/src/configs';
 import { IWechatInfo, ICreateAuthAndUserResult, IRequest, IResponse } from '@leaa/api/src/interfaces';
 import { CreateAuthInput } from '@leaa/common/src/dtos/auth';
-import { loggerUtil, stringUtil, msgUtil } from '@leaa/api/src/utils';
+import { logger, randomString, msgError } from '@leaa/api/src/utils';
 import { UserService } from '@leaa/api/src/modules/user/user.service';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 
@@ -35,7 +35,7 @@ export class AuthWechatService {
   private wechat = this.checkWechatConfig() && new Wechat(authConfig.wechat);
   private wechatOAuth = this.checkWechatConfig() && new OAuth(authConfig.wechat);
   private miniProgram = this.checkMiniProgramConfig() && new MiniProgram(authConfig.wechat);
-  private nextTicket = { ticket: stringUtil.random(), ticket_at: new Date() };
+  private nextTicket = { ticket: randomString(), ticket_at: new Date() };
 
   async verifySignature(req: IRequest): Promise<string | null> {
     const signature = await this.wechat.jssdk.verifySignature(req.query);
@@ -112,21 +112,21 @@ export class AuthWechatService {
     // eslint-disable-next-line max-len
     const url = `/get-weixin-code.html?appid=${authConfig.wechat.appId}&scope=${nextScope}&state=${nextStateParams}&redirect_uri=${authConfig.wechat.wechatRedirectUrl}`;
 
-    loggerUtil.log(`Wechat Login URL, ${url}`, CLS_NAME);
+    logger.log(`Wechat Login URL, ${url}`, CLS_NAME);
 
     res.redirect(url);
   }
 
   async wechatCallback(req: IRequest, res: IResponse): Promise<void | string> {
     if (!req.query.state || !req.query.code) {
-      msgUtil.error({ text: 'Wechat Callback Error' });
+      msgError({ text: 'Wechat Callback Error' });
     }
 
     const { jumpUrl } = JSON.parse(decodeURIComponent(req.query.state));
     const { url, query } = queryString.parseUrl(jumpUrl);
 
     if (!query || !query.platform || !['wechat', 'weibo'].includes(query.platform as string)) {
-      msgUtil.error({ text: 'Wechat Callback Invalid Platform' });
+      msgError({ text: 'Wechat Callback Invalid Platform' });
     }
 
     const platform = (query.platform as string) || PLATFORM_NAME;
@@ -156,9 +156,9 @@ export class AuthWechatService {
         userAuth = newAuth;
       }
 
-      loggerUtil.log(`Wechat Callback Auth, ${JSON.stringify(userAuth)}`, CLS_NAME);
+      logger.log(`Wechat Callback Auth, ${JSON.stringify(userAuth)}`, CLS_NAME);
     } catch (err) {
-      loggerUtil.error('Wechat Callback Error', CLS_NAME, err);
+      logger.error('Wechat Callback Error', CLS_NAME, err);
     }
 
     let nextQuery = query;
@@ -169,7 +169,7 @@ export class AuthWechatService {
 
     const redirectUrl = `${url}?${queryString.stringify(nextQuery)}`;
 
-    loggerUtil.log(`Wechat Redirect URL, ${redirectUrl}`, CLS_NAME);
+    logger.log(`Wechat Redirect URL, ${redirectUrl}`, CLS_NAME);
 
     res.redirect(redirectUrl);
   }

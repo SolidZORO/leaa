@@ -2,7 +2,7 @@ import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Attachment } from '@leaa/common/src/entrys';
-import { pathUtil } from '@leaa/api/src/utils';
+import { getAt2xPath } from '@leaa/api/src/utils';
 import { attachmentConfig } from '@leaa/api/src/configs';
 
 // const CLS_NAME = 'AttachmentProperty';
@@ -35,7 +35,7 @@ export const buildUrlAt2x = (attachment: Attachment): string | null => {
   }
 
   if (attachment.at2x) {
-    return pathUtil.getAt2xPath(buildUrl(attachment));
+    return getAt2xPath(buildUrl(attachment));
   }
 
   return null;

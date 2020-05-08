@@ -1,6 +1,6 @@
 import path from 'path';
 
-const getAt2xPath = (filepath: string | null): string | null => {
+export const getAt2xPath = (filepath: string | null): string | null => {
   if (!filepath) {
     return null;
   }
@@ -20,8 +20,4 @@ const getAt2xPath = (filepath: string | null): string | null => {
   // console.log(`${dir}/${filename}@2x${ext}`);
 
   return `${dir}/${filename}_2x${ext}`;
-};
-
-export const pathUtil = {
-  getAt2xPath,
 };

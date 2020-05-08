@@ -4,7 +4,7 @@ import { diff } from 'jsondiffpatch';
 
 const DailyRotateFile = require('winston-daily-rotate-file');
 
-const log = (
+const baseLog = (
   type: 'error' | 'warn' | 'info' | 'debug' | 'verbose',
   message: string,
   context?: string,
@@ -53,12 +53,12 @@ const log = (
   return winstonLogger.log(type, result);
 };
 
-export const loggerUtil = {
-  log: (message: string, context?: string) => log('info', message, context),
-  error: (message: string, context?: string, trace?: string) => log('error', `❌ ${message}`, context, trace),
-  warn: (message: string, context?: string) => log('warn', `⚠️ ${message}`, context),
-  debug: (message: string, context?: string) => log('debug', message, context),
-  verbose: (message: string, context?: string) => log('verbose', message, context),
+export const logger = {
+  log: (message: string, context?: string) => baseLog('info', message, context),
+  error: (message: string, context?: string, trace?: string) => baseLog('error', `❌ ${message}`, context, trace),
+  warn: (message: string, context?: string) => baseLog('warn', `⚠️ ${message}`, context),
+  debug: (message: string, context?: string) => baseLog('debug', message, context),
+  verbose: (message: string, context?: string) => baseLog('verbose', message, context),
   updateLog: ({
     id,
     prevItem,
@@ -76,7 +76,7 @@ export const loggerUtil = {
     if (diffObject) {
       // log('info', `update item #${id} successful PREV-ITEM: \n${JSON.stringify(prevItem)}\n\n`, constructorName);
       // log('info', `update item #${id} successful NEXT-ITEM: \n${JSON.stringify(nextItem)}\n\n`, constructorName);
-      log('info', `↔️ update item #${id} DIFF: ${JSON.stringify(diff(prevItem, nextItem))}`, constructorName);
+      baseLog('info', `↔️ update item #${id} DIFF: ${JSON.stringify(diff(prevItem, nextItem))}`, constructorName);
     }
   },
 };

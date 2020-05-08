@@ -1,5 +1,5 @@
 import { Controller, Get, Injectable } from '@nestjs/common';
-import { stringUtil } from '@leaa/api/src/utils';
+import { encodeId } from '@leaa/api/src/utils';
 import { Zan } from '@leaa/common/src/entrys';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -13,7 +13,7 @@ export class TestController {
     const hashidsArr = [];
 
     for (let i = 9988; i < 99991; i += 1) {
-      hashidsArr.push(stringUtil.encodeId(i));
+      hashidsArr.push(encodeId(i));
     }
 
     return `<code>${hashidsArr.join(' ')}</code>`;

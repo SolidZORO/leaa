@@ -4,7 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 import { Role, Permission } from '@leaa/common/src/entrys';
 import { RolesWithPaginationObject, CreateRoleInput, UpdateRoleInput } from '@leaa/common/src/dtos/role';
-import { argsUtil, curdUtil, paginationUtil, msgUtil } from '@leaa/api/src/utils';
+import { argsFormat, commonUpdate, commonDelete, isOneField, calcQbPageInfo, msgError } from '@leaa/api/src/utils';
 import { IRolesArgs, IRoleArgs, IGqlCtx } from '@leaa/api/src/interfaces';
 import { PermissionService } from '@leaa/api/src/modules/permission/permission.service';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
@@ -27,7 +27,7 @@ export class RoleService {
       const role = await this.role(id);
 
       if (role && role.slug && role.slug === 'admin') {
-        throw msgUtil.error({ t: ['_error:pleaseDontModify'], gqlCtx });
+        throw msgError({ t: ['_error:pleaseDontModify'], gqlCtx });
       }
     }
 
@@ -35,7 +35,7 @@ export class RoleService {
   }
 
   async roles(args: IRolesArgs): Promise<RolesWithPaginationObject | undefined> {
-    const nextArgs = argsUtil.format(args);
+    const nextArgs = argsFormat(args);
 
     const PRIMARY_TABLE = 'roles';
     const qb = this.roleRepository.createQueryBuilder(PRIMARY_TABLE);
@@ -58,11 +58,11 @@ export class RoleService {
       qb.orderBy(`${PRIMARY_TABLE}.${nextArgs.orderBy}`, nextArgs.orderSort);
     }
 
-    return paginationUtil.calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
+    return calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
   async role(id: string, args?: IRoleArgs): Promise<Role | undefined> {
-    if (!id) throw msgUtil.error({ t: ['_error:notFoundId'] });
+    if (!id) throw msgError({ t: ['_error:notFoundId'] });
 
     let nextArgs: IRoleArgs = {};
 
@@ -116,8 +116,8 @@ export class RoleService {
   async updateRole(id: string, args: UpdateRoleInput, gqlCtx?: IGqlCtx): Promise<Role | undefined> {
     if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id, gqlCtx);
 
-    if (curdUtil.isOneField(args, 'status')) {
-      return curdUtil.commonUpdate({ repository: this.roleRepository, CLS_NAME, id, args });
+    if (isOneField(args, 'status')) {
+      return commonUpdate({ repository: this.roleRepository, CLS_NAME, id, args });
     }
 
     const relationArgs: { permissions?: Permission[] } = {};
@@ -138,15 +138,15 @@ export class RoleService {
     } else {
       if (process.argv.includes('--nuke')) return undefined;
 
-      throw msgUtil.error({ t: ['_error:notFound'], gqlCtx });
+      throw msgError({ t: ['_error:notFound'], gqlCtx });
     }
 
-    return curdUtil.commonUpdate({ repository: this.roleRepository, CLS_NAME, id, args, relation: relationArgs });
+    return commonUpdate({ repository: this.roleRepository, CLS_NAME, id, args, relation: relationArgs });
   }
 
   async deleteRole(id: string, gqlCtx?: IGqlCtx): Promise<Role | undefined> {
     if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id, gqlCtx);
 
-    return curdUtil.commonDelete({ repository: this.roleRepository, CLS_NAME, id });
+    return commonDelete({ repository: this.roleRepository, CLS_NAME, id });
   }
 }

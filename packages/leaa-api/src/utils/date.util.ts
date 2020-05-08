@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-const formatDateRangeTime = <T>(args: T, startField: string, expireField: string): T => {
+export const formatDateRangeTime = <T>(args: T, startField: string, expireField: string): T => {
   if (!args) {
     throw Error('Missing Format Args');
   }
@@ -25,8 +25,4 @@ const formatDateRangeTime = <T>(args: T, startField: string, expireField: string
   }
 
   return nextArgs;
-};
-
-export const dateUtil = {
-  formatDateRangeTime,
 };

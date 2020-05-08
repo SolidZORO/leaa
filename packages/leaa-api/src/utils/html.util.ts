@@ -1,6 +1,6 @@
 import htmlToText from 'html-to-text';
 
-const formatHtmlToText = (content?: string, title?: string): string => {
+export const formatHtmlToText = (content?: string, title?: string): string => {
   const resultTitle = `${title || ''}\n\n`;
   let resultText = '';
 
@@ -10,8 +10,4 @@ const formatHtmlToText = (content?: string, title?: string): string => {
   }
 
   return resultTitle + resultText;
-};
-
-export const htmlUtil = {
-  formatHtmlToText,
 };

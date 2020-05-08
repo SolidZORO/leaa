@@ -17,7 +17,7 @@ import {
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 import { AttachmentProperty } from '@leaa/api/src/modules/attachment/attachment.property';
 import { Attachment } from '@leaa/common/src/entrys';
-import { attachmentUtil, loggerUtil } from '@leaa/api/src/utils';
+import { filenameAt1xToAt2x, isAt2x, logger } from '@leaa/api/src/utils';
 import { attachmentConfig } from '@leaa/api/src/configs';
 import mkdirp from 'mkdirp';
 
@@ -142,7 +142,7 @@ export class SaveInOssService {
 
         fs.writeFileSync(`${attachmentConfig.SAVE_DIR_BY_DISK}/${attachment.filename}`, file);
       } catch (err) {
-        loggerUtil.error(JSON.stringify(err), CLS_NAME);
+        logger.error(JSON.stringify(err), CLS_NAME);
         throw Error(err.message);
       }
     });
@@ -150,10 +150,7 @@ export class SaveInOssService {
     if (attachment.at2x) {
       await this.downloadFile(attachment.urlAt2x || '', (file) => {
         try {
-          fs.writeFileSync(
-            `${attachmentConfig.SAVE_DIR_BY_DISK}/${attachmentUtil.filenameAt1xToAt2x(attachment.filename)}`,
-            file,
-          );
+          fs.writeFileSync(`${attachmentConfig.SAVE_DIR_BY_DISK}/${filenameAt1xToAt2x(attachment.filename)}`, file);
         } catch (e) {
           throw Error(e.message);
         }
@@ -169,7 +166,7 @@ export class SaveInOssService {
     if (!splitFilename) {
       const message = 'Not Found Filename';
 
-      loggerUtil.warn(message, CLS_NAME);
+      logger.warn(message, CLS_NAME);
 
       return;
     }
@@ -177,7 +174,7 @@ export class SaveInOssService {
     const filename = splitFilename.replace('_2x', '');
 
     const isImage = req.mimeType ? req.mimeType.includes(IAttachmentType.IMAGE) : false;
-    const at2x = attachmentUtil.isAt2x(req.object) ? 1 : 0;
+    const at2x = isAt2x(req.object) ? 1 : 0;
     let width = 0;
     let height = 0;
 
@@ -206,7 +203,7 @@ export class SaveInOssService {
       if (!at1x) {
         const message = `Save @2x To @1x Failed, ${JSON.stringify(req.object)}`;
 
-        loggerUtil.warn(message, CLS_NAME);
+        logger.warn(message, CLS_NAME);
 
         return;
       }

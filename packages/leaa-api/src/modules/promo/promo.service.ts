@@ -9,7 +9,16 @@ import {
   UpdatePromoInput,
   RedeemPromoInput,
 } from '@leaa/common/src/dtos/promo';
-import { argsUtil, authUtil, curdUtil, paginationUtil, dateUtil, msgUtil } from '@leaa/api/src/utils';
+import {
+  argsFormat,
+  can,
+  commonUpdate,
+  commonDelete,
+  isOneField,
+  calcQbPageInfo,
+  formatDateRangeTime,
+  msgError,
+} from '@leaa/api/src/utils';
 import { IPromosArgs, IPromoArgs, IGqlCtx } from '@leaa/api/src/interfaces';
 
 import { PromoProperty } from './promo.property';
@@ -24,7 +33,7 @@ export class PromoService {
   ) {}
 
   async promos(args: IPromosArgs, gqlCtx?: IGqlCtx): Promise<PromosWithPaginationObject> {
-    const nextArgs: IPromosArgs = argsUtil.format(args, gqlCtx);
+    const nextArgs: IPromosArgs = argsFormat(args, gqlCtx);
 
     const qb = this.promoRepository.createQueryBuilder();
     qb.select().orderBy(nextArgs.orderBy || 'id', nextArgs.orderSort);
@@ -39,11 +48,11 @@ export class PromoService {
     }
 
     // can
-    if (!gqlCtx?.user || (gqlCtx.user && !authUtil.can(gqlCtx.user, 'promo.list-read--all-status'))) {
+    if (!gqlCtx?.user || (gqlCtx.user && !can(gqlCtx.user, 'promo.list-read--all-status'))) {
       qb.andWhere('status = :status', { status: 1 });
     }
 
-    return paginationUtil.calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
+    return calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
   async promo(id: string, args?: IPromoArgs, gqlCtx?: IGqlCtx): Promise<Promo | undefined> {
@@ -53,57 +62,54 @@ export class PromoService {
     const whereQuery: { id: string; status?: number } = { id };
 
     // can
-    if (!gqlCtx?.user || (gqlCtx.user && !authUtil.can(gqlCtx.user, 'promo.item-read--all-status'))) {
+    if (!gqlCtx?.user || (gqlCtx.user && !can(gqlCtx.user, 'promo.item-read--all-status'))) {
       whereQuery.status = 1;
     }
 
     const promo = await this.promoRepository.findOne({ ...nextArgs, where: whereQuery });
-    if (!promo) throw msgUtil.error({ t: ['_error:notFoundItem'], gqlCtx });
+    if (!promo) throw msgError({ t: ['_error:notFoundItem'], gqlCtx });
 
     return promo;
   }
 
   async promoByCode(code: string, args?: IPromoArgs, gqlCtx?: IGqlCtx): Promise<Promo | undefined> {
     const promo = await this.promoRepository.findOne({ where: { code } });
-    if (!promo) throw msgUtil.error({ t: ['_error:notFoundItem'], gqlCtx });
+    if (!promo) throw msgError({ t: ['_error:notFoundItem'], gqlCtx });
 
     return this.promo(promo.id, args, gqlCtx);
   }
 
   async createPromo(args: CreatePromoInput, gqlCtx?: IGqlCtx): Promise<Promo | undefined> {
-    const nextArgs = dateUtil.formatDateRangeTime(args, 'start_time', 'expire_time');
+    const nextArgs = formatDateRangeTime(args, 'start_time', 'expire_time');
 
     return this.promoRepository.save({ ...nextArgs });
   }
 
   async updatePromo(id: string, args: UpdatePromoInput, gqlCtx?: IGqlCtx): Promise<Promo | undefined> {
-    if (curdUtil.isOneField(args, 'status')) {
-      return curdUtil.commonUpdate({ repository: this.promoRepository, CLS_NAME, id, args });
+    if (isOneField(args, 'status')) {
+      return commonUpdate({ repository: this.promoRepository, CLS_NAME, id, args });
     }
 
-    const nextArgs = dateUtil.formatDateRangeTime(args, 'start_time', 'expire_time');
+    const nextArgs = formatDateRangeTime(args, 'start_time', 'expire_time');
 
-    return curdUtil.commonUpdate({ repository: this.promoRepository, CLS_NAME, id, args: nextArgs });
+    return commonUpdate({ repository: this.promoRepository, CLS_NAME, id, args: nextArgs });
   }
 
   async deletePromo(id: string, gqlCtx?: IGqlCtx): Promise<Promo | undefined> {
-    return curdUtil.commonDelete({ repository: this.promoRepository, CLS_NAME, id });
+    return commonDelete({ repository: this.promoRepository, CLS_NAME, id });
   }
 
   async redeemPromo(info: RedeemPromoInput, gqlCtx?: IGqlCtx): Promise<Promo | undefined> {
     const promo = await this.promoByCode(info.code, undefined, gqlCtx);
-    if (!promo) throw msgUtil.error({ t: ['_error:notFoundItem'], gqlCtx });
+    if (!promo) throw msgError({ t: ['_error:notFoundItem'], gqlCtx });
 
-    if (!this.promoProperty.available(promo)) throw msgUtil.error({ t: ['_module:promo.unavailable'], gqlCtx });
+    if (!this.promoProperty.available(promo)) throw msgError({ t: ['_module:promo.unavailable'], gqlCtx });
 
     // [token user]
     let nextPromo = { ...promo, user_id: gqlCtx?.user?.id };
 
     // can
-    if (
-      !gqlCtx?.user ||
-      (gqlCtx.user && !authUtil.can(gqlCtx.user, 'promo.item-redeem--to-all-user-id') && info.userId)
-    ) {
+    if (!gqlCtx?.user || (gqlCtx.user && !can(gqlCtx.user, 'promo.item-redeem--to-all-user-id') && info.userId)) {
       nextPromo = { ...promo, user_id: info.userId };
     }
 

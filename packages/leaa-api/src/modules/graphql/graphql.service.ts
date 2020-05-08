@@ -4,7 +4,7 @@ import { GqlOptionsFactory, GqlModuleOptions } from '@nestjs/graphql';
 
 import { AuthService } from '@leaa/api/src/modules/auth/auth.service';
 import { permissionConfig } from '@leaa/api/src/configs';
-import { loggerUtil } from '@leaa/api/src/utils';
+import { logger } from '@leaa/api/src/utils';
 import { IRequest } from '@leaa/api/src/interfaces';
 
 const CLS_NAME = 'GraphqlService';
@@ -52,7 +52,7 @@ export class GraphqlService implements GqlOptionsFactory {
           statusCode = Number(messageInfo[1]);
         }
 
-        loggerUtil.error(`${nextMessage} / ${JSON.stringify(error)}\n`, CLS_NAME);
+        logger.error(`${nextMessage} / ${JSON.stringify(error)}\n`, CLS_NAME);
 
         return {
           ...error,

@@ -4,7 +4,15 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 import { Address, Permission, User } from '@leaa/common/src/entrys';
 import { AddressesWithPaginationObject, CreateAddressInput, UpdateAddressInput } from '@leaa/common/src/dtos/address';
-import { argsUtil, curdUtil, paginationUtil, msgUtil } from '@leaa/api/src/utils';
+import {
+  argsFormat,
+  commonUpdate,
+  commonDelete,
+  isOneField,
+  calcQbPageInfo,
+  msgError,
+  msgMessage,
+} from '@leaa/api/src/utils';
 import { IAddresssArgs, IAddressArgs } from '@leaa/api/src/interfaces';
 
 const CLS_NAME = 'AddressService';
@@ -14,7 +22,7 @@ export class AddressService {
   constructor(@InjectRepository(Address) private readonly addressRepository: Repository<Address>) {}
 
   async addresses(args: IAddresssArgs): Promise<AddressesWithPaginationObject | undefined> {
-    const nextArgs = argsUtil.format(args);
+    const nextArgs = argsFormat(args);
 
     const PRIMARY_TABLE = 'addresses';
     const qb = this.addressRepository.createQueryBuilder(PRIMARY_TABLE);
@@ -34,11 +42,11 @@ export class AddressService {
       qb.orderBy(`${PRIMARY_TABLE}.${nextArgs.orderBy}`, nextArgs.orderSort);
     }
 
-    return paginationUtil.calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
+    return calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
   async address(id: string, args?: IAddressArgs): Promise<Address | undefined> {
-    if (!id) throw msgUtil.error({ t: ['_error:notFoundId'] });
+    if (!id) throw msgError({ t: ['_error:notFoundId'] });
 
     let nextArgs: IAddressArgs = {};
 
@@ -57,10 +65,10 @@ export class AddressService {
   async updateAddress(id: string, args: UpdateAddressInput, user?: User): Promise<Address | undefined> {
     const relationArgs: { permissions?: Permission[] } = {};
 
-    return curdUtil.commonUpdate({ repository: this.addressRepository, CLS_NAME, id, args, relation: relationArgs });
+    return commonUpdate({ repository: this.addressRepository, CLS_NAME, id, args, relation: relationArgs });
   }
 
   async deleteAddress(id: string, user?: User): Promise<Address | undefined> {
-    return curdUtil.commonDelete({ repository: this.addressRepository, CLS_NAME, id });
+    return commonDelete({ repository: this.addressRepository, CLS_NAME, id });
   }
 }

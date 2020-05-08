@@ -6,7 +6,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Auth, User } from '@leaa/common/src/entrys';
 import { ICreateAuthAndUserResult, IMiniprogramCloudFnResult } from '@leaa/api/src/interfaces';
 import { CreateAuthInput } from '@leaa/common/src/dtos/auth';
-import { loggerUtil, stringUtil } from '@leaa/api/src/utils';
+import { logger, randomString } from '@leaa/api/src/utils';
 import { UserService } from '@leaa/api/src/modules/user/user.service';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 
@@ -24,7 +24,7 @@ export class AuthMiniprogramService {
     private readonly configService: ConfigService,
   ) {}
 
-  private nextTicket = { ticket: stringUtil.random(), ticket_at: new Date() };
+  private nextTicket = { ticket: randomString(), ticket_at: new Date() };
 
   async createUserAndAuth(platform: string, data: IMiniprogramCloudFnResult): Promise<ICreateAuthAndUserResult> {
     const newUser = await this.userService.createUser({
@@ -75,9 +75,9 @@ export class AuthMiniprogramService {
         userAuth = newAuth;
       }
 
-      loggerUtil.log(`Miniprogram Login Auth, ${JSON.stringify(userAuth)}`, CLS_NAME);
+      logger.log(`Miniprogram Login Auth, ${JSON.stringify(userAuth)}`, CLS_NAME);
     } catch (err) {
-      loggerUtil.error('Miniprogram Login Error', CLS_NAME, err);
+      logger.error('Miniprogram Login Error', CLS_NAME, err);
     }
 
     if (userInfo) {

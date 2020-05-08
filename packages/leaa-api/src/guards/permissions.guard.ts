@@ -3,7 +3,7 @@ import { GqlExecutionContext } from '@nestjs/graphql';
 import { ExecutionContext, CanActivate, Injectable } from '@nestjs/common';
 
 import { User } from '@leaa/common/src/entrys';
-import { msgUtil } from '@leaa/api/src/utils';
+import { msgError, msgMessage } from '@leaa/api/src/utils';
 import { IPermissionSlug } from '@leaa/common/src/interfaces';
 import { PermissionsMetadataKey } from '@leaa/api/src/decorators';
 
@@ -17,14 +17,14 @@ export class PermissionsGuard implements CanActivate {
 
     const user: User | undefined = gqlCtx?.user;
 
-    if (!user) throw msgUtil.error({ t: ['_error:unauthorized'], gqlCtx });
+    if (!user) throw msgError({ t: ['_error:unauthorized'], gqlCtx });
 
     // signup user
     if (!user.is_admin && user.flatPermissions && user.flatPermissions.length === 0) return true;
 
     // not is admin
     if (!user.flatPermissions || user.flatPermissions.length <= 0) {
-      throw msgUtil.error({ t: ['_error:forbidden'], gqlCtx });
+      throw msgError({ t: ['_error:forbidden'], gqlCtx });
     }
 
     return (

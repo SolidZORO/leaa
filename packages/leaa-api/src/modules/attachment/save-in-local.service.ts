@@ -15,7 +15,7 @@ import {
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 import { AttachmentProperty } from '@leaa/api/src/modules/attachment/attachment.property';
 import { Attachment } from '@leaa/common/src/entrys';
-import { loggerUtil, attachmentUtil } from '@leaa/api/src/utils';
+import { logger, isAt2x } from '@leaa/api/src/utils';
 import { attachmentConfig } from '@leaa/api/src/configs';
 
 const CLS_NAME = 'SaveInLocalService';
@@ -57,13 +57,13 @@ export class SaveInLocalService {
     if (!file) {
       const message = 'Not Found Attachment';
 
-      loggerUtil.warn(message, CLS_NAME);
+      logger.warn(message, CLS_NAME);
 
       return;
     }
 
     const isImage = file.mimetype ? file.mimetype.includes(IAttachmentType.IMAGE) : false;
-    const at2x = attachmentUtil.isAt2x(file.originalname) ? 1 : 0;
+    const at2x = isAt2x(file.originalname) ? 1 : 0;
     let width = 0;
     let height = 0;
 
@@ -118,15 +118,13 @@ export class SaveInLocalService {
 
     const attachment = await this.attachmentRepository.save({ ...attachmentData });
 
-    const result = {
+    // eslint-disable-next-line consistent-return
+    return {
       attachment: {
         ...attachment,
         url: this.attachmentProperty.url(attachment),
         urlAt2x: this.attachmentProperty.urlAt2x(attachment),
       },
     };
-
-    // eslint-disable-next-line consistent-return
-    return result;
   }
 }

@@ -4,7 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 import { Product, Category, Tag, Attachment } from '@leaa/common/src/entrys';
 import { ProductsWithPaginationObject, CreateProductInput, UpdateProductInput } from '@leaa/common/src/dtos/product';
-import { argsUtil, paginationUtil, curdUtil, authUtil, msgUtil } from '@leaa/api/src/utils';
+import { argsFormat, calcQbPageInfo, commonUpdate, commonDelete, isOneField, can, msgError } from '@leaa/api/src/utils';
 import { IProductsArgs, IProductArgs, IGqlCtx } from '@leaa/api/src/interfaces';
 
 import { TagService } from '@leaa/api/src/modules/tag/tag.service';
@@ -22,7 +22,7 @@ export class ProductService {
   ) {}
 
   async products(args: IProductsArgs, gqlCtx?: IGqlCtx): Promise<ProductsWithPaginationObject | undefined> {
-    const nextArgs: IProductsArgs = argsUtil.format(args, gqlCtx);
+    const nextArgs: IProductsArgs = argsFormat(args, gqlCtx);
 
     const PRIMARY_TABLE = 'products';
     const qb = await this.productRepository.createQueryBuilder(PRIMARY_TABLE);
@@ -55,15 +55,15 @@ export class ProductService {
     }
 
     // can
-    if (!gqlCtx?.user || (gqlCtx.user && !authUtil.can(gqlCtx.user, 'product.list-read--all-status'))) {
+    if (!gqlCtx?.user || (gqlCtx.user && !can(gqlCtx.user, 'product.list-read--all-status'))) {
       qb.andWhere('status = :status', { status: 1 });
     }
 
-    return paginationUtil.calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
+    return calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
   async product(id: string, args?: IProductArgs, gqlCtx?: IGqlCtx): Promise<Product | undefined> {
-    if (!id) throw msgUtil.error({ t: ['_error:notFoundId'] });
+    if (!id) throw msgError({ t: ['_error:notFoundId'] });
 
     const PRIMARY_TABLE = 'products';
     const qb = await this.productRepository.createQueryBuilder(PRIMARY_TABLE);
@@ -124,8 +124,8 @@ export class ProductService {
   }
 
   async updateProduct(id: string, args: UpdateProductInput, gqlCtx?: IGqlCtx): Promise<Product | undefined> {
-    if (curdUtil.isOneField(args, 'status')) {
-      return curdUtil.commonUpdate({ repository: this.productRepository, CLS_NAME, id, args });
+    if (isOneField(args, 'status')) {
+      return commonUpdate({ repository: this.productRepository, CLS_NAME, id, args });
     }
 
     const { nextRelation, nextArgs } = await this.formatArgs(args);
@@ -137,7 +137,7 @@ export class ProductService {
       await this.tagService.syncTagsToDictFile();
     }
 
-    return curdUtil.commonUpdate({
+    return commonUpdate({
       repository: this.productRepository,
       CLS_NAME,
       id,
@@ -147,6 +147,6 @@ export class ProductService {
   }
 
   async deleteProduct(id: string, gqlCtx?: IGqlCtx): Promise<Product | undefined> {
-    return curdUtil.commonDelete({ repository: this.productRepository, CLS_NAME, id });
+    return commonDelete({ repository: this.productRepository, CLS_NAME, id });
   }
 }

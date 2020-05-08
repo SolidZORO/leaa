@@ -5,7 +5,15 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Zan } from '@leaa/common/src/entrys';
 import { ZansWithPaginationObject, CreateZanInput, UpdateZanInput } from '@leaa/common/src/dtos/zan';
 import { IZansArgs, IZanArgs, IGqlCtx } from '@leaa/api/src/interfaces';
-import { argsUtil, curdUtil, paginationUtil, stringUtil, msgUtil } from '@leaa/api/src/utils';
+import {
+  argsFormat,
+  commonUpdate,
+  commonDelete,
+  isOneField,
+  calcQbPageInfo,
+  uuid,
+  msgError,
+} from '@leaa/api/src/utils';
 
 const CLS_NAME = 'ZanService';
 
@@ -14,7 +22,7 @@ export class ZanService {
   constructor(@InjectRepository(Zan) private readonly zanRepository: Repository<Zan>) {}
 
   async zans(args: IZansArgs, gqlCtx?: IGqlCtx): Promise<ZansWithPaginationObject> {
-    const nextArgs = argsUtil.format(args);
+    const nextArgs = argsFormat(args);
 
     const PRIMARY_TABLE = 'zans';
     const qb = this.zanRepository.createQueryBuilder(PRIMARY_TABLE);
@@ -37,11 +45,11 @@ export class ZanService {
       qb.orderBy(`${PRIMARY_TABLE}.${nextArgs.orderBy}`, nextArgs.orderSort);
     }
 
-    return paginationUtil.calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
+    return calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
   async zan(id: string, args?: IZanArgs, gqlCtx?: IGqlCtx): Promise<Zan | undefined> {
-    if (!id) throw msgUtil.error({ t: ['_error:notFoundId'], gqlCtx });
+    if (!id) throw msgError({ t: ['_error:notFoundId'], gqlCtx });
 
     let nextArgs: IZanArgs = {};
     if (args) {
@@ -52,7 +60,7 @@ export class ZanService {
     const whereQuery: { id: string; status?: number } = { id };
     const zan = await this.zanRepository.findOne({ ...nextArgs, where: whereQuery });
 
-    if (!zan) throw msgUtil.error({ t: ['_error:notFoundItem'], gqlCtx });
+    if (!zan) throw msgError({ t: ['_error:notFoundItem'], gqlCtx });
 
     const views = zan.views ? zan.views + 1 : 1;
     await this.zanRepository.update(zan.id, { views });
@@ -69,29 +77,29 @@ export class ZanService {
 
     return this.zanRepository.save({
       ...args,
-      uuid: stringUtil.uuid(),
+      uuid: uuid(),
       creator: gqlCtx?.user,
     });
   }
 
   async updateZan(id: string, args: UpdateZanInput, gqlCtx?: IGqlCtx): Promise<Zan | undefined> {
-    if (curdUtil.isOneField(args, 'status')) {
-      return curdUtil.commonUpdate({ repository: this.zanRepository, CLS_NAME, id, args });
+    if (isOneField(args, 'status')) {
+      return commonUpdate({ repository: this.zanRepository, CLS_NAME, id, args });
     }
 
-    return curdUtil.commonUpdate({ repository: this.zanRepository, CLS_NAME, id, args });
+    return commonUpdate({ repository: this.zanRepository, CLS_NAME, id, args });
   }
 
   async deleteZan(id: string, gqlCtx?: IGqlCtx): Promise<Zan | undefined> {
-    return curdUtil.commonDelete({ repository: this.zanRepository, CLS_NAME, id });
+    return commonDelete({ repository: this.zanRepository, CLS_NAME, id });
   }
 
   async likeZan(id: string, gqlCtx?: IGqlCtx): Promise<Zan | undefined> {
     let zan = await this.zanRepository.findOne({ id }, { relations: ['users'] });
 
-    if (!zan) throw msgUtil.error({ t: ['_error:notFoundItem'], gqlCtx });
+    if (!zan) throw msgError({ t: ['_error:notFoundItem'], gqlCtx });
 
-    if (!gqlCtx?.user) throw msgUtil.error({ t: ['_error:notFoundAuth'], gqlCtx, statusCode: 401 });
+    if (!gqlCtx?.user) throw msgError({ t: ['_error:notFoundAuth'], gqlCtx, statusCode: 401 });
 
     if (gqlCtx?.user && !zan.users?.map((u) => u.id).includes(gqlCtx?.user?.id)) {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -108,13 +116,13 @@ export class ZanService {
   }
 
   async deleteZanUser(id: string, userId: string, gqlCtx?: IGqlCtx): Promise<Zan | undefined> {
-    if (!userId) throw msgUtil.error({ t: ['_error:notFoundUser'], gqlCtx });
+    if (!userId) throw msgError({ t: ['_error:notFoundUser'], gqlCtx });
 
     let zan = await this.zanRepository.findOne({ id }, { relations: ['users'] });
 
-    if (!zan) throw msgUtil.error({ t: ['_error:notFoundItem'], gqlCtx });
+    if (!zan) throw msgError({ t: ['_error:notFoundItem'], gqlCtx });
     if (!zan.users || zan.users.length <= 0 || !zan.users?.map((u) => u.id).includes(userId)) {
-      throw msgUtil.error({ t: ['_error:notFoundUser'], gqlCtx });
+      throw msgError({ t: ['_error:notFoundUser'], gqlCtx });
     }
 
     // @ts-ignore

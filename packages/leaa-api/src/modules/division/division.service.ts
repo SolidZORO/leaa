@@ -11,7 +11,15 @@ import {
   UpdateDivisionInput,
   CreateDivisionInput,
 } from '@leaa/common/src/dtos/division';
-import { argsUtil, paginationUtil, curdUtil, loggerUtil, msgUtil } from '@leaa/api/src/utils';
+import {
+  argsFormat,
+  calcQbPageInfo,
+  commonUpdate,
+  commonDelete,
+  isOneField,
+  logger,
+  msgError,
+} from '@leaa/api/src/utils';
 import { IDivisionSource } from '@leaa/common/src/interfaces';
 import { SyncTagsToFileObject } from '@leaa/common/src/dtos/tag';
 import { divisionConfig } from '@leaa/api/src/configs';
@@ -24,12 +32,12 @@ export class DivisionService {
   constructor(@InjectRepository(Division) private readonly divisionRepository: Repository<Division>) {}
 
   async divisions(args: IDivisionsArgs): Promise<DivisionsWithPaginationObject> {
-    const nextArgs: IDivisionsArgs = argsUtil.format(args);
+    const nextArgs: IDivisionsArgs = argsFormat(args);
 
     const PRIMARY_TABLE = 'divisions';
     const qb = await this.divisionRepository.createQueryBuilder(PRIMARY_TABLE);
 
-    return paginationUtil.calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
+    return calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
   async divisionsMapping(): Promise<string | undefined> {
@@ -47,7 +55,7 @@ export class DivisionService {
   }
 
   async division(id: string, args?: IDivisionArgs): Promise<Division | undefined> {
-    if (!id) throw msgUtil.error({ t: ['_error:notFoundId'] });
+    if (!id) throw msgError({ t: ['_error:notFoundId'] });
 
     let nextArgs: IDivisionArgs = {};
 
@@ -122,12 +130,12 @@ export class DivisionService {
 
   async syncDivisionToFile(): Promise<SyncTagsToFileObject> {
     if (!fs.existsSync(divisionConfig.DIVISION_OF_CHINA_FILE_PATH)) {
-      loggerUtil.log(`syncDivisionToFile, not exists ${divisionConfig.DIVISION_OF_CHINA_FILE_PATH}`, CLS_NAME);
+      logger.log(`syncDivisionToFile, not exists ${divisionConfig.DIVISION_OF_CHINA_FILE_PATH}`, CLS_NAME);
 
       try {
         mkdirp.sync(divisionConfig.DIVISION_DIR);
       } catch (err) {
-        loggerUtil.error(JSON.stringify(err), CLS_NAME);
+        logger.error(JSON.stringify(err), CLS_NAME);
         throw Error(err.message);
       }
     }
@@ -172,7 +180,7 @@ export class DivisionService {
 
       sqlRunResultMessage = sqlRunResult.message;
 
-      loggerUtil.log(`building division of china... ${sqlRunResultMessage}`, CLS_NAME);
+      logger.log(`building division of china... ${sqlRunResultMessage}`, CLS_NAME);
     }
 
     const [items] = await this.divisionRepository.findAndCount({
@@ -198,15 +206,15 @@ export class DivisionService {
   }
 
   async updateDivision(id: string, args: UpdateDivisionInput): Promise<Division | undefined> {
-    if (curdUtil.isOneField(args, 'status')) {
-      return curdUtil.commonUpdate({ repository: this.divisionRepository, CLS_NAME, id, args });
+    if (isOneField(args, 'status')) {
+      return commonUpdate({ repository: this.divisionRepository, CLS_NAME, id, args });
     }
 
     const nextArgs = {
       ...args,
     };
 
-    const result = await curdUtil.commonUpdate({ repository: this.divisionRepository, CLS_NAME, id, args: nextArgs });
+    const result = await commonUpdate({ repository: this.divisionRepository, CLS_NAME, id, args: nextArgs });
 
     if (result) {
       await this.syncDivisionToFile();
@@ -216,6 +224,6 @@ export class DivisionService {
   }
 
   async deleteDivision(id: string): Promise<Division | undefined> {
-    return curdUtil.commonDelete({ repository: this.divisionRepository, CLS_NAME, id });
+    return commonDelete({ repository: this.divisionRepository, CLS_NAME, id });
   }
 }

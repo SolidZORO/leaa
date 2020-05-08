@@ -10,7 +10,7 @@ import {
   UpdateCategoryInput,
   CategoryTreeObject,
 } from '@leaa/common/src/dtos/category';
-import { argsUtil, curdUtil, paginationUtil, msgUtil } from '@leaa/api/src/utils';
+import { argsFormat, commonUpdate, commonDelete, isOneField, calcQbPageInfo, msgError } from '@leaa/api/src/utils';
 import { ICategoriesArgs, ICategoryArgs, IGqlCtx } from '@leaa/api/src/interfaces';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 import { categorySeed } from '@leaa/api/src/modules/seed/seed.data';
@@ -31,7 +31,7 @@ export class CategoryService {
       const c = await this.category(id);
 
       if (c && c.slug && categorySeed.map((seed) => seed.slug).includes(c.slug)) {
-        throw msgUtil.error({ t: ['_error:pleaseDontModify'], gqlCtx });
+        throw msgError({ t: ['_error:pleaseDontModify'], gqlCtx });
       }
     }
 
@@ -85,7 +85,7 @@ export class CategoryService {
   }
 
   async categories(args: ICategoriesArgs): Promise<CategoriesWithPaginationOrTreeObject | undefined> {
-    const nextArgs: ICategoriesArgs = argsUtil.format(args);
+    const nextArgs: ICategoriesArgs = argsFormat(args);
 
     const qb = this.categoryRepository.createQueryBuilder();
     qb.select().orderBy(nextArgs.orderBy || 'created_at', nextArgs.orderSort);
@@ -126,7 +126,7 @@ export class CategoryService {
       return { trees: this.categoriesByTrees(trees, nextArgs) };
     }
 
-    return paginationUtil.calcQbPageInfo({
+    return calcQbPageInfo({
       qb,
       page: nextArgs.page,
       pageSize: nextArgs.pageSize,
@@ -134,7 +134,7 @@ export class CategoryService {
   }
 
   async category(id: string, args?: ICategoryArgs): Promise<Category | undefined> {
-    if (!id) throw msgUtil.error({ t: ['_error:notFoundId'] });
+    if (!id) throw msgError({ t: ['_error:notFoundId'] });
 
     let nextArgs: ICategoryArgs = {};
     if (args) nextArgs = args;
@@ -144,13 +144,13 @@ export class CategoryService {
 
   async categoryBySlug(slug: string, args?: ICategoryArgs, gqlCtx?: IGqlCtx): Promise<Category | undefined> {
     const category = await this.categoryRepository.findOne({ where: { slug } });
-    if (!category) throw msgUtil.error({ t: ['_error:notFoundItem'], gqlCtx });
+    if (!category) throw msgError({ t: ['_error:notFoundItem'], gqlCtx });
 
     return this.category(category.id, args);
   }
 
   async createCategory(args: CreateCategoryInput, gqlCtx?: IGqlCtx): Promise<Category | undefined> {
-    if (!args || (args && !args.slug)) throw msgUtil.error({ t: ['_error:notFoundField'], gqlCtx });
+    if (!args || (args && !args.slug)) throw msgError({ t: ['_error:notFoundField'], gqlCtx });
 
     const manager = getManager();
     const newCategory = new Category();
@@ -174,8 +174,8 @@ export class CategoryService {
   async updateCategory(id: string, args: UpdateCategoryInput, gqlCtx?: IGqlCtx): Promise<Category | undefined> {
     if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id, gqlCtx);
 
-    if (curdUtil.isOneField(args, 'status')) {
-      return curdUtil.commonUpdate({ repository: this.categoryRepository, CLS_NAME, id, args });
+    if (isOneField(args, 'status')) {
+      return commonUpdate({ repository: this.categoryRepository, CLS_NAME, id, args });
     }
 
     const nextArgs = args;
@@ -191,12 +191,12 @@ export class CategoryService {
       }
     }
 
-    return curdUtil.commonUpdate({ repository: this.categoryRepository, CLS_NAME, id, args: nextArgs });
+    return commonUpdate({ repository: this.categoryRepository, CLS_NAME, id, args: nextArgs });
   }
 
   async deleteCategory(id: string, gqlCtx?: IGqlCtx): Promise<Category | undefined> {
     if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id, gqlCtx);
 
-    return curdUtil.commonDelete({ repository: this.categoryRepository, CLS_NAME, id });
+    return commonDelete({ repository: this.categoryRepository, CLS_NAME, id });
   }
 }
