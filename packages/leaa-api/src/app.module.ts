@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { GraphQLModule } from '@nestjs/graphql';
 
-import { HttpCacheInterceptor } from '@leaa/api/src/interceptors/http-cache.interceptor';
+import { HttpCacheInterceptor } from '@leaa/api/src/interceptors';
 
 import { GraphqlService } from '@leaa/api/src/modules/graphql/graphql.service';
 import { TypeormService } from '@leaa/api/src/modules/typeorm/typeorm.service';

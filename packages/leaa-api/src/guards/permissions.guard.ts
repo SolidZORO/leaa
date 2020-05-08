@@ -3,7 +3,7 @@ import { GqlExecutionContext } from '@nestjs/graphql';
 import { ExecutionContext, CanActivate, Injectable } from '@nestjs/common';
 
 import { User } from '@leaa/common/src/entrys';
-import { msgError, msgMessage } from '@leaa/api/src/utils';
+import { msgError } from '@leaa/api/src/utils';
 import { IPermissionSlug } from '@leaa/common/src/interfaces';
 import { PermissionsMetadataKey } from '@leaa/api/src/decorators';
 

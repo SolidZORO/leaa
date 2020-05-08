@@ -1,6 +1,6 @@
 import { ExecutionContext, Injectable } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { msgError, msgMessage } from '@leaa/api/src/utils';
+import { msgError } from '@leaa/api/src/utils';
 
 @Injectable()
 export class JwtGuard extends AuthGuard('jwt') {

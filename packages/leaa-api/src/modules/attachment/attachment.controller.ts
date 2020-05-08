@@ -1,7 +1,7 @@
 import { Controller, Get, HttpCode, Body, UseInterceptors, Post, UploadedFile, UseGuards } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 
-import { JwtGuard } from '@leaa/api/src/guards/jwt.guard';
+import { JwtGuard } from '@leaa/api/src/guards';
 import { AttachmentService } from '@leaa/api/src/modules/attachment/attachment.service';
 import { SaveInOssService } from '@leaa/api/src/modules/attachment/save-in-oss.service';
 import { ICraeteAttachmentByOssCallback, IAttachmentParams } from '@leaa/common/src/interfaces';

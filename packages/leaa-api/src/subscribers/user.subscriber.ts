@@ -18,7 +18,7 @@ export class UserSubscriber implements EntitySubscriberInterface<User> {
       const avatarParams = 's=160&d=monsterid';
       const avatarUrl = `//secure.gravatar.com/avatar/${emailHash}?${avatarParams}`;
 
-      event.manager.getRepository(User).update(entity.id, { avatar_url: avatarUrl });
+      await event.manager.getRepository(User).update(entity.id, { avatar_url: avatarUrl });
     }
   }
 }

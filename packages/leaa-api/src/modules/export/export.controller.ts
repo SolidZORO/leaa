@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Request, Response, Body, UseGuards } from '@nestjs/common';
 
-import { JwtGuard } from '@leaa/api/src/guards/jwt.guard';
+import { JwtGuard } from '@leaa/api/src/guards';
 import { IRequest, IResponse, IArticlesArgs, IPromosArgs } from '@leaa/api/src/interfaces';
 
 import { ExportService } from './export.service';

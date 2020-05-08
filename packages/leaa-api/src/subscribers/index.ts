@@ -1,3 +1,3 @@
-export { TagSubscriber } from './tag.subscriber';
-export { UserSubscriber } from './user.subscriber';
-export { AttachmentSubscriber } from './attachment.subscriber';
+export * from './tag.subscriber';
+export * from './user.subscriber';
+export * from './attachment.subscriber';

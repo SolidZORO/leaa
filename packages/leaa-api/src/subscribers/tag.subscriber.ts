@@ -10,19 +10,19 @@ export class TagSubscriber implements EntitySubscriberInterface<Tag> {
 
   async afterLoad(entity: Tag, event: LoadEvent<Tag>): Promise<void> {
     if (entity && typeof entity.views !== 'undefined') {
-      event.manager.getRepository(Tag).update(entity.id, { views: entity.views + 1 });
+      await event.manager.getRepository(Tag).update(entity.id, { views: entity.views + 1 });
     }
   }
 
   // async afterInsert(event: InsertEvent<any>): Promise<void> {
   //   if (event.entity && typeof event.entity.count !== 'undefined') {
-  //     // event.manager.getRepository(Tag).update(event.entity.id, { count: event.entity.count + 1 });
+  //     // await event.manager.getRepository(Tag).update(event.entity.id, { count: event.entity.count + 1 });
   //   }
   // }
 
   // async afterUpdate(event: UpdateEvent<Tag>): Promise<void> {
   //   if (event.entity && typeof event.entity.count !== 'undefined') {
-  //     // event.manager.getRepository(Tag).update(event.entity.id, { count: event.entity.count + 1 });
+  //     // await event.manager.getRepository(Tag).update(event.entity.id, { count: event.entity.count + 1 });
   //   }
   // }
 }

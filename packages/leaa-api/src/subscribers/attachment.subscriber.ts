@@ -13,7 +13,7 @@ export class AttachmentSubscriber implements EntitySubscriberInterface<Attachmen
     const { entity } = event;
 
     if (entity && entity.module_name === 'user' && entity.type_name === 'avatar' && entity.module_id) {
-      event.manager.getRepository(User).update(entity.module_id, { avatar_url: buildUrl(entity) });
+      await event.manager.getRepository(User).update(entity.module_id, { avatar_url: buildUrl(entity) });
     }
   }
 
@@ -21,7 +21,7 @@ export class AttachmentSubscriber implements EntitySubscriberInterface<Attachmen
     const { entity } = event;
 
     if (entity && entity.module_name === 'user' && entity.type_name === 'avatar' && entity.module_id) {
-      event.manager.getRepository(User).update(entity.module_id, { avatar_url: null });
+      await event.manager.getRepository(User).update(entity.module_id, { avatar_url: null });
     }
   }
 }

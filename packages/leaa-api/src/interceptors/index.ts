@@ -1,1 +1,1 @@
-export { HttpCacheInterceptor } from '@leaa/api/src/interceptors/http-cache.interceptor';
+export * from '@leaa/api/src/interceptors/http-cache.interceptor';
