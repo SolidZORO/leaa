@@ -27,7 +27,7 @@ export default (props: IPage) => {
   const permissionsRef = useRef<ICommenFormRef<UpdateRoleInput>>(null);
 
   // query
-  const getRoleVariables = { id: id };
+  const getRoleVariables = { id };
   const getRoleQuery = useQuery<{ role: Role }, RoleArgs>(GET_ROLE, {
     variables: getRoleVariables,
     fetchPolicy: 'network-only',
@@ -44,7 +44,7 @@ export default (props: IPage) => {
 
   // mutation
   const [submitVariables, setSubmitVariables] = useState<{ id: string; role: UpdateRoleInput }>({
-    id: id,
+    id,
     role: {},
   });
 
@@ -67,7 +67,7 @@ export default (props: IPage) => {
       ...permissionsData,
     };
 
-    await setSubmitVariables({ id: id, role: submitData });
+    await setSubmitVariables({ id, role: submitData });
     await updateRoleMutate();
   };
 

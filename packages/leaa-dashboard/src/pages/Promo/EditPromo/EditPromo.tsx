@@ -24,7 +24,7 @@ export default (props: IPage) => {
   const infoFormRef = useRef<ICommenFormRef<UpdatePromoInput>>(null);
 
   // query
-  const getPromoVariables = { id: id };
+  const getPromoVariables = { id };
   const getPromoQuery = useQuery<{ promo: Promo }, PromoArgs>(GET_PROMO, {
     variables: getPromoVariables,
     fetchPolicy: 'network-only',
@@ -48,7 +48,7 @@ export default (props: IPage) => {
       ...infoData,
     };
 
-    await setSubmitVariables({ id: id, promo: submitData });
+    await setSubmitVariables({ id, promo: submitData });
     await updatePromoMutate();
   };
 

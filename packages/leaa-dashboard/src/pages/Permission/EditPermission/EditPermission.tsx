@@ -48,7 +48,7 @@ export default (props: IPage) => {
       ...infoData,
     };
 
-    await setSubmitVariables({ id: id, permission: submitData });
+    await setSubmitVariables({ id, permission: submitData });
     await updatePermissionMutate();
   };
 

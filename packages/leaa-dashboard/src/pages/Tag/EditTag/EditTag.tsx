@@ -24,7 +24,7 @@ export default (props: IPage) => {
   const infoFormRef = useRef<ICommenFormRef<UpdateTagInput>>(null);
 
   // query
-  const getTagVariables = { id: id };
+  const getTagVariables = { id };
   const getTagQuery = useQuery<{ tag: Tag }, TagArgs>(GET_TAG, {
     variables: getTagVariables,
     fetchPolicy: 'network-only',
@@ -48,7 +48,7 @@ export default (props: IPage) => {
       ...infoData,
     };
 
-    await setSubmitVariables({ id: id, tag: submitData });
+    await setSubmitVariables({ id, tag: submitData });
     await updateTagMutate();
   };
 
