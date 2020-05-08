@@ -31,7 +31,6 @@
     "@ant-design/icons": "4.1.0",
     "@apollo/react-hooks": "3.1.5",
     "@apollo/react-ssr": "^3.1.5",
-    "@babel/polyfill": "7.8.7",
     "animated-scroll-to": "^2.0.7",
     "antd": "4.2.0",
     "apollo-cache-inmemory": "^1.6.5",
