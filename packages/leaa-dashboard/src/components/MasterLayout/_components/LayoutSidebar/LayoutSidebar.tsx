@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 
 import { IRouteItem } from '@leaa/dashboard/src/interfaces';
 import { masterRoutes, flateMasterRoutes } from '@leaa/dashboard/src/routes/master.route';
-import { authUtil, deviceUtil } from '@leaa/dashboard/src/utils';
+import { getAuthInfo, isMobile } from '@leaa/dashboard/src/utils';
 import { Rcon } from '@leaa/dashboard/src/components';
 import logo from '@leaa/dashboard/src/assets/images/logo/logo-white.svg';
 
@@ -32,7 +32,7 @@ const getMenuName = (menu: IRouteItem) => {
 };
 
 const checkPermission = (permission: string) => {
-  const { flatPermissions } = authUtil.getAuthInfo();
+  const { flatPermissions } = getAuthInfo();
 
   // e.g. 'user.list | role.list' in (master.route.tsx)
   if (permission.includes('|')) {
@@ -80,7 +80,7 @@ const makeFlatMenu = (menu: IRouteItem): React.ReactNode => {
         </Link>
 
         {menu.canCreate &&
-          (authUtil.getAuthInfo().flatPermissions.includes(currentMenuCreatePermission) ||
+          (getAuthInfo().flatPermissions.includes(currentMenuCreatePermission) ||
             menu.permission === ALLOW_PERMISSION) && (
             <Link to={`${menu.path}/create`} className={style['can-create-button']}>
               <Rcon type={CREATE_BUTTON_ICON} />
@@ -127,7 +127,7 @@ export const LayoutSidebar = (props: IProps) => {
   const collapsedLs = localStorage.getItem(SIDERBAR_COLLAPSED_SL_KEY);
   let collapsedInit = collapsedLs !== null && collapsedLs === 'true';
 
-  if (deviceUtil.isMobile() && collapsedLs === null) {
+  if (isMobile() && collapsedLs === null) {
     collapsedInit = true;
   }
 

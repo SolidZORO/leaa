@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 
 import { Rcon } from '@leaa/dashboard/src/components';
 import { envConfig } from '@leaa/dashboard/src/configs';
-import { authUtil } from '@leaa/dashboard/src/utils';
+import { getAuthToken } from '@leaa/dashboard/src/utils';
 
 import style from './style.module.less';
 
@@ -25,7 +25,7 @@ export const ExportButton = (props: IProps) => {
   const { t } = useTranslation();
   const exportUrlBase = `${envConfig.API_URL}/export`;
   const exportUrl = `${exportUrlBase}/${props.moduleName}`;
-  const token = authUtil.getAuthToken();
+  const token = getAuthToken();
 
   const [loading, setLoading] = useState<boolean>(false);
 

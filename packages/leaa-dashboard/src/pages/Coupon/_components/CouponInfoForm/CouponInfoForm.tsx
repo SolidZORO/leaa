@@ -6,7 +6,7 @@ import { Col, Form, Input, InputNumber, Row, DatePicker } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 import { Coupon } from '@leaa/common/src/entrys';
-import { msgUtil, dateUtil } from '@leaa/dashboard/src/utils';
+import { msgMessage, msgError, formatDateTimeToDayStartOrEnd } from '@leaa/dashboard/src/utils';
 import { IOnValidateFormResult, IDateRange } from '@leaa/dashboard/src/interfaces';
 import { UpdateCouponInput } from '@leaa/common/src/dtos/coupon';
 
@@ -33,7 +33,7 @@ export const CouponInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =>
     try {
       return await form.validateFields();
     } catch (error) {
-      return msgUtil.error(error.errorFields[0]?.errors[0]);
+      return msgError(error.errorFields[0]?.errors[0]);
     }
   };
 
@@ -178,13 +178,8 @@ export const CouponInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =>
                   <span className={style['available-date-row']}>
                     <strong>{t('_page:Coupon.availableDate')} : </strong>
                     <em>
-                      {moment(dateUtil.formatDateTimeToDayStartOrEnd('start', timeRange[0])).format(
-                        AVAILABLE_DATE_TIPS_FORMAT,
-                      )}
-                      ~
-                      {moment(dateUtil.formatDateTimeToDayStartOrEnd('end', timeRange[1])).format(
-                        AVAILABLE_DATE_TIPS_FORMAT,
-                      )}
+                      {moment(formatDateTimeToDayStartOrEnd('start', timeRange[0])).format(AVAILABLE_DATE_TIPS_FORMAT)}~
+                      {moment(formatDateTimeToDayStartOrEnd('end', timeRange[1])).format(AVAILABLE_DATE_TIPS_FORMAT)}
                     </em>
                   </span>
                 }

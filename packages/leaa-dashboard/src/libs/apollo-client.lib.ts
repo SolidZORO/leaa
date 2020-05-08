@@ -2,7 +2,7 @@ import { HttpLink } from 'apollo-link-http';
 import { onError } from 'apollo-link-error';
 import { ApolloLink, split } from 'apollo-link';
 import { ApolloClient } from 'apollo-client';
-import { authUtil, msgUtil, langUtil } from '@leaa/dashboard/src/utils';
+import { getAuthToken, removeAuth, msgError, getCurrentLang } from '@leaa/dashboard/src/utils';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { OperationDefinitionNode } from 'graphql';
 
@@ -17,12 +17,12 @@ const httpLink = new HttpLink({
 });
 
 const authLink = new ApolloLink((operation, forward) => {
-  const token = authUtil.getAuthToken();
+  const token = getAuthToken();
 
   operation.setContext({
     headers: {
       Authorization: token ? `Bearer ${token}` : '',
-      lang: langUtil.getCurrentLang(),
+      lang: getCurrentLang(),
     },
   });
 
@@ -34,13 +34,13 @@ const errorLink = onError(({ graphQLErrors }) => {
     graphQLErrors.forEach((error) => {
       if (!ignoreErrorPath.includes(`${error.path}`)) {
         console.error('❌ ERROR >>>>', error, '📌 STACKTRACE >>>>', error.extensions?.exception?.stacktrace);
-        msgUtil.error(error.message);
+        msgError(error.message);
       }
 
       // TIPS: @see /leaa-api/src/utils/err.util.ts mapping code
       // @ts-ignore
       if (error.statusCode === 401) {
-        const removed = authUtil.removeAuth();
+        const removed = removeAuth();
 
         if (removed && window.location.pathname !== LOGOUT_REDIRECT_URL) {
           window.location.href = LOGOUT_REDIRECT_URL;

@@ -77,7 +77,7 @@ describe('SettingService', () => {
     });
   });
 
-  describe('getSetting', () => {
+  describe('getLocalStorageSettings', () => {
     const settingsObject = {
       items: [settingObject, settingObject],
       page: 1,

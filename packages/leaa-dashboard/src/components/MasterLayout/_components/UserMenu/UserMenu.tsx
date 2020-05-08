@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Skeleton, Popover, Button } from 'antd';
 import { RouteComponentProps } from 'react-router-dom';
 
-import { authUtil } from '@leaa/dashboard/src/utils';
+import { getAuthInfo, removeAuth } from '@leaa/dashboard/src/utils';
 import { LOGOUT_REDIRECT_URL } from '@leaa/dashboard/src/constants';
 import { Rcon, BuildInfo, UserAvatar } from '@leaa/dashboard/src/components';
 
@@ -15,7 +15,7 @@ export const UserMenu = (props: IProps): JSX.Element => {
   const { t } = useTranslation();
 
   const onLogout = (): void => {
-    if (authUtil.removeAuth()) {
+    if (removeAuth()) {
       return props.history.push(LOGOUT_REDIRECT_URL);
     }
 
@@ -25,7 +25,7 @@ export const UserMenu = (props: IProps): JSX.Element => {
     return undefined;
   };
 
-  const user = authUtil.getAuthInfo();
+  const user = getAuthInfo();
 
   const menuDom = (
     <div className={style['usermenu-box']}>

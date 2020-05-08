@@ -22,7 +22,7 @@ import {
   UpdateSettingsInput,
 } from '@leaa/common/src/dtos/setting';
 import { IPage, ICommenFormRef, ISubmitData } from '@leaa/dashboard/src/interfaces';
-import { settingUtil, msgUtil } from '@leaa/dashboard/src/utils';
+import { refreshLocalStorageSettings, msgMessage, msgError } from '@leaa/dashboard/src/utils';
 
 import { HtmlMeta, PageCard, SubmitBar, Rcon } from '@leaa/dashboard/src/components';
 
@@ -43,7 +43,7 @@ export default (props: IPage) => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
 
   const onRefreshSettings = () => {
-    settingUtil.refreshLocalStorageSettings();
+    refreshLocalStorageSettings();
   };
 
   const onCloseModalVisible = () => {
@@ -84,7 +84,7 @@ export default (props: IPage) => {
     variables: createSettingVariables,
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
     onCompleted: () => {
-      msgUtil.message(t('_lang:createdSuccessfully'));
+      msgMessage(t('_lang:createdSuccessfully'));
       onCloseModalVisible();
       onRefreshSettings();
     },
@@ -96,7 +96,7 @@ export default (props: IPage) => {
     variables: updateSettingVariables,
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
     onCompleted: () => {
-      msgUtil.message(t('_lang:updatedSuccessfully'));
+      msgMessage(t('_lang:updatedSuccessfully'));
       onCloseModalVisible();
       onRefreshSettings();
     },
@@ -108,7 +108,7 @@ export default (props: IPage) => {
     variables: updateSettingsVariables,
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
     onCompleted: () => {
-      msgUtil.message(t('_lang:updatedSuccessfully'));
+      msgMessage(t('_lang:updatedSuccessfully'));
       onCloseModalVisible();
       onRefreshSettings();
     },
@@ -120,7 +120,7 @@ export default (props: IPage) => {
     variables: deleteSettingVariables,
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
     onCompleted: () => {
-      msgUtil.message(t('_lang:deletedSuccessfully'));
+      msgMessage(t('_lang:deletedSuccessfully'));
       onCloseModalVisible();
       onRefreshSettings();
     },

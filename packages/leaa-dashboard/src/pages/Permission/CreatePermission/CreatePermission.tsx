@@ -8,7 +8,7 @@ import { CreatePermissionInput } from '@leaa/common/src/dtos/permission';
 import { IPage, ICommenFormRef, ISubmitData } from '@leaa/dashboard/src/interfaces';
 import { CREATE_PERMISSION } from '@leaa/dashboard/src/graphqls';
 import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
-import { msgUtil } from '@leaa/dashboard/src/utils';
+import { msgMessage, msgError } from '@leaa/dashboard/src/utils';
 import { PageCard, SubmitBar, Rcon, HtmlMeta } from '@leaa/dashboard/src/components';
 
 import { PermissionInfoForm } from '../_components/PermissionInfoForm/PermissionInfoForm';
@@ -29,7 +29,7 @@ export default (props: IPage) => {
       variables: submitVariables,
       // apollo-link-error onError: e => messageUtil.gqlError(e.message),
       onCompleted({ createPermission }) {
-        msgUtil.message(t('_lang:createdSuccessfully'));
+        msgMessage(t('_lang:createdSuccessfully'));
         props.history.push(`/permissions/${createPermission.id}`);
       },
     },

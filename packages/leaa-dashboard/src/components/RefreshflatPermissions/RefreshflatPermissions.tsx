@@ -5,7 +5,7 @@ import { useQuery } from '@apollo/react-hooks';
 
 import { GET_USER_BY_TOKEN } from '@leaa/dashboard/src/graphqls';
 import { LOGOUT_REDIRECT_URL } from '@leaa/dashboard/src/constants';
-import { authUtil } from '@leaa/dashboard/src/utils';
+import { setAuthInfo, getAuthToken, removeAuth, checkAuthIsAvailably } from '@leaa/dashboard/src/utils';
 import { IAuthInfo } from '@leaa/dashboard/src/interfaces';
 
 interface IProps {
@@ -14,12 +14,12 @@ interface IProps {
 }
 
 export const RefreshflatPermissions = (props: IProps) => {
-  if (authUtil.checkAuthIsAvailably()) {
+  if (checkAuthIsAvailably()) {
     useQuery<{ userByToken: IAuthInfo }, { token: string }>(GET_USER_BY_TOKEN, {
-      variables: { token: authUtil.getAuthToken() || '' },
+      variables: { token: getAuthToken() || '' },
       fetchPolicy: 'network-only',
       onError: () => {
-        if (authUtil.removeAuth()) {
+        if (removeAuth()) {
           return props.history.push(LOGOUT_REDIRECT_URL);
         }
 
@@ -27,11 +27,11 @@ export const RefreshflatPermissions = (props: IProps) => {
       },
       onCompleted: (data) => {
         if (data && data.userByToken.flatPermissions && data.userByToken.flatPermissions.length === 0) {
-          authUtil.removeAuth();
+          removeAuth();
         }
 
         if (data && data.userByToken && data.userByToken.flatPermissions) {
-          authUtil.setAuthInfo(_.pick(data.userByToken, ['id', 'name', 'email', 'flatPermissions', 'avatar_url']));
+          setAuthInfo(_.pick(data.userByToken, ['id', 'name', 'email', 'flatPermissions', 'avatar_url']));
         }
       },
     });

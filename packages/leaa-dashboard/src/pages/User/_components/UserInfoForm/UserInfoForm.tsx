@@ -5,7 +5,7 @@ import { Col, Form, Input, Row } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 import { User } from '@leaa/common/src/entrys';
-import { msgUtil } from '@leaa/dashboard/src/utils';
+import { msgMessage, msgError } from '@leaa/dashboard/src/utils';
 import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
 import { UpdateUserInput } from '@leaa/common/src/dtos/user';
 
@@ -27,7 +27,7 @@ export const UserInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
     try {
       return await form.validateFields();
     } catch (error) {
-      return msgUtil.error(error.errorFields[0]?.errors[0]);
+      return msgError(error.errorFields[0]?.errors[0]);
     }
   };
 

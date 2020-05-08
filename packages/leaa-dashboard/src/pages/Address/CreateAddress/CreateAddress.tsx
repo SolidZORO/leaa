@@ -8,7 +8,7 @@ import { CreateAddressInput } from '@leaa/common/src/dtos/address';
 import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { IPage, ICommenFormRef, ISubmitData } from '@leaa/dashboard/src/interfaces';
 import { CREATE_ADDRESS } from '@leaa/dashboard/src/graphqls';
-import { msgUtil } from '@leaa/dashboard/src/utils';
+import { msgMessage, msgError } from '@leaa/dashboard/src/utils';
 
 import { HtmlMeta, PageCard, SubmitBar, Rcon } from '@leaa/dashboard/src/components';
 
@@ -28,7 +28,7 @@ export default (props: IPage) => {
     variables: submitVariables,
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
     onCompleted({ createAddress }) {
-      msgUtil.message(t('_lang:createdSuccessfully'));
+      msgMessage(t('_lang:createdSuccessfully'));
       props.history.push(`/addresses/${createAddress.id}`);
     },
   });

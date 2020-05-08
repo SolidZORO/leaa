@@ -2,7 +2,7 @@ import { IPermissionSlug } from '@leaa/common/src/interfaces';
 import { AUTH_TOKEN_NAME, AUTH_EXPIRES_IN_NAME, AUTH_INFO, GUEST_TOKEN_NAME } from '@leaa/dashboard/src/constants';
 import { IAuthInfo } from '@leaa/dashboard/src/interfaces';
 
-const setAuthToken = (token: string, expiresIn: number) => {
+export const setAuthToken = (token: string, expiresIn: number) => {
   // sync API tims format
   const expiresInTime = `${Math.floor(Date.now() / 1000) + expiresIn}`;
 
@@ -10,7 +10,7 @@ const setAuthToken = (token: string, expiresIn: number) => {
   localStorage.setItem(AUTH_EXPIRES_IN_NAME, expiresInTime);
 };
 
-const getAuthToken = (options = { onlyToken: false }): string | null => {
+export const getAuthToken = (options = { onlyToken: false }): string | null => {
   const authToken = localStorage.getItem(AUTH_TOKEN_NAME) || null;
 
   if (authToken && options.onlyToken) {
@@ -23,11 +23,11 @@ const getAuthToken = (options = { onlyToken: false }): string | null => {
 //
 //
 
-const setAuthInfo = (info: Partial<IAuthInfo>) => {
+export const setAuthInfo = (info: Partial<IAuthInfo>) => {
   localStorage.setItem(AUTH_INFO, JSON.stringify(info));
 };
 
-const getAuthInfo = (): Required<IAuthInfo> => {
+export const getAuthInfo = (): Required<IAuthInfo> => {
   const authInfo = localStorage.getItem(AUTH_INFO);
 
   const nextAuthInfo: IAuthInfo = {
@@ -49,7 +49,7 @@ const getAuthInfo = (): Required<IAuthInfo> => {
 //
 //
 
-const removeAuthToken = (): boolean => {
+export const removeAuthToken = (): boolean => {
   if (!getAuthToken) {
     console.log('Not Found Auth Token');
 
@@ -62,7 +62,7 @@ const removeAuthToken = (): boolean => {
   return true;
 };
 
-const removeAuthInfo = (): boolean => {
+export const removeAuthInfo = (): boolean => {
   if (!getAuthInfo()) {
     console.log('Not Found Auth Info');
 
@@ -74,7 +74,7 @@ const removeAuthInfo = (): boolean => {
   return true;
 };
 
-const removeAuth = (): boolean => {
+export const removeAuth = (): boolean => {
   const removedAuthToken = removeAuthToken();
   const removedAuthInfo = removeAuthInfo();
 
@@ -84,7 +84,7 @@ const removeAuth = (): boolean => {
 //
 //
 
-const checkAuthIsAvailably = (): boolean => {
+export const checkAuthIsAvailably = (): boolean => {
   const authExpiresIn = localStorage.getItem(AUTH_EXPIRES_IN_NAME);
   const authToken = getAuthToken();
 
@@ -97,9 +97,9 @@ const checkAuthIsAvailably = (): boolean => {
   return true;
 };
 
-const setGuestToken = (token: string) => localStorage.setItem(GUEST_TOKEN_NAME, token);
+export const setGuestToken = (token: string) => localStorage.setItem(GUEST_TOKEN_NAME, token);
 
-const getGuestToken = (options = { onlyToken: false }): string | null => {
+export const getGuestToken = (options = { onlyToken: false }): string | null => {
   const guestToken = localStorage.getItem(GUEST_TOKEN_NAME) || null;
 
   if (guestToken && options.onlyToken) {
@@ -109,7 +109,7 @@ const getGuestToken = (options = { onlyToken: false }): string | null => {
   return guestToken;
 };
 
-const removeGuestToken = (): boolean => {
+export const removeGuestToken = (): boolean => {
   if (!getGuestToken) {
     console.log('Not Found Guest Token');
 
@@ -121,11 +121,11 @@ const removeGuestToken = (): boolean => {
   return true;
 };
 
-const checkGuestIsAvailably = (): boolean => {
+export const checkGuestIsAvailably = (): boolean => {
   return !!getGuestToken();
 };
 
-const can = (permissionName: IPermissionSlug): boolean => {
+export const can = (permissionName: IPermissionSlug): boolean => {
   const authInfoString = localStorage.getItem(AUTH_INFO);
 
   if (!authInfoString || !permissionName) {
@@ -151,21 +151,4 @@ const can = (permissionName: IPermissionSlug): boolean => {
   }
 
   return authInfo.flatPermissions.includes(permissionName);
-};
-
-export const authUtil = {
-  setAuthToken,
-  setAuthInfo,
-  getAuthInfo,
-  getAuthToken,
-  removeAuthToken,
-  removeAuthInfo,
-  removeAuth,
-  checkAuthIsAvailably,
-  can,
-  //
-  getGuestToken,
-  setGuestToken,
-  removeGuestToken,
-  checkGuestIsAvailably,
 };

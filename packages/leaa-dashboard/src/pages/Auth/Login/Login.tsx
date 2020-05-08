@@ -7,7 +7,15 @@ import { Row, Col, Button } from 'antd';
 
 import { LOGIN, LOGIN_BY_TICKET, GET_DEMO_DATA } from '@leaa/dashboard/src/graphqls';
 import { IPage, ICommenFormRef, IAuthInfo, ISubmitData } from '@leaa/dashboard/src/interfaces';
-import { authUtil, msgUtil } from '@leaa/dashboard/src/utils';
+import {
+  setAuthToken,
+  setAuthInfo,
+  checkAuthIsAvailably,
+  getGuestToken,
+  removeGuestToken,
+  msgMessage,
+  msgError,
+} from '@leaa/dashboard/src/utils';
 import { LOGIN_REDIRECT_URL } from '@leaa/dashboard/src/constants';
 import { AuthLoginInput } from '@leaa/common/src/dtos/auth';
 import { DemoDataObject } from '@leaa/common/src/dtos/demo';
@@ -30,12 +38,12 @@ export default (props: IPage) => {
 
   const clearGuestInfo = () => {
     setLoginErrorCount(0);
-    authUtil.removeGuestToken();
+    removeGuestToken();
   };
 
   const setLogin = (login: any) => {
     if (login?.name && login.flatPermissions?.length === 0) {
-      msgUtil.message(t('_page:Auth.Login.notPermissions'));
+      msgMessage(t('_page:Auth.Login.notPermissions'));
 
       return;
     }
@@ -49,11 +57,11 @@ export default (props: IPage) => {
         flatPermissions: login.flatPermissions,
       };
 
-      authUtil.setAuthInfo(authInfo);
+      setAuthInfo(authInfo);
     }
 
     if (login?.authToken && login.authExpiresIn) {
-      authUtil.setAuthToken(login.authToken, login.authExpiresIn);
+      setAuthToken(login.authToken, login.authExpiresIn);
 
       if (qs.redirect) {
         props.history.push(`${qs.redirect}`);
@@ -93,14 +101,14 @@ export default (props: IPage) => {
       setLogin(loginByTicket);
     },
     onError: (e) => {
-      msgUtil.error(e.message);
+      msgError(e.message);
 
       return props.history.push('/login');
     },
   });
 
   useEffect(() => {
-    const authIsAvailably = authUtil.checkAuthIsAvailably();
+    const authIsAvailably = checkAuthIsAvailably();
 
     if (authIsAvailably) {
       clearGuestInfo();
@@ -129,14 +137,14 @@ export default (props: IPage) => {
           email: submitData.email && submitData.email.trim(),
           password: submitData.password,
           captcha: submitData.captcha,
-          guestToken: authUtil.getGuestToken(),
+          guestToken: getGuestToken(),
         },
       },
     });
   };
 
   const onBack = () => {
-    msgUtil.message(t('_page:Auth.Login.backTips'));
+    msgMessage(t('_page:Auth.Login.backTips'));
   };
 
   return (

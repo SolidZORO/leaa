@@ -28,20 +28,15 @@ interface IPickOrderProps {
   order?: SortOrder;
 }
 
-interface IPickOrderResult {
-  orderBy?: string;
-  orderSort?: string;
-}
-
 type IFormatOrderSortResult = 'DESC' | 'ASC' | undefined;
 
-const routerPathToClassName = (routerPath: string): string =>
+export const routerPathToClassName = (routerPath: string): string =>
   routerPath
     .replace(/^\//, '') // remove ^/
     .replace(/\/\d+/g, '-item') // replace /444  ->  -item
     .replace(/\//g, '-'); // replace all /  ->  -
 
-const mergeParamToUrlQuery = ({ window, params, replace }: IMergeParamToUrlQuery): string => {
+export const mergeParamToUrlQuery = ({ window, params, replace }: IMergeParamToUrlQuery): string => {
   const prevBaseUrl = `${window.location.origin}${window.location.pathname}`;
   const query = queryString.parse(window.location.search);
 
@@ -69,7 +64,7 @@ const mergeParamToUrlQuery = ({ window, params, replace }: IMergeParamToUrlQuery
   return nextUrl;
 };
 
-const getPagination = (urlParams: ParsedQuery): IGetPaginationResult => {
+export const getPaginationByUrl = (urlParams: ParsedQuery): IGetPaginationResult => {
   const result: IGetPaginationResult = {
     page: DEFAULT_PAGE,
     pageSize: DEFAULT_PAGE_SIZE,
@@ -86,7 +81,7 @@ const getPagination = (urlParams: ParsedQuery): IGetPaginationResult => {
   return result;
 };
 
-const formatOrderSort = (orderSort?: string[] | string | null | undefined): IFormatOrderSortResult => {
+export const formatOrderSortByUrl = (orderSort?: string[] | string | null | undefined): IFormatOrderSortResult => {
   if (!orderSort) {
     return undefined;
   }
@@ -104,7 +99,7 @@ const formatOrderSort = (orderSort?: string[] | string | null | undefined): IFor
   return undefined;
 };
 
-const formatOrderBy = (orderBy?: string[] | string | null | undefined): string | undefined => {
+export const formatOrderByByUrl = (orderBy?: string[] | string | null | undefined): string | undefined => {
   if (!orderBy) {
     return undefined;
   }
@@ -112,7 +107,7 @@ const formatOrderBy = (orderBy?: string[] | string | null | undefined): string |
   return String(orderBy);
 };
 
-const pickPagination = (params: PaginationProps): IPickPaginationResult => {
+export const pickPaginationByUrl = (params: PaginationProps): IPickPaginationResult => {
   if (_.isEmpty(params)) {
     return { page: undefined, pageSize: undefined };
   }
@@ -131,8 +126,8 @@ const pickPagination = (params: PaginationProps): IPickPaginationResult => {
 };
 
 // TODO EDIT TYPE
-// const pickOrder = (params: IPickOrderProps | any): IPickOrderResult => {
-const pickOrder = (params: IPickOrderProps | any) => {
+// const pickOrderByByUrl = (params: IPickOrderProps | any): IPickOrderResult => {
+export const pickOrderByByUrl = (params: IPickOrderProps | any) => {
   if (_.isEmpty(params)) {
     return { orderBy: undefined, orderSort: undefined };
   }
@@ -144,30 +139,19 @@ const pickOrder = (params: IPickOrderProps | any) => {
   }
 
   if (params.order) {
-    result.orderSort = formatOrderSort(params.order);
+    result.orderSort = formatOrderSortByUrl(params.order);
   }
 
   return result;
 };
 
-const initPaginationState = (urlParams: ParsedQuery): ITablePagination => {
-  const urlPagination = getPagination(urlParams);
+export const initPaginationStateByUrl = (urlParams: ParsedQuery): ITablePagination => {
+  const urlPagination = getPaginationByUrl(urlParams);
 
   return {
     page: urlPagination.page,
     pageSize: urlPagination?.pageSize,
-    orderBy: formatOrderBy(urlParams.orderBy),
-    orderSort: formatOrderSort(urlParams.orderSort),
+    orderBy: formatOrderByByUrl(urlParams.orderBy),
+    orderSort: formatOrderSortByUrl(urlParams.orderSort),
   };
-};
-
-export const urlUtil = {
-  routerPathToClassName,
-  mergeParamToUrlQuery,
-  getPagination,
-  pickPagination,
-  pickOrder,
-  formatOrderSort,
-  formatOrderBy,
-  initPaginationState,
 };

@@ -8,7 +8,7 @@ import { CreateUserInput } from '@leaa/common/src/dtos/user';
 import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { IPage, ICommenFormRef, ISubmitData } from '@leaa/dashboard/src/interfaces';
 import { CREATE_USER } from '@leaa/dashboard/src/graphqls';
-import { msgUtil } from '@leaa/dashboard/src/utils';
+import { msgMessage, msgError } from '@leaa/dashboard/src/utils';
 
 import { HtmlMeta, PageCard, SubmitBar, Rcon } from '@leaa/dashboard/src/components';
 
@@ -28,7 +28,7 @@ export default (props: IPage) => {
     variables: submitVariables,
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
     onCompleted({ createUser }) {
-      msgUtil.message(t('_lang:createdSuccessfully'));
+      msgMessage(t('_lang:createdSuccessfully'));
       props.history.push(`/users/${createUser.id}`);
     },
   });

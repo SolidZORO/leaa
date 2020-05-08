@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { InputNumber } from 'antd';
 import { InputNumberProps } from 'antd/es/input-number';
 
-import { settingUtil } from '@leaa/dashboard/src/utils';
+import { getLocalStorageSettings } from '@leaa/dashboard/src/utils';
 
 import style from './style.module.less';
 
@@ -20,7 +20,7 @@ export const PriceInput = (props: IProps) => {
       })}
     >
       <span className={style['currency-symbol']}>
-        {settingUtil.getSetting({ key: 'currency_symbol', disableNotification: true }).value ||
+        {getLocalStorageSettings({ key: 'currency_symbol', disableNotification: true }).value ||
           'CURRENCY_SYMBOL_NOT_SETTING'}
       </span>
       <InputNumber className="g-input-number" placeholder={t('_lang:price')} {...props} />

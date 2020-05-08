@@ -18,7 +18,7 @@ export const GET_SETTINGS = gql`
   }
 `;
 
-const refreshLocalStorageSettings = () => {
+export const refreshLocalStorageSettings = () => {
   apolloClient
     .query<any>({
       query: GET_SETTINGS,
@@ -32,7 +32,7 @@ const refreshLocalStorageSettings = () => {
     });
 };
 
-const getSetting = (params: { key: string; disableNotification?: boolean }): ISetting => {
+export const getLocalStorageSettings = (params: { key: string; disableNotification?: boolean }): ISetting => {
   const settingByEerrorTips: ISetting = {
     name: '',
     slug: '',
@@ -53,9 +53,4 @@ const getSetting = (params: { key: string; disableNotification?: boolean }): ISe
   }
 
   return setting;
-};
-
-export const settingUtil = {
-  refreshLocalStorageSettings,
-  getSetting,
 };

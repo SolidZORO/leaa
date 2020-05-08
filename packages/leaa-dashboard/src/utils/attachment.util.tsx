@@ -6,23 +6,23 @@ import { message } from 'antd';
 import { Translation } from 'react-i18next';
 
 import { ISaveInOssSignature, ISaveInLocalSignature } from '@leaa/common/src/interfaces';
-import { authUtil } from '@leaa/dashboard/src/utils/auth.util';
+import { getAuthToken } from '@leaa/dashboard/src/utils/auth.util';
 import { envConfig } from '@leaa/dashboard/src/configs';
 
 interface ISignatureResult {
   data: ISaveInOssSignature | ISaveInLocalSignature;
 }
 
-const isAt2x = (originalname: string): boolean => /[＠@_]2x/i.test(originalname);
+export const isAt2x = (originalname: string): boolean => /[＠@_]2x/i.test(originalname);
 
-const getSaveFilename = (originalname: string): string => {
+export const getSaveFilename = (originalname: string): string => {
   const at2x = isAt2x(originalname) ? '_2x' : '';
   const ext = originalname.split('.').pop();
 
   return `${uuid.v4()}${at2x}.${ext}`;
 };
 
-const getSignature = async () => {
+export const getUploadSignature = async () => {
   const signatureResult: ISignatureResult = await axios.get(`${envConfig.API_URL}/attachments/signature`);
 
   if (!signatureResult || !signatureResult.data || !signatureResult.data || !signatureResult.data.uploadEndPoint) {
@@ -32,7 +32,7 @@ const getSignature = async () => {
   return signatureResult;
 };
 
-const uploadFile = (
+export const uploadFile = (
   file: File,
   signatureResult: ISignatureResult,
   attachmentParams: any,
@@ -43,7 +43,7 @@ const uploadFile = (
     onUploadCatch?: (event: any) => void;
   },
 ) => {
-  const token = authUtil.getAuthToken();
+  const token = getAuthToken();
   const formData = new FormData();
 
   //
@@ -112,11 +112,4 @@ const uploadFile = (
         onCallback.onUploadCatch(error);
       }
     });
-};
-
-export const attachmentUtil = {
-  isAt2x,
-  getSaveFilename,
-  getSignature,
-  uploadFile,
 };

@@ -13,7 +13,17 @@ import { GET_PROMOS, DELETE_PROMO, UPDATE_PROMO } from '@leaa/dashboard/src/grap
 import { Promo } from '@leaa/common/src/entrys';
 import { PromosWithPaginationObject, PromosArgs } from '@leaa/common/src/dtos/promo';
 import { IPage, IKey, ITablePagination } from '@leaa/dashboard/src/interfaces';
-import { urlUtil, tableUtil, msgUtil } from '@leaa/dashboard/src/utils';
+import {
+  mergeParamToUrlQuery,
+  getPaginationByUrl,
+  pickPaginationByUrl,
+  pickOrderByByUrl,
+  formatOrderSortByUrl,
+  formatOrderByByUrl,
+  initPaginationStateByUrl,
+  calcTableDefaultSortOrder,
+  msgMessage,
+} from '@leaa/dashboard/src/utils';
 
 import {
   Rcon,
@@ -35,9 +45,9 @@ export default (props: IPage) => {
   const { t } = useTranslation();
 
   const urlParams = queryString.parse(window.location.search);
-  const urlPagination = urlUtil.getPagination(urlParams);
+  const urlPagination = getPaginationByUrl(urlParams);
 
-  const [tablePagination, setTablePagination] = useState<ITablePagination>(urlUtil.initPaginationState(urlParams));
+  const [tablePagination, setTablePagination] = useState<ITablePagination>(initPaginationStateByUrl(urlParams));
   const [selectedRowKeys, setSelectedRowKeys] = useState<IKey[]>([]);
 
   // filter
@@ -53,7 +63,7 @@ export default (props: IPage) => {
   // mutation
   const [deletePromoMutate, deletePromoMutation] = useMutation<Promo>(DELETE_PROMO, {
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
-    onCompleted: () => msgUtil.message(t('_lang:deletedSuccessfully')),
+    onCompleted: () => msgMessage(t('_lang:deletedSuccessfully')),
     refetchQueries: () => [{ query: GET_PROMOS, variables: getPromosVariables }],
   });
 
@@ -84,7 +94,7 @@ export default (props: IPage) => {
       dataIndex: 'id',
       width: 75, // ID
       sorter: true,
-      sortOrder: tableUtil.calcDefaultSortOrder(tablePagination.orderSort, tablePagination.orderBy, 'id'),
+      sortOrder: calcTableDefaultSortOrder(tablePagination.orderSort, tablePagination.orderBy, 'id'),
       render: (id: string) => <TableColumnId id={id} link={`${props.route.path}/${id}`} />,
     },
     {
@@ -114,7 +124,7 @@ export default (props: IPage) => {
       dataIndex: 'created_at',
       width: 120,
       sorter: true,
-      sortOrder: tableUtil.calcDefaultSortOrder(tablePagination.orderSort, tablePagination.orderBy, 'created_at'),
+      sortOrder: calcTableDefaultSortOrder(tablePagination.orderSort, tablePagination.orderBy, 'created_at'),
       render: (text: string) => <TableColumnDate date={text} size="small" />,
     },
     {
@@ -159,7 +169,7 @@ export default (props: IPage) => {
       filterParams.q = result;
     }
 
-    urlUtil.mergeParamToUrlQuery({
+    mergeParamToUrlQuery({
       window,
       params: { page: 1, ...filterParams },
       replace: true,
@@ -218,15 +228,15 @@ export default (props: IPage) => {
                 ...tablePagination,
                 page: pagination.current,
                 pageSize: pagination.pageSize,
-                orderBy: urlUtil.formatOrderBy(sorter.field),
-                orderSort: urlUtil.formatOrderSort(sorter.order),
+                orderBy: formatOrderByByUrl(sorter.field),
+                orderSort: formatOrderSortByUrl(sorter.order),
               });
 
-              urlUtil.mergeParamToUrlQuery({
+              mergeParamToUrlQuery({
                 window,
                 params: {
-                  ...urlUtil.pickPagination(pagination),
-                  ...urlUtil.pickOrder(sorter),
+                  ...pickPaginationByUrl(pagination),
+                  ...pickOrderByByUrl(sorter),
                 },
                 replace: true,
               });

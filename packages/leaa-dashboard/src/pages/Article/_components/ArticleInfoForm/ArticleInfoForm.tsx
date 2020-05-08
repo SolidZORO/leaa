@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { Article } from '@leaa/common/src/entrys';
 import { UpdateArticleInput } from '@leaa/common/src/dtos/article';
 import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
-import { msgUtil } from '@leaa/dashboard/src/utils';
+import { msgMessage, msgError } from '@leaa/dashboard/src/utils';
 
 import { SwitchNumber, SelectCategoryIdByTree, Rcon } from '@leaa/dashboard/src/components';
 
@@ -27,7 +27,7 @@ export const ArticleInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =
     try {
       return await form.validateFields();
     } catch (error) {
-      return msgUtil.error(error.errorFields[0]?.errors[0]);
+      return msgError(error.errorFields[0]?.errors[0]);
     }
   };
 

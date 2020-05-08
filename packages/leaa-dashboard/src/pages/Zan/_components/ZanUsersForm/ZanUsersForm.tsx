@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 import { Zan } from '@leaa/common/src/entrys';
 import { FormCard, UserAvatar, ConfirmDeleteButton } from '@leaa/dashboard/src/components';
-import { msgUtil } from '@leaa/dashboard/src/utils';
+import { msgMessage, msgError } from '@leaa/dashboard/src/utils';
 import { DELETE_ZAN_USER, GET_ZAN } from '@leaa/dashboard/src/graphqls';
 
 import { ZanProgress } from '../ZanProgress/ZanProgress';
@@ -31,7 +31,7 @@ export const ZanUsersForm = (props: IProps) => {
     variables: submitVariables,
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
     onCompleted(e) {
-      msgUtil.message(t('_page:Zan.deletedLikeUser'));
+      msgMessage(t('_page:Zan.deletedLikeUser'));
     },
     refetchQueries: () => [{ query: GET_ZAN, variables: { id: props.item?.id } }],
   });

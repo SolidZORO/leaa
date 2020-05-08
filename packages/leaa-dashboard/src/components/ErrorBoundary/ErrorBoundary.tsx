@@ -2,7 +2,7 @@ import React from 'react';
 import queryString from 'query-string';
 import { Button } from 'antd';
 
-import { urlUtil } from '@leaa/dashboard/src/utils/url.util';
+import { mergeParamToUrlQuery } from '@leaa/dashboard/src/utils/url.util';
 import { Rcon } from '@leaa/dashboard/src/components/Rcon/Rcon';
 
 import style from './style.module.less';
@@ -34,7 +34,7 @@ export class ErrorBoundary extends React.Component<IProps, IState> {
     const qs = queryString.parse(window.location.search);
 
     if (!qs[CATCH_HAS_REFRESH_URL_PARAM]) {
-      window.location.href = urlUtil.mergeParamToUrlQuery({
+      window.location.href = mergeParamToUrlQuery({
         window,
         params: { [CATCH_HAS_REFRESH_URL_PARAM]: 1 },
         replace: false,

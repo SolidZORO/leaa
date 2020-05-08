@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-const formatDateTimeToDayStartOrEnd = (type: 'start' | 'end', dateTime: string | moment.Moment): Date => {
+export const formatDateTimeToDayStartOrEnd = (type: 'start' | 'end', dateTime: string | moment.Moment): Date => {
   const error = new Error('Type or Date-Time Error');
   if (!type || !dateTime) throw error;
 
@@ -15,12 +15,7 @@ const formatDateTimeToDayStartOrEnd = (type: 'start' | 'end', dateTime: string |
   throw error;
 };
 
-const formatDateRangeTime = (startField: string, expireField: string): { start: Date; end: Date } => ({
+export const formatDateRangeTime = (startField: string, expireField: string): { start: Date; end: Date } => ({
   start: formatDateTimeToDayStartOrEnd('start', startField),
   end: formatDateTimeToDayStartOrEnd('end', expireField),
 });
-
-export const dateUtil = {
-  formatDateTimeToDayStartOrEnd,
-  formatDateRangeTime,
-};

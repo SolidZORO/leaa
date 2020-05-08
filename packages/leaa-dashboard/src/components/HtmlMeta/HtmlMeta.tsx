@@ -1,7 +1,7 @@
 import React from 'react';
 // import { Helmet } from 'react-helmet';
 import { envConfig } from '@leaa/dashboard/src/configs';
-import { settingUtil } from '@leaa/dashboard/src/utils';
+import { getLocalStorageSettings } from '@leaa/dashboard/src/utils';
 import { Helmet } from 'react-helmet-async';
 
 // import { useTranslation } from 'react-i18next';
@@ -14,7 +14,7 @@ interface IProps {
 export const HtmlMeta = (props: IProps) => {
   const siteName = props.disableSiteName
     ? ''
-    : ` - ${settingUtil.getSetting({ key: 'site_name', disableNotification: true }).value || envConfig.SITE_NAME}`;
+    : ` - ${getLocalStorageSettings({ key: 'site_name', disableNotification: true }).value || envConfig.SITE_NAME}`;
 
   return (
     <Helmet>

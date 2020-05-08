@@ -1,6 +1,6 @@
 import cx from 'classnames';
-import React, { useEffect, forwardRef, useState, useImperativeHandle } from 'react';
-import { Col, Form, Input, Row, Checkbox, Button } from 'antd';
+import React, { useEffect, forwardRef, useImperativeHandle } from 'react';
+import { Col, Form, Input, Row, Checkbox } from 'antd';
 
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/react-hooks';
@@ -8,7 +8,7 @@ import { useQuery } from '@apollo/react-hooks';
 import { GET_GUEST } from '@leaa/dashboard/src/graphqls';
 import { LoginAccount } from '@leaa/common/src/dtos/demo';
 import { Verification } from '@leaa/common/src/entrys';
-import { authUtil } from '@leaa/dashboard/src/utils';
+import { getGuestToken, setGuestToken } from '@leaa/dashboard/src/utils';
 
 import style from './style.module.less';
 
@@ -25,12 +25,12 @@ export const LoginForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
   const { t } = useTranslation();
   const [form] = Form.useForm();
 
-  const getGuestVariables = { token: authUtil.getGuestToken() };
+  const getGuestVariables = { token: getGuestToken() };
   const getGuestQuery = useQuery<{ guest: Verification }>(GET_GUEST, {
     variables: getGuestVariables,
     fetchPolicy: 'network-only',
     onCompleted: (data) => {
-      if (data.guest.token) authUtil.setGuestToken(data.guest.token);
+      if (data.guest.token) setGuestToken(data.guest.token);
     },
   });
 

@@ -3,7 +3,7 @@ import React, { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { PlusOutlined } from '@ant-design/icons';
 
-import { attachmentUtil } from '@leaa/dashboard/src/utils';
+import { uploadFile, getUploadSignature } from '@leaa/dashboard/src/utils';
 import { Attachment } from '@leaa/common/src/entrys';
 import { IAttachmentParams } from '@leaa/common/src/interfaces';
 
@@ -23,10 +23,10 @@ export const AttachmentDropzone = (props: IProps) => {
   const cardHeight = (props.type === 'card' && props.cardHeight) || undefined;
 
   const onUploadFileList = async (fileList: File[]) => {
-    const signature = await attachmentUtil.getSignature();
+    const signature = await getUploadSignature();
 
     fileList.forEach((file: File) =>
-      attachmentUtil.uploadFile(file, signature, props.attachmentParams, {
+      uploadFile(file, signature, props.attachmentParams, {
         onUploadSuccess: (e) => props.onUploadedCallback && props.onUploadedCallback(e),
       }),
     );

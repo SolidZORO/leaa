@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 
 import { Attachment } from '@leaa/common/src/entrys';
 import { IAttachmentParams } from '@leaa/common/src/interfaces';
-import { langUtil } from '@leaa/dashboard/src/utils';
+import { removeLangSpace } from '@leaa/dashboard/src/utils';
 
 import { AttachmentItem } from '../AttachmentItem/AttachmentItem';
 
@@ -114,7 +114,7 @@ export const AttachmentList = forwardRef((props: IProps, ref: React.Ref<any>) =>
     if (props.type === 'list') {
       return (
         <div className={style['empty-text']}>
-          {langUtil.removeSpace(`${t('_lang:empty')} ${t('_lang:attachment')}`, i18n.language)}
+          {removeLangSpace(`${t('_lang:empty')} ${t('_lang:attachment')}`, i18n.language)}
         </div>
       );
     }

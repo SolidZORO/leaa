@@ -1,4 +1,8 @@
-const calcDefaultSortOrder = (sort?: string, by?: string, field?: string): 'descend' | 'ascend' | boolean => {
+export const calcTableDefaultSortOrder = (
+  sort?: string,
+  by?: string,
+  field?: string,
+): 'descend' | 'ascend' | boolean => {
   if (!by || !sort || !field) {
     return false;
   }
@@ -13,8 +17,4 @@ const calcDefaultSortOrder = (sort?: string, by?: string, field?: string): 'desc
   }
 
   return false;
-};
-
-export const tableUtil = {
-  calcDefaultSortOrder,
 };
