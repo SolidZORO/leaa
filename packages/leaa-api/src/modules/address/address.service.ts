@@ -2,10 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { Address, Permission, User } from '@leaa/common/src/entrys';
+import { Address, Permission } from '@leaa/common/src/entrys';
 import { AddressesWithPaginationObject, CreateAddressInput, UpdateAddressInput } from '@leaa/common/src/dtos/address';
-import { argsFormat, commonUpdate, commonDelete, calcQbPageInfo, errorMessage } from '@leaa/api/src/utils';
-import { IAddresssArgs, IAddressArgs } from '@leaa/api/src/interfaces';
+import { argsFormat, commonUpdate, commonDelete, calcQbPageInfo, errorMsg } from '@leaa/api/src/utils';
+import { IAddresssArgs, IAddressArgs, IGqlCtx } from '@leaa/api/src/interfaces';
 
 const CLS_NAME = 'AddressService';
 
@@ -13,8 +13,10 @@ const CLS_NAME = 'AddressService';
 export class AddressService {
   constructor(@InjectRepository(Address) private readonly addressRepository: Repository<Address>) {}
 
-  async addresses(args: IAddresssArgs): Promise<AddressesWithPaginationObject | undefined> {
-    const nextArgs = argsFormat(args);
+  async addresses(gqlCtx: IGqlCtx, args: IAddresssArgs): Promise<AddressesWithPaginationObject | undefined> {
+    // const { t } = gqlCtx;
+
+    const nextArgs = argsFormat(args, gqlCtx);
 
     const PRIMARY_TABLE = 'addresses';
     const qb = this.addressRepository.createQueryBuilder(PRIMARY_TABLE);
@@ -37,8 +39,10 @@ export class AddressService {
     return calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
-  async address(id: string, args?: IAddressArgs): Promise<Address | undefined> {
-    if (!id) throw errorMessage({ t: ['_error:notFoundId'] });
+  async address(gqlCtx: IGqlCtx, id: string, args?: IAddressArgs): Promise<Address | undefined> {
+    const { t } = gqlCtx;
+
+    if (!id) throw errorMsg(t('_error:notFoundId'));
 
     let nextArgs: IAddressArgs = {};
 
@@ -54,13 +58,13 @@ export class AddressService {
     return this.addressRepository.save({ ...args });
   }
 
-  async updateAddress(id: string, args: UpdateAddressInput, user?: User): Promise<Address | undefined> {
+  async updateAddress(gqlCtx: IGqlCtx, id: string, args: UpdateAddressInput): Promise<Address | undefined> {
     const relationArgs: { permissions?: Permission[] } = {};
 
-    return commonUpdate({ repository: this.addressRepository, CLS_NAME, id, args, relation: relationArgs });
+    return commonUpdate({ repository: this.addressRepository, CLS_NAME, id, args, relation: relationArgs, gqlCtx });
   }
 
-  async deleteAddress(id: string, user?: User): Promise<Address | undefined> {
-    return commonDelete({ repository: this.addressRepository, CLS_NAME, id });
+  async deleteAddress(gqlCtx: IGqlCtx, id: string): Promise<Address | undefined> {
+    return commonDelete({ repository: this.addressRepository, CLS_NAME, id, gqlCtx });
   }
 }

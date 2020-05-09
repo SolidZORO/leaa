@@ -32,7 +32,6 @@ import { ExportModule } from '@leaa/api/src/modules/export/export.module';
 import { ZanModule } from '@leaa/api/src/modules/zan/zan.module';
 import { DemoModule } from '@leaa/api/src/modules/demo/demo.module';
 import { TestModule } from '@leaa/api/src/modules/test/test.module';
-import { I18nModule } from '@leaa/api/src/modules/i18n/i18n.module';
 import { ActionModule } from '@leaa/api/src/modules/action/action.module';
 
 const imports = [
@@ -68,7 +67,7 @@ const imports = [
   ExportModule,
   ZanModule,
   TestModule,
-  I18nModule,
+  // I18nModule,
   ActionModule,
 ];
 

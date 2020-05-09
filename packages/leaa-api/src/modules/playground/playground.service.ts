@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PermissionService } from '@leaa/api/src/modules/permission/permission.service';
 import { RoleService } from '@leaa/api/src/modules/role/role.service';
 import { UserService } from '@leaa/api/src/modules/user/user.service';
+import i18next from 'i18next';
 
 @Injectable()
 export class PlaygroundService {
@@ -17,12 +18,14 @@ export class PlaygroundService {
 
     const user = await this.userService.userByEmail(userEmail);
 
+    const gqlCtx = { t: i18next.t };
+
     if (user) {
-      await this.userService.updateUser(user.id, {
+      await this.userService.updateUser(gqlCtx, user.id, {
         roleSlugs,
       });
 
-      const nextUser = await this.userService.user(user.id, {});
+      const nextUser = await this.userService.user(gqlCtx, user.id, {});
 
       console.log(nextUser);
     }

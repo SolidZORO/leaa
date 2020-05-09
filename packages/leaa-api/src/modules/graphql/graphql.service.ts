@@ -27,7 +27,8 @@ export class GraphqlService implements GqlOptionsFactory {
         return {
           ...ctx,
           user: await this.authService.validateUserByReq(ctx.req),
-          lang: ctx.req.headers.lang,
+          lang: ctx.req.headers['accept-language'] || ctx.req.language,
+          t: ctx.req.t,
         };
       },
       formatError(err: any) {

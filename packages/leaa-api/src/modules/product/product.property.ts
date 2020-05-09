@@ -3,6 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { Product, Attachment } from '@leaa/common/src/entrys';
 import { ProductAttachmentsObject } from '@leaa/common/src/dtos/product';
 import { AttachmentService } from '@leaa/api/src/modules/attachment/attachment.service';
+import i18next from 'i18next';
 
 // const CLS_NAME = 'ProductProperty';
 
@@ -15,7 +16,12 @@ export class ProductProperty {
       return undefined;
     }
 
-    const attachmentsResult = await this.attachmentService.attachments({ moduleName: 'product', moduleId: product.id });
+    const gqlCtx = { t: i18next.t };
+
+    const attachmentsResult = await this.attachmentService.attachments(gqlCtx, {
+      moduleName: 'product',
+      moduleId: product.id,
+    });
     const attachments: Attachment[] = (attachmentsResult && attachmentsResult.items) || [];
 
     return {

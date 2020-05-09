@@ -21,42 +21,46 @@ export class RoleResolver {
   @UseGuards(PermissionsGuard)
   @Permissions('role.list-read')
   @Query(() => RolesWithPaginationObject)
-  async roles(@Args() args: RolesArgs): Promise<RolesWithPaginationObject | undefined> {
-    return this.roleService.roles(args);
+  async roles(@GqlCtx() gqlCtx: IGqlCtx, @Args() args: RolesArgs): Promise<RolesWithPaginationObject | undefined> {
+    return this.roleService.roles(gqlCtx, args);
   }
 
   @UseGuards(PermissionsGuard)
   @Permissions('role.item-read')
   @Query(() => Role)
-  async role(@Args({ name: 'id', type: () => String }) id: string, @Args() args?: RoleArgs): Promise<Role | undefined> {
-    return this.roleService.role(id, args);
+  async role(
+    @GqlCtx() gqlCtx: IGqlCtx,
+    @Args({ name: 'id', type: () => String }) id: string,
+    @Args() args?: RoleArgs,
+  ): Promise<Role | undefined> {
+    return this.roleService.role(gqlCtx, id, args);
   }
 
   @UseGuards(PermissionsGuard)
   @Permissions('role.item-create')
   @Mutation(() => Role)
-  async createRole(@Args('role') args: CreateRoleInput): Promise<Role | undefined> {
-    return this.roleService.createRole(args);
+  async createRole(@GqlCtx() gqlCtx: IGqlCtx, @Args('role') args: CreateRoleInput): Promise<Role | undefined> {
+    return this.roleService.createRole(gqlCtx, args);
   }
 
   @UseGuards(PermissionsGuard)
   @Permissions('role.item-update')
   @Mutation(() => Role)
   async updateRole(
+    @GqlCtx() gqlCtx: IGqlCtx,
     @Args({ name: 'id', type: () => String }) id: string,
     @Args('role') args: UpdateRoleInput,
-    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Role | undefined> {
-    return this.roleService.updateRole(id, args, gqlCtx);
+    return this.roleService.updateRole(gqlCtx, id, args);
   }
 
   @UseGuards(PermissionsGuard)
   @Permissions('role.item-delete')
   @Mutation(() => Role)
   async deleteRole(
+    @GqlCtx() gqlCtx: IGqlCtx,
     @Args({ name: 'id', type: () => String }) id: string,
-    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Role | undefined> {
-    return this.roleService.deleteRole(id, gqlCtx);
+    return this.roleService.deleteRole(gqlCtx, id);
   }
 }

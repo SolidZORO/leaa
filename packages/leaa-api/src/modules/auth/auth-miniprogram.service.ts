@@ -1,3 +1,4 @@
+import i18next from 'i18next';
 import bcryptjs from 'bcryptjs';
 import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
@@ -27,7 +28,9 @@ export class AuthMiniprogramService {
   private nextTicket = { ticket: randomString(), ticket_at: new Date() };
 
   async createUserAndAuth(platform: string, data: IMiniprogramCloudFnResult): Promise<ICreateAuthAndUserResult> {
-    const newUser = await this.userService.createUser({
+    const gqlCtx = { t: i18next.t };
+
+    const newUser = await this.userService.createUser(gqlCtx, {
       email: `${platform}-${new Date().valueOf()}@local.com`,
       password: bcryptjs.hashSync(this.nextTicket.ticket),
       name: data.user.userInfo.nickName,
@@ -57,6 +60,7 @@ export class AuthMiniprogramService {
   }
 
   async miniprogramLogin(data: IMiniprogramCloudFnResult): Promise<User | void> {
+    const gqlCtx = { t: i18next.t };
     const platform = PLATFORM_NAME;
 
     let userInfo: User | undefined;
@@ -66,7 +70,7 @@ export class AuthMiniprogramService {
       const hasAuth = await this.authService.authByOpenId(data.auth.OPENID, platform);
 
       if (hasAuth?.user_id) {
-        userInfo = await this.userService.user(hasAuth.user_id);
+        userInfo = await this.userService.user(gqlCtx, hasAuth.user_id);
         userAuth = { ...hasAuth };
       } else {
         const { newAuth, newUser } = await this.createUserAndAuth(platform, data);

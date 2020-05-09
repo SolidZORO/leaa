@@ -11,8 +11,9 @@ import {
   SyncDivisionToFileObject,
 } from '@leaa/common/src/dtos/division';
 import { DivisionService } from '@leaa/api/src/modules/division/division.service';
-import { CurrentUser, Permissions } from '@leaa/api/src/decorators';
+import { CurrentUser, Permissions, GqlCtx } from '@leaa/api/src/decorators';
 import { PermissionsGuard } from '@leaa/api/src/guards';
+import { IGqlCtx } from '@leaa/api/src/interfaces';
 
 @Resolver(() => Division)
 export class DivisionResolver {
@@ -22,10 +23,10 @@ export class DivisionResolver {
   @Permissions('division.list-read')
   @Query(() => DivisionsWithPaginationObject)
   async divisions(
+    @GqlCtx() gqlCtx: IGqlCtx,
     @Args() args: DivisionsArgs,
-    @CurrentUser() user?: User,
   ): Promise<DivisionsWithPaginationObject | undefined> {
-    return this.divisionService.divisions(args);
+    return this.divisionService.divisions(gqlCtx, args);
   }
 
   // DO NOT CHECK PERMISSIONS
@@ -44,11 +45,11 @@ export class DivisionResolver {
   @Permissions('division.item-read')
   @Query(() => Division)
   async division(
+    @GqlCtx() gqlCtx: IGqlCtx,
     @Args({ name: 'id', type: () => String }) id: string,
     @Args() args?: DivisionArgs,
-    @CurrentUser() user?: User,
   ): Promise<Division | undefined> {
-    return this.divisionService.division(id, args);
+    return this.divisionService.division(gqlCtx, id, args);
   }
 
   @UseGuards(PermissionsGuard)
@@ -69,16 +70,20 @@ export class DivisionResolver {
   @Permissions('division.item-update')
   @Mutation(() => Division)
   async updateDivision(
+    @GqlCtx() gqlCtx: IGqlCtx,
     @Args({ name: 'id', type: () => String }) id: string,
     @Args('division') args: UpdateDivisionInput,
   ): Promise<Division | undefined> {
-    return this.divisionService.updateDivision(id, args);
+    return this.divisionService.updateDivision(gqlCtx, id, args);
   }
 
   @UseGuards(PermissionsGuard)
   @Permissions('division.item-delete')
   @Mutation(() => Division)
-  async deleteDivision(@Args({ name: 'id', type: () => String }) id: string): Promise<Division | undefined> {
-    return this.divisionService.deleteDivision(id);
+  async deleteDivision(
+    @GqlCtx() gqlCtx: IGqlCtx,
+    @Args({ name: 'id', type: () => String }) id: string,
+  ): Promise<Division | undefined> {
+    return this.divisionService.deleteDivision(gqlCtx, id);
   }
 }

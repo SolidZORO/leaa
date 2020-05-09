@@ -1,14 +1,15 @@
 import path from 'path';
-
-import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestExpressApplication } from '@nestjs/platform-express';
 
-import { envInfoForCli } from '@leaa/api/src/utils';
-import { LoggerService } from '@leaa/api/src/modules/logger/logger.service';
-import { ConfigService } from '@leaa/api/src/modules/config/config.service';
-import { TagService } from '@leaa/api/src/modules/tag/tag.service';
 import { AppModule } from '@leaa/api/src/app.module';
+import { TagService } from '@leaa/api/src/modules/tag/tag.service';
+import { ConfigService } from '@leaa/api/src/modules/config/config.service';
+import { LoggerService } from '@leaa/api/src/modules/logger/logger.service';
+import { I18nextMiddleware } from '@leaa/api/src/middlewares';
+
+import { envInfoForCli } from '@leaa/api/src/utils';
 
 (async function bootstrap() {
   const logger = new Logger('App-Log');
@@ -21,6 +22,7 @@ import { AppModule } from '@leaa/api/src/app.module';
   const configService = await app.get(ConfigService);
   const publicPath = path.resolve(__dirname, `../${configService.PUBLIC_DIR}`);
 
+  // app.useStaticAssets(publicPath);
   app.useStaticAssets(publicPath);
   app.useGlobalPipes(new ValidationPipe());
 
@@ -35,6 +37,8 @@ import { AppModule } from '@leaa/api/src/app.module';
     // allowedHeaders: '';
     // preflightContinue: false;
   });
+
+  app.use(I18nextMiddleware);
 
   await app.listen(configService.PORT);
 

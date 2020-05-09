@@ -21,45 +21,52 @@ export class PermissionResolver {
   @UseGuards(PermissionsGuard)
   @Permissions('permission.list-read')
   @Query(() => PermissionsWithPaginationObject)
-  async permissions(@Args() args: PermissionsArgs): Promise<PermissionsWithPaginationObject> {
-    return this.permissionService.permissions(args);
+  async permissions(
+    @GqlCtx() gqlCtx: IGqlCtx,
+    @Args() args: PermissionsArgs,
+  ): Promise<PermissionsWithPaginationObject> {
+    return this.permissionService.permissions(gqlCtx, args);
   }
 
   @UseGuards(PermissionsGuard)
   @Permissions('permission.item-read')
   @Query(() => Permission)
   async permission(
+    @GqlCtx() gqlCtx: IGqlCtx,
     @Args({ name: 'id', type: () => String }) id: string,
     @Args() args: PermissionArgs,
   ): Promise<Permission | undefined> {
-    return this.permissionService.permission(id, args);
+    return this.permissionService.permission(gqlCtx, id, args);
   }
 
   @UseGuards(PermissionsGuard)
   @Permissions('permission.item-create')
   @Mutation(() => Permission)
-  async createPermission(@Args('permission') args: CreatePermissionInput): Promise<Permission | undefined> {
-    return this.permissionService.createPermission(args);
+  async createPermission(
+    @GqlCtx() gqlCtx: IGqlCtx,
+    @Args('permission') args: CreatePermissionInput,
+  ): Promise<Permission | undefined> {
+    return this.permissionService.createPermission(gqlCtx, args);
   }
 
   @UseGuards(PermissionsGuard)
   @Permissions('permission.item-update')
   @Mutation(() => Permission)
   async updatePermission(
+    @GqlCtx() gqlCtx: IGqlCtx,
     @Args({ name: 'id', type: () => String }) id: string,
     @Args('permission') args: UpdatePermissionInput,
-    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Permission | undefined> {
-    return this.permissionService.updatePermission(id, args, gqlCtx);
+    return this.permissionService.updatePermission(gqlCtx, id, args);
   }
 
   @UseGuards(PermissionsGuard)
   @Permissions('permission.item-delete')
   @Mutation(() => Permission)
   async deletePermission(
+    @GqlCtx() gqlCtx: IGqlCtx,
     @Args({ name: 'id', type: () => String }) id: string,
-    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Permission | undefined> {
-    return this.permissionService.deletePermission(id, gqlCtx);
+    return this.permissionService.deletePermission(gqlCtx, id);
   }
 }

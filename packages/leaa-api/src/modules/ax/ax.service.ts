@@ -4,15 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 import { Ax } from '@leaa/common/src/entrys';
 import { AxsWithPaginationObject, CreateAxInput, UpdateAxInput } from '@leaa/common/src/dtos/ax';
-import {
-  argsFormat,
-  can,
-  commonUpdate,
-  commonDelete,
-  isOneField,
-  calcQbPageInfo,
-  errorMessage,
-} from '@leaa/api/src/utils';
+import { argsFormat, can, commonUpdate, commonDelete, isOneField, calcQbPageInfo, errorMsg } from '@leaa/api/src/utils';
 import { IAxsArgs, IAxArgs, IGqlCtx } from '@leaa/api/src/interfaces';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 import { axSeed } from '@leaa/api/src/modules/seed/seed.data';
@@ -26,21 +18,23 @@ export class AxService {
     private readonly configService: ConfigService,
   ) {}
 
-  async PLEASE_DONT_MODIFY_DEMO_DATA(id?: string, gqlCtx?: IGqlCtx): Promise<boolean> {
+  async PLEASE_DONT_MODIFY_DEMO_DATA(gqlCtx: IGqlCtx, id?: string): Promise<boolean> {
+    const { t } = gqlCtx;
+
     if (this.configService.DEMO_MODE && !process.argv.includes('--nuke')) {
       if (!id) return true;
 
-      const ax = await this.ax(id, {}, gqlCtx);
+      const ax = await this.ax(gqlCtx, id, {});
 
       if (ax?.slug && axSeed.map((seed) => seed.slug).includes(ax.slug)) {
-        throw errorMessage({ t: ['_error:pleaseDontModify'], gqlCtx });
+        throw errorMsg(t('_error:pleaseDontModify'), { gqlCtx });
       }
     }
 
     return true;
   }
 
-  async axs(args: IAxsArgs, gqlCtx?: IGqlCtx): Promise<AxsWithPaginationObject> {
+  async axs(gqlCtx: IGqlCtx, args: IAxsArgs): Promise<AxsWithPaginationObject> {
     const nextArgs = argsFormat(args, gqlCtx);
 
     const qb = this.axRepository.createQueryBuilder();
@@ -63,8 +57,10 @@ export class AxService {
     return calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
-  async ax(id: string, args?: IAxArgs, gqlCtx?: IGqlCtx): Promise<Ax | undefined> {
-    if (!id) throw errorMessage({ t: ['_error:notFoundId'], gqlCtx });
+  async ax(gqlCtx: IGqlCtx, id: string, args?: IAxArgs): Promise<Ax | undefined> {
+    const { t } = gqlCtx;
+
+    if (!id) throw errorMsg(t('_error:notFoundId'), { gqlCtx });
 
     let nextArgs: IAxArgs = {};
     if (args) nextArgs = args;
@@ -77,35 +73,37 @@ export class AxService {
     }
 
     const ax = await this.axRepository.findOne({ ...nextArgs, where: whereQuery });
-    if (!ax) throw errorMessage({ t: ['_error:notFoundItem'], gqlCtx });
+    if (!ax) throw errorMsg(t('_error:notFoundItem'), { gqlCtx });
 
     return ax;
   }
 
-  async axBySlug(slug: string, args?: IAxArgs, gqlCtx?: IGqlCtx): Promise<Ax | undefined> {
-    const ax = await this.axRepository.findOne({ where: { slug } });
-    if (!ax) throw errorMessage({ t: ['_error:notFoundItem'], gqlCtx });
+  async axBySlug(gqlCtx: IGqlCtx, slug: string, args?: IAxArgs): Promise<Ax | undefined> {
+    const { t } = gqlCtx;
 
-    return this.ax(ax.id, args, gqlCtx);
+    const ax = await this.axRepository.findOne({ where: { slug } });
+    if (!ax) throw errorMsg(t('_error:notFoundItem'), { gqlCtx });
+
+    return this.ax(gqlCtx, ax.id, args);
   }
 
-  async createAx(args: CreateAxInput, gqlCtx?: IGqlCtx): Promise<Ax | undefined> {
+  async createAx(gqlCtx: IGqlCtx, args: CreateAxInput): Promise<Ax | undefined> {
     return this.axRepository.save({ ...args });
   }
 
-  async updateAx(id: string, args: UpdateAxInput, gqlCtx?: IGqlCtx): Promise<Ax | undefined> {
-    if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id, gqlCtx);
+  async updateAx(gqlCtx: IGqlCtx, id: string, args: UpdateAxInput): Promise<Ax | undefined> {
+    if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(gqlCtx, id);
 
     if (isOneField(args, 'status')) {
-      return commonUpdate({ repository: this.axRepository, CLS_NAME, id, args });
+      return commonUpdate({ repository: this.axRepository, CLS_NAME, id, args, gqlCtx });
     }
 
-    return commonUpdate({ repository: this.axRepository, CLS_NAME, id, args });
+    return commonUpdate({ repository: this.axRepository, CLS_NAME, id, args, gqlCtx });
   }
 
-  async deleteAx(id: string, gqlCtx?: IGqlCtx): Promise<Ax | undefined> {
-    if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id, gqlCtx);
+  async deleteAx(gqlCtx: IGqlCtx, id: string): Promise<Ax | undefined> {
+    if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(gqlCtx, id);
 
-    return commonDelete({ repository: this.axRepository, CLS_NAME, id });
+    return commonDelete({ repository: this.axRepository, CLS_NAME, id, gqlCtx });
   }
 }

@@ -23,10 +23,10 @@ export class ArticleResolver {
   // DO NOT CHECK PERMISSIONS
   @Query(() => ArticlesWithPaginationObject)
   async articles(
+    @GqlCtx() gqlCtx: IGqlCtx,
     @Args() args: ArticlesArgs,
-    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<ArticlesWithPaginationObject | undefined> {
-    return this.articleService.articles(args, gqlCtx);
+    return this.articleService.articles(gqlCtx, args);
   }
 
   // @UseGuards(PermissionsGuard)
@@ -34,11 +34,11 @@ export class ArticleResolver {
   // DO NOT CHECK PERMISSIONS
   @Query(() => Article)
   async article(
+    @GqlCtx() gqlCtx: IGqlCtx,
     @Args({ name: 'id', type: () => String }) id: string,
     @Args() args?: ArticleArgs,
-    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Article | undefined> {
-    return this.articleService.article(id, args, gqlCtx);
+    return this.articleService.article(gqlCtx, id, args);
   }
 
   // @UseGuards(PermissionsGuard)
@@ -46,34 +46,41 @@ export class ArticleResolver {
   // DO NOT CHECK PERMISSIONS
   @Query(() => Article)
   async articleBySlug(
+    @GqlCtx() gqlCtx: IGqlCtx,
     @Args({ name: 'slug', type: () => String }) slug: string,
     @Args() args?: ArticleArgs,
-    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Article | undefined> {
-    return this.articleService.articleBySlug(slug, args, gqlCtx);
+    return this.articleService.articleBySlug(gqlCtx, slug, args);
   }
 
   @UseGuards(PermissionsGuard)
   @Permissions('article.item-create')
   @Mutation(() => Article)
-  async createArticle(@Args('article') args: CreateArticleInput): Promise<Article | undefined> {
-    return this.articleService.createArticle(args);
+  async createArticle(
+    @GqlCtx() gqlCtx: IGqlCtx,
+    @Args('article') args: CreateArticleInput,
+  ): Promise<Article | undefined> {
+    return this.articleService.createArticle(gqlCtx, args);
   }
 
   @UseGuards(PermissionsGuard)
   @Permissions('article.item-update')
   @Mutation(() => Article)
   async updateArticle(
+    @GqlCtx() gqlCtx: IGqlCtx,
     @Args({ name: 'id', type: () => String }) id: string,
     @Args('article') args: UpdateArticleInput,
   ): Promise<Article | undefined> {
-    return this.articleService.updateArticle(id, args);
+    return this.articleService.updateArticle(gqlCtx, id, args);
   }
 
   @UseGuards(PermissionsGuard)
   @Permissions('article.item-delete')
   @Mutation(() => Article)
-  async deleteArticle(@Args({ name: 'id', type: () => String }) id: string): Promise<Article | undefined> {
-    return this.articleService.deleteArticle(id);
+  async deleteArticle(
+    @GqlCtx() gqlCtx: IGqlCtx,
+    @Args({ name: 'id', type: () => String }) id: string,
+  ): Promise<Article | undefined> {
+    return this.articleService.deleteArticle(gqlCtx, id);
   }
 }

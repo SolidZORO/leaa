@@ -9800,6 +9800,11 @@ i18next-browser-languagedetector@^4.1.1:
   dependencies:
     "@babel/runtime" "^7.5.5"
 
+i18next-http-middleware@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.npm.taobao.org/i18next-http-middleware/download/i18next-http-middleware-1.0.4.tgz#80d4edc8343e9db645303ef878a9ea711aaaf593"
+  integrity sha1-gNTtyDQ+nbZFMD74eKnqcRqq9ZM=
+
 i18next-xhr-backend@^3.2.2:
   version "3.2.2"
   resolved "https://registry.npm.taobao.org/i18next-xhr-backend/download/i18next-xhr-backend-3.2.2.tgz#769124441461b085291f539d91864e3691199178"

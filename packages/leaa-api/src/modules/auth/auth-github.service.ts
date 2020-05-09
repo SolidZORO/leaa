@@ -27,7 +27,9 @@ export class AuthGithubService {
   private nextTicket = { ticket: randomString(), ticket_at: new Date() };
 
   async createUserAndAuth(req: IRequest, profile: Profile): Promise<ICreateAuthAndUserResult> {
-    const newUser = await this.userService.createUser({
+    const gqlCtx = { t: req.t };
+
+    const newUser = await this.userService.createUser(gqlCtx, {
       email: `${PLATFORM_NAME}-${new Date().valueOf()}@local.com`,
       password: bcryptjs.hashSync(this.nextTicket.ticket),
       name: profile.displayName,
@@ -72,7 +74,7 @@ export class AuthGithubService {
       if (hasAuth?.user_id) {
         await this.authRepository.update(hasAuth.id, this.nextTicket);
 
-        userInfo = await this.userService.user(hasAuth.user_id);
+        userInfo = await this.userService.user({ t: req.t }, hasAuth.user_id);
         userAuth = { ...hasAuth, ...this.nextTicket };
       } else {
         const { newUser, newAuth } = await this.createUserAndAuth(req, profile);

@@ -17,7 +17,7 @@ import {
   isOneField,
   calcQbPageInfo,
   formatDateRangeTime,
-  errorMessage,
+  errorMsg,
 } from '@leaa/api/src/utils';
 import { IPromosArgs, IPromoArgs, IGqlCtx } from '@leaa/api/src/interfaces';
 
@@ -32,7 +32,7 @@ export class PromoService {
     private readonly promoProperty: PromoProperty,
   ) {}
 
-  async promos(args: IPromosArgs, gqlCtx?: IGqlCtx): Promise<PromosWithPaginationObject> {
+  async promos(gqlCtx: IGqlCtx, args: IPromosArgs): Promise<PromosWithPaginationObject> {
     const nextArgs: IPromosArgs = argsFormat(args, gqlCtx);
 
     const qb = this.promoRepository.createQueryBuilder();
@@ -55,7 +55,9 @@ export class PromoService {
     return calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
-  async promo(id: string, args?: IPromoArgs, gqlCtx?: IGqlCtx): Promise<Promo | undefined> {
+  async promo(gqlCtx: IGqlCtx, id: string, args?: IPromoArgs): Promise<Promo | undefined> {
+    const { t } = gqlCtx;
+
     let nextArgs: IPromoArgs = {};
     if (args) nextArgs = args;
 
@@ -67,43 +69,47 @@ export class PromoService {
     }
 
     const promo = await this.promoRepository.findOne({ ...nextArgs, where: whereQuery });
-    if (!promo) throw errorMessage({ t: ['_error:notFoundItem'], gqlCtx });
+    if (!promo) throw errorMsg(t('_error:notFoundItem'), { gqlCtx });
 
     return promo;
   }
 
-  async promoByCode(code: string, args?: IPromoArgs, gqlCtx?: IGqlCtx): Promise<Promo | undefined> {
-    const promo = await this.promoRepository.findOne({ where: { code } });
-    if (!promo) throw errorMessage({ t: ['_error:notFoundItem'], gqlCtx });
+  async promoByCode(gqlCtx: IGqlCtx, code: string, args?: IPromoArgs): Promise<Promo | undefined> {
+    const { t } = gqlCtx;
 
-    return this.promo(promo.id, args, gqlCtx);
+    const promo = await this.promoRepository.findOne({ where: { code } });
+    if (!promo) throw errorMsg(t('_error:notFoundItem'), { gqlCtx });
+
+    return this.promo(gqlCtx, promo.id, args);
   }
 
-  async createPromo(args: CreatePromoInput, gqlCtx?: IGqlCtx): Promise<Promo | undefined> {
+  async createPromo(gqlCtx: IGqlCtx, args: CreatePromoInput): Promise<Promo | undefined> {
     const nextArgs = formatDateRangeTime(args, 'start_time', 'expire_time');
 
     return this.promoRepository.save({ ...nextArgs });
   }
 
-  async updatePromo(id: string, args: UpdatePromoInput, gqlCtx?: IGqlCtx): Promise<Promo | undefined> {
+  async updatePromo(gqlCtx: IGqlCtx, id: string, args: UpdatePromoInput): Promise<Promo | undefined> {
     if (isOneField(args, 'status')) {
-      return commonUpdate({ repository: this.promoRepository, CLS_NAME, id, args });
+      return commonUpdate({ repository: this.promoRepository, CLS_NAME, id, args, gqlCtx });
     }
 
     const nextArgs = formatDateRangeTime(args, 'start_time', 'expire_time');
 
-    return commonUpdate({ repository: this.promoRepository, CLS_NAME, id, args: nextArgs });
+    return commonUpdate({ repository: this.promoRepository, CLS_NAME, id, args: nextArgs, gqlCtx });
   }
 
-  async deletePromo(id: string, gqlCtx?: IGqlCtx): Promise<Promo | undefined> {
-    return commonDelete({ repository: this.promoRepository, CLS_NAME, id });
+  async deletePromo(gqlCtx: IGqlCtx, id: string): Promise<Promo | undefined> {
+    return commonDelete({ repository: this.promoRepository, CLS_NAME, id, gqlCtx });
   }
 
-  async redeemPromo(info: RedeemPromoInput, gqlCtx?: IGqlCtx): Promise<Promo | undefined> {
-    const promo = await this.promoByCode(info.code, undefined, gqlCtx);
-    if (!promo) throw errorMessage({ t: ['_error:notFoundItem'], gqlCtx });
+  async redeemPromo(gqlCtx: IGqlCtx, info: RedeemPromoInput): Promise<Promo | undefined> {
+    const { t } = gqlCtx;
 
-    if (!this.promoProperty.available(promo)) throw errorMessage({ t: ['_module:promo.unavailable'], gqlCtx });
+    const promo = await this.promoByCode(gqlCtx, info.code, undefined);
+    if (!promo) throw errorMsg(t('_error:notFoundItem'), { gqlCtx });
+
+    if (!this.promoProperty.available(promo)) throw errorMsg(t('_module:promo.unavailable'), { gqlCtx });
 
     // [token user]
     let nextPromo = { ...promo, user_id: gqlCtx?.user?.id };

@@ -18,12 +18,12 @@ import {
   commonDelete,
   isOneField,
   logger,
-  errorMessage,
+  errorMsg,
 } from '@leaa/api/src/utils';
 import { IDivisionSource } from '@leaa/common/src/interfaces';
 import { SyncTagsToFileObject } from '@leaa/common/src/dtos/tag';
 import { divisionConfig } from '@leaa/api/src/configs';
-import { IDivisionsArgs, IDivisionArgs } from '@leaa/api/src/interfaces';
+import { IDivisionsArgs, IDivisionArgs, IGqlCtx } from '@leaa/api/src/interfaces';
 
 const CLS_NAME = 'DivisionService';
 
@@ -31,8 +31,8 @@ const CLS_NAME = 'DivisionService';
 export class DivisionService {
   constructor(@InjectRepository(Division) private readonly divisionRepository: Repository<Division>) {}
 
-  async divisions(args: IDivisionsArgs): Promise<DivisionsWithPaginationObject> {
-    const nextArgs: IDivisionsArgs = argsFormat(args);
+  async divisions(gqlCtx: IGqlCtx, args: IDivisionsArgs): Promise<DivisionsWithPaginationObject> {
+    const nextArgs: IDivisionsArgs = argsFormat(args, gqlCtx);
 
     const PRIMARY_TABLE = 'divisions';
     const qb = await this.divisionRepository.createQueryBuilder(PRIMARY_TABLE);
@@ -54,14 +54,14 @@ export class DivisionService {
     return this.formatDivision(items, 'tree');
   }
 
-  async division(id: string, args?: IDivisionArgs): Promise<Division | undefined> {
-    if (!id) throw errorMessage({ t: ['_error:notFoundId'] });
+  async division(gqlCtx: IGqlCtx, id: string, args?: IDivisionArgs): Promise<Division | undefined> {
+    const { t } = gqlCtx;
+
+    if (!id) throw errorMsg(t('_error:notFoundId'), { gqlCtx });
 
     let nextArgs: IDivisionArgs = {};
 
-    if (args) {
-      nextArgs = args;
-    }
+    if (args) nextArgs = args;
 
     return this.divisionRepository.findOne(id, nextArgs);
   }
@@ -205,16 +205,16 @@ export class DivisionService {
     return result;
   }
 
-  async updateDivision(id: string, args: UpdateDivisionInput): Promise<Division | undefined> {
+  async updateDivision(gqlCtx: IGqlCtx, id: string, args: UpdateDivisionInput): Promise<Division | undefined> {
     if (isOneField(args, 'status')) {
-      return commonUpdate({ repository: this.divisionRepository, CLS_NAME, id, args });
+      return commonUpdate({ repository: this.divisionRepository, CLS_NAME, id, args, gqlCtx });
     }
 
     const nextArgs = {
       ...args,
     };
 
-    const result = await commonUpdate({ repository: this.divisionRepository, CLS_NAME, id, args: nextArgs });
+    const result = await commonUpdate({ repository: this.divisionRepository, CLS_NAME, id, args: nextArgs, gqlCtx });
 
     if (result) {
       await this.syncDivisionToFile();
@@ -223,7 +223,7 @@ export class DivisionService {
     return result;
   }
 
-  async deleteDivision(id: string): Promise<Division | undefined> {
-    return commonDelete({ repository: this.divisionRepository, CLS_NAME, id });
+  async deleteDivision(gqlCtx: IGqlCtx, id: string): Promise<Division | undefined> {
+    return commonDelete({ repository: this.divisionRepository, CLS_NAME, id, gqlCtx });
   }
 }

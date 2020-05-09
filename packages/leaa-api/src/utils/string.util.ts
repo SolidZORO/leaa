@@ -1,9 +1,5 @@
 import { v4 } from 'uuid';
 import crypto from 'crypto';
-import Hashids from 'hashids/cjs';
-import { envConfig } from '@leaa/api/src/modules/config/config.module';
-import { IGqlCtx } from '@leaa/api/src/interfaces';
-import { errorMessage } from '@leaa/api/src/utils/msg.util';
 
 export const getSlug = (str: string, secondChoiceStr?: string): string => {
   const trimStr = str ? str.trim().toLowerCase() : str;
@@ -34,31 +30,4 @@ export const uuid = (): string => v4();
 
 export const md5 = (str: string): string => {
   return crypto.createHash('md5').update(str).digest('hex');
-};
-
-// ABCDEFGHIJKLMNOPQRSTUVWXYZ - ABCDEFGHIJKMNPQRSTUVWXY
-// abcdefghijklmnopqrstuvwxyz - abcdefghijkmnpqrstuvwxyz
-// 0123456789 - 13456789
-export const hashids = new Hashids(envConfig.HASHIDS_SALT, 8, 'abcdefghijkmnpqrstuvwxyz123456789');
-
-export const encodeId = (n: number, gqlCtx?: IGqlCtx): string => {
-  console.log('encodeId-encodeId-encodeId-encodeId-encodeId');
-  if (typeof n === 'undefined') throw errorMessage({ t: ['_error:notFoundId'], gqlCtx });
-
-  const result = hashids.encode(n);
-
-  if (!result) throw errorMessage({ t: ['_error:invalidHashId'], gqlCtx });
-
-  return result;
-};
-
-export const decodeId = (s: string, gqlCtx?: IGqlCtx): number => {
-  console.log('decodeId-decodeId-decodeId-decodeId-decodeId');
-  if (typeof s === 'undefined') throw errorMessage({ t: ['_error:notFoundId'], gqlCtx });
-
-  const result = Number(hashids.decode(s));
-
-  if (Number.isNaN(result) || result === 0) throw errorMessage({ t: ['_error:invalidHashId'], gqlCtx });
-
-  return result;
 };

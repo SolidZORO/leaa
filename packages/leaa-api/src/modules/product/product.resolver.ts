@@ -30,49 +30,49 @@ export class ProductResolver {
 
   @Query(() => ProductsWithPaginationObject, { nullable: true })
   async products(
+    @GqlCtx() gqlCtx: IGqlCtx,
     @Args() args: ProductsArgs,
-    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<ProductsWithPaginationObject | undefined> {
-    return this.productService.products(args, gqlCtx);
+    return this.productService.products(gqlCtx, args);
   }
 
   @Query(() => Product, { nullable: true })
   async product(
+    @GqlCtx() gqlCtx: IGqlCtx,
     @Args({ name: 'id', type: () => String }) id: string,
     @Args() args?: ProductArgs,
-    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Product | undefined> {
-    return this.productService.product(id, args, gqlCtx);
+    return this.productService.product(gqlCtx, id, args);
   }
 
   @UseGuards(PermissionsGuard)
   @Permissions('product.item-create')
   @Mutation(() => Product)
   async createProduct(
+    @GqlCtx() gqlCtx: IGqlCtx,
     @Args('product') args: CreateProductInput,
-    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Product | undefined> {
-    return this.productService.createProduct(args, gqlCtx);
+    return this.productService.createProduct(gqlCtx, args);
   }
 
   @UseGuards(PermissionsGuard)
   @Permissions('product.item-update')
   @Mutation(() => Product)
   async updateProduct(
+    @GqlCtx() gqlCtx: IGqlCtx,
     @Args({ name: 'id', type: () => String }) id: string,
     @Args('product') args: UpdateProductInput,
-    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Product | undefined> {
-    return this.productService.updateProduct(id, args, gqlCtx);
+    return this.productService.updateProduct(gqlCtx, id, args);
   }
 
   @UseGuards(PermissionsGuard)
   @Permissions('product.item-delete')
   @Mutation(() => Product)
   async deleteProduct(
+    @GqlCtx() gqlCtx: IGqlCtx,
     @Args({ name: 'id', type: () => String }) id: string,
-    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Product | undefined> {
-    return this.productService.deleteProduct(id, gqlCtx);
+    return this.productService.deleteProduct(gqlCtx, id);
   }
 }

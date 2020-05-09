@@ -1,15 +1,17 @@
 import { User } from '@leaa/common/src/entrys';
 import { IPermissionSlug } from '@leaa/common/src/interfaces';
-import { errorMessage } from '@leaa/api/src/utils';
+import { errorMsg } from '@leaa/api/src/utils';
 import { IGqlCtx } from '@leaa/api/src/interfaces';
 
-export const checkAvailableUser = (user?: User, gqlCtx?: IGqlCtx): User => {
+export const checkAvailableUser = (user: User | null, gqlCtx: IGqlCtx): User => {
+  const { t } = gqlCtx;
+
   if (!user) {
-    throw errorMessage({ t: ['_error:usernameOrPasswordNotMatch'], gqlCtx, statusCode: 401 });
+    throw errorMsg(t('_error:usernameOrPasswordNotMatch'), { statusCode: 401 });
   }
 
   if (user && user.status !== 1) {
-    throw errorMessage({ t: ['_error:invalidUser'], gqlCtx, statusCode: 401 });
+    throw errorMsg(t('_error:invalidUser'), { statusCode: 401 });
   }
 
   return user;

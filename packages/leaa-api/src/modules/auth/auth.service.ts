@@ -9,7 +9,7 @@ import { User, Auth, Verification } from '@leaa/common/src/entrys';
 import { AuthsWithPaginationObject, CreateAuthInput } from '@leaa/common/src/dtos/auth';
 import { IJwtPayload } from '@leaa/common/src/interfaces';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
-import { checkAvailableUser, argsFormat, calcQbPageInfo, commonDelete, errorMessage } from '@leaa/api/src/utils';
+import { checkAvailableUser, argsFormat, calcQbPageInfo, commonDelete, errorMsg } from '@leaa/api/src/utils';
 import { UserService } from '@leaa/api/src/modules/user/user.service';
 import { permissionConfig } from '@leaa/api/src/configs';
 import { UserProperty } from '@leaa/api/src/modules/user/user.property';
@@ -29,7 +29,9 @@ export class AuthService {
     private readonly userProperty: UserProperty,
   ) {}
 
-  async auths(args: IAuthsArgs, gqlCtx?: IGqlCtx): Promise<AuthsWithPaginationObject | undefined> {
+  async auths(gqlCtx: IGqlCtx, args: IAuthsArgs): Promise<AuthsWithPaginationObject | undefined> {
+    const { t } = gqlCtx;
+
     const nextArgs: IAuthsArgs = argsFormat(args, gqlCtx);
 
     const PRIMARY_TABLE = 'auths';
@@ -51,7 +53,7 @@ export class AuthService {
 
     const items = await calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
 
-    if (!items) throw errorMessage({ t: ['_error:tokenNotBefore'], gqlCtx });
+    if (!items) throw errorMsg(t('_error:tokenNotBefore'), { gqlCtx });
 
     return items;
   }
@@ -70,10 +72,12 @@ export class AuthService {
     return this.authRepository.save({ ...args });
   }
 
-  async deleteAuth(id: string, gqlCtx?: IGqlCtx): Promise<Auth | undefined> {
-    const item = await commonDelete({ repository: this.authRepository, CLS_NAME, id });
+  async deleteAuth(gqlCtx: IGqlCtx, id: string): Promise<Auth | undefined> {
+    const { t } = gqlCtx;
 
-    if (!item) throw errorMessage({ t: ['_error:deleteItemFailed'], gqlCtx });
+    const item = await commonDelete({ repository: this.authRepository, CLS_NAME, id, gqlCtx });
+
+    if (!item) throw errorMsg(t('_error:deleteItemFailed'), { gqlCtx });
 
     return item;
   }
@@ -95,15 +99,17 @@ export class AuthService {
     };
   }
 
-  getUserPayload(token?: string, gqlCtx?: IGqlCtx): IJwtPayload {
-    if (!token) throw errorMessage({ t: ['_error:tokenNotFound'], gqlCtx });
+  getUserPayload(gqlCtx: IGqlCtx, token: string): IJwtPayload {
+    const { t } = gqlCtx;
+
+    if (!token) throw errorMsg(t('_error:tokenNotFound'));
 
     let tokenWithoutBearer = token;
 
     if (token.slice(0, 6) === 'Bearer') {
       tokenWithoutBearer = token.slice(7);
     } else {
-      throw errorMessage({ t: ['_error:tokenNotPrefix'], gqlCtx, statusCode: 401 });
+      throw errorMsg(t('_error:tokenNotPrefix'), { statusCode: 401 });
     }
 
     let payload;
@@ -112,39 +118,41 @@ export class AuthService {
       payload = jwt.verify(tokenWithoutBearer, this.configService.JWT_SECRET_KEY) as IJwtPayload | undefined;
     } catch (err) {
       if (err instanceof jwt.NotBeforeError) {
-        throw errorMessage({ t: ['_error:tokenNotBefore'], gqlCtx, statusCode: 401 });
+        throw errorMsg(t('_error:tokenNotBefore'), { statusCode: 401 });
       }
 
       if (err instanceof jwt.TokenExpiredError) {
-        throw errorMessage({ t: ['_error:tokenExpired'], gqlCtx, statusCode: 401 });
+        throw errorMsg(t('_error:tokenExpired'), { statusCode: 401 });
       }
 
       if (err instanceof jwt.JsonWebTokenError) {
-        throw errorMessage({ t: ['_error:tokenError'], gqlCtx, statusCode: 401 });
+        throw errorMsg(t('_error:tokenError'), { statusCode: 401 });
       }
     }
 
     if (payload) return payload;
 
-    throw errorMessage({ t: ['_error:tokenVerifyFaild'], gqlCtx, statusCode: 401 });
+    throw errorMsg(t('_error:tokenVerifyFaild'), { statusCode: 401 });
   }
 
   // MUST DO minimal cost query
-  async validateUserByPayload(payload: IJwtPayload, gqlCtx?: IGqlCtx): Promise<User | undefined> {
+  async validateUserByPayload(payload: IJwtPayload, gqlCtx: IGqlCtx): Promise<User | undefined> {
+    const { t } = gqlCtx;
+
     // gqlCtx in here ONLY for check `lang`
-    if (!payload) throw errorMessage({ t: ['_error:notFoundInfo'], gqlCtx });
+    if (!payload) throw errorMsg(t('_error:notFoundInfo'));
 
     if (!payload.iat || !payload.exp || !payload.id) {
-      throw errorMessage({ t: ['_error:notFoundInfo'], gqlCtx, statusCode: 401 });
+      throw errorMsg(t('_error:notFoundInfo'), { statusCode: 401 });
     }
 
     const findUser = await this.userRepository.findOne({ relations: ['roles'], where: { id: payload.id } });
 
-    const user = checkAvailableUser(findUser, gqlCtx);
+    const user = checkAvailableUser(findUser || null, gqlCtx);
 
     // IMPORTANT! if user info is changed, Compare `iat` and `last_token_at`
     if (moment(payload.iattz).isBefore(moment(user.last_token_at))) {
-      throw errorMessage({ t: ['_error:userHasBeenUpdated'], gqlCtx, statusCode: 401 });
+      throw errorMsg(t('_error:userHasBeenUpdated'), { statusCode: 401 });
     }
 
     const flatPermissions = await this.userProperty.flatPermissions(user);
@@ -164,10 +172,9 @@ export class AuthService {
       return undefined;
     }
 
-    const gqlCtx = { lang: req.headers?.lang as string };
-    const payload = this.getUserPayload(req.headers.authorization, gqlCtx);
+    const payload = this.getUserPayload({ t: req.t }, req.headers.authorization);
 
-    return this.validateUserByPayload(payload, gqlCtx);
+    return this.validateUserByPayload(payload, { t: req.t });
   }
 
   async addTokenToUser(user: User): Promise<User> {
@@ -181,20 +188,22 @@ export class AuthService {
   }
 
   // TIPS: domain.com/login?otk=901d4862-0a44-xxxx-xxxx-56a9c45 (otk = auth ticket)
-  async loginByTicket(ticket: string, gqlCtx?: IGqlCtx): Promise<User | undefined> {
-    const user = await this.getUserByTicket(ticket, gqlCtx);
+  async loginByTicket(gqlCtx: IGqlCtx, ticket: string): Promise<User | undefined> {
+    const user = await this.getUserByTicket(gqlCtx, ticket);
 
     return this.addTokenToUser(user);
   }
 
-  async getUserByTicket(ticket: string, gqlCtx?: IGqlCtx): Promise<User> {
-    if (!ticket) throw errorMessage({ t: ['_error:notFoundTicket'], gqlCtx });
+  async getUserByTicket(gqlCtx: IGqlCtx, ticket: string): Promise<User> {
+    const { t } = gqlCtx;
+
+    if (!ticket) throw errorMsg(t('_error:notFoundTicket'), { gqlCtx });
 
     const auth = await this.authRepository.findOne({ ticket });
-    if (!auth) throw errorMessage({ t: ['_error:notFoundAuth'], gqlCtx });
+    if (!auth) throw errorMsg(t('_error:notFoundAuth'), { gqlCtx });
 
-    const user = await this.userService.user(auth.user_id || '0', { relations: ['roles'] });
-    if (!user) throw errorMessage({ t: ['_error:notFoundUser'], gqlCtx });
+    const user = await this.userService.user(gqlCtx, auth.user_id || '0', { relations: ['roles'] });
+    if (!user) throw errorMsg(t('_error:notFoundUser'), { gqlCtx });
 
     await this.clearTicket(auth.id);
 
@@ -205,16 +214,18 @@ export class AuthService {
     await this.authRepository.update(authId, { ticket: null, ticket_at: '' });
   }
 
-  async bindUserIdToAuth(user: User, oid: string, gqlCtx?: IGqlCtx): Promise<any> {
+  async bindUserIdToAuth(gqlCtx: IGqlCtx, user: User, oid: string): Promise<any> {
+    const { t } = gqlCtx;
+
     if (!oid || typeof Number(oid) !== 'number') {
-      throw errorMessage({ t: ['_error:notFoundId'], gqlCtx });
+      throw errorMsg(t('_error:notFoundId'), { gqlCtx });
     }
 
     const auth = await this.authRepository.findOne({ id: oid });
-    if (!auth) errorMessage({ t: ['_error:notFoundAuth'], gqlCtx });
+    if (!auth) errorMsg(t('_error:notFoundAuth'), { gqlCtx });
 
     const result = await this.authRepository.update(Number(oid), { user_id: user.id });
-    if (!result) errorMessage({ t: ['_error:bindingFailed'], gqlCtx });
+    if (!result) errorMsg(t('_error:bindingFailed'), { gqlCtx });
 
     return result;
   }

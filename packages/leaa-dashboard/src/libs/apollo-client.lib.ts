@@ -22,7 +22,7 @@ const authLink = new ApolloLink((operation, forward) => {
   operation.setContext({
     headers: {
       Authorization: token ? `Bearer ${token}` : '',
-      lang: getCurrentLang(),
+      'Accept-Language': getCurrentLang(),
     },
   });
 

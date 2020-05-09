@@ -18,7 +18,7 @@ import {
   isOneField,
   calcQbPageInfo,
   can,
-  errorMessage,
+  errorMsg,
 } from '@leaa/api/src/utils';
 import { ISettingsArgs, ISettingArgs, IGqlCtx } from '@leaa/api/src/interfaces';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
@@ -33,21 +33,23 @@ export class SettingService {
     private readonly configService: ConfigService,
   ) {}
 
-  async PLEASE_DONT_MODIFY_DEMO_DATA(id?: string, gqlCtx?: IGqlCtx): Promise<boolean> {
+  async PLEASE_DONT_MODIFY_DEMO_DATA(gqlCtx: IGqlCtx, id?: string): Promise<boolean> {
+    const { t } = gqlCtx;
+
     if (this.configService.DEMO_MODE && !process.argv.includes('--nuke')) {
       if (!id) return true;
 
-      const setting = await this.setting(id);
+      const setting = await this.setting(gqlCtx, id);
 
       if (setting && setting.slug && settingSeed.map((seed) => seed.slug).includes(setting.slug)) {
-        throw errorMessage({ t: ['_error:pleaseDontModify'], gqlCtx });
+        throw errorMsg(t('_error:pleaseDontModify'), { gqlCtx });
       }
     }
 
     return true;
   }
 
-  async settings(args: ISettingsArgs, gqlCtx?: IGqlCtx): Promise<SettingsWithPaginationObject> {
+  async settings(gqlCtx: IGqlCtx, args: ISettingsArgs): Promise<SettingsWithPaginationObject> {
     const nextArgs = argsFormat(args, gqlCtx);
 
     const qb = this.settingRepository.createQueryBuilder();
@@ -69,8 +71,10 @@ export class SettingService {
     return calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
-  async setting(id: string, args?: ISettingArgs, gqlCtx?: IGqlCtx): Promise<Setting | undefined> {
-    if (!id) throw errorMessage({ t: ['_error:notFoundId'], gqlCtx });
+  async setting(gqlCtx: IGqlCtx, id: string, args?: ISettingArgs): Promise<Setting | undefined> {
+    const { t } = gqlCtx;
+
+    if (!id) throw errorMsg(t('_error:notFoundId'), { gqlCtx });
 
     let nextArgs: ISettingArgs = {};
 
@@ -101,7 +105,7 @@ export class SettingService {
     return setting;
   }
 
-  async settingBySlug(slug: string, args?: ISettingArgs, gqlCtx?: IGqlCtx): Promise<Setting | undefined> {
+  async settingBySlug(gqlCtx: IGqlCtx, slug: string, args?: ISettingArgs): Promise<Setting | undefined> {
     const whereQuery: { slug: string; private?: number } = { slug };
 
     // can
@@ -119,28 +123,30 @@ export class SettingService {
       return undefined;
     }
 
-    return this.setting(setting.id, args, gqlCtx);
+    return this.setting(gqlCtx, setting.id, args);
   }
 
-  async createSetting(args: CreateSettingInput): Promise<Setting | undefined> {
+  async createSetting(gqlCtx: IGqlCtx, args: CreateSettingInput): Promise<Setting | undefined> {
     return this.settingRepository.save({ ...args });
   }
 
   async updateSetting(
+    gqlCtx: IGqlCtx,
     id: string,
     args: UpdateSettingInput & FindOneOptions,
-    gqlCtx?: IGqlCtx,
   ): Promise<Setting | undefined> {
     if (isOneField(args, 'status')) {
-      return commonUpdate({ repository: this.settingRepository, CLS_NAME, id, args });
+      return commonUpdate({ repository: this.settingRepository, CLS_NAME, id, args, gqlCtx });
     }
 
-    return commonUpdate({ repository: this.settingRepository, CLS_NAME, id, args });
+    return commonUpdate({ repository: this.settingRepository, CLS_NAME, id, args, gqlCtx });
   }
 
-  async updateSettings(settings: UpdateSettingsInput[], gqlCtx?: IGqlCtx): Promise<SettingsObject> {
+  async updateSettings(gqlCtx: IGqlCtx, settings: UpdateSettingsInput[]): Promise<SettingsObject> {
+    const { t } = gqlCtx;
+
     const batchUpdate = settings.map(async (setting) => {
-      await this.updateSetting(setting.id, setting);
+      await this.updateSetting(gqlCtx, setting.id, setting);
     });
 
     let items: Setting[] = [];
@@ -150,7 +156,7 @@ export class SettingService {
         items = await this.settingRepository.find({ id: In(settings.map((s) => s.id)) });
       })
       .catch(() => {
-        throw errorMessage({ t: ['_error:updateItemFailed'], gqlCtx });
+        throw errorMsg(t('_error:updateItemFailed'), { gqlCtx });
       });
 
     return {
@@ -158,9 +164,9 @@ export class SettingService {
     };
   }
 
-  async deleteSetting(id: string, gqlCtx?: IGqlCtx): Promise<Setting | undefined> {
-    if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id, gqlCtx);
+  async deleteSetting(gqlCtx: IGqlCtx, id: string): Promise<Setting | undefined> {
+    if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(gqlCtx, id);
 
-    return commonDelete({ repository: this.settingRepository, CLS_NAME, id });
+    return commonDelete({ repository: this.settingRepository, CLS_NAME, id, gqlCtx });
   }
 }

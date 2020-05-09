@@ -1,5 +1,5 @@
 import { UseGuards } from '@nestjs/common';
-import { Args, Query, Mutation, Resolver } from '@nestjs/graphql';
+import { Args, Query, Mutation, Resolver, Int } from '@nestjs/graphql';
 
 import { Action } from '@leaa/common/src/entrys';
 import { ActionsArgs, ActionsWithPaginationObject, ActionArgs, CreateActionInput } from '@leaa/common/src/dtos/action';
@@ -16,34 +16,37 @@ export class ActionResolver {
   // @Permissions('action.list-read')
   @Query(() => ActionsWithPaginationObject)
   async actions(
+    @GqlCtx() gqlCtx: IGqlCtx,
     @Args() args: ActionsArgs,
-    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<ActionsWithPaginationObject | undefined> {
-    return this.actionService.actions(args, gqlCtx);
+    return this.actionService.actions(gqlCtx, args);
   }
 
   // @UseGuards(PermissionsGuard)
   // @Permissions('action.item-read')
-  @Query(() => Action)
+  @Query(() => Action, { nullable: true })
   async action(
-    @Args({ name: 'id', type: () => String }) id: string,
+    @GqlCtx() gqlCtx: IGqlCtx,
+    @Args({ name: 'id', type: () => Int }) id: number,
     @Args() args?: ActionArgs,
-    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Action | undefined> {
-    return this.actionService.action(id, args, gqlCtx);
+    return this.actionService.action(gqlCtx, id, args);
   }
 
   @UseGuards(PermissionsGuard)
   @Permissions('action.item-create')
   @Mutation(() => Action)
-  async createAction(@Args('action') args: CreateActionInput): Promise<Action | undefined> {
-    return this.actionService.createAction(args);
+  async createAction(@GqlCtx() gqlCtx: IGqlCtx, @Args('action') args: CreateActionInput): Promise<Action | undefined> {
+    return this.actionService.createAction(gqlCtx, args);
   }
 
   @UseGuards(PermissionsGuard)
   @Permissions('action.item-delete')
   @Mutation(() => Action)
-  async deleteAction(@Args({ name: 'id', type: () => String }) id: string): Promise<Action | undefined> {
-    return this.actionService.deleteAction(id);
+  async deleteAction(
+    @GqlCtx() gqlCtx: IGqlCtx,
+    @Args({ name: 'id', type: () => String }) id: string,
+  ): Promise<Action | undefined> {
+    return this.actionService.deleteAction(gqlCtx, id);
   }
 }

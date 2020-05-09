@@ -4,15 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 import { Product, Category, Tag, Attachment } from '@leaa/common/src/entrys';
 import { ProductsWithPaginationObject, CreateProductInput, UpdateProductInput } from '@leaa/common/src/dtos/product';
-import {
-  argsFormat,
-  calcQbPageInfo,
-  commonUpdate,
-  commonDelete,
-  isOneField,
-  can,
-  errorMessage,
-} from '@leaa/api/src/utils';
+import { argsFormat, calcQbPageInfo, commonUpdate, commonDelete, isOneField, can, errorMsg } from '@leaa/api/src/utils';
 import { IProductsArgs, IProductArgs, IGqlCtx } from '@leaa/api/src/interfaces';
 
 import { TagService } from '@leaa/api/src/modules/tag/tag.service';
@@ -29,7 +21,7 @@ export class ProductService {
     private readonly tagService: TagService,
   ) {}
 
-  async products(args: IProductsArgs, gqlCtx?: IGqlCtx): Promise<ProductsWithPaginationObject | undefined> {
+  async products(gqlCtx: IGqlCtx, args: IProductsArgs): Promise<ProductsWithPaginationObject | undefined> {
     const nextArgs: IProductsArgs = argsFormat(args, gqlCtx);
 
     const PRIMARY_TABLE = 'products';
@@ -70,8 +62,10 @@ export class ProductService {
     return calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
-  async product(id: string, args?: IProductArgs, gqlCtx?: IGqlCtx): Promise<Product | undefined> {
-    if (!id) throw errorMessage({ t: ['_error:notFoundId'] });
+  async product(gqlCtx: IGqlCtx, id: string, args?: IProductArgs): Promise<Product | undefined> {
+    const { t } = gqlCtx;
+
+    if (!id) throw errorMsg(t('_error:notFoundId'), { gqlCtx });
 
     const PRIMARY_TABLE = 'products';
     const qb = await this.productRepository.createQueryBuilder(PRIMARY_TABLE);
@@ -125,15 +119,15 @@ export class ProductService {
     };
   }
 
-  async createProduct(args: CreateProductInput, gqlCtx?: IGqlCtx): Promise<Product | undefined> {
+  async createProduct(gqlCtx: IGqlCtx, args: CreateProductInput): Promise<Product | undefined> {
     const { nextRelation, nextArgs } = await this.formatArgs(args);
 
     return this.productRepository.save({ ...nextArgs, ...nextRelation });
   }
 
-  async updateProduct(id: string, args: UpdateProductInput, gqlCtx?: IGqlCtx): Promise<Product | undefined> {
+  async updateProduct(gqlCtx: IGqlCtx, id: string, args: UpdateProductInput): Promise<Product | undefined> {
     if (isOneField(args, 'status')) {
-      return commonUpdate({ repository: this.productRepository, CLS_NAME, id, args });
+      return commonUpdate({ repository: this.productRepository, CLS_NAME, id, args, gqlCtx });
     }
 
     const { nextRelation, nextArgs } = await this.formatArgs(args);
@@ -151,10 +145,11 @@ export class ProductService {
       id,
       args: nextArgs,
       relation: nextRelation,
+      gqlCtx,
     });
   }
 
-  async deleteProduct(id: string, gqlCtx?: IGqlCtx): Promise<Product | undefined> {
-    return commonDelete({ repository: this.productRepository, CLS_NAME, id });
+  async deleteProduct(gqlCtx: IGqlCtx, id: string): Promise<Product | undefined> {
+    return commonDelete({ repository: this.productRepository, CLS_NAME, id, gqlCtx });
   }
 }

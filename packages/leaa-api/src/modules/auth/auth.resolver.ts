@@ -17,51 +17,51 @@ export class AuthResolver {
   @UseGuards(PermissionsGuard)
   @Permissions('auth.list-read')
   @Query(() => AuthsWithPaginationObject, { nullable: true })
-  async auths(@Args() args: AuthsArgs, @GqlCtx() gqlCtx?: IGqlCtx): Promise<AuthsWithPaginationObject | undefined> {
-    return this.authService.auths(args, gqlCtx);
+  async auths(@GqlCtx() gqlCtx: IGqlCtx, @Args() args: AuthsArgs): Promise<AuthsWithPaginationObject | undefined> {
+    return this.authService.auths(gqlCtx, args);
   }
 
   // in permission.config.ts - notValidateUserQuerys
   @Query(() => Verification)
   async guest(
+    @GqlCtx() gqlCtx: IGqlCtx,
     @Args({ name: 'token', type: () => String, nullable: true }) token?: string,
-    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Verification | undefined> {
-    return this.authLocalService.guest(token, gqlCtx);
+    return this.authLocalService.guest(gqlCtx, token);
   }
 
   @UseGuards(PermissionsGuard)
   @Permissions('auth.item-delete')
   @Mutation(() => Auth)
   async deleteAuth(
+    @GqlCtx() gqlCtx: IGqlCtx,
     @Args({ name: 'id', type: () => String }) id: string,
-    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Auth | undefined> {
-    return this.authService.deleteAuth(id, gqlCtx);
+    return this.authService.deleteAuth(gqlCtx, id);
   }
 
   //
   //
 
   @Mutation(() => User)
-  async login(@Args('user') args: AuthLoginInput, @GqlCtx() gqlCtx?: IGqlCtx): Promise<User | undefined> {
-    return this.authLocalService.login(args, gqlCtx);
+  async login(@GqlCtx() gqlCtx: IGqlCtx, @Args('user') args: AuthLoginInput): Promise<User | undefined> {
+    return this.authLocalService.login(gqlCtx, args);
   }
 
   @Mutation(() => User)
   async loginByTicket(
+    @GqlCtx() gqlCtx: IGqlCtx,
     @Args({ name: 'ticket', type: () => String }) ticket: string,
-    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<User | undefined> {
-    return this.authService.loginByTicket(ticket, gqlCtx);
+    return this.authService.loginByTicket(gqlCtx, ticket);
   }
 
   @Mutation(() => User)
   async signup(
+    @GqlCtx() gqlCtx: IGqlCtx,
     @Args('user') args: AuthSignupInput,
     @Args({ name: 'uid', type: () => String, nullable: true }) uid?: string,
-    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<User | undefined> {
-    return this.authLocalService.signup(args, uid, gqlCtx);
+    return this.authLocalService.signup(gqlCtx, args, uid);
   }
 }

@@ -17,12 +17,14 @@ export class TestResolver {
 
   @UseGuards(PermissionsGuard)
   @Query(() => String)
-  testWithAuth(@GqlCtx() ctx: IGqlCtx): string {
-    return `${Math.random()} - ${ctx.user?.email}`;
+  testWithAuth(@GqlCtx() gqlCtx: IGqlCtx): string {
+    console.log(gqlCtx);
+
+    return `${Math.random()} - ${gqlCtx.user?.email}`;
   }
 
   @Query(() => String)
-  testI18n(@Args({ name: 'x', type: () => Int, nullable: true }) x?: number, @GqlCtx() gqlCtx?: IGqlCtx): string {
-    return this.testService.testI18n(x, gqlCtx);
+  testI18n(@GqlCtx() gqlCtx: IGqlCtx, @Args({ name: 'x', type: () => Int, nullable: true }) x?: number): string {
+    return this.testService.testI18n(gqlCtx, x);
   }
 }

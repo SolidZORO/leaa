@@ -36,64 +36,64 @@ export class CouponResolver {
   @Permissions('coupon.list-read')
   @Query(() => CouponsWithPaginationObject)
   async coupons(
+    @GqlCtx() gqlCtx: IGqlCtx,
     @Args() args: CouponsArgs,
-    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<CouponsWithPaginationObject | undefined> {
-    return this.couponService.coupons(args, gqlCtx);
+    return this.couponService.coupons(gqlCtx, args);
   }
 
   @UseGuards(PermissionsGuard)
   @Permissions('coupon.item-read')
   @Query(() => Coupon)
   async coupon(
+    @GqlCtx() gqlCtx: IGqlCtx,
     @Args({ name: 'id', type: () => String }) id: string,
     @Args() args?: CouponArgs,
-    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Coupon | undefined> {
-    return this.couponService.coupon(id, args, gqlCtx);
+    return this.couponService.coupon(gqlCtx, id, args);
   }
 
   @UseGuards(PermissionsGuard)
   @Permissions('coupon.item-read')
   @Query(() => Coupon)
   async couponByCode(
+    @GqlCtx() gqlCtx: IGqlCtx,
     @Args({ name: 'code', type: () => String }) code: string,
     @Args() args?: CouponArgs,
-    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Coupon | undefined> {
-    return this.couponService.couponByCode(code, args, gqlCtx);
+    return this.couponService.couponByCode(gqlCtx, code, args);
   }
 
   @UseGuards(PermissionsGuard)
   @Permissions('coupon.item-create')
   @Mutation(() => Coupon)
-  async createCoupon(@Args('coupon') args: CreateCouponInput, @GqlCtx() gqlCtx?: IGqlCtx): Promise<Coupon | undefined> {
-    return this.couponService.createCoupon(args, gqlCtx);
+  async createCoupon(@GqlCtx() gqlCtx: IGqlCtx, @Args('coupon') args: CreateCouponInput): Promise<Coupon | undefined> {
+    return this.couponService.createCoupon(gqlCtx, args);
   }
 
   @UseGuards(PermissionsGuard)
   @Permissions('coupon.item-update')
   @Mutation(() => Coupon)
   async updateCoupon(
+    @GqlCtx() gqlCtx: IGqlCtx,
     @Args({ name: 'id', type: () => String }) id: string,
     @Args('coupon') args: UpdateCouponInput,
-    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Coupon | undefined> {
-    return this.couponService.updateCoupon(id, args, gqlCtx);
+    return this.couponService.updateCoupon(gqlCtx, id, args);
   }
 
   @UseGuards(PermissionsGuard)
   @Permissions('coupon.item-delete')
   @Mutation(() => Coupon)
   async deleteCoupon(
+    @GqlCtx() gqlCtx: IGqlCtx,
     @Args({ name: 'id', type: () => String }) id: string,
-    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Coupon | undefined> {
-    return this.couponService.deleteCoupon(id, gqlCtx);
+    return this.couponService.deleteCoupon(gqlCtx, id);
   }
 
   @Mutation(() => Coupon)
-  async redeemCoupon(@Args('info') info: RedeemCouponInput, @GqlCtx() gqlCtx?: IGqlCtx): Promise<Coupon | undefined> {
-    return this.couponService.redeemCoupon(info, gqlCtx);
+  async redeemCoupon(@GqlCtx() gqlCtx: IGqlCtx, @Args('info') info: RedeemCouponInput): Promise<Coupon | undefined> {
+    return this.couponService.redeemCoupon(gqlCtx, info);
   }
 }

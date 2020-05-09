@@ -17,7 +17,7 @@ import {
   calcQbPageInfo,
   can,
   logger,
-  errorMessage,
+  errorMsg,
 } from '@leaa/api/src/utils';
 import { JwtService } from '@nestjs/jwt';
 import { IUsersArgs, IUserArgs, IGqlCtx } from '@leaa/api/src/interfaces';
@@ -36,21 +36,23 @@ export class UserService {
     @InjectRepository(Auth) private readonly authRepository: Repository<Auth>,
   ) {}
 
-  async PLEASE_DONT_MODIFY_DEMO_DATA(id?: string, gqlCtx?: IGqlCtx): Promise<boolean> {
+  async PLEASE_DONT_MODIFY_DEMO_DATA(gqlCtx: IGqlCtx, id?: string): Promise<boolean> {
+    const { t } = gqlCtx;
+
     if (this.configService.DEMO_MODE && !process.argv.includes('--nuke')) {
       if (!id) return true;
 
-      const u = await this.user(id);
+      const u = await this.user(gqlCtx, id);
 
       if (u && u.email && u.email === 'admin@local.com') {
-        throw errorMessage({ t: ['_error:pleaseDontModify'], gqlCtx });
+        throw errorMsg(t('_error:pleaseDontModify'), { gqlCtx });
       }
     }
 
     return true;
   }
 
-  async users(args: IUsersArgs, gqlCtx?: IGqlCtx): Promise<UsersWithPaginationObject> {
+  async users(gqlCtx: IGqlCtx, args: IUsersArgs): Promise<UsersWithPaginationObject> {
     const nextArgs: IUsersArgs = argsFormat(args, gqlCtx);
 
     const PRIMARY_TABLE = 'users';
@@ -83,8 +85,10 @@ export class UserService {
     return calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
-  async user(id: string, args?: IUserArgs, gqlCtx?: IGqlCtx): Promise<User | undefined> {
-    if (!id) throw errorMessage({ t: ['_error:notFoundId'], gqlCtx });
+  async user(gqlCtx: IGqlCtx, id: string, args?: IUserArgs): Promise<User | undefined> {
+    const { t } = gqlCtx;
+
+    if (!id) throw errorMsg(t('_error:notFoundId'), { gqlCtx });
 
     let nextArgs: IUserArgs = {};
 
@@ -97,15 +101,17 @@ export class UserService {
 
     const user = await this.userRepository.findOne({ ...nextArgs, where: whereQuery });
 
-    if (!user) throw errorMessage({ t: ['_error:notFoundItem'], gqlCtx });
+    if (!user) throw errorMsg(t('_error:notFoundItem'), { gqlCtx });
 
     return user;
   }
 
-  async userByToken(token?: string, args?: IUserArgs, gqlCtx?: IGqlCtx): Promise<User | undefined> {
+  async userByToken(gqlCtx: IGqlCtx, token?: string, args?: IUserArgs): Promise<User | undefined> {
+    const { t } = gqlCtx;
+
     let nextArgs: IUserArgs = {};
 
-    if (!token) throw errorMessage({ t: ['_error:tokenNotFound'], gqlCtx });
+    if (!token) throw errorMsg(t('_error:tokenNotFound'), { gqlCtx });
 
     if (args) {
       nextArgs = args;
@@ -114,7 +120,7 @@ export class UserService {
 
     // @ts-ignore
     const userDecode: { id: any } = this.jwtService.decode(token);
-    if (!userDecode || !userDecode.id) throw errorMessage({ t: ['_error:tokenError'], gqlCtx });
+    if (!userDecode || !userDecode.id) throw errorMsg(t('_error:tokenError'), { gqlCtx });
 
     return this.userRepository.findOne(userDecode.id, nextArgs);
   }
@@ -131,7 +137,7 @@ export class UserService {
     return bcryptjs.hashSync(password, salt);
   }
 
-  async createUser(args: CreateUserInput): Promise<User | undefined> {
+  async createUser(gqlCtx: IGqlCtx, args: CreateUserInput): Promise<User | undefined> {
     const nextArgs: CreateUserInput = args;
 
     if (args.password) {
@@ -141,11 +147,11 @@ export class UserService {
     return this.userRepository.save({ ...nextArgs });
   }
 
-  async updateUser(id: string, args: UpdateUserInput, gqlCtx?: IGqlCtx): Promise<User | undefined> {
-    if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id, gqlCtx);
+  async updateUser(gqlCtx: IGqlCtx, id: string, args: UpdateUserInput): Promise<User | undefined> {
+    if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(gqlCtx, id);
 
     if (isOneField(args, 'status')) {
-      return commonUpdate({ repository: this.userRepository, CLS_NAME, id, args });
+      return commonUpdate({ repository: this.userRepository, CLS_NAME, id, args, gqlCtx });
     }
 
     if (isOneField(args, 'avatar_url')) {
@@ -157,7 +163,7 @@ export class UserService {
           moduleId: id,
         };
 
-        const attachments = await this.attachmentService.attachments(avatarParams);
+        const attachments = await this.attachmentService.attachments(gqlCtx, avatarParams);
 
         if (attachments?.items && attachments?.items.length !== 0) {
           const uuids = attachments.items.map((a) => a.uuid);
@@ -167,14 +173,14 @@ export class UserService {
             CLS_NAME,
           );
 
-          await this.attachmentService.deleteAttachments(uuids);
+          await this.attachmentService.deleteAttachments(gqlCtx, uuids);
         }
       }
 
-      return commonUpdate({ repository: this.userRepository, CLS_NAME, id, args });
+      return commonUpdate({ repository: this.userRepository, CLS_NAME, id, args, gqlCtx });
     }
 
-    const prevUser = await this.user(id, { relations: ['roles'] });
+    const prevUser = await this.user(gqlCtx, id, { relations: ['roles'] });
 
     const nextArgs = args;
     const relationArgs: { roles?: Role[] } = {};
@@ -207,6 +213,7 @@ export class UserService {
       id,
       args: nextArgs,
       relation: relationArgs,
+      gqlCtx,
     });
 
     // @ts-ignore
@@ -237,10 +244,10 @@ export class UserService {
     }
   }
 
-  async deleteUser(id: string, gqlCtx?: IGqlCtx): Promise<User | undefined> {
-    if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id, gqlCtx);
+  async deleteUser(gqlCtx: IGqlCtx, id: string): Promise<User | undefined> {
+    if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(gqlCtx, id);
 
-    const deleteUser = await commonDelete({ repository: this.userRepository, CLS_NAME, id });
+    const deleteUser = await commonDelete({ repository: this.userRepository, CLS_NAME, id, gqlCtx });
 
     if (deleteUser) {
       try {

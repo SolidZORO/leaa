@@ -32,8 +32,8 @@ export class AxResolver {
   // @Permissions('ax.item-read')
   // DO NOT CHECK PERMISSIONS
   @Query(() => AxsWithPaginationObject)
-  async axs(@Args() args: AxsArgs, @GqlCtx() gqlCtx?: IGqlCtx): Promise<AxsWithPaginationObject | undefined> {
-    return this.axService.axs(args, gqlCtx);
+  async axs(@GqlCtx() gqlCtx: IGqlCtx, @Args() args: AxsArgs): Promise<AxsWithPaginationObject | undefined> {
+    return this.axService.axs(gqlCtx, args);
   }
 
   // @UseGuards(PermissionsGuard)
@@ -41,11 +41,11 @@ export class AxResolver {
   // DO NOT CHECK PERMISSIONS
   @Query(() => Ax)
   async ax(
+    @GqlCtx() gqlCtx: IGqlCtx,
     @Args({ name: 'id', type: () => String }) id: string,
     @Args() args?: AxArgs,
-    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Ax | undefined> {
-    return this.axService.ax(id, args, gqlCtx);
+    return this.axService.ax(gqlCtx, id, args);
   }
 
   // @UseGuards(PermissionsGuard)
@@ -53,38 +53,38 @@ export class AxResolver {
   // DO NOT CHECK PERMISSIONS
   @Query(() => Ax)
   async axBySlug(
+    @GqlCtx() gqlCtx: IGqlCtx,
     @Args({ name: 'slug', type: () => String }) slug: string,
     @Args() args?: AxArgs,
-    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Ax | undefined> {
-    return this.axService.axBySlug(slug, args, gqlCtx);
+    return this.axService.axBySlug(gqlCtx, slug, args);
   }
 
   @UseGuards(PermissionsGuard)
   @Permissions('ax.item-create')
   @Mutation(() => Ax)
-  async createAx(@Args('ax') args: CreateAxInput, @GqlCtx() gqlCtx?: IGqlCtx): Promise<Ax | undefined> {
-    return this.axService.createAx(args, gqlCtx);
+  async createAx(@GqlCtx() gqlCtx: IGqlCtx, @Args('ax') args: CreateAxInput): Promise<Ax | undefined> {
+    return this.axService.createAx(gqlCtx, args);
   }
 
   @UseGuards(PermissionsGuard)
   @Permissions('ax.item-update')
   @Mutation(() => Ax)
   async updateAx(
+    @GqlCtx() gqlCtx: IGqlCtx,
     @Args({ name: 'id', type: () => String }) id: string,
     @Args('ax') args: UpdateAxInput,
-    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Ax | undefined> {
-    return this.axService.updateAx(id, args, gqlCtx);
+    return this.axService.updateAx(gqlCtx, id, args);
   }
 
   @UseGuards(PermissionsGuard)
   @Permissions('ax.item-delete')
   @Mutation(() => Ax)
   async deleteAx(
+    @GqlCtx() gqlCtx: IGqlCtx,
     @Args({ name: 'id', type: () => String }) id: string,
-    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Ax | undefined> {
-    return this.axService.deleteAx(id, gqlCtx);
+    return this.axService.deleteAx(gqlCtx, id);
   }
 }

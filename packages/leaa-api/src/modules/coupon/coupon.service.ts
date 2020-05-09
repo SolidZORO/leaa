@@ -18,7 +18,7 @@ import {
   can,
   formatDateRangeTime,
   randomString,
-  errorMessage,
+  errorMsg,
 } from '@leaa/api/src/utils';
 import { ICouponsArgs, ICouponArgs, IGqlCtx } from '@leaa/api/src/interfaces';
 
@@ -37,7 +37,9 @@ export class CouponService {
     return `${prefix}${randomString().slice(0, 15)}`.toUpperCase();
   }
 
-  async coupons(args: ICouponsArgs, gqlCtx?: IGqlCtx): Promise<CouponsWithPaginationObject> {
+  async coupons(gqlCtx: IGqlCtx, args: ICouponsArgs): Promise<CouponsWithPaginationObject> {
+    // const { t } = gqlCtx;
+
     const nextArgs: ICouponsArgs = argsFormat(args, gqlCtx);
     const qb = this.couponRepository.createQueryBuilder();
 
@@ -64,8 +66,10 @@ export class CouponService {
     return calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
-  async coupon(id: string, args?: ICouponArgs, gqlCtx?: IGqlCtx): Promise<Coupon | undefined> {
-    if (!id) throw errorMessage({ t: ['_error:notFoundId'], gqlCtx });
+  async coupon(gqlCtx: IGqlCtx, id: string, args?: ICouponArgs): Promise<Coupon | undefined> {
+    const { t } = gqlCtx;
+
+    if (!id) throw errorMsg(t('_error:notFoundId'), { gqlCtx });
 
     let nextArgs: ICouponArgs = {};
     if (args) nextArgs = args;
@@ -82,19 +86,21 @@ export class CouponService {
     }
 
     const coupon = await this.couponRepository.findOne({ ...nextArgs, where: whereQuery });
-    if (!coupon) throw errorMessage({ t: ['_error:notFoundItem'], gqlCtx });
+    if (!coupon) throw errorMsg(t('_error:notFoundItem'), { gqlCtx });
 
     return coupon;
   }
 
-  async couponByCode(code: string, args?: ICouponArgs, gqlCtx?: IGqlCtx): Promise<Coupon | undefined> {
-    const coupon = await this.couponRepository.findOne({ where: { code } });
-    if (!coupon) throw errorMessage({ t: ['_error:notFoundItem'], gqlCtx });
+  async couponByCode(gqlCtx: IGqlCtx, code: string, args?: ICouponArgs): Promise<Coupon | undefined> {
+    const { t } = gqlCtx;
 
-    return this.coupon(coupon.id, args, gqlCtx);
+    const coupon = await this.couponRepository.findOne({ where: { code } });
+    if (!coupon) throw errorMsg(t('_error:notFoundItem'), { gqlCtx });
+
+    return this.coupon(gqlCtx, coupon.id, args);
   }
 
-  async createCoupon(args: CreateCouponInput, gqlCtx?: IGqlCtx): Promise<Coupon | undefined> {
+  async createCoupon(gqlCtx: IGqlCtx, args: CreateCouponInput): Promise<Coupon | undefined> {
     const nextArgs = formatDateRangeTime(args, 'start_time', 'expire_time');
     const couponInputs = [];
 
@@ -111,27 +117,29 @@ export class CouponService {
     return result && result[0];
   }
 
-  async updateCoupon(id: string, args: UpdateCouponInput, gqlCtx?: IGqlCtx): Promise<Coupon | undefined> {
+  async updateCoupon(gqlCtx: IGqlCtx, id: string, args: UpdateCouponInput): Promise<Coupon | undefined> {
     if (isOneField(args, 'status')) {
-      return commonUpdate({ repository: this.couponRepository, CLS_NAME, id, args });
+      return commonUpdate({ repository: this.couponRepository, CLS_NAME, id, args, gqlCtx });
     }
 
     const nextArgs = formatDateRangeTime(args, 'start_time', 'expire_time');
 
-    return commonUpdate({ repository: this.couponRepository, CLS_NAME, id, args: nextArgs });
+    return commonUpdate({ repository: this.couponRepository, CLS_NAME, id, args: nextArgs, gqlCtx });
   }
 
-  async deleteCoupon(id: string, gqlCtx?: IGqlCtx): Promise<Coupon | undefined> {
-    return commonDelete({ repository: this.couponRepository, CLS_NAME, id });
+  async deleteCoupon(gqlCtx: IGqlCtx, id: string): Promise<Coupon | undefined> {
+    return commonDelete({ repository: this.couponRepository, CLS_NAME, id, gqlCtx });
   }
 
-  async redeemCoupon(info: RedeemCouponInput, gqlCtx?: IGqlCtx): Promise<Coupon | undefined> {
-    const coupon = await this.couponByCode(info.code, undefined, gqlCtx);
-    if (!coupon) throw errorMessage({ t: ['_error:notFoundItem'], gqlCtx });
+  async redeemCoupon(gqlCtx: IGqlCtx, info: RedeemCouponInput): Promise<Coupon | undefined> {
+    const { t } = gqlCtx;
 
-    if (!this.couponProperty.available(coupon)) throw errorMessage({ t: ['_module:coupon.unavailable'], gqlCtx });
-    if (!this.couponProperty.canRedeem(coupon)) throw errorMessage({ t: ['_module:coupon.irredeemable'], gqlCtx });
-    if (coupon.user_id) throw errorMessage({ t: ['_module:coupon.alreadyRedeemed'], gqlCtx });
+    const coupon = await this.couponByCode(gqlCtx, info.code, undefined);
+    if (!coupon) throw errorMsg(t('_error:notFoundItem'), { gqlCtx });
+
+    if (!this.couponProperty.available(coupon)) throw errorMsg(t('_module:coupon.unavailable'), { gqlCtx });
+    if (!this.couponProperty.canRedeem(coupon)) throw errorMsg(t('_module:coupon.irredeemable'), { gqlCtx });
+    if (coupon.user_id) throw errorMsg(t('_module:coupon.alreadyRedeemed'), { gqlCtx });
 
     // [token user]
     let nextCoupon = { ...coupon, user_id: gqlCtx?.user?.id };

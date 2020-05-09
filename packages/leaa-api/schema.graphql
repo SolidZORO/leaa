@@ -574,7 +574,7 @@ type Query {
     categoryName: String
     categoryId: String
   ): ActionsWithPaginationObject!
-  action(id: String!): Action!
+  action(id: Int!): Action
   auths(
     page: Int = 1
     pageSize: Int = 30

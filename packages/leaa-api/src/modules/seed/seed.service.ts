@@ -27,6 +27,9 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Attachment } from '@leaa/common/src/entrys';
 import { Repository } from 'typeorm';
+import i18next from 'i18next';
+
+const gqlCtx = { t: i18next.t };
 
 @Injectable()
 export class SeedService {
@@ -48,7 +51,7 @@ export class SeedService {
 
   async insertPermissions() {
     for (const i of permissionsSeed) {
-      const item = await this.permissionService.createPermission(i);
+      const item = await this.permissionService.createPermission(gqlCtx, i);
 
       console.log(item);
     }
@@ -56,7 +59,7 @@ export class SeedService {
 
   async insertRoles() {
     for (const i of rolesSeed) {
-      const item = await this.roleService.createRole(i);
+      const item = await this.roleService.createRole(gqlCtx, i);
 
       console.log(item);
     }
@@ -64,7 +67,7 @@ export class SeedService {
 
   async insertUsers() {
     for (const i of usersSeed) {
-      const item = await this.userService.createUser(i);
+      const item = await this.userService.createUser(gqlCtx, i);
 
       console.log(item);
     }
@@ -72,7 +75,7 @@ export class SeedService {
 
   async insertRandomUsers() {
     for (const i of randomSersSeed) {
-      await this.userService.createUser(i);
+      await this.userService.createUser(gqlCtx, i);
     }
   }
 
@@ -81,7 +84,7 @@ export class SeedService {
       const role = await this.roleService.roleBySlug(i.roleSlug);
 
       if (role) {
-        const nextRole = await this.roleService.updateRole(role.id, { permissionSlugs: i.permissionSlugs });
+        const nextRole = await this.roleService.updateRole(gqlCtx, role.id, { permissionSlugs: i.permissionSlugs });
 
         console.log(nextRole);
       }
@@ -93,7 +96,7 @@ export class SeedService {
       const user = await this.userService.userByEmail(i.userEmail);
 
       if (user) {
-        const nextUser = await this.userService.updateUser(user.id, { roleSlugs: i.roleSlugs });
+        const nextUser = await this.userService.updateUser(gqlCtx, user.id, { roleSlugs: i.roleSlugs });
 
         console.log(nextUser);
       }
@@ -105,12 +108,12 @@ export class SeedService {
       let parentId = '';
 
       if (i.seedParentSlug) {
-        const category = await this.categoryService.categoryBySlug(i.seedParentSlug);
+        const category = await this.categoryService.categoryBySlug(gqlCtx, i.seedParentSlug);
         parentId = category?.id || '';
       }
 
-      // const parent_id = await this.categoryService.createCategory(i);
-      const item = await this.categoryService.createCategory({
+      // const parent_id = await this.categoryService.createCategory(gqlCtx, i);
+      const item = await this.categoryService.createCategory(gqlCtx, {
         ...i,
         parent_id: parentId,
       });
@@ -121,7 +124,7 @@ export class SeedService {
 
   async insertArticle() {
     for (const i of articleSeed) {
-      const item = await this.articleService.createArticle(i);
+      const item = await this.articleService.createArticle(gqlCtx, i);
 
       console.log(item);
     }
@@ -129,7 +132,7 @@ export class SeedService {
 
   async insertAx() {
     for (const i of axSeed) {
-      const item = await this.axService.createAx(i);
+      const item = await this.axService.createAx(gqlCtx, i);
 
       console.log(item);
     }
@@ -145,7 +148,7 @@ export class SeedService {
 
   async insertSetting() {
     for (const i of settingSeed) {
-      const item = await this.settingService.createSetting(i);
+      const item = await this.settingService.createSetting(gqlCtx, i);
 
       console.log(item);
     }
@@ -153,7 +156,7 @@ export class SeedService {
 
   async insertCoupon() {
     for (const i of couponSeed) {
-      const item = await this.couponService.createCoupon(i);
+      const item = await this.couponService.createCoupon(gqlCtx, i);
 
       console.log(item);
     }
@@ -161,7 +164,7 @@ export class SeedService {
 
   async insertPromo() {
     for (const i of promoSeed) {
-      const item = await this.promoService.createPromo(i);
+      const item = await this.promoService.createPromo(gqlCtx, i);
 
       console.log(item);
     }

@@ -35,55 +35,55 @@ export class UserResolver {
   @UseGuards(PermissionsGuard)
   @Permissions('user.list-read')
   @Query(() => UsersWithPaginationObject)
-  async users(@Args() args: UsersArgs, @GqlCtx() gqlCtx?: IGqlCtx): Promise<UsersWithPaginationObject | undefined> {
-    return this.userService.users(args, gqlCtx);
+  async users(@GqlCtx() gqlCtx: IGqlCtx, @Args() args: UsersArgs): Promise<UsersWithPaginationObject | undefined> {
+    return this.userService.users(gqlCtx, args);
   }
 
   @UseGuards(PermissionsGuard)
   @Permissions('user.item-read')
   @Query(() => User)
   async user(
+    @GqlCtx() gqlCtx: IGqlCtx,
     @Args({ name: 'id', type: () => String }) id: string,
     @Args() args?: UserArgs,
-    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<User | undefined> {
-    return this.userService.user(id, args, gqlCtx);
+    return this.userService.user(gqlCtx, id, args);
   }
 
   @Query(() => User)
   async userByToken(
+    @GqlCtx() gqlCtx: IGqlCtx,
     @Args({ name: 'token', type: () => String, nullable: true }) token?: string,
     @Args() args?: UserArgs,
-    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<User | undefined> {
-    return this.userService.userByToken(token, args, gqlCtx);
+    return this.userService.userByToken(gqlCtx, token, args);
   }
 
   @UseGuards(PermissionsGuard)
   @Permissions('user.item-create')
   @Mutation(() => User)
-  async createUser(@Args('user') args: CreateUserInput): Promise<User | undefined> {
-    return this.userService.createUser(args);
+  async createUser(@GqlCtx() gqlCtx: IGqlCtx, @Args('user') args: CreateUserInput): Promise<User | undefined> {
+    return this.userService.createUser(gqlCtx, args);
   }
 
   @UseGuards(PermissionsGuard)
   @Permissions('user.item-update')
   @Mutation(() => User)
   async updateUser(
+    @GqlCtx() gqlCtx: IGqlCtx,
     @Args({ name: 'id', type: () => String }) id: string,
     @Args('user') args: UpdateUserInput,
-    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<User | undefined> {
-    return this.userService.updateUser(id, args, gqlCtx);
+    return this.userService.updateUser(gqlCtx, id, args);
   }
 
   @UseGuards(PermissionsGuard)
   @Permissions('user.item-delete')
   @Mutation(() => User)
   async deleteUser(
+    @GqlCtx() gqlCtx: IGqlCtx,
     @Args({ name: 'id', type: () => String }) id: string,
-    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<User | undefined> {
-    return this.userService.deleteUser(id, gqlCtx);
+    return this.userService.deleteUser(gqlCtx, id);
   }
 }

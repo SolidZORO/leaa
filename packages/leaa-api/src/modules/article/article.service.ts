@@ -15,7 +15,7 @@ import {
   cutTags,
   can,
   formatHtmlToText,
-  errorMessage,
+  errorMsg,
 } from '@leaa/api/src/utils';
 
 import { TagService } from '@leaa/api/src/modules/tag/tag.service';
@@ -31,7 +31,7 @@ export class ArticleService {
     private readonly tagService: TagService,
   ) {}
 
-  async articles(args: IArticlesArgs, gqlCtx?: IGqlCtx): Promise<ArticlesWithPaginationObject> {
+  async articles(gqlCtx: IGqlCtx, args: IArticlesArgs): Promise<ArticlesWithPaginationObject> {
     const nextArgs: IArticlesArgs = argsFormat(args, gqlCtx);
 
     const PRIMARY_TABLE = 'articles';
@@ -77,8 +77,10 @@ export class ArticleService {
     return calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
-  async article(id: string, args?: IArticleArgs, gqlCtx?: IGqlCtx): Promise<Article | undefined> {
-    if (!id) throw errorMessage({ t: ['_error:notFoundId'], gqlCtx });
+  async article(gqlCtx: IGqlCtx, id: string, args?: IArticleArgs): Promise<Article | undefined> {
+    const { t } = gqlCtx;
+
+    if (!id) throw errorMsg(t('_error:notFoundId'), { gqlCtx });
 
     let nextArgs: IArticleArgs = {};
 
@@ -95,14 +97,16 @@ export class ArticleService {
     return this.articleRepository.findOne(id, nextArgs);
   }
 
-  async articleBySlug(slug: string, args?: IArticleArgs, gqlCtx?: IGqlCtx): Promise<Article | undefined> {
-    const article = await this.articleRepository.findOne({ where: { slug } });
-    if (!article) throw errorMessage({ t: ['_error:notFoundItem'], gqlCtx });
+  async articleBySlug(gqlCtx: IGqlCtx, slug: string, args?: IArticleArgs): Promise<Article | undefined> {
+    const { t } = gqlCtx;
 
-    return this.article(article.id, args, gqlCtx);
+    const article = await this.articleRepository.findOne({ where: { slug } });
+    if (!article) throw errorMsg(t('_error:notFoundItem'), { gqlCtx });
+
+    return this.article(gqlCtx, article.id, args);
   }
 
-  async createArticle(args: CreateArticleInput): Promise<Article | undefined> {
+  async createArticle(gqlCtx: IGqlCtx, args: CreateArticleInput): Promise<Article | undefined> {
     const relationArgs: { categories?: Category[] } = {};
 
     // category
@@ -116,9 +120,9 @@ export class ArticleService {
     return this.articleRepository.save({ ...args, ...relationArgs });
   }
 
-  async updateArticle(id: string, args: UpdateArticleInput): Promise<Article | undefined> {
+  async updateArticle(gqlCtx: IGqlCtx, id: string, args: UpdateArticleInput): Promise<Article | undefined> {
     if (isOneField(args, 'status')) {
-      return commonUpdate({ repository: this.articleRepository, CLS_NAME, id, args });
+      return commonUpdate({ repository: this.articleRepository, CLS_NAME, id, args, gqlCtx });
     }
 
     const relationArgs: { tags?: Tag[]; categories?: Category[] } = {};
@@ -152,7 +156,7 @@ export class ArticleService {
       const allText = formatHtmlToText(args.content, args.title);
 
       // batch create tags
-      relationArgs.tags = await this.tagService.createTags(cutTags(allText));
+      relationArgs.tags = await this.tagService.createTags(gqlCtx, cutTags(allText));
 
       // ⚠️ sync tags
       // execute only once when the article has no tag, reducing server pressure
@@ -165,10 +169,11 @@ export class ArticleService {
       id,
       args: nextArgs,
       relation: relationArgs,
+      gqlCtx,
     });
   }
 
-  async deleteArticle(id: string): Promise<Article | undefined> {
-    return commonDelete({ repository: this.articleRepository, CLS_NAME, id });
+  async deleteArticle(gqlCtx: IGqlCtx, id: string): Promise<Article | undefined> {
+    return commonDelete({ repository: this.articleRepository, CLS_NAME, id, gqlCtx });
   }
 }

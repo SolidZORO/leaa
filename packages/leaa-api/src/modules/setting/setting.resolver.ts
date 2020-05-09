@@ -1,5 +1,5 @@
 import { UseGuards } from '@nestjs/common';
-import { Args, Query, Mutation, Resolver, Int } from '@nestjs/graphql';
+import { Args, Query, Mutation, Resolver } from '@nestjs/graphql';
 
 import { Setting } from '@leaa/common/src/entrys';
 import {
@@ -22,19 +22,19 @@ export class SettingResolver {
 
   @Query(() => SettingsWithPaginationObject)
   async settings(
+    @GqlCtx() gqlCtx: IGqlCtx,
     @Args() args: SettingsArgs,
-    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<SettingsWithPaginationObject | undefined> {
-    return this.settingService.settings(args, gqlCtx);
+    return this.settingService.settings(gqlCtx, args);
   }
 
   @Query(() => Setting)
   async setting(
+    @GqlCtx() gqlCtx: IGqlCtx,
     @Args({ name: 'id', type: () => String }) id: string,
     @Args() args?: SettingArgs,
-    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Setting | undefined> {
-    return this.settingService.setting(id, args, gqlCtx);
+    return this.settingService.setting(gqlCtx, id, args);
   }
 
   // @UseGuards(PermissionsGuard)
@@ -42,48 +42,51 @@ export class SettingResolver {
   // DO NOT CHECK PERMISSIONS
   @Query(() => Setting)
   async settingBySlug(
+    @GqlCtx() gqlCtx: IGqlCtx,
     @Args({ name: 'slug', type: () => String }) slug: string,
     @Args() args?: SettingArgs,
-    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Setting | undefined> {
-    return this.settingService.settingBySlug(slug, args, gqlCtx);
+    return this.settingService.settingBySlug(gqlCtx, slug, args);
   }
 
   @UseGuards(PermissionsGuard)
   @Permissions('setting.item-create')
   @Mutation(() => Setting)
-  async createSetting(@Args('setting') args: CreateSettingInput): Promise<Setting | undefined> {
-    return this.settingService.createSetting(args);
+  async createSetting(
+    @GqlCtx() gqlCtx: IGqlCtx,
+    @Args('setting') args: CreateSettingInput,
+  ): Promise<Setting | undefined> {
+    return this.settingService.createSetting(gqlCtx, args);
   }
 
   @UseGuards(PermissionsGuard)
   @Permissions('setting.item-update')
   @Mutation(() => Setting)
   async updateSetting(
+    @GqlCtx() gqlCtx: IGqlCtx,
     @Args({ name: 'id', type: () => String }) id: string,
     @Args('setting') args: UpdateSettingInput,
-    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Setting | undefined> {
-    return this.settingService.updateSetting(id, args, gqlCtx);
+    return this.settingService.updateSetting(gqlCtx, id, args);
   }
 
   @UseGuards(PermissionsGuard)
   @Permissions('setting.item-update')
   @Mutation(() => SettingsObject)
   async updateSettings(
+    @GqlCtx() gqlCtx: IGqlCtx,
     @Args({ name: 'settings', type: () => [UpdateSettingsInput] }) settings: UpdateSettingsInput[],
-    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<SettingsObject> {
-    return this.settingService.updateSettings(settings, gqlCtx);
+    return this.settingService.updateSettings(gqlCtx, settings);
   }
 
   @UseGuards(PermissionsGuard)
   @Permissions('setting.item-delete')
   @Mutation(() => Setting)
   async deleteSetting(
+    @GqlCtx() gqlCtx: IGqlCtx,
     @Args({ name: 'id', type: () => String }) id: string,
-    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Setting | undefined> {
-    return this.settingService.deleteSetting(id, gqlCtx);
+    return this.settingService.deleteSetting(gqlCtx, id);
   }
 }

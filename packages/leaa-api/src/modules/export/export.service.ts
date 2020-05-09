@@ -25,10 +25,10 @@ export class ExportService {
     const filenamePrefix = 'promo';
 
     const gqlCtx = getGqlCtxFromReq(req);
-    const promos = await this.promoService.promos({ ...args, pageSize: PAGE_SIZE }, gqlCtx);
+    const promos = await this.promoService.promos(gqlCtx, { ...args, pageSize: PAGE_SIZE });
 
     const dataTitle = ['Name', 'Amount'];
-    const dataBody = promos.items.map((i) => [i.name, i.amount]);
+    const dataBody = promos.items.map((i: any) => [i.name, i.amount]);
 
     const buffer = xlsx.build([
       {
@@ -49,7 +49,7 @@ export class ExportService {
     const filenamePrefix = 'article';
 
     const gqlCtx = getGqlCtxFromReq(req);
-    const articles = await this.articleService.articles({ ...args, pageSize: PAGE_SIZE }, gqlCtx);
+    const articles = await this.articleService.articles(gqlCtx, { ...args, pageSize: PAGE_SIZE });
 
     const options = { '!cols': [{ wch: 12 }, { wch: 24 }, { wch: 50 }] };
     const dataTitle = ['ID', 'Title', 'Slug'];

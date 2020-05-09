@@ -1,5 +1,5 @@
 import { UseGuards } from '@nestjs/common';
-import { Args, Query, Mutation, Resolver, Int } from '@nestjs/graphql';
+import { Args, Query, Mutation, Resolver } from '@nestjs/graphql';
 
 import { Category } from '@leaa/common/src/entrys';
 import {
@@ -22,8 +22,11 @@ export class CategoryResolver {
   // @Permissions('category.list-read')
   // DO NOT CHECK PERMISSIONS
   @Query(() => CategoriesWithPaginationOrTreeObject)
-  async categories(@Args() args: CategoriesArgs): Promise<CategoriesWithPaginationOrTreeObject | undefined> {
-    return this.categoryService.categories(args);
+  async categories(
+    @GqlCtx() gqlCtx: IGqlCtx,
+    @Args() args: CategoriesArgs,
+  ): Promise<CategoriesWithPaginationOrTreeObject | undefined> {
+    return this.categoryService.categories(gqlCtx, args);
   }
 
   // @UseGuards(PermissionsGuard)
@@ -31,10 +34,11 @@ export class CategoryResolver {
   // DO NOT CHECK PERMISSIONS
   @Query(() => Category)
   async category(
+    @GqlCtx() gqlCtx: IGqlCtx,
     @Args({ name: 'id', type: () => String }) id: string,
     @Args() args?: CategoryArgs,
   ): Promise<Category | undefined> {
-    return this.categoryService.category(id, args);
+    return this.categoryService.category(gqlCtx, id, args);
   }
 
   // @UseGuards(PermissionsGuard)
@@ -42,41 +46,41 @@ export class CategoryResolver {
   // DO NOT CHECK PERMISSIONS
   @Query(() => Category)
   async categoryBySlug(
+    @GqlCtx() gqlCtx: IGqlCtx,
     @Args({ name: 'slug', type: () => String }) slug: string,
     @Args() args?: CategoryArgs,
-    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<CategoryArgs | undefined> {
-    return this.categoryService.categoryBySlug(slug, args, gqlCtx);
+    return this.categoryService.categoryBySlug(gqlCtx, slug, args);
   }
 
   @UseGuards(PermissionsGuard)
   @Permissions('category.item-create')
   @Mutation(() => Category)
   async createCategory(
+    @GqlCtx() gqlCtx: IGqlCtx,
     @Args('category') args: CreateCategoryInput,
-    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Category | undefined> {
-    return this.categoryService.createCategory(args, gqlCtx);
+    return this.categoryService.createCategory(gqlCtx, args);
   }
 
   @UseGuards(PermissionsGuard)
   @Permissions('category.item-update')
   @Mutation(() => Category)
   async updateCategory(
+    @GqlCtx() gqlCtx: IGqlCtx,
     @Args({ name: 'id', type: () => String }) id: string,
     @Args('category') args: UpdateCategoryInput,
-    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Category | undefined> {
-    return this.categoryService.updateCategory(id, args, gqlCtx);
+    return this.categoryService.updateCategory(gqlCtx, id, args);
   }
 
   @UseGuards(PermissionsGuard)
   @Permissions('category.item-delete')
   @Mutation(() => Category)
   async deleteCategory(
+    @GqlCtx() gqlCtx: IGqlCtx,
     @Args({ name: 'id', type: () => String }) id: string,
-    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Category | undefined> {
-    return this.categoryService.deleteCategory(id, gqlCtx);
+    return this.categoryService.deleteCategory(gqlCtx, id);
   }
 }

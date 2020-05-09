@@ -1,5 +1,5 @@
 import { UseGuards } from '@nestjs/common';
-import { Args, Query, Mutation, Resolver, Int } from '@nestjs/graphql';
+import { Args, Query, Mutation, Resolver } from '@nestjs/graphql';
 
 import { Tag } from '@leaa/common/src/entrys';
 import {
@@ -23,8 +23,8 @@ export class TagResolver {
   // @Permissions('tag.list-read')
   // DO NOT CHECK PERMISSIONS
   @Query(() => TagsWithPaginationObject)
-  async tags(@Args() args: TagsArgs, @GqlCtx() gqlCtx?: IGqlCtx): Promise<TagsWithPaginationObject | undefined> {
-    return this.tagService.tags(args, gqlCtx);
+  async tags(@GqlCtx() gqlCtx: IGqlCtx, @Args() args: TagsArgs): Promise<TagsWithPaginationObject | undefined> {
+    return this.tagService.tags(gqlCtx, args);
   }
 
   // @UseGuards(PermissionsGuard)
@@ -32,39 +32,39 @@ export class TagResolver {
   // DO NOT CHECK PERMISSIONS
   @Query(() => Tag)
   async tag(
+    @GqlCtx() gqlCtx: IGqlCtx,
     @Args({ name: 'id', type: () => String }) id: string,
     @Args() args?: TagArgs,
-    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Tag | undefined> {
-    return this.tagService.tag(id, args, gqlCtx);
+    return this.tagService.tag(gqlCtx, id, args);
   }
 
   @UseGuards(PermissionsGuard)
   @Permissions('tag.item-read')
   @Query(() => Tag)
   async tagByName(
+    @GqlCtx() gqlCtx: IGqlCtx,
     @Args({ name: 'name', type: () => String }) name: string,
     @Args() args?: TagArgs,
-    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Tag | undefined> {
-    return this.tagService.tagByName(name, args, gqlCtx);
+    return this.tagService.tagByName(gqlCtx, name, args);
   }
 
   @UseGuards(PermissionsGuard)
   @Permissions('tag.item-create')
   @Mutation(() => Tag)
-  async createTag(@Args('tag') args: CreateTagInput, @GqlCtx() gqlCtx?: IGqlCtx): Promise<Tag | undefined> {
-    return this.tagService.createTag(args, gqlCtx);
+  async createTag(@GqlCtx() gqlCtx: IGqlCtx, @Args('tag') args: CreateTagInput): Promise<Tag | undefined> {
+    return this.tagService.createTag(gqlCtx, args);
   }
 
   @UseGuards(PermissionsGuard)
   @Permissions('tag.item-create')
   @Mutation(() => Tag)
   async createTags(
+    @GqlCtx() gqlCtx: IGqlCtx,
     @Args({ name: 'tagNames', type: () => [String] }) tagNames: string[],
-    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Tag[] | undefined> {
-    return this.tagService.createTags(tagNames, gqlCtx);
+    return this.tagService.createTags(gqlCtx, tagNames);
   }
 
   @UseGuards(PermissionsGuard)
@@ -78,20 +78,20 @@ export class TagResolver {
   @Permissions('tag.item-update')
   @Mutation(() => Tag)
   async updateTag(
+    @GqlCtx() gqlCtx: IGqlCtx,
     @Args({ name: 'id', type: () => String }) id: string,
     @Args('tag') args: UpdateTagInput,
-    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Tag | undefined> {
-    return this.tagService.updateTag(id, args, gqlCtx);
+    return this.tagService.updateTag(gqlCtx, id, args);
   }
 
   @UseGuards(PermissionsGuard)
   @Permissions('tag.item-delete')
   @Mutation(() => Tag)
   async deleteTag(
+    @GqlCtx() gqlCtx: IGqlCtx,
     @Args({ name: 'id', type: () => String }) id: string,
-    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Tag | undefined> {
-    return this.tagService.deleteTag(id, gqlCtx);
+    return this.tagService.deleteTag(gqlCtx, id);
   }
 }

@@ -25,7 +25,7 @@ import {
   can,
   filenameAt1xToAt2x,
   calcQbPageInfo,
-  errorMessage,
+  errorMsg,
 } from '@leaa/api/src/utils';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 import { IAttachmentsArgs, IAttachmentArgs, IGqlCtx } from '@leaa/api/src/interfaces';
@@ -57,7 +57,7 @@ export class AttachmentService {
     return null;
   }
 
-  async attachments(args: IAttachmentsArgs, gqlCtx?: IGqlCtx): Promise<AttachmentsWithPaginationObject> {
+  async attachments(gqlCtx: IGqlCtx, args: IAttachmentsArgs): Promise<AttachmentsWithPaginationObject> {
     const nextArgs = argsFormat(args, gqlCtx);
 
     const moduleFilter: IAttachmentDbFilterField = {};
@@ -103,8 +103,10 @@ export class AttachmentService {
     return calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
-  async attachment(uuid: string, args?: IAttachmentArgs, gqlCtx?: IGqlCtx): Promise<Attachment | undefined> {
-    if (!uuid) throw errorMessage({ t: ['_error:notFoundId'], gqlCtx });
+  async attachment(gqlCtx: IGqlCtx, uuid: string, args?: IAttachmentArgs): Promise<Attachment | undefined> {
+    const { t } = gqlCtx;
+
+    if (!uuid) throw errorMsg(t('_error:notFoundId'), { gqlCtx });
 
     let nextArgs: IAttachmentArgs = {};
 
@@ -129,11 +131,13 @@ export class AttachmentService {
     return this.saveInLocalServer.createAttachmentByLocal(body, file);
   }
 
-  async updateAttachment(uuid: string, args: UpdateAttachmentInput, gqlCtx?: IGqlCtx): Promise<Attachment | undefined> {
-    if (!args) throw errorMessage({ t: ['_error:notFoundArgs'], gqlCtx });
+  async updateAttachment(gqlCtx: IGqlCtx, uuid: string, args: UpdateAttachmentInput): Promise<Attachment | undefined> {
+    const { t } = gqlCtx;
+
+    if (!args) throw errorMsg(t('_error:notFoundArgs'), { gqlCtx });
 
     let prevItem = await this.attachmentRepository.findOne({ uuid });
-    if (!prevItem) throw errorMessage({ t: ['_error:notFoundItem'], gqlCtx });
+    if (!prevItem) throw errorMsg(t('_error:notFoundItem'), { gqlCtx });
 
     prevItem = { ...prevItem, ...args };
     const nextItem = await this.attachmentRepository.save(prevItem);
@@ -143,8 +147,10 @@ export class AttachmentService {
     return nextItem;
   }
 
-  async updateAttachments(attachments: UpdateAttachmentsInput[], gqlCtx?: IGqlCtx): Promise<AttachmentsObject> {
-    if (!attachments) throw errorMessage({ t: ['_error:notFoundItems'], gqlCtx });
+  async updateAttachments(gqlCtx: IGqlCtx, attachments: UpdateAttachmentsInput[]): Promise<AttachmentsObject> {
+    const { t } = gqlCtx;
+
+    if (!attachments) throw errorMsg(t('_error:notFoundItems'), { gqlCtx });
 
     const batchUpdate = attachments.map(async (attachment) => {
       await this.attachmentRepository.update({ uuid: attachment.uuid }, _.omit(attachment, ['uuid']));
@@ -167,12 +173,14 @@ export class AttachmentService {
     };
   }
 
-  async deleteAttachments(uuid: string[], gqlCtx?: IGqlCtx): Promise<DeleteAttachmentsObject | undefined> {
+  async deleteAttachments(gqlCtx: IGqlCtx, uuid: string[]): Promise<DeleteAttachmentsObject | undefined> {
+    const { t } = gqlCtx;
+
     const prevItems = await this.attachmentRepository.find({ uuid: In(uuid) });
-    if (!prevItems) throw errorMessage({ t: ['_error:notFoundItem'], gqlCtx });
+    if (!prevItems) throw errorMsg(t('_error:notFoundItem'), { gqlCtx });
 
     const nextItem = await this.attachmentRepository.remove(prevItems);
-    if (!nextItem) throw errorMessage({ t: ['_error:deleteItemFailed'], gqlCtx });
+    if (!nextItem) throw errorMsg(t('_error:deleteItemFailed'), { gqlCtx });
 
     prevItems.forEach((i) => {
       if (i.at2x) {

@@ -3,6 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { Ax, Attachment } from '@leaa/common/src/entrys';
 import { AxAttachmentsObject } from '@leaa/common/src/dtos/ax';
 import { AttachmentService } from '@leaa/api/src/modules/attachment/attachment.service';
+import i18next from 'i18next';
 
 // const CLS_NAME = 'AxProperty';
 
@@ -15,7 +16,9 @@ export class AxProperty {
       return undefined;
     }
 
-    const attachmentsResult = await this.attachmentService.attachments({
+    const gqlCtx = { t: i18next.t };
+
+    const attachmentsResult = await this.attachmentService.attachments(gqlCtx, {
       moduleName: 'ax',
       moduleId: ax.id,
     });

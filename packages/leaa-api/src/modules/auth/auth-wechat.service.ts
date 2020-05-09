@@ -9,11 +9,12 @@ import { Auth } from '@leaa/common/src/entrys';
 import { authConfig } from '@leaa/api/src/configs';
 import { IWechatInfo, ICreateAuthAndUserResult, IRequest, IResponse } from '@leaa/api/src/interfaces';
 import { CreateAuthInput } from '@leaa/common/src/dtos/auth';
-import { logger, randomString, errorMessage } from '@leaa/api/src/utils';
+import { logger, randomString, errorMsg } from '@leaa/api/src/utils';
 import { UserService } from '@leaa/api/src/modules/user/user.service';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 
 import { AuthService } from './auth.service';
+import i18next from 'i18next';
 
 const CLS_NAME = 'AuthWechatService';
 const PLATFORM_NAME = 'wechat';
@@ -70,7 +71,9 @@ export class AuthWechatService {
   }
 
   async createUserAndAuth(platform: string, profile: IWechatInfo): Promise<ICreateAuthAndUserResult> {
-    const newUser = await this.userService.createUser({
+    const gqlCtx = { t: i18next.t };
+
+    const newUser = await this.userService.createUser(gqlCtx, {
       email: `${platform}-${new Date().valueOf()}@local.com`,
       password: bcryptjs.hashSync(this.nextTicket.ticket),
       name: profile.nickname,
@@ -118,15 +121,17 @@ export class AuthWechatService {
   }
 
   async wechatCallback(req: IRequest, res: IResponse): Promise<void | string> {
+    const { t } = req;
+
     if (!req.query.state || !req.query.code) {
-      errorMessage({ text: 'Wechat Callback Error' });
+      errorMsg(t('Wechat Callback Error'));
     }
 
     const { jumpUrl } = JSON.parse(decodeURIComponent(req.query.state));
     const { url, query } = queryString.parseUrl(jumpUrl);
 
     if (!query || !query.platform || !['wechat', 'weibo'].includes(query.platform as string)) {
-      errorMessage({ text: 'Wechat Callback Invalid Platform' });
+      errorMsg(t('Wechat Callback Invalid Platform'));
     }
 
     const platform = (query.platform as string) || PLATFORM_NAME;

@@ -1,5 +1,5 @@
 import { UseGuards } from '@nestjs/common';
-import { Args, Query, Mutation, Resolver, Int } from '@nestjs/graphql';
+import { Args, Query, Mutation, Resolver } from '@nestjs/graphql';
 
 import { Zan } from '@leaa/common/src/entrys';
 import { ZansArgs, ZansWithPaginationObject, ZanArgs, CreateZanInput, UpdateZanInput } from '@leaa/common/src/dtos/zan';
@@ -13,59 +13,59 @@ export class ZanResolver {
   constructor(private readonly zanService: ZanService) {}
 
   @Query(() => ZansWithPaginationObject)
-  async zans(@Args() args: ZansArgs, @GqlCtx() gqlCtx?: IGqlCtx): Promise<ZansWithPaginationObject | undefined> {
-    return this.zanService.zans(args, gqlCtx);
+  async zans(@GqlCtx() gqlCtx: IGqlCtx, @Args() args: ZansArgs): Promise<ZansWithPaginationObject | undefined> {
+    return this.zanService.zans(gqlCtx, args);
   }
 
   @Query(() => Zan)
   async zan(
+    @GqlCtx() gqlCtx: IGqlCtx,
     @Args({ name: 'id', type: () => String }) id: string,
     @Args() args?: ZanArgs,
-    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Zan | undefined> {
-    return this.zanService.zan(id, args, gqlCtx);
+    return this.zanService.zan(gqlCtx, id, args);
   }
 
   @Mutation(() => Zan)
-  async createZan(@Args('zan') args: CreateZanInput, @GqlCtx() gqlCtx?: IGqlCtx): Promise<Zan | undefined> {
-    return this.zanService.createZan(args, gqlCtx);
+  async createZan(@GqlCtx() gqlCtx: IGqlCtx, @Args('zan') args: CreateZanInput): Promise<Zan | undefined> {
+    return this.zanService.createZan(gqlCtx, args);
   }
 
   @UseGuards(PermissionsGuard)
   @Permissions('zan.item-update')
   @Mutation(() => Zan)
   async updateZan(
+    @GqlCtx() gqlCtx: IGqlCtx,
     @Args({ name: 'id', type: () => String }) id: string,
     @Args('zan') args: UpdateZanInput,
-    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Zan | undefined> {
-    return this.zanService.updateZan(id, args, gqlCtx);
+    return this.zanService.updateZan(gqlCtx, id, args);
   }
 
   @UseGuards(PermissionsGuard)
   @Permissions('zan.item-delete')
   @Mutation(() => Zan)
   async deleteZan(
+    @GqlCtx() gqlCtx: IGqlCtx,
     @Args({ name: 'id', type: () => String }) id: string,
-    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Zan | undefined> {
-    return this.zanService.deleteZan(id, gqlCtx);
+    return this.zanService.deleteZan(gqlCtx, id);
   }
 
   @Mutation(() => Zan)
   async likeZan(
+    @GqlCtx() gqlCtx: IGqlCtx,
     @Args({ name: 'id', type: () => String }) id: string,
-    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Zan | undefined> {
-    return this.zanService.likeZan(id, gqlCtx);
+    return this.zanService.likeZan(gqlCtx, id);
   }
 
   @Mutation(() => Zan)
   async deleteZanUser(
+    @GqlCtx() gqlCtx: IGqlCtx,
     @Args({ name: 'id', type: () => String }) id: string,
     @Args({ name: 'userId', type: () => String }) userId: string,
-    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Zan | undefined> {
-    return this.zanService.deleteZanUser(id, userId, gqlCtx);
+    return this.zanService.deleteZanUser(gqlCtx, id, userId);
   }
 }

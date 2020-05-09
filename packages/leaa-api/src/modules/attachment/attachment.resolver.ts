@@ -37,43 +37,43 @@ export class AttachmentResolver {
 
   @Query(() => AttachmentsWithPaginationObject)
   async attachments(
+    @GqlCtx() gqlCtx: IGqlCtx,
     @Args() args: AttachmentsArgs,
-    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<AttachmentsWithPaginationObject | undefined> {
-    return this.attachmentService.attachments(args, gqlCtx);
+    return this.attachmentService.attachments(gqlCtx, args);
   }
 
   @Query(() => Attachment)
   async attachment(
+    @GqlCtx() gqlCtx: IGqlCtx,
     @Args({ name: 'uuid', type: () => String }) uuid: string,
     @Args() args?: AttachmentArgs,
-    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Attachment | undefined> {
-    return this.attachmentService.attachment(uuid, args, gqlCtx);
+    return this.attachmentService.attachment(gqlCtx, uuid, args);
   }
 
   @Mutation(() => Attachment)
   async updateAttachment(
+    @GqlCtx() gqlCtx: IGqlCtx,
     @Args({ name: 'uuid', type: () => String }) uuid: string,
     @Args('attachment') args: UpdateAttachmentInput,
-    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<Attachment | undefined> {
-    return this.attachmentService.updateAttachment(uuid, args, gqlCtx);
+    return this.attachmentService.updateAttachment(gqlCtx, uuid, args);
   }
 
   @Mutation(() => AttachmentsObject)
   async updateAttachments(
+    @GqlCtx() gqlCtx: IGqlCtx,
     @Args({ name: 'attachments', type: () => [UpdateAttachmentsInput] }) attachments: UpdateAttachmentsInput[],
-    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<AttachmentsObject> {
-    return this.attachmentService.updateAttachments(attachments, gqlCtx);
+    return this.attachmentService.updateAttachments(gqlCtx, attachments);
   }
 
   @Mutation(() => DeleteAttachmentsObject)
   async deleteAttachments(
+    @GqlCtx() gqlCtx: IGqlCtx,
     @Args({ name: 'uuid', type: () => [String] }) uuid: string[],
-    @GqlCtx() gqlCtx?: IGqlCtx,
   ): Promise<DeleteAttachmentsObject | undefined> {
-    return this.attachmentService.deleteAttachments(uuid, gqlCtx);
+    return this.attachmentService.deleteAttachments(gqlCtx, uuid);
   }
 }
