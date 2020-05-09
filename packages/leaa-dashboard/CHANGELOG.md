@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.2.0](https://github.com/SolidZORO/leaa/compare/v2.0.6...v2.2.0) (2020-05-09)
+
+### Features
+
+- auth login add Captcha (not display by default, auto tigger) ([a068b54](https://github.com/SolidZORO/leaa/commit/a068b543e81c65b235cb85a8430d4ca27285219f))
+
+### Performance Improvements
+
+- .babelrc add ignore ([99040ad](https://github.com/SolidZORO/leaa/commit/99040adf66b67fa3ca409bb86acdab9f1458aaa3))
+- babel useBuiltIns: 'usage' replace @babel/polyfill ([ee25c09](https://github.com/SolidZORO/leaa/commit/ee25c092152ddddf917ca5dff8c031e6006bf4a3))
+- format code ([e8502d3](https://github.com/SolidZORO/leaa/commit/e8502d3c9455b685e47ac18e39769f4d5e588724))
+
 ## [2.1.1](https://github.com/SolidZORO/leaa/compare/v2.0.6...v2.1.1) (2020-05-06)
 
 ### Features
