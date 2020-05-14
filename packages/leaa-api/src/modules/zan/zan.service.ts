@@ -21,7 +21,7 @@ const CLS_NAME = 'ZanService';
 export class ZanService {
   constructor(@InjectRepository(Zan) private readonly zanRepository: Repository<Zan>) {}
 
-  async zans(gqlCtx: IGqlCtx, args: IZansArgs): Promise<ZansWithPaginationObject> {
+  async zans(args: IZansArgs): Promise<ZansWithPaginationObject> {
     const nextArgs = argsFormat(args, gqlCtx);
 
     const PRIMARY_TABLE = 'zans';
@@ -48,7 +48,7 @@ export class ZanService {
     return calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
-  async zan(gqlCtx: IGqlCtx, id: string, args?: IZanArgs): Promise<Zan | undefined> {
+  async zan(id: string, args?: IZanArgs): Promise<Zan | undefined> {
     const { t } = gqlCtx;
 
     if (!id) throw errorMsg(t('_error:notFoundId'), { gqlCtx });
@@ -70,7 +70,7 @@ export class ZanService {
     return zan;
   }
 
-  async createZan(gqlCtx: IGqlCtx, args: CreateZanInput): Promise<Zan | undefined> {
+  async createZan(args: CreateZanInput): Promise<Zan | undefined> {
     const zan = await this.zanRepository.findOne({ title: args.title }, { relations: ['users', 'creator'] });
 
     if (zan?.creator?.id === gqlCtx?.user?.id) {
@@ -84,7 +84,7 @@ export class ZanService {
     });
   }
 
-  async updateZan(gqlCtx: IGqlCtx, id: string, args: UpdateZanInput): Promise<Zan | undefined> {
+  async updateZan(id: string, args: UpdateZanInput): Promise<Zan | undefined> {
     if (isOneField(args, 'status')) {
       return commonUpdate({ repository: this.zanRepository, CLS_NAME, id, args, gqlCtx });
     }
@@ -92,11 +92,11 @@ export class ZanService {
     return commonUpdate({ repository: this.zanRepository, CLS_NAME, id, args, gqlCtx });
   }
 
-  async deleteZan(gqlCtx: IGqlCtx, id: string): Promise<Zan | undefined> {
+  async deleteZan(id: string): Promise<Zan | undefined> {
     return commonDelete({ repository: this.zanRepository, CLS_NAME, id, gqlCtx });
   }
 
-  async likeZan(gqlCtx: IGqlCtx, id: string): Promise<Zan | undefined> {
+  async likeZan(id: string): Promise<Zan | undefined> {
     const { t } = gqlCtx;
 
     let zan = await this.zanRepository.findOne({ id }, { relations: ['users'] });
@@ -119,7 +119,7 @@ export class ZanService {
     return zan;
   }
 
-  async deleteZanUser(gqlCtx: IGqlCtx, id: string, userId: string): Promise<Zan | undefined> {
+  async deleteZanUser(id: string, userId: string): Promise<Zan | undefined> {
     const { t } = gqlCtx;
 
     if (!userId) throw errorMsg(t('_error:notFoundUser'), { gqlCtx });

@@ -31,7 +31,7 @@ const CLS_NAME = 'DivisionService';
 export class DivisionService {
   constructor(@InjectRepository(Division) private readonly divisionRepository: Repository<Division>) {}
 
-  async divisions(gqlCtx: IGqlCtx, args: IDivisionsArgs): Promise<DivisionsWithPaginationObject> {
+  async divisions(args: IDivisionsArgs): Promise<DivisionsWithPaginationObject> {
     const nextArgs: IDivisionsArgs = argsFormat(args, gqlCtx);
 
     const PRIMARY_TABLE = 'divisions';
@@ -54,7 +54,7 @@ export class DivisionService {
     return this.formatDivision(items, 'tree');
   }
 
-  async division(gqlCtx: IGqlCtx, id: string, args?: IDivisionArgs): Promise<Division | undefined> {
+  async division(id: string, args?: IDivisionArgs): Promise<Division | undefined> {
     const { t } = gqlCtx;
 
     if (!id) throw errorMsg(t('_error:notFoundId'), { gqlCtx });
@@ -205,7 +205,7 @@ export class DivisionService {
     return result;
   }
 
-  async updateDivision(gqlCtx: IGqlCtx, id: string, args: UpdateDivisionInput): Promise<Division | undefined> {
+  async updateDivision(id: string, args: UpdateDivisionInput): Promise<Division | undefined> {
     if (isOneField(args, 'status')) {
       return commonUpdate({ repository: this.divisionRepository, CLS_NAME, id, args, gqlCtx });
     }
@@ -223,7 +223,7 @@ export class DivisionService {
     return result;
   }
 
-  async deleteDivision(gqlCtx: IGqlCtx, id: string): Promise<Division | undefined> {
+  async deleteDivision(id: string): Promise<Division | undefined> {
     return commonDelete({ repository: this.divisionRepository, CLS_NAME, id, gqlCtx });
   }
 }

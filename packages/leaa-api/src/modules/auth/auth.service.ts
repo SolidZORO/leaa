@@ -29,7 +29,7 @@ export class AuthService {
     private readonly userProperty: UserProperty,
   ) {}
 
-  async auths(gqlCtx: IGqlCtx, args: IAuthsArgs): Promise<AuthsWithPaginationObject | undefined> {
+  async auths(args: IAuthsArgs): Promise<AuthsWithPaginationObject | undefined> {
     const { t } = gqlCtx;
 
     const nextArgs: IAuthsArgs = argsFormat(args, gqlCtx);
@@ -53,7 +53,7 @@ export class AuthService {
 
     const items = await calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
 
-    if (!items) throw errorMsg(t('_error:tokenNotBefore'), { gqlCtx });
+    if (!items) throw errorMsg(t('_error:tokenNotBefore'));
 
     return items;
   }
@@ -72,7 +72,7 @@ export class AuthService {
     return this.authRepository.save({ ...args });
   }
 
-  async deleteAuth(gqlCtx: IGqlCtx, id: string): Promise<Auth | undefined> {
+  async deleteAuth(id: string): Promise<Auth | undefined> {
     const { t } = gqlCtx;
 
     const item = await commonDelete({ repository: this.authRepository, CLS_NAME, id, gqlCtx });
@@ -99,7 +99,7 @@ export class AuthService {
     };
   }
 
-  getUserPayload(gqlCtx: IGqlCtx, token: string): IJwtPayload {
+  getUserPayload(token: string): IJwtPayload {
     const { t } = gqlCtx;
 
     if (!token) throw errorMsg(t('_error:tokenNotFound'));
@@ -136,9 +136,7 @@ export class AuthService {
   }
 
   // MUST DO minimal cost query
-  async validateUserByPayload(payload: IJwtPayload, gqlCtx: IGqlCtx): Promise<User | undefined> {
-    const { t } = gqlCtx;
-
+  async validateUserByPayload(payload: IJwtPayload): Promise<User | undefined> {
     // gqlCtx in here ONLY for check `lang`
     if (!payload) throw errorMsg(t('_error:notFoundInfo'));
 
@@ -148,7 +146,7 @@ export class AuthService {
 
     const findUser = await this.userRepository.findOne({ relations: ['roles'], where: { id: payload.id } });
 
-    const user = checkAvailableUser(findUser || null, gqlCtx);
+    const user = checkAvailableUser(findUser);
 
     // IMPORTANT! if user info is changed, Compare `iat` and `last_token_at`
     if (moment(payload.iattz).isBefore(moment(user.last_token_at))) {
@@ -188,13 +186,13 @@ export class AuthService {
   }
 
   // TIPS: domain.com/login?otk=901d4862-0a44-xxxx-xxxx-56a9c45 (otk = auth ticket)
-  async loginByTicket(gqlCtx: IGqlCtx, ticket: string): Promise<User | undefined> {
+  async loginByTicket(ticket: string): Promise<User | undefined> {
     const user = await this.getUserByTicket(gqlCtx, ticket);
 
     return this.addTokenToUser(user);
   }
 
-  async getUserByTicket(gqlCtx: IGqlCtx, ticket: string): Promise<User> {
+  async getUserByTicket(ticket: string): Promise<User> {
     const { t } = gqlCtx;
 
     if (!ticket) throw errorMsg(t('_error:notFoundTicket'), { gqlCtx });
@@ -214,7 +212,7 @@ export class AuthService {
     await this.authRepository.update(authId, { ticket: null, ticket_at: '' });
   }
 
-  async bindUserIdToAuth(gqlCtx: IGqlCtx, user: User, oid: string): Promise<any> {
+  async bindUserIdToAuth(user: User, oid: string): Promise<any> {
     const { t } = gqlCtx;
 
     if (!oid || typeof Number(oid) !== 'number') {

@@ -23,7 +23,7 @@ import {
   formatOrderByByUrl,
   initPaginationStateByUrl,
   calcTableDefaultSortOrder,
-  successMessage,
+  msg,
 } from '@leaa/dashboard/src/utils';
 
 import {
@@ -72,7 +72,7 @@ export default (props: IPage) => {
   // mutation
   const [deleteRoleMutate, deleteRoleMutation] = useMutation<Role>(DELETE_ROLE, {
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
-    onCompleted: () => successMessage(t('_lang:deletedSuccessfully')),
+    onCompleted: () => msg(t('_lang:deletedSuccessfully')),
     refetchQueries: () => [{ query: GET_ROLES, variables: getRolesVariables }],
   });
 

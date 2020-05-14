@@ -37,7 +37,7 @@ export class CouponService {
     return `${prefix}${randomString().slice(0, 15)}`.toUpperCase();
   }
 
-  async coupons(gqlCtx: IGqlCtx, args: ICouponsArgs): Promise<CouponsWithPaginationObject> {
+  async coupons(args: ICouponsArgs): Promise<CouponsWithPaginationObject> {
     // const { t } = gqlCtx;
 
     const nextArgs: ICouponsArgs = argsFormat(args, gqlCtx);
@@ -66,7 +66,7 @@ export class CouponService {
     return calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
-  async coupon(gqlCtx: IGqlCtx, id: string, args?: ICouponArgs): Promise<Coupon | undefined> {
+  async coupon(id: string, args?: ICouponArgs): Promise<Coupon | undefined> {
     const { t } = gqlCtx;
 
     if (!id) throw errorMsg(t('_error:notFoundId'), { gqlCtx });
@@ -91,7 +91,7 @@ export class CouponService {
     return coupon;
   }
 
-  async couponByCode(gqlCtx: IGqlCtx, code: string, args?: ICouponArgs): Promise<Coupon | undefined> {
+  async couponByCode(code: string, args?: ICouponArgs): Promise<Coupon | undefined> {
     const { t } = gqlCtx;
 
     const coupon = await this.couponRepository.findOne({ where: { code } });
@@ -100,7 +100,7 @@ export class CouponService {
     return this.coupon(gqlCtx, coupon.id, args);
   }
 
-  async createCoupon(gqlCtx: IGqlCtx, args: CreateCouponInput): Promise<Coupon | undefined> {
+  async createCoupon(args: CreateCouponInput): Promise<Coupon | undefined> {
     const nextArgs = formatDateRangeTime(args, 'start_time', 'expire_time');
     const couponInputs = [];
 
@@ -117,7 +117,7 @@ export class CouponService {
     return result && result[0];
   }
 
-  async updateCoupon(gqlCtx: IGqlCtx, id: string, args: UpdateCouponInput): Promise<Coupon | undefined> {
+  async updateCoupon(id: string, args: UpdateCouponInput): Promise<Coupon | undefined> {
     if (isOneField(args, 'status')) {
       return commonUpdate({ repository: this.couponRepository, CLS_NAME, id, args, gqlCtx });
     }
@@ -127,11 +127,11 @@ export class CouponService {
     return commonUpdate({ repository: this.couponRepository, CLS_NAME, id, args: nextArgs, gqlCtx });
   }
 
-  async deleteCoupon(gqlCtx: IGqlCtx, id: string): Promise<Coupon | undefined> {
+  async deleteCoupon(id: string): Promise<Coupon | undefined> {
     return commonDelete({ repository: this.couponRepository, CLS_NAME, id, gqlCtx });
   }
 
-  async redeemCoupon(gqlCtx: IGqlCtx, info: RedeemCouponInput): Promise<Coupon | undefined> {
+  async redeemCoupon(info: RedeemCouponInput): Promise<Coupon | undefined> {
     const { t } = gqlCtx;
 
     const coupon = await this.couponByCode(gqlCtx, info.code, undefined);

@@ -8,7 +8,7 @@ import { GET_PROMO, UPDATE_PROMO } from '@leaa/dashboard/src/graphqls';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { PromoArgs, UpdatePromoInput } from '@leaa/common/src/dtos/promo';
 import { IPage, ICommenFormRef, ISubmitData } from '@leaa/dashboard/src/interfaces';
-import { successMessage } from '@leaa/dashboard/src/utils';
+import { msg } from '@leaa/dashboard/src/utils';
 
 import { HtmlMeta, PageCard, SubmitBar, Rcon } from '@leaa/dashboard/src/components';
 
@@ -35,7 +35,7 @@ export default (props: IPage) => {
   const [updatePromoMutate, updatePromoMutation] = useMutation<Promo>(UPDATE_PROMO, {
     variables: submitVariables,
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
-    onCompleted: () => successMessage(t('_lang:updatedSuccessfully')),
+    onCompleted: () => msg(t('_lang:updatedSuccessfully')),
     refetchQueries: () => [{ query: GET_PROMO, variables: getPromoVariables }],
   });
 

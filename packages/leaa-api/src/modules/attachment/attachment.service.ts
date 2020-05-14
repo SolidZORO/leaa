@@ -57,7 +57,7 @@ export class AttachmentService {
     return null;
   }
 
-  async attachments(gqlCtx: IGqlCtx, args: IAttachmentsArgs): Promise<AttachmentsWithPaginationObject> {
+  async attachments(args: IAttachmentsArgs): Promise<AttachmentsWithPaginationObject> {
     const nextArgs = argsFormat(args, gqlCtx);
 
     const moduleFilter: IAttachmentDbFilterField = {};
@@ -103,7 +103,7 @@ export class AttachmentService {
     return calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
-  async attachment(gqlCtx: IGqlCtx, uuid: string, args?: IAttachmentArgs): Promise<Attachment | undefined> {
+  async attachment(uuid: string, args?: IAttachmentArgs): Promise<Attachment | undefined> {
     const { t } = gqlCtx;
 
     if (!uuid) throw errorMsg(t('_error:notFoundId'), { gqlCtx });
@@ -131,7 +131,7 @@ export class AttachmentService {
     return this.saveInLocalServer.createAttachmentByLocal(body, file);
   }
 
-  async updateAttachment(gqlCtx: IGqlCtx, uuid: string, args: UpdateAttachmentInput): Promise<Attachment | undefined> {
+  async updateAttachment(uuid: string, args: UpdateAttachmentInput): Promise<Attachment | undefined> {
     const { t } = gqlCtx;
 
     if (!args) throw errorMsg(t('_error:notFoundArgs'), { gqlCtx });
@@ -147,7 +147,7 @@ export class AttachmentService {
     return nextItem;
   }
 
-  async updateAttachments(gqlCtx: IGqlCtx, attachments: UpdateAttachmentsInput[]): Promise<AttachmentsObject> {
+  async updateAttachments(attachments: UpdateAttachmentsInput[]): Promise<AttachmentsObject> {
     const { t } = gqlCtx;
 
     if (!attachments) throw errorMsg(t('_error:notFoundItems'), { gqlCtx });
@@ -173,7 +173,7 @@ export class AttachmentService {
     };
   }
 
-  async deleteAttachments(gqlCtx: IGqlCtx, uuid: string[]): Promise<DeleteAttachmentsObject | undefined> {
+  async deleteAttachments(uuid: string[]): Promise<DeleteAttachmentsObject | undefined> {
     const { t } = gqlCtx;
 
     const prevItems = await this.attachmentRepository.find({ uuid: In(uuid) });

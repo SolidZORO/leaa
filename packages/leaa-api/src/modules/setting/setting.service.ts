@@ -33,7 +33,7 @@ export class SettingService {
     private readonly configService: ConfigService,
   ) {}
 
-  async PLEASE_DONT_MODIFY_DEMO_DATA(gqlCtx: IGqlCtx, id?: string): Promise<boolean> {
+  async PLEASE_DONT_MODIFY_DEMO_DATA(id?: string): Promise<boolean> {
     const { t } = gqlCtx;
 
     if (this.configService.DEMO_MODE && !process.argv.includes('--nuke')) {
@@ -49,7 +49,7 @@ export class SettingService {
     return true;
   }
 
-  async settings(gqlCtx: IGqlCtx, args: ISettingsArgs): Promise<SettingsWithPaginationObject> {
+  async settings(args: ISettingsArgs): Promise<SettingsWithPaginationObject> {
     const nextArgs = argsFormat(args, gqlCtx);
 
     const qb = this.settingRepository.createQueryBuilder();
@@ -71,7 +71,7 @@ export class SettingService {
     return calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
-  async setting(gqlCtx: IGqlCtx, id: string, args?: ISettingArgs): Promise<Setting | undefined> {
+  async setting(id: string, args?: ISettingArgs): Promise<Setting | undefined> {
     const { t } = gqlCtx;
 
     if (!id) throw errorMsg(t('_error:notFoundId'), { gqlCtx });
@@ -105,7 +105,7 @@ export class SettingService {
     return setting;
   }
 
-  async settingBySlug(gqlCtx: IGqlCtx, slug: string, args?: ISettingArgs): Promise<Setting | undefined> {
+  async settingBySlug(slug: string, args?: ISettingArgs): Promise<Setting | undefined> {
     const whereQuery: { slug: string; private?: number } = { slug };
 
     // can
@@ -126,7 +126,7 @@ export class SettingService {
     return this.setting(gqlCtx, setting.id, args);
   }
 
-  async createSetting(gqlCtx: IGqlCtx, args: CreateSettingInput): Promise<Setting | undefined> {
+  async createSetting(args: CreateSettingInput): Promise<Setting | undefined> {
     return this.settingRepository.save({ ...args });
   }
 
@@ -142,7 +142,7 @@ export class SettingService {
     return commonUpdate({ repository: this.settingRepository, CLS_NAME, id, args, gqlCtx });
   }
 
-  async updateSettings(gqlCtx: IGqlCtx, settings: UpdateSettingsInput[]): Promise<SettingsObject> {
+  async updateSettings(settings: UpdateSettingsInput[]): Promise<SettingsObject> {
     const { t } = gqlCtx;
 
     const batchUpdate = settings.map(async (setting) => {
@@ -164,7 +164,7 @@ export class SettingService {
     };
   }
 
-  async deleteSetting(gqlCtx: IGqlCtx, id: string): Promise<Setting | undefined> {
+  async deleteSetting(id: string): Promise<Setting | undefined> {
     if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(gqlCtx, id);
 
     return commonDelete({ repository: this.settingRepository, CLS_NAME, id, gqlCtx });

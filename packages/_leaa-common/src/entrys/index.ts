@@ -17,3 +17,4 @@ export { Division } from './division.entity';
 export { Zan } from './zan.entity';
 export { Verification } from './verification.entity';
 export { Action } from './action.entity';
+export { Company } from './company.entity';

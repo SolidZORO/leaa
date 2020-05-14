@@ -6,7 +6,7 @@ import { Col, Form, Input, InputNumber, Row, DatePicker } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 import { Promo } from '@leaa/common/src/entrys';
-import { errorMessage, formatDateTimeToDayStartOrEnd } from '@leaa/dashboard/src/utils';
+import { errorMsg, formatDateTimeToDayStartOrEnd } from '@leaa/dashboard/src/utils';
 import { IOnValidateFormResult, IDateRange } from '@leaa/dashboard/src/interfaces';
 import { UpdatePromoInput } from '@leaa/common/src/dtos/promo';
 
@@ -33,7 +33,7 @@ export const PromoInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) => 
     try {
       return await form.validateFields();
     } catch (err) {
-      return errorMessage(err.errorFields[0]?.errors[0]);
+      return errorMsg(err.errorFields[0]?.errors[0]);
     }
   };
 

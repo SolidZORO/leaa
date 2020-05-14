@@ -5,7 +5,7 @@ import queryString from 'query-string';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { Row, Col, Button } from 'antd';
 
-import { LOGIN, LOGIN_BY_TICKET, GET_DEMO_DATA } from '@leaa/dashboard/src/graphqls';
+// import { LOGIN, LOGIN_BY_TICKET, GET_DEMO_DATA } from '@leaa/dashboard/src/graphqls';
 import { IPage, ICommenFormRef, IAuthInfo, ISubmitData } from '@leaa/dashboard/src/interfaces';
 import {
   setAuthToken,
@@ -13,8 +13,9 @@ import {
   checkAuthIsAvailably,
   getGuestToken,
   removeGuestToken,
-  successMessage,
-  errorMessage,
+  msg,
+  errorMsg,
+  ajax,
 } from '@leaa/dashboard/src/utils';
 import { LOGIN_REDIRECT_URL } from '@leaa/dashboard/src/constants';
 import { AuthLoginInput } from '@leaa/common/src/dtos/auth';
@@ -27,6 +28,7 @@ import logo from '@leaa/dashboard/src/assets/images/logo/logo-black.svg';
 import { LoginForm } from './_components/LoginForm/LoginForm';
 
 import style from './style.module.less';
+import { AxiosResponse } from 'axios';
 
 export default (props: IPage) => {
   const { t } = useTranslation();
@@ -43,7 +45,7 @@ export default (props: IPage) => {
 
   const setLogin = (login: any) => {
     if (login?.name && login.flatPermissions?.length === 0) {
-      successMessage(t('_page:Auth.Login.notPermissions'));
+      msg(t('_page:Auth.Login.notPermissions'));
 
       return;
     }
@@ -72,40 +74,40 @@ export default (props: IPage) => {
   };
 
   // query
-  const getDemoDataQuery = envConfig.DEMO_MODE
-    ? useQuery<{ demoData: DemoDataObject }>(GET_DEMO_DATA, {
-        fetchPolicy: 'network-only',
-      })
-    : undefined;
-
-  // mutation
-  const [submitLoginMutate, submitLoginMutation] = useMutation<{
-    login: IAuthInfo;
-  }>(LOGIN, {
-    // apollo-link-error onError: e => messageUtil.gqlError(e.message),
-    onCompleted({ login }) {
-      clearGuestInfo();
-      setLogin(login);
-    },
-    onError: () => {
-      setLoginErrorCount((prev) => prev + 1);
-    },
-  });
-
-  const [submitLoginByTicketMutate] = useMutation<{
-    loginByTicket: IAuthInfo;
-  }>(LOGIN_BY_TICKET, {
-    // apollo-link-error onError: e => messageUtil.gqlError(e.message),
-    onCompleted({ loginByTicket }) {
-      clearGuestInfo();
-      setLogin(loginByTicket);
-    },
-    onError: (e) => {
-      errorMessage(e.message);
-
-      return props.history.push('/login');
-    },
-  });
+  // const getDemoDataQuery = envConfig.DEMO_MODE
+  //   ? useQuery<{ demoData: DemoDataObject }>(GET_DEMO_DATA, {
+  //       fetchPolicy: 'network-only',
+  //     })
+  //   : undefined;
+  //
+  // // mutation
+  // const [submitLoginMutate, submitLoginMutation] = useMutation<{
+  //   login: IAuthInfo;
+  // }>(LOGIN, {
+  //   // apollo-link-error onError: e => messageUtil.gqlError(e.message),
+  //   onCompleted({ login }) {
+  //     clearGuestInfo();
+  //     setLogin(login);
+  //   },
+  //   onError: () => {
+  //     setLoginErrorCount((prev) => prev + 1);
+  //   },
+  // });
+  //
+  // const [submitLoginByTicketMutate] = useMutation<{
+  //   loginByTicket: IAuthInfo;
+  // }>(LOGIN_BY_TICKET, {
+  //   // apollo-link-error onError: e => messageUtil.gqlError(e.message),
+  //   onCompleted({ loginByTicket }) {
+  //     clearGuestInfo();
+  //     setLogin(loginByTicket);
+  //   },
+  //   onError: (e) => {
+  //     errorMsg(e.message);
+  //
+  //     return props.history.push('/login');
+  //   },
+  // });
 
   useEffect(() => {
     const authIsAvailably = checkAuthIsAvailably();
@@ -117,13 +119,13 @@ export default (props: IPage) => {
   }, []);
 
   useEffect(() => {
-    if (qs.ticket) {
-      (async () => {
-        await submitLoginByTicketMutate({
-          variables: { ticket: qs.ticket },
-        });
-      })();
-    }
+    // if (qs.ticket) {
+    //   (async () => {
+    //     await submitLoginByTicketMutate({
+    //       variables: { ticket: qs.ticket },
+    //     });
+    //   })();
+    // }
   }, [qs.ticket]);
 
   const onSubmit = async () => {
@@ -131,20 +133,46 @@ export default (props: IPage) => {
 
     if (!submitData) return;
 
-    await submitLoginMutate({
-      variables: {
-        user: {
-          email: submitData.email && submitData.email.trim(),
-          password: submitData.password,
-          captcha: submitData.captcha,
-          guestToken: getGuestToken(),
-        },
-      },
-    });
+    console.log(submitData, envConfig.API_URL);
+
+    ajax
+      .post(`${envConfig.API_URL}/auth/login`, submitData)
+      .then((res) => {
+        // console.log(res);
+
+        // clearGuestInfo();
+        setLogin(res.data);
+      })
+      .catch((err) => {
+        errorMsg(err.message);
+        return props.history.push('/login');
+
+        //   onCompleted({ loginByTicket }) {
+        //     clearGuestInfo();
+        //     setLogin(loginByTicket);
+        //   },
+        //   onError: (e) => {
+        //     errorMsg(e.message);
+        //
+        //     return props.history.push('/login');
+        //   },
+      });
+
+    //
+    // await submitLoginMutate({
+    //   variables: {
+    //     user: {
+    //       email: submitData.email && submitData.email.trim(),
+    //       password: submitData.password,
+    //       captcha: submitData.captcha,
+    //       guestToken: getGuestToken(),
+    //     },
+    //   },
+    // });
   };
 
   const onBack = () => {
-    successMessage(t('_page:Auth.Login.backTips'));
+    msg(t('_page:Auth.Login.backTips'));
   };
 
   return (
@@ -165,7 +193,11 @@ export default (props: IPage) => {
               <div className={style['login-form']}>
                 <LoginForm
                   ref={loginFormRef}
-                  initialValues={getDemoDataQuery?.data?.demoData?.loginAccountByAdmin}
+                  // initialValues={getDemoDataQuery?.data?.demoData?.loginAccountByAdmin}
+                  initialValues={{
+                    email: 'admin@local.com',
+                    password: 'h8Hx9qvPKoHMLQgj',
+                  }}
                   onPressSubmitCallback={onSubmit}
                   loginErrorCount={loginErrorCount}
                 />
@@ -175,7 +207,7 @@ export default (props: IPage) => {
                 <Row className={style['button-row']}>
                   <Button
                     className={style['button-login']}
-                    loading={submitLoginMutation.loading}
+                    // loading={submitLoginMutation.loading}
                     size="large"
                     type="primary"
                     htmlType="submit"

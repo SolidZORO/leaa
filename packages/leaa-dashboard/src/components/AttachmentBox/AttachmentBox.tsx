@@ -8,7 +8,7 @@ import { GET_ATTACHMENTS, UPDATE_ATTACHMENTS } from '@leaa/dashboard/src/graphql
 import { IAttachmentParams } from '@leaa/common/src/interfaces';
 
 import { Attachment } from '@leaa/common/src/entrys';
-import { removeLangSpace, successMessage } from '@leaa/dashboard/src/utils';
+import { removeLangSpace, msg } from '@leaa/dashboard/src/utils';
 import {
   AttachmentsArgs,
   AttachmentsWithPaginationObject,
@@ -69,7 +69,7 @@ export const AttachmentBox = forwardRef((props: IProps, ref: React.Ref<any>) => 
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
     onCompleted: () =>
       !props.disableMessage &&
-      successMessage(`${removeLangSpace(`${t('_lang:attachment')} ${t('_lang:updatedSuccessfully')}`, i18n.language)}`),
+      msg(`${removeLangSpace(`${t('_lang:attachment')} ${t('_lang:updatedSuccessfully')}`, i18n.language)}`),
     refetchQueries: () => [{ query: GET_ATTACHMENTS, variables: getAttachmentsVariables }],
   });
 

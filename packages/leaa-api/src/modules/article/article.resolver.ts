@@ -1,4 +1,3 @@
-import { UseGuards } from '@nestjs/common';
 import { Args, Query, Mutation, Resolver } from '@nestjs/graphql';
 
 import { Article } from '@leaa/common/src/entrys';
@@ -10,7 +9,7 @@ import {
   UpdateArticleInput,
 } from '@leaa/common/src/dtos/article';
 import { ArticleService } from '@leaa/api/src/modules/article/article.service';
-import { PermissionsGuard } from '@leaa/api/src/guards';
+
 import { Permissions, GqlCtx } from '@leaa/api/src/decorators';
 import { IGqlCtx } from '@leaa/api/src/interfaces';
 
@@ -18,7 +17,7 @@ import { IGqlCtx } from '@leaa/api/src/interfaces';
 export class ArticleResolver {
   constructor(private readonly articleService: ArticleService) {}
 
-  // @UseGuards(PermissionsGuard)
+  //
   // @Permissions('article.list-read')
   // DO NOT CHECK PERMISSIONS
   @Query(() => ArticlesWithPaginationObject)
@@ -29,7 +28,7 @@ export class ArticleResolver {
     return this.articleService.articles(gqlCtx, args);
   }
 
-  // @UseGuards(PermissionsGuard)
+  //
   // @Permissions('article.item-read')
   // DO NOT CHECK PERMISSIONS
   @Query(() => Article)
@@ -41,7 +40,7 @@ export class ArticleResolver {
     return this.articleService.article(gqlCtx, id, args);
   }
 
-  // @UseGuards(PermissionsGuard)
+  //
   // @Permissions('article.item-read')
   // DO NOT CHECK PERMISSIONS
   @Query(() => Article)
@@ -53,7 +52,6 @@ export class ArticleResolver {
     return this.articleService.articleBySlug(gqlCtx, slug, args);
   }
 
-  @UseGuards(PermissionsGuard)
   @Permissions('article.item-create')
   @Mutation(() => Article)
   async createArticle(
@@ -63,7 +61,6 @@ export class ArticleResolver {
     return this.articleService.createArticle(gqlCtx, args);
   }
 
-  @UseGuards(PermissionsGuard)
   @Permissions('article.item-update')
   @Mutation(() => Article)
   async updateArticle(
@@ -74,7 +71,6 @@ export class ArticleResolver {
     return this.articleService.updateArticle(gqlCtx, id, args);
   }
 
-  @UseGuards(PermissionsGuard)
   @Permissions('article.item-delete')
   @Mutation(() => Article)
   async deleteArticle(

@@ -31,7 +31,7 @@ const CLS_NAME = 'TagService';
 export class TagService {
   constructor(@InjectRepository(Tag) private readonly tagRepository: Repository<Tag>) {}
 
-  async tags(gqlCtx: IGqlCtx, args: ITagsArgs): Promise<TagsWithPaginationObject> {
+  async tags(args: ITagsArgs): Promise<TagsWithPaginationObject> {
     const nextArgs = argsFormat(args, gqlCtx);
 
     const qb = this.tagRepository.createQueryBuilder();
@@ -48,7 +48,7 @@ export class TagService {
     return calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
-  async tag(gqlCtx: IGqlCtx, id: string, args?: ITagArgs): Promise<Tag | undefined> {
+  async tag(id: string, args?: ITagArgs): Promise<Tag | undefined> {
     const { t } = gqlCtx;
 
     if (!id) throw errorMsg(t('_error:notFoundId'), { gqlCtx });
@@ -62,7 +62,7 @@ export class TagService {
     return tag;
   }
 
-  async tagByName(gqlCtx: IGqlCtx, name: string, args?: ITagArgs): Promise<Tag | undefined> {
+  async tagByName(name: string, args?: ITagArgs): Promise<Tag | undefined> {
     const tag = await this.tagRepository.findOne({ where: { name } });
     if (!tag) return undefined;
 
@@ -102,7 +102,7 @@ export class TagService {
     };
   }
 
-  async createTag(gqlCtx: IGqlCtx, args: CreateTagInput): Promise<Tag | undefined> {
+  async createTag(args: CreateTagInput): Promise<Tag | undefined> {
     const tag = await this.tagByName(gqlCtx, args.name);
 
     if (tag) return tag;
@@ -112,7 +112,7 @@ export class TagService {
     return this.tagRepository.save({ ...nextArgs });
   }
 
-  async createTags(gqlCtx: IGqlCtx, tagNames: string[]): Promise<Tag[] | undefined> {
+  async createTags(tagNames: string[]): Promise<Tag[] | undefined> {
     let tags: Tag[] = [];
     const batchUpdatePromise: Promise<any>[] = [];
 
@@ -131,7 +131,7 @@ export class TagService {
     return tags;
   }
 
-  async updateTag(gqlCtx: IGqlCtx, id: string, args: UpdateTagInput): Promise<Tag | undefined> {
+  async updateTag(id: string, args: UpdateTagInput): Promise<Tag | undefined> {
     if (isOneField(args, 'status')) return commonUpdate({ repository: this.tagRepository, CLS_NAME, id, args, gqlCtx });
 
     let nextArgs: UpdateTagInput = args;
@@ -143,7 +143,7 @@ export class TagService {
     return commonUpdate({ repository: this.tagRepository, CLS_NAME, id, args: nextArgs, gqlCtx });
   }
 
-  async deleteTag(gqlCtx: IGqlCtx, id: string): Promise<Tag | undefined> {
+  async deleteTag(id: string): Promise<Tag | undefined> {
     return commonDelete({ repository: this.tagRepository, CLS_NAME, id, gqlCtx });
   }
 }

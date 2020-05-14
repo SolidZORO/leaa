@@ -1,4 +1,3 @@
-import { UseGuards } from '@nestjs/common';
 import { Args, Query, Mutation, Resolver, ResolveField, Parent, Int } from '@nestjs/graphql';
 
 import { Product } from '@leaa/common/src/entrys';
@@ -11,7 +10,7 @@ import {
   ProductAttachmentsObject,
 } from '@leaa/common/src/dtos/product';
 import { ProductService } from '@leaa/api/src/modules/product/product.service';
-import { PermissionsGuard } from '@leaa/api/src/guards';
+
 import { Permissions, GqlCtx } from '@leaa/api/src/decorators';
 import { ProductProperty } from '@leaa/api/src/modules/product/product.property';
 import { IGqlCtx } from '@leaa/api/src/interfaces';
@@ -45,7 +44,6 @@ export class ProductResolver {
     return this.productService.product(gqlCtx, id, args);
   }
 
-  @UseGuards(PermissionsGuard)
   @Permissions('product.item-create')
   @Mutation(() => Product)
   async createProduct(
@@ -55,7 +53,6 @@ export class ProductResolver {
     return this.productService.createProduct(gqlCtx, args);
   }
 
-  @UseGuards(PermissionsGuard)
   @Permissions('product.item-update')
   @Mutation(() => Product)
   async updateProduct(
@@ -66,7 +63,6 @@ export class ProductResolver {
     return this.productService.updateProduct(gqlCtx, id, args);
   }
 
-  @UseGuards(PermissionsGuard)
   @Permissions('product.item-delete')
   @Mutation(() => Product)
   async deleteProduct(

@@ -1,4 +1,3 @@
-import { UseGuards } from '@nestjs/common';
 import { Args, Query, Mutation, Resolver } from '@nestjs/graphql';
 
 import { Category } from '@leaa/common/src/entrys';
@@ -10,7 +9,7 @@ import {
   UpdateCategoryInput,
 } from '@leaa/common/src/dtos/category';
 import { CategoryService } from '@leaa/api/src/modules/category/category.service';
-import { PermissionsGuard } from '@leaa/api/src/guards';
+
 import { Permissions, GqlCtx } from '@leaa/api/src/decorators';
 import { IGqlCtx } from '@leaa/api/src/interfaces';
 
@@ -18,7 +17,7 @@ import { IGqlCtx } from '@leaa/api/src/interfaces';
 export class CategoryResolver {
   constructor(private readonly categoryService: CategoryService) {}
 
-  // @UseGuards(PermissionsGuard)
+  //
   // @Permissions('category.list-read')
   // DO NOT CHECK PERMISSIONS
   @Query(() => CategoriesWithPaginationOrTreeObject)
@@ -29,7 +28,7 @@ export class CategoryResolver {
     return this.categoryService.categories(gqlCtx, args);
   }
 
-  // @UseGuards(PermissionsGuard)
+  //
   // @Permissions('category.item-read')
   // DO NOT CHECK PERMISSIONS
   @Query(() => Category)
@@ -41,7 +40,7 @@ export class CategoryResolver {
     return this.categoryService.category(gqlCtx, id, args);
   }
 
-  // @UseGuards(PermissionsGuard)
+  //
   // @Permissions('category.item-read')
   // DO NOT CHECK PERMISSIONS
   @Query(() => Category)
@@ -53,7 +52,6 @@ export class CategoryResolver {
     return this.categoryService.categoryBySlug(gqlCtx, slug, args);
   }
 
-  @UseGuards(PermissionsGuard)
   @Permissions('category.item-create')
   @Mutation(() => Category)
   async createCategory(
@@ -63,7 +61,6 @@ export class CategoryResolver {
     return this.categoryService.createCategory(gqlCtx, args);
   }
 
-  @UseGuards(PermissionsGuard)
   @Permissions('category.item-update')
   @Mutation(() => Category)
   async updateCategory(
@@ -74,7 +71,6 @@ export class CategoryResolver {
     return this.categoryService.updateCategory(gqlCtx, id, args);
   }
 
-  @UseGuards(PermissionsGuard)
   @Permissions('category.item-delete')
   @Mutation(() => Category)
   async deleteCategory(

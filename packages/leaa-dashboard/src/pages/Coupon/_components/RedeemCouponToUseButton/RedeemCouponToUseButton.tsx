@@ -9,7 +9,7 @@ import { Coupon } from '@leaa/common/src/entrys';
 
 import { UserSearchBox, IdTag, Rcon } from '@leaa/dashboard/src/components';
 import { REDEEM_COUPON } from '@leaa/dashboard/src/graphqls';
-import { removeLangSpace, can, successMessage } from '@leaa/dashboard/src/utils';
+import { removeLangSpace, can, msg } from '@leaa/dashboard/src/utils';
 
 import style from './style.module.less';
 
@@ -33,7 +33,7 @@ export const RedeemCouponToUseButton = (props: IProps) => {
     variables: { info: { code: props.item.code, userId } },
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
     onCompleted: () => {
-      successMessage(t('_lang:updatedSuccessfully'));
+      msg(t('_lang:updatedSuccessfully'));
       setVisible(false);
 
       if (props.onConvetCompletedCallback) {

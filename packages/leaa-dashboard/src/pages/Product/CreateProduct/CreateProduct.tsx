@@ -7,7 +7,7 @@ import { Product } from '@leaa/common/src/entrys';
 import { CREATE_PRODUCT } from '@leaa/dashboard/src/graphqls';
 import { CreateProductInput } from '@leaa/common/src/dtos/product';
 import { IPage, ISubmitData, ICommenFormRef } from '@leaa/dashboard/src/interfaces';
-import { successMessage } from '@leaa/dashboard/src/utils';
+import { msg } from '@leaa/dashboard/src/utils';
 import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { PageCard, HtmlMeta, SubmitBar, Rcon } from '@leaa/dashboard/src/components';
 
@@ -27,7 +27,7 @@ export default (props: IPage) => {
     variables: submitVariables,
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
     onCompleted({ createProduct }) {
-      successMessage(t('_lang:createdSuccessfully'));
+      msg(t('_lang:createdSuccessfully'));
       props.history.push(`/products/${createProduct.id}`);
     },
   });

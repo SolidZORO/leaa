@@ -1,4 +1,3 @@
-import { UseGuards } from '@nestjs/common';
 import { Args, Query, Mutation, Resolver } from '@nestjs/graphql';
 
 import { Tag } from '@leaa/common/src/entrys';
@@ -11,7 +10,7 @@ import {
   SyncTagsToFileObject,
 } from '@leaa/common/src/dtos/tag';
 import { TagService } from '@leaa/api/src/modules/tag/tag.service';
-import { PermissionsGuard } from '@leaa/api/src/guards';
+
 import { Permissions, GqlCtx } from '@leaa/api/src/decorators';
 import { IGqlCtx } from '@leaa/api/src/interfaces';
 
@@ -19,15 +18,15 @@ import { IGqlCtx } from '@leaa/api/src/interfaces';
 export class TagResolver {
   constructor(private readonly tagService: TagService) {}
 
-  // @UseGuards(PermissionsGuard)
+  //
   // @Permissions('tag.list-read')
   // DO NOT CHECK PERMISSIONS
   @Query(() => TagsWithPaginationObject)
-  async tags(@GqlCtx() gqlCtx: IGqlCtx, @Args() args: TagsArgs): Promise<TagsWithPaginationObject | undefined> {
+  async tags(@GqlCtx() @Args() args: TagsArgs): Promise<TagsWithPaginationObject | undefined> {
     return this.tagService.tags(gqlCtx, args);
   }
 
-  // @UseGuards(PermissionsGuard)
+  //
   // @Permissions('tag.item-read')
   // DO NOT CHECK PERMISSIONS
   @Query(() => Tag)
@@ -39,7 +38,6 @@ export class TagResolver {
     return this.tagService.tag(gqlCtx, id, args);
   }
 
-  @UseGuards(PermissionsGuard)
   @Permissions('tag.item-read')
   @Query(() => Tag)
   async tagByName(
@@ -50,14 +48,12 @@ export class TagResolver {
     return this.tagService.tagByName(gqlCtx, name, args);
   }
 
-  @UseGuards(PermissionsGuard)
   @Permissions('tag.item-create')
   @Mutation(() => Tag)
-  async createTag(@GqlCtx() gqlCtx: IGqlCtx, @Args('tag') args: CreateTagInput): Promise<Tag | undefined> {
+  async createTag(@GqlCtx() @Args('tag') args: CreateTagInput): Promise<Tag | undefined> {
     return this.tagService.createTag(gqlCtx, args);
   }
 
-  @UseGuards(PermissionsGuard)
   @Permissions('tag.item-create')
   @Mutation(() => Tag)
   async createTags(
@@ -67,14 +63,12 @@ export class TagResolver {
     return this.tagService.createTags(gqlCtx, tagNames);
   }
 
-  @UseGuards(PermissionsGuard)
   @Permissions('tag.item-update')
   @Mutation(() => SyncTagsToFileObject)
   async syncTagsToDictFile(): Promise<SyncTagsToFileObject> {
     return this.tagService.syncTagsToDictFile();
   }
 
-  @UseGuards(PermissionsGuard)
   @Permissions('tag.item-update')
   @Mutation(() => Tag)
   async updateTag(
@@ -85,7 +79,6 @@ export class TagResolver {
     return this.tagService.updateTag(gqlCtx, id, args);
   }
 
-  @UseGuards(PermissionsGuard)
   @Permissions('tag.item-delete')
   @Mutation(() => Tag)
   async deleteTag(

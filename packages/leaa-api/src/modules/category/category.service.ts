@@ -24,7 +24,7 @@ export class CategoryService {
     private readonly configService: ConfigService,
   ) {}
 
-  async PLEASE_DONT_MODIFY_DEMO_DATA(gqlCtx: IGqlCtx, id?: string): Promise<boolean> {
+  async PLEASE_DONT_MODIFY_DEMO_DATA(id?: string): Promise<boolean> {
     const { t } = gqlCtx;
 
     if (this.configService.DEMO_MODE && !process.argv.includes('--nuke')) {
@@ -86,7 +86,7 @@ export class CategoryService {
     return [this.rootCategory(result)];
   }
 
-  async categories(gqlCtx: IGqlCtx, args: ICategoriesArgs): Promise<CategoriesWithPaginationOrTreeObject | undefined> {
+  async categories(args: ICategoriesArgs): Promise<CategoriesWithPaginationOrTreeObject | undefined> {
     const nextArgs: ICategoriesArgs = argsFormat(args, gqlCtx);
 
     const qb = this.categoryRepository.createQueryBuilder();
@@ -135,7 +135,7 @@ export class CategoryService {
     });
   }
 
-  async category(gqlCtx: IGqlCtx, id: string, args?: ICategoryArgs): Promise<Category | undefined> {
+  async category(id: string, args?: ICategoryArgs): Promise<Category | undefined> {
     const { t } = gqlCtx;
 
     if (!id) throw errorMsg(t('_error:notFoundId'), { gqlCtx });
@@ -146,7 +146,7 @@ export class CategoryService {
     return this.categoryRepository.findOne(id, nextArgs);
   }
 
-  async categoryBySlug(gqlCtx: IGqlCtx, slug: string, args?: ICategoryArgs): Promise<Category | undefined> {
+  async categoryBySlug(slug: string, args?: ICategoryArgs): Promise<Category | undefined> {
     const { t } = gqlCtx;
 
     const category = await this.categoryRepository.findOne({ where: { slug } });
@@ -155,7 +155,7 @@ export class CategoryService {
     return this.category(gqlCtx, category.id, args);
   }
 
-  async createCategory(gqlCtx: IGqlCtx, args: CreateCategoryInput): Promise<Category | undefined> {
+  async createCategory(args: CreateCategoryInput): Promise<Category | undefined> {
     const { t } = gqlCtx;
 
     if (!args || (args && !args.slug)) throw errorMsg(t('_error:notFoundField'), { gqlCtx });
@@ -179,7 +179,7 @@ export class CategoryService {
     return manager.save(newCategory);
   }
 
-  async updateCategory(gqlCtx: IGqlCtx, id: string, args: UpdateCategoryInput): Promise<Category | undefined> {
+  async updateCategory(id: string, args: UpdateCategoryInput): Promise<Category | undefined> {
     if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(gqlCtx, id);
 
     if (isOneField(args, 'status')) {
@@ -202,7 +202,7 @@ export class CategoryService {
     return commonUpdate({ repository: this.categoryRepository, CLS_NAME, id, args: nextArgs, gqlCtx });
   }
 
-  async deleteCategory(gqlCtx: IGqlCtx, id: string): Promise<Category | undefined> {
+  async deleteCategory(id: string): Promise<Category | undefined> {
     if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(gqlCtx, id);
 
     return commonDelete({ repository: this.categoryRepository, CLS_NAME, id, gqlCtx });

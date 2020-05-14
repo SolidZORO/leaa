@@ -32,7 +32,7 @@ export class PromoService {
     private readonly promoProperty: PromoProperty,
   ) {}
 
-  async promos(gqlCtx: IGqlCtx, args: IPromosArgs): Promise<PromosWithPaginationObject> {
+  async promos(args: IPromosArgs): Promise<PromosWithPaginationObject> {
     const nextArgs: IPromosArgs = argsFormat(args, gqlCtx);
 
     const qb = this.promoRepository.createQueryBuilder();
@@ -55,7 +55,7 @@ export class PromoService {
     return calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
-  async promo(gqlCtx: IGqlCtx, id: string, args?: IPromoArgs): Promise<Promo | undefined> {
+  async promo(id: string, args?: IPromoArgs): Promise<Promo | undefined> {
     const { t } = gqlCtx;
 
     let nextArgs: IPromoArgs = {};
@@ -74,7 +74,7 @@ export class PromoService {
     return promo;
   }
 
-  async promoByCode(gqlCtx: IGqlCtx, code: string, args?: IPromoArgs): Promise<Promo | undefined> {
+  async promoByCode(code: string, args?: IPromoArgs): Promise<Promo | undefined> {
     const { t } = gqlCtx;
 
     const promo = await this.promoRepository.findOne({ where: { code } });
@@ -83,13 +83,13 @@ export class PromoService {
     return this.promo(gqlCtx, promo.id, args);
   }
 
-  async createPromo(gqlCtx: IGqlCtx, args: CreatePromoInput): Promise<Promo | undefined> {
+  async createPromo(args: CreatePromoInput): Promise<Promo | undefined> {
     const nextArgs = formatDateRangeTime(args, 'start_time', 'expire_time');
 
     return this.promoRepository.save({ ...nextArgs });
   }
 
-  async updatePromo(gqlCtx: IGqlCtx, id: string, args: UpdatePromoInput): Promise<Promo | undefined> {
+  async updatePromo(id: string, args: UpdatePromoInput): Promise<Promo | undefined> {
     if (isOneField(args, 'status')) {
       return commonUpdate({ repository: this.promoRepository, CLS_NAME, id, args, gqlCtx });
     }
@@ -99,11 +99,11 @@ export class PromoService {
     return commonUpdate({ repository: this.promoRepository, CLS_NAME, id, args: nextArgs, gqlCtx });
   }
 
-  async deletePromo(gqlCtx: IGqlCtx, id: string): Promise<Promo | undefined> {
+  async deletePromo(id: string): Promise<Promo | undefined> {
     return commonDelete({ repository: this.promoRepository, CLS_NAME, id, gqlCtx });
   }
 
-  async redeemPromo(gqlCtx: IGqlCtx, info: RedeemPromoInput): Promise<Promo | undefined> {
+  async redeemPromo(info: RedeemPromoInput): Promise<Promo | undefined> {
     const { t } = gqlCtx;
 
     const promo = await this.promoByCode(gqlCtx, info.code, undefined);

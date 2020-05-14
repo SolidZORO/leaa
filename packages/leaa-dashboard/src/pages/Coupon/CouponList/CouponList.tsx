@@ -22,7 +22,7 @@ import {
   formatOrderByByUrl,
   initPaginationStateByUrl,
   calcTableDefaultSortOrder,
-  successMessage,
+  msg,
 } from '@leaa/dashboard/src/utils';
 
 import {
@@ -67,7 +67,7 @@ export default (props: IPage) => {
   // mutation
   const [deleteCouponMutate, deleteCouponMutation] = useMutation<Coupon>(DELETE_COUPON, {
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
-    onCompleted: () => successMessage(t('_lang:deletedSuccessfully')),
+    onCompleted: () => msg(t('_lang:deletedSuccessfully')),
     refetchQueries: () => [{ query: GET_COUPONS, variables: getCouponsVariables }],
   });
 

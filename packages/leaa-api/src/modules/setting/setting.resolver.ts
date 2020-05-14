@@ -1,4 +1,3 @@
-import { UseGuards } from '@nestjs/common';
 import { Args, Query, Mutation, Resolver } from '@nestjs/graphql';
 
 import { Setting } from '@leaa/common/src/entrys';
@@ -12,7 +11,7 @@ import {
   SettingsObject,
 } from '@leaa/common/src/dtos/setting';
 import { SettingService } from '@leaa/api/src/modules/setting/setting.service';
-import { PermissionsGuard } from '@leaa/api/src/guards';
+
 import { Permissions, GqlCtx } from '@leaa/api/src/decorators';
 import { IGqlCtx } from '@leaa/api/src/interfaces';
 
@@ -37,7 +36,7 @@ export class SettingResolver {
     return this.settingService.setting(gqlCtx, id, args);
   }
 
-  // @UseGuards(PermissionsGuard)
+  //
   // @Permissions('setting.item-read')
   // DO NOT CHECK PERMISSIONS
   @Query(() => Setting)
@@ -49,7 +48,6 @@ export class SettingResolver {
     return this.settingService.settingBySlug(gqlCtx, slug, args);
   }
 
-  @UseGuards(PermissionsGuard)
   @Permissions('setting.item-create')
   @Mutation(() => Setting)
   async createSetting(
@@ -59,7 +57,6 @@ export class SettingResolver {
     return this.settingService.createSetting(gqlCtx, args);
   }
 
-  @UseGuards(PermissionsGuard)
   @Permissions('setting.item-update')
   @Mutation(() => Setting)
   async updateSetting(
@@ -70,7 +67,6 @@ export class SettingResolver {
     return this.settingService.updateSetting(gqlCtx, id, args);
   }
 
-  @UseGuards(PermissionsGuard)
   @Permissions('setting.item-update')
   @Mutation(() => SettingsObject)
   async updateSettings(
@@ -80,7 +76,6 @@ export class SettingResolver {
     return this.settingService.updateSettings(gqlCtx, settings);
   }
 
-  @UseGuards(PermissionsGuard)
   @Permissions('setting.item-delete')
   @Mutation(() => Setting)
   async deleteSetting(

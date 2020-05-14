@@ -12,7 +12,7 @@ interface ICommonUpdate<Entity, UpdateInput> {
   args: UpdateInput;
   id: any;
   relation?: any;
-  gqlCtx: IGqlCtx;
+  // gqlCtx: IGqlCtx;
 }
 
 export const commonUpdate = async <Entity, UpdateInput>({
@@ -21,20 +21,17 @@ export const commonUpdate = async <Entity, UpdateInput>({
   args,
   id,
   relation = {},
-  gqlCtx,
 }: ICommonUpdate<Entity, UpdateInput>): Promise<any | undefined> => {
-  const { t } = gqlCtx;
-
   if (!args) {
     logger.warn(`Not Found Args by #${id} (Update)`, CLS_NAME);
-    throw errorMsg(t('_error:notFoundArgs'), { gqlCtx });
+    throw errorMsg('_error:notFoundArgs');
   }
 
   const prevItem = await repository.findOne(id);
 
   if (!prevItem) {
     logger.warn(`Not Found Item #${id} (Update)`, CLS_NAME);
-    throw errorMsg(t('_error:notFoundItem'), { gqlCtx });
+    throw errorMsg('_error:notFoundItem');
   }
 
   const nextItem = await repository.save({
@@ -57,30 +54,29 @@ interface ICommonDelete<Entity> {
   CLS_NAME: string;
   repository: Repository<Entity>;
   id: any;
-  gqlCtx: IGqlCtx;
+  // gqlCtx: IGqlCtx;
 }
 
 export const commonDelete = async <Entity, UpdateInput>({
   CLS_NAME,
   repository,
   id,
-  gqlCtx,
 }: ICommonDelete<Entity>): Promise<any | undefined> => {
-  const { t } = gqlCtx;
+  // const { t } = gqlCtx;
 
   const prevId = id;
   const prevItem = await repository.findOne(id);
 
   if (!prevItem) {
     logger.warn(`Not Found Item #${id} (Delete)`, CLS_NAME);
-    throw errorMsg(t('_error:notFoundItem'), { gqlCtx });
+    throw errorMsg('_error:notFoundItem');
   }
 
   const nextItem = await repository.remove(prevItem);
 
   if (!nextItem) {
     logger.warn(`Delete Item #${id} Failed`, CLS_NAME);
-    throw errorMsg(t('_error:deleteItemFailed'), { gqlCtx });
+    throw errorMsg('_error:deleteItemFailed');
   }
 
   logger.warn(`Delete Item #${id} Successful: ${JSON.stringify(nextItem)}\n\n`, CLS_NAME);

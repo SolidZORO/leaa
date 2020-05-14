@@ -1,2 +1,2 @@
-export * from '@leaa/api/src/guards/jwt.guard';
-export * from '@leaa/api/src/guards/permissions.guard';
+export * from './jwt.guard';
+export * from './permissions.guard';

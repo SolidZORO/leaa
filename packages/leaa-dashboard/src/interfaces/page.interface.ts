@@ -4,6 +4,9 @@ import { IOrderSort } from '@leaa/common/src/dtos/_common';
 import { IRouteItem } from './router.interface';
 
 export interface ITablePagination {
+  count?: number;
+  total?: number;
+  pageCount?: number;
   page?: number;
   pageSize?: number;
   orderBy?: any;

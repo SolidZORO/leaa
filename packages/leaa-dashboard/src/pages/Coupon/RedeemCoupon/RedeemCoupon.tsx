@@ -7,7 +7,7 @@ import { Coupon } from '@leaa/common/src/entrys';
 import { RedeemCouponInput } from '@leaa/common/src/dtos/coupon';
 import { IPage, ISubmitData } from '@leaa/dashboard/src/interfaces';
 import { REDEEM_COUPON } from '@leaa/dashboard/src/graphqls';
-import { successMessage } from '@leaa/dashboard/src/utils';
+import { msg } from '@leaa/dashboard/src/utils';
 
 import { HtmlMeta, PageCard, Rcon } from '@leaa/dashboard/src/components';
 
@@ -27,7 +27,7 @@ export default (props: IPage) => {
     variables: submitVariables,
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
     onCompleted(e) {
-      successMessage(t('_lang:createdSuccessfully'));
+      msg(t('_lang:createdSuccessfully'));
       // props.history.push('/coupons');
     },
   });

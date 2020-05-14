@@ -1,8 +1,7 @@
-import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 
 import { Auth, User, Verification } from '@leaa/common/src/entrys';
-import { PermissionsGuard } from '@leaa/api/src/guards';
+
 import { Permissions, GqlCtx } from '@leaa/api/src/decorators';
 import { AuthsWithPaginationObject, AuthsArgs, AuthLoginInput, AuthSignupInput } from '@leaa/common/src/dtos/auth';
 import { IGqlCtx } from '@leaa/api/src/interfaces';
@@ -14,10 +13,9 @@ import { AuthLocalService } from './auth-local.service';
 export class AuthResolver {
   constructor(private readonly authService: AuthService, private readonly authLocalService: AuthLocalService) {}
 
-  @UseGuards(PermissionsGuard)
   @Permissions('auth.list-read')
   @Query(() => AuthsWithPaginationObject, { nullable: true })
-  async auths(@GqlCtx() gqlCtx: IGqlCtx, @Args() args: AuthsArgs): Promise<AuthsWithPaginationObject | undefined> {
+  async auths(@GqlCtx() @Args() args: AuthsArgs): Promise<AuthsWithPaginationObject | undefined> {
     return this.authService.auths(gqlCtx, args);
   }
 
@@ -30,7 +28,6 @@ export class AuthResolver {
     return this.authLocalService.guest(gqlCtx, token);
   }
 
-  @UseGuards(PermissionsGuard)
   @Permissions('auth.item-delete')
   @Mutation(() => Auth)
   async deleteAuth(
@@ -44,7 +41,7 @@ export class AuthResolver {
   //
 
   @Mutation(() => User)
-  async login(@GqlCtx() gqlCtx: IGqlCtx, @Args('user') args: AuthLoginInput): Promise<User | undefined> {
+  async login(@GqlCtx() @Args('user') args: AuthLoginInput): Promise<User | undefined> {
     return this.authLocalService.login(gqlCtx, args);
   }
 

@@ -5,7 +5,7 @@ import { Col, Form, Input, Row, InputNumber } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 import { Zan } from '@leaa/common/src/entrys';
-import { errorMessage } from '@leaa/dashboard/src/utils';
+import { errorMsg } from '@leaa/dashboard/src/utils';
 import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
 import { UpdateZanInput } from '@leaa/common/src/dtos/zan';
 
@@ -27,7 +27,7 @@ export const ZanInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
     try {
       return await form.validateFields();
     } catch (err) {
-      return errorMessage(err.errorFields[0]?.errors[0]);
+      return errorMsg(err.errorFields[0]?.errors[0]);
     }
   };
 

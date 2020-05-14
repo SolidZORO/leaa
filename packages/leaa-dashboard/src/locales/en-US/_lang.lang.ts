@@ -83,7 +83,7 @@ export default {
   readSuccessfully: 'Read Successfully',
   createdSuccessfully: 'Created Successfully',
   updatedSuccessfully: 'Updated Successfully',
-  deletedSuccessfully: 'Deleted Successfully',
+  deletedSuccessfully: 'Deleted Successfully {{ id }}',
   //
   bannerMb: 'Banner Mb',
   bannerPc: 'Banner PC',

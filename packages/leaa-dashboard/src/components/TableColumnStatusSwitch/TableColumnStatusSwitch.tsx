@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { Switch, message } from 'antd';
 import { SwitchSize } from 'antd/es/switch';
 
-import { errorMessage } from '@leaa/dashboard/src/utils';
+import { errorMsg } from '@leaa/dashboard/src/utils';
 import { apolloClient } from '@leaa/dashboard/src/libs';
 
 import style from './style.module.less';
@@ -55,7 +55,7 @@ export const TableColumnStatusSwitch = (props: IProps) => {
         // );
       })
       .catch((err: Error) => {
-        errorMessage(err.message);
+        errorMsg(err.message);
       })
       .finally(() => setSwitchLoading(false));
   };

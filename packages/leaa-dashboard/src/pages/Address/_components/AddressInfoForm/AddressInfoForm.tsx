@@ -5,7 +5,7 @@ import { Col, Form, Input, Row } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 import { Address } from '@leaa/common/src/entrys';
-import { errorMessage } from '@leaa/dashboard/src/utils';
+import { errorMsg } from '@leaa/dashboard/src/utils';
 import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
 import { UpdateAddressInput } from '@leaa/common/src/dtos/address';
 
@@ -27,7 +27,7 @@ export const AddressInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =
     try {
       return await form.validateFields();
     } catch (err) {
-      return errorMessage(err.errorFields[0]?.errors[0]);
+      return errorMsg(err.errorFields[0]?.errors[0]);
     }
   };
 

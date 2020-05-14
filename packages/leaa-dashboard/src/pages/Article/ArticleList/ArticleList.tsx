@@ -22,7 +22,7 @@ import {
   formatOrderByByUrl,
   initPaginationStateByUrl,
   calcTableDefaultSortOrder,
-  successMessage,
+  msg,
 } from '@leaa/dashboard/src/utils';
 
 import {
@@ -70,7 +70,7 @@ export default (props: IPage) => {
   // mutation
   const [deleteArticleMutate, deleteArticleMutation] = useMutation<Article>(DELETE_ARTICLE, {
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
-    onCompleted: () => successMessage(t('_lang:deletedSuccessfully')),
+    onCompleted: () => msg(t('_lang:deletedSuccessfully')),
     refetchQueries: () => [{ query: GET_ARTICLES, variables: getArticlesVariables }],
   });
 
@@ -267,6 +267,8 @@ export default (props: IPage) => {
               showSizeChanger: true,
             }}
             onChange={(pagination, filters, sorter: any) => {
+              console.log(222222222);
+
               setTablePagination({
                 ...tablePagination,
                 page: pagination.current,

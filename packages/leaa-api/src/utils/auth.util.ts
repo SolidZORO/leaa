@@ -2,16 +2,11 @@ import { User } from '@leaa/common/src/entrys';
 import { IPermissionSlug } from '@leaa/common/src/interfaces';
 import { errorMsg } from '@leaa/api/src/utils';
 import { IGqlCtx } from '@leaa/api/src/interfaces';
+import { UnauthorizedException } from '@nestjs/common';
 
-export const checkAvailableUser = (user: User | null, gqlCtx: IGqlCtx): User => {
-  const { t } = gqlCtx;
-
-  if (!user) {
-    throw errorMsg(t('_error:usernameOrPasswordNotMatch'), { statusCode: 401 });
-  }
-
-  if (user && user.status !== 1) {
-    throw errorMsg(t('_error:invalidUser'), { statusCode: 401 });
+export const checkAvailableUser = (user?: User): User => {
+  if (!user || (user && user.status !== 1)) {
+    throw new UnauthorizedException();
   }
 
   return user;

@@ -7,3 +7,4 @@ export * from './table.util';
 export * from './device.util';
 export * from './setting.util';
 export * from './attachment.util';
+export * from './ajax.util';

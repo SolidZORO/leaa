@@ -21,6 +21,7 @@ import {
 } from '@leaa/api/src/utils';
 import { JwtService } from '@nestjs/jwt';
 import { IUsersArgs, IUserArgs, IGqlCtx } from '@leaa/api/src/interfaces';
+import { UserProperty } from '@leaa/api/src/modules/user/user.property';
 
 const CLS_NAME = 'UserService';
 
@@ -31,37 +32,36 @@ export class UserService {
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
     private readonly attachmentService: AttachmentService,
+    private readonly userProperty: UserProperty,
     @InjectRepository(User) private readonly userRepository: Repository<User>,
     @InjectRepository(Role) private readonly roleRepository: Repository<Role>,
     @InjectRepository(Auth) private readonly authRepository: Repository<Auth>,
   ) {}
 
-  async PLEASE_DONT_MODIFY_DEMO_DATA(gqlCtx: IGqlCtx, id?: string): Promise<boolean> {
-    const { t } = gqlCtx;
-
+  async PLEASE_DONT_MODIFY_DEMO_DATA(id?: string): Promise<boolean> {
     if (this.configService.DEMO_MODE && !process.argv.includes('--nuke')) {
       if (!id) return true;
 
-      const u = await this.user(gqlCtx, id);
+      // const u = await this.user( id);
 
-      if (u && u.email && u.email === 'admin@local.com') {
-        throw errorMsg(t('_error:pleaseDontModify'), { gqlCtx });
-      }
+      // if (u && u.email && u.email === 'admin@local.com') {
+      //   throw errorMsg('_error:pleaseDontModify');
+      // }
     }
 
     return true;
   }
 
-  async users(gqlCtx: IGqlCtx, args: IUsersArgs): Promise<UsersWithPaginationObject> {
-    const nextArgs: IUsersArgs = argsFormat(args, gqlCtx);
+  async users(args: IUsersArgs): Promise<UsersWithPaginationObject> {
+    const nextArgs: IUsersArgs = argsFormat(args);
 
     const PRIMARY_TABLE = 'users';
     const qb = this.userRepository.createQueryBuilder(PRIMARY_TABLE);
 
     // relations
-    if (gqlCtx?.user && can(gqlCtx.user, 'role.list-read')) {
-      qb.leftJoinAndSelect(`${PRIMARY_TABLE}.roles`, 'roles');
-    }
+    // // if (gqlCtx?.user && can(gqlCtx.user, 'role.list-read')) {
+    qb.leftJoinAndSelect(`${PRIMARY_TABLE}.roles`, 'roles');
+    // // }
 
     // q
     if (nextArgs.q) {
@@ -78,17 +78,15 @@ export class UserService {
     }
 
     // can
-    if (!(gqlCtx?.user && can(gqlCtx.user, 'user.list-read--all-status'))) {
-      qb.andWhere('status = :status', { status: 1 });
-    }
+    // if (!(gqlCtx?.user && can(gqlCtx.user, 'user.list-read--all-status'))) {
+    qb.andWhere('status = :status', { status: 1 });
+    // }
 
     return calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
-  async user(gqlCtx: IGqlCtx, id: string, args?: IUserArgs): Promise<User | undefined> {
-    const { t } = gqlCtx;
-
-    if (!id) throw errorMsg(t('_error:notFoundId'), { gqlCtx });
+  async user(id: string, args?: IUserArgs): Promise<User | undefined> {
+    if (!id) throw errorMsg('_error:notFoundId');
 
     let nextArgs: IUserArgs = {};
 
@@ -101,28 +99,34 @@ export class UserService {
 
     const user = await this.userRepository.findOne({ ...nextArgs, where: whereQuery });
 
-    if (!user) throw errorMsg(t('_error:notFoundItem'), { gqlCtx });
+    if (!user) throw errorMsg('_error:notFoundItem');
 
     return user;
   }
 
-  async userByToken(gqlCtx: IGqlCtx, token?: string, args?: IUserArgs): Promise<User | undefined> {
-    const { t } = gqlCtx;
+  async userByToken(token?: string): Promise<User | undefined> {
+    console.log('><>>>>>>>>>>>>', token);
 
-    let nextArgs: IUserArgs = {};
+    if (!token) throw errorMsg('_error:tokenNotFound');
 
-    if (!token) throw errorMsg(t('_error:tokenNotFound'), { gqlCtx });
-
-    if (args) {
-      nextArgs = args;
-      nextArgs.relations = ['roles'];
-    }
+    // if (args) {
+    //   nextArgs = args;
+    //   nextArgs.relations = ['roles'];
+    // }
 
     // @ts-ignore
     const userDecode: { id: any } = this.jwtService.decode(token);
-    if (!userDecode || !userDecode.id) throw errorMsg(t('_error:tokenError'), { gqlCtx });
+    if (!userDecode || !userDecode.id) throw errorMsg('_error:tokenError');
 
-    return this.userRepository.findOne(userDecode.id, nextArgs);
+    const user = await this.userRepository.findOne(userDecode.id, {
+      relations: ['roles'],
+    });
+
+    if (user) {
+      user.flatPermissions = await this.userProperty.flatPermissions(user);
+    }
+
+    return user;
   }
 
   async userByEmail(email: string): Promise<User | undefined> {
@@ -137,7 +141,7 @@ export class UserService {
     return bcryptjs.hashSync(password, salt);
   }
 
-  async createUser(gqlCtx: IGqlCtx, args: CreateUserInput): Promise<User | undefined> {
+  async createUser(args: CreateUserInput): Promise<User | undefined> {
     const nextArgs: CreateUserInput = args;
 
     if (args.password) {
@@ -147,11 +151,11 @@ export class UserService {
     return this.userRepository.save({ ...nextArgs });
   }
 
-  async updateUser(gqlCtx: IGqlCtx, id: string, args: UpdateUserInput): Promise<User | undefined> {
-    if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(gqlCtx, id);
+  async updateUser(id: string, args: UpdateUserInput): Promise<User | undefined> {
+    if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id);
 
     if (isOneField(args, 'status')) {
-      return commonUpdate({ repository: this.userRepository, CLS_NAME, id, args, gqlCtx });
+      return commonUpdate({ repository: this.userRepository, CLS_NAME, id, args });
     }
 
     if (isOneField(args, 'avatar_url')) {
@@ -163,7 +167,7 @@ export class UserService {
           moduleId: id,
         };
 
-        const attachments = await this.attachmentService.attachments(gqlCtx, avatarParams);
+        const attachments = await this.attachmentService.attachments(avatarParams);
 
         if (attachments?.items && attachments?.items.length !== 0) {
           const uuids = attachments.items.map((a) => a.uuid);
@@ -173,14 +177,14 @@ export class UserService {
             CLS_NAME,
           );
 
-          await this.attachmentService.deleteAttachments(gqlCtx, uuids);
+          await this.attachmentService.deleteAttachments(uuids);
         }
       }
 
-      return commonUpdate({ repository: this.userRepository, CLS_NAME, id, args, gqlCtx });
+      return commonUpdate({ repository: this.userRepository, CLS_NAME, id, args });
     }
 
-    const prevUser = await this.user(gqlCtx, id, { relations: ['roles'] });
+    const prevUser = await this.user(id, { relations: ['roles'] });
 
     const nextArgs = args;
     const relationArgs: { roles?: Role[] } = {};
@@ -213,7 +217,6 @@ export class UserService {
       id,
       args: nextArgs,
       relation: relationArgs,
-      gqlCtx,
     });
 
     // @ts-ignore
@@ -244,10 +247,10 @@ export class UserService {
     }
   }
 
-  async deleteUser(gqlCtx: IGqlCtx, id: string): Promise<User | undefined> {
-    if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(gqlCtx, id);
+  async deleteUser(id: string): Promise<User | undefined> {
+    if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id);
 
-    const deleteUser = await commonDelete({ repository: this.userRepository, CLS_NAME, id, gqlCtx });
+    const deleteUser = await commonDelete({ repository: this.userRepository, CLS_NAME, id });
 
     if (deleteUser) {
       try {

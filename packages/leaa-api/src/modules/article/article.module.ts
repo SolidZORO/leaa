@@ -11,4 +11,4 @@ import { TagService } from '@leaa/api/src/modules/tag/tag.service';
   providers: [ArticleResolver, ArticleService, TagService],
   exports: [ArticleService],
 })
-export class ActionModule {}
+export class ArticleModule {}

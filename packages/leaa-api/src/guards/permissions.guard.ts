@@ -1,37 +1,25 @@
+import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { GqlExecutionContext } from '@nestjs/graphql';
-import { ExecutionContext, CanActivate, Injectable } from '@nestjs/common';
-
-import { User } from '@leaa/common/src/entrys';
-import { errorMsg } from '@leaa/api/src/utils';
 import { IPermissionSlug } from '@leaa/common/src/interfaces';
-import { PermissionsMetadataKey } from '@leaa/api/src/decorators';
+import { IRequest } from '@leaa/api/src/interfaces';
 
 @Injectable()
 export class PermissionsGuard implements CanActivate {
   constructor(private readonly reflector: Reflector) {}
 
-  canActivate(context: ExecutionContext): boolean | Promise<boolean> {
-    const permissions = this.reflector.get<IPermissionSlug[]>(PermissionsMetadataKey, context.getHandler());
-    const gqlCtx = GqlExecutionContext.create(context).getContext();
-
-    const { t } = gqlCtx;
-
-    const user: User | undefined = gqlCtx?.user;
-
-    if (!user) throw errorMsg(t('_error:unauthorized'), { gqlCtx });
-
-    // signup user
-    if (!user.is_admin && user.flatPermissions && user.flatPermissions.length === 0) return true;
-
-    // not is admin
-    if (!user.flatPermissions || user.flatPermissions.length <= 0) {
-      throw errorMsg(t('_error:forbidden'), { gqlCtx });
-    }
-
-    return (
-      user.flatPermissions &&
-      user.flatPermissions.some((permission) => permissions && permissions.includes(permission as IPermissionSlug))
+  canActivate(context: ExecutionContext): boolean {
+    const needPermissions: string[] | undefined = this.reflector.get<IPermissionSlug[]>(
+      'permissions',
+      context.getHandler(),
     );
+
+    if (!needPermissions || (needPermissions && needPermissions.length === 0)) return true;
+
+    const req: IRequest = context.switchToHttp().getRequest();
+    const userPermissions: string[] | undefined = req.user?.flatPermissions;
+
+    if (!userPermissions || (userPermissions && userPermissions.length === 0)) return false;
+
+    return needPermissions.every((np) => userPermissions.includes(np));
   }
 }

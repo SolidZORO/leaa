@@ -5,7 +5,7 @@ import { useMutation } from '@apollo/react-hooks';
 
 import { SyncTagsToFileObject } from '@leaa/common/src/dtos/tag';
 import { SYNC_TAGS_TO_FILE } from '@leaa/dashboard/src/graphqls';
-import { successMessage } from '@leaa/dashboard/src/utils';
+import { msg } from '@leaa/dashboard/src/utils';
 import { Rcon } from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';
@@ -22,7 +22,7 @@ export const SyncTagsToFileButton = (props: IProps) => {
       // variables: undefined,
       // apollo-link-error onError: e => messageUtil.gqlError(e.message),
       onCompleted({ syncTagsToDictFile }) {
-        successMessage(syncTagsToDictFile.status);
+        msg(syncTagsToDictFile.status);
       },
     },
   );

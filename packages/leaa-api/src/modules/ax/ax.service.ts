@@ -18,7 +18,7 @@ export class AxService {
     private readonly configService: ConfigService,
   ) {}
 
-  async PLEASE_DONT_MODIFY_DEMO_DATA(gqlCtx: IGqlCtx, id?: string): Promise<boolean> {
+  async PLEASE_DONT_MODIFY_DEMO_DATA(id?: string): Promise<boolean> {
     const { t } = gqlCtx;
 
     if (this.configService.DEMO_MODE && !process.argv.includes('--nuke')) {
@@ -34,7 +34,7 @@ export class AxService {
     return true;
   }
 
-  async axs(gqlCtx: IGqlCtx, args: IAxsArgs): Promise<AxsWithPaginationObject> {
+  async axs(args: IAxsArgs): Promise<AxsWithPaginationObject> {
     const nextArgs = argsFormat(args, gqlCtx);
 
     const qb = this.axRepository.createQueryBuilder();
@@ -57,7 +57,7 @@ export class AxService {
     return calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
-  async ax(gqlCtx: IGqlCtx, id: string, args?: IAxArgs): Promise<Ax | undefined> {
+  async ax(id: string, args?: IAxArgs): Promise<Ax | undefined> {
     const { t } = gqlCtx;
 
     if (!id) throw errorMsg(t('_error:notFoundId'), { gqlCtx });
@@ -78,7 +78,7 @@ export class AxService {
     return ax;
   }
 
-  async axBySlug(gqlCtx: IGqlCtx, slug: string, args?: IAxArgs): Promise<Ax | undefined> {
+  async axBySlug(slug: string, args?: IAxArgs): Promise<Ax | undefined> {
     const { t } = gqlCtx;
 
     const ax = await this.axRepository.findOne({ where: { slug } });
@@ -87,11 +87,11 @@ export class AxService {
     return this.ax(gqlCtx, ax.id, args);
   }
 
-  async createAx(gqlCtx: IGqlCtx, args: CreateAxInput): Promise<Ax | undefined> {
+  async createAx(args: CreateAxInput): Promise<Ax | undefined> {
     return this.axRepository.save({ ...args });
   }
 
-  async updateAx(gqlCtx: IGqlCtx, id: string, args: UpdateAxInput): Promise<Ax | undefined> {
+  async updateAx(id: string, args: UpdateAxInput): Promise<Ax | undefined> {
     if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(gqlCtx, id);
 
     if (isOneField(args, 'status')) {
@@ -101,7 +101,7 @@ export class AxService {
     return commonUpdate({ repository: this.axRepository, CLS_NAME, id, args, gqlCtx });
   }
 
-  async deleteAx(gqlCtx: IGqlCtx, id: string): Promise<Ax | undefined> {
+  async deleteAx(id: string): Promise<Ax | undefined> {
     if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(gqlCtx, id);
 
     return commonDelete({ repository: this.axRepository, CLS_NAME, id, gqlCtx });

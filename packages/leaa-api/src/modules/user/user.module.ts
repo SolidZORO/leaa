@@ -10,6 +10,7 @@ import { RoleModule } from '@leaa/api/src/modules/role/role.module';
 import { AuthTokenModule } from '@leaa/api/src/modules/auth-token/auth-token.module';
 import { AttachmentModule } from '@leaa/api/src/modules/attachment/attachment.module';
 import { AuthModule } from '@leaa/api/src/modules/auth/auth.module';
+import { UserController } from '@leaa/api/src/modules/user/user.controller';
 
 @Module({
   imports: [
@@ -21,5 +22,6 @@ import { AuthModule } from '@leaa/api/src/modules/auth/auth.module';
   ],
   providers: [UserResolver, UserService, UserProperty],
   exports: [UserResolver, UserService, UserProperty],
+  controllers: [UserController],
 })
 export class UserModule {}

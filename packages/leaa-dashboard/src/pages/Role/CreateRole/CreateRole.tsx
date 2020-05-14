@@ -8,7 +8,7 @@ import { CreateRoleInput } from '@leaa/common/src/dtos/role';
 import { IPage, ICommenFormRef, ISubmitData } from '@leaa/dashboard/src/interfaces';
 import { CREATE_ROLE } from '@leaa/dashboard/src/graphqls';
 import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
-import { successMessage } from '@leaa/dashboard/src/utils';
+import { msg } from '@leaa/dashboard/src/utils';
 
 import { HtmlMeta, PageCard, SubmitBar, Rcon } from '@leaa/dashboard/src/components';
 
@@ -28,7 +28,7 @@ export default (props: IPage) => {
     variables: submitVariables,
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
     onCompleted({ createRole }) {
-      successMessage(t('_lang:createdSuccessfully'));
+      msg(t('_lang:createdSuccessfully'));
       props.history.push(`/roles/${createRole.id}`);
     },
   });

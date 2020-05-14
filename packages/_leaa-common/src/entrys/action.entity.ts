@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, Index } from 'typeorm';
 import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { IModuleNameEnum } from '@leaa/common/src/interfaces';
 
@@ -13,10 +13,12 @@ export class Action {
   @Field(() => String, { nullable: true })
   ip!: string;
 
+  @Index()
   @Column({ type: 'enum', enum: IModuleNameEnum })
   @Field(() => String)
   module!: string;
 
+  @Index()
   @Column({ type: 'varchar', length: 64 })
   @Field(() => String)
   action!: string;

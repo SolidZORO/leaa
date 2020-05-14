@@ -1,11 +1,10 @@
-import { UseGuards } from '@nestjs/common';
 import { Args, Query, Mutation, Resolver } from '@nestjs/graphql';
 
 import { Zan } from '@leaa/common/src/entrys';
 import { ZansArgs, ZansWithPaginationObject, ZanArgs, CreateZanInput, UpdateZanInput } from '@leaa/common/src/dtos/zan';
 import { Permissions, GqlCtx } from '@leaa/api/src/decorators';
 import { ZanService } from '@leaa/api/src/modules/zan/zan.service';
-import { PermissionsGuard } from '@leaa/api/src/guards';
+
 import { IGqlCtx } from '@leaa/api/src/interfaces';
 
 @Resolver(() => Zan)
@@ -13,7 +12,7 @@ export class ZanResolver {
   constructor(private readonly zanService: ZanService) {}
 
   @Query(() => ZansWithPaginationObject)
-  async zans(@GqlCtx() gqlCtx: IGqlCtx, @Args() args: ZansArgs): Promise<ZansWithPaginationObject | undefined> {
+  async zans(@GqlCtx() @Args() args: ZansArgs): Promise<ZansWithPaginationObject | undefined> {
     return this.zanService.zans(gqlCtx, args);
   }
 
@@ -27,11 +26,10 @@ export class ZanResolver {
   }
 
   @Mutation(() => Zan)
-  async createZan(@GqlCtx() gqlCtx: IGqlCtx, @Args('zan') args: CreateZanInput): Promise<Zan | undefined> {
+  async createZan(@GqlCtx() @Args('zan') args: CreateZanInput): Promise<Zan | undefined> {
     return this.zanService.createZan(gqlCtx, args);
   }
 
-  @UseGuards(PermissionsGuard)
   @Permissions('zan.item-update')
   @Mutation(() => Zan)
   async updateZan(
@@ -42,7 +40,6 @@ export class ZanResolver {
     return this.zanService.updateZan(gqlCtx, id, args);
   }
 
-  @UseGuards(PermissionsGuard)
   @Permissions('zan.item-delete')
   @Mutation(() => Zan)
   async deleteZan(

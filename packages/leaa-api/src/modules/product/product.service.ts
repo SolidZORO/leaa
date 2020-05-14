@@ -21,7 +21,7 @@ export class ProductService {
     private readonly tagService: TagService,
   ) {}
 
-  async products(gqlCtx: IGqlCtx, args: IProductsArgs): Promise<ProductsWithPaginationObject | undefined> {
+  async products(args: IProductsArgs): Promise<ProductsWithPaginationObject | undefined> {
     const nextArgs: IProductsArgs = argsFormat(args, gqlCtx);
 
     const PRIMARY_TABLE = 'products';
@@ -62,7 +62,7 @@ export class ProductService {
     return calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
-  async product(gqlCtx: IGqlCtx, id: string, args?: IProductArgs): Promise<Product | undefined> {
+  async product(id: string, args?: IProductArgs): Promise<Product | undefined> {
     const { t } = gqlCtx;
 
     if (!id) throw errorMsg(t('_error:notFoundId'), { gqlCtx });
@@ -119,13 +119,13 @@ export class ProductService {
     };
   }
 
-  async createProduct(gqlCtx: IGqlCtx, args: CreateProductInput): Promise<Product | undefined> {
+  async createProduct(args: CreateProductInput): Promise<Product | undefined> {
     const { nextRelation, nextArgs } = await this.formatArgs(args);
 
     return this.productRepository.save({ ...nextArgs, ...nextRelation });
   }
 
-  async updateProduct(gqlCtx: IGqlCtx, id: string, args: UpdateProductInput): Promise<Product | undefined> {
+  async updateProduct(id: string, args: UpdateProductInput): Promise<Product | undefined> {
     if (isOneField(args, 'status')) {
       return commonUpdate({ repository: this.productRepository, CLS_NAME, id, args, gqlCtx });
     }
@@ -149,7 +149,7 @@ export class ProductService {
     });
   }
 
-  async deleteProduct(gqlCtx: IGqlCtx, id: string): Promise<Product | undefined> {
+  async deleteProduct(id: string): Promise<Product | undefined> {
     return commonDelete({ repository: this.productRepository, CLS_NAME, id, gqlCtx });
   }
 }

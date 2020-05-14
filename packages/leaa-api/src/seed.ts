@@ -15,11 +15,21 @@ import { SeedService } from '@leaa/api/src/modules/seed/seed.service';
     process.abort();
   };
 
-  if (process.argv.includes('--rebuild-auth') || process.argv.includes('--nuke')) {
+  if (
+    process.argv.includes('--rebuild-auth') ||
+    process.argv.includes('--nuke') ||
+    process.argv.includes('--fill-action')
+  ) {
     const logger = new Logger('Seed-Log');
     logger.log('Seed Launcher...', ' 🔰 ');
   } else {
-    await console.log('\n\nPLEASE INPUT: `yarn seed --nuke` or `yarn seed --rebuild-auth`\n\n');
+    await console.log(
+      '\n\nPLEASE INPUT: \n' +
+        '`yarn seed --nuke` or \n' +
+        '`yarn seed --rebuild-auth` \n' +
+        '`yarn seed --fill-action` \n' +
+        '\n\n',
+    );
     await forceExit();
   }
 
@@ -33,6 +43,41 @@ import { SeedService } from '@leaa/api/src/modules/seed/seed.service';
     await seedService.insertUserAddRole();
     await seedService.insertRoleAddPermissions();
   };
+
+  //
+  //
+  //
+  //
+  //
+
+  if (process.argv.includes('--fill-action')) {
+    console.log('\n\n\n\n FILL ACTION\n\n\n\n');
+
+    const queryRunner = getConnection().createQueryRunner();
+
+    await getManager().query('SET FOREIGN_KEY_CHECKS = 0;');
+
+    // clear
+    await getRepository('Action').clear();
+
+    if (await queryRunner.getTable('actions')) {
+      await getRepository('actions').clear();
+    }
+
+    await getManager().query('SET FOREIGN_KEY_CHECKS = 1;');
+
+    await seedService.fillAction();
+
+    await console.log('\n\n\n\n---- FILL ACTION DONE ----');
+    await forceExit();
+    return;
+  }
+
+  //
+  //
+  //
+  //
+  //
 
   if (process.argv.includes('--rebuild-auth')) {
     console.log('\n\n\n\n REBUILD AUTH\n\n\n\n');
@@ -63,6 +108,12 @@ import { SeedService } from '@leaa/api/src/modules/seed/seed.service';
     await forceExit();
     return;
   }
+
+  //
+  //
+  //
+  //
+  //
 
   if (process.argv.includes('--nuke')) {
     console.log('\n\n\n\n✴️✴️✴️✴️✴️✴️✴️✴️✴️✴️ NUKE NUKE NUKE NUKE ALL DB TABLE\n\n\n\n');

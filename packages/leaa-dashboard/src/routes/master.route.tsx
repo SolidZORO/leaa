@@ -20,6 +20,19 @@ export const masterRoutes: IRouteItem[] = [
     path: '_content-group',
     icon: 'ri-archive-line',
     children: [
+      // ---- Action ----
+      {
+        name: 'Action',
+        namei18n: '_route:action',
+        permission: 'action.list-read',
+        path: '/actions',
+        icon: 'ri-file-list-2-line',
+        LazyComponent: React.lazy(() =>
+          import(/* webpackChunkName: 'ActionList' */ '../pages/Action/ActionList/ActionList'),
+        ),
+        canCreate: true,
+        exact: true,
+      },
       // ---- Article ----
       {
         name: 'Create Article',

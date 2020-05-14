@@ -1,4 +1,3 @@
-import { UseGuards } from '@nestjs/common';
 import { Args, Query, Mutation, Resolver, ResolveField, Parent, Int } from '@nestjs/graphql';
 
 import { Ax } from '@leaa/common/src/entrys';
@@ -13,7 +12,7 @@ import {
 import { Permissions, GqlCtx } from '@leaa/api/src/decorators';
 import { AxService } from '@leaa/api/src/modules/ax/ax.service';
 import { AxProperty } from '@leaa/api/src/modules/ax/ax.property';
-import { PermissionsGuard } from '@leaa/api/src/guards';
+
 import { IGqlCtx } from '@leaa/api/src/interfaces';
 
 @Resolver(() => Ax)
@@ -28,15 +27,15 @@ export class AxResolver {
   //
   //
 
-  // @UseGuards(PermissionsGuard)
+  //
   // @Permissions('ax.item-read')
   // DO NOT CHECK PERMISSIONS
   @Query(() => AxsWithPaginationObject)
-  async axs(@GqlCtx() gqlCtx: IGqlCtx, @Args() args: AxsArgs): Promise<AxsWithPaginationObject | undefined> {
+  async axs(@GqlCtx() @Args() args: AxsArgs): Promise<AxsWithPaginationObject | undefined> {
     return this.axService.axs(gqlCtx, args);
   }
 
-  // @UseGuards(PermissionsGuard)
+  //
   // @Permissions('ax.item-read')
   // DO NOT CHECK PERMISSIONS
   @Query(() => Ax)
@@ -48,7 +47,7 @@ export class AxResolver {
     return this.axService.ax(gqlCtx, id, args);
   }
 
-  // @UseGuards(PermissionsGuard)
+  //
   // @Permissions('ax.item-read')
   // DO NOT CHECK PERMISSIONS
   @Query(() => Ax)
@@ -60,14 +59,12 @@ export class AxResolver {
     return this.axService.axBySlug(gqlCtx, slug, args);
   }
 
-  @UseGuards(PermissionsGuard)
   @Permissions('ax.item-create')
   @Mutation(() => Ax)
-  async createAx(@GqlCtx() gqlCtx: IGqlCtx, @Args('ax') args: CreateAxInput): Promise<Ax | undefined> {
+  async createAx(@GqlCtx() @Args('ax') args: CreateAxInput): Promise<Ax | undefined> {
     return this.axService.createAx(gqlCtx, args);
   }
 
-  @UseGuards(PermissionsGuard)
   @Permissions('ax.item-update')
   @Mutation(() => Ax)
   async updateAx(
@@ -78,7 +75,6 @@ export class AxResolver {
     return this.axService.updateAx(gqlCtx, id, args);
   }
 
-  @UseGuards(PermissionsGuard)
   @Permissions('ax.item-delete')
   @Mutation(() => Ax)
   async deleteAx(

@@ -2332,6 +2332,35 @@
   dependencies:
     uuid "7.0.2"
 
+"@nestjsx/crud-request@^4.6.1":
+  version "4.6.1"
+  resolved "https://registry.npm.taobao.org/@nestjsx/crud-request/download/@nestjsx/crud-request-4.6.1.tgz#7dad476399ac61b9ba718139e81edb694d440fd3"
+  integrity sha1-fa1HY5msYbm6cYE56B7baU1ED9M=
+  dependencies:
+    "@nestjsx/util" "^4.6.1"
+    qs "^6.8.0"
+
+"@nestjsx/crud-typeorm@^4.6.1":
+  version "4.6.1"
+  resolved "https://registry.npm.taobao.org/@nestjsx/crud-typeorm/download/@nestjsx/crud-typeorm-4.6.1.tgz#a8d5337931fbbdf27360404fc16d81e44182f230"
+  integrity sha1-qNUzeTH7vfJzYEBPwW2B5EGC8jA=
+  dependencies:
+    "@zmotivat0r/o0" "^1.0.2"
+
+"@nestjsx/crud@^4.6.1":
+  version "4.6.1"
+  resolved "https://registry.npm.taobao.org/@nestjsx/crud/download/@nestjsx/crud-4.6.1.tgz#a0bd067564aae86201894bccf7547f17ddd92799"
+  integrity sha1-oL0GdWSq6GIBiUvM91R/F93ZJ5k=
+  dependencies:
+    "@nestjsx/crud-request" "^4.6.1"
+    "@nestjsx/util" "^4.6.1"
+    deepmerge "^3.2.0"
+
+"@nestjsx/util@^4.6.1":
+  version "4.6.1"
+  resolved "https://registry.npm.taobao.org/@nestjsx/util/download/@nestjsx/util-4.6.1.tgz#0fecb7618b26ec8d479d6d857f3a26523c2fafd4"
+  integrity sha1-D+y3YYsm7I1HnW2FfzomUjwvr9Q=
+
 "@nodelib/fs.scandir@2.1.3":
   version "2.1.3"
   resolved "https://registry.npm.taobao.org/@nodelib/fs.scandir/download/@nodelib/fs.scandir-2.1.3.tgz#3a582bdb53804c6ba6d146579c46e52130cf4a3b"
@@ -2892,13 +2921,6 @@
     "@types/fs-capacitor" "*"
     "@types/koa" "*"
     graphql "^14.5.3"
-
-"@types/hashids@^1.0.30":
-  version "1.0.30"
-  resolved "https://registry.npm.taobao.org/@types/hashids/download/@types/hashids-1.0.30.tgz#c0a056b25c5b13c80bf330fb8d379ac4d4049999"
-  integrity sha1-wKBWslxbE8gL8zD7jTeaxNQEmZk=
-  dependencies:
-    "@types/node" "*"
 
 "@types/history@*", "@types/history@^4.7.5":
   version "4.7.5"
@@ -3727,6 +3749,11 @@
     is-windows "^1.0.0"
     mkdirp-promise "^5.0.1"
     mz "^2.5.0"
+
+"@zmotivat0r/o0@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.npm.taobao.org/@zmotivat0r/o0/download/@zmotivat0r/o0-1.0.2.tgz#5eb069a631678736234d4c34b07c3a2bae8f8e4b"
+  integrity sha1-XrBppjFnhzYjTUw0sHw6K66Pjks=
 
 JSONStream@^1.0.4, JSONStream@^1.3.4:
   version "1.3.5"
@@ -7165,6 +7192,11 @@ deepmerge@4.2.2, deepmerge@^4.2.2:
   resolved "https://registry.npm.taobao.org/deepmerge/download/deepmerge-4.2.2.tgz#44d2ea3679b8f4d4ffba33f03d865fc1e7bf4955"
   integrity sha1-RNLqNnm49NT/ujPwPYZfwee/SVU=
 
+deepmerge@^3.2.0:
+  version "3.3.0"
+  resolved "https://registry.npm.taobao.org/deepmerge/download/deepmerge-3.3.0.tgz?cache=0&sync_timestamp=1572279720382&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fdeepmerge%2Fdownload%2Fdeepmerge-3.3.0.tgz#d3c47fd6f3a93d517b14426b0628a17b0125f5f7"
+  integrity sha1-08R/1vOpPVF7FEJrBiihewEl9fc=
+
 default-gateway@^4.2.0:
   version "4.2.0"
   resolved "https://registry.npm.taobao.org/default-gateway/download/default-gateway-4.2.0.tgz#167104c7500c2115f6dd69b0a536bb8ed720552b"
@@ -9456,11 +9488,6 @@ hash.js@^1.0.0, hash.js@^1.0.3:
   dependencies:
     inherits "^2.0.3"
     minimalistic-assert "^1.0.1"
-
-hashids@^2.2.1:
-  version "2.2.1"
-  resolved "https://registry.npm.taobao.org/hashids/download/hashids-2.2.1.tgz#ad0c600f0083aa0df7451dfd184e53db34f71289"
-  integrity sha1-rQxgDwCDqg33RR39GE5T2zT3Eok=
 
 he@^1.2.0:
   version "1.2.0"
@@ -14451,7 +14478,7 @@ qs@6.7.0:
   resolved "https://registry.npm.taobao.org/qs/download/qs-6.7.0.tgz#41dc1a015e3d581f1621776be31afb2876a9b1bc"
   integrity sha1-QdwaAV49WB8WIXdr4xr7KHapsbw=
 
-qs@^6.4.0, qs@^6.5.1:
+qs@6.9.4, qs@^6.4.0, qs@^6.5.1, qs@^6.8.0:
   version "6.9.4"
   resolved "https://registry.npm.taobao.org/qs/download/qs-6.9.4.tgz#9090b290d1f91728d3c22e54843ca44aea5ab687"
   integrity sha1-kJCykNH5FyjTwi5UhDykSupatoc=

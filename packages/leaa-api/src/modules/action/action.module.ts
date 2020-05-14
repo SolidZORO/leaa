@@ -2,12 +2,13 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { Action } from '@leaa/common/src/entrys';
-import { ActionResolver } from '@leaa/api/src/modules/action/action.resolver';
-import { ActionService } from '@leaa/api/src/modules/action/action.service';
+import { ActionService } from './action.service';
+import { ActionController } from './action.controller';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Action])],
-  providers: [ActionResolver, ActionService],
+  providers: [ActionService],
   exports: [ActionService],
+  controllers: [ActionController],
 })
 export class ActionModule {}

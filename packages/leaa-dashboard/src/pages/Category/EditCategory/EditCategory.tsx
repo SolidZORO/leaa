@@ -12,7 +12,7 @@ import {
   CategoriesWithPaginationOrTreeObject,
 } from '@leaa/common/src/dtos/category';
 import { IPage, ICommenFormRef, ISubmitData } from '@leaa/dashboard/src/interfaces';
-import { successMessage } from '@leaa/dashboard/src/utils';
+import { msg } from '@leaa/dashboard/src/utils';
 
 import { HtmlMeta, PageCard, SubmitBar, Rcon } from '@leaa/dashboard/src/components';
 
@@ -51,7 +51,7 @@ export default (props: IPage) => {
   const [updateCategoryMutate, updateCategoryMutation] = useMutation<Category>(UPDATE_CATEGORY, {
     variables: submitVariables,
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
-    onCompleted: () => successMessage(t('_lang:updatedSuccessfully')),
+    onCompleted: () => msg(t('_lang:updatedSuccessfully')),
     refetchQueries: () => [{ query: GET_CATEGORY, variables: getCategoryVariables }],
   });
 

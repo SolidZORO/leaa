@@ -31,7 +31,7 @@ export class ArticleService {
     private readonly tagService: TagService,
   ) {}
 
-  async articles(gqlCtx: IGqlCtx, args: IArticlesArgs): Promise<ArticlesWithPaginationObject> {
+  async articles(args: IArticlesArgs): Promise<ArticlesWithPaginationObject> {
     const nextArgs: IArticlesArgs = argsFormat(args, gqlCtx);
 
     const PRIMARY_TABLE = 'articles';
@@ -77,7 +77,7 @@ export class ArticleService {
     return calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
-  async article(gqlCtx: IGqlCtx, id: string, args?: IArticleArgs): Promise<Article | undefined> {
+  async article(id: string, args?: IArticleArgs): Promise<Article | undefined> {
     const { t } = gqlCtx;
 
     if (!id) throw errorMsg(t('_error:notFoundId'), { gqlCtx });
@@ -97,7 +97,7 @@ export class ArticleService {
     return this.articleRepository.findOne(id, nextArgs);
   }
 
-  async articleBySlug(gqlCtx: IGqlCtx, slug: string, args?: IArticleArgs): Promise<Article | undefined> {
+  async articleBySlug(slug: string, args?: IArticleArgs): Promise<Article | undefined> {
     const { t } = gqlCtx;
 
     const article = await this.articleRepository.findOne({ where: { slug } });
@@ -106,7 +106,7 @@ export class ArticleService {
     return this.article(gqlCtx, article.id, args);
   }
 
-  async createArticle(gqlCtx: IGqlCtx, args: CreateArticleInput): Promise<Article | undefined> {
+  async createArticle(args: CreateArticleInput): Promise<Article | undefined> {
     const relationArgs: { categories?: Category[] } = {};
 
     // category
@@ -120,7 +120,7 @@ export class ArticleService {
     return this.articleRepository.save({ ...args, ...relationArgs });
   }
 
-  async updateArticle(gqlCtx: IGqlCtx, id: string, args: UpdateArticleInput): Promise<Article | undefined> {
+  async updateArticle(id: string, args: UpdateArticleInput): Promise<Article | undefined> {
     if (isOneField(args, 'status')) {
       return commonUpdate({ repository: this.articleRepository, CLS_NAME, id, args, gqlCtx });
     }
@@ -173,7 +173,7 @@ export class ArticleService {
     });
   }
 
-  async deleteArticle(gqlCtx: IGqlCtx, id: string): Promise<Article | undefined> {
+  async deleteArticle(id: string): Promise<Article | undefined> {
     return commonDelete({ repository: this.articleRepository, CLS_NAME, id, gqlCtx });
   }
 }

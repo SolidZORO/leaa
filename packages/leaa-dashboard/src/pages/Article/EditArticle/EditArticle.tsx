@@ -9,7 +9,7 @@ import { GET_ARTICLE, UPDATE_ARTICLE } from '@leaa/dashboard/src/graphqls';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { ArticleArgs, UpdateArticleInput } from '@leaa/common/src/dtos/article';
 import { IPage, ICommenFormRef, ISubmitData } from '@leaa/dashboard/src/interfaces';
-import { successMessage } from '@leaa/dashboard/src/utils';
+import { msg } from '@leaa/dashboard/src/utils';
 
 import {
   PageCard,
@@ -51,7 +51,7 @@ export default (props: IPage) => {
   const [updateArticleMutate, updateArticleMutation] = useMutation<Article>(UPDATE_ARTICLE, {
     variables: submitVariables,
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
-    onCompleted: () => successMessage(t('_lang:updatedSuccessfully')),
+    onCompleted: () => msg(t('_lang:updatedSuccessfully')),
     refetchQueries: () => [{ query: GET_ARTICLE, variables: getArticleVariables }],
   });
 

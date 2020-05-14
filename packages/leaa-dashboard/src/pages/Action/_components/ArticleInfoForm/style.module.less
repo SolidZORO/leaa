@@ -1,0 +1,62 @@
+@import '~@leaa/dashboard/src/styles/variables.less';
+
+.wrapper {
+}
+
+.form-wrapper {
+}
+
+.form-row {
+}
+
+.form--title-wrapper {
+  :global {
+    .ant-row {
+      margin-bottom: 15px;
+    }
+  }
+}
+
+.form--slug-wrapper {
+  display: flex;
+  justify-content: space-between;
+
+  :global {
+    .ant-row {
+      margin-bottom: 15px;
+    }
+  }
+
+  .block--slug {
+    flex: auto;
+
+    .item--slug {
+    }
+
+    .form-item-slug-input {
+      input {
+        background-color: transparent;
+        border: none;
+      }
+    }
+  }
+
+  .block--category-and-status {
+    label {
+      margin-top: 3px;
+      font-size: 80%;
+      color: #888;
+    }
+
+    .item--category {
+      display: inline-block;
+    }
+
+    .item--status {
+      display: inline-block;
+    }
+  }
+}
+
+.form-row--slug-wrapper {
+}

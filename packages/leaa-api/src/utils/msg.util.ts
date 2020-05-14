@@ -6,6 +6,7 @@ interface IHandleMessageParams {
   statusCode?: number;
   gqlCtx?: IGqlCtx;
   CLS_NAME?: string;
+  language?: string;
 }
 
 type IErrorParams = Omit<IHandleMessageParams, 'type'>;
@@ -41,5 +42,9 @@ export const errorMsg = (msgText: string, params?: IErrorParams): Error => {
 };
 
 export const msg = (msgText: string, params?: IMessageParams): string => {
+  return handleMessage(msgText, { ...params, type: 'message' }) as string;
+};
+
+export const msgT = (msgText: string, params?: IMessageParams): string => {
   return handleMessage(msgText, { ...params, type: 'message' }) as string;
 };

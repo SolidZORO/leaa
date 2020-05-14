@@ -20,24 +20,24 @@ export class RoleService {
     private readonly configService: ConfigService,
   ) {}
 
-  async PLEASE_DONT_MODIFY_DEMO_DATA(gqlCtx: IGqlCtx, id?: string): Promise<boolean> {
-    const { t } = gqlCtx;
+  async PLEASE_DONT_MODIFY_DEMO_DATA(id?: string): Promise<boolean> {
+    // const { t } = gqlCtx;
 
     if (this.configService.DEMO_MODE && !process.argv.includes('--nuke')) {
       if (!id) return true;
 
-      const role = await this.role(gqlCtx, id);
+      const role = await this.role(id);
 
       if (role && role.slug && role.slug === 'admin') {
-        throw errorMsg(t('_error:pleaseDontModify'), { gqlCtx });
+        throw errorMsg('_error:pleaseDontModify');
       }
     }
 
     return true;
   }
 
-  async roles(gqlCtx: IGqlCtx, args: IRolesArgs): Promise<RolesWithPaginationObject | undefined> {
-    const nextArgs = argsFormat(args, gqlCtx);
+  async roles(args: IRolesArgs): Promise<RolesWithPaginationObject | undefined> {
+    const nextArgs = argsFormat(args);
 
     const PRIMARY_TABLE = 'roles';
     const qb = this.roleRepository.createQueryBuilder(PRIMARY_TABLE);
@@ -63,10 +63,10 @@ export class RoleService {
     return calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
-  async role(gqlCtx: IGqlCtx, id: string, args?: IRoleArgs): Promise<Role | undefined> {
-    const { t } = gqlCtx;
+  async role(id: string, args?: IRoleArgs): Promise<Role | undefined> {
+    // const { t } = gqlCtx;
 
-    if (!id) throw errorMsg(t('_error:notFoundId'), { gqlCtx });
+    if (!id) throw errorMsg('_error:notFoundId');
 
     let nextArgs: IRoleArgs = {};
 
@@ -113,17 +113,17 @@ export class RoleService {
     return roleIds;
   }
 
-  async createRole(gqlCtx: IGqlCtx, args: CreateRoleInput): Promise<Role | undefined> {
+  async createRole(args: CreateRoleInput): Promise<Role | undefined> {
     return this.roleRepository.save({ ...args });
   }
 
-  async updateRole(gqlCtx: IGqlCtx, id: string, args: UpdateRoleInput): Promise<Role | undefined> {
-    const { t } = gqlCtx;
+  async updateRole(id: string, args: UpdateRoleInput): Promise<Role | undefined> {
+    // const { t } = gqlCtx;
 
-    if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(gqlCtx, id);
+    if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id);
 
     if (isOneField(args, 'status')) {
-      return commonUpdate({ repository: this.roleRepository, CLS_NAME, id, args, gqlCtx });
+      return commonUpdate({ repository: this.roleRepository, CLS_NAME, id, args });
     }
 
     const relationArgs: { permissions?: Permission[] } = {};
@@ -144,15 +144,15 @@ export class RoleService {
     } else {
       if (process.argv.includes('--nuke')) return undefined;
 
-      throw errorMsg(t('_error:notFound'), { gqlCtx });
+      throw errorMsg('_error:notFound');
     }
 
-    return commonUpdate({ repository: this.roleRepository, CLS_NAME, id, args, relation: relationArgs, gqlCtx });
+    return commonUpdate({ repository: this.roleRepository, CLS_NAME, id, args, relation: relationArgs });
   }
 
-  async deleteRole(gqlCtx: IGqlCtx, id: string): Promise<Role | undefined> {
-    if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(gqlCtx, id);
+  async deleteRole(id: string): Promise<Role | undefined> {
+    if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id);
 
-    return commonDelete({ repository: this.roleRepository, CLS_NAME, id, gqlCtx });
+    return commonDelete({ repository: this.roleRepository, CLS_NAME, id });
   }
 }

@@ -1,4 +1,5 @@
 export enum IModuleNameEnum {
+  article = 'article',
   config = 'config',
   seed = 'seed',
   playground = 'playground',

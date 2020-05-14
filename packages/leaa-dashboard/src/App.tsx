@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Spin, ConfigProvider } from 'antd';
-import { ApolloProvider } from '@apollo/react-hooks';
 import { Router, Switch } from 'react-router-dom';
 import { I18nextProvider } from 'react-i18next';
 import { HelmetProvider } from 'react-helmet-async';
@@ -8,7 +7,7 @@ import { LoadingOutlined } from '@ant-design/icons';
 import zhCN from 'antd/es/locale-provider/zh_CN';
 import enUS from 'antd/es/locale-provider/en_US';
 
-import { apolloClient, history } from '@leaa/dashboard/src/libs';
+import { history } from '@leaa/dashboard/src/libs';
 // cannot use deconstruction components dir in here (App.tsx)
 import { ErrorBoundary } from '@leaa/dashboard/src/components/ErrorBoundary/ErrorBoundary';
 import { RefreshflatPermissions } from '@leaa/dashboard/src/components/RefreshflatPermissions/RefreshflatPermissions';
@@ -34,24 +33,22 @@ export const App = (): JSX.Element => {
     <ErrorBoundary>
       <HelmetProvider>
         <ConfigProvider locale={locale}>
-          <ApolloProvider client={apolloClient}>
-            <StoreProvider value={store}>
-              <I18nextProvider i18n={i18n}>
-                <RefreshSetting>
-                  <RefreshflatPermissions history={history}>
-                    <Router history={history}>
-                      <Switch>
-                        {authRoute}
-                        {masterRoute}
-                        {testWithoutLayoutRoute}
-                        {otherRoute}
-                      </Switch>
-                    </Router>
-                  </RefreshflatPermissions>
-                </RefreshSetting>
-              </I18nextProvider>
-            </StoreProvider>
-          </ApolloProvider>
+          <StoreProvider value={store}>
+            <I18nextProvider i18n={i18n}>
+              <RefreshSetting>
+                <RefreshflatPermissions history={history}>
+                  <Router history={history}>
+                    <Switch>
+                      {authRoute}
+                      {masterRoute}
+                      {testWithoutLayoutRoute}
+                      {otherRoute}
+                    </Switch>
+                  </Router>
+                </RefreshflatPermissions>
+              </RefreshSetting>
+            </I18nextProvider>
+          </StoreProvider>
         </ConfigProvider>
       </HelmetProvider>
     </ErrorBoundary>

@@ -13,7 +13,7 @@ const CLS_NAME = 'AddressService';
 export class AddressService {
   constructor(@InjectRepository(Address) private readonly addressRepository: Repository<Address>) {}
 
-  async addresses(gqlCtx: IGqlCtx, args: IAddresssArgs): Promise<AddressesWithPaginationObject | undefined> {
+  async addresses(args: IAddresssArgs): Promise<AddressesWithPaginationObject | undefined> {
     // const { t } = gqlCtx;
 
     const nextArgs = argsFormat(args, gqlCtx);
@@ -39,7 +39,7 @@ export class AddressService {
     return calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
   }
 
-  async address(gqlCtx: IGqlCtx, id: string, args?: IAddressArgs): Promise<Address | undefined> {
+  async address(id: string, args?: IAddressArgs): Promise<Address | undefined> {
     const { t } = gqlCtx;
 
     if (!id) throw errorMsg(t('_error:notFoundId'));
@@ -58,13 +58,13 @@ export class AddressService {
     return this.addressRepository.save({ ...args });
   }
 
-  async updateAddress(gqlCtx: IGqlCtx, id: string, args: UpdateAddressInput): Promise<Address | undefined> {
+  async updateAddress(id: string, args: UpdateAddressInput): Promise<Address | undefined> {
     const relationArgs: { permissions?: Permission[] } = {};
 
     return commonUpdate({ repository: this.addressRepository, CLS_NAME, id, args, relation: relationArgs, gqlCtx });
   }
 
-  async deleteAddress(gqlCtx: IGqlCtx, id: string): Promise<Address | undefined> {
+  async deleteAddress(id: string): Promise<Address | undefined> {
     return commonDelete({ repository: this.addressRepository, CLS_NAME, id, gqlCtx });
   }
 }

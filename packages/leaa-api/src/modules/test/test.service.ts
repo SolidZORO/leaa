@@ -1,25 +1,21 @@
 import { Injectable } from '@nestjs/common';
 
-import { IGqlCtx } from '@leaa/api/src/interfaces';
-import { errorMsg, msg } from '@leaa/api/src/utils';
+import { IRequest } from '@leaa/api/src/interfaces';
+import { msgT } from '@leaa/api/src/utils';
+import { I18nextMiddleware } from '@leaa/api/src/middlewares';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Zan } from '@leaa/common/src/entrys';
+import { Repository } from 'typeorm';
 
 const CLS_NAME = 'TestService';
 
 @Injectable()
 export class TestService {
-  testI18n(gqlCtx: IGqlCtx, x?: number): string {
-    const { t } = gqlCtx;
-    // console.log('CLS_NAME', CLS_NAME, 'X(NUMBER)', x, 'LANG', gqlCtx?.lang, 'GQLCTX', gqlCtx);
-    // console.log('CLS_NAME', CLS_NAME, 'X(NUMBER)', x, 'LANG', gqlCtx?.lang, t());
-    // console.log(t('_error:test'));
+  async testI18n(id: string, args?: { sort: string; t: any }): Promise<string> {
+    const { t } = args;
 
-    // console.log(ctx.t);
+    console.log(id, args);
 
-    if (typeof x !== 'undefined' && x > 0) {
-      throw errorMsg(t('_error:test'), { gqlCtx });
-    }
-
-    // return msg({ t: ['_error:test'], gqlCtx });
-    return msg(t('_error:test'));
+    return msgT('_error:notFoundItem', { language: args.language });
   }
 }

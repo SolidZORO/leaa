@@ -47,6 +47,8 @@
     "@nestjs/platform-express": "^7.0.9",
     "@nestjs/testing": "^7.0.9",
     "@nestjs/typeorm": "^7.0.0",
+    "@nestjsx/crud": "^4.6.1",
+    "@nestjsx/crud-typeorm": "^4.6.1",
     "ali-oss": "^6.7.0",
     "apollo-cache-inmemory": "^1.6.5",
     "apollo-link": "^1.2.14",

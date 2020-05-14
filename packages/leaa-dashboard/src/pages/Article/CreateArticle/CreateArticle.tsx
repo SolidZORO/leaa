@@ -8,7 +8,7 @@ import { CreateArticleInput } from '@leaa/common/src/dtos/article';
 import { IPage, ISubmitData, ICommenFormRef } from '@leaa/dashboard/src/interfaces';
 import { CREATE_ARTICLE } from '@leaa/dashboard/src/graphqls';
 import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
-import { successMessage } from '@leaa/dashboard/src/utils';
+import { msg } from '@leaa/dashboard/src/utils';
 
 import { PageCard, HtmlMeta, SubmitBar, Rcon } from '@leaa/dashboard/src/components';
 
@@ -28,7 +28,7 @@ export default (props: IPage) => {
     variables: submitVariables,
     // apollo-link-error onError: e => messageUtil.gqlError(e.message),
     onCompleted({ createArticle }) {
-      successMessage(t('_lang:createdSuccessfully'));
+      msg(t('_lang:createdSuccessfully'));
       props.history.push(`/articles/${createArticle.id}`);
     },
   });
