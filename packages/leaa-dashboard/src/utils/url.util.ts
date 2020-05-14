@@ -1,36 +1,12 @@
 import _ from 'lodash';
-import animateScrollTo from 'animated-scroll-to';
-import queryString, { ParsedQuery } from 'query-string';
 import qs from 'qs';
+import animateScrollTo from 'animated-scroll-to';
+import { QuerySortArr, QuerySort } from '@nestjsx/crud-request';
 import { PaginationProps } from 'antd/es/pagination';
-import { SortOrder, SorterResult, Key } from 'antd/es/table/interface';
+import { SortOrder, SorterResult } from 'antd/es/table/interface';
 
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from '@leaa/dashboard/src/constants';
 import { ITablePagination, ICrudQueryParams } from '@leaa/dashboard/src/interfaces';
-import { QuerySortArr, QuerySort, ParsedRequestParams, RequestQueryBuilder } from '@nestjsx/crud-request';
-
-interface IMergeParamToUrlQuery {
-  window: Window;
-  params: {} | undefined;
-  replace: boolean;
-}
-
-interface IGetPaginationResult {
-  page: number;
-  pageSize: number;
-}
-
-interface IPickPaginationResult {
-  page?: number;
-  pageSize?: number;
-}
-
-interface IPickOrderProps {
-  field?: string;
-  order?: SortOrder;
-}
-
-type IFormatOrderSortResult = 'DESC' | 'ASC' | undefined;
 
 export const routerPathToClassName = (routerPath: string): string =>
   routerPath
@@ -38,9 +14,15 @@ export const routerPathToClassName = (routerPath: string): string =>
     .replace(/\/\d+/g, '-item') // replace /444  ->  -item
     .replace(/\//g, '-'); // replace all /  ->  -
 
+interface IMergeParamToUrlQuery {
+  window: Window;
+  params: {} | undefined;
+  replace: boolean;
+}
+
 export const mergeParamToUrlQuery = ({ window, params, replace }: IMergeParamToUrlQuery): string => {
   const prevBaseUrl = `${window.location.origin}${window.location.pathname}`;
-  const query = queryString.parse(window.location.search);
+  const query = qs.parse(window.location.search, { ignoreQueryPrefix: true });
 
   const paramsObject = {
     ...query,
@@ -52,7 +34,7 @@ export const mergeParamToUrlQuery = ({ window, params, replace }: IMergeParamToU
   let paramsString = '';
 
   if (paramsObject) {
-    paramsString = queryString.stringify(paramsObject);
+    paramsString = qs.stringify(paramsObject, { addQueryPrefix: true });
   }
 
   nextUrl += `${paramsString ? '?' : ''}${paramsString}`;
@@ -89,10 +71,6 @@ export const mergeParamToUrlQuery = ({ window, params, replace }: IMergeParamToU
 //
 //
 
-window.qs = qs;
-// @ts-ignore
-window.queryString = queryString;
-
 export const curdQueryToCurdState = (curdQuery: ICrudQueryParams | any): ICrudQueryParams => {
   if (JSON.stringify(curdQuery) === '{}') return curdQuery;
 
@@ -109,6 +87,8 @@ export const curdQueryToCurdState = (curdQuery: ICrudQueryParams | any): ICrudQu
   if (typeof curdQuery.offset !== 'undefined') curdState.offset = Number(curdQuery.offset);
   if (typeof curdQuery.page !== 'undefined') curdState.page = Number(curdQuery.page);
 
+  if (typeof curdQuery.resetCache !== 'undefined') curdState.resetCache = JSON.parse(curdQuery.resetCache);
+
   return curdState;
 };
 
@@ -123,16 +103,21 @@ export const curdStateToCurdQuery = (curdState: ICrudQueryParams | any): ICrudQu
   if (typeof curdState.or !== 'undefined') curdQuery.or = JSON.stringify(curdState.or);
   if (typeof curdState.join !== 'undefined') curdQuery.join = JSON.stringify(curdState.join);
   if (typeof curdState.sort !== 'undefined') curdQuery.sort = JSON.stringify(curdState.sort);
+  if (typeof curdState.resetCache !== 'undefined') curdQuery.resetCache = JSON.stringify(curdState.resetCache);
 
   return curdQuery;
 };
 
-export const urlToCurdState = (url: string): ICrudQueryParams => {
-  return curdQueryToCurdState(queryString.parse(url));
+export const urlQueryToCurdState = (urlQuery: string): ICrudQueryParams => {
+  const urlObject = qs.parse(urlQuery, { ignoreQueryPrefix: true });
+
+  return curdQueryToCurdState(urlObject);
 };
 
-export const curdStateToUrl = (curdState: ICrudQueryParams | any): string => {
-  return queryString.stringify(curdStateToCurdQuery(curdState));
+export const curdStateToUrlQuery = (curdState: ICrudQueryParams | any, qsOptions?: qs.IStringifyOptions): string => {
+  const curdQuery = curdStateToCurdQuery(curdState);
+
+  return qs.stringify(curdQuery, qsOptions);
 };
 
 interface ISetCurdQueryToUrl {
@@ -142,18 +127,11 @@ interface ISetCurdQueryToUrl {
 }
 
 export const setCurdQueryToUrl = ({ window, query, replace }: ISetCurdQueryToUrl): string => {
-  const { url, query: urlQuery } = queryString.parseUrl(window.location.href);
+  const baseUrl = `${window.location.origin}${window.location.pathname}`;
+  const urlObject = qs.parse(window.location.search, { ignoreQueryPrefix: true });
 
-  const nextQuery = curdStateToUrl({
-    ...urlQuery,
-    ...query,
-  });
-
-  const nextUrl = `${url}${nextQuery ? '?' : ''}${nextQuery}`;
-  // const nextUrl = queryString.stringifyUrl({ url, query: nextQuery }, { encode: false });
-  console.log('nextQuery', nextQuery);
-  console.log('nextUrl', nextUrl);
-  console.log('url', url);
+  const nextQuery = curdStateToUrlQuery({ ...urlObject, ...query }, { addQueryPrefix: true });
+  const nextUrl = `${baseUrl}${nextQuery}`;
 
   if (replace) {
     window.history.pushState(null, '', nextUrl);
@@ -186,6 +164,11 @@ export const setCurdQueryToUrl = ({ window, query, replace }: ISetCurdQueryToUrl
 //
 //
 
+interface IGetPaginationResult {
+  page: number;
+  pageSize: number;
+}
+
 export const getPaginationByUrl = (urlParams: any): IGetPaginationResult => {
   const result: IGetPaginationResult = {
     page: DEFAULT_PAGE,
@@ -202,6 +185,8 @@ export const getPaginationByUrl = (urlParams: any): IGetPaginationResult => {
 
   return result;
 };
+
+type IFormatOrderSortResult = 'DESC' | 'ASC' | undefined;
 
 export const formatOrderSortByUrl = (orderSort?: string[] | string | null | undefined): IFormatOrderSortResult => {
   if (!orderSort) {
@@ -221,7 +206,7 @@ export const formatOrderSortByUrl = (orderSort?: string[] | string | null | unde
   return undefined;
 };
 
-export const formatOrderSortByPagination = (
+export const formatOrderSort = (
   orderSort?: SorterResult<any>,
 ): QuerySort | QuerySortArr | Array<QuerySort | QuerySortArr> | undefined => {
   if (!orderSort) {
@@ -249,6 +234,11 @@ export const formatOrderByByUrl = (orderBy?: string[] | string | null | undefine
   return String(orderBy);
 };
 
+interface IPickPaginationResult {
+  page?: number;
+  pageSize?: number;
+}
+
 export const pickPaginationByUrl = (params: PaginationProps): IPickPaginationResult => {
   if (_.isEmpty(params)) {
     return { page: undefined, pageSize: undefined };
@@ -266,6 +256,11 @@ export const pickPaginationByUrl = (params: PaginationProps): IPickPaginationRes
 
   return result;
 };
+
+interface IPickOrderProps {
+  field?: string;
+  order?: SortOrder;
+}
 
 // TODO EDIT TYPE
 // const pickOrderByByUrl = (params: IPickOrderProps | any): IPickOrderResult => {
@@ -287,7 +282,7 @@ export const pickOrderByByUrl = (params: IPickOrderProps | any) => {
   return result;
 };
 
-export const initPaginationStateByUrl = (urlParams: ParsedQuery): ITablePagination => {
+export const initPaginationStateByUrl = (urlParams: any): ITablePagination => {
   const urlPagination = getPaginationByUrl(urlParams);
 
   return {

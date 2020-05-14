@@ -249,7 +249,7 @@ export default (props: IPage) => {
       }
       extra={
         <div className="g-page-card-extra-filter-bar-wrapper">
-          <FilterIcon urlParams={urlParams} onClose={() => props.history.push('/products')} />
+          <FilterIcon showClose={urlParams} onClose={() => props.history.push('/products')} />
 
           <TagSearchBox
             className={cx('g-extra-filter-bar--item', 'g-extra-filter-bar--tag')}

@@ -86,7 +86,7 @@ export default {
   readSuccessfully: '读取成功',
   createdSuccessfully: '创建成功',
   updatedSuccessfully: '更新成功',
-  deletedSuccessfully: '删除成功 {{ id }}',
+  deletedSuccessfully: '删除成功 #{{ id }}',
   //
   bannerMb: '主图 MB',
   galleryMb: '商品图 MB',

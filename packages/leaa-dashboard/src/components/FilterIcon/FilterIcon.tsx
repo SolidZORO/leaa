@@ -1,30 +1,55 @@
-import React from 'react';
-import _ from 'lodash';
+import React, { useEffect, useState } from 'react';
 import cx from 'classnames';
-import { Options } from 'currency.js';
-import { ParsedQuery } from 'query-string';
+import _ from 'lodash';
 
 import { Rcon } from '@leaa/dashboard/src/components';
+import { ICrudQueryParams } from '@leaa/dashboard/src/interfaces';
 
 import style from './style.module.less';
 
-interface IProps extends Options {
-  urlParams: ParsedQuery;
-  onClose: () => void;
+interface IProps {
+  query?: ICrudQueryParams | any;
+  clearQuery?: string[];
+  onClose: (clearQuery: any) => void;
 }
 
 export const FilterIcon = (props: IProps) => {
-  let showClose = false;
+  const [showClose, setShowClose] = useState(false);
 
-  if (!_.isEmpty(props.urlParams)) {
-    showClose = !_.isEmpty(_.omit(props.urlParams, ['page', 'pageSize', 'orderBy', 'orderSort']));
-  }
+  const onClose = () => {
+    if (!showClose || !props.clearQuery) return;
+
+    const clearQ = props.clearQuery.reduce((attrs: any, cur: any) => {
+      // eslint-disable-next-line no-param-reassign
+      attrs[cur] = undefined;
+
+      return attrs;
+    }, {});
+
+    console.log('>>>>>>>', props.query);
+
+    // default
+    clearQ.limit = props.query.limit || 20;
+    clearQ.page = 1;
+
+    if (props.onClose) props.onClose(clearQ);
+  };
+
+  useEffect(() => {
+    if (props.query && props.clearQuery) {
+      // const ignoreQuery = ['sort'];
+      // const queryObj = _.pick(_.omit(props.query, ignoreQuery), props.clearQuery);
+      const queryObj = _.pick(props.query, props.clearQuery);
+
+      setShowClose(JSON.stringify(queryObj) !== '{}');
+    }
+  }, [props.query]);
 
   return (
     <Rcon
       className={cx(style['filter-bar-icon'], { [style['filter-bar-icon--show-close']]: showClose })}
       type={showClose ? 'ri-close-circle-line' : 'ri-filter-line'}
-      onClick={showClose ? props.onClose : undefined}
+      onClick={onClose}
     />
   );
 };

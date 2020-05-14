@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import _ from 'lodash';
+import React, { useState, useCallback, useEffect } from 'react';
 import cx from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { Input } from 'antd';
@@ -7,53 +8,46 @@ import { SearchOutlined } from '@ant-design/icons';
 
 import style from './style.module.less';
 
-interface IProps {
-  onChange?: (str?: string) => void;
-  value?: string | string[];
-  componentProps?: InputProps;
+interface IProps extends InputProps {
+  onSearch?: (s?: string) => void;
   className?: string;
 }
 
 export const SearchInput = (props: IProps) => {
   const { t } = useTranslation();
-  const [searchText, setSearchText] = useState<string | string[] | undefined>(props.value || undefined);
+  const [text, setText] = useState<string | number | string[] | undefined>(props.value);
 
-  const onPassToParent = (text?: string) => {
-    const nextText = text === '__CLEAR__' ? undefined : text;
+  const onSearch = useCallback(
+    _.debounce((str?: string) => {
+      if (props.onSearch) props.onSearch(str);
+    }, 300),
+    [],
+  );
 
-    setSearchText(nextText);
+  const onChange = (str?: string) => {
+    const nextStr = str || undefined;
 
-    if (props.onChange) {
-      props.onChange(nextText);
-    }
+    setText(nextStr);
+    onSearch(nextStr);
   };
 
-  const onChange = (event: React.FormEvent<HTMLInputElement>) => {
-    if (!event.currentTarget.value) {
-      onPassToParent('__CLEAR__');
-    } else {
-      setSearchText(event.currentTarget.value);
-    }
-  };
+  useEffect(() => {
+    if (!props.value) setText(undefined);
+  }, [props.value]);
 
   return (
     <div className={cx(style['wrapper'], props.className)}>
       <Input
         prefixCls="search-input ant-input"
-        className={cx(style['search-input-wrapper'], 'search-input-wrapper')}
         allowClear
         placeholder={`${t('_comp:SearchInput.placeholder')}`}
-        onChange={onChange}
-        defaultValue={searchText}
-        value={searchText}
+        onChange={(e) => onChange(e.currentTarget.value)}
+        value={text}
         addonAfter={
-          <SearchOutlined
-            className={style['search-input-search-button']}
-            onClick={() => onPassToParent(searchText as string)}
-          />
+          <SearchOutlined className={style['search-input-search-button']} onClick={() => onChange(text as string)} />
         }
-        onPressEnter={() => onPassToParent(searchText as string)}
-        {...props.componentProps}
+        onPressEnter={() => onChange(text as string)}
+        className={cx(style['search-input-wrapper'], 'search-input-wrapper')}
       />
     </div>
   );
