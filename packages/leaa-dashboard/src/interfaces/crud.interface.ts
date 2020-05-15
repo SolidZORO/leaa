@@ -1,6 +1,6 @@
 import { CreateQueryParams } from '@nestjsx/crud-request';
 
-export interface ICrudQueryParams extends CreateQueryParams {
+export interface ICrudListQueryParams extends CreateQueryParams {
   q?: string;
   s?: string;
 }

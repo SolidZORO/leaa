@@ -6,7 +6,7 @@ import { PaginationProps } from 'antd/es/pagination';
 import { SortOrder, SorterResult } from 'antd/es/table/interface';
 
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from '@leaa/dashboard/src/constants';
-import { ITablePagination, ICrudQueryParams } from '@leaa/dashboard/src/interfaces';
+import { ITablePagination, ICrudListQueryParams } from '@leaa/dashboard/src/interfaces';
 import { SCondition } from '@nestjsx/crud-request/lib/types';
 
 export const transRouterPathToClassName = (routerPath: string): string =>
@@ -72,10 +72,10 @@ export const mergeUrlParamToUrlQuery = ({ window, params, replace }: IMergeParam
 //
 //
 
-export const transCurdQueryToCurdState = (curdQuery: ICrudQueryParams | any): ICrudQueryParams => {
+export const transCurdQueryToCurdState = (curdQuery: ICrudListQueryParams | any): ICrudListQueryParams => {
   if (JSON.stringify(curdQuery) === '{}') return curdQuery;
 
-  const curdState: ICrudQueryParams | any = curdQuery;
+  const curdState: ICrudListQueryParams | any = curdQuery;
 
   if (typeof curdQuery.fields !== 'undefined') curdState.fields = JSON.parse(curdQuery.fields);
   if (typeof curdQuery.search !== 'undefined') curdState.search = JSON.parse(curdQuery.search);
@@ -93,10 +93,10 @@ export const transCurdQueryToCurdState = (curdQuery: ICrudQueryParams | any): IC
   return curdState;
 };
 
-export const transCurdStateToCurdQuery = (curdState: ICrudQueryParams | any): ICrudQueryParams => {
+export const transCurdStateToCurdQuery = (curdState: ICrudListQueryParams | any): ICrudListQueryParams => {
   if (JSON.stringify(curdState) === '{}') return curdState;
 
-  const curdQuery: ICrudQueryParams | any = curdState;
+  const curdQuery: ICrudListQueryParams | any = curdState;
 
   if (typeof curdState.fields !== 'undefined') curdQuery.fields = JSON.stringify(curdState.fields);
   if (typeof curdState.search !== 'undefined') curdQuery.search = JSON.stringify(curdState.search);
@@ -109,14 +109,14 @@ export const transCurdStateToCurdQuery = (curdState: ICrudQueryParams | any): IC
   return curdQuery;
 };
 
-export const transUrlQueryToCurdState = (urlQuery: string): ICrudQueryParams => {
-  const urlObject = qs.parse(urlQuery, { ignoreQueryPrefix: true });
+export const transUrlQueryToCurdState = (window: Window): ICrudListQueryParams => {
+  const urlObject = qs.parse(window.location.search, { ignoreQueryPrefix: true });
 
   return transCurdQueryToCurdState(urlObject);
 };
 
 export const transCurdStateToUrlQuery = (
-  curdState: ICrudQueryParams | any,
+  curdState: ICrudListQueryParams | any,
   qsOptions?: qs.IStringifyOptions,
 ): string => {
   const curdQuery = transCurdStateToCurdQuery(curdState);
@@ -126,7 +126,7 @@ export const transCurdStateToUrlQuery = (
 
 interface ISetCurdQueryToUrl {
   window: Window;
-  query: ICrudQueryParams | undefined;
+  query: ICrudListQueryParams | undefined;
   replace?: boolean;
 }
 
@@ -153,14 +153,13 @@ export const genFuzzySearchByQ = (
   if (!q) return undefined;
   if (!options) throw Error('genFuzzySearchByQ Missing params `options`.');
 
-  // e.g. return condition
-  // { $or: [{ module: { $cont: s } }, { account: { $cont: s } }] }
-
   const { type, fields } = options;
 
   const cFields = fields.reduce((acc: any[], cur) => {
     return acc.concat({ [cur]: { $cont: q } });
   }, []);
+
+  // return condition e.g. { $or: [{ module: { $cont: s } }, { account: { $cont: s } }] }
 
   return {
     [type]: cFields,

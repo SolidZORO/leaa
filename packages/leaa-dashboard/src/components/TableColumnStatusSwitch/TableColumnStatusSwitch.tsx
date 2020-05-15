@@ -1,68 +1,55 @@
 import cx from 'classnames';
+import { AxiosResponse, AxiosError } from 'axios';
 import React, { useState } from 'react';
-import { DocumentNode } from 'graphql';
 import { useTranslation } from 'react-i18next';
 import { Switch, message } from 'antd';
 import { SwitchSize } from 'antd/es/switch';
 
-import { errorMsg } from '@leaa/dashboard/src/utils';
-import { apolloClient } from '@leaa/dashboard/src/libs';
+import { ajax, errorMsg } from '@leaa/dashboard/src/utils';
+import { envConfig } from '@leaa/dashboard/src/configs';
+import { ICurdDeleteData, ICurdError } from '@leaa/dashboard/src/interfaces';
 
 import style from './style.module.less';
 
 interface IProps {
-  className?: string;
-  loading?: boolean;
-  size?: SwitchSize;
+  routerName: string;
   id: string;
-  value: number;
-  variablesField: string;
-  mutation: DocumentNode;
-  refetchQueries?: any;
+  value?: number;
+  size?: SwitchSize;
+  onSuccessCallback?: () => void;
+  className?: string;
 }
 
 export const TableColumnStatusSwitch = (props: IProps) => {
   const { t } = useTranslation();
-  const [switchStatus, setSwitchStatus] = useState<boolean>(Boolean(props.value));
-  const [switchLoading, setSwitchLoading] = useState<boolean>(false);
 
-  const onChange = (e: boolean) => {
-    setSwitchLoading(true);
+  const [status, setStatus] = useState<boolean>(Boolean(props.value));
+  const [loading, setLoadin] = useState(false);
 
-    apolloClient
-      .mutate<any>({
-        mutation: props.mutation,
-        variables: { id: props.id, [props.variablesField]: { status: Number(e) } },
-        fetchPolicy: 'no-cache',
-        refetchQueries: props.refetchQueries,
-      })
-      .then(() => {
-        setSwitchStatus(e);
+  const onChange = (v: boolean) => {
+    setLoadin(true);
+
+    ajax
+      .put(`${envConfig.API_URL}/${props.routerName}/${props.id}`, { status: Number(v) })
+      .then((res: AxiosResponse<ICurdDeleteData<any>>) => {
+        setStatus(Boolean(res.data.status));
 
         message.success(
           <span>
             {t('_comp:TableColumnStatusSwitch.updatedSuccessfully', { id: props.id })}
-            <Switch checked={e} size="small" className={style['tips-switch']} />
+            <Switch checked={Boolean(res.data.status)} size="small" className={style['tips-switch']} />
           </span>,
         );
 
-        // TODO add status tips
-        // messageUtil.message(
-        //   t('_comp:TableColumnStatusSwitch.updatedSuccessfully', {
-        //     id: props.id,
-        //     status: (e && t('_comp:TableColumnStatusSwitch.true')) || <p>xxxx</p>,
-        //   }),
-        // );
+        if (props.onSuccessCallback) props.onSuccessCallback();
       })
-      .catch((err: Error) => {
-        errorMsg(err.message);
-      })
-      .finally(() => setSwitchLoading(false));
+      .catch((err: AxiosError<ICurdError>) => errorMsg(err.response?.data?.message || err.message))
+      .finally(() => setLoadin(false));
   };
 
   return (
     <div className={cx(style['wrapper'], props.className)}>
-      <Switch checked={switchStatus} onChange={onChange} size={props.size} loading={switchLoading} />
+      <Switch checked={status} onChange={onChange} size={props.size} loading={loading} />
     </div>
   );
 };

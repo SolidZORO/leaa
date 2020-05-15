@@ -14,18 +14,18 @@ import {
   IKey,
   ICurdGetDataWithPagination,
   ICurdError,
-  ICrudQueryParams,
+  ICrudListQueryParams,
   ICurdDeleteData,
   ITableColumns,
 } from '@leaa/dashboard/src/interfaces';
 import {
+  msg,
   ajax,
   errorMsg,
   setCurdQueryToUrl,
   formatOrderSort,
   calcTableSortOrder,
   transUrlQueryToCurdState,
-  msg,
   genFuzzySearchByQ,
 } from '@leaa/dashboard/src/utils';
 import {
@@ -46,44 +46,29 @@ const ROUTE_NAME = 'actions';
 export default (props: IPage) => {
   const { t } = useTranslation();
 
-  const [crudQuery, setCrudQuery] = useState<ICrudQueryParams>({
+  const [crudQuery, setCrudQuery] = useState<ICrudListQueryParams>({
     ...DEFAULT_QUERY,
-    ...transUrlQueryToCurdState(window.location.search),
+    ...transUrlQueryToCurdState(window),
   });
-  const [list, setList] = useState<ICurdGetDataWithPagination<Action>>();
 
+  const [listLoading, setListLoading] = useState(false);
+
+  const [list, setList] = useState<ICurdGetDataWithPagination<Action>>();
   const [selectedRowKeys, setSelectedRowKeys] = useState<IKey[]>([]);
 
-  const [fetchLoading, setFetchLoading] = useState<any>(false);
-  const [deleteLoading, setDeleteLoading] = useState<any>(false);
-
-  const fetchList = (params: ICrudQueryParams) => {
+  const fetchList = (params: ICrudListQueryParams) => {
     setCrudQuery(params);
-    setFetchLoading(true);
+    setListLoading(true);
 
     ajax
       .get(`${envConfig.API_URL}/${ROUTE_NAME}`, { params: RequestQueryBuilder.create(params).queryObject })
       .then((res: AxiosResponse<ICurdGetDataWithPagination<Action>>) => {
-        console.log(res.data);
         setList(res.data);
 
         setCurdQueryToUrl({ window, query: params, replace: true });
       })
       .catch((err: AxiosError<ICurdError>) => errorMsg(err.response?.data?.message || err.message))
-      .finally(() => setFetchLoading(false));
-  };
-
-  const deleteItem = (id?: number) => {
-    setDeleteLoading(true);
-
-    ajax
-      .delete(`${envConfig.API_URL}/${ROUTE_NAME}/${id}`)
-      .then((res: AxiosResponse<ICurdDeleteData<Action>>) => {
-        msg(t('_lang:deletedSuccessfully', { id: res?.data?.id }));
-        fetchList(crudQuery);
-      })
-      .catch((err: AxiosError<ICurdError>) => errorMsg(err.response?.data?.message || err.message))
-      .finally(() => setDeleteLoading(false));
+      .finally(() => setListLoading(false));
   };
 
   useEffect(() => fetchList(crudQuery), [crudQuery]);
@@ -116,14 +101,19 @@ export default (props: IPage) => {
       dataIndex: 'module',
       sorter: true,
       sortOrder: calcTableSortOrder('module', crudQuery.sort),
-      render: (text: string, record: Action) => <>{record.module}</>,
+      render: (text: string, record: Action) => record.module,
     },
     {
-      title: t('_lang:action'),
+      title: t('_lang:token'),
+      dataIndex: 'token',
+      render: (text: string, record: Action) => record.token,
+    },
+    {
+      title: 'Action',
       dataIndex: 'action',
       sorter: true,
       sortOrder: calcTableSortOrder('action', crudQuery.sort),
-      render: (text: string, record: Action) => <>{record.action}</>,
+      render: (text: string, record: Action) => record.action,
     },
     {
       title: t('_lang:action'),
@@ -133,8 +123,8 @@ export default (props: IPage) => {
         <TableColumnDeleteButton
           id={record.id}
           fieldName={record.module}
-          loading={deleteLoading}
-          onClick={() => deleteItem(record.id)}
+          routerName={ROUTE_NAME}
+          onSuccessCallback={() => fetchList(transUrlQueryToCurdState(window))}
         />
       ),
     },
@@ -171,7 +161,7 @@ export default (props: IPage) => {
         </div>
       }
       className={style['wapper']}
-      loading={fetchLoading}
+      loading={listLoading}
     >
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 

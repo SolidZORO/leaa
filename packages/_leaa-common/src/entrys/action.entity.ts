@@ -44,4 +44,8 @@ export class Action {
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   @Field(() => Date)
   created_at!: Date;
+
+  @Column({ type: 'timestamp', nullable: true, onUpdate: 'CURRENT_TIMESTAMP' })
+  @Field(() => Date, { nullable: true })
+  updated_at?: Date;
 }

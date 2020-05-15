@@ -144,4 +144,7 @@ export default {
     getApiError: 'Get Api Error',
     getApiMessage: 'Get Api Message',
   },
+  Action: {
+    actionInfo: 'Action Log Info',
+  },
 };

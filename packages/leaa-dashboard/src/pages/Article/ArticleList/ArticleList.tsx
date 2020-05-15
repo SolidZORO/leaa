@@ -1,30 +1,31 @@
-import _ from 'lodash';
 import cx from 'classnames';
 import React, { useState, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
-import queryString from 'query-string';
+import { AxiosError, AxiosResponse } from 'axios';
 import { Link } from 'react-router-dom';
-import { useQuery, useMutation } from '@apollo/react-hooks';
+import { useTranslation } from 'react-i18next';
+import { RequestQueryBuilder } from '@nestjsx/crud-request';
 import { Table } from 'antd';
 
-import { DEFAULT_PAGE_SIZE_OPTIONS, PAGE_CARD_TITLE_CREATE_ICON } from '@leaa/dashboard/src/constants';
-import { GET_ARTICLES, DELETE_ARTICLE, UPDATE_ARTICLE } from '@leaa/dashboard/src/graphqls';
-
-import { Article, Tag as TagEntry } from '@leaa/common/src/entrys';
-import { ArticlesWithPaginationObject, ArticlesArgs } from '@leaa/common/src/dtos/article';
-import { IPage, IKey, ITablePagination } from '@leaa/dashboard/src/interfaces';
+import { Article } from '@leaa/common/src/entrys';
+import { envConfig } from '@leaa/dashboard/src/configs';
+import { DEFAULT_PAGE_SIZE_OPTIONS, PAGE_CARD_TITLE_CREATE_ICON, DEFAULT_QUERY } from '@leaa/dashboard/src/constants';
 import {
-  mergeUrlParamToUrlQuery,
-  getPaginationByUrl,
-  pickPaginationByUrl,
-  pickOrderByByUrl,
-  formatOrderSortByUrl,
-  formatOrderByByUrl,
-  initPaginationStateByUrl,
-  calcTableDefaultSortOrder,
-  msg,
+  IPage,
+  IKey,
+  ICurdGetDataWithPagination,
+  ICurdError,
+  ICrudListQueryParams,
+  ITableColumns,
+} from '@leaa/dashboard/src/interfaces';
+import {
+  ajax,
+  errorMsg,
+  setCurdQueryToUrl,
+  formatOrderSort,
+  calcTableSortOrder,
+  transUrlQueryToCurdState,
+  genFuzzySearchByQ,
 } from '@leaa/dashboard/src/utils';
-
 import {
   Rcon,
   PageCard,
@@ -32,65 +33,47 @@ import {
   TableCard,
   SearchInput,
   FilterIcon,
-  TagMiniSets,
-  TagSearchBox,
-  ExportButton,
   TableColumnId,
-  TableColumnDate,
-  SelectCategoryIdByTree,
   TableColumnDeleteButton,
+  TagMiniSets,
   TableColumnStatusSwitch,
+  TableColumnDate,
 } from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';
 
+const ROUTE_NAME = 'articles';
+
 export default (props: IPage) => {
   const { t } = useTranslation();
 
-  const urlParams = queryString.parse(window.location.search);
-  const urlPagination = getPaginationByUrl(urlParams);
+  const [crudQuery, setCrudQuery] = useState<ICrudListQueryParams>({
+    ...DEFAULT_QUERY,
+    ...transUrlQueryToCurdState(window),
+  });
 
-  const [tablePagination, setTablePagination] = useState<ITablePagination>(initPaginationStateByUrl(urlParams));
+  const [listLoading, setListLoading] = useState(false);
+
+  const [list, setList] = useState<ICurdGetDataWithPagination<Article>>();
   const [selectedRowKeys, setSelectedRowKeys] = useState<IKey[]>([]);
 
-  // filter
-  const [q, setQ] = useState<string | undefined>(urlParams.q ? String(urlParams.q) : undefined);
-  const [tagName, setTagName] = useState<string | undefined>(urlParams.tagName ? String(urlParams.tagName) : undefined);
-  const [categoryId, setCategoryId] = useState<string | undefined>(
-    urlParams.categoryId ? String(urlParams.categoryId) : undefined,
-  );
+  const fetchList = (params: ICrudListQueryParams) => {
+    setCrudQuery(params);
+    setListLoading(true);
 
-  // query
-  const getArticlesVariables = { ...tablePagination, q, tagName, categoryId };
-  const getArticlesQuery = useQuery<{ articles: ArticlesWithPaginationObject }, ArticlesArgs>(GET_ARTICLES, {
-    variables: getArticlesVariables,
-    fetchPolicy: 'network-only',
-  });
+    ajax
+      .get(`${envConfig.API_URL}/${ROUTE_NAME}`, { params: RequestQueryBuilder.create(params).queryObject })
+      .then((res: AxiosResponse<ICurdGetDataWithPagination<Article>>) => {
+        setList(res.data);
 
-  // mutation
-  const [deleteArticleMutate, deleteArticleMutation] = useMutation<Article>(DELETE_ARTICLE, {
-    // apollo-link-error onError: e => messageUtil.gqlError(e.message),
-    onCompleted: () => msg(t('_lang:deletedSuccessfully')),
-    refetchQueries: () => [{ query: GET_ARTICLES, variables: getArticlesVariables }],
-  });
-
-  const resetUrlParams = () => {
-    setTablePagination({
-      page: urlPagination.page,
-      pageSize: urlPagination.pageSize,
-      orderBy: undefined,
-      orderSort: undefined,
-    });
-
-    setSelectedRowKeys([]);
-    setQ(undefined);
-    setTagName(undefined);
-    setCategoryId(undefined);
+        setCurdQueryToUrl({ window, query: params, replace: true });
+      })
+      .catch((err: AxiosError<ICurdError>) => errorMsg(err.response?.data?.message || err.message))
+      .finally(() => setListLoading(false));
   };
 
-  useEffect(() => {
-    if (_.isEmpty(urlParams)) resetUrlParams(); // change route reset url
-  }, [props.history.location.key]);
+  useEffect(() => fetchList(crudQuery), [crudQuery]);
+  useEffect(() => (props.history.location.key ? setCrudQuery(DEFAULT_QUERY) : undefined), [props.history.location.key]);
 
   const rowSelection = {
     columnWidth: 30,
@@ -98,20 +81,20 @@ export default (props: IPage) => {
     selectedRowKeys,
   };
 
-  const columns = [
+  const columns: ITableColumns = [
     {
       title: 'ID',
       dataIndex: 'id',
       width: 75, // ID
       sorter: true,
-      sortOrder: calcTableDefaultSortOrder(tablePagination.orderSort, tablePagination.orderBy, 'id'),
+      sortOrder: calcTableSortOrder('id', crudQuery.sort),
       render: (id: string) => <TableColumnId id={id} link={`${props.route.path}/${id}`} />,
     },
     {
       title: t('_lang:title'),
       dataIndex: 'title',
       sorter: true,
-      sortOrder: calcTableDefaultSortOrder(tablePagination.orderSort, tablePagination.orderBy, 'title'),
+      sortOrder: calcTableSortOrder('title', crudQuery.sort),
       render: (text: string, record: Article) => (
         <>
           <Link to={`${props.route.path}/${record.id}`}>{record.title}</Link>
@@ -132,9 +115,8 @@ export default (props: IPage) => {
     {
       title: t('_lang:createdAt'),
       dataIndex: 'created_at',
-      width: 120,
       sorter: true,
-      sortOrder: calcTableDefaultSortOrder(tablePagination.orderSort, tablePagination.orderBy, 'created_at'),
+      sortOrder: calcTableSortOrder('created_at', crudQuery.sort),
       render: (text: string) => <TableColumnDate date={text} size="small" />,
     },
     {
@@ -142,14 +124,7 @@ export default (props: IPage) => {
       dataIndex: 'status',
       width: 60,
       render: (text: string, record: Article) => (
-        <TableColumnStatusSwitch
-          id={record.id}
-          value={Number(record.status)}
-          size="small"
-          variablesField="article"
-          mutation={UPDATE_ARTICLE}
-          refetchQueries={[{ query: GET_ARTICLES, variables: getArticlesVariables }]}
-        />
+        <TableColumnStatusSwitch id={record.id} value={record.status} routerName={ROUTE_NAME} size="small" />
       ),
     },
     {
@@ -160,45 +135,12 @@ export default (props: IPage) => {
         <TableColumnDeleteButton
           id={record.id}
           fieldName={record.title}
-          loading={deleteArticleMutation.loading}
-          onClick={async () => deleteArticleMutate({ variables: { id: record.id } })}
+          routerName={ROUTE_NAME}
+          onSuccessCallback={() => fetchList(transUrlQueryToCurdState(window))}
         />
       ),
     },
   ];
-
-  const onFilter = (params: { field: string; value?: string | string[] | null }) => {
-    setTablePagination({ ...tablePagination, page: 1 });
-
-    const filterParams: { q?: string; categoryId?: string; brandId?: string; tagName?: string } = {};
-
-    if (params.field === 'q') {
-      const result = params.value ? String(params.value) : undefined;
-
-      setQ(result);
-      filterParams.q = result;
-    }
-
-    if (params.field === 'tagName') {
-      const result = params.value ? String(params.value) : undefined;
-
-      setTagName(result);
-      filterParams.tagName = result;
-    }
-
-    if (params.field === 'categoryId') {
-      const result = params.value ? String(params.value) : undefined;
-
-      setCategoryId(result);
-      filterParams.categoryId = result;
-    }
-
-    mergeUrlParamToUrlQuery({
-      window,
-      params: { page: 1, ...filterParams },
-      replace: true,
-    });
-  };
 
   return (
     <PageCard
@@ -215,75 +157,47 @@ export default (props: IPage) => {
       }
       extra={
         <div className="g-page-card-extra-filter-bar-wrapper">
-          <FilterIcon showClose={urlParams} onClose={() => props.history.push('/articles')} />
-
-          <TagSearchBox
-            className={cx('g-extra-filter-bar--item', 'g-extra-filter-bar--tag')}
-            useOnBlur
-            onSelectTagCallback={(v: TagEntry) => onFilter({ field: 'tagName', value: v.name })}
-            onEnterCallback={(v) => onFilter({ field: 'tagName', value: v })}
-            value={tagName}
-            placeholder={t('_lang:tag')}
-          />
-
-          <SelectCategoryIdByTree
-            className={cx('g-extra-filter-bar--item', 'g-extra-filter-bar--category')}
-            componentProps={{ allowClear: true }}
-            onChange={(v) => onFilter({ field: 'categoryId', value: v })}
-            value={categoryId || undefined}
-            parentSlug="articles"
-          />
+          <FilterIcon query={crudQuery} clearQuery={['q', 'search']} onClose={(query: any) => setCrudQuery(query)} />
 
           <SearchInput
             className={cx('g-extra-filter-bar--item', 'g-extra-filter-bar--q')}
-            value={q}
-            onChange={(v) => onFilter({ field: 'q', value: v })}
+            value={crudQuery.q}
+            onSearch={(s?: string) => {
+              return setCrudQuery({
+                ...DEFAULT_QUERY,
+                q: s,
+                search: genFuzzySearchByQ(s, { type: '$or', fields: ['title'] }),
+              });
+            }}
           />
-
-          <ExportButton moduleName="article" params={getArticlesVariables} />
         </div>
       }
       className={style['wapper']}
-      loading={getArticlesQuery.loading}
+      loading={listLoading}
     >
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
-      {getArticlesQuery?.data?.articles?.items && (
-        <TableCard selectedRowKeys={selectedRowKeys} totalLength={getArticlesQuery.data.articles.total}>
+      {list?.data && (
+        <TableCard selectedRowKeys={selectedRowKeys} totalLength={list.total}>
           <Table
             rowKey="id"
             size="small"
             rowSelection={rowSelection}
-            columns={columns as any}
-            dataSource={getArticlesQuery.data.articles.items}
+            columns={columns}
+            dataSource={list.data}
             pagination={{
-              defaultCurrent: tablePagination.page,
-              defaultPageSize: tablePagination.pageSize,
-              total: getArticlesQuery.data.articles.total,
-              current: tablePagination.page,
-              pageSize: tablePagination.pageSize,
-              //
+              total: list.total,
+              current: list.page,
+              pageSize: crudQuery.limit,
               pageSizeOptions: DEFAULT_PAGE_SIZE_OPTIONS,
               showSizeChanger: true,
             }}
             onChange={(pagination, filters, sorter: any) => {
-              console.log(222222222);
-
-              setTablePagination({
-                ...tablePagination,
+              setCrudQuery({
+                ...crudQuery,
+                limit: pagination.pageSize,
                 page: pagination.current,
-                pageSize: pagination.pageSize,
-                orderBy: formatOrderByByUrl(sorter.field),
-                orderSort: formatOrderSortByUrl(sorter.order),
-              });
-
-              mergeUrlParamToUrlQuery({
-                window,
-                params: {
-                  ...pickPaginationByUrl(pagination),
-                  ...pickOrderByByUrl(sorter),
-                },
-                replace: true,
+                sort: formatOrderSort(sorter),
               });
             }}
           />

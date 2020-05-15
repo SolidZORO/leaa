@@ -72,6 +72,8 @@ export default {
   views: '浏览量',
   avatar: '头像',
   creator: '创建人',
+  ip: 'IP',
+  token: 'Token',
   //
   select: '选择',
   selected: '选中',

@@ -20,19 +20,6 @@ export const masterRoutes: IRouteItem[] = [
     path: '_content-group',
     icon: 'ri-archive-line',
     children: [
-      // ---- Action ----
-      {
-        name: 'Action',
-        namei18n: '_route:action',
-        permission: 'action.list-read',
-        path: '/actions',
-        icon: 'ri-file-list-2-line',
-        LazyComponent: React.lazy(() =>
-          import(/* webpackChunkName: 'ActionList' */ '../pages/Action/ActionList/ActionList'),
-        ),
-        canCreate: true,
-        exact: true,
-      },
       // ---- Article ----
       {
         name: 'Create Article',
@@ -569,6 +556,30 @@ export const masterRoutes: IRouteItem[] = [
         icon: 'ri-key-2-line',
         LazyComponent: React.lazy(() => import(/* webpackChunkName: 'AuthList' */ '../pages/Auth/AuthList/AuthList')),
         canCreate: false,
+        exact: true,
+      },
+      // ---- Action ----
+      {
+        name: 'Action',
+        namei18n: '_route:action',
+        permission: 'action.list-read',
+        path: '/actions',
+        icon: 'ri-file-list-2-line',
+        LazyComponent: React.lazy(() =>
+          import(/* webpackChunkName: 'ActionList' */ '../pages/Action/ActionList/ActionList'),
+        ),
+        canCreate: true,
+        exact: true,
+      },
+      {
+        name: 'Edit Action',
+        namei18n: '_route:editAction',
+        permission: 'action.item-read',
+        path: '/actions/:id(\\d+)',
+        icon: 'ri-function-line',
+        LazyComponent: React.lazy(() =>
+          import(/* webpackChunkName: 'EditAction' */ '../pages/Action/EditAction/EditAction'),
+        ),
         exact: true,
       },
     ],

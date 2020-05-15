@@ -3,13 +3,13 @@ import cx from 'classnames';
 import _ from 'lodash';
 
 import { Rcon } from '@leaa/dashboard/src/components';
-import { ICrudQueryParams } from '@leaa/dashboard/src/interfaces';
+import { ICrudListQueryParams } from '@leaa/dashboard/src/interfaces';
 import { DEFAULT_QUERY } from '@leaa/dashboard/src/constants';
 
 import style from './style.module.less';
 
 interface IProps {
-  query?: ICrudQueryParams | any;
+  query?: ICrudListQueryParams | any;
   clearQuery?: string[];
   onClose: (clearQuery: any) => void;
 }

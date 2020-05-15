@@ -69,6 +69,8 @@ export default {
   views: 'Views',
   avatar: 'Avatar',
   creator: 'Creator',
+  ip: 'IP',
+  token: 'Token',
   //
   select: 'Select',
   selected: 'Selected',
