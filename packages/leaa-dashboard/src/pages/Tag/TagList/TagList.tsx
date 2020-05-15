@@ -14,7 +14,7 @@ import { Tag as TagEntry } from '@leaa/common/src/entrys';
 import { TagsWithPaginationObject, TagsArgs } from '@leaa/common/src/dtos/tag';
 import { IPage, IKey, ITablePagination } from '@leaa/dashboard/src/interfaces';
 import {
-  mergeParamToUrlQuery,
+  mergeUrlParamToUrlQuery,
   getPaginationByUrl,
   pickPaginationByUrl,
   pickOrderByByUrl,
@@ -158,7 +158,7 @@ export default (props: IPage) => {
       filterParams.q = result;
     }
 
-    mergeParamToUrlQuery({
+    mergeUrlParamToUrlQuery({
       window,
       params: { page: 1, ...filterParams },
       replace: true,
@@ -223,7 +223,7 @@ export default (props: IPage) => {
                 orderSort: formatOrderSortByUrl(sorter.order),
               });
 
-              mergeParamToUrlQuery({
+              mergeUrlParamToUrlQuery({
                 window,
                 params: {
                   ...pickPaginationByUrl(pagination),

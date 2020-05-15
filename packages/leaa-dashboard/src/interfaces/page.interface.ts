@@ -1,7 +1,11 @@
 import { RouteComponentProps } from 'react-router-dom';
 import { IOrderSort } from '@leaa/common/src/dtos/_common';
 
+import { ColumnsType } from 'antd/es/table/interface';
+
 import { IRouteItem } from './router.interface';
+
+export declare type ITableColumns = ColumnsType | any;
 
 export interface ITablePagination {
   count?: number;

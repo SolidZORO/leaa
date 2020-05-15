@@ -53,6 +53,8 @@ export default {
   price: 'Price',
   serial: 'Serial',
   stock: 'Stock',
+  account: 'Account',
+  module: 'Module',
   //
   create: 'Create',
   edit: 'Edit',

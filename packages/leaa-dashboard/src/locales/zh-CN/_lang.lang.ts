@@ -56,6 +56,8 @@ export default {
   price: '价格',
   serial: '编号',
   stock: '库存',
+  account: '账户',
+  module: '模块',
   //
   create: '创建',
   edit: '编辑',

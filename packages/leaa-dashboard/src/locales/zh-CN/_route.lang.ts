@@ -23,6 +23,7 @@ const address = '地址';
 const division = '地址源';
 const zan = '集赞';
 const auth = '开放授权';
+const action = '操作记录';
 
 export default {
   home,
@@ -102,6 +103,10 @@ export default {
   zan,
   createZan: `${_lang.create} ${zan}`,
   editZan: `${_lang.edit} ${zan}`,
+  //
+  action,
+  createAction: `${_lang.create} ${action}`,
+  editAction: `${_lang.edit} ${action}`,
   //
   auth,
 };

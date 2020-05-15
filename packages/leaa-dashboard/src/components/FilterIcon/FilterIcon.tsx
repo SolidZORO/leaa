@@ -4,6 +4,7 @@ import _ from 'lodash';
 
 import { Rcon } from '@leaa/dashboard/src/components';
 import { ICrudQueryParams } from '@leaa/dashboard/src/interfaces';
+import { DEFAULT_QUERY } from '@leaa/dashboard/src/constants';
 
 import style from './style.module.less';
 
@@ -24,13 +25,7 @@ export const FilterIcon = (props: IProps) => {
       attrs[cur] = undefined;
 
       return attrs;
-    }, {});
-
-    console.log('>>>>>>>', props.query);
-
-    // default
-    clearQ.limit = props.query.limit || 20;
-    clearQ.page = 1;
+    }, DEFAULT_QUERY);
 
     if (props.onClose) props.onClose(clearQ);
   };

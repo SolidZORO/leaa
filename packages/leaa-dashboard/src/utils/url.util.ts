@@ -7,8 +7,9 @@ import { SortOrder, SorterResult } from 'antd/es/table/interface';
 
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from '@leaa/dashboard/src/constants';
 import { ITablePagination, ICrudQueryParams } from '@leaa/dashboard/src/interfaces';
+import { SCondition } from '@nestjsx/crud-request/lib/types';
 
-export const routerPathToClassName = (routerPath: string): string =>
+export const transRouterPathToClassName = (routerPath: string): string =>
   routerPath
     .replace(/^\//, '') // remove ^/
     .replace(/\/\d+/g, '-item') // replace /444  ->  -item
@@ -20,7 +21,7 @@ interface IMergeParamToUrlQuery {
   replace: boolean;
 }
 
-export const mergeParamToUrlQuery = ({ window, params, replace }: IMergeParamToUrlQuery): string => {
+export const mergeUrlParamToUrlQuery = ({ window, params, replace }: IMergeParamToUrlQuery): string => {
   const prevBaseUrl = `${window.location.origin}${window.location.pathname}`;
   const query = qs.parse(window.location.search, { ignoreQueryPrefix: true });
 
@@ -71,7 +72,7 @@ export const mergeParamToUrlQuery = ({ window, params, replace }: IMergeParamToU
 //
 //
 
-export const curdQueryToCurdState = (curdQuery: ICrudQueryParams | any): ICrudQueryParams => {
+export const transCurdQueryToCurdState = (curdQuery: ICrudQueryParams | any): ICrudQueryParams => {
   if (JSON.stringify(curdQuery) === '{}') return curdQuery;
 
   const curdState: ICrudQueryParams | any = curdQuery;
@@ -92,7 +93,7 @@ export const curdQueryToCurdState = (curdQuery: ICrudQueryParams | any): ICrudQu
   return curdState;
 };
 
-export const curdStateToCurdQuery = (curdState: ICrudQueryParams | any): ICrudQueryParams => {
+export const transCurdStateToCurdQuery = (curdState: ICrudQueryParams | any): ICrudQueryParams => {
   if (JSON.stringify(curdState) === '{}') return curdState;
 
   const curdQuery: ICrudQueryParams | any = curdState;
@@ -108,14 +109,17 @@ export const curdStateToCurdQuery = (curdState: ICrudQueryParams | any): ICrudQu
   return curdQuery;
 };
 
-export const urlQueryToCurdState = (urlQuery: string): ICrudQueryParams => {
+export const transUrlQueryToCurdState = (urlQuery: string): ICrudQueryParams => {
   const urlObject = qs.parse(urlQuery, { ignoreQueryPrefix: true });
 
-  return curdQueryToCurdState(urlObject);
+  return transCurdQueryToCurdState(urlObject);
 };
 
-export const curdStateToUrlQuery = (curdState: ICrudQueryParams | any, qsOptions?: qs.IStringifyOptions): string => {
-  const curdQuery = curdStateToCurdQuery(curdState);
+export const transCurdStateToUrlQuery = (
+  curdState: ICrudQueryParams | any,
+  qsOptions?: qs.IStringifyOptions,
+): string => {
+  const curdQuery = transCurdStateToCurdQuery(curdState);
 
   return qs.stringify(curdQuery, qsOptions);
 };
@@ -130,7 +134,7 @@ export const setCurdQueryToUrl = ({ window, query, replace }: ISetCurdQueryToUrl
   const baseUrl = `${window.location.origin}${window.location.pathname}`;
   const urlObject = qs.parse(window.location.search, { ignoreQueryPrefix: true });
 
-  const nextQuery = curdStateToUrlQuery({ ...urlObject, ...query }, { addQueryPrefix: true });
+  const nextQuery = transCurdStateToUrlQuery({ ...urlObject, ...query }, { addQueryPrefix: true });
   const nextUrl = `${baseUrl}${nextQuery}`;
 
   if (replace) {
@@ -140,6 +144,41 @@ export const setCurdQueryToUrl = ({ window, query, replace }: ISetCurdQueryToUrl
   animateScrollTo(0);
 
   return nextUrl;
+};
+
+export const genFuzzySearchByQ = (
+  q?: string,
+  options?: { type: '$or' | '$and'; fields: string[] },
+): SCondition | undefined => {
+  if (!q) return undefined;
+  if (!options) throw Error('genFuzzySearchByQ Missing params `options`.');
+
+  // e.g. return condition
+  // { $or: [{ module: { $cont: s } }, { account: { $cont: s } }] }
+
+  const { type, fields } = options;
+
+  const cFields = fields.reduce((acc: any[], cur) => {
+    return acc.concat({ [cur]: { $cont: q } });
+  }, []);
+
+  return {
+    [type]: cFields,
+  };
+
+  // const baseUrl = `${window.location.origin}${window.location.pathname}`;
+  // const urlObject = qs.parse(window.location.search, { ignoreQueryPrefix: true });
+  //
+  // const nextQuery = transCurdStateToUrlQuery({ ...urlObject, ...query }, { addQueryPrefix: true });
+  // const nextUrl = `${baseUrl}${nextQuery}`;
+  //
+  // if (replace) {
+  //   window.history.pushState(null, '', nextUrl);
+  // }
+  //
+  // animateScrollTo(0);
+  //
+  // return nextUrl;
 };
 
 //

@@ -14,7 +14,7 @@ import { Permission } from '@leaa/common/src/entrys';
 import { PermissionsWithPaginationObject, PermissionsArgs } from '@leaa/common/src/dtos/permission';
 import { IPage, IKey, ITablePagination } from '@leaa/dashboard/src/interfaces';
 import {
-  mergeParamToUrlQuery,
+  mergeUrlParamToUrlQuery,
   getPaginationByUrl,
   pickPaginationByUrl,
   pickOrderByByUrl,
@@ -145,7 +145,7 @@ export default (props: IPage) => {
       filterParams.q = result;
     }
 
-    mergeParamToUrlQuery({
+    mergeUrlParamToUrlQuery({
       window,
       params: { page: 1, ...filterParams },
       replace: true,
@@ -206,7 +206,7 @@ export default (props: IPage) => {
                 orderSort: formatOrderSortByUrl(sorter.order),
               });
 
-              mergeParamToUrlQuery({
+              mergeUrlParamToUrlQuery({
                 window,
                 params: {
                   ...pickPaginationByUrl(pagination),

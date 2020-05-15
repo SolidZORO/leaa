@@ -5,7 +5,7 @@ import animateScrollTo from 'animated-scroll-to';
 import { Layout, Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 
-import { routerPathToClassName, checkAuthIsAvailably } from '@leaa/dashboard/src/utils';
+import { transRouterPathToClassName, checkAuthIsAvailably } from '@leaa/dashboard/src/utils';
 import { IRouteItem } from '@leaa/dashboard/src/interfaces';
 import { DefaultLayout } from '@leaa/dashboard/src/components';
 
@@ -32,7 +32,7 @@ export const MasterLayout = (props: IProps) => {
     <DefaultLayout
       component={(matchProps: RouteComponentProps) => {
         const pageClassName =
-          matchProps && matchProps.match.url ? `page-${routerPathToClassName(matchProps.match.url)}` : null;
+          matchProps && matchProps.match.url ? `page-${transRouterPathToClassName(matchProps.match.url)}` : null;
 
         useEffect(() => {
           matchProps.history.listen(() => animateScrollTo(0));

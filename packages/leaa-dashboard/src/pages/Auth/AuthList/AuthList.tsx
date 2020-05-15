@@ -13,7 +13,7 @@ import { GET_AUTHS, DELETE_AUTH } from '@leaa/dashboard/src/graphqls';
 import { AuthsWithPaginationObject, AuthsArgs } from '@leaa/common/src/dtos/auth';
 import { IPage, IKey, ITablePagination } from '@leaa/dashboard/src/interfaces';
 import {
-  mergeParamToUrlQuery,
+  mergeUrlParamToUrlQuery,
   getPaginationByUrl,
   pickPaginationByUrl,
   pickOrderByByUrl,
@@ -162,7 +162,7 @@ export default (props: IPage) => {
       filterParams.q = result;
     }
 
-    mergeParamToUrlQuery({
+    mergeUrlParamToUrlQuery({
       window,
       params: { page: 1, ...filterParams },
       replace: true,
@@ -223,7 +223,7 @@ export default (props: IPage) => {
                 orderSort: formatOrderSortByUrl(sorter.order),
               });
 
-              mergeParamToUrlQuery({
+              mergeUrlParamToUrlQuery({
                 window,
                 params: {
                   ...pickPaginationByUrl(pagination),

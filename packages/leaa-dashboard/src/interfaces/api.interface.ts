@@ -1,4 +1,4 @@
-export declare interface IApiCurdGetDataWithPagination<T> {
+export declare interface ICurdGetDataWithPagination<T> {
   count: number;
   data: T[];
   page: number;
@@ -6,9 +6,9 @@ export declare interface IApiCurdGetDataWithPagination<T> {
   total: number;
 }
 
-export declare type IApiCurdDeleteData<T> = T;
+export declare type ICurdDeleteData<T> = T;
 
-export declare interface IApiCurdError {
+export declare interface ICurdError {
   error: string;
   message: string;
   statusCode: number;

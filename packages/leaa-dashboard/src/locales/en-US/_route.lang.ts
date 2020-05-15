@@ -23,6 +23,7 @@ const address = 'Address';
 const division = 'Division';
 const zan = 'Collect Zan';
 const auth = 'Auth';
+const action = 'Action Log';
 
 export default {
   home,
@@ -102,6 +103,10 @@ export default {
   zan,
   createZan: `${_lang.create} ${zan}`,
   editZan: `${_lang.edit} ${zan}`,
+  //
+  action,
+  createAction: `${_lang.create} ${action}`,
+  editAction: `${_lang.edit} ${action}`,
   //
   auth,
 };
