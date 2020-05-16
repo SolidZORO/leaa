@@ -73,59 +73,59 @@ export const mergeUrlParamToUrlQuery = ({ window, params, replace }: IMergeParam
 //
 //
 
-export const transCurdQueryToCurdState = (curdQuery: ICrudListQueryParams | any): ICrudListQueryParams => {
-  if (JSON.stringify(curdQuery) === '{}') return curdQuery;
+export const transCrudQueryToCrudState = (crudQuery: ICrudListQueryParams | any): ICrudListQueryParams => {
+  if (JSON.stringify(crudQuery) === '{}') return crudQuery;
 
-  const curdState: ICrudListQueryParams | any = curdQuery;
+  const crudState: ICrudListQueryParams | any = crudQuery;
 
-  if (typeof curdQuery.fields !== 'undefined') curdState.fields = JSON.parse(curdQuery.fields);
-  if (typeof curdQuery.search !== 'undefined') curdState.search = JSON.parse(curdQuery.search);
-  if (typeof curdQuery.filter !== 'undefined') curdState.filter = JSON.parse(curdQuery.filter);
-  if (typeof curdQuery.or !== 'undefined') curdState.or = JSON.parse(curdQuery.or);
-  if (typeof curdQuery.join !== 'undefined') curdState.join = JSON.parse(curdQuery.join);
-  if (typeof curdQuery.sort !== 'undefined') curdState.sort = JSON.parse(curdQuery.sort);
+  if (typeof crudQuery.fields !== 'undefined') crudState.fields = JSON.parse(crudQuery.fields);
+  if (typeof crudQuery.search !== 'undefined') crudState.search = JSON.parse(crudQuery.search);
+  if (typeof crudQuery.filter !== 'undefined') crudState.filter = JSON.parse(crudQuery.filter);
+  if (typeof crudQuery.or !== 'undefined') crudState.or = JSON.parse(crudQuery.or);
+  if (typeof crudQuery.join !== 'undefined') crudState.join = JSON.parse(crudQuery.join);
+  if (typeof crudQuery.sort !== 'undefined') crudState.sort = JSON.parse(crudQuery.sort);
 
-  if (typeof curdQuery.limit !== 'undefined') curdState.limit = Number(curdQuery.limit);
-  if (typeof curdQuery.offset !== 'undefined') curdState.offset = Number(curdQuery.offset);
-  if (typeof curdQuery.page !== 'undefined') curdState.page = Number(curdQuery.page);
+  if (typeof crudQuery.limit !== 'undefined') crudState.limit = Number(crudQuery.limit);
+  if (typeof crudQuery.offset !== 'undefined') crudState.offset = Number(crudQuery.offset);
+  if (typeof crudQuery.page !== 'undefined') crudState.page = Number(crudQuery.page);
 
-  if (typeof curdQuery.resetCache !== 'undefined') curdState.resetCache = JSON.parse(curdQuery.resetCache);
+  if (typeof crudQuery.resetCache !== 'undefined') crudState.resetCache = JSON.parse(crudQuery.resetCache);
 
-  return curdState;
+  return crudState;
 };
 
-export const transCurdStateToCurdQuery = (curdState: ICrudListQueryParams | any): ICrudListQueryParams => {
-  if (JSON.stringify(curdState) === '{}') return curdState;
+export const transCrudStateToCrudQuery = (crudState: ICrudListQueryParams | any): ICrudListQueryParams => {
+  if (JSON.stringify(crudState) === '{}') return crudState;
 
-  const curdQuery: ICrudListQueryParams | any = curdState;
+  const crudQuery: ICrudListQueryParams | any = crudState;
 
-  if (typeof curdState.fields !== 'undefined') curdQuery.fields = JSON.stringify(curdState.fields);
-  if (typeof curdState.search !== 'undefined') curdQuery.search = JSON.stringify(curdState.search);
-  if (typeof curdState.filter !== 'undefined') curdQuery.filter = JSON.stringify(curdState.filter);
-  if (typeof curdState.or !== 'undefined') curdQuery.or = JSON.stringify(curdState.or);
-  if (typeof curdState.join !== 'undefined') curdQuery.join = JSON.stringify(curdState.join);
-  if (typeof curdState.sort !== 'undefined') curdQuery.sort = JSON.stringify(curdState.sort);
-  if (typeof curdState.resetCache !== 'undefined') curdQuery.resetCache = JSON.stringify(curdState.resetCache);
+  if (typeof crudState.fields !== 'undefined') crudQuery.fields = JSON.stringify(crudState.fields);
+  if (typeof crudState.search !== 'undefined') crudQuery.search = JSON.stringify(crudState.search);
+  if (typeof crudState.filter !== 'undefined') crudQuery.filter = JSON.stringify(crudState.filter);
+  if (typeof crudState.or !== 'undefined') crudQuery.or = JSON.stringify(crudState.or);
+  if (typeof crudState.join !== 'undefined') crudQuery.join = JSON.stringify(crudState.join);
+  if (typeof crudState.sort !== 'undefined') crudQuery.sort = JSON.stringify(crudState.sort);
+  if (typeof crudState.resetCache !== 'undefined') crudQuery.resetCache = JSON.stringify(crudState.resetCache);
 
-  return curdQuery;
+  return crudQuery;
 };
 
-export const transUrlQueryToCurdState = (window: Window): ICrudListQueryParams => {
+export const transUrlQueryToCrudState = (window: Window): ICrudListQueryParams => {
   const urlObject = qs.parse(window.location.search, { ignoreQueryPrefix: true });
 
-  return transCurdQueryToCurdState(urlObject);
+  return transCrudQueryToCrudState(urlObject);
 };
 
-export const transCurdStateToUrlQuery = (
-  curdState: ICrudListQueryParams | any,
+export const transCrudStateToUrlQuery = (
+  crudState: ICrudListQueryParams | any,
   qsOptions?: qs.IStringifyOptions,
 ): string => {
-  const curdQuery = transCurdStateToCurdQuery(curdState);
+  const crudQuery = transCrudStateToCrudQuery(crudState);
 
-  return qs.stringify(curdQuery, qsOptions);
+  return qs.stringify(crudQuery, qsOptions);
 };
 
-interface ISetCurdQueryToUrl {
+interface ISetCrudQueryToUrl {
   window: Window;
   query: ICrudListQueryParams | undefined;
   replace?: boolean;
@@ -137,11 +137,11 @@ export const getUrlPath = (w?: Window): string => {
   return `${win.location.origin}${win.location.pathname}`;
 };
 
-export const setCurdQueryToUrl = ({ window, query, replace }: ISetCurdQueryToUrl): string => {
+export const setCrudQueryToUrl = ({ window, query, replace }: ISetCrudQueryToUrl): string => {
   const urlPath = getUrlPath(window);
   const urlObject = qs.parse(window.location.search, { ignoreQueryPrefix: true });
 
-  const nextQuery = transCurdStateToUrlQuery({ ...urlObject, ...query }, { addQueryPrefix: true });
+  const nextQuery = transCrudStateToUrlQuery({ ...urlObject, ...query }, { addQueryPrefix: true });
   const nextUrl = `${urlPath}${nextQuery}`;
 
   if (replace) {
@@ -153,10 +153,10 @@ export const setCurdQueryToUrl = ({ window, query, replace }: ISetCurdQueryToUrl
   return nextUrl;
 };
 
-export const genCurdRequestQuery = (curdState: ICrudListQueryParams): ICrudListQueryParams | undefined => {
+export const genCrudRequestQuery = (crudState: ICrudListQueryParams): ICrudListQueryParams | undefined => {
   try {
-    console.log(RequestQueryBuilder.create(curdState).queryObject);
-    return RequestQueryBuilder.create(curdState).queryObject;
+    console.log(RequestQueryBuilder.create(crudState).queryObject);
+    return RequestQueryBuilder.create(crudState).queryObject;
   } catch (err) {
     errorMsg(err.message);
     return DEFAULT_QUERY;
@@ -187,7 +187,7 @@ export const genFuzzySearchByQ = (
   // const baseUrl = `${window.location.origin}${window.location.pathname}`;
   // const urlObject = qs.parse(window.location.search, { ignoreQueryPrefix: true });
   //
-  // const nextQuery = transCurdStateToUrlQuery({ ...urlObject, ...query }, { addQueryPrefix: true });
+  // const nextQuery = transCrudStateToUrlQuery({ ...urlObject, ...query }, { addQueryPrefix: true });
   // const nextUrl = `${baseUrl}${nextQuery}`;
   //
   // if (replace) {

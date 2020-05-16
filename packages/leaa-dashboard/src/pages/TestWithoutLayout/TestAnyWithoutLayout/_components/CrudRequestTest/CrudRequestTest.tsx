@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { CreateQueryParams } from '@nestjsx/crud-request/lib/interfaces';
-import { getCurdQueryByUrl } from '@leaa/dashboard/src/utils';
+import { getCrudQueryByUrl } from '@leaa/dashboard/src/utils';
 import queryString from 'query-string';
 import { RequestQueryBuilder } from '@nestjsx/crud-request';
 
@@ -9,7 +9,7 @@ export const CrudRequestTest = () => {
   //
   //
   //
-  // const ACTIONS_QUERY_BY_URL: CreateQueryParams = getCurdQueryByUrl(window.location.search);
+  // const ACTIONS_QUERY_BY_URL: CreateQueryParams = getCrudQueryByUrl(window.location.search);
   // const ACTIONS_QUERY_BY_DEFAULT: CreateQueryParams = {
   //   fields: ['account', 'id', 'module'],
   //   search: { module: { $eq: 'auth' } },
@@ -28,10 +28,10 @@ export const CrudRequestTest = () => {
   //   // eslint-disable-next-line max-len
   //   'limit=99&s=%7B%22module%22:%20%7B%22$eq%22:%20%22auth%22%7D%7D&fields=account,module&q=AAAAAAAAAAAAA';
   //
-  // const curdQuery = urlToCurd(url);
-  // console.log('curdQuery >>>', curdQuery);
+  // const crudQuery = urlToCrud(url);
+  // console.log('crudQuery >>>', crudQuery);
   //
-  // const urlString = curdToUrl(curdQuery);
+  // const urlString = crudToUrl(crudQuery);
   // console.log('urlString >>>', urlString);
   // //
   //

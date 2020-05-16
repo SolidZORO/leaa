@@ -15,11 +15,11 @@ import { AuthLoginInput } from '@leaa/common/src/dtos/auth';
 import { CrudController, Crud, ParsedRequest, ParsedBody } from '@nestjsx/crud';
 import { Company, Auth } from '@leaa/common/src/entrys';
 import { CompanyService } from '@leaa/api/src/modules/company/company.service';
-import { curdConfig } from '@leaa/api/src/configs';
+import { crudConfig } from '@leaa/api/src/configs';
 import { JwtGuard, PermissionsGuard } from '@leaa/api/src/guards';
 
 // @Crud({
-//   ...curdConfig,
+//   ...crudConfig,
 //   model: {
 //     type: Auth,
 //   },

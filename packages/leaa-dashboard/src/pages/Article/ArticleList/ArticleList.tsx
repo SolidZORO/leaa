@@ -14,18 +14,18 @@ import {
   ICrudListQueryParams,
   ITableColumns,
   IHttpRes,
-  ICurdRes,
+  ICrudRes,
   IHttpError,
 } from '@leaa/dashboard/src/interfaces';
 import {
   ajax,
   errorMsg,
-  setCurdQueryToUrl,
+  setCrudQueryToUrl,
   formatOrderSort,
   calcTableSortOrder,
-  transUrlQueryToCurdState,
+  transUrlQueryToCrudState,
   genFuzzySearchByQ,
-  genCurdRequestQuery,
+  genCrudRequestQuery,
 } from '@leaa/dashboard/src/utils';
 import {
   Rcon,
@@ -51,12 +51,12 @@ export default (props: IPage) => {
 
   const [crudQuery, setCrudQuery] = useState<ICrudListQueryParams>({
     ...DEFAULT_QUERY,
-    ...transUrlQueryToCurdState(window),
+    ...transUrlQueryToCrudState(window),
   });
 
   const [listLoading, setListLoading] = useState(false);
 
-  const [list, setList] = useState<ICurdRes<Article>>();
+  const [list, setList] = useState<ICrudRes<Article>>();
   const [selectedRowKeys, setSelectedRowKeys] = useState<IKey[]>([]);
 
   const fetchList = (params: ICrudListQueryParams) => {
@@ -64,13 +64,13 @@ export default (props: IPage) => {
     setListLoading(true);
 
     ajax
-      .get(`${envConfig.API_URL}/${ROUTE_NAME}`, { params: { params: genCurdRequestQuery(params) } })
-      .then((res: IHttpRes<ICurdRes<Article>>) => {
+      .get(`${envConfig.API_URL}/${ROUTE_NAME}`, { params: { params: genCrudRequestQuery(params) } })
+      .then((res: IHttpRes<ICrudRes<Article>>) => {
         setList(res.data.data);
 
-        setCurdQueryToUrl({ window, query: params, replace: true });
+        setCrudQueryToUrl({ window, query: params, replace: true });
       })
-      .catch((err: AxiosError<IHttpError>) => errorMsg(err.response?.data?.message || err.message))
+      .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
       .finally(() => setListLoading(false));
   };
 
@@ -138,7 +138,7 @@ export default (props: IPage) => {
           id={record.id}
           fieldName={record.title}
           routerName={ROUTE_NAME}
-          onSuccessCallback={() => fetchList(transUrlQueryToCurdState(window))}
+          onSuccessCallback={() => fetchList(transUrlQueryToCrudState(window))}
         />
       ),
     },
@@ -176,7 +176,7 @@ export default (props: IPage) => {
               return setCrudQuery({
                 ...DEFAULT_QUERY,
                 q: s,
-                search: genFuzzySearchByQ(s, { type: '$or', fields: ['title'] }),
+                search: genFuzzySearchByQ(s, { type: '$or', fields: ['title', 'slug'] }),
               });
             }}
           />

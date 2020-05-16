@@ -2,7 +2,7 @@ import { Controller, UseGuards } from '@nestjs/common';
 import { Crud, CrudController } from '@nestjsx/crud';
 
 import { Permissions } from '@leaa/api/src/decorators';
-// import { curdConfig } from '@leaa/api/src/configs';
+// import { crudConfig } from '@leaa/api/src/configs';
 import { CreateArticleInput, UpdateArticleInput } from '@leaa/common/src/dtos/article';
 import { JwtGuard, PermissionsGuard } from '@leaa/api/src/guards';
 import { Article } from '@leaa/common/src/entrys';

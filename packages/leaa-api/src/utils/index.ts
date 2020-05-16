@@ -2,7 +2,7 @@ export * from './msg.util';
 export * from './cli.util';
 export * from './argsUtil';
 export * from './path.util';
-export * from './curd.util';
+export * from './crud.util';
 export * from './dict.util';
 export * from './auth.util';
 export * from './http.util';

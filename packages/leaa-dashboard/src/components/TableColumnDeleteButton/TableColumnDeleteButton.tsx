@@ -9,7 +9,7 @@ import { DeleteOutlined, LoadingOutlined, QuestionCircleOutlined } from '@ant-de
 import { ajax, errorMsg, msg } from '@leaa/dashboard/src/utils';
 import { envConfig } from '@leaa/dashboard/src/configs';
 import { AxiosResponse, AxiosError } from 'axios';
-import { ICurdDeleteData, ICurdError } from '@leaa/dashboard/src/interfaces';
+import { ICrudDeleteData, ICrudError } from '@leaa/dashboard/src/interfaces';
 
 import { IdTag } from '../IdTag/IdTag';
 
@@ -35,12 +35,12 @@ export const TableColumnDeleteButton = (props: IProps) => {
 
     ajax
       .delete(`${envConfig.API_URL}/${props.routerName}/${props.id}`)
-      .then((res: AxiosResponse<ICurdDeleteData<any>>) => {
+      .then((res: AxiosResponse<ICrudDeleteData<any>>) => {
         msg(t('_lang:deletedSuccessfully', { id: res?.data?.id }));
 
         if (props.onSuccessCallback) props.onSuccessCallback();
       })
-      .catch((err: AxiosError<ICurdError>) => errorMsg(err.response?.data?.message || err.message))
+      .catch((err: AxiosError<ICrudError>) => errorMsg(err.response?.data?.message || err.message))
       .finally(() => setLoading(false));
 
     if (props.onChange) props.onChange();

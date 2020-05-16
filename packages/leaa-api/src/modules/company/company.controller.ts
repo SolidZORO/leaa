@@ -1,14 +1,14 @@
 import { Controller, HttpCode, Post, Req, Body } from '@nestjs/common';
 import { Crud, CrudController, ParsedRequest, ParsedBody } from '@nestjsx/crud';
 
-import { curdConfig } from '@leaa/api/src/configs';
+import { crudConfig } from '@leaa/api/src/configs';
 import { Company } from '@leaa/common/src/entrys';
 import { ICrudRequest } from '@leaa/api/src/interfaces';
 import { AuthLoginInput } from '@leaa/common/src/dtos/auth';
 import { CompanyService } from './company.service';
 
 @Crud({
-  ...curdConfig,
+  ...crudConfig,
   model: {
     type: Company,
   },

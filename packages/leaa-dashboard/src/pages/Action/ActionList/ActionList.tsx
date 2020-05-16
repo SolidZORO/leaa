@@ -13,18 +13,18 @@ import {
   IHttpRes,
   ITableColumns,
   ICrudListQueryParams,
-  ICurdRes,
+  ICrudRes,
   IHttpError,
 } from '@leaa/dashboard/src/interfaces';
 import {
   ajax,
   errorMsg,
-  setCurdQueryToUrl,
+  setCrudQueryToUrl,
   formatOrderSort,
   calcTableSortOrder,
-  transUrlQueryToCurdState,
+  transUrlQueryToCrudState,
   genFuzzySearchByQ,
-  genCurdRequestQuery,
+  genCrudRequestQuery,
 } from '@leaa/dashboard/src/utils';
 import {
   Rcon,
@@ -46,12 +46,12 @@ export default (props: IPage) => {
 
   const [crudQuery, setCrudQuery] = useState<ICrudListQueryParams>({
     ...DEFAULT_QUERY,
-    ...transUrlQueryToCurdState(window),
+    ...transUrlQueryToCrudState(window),
   });
 
   const [listLoading, setListLoading] = useState(false);
 
-  const [list, setList] = useState<ICurdRes<Action>>();
+  const [list, setList] = useState<ICrudRes<Action>>();
   const [selectedRowKeys, setSelectedRowKeys] = useState<IKey[]>([]);
 
   const fetchList = (params: ICrudListQueryParams) => {
@@ -59,11 +59,11 @@ export default (props: IPage) => {
     setListLoading(true);
 
     ajax
-      .get(`${envConfig.API_URL}/${ROUTE_NAME}`, { params: genCurdRequestQuery(params) })
-      .then((res: IHttpRes<ICurdRes<Action>>) => {
+      .get(`${envConfig.API_URL}/${ROUTE_NAME}`, { params: genCrudRequestQuery(params) })
+      .then((res: IHttpRes<ICrudRes<Action>>) => {
         setList(res.data.data);
 
-        setCurdQueryToUrl({ window, query: params, replace: true });
+        setCrudQueryToUrl({ window, query: params, replace: true });
       })
       .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
       .finally(() => setListLoading(false));
@@ -122,7 +122,7 @@ export default (props: IPage) => {
           id={record.id}
           fieldName={record.module}
           routerName={ROUTE_NAME}
-          onSuccessCallback={() => fetchList(transUrlQueryToCurdState(window))}
+          onSuccessCallback={() => fetchList(transUrlQueryToCrudState(window))}
         />
       ),
     },

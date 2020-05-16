@@ -6,7 +6,7 @@ import { Button } from 'antd';
 import { Action } from '@leaa/common/src/entrys';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { UpdateActionInput } from '@leaa/common/src/dtos/action';
-import { IPage, ICommenFormRef, ICurdError, ISubmitData } from '@leaa/dashboard/src/interfaces';
+import { IPage, ICommenFormRef, ICrudError, ISubmitData } from '@leaa/dashboard/src/interfaces';
 import { ajax, errorMsg, msg } from '@leaa/dashboard/src/utils';
 
 import { envConfig } from '@leaa/dashboard/src/configs';
@@ -38,7 +38,7 @@ export default (props: IPage) => {
       .then((res: AxiosResponse<Action>) => {
         setItem(res.data);
       })
-      .catch((err: AxiosError<ICurdError>) => errorMsg(err.response?.data?.message || err.message))
+      .catch((err: AxiosError<ICrudError>) => errorMsg(err.response?.data?.message || err.message))
       .finally(() => setitemLoading(false));
   };
 
@@ -52,7 +52,7 @@ export default (props: IPage) => {
 
         msg(t('_lang:updatedSuccessfully'));
       })
-      .catch((err: AxiosError<ICurdError>) => errorMsg(err.response?.data?.message || err.message))
+      .catch((err: AxiosError<ICrudError>) => errorMsg(err.response?.data?.message || err.message))
       .finally(() => setSubmitLoading(false));
   };
 

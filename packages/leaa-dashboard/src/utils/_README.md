@@ -10,7 +10,7 @@ e.g. `formatOrder()`
 
 ### 把 A 变成 B（I/O 类型改变）`trans`
 
-e.g. `transCurdStateToUrlQuery()`
+e.g. `transCrudStateToUrlQuery()`
 
 ```
 { q: 'abc' } => { order: ""abc"" } (JSON.stringify)
