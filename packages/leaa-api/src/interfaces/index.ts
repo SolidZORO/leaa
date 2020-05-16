@@ -6,7 +6,7 @@ export * from './config.interface';
 export * from './setting.interface';
 export * from './auth.interface';
 //
-export * from './express.interface';
+export * from './http.interface';
 export * from './article.interface';
 export * from './zan.interface';
 export * from './product.interface';

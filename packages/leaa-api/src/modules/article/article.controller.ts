@@ -30,15 +30,17 @@ import { ArticleService } from './article.service';
   routes: {
     // getManyBase: { decorators: [Permissions('article.list-read')] },
     // getOneBase: { decorators: [Permissions('article.item-read')] },
-    createOneBase: { decorators: [Permissions('article.item-create')] },
-    deleteOneBase: { decorators: [Permissions('article.item-delete')], returnDeleted: true },
+    createOneBase: { decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('article.item-create')] },
+    deleteOneBase: {
+      decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('article.item-delete')],
+      returnDeleted: true,
+    },
   },
   dto: {
     create: CreateArticleInput,
     update: UpdateArticleInput,
   },
 })
-@UseGuards(JwtGuard, PermissionsGuard)
 @Controller('/articles')
 export class ArticleController implements CrudController<Article> {
   constructor(public service: ArticleService) {}

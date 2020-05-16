@@ -37,17 +37,17 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
 
-    "paths": {
-      "@starter/*": ["packages/*/src"]
-    },
-
     /* Advanced Options */
     "resolveJsonModule": true,
     "forceConsistentCasingInFileNames": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "removeComments": true,
-    "pretty": true
+    "pretty": true,
+
+    "paths": {
+      "@starter/*": ["packages/*/src"]
+    }
   },
   "compileOnSave": false,
   "include": ["packages/*/src", "packages/*/typings"],

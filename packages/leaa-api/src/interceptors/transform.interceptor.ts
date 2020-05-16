@@ -1,31 +1,33 @@
-import { Injectable, HttpException, NestInterceptor, CallHandler, ExecutionContext, HttpStatus } from '@nestjs/common';
-import { Reflector } from '@nestjs/core';
-import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Injectable, NestInterceptor, ExecutionContext, CallHandler, HttpStatus } from '@nestjs/common';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { IResponse, IRequest } from '@leaa/api/src/interfaces';
+
+export interface IHttpData<T> {
+  statusCode: number;
+  message: string;
+  data: T;
+  lang: string;
+}
 
 @Injectable()
-export class ErrorsInterceptor implements NestInterceptor {
-  // constructor(private readonly reflector: Reflector) {}
+export class TransformInterceptor<T> implements NestInterceptor<T, IHttpData<T>> {
+  intercept(context: ExecutionContext, next: CallHandler): Observable<IHttpData<T>> {
+    const ctx = context.switchToHttp();
+    const res: IResponse = ctx.getResponse();
+    const req: IRequest = ctx.getRequest();
 
-  intercept(context: ExecutionContext, next: CallHandler<any>): Observable<any> {
-    const call$ = next.handle();
+    const statusCode = res.statusCode || HttpStatus.OK;
+    const message = 'Success';
+    const lang = req.language || '';
 
-    return call$.pipe(
-      catchError((error: any): any => {
-        if (error instanceof HttpException) {
-          return Promise.resolve({
-            code: error.getStatus(),
-            message: error.getResponse(),
-          });
-        }
-
-        if (error.code && error.details) {
-          return Promise.resolve({
-            code: error.code,
-            message: error.details,
-          });
-        }
-      }),
+    return next.handle().pipe(
+      map((data) => ({
+        statusCode,
+        message,
+        lang,
+        data,
+      })),
     );
   }
 }

@@ -141,7 +141,7 @@ export default (props: IPage) => {
         // console.log(res);
 
         // clearGuestInfo();
-        setLogin(res.data);
+        setLogin(res.data.data);
       })
       .catch((err) => {
         errorMsg(err.message);

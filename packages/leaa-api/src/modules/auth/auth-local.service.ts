@@ -4,7 +4,7 @@ import svgCaptcha from 'svg-captcha';
 import xss from 'xss';
 import bcryptjs from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException, HttpException, NotFoundException } from '@nestjs/common';
 import { Repository, Between, In } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
@@ -47,11 +47,11 @@ export class AuthLocalService extends TypeOrmCrudService<Auth> {
   async login(req: ICrudRequest, body: AuthLoginInput): Promise<User | undefined> {
     const { t } = req;
 
-    if (!req || !req?.ip) throw errorMsg(t('_error:notFoundIp'));
+    if (!req || !req?.ip) throw new NotFoundException(t('_error:notFoundIp'));
 
     const account = xss.filterXSS(body.email.trim().toLowerCase());
 
-    const findUser = await this.userRepository.findOne({
+    const findUser = await this.userRepository.findOneOrFail({
       select: ['id', 'email', 'name', 'status', 'password', 'avatar_url'],
       where: {
         email: account,
@@ -59,9 +59,6 @@ export class AuthLocalService extends TypeOrmCrudService<Auth> {
       // for get flatPermissions
       relations: ['roles'],
     });
-
-    console.log('ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ');
-    console.log('ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ', req.options);
 
     // log
     const loginAction = await this.actionService.logAction(req, {
@@ -71,16 +68,6 @@ export class AuthLocalService extends TypeOrmCrudService<Auth> {
       token: body.guestToken || 'NO-TOKEN',
       account,
     });
-    //   {
-    // const loginAction = await this.actionService.createOne(req, {
-    //   // ip: req?.ip,
-    //   module: 'auth',
-    //   action: 'login',
-    //   // token: body.guestToken || 'NO-TOKEN',
-    //   // account,
-    // });
-
-    console.log('XXXXXXXXXX', loginAction);
 
     const user = checkAvailableUser(findUser);
 
@@ -126,9 +113,7 @@ export class AuthLocalService extends TypeOrmCrudService<Auth> {
       const msg = `User (${account}) Info Not Match`;
       logger.log(msg, CLS_NAME);
 
-      // throw errorMsg(t('_error:userInfoNotMatch'));
-      throw errorMsg(t('_error:userInfoNotMatch'), { statusCode: 401 });
-      // return Error('111111111111');
+      throw new UnauthorizedException(t('_error:userInfoNotMatch'));
     }
 
     if (user.password) delete user.password;

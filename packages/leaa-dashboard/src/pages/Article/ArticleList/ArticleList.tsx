@@ -1,9 +1,8 @@
 import cx from 'classnames';
 import React, { useState, useEffect } from 'react';
-import { AxiosError, AxiosResponse } from 'axios';
+import { AxiosError } from 'axios';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { RequestQueryBuilder } from '@nestjsx/crud-request';
 import { Table } from 'antd';
 
 import { Article } from '@leaa/common/src/entrys';
@@ -12,10 +11,11 @@ import { DEFAULT_PAGE_SIZE_OPTIONS, PAGE_CARD_TITLE_CREATE_ICON, DEFAULT_QUERY }
 import {
   IPage,
   IKey,
-  ICurdGetDataWithPagination,
-  ICurdError,
   ICrudListQueryParams,
   ITableColumns,
+  IHttpRes,
+  ICurdRes,
+  IHttpError,
 } from '@leaa/dashboard/src/interfaces';
 import {
   ajax,
@@ -25,6 +25,7 @@ import {
   calcTableSortOrder,
   transUrlQueryToCurdState,
   genFuzzySearchByQ,
+  genCurdRequestQuery,
 } from '@leaa/dashboard/src/utils';
 import {
   Rcon,
@@ -38,6 +39,7 @@ import {
   TagMiniSets,
   TableColumnStatusSwitch,
   TableColumnDate,
+  SelectCategoryIdByTree,
 } from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';
@@ -54,7 +56,7 @@ export default (props: IPage) => {
 
   const [listLoading, setListLoading] = useState(false);
 
-  const [list, setList] = useState<ICurdGetDataWithPagination<Article>>();
+  const [list, setList] = useState<ICurdRes<Article>>();
   const [selectedRowKeys, setSelectedRowKeys] = useState<IKey[]>([]);
 
   const fetchList = (params: ICrudListQueryParams) => {
@@ -62,13 +64,13 @@ export default (props: IPage) => {
     setListLoading(true);
 
     ajax
-      .get(`${envConfig.API_URL}/${ROUTE_NAME}`, { params: RequestQueryBuilder.create(params).queryObject })
-      .then((res: AxiosResponse<ICurdGetDataWithPagination<Article>>) => {
-        setList(res.data);
+      .get(`${envConfig.API_URL}/${ROUTE_NAME}`, { params: { params: genCurdRequestQuery(params) } })
+      .then((res: IHttpRes<ICurdRes<Article>>) => {
+        setList(res.data.data);
 
         setCurdQueryToUrl({ window, query: params, replace: true });
       })
-      .catch((err: AxiosError<ICurdError>) => errorMsg(err.response?.data?.message || err.message))
+      .catch((err: AxiosError<IHttpError>) => errorMsg(err.response?.data?.message || err.message))
       .finally(() => setListLoading(false));
   };
 
@@ -158,6 +160,14 @@ export default (props: IPage) => {
       extra={
         <div className="g-page-card-extra-filter-bar-wrapper">
           <FilterIcon query={crudQuery} clearQuery={['q', 'search']} onClose={(query: any) => setCrudQuery(query)} />
+
+          {/*<SelectCategoryIdByTree*/}
+          {/*  className={cx('g-extra-filter-bar--item', 'g-extra-filter-bar--category')}*/}
+          {/*  componentProps={{ allowClear: true }}*/}
+          {/*  // onChange={v => onFilter({ field: 'categoryId', value: v })}*/}
+          {/*  // value={categoryId || undefined}*/}
+          {/*  parentSlug="articles"*/}
+          {/*/>*/}
 
           <SearchInput
             className={cx('g-extra-filter-bar--item', 'g-extra-filter-bar--q')}

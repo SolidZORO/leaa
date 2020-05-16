@@ -1,9 +1,7 @@
 import cx from 'classnames';
 import React, { useState, useEffect } from 'react';
-import { AxiosError, AxiosResponse } from 'axios';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { RequestQueryBuilder } from '@nestjsx/crud-request';
 import { Table } from 'antd';
 
 import { Action } from '@leaa/common/src/entrys';
@@ -12,14 +10,13 @@ import { DEFAULT_PAGE_SIZE_OPTIONS, PAGE_CARD_TITLE_CREATE_ICON, DEFAULT_QUERY }
 import {
   IPage,
   IKey,
-  ICurdGetDataWithPagination,
-  ICurdError,
-  ICrudListQueryParams,
-  ICurdDeleteData,
+  IHttpRes,
   ITableColumns,
+  ICrudListQueryParams,
+  ICurdRes,
+  IHttpError,
 } from '@leaa/dashboard/src/interfaces';
 import {
-  msg,
   ajax,
   errorMsg,
   setCurdQueryToUrl,
@@ -27,6 +24,7 @@ import {
   calcTableSortOrder,
   transUrlQueryToCurdState,
   genFuzzySearchByQ,
+  genCurdRequestQuery,
 } from '@leaa/dashboard/src/utils';
 import {
   Rcon,
@@ -53,7 +51,7 @@ export default (props: IPage) => {
 
   const [listLoading, setListLoading] = useState(false);
 
-  const [list, setList] = useState<ICurdGetDataWithPagination<Action>>();
+  const [list, setList] = useState<ICurdRes<Action>>();
   const [selectedRowKeys, setSelectedRowKeys] = useState<IKey[]>([]);
 
   const fetchList = (params: ICrudListQueryParams) => {
@@ -61,13 +59,13 @@ export default (props: IPage) => {
     setListLoading(true);
 
     ajax
-      .get(`${envConfig.API_URL}/${ROUTE_NAME}`, { params: RequestQueryBuilder.create(params).queryObject })
-      .then((res: AxiosResponse<ICurdGetDataWithPagination<Action>>) => {
-        setList(res.data);
+      .get(`${envConfig.API_URL}/${ROUTE_NAME}`, { params: genCurdRequestQuery(params) })
+      .then((res: IHttpRes<ICurdRes<Action>>) => {
+        setList(res.data.data);
 
         setCurdQueryToUrl({ window, query: params, replace: true });
       })
-      .catch((err: AxiosError<ICurdError>) => errorMsg(err.response?.data?.message || err.message))
+      .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
       .finally(() => setListLoading(false));
   };
 

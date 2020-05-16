@@ -9,6 +9,8 @@
 
     "moduleResolution": "node",
 
+    "experimentalDecorators": true,
+
     "paths": {
       "@leaa/common/*": ["../_leaa-common/*"],
       "@leaa/api/*": ["./*"]

@@ -1,6 +1,5 @@
-import { ExecutionContext, Injectable } from '@nestjs/common';
+import { ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { errorMsg } from '@leaa/api/src/utils';
 
 @Injectable()
 export class JwtGuard extends AuthGuard('jwt') {
@@ -11,7 +10,7 @@ export class JwtGuard extends AuthGuard('jwt') {
   handleRequest(err: Error, user: any, info: any, context: any) {
     const { t } = context.getRequest();
 
-    if (err || !user) throw errorMsg(t('_error:unauthorized'));
+    if (err || !user) throw new UnauthorizedException(t('_error:unauthorized'));
 
     return user;
   }

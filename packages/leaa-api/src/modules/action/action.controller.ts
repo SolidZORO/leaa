@@ -17,17 +17,19 @@ import { ActionService } from './action.service';
     alwaysPaginate: true,
   },
   routes: {
-    getManyBase: { decorators: [Permissions('action.list-read')] },
-    getOneBase: { decorators: [Permissions('action.item-read')] },
-    createOneBase: { decorators: [Permissions('action.item-create')] },
-    deleteOneBase: { decorators: [Permissions('action.item-delete')], returnDeleted: true },
+    getManyBase: { decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('action.list-read')] },
+    getOneBase: { decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('action.item-read')] },
+    createOneBase: { decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('action.item-create')] },
+    deleteOneBase: {
+      decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('action.item-delete')],
+      returnDeleted: true,
+    },
   },
   dto: {
     create: CreateActionInput,
     update: UpdateActionInput,
   },
 })
-@UseGuards(JwtGuard, PermissionsGuard)
 @Controller('/actions')
 export class ActionController implements CrudController<Action> {
   constructor(public service: ActionService) {}

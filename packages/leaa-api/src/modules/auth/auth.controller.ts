@@ -29,28 +29,12 @@ import { JwtGuard, PermissionsGuard } from '@leaa/api/src/guards';
 // export class UserController {
 // @UseGuards(JwtGuard)
 export class AuthController {
-  // constructor(public authLocalService: AuthLocalService) {}
-
   constructor(public authLocalService: AuthLocalService) {}
-
-  // constructor(
-  //   private readonly authLocalService: AuthLocalService,
-  //   private readonly authGithubService: AuthGithubService,
-  // ) {}
 
   @HttpCode(200)
   @Post('/login')
   async login(@Req() req: ICrudRequest, @Body() body: AuthLoginInput): Promise<any> {
     return this.authLocalService.login(req, body);
-  }
-
-  @HttpCode(200)
-  @Permissions('action.list-read')
-  @UseGuards(JwtGuard, PermissionsGuard)
-  @Post('/login2')
-  async login2(@Req() req: ICrudRequest, @Body() body: AuthLoginInput): Promise<any> {
-    console.log(req.user);
-    return JSON.stringify(req.user?.flatPermissions);
   }
 
   // //

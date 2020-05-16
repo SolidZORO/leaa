@@ -1,1 +1,2 @@
-export * from '@leaa/api/src/interceptors/http-cache.interceptor';
+export * from './http-cache.interceptor';
+export * from './transform.interceptor';

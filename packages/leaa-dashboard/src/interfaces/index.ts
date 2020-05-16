@@ -5,5 +5,5 @@ export * from './i18n.interface';
 export * from './auth.interface';
 export * from './config.interface';
 export * from './form.interface';
-export * from './api.interface';
+export * from './http.interface';
 export * from './crud.interface';

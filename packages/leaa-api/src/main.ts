@@ -8,6 +8,8 @@ import { TagService } from '@leaa/api/src/modules/tag/tag.service';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 import { LoggerService } from '@leaa/api/src/modules/logger/logger.service';
 import { I18nextMiddleware } from '@leaa/api/src/middlewares';
+import { HttpExceptionFilter } from '@leaa/api/src/filters';
+import { TransformInterceptor } from '@leaa/api/src/interceptors';
 
 import { envInfoForCli } from '@leaa/api/src/utils';
 
@@ -22,9 +24,10 @@ import { envInfoForCli } from '@leaa/api/src/utils';
   const configService = await app.get(ConfigService);
   const publicPath = path.resolve(__dirname, `../${configService.PUBLIC_DIR}`);
 
-  // app.useStaticAssets(publicPath);
   app.useStaticAssets(publicPath);
   app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalFilters(new HttpExceptionFilter());
+  app.useGlobalInterceptors(new TransformInterceptor());
 
   app.disable('x-powered-by');
   app.enableCors({

@@ -1,13 +1,14 @@
 import _ from 'lodash';
 import qs from 'qs';
 import animateScrollTo from 'animated-scroll-to';
-import { QuerySortArr, QuerySort } from '@nestjsx/crud-request';
+import { QuerySortArr, QuerySort, RequestQueryBuilder } from '@nestjsx/crud-request';
 import { PaginationProps } from 'antd/es/pagination';
 import { SortOrder, SorterResult } from 'antd/es/table/interface';
 
-import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from '@leaa/dashboard/src/constants';
+import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE, DEFAULT_QUERY } from '@leaa/dashboard/src/constants';
 import { ITablePagination, ICrudListQueryParams } from '@leaa/dashboard/src/interfaces';
 import { SCondition } from '@nestjsx/crud-request/lib/types';
+import { errorMsg } from '@leaa/dashboard/src/utils/msg.util';
 
 export const transRouterPathToClassName = (routerPath: string): string =>
   routerPath
@@ -130,12 +131,18 @@ interface ISetCurdQueryToUrl {
   replace?: boolean;
 }
 
+export const getUrlPath = (w?: Window): string => {
+  const win = w || window;
+
+  return `${win.location.origin}${win.location.pathname}`;
+};
+
 export const setCurdQueryToUrl = ({ window, query, replace }: ISetCurdQueryToUrl): string => {
-  const baseUrl = `${window.location.origin}${window.location.pathname}`;
+  const urlPath = getUrlPath(window);
   const urlObject = qs.parse(window.location.search, { ignoreQueryPrefix: true });
 
   const nextQuery = transCurdStateToUrlQuery({ ...urlObject, ...query }, { addQueryPrefix: true });
-  const nextUrl = `${baseUrl}${nextQuery}`;
+  const nextUrl = `${urlPath}${nextQuery}`;
 
   if (replace) {
     window.history.pushState(null, '', nextUrl);
@@ -144,6 +151,18 @@ export const setCurdQueryToUrl = ({ window, query, replace }: ISetCurdQueryToUrl
   animateScrollTo(0);
 
   return nextUrl;
+};
+
+export const genCurdRequestQuery = (curdState: ICrudListQueryParams): ICrudListQueryParams | undefined => {
+  try {
+    console.log(RequestQueryBuilder.create(curdState).queryObject);
+    return RequestQueryBuilder.create(curdState).queryObject;
+  } catch (err) {
+    errorMsg(err.message);
+    return DEFAULT_QUERY;
+  }
+
+  // return {};
 };
 
 export const genFuzzySearchByQ = (
