@@ -5,7 +5,7 @@ import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 import { Category } from '@leaa/common/src/entrys';
 import { Repository, TreeRepository, getManager } from 'typeorm';
 import moment from 'moment';
-import { ICategoriesArgs } from '@leaa/api/src/interfaces';
+import { ICategoriesQuery } from '@leaa/api/src/interfaces';
 import { CategoryTreeObject } from '@leaa/common/src/dtos/category';
 import { CrudController, Override, CrudRequest } from '@nestjsx/crud';
 
@@ -15,17 +15,15 @@ export class CategoryService extends TypeOrmCrudService<Category> {
     super(repo as TreeRepository<Category>);
   }
 
-  async tree() {
-    // const manager = getManager();
-    // const categories = await manager.getTreeRepository(Category).findTrees();
+  async tree(options?: ICategoriesQuery) {
     const categories = await (this.repo as TreeRepository<Category>).findTrees();
 
-    return this.categoriesByTrees(categories);
+    return this.categoriesByTrees(categories, options);
   }
 
   rootCategory(children?: any[]) {
     return {
-      key: '0-0-0-root',
+      // key: '0-0-0-root',
       id: '----',
       parent_id: null,
       slug: '----',
@@ -40,15 +38,15 @@ export class CategoryService extends TypeOrmCrudService<Category> {
     };
   }
 
-  categoriesByTrees(items: Category[], args?: ICategoriesArgs): CategoryTreeObject[] {
+  categoriesByTrees(items: Category[], options?: ICategoriesQuery): CategoryTreeObject[] {
     const appendInfoToItem = (item: Category): Omit<CategoryTreeObject, 'children'> => ({
       ...item,
-      key: `${item.parent_id}-${item.id}-${item.slug}`,
+      // key: `${item.parent_id}-${item.id}-${item.slug}`,
       //
       title: `${item.name}`,
       subtitle: item.slug,
       value: item.id,
-      expanded: args && args.expanded,
+      expanded: Boolean([true, 'true'].includes(options?.expanded || '')),
     });
 
     const recursiveItems = (categories: Category[]) => {

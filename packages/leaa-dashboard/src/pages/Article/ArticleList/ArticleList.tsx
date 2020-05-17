@@ -1,6 +1,5 @@
 import cx from 'classnames';
 import React, { useState, useEffect } from 'react';
-import { AxiosError } from 'axios';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Table } from 'antd';
@@ -24,8 +23,8 @@ import {
   formatOrderSort,
   calcTableSortOrder,
   transUrlQueryToCrudState,
-  genFuzzySearchByQ,
   genCrudRequestQuery,
+  genCrudQuerySearch,
 } from '@leaa/dashboard/src/utils';
 import {
   Rcon,
@@ -64,7 +63,7 @@ export default (props: IPage) => {
     setListLoading(true);
 
     ajax
-      .get(`${envConfig.API_URL}/${ROUTE_NAME}`, { params: { params: genCrudRequestQuery(params) } })
+      .get(`${envConfig.API_URL}/${ROUTE_NAME}`, { params: genCrudRequestQuery(params) })
       .then((res: IHttpRes<ICrudRes<Article>>) => {
         setList(res.data.data);
 
@@ -144,6 +143,8 @@ export default (props: IPage) => {
     },
   ];
 
+  console.log(crudQuery);
+
   return (
     <PageCard
       title={
@@ -159,24 +160,42 @@ export default (props: IPage) => {
       }
       extra={
         <div className="g-page-card-extra-filter-bar-wrapper">
-          <FilterIcon query={crudQuery} clearQuery={['q', 'search']} onClose={(query: any) => setCrudQuery(query)} />
+          <FilterIcon
+            crudQuery={crudQuery}
+            clear={['q', 'search', 'categoryId']}
+            onClose={(query: any) => setCrudQuery(query)}
+          />
 
-          {/*<SelectCategoryIdByTree*/}
-          {/*  className={cx('g-extra-filter-bar--item', 'g-extra-filter-bar--category')}*/}
-          {/*  componentProps={{ allowClear: true }}*/}
-          {/*  // onChange={v => onFilter({ field: 'categoryId', value: v })}*/}
-          {/*  // value={categoryId || undefined}*/}
-          {/*  parentSlug="articles"*/}
-          {/*/>*/}
+          <SelectCategoryIdByTree
+            className={cx('g-extra-filter-bar--item', 'g-extra-filter-bar--category')}
+            componentProps={{ allowClear: true }}
+            onChange={(cId?: string) => {
+              setCrudQuery({
+                ...crudQuery,
+                search: genCrudQuerySearch(cId, {
+                  crudQuery,
+                  condition: { $and: [{ 'categories.id': { $eq: cId } }] },
+                  clear: { $and: [{ 'categories.id': undefined }] },
+                }),
+                categoryId: cId || undefined,
+              });
+            }}
+            value={crudQuery?.categoryId || undefined}
+            parentSlug="articles"
+          />
 
           <SearchInput
             className={cx('g-extra-filter-bar--item', 'g-extra-filter-bar--q')}
             value={crudQuery.q}
-            onSearch={(s?: string) => {
+            onSearch={(q?: string) => {
               return setCrudQuery({
-                ...DEFAULT_QUERY,
-                q: s,
-                search: genFuzzySearchByQ(s, { type: '$or', fields: ['title', 'slug'] }),
+                ...crudQuery,
+                search: genCrudQuerySearch(q, {
+                  crudQuery,
+                  condition: { $and: [{ $or: [{ title: { $cont: q } }, { slug: { $cont: q } }] }] },
+                  clear: { $and: [{ $or: undefined }] },
+                }),
+                q: q || undefined,
               });
             }}
           />

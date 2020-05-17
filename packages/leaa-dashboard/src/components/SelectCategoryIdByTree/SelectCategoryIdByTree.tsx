@@ -1,12 +1,19 @@
+import _ from 'lodash';
 import cx from 'classnames';
 import React, { useState, useEffect } from 'react';
 import { TreeSelect } from 'antd';
 import { useTranslation } from 'react-i18next';
-import { useQuery } from '@apollo/react-hooks';
+// import { useQuery } from '@apollo/react-hooks';
 import { TreeSelectProps } from 'antd/es/tree-select';
 
 import { GET_CATEGORIES } from '@leaa/dashboard/src/graphqls';
 import { CategoriesArgs, CategoriesWithPaginationOrTreeObject } from '@leaa/common/src/dtos/category';
+
+import { ICategoriesQuery } from '@leaa/api/src/interfaces';
+import { ajax, errorMsg } from '@leaa/dashboard/src/utils';
+import { envConfig } from '@leaa/dashboard/src/configs';
+import { IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
+import { TreeItem } from 'react-sortable-tree';
 
 import style from './style.module.less';
 
@@ -14,7 +21,8 @@ interface IProps {
   value?: string | string[] | null;
   initialValues?: string | string[] | null;
   className?: string;
-  onChange?: (value?: string | string[] | null) => void;
+  // onChange?: (value?: string | string[] | null) => void;
+  onChange?: (value?: any) => void;
   multipleSelect?: boolean;
   componentProps?: TreeSelectProps<any>;
   parentId?: string;
@@ -26,26 +34,27 @@ interface IProps {
 export const SelectCategoryIdByTree = (props: IProps) => {
   const { t } = useTranslation();
 
-  // query
-  const getCategoriesVariables: CategoriesArgs = {
-    expanded: true,
-    treeType: true,
-    parentId: props.parentId,
-    parentSlug: props.parentSlug,
+  const [tree, setTree] = useState<TreeItem[]>([]);
+  const [treeLoading, setTreeLoading] = useState(false);
+
+  const fetchList = (params: ICategoriesQuery = { expanded: true }) => {
+    setTreeLoading(true);
+
+    ajax
+      .get(`${envConfig.API_URL}/categories/tree`, { params })
+      .then((res: IHttpRes<TreeItem[]>) => {
+        setTree(res.data?.data);
+      })
+      .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
+      .finally(() => setTreeLoading(false));
   };
 
-  const getCategoriesQuery = useQuery<{ categories: CategoriesWithPaginationOrTreeObject }, CategoriesArgs>(
-    GET_CATEGORIES,
-    {
-      variables: getCategoriesVariables,
-      fetchPolicy: 'network-only',
-    },
-  );
+  useEffect(() => fetchList(), []);
 
   const [value, setValue] = useState<string | string[] | undefined | null>(props.value || props.initialValues);
 
   const onChange = (v?: string | string[] | null) => {
-    setValue(v);
+    setValue(v || undefined);
 
     if (props.onChange) props.onChange(v);
   };
@@ -66,24 +75,17 @@ export const SelectCategoryIdByTree = (props: IProps) => {
       }
     : {};
 
-  const onCalcTreeData = () => {
-    if (getCategoriesQuery.data?.categories?.trees?.length) {
-      return getCategoriesQuery.data.categories.trees;
-    }
-
-    return [];
-  };
-
   return (
     <div className={cx(style['wrapper'], props.className)}>
       <TreeSelect
         {...multipleSelectOption}
-        loading={getCategoriesQuery.loading}
-        // TIPS: waiting data then select (fix only show number)
-        value={value || '----'}
+        loading={treeLoading}
+        // TIPS: value 即便是有值，也必须等待 tree query 完毕后才现实，不然 select 会被 uuid 撑开
+        value={!_.isEmpty(tree) ? value : '----'}
         treeDefaultExpandAll
-        dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-        treeData={onCalcTreeData()}
+        dropdownClassName={style['tree-dropdown']}
+        dropdownMatchSelectWidth={false}
+        treeData={tree as any}
         placeholder={props.placeholder || t('_lang:category')}
         onChange={onChange}
         className={style['tree-select-wrapper']}

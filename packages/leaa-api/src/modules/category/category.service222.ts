@@ -11,7 +11,7 @@ import {
   CategoryTreeObject,
 } from '@leaa/common/src/dtos/category';
 import { argsFormat, commonUpdate, commonDelete, isOneField, calcQbPageInfo, errorMsg } from '@leaa/api/src/utils';
-import { ICategoriesArgs, ICategoryArgs, IGqlCtx } from '@leaa/api/src/interfaces';
+import { ICategoriesQuery, ICategoryArgs, IGqlCtx } from '@leaa/api/src/interfaces';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 import { categorySeed } from '@leaa/api/src/modules/seed/seed.data';
 
@@ -57,7 +57,7 @@ export class CategoryService {
     };
   }
 
-  categoriesByTrees(items: Category[], args?: ICategoriesArgs): CategoryTreeObject[] {
+  categoriesByTrees(items: Category[], args?: ICategoriesQuery): CategoryTreeObject[] {
     const appendInfoToItem = (item: Category): Omit<CategoryTreeObject, 'children'> => ({
       ...item,
       key: `${item.parent_id}-${item.id}-${item.slug}`,
@@ -86,8 +86,8 @@ export class CategoryService {
     return [this.rootCategory(result)];
   }
 
-  async categories(args: ICategoriesArgs): Promise<CategoriesWithPaginationOrTreeObject | undefined> {
-    const nextArgs: ICategoriesArgs = argsFormat(args, gqlCtx);
+  async categories(args: ICategoriesQuery): Promise<CategoriesWithPaginationOrTreeObject | undefined> {
+    const nextArgs: ICategoriesQuery = argsFormat(args, gqlCtx);
 
     const qb = this.categoryRepository.createQueryBuilder();
     qb.select().orderBy(nextArgs.orderBy || 'created_at', nextArgs.orderSort);

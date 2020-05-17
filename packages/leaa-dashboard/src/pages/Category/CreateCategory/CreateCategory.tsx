@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { Button } from 'antd';
 import { useTranslation } from 'react-i18next';
-import { useMutation } from '@apollo/react-hooks';
+// import { useMutation } from '@apollo/react-hooks';
 
 import { Category } from '@leaa/common/src/entrys';
 import { CreateCategoryInput } from '@leaa/common/src/dtos/category';
@@ -23,15 +23,15 @@ export default (props: IPage) => {
   const infoFormRef = useRef<ICommenFormRef<CreateCategoryInput>>(null);
 
   // mutation
-  const [submitVariables, setSubmitVariables] = useState<{ category: CreateCategoryInput }>();
-  const [createCategoryMutate, createCategoryMutation] = useMutation<{ createCategory: Category }>(CREATE_CATEGORY, {
-    variables: submitVariables,
-    // apollo-link-error onError: e => messageUtil.gqlError(e.message),
-    onCompleted({ createCategory }) {
-      msg(t('_lang:createdSuccessfully'));
-      props.history.push(`/categories/${createCategory.id}`);
-    },
-  });
+  // const [submitVariables, setSubmitVariables] = useState<{ category: CreateCategoryInput }>();
+  // const [createCategoryMutate, createCategoryMutation] = useMutation<{ createCategory: Category }>(CREATE_CATEGORY, {
+  //   variables: submitVariables,
+  //   // apollo-link-error onError: e => messageUtil.gqlError(e.message),
+  //   onCompleted({ createCategory }) {
+  //     msg(t('_lang:createdSuccessfully'));
+  //     props.history.push(`/categories/${createCategory.id}`);
+  //   },
+  // });
 
   const onSubmit = async () => {
     const infoData: ISubmitData<CreateCategoryInput> = await infoFormRef.current?.onValidateForm();
@@ -42,8 +42,8 @@ export default (props: IPage) => {
       ...infoData,
     };
 
-    await setSubmitVariables({ category: submitData });
-    await createCategoryMutate();
+    // await setSubmitVariables({ category: submitData });
+    // await createCategoryMutate();
   };
 
   return (
@@ -55,7 +55,7 @@ export default (props: IPage) => {
         </span>
       }
       className={style['wapper']}
-      loading={createCategoryMutation.loading}
+      // loading={createCategoryMutation.loading}
     >
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
@@ -67,7 +67,7 @@ export default (props: IPage) => {
           size="large"
           icon={<Rcon type={CREATE_BUTTON_ICON} />}
           className="g-submit-bar-button"
-          loading={createCategoryMutation.loading}
+          // loading={createCategoryMutation.loading}
           onClick={onSubmit}
         >
           {t('_lang:create')}

@@ -35,6 +35,6 @@ export class Category extends Base {
   parent?: Category | null;
 
   // Virtual Field (not in DB)
-  @Field(() => String, { nullable: true })
-  key?: string | null;
+  // @Field(() => String, { nullable: true })
+  // key?: string | null;
 }

@@ -1,17 +1,24 @@
 import { Controller, UseGuards, Get, Req, Query } from '@nestjs/common';
-import { Crud, CrudController, ParsedRequest, CrudRequest } from '@nestjsx/crud';
+import { Crud, CrudController, CrudRequest } from '@nestjsx/crud';
 
 import { Permissions } from '@leaa/api/src/decorators';
 // import { crudConfig } from '@leaa/api/src/configs';
 import { CreateCategoryInput, UpdateCategoryInput } from '@leaa/common/src/dtos/category';
+import { ICategoriesQuery } from '@leaa/api/src/interfaces';
 import { JwtGuard, PermissionsGuard } from '@leaa/api/src/guards';
 import { Category } from '@leaa/common/src/entrys';
 import { CategoryService } from './category.service';
-import { QueryBuilder } from 'typeorm';
 
 @Crud({
   model: {
     type: Category,
+  },
+  params: {
+    id: {
+      field: 'id',
+      type: 'uuid',
+      primary: true,
+    },
   },
   query: {
     maxLimit: 1000,
@@ -37,7 +44,7 @@ export class CategoryController implements CrudController<Category> {
 
   @Get('tree')
   // async tree(@ParsedRequest() req: CrudRequest) {
-  async tree(@Req() req: CrudRequest, @Query() query: any) {
-    return this.service.tree();
+  async tree(@Req() req: CrudRequest, @Query() query: ICategoriesQuery) {
+    return this.service.tree(query);
   }
 }

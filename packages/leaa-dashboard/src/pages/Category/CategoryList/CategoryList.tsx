@@ -2,46 +2,41 @@ import _ from 'lodash';
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { useQuery, useMutation } from '@apollo/react-hooks';
 import { Button } from 'antd';
 import SortableTree, { TreeItem } from 'react-sortable-tree';
 
+import { envConfig } from '@leaa/dashboard/src/configs';
 import { PAGE_CARD_TITLE_CREATE_ICON, CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
-import { DELETE_CATEGORY, GET_CATEGORIES } from '@leaa/dashboard/src/graphqls';
-import { Category } from '@leaa/common/src/entrys';
-import { CategoriesWithPaginationOrTreeObject, CategoriesArgs } from '@leaa/common/src/dtos/category';
-import { msg } from '@leaa/dashboard/src/utils';
-import { IPage } from '@leaa/dashboard/src/interfaces';
+import { ajax, errorMsg } from '@leaa/dashboard/src/utils';
+import { IPage, IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
+import { ICategoriesQuery } from '@leaa/api/src/interfaces';
 
 import { HtmlMeta, PageCard, TableColumnDeleteButton, Rcon } from '@leaa/dashboard/src/components';
 
 import 'react-sortable-tree/style.css';
 import style from './style.module.less';
 
+const ROUTE_NAME = 'categories';
+
 export default (props: IPage) => {
   const { t } = useTranslation();
 
-  const [treeData, setTreeData] = useState<TreeItem[]>([]);
+  const [tree, setTree] = useState<TreeItem[]>([]);
+  const [treeLoading, setTreeLoading] = useState(false);
 
-  const getCategoriesVariables: CategoriesArgs = { expanded: true, treeType: true };
-  const getCategoriesQuery = useQuery<{ categories: CategoriesWithPaginationOrTreeObject }, CategoriesArgs>(
-    GET_CATEGORIES,
-    {
-      variables: getCategoriesVariables,
-      fetchPolicy: 'network-only',
-    },
-  );
+  const fetchList = (params: ICategoriesQuery = { expanded: true }) => {
+    setTreeLoading(true);
 
-  // mutation
-  const [deleteCategoryMutate, deleteCategoryMutation] = useMutation<Category>(DELETE_CATEGORY, {
-    // apollo-link-error onError: e => messageUtil.gqlError(e.message),
-    onCompleted: () => msg(t('_lang:deletedSuccessfully')),
-    refetchQueries: () => [{ query: GET_CATEGORIES, variables: getCategoriesVariables }],
-  });
+    ajax
+      .get(`${envConfig.API_URL}/${ROUTE_NAME}/tree`, { params })
+      .then((res: IHttpRes<TreeItem[]>) => {
+        setTree(res.data?.data);
+      })
+      .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
+      .finally(() => setTreeLoading(false));
+  };
 
-  useEffect(() => {
-    if (getCategoriesQuery?.data?.categories?.trees) setTreeData(getCategoriesQuery.data.categories.trees);
-  }, [getCategoriesQuery?.data?.categories?.trees]);
+  useEffect(() => fetchList(), []);
 
   return (
     <PageCard
@@ -57,7 +52,7 @@ export default (props: IPage) => {
         </span>
       }
       className={style['wapper']}
-      loading={getCategoriesQuery.loading}
+      loading={treeLoading}
     >
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
@@ -66,8 +61,8 @@ export default (props: IPage) => {
           className={style['tree-wrapper']}
           isVirtualized={false}
           canDrag={false}
-          treeData={treeData}
-          onChange={(e) => setTreeData(e)}
+          treeData={tree}
+          onChange={(e) => setTree(e)}
           generateNodeProps={({ node }) => ({
             className: style['tree-item'],
             title: [
@@ -87,8 +82,8 @@ export default (props: IPage) => {
                 size="small"
                 id={node.id}
                 fieldName={node.name}
-                loading={deleteCategoryMutation.loading}
-                onClick={async () => deleteCategoryMutate({ variables: { id: node.id } })}
+                routerName={ROUTE_NAME}
+                onSuccessCallback={() => fetchList()}
                 className={style['tree-item-delete-button']}
               />,
               <Button key={`${node.id}`} title={_.toString(node)} size="small">

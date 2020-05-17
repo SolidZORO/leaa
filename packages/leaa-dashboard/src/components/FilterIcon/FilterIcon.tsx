@@ -9,18 +9,18 @@ import { DEFAULT_QUERY } from '@leaa/dashboard/src/constants';
 import style from './style.module.less';
 
 interface IProps {
-  query?: ICrudListQueryParams | any;
-  clearQuery?: string[];
-  onClose: (clearQuery: any) => void;
+  crudQuery?: ICrudListQueryParams | any;
+  clear?: string[];
+  onClose: (clearCondition: any) => void;
 }
 
 export const FilterIcon = (props: IProps) => {
   const [showClose, setShowClose] = useState(false);
 
   const onClose = () => {
-    if (!showClose || !props.clearQuery) return;
+    if (!showClose || !props.clear) return;
 
-    const clearQ = props.clearQuery.reduce((attrs: any, cur: any) => {
+    const clearQ = props.clear.reduce((attrs: any, cur: any) => {
       // eslint-disable-next-line no-param-reassign
       attrs[cur] = undefined;
 
@@ -31,14 +31,12 @@ export const FilterIcon = (props: IProps) => {
   };
 
   useEffect(() => {
-    if (props.query && props.clearQuery) {
-      // const ignoreQuery = ['sort'];
-      // const queryObj = _.pick(_.omit(props.query, ignoreQuery), props.clearQuery);
-      const queryObj = _.pick(props.query, props.clearQuery);
+    if (props.crudQuery && props.clear) {
+      const prevQueryObj = _.pick(props.crudQuery, props.clear);
 
-      setShowClose(JSON.stringify(queryObj) !== '{}');
+      setShowClose(JSON.stringify(prevQueryObj) !== '{}');
     }
-  }, [props.query]);
+  }, [props.crudQuery]);
 
   return (
     <Rcon

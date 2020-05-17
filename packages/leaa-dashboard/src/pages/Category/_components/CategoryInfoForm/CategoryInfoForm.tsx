@@ -75,7 +75,7 @@ export const CategoryInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) 
           <Row gutter={16} className={style['form-row']}>
             <Col xs={24} sm={6}>
               <Form.Item name="parent_id" rules={[{ required: true }]} label={`${t('_lang:parent')} ID`}>
-                <SelectCategoryIdByTree initialValues={getParentId()} />
+                {/*<SelectCategoryIdByTree initialValues={getParentId()} />*/}
               </Form.Item>
             </Col>
 

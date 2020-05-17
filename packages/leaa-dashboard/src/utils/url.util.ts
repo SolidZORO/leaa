@@ -9,12 +9,18 @@ import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE, DEFAULT_QUERY } from '@leaa/dashboard/
 import { ITablePagination, ICrudListQueryParams } from '@leaa/dashboard/src/interfaces';
 import { SCondition } from '@nestjsx/crud-request/lib/types';
 import { errorMsg } from '@leaa/dashboard/src/utils/msg.util';
+import mockLink from 'apollo-link/lib/test-utils/mockLink';
 
-export const transRouterPathToClassName = (routerPath: string): string =>
-  routerPath
-    .replace(/^\//, '') // remove ^/
+/**
+ * /articles/123    -> articles-item
+ * /articles/create -> articles-create
+ */
+export function transRouterPathToClassName(routerPath: string): string {
+  return routerPath
+    .replace(/^\//, '') //         remove ^/
     .replace(/\/\d+/g, '-item') // replace /444  ->  -item
-    .replace(/\//g, '-'); // replace all /  ->  -
+    .replace(/\//g, '-'); //       replace all /  ->  -
+}
 
 interface IMergeParamToUrlQuery {
   window: Window;
@@ -22,7 +28,7 @@ interface IMergeParamToUrlQuery {
   replace: boolean;
 }
 
-export const mergeUrlParamToUrlQuery = ({ window, params, replace }: IMergeParamToUrlQuery): string => {
+export function mergeUrlParamToUrlQuery({ window, params, replace }: IMergeParamToUrlQuery): string {
   const prevBaseUrl = `${window.location.origin}${window.location.pathname}`;
   const query = qs.parse(window.location.search, { ignoreQueryPrefix: true });
 
@@ -48,7 +54,7 @@ export const mergeUrlParamToUrlQuery = ({ window, params, replace }: IMergeParam
   animateScrollTo(0);
 
   return nextUrl;
-};
+}
 
 //
 //
@@ -73,7 +79,7 @@ export const mergeUrlParamToUrlQuery = ({ window, params, replace }: IMergeParam
 //
 //
 
-export const transCrudQueryToCrudState = (crudQuery: ICrudListQueryParams | any): ICrudListQueryParams => {
+export function transCrudQueryToCrudState(crudQuery: ICrudListQueryParams | any): ICrudListQueryParams {
   if (JSON.stringify(crudQuery) === '{}') return crudQuery;
 
   const crudState: ICrudListQueryParams | any = crudQuery;
@@ -92,9 +98,9 @@ export const transCrudQueryToCrudState = (crudQuery: ICrudListQueryParams | any)
   if (typeof crudQuery.resetCache !== 'undefined') crudState.resetCache = JSON.parse(crudQuery.resetCache);
 
   return crudState;
-};
+}
 
-export const transCrudStateToCrudQuery = (crudState: ICrudListQueryParams | any): ICrudListQueryParams => {
+export function transCrudStateToCrudQuery(crudState: ICrudListQueryParams | any): ICrudListQueryParams {
   if (JSON.stringify(crudState) === '{}') return crudState;
 
   const crudQuery: ICrudListQueryParams | any = crudState;
@@ -108,22 +114,22 @@ export const transCrudStateToCrudQuery = (crudState: ICrudListQueryParams | any)
   if (typeof crudState.resetCache !== 'undefined') crudQuery.resetCache = JSON.stringify(crudState.resetCache);
 
   return crudQuery;
-};
+}
 
-export const transUrlQueryToCrudState = (window: Window): ICrudListQueryParams => {
+export function transUrlQueryToCrudState(window: Window): ICrudListQueryParams {
   const urlObject = qs.parse(window.location.search, { ignoreQueryPrefix: true });
 
   return transCrudQueryToCrudState(urlObject);
-};
+}
 
-export const transCrudStateToUrlQuery = (
+export function transCrudStateToUrlQuery(
   crudState: ICrudListQueryParams | any,
   qsOptions?: qs.IStringifyOptions,
-): string => {
+): string {
   const crudQuery = transCrudStateToCrudQuery(crudState);
 
   return qs.stringify(crudQuery, qsOptions);
-};
+}
 
 interface ISetCrudQueryToUrl {
   window: Window;
@@ -131,13 +137,13 @@ interface ISetCrudQueryToUrl {
   replace?: boolean;
 }
 
-export const getUrlPath = (w?: Window): string => {
+export function getUrlPath(w?: Window): string {
   const win = w || window;
 
   return `${win.location.origin}${win.location.pathname}`;
-};
+}
 
-export const setCrudQueryToUrl = ({ window, query, replace }: ISetCrudQueryToUrl): string => {
+export function setCrudQueryToUrl({ window, query, replace }: ISetCrudQueryToUrl): string {
   const urlPath = getUrlPath(window);
   const urlObject = qs.parse(window.location.search, { ignoreQueryPrefix: true });
 
@@ -151,9 +157,9 @@ export const setCrudQueryToUrl = ({ window, query, replace }: ISetCrudQueryToUrl
   animateScrollTo(0);
 
   return nextUrl;
-};
+}
 
-export const genCrudRequestQuery = (crudState: ICrudListQueryParams): ICrudListQueryParams | undefined => {
+export function genCrudRequestQuery(crudState: ICrudListQueryParams): ICrudListQueryParams | undefined {
   try {
     console.log(RequestQueryBuilder.create(crudState).queryObject);
     return RequestQueryBuilder.create(crudState).queryObject;
@@ -163,12 +169,22 @@ export const genCrudRequestQuery = (crudState: ICrudListQueryParams): ICrudListQ
   }
 
   // return {};
-};
+}
 
-export const genFuzzySearchByQ = (
+/**
+ * - IN
+ *       {`kw`, {type: '$or', fields: ['module', 'account']}}
+ *
+ * - OUT
+ *       { $or: [
+ *         { module: { $cont: 'kw' } },
+ *         { account: { $cont: 'kw' } }]
+ *       }
+ */
+export function genFuzzySearchByQ(
   q?: string,
   options?: { type: '$or' | '$and'; fields: string[] },
-): SCondition | undefined => {
+): SCondition | undefined {
   if (!q) return undefined;
   if (!options) throw Error('genFuzzySearchByQ Missing params `options`.');
 
@@ -178,26 +194,48 @@ export const genFuzzySearchByQ = (
     return acc.concat({ [cur]: { $cont: q } });
   }, []);
 
-  // return condition e.g. { $or: [{ module: { $cont: s } }, { account: { $cont: s } }] }
-
   return {
     [type]: cFields,
   };
+}
 
-  // const baseUrl = `${window.location.origin}${window.location.pathname}`;
-  // const urlObject = qs.parse(window.location.search, { ignoreQueryPrefix: true });
-  //
-  // const nextQuery = transCrudStateToUrlQuery({ ...urlObject, ...query }, { addQueryPrefix: true });
-  // const nextUrl = `${baseUrl}${nextQuery}`;
-  //
-  // if (replace) {
-  //   window.history.pushState(null, '', nextUrl);
-  // }
-  //
-  // animateScrollTo(0);
-  //
-  // return nextUrl;
-};
+/**
+- IN
+  (
+    `web`
+    {
+      crudQuery,
+      condition: { $and: [{ $or: [{ title: { $cont: 'web' } }, { slug: { $cont: 'web' } }] }] },
+      clear: { $and: [{ $or: undefined }] },
+    }
+  )
+
+- OUT
+  {
+    $and: [{
+      'categories.id': { $eq: '859b5db0-0b16-4973-864c-9f7be81a33f0' },
+      $or: [{ title: { $cont: 'web' } }, { slug: { $cont: 'web' } }],
+    }],
+  }
+ */
+export function genCrudQuerySearch(
+  key?: string,
+  options?: { crudQuery: ICrudListQueryParams; condition: SCondition; clear: SCondition },
+): SCondition | undefined {
+  const prevSearch: SCondition | undefined = options?.crudQuery?.search;
+
+  const keepMergeUndefinedValue = (value: any, srcValue: any, k: string, object: any) => {
+    if (srcValue === undefined) _.unset(object, k);
+  };
+
+  let nextSearch = key
+    ? _.merge(prevSearch, options?.condition)
+    : _.mergeWith(prevSearch, options?.clear, keepMergeUndefinedValue);
+
+  nextSearch = _.pickBy(nextSearch, _.identity);
+
+  return nextSearch as SCondition;
+}
 
 //
 //
@@ -226,7 +264,7 @@ interface IGetPaginationResult {
   pageSize: number;
 }
 
-export const getPaginationByUrl = (urlParams: any): IGetPaginationResult => {
+export function getPaginationByUrl(urlParams: any): IGetPaginationResult {
   const result: IGetPaginationResult = {
     page: DEFAULT_PAGE,
     pageSize: DEFAULT_PAGE_SIZE,
@@ -241,11 +279,11 @@ export const getPaginationByUrl = (urlParams: any): IGetPaginationResult => {
   }
 
   return result;
-};
+}
 
 type IFormatOrderSortResult = 'DESC' | 'ASC' | undefined;
 
-export const formatOrderSortByUrl = (orderSort?: string[] | string | null | undefined): IFormatOrderSortResult => {
+export function formatOrderSortByUrl(orderSort?: string[] | string | null | undefined): IFormatOrderSortResult {
   if (!orderSort) {
     return undefined;
   }
@@ -261,11 +299,11 @@ export const formatOrderSortByUrl = (orderSort?: string[] | string | null | unde
   }
 
   return undefined;
-};
+}
 
-export const formatOrderSort = (
+export function formatOrderSort(
   orderSort?: SorterResult<any>,
-): QuerySort | QuerySortArr | Array<QuerySort | QuerySortArr> | undefined => {
+): QuerySort | QuerySortArr | Array<QuerySort | QuerySortArr> | undefined {
   if (!orderSort) {
     return undefined;
   }
@@ -281,22 +319,22 @@ export const formatOrderSort = (
   if (!order) return undefined;
 
   return [field, order] as QuerySortArr;
-};
+}
 
-export const formatOrderByByUrl = (orderBy?: string[] | string | null | undefined): string | undefined => {
+export function formatOrderByByUrl(orderBy?: string[] | string | null | undefined): string | undefined {
   if (!orderBy) {
     return undefined;
   }
 
   return String(orderBy);
-};
+}
 
 interface IPickPaginationResult {
   page?: number;
   pageSize?: number;
 }
 
-export const pickPaginationByUrl = (params: PaginationProps): IPickPaginationResult => {
+export function pickPaginationByUrl(params: PaginationProps): IPickPaginationResult {
   if (_.isEmpty(params)) {
     return { page: undefined, pageSize: undefined };
   }
@@ -312,7 +350,7 @@ export const pickPaginationByUrl = (params: PaginationProps): IPickPaginationRes
   }
 
   return result;
-};
+}
 
 interface IPickOrderProps {
   field?: string;
@@ -321,7 +359,7 @@ interface IPickOrderProps {
 
 // TODO EDIT TYPE
 // const pickOrderByByUrl = (params: IPickOrderProps | any): IPickOrderResult => {
-export const pickOrderByByUrl = (params: IPickOrderProps | any) => {
+export function pickOrderByByUrl(params: IPickOrderProps | any) {
   if (_.isEmpty(params)) {
     return { orderBy: undefined, orderSort: undefined };
   }
@@ -337,9 +375,9 @@ export const pickOrderByByUrl = (params: IPickOrderProps | any) => {
   }
 
   return result;
-};
+}
 
-export const initPaginationStateByUrl = (urlParams: any): ITablePagination => {
+export function initPaginationStateByUrl(urlParams: any): ITablePagination {
   const urlPagination = getPaginationByUrl(urlParams);
 
   return {
@@ -348,4 +386,4 @@ export const initPaginationStateByUrl = (urlParams: any): ITablePagination => {
     orderBy: formatOrderByByUrl(urlParams.orderBy),
     orderSort: formatOrderSortByUrl(urlParams.orderSort),
   };
-};
+}
