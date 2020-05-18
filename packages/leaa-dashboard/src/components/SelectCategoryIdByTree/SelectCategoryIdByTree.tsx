@@ -3,11 +3,7 @@ import cx from 'classnames';
 import React, { useState, useEffect } from 'react';
 import { TreeSelect } from 'antd';
 import { useTranslation } from 'react-i18next';
-// import { useQuery } from '@apollo/react-hooks';
 import { TreeSelectProps } from 'antd/es/tree-select';
-
-import { GET_CATEGORIES } from '@leaa/dashboard/src/graphqls';
-import { CategoriesArgs, CategoriesWithPaginationOrTreeObject } from '@leaa/common/src/dtos/category';
 
 import { ICategoriesQuery } from '@leaa/api/src/interfaces';
 import { ajax, errorMsg } from '@leaa/dashboard/src/utils';

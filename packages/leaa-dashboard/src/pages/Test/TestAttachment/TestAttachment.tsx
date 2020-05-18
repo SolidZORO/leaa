@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { IPage } from '@leaa/dashboard/src/interfaces';
 import { IAttachmentBoxRef } from '@leaa/common/src/interfaces';
 
-import { HtmlMeta, AttachmentBox } from '@leaa/dashboard/src/components';
+import { HtmlMeta } from '@leaa/dashboard/src/components';
 
 export default (props: IPage) => {
   const { t } = useTranslation();
@@ -23,18 +23,6 @@ export default (props: IPage) => {
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
       <h2>Attachment Box</h2>
-
-      <AttachmentBox
-        ref={attachmentBoxRef}
-        attachmentParams={{
-          type: 'image',
-          moduleId: '',
-          moduleName: 'playground',
-          typeName: 'testbox',
-          typePlatform: 'mb',
-        }}
-        listHeight={200}
-      />
 
       <br />
 

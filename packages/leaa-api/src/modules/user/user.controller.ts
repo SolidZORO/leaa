@@ -1,17 +1,54 @@
-import { Controller, Post, Req, HttpCode, UseGuards, Body } from '@nestjs/common';
-import { AuthLocalService } from '@leaa/api/src/modules/auth/auth-local.service';
+import { Controller, UseGuards, Post, Get, Req, HttpCode, Body } from '@nestjs/common';
 import { ICrudRequest } from '@leaa/api/src/interfaces';
-import { UserService } from '@leaa/api/src/modules/user/user.service';
-import { JwtGuard, PermissionsGuard } from '@leaa/api/src/guards';
+import { Crud, CrudController } from '@nestjsx/crud';
 
+import { Permissions } from '@leaa/api/src/decorators';
+import { CreateUserInput, UpdateUserInput } from '@leaa/common/src/dtos/user';
+import { JwtGuard, PermissionsGuard } from '@leaa/api/src/guards';
+import { User } from '@leaa/common/src/entrys';
+import { UserService } from './user.service';
+
+@Crud({
+  model: { type: User },
+  params: {
+    id: {
+      field: 'id',
+      type: 'uuid',
+      primary: true,
+    },
+    password: {
+      field: 'password',
+      disabled: true,
+    },
+  },
+  query: { maxLimit: 1000, alwaysPaginate: true },
+  routes: {
+    // getManyBase: { decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('user.list-read')] },
+    // getOneBase: { decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('user.item-read')] },
+    createOneBase: { decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('user.item-create')] },
+    updateOneBase: { decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('user.item-update')] },
+    deleteOneBase: {
+      decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('user.item-delete')],
+      returnDeleted: true,
+    },
+  },
+  dto: {
+    create: CreateUserInput,
+    update: UpdateUserInput,
+  },
+})
 @Controller('/users')
-// @UseGuards(JwtGuard, PermissionsGuard)
-export class UserController {
-  constructor(public authLocalService: AuthLocalService, public userService: UserService) {}
+export class UserController implements CrudController<User> {
+  constructor(public service: UserService) {}
 
   @HttpCode(200)
-  @Post('/userByToken')
+  @Post('userByToken')
   async userByToken(@Req() req: ICrudRequest, @Body() body: any): Promise<any> {
-    return this.userService.userByToken(body?.token);
+    return this.service.userByToken(body);
+  }
+
+  @Get('userByHashid')
+  async userByhashid(): Promise<any> {
+    return this.service.userByHashid();
   }
 }

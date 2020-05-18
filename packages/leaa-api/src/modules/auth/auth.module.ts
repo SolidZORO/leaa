@@ -7,7 +7,7 @@ import { User, Role, Permission, Auth, Verification, Action } from '@leaa/common
 
 import { UserService } from '@leaa/api/src/modules/user/user.service';
 import { UserProperty } from '@leaa/api/src/modules/user/user.property';
-import { UserResolver } from '@leaa/api/src/modules/user/user.resolver';
+// import { UserResolver } from '@leaa/api/src/modules/user/user.resolver';
 import { RoleService } from '@leaa/api/src/modules/role/role.service';
 import { PermissionService } from '@leaa/api/src/modules/permission/permission.service';
 
@@ -38,7 +38,7 @@ import { AttachmentModule } from '@leaa/api/src/modules/attachment/attachment.mo
     AuthLocalService,
     AuthGithubService,
     //
-    UserResolver,
+    // UserResolver,
     UserService,
     UserProperty,
     //

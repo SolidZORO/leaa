@@ -11,15 +11,7 @@ import { ArticleArgs, UpdateArticleInput } from '@leaa/common/src/dtos/article';
 import { IPage, ICommenFormRef, ISubmitData } from '@leaa/dashboard/src/interfaces';
 import { msg } from '@leaa/dashboard/src/utils';
 
-import {
-  PageCard,
-  HtmlMeta,
-  WYSIWYGEditor,
-  AttachmentBox,
-  SelectTagId,
-  Rcon,
-  SubmitBar,
-} from '@leaa/dashboard/src/components';
+import { PageCard, HtmlMeta, WYSIWYGEditor, Rcon, SubmitBar } from '@leaa/dashboard/src/components';
 
 import { ArticleInfoForm } from '../_components/ArticleInfoForm/ArticleInfoForm';
 import { ArticleExtForm } from '../_components/ArticleExtForm/ArticleExtForm';
@@ -107,37 +99,6 @@ export default (props: IPage) => {
           typeName: 'editor',
         }}
       />
-
-      <div className={style['select-tag-id-wrapper']}>
-        <SelectTagId
-          ref={selectTagIdRef}
-          placement="topLeft"
-          enterCreateTag
-          selectedTagsMaxLength={5}
-          selectedTags={getArticleQuery.data?.article?.tags}
-          onChangeSelectedTagsCallback={(tags: Tag[]) => setArticleTags(tags)}
-        />
-      </div>
-
-      <div className={style['container-wrapper']}>
-        <div className={style['container-main']}>
-          <AttachmentBox
-            ref={attachmentBoxRef}
-            disableMessage
-            listHeight={229}
-            attachmentParams={{
-              type: 'image',
-              moduleId: id,
-              moduleName: 'article',
-              typeName: 'banner',
-            }}
-          />
-        </div>
-
-        <div className={style['container-ext']}>
-          <ArticleExtForm item={getArticleQuery.data?.article} loading={getArticleQuery.loading} ref={extFormRef} />
-        </div>
-      </div>
 
       <SubmitBar full>
         <Button

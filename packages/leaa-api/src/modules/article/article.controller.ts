@@ -2,16 +2,13 @@ import { Controller, UseGuards } from '@nestjs/common';
 import { Crud, CrudController } from '@nestjsx/crud';
 
 import { Permissions } from '@leaa/api/src/decorators';
-// import { crudConfig } from '@leaa/api/src/configs';
 import { CreateArticleInput, UpdateArticleInput } from '@leaa/common/src/dtos/article';
 import { JwtGuard, PermissionsGuard } from '@leaa/api/src/guards';
 import { Article } from '@leaa/common/src/entrys';
 import { ArticleService } from './article.service';
 
 @Crud({
-  model: {
-    type: Article,
-  },
+  model: { type: Article },
   params: {
     id: {
       field: 'id',
@@ -31,6 +28,7 @@ import { ArticleService } from './article.service';
     // getManyBase: { decorators: [Permissions('article.list-read')] },
     // getOneBase: { decorators: [Permissions('article.item-read')] },
     createOneBase: { decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('article.item-create')] },
+    updateOneBase: { decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('article.item-update')] },
     deleteOneBase: {
       decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('article.item-delete')],
       returnDeleted: true,

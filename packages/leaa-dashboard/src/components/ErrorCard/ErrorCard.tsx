@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react';
 import { notification } from 'antd';
-import { ApolloError } from 'apollo-client';
 import { errorMsg } from '@leaa/dashboard/src/utils';
 
 import style from './style.module.less';
 
 interface IProps {
-  error: ApolloError;
+  error: Error;
   message?: React.ReactNode | string;
 }
 

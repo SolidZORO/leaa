@@ -22,7 +22,7 @@ import { CategoryModule } from '@leaa/api/src/modules/category/category.module';
 // import { AttachmentModule } from '@leaa/api/src/modules/attachment/attachment.module';
 import { PermissionModule } from '@leaa/api/src/modules/permission/permission.module';
 // import { SettingModule } from '@leaa/api/src/modules/setting/setting.module';
-// import { TagModule } from '@leaa/api/src/modules/tag/tag.module';
+import { TagModule } from '@leaa/api/src/modules/tag/tag.module';
 // import { CouponModule } from '@leaa/api/src/modules/coupon/coupon.module';
 // import { PromoModule } from '@leaa/api/src/modules/promo/promo.module';
 // import { ProductModule } from '@leaa/api/src/modules/product/product.module';
@@ -59,7 +59,7 @@ const imports = [
   // CompanyModule,
   // AuthTokenModule,
   // SettingModule,
-  // TagModule,
+  TagModule,
   // CouponModule,
   // PromoModule,
   // ProductModule,

@@ -5,7 +5,6 @@ import { User, Role, Permission, Auth } from '@leaa/common/src/entrys';
 
 import { UserService } from '@leaa/api/src/modules/user/user.service';
 import { UserProperty } from '@leaa/api/src/modules/user/user.property';
-import { UserResolver } from '@leaa/api/src/modules/user/user.resolver';
 import { RoleModule } from '@leaa/api/src/modules/role/role.module';
 import { AuthTokenModule } from '@leaa/api/src/modules/auth-token/auth-token.module';
 import { AttachmentModule } from '@leaa/api/src/modules/attachment/attachment.module';
@@ -20,8 +19,8 @@ import { UserController } from '@leaa/api/src/modules/user/user.controller';
     AttachmentModule,
     AuthModule,
   ],
-  providers: [UserResolver, UserService, UserProperty],
-  exports: [UserResolver, UserService, UserProperty],
+  providers: [UserService, UserProperty],
+  exports: [UserService, UserProperty],
   controllers: [UserController],
 })
 export class UserModule {}

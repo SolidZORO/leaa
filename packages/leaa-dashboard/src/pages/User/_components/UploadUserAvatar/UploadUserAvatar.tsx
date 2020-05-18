@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useMutation } from '@apollo/react-hooks';
 
 import { User } from '@leaa/common/src/entrys';
-import { AttachmentBox, ConfirmDeleteButton } from '@leaa/dashboard/src/components';
+import { ConfirmDeleteButton } from '@leaa/dashboard/src/components';
 import { UPDATE_USER } from '@leaa/dashboard/src/graphqls';
 
 import style from './style.module.less';
@@ -60,18 +60,6 @@ export const UploadUserAvatar = (props: IProps) => {
 
           <img alt="" src={aurl || ''} />
         </div>
-      )}
-
-      {!aurl && (
-        <AttachmentBox
-          type="card"
-          title={t('_lang:avatar')}
-          disableMessage
-          attachmentParams={avatarParams}
-          cardHeight={80}
-          className={style['avatar-box']}
-          circle
-        />
       )}
     </div>
   );
