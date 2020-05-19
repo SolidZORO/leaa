@@ -1,8 +1,7 @@
 import cx from 'classnames';
 import React, { useEffect, forwardRef, useImperativeHandle } from 'react';
-import { Form, Input } from 'antd';
-
 import { useTranslation } from 'react-i18next';
+import { Form, Input } from 'antd';
 
 import { Article } from '@leaa/common/src/entrys';
 import { UpdateArticleInput } from '@leaa/common/src/dtos/article';
@@ -31,34 +30,24 @@ export const ArticleInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =
     }
   };
 
-  const onUpdateForm = (item?: Article) => {
-    if (!item) return form.setFieldsValue({ status: 0 });
+  const onRefreshForm = (item?: Article) => {
+    if (!item) return form.setFieldsValue({});
 
-    // if APIs return error, do not flush out edited data
-    if (form.getFieldValue('updated_at') && !item.updated_at) {
-      form.resetFields();
-      return undefined;
-    }
-
-    // update was successful, keeping the form data and APIs in sync.
-    if (form.getFieldValue('updated_at') !== item.updated_at) {
-      form.resetFields();
-      form.setFieldsValue({
-        ...item,
-        categoryIds: (item?.categories && item.categories[0]?.id) || undefined,
-      });
-    }
+    form.resetFields();
+    form.setFieldsValue({
+      ...item,
+      categoryIds: (item?.categories && item.categories[0]?.id) || undefined,
+    });
 
     return undefined;
   };
 
-  useEffect(() => onUpdateForm(props.item), [form, props.item]);
-
+  useEffect(() => onRefreshForm(props.item), [form, props.item]);
   useImperativeHandle(ref, () => ({ form, onValidateForm }));
 
   return (
     <div className={cx(style['wrapper'], props.className)}>
-      <Form form={form} name="article-info-1" layout="vertical" className={style['form--title-wrapper']}>
+      <Form form={form} name="article-info" layout="vertical" className={style['form--title-wrapper']}>
         <Form.Item name="title" rules={[{ required: true }]}>
           <Input size="large" placeholder={t('_lang:title')} />
         </Form.Item>
@@ -84,7 +73,11 @@ export const ArticleInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =
             colon={false}
             className={style['item--category']}
           >
-            <SelectCategoryIdByTree parentSlug="articles" componentProps={{ allowClear: true, size: 'small' }} />
+            <SelectCategoryIdByTree
+              parentSlug="articles"
+              componentProps={{ allowClear: true, size: 'small' }}
+              dropdownWidth={200}
+            />
           </Form.Item>
 
           <Form.Item

@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { Tag } from '@leaa/common/src/entrys';
 import { envConfig } from '@leaa/dashboard/src/configs';
 import { DEFAULT_QUERY } from '@leaa/dashboard/src/constants';
-import { IPage, ICrudListQueryParams, IHttpRes, ICrudRes, IHttpError } from '@leaa/dashboard/src/interfaces';
+import { IPage, ICrudListQueryParams, IHttpRes, ICrudListRes, IHttpError } from '@leaa/dashboard/src/interfaces';
 import {
   ajax,
   errorMsg,
@@ -30,15 +30,15 @@ export default (props: IPage) => {
 
   const [listLoading, setListLoading] = useState(false);
 
-  const [list, setList] = useState<ICrudRes<Tag>>();
+  const [list, setList] = useState<ICrudListRes<Tag>>();
 
-  const fetchList = (params: ICrudListQueryParams) => {
+  const onFetchList = (params: ICrudListQueryParams) => {
     setCrudQuery(params);
     setListLoading(true);
 
     ajax
       .get(`${envConfig.API_URL}/${API_PATH}`, { params: genCrudRequestQuery(params) })
-      .then((res: IHttpRes<ICrudRes<Tag>>) => {
+      .then((res: IHttpRes<ICrudListRes<Tag>>) => {
         setList(res.data.data);
 
         setCrudQueryToUrl({ window, query: params, replace: true });
@@ -47,12 +47,13 @@ export default (props: IPage) => {
       .finally(() => setListLoading(false));
   };
 
-  useEffect(() => fetchList(crudQuery), [crudQuery]);
+  useEffect(() => onFetchList(crudQuery), [crudQuery]);
   useEffect(() => (props.history.location.key ? setCrudQuery(DEFAULT_QUERY) : undefined), [props.history.location.key]);
 
   return (
     <PageCard
       route={props.route}
+      title="@LIST"
       extra={
         <div className="g-page-card-extra-filter-bar-wrapper">
           <FilterIcon

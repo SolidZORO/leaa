@@ -10,35 +10,56 @@ import { PAGE_CARD_TITLE_CREATE_ICON } from '@leaa/dashboard/src/constants';
 
 import style from './style.module.less';
 
+declare type IPropTitle = null | '@LIST' | '@EDIT' | '@CREATE' | '@ITEM' | React.ReactNode;
+
 interface IProps {
   children: React.ReactNode;
-  title?: React.ReactNode;
+  title?: IPropTitle;
   extra?: React.ReactNode;
   className?: string;
-  route?: IRouteItem;
+  route: IRouteItem;
   loading?: boolean;
 }
 
 export const PageCard = (props: IProps) => {
   const { t } = useTranslation();
 
-  const defaultTitle = (
-    <span>
-      <Rcon type={props.route?.icon} />
-      <strong>{t(`${props.route?.namei18n}`)}</strong>
-      {props.route?.canCreate && (
-        <Link className="g-page-card-create-link" to={`${props.route?.path}/create`}>
-          <Rcon type={PAGE_CARD_TITLE_CREATE_ICON} />
-        </Link>
-      )}
-    </span>
-  );
+  const genTitlt = (title?: IPropTitle) => {
+    if (!title) return null;
+
+    if (title === '@LIST')
+      return (
+        <div className={style['title']}>
+          <span>
+            <Rcon type={props.route?.icon} />
+            <strong>{t(`${props.route?.namei18n}`)}</strong>
+            {props.route?.canCreate && (
+              <Link className="g-page-card-create-link" to={`${props.route?.path}/create`}>
+                <Rcon type={PAGE_CARD_TITLE_CREATE_ICON} />
+              </Link>
+            )}
+          </span>
+        </div>
+      );
+
+    // Page 里面 title 还是该写什么写什么，不知道那天这里会出现 if 判断
+    if (title === ('@EDIT' || '@CREATE' || '@ITEM'))
+      return (
+        <div className={style['title']}>
+          <span>
+            <Rcon type={props.route?.icon} />
+            <strong>{t(`${props.route?.namei18n}`)}</strong>
+          </span>
+        </div>
+      );
+
+    return null;
+  };
 
   return (
     <div className={cx(style['wrapper'], props.className)}>
       <div className={style['header']}>
-        {props.title === null && null}
-        {props.title !== null && <div className={style['title']}>{props.title || defaultTitle}</div>}
+        {genTitlt(props.title)}
 
         {props.extra && <div className={style['extra']}>{props.extra}</div>}
       </div>

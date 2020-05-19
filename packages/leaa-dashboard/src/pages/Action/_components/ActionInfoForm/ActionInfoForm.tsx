@@ -33,11 +33,13 @@ export const ActionInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =>
   const onRefreshForm = (item?: Action) => {
     if (!item) return form.setFieldsValue({});
 
-    return form.setFieldsValue(item);
+    form.resetFields();
+    form.setFieldsValue(item);
+
+    return undefined;
   };
 
   useEffect(() => onRefreshForm(props.item), [form, props.item]);
-
   useImperativeHandle(ref, () => ({ form, onValidateForm }));
 
   return (
@@ -46,16 +48,16 @@ export const ActionInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =>
         title={t('_page:Action.actionInfo')}
         extra={<EntryInfoDate date={props.item && [props.item.created_at, props.item.updated_at]} />}
       >
-        <Form form={form} name="ax-info" layout="vertical">
+        <Form form={form} name="action-info" layout="vertical">
           <Row gutter={16} className={style['form-row']}>
             <Col xs={24} sm={6}>
-              <Form.Item name="account" rules={[{ required: true }]} label={t('_lang:account')}>
+              <Form.Item name="account" rules={[]} label={t('_lang:account')}>
                 <Input placeholder={t('_lang:account')} />
               </Form.Item>
             </Col>
 
             <Col xs={24} sm={6}>
-              <Form.Item name="module" rules={[{ required: true }]} label={t('_lang:module')}>
+              <Form.Item name="module" rules={[]} label={t('_lang:module')}>
                 <Input placeholder={t('_lang:module')} />
               </Form.Item>
             </Col>

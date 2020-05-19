@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { Article } from '@leaa/common/src/entrys';
 import { envConfig } from '@leaa/dashboard/src/configs';
 import { DEFAULT_QUERY } from '@leaa/dashboard/src/constants';
-import { IPage, ICrudListQueryParams, IHttpRes, ICrudRes, IHttpError } from '@leaa/dashboard/src/interfaces';
+import { IPage, ICrudListQueryParams, IHttpRes, ICrudListRes, IHttpError } from '@leaa/dashboard/src/interfaces';
 import {
   ajax,
   errorMsg,
@@ -25,7 +25,7 @@ import {
 
 import style from './style.module.less';
 
-const ROUTE_NAME = 'articles';
+const API_PATH = 'articles';
 
 export default (props: IPage) => {
   const { t } = useTranslation();
@@ -37,15 +37,15 @@ export default (props: IPage) => {
 
   const [listLoading, setListLoading] = useState(false);
 
-  const [list, setList] = useState<ICrudRes<Article>>();
+  const [list, setList] = useState<ICrudListRes<Article>>();
 
-  const fetchList = (params: ICrudListQueryParams) => {
+  const onFetchList = (params: ICrudListQueryParams) => {
     setCrudQuery(params);
     setListLoading(true);
 
     ajax
-      .get(`${envConfig.API_URL}/${ROUTE_NAME}`, { params: genCrudRequestQuery(params) })
-      .then((res: IHttpRes<ICrudRes<Article>>) => {
+      .get(`${envConfig.API_URL}/${API_PATH}`, { params: genCrudRequestQuery(params) })
+      .then((res: IHttpRes<ICrudListRes<Article>>) => {
         setList(res.data.data);
 
         setCrudQueryToUrl({ window, query: params, replace: true });
@@ -54,12 +54,13 @@ export default (props: IPage) => {
       .finally(() => setListLoading(false));
   };
 
-  useEffect(() => fetchList(crudQuery), [crudQuery]);
+  useEffect(() => onFetchList(crudQuery), [crudQuery]);
   useEffect(() => (props.history.location.key ? setCrudQuery(DEFAULT_QUERY) : undefined), [props.history.location.key]);
 
   return (
     <PageCard
       route={props.route}
+      title="@LIST"
       extra={
         <div className="g-page-card-extra-filter-bar-wrapper">
           <FilterIcon
@@ -113,8 +114,8 @@ export default (props: IPage) => {
           crudQuery={crudQuery}
           setCrudQuery={setCrudQuery}
           route={props.route}
-          routerName={ROUTE_NAME}
-          columnFields={['id', 'title', 'createdAt', 'status', { action: { fieldName: 'title' } }]}
+          routerName={API_PATH}
+          columnFields={['id', 'title', 'category', 'createdAt', 'status', { action: { fieldName: 'title' } }]}
           list={list}
         />
       )}

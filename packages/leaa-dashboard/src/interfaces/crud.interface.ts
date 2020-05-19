@@ -8,3 +8,11 @@ export interface ICrudListQueryParams extends CreateQueryParams {
   tagId?: string;
   userId?: string;
 }
+
+export interface ICrudListRes<T> {
+  count: number;
+  data?: T[];
+  page: number;
+  pageCount: number;
+  total: number;
+}

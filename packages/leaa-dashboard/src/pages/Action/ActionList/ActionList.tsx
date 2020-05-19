@@ -1,11 +1,12 @@
 import cx from 'classnames';
+import { Link } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { Action } from '@leaa/common/src/entrys';
 import { envConfig } from '@leaa/dashboard/src/configs';
 import { DEFAULT_QUERY } from '@leaa/dashboard/src/constants';
-import { IPage, IHttpRes, ICrudListQueryParams, ICrudRes, IHttpError } from '@leaa/dashboard/src/interfaces';
+import { IPage, IHttpRes, ICrudListQueryParams, ICrudListRes, IHttpError } from '@leaa/dashboard/src/interfaces';
 import {
   ajax,
   errorMsg,
@@ -18,9 +19,8 @@ import {
 import { PageCard, HtmlMeta, TableCard, SearchInput, FilterIcon } from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';
-import { Link } from 'react-router-dom';
 
-const ROUTE_NAME = 'actions';
+const API_PATH = 'actions';
 
 export default (props: IPage) => {
   const { t } = useTranslation();
@@ -32,15 +32,15 @@ export default (props: IPage) => {
 
   const [listLoading, setListLoading] = useState(false);
 
-  const [list, setList] = useState<ICrudRes<Action>>();
+  const [list, setList] = useState<ICrudListRes<Action>>();
 
-  const fetchList = (params: ICrudListQueryParams) => {
+  const onFetchList = (params: ICrudListQueryParams) => {
     setCrudQuery(params);
     setListLoading(true);
 
     ajax
-      .get(`${envConfig.API_URL}/${ROUTE_NAME}`, { params: genCrudRequestQuery(params) })
-      .then((res: IHttpRes<ICrudRes<Action>>) => {
+      .get(`${envConfig.API_URL}/${API_PATH}`, { params: genCrudRequestQuery(params) as ICrudListQueryParams })
+      .then((res: IHttpRes<ICrudListRes<Action>>) => {
         setList(res.data.data);
 
         setCrudQueryToUrl({ window, query: params, replace: true });
@@ -49,12 +49,13 @@ export default (props: IPage) => {
       .finally(() => setListLoading(false));
   };
 
-  useEffect(() => fetchList(crudQuery), [crudQuery]);
+  useEffect(() => onFetchList(crudQuery), [crudQuery]);
   useEffect(() => (props.history.location.key ? setCrudQuery(DEFAULT_QUERY) : undefined), [props.history.location.key]);
 
   return (
     <PageCard
       route={props.route}
+      title="@LIST"
       extra={
         <div className="g-page-card-extra-filter-bar-wrapper">
           <FilterIcon crudQuery={crudQuery} clear={['q', 'search']} onClose={(query: any) => setCrudQuery(query)} />
@@ -82,7 +83,7 @@ export default (props: IPage) => {
           crudQuery={crudQuery}
           setCrudQuery={setCrudQuery}
           route={props.route}
-          routerName={ROUTE_NAME}
+          routerName={API_PATH}
           columnFields={[
             'id',
             'account',

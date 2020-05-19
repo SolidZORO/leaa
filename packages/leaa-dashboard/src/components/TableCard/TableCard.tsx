@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import _ from 'lodash';
+import { v4 } from 'uuid';
 import cx from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -7,7 +8,7 @@ import {
   IKey,
   ITableColumns,
   ICrudListQueryParams,
-  ICrudRes,
+  ICrudListRes,
   ITableColumn,
   IRouteItem,
 } from '@leaa/dashboard/src/interfaces';
@@ -29,7 +30,7 @@ import style from './style.module.less';
 declare type IColumnField = string | { [key: string]: any };
 
 interface IProps<T> extends TableProps<T> {
-  list?: ICrudRes<T>;
+  list?: ICrudListRes<T>;
   selectedRowBar?: React.ReactNode;
   selectedRowKeys?: IKey[];
   // columnFields?: IColumnField[];
@@ -85,7 +86,15 @@ export const TableCard = <T extends object>(props: IProps<T>) => {
       sortOrder: calcTableSortOrder('name', crudQuery.sort),
       render: (text: string, record: any) => <Link to={`${props.route.path}/${record.id}`}>{record.name}</Link>,
     }),
-    // description: () => genSimpleColumn('description'),
+
+    category: () => ({
+      title: t('_lang:category'),
+      dataIndex: 'category',
+      width: 100,
+      render: (text: string, record: any) => (
+        <span>{record.categories && record.categories.length > 0 ? record.categories[0].name : '----'}</span>
+      ),
+    }),
     views: () => ({
       title: t('_lang:views'),
       dataIndex: 'views',
@@ -167,6 +176,7 @@ export const TableCard = <T extends object>(props: IProps<T>) => {
     >
       <div className={style['container']}>
         <Table
+          showSorterTooltip={false}
           rowKey={props.rowKey || 'id'}
           size={props.size || 'small'}
           rowSelection={rowSelection}

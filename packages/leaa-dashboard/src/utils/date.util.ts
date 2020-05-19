@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-export const formatDateTimeToDayStartOrEnd = (type: 'start' | 'end', dateTime: string | moment.Moment): Date => {
+export function formatDateTimeToDayStartOrEnd(type: 'start' | 'end', dateTime: string | moment.Moment): Date {
   const error = new Error('Type or Date-Time Error');
   if (!type || !dateTime) throw error;
 
@@ -13,9 +13,22 @@ export const formatDateTimeToDayStartOrEnd = (type: 'start' | 'end', dateTime: s
   }
 
   throw error;
-};
+}
 
-export const formatDateRangeTime = (startField: string, expireField: string): { start: Date; end: Date } => ({
-  start: formatDateTimeToDayStartOrEnd('start', startField),
-  end: formatDateTimeToDayStartOrEnd('end', expireField),
-});
+export function formatDateRangeTime(startField: string, expireField: string): { start: Date; end: Date } {
+  return {
+    start: formatDateTimeToDayStartOrEnd('start', startField),
+    end: formatDateTimeToDayStartOrEnd('end', expireField),
+  };
+}
+
+export function formatFieldsToMoment(item: any, { fields }: { fields: string[] }) {
+  if (!fields || (fields && fields.length === 0)) return item;
+
+  fields.forEach((field) => {
+    // eslint-disable-next-line no-param-reassign
+    item[field] = item[field] ? moment(item[field]) : null;
+  });
+
+  return item;
+}

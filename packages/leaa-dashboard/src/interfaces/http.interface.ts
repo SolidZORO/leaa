@@ -13,11 +13,3 @@ export interface IHttpRes<T> extends AxiosResponse {
 }
 
 export interface IHttpError extends AxiosError {}
-
-export interface ICrudRes<T> {
-  count: number;
-  data: T[];
-  page: number;
-  pageCount: number;
-  total: number;
-}

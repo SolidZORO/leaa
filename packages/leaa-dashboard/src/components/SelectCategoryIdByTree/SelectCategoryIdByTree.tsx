@@ -25,6 +25,7 @@ interface IProps {
   parentSlug?: string;
   style?: React.CSSProperties;
   placeholder?: string;
+  dropdownWidth?: number;
 }
 
 export const SelectCategoryIdByTree = (props: IProps) => {
@@ -71,6 +72,7 @@ export const SelectCategoryIdByTree = (props: IProps) => {
       }
     : {};
 
+  console.log('CTVVVVVVV', !_.isEmpty(tree) ? value : '----');
   return (
     <div className={cx(style['wrapper'], props.className)}>
       <TreeSelect
@@ -80,6 +82,7 @@ export const SelectCategoryIdByTree = (props: IProps) => {
         value={!_.isEmpty(tree) ? value : '----'}
         treeDefaultExpandAll
         dropdownClassName={style['tree-dropdown']}
+        dropdownStyle={{ width: props.dropdownWidth || 'auto' }}
         dropdownMatchSelectWidth={false}
         treeData={tree as any}
         placeholder={props.placeholder || t('_lang:category')}

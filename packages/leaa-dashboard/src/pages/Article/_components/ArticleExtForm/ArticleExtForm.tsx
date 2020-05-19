@@ -6,7 +6,7 @@ import { Col, Form, Input, Row, DatePicker } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 import { Article } from '@leaa/common/src/entrys';
-import { errorMsg } from '@leaa/dashboard/src/utils';
+import { errorMsg, formatFieldsToMoment } from '@leaa/dashboard/src/utils';
 import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
 import { UpdateArticleInput } from '@leaa/common/src/dtos/article';
 
@@ -32,29 +32,16 @@ export const ArticleExtForm = forwardRef((props: IProps, ref: React.Ref<any>) =>
     }
   };
 
-  const onUpdateForm = (item?: Article) => {
-    if (!item) return undefined;
+  const onRefreshForm = (item?: Article) => {
+    if (!item) return form.setFieldsValue({});
 
-    // if APIs return error, do not flush out edited data
-    if (form.getFieldValue('updated_at') && !item.updated_at) {
-      form.resetFields();
-      return undefined;
-    }
-
-    // update was successful, keeping the form data and APIs in sync.
-    if (form.getFieldValue('updated_at') !== item.updated_at) {
-      form.resetFields();
-      form.setFieldsValue({
-        description: item.description,
-        released_at: item.released_at ? moment(item.released_at) : null,
-      });
-    }
+    form.resetFields();
+    form.setFieldsValue(formatFieldsToMoment(item, { fields: ['released_at', 'updated_at'] }));
 
     return undefined;
   };
 
-  useEffect(() => onUpdateForm(props.item), [form, props.item]);
-
+  useEffect(() => onRefreshForm(props.item), [form, props.item]);
   useImperativeHandle(ref, () => ({ form, onValidateForm }));
 
   return (
@@ -66,24 +53,20 @@ export const ArticleExtForm = forwardRef((props: IProps, ref: React.Ref<any>) =>
         <Form form={form} name="article-ext" layout="vertical">
           <Row gutter={16} className={style['form-row']}>
             <Col xs={24}>
-              <Form.Item name="description" rules={[]} label={t('_lang:description')}>
+              <Form.Item name="description" label={t('_lang:description')}>
                 <Input.TextArea rows={3} placeholder={t('_lang:description')} />
               </Form.Item>
             </Col>
 
             <Col xs={24}>
-              <Form.Item name="released_at" rules={[]} label={t('_lang:releasedAt')}>
+              <Form.Item name="released_at" label={t('_lang:releasedAt')}>
                 <DatePicker showTime />
               </Form.Item>
             </Col>
 
             <Col xs={24}>
               <Form.Item label={t('_lang:updatedAt')}>
-                <DatePicker
-                  showTime
-                  value={props.item?.updated_at ? moment(props.item.updated_at) : moment()}
-                  disabled
-                />
+                <DatePicker showTime disabled value={moment(props.item?.updated_at)} />
               </Form.Item>
             </Col>
           </Row>

@@ -16,7 +16,7 @@ import { HtmlMeta, PageCard, TableColumnDeleteButton, Rcon } from '@leaa/dashboa
 import 'react-sortable-tree/style.css';
 import style from './style.module.less';
 
-const ROUTE_NAME = 'categories';
+const API_PATH = 'categories';
 
 export default (props: IPage) => {
   const { t } = useTranslation();
@@ -24,11 +24,11 @@ export default (props: IPage) => {
   const [tree, setTree] = useState<TreeItem[]>([]);
   const [treeLoading, setTreeLoading] = useState(false);
 
-  const fetchList = (params: ICategoriesQuery = { expanded: true }) => {
+  const onFetchList = (params: ICategoriesQuery = { expanded: true }) => {
     setTreeLoading(true);
 
     ajax
-      .get(`${envConfig.API_URL}/${ROUTE_NAME}/tree`, { params })
+      .get(`${envConfig.API_URL}/${API_PATH}/tree`, { params })
       .then((res: IHttpRes<TreeItem[]>) => {
         setTree(res.data?.data);
       })
@@ -36,24 +36,10 @@ export default (props: IPage) => {
       .finally(() => setTreeLoading(false));
   };
 
-  useEffect(() => fetchList(), []);
+  useEffect(() => onFetchList(), []);
 
   return (
-    <PageCard
-      title={
-        <span>
-          <Rcon type={props.route.icon} />
-          <strong>{t(`${props.route.namei18n}`)}</strong>
-          {props.route.canCreate && (
-            <Link className="g-page-card-create-link" to={`${props.route.path}/create`}>
-              <Rcon type={PAGE_CARD_TITLE_CREATE_ICON} />
-            </Link>
-          )}
-        </span>
-      }
-      className={style['wapper']}
-      loading={treeLoading}
-    >
+    <PageCard route={props.route} title="@LIST" className={style['wapper']} loading={treeLoading}>
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
       <div style={{ height: '70vh' }}>
@@ -81,9 +67,9 @@ export default (props: IPage) => {
                 key={`${node.id}`}
                 size="small"
                 id={node.id}
-                fieldName={node.name}
-                routerName={ROUTE_NAME}
-                onSuccessCallback={() => fetchList()}
+                tipsTitle={node.name}
+                apiPath={API_PATH}
+                onSuccessCallback={() => onFetchList()}
                 className={style['tree-item-delete-button']}
               />,
               <Button key={`${node.id}`} title={_.toString(node)} size="small">

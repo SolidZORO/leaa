@@ -176,17 +176,8 @@ export default (props: IPage) => {
 
   return (
     <PageCard
-      title={
-        <span>
-          <Rcon type={props.route.icon} />
-          <strong>{t(`${props.route.namei18n}`)}</strong>
-          {props.route.canCreate && (
-            <Link className="g-page-card-create-link" to={`${props.route.path}/create`}>
-              <Rcon type={PAGE_CARD_TITLE_CREATE_ICON} />
-            </Link>
-          )}
-        </span>
-      }
+      route={props.route}
+      title="@LIST"
       extra={
         <div className="g-page-card-extra-filter-bar-wrapper">
           <SearchInput
