@@ -8,17 +8,16 @@ import { DeleteOutlined, LoadingOutlined, QuestionCircleOutlined } from '@ant-de
 
 import { ajax, errorMsg, msg } from '@leaa/dashboard/src/utils';
 import { envConfig } from '@leaa/dashboard/src/configs';
-import { AxiosResponse, AxiosError } from 'axios';
-import { ICrudDeleteData, ICrudError } from '@leaa/dashboard/src/interfaces';
+import { IHttpError, IHttpRes } from '@leaa/dashboard/src/interfaces';
 
 import { IdTag } from '../IdTag/IdTag';
 
 import style from './style.module.less';
 
 interface IProps {
-  routerName: string;
+  apiPath: string;
   id: number | string | undefined;
-  fieldName?: React.ReactNode;
+  tipsTitle?: React.ReactNode;
   size?: ButtonSize;
   onChange?: () => void;
   onSuccessCallback?: () => void;
@@ -34,13 +33,13 @@ export const TableColumnDeleteButton = (props: IProps) => {
     setLoading(true);
 
     ajax
-      .delete(`${envConfig.API_URL}/${props.routerName}/${props.id}`)
-      .then((res: AxiosResponse<ICrudDeleteData<any>>) => {
-        msg(t('_lang:deletedSuccessfully', { id: res?.data?.id }));
+      .delete(`${envConfig.API_URL}/${props.apiPath}/${props.id}`)
+      .then((res: IHttpRes<{ id: number | string }>) => {
+        msg(t('_lang:deletedSuccessfully', { id: res?.data?.data?.id }));
 
         if (props.onSuccessCallback) props.onSuccessCallback();
       })
-      .catch((err: AxiosError<ICrudError>) => errorMsg(err.response?.data?.message || err.message))
+      .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
       .finally(() => setLoading(false));
 
     if (props.onChange) props.onChange();
@@ -59,7 +58,7 @@ export const TableColumnDeleteButton = (props: IProps) => {
               <QuestionCircleOutlined className={style['icon-question']} />
             )}
             {t('_comp:TableColumnDeleteButton.confirmDeleteItem')} {props.id && <IdTag id={props.id} />}{' '}
-            {props.fieldName ? <em>{props.fieldName} ?</em> : null}
+            {props.tipsTitle ? <em>{props.tipsTitle} ?</em> : null}
           </span>
         }
         placement="topRight"

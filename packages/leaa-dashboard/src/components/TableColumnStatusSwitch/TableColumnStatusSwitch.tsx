@@ -12,7 +12,7 @@ import { IHttpError, IHttpRes } from '@leaa/dashboard/src/interfaces';
 import style from './style.module.less';
 
 interface IProps {
-  routerName: string;
+  apiPath: string;
   id: string;
   value?: number;
   size?: SwitchSize;
@@ -30,7 +30,7 @@ export const TableColumnStatusSwitch = (props: IProps) => {
     setLoadin(true);
 
     ajax
-      .put(`${envConfig.API_URL}/${props.routerName}/${props.id}`, { status: Number(v) })
+      .put(`${envConfig.API_URL}/${props.apiPath}/${props.id}`, { status: Number(v) })
       .then((res: IHttpRes<{ status: number }>) => {
         setStatus(Boolean(res.data.data?.status));
 

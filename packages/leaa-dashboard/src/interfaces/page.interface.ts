@@ -5,7 +5,8 @@ import { ColumnsType } from 'antd/es/table/interface';
 
 import { IRouteItem } from './router.interface';
 
-export declare type ITableColumns = ColumnsType | any;
+export declare type ITableColumns = ColumnsType[] | any;
+export declare type ITableColumn = ColumnsType;
 
 export interface ITablePagination {
   count?: number;
