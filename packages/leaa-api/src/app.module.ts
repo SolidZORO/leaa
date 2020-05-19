@@ -33,17 +33,12 @@ import { TagModule } from '@leaa/api/src/modules/tag/tag.module';
 import { DemoModule } from '@leaa/api/src/modules/demo/demo.module';
 import { TestModule } from '@leaa/api/src/modules/test/test.module';
 import { ActionModule } from '@leaa/api/src/modules/action/action.module';
-import { CompanyModule } from '@leaa/api/src/modules/company/company.module';
 
 const imports = [
-  CacheModule.register(),
   TypeOrmModule.forRootAsync({
     useClass: TypeormService,
   }),
-  // GraphQLModule.forRootAsync({
-  //   imports: [AuthModule],
-  //   useClass: GraphqlService,
-  // }),
+  CacheModule.register(),
   ConfigModule,
   SeedModule,
   PlaygroundModule,
@@ -70,7 +65,6 @@ const imports = [
   TestModule,
   // I18nModule,
   ActionModule,
-  CompanyModule,
 ];
 
 if (envConfig.DEMO_MODE) {

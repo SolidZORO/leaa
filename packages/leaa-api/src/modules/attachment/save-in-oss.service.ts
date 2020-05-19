@@ -36,18 +36,18 @@ export class SaveInOssService {
   private EXPIRED_TIME_MINUTES = 10;
 
   client: OSS = new OSS({
-    accessKeyId: this.configService.OSS_ALIYUN_AK_ID,
-    accessKeySecret: this.configService.OSS_ALIYUN_AK_SECRET,
-    region: this.configService.OSS_ALIYUN_REGION,
-    bucket: this.configService.OSS_ALIYUN_BUCKET,
+    accessKeyId: this.configService.ATTACHMENT_OSS_ALIYUN_AK_ID,
+    accessKeySecret: this.configService.ATTACHMENT_OSS_ALIYUN_AK_SECRET,
+    region: this.configService.ATTACHMENT_OSS_ALIYUN_REGION,
+    bucket: this.configService.ATTACHMENT_OSS_ALIYUN_BUCKET,
   });
 
   async getSignature(): Promise<ISaveInOssSignature> {
     // prettier-ignore
     const expiration = moment(Date.now()).add(this.EXPIRED_TIME_MINUTES, 'minutes').utc().format();
 
-    const OSSAccessKeyId = this.configService.OSS_ALIYUN_AK_ID;
-    const OSSAccessKeySecret = this.configService.OSS_ALIYUN_AK_SECRET;
+    const OSSAccessKeyId = this.configService.ATTACHMENT_OSS_ALIYUN_AK_ID;
+    const OSSAccessKeySecret = this.configService.ATTACHMENT_OSS_ALIYUN_AK_SECRET;
     const saveDirPath = attachmentConfig.SAVE_DIR_BY_DB;
 
     const policyJson = JSON.stringify({
@@ -85,7 +85,7 @@ export class SaveInOssService {
     /* eslint-enable no-template-curly-in-string */
 
     const callbackJson = {
-      callbackUrl: this.configService.OSS_ALIYUN_CALLBACK_URL,
+      callbackUrl: this.configService.ATTACHMENT_OSS_ALIYUN_CALLBACK_URL,
       callbackBodyType: 'application/json', // cry... this `\/` wasting some time...
       callbackBody,
     };

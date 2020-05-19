@@ -14,7 +14,7 @@ export const envInfoForCli = ({
   DIRNAME?: string;
 }) => {
   // emoji for CLI
-  const serverBaseByText = `${config.PROTOCOL}://${config.BASE_HOST}:${config.PORT}`;
+  const serverBaseByText = `${config.SERVER_PROTOCOL}://${config.BASE_HOST}:${config.SERVER_PORT}`;
   const serverBaseByEmoji = `✨✨ \x1b[00;44;9m${serverBaseByText}\x1b[0m ✨✨`;
   const serverGraphqlByEmoji = `✨✨ \x1b[00;41;9m${serverBaseByText}/graphql\x1b[0m ✨✨`;
   const serverEnv = `${NODE_ENV !== 'production' ? '🚀' : '🔰'} ${(NODE_ENV || 'NOT-ENV').toUpperCase()}`;

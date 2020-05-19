@@ -9,12 +9,12 @@ export class ConfigService {
     this.envConfig = this.validate(dotEnvPath);
   }
 
-  get PROTOCOL(): string {
-    return this.envConfig.PROTOCOL;
+  get SERVER_PROTOCOL(): string {
+    return this.envConfig.SERVER_PROTOCOL;
   }
 
-  get PORT(): number {
-    return Number(this.envConfig.PORT);
+  get SERVER_PORT(): number {
+    return Number(this.envConfig.SERVER_PORT);
   }
 
   get DEMO_MODE(): boolean {
@@ -30,7 +30,7 @@ export class ConfigService {
   }
 
   get API_URL(): string {
-    return `${this.envConfig.PROTOCOL}://${this.envConfig.BASE_HOST}:${this.envConfig.PORT}`;
+    return `${this.envConfig.SERVER_PROTOCOL}://${this.envConfig.BASE_HOST}:${this.envConfig.SERVER_PORT}`;
   }
 
   get PUBLIC_DIR(): string {
@@ -67,8 +67,8 @@ export class ConfigService {
     return Number(this.envConfig.DB_PORT);
   }
 
-  get DB_USER(): string {
-    return this.envConfig.DB_USER;
+  get DB_USERNAME(): string {
+    return this.envConfig.DB_USERNAME;
   }
 
   get DB_PASSWORD(): string {
@@ -105,24 +105,24 @@ export class ConfigService {
 
   //
 
-  get OSS_ALIYUN_BUCKET(): string {
-    return this.envConfig.OSS_ALIYUN_BUCKET || '';
+  get ATTACHMENT_OSS_ALIYUN_BUCKET(): string {
+    return this.envConfig.ATTACHMENT_OSS_ALIYUN_BUCKET || '';
   }
 
-  get OSS_ALIYUN_AK_SECRET(): string {
-    return this.envConfig.OSS_ALIYUN_AK_SECRET || '';
+  get ATTACHMENT_OSS_ALIYUN_AK_SECRET(): string {
+    return this.envConfig.ATTACHMENT_OSS_ALIYUN_AK_SECRET || '';
   }
 
-  get OSS_ALIYUN_AK_ID(): string {
-    return this.envConfig.OSS_ALIYUN_AK_ID || '';
+  get ATTACHMENT_OSS_ALIYUN_AK_ID(): string {
+    return this.envConfig.ATTACHMENT_OSS_ALIYUN_AK_ID || '';
   }
 
-  get OSS_ALIYUN_REGION(): string {
-    return this.envConfig.OSS_ALIYUN_REGION || '';
+  get ATTACHMENT_OSS_ALIYUN_REGION(): string {
+    return this.envConfig.ATTACHMENT_OSS_ALIYUN_REGION || '';
   }
 
-  get OSS_ALIYUN_CALLBACK_URL(): string {
-    return this.envConfig.OSS_ALIYUN_CALLBACK_URL || '';
+  get ATTACHMENT_OSS_ALIYUN_CALLBACK_URL(): string {
+    return this.envConfig.ATTACHMENT_OSS_ALIYUN_CALLBACK_URL || '';
   }
 
   //
@@ -167,8 +167,8 @@ export class ConfigService {
 
   private validate(dotEnvPath: string): IDotEnv {
     const rule = {
-      PROTOCOL: envalid.str({ choices: ['http', 'https'], default: 'http' }),
-      PORT: envalid.port({ default: 5555 }),
+      SERVER_PROTOCOL: envalid.str({ choices: ['http', 'https'], default: 'http' }),
+      SERVER_PORT: envalid.port({ default: 5555 }),
       //
       DEMO_MODE: envalid.str({ choices: ['true', 'false'], default: 'false' }),
       DEBUG_MODE: envalid.str({ choices: ['true', 'false'], default: 'false' }),
@@ -183,7 +183,7 @@ export class ConfigService {
       DB_TYPE: envalid.str({ choices: ['mysql'], default: 'mysql' }),
       DB_HOST: envalid.str(),
       DB_PORT: envalid.num(),
-      DB_USER: envalid.str(),
+      DB_USERNAME: envalid.str(),
       DB_PASSWORD: envalid.str(),
       DB_DATABASE: envalid.str(),
       DB_SYNCHRONIZE: envalid.str(),

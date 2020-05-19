@@ -36,15 +36,24 @@ export class TypeormService implements TypeOrmOptionsFactory {
     this.logger = new Logger(CLS_NAME);
   }
 
-  createTypeOrmOptions(): TypeOrmModuleOptions {
-    let options: TypeOrmModuleOptions = {
+  createTypeOrmOptions(): TypeOrmModuleOptions & { collation: any } {
+    return {
+      type: this.configService.DB_TYPE as 'mysql',
       host: this.configService.DB_HOST,
       port: this.configService.DB_PORT,
-      username: this.configService.DB_USER,
+      username: this.configService.DB_USERNAME,
       password: this.configService.DB_PASSWORD,
       database: this.configService.DB_DATABASE,
       synchronize: this.configService.DB_SYNCHRONIZE,
       logging: process.env.NODE_ENV !== 'production',
+      charset: 'utf8mb4',
+      collation: 'utf8mb4_unicode_ci',
+      // https://stackoverflow.com/questions/35553432/error-handshake-inactivity-timeout-in-node-js-mysql-module
+      keepConnectionAlive: true,
+      acquireTimeout: 20 * 1000, // 20s
+      // fix local and server timeone out of sync
+      // dateStrings: true,
+      // timezone: 'Z',
       entities: [
         // `${__dirname}/**/*.entity{.js,.ts}`,
         //
@@ -71,24 +80,5 @@ export class TypeormService implements TypeOrmOptionsFactory {
       ],
       subscribers: [TagSubscriber, AttachmentSubscriber, UserSubscriber],
     };
-
-    if (this.configService.DB_TYPE === 'mysql') {
-      options = {
-        ...options,
-        ...{
-          type: 'mysql',
-          charset: 'utf8mb4',
-          collation: 'utf8mb4_unicode_ci',
-          // https://stackoverflow.com/questions/35553432/error-handshake-inactivity-timeout-in-node-js-mysql-module
-          keepConnectionAlive: true,
-          acquireTimeout: 20 * 1000, // 20s
-          // fix local and server timeone out of sync
-          // dateStrings: true,
-          // timezone: 'Z',
-        },
-      };
-    }
-
-    return options;
   }
 }

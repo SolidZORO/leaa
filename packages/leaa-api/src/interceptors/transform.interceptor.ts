@@ -17,6 +17,9 @@ export class TransformInterceptor<T> implements NestInterceptor<T, IHttpData<T>>
     const res: IResponse = ctx.getResponse();
     const req: IRequest = ctx.getRequest();
 
+    // ignore index
+    if (req.route.path === '/') return next.handle();
+
     const statusCode = res.statusCode || HttpStatus.OK;
     const message = 'Success';
     const lang = req.language || '';

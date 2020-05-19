@@ -1,5 +1,6 @@
 export * from './msg.util';
 export * from './url.util';
+export * from './crud.util';
 export * from './date.util';
 export * from './lang.util';
 export * from './auth.util';

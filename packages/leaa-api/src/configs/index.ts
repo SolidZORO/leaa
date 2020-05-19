@@ -1,5 +1,4 @@
 export { roleConfig } from './role.config';
-export { permissionConfig } from './permission.config';
 export { attachmentConfig } from './attachment.config';
 export { authConfig } from './auth.config';
 export { dictConfig } from './dict.config';

@@ -1,10 +1,6 @@
 import { QuerySort, QuerySortArr } from '@nestjsx/crud-request';
 
-export const calcTableDefaultSortOrder = (
-  sort?: string,
-  by?: string,
-  field?: string,
-): 'descend' | 'ascend' | boolean => {
+export function calcTableDefaultSortOrder(sort?: string, by?: string, field?: string): 'descend' | 'ascend' | boolean {
   if (!by || !sort || !field) {
     return false;
   }
@@ -19,12 +15,12 @@ export const calcTableDefaultSortOrder = (
   }
 
   return false;
-};
+}
 
-export const calcTableSortOrder = (
+export function calcTableSortOrder(
   currentField: string,
   sort?: QuerySort | QuerySortArr | Array<QuerySort | QuerySortArr> | undefined,
-): 'descend' | 'ascend' | boolean => {
+): 'descend' | 'ascend' | boolean {
   if (!currentField || !sort) {
     return false;
   }
@@ -39,4 +35,4 @@ export const calcTableSortOrder = (
   }
 
   return false;
-};
+}

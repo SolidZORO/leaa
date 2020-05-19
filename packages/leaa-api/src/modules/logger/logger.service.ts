@@ -1,7 +1,7 @@
-import { Logger as NestLogger, LoggerService as NestLoggerService } from '@nestjs/common';
+import { Logger, LoggerService as NestLoggerService } from '@nestjs/common';
 import { logger } from '@leaa/api/src/utils';
 
-export class LoggerService extends NestLogger implements NestLoggerService {
+export class LoggerService extends Logger implements NestLoggerService {
   log(message: string, context?: string) {
     super.log(message, context);
     logger.log(message, context);

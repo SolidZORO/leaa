@@ -1,4 +1,6 @@
 import path from 'path';
+import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
 import { NestFactory } from '@nestjs/core';
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestExpressApplication } from '@nestjs/platform-express';
@@ -41,9 +43,16 @@ import { envInfoForCli } from '@leaa/api/src/utils';
     // preflightContinue: false;
   });
 
+  app.use(helmet());
+  app.use(
+    rateLimit({
+      windowMs: 10 * 60 * 1000, // 10 minutes
+      max: 1000, // limit each IP to 1000 requests per windowMs
+    }),
+  );
   app.use(I18nextMiddleware);
 
-  await app.listen(configService.PORT);
+  await app.listen(configService.SERVER_PORT);
 
   // ⚠️ sync all tags to file @ initApp
   const tagService = await app.get(TagService);

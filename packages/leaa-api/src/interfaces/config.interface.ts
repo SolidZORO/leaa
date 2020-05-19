@@ -1,6 +1,6 @@
 export interface IDotEnv {
-  PROTOCOL: string;
-  PORT: number;
+  SERVER_PROTOCOL: string;
+  SERVER_PORT: number;
 
   DEMO_MODE: string;
   DEBUG_MODE: string;
@@ -15,7 +15,7 @@ export interface IDotEnv {
   DB_TYPE: string;
   DB_HOST: string;
   DB_PORT: number;
-  DB_USER: string;
+  DB_USERNAME: string;
   DB_PASSWORD: string;
   DB_DATABASE: string;
   DB_SYNCHRONIZE: string;
@@ -25,11 +25,11 @@ export interface IDotEnv {
   CLIENT_COOKIE_EXPIRES_SECOND: number;
   SERVER_COOKIE_EXPIRES_SECOND: number;
 
-  OSS_ALIYUN_BUCKET?: string;
-  OSS_ALIYUN_AK_SECRET?: string;
-  OSS_ALIYUN_AK_ID?: string;
-  OSS_ALIYUN_REGION?: string;
-  OSS_ALIYUN_CALLBACK_URL?: string;
+  ATTACHMENT_OSS_ALIYUN_BUCKET?: string;
+  ATTACHMENT_OSS_ALIYUN_AK_SECRET?: string;
+  ATTACHMENT_OSS_ALIYUN_AK_ID?: string;
+  ATTACHMENT_OSS_ALIYUN_REGION?: string;
+  ATTACHMENT_OSS_ALIYUN_CALLBACK_URL?: string;
 
   OAUTH_WECHAT_APP_ID?: string;
   OAUTH_WECHAT_APP_SECRET?: string;
