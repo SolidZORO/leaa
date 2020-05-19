@@ -127,8 +127,8 @@ export const TableCard = <T extends object>(props: IProps<T>) => {
    *
    * 1，undefined
    * 2，['id', 'action']
-   * 3，['id', { action: { p1: '1', p2: 'B'} }] // {} 部分是参数
-   * 4，['id', { render: => (<p />) }]
+   * 3，['id', { action: { p1: '1', p2: 'B'} }] -  {} 部分是参数
+   * 4，['id', { render: => (<p />) }] - 原生 TableColumn
    * */
   const genColumns = (cFields?: IColumnField[] | 'all'): ITableColumns => {
     const cSetKeys = Object.keys(columnSet);

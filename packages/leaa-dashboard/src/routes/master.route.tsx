@@ -28,7 +28,7 @@ export const masterRoutes: IRouteItem[] = [
         path: '/articles/create',
         icon: 'ri-file-list-2-line',
         LazyComponent: React.lazy(() =>
-          import(/* webpackChunkName: 'CreateArticle' */ '../pages/Article/CreateArticle/CreateArticle'),
+          import(/* webpackChunkName: 'ArticleCreate' */ '../pages/Article/ArticleCreate/ArticleCreate'),
         ),
         exact: true,
         isCreate: true,
@@ -40,7 +40,7 @@ export const masterRoutes: IRouteItem[] = [
         path: '/articles/:id([\\w]{8}-[\\w]{4}-[\\w]{4}-[\\w]{4}-[\\w]{12})',
         icon: 'ri-file-list-2-line',
         LazyComponent: React.lazy(() =>
-          import(/* webpackChunkName: 'EditArticle' */ '../pages/Article/EditArticle/EditArticle'),
+          import(/* webpackChunkName: 'ArticleEdit' */ '../pages/Article/ArticleEdit/ArticleEdit'),
         ),
         exact: true,
       },
@@ -63,7 +63,7 @@ export const masterRoutes: IRouteItem[] = [
         permission: 'tag.item-create',
         path: '/tags/create',
         icon: 'ri-price-tag-3-line',
-        LazyComponent: React.lazy(() => import(/* webpackChunkName: 'CreateTag' */ '../pages/Tag/CreateTag/CreateTag')),
+        LazyComponent: React.lazy(() => import(/* webpackChunkName: 'TagCreate' */ '../pages/Tag/TagCreate/TagCreate')),
         exact: true,
         isCreate: true,
       },
@@ -73,7 +73,7 @@ export const masterRoutes: IRouteItem[] = [
         permission: 'tag.item-read',
         path: '/tags/:id([\\w]{8}-[\\w]{4}-[\\w]{4}-[\\w]{4}-[\\w]{12})',
         icon: 'ri-price-tag-3-line',
-        LazyComponent: React.lazy(() => import(/* webpackChunkName: 'EditTag' */ '../pages/Tag/EditTag/EditTag')),
+        LazyComponent: React.lazy(() => import(/* webpackChunkName: 'TagEdit' */ '../pages/Tag/TagEdit/TagEdit')),
         exact: true,
       },
       {
@@ -108,7 +108,7 @@ export const masterRoutes: IRouteItem[] = [
         path: '/users/create',
         icon: 'ri-user-3-line',
         LazyComponent: React.lazy(() =>
-          import(/* webpackChunkName: 'CreateUser' */ '../pages/User/CreateUser/CreateUser'),
+          import(/* webpackChunkName: 'UserCreate' */ '../pages/User/UserCreate/UserCreate'),
         ),
         exact: true,
         isCreate: true,
@@ -119,7 +119,7 @@ export const masterRoutes: IRouteItem[] = [
         permission: 'user.item-read',
         path: '/users/:id([\\w]{8}-[\\w]{4}-[\\w]{4}-[\\w]{4}-[\\w]{12})',
         icon: 'ri-user-3-line',
-        LazyComponent: React.lazy(() => import(/* webpackChunkName: 'EditUser' */ '../pages/User/EditUser/EditUser')),
+        LazyComponent: React.lazy(() => import(/* webpackChunkName: 'UserEdit' */ '../pages/User/UserEdit/UserEdit')),
         exact: true,
       },
       {
@@ -140,7 +140,7 @@ export const masterRoutes: IRouteItem[] = [
         path: '/roles/create',
         icon: 'ri-vip-crown-2-line',
         LazyComponent: React.lazy(() =>
-          import(/* webpackChunkName: 'CreateRole' */ '../pages/Role/CreateRole/CreateRole'),
+          import(/* webpackChunkName: 'RoleCreate' */ '../pages/Role/RoleCreate/RoleCreate'),
         ),
         exact: true,
         isCreate: true,
@@ -151,7 +151,7 @@ export const masterRoutes: IRouteItem[] = [
         permission: 'role.item-read',
         path: '/roles/:id([\\w]{8}-[\\w]{4}-[\\w]{4}-[\\w]{4}-[\\w]{12})',
         icon: 'ri-vip-crown-2-line',
-        LazyComponent: React.lazy(() => import(/* webpackChunkName: 'EditRole' */ '../pages/Role/EditRole/EditRole')),
+        LazyComponent: React.lazy(() => import(/* webpackChunkName: 'RoleEdit' */ '../pages/Role/RoleEdit/RoleEdit')),
         exact: true,
       },
       {
@@ -172,7 +172,7 @@ export const masterRoutes: IRouteItem[] = [
         path: '/permissions/create',
         icon: 'ri-lock-2-line',
         LazyComponent: React.lazy(() =>
-          import(/* webpackChunkName: 'CreatePermission' */ '../pages/Permission/CreatePermission/CreatePermission'),
+          import(/* webpackChunkName: 'PermissionCreate' */ '../pages/Permission/PermissionCreate/PermissionCreate'),
         ),
         exact: true,
         isCreate: true,
@@ -184,7 +184,7 @@ export const masterRoutes: IRouteItem[] = [
         path: '/permissions/:id([\\w]{8}-[\\w]{4}-[\\w]{4}-[\\w]{4}-[\\w]{12})',
         icon: 'ri-lock-2-line',
         LazyComponent: React.lazy(() =>
-          import(/* webpackChunkName: 'EditPermission' */ '../pages/Permission/EditPermission/EditPermission'),
+          import(/* webpackChunkName: 'PermissionEdit' */ '../pages/Permission/PermissionEdit/PermissionEdit'),
         ),
         exact: true,
       },
@@ -235,7 +235,7 @@ export const masterRoutes: IRouteItem[] = [
     path: '/categories/:id([\\w]{8}-[\\w]{4}-[\\w]{4}-[\\w]{4}-[\\w]{12})',
     icon: 'ri-function-line',
     LazyComponent: React.lazy(() =>
-      import(/* webpackChunkName: 'EditCategory' */ '../pages/Category/EditCategory/EditCategory'),
+      import(/* webpackChunkName: 'CategoryEdit' */ '../pages/Category/CategoryEdit/CategoryEdit'),
     ),
     exact: true,
   },
@@ -317,7 +317,7 @@ export const masterRoutes: IRouteItem[] = [
         path: '/actions/:id(\\d+)',
         icon: 'ri-function-line',
         LazyComponent: React.lazy(() =>
-          import(/* webpackChunkName: 'EditAction' */ '../pages/Action/EditAction/EditAction'),
+          import(/* webpackChunkName: 'ActionEdit' */ '../pages/Action/ActionEdit/ActionEdit'),
         ),
         exact: true,
       },
