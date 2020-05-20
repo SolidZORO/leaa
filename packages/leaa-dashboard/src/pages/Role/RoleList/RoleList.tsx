@@ -1,8 +1,9 @@
 import cx from 'classnames';
+import { Link } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Role } from '@leaa/common/src/entrys';
+import { Role, Permission } from '@leaa/common/src/entrys';
 import { envConfig } from '@leaa/dashboard/src/configs';
 import { DEFAULT_QUERY } from '@leaa/dashboard/src/constants';
 import { IPage, ICrudListQueryParams, IHttpRes, ICrudListRes, IHttpError } from '@leaa/dashboard/src/interfaces';
@@ -13,8 +14,11 @@ import {
   transUrlQueryToCrudState,
   genCrudRequestQuery,
   genCrudQuerySearch,
+  calcTableSortOrder,
 } from '@leaa/dashboard/src/utils';
 import { PageCard, HtmlMeta, TableCard, SearchInput, FilterIcon } from '@leaa/dashboard/src/components';
+
+import { RolePermissionLength } from '../_components/RolePermissionLength/RolePermissionLength';
 
 import style from './style.module.less';
 
@@ -31,6 +35,7 @@ export default (props: IPage) => {
   const [listLoading, setListLoading] = useState(false);
 
   const [list, setList] = useState<ICrudListRes<Role>>();
+  const [prmissions, setPrmissions] = useState<Permission[] | undefined>([]);
 
   const onFetchList = (params: ICrudListQueryParams) => {
     setCrudQuery(params);
@@ -47,6 +52,16 @@ export default (props: IPage) => {
       .finally(() => setListLoading(false));
   };
 
+  const onFetchpPrmissions = () => {
+    ajax
+      .get(`${envConfig.API_URL}/permissions`)
+      .then((res: IHttpRes<ICrudListRes<Permission>>) => {
+        setPrmissions(res.data.data?.data);
+      })
+      .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message));
+  };
+
+  useEffect(() => onFetchpPrmissions(), []);
   useEffect(() => onFetchList(crudQuery), [crudQuery]);
   useEffect(() => (props.history.location.key ? setCrudQuery(DEFAULT_QUERY) : undefined), [props.history.location.key]);
 
@@ -90,7 +105,31 @@ export default (props: IPage) => {
           setCrudQuery={setCrudQuery}
           route={props.route}
           routerName={API_PATH}
-          columnFields={['id', 'name', 'slug', 'createdAt', { action: { fieldName: 'name' } }]}
+          columnFields={[
+            'id',
+            'name',
+            {
+              title: t('_lang:name'),
+              dataIndex: 'name',
+              sorter: true,
+              sortOrder: calcTableSortOrder('id', crudQuery.sort),
+              render: (text: string, record: Role) => (
+                <Link to={`${props.route.path}/${record.id}`}>
+                  <span>
+                    {record.name}{' '}
+                    <sup>
+                      <RolePermissionLength
+                        rolePermissionsLength={record.permissions?.length}
+                        allPermissionsLength={prmissions?.length}
+                      />
+                    </sup>
+                  </span>
+                </Link>
+              ),
+            },
+            'createdAt',
+            { action: { fieldName: 'name' } },
+          ]}
           list={list}
         />
       )}

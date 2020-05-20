@@ -56,11 +56,7 @@ export default (props: IPage) => {
       title="@LIST"
       extra={
         <div className="g-page-card-extra-filter-bar-wrapper">
-          <FilterIcon
-            crudQuery={crudQuery}
-            clear={['q', 'search']}
-            onClose={(query: any) => setCrudQuery(query)}
-          />
+          <FilterIcon crudQuery={crudQuery} clear={['q', 'search']} onClose={(query: any) => setCrudQuery(query)} />
 
           <SearchInput
             className={cx('g-extra-filter-bar--item', 'g-extra-filter-bar--q')}
@@ -90,7 +86,7 @@ export default (props: IPage) => {
           setCrudQuery={setCrudQuery}
           route={props.route}
           routerName={API_PATH}
-          columnFields={['id', 'name', 'slug', 'createdAt', 'status', { action: { fieldName: 'name' } }]}
+          columnFields={['id', 'name', 'slug', 'createdAt', { action: { fieldName: 'name' } }]}
           list={list}
         />
       )}

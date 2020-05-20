@@ -51,7 +51,24 @@ plugins.push(
   new webpack.ProvidePlugin(provide),
   new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /zh-cn/),
   new HtmlWebpackPlugin(outputHtmlOption),
-  new LodashModuleReplacementPlugin(),
+  new LodashModuleReplacementPlugin({
+    shorthands: true, // for _.groupBy
+    // cloning: true,
+    // currying: true,
+    // caching: true,
+    collections: true,
+    // exotics: true,
+    // guards: true,
+    // metadata: true,
+    // deburring: true,
+    // unicode: true,
+    // chaining: true,
+    // memoizing: true,
+    // coercions: true,
+    // flattening: true,
+    // paths: true,
+    // placeholders: true,
+  }),
 );
 
 if (WPCONST.__DEV__) {

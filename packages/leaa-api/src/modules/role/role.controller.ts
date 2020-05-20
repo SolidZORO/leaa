@@ -1,12 +1,13 @@
 import { Controller, UseGuards } from '@nestjs/common';
-import { Crud, CrudController } from '@nestjsx/crud';
+import { Crud, CrudController, Override, ParsedRequest, CrudRequest, ParsedBody } from '@nestjsx/crud';
 
 import { Permissions } from '@leaa/api/src/decorators';
 import { CreateRoleInput, UpdateRoleInput } from '@leaa/common/src/dtos/role';
 import { JwtGuard, PermissionsGuard } from '@leaa/api/src/guards';
-import { Role } from '@leaa/common/src/entrys';
+import { Role, Article } from '@leaa/common/src/entrys';
 
 import { RoleService } from './role.service';
+import { UpdateArticleInput } from '@leaa/common/src/dtos/article';
 
 @Crud({
   model: { type: Role },
@@ -43,4 +44,9 @@ import { RoleService } from './role.service';
 @Controller('/roles')
 export class RoleController implements CrudController<Role> {
   constructor(public service: RoleService) {}
+
+  @Override('updateOneBase')
+  updateOne(@ParsedRequest() req: CrudRequest, @ParsedBody() dto: UpdateArticleInput): Promise<Role> {
+    return this.service.updateOne(req, dto);
+  }
 }

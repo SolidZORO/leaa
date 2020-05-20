@@ -9,6 +9,9 @@ import { IRolesArgs, IRoleArgs, IGqlCtx } from '@leaa/api/src/interfaces';
 import { PermissionService } from '@leaa/api/src/modules/permission/permission.service';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
+import { ParsedRequest, CrudRequest, ParsedBody } from '@nestjsx/crud';
+import { UpdateArticleInput } from '@leaa/common/src/dtos/article';
+import { plainToClass } from 'class-transformer';
 
 const CLS_NAME = 'RoleService';
 
@@ -21,6 +24,44 @@ export class RoleService extends TypeOrmCrudService<Role> {
     private readonly configService: ConfigService,
   ) {
     super(roleRepo);
+  }
+
+  async updateOne(@ParsedRequest() req: CrudRequest, @ParsedBody() dto: UpdateRoleInput): Promise<Role> {
+    const { allowParamsOverride, returnShallow } = req.options.routes?.updateOneBase || {};
+
+    const paramsFilters = this.getParamFilters(req.parsed);
+    const found = await this.getOneOrFail(req, returnShallow);
+    const toSave = !allowParamsOverride
+      ? { ...found, ...dto, ...paramsFilters, ...req.parsed.authPersist }
+      : { ...found, ...dto, ...req.parsed.authPersist };
+
+    let permissionObjects;
+
+    if (dto.permissionIds && Array.isArray(dto.permissionIds)) {
+      permissionObjects = await this.permissionRepo.findByIds(dto.permissionIds);
+    }
+
+    // if (dto.permissionSlugs && Array.isArray(dto.permissionSlugs)) {
+    //   const permissionId = await this.permissionService.permissionSlugsToIds(dto.permissionSlugs);
+    //   permissionObjects = await this.permissionRepo.findByIds(permissionId);
+    // }
+
+    if (permissionObjects) {
+      toSave.permissions = permissionObjects;
+    } else {
+      throw errorMsg('_error:notFound');
+    }
+
+    const updated = await this.repo.save(plainToClass(this.entityType, toSave));
+
+    if (returnShallow) return updated;
+
+    req.parsed.paramsFilter.forEach((filter) => {
+      // eslint-disable-next-line no-param-reassign
+      filter.value = (updated as any)[filter.field];
+    });
+
+    return this.getOneOrFail(req);
   }
 
   //
