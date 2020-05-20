@@ -1,80 +1,82 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from 'antd';
-import { useQuery, useMutation } from '@apollo/react-hooks';
 
 import { Tag } from '@leaa/common/src/entrys';
-import { GET_TAG, UPDATE_TAG } from '@leaa/dashboard/src/graphqls';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
-import { TagArgs, UpdateTagInput } from '@leaa/common/src/dtos/tag';
-import { IPage, ICommenFormRef, ISubmitData } from '@leaa/dashboard/src/interfaces';
-import { msg } from '@leaa/dashboard/src/utils';
+import { UpdateTagInput } from '@leaa/common/src/dtos/tag';
+import { IPage, ICommenFormRef, ISubmitData, IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
+import { msg, errorMsg, ajax } from '@leaa/dashboard/src/utils';
+import { envConfig } from '@leaa/dashboard/src/configs';
 
-import { HtmlMeta, PageCard, SubmitBar, Rcon } from '@leaa/dashboard/src/components';
+import { PageCard, HtmlMeta, Rcon, SubmitBar } from '@leaa/dashboard/src/components';
 
 import { TagInfoForm } from '../_components/TagInfoForm/TagInfoForm';
 
 import style from './style.module.less';
 
+const API_PATH = 'tags';
+
 export default (props: IPage) => {
   const { t } = useTranslation();
   const { id } = props.match.params as { id: string };
 
-  // ref
   const infoFormRef = useRef<ICommenFormRef<UpdateTagInput>>(null);
 
-  // query
-  const getTagVariables = { id };
-  const getTagQuery = useQuery<{ tag: Tag }, TagArgs>(GET_TAG, {
-    variables: getTagVariables,
-    fetchPolicy: 'network-only',
-  });
+  const [item, setItem] = useState<Tag | undefined>();
+  const [itemLoading, setItemLoading] = useState(false);
+  const [submitLoading, setSubmitLoading] = useState(false);
 
-  // mutation
-  const [submitVariables, setSubmitVariables] = useState<{ id: string; tag: UpdateTagInput }>();
-  const [updateTagMutate, updateTagMutation] = useMutation<Tag>(UPDATE_TAG, {
-    variables: submitVariables,
-    // apollo-link-error onError: e => messageUtil.gqlError(e.message),
-    onCompleted: () => msg(t('_lang:updatedSuccessfully')),
-    refetchQueries: () => [{ query: GET_TAG, variables: getTagVariables }],
-  });
+  const onFetchItem = () => {
+    setItemLoading(true);
 
-  const onSubmit = async () => {
+    ajax
+      .get(`${envConfig.API_URL}/${API_PATH}/${id}`)
+      .then((res: IHttpRes<Tag>) => {
+        setItem(res.data.data);
+      })
+      .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
+      .finally(() => setItemLoading(false));
+  };
+
+  const onUpdateItem = async () => {
     const infoData: ISubmitData<UpdateTagInput> = await infoFormRef.current?.onValidateForm();
 
     if (!infoData) return;
 
-    const submitData: ISubmitData<UpdateTagInput> = {
+    const data: ISubmitData<UpdateTagInput> = {
       ...infoData,
     };
 
-    await setSubmitVariables({ id, tag: submitData });
-    await updateTagMutate();
+    setSubmitLoading(true);
+
+    ajax
+      .patch(`${envConfig.API_URL}/${API_PATH}/${id}`, data)
+      .then((res: IHttpRes<Tag>) => {
+        setItem(res.data.data);
+
+        msg(t('_lang:updatedSuccessfully'));
+      })
+      .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
+      .finally(() => setSubmitLoading(false));
   };
 
+  useEffect(() => onFetchItem(), []);
+
   return (
-    <PageCard
-      title={
-        <span>
-          <Rcon type={props.route.icon} />
-          <strong>{t(`${props.route.namei18n}`)}</strong>
-        </span>
-      }
-      className={style['wapper']}
-      loading={getTagQuery.loading || updateTagMutation.loading}
-    >
+    <PageCard route={props.route} title="@EDIT" className={style['wapper']} loading={itemLoading || submitLoading}>
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
-      <TagInfoForm ref={infoFormRef} item={getTagQuery.data?.tag} loading={getTagQuery.loading} />
+      <TagInfoForm item={item} loading={itemLoading} ref={infoFormRef} />
 
-      <SubmitBar>
+      <SubmitBar full>
         <Button
           type="primary"
           size="large"
           icon={<Rcon type={UPDATE_BUTTON_ICON} />}
           className="g-submit-bar-button"
-          loading={updateTagMutation.loading}
-          onClick={onSubmit}
+          loading={submitLoading}
+          onClick={onUpdateItem}
         >
           {t('_lang:update')}
         </Button>

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Button } from 'antd';
 
 import { Article } from '@leaa/common/src/entrys';
-import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
+import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { UpdateArticleInput } from '@leaa/common/src/dtos/article';
 import { IPage, ICommenFormRef, ISubmitData, IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
 import { msg, errorMsg, ajax } from '@leaa/dashboard/src/utils';
@@ -56,12 +56,12 @@ export default (props: IPage) => {
         <Button
           type="primary"
           size="large"
-          icon={<Rcon type={UPDATE_BUTTON_ICON} />}
+          icon={<Rcon type={CREATE_BUTTON_ICON} />}
           className="g-submit-bar-button"
           loading={submitLoading}
           onClick={onCreateItem}
         >
-          {t('_lang:update')}
+          {t('_lang:create')}
         </Button>
       </SubmitBar>
     </PageCard>

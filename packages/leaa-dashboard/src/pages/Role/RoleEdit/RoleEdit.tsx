@@ -1,96 +1,110 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from 'antd';
-import { useQuery, useMutation } from '@apollo/react-hooks';
 
-import { Role } from '@leaa/common/src/entrys';
-import { GET_PERMISSIONS, GET_ROLE, UPDATE_ROLE } from '@leaa/dashboard/src/graphqls';
+import { Role, Permission } from '@leaa/common/src/entrys';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
-import { RoleArgs, UpdateRoleInput } from '@leaa/common/src/dtos/role';
-import { PermissionsWithPaginationObject, PermissionsArgs } from '@leaa/common/src/dtos/permission';
-import { IPage, ICommenFormRef, ISubmitData } from '@leaa/dashboard/src/interfaces';
-import { msg } from '@leaa/dashboard/src/utils';
+import { UpdateRoleInput } from '@leaa/common/src/dtos/role';
+import {
+  IPage,
+  ICommenFormRef,
+  ISubmitData,
+  IHttpRes,
+  IHttpError,
+  ICrudListQueryParams,
+  ICrudListRes,
+} from '@leaa/dashboard/src/interfaces';
+import { msg, errorMsg, ajax } from '@leaa/dashboard/src/utils';
 
-import { HtmlMeta, PageCard, SubmitBar, Rcon } from '@leaa/dashboard/src/components';
+import { envConfig } from '@leaa/dashboard/src/configs';
+import { PageCard, HtmlMeta, Rcon, SubmitBar } from '@leaa/dashboard/src/components';
 
 import { RoleInfoForm } from '../_components/RoleInfoForm/RoleInfoForm';
 import { RolePermissionsForm } from '../_components/RolePermissionsForm/RolePermissionsForm';
 
 import style from './style.module.less';
 
+const API_PATH = 'roles';
+
 export default (props: IPage) => {
   const { t } = useTranslation();
   const { id } = props.match.params as { id: string };
 
-  // ref
   const infoFormRef = useRef<ICommenFormRef<UpdateRoleInput>>(null);
   const permissionsRef = useRef<ICommenFormRef<UpdateRoleInput>>(null);
 
-  // query
-  const getRoleVariables = { id };
-  const getRoleQuery = useQuery<{ role: Role }, RoleArgs>(GET_ROLE, {
-    variables: getRoleVariables,
-    fetchPolicy: 'network-only',
-  });
+  const [item, setItem] = useState<Role | undefined>();
+  const [itemLoading, setItemLoading] = useState(false);
+  const [submitLoading, setSubmitLoading] = useState(false);
 
-  const getPermissionsVariables = { pageSize: 9999 };
-  const getPermissionsQuery = useQuery<{ permissions: PermissionsWithPaginationObject }, PermissionsArgs>(
-    GET_PERMISSIONS,
-    {
-      variables: getPermissionsVariables,
-      fetchPolicy: 'network-only',
-    },
-  );
+  const [prmissions, setPrmissions] = useState<Permission[] | undefined>([]);
+  const [prmissionsLoading, setPrmissionsLoading] = useState(false);
 
-  // mutation
-  const [submitVariables, setSubmitVariables] = useState<{ id: string; role: UpdateRoleInput }>({
-    id,
-    role: {},
-  });
+  const onFetchItem = () => {
+    setItemLoading(true);
 
-  const [updateRoleMutate, updateRoleMutation] = useMutation<Role>(UPDATE_ROLE, {
-    variables: submitVariables,
-    // apollo-link-error onError: e => messageUtil.gqlError(e.message),
-    onCompleted: () => msg(t('_lang:updatedSuccessfully')),
-    refetchQueries: () => [{ query: GET_ROLE, variables: getRoleVariables }],
-  });
+    ajax
+      .get(`${envConfig.API_URL}/${API_PATH}/${id}`)
+      .then((res: IHttpRes<Role>) => {
+        setItem(res.data.data);
+      })
+      .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
+      .finally(() => setItemLoading(false));
+  };
 
-  const onSubmit = async () => {
+  const onFetchpPrmissions = () => {
+    setPrmissionsLoading(true);
+
+    ajax
+      .get(`${envConfig.API_URL}/permissions`)
+      .then((res: IHttpRes<ICrudListRes<Permission>>) => {
+        setPrmissions(res.data.data?.data);
+      })
+      .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
+      .finally(() => setPrmissionsLoading(false));
+  };
+
+  const onUpdateItem = async () => {
     const infoData: ISubmitData<UpdateRoleInput> = await infoFormRef.current?.onValidateForm();
     const permissionsData: ISubmitData<UpdateRoleInput> = await permissionsRef.current?.onValidateForm();
 
     if (!infoData) return;
     if (!permissionsData || (permissionsData && !Array.isArray(permissionsData.permissionIds))) return;
 
-    const submitData: ISubmitData<UpdateRoleInput> = {
+    const data: ISubmitData<UpdateRoleInput> = {
       ...infoData,
       ...permissionsData,
     };
 
-    await setSubmitVariables({ id, role: submitData });
-    await updateRoleMutate();
+    setSubmitLoading(true);
+
+    ajax
+      .patch(`${envConfig.API_URL}/${API_PATH}/${id}`, data)
+      .then((res: IHttpRes<Role>) => {
+        setItem(res.data.data);
+
+        msg(t('_lang:updatedSuccessfully'));
+      })
+      .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
+      .finally(() => setSubmitLoading(false));
   };
 
+  useEffect(() => {
+    onFetchItem();
+    onFetchpPrmissions();
+  }, []);
+
   return (
-    <PageCard
-      title={
-        <span>
-          <Rcon type={props.route.icon} />
-          <strong>{t(`${props.route.namei18n}`)}</strong>
-        </span>
-      }
-      className={style['wapper']}
-      loading={getRoleQuery.loading || updateRoleMutation.loading}
-    >
+    <PageCard route={props.route} title="@EDIT" className={style['wapper']} loading={itemLoading || submitLoading}>
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
-      <RoleInfoForm ref={infoFormRef} item={getRoleQuery.data?.role} loading={getRoleQuery.loading} />
+      <RoleInfoForm item={item} loading={itemLoading} ref={infoFormRef} />
 
       <RolePermissionsForm
         ref={permissionsRef}
-        item={getRoleQuery.data?.role}
-        loading={getRoleQuery.loading}
-        permissions={getPermissionsQuery.data?.permissions?.items || []}
+        item={item}
+        loading={prmissionsLoading}
+        permissions={prmissions || []}
       />
 
       <SubmitBar full>
@@ -99,8 +113,8 @@ export default (props: IPage) => {
           size="large"
           icon={<Rcon type={UPDATE_BUTTON_ICON} />}
           className="g-submit-bar-button"
-          loading={updateRoleMutation.loading}
-          onClick={onSubmit}
+          loading={submitLoading}
+          onClick={onUpdateItem}
         >
           {t('_lang:update')}
         </Button>

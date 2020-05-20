@@ -1,13 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from 'antd';
-import { useQuery, useMutation } from '@apollo/react-hooks';
 
-import { Article, Tag, Action } from '@leaa/common/src/entrys';
+import { Article, Tag } from '@leaa/common/src/entrys';
 import { IAttachmentBoxRef } from '@leaa/common/src/interfaces';
-import { GET_ARTICLE, UPDATE_ARTICLE } from '@leaa/dashboard/src/graphqls';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
-import { ArticleArgs, UpdateArticleInput } from '@leaa/common/src/dtos/article';
+import { UpdateArticleInput } from '@leaa/common/src/dtos/article';
 import { IPage, ICommenFormRef, ISubmitData, IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
 import { msg, errorMsg, ajax } from '@leaa/dashboard/src/utils';
 

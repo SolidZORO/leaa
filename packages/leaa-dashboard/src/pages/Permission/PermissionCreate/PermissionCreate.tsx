@@ -1,76 +1,65 @@
 import React, { useState, useRef } from 'react';
-import { Button } from 'antd';
 import { useTranslation } from 'react-i18next';
-import { useMutation } from '@apollo/react-hooks';
+import { Button } from 'antd';
 
 import { Permission } from '@leaa/common/src/entrys';
-import { CreatePermissionInput } from '@leaa/common/src/dtos/permission';
-import { IPage, ICommenFormRef, ISubmitData } from '@leaa/dashboard/src/interfaces';
-import { CREATE_PERMISSION } from '@leaa/dashboard/src/graphqls';
 import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
-import { msg } from '@leaa/dashboard/src/utils';
-import { PageCard, SubmitBar, Rcon, HtmlMeta } from '@leaa/dashboard/src/components';
+import { UpdatePermissionInput } from '@leaa/common/src/dtos/permission';
+import { IPage, ICommenFormRef, ISubmitData, IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
+import { msg, errorMsg, ajax } from '@leaa/dashboard/src/utils';
+
+import { envConfig } from '@leaa/dashboard/src/configs';
+import { PageCard, HtmlMeta, Rcon, SubmitBar } from '@leaa/dashboard/src/components';
 
 import { PermissionInfoForm } from '../_components/PermissionInfoForm/PermissionInfoForm';
 
 import style from './style.module.less';
 
+const API_PATH = 'permissions';
+
 export default (props: IPage) => {
   const { t } = useTranslation();
 
-  // ref
-  const infoFormRef = useRef<ICommenFormRef<CreatePermissionInput>>(null);
+  const infoFormRef = useRef<ICommenFormRef<UpdatePermissionInput>>(null);
 
-  // mutation
-  const [submitVariables, setSubmitVariables] = useState<{ permission: CreatePermissionInput }>();
-  const [createPermissionMutate, createPermissionMutation] = useMutation<{ createPermission: Permission }>(
-    CREATE_PERMISSION,
-    {
-      variables: submitVariables,
-      // apollo-link-error onError: e => messageUtil.gqlError(e.message),
-      onCompleted({ createPermission }) {
-        msg(t('_lang:createdSuccessfully'));
-        props.history.push(`/permissions/${createPermission.id}`);
-      },
-    },
-  );
+  const [submitLoading, setSubmitLoading] = useState(false);
 
-  const onSubmit = async () => {
-    const infoData: ISubmitData<CreatePermissionInput> = await infoFormRef.current?.onValidateForm();
+  const onCreateItem = async () => {
+    const infoData: ISubmitData<UpdatePermissionInput> = await infoFormRef.current?.onValidateForm();
 
     if (!infoData) return;
 
-    const submitData: ISubmitData<CreatePermissionInput> = {
+    const data: ISubmitData<UpdatePermissionInput> = {
       ...infoData,
     };
 
-    await setSubmitVariables({ permission: submitData });
-    await createPermissionMutate();
+    setSubmitLoading(true);
+
+    ajax
+      .post(`${envConfig.API_URL}/${API_PATH}`, data)
+      .then((res: IHttpRes<Permission>) => {
+        msg(t('_lang:createdSuccessfully'));
+
+        props.history.push(`/${API_PATH}/${res.data.data?.id}`);
+      })
+      .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
+      .finally(() => setSubmitLoading(false));
   };
 
   return (
-    <PageCard
-      title={
-        <span>
-          <Rcon type={props.route.icon} />
-          <strong>{t(`${props.route.namei18n}`)}</strong>
-        </span>
-      }
-      className={style['wapper']}
-      loading={false}
-    >
+    <PageCard route={props.route} title="@CREATE" className={style['wapper']} loading={submitLoading}>
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
       <PermissionInfoForm ref={infoFormRef} />
 
-      <SubmitBar>
+      <SubmitBar full>
         <Button
           type="primary"
           size="large"
           icon={<Rcon type={CREATE_BUTTON_ICON} />}
           className="g-submit-bar-button"
-          loading={createPermissionMutation.loading}
-          onClick={onSubmit}
+          loading={submitLoading}
+          onClick={onCreateItem}
         >
           {t('_lang:create')}
         </Button>

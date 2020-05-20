@@ -1,84 +1,82 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from 'antd';
-import { useQuery, useMutation } from '@apollo/react-hooks';
 
 import { Permission } from '@leaa/common/src/entrys';
-import { GET_PERMISSION, UPDATE_PERMISSION } from '@leaa/dashboard/src/graphqls';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
-import { PermissionArgs, UpdatePermissionInput } from '@leaa/common/src/dtos/permission';
-import { IPage, ICommenFormRef, ISubmitData } from '@leaa/dashboard/src/interfaces';
-import { msg } from '@leaa/dashboard/src/utils';
+import { UpdatePermissionInput } from '@leaa/common/src/dtos/permission';
+import { IPage, ICommenFormRef, ISubmitData, IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
+import { msg, errorMsg, ajax } from '@leaa/dashboard/src/utils';
 
+import { envConfig } from '@leaa/dashboard/src/configs';
 import { PageCard, HtmlMeta, Rcon, SubmitBar } from '@leaa/dashboard/src/components';
 
 import { PermissionInfoForm } from '../_components/PermissionInfoForm/PermissionInfoForm';
 
 import style from './style.module.less';
 
+const API_PATH = 'permissions';
+
 export default (props: IPage) => {
   const { t } = useTranslation();
   const { id } = props.match.params as { id: string };
 
-  // ref
   const infoFormRef = useRef<ICommenFormRef<UpdatePermissionInput>>(null);
 
-  // query
-  const getPermissionVariables = { id };
-  const getPermissionQuery = useQuery<{ permission: Permission }, PermissionArgs>(GET_PERMISSION, {
-    variables: getPermissionVariables,
-    fetchPolicy: 'network-only',
-  });
+  const [item, setItem] = useState<Permission | undefined>();
+  const [itemLoading, setItemLoading] = useState(false);
+  const [submitLoading, setSubmitLoading] = useState(false);
 
-  // mutation
-  const [submitVariables, setSubmitVariables] = useState<{ id: string; permission: UpdatePermissionInput }>();
-  const [updatePermissionMutate, updatePermissionMutation] = useMutation<Permission>(UPDATE_PERMISSION, {
-    variables: submitVariables,
-    // apollo-link-error onError: e => messageUtil.gqlError(e.message),
-    onCompleted: () => msg(t('_lang:updatedSuccessfully')),
-    refetchQueries: () => [{ query: GET_PERMISSION, variables: getPermissionVariables }],
-  });
+  const onFetchItem = () => {
+    setItemLoading(true);
 
-  const onSubmit = async () => {
+    ajax
+      .get(`${envConfig.API_URL}/${API_PATH}/${id}`)
+      .then((res: IHttpRes<Permission>) => {
+        setItem(res.data.data);
+      })
+      .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
+      .finally(() => setItemLoading(false));
+  };
+
+  const onUpdateItem = async () => {
     const infoData: ISubmitData<UpdatePermissionInput> = await infoFormRef.current?.onValidateForm();
 
     if (!infoData) return;
 
-    const submitData: ISubmitData<UpdatePermissionInput> = {
+    const data: ISubmitData<UpdatePermissionInput> = {
       ...infoData,
     };
 
-    await setSubmitVariables({ id, permission: submitData });
-    await updatePermissionMutate();
+    setSubmitLoading(true);
+
+    ajax
+      .patch(`${envConfig.API_URL}/${API_PATH}/${id}`, data)
+      .then((res: IHttpRes<Permission>) => {
+        setItem(res.data.data);
+
+        msg(t('_lang:updatedSuccessfully'));
+      })
+      .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
+      .finally(() => setSubmitLoading(false));
   };
 
+  useEffect(() => onFetchItem(), []);
+
   return (
-    <PageCard
-      title={
-        <span>
-          <Rcon type={props.route.icon} />
-          <strong>{t(`${props.route.namei18n}`)}</strong>
-        </span>
-      }
-      className={style['wapper']}
-      loading={getPermissionQuery.loading || updatePermissionMutation.loading}
-    >
+    <PageCard route={props.route} title="@EDIT" className={style['wapper']} loading={itemLoading || submitLoading}>
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
-      <PermissionInfoForm
-        ref={infoFormRef}
-        item={getPermissionQuery.data?.permission}
-        loading={getPermissionQuery.loading}
-      />
+      <PermissionInfoForm item={item} loading={itemLoading} ref={infoFormRef} />
 
-      <SubmitBar>
+      <SubmitBar full>
         <Button
           type="primary"
           size="large"
           icon={<Rcon type={UPDATE_BUTTON_ICON} />}
           className="g-submit-bar-button"
-          loading={updatePermissionMutation.loading}
-          onClick={onSubmit}
+          loading={submitLoading}
+          onClick={onUpdateItem}
         >
           {t('_lang:update')}
         </Button>

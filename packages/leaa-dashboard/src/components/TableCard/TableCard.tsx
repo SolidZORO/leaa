@@ -15,7 +15,7 @@ import {
 
 import { DEFAULT_PAGE_SIZE_OPTIONS } from '@leaa/dashboard/src/constants';
 import { formatOrderSort, calcTableSortOrder, transUrlQueryToCrudState } from '@leaa/dashboard/src/utils';
-import { Table } from 'antd';
+import { Table, Tag } from 'antd';
 import { TableProps } from 'antd/es/table/Table';
 import {
   TableColumnDate,
@@ -23,6 +23,8 @@ import {
   TableColumnDeleteButton,
   TableColumnId,
   TagMiniSets,
+  Rcon,
+  UserAvatar,
 } from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';
@@ -85,6 +87,35 @@ export const TableCard = <T extends object>(props: IProps<T>) => {
       sorter: true,
       sortOrder: calcTableSortOrder('name', crudQuery.sort),
       render: (text: string, record: any) => <Link to={`${props.route.path}/${record.id}`}>{record.name}</Link>,
+    }),
+    email: () => ({
+      title: t('_lang:email'),
+      dataIndex: 'email',
+      sorter: true,
+      sortOrder: calcTableSortOrder('email', crudQuery.sort),
+      render: (text: string, record: any) => <Link to={`${props.route.path}/${record.id}`}>{record.email}</Link>,
+    }),
+    roleList: () => ({
+      title: t('_lang:role'),
+      dataIndex: 'role',
+      sortOrder: calcTableSortOrder('name', crudQuery.sort),
+      render: (text: string, record: any) => (
+        <div>{record.roles && record.roles.map((r: any) => <Tag key={r.name}>{r.name}</Tag>)}</div>
+      ),
+    }),
+    avatar: () => ({
+      title: t('_lang:avatar'),
+      dataIndex: 'avatar_url',
+      width: 60,
+      render: (avatar: string) => <UserAvatar url={avatar} />,
+    }),
+    isAdmin: () => ({
+      title: <Rcon type="ri-vip-crown-2-line" />,
+      width: 30,
+      dataIndex: 'is_admin',
+      sorter: true,
+      sortOrder: calcTableSortOrder('name', crudQuery.sort),
+      render: (text: string, record: any) => (record.is_admin ? <Rcon type="ri-vip-crown-2-line" /> : null),
     }),
     category: () => ({
       title: t('_lang:category'),

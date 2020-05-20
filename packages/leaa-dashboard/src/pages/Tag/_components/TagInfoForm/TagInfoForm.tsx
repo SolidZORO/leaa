@@ -31,32 +31,16 @@ export const TagInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
     }
   };
 
-  const onUpdateForm = (item?: TagEntry) => {
-    if (!item) return undefined;
+  const onRefreshForm = (item?: TagEntry) => {
+    if (!item) return form.setFieldsValue({ status: 0 });
 
-    // if APIs return error, do not flush out edited data
-    if (form.getFieldValue('updated_at') && !item.updated_at) {
-      form.resetFields();
-      return undefined;
-    }
-
-    // update was successful, keeping the form data and APIs in sync.
-    if (form.getFieldValue('updated_at') !== item.updated_at) {
-      form.resetFields();
-      form.setFieldsValue({
-        name: item.name,
-        icon: item.icon,
-        description: item.description,
-      });
-    }
+    form.resetFields();
+    form.setFieldsValue(item);
 
     return undefined;
   };
 
-  useEffect(() => {
-    onUpdateForm(props.item);
-  }, [props.item]);
-
+  useEffect(() => onRefreshForm(props.item), [form, props.item]);
   useImperativeHandle(ref, () => ({ form, onValidateForm }));
 
   return (

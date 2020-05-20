@@ -21,7 +21,13 @@ import { UserService } from './user.service';
       disabled: true,
     },
   },
-  query: { maxLimit: 1000, alwaysPaginate: true },
+  query: {
+    maxLimit: 1000,
+    alwaysPaginate: true,
+    join: {
+      roles: { eager: true },
+    },
+  },
   routes: {
     // getManyBase: { decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('user.list-read')] },
     // getOneBase: { decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('user.item-read')] },

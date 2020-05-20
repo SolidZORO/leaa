@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import cx from 'classnames';
 import React, { useEffect, useState, forwardRef, useImperativeHandle } from 'react';
 import { Form } from 'antd';
@@ -43,39 +44,30 @@ export const RolePermissionsForm = forwardRef((props: IProps, ref: React.Ref<any
     }
   };
 
-  const onUpdateForm = (item?: Role) => {
-    if (!item) return undefined;
+  const onRefreshForm = (item?: Role) => {
+    if (!item) return form.setFieldsValue({});
 
-    // if APIs return error, do not flush out edited data
-    if (form.getFieldValue('updated_at') && !item.updated_at) {
-      form.resetFields();
-      return undefined;
-    }
+    form.resetFields();
 
-    // update was successful, keeping the form data and APIs in sync.
-    if (form.getFieldValue('updated_at') !== item.updated_at) {
-      form.resetFields();
-      const permissionIds = getPermissionIds(props.item);
+    const permissionIds = getPermissionIds(props.item);
 
-      form.setFieldsValue({
-        ...item,
-        permissionIds,
-      });
+    form.setFieldsValue({
+      ...item,
+      permissionIds,
+    });
 
-      setPermissionLength(permissionIds.length);
-    }
+    setPermissionLength(permissionIds.length);
 
     return undefined;
   };
 
-  const onChangePermissionIds = (permissionIds: Array<CheckboxValueType>) => {
+  const onChangePermissionIds = (permissionIds: CheckboxValueType[] | undefined) => {
     form.setFieldsValue({ permissionIds });
 
-    setPermissionLength(permissionIds.length);
+    if (permissionIds) setPermissionLength(permissionIds.length);
   };
 
-  useEffect(() => onUpdateForm(props.item), [form, props.item]);
-
+  useEffect(() => onRefreshForm(props.item), [form, props.item]);
   useImperativeHandle(ref, () => ({ form, onValidateForm }));
 
   return (
@@ -96,7 +88,13 @@ export const RolePermissionsForm = forwardRef((props: IProps, ref: React.Ref<any
         <Form form={form} name="role-permissions" layout="vertical">
           <Form.Item name="permissionIds" rules={[]} validateTrigger={['onBlur']}>
             <RolePermissionsCheckbox
-              permissionsFlat={(Array.isArray(props.permissions) && props.permissions) || []}
+              permissionsFlat={
+                (_.isArray(props.permissions) &&
+                  !_.isEmpty(props.permissions) &&
+                  _.isArray(props.permissions) &&
+                  props.permissions) ||
+                []
+              }
               onChangePermissionIds={onChangePermissionIds}
             />
           </Form.Item>

@@ -1,76 +1,67 @@
 import React, { useState, useRef } from 'react';
-import { Button } from 'antd';
 import { useTranslation } from 'react-i18next';
-import { useMutation } from '@apollo/react-hooks';
+import { Button } from 'antd';
 
 import { Tag } from '@leaa/common/src/entrys';
-import { CreateTagInput } from '@leaa/common/src/dtos/tag';
-import { IPage, ICommenFormRef, ISubmitData } from '@leaa/dashboard/src/interfaces';
-import { CREATE_TAG } from '@leaa/dashboard/src/graphqls';
-import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
-import { msg } from '@leaa/dashboard/src/utils';
+import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
+import { UpdateTagInput } from '@leaa/common/src/dtos/tag';
+import { IPage, ICommenFormRef, ISubmitData, IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
+import { msg, errorMsg, ajax } from '@leaa/dashboard/src/utils';
 
-import { HtmlMeta, PageCard, SubmitBar, Rcon } from '@leaa/dashboard/src/components';
+import { envConfig } from '@leaa/dashboard/src/configs';
+import { PageCard, HtmlMeta, Rcon, SubmitBar } from '@leaa/dashboard/src/components';
 
 import { TagInfoForm } from '../_components/TagInfoForm/TagInfoForm';
 
 import style from './style.module.less';
 
+const API_PATH = 'tags';
+
 export default (props: IPage) => {
   const { t } = useTranslation();
 
-  // ref
-  const infoFormRef = useRef<ICommenFormRef<CreateTagInput>>(null);
+  const infoFormRef = useRef<ICommenFormRef<UpdateTagInput>>(null);
 
-  // mutation
-  const [submitVariables, setSubmitVariables] = useState<{ tag: CreateTagInput }>();
-  const [createTagMutate, createTagMutation] = useMutation<{ createTag: Tag }>(CREATE_TAG, {
-    variables: submitVariables,
-    // apollo-link-error onError: e => messageUtil.gqlError(e.message),
-    onCompleted({ createTag }) {
-      msg(t('_lang:createdSuccessfully'));
-      props.history.push(`/tags/${createTag.id}`);
-    },
-  });
+  const [submitLoading, setSubmitLoading] = useState(false);
 
-  const onSubmit = async () => {
-    const infoData: ISubmitData<CreateTagInput> = await infoFormRef.current?.onValidateForm();
+  const onCreateItem = async () => {
+    const infoData: ISubmitData<UpdateTagInput> = await infoFormRef.current?.onValidateForm();
 
     if (!infoData) return;
 
-    const submitData: ISubmitData<CreateTagInput> = {
+    const data: ISubmitData<UpdateTagInput> = {
       ...infoData,
     };
 
-    await setSubmitVariables({ tag: submitData });
-    await createTagMutate();
+    setSubmitLoading(true);
+
+    ajax
+      .post(`${envConfig.API_URL}/${API_PATH}`, data)
+      .then((res: IHttpRes<Tag>) => {
+        msg(t('_lang:createdSuccessfully'));
+
+        props.history.push(`/${API_PATH}/${res.data.data?.id}`);
+      })
+      .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
+      .finally(() => setSubmitLoading(false));
   };
 
   return (
-    <PageCard
-      title={
-        <span>
-          <Rcon type={props.route.icon} />
-          <strong>{t(`${props.route.namei18n}`)}</strong>
-        </span>
-      }
-      className={style['wapper']}
-      loading={createTagMutation.loading}
-    >
+    <PageCard route={props.route} title="@CREATE" className={style['wapper']} loading={submitLoading}>
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
       <TagInfoForm ref={infoFormRef} />
 
-      <SubmitBar>
+      <SubmitBar full>
         <Button
           type="primary"
           size="large"
-          icon={<Rcon type={CREATE_BUTTON_ICON} />}
+          icon={<Rcon type={UPDATE_BUTTON_ICON} />}
           className="g-submit-bar-button"
-          loading={createTagMutation.loading}
-          onClick={onSubmit}
+          loading={submitLoading}
+          onClick={onCreateItem}
         >
-          {t('_lang:create')}
+          {t('_lang:update')}
         </Button>
       </SubmitBar>
     </PageCard>

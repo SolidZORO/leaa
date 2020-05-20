@@ -11,6 +11,14 @@ import { TagService } from '@leaa/api/src/modules/tag/tag.service';
 import { plainToClass } from 'class-transformer';
 import moment from 'moment';
 
+export interface ITransIdsToEntrys {
+  dto: any;
+  toSave: any;
+  idName: any;
+  sName: string;
+  repo: any;
+}
+
 @Injectable()
 export class ArticleService extends TypeOrmCrudService<Article> {
   constructor(
@@ -22,19 +30,7 @@ export class ArticleService extends TypeOrmCrudService<Article> {
     super(articleRepo);
   }
 
-  async transIdsToEntrys({
-    dto,
-    toSave,
-    idName,
-    sName,
-    repo,
-  }: {
-    dto: any;
-    toSave: any;
-    idName: any;
-    sName: string;
-    repo: any;
-  }) {
+  async transIdsToEntrys({ dto, toSave, idName, sName, repo }: ITransIdsToEntrys) {
     const dtoIds: any = dto[idName];
 
     /* eslint-disable no-param-reassign */

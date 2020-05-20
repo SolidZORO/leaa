@@ -1,178 +1,54 @@
-import _ from 'lodash';
 import cx from 'classnames';
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import queryString from 'query-string';
-import { Link } from 'react-router-dom';
-import { useQuery, useMutation } from '@apollo/react-hooks';
-import { Table } from 'antd';
-
-import { DEFAULT_PAGE_SIZE_OPTIONS, PAGE_CARD_TITLE_CREATE_ICON } from '@leaa/dashboard/src/constants';
-import { GET_ROLES, DELETE_ROLE, GET_PERMISSIONS } from '@leaa/dashboard/src/graphqls';
 
 import { Role } from '@leaa/common/src/entrys';
-import { RolesWithPaginationObject, RolesArgs } from '@leaa/common/src/dtos/role';
-import { PermissionsWithPaginationObject, PermissionsArgs } from '@leaa/common/src/dtos/permission';
-import { IPage, IKey, ITablePagination } from '@leaa/dashboard/src/interfaces';
+import { envConfig } from '@leaa/dashboard/src/configs';
+import { DEFAULT_QUERY } from '@leaa/dashboard/src/constants';
+import { IPage, ICrudListQueryParams, IHttpRes, ICrudListRes, IHttpError } from '@leaa/dashboard/src/interfaces';
 import {
-  mergeUrlParamToUrlQuery,
-  getPaginationByUrl,
-  pickPaginationByUrl,
-  pickOrderByByUrl,
-  formatOrderSortByUrl,
-  formatOrderByByUrl,
-  initPaginationStateByUrl,
-  calcTableDefaultSortOrder,
-  msg,
+  ajax,
+  errorMsg,
+  setCrudQueryToUrl,
+  transUrlQueryToCrudState,
+  genCrudRequestQuery,
+  genCrudQuerySearch,
 } from '@leaa/dashboard/src/utils';
-
-import {
-  Rcon,
-  PageCard,
-  HtmlMeta,
-  TableCard,
-  SearchInput,
-  TableColumnId,
-  TableColumnDate,
-  TableColumnDeleteButton,
-} from '@leaa/dashboard/src/components';
-
-import { RolePermissionLength } from '../_components/RolePermissionLength/RolePermissionLength';
+import { PageCard, HtmlMeta, TableCard, SearchInput, FilterIcon } from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';
+
+const API_PATH = 'roles';
 
 export default (props: IPage) => {
   const { t } = useTranslation();
 
-  const urlParams = queryString.parse(window.location.search);
-  const urlPagination = getPaginationByUrl(urlParams);
-
-  const [tablePagination, setTablePagination] = useState<ITablePagination>(initPaginationStateByUrl(urlParams));
-  const [selectedRowKeys, setSelectedRowKeys] = useState<IKey[]>([]);
-
-  // filter
-  const [q, setQ] = useState<string | undefined>(urlParams.q ? String(urlParams.q) : undefined);
-
-  // query
-  const getRolesVariables = { ...tablePagination, q };
-  const getRolesQuery = useQuery<{ roles: RolesWithPaginationObject }, RolesArgs>(GET_ROLES, {
-    variables: getRolesVariables,
-    fetchPolicy: 'network-only',
+  const [crudQuery, setCrudQuery] = useState<ICrudListQueryParams>({
+    ...DEFAULT_QUERY,
+    ...transUrlQueryToCrudState(window),
   });
 
-  const getPermissionsVariables = { pageSize: 9999 };
-  const getPermissionsQuery = useQuery<{ permissions: PermissionsWithPaginationObject }, PermissionsArgs>(
-    GET_PERMISSIONS,
-    {
-      variables: getPermissionsVariables,
-      fetchPolicy: 'network-only',
-    },
-  );
+  const [listLoading, setListLoading] = useState(false);
 
-  // mutation
-  const [deleteRoleMutate, deleteRoleMutation] = useMutation<Role>(DELETE_ROLE, {
-    // apollo-link-error onError: e => messageUtil.gqlError(e.message),
-    onCompleted: () => msg(t('_lang:deletedSuccessfully')),
-    refetchQueries: () => [{ query: GET_ROLES, variables: getRolesVariables }],
-  });
+  const [list, setList] = useState<ICrudListRes<Role>>();
 
-  const resetUrlParams = () => {
-    setTablePagination({
-      page: urlPagination.page,
-      pageSize: urlPagination.pageSize,
-      orderBy: undefined,
-      orderSort: undefined,
-    });
+  const onFetchList = (params: ICrudListQueryParams) => {
+    setCrudQuery(params);
+    setListLoading(true);
 
-    setSelectedRowKeys([]);
-    setQ(undefined);
+    ajax
+      .get(`${envConfig.API_URL}/${API_PATH}`, { params: genCrudRequestQuery(params) })
+      .then((res: IHttpRes<ICrudListRes<Role>>) => {
+        setList(res.data.data);
+
+        setCrudQueryToUrl({ window, query: params, replace: true });
+      })
+      .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
+      .finally(() => setListLoading(false));
   };
 
-  useEffect(() => {
-    if (_.isEmpty(urlParams)) resetUrlParams(); // change route reset url
-  }, [props.history.location.key]);
-
-  const rowSelection = {
-    columnWidth: 30,
-    onChange: (keys: IKey[]) => setSelectedRowKeys(keys),
-    selectedRowKeys,
-  };
-
-  const columns = [
-    {
-      title: 'ID',
-      dataIndex: 'id',
-      width: 75, // ID
-      sorter: true,
-      sortOrder: calcTableDefaultSortOrder(tablePagination.orderSort, tablePagination.orderBy, 'id'),
-      render: (id: string) => <TableColumnId id={id} link={`${props.route.path}/${id}`} />,
-    },
-    {
-      title: t('_lang:name'),
-      dataIndex: 'name',
-      sorter: true,
-      sortOrder: calcTableDefaultSortOrder(tablePagination.orderSort, tablePagination.orderBy, 'name'),
-      render: (text: string, record: Role) => (
-        <Link to={`${props.route.path}/${record.id}`}>
-          <span>
-            {record.name}{' '}
-            <sup>
-              <RolePermissionLength
-                rolePermissionsLength={record.permissions?.length}
-                allPermissionsLength={getPermissionsQuery.data?.permissions?.items?.length}
-              />
-            </sup>
-          </span>
-        </Link>
-      ),
-    },
-    {
-      title: t('_lang:slug'),
-      dataIndex: 'slug',
-      sorter: true,
-      sortOrder: calcTableDefaultSortOrder(tablePagination.orderSort, tablePagination.orderBy, 'slug'),
-    },
-    {
-      title: t('_lang:createdAt'),
-      dataIndex: 'created_at',
-      width: 120,
-      sorter: true,
-      sortOrder: calcTableDefaultSortOrder(tablePagination.orderSort, tablePagination.orderBy, 'created_at'),
-      render: (text: string) => <TableColumnDate date={text} size="small" />,
-    },
-    {
-      title: t('_lang:action'),
-      dataIndex: 'operation',
-      width: 60,
-      render: (text: string, record: Role) => (
-        <TableColumnDeleteButton
-          id={record.id}
-          fieldName={record.name}
-          loading={deleteRoleMutation.loading}
-          onClick={async () => deleteRoleMutate({ variables: { id: record.id } })}
-        />
-      ),
-    },
-  ];
-
-  const onFilter = (params: { field: string; value?: string | number | number[] }) => {
-    setTablePagination({ ...tablePagination, page: 1 });
-
-    const filterParams: { q?: string; categoryId?: number; brandId?: number; tagName?: string } = {};
-
-    if (params.field === 'q') {
-      const result = params.value ? String(params.value) : undefined;
-
-      setQ(result);
-      filterParams.q = result;
-    }
-
-    mergeUrlParamToUrlQuery({
-      window,
-      params: { page: 1, ...filterParams },
-      replace: true,
-    });
-  };
+  useEffect(() => onFetchList(crudQuery), [crudQuery]);
+  useEffect(() => (props.history.location.key ? setCrudQuery(DEFAULT_QUERY) : undefined), [props.history.location.key]);
 
   return (
     <PageCard
@@ -180,56 +56,43 @@ export default (props: IPage) => {
       title="@LIST"
       extra={
         <div className="g-page-card-extra-filter-bar-wrapper">
+          <FilterIcon
+            crudQuery={crudQuery}
+            clear={['q', 'search', 'categoryId']}
+            onClose={(query: any) => setCrudQuery(query)}
+          />
+
           <SearchInput
             className={cx('g-extra-filter-bar--item', 'g-extra-filter-bar--q')}
-            value={q}
-            onChange={(v) => onFilter({ field: 'q', value: v })}
+            value={crudQuery.q}
+            onSearch={(q?: string) => {
+              return setCrudQuery({
+                ...crudQuery,
+                search: genCrudQuerySearch(q, {
+                  crudQuery,
+                  condition: { $and: [{ $or: [{ name: { $cont: q } }] }] },
+                  clear: { $and: [{ $or: undefined }] },
+                }),
+                q: q || undefined,
+              });
+            }}
           />
         </div>
       }
       className={style['wapper']}
-      loading={getRolesQuery.loading}
+      loading={listLoading}
     >
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
-      {getRolesQuery?.data?.roles?.items && (
-        <TableCard selectedRowKeys={selectedRowKeys} totalLength={getRolesQuery.data.roles.total}>
-          <Table
-            rowKey="id"
-            size="small"
-            rowSelection={rowSelection}
-            columns={columns as any}
-            dataSource={getRolesQuery.data.roles.items}
-            pagination={{
-              defaultCurrent: tablePagination.page,
-              defaultPageSize: tablePagination.pageSize,
-              total: getRolesQuery.data.roles.total,
-              current: tablePagination.page,
-              pageSize: tablePagination.pageSize,
-              //
-              pageSizeOptions: DEFAULT_PAGE_SIZE_OPTIONS,
-              showSizeChanger: true,
-            }}
-            onChange={(pagination, filters, sorter: any) => {
-              setTablePagination({
-                ...tablePagination,
-                page: pagination.current,
-                pageSize: pagination.pageSize,
-                orderBy: formatOrderByByUrl(sorter.field),
-                orderSort: formatOrderSortByUrl(sorter.order),
-              });
-
-              mergeUrlParamToUrlQuery({
-                window,
-                params: {
-                  ...pickPaginationByUrl(pagination),
-                  ...pickOrderByByUrl(sorter),
-                },
-                replace: true,
-              });
-            }}
-          />
-        </TableCard>
+      {list?.data && (
+        <TableCard
+          crudQuery={crudQuery}
+          setCrudQuery={setCrudQuery}
+          route={props.route}
+          routerName={API_PATH}
+          columnFields={['id', 'name', 'slug', 'createdAt', { action: { fieldName: 'name' } }]}
+          list={list}
+        />
       )}
     </PageCard>
   );

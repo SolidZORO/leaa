@@ -1,105 +1,127 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from 'antd';
-import { useQuery, useMutation } from '@apollo/react-hooks';
 
-import { User } from '@leaa/common/src/entrys';
-import { GET_USER, GET_ROLES, UPDATE_USER } from '@leaa/dashboard/src/graphqls';
-import { RolesWithPaginationObject, RolesArgs } from '@leaa/common/src/dtos/role';
+import { User, Tag, Role } from '@leaa/common/src/entrys';
+import { IAttachmentBoxRef } from '@leaa/common/src/interfaces';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
-import { UserArgs, UpdateUserInput } from '@leaa/common/src/dtos/user';
-import { IPage, ICommenFormRef, ISubmitData } from '@leaa/dashboard/src/interfaces';
-import { msg } from '@leaa/dashboard/src/utils';
+import { UpdateUserInput } from '@leaa/common/src/dtos/user';
+import { IPage, ICommenFormRef, ISubmitData, IHttpRes, IHttpError, ICrudListRes } from '@leaa/dashboard/src/interfaces';
+import { msg, errorMsg, ajax } from '@leaa/dashboard/src/utils';
 
-import { HtmlMeta, PageCard, SubmitBar, Rcon } from '@leaa/dashboard/src/components';
+import { envConfig } from '@leaa/dashboard/src/configs';
+import { PageCard, HtmlMeta, WYSIWYGEditor, Rcon, SubmitBar } from '@leaa/dashboard/src/components';
 
 import { UserInfoForm } from '../_components/UserInfoForm/UserInfoForm';
 import { UserRolesForm } from '../_components/UserRolesForm/UserRolesForm';
-import { UploadUserAvatar } from '../_components/UploadUserAvatar/UploadUserAvatar';
+// import { UserExtForm } from '../_components/UserExtForm/UserExtForm';
 
 import style from './style.module.less';
+// import { UploadUserAvatar } from '@leaa/dashboard/src/pages/User/_components/UploadUserAvatar/UploadUserAvatar';
+
+const API_PATH = 'users';
 
 export default (props: IPage) => {
   const { t } = useTranslation();
   const { id } = props.match.params as { id: string };
 
-  // ref
   const infoFormRef = useRef<ICommenFormRef<UpdateUserInput>>(null);
-  const userRolesFormRef = useRef<ICommenFormRef<UpdateUserInput>>(null);
+  const rolesFormRef = useRef<ICommenFormRef<UpdateUserInput>>(null);
 
-  // query
-  const getUserVariables = { id };
-  const getUserQuery = useQuery<{ user: User }, UserArgs>(GET_USER, {
-    variables: getUserVariables,
-    fetchPolicy: 'network-only',
-  });
+  const [item, setItem] = useState<User | undefined>();
+  const [itemLoading, setItemLoading] = useState(false);
+  const [submitLoading, setSubmitLoading] = useState(false);
 
-  const getRolesVariables = { pageSize: 9999 };
-  const getRolesQuery = useQuery<{ roles: RolesWithPaginationObject }, RolesArgs>(GET_ROLES, {
-    variables: getRolesVariables,
-    fetchPolicy: 'network-only',
-  });
+  const [roles, setRoles] = useState<Role[]>();
+  const [rolesLoading, setRolesLoading] = useState(false);
 
-  // mutation
-  const [submitVariables, setSubmitVariables] = useState<{ id: string; user: UpdateUserInput }>({
-    id,
-    user: {},
-  });
-  const [updateUserMutate, updateUserMutation] = useMutation<User>(UPDATE_USER, {
-    variables: submitVariables,
-    // apollo-link-error onError: e => messageUtil.gqlError(e.message),
-    onCompleted: () => msg(t('_lang:updatedSuccessfully')),
-    refetchQueries: () => [{ query: GET_USER, variables: getUserVariables }],
-  });
+  const userContentRef = useRef<any>(null);
+  const attachmentBoxRef = useRef<IAttachmentBoxRef>(null);
+  const selectTagIdRef = useRef<any>(null);
+  const [userTags, setUserTags] = useState<Tag[]>();
 
-  const onSubmit = async () => {
+  const onFetchItem = () => {
+    setItemLoading(true);
+
+    ajax
+      .get(`${envConfig.API_URL}/${API_PATH}/${id}`)
+      .then((res: IHttpRes<User>) => {
+        setItem(res.data.data);
+      })
+      .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
+      .finally(() => setItemLoading(false));
+  };
+
+  const onFetchRoles = () => {
+    setRolesLoading(true);
+
+    ajax
+      .get(`${envConfig.API_URL}/roles`)
+      .then((res: IHttpRes<ICrudListRes<Role>>) => {
+        // console.log(res.data.data?.data);
+        setRoles(res.data.data?.data);
+
+        // setItem(res.data.data);
+      })
+      .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
+      .finally(() => setRolesLoading(false));
+  };
+
+  const onUpdateItem = async () => {
     const infoData: ISubmitData<UpdateUserInput> = await infoFormRef.current?.onValidateForm();
-    const userRolesData: ISubmitData<UpdateUserInput> = await userRolesFormRef.current?.onValidateForm();
+    const userRolesData: ISubmitData<UpdateUserInput> = await rolesFormRef.current?.onValidateForm();
 
     if (!infoData) return;
     if (!userRolesData) return;
 
-    const submitData: ISubmitData<UpdateUserInput> = {
+    const data: ISubmitData<UpdateUserInput> = {
       ...infoData,
       ...userRolesData,
     };
 
-    await setSubmitVariables({ id, user: submitData });
-    await updateUserMutate();
+    setSubmitLoading(true);
+
+    ajax
+      .patch(`${envConfig.API_URL}/${API_PATH}/${id}`, data)
+      .then((res: IHttpRes<User>) => {
+        setItem(res.data.data);
+
+        msg(t('_lang:updatedSuccessfully'));
+      })
+      .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
+      .finally(() => setSubmitLoading(false));
+
+    // attachments
+    await attachmentBoxRef.current?.onUpdateAttachments();
   };
 
+  useEffect(() => {
+    onFetchItem();
+    onFetchRoles();
+  }, []);
+
   return (
-    <PageCard
-      title={
-        <span>
-          <Rcon type={props.route.icon} />
-          <strong>{t(`${props.route.namei18n}`)}</strong>
-        </span>
-      }
-      className={style['wapper']}
-      loading={getUserQuery.loading || updateUserMutation.loading}
-    >
+    <PageCard route={props.route} title="@EDIT" className={style['wapper']} loading={itemLoading || submitLoading}>
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
-      <UploadUserAvatar item={getUserQuery.data?.user} loading={getUserQuery.loading} />
-
-      <UserInfoForm ref={infoFormRef} item={getUserQuery.data?.user} loading={getUserQuery.loading} />
+      <UserInfoForm item={item} loading={itemLoading} ref={infoFormRef} />
 
       <UserRolesForm
-        ref={userRolesFormRef}
-        item={getUserQuery.data?.user}
-        loading={getRolesQuery.loading}
-        roles={getRolesQuery.data?.roles?.items || []}
+        ref={rolesFormRef}
+        item={item}
+        loading={false}
+        // roles={getRolesQuery.data?.roles?.items || []}
+        roles={roles || []}
       />
 
-      <SubmitBar>
+      <SubmitBar full>
         <Button
           type="primary"
           size="large"
           icon={<Rcon type={UPDATE_BUTTON_ICON} />}
           className="g-submit-bar-button"
-          loading={updateUserMutation.loading}
-          onClick={onSubmit}
+          loading={submitLoading}
+          onClick={onUpdateItem}
         >
           {t('_lang:update')}
         </Button>

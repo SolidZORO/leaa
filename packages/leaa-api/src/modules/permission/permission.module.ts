@@ -5,12 +5,14 @@ import { Permission, Role } from '@leaa/common/src/entrys';
 
 import { RoleService } from '@leaa/api/src/modules/role/role.service';
 import { RoleModule } from '@leaa/api/src/modules/role/role.module';
-import { PermissionResolver } from '@leaa/api/src/modules/permission/permission.resolver';
-import { PermissionService } from '@leaa/api/src/modules/permission/permission.service';
+
+import { PermissionController } from './permission.controller';
+import { PermissionService } from './permission.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Role, Permission]), RoleModule],
-  providers: [PermissionResolver, PermissionService, RoleService],
+  providers: [PermissionService, RoleService],
   exports: [PermissionService],
+  controllers: [PermissionController],
 })
 export class PermissionModule {}
