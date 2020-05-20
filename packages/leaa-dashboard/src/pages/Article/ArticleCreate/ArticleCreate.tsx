@@ -1,74 +1,67 @@
 import React, { useState, useRef } from 'react';
-import { Button } from 'antd';
 import { useTranslation } from 'react-i18next';
-import { useMutation } from '@apollo/react-hooks';
+import { Button } from 'antd';
 
 import { Article } from '@leaa/common/src/entrys';
-import { CreateArticleInput } from '@leaa/common/src/dtos/article';
-import { IPage, ISubmitData, ICommenFormRef } from '@leaa/dashboard/src/interfaces';
-import { CREATE_ARTICLE } from '@leaa/dashboard/src/graphqls';
-import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
-import { msg } from '@leaa/dashboard/src/utils';
+import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
+import { UpdateArticleInput } from '@leaa/common/src/dtos/article';
+import { IPage, ICommenFormRef, ISubmitData, IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
+import { msg, errorMsg, ajax } from '@leaa/dashboard/src/utils';
 
-import { PageCard, HtmlMeta, SubmitBar, Rcon } from '@leaa/dashboard/src/components';
+import { envConfig } from '@leaa/dashboard/src/configs';
+import { PageCard, HtmlMeta, Rcon, SubmitBar } from '@leaa/dashboard/src/components';
 
 import { ArticleInfoForm } from '../_components/ArticleInfoForm/ArticleInfoForm';
 
 import style from './style.module.less';
 
+const API_PATH = 'articles';
+
 export default (props: IPage) => {
   const { t } = useTranslation();
 
-  // ref
-  const infoFormRef = useRef<ICommenFormRef<CreateArticleInput>>(null);
+  const infoFormRef = useRef<ICommenFormRef<UpdateArticleInput>>(null);
 
-  // mutation
-  const [submitVariables, setSubmitVariables] = useState<{ article: CreateArticleInput }>();
-  const [createArticleMutate, createArticleMutation] = useMutation<{ createArticle: Article }>(CREATE_ARTICLE, {
-    variables: submitVariables,
-    // apollo-link-error onError: e => messageUtil.gqlError(e.message),
-    onCompleted({ createArticle }) {
-      msg(t('_lang:createdSuccessfully'));
-      props.history.push(`/articles/${createArticle.id}`);
-    },
-  });
+  const [submitLoading, setSubmitLoading] = useState(false);
 
-  const onSubmit = async () => {
-    const infoData: ISubmitData<CreateArticleInput> = await infoFormRef.current?.onValidateForm();
+  const onCreateItem = async () => {
+    const infoData: ISubmitData<UpdateArticleInput> = await infoFormRef.current?.onValidateForm();
 
     if (!infoData) return;
 
-    const submitData: ISubmitData<CreateArticleInput> = infoData;
+    const data: ISubmitData<UpdateArticleInput> = {
+      ...infoData,
+    };
 
-    await setSubmitVariables({ article: submitData });
-    await createArticleMutate();
+    setSubmitLoading(true);
+
+    ajax
+      .post(`${envConfig.API_URL}/${API_PATH}`, data)
+      .then((res: IHttpRes<Article>) => {
+        msg(t('_lang:createdSuccessfully'));
+
+        props.history.push(`/${API_PATH}/${res.data.data?.id}`);
+      })
+      .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
+      .finally(() => setSubmitLoading(false));
   };
 
   return (
-    <PageCard
-      title={
-        <span>
-          <Rcon type={props.route.icon} />
-          <strong>{t(`${props.route.namei18n}`)}</strong>
-        </span>
-      }
-      className={style['wapper']}
-      loading={createArticleMutation.loading}
-    >
+    <PageCard route={props.route} title="@CREATE" className={style['wapper']} loading={submitLoading}>
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
       <ArticleInfoForm ref={infoFormRef} />
 
-      <SubmitBar>
+      <SubmitBar full>
         <Button
           type="primary"
           size="large"
-          icon={<Rcon type={CREATE_BUTTON_ICON} />}
+          icon={<Rcon type={UPDATE_BUTTON_ICON} />}
           className="g-submit-bar-button"
-          loading={createArticleMutation.loading}
-          onClick={onSubmit}
+          loading={submitLoading}
+          onClick={onCreateItem}
         >
-          {t('_lang:create')}
+          {t('_lang:update')}
         </Button>
       </SubmitBar>
     </PageCard>

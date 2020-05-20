@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
@@ -49,7 +50,7 @@ export class CategoryService extends TypeOrmCrudService<Category> {
       expanded: Boolean([true, 'true'].includes(options?.expanded || '')),
     });
 
-    const recursiveItems = (categories: Category[]) => {
+    const recursiveItems = (categories: Category[]): CategoryTreeObject[] => {
       return categories.map((category) => {
         if (category.children && Array.isArray(category.children) && category.children.length > 0) {
           // eslint-disable-next-line no-param-reassign
@@ -62,7 +63,15 @@ export class CategoryService extends TypeOrmCrudService<Category> {
 
     const result = recursiveItems(items);
 
-    // if (args && (args.parentId || args.parentSlug)) return result;
+    // pick parent slug OR id
+    if (result && _.isArray(result) && (options?.parentSlug || options?.parentId)) {
+      let pickPatent: CategoryTreeObject | undefined;
+
+      if (options?.parentSlug) pickPatent = result.find((c) => c.slug === options.parentSlug);
+      if (options?.parentId) pickPatent = result.find((c) => c.id === options.parentId);
+
+      return [this.rootCategory(pickPatent?.children)];
+    }
 
     return [this.rootCategory(result)];
   }

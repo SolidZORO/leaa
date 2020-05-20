@@ -48,18 +48,14 @@ export default (props: IPage) => {
 
   return (
     <PageCard
-      title={
-        <span>
-          <Rcon type={props.route.icon} />
-          <strong>{t(`${props.route.namei18n}`)}</strong>
-        </span>
-      }
+      title="@LIST"
+      route={props.route}
       className={style['wapper']}
       // loading={createCategoryMutation.loading}
     >
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
-      <CategoryInfoForm ref={infoFormRef} />
+      {/*<CategoryInfoForm ref={infoFormRef} />*/}
 
       <SubmitBar>
         <Button

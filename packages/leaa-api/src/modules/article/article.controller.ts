@@ -1,5 +1,5 @@
 import { Controller, UseGuards } from '@nestjs/common';
-import { Crud, CrudController } from '@nestjsx/crud';
+import { Crud, CrudController, Override, ParsedRequest, ParsedBody, CrudRequest } from '@nestjsx/crud';
 
 import { Permissions } from '@leaa/api/src/decorators';
 import { CreateArticleInput, UpdateArticleInput } from '@leaa/common/src/dtos/article';
@@ -43,4 +43,9 @@ import { ArticleService } from './article.service';
 @Controller('/articles')
 export class ArticleController implements CrudController<Article> {
   constructor(public service: ArticleService) {}
+
+  @Override('updateOneBase')
+  updateOne(@ParsedRequest() req: CrudRequest, @ParsedBody() dto: UpdateArticleInput): Promise<Article> {
+    return this.service.updateOne(req, dto);
+  }
 }

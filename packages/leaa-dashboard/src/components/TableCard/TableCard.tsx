@@ -86,7 +86,6 @@ export const TableCard = <T extends object>(props: IProps<T>) => {
       sortOrder: calcTableSortOrder('name', crudQuery.sort),
       render: (text: string, record: any) => <Link to={`${props.route.path}/${record.id}`}>{record.name}</Link>,
     }),
-
     category: () => ({
       title: t('_lang:category'),
       dataIndex: 'category',

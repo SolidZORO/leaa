@@ -35,3 +35,4 @@ export { SelectCategoryIdByTree } from './SelectCategoryIdByTree/SelectCategoryI
 export { RefreshflatPermissions } from './RefreshflatPermissions/RefreshflatPermissions';
 export { TableColumnDeleteButton } from './TableColumnDeleteButton/TableColumnDeleteButton';
 export { TableColumnStatusSwitch } from './TableColumnStatusSwitch/TableColumnStatusSwitch';
+export { TagSearchBox } from './TagSearchBox/TagSearchBox';

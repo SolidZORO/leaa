@@ -31,12 +31,12 @@ export const ArticleInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =
   };
 
   const onRefreshForm = (item?: Article) => {
-    if (!item) return form.setFieldsValue({});
+    if (!item) return form.setFieldsValue({ status: 0 });
 
     form.resetFields();
     form.setFieldsValue({
       ...item,
-      categoryIds: (item?.categories && item.categories[0]?.id) || undefined,
+      categoryIds: (item?.categories && item.categories[0]?.id) || null,
     });
 
     return undefined;
@@ -68,6 +68,7 @@ export const ArticleInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =
         <div className={style['block--category-and-status']}>
           <Form.Item
             name="categoryIds"
+            normalize={(e) => e || null}
             rules={[]}
             label={t('_lang:category')}
             colon={false}

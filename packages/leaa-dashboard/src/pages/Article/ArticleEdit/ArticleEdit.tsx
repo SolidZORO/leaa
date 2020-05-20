@@ -29,7 +29,7 @@ export default (props: IPage) => {
   const extFormRef = useRef<ICommenFormRef<UpdateArticleInput>>(null);
 
   const [item, setItem] = useState<Article | undefined>();
-  const [itemLoading, setitemLoading] = useState(false);
+  const [itemLoading, setItemLoading] = useState(false);
   const [submitLoading, setSubmitLoading] = useState(false);
 
   const articleContentRef = useRef<any>(null);
@@ -38,7 +38,7 @@ export default (props: IPage) => {
   const [articleTags, setArticleTags] = useState<Tag[]>();
 
   const onFetchItem = () => {
-    setitemLoading(true);
+    setItemLoading(true);
 
     ajax
       .get(`${envConfig.API_URL}/${API_PATH}/${id}`)
@@ -46,7 +46,7 @@ export default (props: IPage) => {
         setItem(res.data.data);
       })
       .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
-      .finally(() => setitemLoading(false));
+      .finally(() => setItemLoading(false));
   };
 
   const onUpdateItem = async () => {
@@ -62,13 +62,7 @@ export default (props: IPage) => {
       content: articleContentRef.current?.props?.value,
     };
 
-    if (typeof data.categoryIds === 'undefined') {
-      data.categoryIds = null;
-    }
-
     data.tagIds = articleTags?.length ? articleTags.map((tag) => tag.id) : null;
-
-    console.log(data);
 
     setSubmitLoading(true);
 

@@ -34,7 +34,7 @@ export const SelectCategoryIdByTree = (props: IProps) => {
   const [tree, setTree] = useState<TreeItem[]>([]);
   const [treeLoading, setTreeLoading] = useState(false);
 
-  const fetchList = (params: ICategoriesQuery = { expanded: true }) => {
+  const onFetchCategories = (params: ICategoriesQuery = { expanded: true, parentSlug: props?.parentSlug }) => {
     setTreeLoading(true);
 
     ajax
@@ -46,12 +46,12 @@ export const SelectCategoryIdByTree = (props: IProps) => {
       .finally(() => setTreeLoading(false));
   };
 
-  useEffect(() => fetchList(), []);
+  useEffect(() => onFetchCategories(), []);
 
   const [value, setValue] = useState<string | string[] | undefined | null>(props.value || props.initialValues);
 
   const onChange = (v?: string | string[] | null) => {
-    setValue(v || undefined);
+    setValue(v || null);
 
     if (props.onChange) props.onChange(v);
   };
@@ -66,13 +66,12 @@ export const SelectCategoryIdByTree = (props: IProps) => {
 
   const multipleSelectOption = props.multipleSelect
     ? {
-        treeCheckable: true,
-        // showCheckedStrategy: SHOW_PARENT,
-        // multiple: true,
-      }
+      treeCheckable: true,
+      // showCheckedStrategy: SHOW_PARENT,
+      // multiple: true,
+    }
     : {};
 
-  console.log('CTVVVVVVV', !_.isEmpty(tree) ? value : '----');
   return (
     <div className={cx(style['wrapper'], props.className)}>
       <TreeSelect
