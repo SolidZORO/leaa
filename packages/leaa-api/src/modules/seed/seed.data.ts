@@ -191,6 +191,16 @@ export const permissionsSeed: { name: string; slug: IPermissionSlug }[] = [
   { name: 'Auth List Read', slug: 'auth.list-read' },
   { name: 'Auth Item Delete', slug: 'auth.item-delete' },
   //
+  // --------------------------------
+  //
+  { name: 'Oauth List Read', slug: 'oauth.list-read' },
+  //
+  { name: 'Oauth Item Read', slug: 'oauth.item-read' },
+  { name: 'Oauth Item Create', slug: 'oauth.item-create' },
+  { name: 'Oauth Item Delete', slug: 'oauth.item-delete' },
+  //
+  // --------------------------------
+  //
   { name: 'Action List Read', slug: 'action.list-read' },
   //
   { name: 'Action Item Read', slug: 'action.item-read' },
@@ -238,14 +248,14 @@ for (let i = 0; i < 50; i += 1) {
 export const randomSersSeed = randomSersSeedData;
 
 // prettier-ignore
-export const roleAddPermissionsSeed = [
+export const permissionsToRoleSeed = [
   { roleSlug: 'admin', permissionSlugs: permissionsSeed.map(p => p.slug) }, // allpermissions
   { roleSlug: 'staff', permissionSlugs: permissionsSeed.filter(p => p.slug.includes('user.')).map(p => p.slug) },
   { roleSlug: 'attachment-manager', permissionSlugs: permissionsSeed.filter(p => p.slug.includes('attachment.')).map(p => p.slug) },
 ];
 
 // prettier-ignore
-export const userAddRolesSeed = [
+export const rolesToUserSeed = [
   { userEmail: 'admin@local.com', roleSlugs: ['admin', 'staff', 'attachment-manager'] },
   { userEmail: 'staff@local.com', roleSlugs: ['staff', 'attachment-manager'] },
 ];

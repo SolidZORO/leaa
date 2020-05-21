@@ -16,19 +16,19 @@ export class PlaygroundService {
     const userEmail = 'admin@admin.com';
     const roleSlugs = ['admin', 'staff'];
 
-    const user = await this.userService.userByEmail(userEmail);
-
-    const gqlCtx = { t: i18next.t };
-
-    if (user) {
-      await this.userService.updateUser(gqlCtx, user.id, {
-        roleSlugs,
-      });
-
-      const nextUser = await this.userService.user(gqlCtx, user.id, {});
-
-      console.log(nextUser);
-    }
+    // const user = await this.userService.userByEmail(userEmail);
+    //
+    // const gqlCtx = { t: i18next.t };
+    //
+    // if (user) {
+    //   await this.userService.updateUser(gqlCtx, user.id, {
+    //     roleSlugs,
+    //   });
+    //
+    //   const nextUser = await this.userService.user(gqlCtx, user.id, {});
+    //
+    //   console.log(nextUser);
+    // }
   }
 
   // async test() {

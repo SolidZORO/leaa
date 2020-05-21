@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { CreateQueryParams } from '@nestjsx/crud-request/lib/interfaces';
-import { getCrudQueryByUrl } from '@leaa/dashboard/src/utils';
-import queryString from 'query-string';
 import { RequestQueryBuilder } from '@nestjsx/crud-request';
 
 export const CrudRequestTest = () => {

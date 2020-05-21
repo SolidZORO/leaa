@@ -286,14 +286,16 @@ export const masterRoutes: IRouteItem[] = [
     path: '_data-group',
     icon: 'ri-hard-drive-line',
     children: [
-      // ---- Auth ----
+      // ---- Oauth ----
       {
-        name: 'Auth',
-        namei18n: '_route:auth',
-        permission: 'auth.list-read',
-        path: '/auths',
+        name: 'Oauth',
+        namei18n: '_route:oauth',
+        permission: 'oauth.list-read',
+        path: '/oauths',
         icon: 'ri-key-2-line',
-        LazyComponent: React.lazy(() => import(/* webpackChunkName: 'AuthList' */ '../pages/Auth/AuthList/AuthList')),
+        LazyComponent: React.lazy(() =>
+          import(/* webpackChunkName: 'OauthList' */ '../pages/Oauth/OauthList/OauthList'),
+        ),
         canCreate: false,
         exact: true,
       },

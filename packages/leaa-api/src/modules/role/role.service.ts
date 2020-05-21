@@ -1,4 +1,4 @@
-import { Repository } from 'typeorm';
+import { Repository, In } from 'typeorm';
 import { plainToClass } from 'class-transformer';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
@@ -42,6 +42,46 @@ export class RoleService extends TypeOrmCrudService<Role> {
     });
 
     return this.getOneOrFail(req);
+  }
+
+  //
+  //
+
+  async getOneBySlug(slug: string): Promise<Role | undefined> {
+    return this.roleRepo.findOne({
+      relations: ['permissions'],
+      where: { slug },
+    });
+  }
+
+  async getManyPermissionsByRoleIds(roleIds: string[]): Promise<Permission[] | undefined> {
+    const roles = await this.roleRepo.findByIds(roleIds, { relations: ['permissions'] });
+
+    let nextPermissions: Permission[] = [];
+
+    roles.forEach((r) => {
+      if (r.permissions && r.permissions.length > 0) {
+        nextPermissions = nextPermissions.concat(r.permissions);
+      }
+    });
+
+    return nextPermissions;
+  }
+
+  async transSlugsToIds(slugs: string[]): Promise<string[]> {
+    let roleIds: string[] = [];
+
+    const roles = await this.roleRepo.find({
+      slug: In(slugs),
+    });
+
+    console.log('KKKKKKKKKK', roles);
+
+    if (roles && roles.length > 0) {
+      roleIds = roles.map((p) => p.id);
+    }
+
+    return roleIds;
   }
 
   //
@@ -103,26 +143,7 @@ export class RoleService extends TypeOrmCrudService<Role> {
   //   return this.roleRepo.findOne(id, nextArgs);
   // }
   //
-  // async roleBySlug(slug: string): Promise<Role | undefined> {
-  //   return this.roleRepo.findOne({
-  //     relations: ['permissions'],
-  //     where: { slug },
-  //   });
-  // }
-  //
-  async rolePermissionsByRoleIds(roleIds: string[]): Promise<Permission[] | undefined> {
-    const roles = await this.roleRepo.findByIds(roleIds, { relations: ['permissions'] });
 
-    let nextPermissions: Permission[] = [];
-
-    roles.forEach((r) => {
-      if (r.permissions && r.permissions.length > 0) {
-        nextPermissions = nextPermissions.concat(r.permissions);
-      }
-    });
-
-    return nextPermissions;
-  }
   //
   // async roleSlugsToIds(slugs: string[]): Promise<string[]> {
   //   let roleIds: string[] = [];

@@ -1,3 +1,7 @@
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable no-await-in-loop */
+
+import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { PermissionService } from '@leaa/api/src/modules/permission/permission.service';
 import { RoleService } from '@leaa/api/src/modules/role/role.service';
@@ -8,15 +12,17 @@ import { AxService } from '@leaa/api/src/modules/ax/ax.service';
 import { SettingService } from '@leaa/api/src/modules/setting/setting.service';
 import { CouponService } from '@leaa/api/src/modules/coupon/coupon.service';
 import { PromoService } from '@leaa/api/src/modules/promo/promo.service';
-import { ActionService } from '@leaa/api/src/modules/action/action.service';
+
+import { InjectRepository } from '@nestjs/typeorm';
+import { Attachment, Action } from '@leaa/common/src/entrys';
 
 import {
   permissionsSeed,
   rolesSeed,
   usersSeed,
   randomSersSeed,
-  roleAddPermissionsSeed,
-  userAddRolesSeed,
+  permissionsToRoleSeed,
+  rolesToUserSeed,
   categorySeed,
   articleSeed,
   axSeed,
@@ -24,13 +30,9 @@ import {
   attachmentSeed,
   couponSeed,
   promoSeed,
-} from '@leaa/api/src/modules/seed/seed.data';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Attachment, Action } from '@leaa/common/src/entrys';
-import { Repository } from 'typeorm';
-import i18next from 'i18next';
+} from './seed.data';
 
-const gqlCtx = { t: i18next.t };
+import { req } from './__seed__.mock';
 
 @Injectable()
 export class SeedService {
@@ -46,23 +48,19 @@ export class SeedService {
     private readonly settingService: SettingService,
     private readonly couponService: CouponService,
     private readonly promoService: PromoService,
-    private readonly actionService: ActionService,
   ) {}
-
-  /* eslint-disable no-restricted-syntax */
-  /* eslint-disable no-await-in-loop */
 
   async insertPermissions() {
     for (const i of permissionsSeed) {
-      const item = await this.permissionService.createPermission(i);
+      const item = await this.permissionService.createOne(req, i);
 
       console.log(item);
     }
   }
-
+  //
   async insertRoles() {
     for (const i of rolesSeed) {
-      const item = await this.roleService.createRole(i);
+      const item = await this.roleService.createOne(req, i);
 
       console.log(item);
     }
@@ -70,7 +68,7 @@ export class SeedService {
 
   async insertUsers() {
     for (const i of usersSeed) {
-      const item = await this.userService.createUser(i);
+      const item = await this.userService.createOne(req, i);
 
       console.log(item);
     }
@@ -78,30 +76,38 @@ export class SeedService {
 
   async insertRandomUsers() {
     for (const i of randomSersSeed) {
-      await this.userService.createUser(i);
+      await this.userService.createOne(req, i);
     }
   }
 
-  async insertRoleAddPermissions() {
-    for (const i of roleAddPermissionsSeed) {
-      const role = await this.roleService.roleBySlug(i.roleSlug);
+  async insertPermissionsToRole() {
+    for (const i of permissionsToRoleSeed) {
+      const role = await this.roleService.getOneBySlug(i.roleSlug);
 
       if (role) {
-        const nextRole = await this.roleService.updateRole(role.id, { permissionSlugs: i.permissionSlugs });
+        const nextReq = req;
+        // nextReq.parsed.paramsFilter = [{ field: 'id', operator: '$eq', value: role.id }];
+        nextReq.parsed.search = { $and: [undefined, { id: { $eq: role.id } }] };
+        nextReq.options.params = { id: role.id };
 
-        console.log(nextRole);
+        const permissionIds = await this.permissionService.transSlugsToIds(i.permissionSlugs);
+        await this.roleService.updateOne(nextReq, { permissionIds });
       }
     }
   }
 
-  async insertUserAddRole() {
-    for (const i of userAddRolesSeed) {
-      const user = await this.userService.userByEmail(i.userEmail);
+  async insertRolesToUser() {
+    for (const i of rolesToUserSeed) {
+      const user = await this.userService.getOneByEmail(i.userEmail);
 
       if (user) {
-        const nextUser = await this.userService.updateUser(user.id, { roleSlugs: i.roleSlugs });
+        const nextReq = req;
+        // nextReq.parsed.paramsFilter = [{ field: 'id', operator: '$eq', value: user.id }];
+        nextReq.parsed.search = { $and: [undefined, { id: { $eq: user.id } }] };
+        nextReq.options.params = { id: user.id };
 
-        console.log(nextUser);
+        const roleIds = await this.roleService.transSlugsToIds(i.roleSlugs);
+        await this.userService.updateOne(nextReq, { roleIds });
       }
     }
   }
@@ -111,12 +117,12 @@ export class SeedService {
       let parentId = '';
 
       if (i.seedParentSlug) {
-        const category = await this.categoryService.categoryBySlug(i.seedParentSlug);
+        const category = await this.categoryService.getOneBySlug(i.seedParentSlug);
         parentId = category?.id || '';
       }
 
       // const parent_id = await this.categoryService.createCategory(i);
-      const item = await this.categoryService.createCategory({
+      const item = await this.categoryService.createOne(req, {
         ...i,
         parent_id: parentId,
       });
@@ -127,7 +133,7 @@ export class SeedService {
 
   async insertArticle() {
     for (const i of articleSeed) {
-      const item = await this.articleService.createArticle(i);
+      const item = await this.articleService.createOne(req, i);
 
       console.log(item);
     }
@@ -176,7 +182,7 @@ export class SeedService {
   randomArray = (items: any[]) => items[Math.floor(Math.random() * items.length)];
 
   async fillAction() {
-    for (let i = 0; i < 20000; i += 1) {
+    for (let i = 0; i < 500; i += 1) {
       const modules = [
         'config',
         'seed',

@@ -54,6 +54,22 @@ export class UserService extends TypeOrmCrudService<User> {
     return result;
   }
 
+  async deleteOne(req: CrudRequest): Promise<User | void> {
+    const result = await super.deleteOne(req);
+
+    // delete user all auth/oauth
+    if (result) {
+      try {
+        await this.deleteUserAllAuth(result.id);
+      } catch (err) {
+        throw Error(err.message);
+      }
+    }
+  }
+
+  //
+  //
+
   async userByToken(body?: { token?: string }): Promise<User | undefined> {
     const token = body?.token;
 
@@ -92,17 +108,11 @@ export class UserService extends TypeOrmCrudService<User> {
     }
   }
 
-  async deleteOne(req: CrudRequest): Promise<User | void> {
-    const result = await super.deleteOne(req);
-
-    // delete user all auth/oauth
-    if (result) {
-      try {
-        await this.deleteUserAllAuth(result.id);
-      } catch (err) {
-        throw Error(err.message);
-      }
-    }
+  async getOneByEmail(email: string): Promise<User | undefined> {
+    return this.userRepo.findOne({
+      relations: ['roles'],
+      where: { email },
+    });
   }
 }
 

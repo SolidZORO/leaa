@@ -143,6 +143,13 @@ declare const permissionSlug: [
   'auth.list-read',
   'auth.item-delete',
   // --------------------
+  'oauth.list-read',
+  //
+  'oauth.item-read',
+  'oauth.item-create',
+  'oauth.item-update',
+  'oauth.item-delete',
+  // --------------------
   'action.list-read',
   //
   'action.item-read',

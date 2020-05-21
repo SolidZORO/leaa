@@ -5,8 +5,10 @@ import { getConnection, getManager, getRepository } from 'typeorm';
 
 import { AppModule } from '@leaa/api/src/app.module';
 import { SeedService } from '@leaa/api/src/modules/seed/seed.service';
+import { LoggerService } from '@leaa/api/src/modules/logger/logger.service';
 
 (async function seed() {
+  // ⚠️ before Start, Force Exit All
   const forceExit = () => {
     process.exit();
     process.exit(0);
@@ -15,9 +17,11 @@ import { SeedService } from '@leaa/api/src/modules/seed/seed.service';
     process.abort();
   };
 
+  // CLI Tips
   if (
     process.argv.includes('--rebuild-auth') ||
     process.argv.includes('--nuke') ||
+    process.argv.includes('--test') ||
     process.argv.includes('--fill-action')
   ) {
     const logger = new Logger('Seed-Log');
@@ -27,29 +31,72 @@ import { SeedService } from '@leaa/api/src/modules/seed/seed.service';
       '\n\nPLEASE INPUT: \n' +
         '`yarn seed --nuke` or \n' +
         '`yarn seed --rebuild-auth` \n' +
+        '`yarn seed --test` \n' +
         '`yarn seed --fill-action` \n' +
         '\n\n',
     );
     await forceExit();
   }
 
-  const app: NestExpressApplication = await NestFactory.create(AppModule);
+  // Create App
+  const app: NestExpressApplication = await NestFactory.create(AppModule, { logger: new LoggerService() });
   const seedService: SeedService = await app.get(SeedService);
 
-  const insertAuth = async () => {
+  // Common Fn
+  const insertAllAboutAuth = async () => {
     await seedService.insertPermissions();
     await seedService.insertRoles();
     await seedService.insertUsers();
-    await seedService.insertUserAddRole();
-    await seedService.insertRoleAddPermissions();
+    //
+    console.log('\n\n\n\n ----------- \n\n\n\n');
+    //
+    await seedService.insertRolesToUser();
+    await seedService.insertPermissionsToRole();
   };
 
   //
   //
   //
   //
-  //
+  // ⚠️ NUKKKKKKKKKKKKKKKKKKKKE ALL DATABASE! 注意！谨慎操作！
+  if (process.argv.includes('--nuke')) {
+    console.log('\n\n\n\n✴️✴️✴️✴️✴️✴️✴️✴️✴️✴️ NUKE NUKE NUKE NUKE ALL DB TABLE\n\n\n\n');
 
+    await getConnection().synchronize(true);
+
+    try {
+      await seedService.insertSetting();
+
+      await insertAllAboutAuth();
+
+      await seedService.insertCategory();
+      await seedService.insertArticle();
+      await seedService.insertAx();
+      await seedService.insertAttachment();
+      await seedService.insertCoupon();
+      await seedService.insertPromo();
+
+      if (process.argv.includes('--debug')) {
+        await seedService.insertRandomUsers();
+      }
+
+      await console.log('\n\n\n\n---- ALL SEED INSERTED ----');
+      // await process.exit(1);
+      await forceExit();
+    } catch (e) {
+      await console.log('\n\n\n\n---- SEED INSERT FAILD ----', e);
+      await forceExit();
+    }
+
+    await console.log('\n\n\n\n---- SEED FINAL ----');
+    await forceExit();
+  }
+
+  //
+  //
+  //
+  //
+  // Fill Action (for Test)
   if (process.argv.includes('--fill-action')) {
     console.log('\n\n\n\n FILL ACTION\n\n\n\n');
 
@@ -77,8 +124,7 @@ import { SeedService } from '@leaa/api/src/modules/seed/seed.service';
   //
   //
   //
-  //
-
+  // Rebuild Auth
   if (process.argv.includes('--rebuild-auth')) {
     console.log('\n\n\n\n REBUILD AUTH\n\n\n\n');
 
@@ -102,7 +148,7 @@ import { SeedService } from '@leaa/api/src/modules/seed/seed.service';
     await getManager().query('SET FOREIGN_KEY_CHECKS = 1;');
 
     // re-build
-    await insertAuth();
+    await insertAllAboutAuth();
 
     await console.log('\n\n\n\n---- REBUILD AUTH DONE ----');
     await forceExit();
@@ -113,38 +159,8 @@ import { SeedService } from '@leaa/api/src/modules/seed/seed.service';
   //
   //
   //
-  //
-
-  if (process.argv.includes('--nuke')) {
-    console.log('\n\n\n\n✴️✴️✴️✴️✴️✴️✴️✴️✴️✴️ NUKE NUKE NUKE NUKE ALL DB TABLE\n\n\n\n');
-
-    await getConnection().synchronize(true);
-
-    try {
-      await seedService.insertSetting();
-
-      await insertAuth();
-
-      await seedService.insertCategory();
-      await seedService.insertArticle();
-      await seedService.insertAx();
-      await seedService.insertAttachment();
-      await seedService.insertCoupon();
-      await seedService.insertPromo();
-
-      if (process.argv.includes('--debug')) {
-        await seedService.insertRandomUsers();
-      }
-
-      await console.log('\n\n\n\n---- ALL SEED INSERTED ----');
-      // await process.exit(1);
-      await forceExit();
-    } catch (e) {
-      await console.log('\n\n\n\n---- SEED INSERT FAILD ----', e);
-      await forceExit();
-    }
-
-    await console.log('\n\n\n\n---- SEED FINAL ----');
-    await forceExit();
+  // for Test
+  if (process.argv.includes('--test')) {
+    await insertAllAboutAuth();
   }
 })();

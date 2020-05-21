@@ -6,7 +6,7 @@ import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 import { Category } from '@leaa/common/src/entrys';
 import { TreeRepository } from 'typeorm';
 import moment from 'moment';
-import { ICategoriesQuery } from '@leaa/api/src/interfaces';
+import { ICategoriesQuery, ICategoryArgs } from '@leaa/api/src/interfaces';
 import { CategoryTreeObject } from '@leaa/common/src/dtos/category';
 
 @Injectable()
@@ -73,5 +73,9 @@ export class CategoryService extends TypeOrmCrudService<Category> {
     }
 
     return [this.rootCategory(result)];
+  }
+
+  async getOneBySlug(slug: string): Promise<Category | undefined> {
+    return this.categoryRepo.findOneOrFail({ where: { slug } });
   }
 }

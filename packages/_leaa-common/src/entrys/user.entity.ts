@@ -1,5 +1,5 @@
 import { Index, Entity, Column, JoinTable, ManyToMany } from 'typeorm';
-import { Exclude, Expose } from 'class-transformer';
+import { Exclude } from 'class-transformer';
 
 import { Base, Role, Permission, Address, Attachment } from '@leaa/common/src/entrys';
 
@@ -9,11 +9,6 @@ import { Base, Role, Permission, Address, Attachment } from '@leaa/common/src/en
 export class User extends Base {
   @Column({ type: 'varchar', length: 64, nullable: true, default: '' })
   name?: string;
-
-  @Expose()
-  get fullName(): string {
-    return `${this.name} ------------ `;
-  }
 
   // @Column({ type: 'varchar', length: 32, unique: true })
   @Column({ type: 'varchar', length: 32, default: '', nullable: true })

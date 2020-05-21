@@ -13,7 +13,7 @@ export class UserProperty {
     if (!user || !user.roles) return undefined;
 
     const roleIds = user.roles.map((r) => r.id);
-    const permissions = await this.roleService.rolePermissionsByRoleIds(roleIds);
+    const permissions = await this.roleService.getManyPermissionsByRoleIds(roleIds);
     if (!permissions) return undefined;
 
     return permissions;

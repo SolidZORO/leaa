@@ -1,11 +1,12 @@
-import { Controller, Get, Req, Param, Body } from '@nestjs/common';
-import { Zan } from '@leaa/common/src/entrys';
+import { Controller, Get } from '@nestjs/common';
+import { Zan, Role } from '@leaa/common/src/entrys';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { IRequest } from '@leaa/api/src/interfaces';
 
 import { TestService } from '@leaa/api/src/modules/test/test.service';
-import { IAttachmentParams } from '@leaa/common/src/interfaces';
+import { RoleService } from '@leaa/api/src/modules/role/role.service';
+import { req } from '@leaa/api/src/modules/seed/__seed__.mock';
+import { CrudRequest } from '@nestjsx/crud';
 
 // import { JwtGuard } from '@leaa/api/src/guards';
 
@@ -13,7 +14,9 @@ import { IAttachmentParams } from '@leaa/common/src/interfaces';
 export class TestController {
   constructor(
     @InjectRepository(Zan) private readonly zanRepository: Repository<Zan>,
+    @InjectRepository(Role) private readonly roleRepository: Repository<Role>,
     private readonly testService: TestService,
+    private readonly roleService: RoleService,
   ) {}
 
   @Get('/metadata')
@@ -23,11 +26,21 @@ export class TestController {
     return 'metadata';
   }
 
-  // @UseGuards(JwtGuard)
-  @Get('/i18n/:id/:ext?')
-  async i18n(@Req() req: IRequest, @Param('id') id: string, @Body() body: { sort: string; t: any }) {
-    console.log(req.language);
+  @Get('/crud')
+  async crud() {
+    // console.log(Object.keys(this.zanRepository.metadata.propertiesMap));
 
-    return this.testService.testI18n(id, { ...body, t: req.t });
+    const nextReq: CrudRequest = req;
+    // nextReq.options.params = { id: '53474266-065f-4a14-bbe6-a4ac4dee88c8' };
+
+    console.log(nextReq);
+
+    return this.roleService.getOne(nextReq);
+
+    // // const nextRole = await this.roleService.updateOne(nextReq, { permissionIds: [] });
+    // const nextRole = await this.roleService.getOne(nextReq);
+    //
+    // // return 'metadata';
+    // return nextRole;
   }
 }

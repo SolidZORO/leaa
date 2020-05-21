@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 
 import { Permission } from '@leaa/common/src/entrys';
-import { Repository } from 'typeorm';
+import { Repository, In } from 'typeorm';
 
 export interface ITransIdsToEntrys {
   dto: any;
@@ -17,6 +17,20 @@ export interface ITransIdsToEntrys {
 export class PermissionService extends TypeOrmCrudService<Permission> {
   constructor(@InjectRepository(Permission) private readonly permissionRepo: Repository<Permission>) {
     super(permissionRepo);
+  }
+
+  async transSlugsToIds(slugs: string[]): Promise<string[]> {
+    let permissionIds: string[] = [];
+
+    const permissions = await this.permissionRepo.find({
+      slug: In(slugs),
+    });
+
+    if (permissions && permissions.length > 0) {
+      permissionIds = permissions.map((p) => p.id);
+    }
+
+    return permissionIds;
   }
 }
 
@@ -101,19 +115,7 @@ export class PermissionService extends TypeOrmCrudService<Permission> {
 //     return this.permissionRepository.findOne(id, nextArgs);
 //   }
 //
-//   async permissionSlugsToIds(slugs: string[]): Promise<string[]> {
-//     let permissionIds: string[] = [];
-//
-//     const permissions = await this.permissionRepository.find({
-//       slug: In(slugs),
-//     });
-//
-//     if (permissions && permissions.length > 0) {
-//       permissionIds = permissions.map((p) => p.id);
-//     }
-//
-//     return permissionIds;
-//   }
+
 //
 //   async createPermission(args: CreatePermissionInput): Promise<Permission | undefined> {
 //     return this.permissionRepository.save({ ...args });

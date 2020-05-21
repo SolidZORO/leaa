@@ -1,25 +1,22 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import queryString from 'query-string';
-
-import { useMutation, useQuery } from '@apollo/react-hooks';
+import qs from 'qs';
 import { Row, Col, Button } from 'antd';
-
 // import { LOGIN, LOGIN_BY_TICKET, GET_DEMO_DATA } from '@leaa/dashboard/src/graphqls';
-import { IPage, ICommenFormRef, IAuthInfo, ISubmitData } from '@leaa/dashboard/src/interfaces';
+import { IPage, ICommenFormRef, ISubmitData, IHttpRes } from '@leaa/dashboard/src/interfaces';
 import {
   setAuthToken,
   setAuthInfo,
   checkAuthIsAvailably,
-  getGuestToken,
   removeGuestToken,
   msg,
   errorMsg,
   ajax,
+  setAjaxToken,
 } from '@leaa/dashboard/src/utils';
 import { LOGIN_REDIRECT_URL } from '@leaa/dashboard/src/constants';
+import { User } from '@leaa/common/src/entrys';
 import { AuthLoginInput } from '@leaa/common/src/dtos/auth';
-import { DemoDataObject } from '@leaa/common/src/dtos/demo';
 import { envConfig } from '@leaa/dashboard/src/configs';
 import { HtmlMeta, SwitchLanguage, BuildInfo, AuthGithubButton } from '@leaa/dashboard/src/components';
 
@@ -28,14 +25,14 @@ import logo from '@leaa/dashboard/src/assets/images/logo/logo-black.svg';
 import { LoginForm } from './_components/LoginForm/LoginForm';
 
 import style from './style.module.less';
-import { AxiosResponse } from 'axios';
 
 export default (props: IPage) => {
   const { t } = useTranslation();
-  const qs = queryString.parse(window.location.search);
-  const [loginErrorCount, setLoginErrorCount] = useState<number>(0);
+  const urlObject = qs.parse(window.location.search, { ignoreQueryPrefix: true });
 
-  // ref
+  const [loginErrorCount, setLoginErrorCount] = useState<number>(0);
+  const [submitLoading, setSubmitLoading] = useState<boolean>(false);
+
   const loginFormRef = useRef<ICommenFormRef<AuthLoginInput>>(null);
 
   const clearGuestInfo = () => {
@@ -65,49 +62,13 @@ export default (props: IPage) => {
     if (login?.authToken && login.authExpiresIn) {
       setAuthToken(login.authToken, login.authExpiresIn);
 
-      if (qs.redirect) {
-        props.history.push(`${qs.redirect}`);
+      if (urlObject.redirect) {
+        props.history.push(`${urlObject.redirect}`);
       } else {
         props.history.push(LOGIN_REDIRECT_URL);
       }
     }
   };
-
-  // query
-  // const getDemoDataQuery = envConfig.DEMO_MODE
-  //   ? useQuery<{ demoData: DemoDataObject }>(GET_DEMO_DATA, {
-  //       fetchPolicy: 'network-only',
-  //     })
-  //   : undefined;
-  //
-  // // mutation
-  // const [submitLoginMutate, submitLoginMutation] = useMutation<{
-  //   login: IAuthInfo;
-  // }>(LOGIN, {
-  //   // apollo-link-error onError: e => messageUtil.gqlError(e.message),
-  //   onCompleted({ login }) {
-  //     clearGuestInfo();
-  //     setLogin(login);
-  //   },
-  //   onError: () => {
-  //     setLoginErrorCount((prev) => prev + 1);
-  //   },
-  // });
-  //
-  // const [submitLoginByTicketMutate] = useMutation<{
-  //   loginByTicket: IAuthInfo;
-  // }>(LOGIN_BY_TICKET, {
-  //   // apollo-link-error onError: e => messageUtil.gqlError(e.message),
-  //   onCompleted({ loginByTicket }) {
-  //     clearGuestInfo();
-  //     setLogin(loginByTicket);
-  //   },
-  //   onError: (e) => {
-  //     errorMsg(e.message);
-  //
-  //     return props.history.push('/login');
-  //   },
-  // });
 
   useEffect(() => {
     const authIsAvailably = checkAuthIsAvailably();
@@ -118,57 +79,35 @@ export default (props: IPage) => {
     }
   }, []);
 
-  useEffect(() => {
-    // if (qs.ticket) {
-    //   (async () => {
-    //     await submitLoginByTicketMutate({
-    //       variables: { ticket: qs.ticket },
-    //     });
-    //   })();
-    // }
-  }, [qs.ticket]);
+  // useEffect(() => {
+  //   // if (qs.ticket) {
+  //   //   (async () => {
+  //   //     await submitLoginByTicketMutate({
+  //   //       variables: { ticket: qs.ticket },
+  //   //     });
+  //   //   })();
+  //   // }
+  // }, [qs.ticket]);
 
   const onSubmit = async () => {
     const submitData: ISubmitData<AuthLoginInput> = await loginFormRef.current?.onValidateForm();
 
     if (!submitData) return;
 
-    console.log(submitData, envConfig.API_URL);
+    setSubmitLoading(true);
 
     ajax
       .post(`${envConfig.API_URL}/auth/login`, submitData)
-      .then((res) => {
-        // console.log(res);
-
-        // clearGuestInfo();
+      .then((res: IHttpRes<User>) => {
         setLogin(res.data.data);
+
+        if (res.data.data?.authToken) setAjaxToken(res.data.data.authToken);
       })
       .catch((err) => {
         errorMsg(err.message);
         return props.history.push('/login');
-
-        //   onCompleted({ loginByTicket }) {
-        //     clearGuestInfo();
-        //     setLogin(loginByTicket);
-        //   },
-        //   onError: (e) => {
-        //     errorMsg(e.message);
-        //
-        //     return props.history.push('/login');
-        //   },
-      });
-
-    //
-    // await submitLoginMutate({
-    //   variables: {
-    //     user: {
-    //       email: submitData.email && submitData.email.trim(),
-    //       password: submitData.password,
-    //       captcha: submitData.captcha,
-    //       guestToken: getGuestToken(),
-    //     },
-    //   },
-    // });
+      })
+      .finally(() => setSubmitLoading(false));
   };
 
   const onBack = () => {
@@ -191,23 +130,14 @@ export default (props: IPage) => {
               <div className={style['description']}>{t('_page:Auth.Login.subTitle')}</div>
 
               <div className={style['login-form']}>
-                <LoginForm
-                  ref={loginFormRef}
-                  // initialValues={getDemoDataQuery?.data?.demoData?.loginAccountByAdmin}
-                  initialValues={{
-                    email: 'admin@local.com',
-                    password: 'h8Hx9qvPKoHMLQgj',
-                  }}
-                  onPressSubmitCallback={onSubmit}
-                  loginErrorCount={loginErrorCount}
-                />
+                <LoginForm ref={loginFormRef} onPressSubmitCallback={onSubmit} loginErrorCount={loginErrorCount} />
               </div>
 
               <div className={style['local-button']}>
                 <Row className={style['button-row']}>
                   <Button
                     className={style['button-login']}
-                    // loading={submitLoginMutation.loading}
+                    loading={submitLoading}
                     size="large"
                     type="primary"
                     htmlType="submit"
