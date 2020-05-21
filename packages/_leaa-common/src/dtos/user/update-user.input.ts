@@ -40,7 +40,7 @@ export class UpdateUserInput {
   @Field(() => [String], { nullable: true })
   roleIds?: string[];
 
-  @IsOptional()
-  @Field(() => [String], { nullable: true })
-  roleSlugs?: string[];
+  // @IsOptional()
+  // @Field(() => [String], { nullable: true })
+  // roleSlugs?: string[];
 }

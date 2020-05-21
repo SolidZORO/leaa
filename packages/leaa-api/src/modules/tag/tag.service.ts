@@ -16,8 +16,8 @@ const CLS_NAME = 'TagService';
 
 @Injectable()
 export class TagService extends TypeOrmCrudService<Tag> {
-  constructor(@InjectRepository(Tag) repo: Repository<Tag>) {
-    super(repo);
+  constructor(@InjectRepository(Tag) private readonly tagRepo: Repository<Tag>) {
+    super(tagRepo);
   }
 
   async syncTagsToDictFile(): Promise<SyncTagsToFileObject> {
@@ -32,7 +32,7 @@ export class TagService extends TypeOrmCrudService<Tag> {
       }
     }
 
-    const [items, total] = await this.repo.findAndCount({ select: ['name'] });
+    const [items, total] = await this.tagRepo.findAndCount({ select: ['name'] });
 
     if (total) {
       fs.writeFileSync(dictConfig.TAGS_DICT_PATH, items.map((item) => item.name).join('\n'));

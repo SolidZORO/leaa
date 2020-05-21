@@ -1,15 +1,9 @@
-import _ from 'lodash';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 
-import { Permission, Tag, Category } from '@leaa/common/src/entrys';
+import { Permission } from '@leaa/common/src/entrys';
 import { Repository } from 'typeorm';
-import { Override, ParsedRequest, ParsedBody, CrudRequest } from '@nestjsx/crud';
-import { UpdatePermissionInput } from '@leaa/common/src/dtos/permission';
-import { TagService } from '@leaa/api/src/modules/tag/tag.service';
-import { plainToClass } from 'class-transformer';
-import moment from 'moment';
 
 export interface ITransIdsToEntrys {
   dto: any;

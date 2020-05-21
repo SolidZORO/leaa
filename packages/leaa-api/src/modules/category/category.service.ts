@@ -4,20 +4,19 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 
 import { Category } from '@leaa/common/src/entrys';
-import { Repository, TreeRepository, getManager } from 'typeorm';
+import { TreeRepository } from 'typeorm';
 import moment from 'moment';
 import { ICategoriesQuery } from '@leaa/api/src/interfaces';
 import { CategoryTreeObject } from '@leaa/common/src/dtos/category';
-import { CrudController, Override, CrudRequest } from '@nestjsx/crud';
 
 @Injectable()
 export class CategoryService extends TypeOrmCrudService<Category> {
-  constructor(@InjectRepository(Category) repo: TreeRepository<Category>) {
-    super(repo as TreeRepository<Category>);
+  constructor(@InjectRepository(Category) private readonly categoryRepo: TreeRepository<Category>) {
+    super(categoryRepo as TreeRepository<Category>);
   }
 
   async tree(options?: ICategoriesQuery) {
-    const categories = await (this.repo as TreeRepository<Category>).findTrees();
+    const categories = await (this.categoryRepo as TreeRepository<Category>).findTrees();
 
     return this.categoriesByTrees(categories, options);
   }

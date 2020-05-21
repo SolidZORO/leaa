@@ -1,76 +1,67 @@
 import React, { useState, useRef } from 'react';
-import { Button } from 'antd';
 import { useTranslation } from 'react-i18next';
-import { useMutation } from '@apollo/react-hooks';
+import { Button } from 'antd';
 
 import { User } from '@leaa/common/src/entrys';
-import { CreateUserInput } from '@leaa/common/src/dtos/user';
-import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
-import { IPage, ICommenFormRef, ISubmitData } from '@leaa/dashboard/src/interfaces';
-import { CREATE_USER } from '@leaa/dashboard/src/graphqls';
-import { msg } from '@leaa/dashboard/src/utils';
+import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
+import { UpdateUserInput } from '@leaa/common/src/dtos/user';
+import { IPage, ICommenFormRef, ISubmitData, IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
+import { msg, errorMsg, ajax } from '@leaa/dashboard/src/utils';
 
-import { HtmlMeta, PageCard, SubmitBar, Rcon } from '@leaa/dashboard/src/components';
+import { envConfig } from '@leaa/dashboard/src/configs';
+import { PageCard, HtmlMeta, Rcon, SubmitBar } from '@leaa/dashboard/src/components';
 
 import { UserInfoForm } from '../_components/UserInfoForm/UserInfoForm';
 
 import style from './style.module.less';
 
+const API_PATH = 'users';
+
 export default (props: IPage) => {
   const { t } = useTranslation();
 
-  // ref
-  const infoFormRef = useRef<ICommenFormRef<CreateUserInput>>(null);
+  const infoFormRef = useRef<ICommenFormRef<UpdateUserInput>>(null);
 
-  // mutation
-  const [submitVariables, setSubmitVariables] = useState<{ user: CreateUserInput }>();
-  const [createUserMutate, createUserMutation] = useMutation<{ createUser: User }>(CREATE_USER, {
-    variables: submitVariables,
-    // apollo-link-error onError: e => messageUtil.gqlError(e.message),
-    onCompleted({ createUser }) {
-      msg(t('_lang:createdSuccessfully'));
-      props.history.push(`/users/${createUser.id}`);
-    },
-  });
+  const [submitLoading, setSubmitLoading] = useState(false);
 
-  const onSubmit = async () => {
-    const infoData: ISubmitData<CreateUserInput> = await infoFormRef.current?.onValidateForm();
+  const onCreateItem = async () => {
+    const infoData: ISubmitData<UpdateUserInput> = await infoFormRef.current?.onValidateForm();
 
     if (!infoData) return;
 
-    const submitData: ISubmitData<CreateUserInput> = {
+    const data: ISubmitData<UpdateUserInput> = {
       ...infoData,
     };
 
-    await setSubmitVariables({ user: submitData });
-    await createUserMutate();
+    setSubmitLoading(true);
+
+    ajax
+      .post(`${envConfig.API_URL}/${API_PATH}`, data)
+      .then((res: IHttpRes<User>) => {
+        msg(t('_lang:createdSuccessfully'));
+
+        props.history.push(`/${API_PATH}/${res.data.data?.id}`);
+      })
+      .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
+      .finally(() => setSubmitLoading(false));
   };
 
   return (
-    <PageCard
-      title={
-        <span>
-          <Rcon type={props.route.icon} />
-          <strong>{t(`${props.route.namei18n}`)}</strong>
-        </span>
-      }
-      className={style['wapper']}
-      loading={createUserMutation.loading}
-    >
+    <PageCard route={props.route} title="@CREATE" className={style['wapper']} loading={submitLoading}>
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
       <UserInfoForm ref={infoFormRef} />
 
-      <SubmitBar>
+      <SubmitBar full>
         <Button
           type="primary"
           size="large"
-          icon={<Rcon type={CREATE_BUTTON_ICON} />}
+          icon={<Rcon type={UPDATE_BUTTON_ICON} />}
           className="g-submit-bar-button"
-          loading={createUserMutation.loading}
-          onClick={onSubmit}
+          loading={submitLoading}
+          onClick={onCreateItem}
         >
-          {t('_lang:create')}
+          {t('_lang:update')}
         </Button>
       </SubmitBar>
     </PageCard>

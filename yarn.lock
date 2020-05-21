@@ -2803,6 +2803,11 @@
   dependencies:
     "@types/express" "*"
 
+"@types/diff@^4.0.2":
+  version "4.0.2"
+  resolved "https://registry.npm.taobao.org/@types/diff/download/@types/diff-4.0.2.tgz#2e9bb89f9acc3ab0108f0f3dc4dbdcf2fff8a99c"
+  integrity sha1-Lpu4n5rMOrAQjw89xNvc8v/4qZw=
+
 "@types/dinero.js@^1.6.4":
   version "1.6.4"
   resolved "https://registry.npm.taobao.org/@types/dinero.js/download/@types/dinero.js-1.6.4.tgz#a7fd5ac19feb379d3750cdfcfb32387dfaa12fb4"
@@ -7436,7 +7441,7 @@ diff-sequences@^26.0.0:
   resolved "https://registry.npm.taobao.org/diff-sequences/download/diff-sequences-26.0.0.tgz?cache=0&sync_timestamp=1588614801842&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fdiff-sequences%2Fdownload%2Fdiff-sequences-26.0.0.tgz#0760059a5c287637b842bd7085311db7060e88a6"
   integrity sha1-B2AFmlwodje4Qr1whTEdtwYOiKY=
 
-diff@^4.0.1:
+diff@^4.0.1, diff@^4.0.2:
   version "4.0.2"
   resolved "https://registry.npm.taobao.org/diff/download/diff-4.0.2.tgz#60f3aecb89d5fae520c11aa19efc2bb982aade7d"
   integrity sha1-YPOuy4nV+uUgwRqhnvwruYKq3n0=

@@ -32,7 +32,7 @@ export const UserInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
   };
 
   const onRefreshForm = (item?: User) => {
-    if (!item) return form.setFieldsValue({ status: 0, is_admin: 0 });
+    if (!item) return form.setFieldsValue({ status: 1, is_admin: 0 });
 
     form.resetFields();
     form.setFieldsValue(item);

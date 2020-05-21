@@ -1,21 +1,17 @@
-import _ from 'lodash';
-import moment from 'moment';
-import svgCaptcha from 'svg-captcha';
 import xss from 'xss';
 import bcryptjs from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
-import { Injectable, UnauthorizedException, HttpException, NotFoundException } from '@nestjs/common';
-import { Repository, Between, In } from 'typeorm';
+import { Injectable, UnauthorizedException, NotFoundException } from '@nestjs/common';
+import { Repository, In } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { User, Verification, Action, Auth } from '@leaa/common/src/entrys';
-import { AuthLoginInput, AuthSignupInput } from '@leaa/common/src/dtos/auth';
-import { checkAvailableUser, logger, errorMsg } from '@leaa/api/src/utils';
+import { AuthLoginInput } from '@leaa/common/src/dtos/auth';
+import { checkAvailableUser, logger } from '@leaa/api/src/utils';
 import { UserService } from '@leaa/api/src/modules/user/user.service';
 import { AuthService } from '@leaa/api/src/modules/auth/auth.service';
 import { ActionService } from '@leaa/api/src/modules/action/action.service';
-import { IGqlCtx, IRequest, ICrudRequest } from '@leaa/api/src/interfaces';
-import { captchaConfig } from '@leaa/api/src/configs';
+import { ICrudRequest } from '@leaa/api/src/interfaces';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 import { UserProperty } from '@leaa/api/src/modules/user/user.property';
 
@@ -29,8 +25,7 @@ const SHOW_CAPTCHA_BY_LOGIN_ERROR_COUNT = 3;
 // export class AuthLocalService {
 export class AuthLocalService extends TypeOrmCrudService<Auth> {
   constructor(
-    // @InjectRepository(Action) repo: Repository<Action>,
-    @InjectRepository(Auth) repo: Repository<Auth>,
+    @InjectRepository(Auth) private readonly authRepo: Repository<Auth>,
     @InjectRepository(User) private readonly userRepository: Repository<User>,
     @InjectRepository(Verification) private readonly verificationRepository: Repository<Verification>,
     @InjectRepository(Action) private readonly actionRepository: Repository<Action>,
@@ -41,7 +36,7 @@ export class AuthLocalService extends TypeOrmCrudService<Auth> {
     private readonly actionService: ActionService,
     private readonly userProperty: UserProperty,
   ) {
-    super(repo);
+    super(authRepo);
   }
 
   async login(req: ICrudRequest, body: AuthLoginInput): Promise<User | undefined> {

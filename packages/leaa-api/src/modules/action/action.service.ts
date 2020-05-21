@@ -9,11 +9,11 @@ import { Repository } from 'typeorm';
 
 @Injectable()
 export class ActionService extends TypeOrmCrudService<Action> {
-  constructor(@InjectRepository(Action) repo: Repository<Action>) {
-    super(repo);
+  constructor(@InjectRepository(Action) private readonly actionRepo: Repository<Action>) {
+    super(actionRepo);
   }
 
   async logAction(req: ICrudRequest, body: CreateActionInput): Promise<Action | undefined> {
-    return this.repo.save(body);
+    return this.actionRepo.save(body);
   }
 }

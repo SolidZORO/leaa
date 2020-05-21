@@ -1,13 +1,17 @@
-import { Injectable } from '@nestjs/common';
+import _ from 'lodash';
+import bcryptjs from 'bcryptjs';
+import * as jsondiffpatch from 'jsondiffpatch';
+import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
-
-import { User } from '@leaa/common/src/entrys';
-import { Repository } from 'typeorm';
-import { IUsersArgs } from '@leaa/api/src/interfaces';
-import { errorMsg } from '@leaa/api/src/utils';
-
+import { CrudRequest } from '@nestjsx/crud';
+import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+
+import { errorMsg, logger } from '@leaa/api/src/utils';
+import { User, Role, Auth } from '@leaa/common/src/entrys';
+import { UpdateUserInput, CreateUserInput } from '@leaa/common/src/dtos/user';
+
 import { UserProperty } from './user.property';
 
 const CLS_NAME = 'UserService';
@@ -15,64 +19,53 @@ const CLS_NAME = 'UserService';
 @Injectable()
 export class UserService extends TypeOrmCrudService<User> {
   constructor(
-    @InjectRepository(User) repo: Repository<User>,
+    @InjectRepository(User) private readonly userRepo: Repository<User>,
+    @InjectRepository(Role) private readonly roleRepo: Repository<Role>,
+    @InjectRepository(Auth) private readonly authRepo: Repository<Auth>,
     private readonly userProperty: UserProperty,
     private readonly jwtService: JwtService,
   ) {
-    super(repo);
+    super(userRepo);
   }
 
-  async users(args: IUsersArgs): Promise<any> {
-    // const nextArgs: IUsersArgs = argsFormat(args);
-    // const PRIMARY_TABLE = 'users';
-    // const qb = this.userRepository.createQueryBuilder(PRIMARY_TABLE);
-    //
-    // // relations
-    // // // if (gqlCtx?.user && can(gqlCtx.user, 'role.list-read')) {
-    // qb.leftJoinAndSelect(`${PRIMARY_TABLE}.roles`, 'roles');
-    // // // }
-    //
-    // // q
-    // if (nextArgs.q) {
-    //   const qLike = `%${nextArgs.q}%`;
-    //
-    //   ['name', 'email'].forEach((key) => {
-    //     qb.orWhere(`${PRIMARY_TABLE}.${key} LIKE :${key}`, { [key]: qLike });
-    //   });
-    // }
-    //
-    // // order
-    // if (nextArgs.orderBy && nextArgs.orderSort) {
-    //   qb.orderBy(`${PRIMARY_TABLE}.${nextArgs.orderBy}`, nextArgs.orderSort);
-    // }
-    //
-    // // can
-    // // if (!(gqlCtx?.user && can(gqlCtx.user, 'user.list-read--all-status'))) {
-    // qb.andWhere('status = :status', { status: 1 });
-    // // }
-    //
-    // return calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
+  async createOne(req: CrudRequest, dto: CreateUserInput | User): Promise<User> {
+    const nextDto = dto;
+    if (dto.password) nextDto.password = await this.createPassword(dto.password);
+
+    return super.createOne(req, nextDto);
   }
 
-  async userByToken(body?: any): Promise<User | undefined> {
-    const { token } = body;
+  async updateOne(req: CrudRequest, dto: UpdateUserInput): Promise<User> {
+    const prevUser = await this.getOneOrFail(req);
+
+    const nextDto: UpdateUserInput & { roles?: Role[] } = dto;
+    if (dto.password) nextDto.password = await this.createPassword(dto.password);
+    if (dto.roleIds && _.isArray(dto.roleIds)) nextDto.roles = await this.roleRepo.findByIds(dto.roleIds);
+
+    const result = await super.updateOne(req, nextDto);
+
+    // save diff data to log
+    const diffData = await jsondiffpatch
+      .create({ propertyFilter: (name: string) => !['password', 'updated_at'].includes(name) })
+      .diff(prevUser, result);
+
+    if (diffData) logger.log(`Update User ${result.id}, Diff Data, ${JSON.stringify(diffData)}`, CLS_NAME);
+
+    return result;
+  }
+
+  async userByToken(body?: { token?: string }): Promise<User | undefined> {
+    const token = body?.token;
 
     if (!token) throw errorMsg('_error:tokenNotFound');
-
-    // if (args) {
-    //   nextArgs = args;
-    //   nextArgs.relations = ['roles'];
-    // }
 
     // @ts-ignore
     const userDecode: { id: any } = this.jwtService.decode(token);
     if (!userDecode || !userDecode.id) throw errorMsg('_error:tokenError');
 
-    const user = await this.repo.findOne(userDecode.id, {
+    const user = await this.userRepo.findOne(userDecode.id, {
       relations: ['roles'],
     });
-
-    console.log('XXXXXXXXXXXXX', user);
 
     if (user) {
       user.flatPermissions = await this.userProperty.flatPermissions(user);
@@ -82,11 +75,34 @@ export class UserService extends TypeOrmCrudService<User> {
   }
 
   async userByHashid(): Promise<User | undefined> {
-    const u = await this.repo.findOneOrFail('4ab04524-11a1-4cc9-b1bc-069d44d7e3bd');
+    return this.userRepo.findOneOrFail('4ab04524-11a1-4cc9-b1bc-069d44d7e3bd');
+  }
 
-    console.log('UUUUUUU>>>>>>>', u);
+  async createPassword(password: string): Promise<string> {
+    const salt = bcryptjs.genSaltSync();
+    return bcryptjs.hashSync(password, salt);
+  }
 
-    return u;
+  async deleteUserAllAuth(id: string): Promise<void> {
+    const auths = await this.authRepo.find({ where: { user_id: id } });
+
+    if (auths) {
+      const deleteAuths = await this.authRepo.remove(auths);
+      logger.log(`Delete User All Auth, ${JSON.stringify(deleteAuths)}`, CLS_NAME);
+    }
+  }
+
+  async deleteOne(req: CrudRequest): Promise<User | void> {
+    const result = await super.deleteOne(req);
+
+    // delete user all auth/oauth
+    if (result) {
+      try {
+        await this.deleteUserAllAuth(result.id);
+      } catch (err) {
+        throw Error(err.message);
+      }
+    }
   }
 }
 
@@ -228,10 +244,7 @@ export class UserService extends TypeOrmCrudService<User> {
 //     });
 //   }
 //
-//   async createPassword(password: string): Promise<string> {
-//     const salt = bcryptjs.genSaltSync();
-//     return bcryptjs.hashSync(password, salt);
-//   }
+
 //
 //   async createUser(args: CreateUserInput): Promise<User | undefined> {
 //     const nextArgs: CreateUserInput = args;
@@ -330,28 +343,5 @@ export class UserService extends TypeOrmCrudService<User> {
 //     return nextUser;
 //   }
 //
-//   async deleteUserAllAuth(id: string): Promise<void> {
-//     const auths = await this.authRepository.find({ where: { user_id: id } });
-//
-//     if (auths) {
-//       const deleteAuths = await this.authRepository.remove(auths);
-//       logger.log(`Delete User All Auth, ${JSON.stringify(deleteAuths)}`, CLS_NAME);
-//     }
-//   }
-//
-//   async deleteUser(id: string): Promise<User | undefined> {
-//     if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id);
-//
-//     const deleteUser = await commonDelete({ repository: this.userRepository, CLS_NAME, id });
-//
-//     if (deleteUser) {
-//       try {
-//         await this.deleteUserAllAuth(id);
-//       } catch (err) {
-//         throw Error(err);
-//       }
-//     }
-//
-//     return deleteUser;
-//   }
+
 // }

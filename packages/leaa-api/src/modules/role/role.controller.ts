@@ -4,10 +4,9 @@ import { Crud, CrudController, Override, ParsedRequest, CrudRequest, ParsedBody 
 import { Permissions } from '@leaa/api/src/decorators';
 import { CreateRoleInput, UpdateRoleInput } from '@leaa/common/src/dtos/role';
 import { JwtGuard, PermissionsGuard } from '@leaa/api/src/guards';
-import { Role, Article } from '@leaa/common/src/entrys';
+import { Role } from '@leaa/common/src/entrys';
 
 import { RoleService } from './role.service';
-import { UpdateArticleInput } from '@leaa/common/src/dtos/article';
 
 @Crud({
   model: { type: Role },
@@ -46,7 +45,7 @@ export class RoleController implements CrudController<Role> {
   constructor(public service: RoleService) {}
 
   @Override('updateOneBase')
-  updateOne(@ParsedRequest() req: CrudRequest, @ParsedBody() dto: UpdateArticleInput): Promise<Role> {
+  updateOne(@ParsedRequest() req: CrudRequest, @ParsedBody() dto: UpdateRoleInput): Promise<Role> {
     return this.service.updateOne(req, dto);
   }
 }

@@ -15,7 +15,7 @@ export class UpdateRoleInput {
   @Field(() => [String], { nullable: true })
   permissionIds?: string[];
 
-  @IsOptional()
-  @Field(() => [String], { nullable: true })
-  permissionSlugs?: string[];
+  // @IsOptional()
+  // @Field(() => [String], { nullable: true })
+  // permissionSlugs?: string[];
 }
