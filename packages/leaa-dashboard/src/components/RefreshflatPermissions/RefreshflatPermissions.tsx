@@ -20,11 +20,7 @@ export const RefreshflatPermissions = (props: IProps) => {
         if (res.data?.data?.flatPermissions && res.data?.data.flatPermissions.length === 0) {
           removeAuth();
 
-
-
-          
-
-
+          console.log(2111111);
         }
 
         if (res.data?.data?.flatPermissions && res.data?.data.flatPermissions.length !== 0) {
