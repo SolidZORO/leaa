@@ -101,6 +101,7 @@
     "rxjs": "^6.5.5",
     "supertest": "^4.0.2",
     "svg-captcha": "^1.4.0",
+    "transliteration": "^2.1.11",
     "typeorm": "^0.2.25",
     "uuid": "^8.1.0",
     "wechat-jssdk": "^5.0.4",

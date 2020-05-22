@@ -17474,6 +17474,13 @@ tr46@^2.0.2:
   dependencies:
     punycode "^2.1.1"
 
+transliteration@^2.1.11:
+  version "2.1.11"
+  resolved "https://registry.npm.taobao.org/transliteration/download/transliteration-2.1.11.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Ftransliteration%2Fdownload%2Ftransliteration-2.1.11.tgz#84a274349525cf8bb9f09d5fcd28c07c66ee6940"
+  integrity sha1-hKJ0NJUlz4u58J1fzSjAfGbuaUA=
+  dependencies:
+    yargs "^15.3.1"
+
 tree-kill@^1.2.1:
   version "1.2.2"
   resolved "https://registry.npm.taobao.org/tree-kill/download/tree-kill-1.2.2.tgz?cache=0&sync_timestamp=1576090178663&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Ftree-kill%2Fdownload%2Ftree-kill-1.2.2.tgz#4ca09a9092c88b73a7cdc5e8a01b507b0790a0cc"

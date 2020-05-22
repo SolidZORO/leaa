@@ -28,7 +28,7 @@ import { RoleService } from './role.service';
     getManyBase: { decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('role.list-read')] },
     getOneBase: { decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('role.item-read')] },
     createOneBase: { decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('role.item-create')] },
-    updateOneBase: { decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('role.item-update')] },
+    // updateOneBase: { decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('role.item-update')] },
     deleteOneBase: {
       decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('role.item-delete')],
       returnDeleted: true,
@@ -45,6 +45,8 @@ export class RoleController implements CrudController<Role> {
   constructor(public service: RoleService) {}
 
   @Override('updateOneBase')
+  @UseGuards(JwtGuard, PermissionsGuard)
+  @Permissions('role.item-update')
   updateOne(@ParsedRequest() req: CrudRequest, @ParsedBody() dto: UpdateRoleInput): Promise<Role> {
     return this.service.updateOne(req, dto);
   }

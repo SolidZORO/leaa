@@ -21,8 +21,8 @@ import { CategoryService } from './category.service';
   routes: {
     getManyBase: { decorators: [UseGuards(JwtGuard, PermissionsGuard)] },
     getOneBase: { decorators: [UseGuards(JwtGuard, PermissionsGuard)] },
-    createOneBase: { decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('category.item-create')] },
-    updateOneBase: { decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('category.item-update')] },
+    // createOneBase: { decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('category.item-create')] },
+    // updateOneBase: { decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('category.item-update')] },
     deleteOneBase: {
       decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('category.item-delete')],
       returnDeleted: true,
@@ -38,11 +38,15 @@ export class CategoryController implements CrudController<Category> {
   constructor(public service: CategoryService) {}
 
   @Override('createOneBase')
+  @UseGuards(JwtGuard, PermissionsGuard)
+  @Permissions('category.item-create')
   createOne(@ParsedRequest() req: CrudRequest, @ParsedBody() dto: Category & CreateCategoryInput): Promise<Category> {
     return this.service.createOne(req, dto);
   }
 
   @Override('updateOneBase')
+  @UseGuards(JwtGuard, PermissionsGuard)
+  @Permissions('category.item-update')
   updateOne(@ParsedRequest() req: CrudRequest, @ParsedBody() dto: Category & UpdateCategoryInput): Promise<Category> {
     return this.service.updateOne(req, dto);
   }

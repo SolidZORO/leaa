@@ -32,10 +32,10 @@ import { UserService } from './user.service';
   routes: {
     getManyBase: { decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('user.list-read')] },
     getOneBase: { decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('user.item-read')] },
-    createOneBase: { decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('user.item-create')] },
-    updateOneBase: { decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('user.item-update')] },
+    // createOneBase: { decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('user.item-create')] },
+    // updateOneBase: { decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('user.item-update')] },
     deleteOneBase: {
-      decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('user.item-delete')],
+      // decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('user.item-delete')],
       returnDeleted: true,
     },
   },
@@ -49,16 +49,22 @@ export class UserController implements CrudController<User> {
   constructor(public service: UserService) {}
 
   @Override('createOneBase')
+  @UseGuards(JwtGuard, PermissionsGuard)
+  @Permissions('user.item-create')
   createOne(@ParsedRequest() req: CrudRequest, @ParsedBody() dto: User & CreateUserInput): Promise<User> {
     return this.service.createOne(req, dto);
   }
 
   @Override('updateOneBase')
+  @UseGuards(JwtGuard, PermissionsGuard)
+  @Permissions('user.item-update')
   updateOne(@ParsedRequest() req: CrudRequest, @ParsedBody() dto: UpdateUserInput): Promise<User> {
     return this.service.updateOne(req, dto);
   }
 
   @Override('deleteOneBase')
+  @UseGuards(JwtGuard, PermissionsGuard)
+  @Permissions('user.item-delete')
   deleteOne(@ParsedRequest() req: CrudRequest): Promise<User | void> {
     return this.service.deleteOne(req);
   }
@@ -70,10 +76,5 @@ export class UserController implements CrudController<User> {
   @Post('userByToken')
   async userByToken(@Req() req: ICrudRequest, @Body() body: any): Promise<any> {
     return this.service.userByToken(body);
-  }
-
-  @Get('userByHashid')
-  async userByhashid(): Promise<any> {
-    return this.service.userByHashid();
   }
 }

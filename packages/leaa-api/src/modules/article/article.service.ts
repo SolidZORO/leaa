@@ -6,9 +6,10 @@ import { CrudRequest } from '@nestjsx/crud';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 import { plainToClass } from 'class-transformer';
+import { slugify } from 'transliteration';
 
 import { Article, Tag, Category } from '@leaa/common/src/entrys';
-import { UpdateArticleInput } from '@leaa/common/src/dtos/article';
+import { UpdateArticleInput, CreateArticleInput } from '@leaa/common/src/dtos/article';
 import { TagService } from '@leaa/api/src/modules/tag/tag.service';
 import { formatHtmlToText, cutTags } from '@leaa/api/src/utils';
 
@@ -31,6 +32,13 @@ export class ArticleService extends TypeOrmCrudService<Article> {
     super(articleRepo);
   }
 
+  async createOne(req: CrudRequest, dto: Article & CreateArticleInput): Promise<Article> {
+    const nextDto = dto;
+    nextDto.slug = await this.genSlug({ title: dto.title, slug: dto.slug });
+
+    return super.createOne(req, nextDto);
+  }
+
   async updateOne(req: CrudRequest, dto: UpdateArticleInput): Promise<Article> {
     const { allowParamsOverride, returnShallow } = req.options.routes?.updateOneBase || {};
 
@@ -39,6 +47,8 @@ export class ArticleService extends TypeOrmCrudService<Article> {
     const toSave = !allowParamsOverride
       ? { ...found, ...dto, ...paramsFilters, ...req.parsed.authPersist }
       : { ...found, ...dto, ...req.parsed.authPersist };
+
+    toSave.slug = await this.genSlug({ title: toSave.title, slug: toSave.slug });
 
     await this.formatRelationIdsToSave({
       dto,
@@ -78,6 +88,17 @@ export class ArticleService extends TypeOrmCrudService<Article> {
 
   //
   //
+
+  async genSlug({ title, slug }: { title: string; slug?: string | null }): Promise<string> {
+    if (!slug) {
+      const prevSlug = slugify(title);
+      const hasSlug = await this.articleRepo.findOne({ where: { slug: prevSlug } });
+
+      return hasSlug ? `${prevSlug}-${new Date().getMilliseconds()}` : prevSlug;
+    }
+
+    return slugify(slug);
+  }
 
   async formatRelationIdsToSave({ dto, toSave, idField, saveField, repo }: ITransIdsToEntrys) {
     const dtoIds: any = dto[idField];
