@@ -1136,6 +1136,15 @@
   dependencies:
     conventional-changelog-conventionalcommits "4.2.1"
 
+"@commitlint/config-lerna-scopes@^8.3.4":
+  version "8.3.4"
+  resolved "https://registry.npm.taobao.org/@commitlint/config-lerna-scopes/download/@commitlint/config-lerna-scopes-8.3.4.tgz#4e977cb39114664ce7db502b1d8e5d77f1a92340"
+  integrity sha1-Tpd8s5EUZkzn21ArHY5dd/GpI0A=
+  dependencies:
+    import-from "3.0.0"
+    resolve-pkg "2.0.0"
+    semver "6.3.0"
+
 "@commitlint/ensure@^8.3.4":
   version "8.3.4"
   resolved "https://registry.npm.taobao.org/@commitlint/ensure/download/@commitlint/ensure-8.3.4.tgz#6931677e4ca0fde71686ae3b7a367261647a341d"
@@ -10059,6 +10068,13 @@ import-fresh@^3.0.0, import-fresh@^3.1.0:
     parent-module "^1.0.0"
     resolve-from "^4.0.0"
 
+import-from@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.npm.taobao.org/import-from/download/import-from-3.0.0.tgz#055cfec38cd5a27d8057ca51376d7d3bf0891966"
+  integrity sha1-BVz+w4zVon2AV8pRN219O/CJGWY=
+  dependencies:
+    resolve-from "^5.0.0"
+
 import-from@^2.1.0:
   version "2.1.0"
   resolved "https://registry.npm.taobao.org/import-from/download/import-from-2.1.0.tgz#335db7f2a7affd53aaa471d4b8021dee36b7f3b1"
@@ -15820,6 +15836,13 @@ resolve-pathname@^3.0.0:
   version "3.0.0"
   resolved "https://registry.npm.taobao.org/resolve-pathname/download/resolve-pathname-3.0.0.tgz#99d02224d3cf263689becbb393bc560313025dcd"
   integrity sha1-mdAiJNPPJjaJvsuzk7xWAxMCXc0=
+
+resolve-pkg@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.npm.taobao.org/resolve-pkg/download/resolve-pkg-2.0.0.tgz#ac06991418a7623edc119084edc98b0e6bf05a41"
+  integrity sha1-rAaZFBinYj7cEZCE7cmLDmvwWkE=
+  dependencies:
+    resolve-from "^5.0.0"
 
 resolve-url@^0.2.1:
   version "0.2.1"

@@ -56,9 +56,9 @@
     "postversionup:major": "yarn commit-version",
     "commit-version": "git add . && git commit -m \"chore(release): publish `node -p 'require(\"./lerna.json\").version'`\""
   },
-  "dependencies": {},
   "devDependencies": {
     "@commitlint/cli": "^8.3.5",
+    "@commitlint/config-lerna-scopes": "^8.3.4",
     "@commitlint/config-conventional": "^8.3.4",
     "commitizen": "4.1.2",
     "cz-conventional-changelog": "3.2.0",
