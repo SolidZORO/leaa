@@ -18,6 +18,17 @@ interface IProps {
   loading?: boolean;
 }
 
+/**
+ * 关于 categoryIds 为空的处理方式
+ *
+ * @ideaNotes
+ * categoryIds 如果没有值，请设置为 null，以强表示为清空，API 看到这个值会做清空处理，
+ * 如果为 '' 字符或 undefined，API 都不会做处理，因为意图不够明确。
+ *
+ * 所以有两个地方需要注意，
+ * - Input  | `setFieldsValue`，
+ * - Output | Form.Item `normalize={(e) => e || null}`
+ */
 export const ArticleInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
   const { t } = useTranslation();
   const [form] = Form.useForm();

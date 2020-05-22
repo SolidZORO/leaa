@@ -1,21 +1,22 @@
 import _ from 'lodash';
+import moment from 'moment';
+import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
+import { CrudRequest } from '@nestjsx/crud';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
+import { plainToClass } from 'class-transformer';
 
 import { Article, Tag, Category } from '@leaa/common/src/entrys';
-import { Repository } from 'typeorm';
-import { CrudRequest } from '@nestjsx/crud';
 import { UpdateArticleInput } from '@leaa/common/src/dtos/article';
 import { TagService } from '@leaa/api/src/modules/tag/tag.service';
-import { plainToClass } from 'class-transformer';
-import moment from 'moment';
+import { formatHtmlToText, cutTags } from '@leaa/api/src/utils';
 
 export interface ITransIdsToEntrys {
   dto: any;
   toSave: any;
-  idName: any;
-  sName: string;
+  idField: any;
+  saveField: string;
   repo: any;
 }
 
@@ -30,24 +31,6 @@ export class ArticleService extends TypeOrmCrudService<Article> {
     super(articleRepo);
   }
 
-  async transIdsToEntrys({ dto, toSave, idName, sName, repo }: ITransIdsToEntrys) {
-    const dtoIds: any = dto[idName];
-
-    /* eslint-disable no-param-reassign */
-
-    if (dtoIds === null) toSave[sName] = [];
-    if (dtoIds && dtoIds.length) {
-      const items = await repo.findByIds(dtoIds);
-
-      if (!_.isEmpty(items) && !_.isEqual(items, toSave[sName])) {
-        toSave[sName] = items;
-        toSave.updated_at = moment().toDate();
-      }
-    }
-
-    /* eslint-enable */
-  }
-
   async updateOne(req: CrudRequest, dto: UpdateArticleInput): Promise<Article> {
     const { allowParamsOverride, returnShallow } = req.options.routes?.updateOneBase || {};
 
@@ -57,15 +40,24 @@ export class ArticleService extends TypeOrmCrudService<Article> {
       ? { ...found, ...dto, ...paramsFilters, ...req.parsed.authPersist }
       : { ...found, ...dto, ...req.parsed.authPersist };
 
-    await this.transIdsToEntrys({ dto, toSave, idName: 'categoryIds', sName: 'categories', repo: this.categoryRepo });
-    await this.transIdsToEntrys({ dto, toSave, idName: 'tagIds', sName: 'tags', repo: this.tagRepo });
+    await this.formatRelationIdsToSave({
+      dto,
+      toSave,
+      idField: 'categoryIds',
+      saveField: 'categories',
+      repo: this.categoryRepo,
+    });
+    await this.formatRelationIdsToSave({ dto, toSave, idField: 'tagIds', saveField: 'tags', repo: this.tagRepo });
 
     // // auto add tag from article content (by jieba)
     // if (dto.content && (!dto.tagIds || (dto.tagIds && dto.tagIds.length === 0))) {
     //   const allText = formatHtmlToText(dto.content, dto.title);
     //
+    //
+    //   console.log(cutTags(allText));
+    //
     //   // batch create tags
-    //   relationArgs.tags = await this.tagService.createTags(gqlCtx, cutTags(allText));
+    //   toSave.tags = await this.tagService.createTags(cutTags(allText));
     //
     //   // ⚠️ sync tags
     //   // execute only once when the article has no tag, reducing server pressure
@@ -82,5 +74,28 @@ export class ArticleService extends TypeOrmCrudService<Article> {
     });
 
     return this.getOneOrFail(req);
+  }
+
+  //
+  //
+
+  async formatRelationIdsToSave({ dto, toSave, idField, saveField, repo }: ITransIdsToEntrys) {
+    const dtoIds: any = dto[idField];
+
+    /* eslint-disable no-param-reassign */
+
+    if (dtoIds === null) toSave[saveField] = [];
+
+    if (dtoIds && dtoIds.length) {
+      const items = await repo.findByIds(dtoIds);
+
+      // 如果 relation 有更新，item 的时间也会更新
+      if (!_.isEmpty(items) && !_.isEqual(items, toSave[saveField])) {
+        toSave[saveField] = items;
+        toSave.updated_at = moment().toDate();
+      }
+    }
+
+    /* eslint-enable */
   }
 }

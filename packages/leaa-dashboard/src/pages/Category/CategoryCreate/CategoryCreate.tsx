@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from 'antd';
 
@@ -7,8 +7,8 @@ import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { UpdateCategoryInput } from '@leaa/common/src/dtos/category';
 import { IPage, ICommenFormRef, ISubmitData, IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
 import { msg, errorMsg, ajax } from '@leaa/dashboard/src/utils';
-import { envConfig } from '@leaa/dashboard/src/configs';
 
+import { envConfig } from '@leaa/dashboard/src/configs';
 import { PageCard, HtmlMeta, Rcon, SubmitBar } from '@leaa/dashboard/src/components';
 
 import { CategoryInfoForm } from '../_components/CategoryInfoForm/CategoryInfoForm';
@@ -19,27 +19,12 @@ const API_PATH = 'categories';
 
 export default (props: IPage) => {
   const { t } = useTranslation();
-  const { id } = props.match.params as { id: string };
 
   const infoFormRef = useRef<ICommenFormRef<UpdateCategoryInput>>(null);
 
-  const [item, setItem] = useState<Category | undefined>();
-  const [itemLoading, setItemLoading] = useState(false);
   const [submitLoading, setSubmitLoading] = useState(false);
 
-  const onFetchItem = () => {
-    setItemLoading(true);
-
-    ajax
-      .get(`${envConfig.API_URL}/${API_PATH}/${id}`)
-      .then((res: IHttpRes<Category>) => {
-        setItem(res.data.data);
-      })
-      .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
-      .finally(() => setItemLoading(false));
-  };
-
-  const onUpdateItem = async () => {
+  const onCreateItem = async () => {
     const infoData: ISubmitData<UpdateCategoryInput> = await infoFormRef.current?.onValidateForm();
 
     if (!infoData) return;
@@ -51,23 +36,21 @@ export default (props: IPage) => {
     setSubmitLoading(true);
 
     ajax
-      .patch(`${envConfig.API_URL}/${API_PATH}/${id}`, data)
+      .post(`${envConfig.API_URL}/${API_PATH}`, data)
       .then((res: IHttpRes<Category>) => {
-        setItem(res.data.data);
+        msg(t('_lang:createdSuccessfully'));
 
-        msg(t('_lang:updatedSuccessfully'));
+        props.history.push(`/${API_PATH}/${res.data.data?.id}`);
       })
       .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
       .finally(() => setSubmitLoading(false));
   };
 
-  useEffect(() => onFetchItem(), []);
-
   return (
-    <PageCard route={props.route} title="@EDIT" className={style['wapper']} loading={itemLoading || submitLoading}>
+    <PageCard route={props.route} title="@CREATE" className={style['wapper']} loading={submitLoading}>
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
-      <CategoryInfoForm item={item} loading={itemLoading} ref={infoFormRef} />
+      <CategoryInfoForm ref={infoFormRef} />
 
       <SubmitBar full>
         <Button
@@ -76,7 +59,7 @@ export default (props: IPage) => {
           icon={<Rcon type={UPDATE_BUTTON_ICON} />}
           className="g-submit-bar-button"
           loading={submitLoading}
-          onClick={onUpdateItem}
+          onClick={onCreateItem}
         >
           {t('_lang:update')}
         </Button>

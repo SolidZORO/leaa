@@ -1,5 +1,5 @@
 import cx from 'classnames';
-import queryString from 'query-string';
+import qs from 'qs';
 import React, { useEffect, forwardRef, useImperativeHandle } from 'react';
 import { Col, Form, Input, Row } from 'antd';
 
@@ -16,7 +16,6 @@ import style from './style.module.less';
 
 interface IProps {
   item?: Category;
-  categorys?: Category[];
   loading?: boolean;
   className?: string;
 }
@@ -30,7 +29,7 @@ export const CategoryInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) 
     if (props.item?.parent_id) return props.item.parent_id;
 
     // for Create
-    return queryString.parse(window.location.search)?.parent_id;
+    return qs.parse(window.location.search, { ignoreQueryPrefix: true })?.parent_id;
   };
 
   const onValidateForm = async (): IOnValidateFormResult<UpdateCategoryInput> => {
@@ -41,28 +40,16 @@ export const CategoryInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) 
     }
   };
 
-  const onUpdateForm = (item?: Category) => {
-    if (!item) return undefined;
+  const onRefreshForm = (item?: Category) => {
+    if (!item) return form.setFieldsValue({ parent_id: getParentId() });
 
-    // if APIs return error, do not flush out edited data
-    if (form.getFieldValue('updated_at') && !item.updated_at) {
-      form.resetFields();
-      return undefined;
-    }
-
-    // update was successful, keeping the form data and APIs in sync.
-    if (form.getFieldValue('updated_at') !== item.updated_at) {
-      form.resetFields();
-      form.setFieldsValue({
-        ...item,
-        parent_id: getParentId(),
-      });
-    }
+    form.resetFields();
+    form.setFieldsValue(item);
 
     return undefined;
   };
 
-  useEffect(() => onUpdateForm(props.item), [form, props.item]);
+  useEffect(() => onRefreshForm(props.item), [form, props.item]);
   useImperativeHandle(ref, () => ({ form, onValidateForm }));
 
   return (
@@ -74,8 +61,8 @@ export const CategoryInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) 
         <Form form={form} name="category-info" layout="vertical">
           <Row gutter={16} className={style['form-row']}>
             <Col xs={24} sm={6}>
-              <Form.Item name="parent_id" rules={[{ required: true }]} label={`${t('_lang:parent')} ID`}>
-                {/*<SelectCategoryIdByTree initialValues={getParentId()} />*/}
+              <Form.Item name="parent_id" label={`${t('_lang:parent')} ID`}>
+                <SelectCategoryIdByTree />
               </Form.Item>
             </Col>
 

@@ -1,5 +1,5 @@
 import { Controller, UseGuards, Get, Req, Query } from '@nestjs/common';
-import { Crud, CrudController, CrudRequest } from '@nestjsx/crud';
+import { Crud, CrudController, CrudRequest, Override, ParsedRequest, ParsedBody } from '@nestjsx/crud';
 
 import { Permissions } from '@leaa/api/src/decorators';
 import { CreateCategoryInput, UpdateCategoryInput } from '@leaa/common/src/dtos/category';
@@ -37,8 +37,20 @@ import { CategoryService } from './category.service';
 export class CategoryController implements CrudController<Category> {
   constructor(public service: CategoryService) {}
 
+  @Override('createOneBase')
+  createOne(@ParsedRequest() req: CrudRequest, @ParsedBody() dto: Category & CreateCategoryInput): Promise<Category> {
+    return this.service.createOne(req, dto);
+  }
+
+  @Override('updateOneBase')
+  updateOne(@ParsedRequest() req: CrudRequest, @ParsedBody() dto: Category & UpdateCategoryInput): Promise<Category> {
+    return this.service.updateOne(req, dto);
+  }
+
+  //
+  //
+
   @Get('tree')
-  // async tree(@ParsedRequest() req: CrudRequest) {
   async tree(@Req() req: CrudRequest, @Query() query: ICategoriesQuery) {
     return this.service.tree(query);
   }

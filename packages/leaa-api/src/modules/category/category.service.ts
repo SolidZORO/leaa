@@ -1,18 +1,47 @@
 import _ from 'lodash';
+import moment from 'moment';
+import { TreeRepository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
+import { CrudRequest } from '@nestjsx/crud';
 
 import { Category } from '@leaa/common/src/entrys';
-import { TreeRepository } from 'typeorm';
-import moment from 'moment';
-import { ICategoriesQuery, ICategoryArgs } from '@leaa/api/src/interfaces';
-import { CategoryTreeObject } from '@leaa/common/src/dtos/category';
+import { ICategoriesQuery } from '@leaa/api/src/interfaces';
+import { CategoryTreeObject, CreateCategoryInput, UpdateCategoryInput } from '@leaa/common/src/dtos/category';
 
 @Injectable()
 export class CategoryService extends TypeOrmCrudService<Category> {
   constructor(@InjectRepository(Category) private readonly categoryRepo: TreeRepository<Category>) {
-    super(categoryRepo as TreeRepository<Category>);
+    super(categoryRepo);
+  }
+
+  async createOne(req: CrudRequest, dto: Category & CreateCategoryInput): Promise<Category> {
+    const nextDto = {
+      ...dto,
+      parent: await this.formatParentId(dto.parent_id),
+    };
+
+    return super.createOne(req, nextDto);
+  }
+
+  async updateOne(req: CrudRequest, dto: Category & UpdateCategoryInput): Promise<Category> {
+    const nextDto = {
+      ...dto,
+      parent: await this.formatParentId(dto.parent_id),
+    };
+
+    return super.updateOne(req, nextDto);
+  }
+
+  //
+  //
+
+  async formatParentId(parentId?: string | null) {
+    if (parentId === '----' || null) return null;
+    if (parentId) return this.categoryRepo.findOneOrFail(parentId);
+
+    return null;
   }
 
   async tree(options?: ICategoriesQuery) {

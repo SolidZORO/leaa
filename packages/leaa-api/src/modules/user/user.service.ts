@@ -28,7 +28,7 @@ export class UserService extends TypeOrmCrudService<User> {
     super(userRepo);
   }
 
-  async createOne(req: CrudRequest, dto: CreateUserInput | User): Promise<User> {
+  async createOne(req: CrudRequest, dto: User & CreateUserInput): Promise<User> {
     const nextDto = dto;
     if (dto.password) nextDto.password = await this.createPassword(dto.password);
 

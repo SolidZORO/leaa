@@ -223,7 +223,7 @@ export const masterRoutes: IRouteItem[] = [
     path: '/categories/create',
     icon: 'ri-function-line',
     LazyComponent: React.lazy(() =>
-      import(/* webpackChunkName: 'CreateCategory' */ '../pages/Category/CreateCategory/CreateCategory'),
+      import(/* webpackChunkName: 'CategoryCreate' */ '../pages/Category/CategoryCreate/CategoryCreate'),
     ),
     exact: true,
     isCreate: true,

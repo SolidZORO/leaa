@@ -49,7 +49,7 @@ export class UserController implements CrudController<User> {
   constructor(public service: UserService) {}
 
   @Override('createOneBase')
-  createOne(@ParsedRequest() req: CrudRequest, @ParsedBody() dto: CreateUserInput): Promise<User> {
+  createOne(@ParsedRequest() req: CrudRequest, @ParsedBody() dto: User & CreateUserInput): Promise<User> {
     return this.service.createOne(req, dto);
   }
 
