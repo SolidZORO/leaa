@@ -3,5 +3,12 @@
   "version": "2.2.0",
   "npmClient": "yarn",
   "includeMergedTags": true,
-  "useWorkspaces": true
+  "useWorkspaces": true,
+  "command": {
+    "publish": {
+      "conventionalCommits": true,
+      "message": "chore(release): publish"
+    }
+  },
+  "ignoreChanges": ["**/__(fixtures|tests|specs)__/**", "**/*.(md|txt)"]
 }
