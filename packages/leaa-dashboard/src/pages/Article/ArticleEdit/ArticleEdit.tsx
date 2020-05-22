@@ -10,7 +10,7 @@ import { IPage, ICommenFormRef, ISubmitData, IHttpRes, IHttpError } from '@leaa/
 import { msg, errorMsg, ajax } from '@leaa/dashboard/src/utils';
 
 import { envConfig } from '@leaa/dashboard/src/configs';
-import { PageCard, HtmlMeta, WYSIWYGEditor, Rcon, SubmitBar } from '@leaa/dashboard/src/components';
+import { PageCard, HtmlMeta, WYSIWYGEditor, Rcon, SubmitBar, SelectTagId } from '@leaa/dashboard/src/components';
 
 import { ArticleInfoForm } from '../_components/ArticleInfoForm/ArticleInfoForm';
 import { ArticleExtForm } from '../_components/ArticleExtForm/ArticleExtForm';
@@ -64,6 +64,8 @@ export default (props: IPage) => {
 
     setSubmitLoading(true);
 
+    console.log(data);
+
     ajax
       .patch(`${envConfig.API_URL}/${API_PATH}/${id}`, data)
       .then((res: IHttpRes<Article>) => {
@@ -96,6 +98,16 @@ export default (props: IPage) => {
           typeName: 'editor',
         }}
       />
+
+      <div className={style['select-tag-id-wrapper']}>
+        <SelectTagId
+          ref={selectTagIdRef}
+          placement="topLeft"
+          maxSelectedSize={10}
+          selectedTags={item?.tags}
+          onChangeSelectedTagsCallback={(tags: Tag[]) => setArticleTags(tags)}
+        />
+      </div>
 
       <div className={style['container-ext']}>
         <ArticleExtForm item={item} loading={itemLoading} ref={extFormRef} />

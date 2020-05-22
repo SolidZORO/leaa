@@ -34,6 +34,8 @@ export const SelectCategoryIdByTree = (props: IProps) => {
   const [tree, setTree] = useState<TreeItem[]>([]);
   const [treeLoading, setTreeLoading] = useState(false);
 
+  const [value, setValue] = useState<string | string[] | undefined | null>(props.value || props.initialValues);
+
   const onFetchCategories = (params: ICategoriesQuery = { expanded: true, parentSlug: props?.parentSlug }) => {
     setTreeLoading(true);
 
@@ -45,10 +47,6 @@ export const SelectCategoryIdByTree = (props: IProps) => {
       .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
       .finally(() => setTreeLoading(false));
   };
-
-  useEffect(() => onFetchCategories(), []);
-
-  const [value, setValue] = useState<string | string[] | undefined | null>(props.value || props.initialValues);
 
   const onChange = (v?: string | string[] | null) => {
     setValue(v || null);
@@ -71,6 +69,10 @@ export const SelectCategoryIdByTree = (props: IProps) => {
         // multiple: true,
       }
     : {};
+
+  useEffect(() => {
+    onFetchCategories();
+  }, []);
 
   return (
     <div className={cx(style['wrapper'], props.className)}>

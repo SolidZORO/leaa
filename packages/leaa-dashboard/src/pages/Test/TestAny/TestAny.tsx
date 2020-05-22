@@ -3,7 +3,14 @@ import { useTranslation } from 'react-i18next';
 import { IPage } from '@leaa/dashboard/src/interfaces';
 import { useStore } from '@leaa/dashboard/src/stores';
 
-import { HtmlMeta, SelectCategoryIdByTree, Rcon, SuspenseFallback, TagSearchBox } from '@leaa/dashboard/src/components';
+import {
+  HtmlMeta,
+  SelectCategoryIdByTree,
+  Rcon,
+  SuspenseFallback,
+  TagSearchBox,
+  SelectTagId,
+} from '@leaa/dashboard/src/components';
 
 import { GithubAuthButton } from '../_components/GithubAuthButton/GithubAuthButton';
 
@@ -45,6 +52,11 @@ export default (props: IPage) => {
 
       <h5>TAG SEARCH BOX</h5>
       <TagSearchBox />
+      <br />
+      <br />
+
+      <h5>TAG SELECT BOX</h5>
+      <SelectTagId maxSelectedSize={10} />
       <br />
       <br />
 

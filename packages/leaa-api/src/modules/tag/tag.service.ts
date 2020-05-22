@@ -1,16 +1,17 @@
 import fs from 'fs';
 import mkdirp from 'mkdirp';
+import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
-
 import { logger } from '@leaa/api/src/utils';
 
-import { SyncTagsToFileObject } from '@leaa/common/src/dtos/tag';
+import { SyncTagsToFileObject, CreateTagInput } from '@leaa/common/src/dtos/tag';
 import { dictConfig } from '@leaa/api/src/configs';
 
 import { Tag } from '@leaa/common/src/entrys';
-import { Repository } from 'typeorm';
+import { CrudRequest } from '@nestjsx/crud';
+// import { CrudRequest, GetManyDefaultResponse } from '@nestjsx/crud';
 
 const CLS_NAME = 'TagService';
 
@@ -19,6 +20,23 @@ export class TagService extends TypeOrmCrudService<Tag> {
   constructor(@InjectRepository(Tag) private readonly tagRepo: Repository<Tag>) {
     super(tagRepo);
   }
+
+  // async getMany(req: CrudRequest): Promise<GetManyDefaultResponse<Tag> | Tag[]> {
+  //   const { parsed, options } = req;
+  //   const builder = await this.createBuilder(parsed, options);
+  //
+  //   return this.doGetMany(builder, parsed, options);
+  // }
+
+  async createOne(req: CrudRequest, dto: Tag & CreateTagInput): Promise<Tag> {
+    const hasTag = await this.tagRepo.findOne({ where: { name: dto.name } });
+    if (hasTag) return hasTag;
+
+    return super.createOne(req, dto);
+  }
+
+  //
+  //
 
   async syncTagsToDictFile(): Promise<SyncTagsToFileObject> {
     if (!fs.existsSync(dictConfig.TAGS_DICT_PATH)) {

@@ -36,3 +36,4 @@ export { RefreshflatPermissions } from './RefreshflatPermissions/RefreshflatPerm
 export { TableColumnDeleteButton } from './TableColumnDeleteButton/TableColumnDeleteButton';
 export { TableColumnStatusSwitch } from './TableColumnStatusSwitch/TableColumnStatusSwitch';
 export { TagSearchBox } from './TagSearchBox/TagSearchBox';
+export { SelectTagId } from './SelectTagId/SelectTagId';

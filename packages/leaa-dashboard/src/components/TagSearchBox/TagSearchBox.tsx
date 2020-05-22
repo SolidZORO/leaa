@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useRef, forwardRef } from 'react';
+import React, { useState, useEffect, forwardRef, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import cx from 'classnames';
 import _ from 'lodash';
-import { AutoComplete, Input } from 'antd';
+import { AutoComplete } from 'antd';
 import { AutoCompleteProps } from 'antd/es/auto-complete';
-import { LoadingOutlined } from '@ant-design/icons';
+import { CreateQueryParams } from '@nestjsx/crud-request';
 
 import { Tag as TagEntry } from '@leaa/common/src/entrys';
 import { ajax, errorMsg } from '@leaa/dashboard/src/utils';
@@ -16,13 +16,11 @@ import style from './style.module.less';
 interface IProps extends AutoCompleteProps {
   className?: string;
   useOnBlur?: boolean;
-  enterCreateTag?: boolean;
   value?: string;
   autoFocus?: boolean;
   onSelectTagCallback?: (tag: TagEntry) => void;
-  onEnterCallback?: (tag?: string) => void;
   onChangeTagNameCallback?: (tag?: string) => void;
-  placeholder?: string;
+  selectedTagsSize?: number;
 }
 
 const DEBOUNCE_MS = 300;
@@ -40,78 +38,60 @@ export const TagSearchBox = forwardRef((props: IProps, ref: React.Ref<any>) => {
     setOptionalTags([]);
   };
 
-  const queryTags = useRef(
-    _.debounce((v: string) => {
-      setLoading(true);
-      setOptionalTags([]);
+  const onFetchTags = (v?: string) => {
+    setLoading(true);
+    setOptionalTags([]);
 
-      console.log(v);
+    ajax
+      .get(`${envConfig.API_URL}/tags`, {
+        params: {
+          s: { $or: [{ name: { $cont: v } }] },
+          limit: 30,
+        } as CreateQueryParams,
+      })
+      .then((res: IHttpRes<ICrudListRes<TagEntry>>) => {
+        if (res.data?.data?.data && !_.isEmpty(res.data.data.data)) {
+          return setOptionalTags(res.data?.data?.data as TagEntry[]);
+        }
 
-      ajax
-        .get(`${envConfig.API_URL}/tags`, {
-          params: {
-            s: {
-              $or: [{ name: { $cont: v } }],
-            },
-          },
-        })
-        .then((res: IHttpRes<ICrudListRes<TagEntry>>) => {
-          setOptionalTags(res.data?.data?.data as TagEntry[]);
-        })
-        .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
-        .finally(() => setLoading(false));
-    }, DEBOUNCE_MS),
+        return undefined;
+      })
+      .catch((err: IHttpError) => {
+        // console.log(err.response?.data?.message || err.message);
+        errorMsg(err.response?.data?.message || err.message);
+      })
+      .finally(() => setLoading(false));
+  };
+
+  const onSearch = useCallback(
+    _.debounce((v?: string) => onFetchTags(v), DEBOUNCE_MS),
+    [],
   );
 
-  // query tags
-  const onQueryTags = (tag: string) => queryTags.current(tag);
+  const onSelect = (tagName: string) => {
+    setInputKey('');
+    const tagObject = optionalTags.find((item) => item.name === tagName);
 
-  const onClear = () => {
-    init();
+    if (props.onSelectTagCallback && tagObject) props.onSelectTagCallback(tagObject);
   };
+
+  const onClear = () => init();
 
   const onChange = (v: any) => {
     setInputKey(v);
 
-    if (props.onChangeTagNameCallback) {
-      props.onChangeTagNameCallback(v);
-    }
-
-    if (typeof v === 'undefined') {
-      onClear();
-
-      if (props.onEnterCallback) {
-        props.onEnterCallback(undefined);
-      }
-    }
+    if (props.onChangeTagNameCallback) props.onChangeTagNameCallback(v);
+    if (typeof v === 'undefined') onClear();
   };
 
-  const onSearch = (v: string) => {
-    onQueryTags(v);
-  };
-
-  const onSelect = (tagName: any) => {
-    const tagObject = optionalTags.find((item) => item.name === tagName);
-
-    if (props.onSelectTagCallback && tagObject) {
-      props.onSelectTagCallback(tagObject);
-    }
-  };
-
-  // TIPS:
-  // It triggers both `onSelect` & `onEnter` when `onSelect` press Enter
-  // So, don't use `onSelect` in here
-  const onEnter = (e: any) => {
-    if (props.onEnterCallback) {
-      props.onEnterCallback(e.currentTarget.value);
-    }
-  };
+  useEffect(() => {
+    setInputKey('');
+  }, [props.selectedTagsSize]);
 
   useEffect(() => {
     return () => init();
   }, []);
 
-  // TIPS: onEnter & onSelect will be CONFLICT!
   return (
     <div className={cx(style['wrapper'], props.className)}>
       <div className={cx(style['container'])}>
@@ -128,15 +108,11 @@ export const TagSearchBox = forwardRef((props: IProps, ref: React.Ref<any>) => {
           options={optionalTags.map((tag) => ({
             label: tag.name,
             value: tag.name,
+            // @ts-ignore
+            need_create_one: tag?.need_create_one || 'n',
           }))}
           value={inputKey}
-        >
-          <Input
-            onPressEnter={onEnter}
-            suffix={loading ? <LoadingOutlined /> : <span />}
-            placeholder={props.placeholder || t('_comp:SelectTagId.searchTags')}
-          />
-        </AutoComplete>
+        />
       </div>
     </div>
   );
