@@ -66,10 +66,10 @@ export const SelectCategoryIdByTree = (props: IProps) => {
 
   const multipleSelectOption = props.multipleSelect
     ? {
-      treeCheckable: true,
-      // showCheckedStrategy: SHOW_PARENT,
-      // multiple: true,
-    }
+        treeCheckable: true,
+        // showCheckedStrategy: SHOW_PARENT,
+        // multiple: true,
+      }
     : {};
 
   return (
