@@ -19,7 +19,6 @@ export const RefreshflatPermissions = (props: IProps) => {
       .then((res: IHttpRes<User>) => {
         if (res.data?.data?.flatPermissions && res.data?.data.flatPermissions.length === 0) {
           removeAuth();
-
         }
 
         if (res.data?.data?.flatPermissions && res.data?.data.flatPermissions.length !== 0) {
