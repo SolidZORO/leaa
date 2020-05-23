@@ -63,13 +63,11 @@ export const TagInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
               </Form.Item>
             </Col>
 
-            {props.item && props.item.views && (
-              <Col xs={24} sm={4}>
-                <Form.Item label={t('_lang:views')}>
-                  <Input placeholder={t('_lang:views')} value={props.item.views} disabled />
-                </Form.Item>
-              </Col>
-            )}
+            <Col xs={24} sm={4}>
+              <Form.Item label={t('_lang:views')}>
+                <Input placeholder={t('_lang:views')} value={props.item?.views} disabled />
+              </Form.Item>
+            </Col>
           </Row>
 
           <Row gutter={16}>
