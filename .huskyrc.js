@@ -5,13 +5,15 @@ const tasks = (arr) => arr.join(' && ');
 
 module.exports = {
   hooks: {
-    //this is for linux ==> 'prepare-commit-msg': 'exec < /dev/tty && git cz --hook',
     // https://www.npmjs.com/package/commitizen
-    'prepare-commit-msg': 'git cz --hook || true HUSKY_DEBUG',
-    'commit-msg': 'commitlint -E HUSKY_GIT_PARAMS HUSKY_USE_YARN',
+    'commit-msg': 'commitlint -E HUSKY_GIT_PARAMS',
+
     'pre-commit': tasks([
-      'pretty-quick --staged', // https://github.com/azz/pretty-quick
-      'lint-staged', // https://github.com/okonet/lint-staged#configuration.
+      // https://github.com/azz/pretty-quick
+      'pretty-quick --staged',
+
+      // https://github.com/okonet/lint-staged#configuration.
+      'lint-staged',
     ]),
   },
 };

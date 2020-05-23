@@ -26,6 +26,7 @@
     "---------------------------------------------------------------------- PROD ----": "----",
     "build": "yarn clear && NODE_ENV=production cross-env webpack --config ./tools/webpack/webpack.config.js --progress --release",
     "---------------------------------------------------------------------- ALIAS ----": "----",
+    "commit": "git-cz",
     "u": "yarn upgrade-interactive --latest"
   },
   "dependencies": {

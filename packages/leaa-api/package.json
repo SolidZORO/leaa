@@ -35,6 +35,7 @@
     "build": "yarn clear && NODE_ENV=production tsc -b tsconfig.build.json && node gen-buildinfo.js",
     "start": "NODE_ENV=production node index.js",
     "---------------------------------------------------------------------- ALIAS ----": "----",
+    "commit": "git-cz",
     "u": "yarn upgrade-interactive --latest"
   },
   "dependencies": {
