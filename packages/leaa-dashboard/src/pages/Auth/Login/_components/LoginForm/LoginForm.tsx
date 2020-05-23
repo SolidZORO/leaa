@@ -3,11 +3,11 @@ import React, { useEffect, forwardRef, useImperativeHandle } from 'react';
 import { Col, Form, Input, Row, Checkbox } from 'antd';
 
 import { useTranslation } from 'react-i18next';
-import { useQuery } from '@apollo/react-hooks';
+// import { useQuery } from '@apollo/react-hooks';
 
-import { GET_GUEST } from '@leaa/dashboard/src/graphqls';
+// import { GET_GUEST } from '@leaa/dashboard/src/graphqls';
 import { LoginAccount } from '@leaa/common/src/dtos/demo';
-import { Verification } from '@leaa/common/src/entrys';
+// import { Verification } from '@leaa/common/src/entrys';
 import { getGuestToken, setGuestToken } from '@leaa/dashboard/src/utils';
 
 import style from './style.module.less';

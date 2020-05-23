@@ -1,4 +1,4 @@
-/* eslint-disable max-len */
+/* eslint-disable no-underscore-dangle, max-len */
 const path = require('path');
 
 const WPCONST = {};
@@ -9,8 +9,10 @@ if (WPCONST.IS_ANALYZER) {
 }
 
 WPCONST.__DEV__ = !process.argv.includes('--release');
+WPCONST.__PROD__ = process.argv.includes('--release');
 WPCONST.IS_SERVER = process.argv.includes('--server');
 WPCONST.IS_VERBOSE = process.argv.includes('--verbose');
+WPCONST.IS_SMP = process.argv.includes('--smp');
 WPCONST.IS_ANALYZER =
   process.argv.includes('--analyze') ||
   process.argv.includes('--analyse') ||

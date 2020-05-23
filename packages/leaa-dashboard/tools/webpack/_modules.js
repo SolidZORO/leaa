@@ -7,10 +7,13 @@ const { WPCONST } = require('./_const');
 const antdModifyVars = lessToJS(fs.readFileSync(`${WPCONST.SRC_DIR}/styles/variables.less`, 'utf8'));
 
 const modules = {
-  strictExportPresence: false,
+  // strictExportPresence: false,
+  strictExportPresence: true,
 };
 
 modules.rules = [
+  // Disable require.ensure as it's not a standard language feature.
+  { parser: { requireEnsure: false } },
   {
     test: WPCONST.REGX_TS,
     include: WPCONST.SRC_DIR,

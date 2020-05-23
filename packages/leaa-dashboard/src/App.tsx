@@ -29,6 +29,8 @@ export const App = (): JSX.Element => {
     setLocale(getLocale());
   });
 
+  // return <p>NULL-MIN-TEST</p>;
+
   return (
     <ErrorBoundary>
       <HelmetProvider>

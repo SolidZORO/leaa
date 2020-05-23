@@ -6,7 +6,9 @@ import { RequestQueryBuilder } from '@nestjsx/crud-request';
 import { DEFAULT_QUERY } from '@leaa/dashboard/src/constants';
 import { ICrudListQueryParams } from '@leaa/dashboard/src/interfaces';
 import { SCondition } from '@nestjsx/crud-request/lib/types';
+
 import { errorMsg } from '@leaa/dashboard/src/utils/msg.util';
+import { getUrlPath } from '@leaa/dashboard/src/utils/url.util';
 
 export function transCrudQueryToCrudState(crudQuery: ICrudListQueryParams | any): ICrudListQueryParams {
   if (JSON.stringify(crudQuery) === '{}') return crudQuery;
@@ -64,12 +66,6 @@ interface ISetCrudQueryToUrl {
   window: Window;
   query: ICrudListQueryParams | undefined;
   replace?: boolean;
-}
-
-export function getUrlPath(w?: Window): string {
-  const win = w || window;
-
-  return `${win.location.origin}${win.location.pathname}`;
 }
 
 export function setCrudQueryToUrl({ window, query, replace }: ISetCrudQueryToUrl): string {

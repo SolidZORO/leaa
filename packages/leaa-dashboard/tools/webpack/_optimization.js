@@ -1,11 +1,13 @@
+/* eslint-disable no-underscore-dangle */
 const TerserPlugin = require('terser-webpack-plugin');
+const safePostCssParser = require('postcss-safe-parser');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 const { WPCONST } = require('./_const');
 
 const optimization = {
   namedModules: true,
-  runtimeChunk: false,
+  runtimeChunk: true,
   noEmitOnErrors: true,
   // concatenateModules: true,
   //
@@ -16,13 +18,14 @@ const optimization = {
 };
 
 optimization.splitChunks = {
-  chunks: 'async',
+  chunks: 'all',
   minSize: 30000,
   // minChunks: 2,
   // maxAsyncRequests: 5,
   // maxInitialRequests: 3,
   // automaticNameDelimiter: '~',
   automaticNameMaxLength: 30,
+  // name: true,
   name: true,
   cacheGroups: {
     REACT: {
@@ -54,14 +57,6 @@ optimization.splitChunks = {
       test: /[\\/]node_modules[\\/](mobx|axios|i18next)/,
       chunks: 'initial',
       priority: 40,
-      reuseExistingChunk: true,
-      enforce: true,
-    },
-    APOLLO: {
-      name: '_apollo',
-      test: /[\\/]node_modules[\\/](apollo*|\\@apollo*|graphqls*)/,
-      chunks: 'initial',
-      priority: 30,
       reuseExistingChunk: true,
       enforce: true,
     },
@@ -109,29 +104,45 @@ if (WPCONST.__DEV__) {
       extractComments: false,
       sourceMap: false,
       terserOptions: {
-        ecma: 8,
-        warnings: false,
-        parse: {},
+        parse: {
+          // We want terser to parse ecma 8 code. However, we don't want it
+          // to apply any minification steps that turns valid ecma 5 code
+          // into invalid ecma 5 code. This is why the 'compress' and 'output'
+          // sections only apply transformations that are ecma 5 safe
+          // https://github.com/facebook/create-react-app/pull/4234
+          ecma: 8,
+        },
         compress: {
-          unused: true,
+          ecma: 5,
           warnings: false,
-          drop_debugger: true,
-          dead_code: true,
+          // Disabled because of an issue with Uglify breaking seemingly valid code:
+          // https://github.com/facebook/create-react-app/issues/2376
+          // Pending further investigation:
+          // https://github.com/mishoo/UglifyJS2/issues/2011
+          comparisons: false,
+          // Disabled because of an issue with Terser breaking valid code:
+          // https://github.com/facebook/create-react-app/issues/5250
+          // Pending further investigation:
+          // https://github.com/terser-js/terser/issues/120
+          inline: 2,
         },
-        mangle: true, // Note `mangle.properties` is `false` by default.
-        module: false,
-        output: {
-          comments: false,
+        mangle: {
+          safari10: true,
         },
-        toplevel: false,
-        nameCache: null,
-        ie8: false,
+        // Added for profiling in devtools
         keep_classnames: undefined,
         keep_fnames: false,
-        safari10: false,
+        output: {
+          ecma: 5,
+          comments: false,
+          // Turned on because emoji and regex is not minified properly using default
+          // https://github.com/facebook/create-react-app/issues/2488
+          ascii_only: true,
+        },
       },
     }),
     new OptimizeCSSAssetsPlugin({
+      parser: safePostCssParser,
       assetNameRegExp: /\.css\.*(?!.*map)/g,
       cssProcessorOptions: {
         reduceIdents: false, // https://github.com/ben-eb/cssnano/issues/247
@@ -139,6 +150,9 @@ if (WPCONST.__DEV__) {
         discardComments: { removeAll: true },
         safe: true,
         autoprefixer: { disable: true },
+      },
+      cssProcessorPluginOptions: {
+        preset: ['default', { minifyFontValues: { removeQuotes: false } }],
       },
       canPrint: true,
     }),

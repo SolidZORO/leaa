@@ -309,7 +309,7 @@ export const masterRoutes: IRouteItem[] = [
         LazyComponent: React.lazy(() =>
           import(/* webpackChunkName: 'ActionList' */ '../pages/Action/ActionList/ActionList'),
         ),
-        canCreate: true,
+        // canCreate: true,
         exact: true,
       },
       {

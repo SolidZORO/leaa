@@ -1,15 +1,18 @@
 import _ from 'lodash';
 import qs from 'qs';
 import animateScrollTo from 'animated-scroll-to';
-import { QuerySortArr, QuerySort, RequestQueryBuilder } from '@nestjsx/crud-request';
+import { QuerySortArr, QuerySort } from '@nestjsx/crud-request';
 import { PaginationProps } from 'antd/es/pagination';
 import { SortOrder, SorterResult } from 'antd/es/table/interface';
 
-import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE, DEFAULT_QUERY } from '@leaa/dashboard/src/constants';
-import { ITablePagination, ICrudListQueryParams } from '@leaa/dashboard/src/interfaces';
-import { SCondition } from '@nestjsx/crud-request/lib/types';
-import { errorMsg } from '@leaa/dashboard/src/utils/msg.util';
-import mockLink from 'apollo-link/lib/test-utils/mockLink';
+import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from '@leaa/dashboard/src/constants';
+import { ITablePagination } from '@leaa/dashboard/src/interfaces';
+
+export function getUrlPath(w?: Window): string {
+  const win = w || window;
+
+  return `${win.location.origin}${win.location.pathname}`;
+}
 
 /**
  * /articles/123    -> articles-item

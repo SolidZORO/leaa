@@ -2,13 +2,18 @@
 <html className="no-js" lang="zh-CN">
 <head>
   <meta charset="utf-8">
-  <title><%= htmlWebpackPlugin.options.title %></title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="renderer" content="webkit">
   <meta name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <!--
+  manifest.json provides metadata used when your web app is installed on a
+  user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+  -->
+  <link rel="manifest" href="<%= htmlWebpackPlugin.options.manifest %>" />
+  <title><%= htmlWebpackPlugin.options.title %></title>
 </head>
 <body>
 <div id="app"></div>

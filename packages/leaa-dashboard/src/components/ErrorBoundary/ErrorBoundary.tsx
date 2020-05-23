@@ -1,8 +1,9 @@
 import React from 'react';
-import queryString from 'query-string';
+import qs from 'qs';
 import { Button } from 'antd';
 
-import { mergeUrlParamToUrlQuery } from '@leaa/dashboard/src/utils/url.util';
+// import { mergeUrlParamToUrlQuery } from '@leaa/dashboard/src/utils/url.util';
+import { getUrlPath } from '@leaa/dashboard/src/utils/url.util';
 import { Rcon } from '@leaa/dashboard/src/components/Rcon/Rcon';
 
 import style from './style.module.less';
@@ -31,17 +32,21 @@ export class ErrorBoundary extends React.Component<IProps, IState> {
 
   componentDidCatch(err: Error, info: {}) {
     // TIPS: Many times DidCatch is because the JS file can't be retrieved, so refresh it first.
-    const qs = queryString.parse(window.location.search);
+    // const qsQuery = qs.parse(window.location.search, { ignoreQueryPrefix: true });
 
-    if (!qs[CATCH_HAS_REFRESH_URL_PARAM]) {
-      window.location.href = mergeUrlParamToUrlQuery({
-        window,
-        params: { [CATCH_HAS_REFRESH_URL_PARAM]: 1 },
-        replace: false,
-      });
+    const urlPath = getUrlPath(window);
+    const urlQuery = qs.parse(window.location.search, { ignoreQueryPrefix: true });
+    const nextQueryStr = qs.stringify({ ...urlQuery, [CATCH_HAS_REFRESH_URL_PARAM]: 1 }, { addQueryPrefix: true });
+    const nextUrl = `${urlPath}${nextQueryStr}`;
+
+    console.log('💥 NEXT-URL', nextUrl);
+
+    if (!urlQuery[CATCH_HAS_REFRESH_URL_PARAM]) {
+      console.log('💥 RELOAD');
+      window.history.pushState(null, '', nextUrl);
     }
 
-    console.log('---- ALL-STACK ----', info, err);
+    // console.log('---- ALL-STACK ----', info, err);
 
     this.setState({ errorInfo: err.message });
   }

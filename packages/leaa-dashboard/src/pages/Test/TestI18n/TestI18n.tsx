@@ -2,13 +2,11 @@ import moment from 'moment';
 import React, { useEffect } from 'react';
 import { DatePicker, Button } from 'antd';
 import { useTranslation } from 'react-i18next';
-import { useLazyQuery } from '@apollo/react-hooks';
 
 import { IPage } from '@leaa/dashboard/src/interfaces';
 import { HtmlMeta } from '@leaa/dashboard/src/components';
 
 import gql from 'graphql-tag';
-import { msg } from '@leaa/dashboard/src/utils';
 
 export const GET_TESTI18N = gql`
   query($x: Int) {
@@ -18,18 +16,6 @@ export const GET_TESTI18N = gql`
 
 export default (props: IPage) => {
   const { t } = useTranslation();
-
-  const [getTestI18nQuery, getTestI18nResult] = useLazyQuery<{ testI18n: string }, { x: number }>(GET_TESTI18N, {
-    fetchPolicy: 'network-only',
-  });
-
-  useEffect(() => {
-    if (getTestI18nResult.data?.testI18n) {
-      msg(getTestI18nResult.data?.testI18n);
-    }
-  }, [getTestI18nResult.data]);
-
-  // console.log(getTestI18nQuery);
 
   return (
     <>

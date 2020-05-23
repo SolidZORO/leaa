@@ -19,6 +19,7 @@ module.exports = {
   ],
   globals: {
     __DEV__: true,
+    __PROD__: true,
     status: false,
   },
   env: {

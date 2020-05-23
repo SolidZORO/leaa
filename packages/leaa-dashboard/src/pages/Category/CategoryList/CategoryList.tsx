@@ -42,7 +42,7 @@ export default (props: IPage) => {
     <PageCard route={props.route} title="@LIST" className={style['wapper']} loading={treeLoading}>
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
-      <div style={{ height: '70vh' }}>
+      <div style={{ height: '100%', overflow: 'auto' }}>
         <SortableTree
           className={style['tree-wrapper']}
           isVirtualized={false}
@@ -53,7 +53,7 @@ export default (props: IPage) => {
             className: style['tree-item'],
             title: [
               <div className={style['tree-item-title']} key={`${node.id}`}>
-                {node.id ? <Link to={`/categories/${node.id}`}>{node.title}</Link> : node.title}
+                {node.id && node.id !== '----' ? <Link to={`/categories/${node.id}`}>{node.title}</Link> : node.title}
               </div>,
             ],
             subtitle: [
