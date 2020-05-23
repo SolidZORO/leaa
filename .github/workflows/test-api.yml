@@ -1,6 +1,11 @@
-name: TEST
+name: Test Api
 
-on: [push]
+on:
+  push:
+    branches:
+      - master
+      - restful
+      - graphql
 
 jobs:
   test:
@@ -8,7 +13,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        node_version: [10]
+        node_version: [12]
         os: [ubuntu-latest]
 
     steps:

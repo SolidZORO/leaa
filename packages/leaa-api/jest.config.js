@@ -16,9 +16,10 @@ module.exports = {
   moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>/' }),
   modulePathIgnorePatterns: ['<rootDir>/.cache/', '<rootDir>/_build/', '<rootDir>/_dist/', '<rootDir>/_deploy/'],
   //
-  testRegex: '.*\\.test.(t|j)s$',
+  testRegex: '.*\\.(spec|test).(t|j)s$',
   collectCoverageFrom: [
-    'src/**/*.{js,jsx,tsx,ts}',
+    'test/**/*.{js,jsx,tsx,ts}',
+    // 'src/**/*.{js,jsx,tsx,ts}',
     '!**/node_modules/**',
     '!**/vendor/**',
     '!**/dist/**',
