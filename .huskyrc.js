@@ -5,10 +5,9 @@ module.exports = {
   // https://git-scm.com/docs/githooks
   hooks: {
     // https://www.npmjs.com/package/commitizen
-    'prepare-commit-msg': 'git cz --hook || true HUSKY_DEBUG',
+    // 'prepare-commit-msg': 'git cz --hook || true HUSKY_DEBUG',
     //this is for linux ==> 'prepare-commit-msg': 'exec < /dev/tty && git cz --hook',
-    'commit-msg': 'commitlint -E HUSKY_GIT_PARAMS HUSKY_USE_YARN',
-
+    'commit-msg': 'commitlint -E HUSKY_GIT_PARAMS',
     'pre-commit': tasks([
       //check nx before committing!!
       // uncommented for now

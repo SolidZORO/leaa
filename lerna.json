@@ -6,8 +6,12 @@
   "useWorkspaces": true,
   "command": {
     "publish": {
+      "allowBranch": "next",
+      "cdVersion": "prerelease",
       "conventionalCommits": true,
-      "message": "chore(release): publish"
+      "gitRemote": "upstream",
+      "preid": "alpha",
+      "message": "chore(release): publish %s"
     }
   },
   "ignoreChanges": ["**/__(fixtures|tests|specs)__/**", "**/*.(md|txt)"]
