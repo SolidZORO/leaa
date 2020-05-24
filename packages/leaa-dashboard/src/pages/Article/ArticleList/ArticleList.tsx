@@ -36,7 +36,6 @@ export default (props: IPage) => {
   });
 
   const [listLoading, setListLoading] = useState(false);
-
   const [list, setList] = useState<ICrudListRes<Article>>();
 
   const onFetchList = (params: ICrudListQueryParams) => {

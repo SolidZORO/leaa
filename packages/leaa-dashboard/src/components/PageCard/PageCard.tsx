@@ -53,7 +53,7 @@ export const PageCard = (props: IProps) => {
         </div>
       );
 
-    return null;
+    return <div className={style['title']}>{title}</div>;
   };
 
   return (

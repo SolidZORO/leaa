@@ -261,14 +261,14 @@ export const rolesToUserSeed = [
 ];
 
 interface ICreateCategoryInput extends CreateCategoryInput {
-  seedParentSlug: string;
+  seedParentSlug?: string;
 }
 
 // prettier-ignore
 export const categorySeed: ICreateCategoryInput[] = [
-  {  name: 'Articles', description: '文章分类', slug: 'articles', seedParentSlug: '' },
-  {  name: 'Products', description: '商品分类', slug: 'products', seedParentSlug: '' },
-  {  name: 'Brands', description: '品牌分类', slug: 'brands', seedParentSlug: '' },
+  {  name: 'Articles', description: '文章分类', slug: 'articles' },
+  {  name: 'Products', description: '商品分类', slug: 'products' },
+  {  name: 'Brands', description: '品牌分类', slug: 'brands' },
   //
   {  name: 'Frontend', slug: 'frontend', seedParentSlug: 'articles' },
   {  name: 'Backend', slug: 'backend', seedParentSlug: 'articles' },

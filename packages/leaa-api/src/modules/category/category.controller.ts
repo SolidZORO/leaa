@@ -40,14 +40,14 @@ export class CategoryController implements CrudController<Category> {
   @Override('createOneBase')
   @UseGuards(JwtGuard, PermissionsGuard)
   @Permissions('category.item-create')
-  createOne(@ParsedRequest() req: CrudRequest, @ParsedBody() dto: Category & CreateCategoryInput): Promise<Category> {
+  createOne(@ParsedRequest() req: CrudRequest, @ParsedBody() dto: Category | CreateCategoryInput): Promise<Category> {
     return this.service.createOne(req, dto);
   }
 
   @Override('updateOneBase')
   @UseGuards(JwtGuard, PermissionsGuard)
   @Permissions('category.item-update')
-  updateOne(@ParsedRequest() req: CrudRequest, @ParsedBody() dto: Category & UpdateCategoryInput): Promise<Category> {
+  updateOne(@ParsedRequest() req: CrudRequest, @ParsedBody() dto: Category | UpdateCategoryInput): Promise<Category> {
     return this.service.updateOne(req, dto);
   }
 

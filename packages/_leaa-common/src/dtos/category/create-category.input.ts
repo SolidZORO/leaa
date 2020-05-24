@@ -8,7 +8,7 @@ export class CreateCategoryInput {
   @IsNotEmpty()
   slug!: string;
 
-  parent_id?: string;
+  parent_id?: string | null;
 
   description?: string;
 

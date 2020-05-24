@@ -1,25 +1,21 @@
 import { PrimaryGeneratedColumn, Column } from 'typeorm';
-import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { Exclude } from 'class-transformer';
 
-@ObjectType()
 export class Base {
   @PrimaryGeneratedColumn('uuid')
-  @Field(() => String)
   id!: string;
 
   //
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  @Field(() => Date)
   created_at!: Date;
 
   @Column({ type: 'timestamp', nullable: true, onUpdate: 'CURRENT_TIMESTAMP' })
-  @Field(() => Date, { nullable: true })
   updated_at?: Date;
 
   // SOFT DELETE
   // https://github.com/typeorm/typeorm/issues/534
+  @Exclude({ toPlainOnly: true })
   @Column({ type: 'timestamp', nullable: true })
-  @Field(() => Date, { nullable: true })
   deleted_at?: Date;
 }

@@ -1,6 +1,5 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable no-await-in-loop */
-
 import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { PermissionService } from '@leaa/api/src/modules/permission/permission.service';
@@ -68,7 +67,7 @@ export class SeedService {
 
   async insertUsers() {
     for (const i of usersSeed) {
-      const item = await this.userService.createOne(req, i);
+      const item = await this.userService.createOne(req, i as any);
 
       console.log(item);
     }
@@ -76,7 +75,7 @@ export class SeedService {
 
   async insertRandomUsers() {
     for (const i of randomSersSeed) {
-      await this.userService.createOne(req, i);
+      await this.userService.createOne(req, i as any);
     }
   }
 
@@ -114,17 +113,21 @@ export class SeedService {
 
   async insertCategory() {
     for (const i of categorySeed) {
-      let parentId = '';
+      let parent = null;
+      // eslint-disable-next-line @typescript-eslint/camelcase
+      let parent_id = null;
 
       if (i.seedParentSlug) {
-        const category = await this.categoryService.getOneBySlug(i.seedParentSlug);
-        parentId = category?.id || '';
+        parent = await this.categoryService.getOneBySlug(i?.seedParentSlug);
+        // eslint-disable-next-line @typescript-eslint/camelcase
+        parent_id = parent?.id;
+        await console.log('insertCategory >>>>>>>>>>>>>>', i.seedParentSlug, parent);
       }
 
-      // const parent_id = await this.categoryService.createCategory(i);
       const item = await this.categoryService.createOne(req, {
         ...i,
-        parent_id: parentId,
+        parent,
+        parent_id,
       });
 
       console.log(item);
@@ -133,7 +136,7 @@ export class SeedService {
 
   async insertArticle() {
     for (const i of articleSeed) {
-      const item = await this.articleService.createOne(req, i);
+      const item = await this.articleService.createOne(req, i as any);
 
       console.log(item);
     }
@@ -157,7 +160,7 @@ export class SeedService {
 
   async insertSetting() {
     for (const i of settingSeed) {
-      const item = await this.settingService.createSetting(i);
+      const item = await this.settingService.createOne(req, i as any);
 
       console.log(item);
     }

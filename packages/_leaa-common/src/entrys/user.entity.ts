@@ -49,12 +49,8 @@ export class User extends Base {
 
   // Virtual Field (not in DB)
   permissions?: Permission[];
-
   flatPermissions?: string[];
-
   authToken?: string;
-
   authExpiresIn?: number;
-
   avatar?: Attachment;
 }

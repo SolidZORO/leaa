@@ -16,7 +16,7 @@ export class CategoryService extends TypeOrmCrudService<Category> {
     super(categoryRepo);
   }
 
-  async createOne(req: CrudRequest, dto: Category & CreateCategoryInput): Promise<Category> {
+  async createOne(req: CrudRequest, dto: Category | CreateCategoryInput): Promise<Category> {
     const nextDto = {
       ...dto,
       parent: await this.formatParentId(dto.parent_id),
@@ -25,7 +25,7 @@ export class CategoryService extends TypeOrmCrudService<Category> {
     return super.createOne(req, nextDto);
   }
 
-  async updateOne(req: CrudRequest, dto: Category & UpdateCategoryInput): Promise<Category> {
+  async updateOne(req: CrudRequest, dto: Category | UpdateCategoryInput): Promise<Category> {
     const nextDto = {
       ...dto,
       parent: await this.formatParentId(dto.parent_id),

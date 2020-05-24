@@ -108,7 +108,7 @@ export const SettingListForm = forwardRef((props: IProps, ref: React.Ref<any>) =
     }
   };
 
-  const onUpdateForm = (items?: Setting[]) => {
+  const onRefreshForm = (items?: Setting[]) => {
     if (!items) return undefined;
 
     return items.forEach((item) => {
@@ -118,10 +118,7 @@ export const SettingListForm = forwardRef((props: IProps, ref: React.Ref<any>) =
     });
   };
 
-  useEffect(() => {
-    onUpdateForm(props.items);
-  }, [props.items]);
-
+  useEffect(() => onRefreshForm(props.items), [form, props.items]);
   useImperativeHandle(ref, () => ({ form, onValidateForm }));
 
   return (

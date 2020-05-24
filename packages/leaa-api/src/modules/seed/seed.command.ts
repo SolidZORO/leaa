@@ -161,6 +161,8 @@ import { LoggerService } from '@leaa/api/src/modules/logger/logger.service';
   //
   // for Test
   if (process.argv.includes('--test')) {
-    await insertAllAboutAuth();
+    // clear
+    // await getRepository('Category').clear();
+    await seedService.insertCategory();
   }
 })();
