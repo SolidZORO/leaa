@@ -33,7 +33,7 @@ export const TableColumnDeleteButton = (props: IProps) => {
     setLoading(true);
 
     ajax
-      .delete(`${envConfig.API_URL}/${props.apiPath}/${props.id}`)
+      .delete(`${envConfig.API_URL}/${envConfig.API_VERSION}/${props.apiPath}/${props.id}`)
       .then((res: IHttpRes<{ id: number | string }>) => {
         msg(t('_lang:deletedSuccessfully', { id: res?.data?.data?.id }));
 

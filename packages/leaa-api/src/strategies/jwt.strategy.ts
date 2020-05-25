@@ -4,8 +4,8 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 import { JwtService } from '@nestjs/jwt';
 
 import { IJwtPayload } from '@leaa/common/src/interfaces';
-import { ConfigService } from '@leaa/api/src/modules/config/config.service';
-import { AuthService } from '@leaa/api/src/modules/auth/auth.service';
+import { ConfigService } from '@leaa/api/src/modules/v1/config/config.service';
+import { AuthService } from '@leaa/api/src/modules/v1/auth/auth.service';
 import { checkAvailableUser } from '@leaa/api/src/utils';
 
 @Injectable()

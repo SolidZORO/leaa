@@ -42,7 +42,7 @@ export default (props: IPage) => {
     setListLoading(true);
 
     ajax
-      .get(`${envConfig.API_URL}/${API_PATH}`, { params: genCrudRequestQuery(params) })
+      .get(`${envConfig.API_URL}/${envConfig.API_VERSION}/${API_PATH}`, { params: genCrudRequestQuery(params) })
       .then((res: IHttpRes<ICrudListRes<Role>>) => {
         setList(res.data.data);
 
@@ -54,7 +54,7 @@ export default (props: IPage) => {
 
   const onFetchpPrmissions = () => {
     ajax
-      .get(`${envConfig.API_URL}/permissions`)
+      .get(`${envConfig.API_URL}/${envConfig.API_VERSION}/permissions`)
       .then((res: IHttpRes<ICrudListRes<Permission>>) => {
         setPrmissions(res.data.data?.data);
       })

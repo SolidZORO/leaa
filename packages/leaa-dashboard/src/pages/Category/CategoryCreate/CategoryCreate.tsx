@@ -36,7 +36,7 @@ export default (props: IPage) => {
     setSubmitLoading(true);
 
     ajax
-      .post(`${envConfig.API_URL}/${API_PATH}`, data)
+      .post(`${envConfig.API_URL}/${envConfig.API_VERSION}/${API_PATH}`, data)
       .then((res: IHttpRes<Category>) => {
         msg(t('_lang:createdSuccessfully'));
 

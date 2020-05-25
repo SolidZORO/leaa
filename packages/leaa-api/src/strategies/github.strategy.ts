@@ -3,8 +3,8 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Strategy, Profile } from 'passport-github';
 
 import { IRequest } from '@leaa/api/src/interfaces';
-import { ConfigService } from '@leaa/api/src/modules/config/config.service';
-import { AuthGithubService } from '@leaa/api/src/modules/auth/auth-github.service';
+import { ConfigService } from '@leaa/api/src/modules/v1/config/config.service';
+import { AuthGithubService } from '@leaa/api/src/modules/v1/auth/auth-github.service';
 
 @Injectable()
 export class GithubStrategy extends PassportStrategy(Strategy, 'github') {

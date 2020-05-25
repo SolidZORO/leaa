@@ -17,8 +17,8 @@
 </head>
 <body>
 <div id="app"></div>
-<script id="__ENV_DATA__" type="application/json"><%= htmlWebpackPlugin.options.env %></script>
-<script id="__BUILD_DATA__" type="application/json"><%= htmlWebpackPlugin.options.build %></script>
-<%= htmlWebpackPlugin.options.analytics_code %>
+<script id="__ENV_DATA__" type="application/json"><%= htmlWebpackPlugin.options.__ENV_DATA__ %></script>
+<script id="__BUILD_DATA__" type="application/json"><%= htmlWebpackPlugin.options.__BUILD_DATA__ %></script>
+<%= htmlWebpackPlugin.options.__ANALYTICS_CODE__ %>
 </body>
 </html>

@@ -48,7 +48,7 @@ export const SelectTagId = forwardRef((props: IProps, ref: React.Ref<any>) => {
     if (!name) return;
 
     ajax
-      .post(`${envConfig.API_URL}/tags`, { name })
+      .post(`${envConfig.API_URL}/${envConfig.API_VERSION}/tags`, { name })
       .then((res: IHttpRes<TagEntry>) => {
         console.log('onCreateTag Done', res.data?.data);
 

@@ -1,0 +1,68 @@
+import { Controller, Get, HttpCode, Body, UseInterceptors, Post, UploadedFile, UseGuards } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
+
+import { JwtGuard, PermissionsGuard } from '@leaa/api/src/guards';
+import { AttachmentService } from '@leaa/api/src/modules/v1/attachment/attachment.service';
+import { SaveInOssService } from '@leaa/api/src/modules/v1/attachment/save-in-oss.service';
+import { ICraeteAttachmentByOssCallback, IAttachmentParams } from '@leaa/common/src/interfaces';
+import { Crud, CrudController } from '@nestjsx/crud';
+import { Attachment } from '@leaa/common/src/entrys';
+import { Permissions } from '@leaa/api/src/decorators';
+import { CreateAttachmentInput, UpdateAttachmentInput } from '@leaa/common/src/dtos/attachment';
+
+@Crud({
+  model: { type: Attachment },
+  params: {
+    id: {
+      field: 'id',
+      type: 'uuid',
+      primary: true,
+    },
+  },
+  query: {
+    maxLimit: 1000,
+    alwaysPaginate: true,
+  },
+  routes: {
+    // getManyBase: { decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('attachment.list-read')] },
+    // getOneBase: { decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('attachment.item-read')] },
+    // createOneBase: { decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('attachment.item-create')] },
+    updateOneBase: { decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('attachment.item-update')] },
+    deleteOneBase: {
+      decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('attachment.item-delete')],
+      returnDeleted: true,
+    },
+  },
+  dto: {
+    create: CreateAttachmentInput,
+    update: UpdateAttachmentInput,
+    replace: UpdateAttachmentInput,
+  },
+})
+@Controller('/v1/attachments')
+export class AttachmentController implements CrudController<Attachment> {
+  constructor(public readonly service: AttachmentService, private readonly saveInOssService: SaveInOssService) {}
+
+  // @Get('')
+  // async done() {
+  //   return 'GET DONE!';
+  // }
+
+  // @Get('/signature')
+  // async getSignature() {
+  //   return this.service.getSignature();
+  // }
+
+  // @HttpCode(200)
+  // @Post('/upload')
+  // @UseGuards(JwtGuard)
+  // @UseInterceptors(FileInterceptor('file'))
+  // async uploadFile(@Body() body: IAttachmentParams, @UploadedFile() file: Express.Multer.File) {
+  //   return this.service.createAttachmentByLocal(body, file);
+  // }
+  //
+  // @Post('/oss/callback')
+  // async ossCallback(@Body() request: ICraeteAttachmentByOssCallback) {
+  //   return this.saveInOssService.ossCallback(request);
+  // }
+}

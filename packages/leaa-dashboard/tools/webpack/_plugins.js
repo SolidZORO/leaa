@@ -1,6 +1,5 @@
 /* eslint-disable no-underscore-dangle, max-len */
 const _ = require('lodash');
-const dotenv = require('dotenv');
 const moment = require('moment');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -14,25 +13,31 @@ const InlineChunkHtmlPlugin = require('react-dev-utils/InlineChunkHtmlPlugin');
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
 // const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 
+const { showEnvInfo, getEnvInfo } = require('./_fn');
 const { WPCONST } = require('./_const');
 const { analyzer } = require('./_analyzer');
 const { provide } = require('./_provide');
 
-const envPath = `${WPCONST.ROOT_DIR}/${WPCONST.__DEV__ ? '.env' : '.env.production'}`;
-const env = dotenv.config({ path: envPath }).parsed;
+const env = getEnvInfo();
+
+class ShowEnvInfoWebpackPlugin {
+  apply(compiler) {
+    compiler.hooks.done.tap('ShowEnvInfoWebpackPlugin', () => showEnvInfo());
+  }
+}
 
 // HtmlWebpackPlugin
 const htmlWebpackPluginOption = {
-  title: `${process.env.SITE_NAME || '-'}`,
-  env: Buffer.from(JSON.stringify(_.pick(env, Object.keys(env)))).toString('base64'),
-  analytics_code: (!WPCONST.__DEV__ && env && env.ANALYTICS_CODE && `<script>${env.ANALYTICS_CODE}</script>`) || '',
-  build: Buffer.from(
+  __ENV_DATA__: Buffer.from(JSON.stringify(_.pick(env, Object.keys(env)))).toString('base64'),
+  __BUILD_DATA__: Buffer.from(
     JSON.stringify({
       BUILDTIME: moment().format('YYYYMMDD-HHmmss'),
       VERSION: `v${process.env.npm_package_version}`,
       MODE: WPCONST.MODE,
     }),
   ).toString('base64'),
+  __ANALYTICS_CODE__: (!WPCONST.__DEV__ && env && env.ANALYTICS_CODE && `<script>${env.ANALYTICS_CODE}</script>`) || '',
+  title: `${env.SITE_NAME || '-'}`,
   manifest: `${WPCONST.CDN_DIR_PATH}/manifest.json`,
   filename: `${WPCONST.BUILD_PUBLIC_DIR}/index.html`,
   template: `${WPCONST.VIEWS_DIR}/index.ejs`,
@@ -84,6 +89,7 @@ const plugins = [
   new LodashModuleReplacementPlugin(lodashModuleReplacementPluginOption),
   // new CaseSensitivePathsPlugin(),
   new ManifestPlugin(),
+  new ShowEnvInfoWebpackPlugin(),
 
   //
   // DEV ONLY

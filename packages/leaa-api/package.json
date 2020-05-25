@@ -27,7 +27,7 @@
     "---------------------------------------------------------------------- DEV ----": "----",
     "dev-tsnodedev": "NODE_ENV=development ts-node-dev --respawn --transpileOnly --ignore-watch node_modules -r tsconfig-paths/register ./src/main.ts",
     "dev": "NODE_ENV=development yarn dev-tsnodedev",
-    "seed": "NODE_ENV=development ts-node-dev --respawn --transpileOnly -r tsconfig-paths/register src/modules/seed/seed.command.ts",
+    "seed": "NODE_ENV=development ts-node-dev --respawn --transpileOnly -r tsconfig-paths/register src/modules/v1/seed/seed.command.ts",
     "clear": "rimraf _build",
     "---------------------------------------------------------------------- PROD ----": "----",
     "prod": "NODE_ENV=production ts-node-dev --respawn --transpileOnly -r tsconfig-paths/register ./src/main.ts",
@@ -41,13 +41,13 @@
   "dependencies": {
     "@apollo/react-hooks": "3.1.5",
     "@apollo/react-ssr": "^3.1.5",
-    "@nestjs/common": "^7.0.13",
-    "@nestjs/core": "^7.0.13",
+    "@nestjs/common": "^7.1.0",
+    "@nestjs/core": "^7.1.0",
     "@nestjs/graphql": "^7.3.9",
     "@nestjs/jwt": "^7.0.0",
     "@nestjs/passport": "^7.0.0",
-    "@nestjs/platform-express": "^7.0.13",
-    "@nestjs/testing": "^7.0.13",
+    "@nestjs/platform-express": "^7.1.0",
+    "@nestjs/testing": "^7.1.0",
     "@nestjs/typeorm": "^7.0.0",
     "@nestjsx/crud": "^4.6.2",
     "@nestjsx/crud-typeorm": "^4.6.2",
@@ -138,6 +138,7 @@
     "@types/stylelint": "^9.10.1",
     "@types/supertest": "^2.0.9",
     "@types/uuid": "^8.0.0",
-    "express-serve-static-core": "^0.1.1"
+    "express-serve-static-core": "^0.1.1",
+    "lerna": "^3.22.0"
   }
 }

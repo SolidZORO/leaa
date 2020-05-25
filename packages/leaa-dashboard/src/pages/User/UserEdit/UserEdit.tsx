@@ -44,7 +44,7 @@ export default (props: IPage) => {
     setItemLoading(true);
 
     ajax
-      .get(`${envConfig.API_URL}/${API_PATH}/${id}`)
+      .get(`${envConfig.API_URL}/${envConfig.API_VERSION}/${API_PATH}/${id}`)
       .then((res: IHttpRes<User>) => {
         setItem(res.data.data);
       })
@@ -56,7 +56,7 @@ export default (props: IPage) => {
     setRolesLoading(true);
 
     ajax
-      .get(`${envConfig.API_URL}/roles`)
+      .get(`${envConfig.API_URL}/${envConfig.API_VERSION}/roles`)
       .then((res: IHttpRes<ICrudListRes<Role>>) => {
         // console.log(res.data.data?.data);
         setRoles(res.data.data?.data);
@@ -82,7 +82,7 @@ export default (props: IPage) => {
     setSubmitLoading(true);
 
     ajax
-      .patch(`${envConfig.API_URL}/${API_PATH}/${id}`, data)
+      .patch(`${envConfig.API_URL}/${envConfig.API_VERSION}/${API_PATH}/${id}`, data)
       .then((res: IHttpRes<User>) => {
         setItem(res.data.data);
 

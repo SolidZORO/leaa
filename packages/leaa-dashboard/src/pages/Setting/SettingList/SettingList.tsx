@@ -90,7 +90,7 @@ export default (props: IPage) => {
     setListLoading(true);
 
     ajax
-      .get(`${envConfig.API_URL}/${API_PATH}`, { params: genCrudRequestQuery(params) })
+      .get(`${envConfig.API_URL}/${envConfig.API_VERSION}/${API_PATH}`, { params: genCrudRequestQuery(params) })
       .then((res: IHttpRes<ICrudListRes<Setting>>) => {
         setList(res.data.data?.data);
       })
@@ -109,7 +109,7 @@ export default (props: IPage) => {
     setCreateLoading(true);
 
     ajax
-      .post(`${envConfig.API_URL}/${API_PATH}`, data)
+      .post(`${envConfig.API_URL}/${envConfig.API_VERSION}/${API_PATH}`, data)
       .then((res: IHttpRes<Setting>) => {
         msg(t('_lang:createdSuccessfully'));
         //
@@ -132,7 +132,7 @@ export default (props: IPage) => {
     setUpdateLoading(true);
 
     return ajax
-      .patch(`${envConfig.API_URL}/${API_PATH}/${id}`, data)
+      .patch(`${envConfig.API_URL}/${envConfig.API_VERSION}/${API_PATH}/${id}`, data)
       .then((res: IHttpRes<{ id: number | string }>) => {
         msg(t('_lang:updatedSuccessfully', { id: res?.data?.data?.id }));
         //
@@ -153,7 +153,7 @@ export default (props: IPage) => {
     setBatchUpdatesLoading(true);
 
     return ajax
-      .post(`${envConfig.API_URL}/${API_PATH}/batch`, { settings: data })
+      .post(`${envConfig.API_URL}/${envConfig.API_VERSION}/${API_PATH}/batch`, { settings: data })
       .then((res: IHttpRes<{ id: number | string }>) => {
         msg(t('_lang:updatedSuccessfully'));
         //
@@ -173,7 +173,7 @@ export default (props: IPage) => {
     setDeleteLoading(true);
 
     return ajax
-      .delete(`${envConfig.API_URL}/${API_PATH}/${id}`)
+      .delete(`${envConfig.API_URL}/${envConfig.API_VERSION}/${API_PATH}/${id}`)
       .then((res: IHttpRes<{ id: number | string }>) => {
         msg(t('_lang:deletedSuccessfully', { id: res?.data?.data?.id }));
         //

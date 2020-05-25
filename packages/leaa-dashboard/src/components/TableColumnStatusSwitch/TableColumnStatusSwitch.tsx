@@ -30,7 +30,7 @@ export const TableColumnStatusSwitch = (props: IProps) => {
     setLoadin(true);
 
     ajax
-      .put(`${envConfig.API_URL}/${props.apiPath}/${props.id}`, { status: Number(v) })
+      .put(`${envConfig.API_URL}/${envConfig.API_VERSION}/${props.apiPath}/${props.id}`, { status: Number(v) })
       .then((res: IHttpRes<{ status: number }>) => {
         setStatus(Boolean(res.data.data?.status));
 

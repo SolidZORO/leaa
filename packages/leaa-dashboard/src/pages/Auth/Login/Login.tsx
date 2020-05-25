@@ -97,7 +97,7 @@ export default (props: IPage) => {
     setSubmitLoading(true);
 
     ajax
-      .post(`${envConfig.API_URL}/auth/login`, submitData)
+      .post(`${envConfig.API_URL}/${envConfig.API_VERSION}/auth/login`, submitData)
       .then((res: IHttpRes<User>) => {
         setLogin(res.data.data);
 

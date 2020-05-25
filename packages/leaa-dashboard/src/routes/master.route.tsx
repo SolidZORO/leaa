@@ -354,6 +354,19 @@ export const masterRoutes: IRouteItem[] = [
         ),
         exact: true,
       },
+      // ---- Attachment ----
+      {
+        name: 'Attachment',
+        namei18n: '_route:attachment',
+        permission: 'attachment.list-read',
+        path: '/attachments',
+        icon: 'ri-file-list-2-line',
+        LazyComponent: React.lazy(() =>
+          import(/* webpackChunkName: 'AttachmentList' */ '../pages/Attachment/AttachmentList/AttachmentList'),
+        ),
+        // canCreate: true,
+        exact: true,
+      },
     ],
   },
   //

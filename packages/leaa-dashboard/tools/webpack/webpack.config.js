@@ -10,7 +10,6 @@ const { resolve } = require('./_resolve');
 const { externals } = require('./_externals');
 const { devServer } = require('./_devServer');
 const { optimization } = require('./_optimization');
-const { showEnvInfo } = require('./_fn');
 
 // @see https://webpack.docschina.org/configuration/devtool/
 let webpackConfig = {
@@ -66,8 +65,6 @@ let webpackConfig = {
     child_process: 'empty',
   },
 };
-
-showEnvInfo();
 
 if (WPCONST.IS_SMP) {
   const smp = new SpeedMeasurePlugin();

@@ -1,7 +1,7 @@
 import { EventSubscriber, EntitySubscriberInterface, InsertEvent, RemoveEvent } from 'typeorm';
 
 import { Attachment, User } from '@leaa/common/src/entrys';
-import { buildUrl } from '@leaa/api/src/modules/attachment/attachment.property';
+import { buildUrl } from '@leaa/api/src/modules/v1/attachment/attachment.property';
 
 @EventSubscriber()
 export class AttachmentSubscriber implements EntitySubscriberInterface<Attachment> {

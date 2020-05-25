@@ -1,4 +1,4 @@
-import { envConfig } from '@leaa/api/src/modules/config/config.module';
+import { envConfig } from '@leaa/api/src/modules/v1/config/config.module';
 
 export const wechat = {
   appId: envConfig.OAUTH_WECHAT_APP_ID,

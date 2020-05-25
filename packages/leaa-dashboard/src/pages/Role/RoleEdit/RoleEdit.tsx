@@ -44,7 +44,7 @@ export default (props: IPage) => {
     setItemLoading(true);
 
     ajax
-      .get(`${envConfig.API_URL}/${API_PATH}/${id}`)
+      .get(`${envConfig.API_URL}/${envConfig.API_VERSION}/${API_PATH}/${id}`)
       .then((res: IHttpRes<Role>) => {
         setItem(res.data.data);
       })
@@ -56,7 +56,7 @@ export default (props: IPage) => {
     setPrmissionsLoading(true);
 
     ajax
-      .get(`${envConfig.API_URL}/permissions`)
+      .get(`${envConfig.API_URL}/${envConfig.API_VERSION}/permissions`)
       .then((res: IHttpRes<ICrudListRes<Permission>>) => {
         setPrmissions(res.data.data?.data);
       })
@@ -79,7 +79,7 @@ export default (props: IPage) => {
     setSubmitLoading(true);
 
     ajax
-      .patch(`${envConfig.API_URL}/${API_PATH}/${id}`, data)
+      .patch(`${envConfig.API_URL}/${envConfig.API_VERSION}/${API_PATH}/${id}`, data)
       .then((res: IHttpRes<Role>) => {
         setItem(res.data.data);
 

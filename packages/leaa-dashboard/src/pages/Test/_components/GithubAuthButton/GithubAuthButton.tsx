@@ -19,7 +19,7 @@ interface IProps {
 export const GithubAuthButton = (props: IProps) => {
   return (
     <div className={cx(style['wrapper'], props.className)}>
-      <Button size="small" className={style['like-button']} href={`${envConfig.API_URL}/auth/github/login`}>
+      <Button size="small" className={style['like-button']} href={`${envConfig.API_URL}/${envConfig.API_VERSION}/auth/github/login`}>
         Auth Github
       </Button>
     </div>

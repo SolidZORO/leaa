@@ -6,6 +6,7 @@ export interface IDotEnv {
   SERVER_PORT: number;
   SERVER_HOST: string;
   API_URL: string;
+  API_VERSION: string;
   GRAPHQL_ENDPOINT: string;
   ANALYTICS_CODE: string;
 }

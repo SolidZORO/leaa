@@ -23,7 +23,7 @@ interface IProps {
 
 export const ExportButton = (props: IProps) => {
   const { t } = useTranslation();
-  const exportUrlBase = `${envConfig.API_URL}/export`;
+  const exportUrlBase = `${envConfig.API_URL}/${envConfig.API_VERSION}/export`;
   const exportUrl = `${exportUrlBase}/${props.moduleName}`;
   const token = getAuthToken();
 

@@ -28,7 +28,7 @@ export default (props: IPage) => {
     setTreeLoading(true);
 
     ajax
-      .get(`${envConfig.API_URL}/${API_PATH}/tree`, { params })
+      .get(`${envConfig.API_URL}/${envConfig.API_VERSION}/${API_PATH}/tree`, { params })
       .then((res: IHttpRes<TreeItem[]>) => {
         setTree(res.data?.data);
       })

@@ -40,7 +40,7 @@ export const SelectCategoryIdByTree = (props: IProps) => {
     setTreeLoading(true);
 
     ajax
-      .get(`${envConfig.API_URL}/categories/tree`, { params })
+      .get(`${envConfig.API_URL}/${envConfig.API_VERSION}/categories/tree`, { params })
       .then((res: IHttpRes<TreeItem[]>) => {
         setTree(res.data?.data);
       })

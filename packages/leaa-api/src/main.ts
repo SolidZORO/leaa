@@ -9,9 +9,10 @@ import { AppModule } from '@leaa/api/src/app.module';
 import { HttpExceptionFilter } from '@leaa/api/src/filters';
 import { I18nextMiddleware } from '@leaa/api/src/middlewares';
 import { TransformInterceptor } from '@leaa/api/src/interceptors';
-import { TagService } from '@leaa/api/src/modules/tag/tag.service';
-import { ConfigService } from '@leaa/api/src/modules/config/config.service';
-import { LoggerService } from '@leaa/api/src/modules/logger/logger.service';
+import { ConfigService } from '@leaa/api/src/modules/v1/config/config.service';
+import { LoggerService } from '@leaa/api/src/modules/v1/logger/logger.service';
+
+import { TagService } from '@leaa/api/src/modules/v1/tag/tag.service';
 
 import { envInfoForCli } from '@leaa/api/src/utils';
 
@@ -33,14 +34,15 @@ import { envInfoForCli } from '@leaa/api/src/utils';
 
   app.disable('x-powered-by');
   app.enableCors({
-    origin: true,
-    credentials: true,
+    origin: '*',
+    // origin: true,
+    // credentials: true,
     maxAge: 0,
     optionsSuccessStatus: 200,
+    // methods: '',
+    allowedHeaders: ['Content-Type', 'Authorization'],
     exposedHeaders: ['Authorization'],
-    // methods: '';
-    // allowedHeaders: '';
-    // preflightContinue: false;
+    // preflightContinue: false,
   });
 
   app.use(helmet());

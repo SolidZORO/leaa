@@ -1,7 +1,7 @@
 import { rule } from 'graphql-shield';
 import jsonwebtoken from 'jsonwebtoken';
 
-import { envConfig } from '@leaa/api/src/modules/config/config.module';
+import { envConfig } from '@leaa/api/src/modules/v1/config/config.module';
 
 export const hasRole = (allowedRoles: string) =>
   rule(`has-role-${allowedRoles}`)(async (parent, args, context, info) => {

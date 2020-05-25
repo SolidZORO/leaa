@@ -43,7 +43,7 @@ export const TagSearchBox = forwardRef((props: IProps, ref: React.Ref<any>) => {
     setOptionalTags([]);
 
     ajax
-      .get(`${envConfig.API_URL}/tags`, {
+      .get(`${envConfig.API_URL}/${envConfig.API_VERSION}/tags`, {
         params: {
           s: { $or: [{ name: { $cont: v } }] },
           limit: 30,

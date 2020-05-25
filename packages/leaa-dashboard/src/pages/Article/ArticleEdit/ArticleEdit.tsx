@@ -39,7 +39,7 @@ export default (props: IPage) => {
     setItemLoading(true);
 
     ajax
-      .get(`${envConfig.API_URL}/${API_PATH}/${id}`)
+      .get(`${envConfig.API_URL}/${envConfig.API_VERSION}/${API_PATH}/${id}`)
       .then((res: IHttpRes<Article>) => {
         setItem(res.data.data);
       })
@@ -67,7 +67,7 @@ export default (props: IPage) => {
     console.log(data);
 
     ajax
-      .patch(`${envConfig.API_URL}/${API_PATH}/${id}`, data)
+      .patch(`${envConfig.API_URL}/${envConfig.API_VERSION}/${API_PATH}/${id}`, data)
       .then((res: IHttpRes<Article>) => {
         setItem(res.data.data);
 
