@@ -39,7 +39,9 @@ export default (props: IPage) => {
     setListLoading(true);
 
     ajax
-      .get(`${envConfig.API_URL}/${envConfig.API_VERSION}/${API_PATH}`, { params: genCrudRequestQuery(params) as ICrudListQueryParams })
+      .get(`${envConfig.API_URL}/${envConfig.API_VERSION}/${API_PATH}`, {
+        params: genCrudRequestQuery(params) as ICrudListQueryParams,
+      })
       .then((res: IHttpRes<ICrudListRes<Action>>) => {
         setList(res.data.data);
 

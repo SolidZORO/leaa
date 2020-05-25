@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React from 'react';
 import cx from 'classnames';
 import { Spin } from 'antd';
@@ -27,7 +28,7 @@ export const PageCard = (props: IProps) => {
   const genTitlt = (title?: IPropTitle) => {
     if (!title) return null;
 
-    if (title === '@LIST')
+    if (_.isString(title) && title === '@LIST')
       return (
         <div className={style['title']}>
           <span>
@@ -43,7 +44,7 @@ export const PageCard = (props: IProps) => {
       );
 
     // Page 里面 title 还是该写什么写什么，不知道那天这里会出现 if 判断
-    if (title === ('@EDIT' || '@CREATE' || '@ITEM'))
+    if (_.isString(title) && ['@EDIT', '@CREATE', '@ITEM'].includes(title))
       return (
         <div className={style['title']}>
           <span>

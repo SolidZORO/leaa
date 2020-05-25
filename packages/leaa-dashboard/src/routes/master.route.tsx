@@ -364,8 +364,20 @@ export const masterRoutes: IRouteItem[] = [
         LazyComponent: React.lazy(() =>
           import(/* webpackChunkName: 'AttachmentList' */ '../pages/Attachment/AttachmentList/AttachmentList'),
         ),
-        // canCreate: true,
+        canCreate: true,
         exact: true,
+      },
+      {
+        name: 'Create Attachment',
+        namei18n: '_route:createAttachment',
+        permission: 'attachment.item-create',
+        path: '/attachments/create',
+        icon: 'ri-file-list-2-line',
+        LazyComponent: React.lazy(() =>
+          import(/* webpackChunkName: 'AttachmentCreate' */ '../pages/Attachment/AttachmentCreate/AttachmentCreate'),
+        ),
+        exact: true,
+        isCreate: true,
       },
     ],
   },

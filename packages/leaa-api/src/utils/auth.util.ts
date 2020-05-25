@@ -1,7 +1,5 @@
 import { User } from '@leaa/common/src/entrys';
 import { IPermissionSlug } from '@leaa/common/src/interfaces';
-import { errorMsg } from '@leaa/api/src/utils';
-import { IGqlCtx } from '@leaa/api/src/interfaces';
 import { UnauthorizedException } from '@nestjs/common';
 
 export const checkAvailableUser = (user?: User): User => {
