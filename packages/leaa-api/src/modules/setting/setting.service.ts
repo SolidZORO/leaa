@@ -20,9 +20,8 @@ export class SettingService extends TypeOrmCrudService<Setting> {
   //
   //
 
-  // async updateMany(req: CrudRequest, dto: Setting & CreateSettingInput): Promise<Setting[]> {
-  async batchUpdate(dto: UpdateSettingsInput): Promise<Setting[]> {
-    let items: Setting[] = [];
+  async batchUpdate(dto: UpdateSettingsInput): Promise<string> {
+    // let items: Setting[] = [];
 
     const batchIds = dto.settings.map((s) => s.id);
     const batchUpdate = dto.settings.map(async (setting) => {
@@ -33,12 +32,12 @@ export class SettingService extends TypeOrmCrudService<Setting> {
 
     await Promise.all(batchUpdate)
       .then(async () => {
-        items = await this.settingRepo.find({ id: In(batchIds) });
+        await this.settingRepo.find({ id: In(batchIds) });
       })
       .catch(() => {
         throw new NotFoundException();
       });
 
-    return items;
+    return 'batchUpdate OK';
   }
 }

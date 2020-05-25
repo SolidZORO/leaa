@@ -1,14 +1,13 @@
 import { Controller, UseGuards } from '@nestjs/common';
 import { Crud, CrudController, Override, ParsedRequest, CrudRequest, ParsedBody } from '@nestjsx/crud';
-// import { Crud, CrudController, Override, ParsedRequest, CrudRequest, GetManyDefaultResponse } from '@nestjsx/crud';
-
 import { Permissions } from '@leaa/api/src/decorators';
 import { CreateTagInput, UpdateTagInput } from '@leaa/common/src/dtos/tag';
 import { JwtGuard, PermissionsGuard } from '@leaa/api/src/guards';
-import { Tag, User } from '@leaa/common/src/entrys';
+import { Tag } from '@leaa/common/src/entrys';
 
 import { TagService } from './tag.service';
-import { CreateUserInput } from '@leaa/common/src/dtos/user';
+
+// import { Crud, CrudController, Override, ParsedRequest, CrudRequest, GetManyDefaultResponse } from '@nestjsx/crud';
 
 @Crud({
   model: { type: Tag },

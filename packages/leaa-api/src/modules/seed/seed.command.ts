@@ -71,10 +71,10 @@ import { LoggerService } from '@leaa/api/src/modules/logger/logger.service';
 
       await seedService.insertCategory();
       await seedService.insertArticle();
-      await seedService.insertAx();
       await seedService.insertAttachment();
-      await seedService.insertCoupon();
-      await seedService.insertPromo();
+      // await seedService.insertAx();
+      // await seedService.insertCoupon();
+      // await seedService.insertPromo();
 
       if (process.argv.includes('--debug')) {
         await seedService.insertRandomUsers();

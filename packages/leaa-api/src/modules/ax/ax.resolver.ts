@@ -10,14 +10,14 @@ import {
   AxAttachmentsObject,
 } from '@leaa/common/src/dtos/ax';
 import { Permissions, GqlCtx } from '@leaa/api/src/decorators';
-import { AxService } from '@leaa/api/src/modules/ax/ax.service';
+import { AxService2 } from '@leaa/api/src/modules/ax/ax.service';
 import { AxProperty } from '@leaa/api/src/modules/ax/ax.property';
 
 import { IGqlCtx } from '@leaa/api/src/interfaces';
 
 @Resolver(() => Ax)
 export class AxResolver {
-  constructor(private readonly axService: AxService, private readonly axProperty: AxProperty) {}
+  constructor(private readonly axService: AxService2, private readonly axProperty: AxProperty) {}
 
   @ResolveField(() => AxAttachmentsObject)
   async attachments(@Parent() ax: Ax | undefined): Promise<AxAttachmentsObject | undefined> {

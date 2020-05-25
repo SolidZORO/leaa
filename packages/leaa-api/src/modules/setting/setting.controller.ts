@@ -1,4 +1,4 @@
-import { Controller, UseGuards, Get, Put, Post, Body } from '@nestjs/common';
+import { Controller, UseGuards, Post, Body } from '@nestjs/common';
 import { Crud, CrudController, Override, ParsedRequest, ParsedBody, CrudRequest } from '@nestjsx/crud';
 
 import { Permissions } from '@leaa/api/src/decorators';
@@ -21,10 +21,6 @@ import { SettingService } from './setting.service';
     maxLimit: 1000,
     alwaysPaginate: true,
     sort: [{ field: 'sort', order: 'ASC' }],
-    // join: {
-    //   tags: { eager: true },
-    //   categories: { eager: true },
-    // },
   },
   routes: {
     // getManyBase: { decorators: [Permissions('setting.list-read')] },

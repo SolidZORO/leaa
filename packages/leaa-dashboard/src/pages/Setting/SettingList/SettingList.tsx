@@ -3,7 +3,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Modal, Popconfirm, message } from 'antd';
 import { DeleteOutlined, LoadingOutlined, QuestionCircleOutlined } from '@ant-design/icons';
-import { UPDATE_BUTTON_ICON, DEFAULT_QUERY, PAGE_CARD_TITLE_CREATE_ICON } from '@leaa/dashboard/src/constants';
+import {
+  UPDATE_BUTTON_ICON,
+  DEFAULT_QUERY,
+  PAGE_CARD_TITLE_CREATE_ICON,
+  DEFAULT_PAGE_SIZE,
+} from '@leaa/dashboard/src/constants';
 
 import { Setting } from '@leaa/common/src/entrys';
 import { envConfig } from '@leaa/dashboard/src/configs';
@@ -77,23 +82,17 @@ export default (props: IPage) => {
 
   //
   // Read (List)
-  const [crudQuery, setCrudQuery] = useState<ICrudListQueryParams>({
-    ...DEFAULT_QUERY,
-    ...transUrlQueryToCrudState(window),
-  });
+  const [crudQuery] = useState<ICrudListQueryParams>({ limit: 99999 });
 
   const [list, setList] = useState<Setting[]>();
   const [listLoading, setListLoading] = useState(false);
   const onFetchList = (params: ICrudListQueryParams) => {
-    setCrudQuery(params);
     setListLoading(true);
 
     ajax
       .get(`${envConfig.API_URL}/${API_PATH}`, { params: genCrudRequestQuery(params) })
       .then((res: IHttpRes<ICrudListRes<Setting>>) => {
         setList(res.data.data?.data);
-
-        setCrudQueryToUrl({ window, query: params, replace: true });
       })
       .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
       .finally(() => setListLoading(false));
@@ -185,8 +184,7 @@ export default (props: IPage) => {
       .finally(() => setDeleteLoading(false));
   };
 
-  useEffect(() => onFetchList(crudQuery), [crudQuery]);
-  useEffect(() => (props.history.location.key ? setCrudQuery(DEFAULT_QUERY) : undefined), [props.history.location.key]);
+  useEffect(() => onFetchList(crudQuery), [props.history.location.key]);
 
   console.log(modalData);
 

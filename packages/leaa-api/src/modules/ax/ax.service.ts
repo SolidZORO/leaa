@@ -1,109 +1,56 @@
+import _ from 'lodash';
+import moment from 'moment';
+import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
-import { Repository, SelectQueryBuilder } from 'typeorm';
+import { CrudRequest } from '@nestjsx/crud';
 import { InjectRepository } from '@nestjs/typeorm';
+import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
+import { plainToClass } from 'class-transformer';
+import { slugify } from 'transliteration';
 
-import { Ax } from '@leaa/common/src/entrys';
-import { AxsWithPaginationObject, CreateAxInput, UpdateAxInput } from '@leaa/common/src/dtos/ax';
-import { argsFormat, can, commonUpdate, commonDelete, isOneField, calcQbPageInfo, errorMsg } from '@leaa/api/src/utils';
-import { IAxsArgs, IAxArgs, IGqlCtx } from '@leaa/api/src/interfaces';
-import { ConfigService } from '@leaa/api/src/modules/config/config.service';
-import { axSeed } from '@leaa/api/src/modules/seed/seed.data';
+import { Ax, Tag, Category } from '@leaa/common/src/entrys';
+import { UpdateAxInput, CreateAxInput } from '@leaa/common/src/dtos/ax';
+import { TagService } from '@leaa/api/src/modules/tag/tag.service';
+import { formatHtmlToText, cutTags } from '@leaa/api/src/utils';
 
-const CLS_NAME = 'AxService';
+export interface ITransIdsToEntrys {
+  dto: any;
+  toSave: any;
+  idField: any;
+  saveField: string;
+  repo: any;
+}
 
 @Injectable()
-export class AxService {
-  constructor(
-    @InjectRepository(Ax) private readonly axRepository: Repository<Ax>,
-    private readonly configService: ConfigService,
-  ) {}
-
-  async PLEASE_DONT_MODIFY_DEMO_DATA(id?: string): Promise<boolean> {
-    const { t } = gqlCtx;
-
-    if (this.configService.DEMO_MODE && !process.argv.includes('--nuke')) {
-      if (!id) return true;
-
-      const ax = await this.ax(gqlCtx, id, {});
-
-      if (ax?.slug && axSeed.map((seed) => seed.slug).includes(ax.slug)) {
-        throw errorMsg(t('_error:pleaseDontModify'), { gqlCtx });
-      }
-    }
-
-    return true;
+export class AxService extends TypeOrmCrudService<Ax> {
+  constructor(@InjectRepository(Ax) private readonly axRepo: Repository<Ax>) {
+    super(axRepo);
   }
 
-  async axs(args: IAxsArgs): Promise<AxsWithPaginationObject> {
-    const nextArgs = argsFormat(args, gqlCtx);
+  async updateOne(req: CrudRequest, dto: UpdateAxInput): Promise<Ax> {
+    const { allowParamsOverride, returnShallow } = req.options.routes?.updateOneBase || {};
 
-    const qb = this.axRepository.createQueryBuilder();
-    qb.select().orderBy(nextArgs.orderBy || 'created_at', nextArgs.orderSort);
+    const paramsFilters = this.getParamFilters(req.parsed);
+    const found = await this.getOneOrFail(req, returnShallow);
+    const toSave = !allowParamsOverride
+      ? { ...found, ...dto, ...paramsFilters, ...req.parsed.authPersist }
+      : { ...found, ...dto, ...req.parsed.authPersist };
 
-    // q
-    if (nextArgs.q) {
-      const aliasName = new SelectQueryBuilder(qb).alias;
+    const updated = await this.repo.save(plainToClass(this.entityType, toSave));
 
-      ['title', 'slug'].forEach((key) => {
-        qb.orWhere(`${aliasName}.${key} = :${key}`, { [key]: `${nextArgs.q}` });
-      });
-    }
+    if (returnShallow) return updated;
 
-    // can
-    if (!gqlCtx?.user || (gqlCtx.user && !can(gqlCtx.user, 'ax.list-read--all-status'))) {
-      qb.andWhere('status = :status', { status: 1 });
-    }
+    req.parsed.paramsFilter.forEach((filter) => {
+      // eslint-disable-next-line no-param-reassign
+      filter.value = (updated as any)[filter.field];
+    });
 
-    return calcQbPageInfo({ qb, page: nextArgs.page, pageSize: nextArgs.pageSize });
+    return this.getOneOrFail(req);
   }
 
-  async ax(id: string, args?: IAxArgs): Promise<Ax | undefined> {
-    const { t } = gqlCtx;
+  //
 
-    if (!id) throw errorMsg(t('_error:notFoundId'), { gqlCtx });
-
-    let nextArgs: IAxArgs = {};
-    if (args) nextArgs = args;
-
-    const whereQuery: { id: string; status?: number } = { id };
-
-    // can
-    if (!gqlCtx?.user || (gqlCtx.user && !can(gqlCtx.user, 'ax.item-read--all-status'))) {
-      whereQuery.status = 1;
-    }
-
-    const ax = await this.axRepository.findOne({ ...nextArgs, where: whereQuery });
-    if (!ax) throw errorMsg(t('_error:notFoundItem'), { gqlCtx });
-
-    return ax;
-  }
-
-  async axBySlug(slug: string, args?: IAxArgs): Promise<Ax | undefined> {
-    const { t } = gqlCtx;
-
-    const ax = await this.axRepository.findOne({ where: { slug } });
-    if (!ax) throw errorMsg(t('_error:notFoundItem'), { gqlCtx });
-
-    return this.ax(gqlCtx, ax.id, args);
-  }
-
-  async createAx(args: CreateAxInput): Promise<Ax | undefined> {
-    return this.axRepository.save({ ...args });
-  }
-
-  async updateAx(id: string, args: UpdateAxInput): Promise<Ax | undefined> {
-    if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(gqlCtx, id);
-
-    if (isOneField(args, 'status')) {
-      return commonUpdate({ repository: this.axRepository, CLS_NAME, id, args, gqlCtx });
-    }
-
-    return commonUpdate({ repository: this.axRepository, CLS_NAME, id, args, gqlCtx });
-  }
-
-  async deleteAx(id: string): Promise<Ax | undefined> {
-    if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(gqlCtx, id);
-
-    return commonDelete({ repository: this.axRepository, CLS_NAME, id, gqlCtx });
+  async getOneBySlug(slug: string): Promise<Ax | undefined> {
+    return this.axRepo.findOneOrFail({ where: { slug } });
   }
 }

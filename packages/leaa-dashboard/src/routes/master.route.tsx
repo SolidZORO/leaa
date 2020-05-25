@@ -211,7 +211,38 @@ export const masterRoutes: IRouteItem[] = [
     permission: 'coupon.list-read | ax.list-read | promo.list-read',
     path: '_marketing-group',
     icon: 'ri-voiceprint-line',
-    children: [],
+    children: [
+      // ---- Ax ----
+      {
+        name: 'Create Ax',
+        namei18n: '_route:createAx',
+        permission: 'ax.item-create',
+        path: '/axs/create',
+        icon: 'ri-paint-brush-line',
+        LazyComponent: React.lazy(() => import(/* webpackChunkName: 'AxCreate' */ '../pages/Ax/AxCreate/AxCreate')),
+        exact: true,
+        isCreate: true,
+      },
+      {
+        name: 'Edit Ax',
+        namei18n: '_route:editAx',
+        permission: 'ax.item-read',
+        path: '/axs/:id([\\w]{8}-[\\w]{4}-[\\w]{4}-[\\w]{4}-[\\w]{12})',
+        icon: 'ri-paint-brush-line',
+        LazyComponent: React.lazy(() => import(/* webpackChunkName: 'AxEdit' */ '../pages/Ax/AxEdit/AxEdit')),
+        exact: true,
+      },
+      {
+        name: 'Ax',
+        namei18n: '_route:ax',
+        permission: 'ax.list-read',
+        path: '/axs',
+        icon: 'ri-paint-brush-line',
+        LazyComponent: React.lazy(() => import(/* webpackChunkName: 'AxList' */ '../pages/Ax/AxList/AxList')),
+        canCreate: true,
+        exact: true,
+      },
+    ],
   },
   //
   // ---- Category ----

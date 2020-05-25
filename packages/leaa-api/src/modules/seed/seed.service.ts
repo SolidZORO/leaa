@@ -9,8 +9,6 @@ import { CategoryService } from '@leaa/api/src/modules/category/category.service
 import { ArticleService } from '@leaa/api/src/modules/article/article.service';
 import { AxService } from '@leaa/api/src/modules/ax/ax.service';
 import { SettingService } from '@leaa/api/src/modules/setting/setting.service';
-import { CouponService } from '@leaa/api/src/modules/coupon/coupon.service';
-import { PromoService } from '@leaa/api/src/modules/promo/promo.service';
 
 import { InjectRepository } from '@nestjs/typeorm';
 import { Attachment, Action } from '@leaa/common/src/entrys';
@@ -24,11 +22,9 @@ import {
   rolesToUserSeed,
   categorySeed,
   articleSeed,
-  axSeed,
+  // axSeed,
   settingSeed,
   attachmentSeed,
-  couponSeed,
-  promoSeed,
 } from './seed.data';
 
 import { req } from './__seed__.mock';
@@ -45,8 +41,6 @@ export class SeedService {
     private readonly articleService: ArticleService,
     private readonly axService: AxService,
     private readonly settingService: SettingService,
-    private readonly couponService: CouponService,
-    private readonly promoService: PromoService,
   ) {}
 
   async insertPermissions() {
@@ -142,13 +136,13 @@ export class SeedService {
     }
   }
 
-  async insertAx() {
-    for (const i of axSeed) {
-      const item = await this.axService.createAx(i);
-
-      console.log(item);
-    }
-  }
+  // async insertAx() {
+  //   for (const i of axSeed) {
+  //     const item = await this.axService.createAx(i);
+  //
+  //     console.log(item);
+  //   }
+  // }
 
   async insertAttachment() {
     for (const i of attachmentSeed) {
@@ -166,21 +160,21 @@ export class SeedService {
     }
   }
 
-  async insertCoupon() {
-    for (const i of couponSeed) {
-      const item = await this.couponService.createCoupon(i);
-
-      console.log(item);
-    }
-  }
-
-  async insertPromo() {
-    for (const i of promoSeed) {
-      const item = await this.promoService.createPromo(i);
-
-      console.log(item);
-    }
-  }
+  // async insertCoupon() {
+  //   for (const i of couponSeed) {
+  //     const item = await this.couponService.createCoupon(i);
+  //
+  //     console.log(item);
+  //   }
+  // }
+  //
+  // async insertPromo() {
+  //   for (const i of promoSeed) {
+  //     const item = await this.promoService.createPromo(i);
+  //
+  //     console.log(item);
+  //   }
+  // }
 
   randomArray = (items: any[]) => items[Math.floor(Math.random() * items.length)];
 

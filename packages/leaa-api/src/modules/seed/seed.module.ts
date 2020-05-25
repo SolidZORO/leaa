@@ -7,8 +7,6 @@ import { ArticleModule } from '@leaa/api/src/modules/article/article.module';
 import { CategoryModule } from '@leaa/api/src/modules/category/category.module';
 import { AxModule } from '@leaa/api/src/modules/ax/ax.module';
 import { SettingModule } from '@leaa/api/src/modules/setting/setting.module';
-import { CouponModule } from '@leaa/api/src/modules/coupon/coupon.module';
-import { PromoModule } from '@leaa/api/src/modules/promo/promo.module';
 import { ActionModule } from '@leaa/api/src/modules/action/action.module';
 
 import { SeedService } from '@leaa/api/src/modules/seed/seed.service';
@@ -25,8 +23,6 @@ import { Attachment, Action } from '@leaa/common/src/entrys';
     CategoryModule,
     AxModule,
     SettingModule,
-    CouponModule,
-    PromoModule,
     ActionModule,
   ],
   providers: [SeedService],

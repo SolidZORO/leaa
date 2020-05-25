@@ -6,12 +6,12 @@ import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestExpressApplication } from '@nestjs/platform-express';
 
 import { AppModule } from '@leaa/api/src/app.module';
+import { HttpExceptionFilter } from '@leaa/api/src/filters';
+import { I18nextMiddleware } from '@leaa/api/src/middlewares';
+import { TransformInterceptor } from '@leaa/api/src/interceptors';
 import { TagService } from '@leaa/api/src/modules/tag/tag.service';
 import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 import { LoggerService } from '@leaa/api/src/modules/logger/logger.service';
-import { I18nextMiddleware } from '@leaa/api/src/middlewares';
-import { HttpExceptionFilter } from '@leaa/api/src/filters';
-import { TransformInterceptor } from '@leaa/api/src/interceptors';
 
 import { envInfoForCli } from '@leaa/api/src/utils';
 
