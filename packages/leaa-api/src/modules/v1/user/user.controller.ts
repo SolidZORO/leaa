@@ -72,9 +72,4 @@ export class UserController implements CrudController<User> {
 
   //
   //
-
-  @Post('userByToken')
-  async userByToken(@Req() req: ICrudRequest, @Body() body: any): Promise<any> {
-    return this.service.userByToken(body);
-  }
 }

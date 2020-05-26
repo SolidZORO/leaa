@@ -30,6 +30,15 @@ export class UpdateUserInput {
   @IsOptional()
   roleIds?: string[];
 
+  @IsOptional()
+  last_login_ip?: string;
+
+  @IsOptional()
+  last_login_at?: Date;
+
+  @IsOptional()
+  last_token_at?: Date;
+
   // @IsOptional()
   //
   // roleSlugs?: string[];

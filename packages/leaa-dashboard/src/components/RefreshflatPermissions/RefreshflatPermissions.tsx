@@ -15,7 +15,7 @@ interface IProps {
 export const RefreshflatPermissions = (props: IProps) => {
   if (checkAuthIsAvailably()) {
     ajax
-      .post(`${envConfig.API_URL}/${envConfig.API_VERSION}/users/userByToken`, { token: getAuthToken() })
+      .post(`${envConfig.API_URL}/${envConfig.API_VERSION}/auth/user-by-token`, { token: getAuthToken() })
       .then((res: IHttpRes<User>) => {
         if (res.data?.data?.flatPermissions && res.data?.data.flatPermissions.length === 0) removeAuth();
 

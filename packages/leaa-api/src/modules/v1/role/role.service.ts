@@ -75,11 +75,7 @@ export class RoleService extends TypeOrmCrudService<Role> {
       slug: In(slugs),
     });
 
-    console.log('KKKKKKKKKK', roles);
-
-    if (roles && roles.length > 0) {
-      roleIds = roles.map((p) => p.id);
-    }
+    if (roles && roles.length > 0) roleIds = roles.map((p) => p.id);
 
     return roleIds;
   }

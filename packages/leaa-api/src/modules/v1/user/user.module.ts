@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { User, Role, Permission, Auth } from '@leaa/common/src/entrys';
+import { User, Role, Permission, Auth, Verification } from '@leaa/common/src/entrys';
 
 import { UserService } from '@leaa/api/src/modules/v1/user/user.service';
 import { RoleModule } from '@leaa/api/src/modules/v1/role/role.module';
@@ -12,7 +12,7 @@ import { UserController } from '@leaa/api/src/modules/v1/user/user.controller';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User, Role, Permission, Auth]),
+    TypeOrmModule.forFeature([User, Role, Permission, Auth, Verification]),
     RoleModule,
     AuthTokenModule,
     AttachmentModule,

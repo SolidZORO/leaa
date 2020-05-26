@@ -8,13 +8,13 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User, Verification, Action, Auth } from '@leaa/common/src/entrys';
 import { AuthLoginInput } from '@leaa/common/src/dtos/auth';
 import { checkAvailableUser, logger } from '@leaa/api/src/utils';
-import { UserService } from '@leaa/api/src/modules/v1/user/user.service';
 import { ActionService } from '@leaa/api/src/modules/v1/action/action.service';
 import { ICrudRequest } from '@leaa/api/src/interfaces';
 import { IJwtPayload } from '@leaa/common/src/interfaces';
 import moment from 'moment';
 import { ConfigService } from '@leaa/api/src/modules/v1/config/config.service';
 import { RoleService } from '@leaa/api/src/modules/v1/role/role.service';
+import { NotFoundIpException } from '@leaa/api/src/exceptions';
 
 const CLS_NAME = 'AuthService';
 
@@ -26,25 +26,23 @@ const SHOW_CAPTCHA_BY_LOGIN_ERROR_COUNT = 3;
 export class AuthService {
   constructor(
     @InjectRepository(Auth) private readonly authRepo: Repository<Auth>,
-    @InjectRepository(User) private readonly userRepository: Repository<User>,
-    @InjectRepository(Verification) private readonly verificationRepository: Repository<Verification>,
-    @InjectRepository(Action) private readonly actionRepository: Repository<Action>,
-    // @InjectRepository(Action) private readonly actionRepository: Repository<Action>,
+    @InjectRepository(User) private readonly userRepo: Repository<User>,
+    @InjectRepository(Verification) private readonly verificationRepo: Repository<Verification>,
+    @InjectRepository(Action) private readonly actionRepo: Repository<Action>,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
-    private readonly userService: UserService,
     private readonly roleService: RoleService,
     private readonly actionService: ActionService,
   ) {}
 
-  async login(req: ICrudRequest, body: AuthLoginInput): Promise<User | undefined> {
+  async login(req: ICrudRequest, ip: string, body: AuthLoginInput): Promise<User | undefined> {
     const { t } = req;
 
-    if (!req || !req?.ip) throw new NotFoundException(t('_error:notFoundIp'));
+    if (!ip) throw new NotFoundIpException();
 
     const account = xss.filterXSS(body.email.trim().toLowerCase());
 
-    const findUser = await this.userRepository.findOneOrFail({
+    const findUser = await this.userRepo.findOneOrFail({
       select: ['id', 'email', 'name', 'status', 'password', 'avatar_url'],
       where: {
         email: account,
@@ -75,7 +73,7 @@ export class AuthService {
     // // Captcha
     // //
     // // check Login Count at Actions
-    // const loginCount = await this.actionRepository.count({
+    // const loginCount = await this.actionRepo.count({
     //   where: {
     //     ip: gqlCtx?.req?.ip,
     //     module: 'auth',
@@ -90,7 +88,7 @@ export class AuthService {
     // if (loginCount >= SHOW_CAPTCHA_BY_LOGIN_ERROR_COUNT + 2) {
     //   if (!args.guestToken) throw errorMsg(t('_error:notFoundToken'), { gqlCtx });
     //
-    //   const captcha = await this.verificationRepository.findOne({ token: args.guestToken, code: args.captcha });
+    //   const captcha = await this.verificationRepo.findOne({ token: args.guestToken, code: args.captcha });
     //   if (!captcha) throw errorMsg(t('_error:verifyCodeNotMatch'), { gqlCtx });
     // }
     //
@@ -105,7 +103,7 @@ export class AuthService {
       const msg = `User (${account}) Info Not Match`;
       logger.log(msg, CLS_NAME);
 
-      throw new UnauthorizedException(t('_error:userInfoNotMatch'));
+      throw new UnauthorizedException();
     }
 
     if (user.password) delete user.password;
@@ -115,6 +113,11 @@ export class AuthService {
     // last, clear Action and Verification
     await this.clearLoginActionAndVerification({ token: body.guestToken });
 
+    await this.userRepo.update(user.id, {
+      last_login_ip: ip,
+      last_login_at: new Date(),
+    });
+
     // delete something
     delete user.roles;
 
@@ -122,31 +125,47 @@ export class AuthService {
   }
 
   // MUST DO minimal cost query
-  async validateUserByPayload(payload: IJwtPayload): Promise<User | undefined> {
-    if (!payload) throw new UnauthorizedException();
-    if (!payload.iat || !payload.exp || !payload.id) throw new NotFoundException();
+  async validateUserByPayload(jwtPayload: IJwtPayload): Promise<User | undefined> {
+    if (!jwtPayload) throw new UnauthorizedException();
+    if (!jwtPayload.iat || !jwtPayload.exp || !jwtPayload.id) throw new UnauthorizedException();
 
-    const findUser = await this.userRepository.findOne({ relations: ['roles'], where: { id: payload.id } });
+    const hasUser = await this.userRepo.findOne({
+      relations: ['roles'],
+      where: { id: jwtPayload.id },
+    });
 
-    const user = checkAvailableUser(findUser);
+    const user = checkAvailableUser(hasUser);
 
-    // IMPORTANT! if user info is changed, Compare `iat` and `last_token_at`
-    if (moment(payload.iattz).isBefore(moment(user.last_token_at))) {
-      throw new UnauthorizedException();
-    }
+    // @TIPS IMPORTANT! if user info is changed, Compare jwt `iattz` and `last_token_at`
+    // 对比 jwtPayload.iattz（原来的 iat 可能会存在客户端与服务器 tz 不相同带问题，所以这里加了一个带 timezome 的 iat）
+    if (moment(jwtPayload.iattz).isBefore(moment(user.last_token_at))) throw new UnauthorizedException();
 
     const flatPermissions = await this.roleService.getFlatPermissionsByUser(user);
+
+    // delete something
+    delete user.roles;
 
     return { ...user, flatPermissions };
   }
 
+  async userByToken(body?: { token?: string }): Promise<User | undefined> {
+    const token = body?.token;
+
+    if (!token) throw new NotFoundException();
+
+    // @ts-ignore
+    const jwtPayload: { id: any } = this.jwtService.decode(token);
+
+    return this.validateUserByPayload(jwtPayload);
+  }
+
   async clearLoginActionAndVerification({ token }: { token?: string }) {
-    await this.actionRepository.delete({
+    await this.actionRepo.delete({
       module: 'auth',
       action: In(['login', 'guest']),
       token: In([token, 'NO-TOKEN']),
     });
-    await this.verificationRepository.delete({ token });
+    await this.verificationRepo.delete({ token });
   }
 
   async addTokenToUser(user: User): Promise<User> {
@@ -191,7 +210,7 @@ export class AuthService {
   //   let newUser: User;
   //
   //   try {
-  //     newUser = await this.userRepository.save({
+  //     newUser = await this.userRepo.save({
   //       ...nextArgs,
   //       status: 1,
   //     });
@@ -214,7 +233,7 @@ export class AuthService {
   // async createGuest(showCaptcha?: boolean): Promise<Verification | undefined> {
   //   const captcha = svgCaptcha.create(captchaConfig.SVG_CAPTCHA);
   //
-  //   const guest = await this.verificationRepository.save({
+  //   const guest = await this.verificationRepo.save({
   //     code: captcha.text.toLowerCase(),
   //     token: this.jwtService.sign({}),
   //   });
@@ -232,7 +251,7 @@ export class AuthService {
   //   if (!gqlCtx || !gqlCtx.req?.ip) throw errorMsg(t('_error:notFoundIp'), { gqlCtx });
   //
   //   // Prevent hacking ( 30min - MAX - 100req)
-  //   const guestCount = await this.actionRepository.count({
+  //   const guestCount = await this.actionRepo.count({
   //     where: {
   //       ip: gqlCtx?.req?.ip,
   //       module: 'auth',
@@ -245,7 +264,7 @@ export class AuthService {
   //
   //   // Controller Captcha Show (for Dashboard)
   //   // Just showCaptcha, but whether login depends on the `account` at Table `actions`
-  //   const loginCount = await this.actionRepository.count({
+  //   const loginCount = await this.actionRepo.count({
   //     where: {
   //       ip: gqlCtx?.req?.ip,
   //       module: 'auth',
@@ -266,10 +285,10 @@ export class AuthService {
   //   });
   //
   //   const captcha = svgCaptcha.create(captchaConfig.SVG_CAPTCHA);
-  //   const guest = await this.verificationRepository.findOne({ token });
+  //   const guest = await this.verificationRepo.findOne({ token });
   //
   //   if (token && guest?.id) {
-  //     await this.verificationRepository.update(guest.id, { code: captcha.text.toLowerCase() });
+  //     await this.verificationRepo.update(guest.id, { code: captcha.text.toLowerCase() });
   //
   //     if (showCaptcha) guest.captcha = captcha.data;
   //     delete guest.code;
@@ -324,11 +343,11 @@ export class AuthService {
 //   export class AuthLocalService extends TypeOrmCrudService<Auth> {
 //     constructor(
 //       @InjectRepository(Auth) private readonly authRepo: Repository<Auth>,
-//     @InjectRepository(User) private readonly userRepository: Repository<User>,
+//     @InjectRepository(User) private readonly userRepo: Repository<User>,
 //     @InjectRepository(Auth) private readonly authRepository: Repository<Auth>,
-//     @InjectRepository(Verification) private readonly verificationRepository: Repository<Verification>,
-//     @InjectRepository(Action) private readonly actionRepository: Repository<Action>,
-//       // @InjectRepository(Action) private readonly actionRepository: Repository<Action>,
+//     @InjectRepository(Verification) private readonly verificationRepo: Repository<Verification>,
+//     @InjectRepository(Action) private readonly actionRepo: Repository<Action>,
+//       // @InjectRepository(Action) private readonly actionRepo: Repository<Action>,
 //       private readonly jwtService: JwtService,
 //       private readonly configService: ConfigService,
 //       private readonly userService: UserService,
@@ -457,7 +476,7 @@ export class AuthService {
 //   if (!payload.iat || !payload.exp || !payload.id) {
 //     throw errorMsg(t('_error:notFoundInfo'), { statusCode: 401 });
 //   }
-//   const findUser = await this.userRepository.findOneOrFail({
+//   const findUser = await this.userRepo.findOneOrFail({
 //     select: ['id', 'email', 'name', 'status', 'password', 'avatar_url'],
 //     where: {
 //       email: account,
@@ -466,7 +485,7 @@ export class AuthService {
 //     relations: ['roles'],
 //   });
 //
-//   const findUser = await this.userRepository.findOne({ relations: ['roles'], where: { id: payload.id } });
+//   const findUser = await this.userRepo.findOne({ relations: ['roles'], where: { id: payload.id } });
 //   // log
 //   const loginAction = await this.actionService.logAction(req, {
 //     ip: req?.ip,
@@ -503,7 +522,7 @@ export class AuthService {
 //     // // Captcha
 //     // //
 //     // // check Login Count at Actions
-//     // const loginCount = await this.actionRepository.count({
+//     // const loginCount = await this.actionRepo.count({
 //     //   where: {
 //     //     ip: gqlCtx?.req?.ip,
 //     //     module: 'auth',
@@ -518,7 +537,7 @@ export class AuthService {
 //     // if (loginCount >= SHOW_CAPTCHA_BY_LOGIN_ERROR_COUNT + 2) {
 //     //   if (!args.guestToken) throw errorMsg(t('_error:notFoundToken'), { gqlCtx });
 //     //
-//     //   const captcha = await this.verificationRepository.findOne({ token: args.guestToken, code: args.captcha });
+//     //   const captcha = await this.verificationRepo.findOne({ token: args.guestToken, code: args.captcha });
 //     //   if (!captcha) throw errorMsg(t('_error:verifyCodeNotMatch'), { gqlCtx });
 //     // }
 //     //
@@ -584,12 +603,12 @@ export class AuthService {
 //
 //   return user;
 //   async clearLoginActionAndVerification({ token }: { token?: string }) {
-//     await this.actionRepository.delete({
+//     await this.actionRepo.delete({
 //       module: 'auth',
 //       action: In(['login', 'guest']),
 //       token: In([token, 'NO-TOKEN']),
 //     });
-//     await this.verificationRepository.delete({ token });
+//     await this.verificationRepo.delete({ token });
 //   }
 //
 //   async clearTicket(authId: string): Promise<void> {
@@ -629,7 +648,7 @@ export class AuthService {
 //   //   let newUser: User;
 //   //
 //   //   try {
-//   //     newUser = await this.userRepository.save({
+//   //     newUser = await this.userRepo.save({
 //   //       ...nextArgs,
 //   //       status: 1,
 //   //     });
@@ -652,7 +671,7 @@ export class AuthService {
 //   // async createGuest(showCaptcha?: boolean): Promise<Verification | undefined> {
 //   //   const captcha = svgCaptcha.create(captchaConfig.SVG_CAPTCHA);
 //   //
-//   //   const guest = await this.verificationRepository.save({
+//   //   const guest = await this.verificationRepo.save({
 //   //     code: captcha.text.toLowerCase(),
 //   //     token: this.jwtService.sign({}),
 //   //   });
@@ -670,7 +689,7 @@ export class AuthService {
 //   //   if (!gqlCtx || !gqlCtx.req?.ip) throw errorMsg(t('_error:notFoundIp'), { gqlCtx });
 //   //
 //   //   // Prevent hacking ( 30min - MAX - 100req)
-//   //   const guestCount = await this.actionRepository.count({
+//   //   const guestCount = await this.actionRepo.count({
 //   //     where: {
 //   //       ip: gqlCtx?.req?.ip,
 //   //       module: 'auth',
@@ -683,7 +702,7 @@ export class AuthService {
 //   //
 //   //   // Controller Captcha Show (for Dashboard)
 //   //   // Just showCaptcha, but whether login depends on the `account` at Table `actions`
-//   //   const loginCount = await this.actionRepository.count({
+//   //   const loginCount = await this.actionRepo.count({
 //   //     where: {
 //   //       ip: gqlCtx?.req?.ip,
 //   //       module: 'auth',
@@ -704,10 +723,10 @@ export class AuthService {
 //   //   });
 //   //
 //   //   const captcha = svgCaptcha.create(captchaConfig.SVG_CAPTCHA);
-//   //   const guest = await this.verificationRepository.findOne({ token });
+//   //   const guest = await this.verificationRepo.findOne({ token });
 //   //
 //   //   if (token && guest?.id) {
-//   //     await this.verificationRepository.update(guest.id, { code: captcha.text.toLowerCase() });
+//   //     await this.verificationRepo.update(guest.id, { code: captcha.text.toLowerCase() });
 //   //
 //   //     if (showCaptcha) guest.captcha = captcha.data;
 //   //     delete guest.code;

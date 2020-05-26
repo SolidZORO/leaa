@@ -3,19 +3,13 @@ import { IPermissionSlug } from '@leaa/common/src/interfaces';
 import { UnauthorizedException } from '@nestjs/common';
 
 export const checkAvailableUser = (user?: User): User => {
-  if (!user || (user && user.status !== 1)) {
-    throw new UnauthorizedException();
-  }
+  if (!user || (user && user.status !== 1)) throw new UnauthorizedException();
 
   return user;
 };
 
 export const can = (user: User, permissionName: IPermissionSlug): boolean => {
-  if (!user || !permissionName || !user.flatPermissions) {
-    return false;
-  }
+  if (!user || !permissionName || !user.flatPermissions) return false;
 
   return user && user.flatPermissions && user.flatPermissions.includes(permissionName);
 };
-
-// export const isAdmin = (gqlCtx?: IGqlCtx): boolean => gqlCtx?.user?.is_admin === 1;

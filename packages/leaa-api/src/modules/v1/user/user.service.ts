@@ -5,13 +5,11 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 import { CrudRequest } from '@nestjsx/crud';
-import { Injectable, UnauthorizedException, NotFoundException } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
+import { Injectable } from '@nestjs/common';
 
-import { errorMsg, logger } from '@leaa/api/src/utils';
+import { logger } from '@leaa/api/src/utils';
 import { User, Role, Auth } from '@leaa/common/src/entrys';
 import { UpdateUserInput, CreateUserInput } from '@leaa/common/src/dtos/user';
-import { RoleService } from '@leaa/api/src/modules/v1/role/role.service';
 
 const CLS_NAME = 'UserService';
 
@@ -21,8 +19,6 @@ export class UserService extends TypeOrmCrudService<User> {
     @InjectRepository(User) private readonly userRepo: Repository<User>,
     @InjectRepository(Role) private readonly roleRepo: Repository<Role>,
     @InjectRepository(Auth) private readonly authRepo: Repository<Auth>,
-    private readonly roleService: RoleService,
-    private readonly jwtService: JwtService,
   ) {
     super(userRepo);
   }
@@ -38,7 +34,14 @@ export class UserService extends TypeOrmCrudService<User> {
     const prevUser = await this.getOneOrFail(req);
 
     const nextDto: UpdateUserInput & { roles?: Role[] } = dto;
+
     if (dto.password) nextDto.password = await this.createPassword(dto.password);
+
+    // @TIPS 更新某些关键信息之后，可以在 validateUserByPayload 那边通过对比 last_token_at 让用户强制弹出
+    if (dto.password || dto.is_admin !== prevUser.is_admin || dto.status !== prevUser.status) {
+      nextDto.last_token_at = new Date();
+    }
+
     if (dto.roleIds && _.isArray(dto.roleIds)) nextDto.roles = await this.roleRepo.findByIds(dto.roleIds);
 
     const result = await super.updateOne(req, nextDto);
@@ -68,28 +71,6 @@ export class UserService extends TypeOrmCrudService<User> {
 
   //
   //
-
-  async userByToken(body?: { token?: string }): Promise<User | undefined> {
-    const token = body?.token;
-
-    if (!token) throw new NotFoundException();
-
-    // @ts-ignore
-    const userDecode: { id: any } = this.jwtService.decode(token);
-
-    if (!userDecode || !userDecode.id) throw new UnauthorizedException();
-
-    const user = await this.userRepo.findOneOrFail(userDecode.id, { relations: ['roles'] });
-
-    if (!user) throw new UnauthorizedException();
-    if (user) {
-      user.flatPermissions = await this.roleService.getFlatPermissionsByUser(user);
-
-      delete user.roles;
-    }
-
-    return user;
-  }
 
   async createPassword(password: string): Promise<string> {
     const salt = bcryptjs.genSaltSync();
@@ -230,10 +211,10 @@ export class UserService extends TypeOrmCrudService<User> {
 //     // }
 //
 //     // @ts-ignore
-//     const userDecode: { id: any } = this.jwtService.decode(token);
-//     if (!userDecode || !userDecode.id) throw errorMsg('_error:tokenError');
+//     const jwtPayload: { id: any } = this.jwtService.decode(token);
+//     if (!jwtPayload || !jwtPayload.id) throw errorMsg('_error:tokenError');
 //
-//     const user = await this.userRepository.findOne(userDecode.id, {
+//     const user = await this.userRepository.findOne(jwtPayload.id, {
 //       relations: ['roles'],
 //     });
 //

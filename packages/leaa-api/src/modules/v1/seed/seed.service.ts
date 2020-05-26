@@ -9,6 +9,7 @@ import { CategoryService } from '@leaa/api/src/modules/v1/category/category.serv
 import { ArticleService } from '@leaa/api/src/modules/v1/article/article.service';
 import { AxService } from '@leaa/api/src/modules/v1/ax/ax.service';
 import { SettingService } from '@leaa/api/src/modules/v1/setting/setting.service';
+import { AuthService } from '@leaa/api/src/modules/v1/auth/auth.service';
 
 import { InjectRepository } from '@nestjs/typeorm';
 import { Attachment, Action } from '@leaa/common/src/entrys';
@@ -36,6 +37,7 @@ export class SeedService {
     private readonly permissionService: PermissionService,
     private readonly roleService: RoleService,
     private readonly userService: UserService,
+    private readonly authService: AuthService,
     private readonly categoryService: CategoryService,
     private readonly articleService: ArticleService,
     private readonly axService: AxService,

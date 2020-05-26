@@ -30,18 +30,16 @@ export class User extends Base {
   @Column({ type: 'int', default: 0 })
   is_admin?: number;
 
-  @Exclude({ toPlainOnly: true })
-  @Column({ type: 'varchar', length: 32, nullable: true, select: false })
+  @Column({ type: 'varchar', length: 32, nullable: true })
   last_login_ip?: string;
 
-  @Exclude({ toPlainOnly: true })
-  @Column({ type: 'timestamp', nullable: true, select: false })
+  @Column({ type: 'timestamp', nullable: true })
   last_login_at?: Date;
 
-  @Column({ type: 'timestamp', nullable: true, select: false })
+  @Column({ type: 'timestamp', nullable: true })
   last_token_at?: Date;
 
-  @Exclude({ toPlainOnly: true })
+  // @Exclude({ toPlainOnly: true })
   @ManyToMany(() => Role, (role) => role.user)
   @JoinTable()
   roles?: Role[];

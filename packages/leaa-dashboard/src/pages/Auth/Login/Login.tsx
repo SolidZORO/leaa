@@ -2,8 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import qs from 'qs';
 import { Row, Col, Button } from 'antd';
-// import { LOGIN, LOGIN_BY_TICKET, GET_DEMO_DATA } from '@leaa/dashboard/src/graphqls';
-import { IPage, ICommenFormRef, ISubmitData, IHttpRes } from '@leaa/dashboard/src/interfaces';
+import { IPage, ICommenFormRef, ISubmitData, IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
 import {
   setAuthToken,
   setAuthInfo,
@@ -103,8 +102,9 @@ export default (props: IPage) => {
 
         if (res.data.data?.authToken) setAjaxToken(res.data.data.authToken);
       })
-      .catch((err) => {
-        errorMsg(err.message);
+      .catch((err: IHttpError) => {
+        errorMsg(err.response?.data?.message || err.message);
+
         return props.history.push('/login');
       })
       .finally(() => setSubmitLoading(false));
