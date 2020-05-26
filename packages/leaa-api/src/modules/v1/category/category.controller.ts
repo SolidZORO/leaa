@@ -32,6 +32,7 @@ import { CategoryService } from './category.service';
   dto: {
     create: CreateCategoryInput,
     update: UpdateCategoryInput,
+    replace: Category,
   },
 })
 @Controller('/v1/categories')

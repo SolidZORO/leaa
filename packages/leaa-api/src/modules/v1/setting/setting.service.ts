@@ -21,23 +21,16 @@ export class SettingService extends TypeOrmCrudService<Setting> {
   //
 
   async batchUpdate(dto: UpdateSettingsInput): Promise<string> {
-    // let items: Setting[] = [];
+    const batchUpdate = dto.settings.map((setting) => this.settingRepo.update(setting.id, { value: setting.value }));
 
-    const batchIds = dto.settings.map((s) => s.id);
-    const batchUpdate = dto.settings.map(async (setting) => {
-      await this.settingRepo.update(setting.id, { value: setting.value });
-    });
-
-    // return items;
-
-    await Promise.all(batchUpdate)
-      .then(async () => {
-        await this.settingRepo.find({ id: In(batchIds) });
+    return Promise.all(batchUpdate)
+      .then((data) => {
+        // this.settingRepo.find({ id: In(batchIds) });
+        // return 'batchUpdate Promise OK';
+        return `Batch Updated ${data.length} Settings`;
       })
       .catch(() => {
         throw new NotFoundException();
       });
-
-    return 'batchUpdate OK';
   }
 }

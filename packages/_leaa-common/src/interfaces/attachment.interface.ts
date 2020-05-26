@@ -33,7 +33,7 @@ export type IAttachmentDbFilterField = Partial<
 
 export type IAttachmentCreateFieldByLocal = Pick<
   Attachment,
-  | 'uuid'
+  | 'id'
   | 'title'
   | 'alt'
   | 'type'

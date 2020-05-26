@@ -1,6 +1,6 @@
 import fs from 'fs';
 import { Repository } from 'typeorm';
-import { Injectable, HttpCode } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import axios from 'axios';
 import crypto from 'crypto';
@@ -15,20 +15,19 @@ import {
   IAttachmentCreateFieldByOss,
 } from '@leaa/common/src/interfaces';
 import { ConfigService } from '@leaa/api/src/modules/v1/config/config.service';
-import { AttachmentProperty } from '@leaa/api/src/modules/v1/attachment/attachment.property';
 import { Attachment } from '@leaa/common/src/entrys';
-import { filenameAt1xToAt2x, isAt2x, logger } from '@leaa/api/src/utils';
+import { filenameAt1xToAt2x, isAt2x, logger, uuid } from '@leaa/api/src/utils';
 import { attachmentConfig } from '@leaa/api/src/configs';
 import mkdirp from 'mkdirp';
+import { isUUID } from '@nestjs/common/utils/is-uuid';
 
 const CLS_NAME = 'SaveInOssService';
 
 @Injectable()
 export class SaveInOssService {
   constructor(
-    @InjectRepository(Attachment) private readonly attachmentRepository: Repository<Attachment>,
+    @InjectRepository(Attachment) private readonly attachmentRepo: Repository<Attachment>,
     private readonly configService: ConfigService,
-    private readonly attachmentProperty: AttachmentProperty,
   ) {}
 
   // eslint-disable-next-line max-len
@@ -133,9 +132,7 @@ export class SaveInOssService {
     return this.downloadFile(at1xUrl, (file) => this.client.put(filename.replace('_2x', ''), file));
   }
 
-  async saveOssToLocal(
-    attachment: Pick<Attachment, 'filename' | 'url' | 'urlAt2x' | 'at2x'>,
-  ): Promise<'success' | Error> {
+  async saveOssToLocal(attachment: Attachment): Promise<'success' | Error> {
     await this.downloadFile(attachment.url || '', (file) => {
       try {
         mkdirp.sync(attachmentConfig.SAVE_DIR_BY_DISK);
@@ -160,7 +157,7 @@ export class SaveInOssService {
     return 'success';
   }
 
-  async createAttachmentByOss(req: ICraeteAttachmentByOssCallback): Promise<{ attachment: Attachment } | undefined> {
+  async createAttachmentByOss(req: ICraeteAttachmentByOssCallback): Promise<Attachment | undefined> {
     const splitFilename = req.object.split('/').pop();
 
     if (!splitFilename) {
@@ -194,8 +191,8 @@ export class SaveInOssService {
     const filepath = `/${req.object.replace('_2x', '')}`;
 
     const ext = `.${req.format}`.toLowerCase();
-    const uuid = filename.replace(ext, '');
     const title = req.originalname.replace(ext, '');
+    const id = filename.replace(ext, '');
 
     if (isImage && at2x) {
       const at1x = await this.saveAt2xToAt1xByOss(req.object);
@@ -210,7 +207,7 @@ export class SaveInOssService {
     }
 
     const attachmentData: IAttachmentCreateFieldByOss = {
-      uuid,
+      id: isUUID(id) ? id : uuid(),
       title,
       alt: title,
       type: req.mimeType ? `${req.mimeType.split('/')[0]}` : 'no-mime',
@@ -232,17 +229,9 @@ export class SaveInOssService {
       in_local: 0,
     };
 
-    const url = this.attachmentProperty.url(attachmentData as Attachment);
-    const urlAt2x = this.attachmentProperty.urlAt2x(attachmentData as Attachment);
-
     // if SAVE_IN_LOCAL failed, don't write DB
     if (this.configService.ATTACHMENT_SAVE_IN_LOCAL) {
-      const status = await this.saveOssToLocal({
-        filename: attachmentData.filename,
-        at2x: attachmentData.at2x,
-        url,
-        urlAt2x,
-      });
+      const status = await this.saveOssToLocal(attachmentData);
 
       if (status !== 'success') {
         throw Error('Save Oss To Local Error');
@@ -251,16 +240,8 @@ export class SaveInOssService {
       attachmentData.in_local = 1;
     }
 
-    const attachment = await this.attachmentRepository.save({ ...attachmentData });
-
     // eslint-disable-next-line consistent-return
-    return {
-      attachment: {
-        ...attachment,
-        url,
-        urlAt2x,
-      },
-    };
+    return this.attachmentRepo.save({ ...attachmentData });
   }
 
   // @HttpCode(200)

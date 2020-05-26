@@ -19,10 +19,14 @@ import { IndexModule } from '@leaa/api/src/modules/v1/index/index.module';
 import { TagModule } from '@leaa/api/src/modules/v1/tag/tag.module';
 import { CategoryModule } from '@leaa/api/src/modules/v1/category/category.module';
 import { AttachmentModule } from '@leaa/api/src/modules/v1/attachment/attachment.module';
+import { ConfigService } from '@leaa/api/src/modules/v1/config/config.service';
 
 const imports = [
   CacheModule.register(),
-  TypeOrmModule.forRootAsync({ useClass: TypeormService }),
+  TypeOrmModule.forRootAsync({
+    inject: [ConfigService],
+    useClass: TypeormService,
+  }),
   SeedModule,
   ConfigModule,
   PlaygroundModule,

@@ -16,6 +16,6 @@ export class Base {
   // SOFT DELETE
   // https://github.com/typeorm/typeorm/issues/534
   @Exclude({ toPlainOnly: true })
-  @Column({ type: 'timestamp', nullable: true })
+  @Column({ type: 'timestamp', nullable: true, select: false })
   deleted_at?: Date;
 }

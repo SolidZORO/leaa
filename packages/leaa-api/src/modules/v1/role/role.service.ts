@@ -5,7 +5,7 @@ import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 import { CrudRequest } from '@nestjsx/crud';
 import { Injectable } from '@nestjs/common';
 
-import { Role, Permission } from '@leaa/common/src/entrys';
+import { Role, User, Permission } from '@leaa/common/src/entrys';
 import { UpdateRoleInput } from '@leaa/common/src/dtos/role';
 
 // const CLS_NAME = 'RoleService';
@@ -82,6 +82,24 @@ export class RoleService extends TypeOrmCrudService<Role> {
     }
 
     return roleIds;
+  }
+
+  async getPermissionsByUser(user: User | undefined): Promise<Permission[] | undefined> {
+    if (!user || !user.roles) return undefined;
+
+    const roleIds = user.roles.map((r) => r.id);
+    const permissions = await this.getManyPermissionsByRoleIds(roleIds);
+    if (!permissions) return undefined;
+
+    return permissions;
+  }
+
+  async getFlatPermissionsByUser(user: User | undefined): Promise<string[] | undefined> {
+    const permissions = await this.getPermissionsByUser(user);
+
+    if (!permissions) return undefined;
+
+    return [...new Set(permissions.map((permission) => permission.slug))];
   }
 
   //

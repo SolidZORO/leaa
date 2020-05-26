@@ -8,7 +8,7 @@ import { ICraeteAttachmentByOssCallback, IAttachmentParams } from '@leaa/common/
 import { Crud, CrudController } from '@nestjsx/crud';
 import { Attachment } from '@leaa/common/src/entrys';
 import { Permissions } from '@leaa/api/src/decorators';
-import { CreateAttachmentInput, UpdateAttachmentInput } from '@leaa/common/src/dtos/attachment';
+import { CreateAttachmentInput, UpdateAttachmentInput, UpdateAttachmentsInput } from '@leaa/common/src/dtos/attachment';
 
 @Crud({
   model: { type: Attachment },
@@ -24,6 +24,8 @@ import { CreateAttachmentInput, UpdateAttachmentInput } from '@leaa/common/src/d
     alwaysPaginate: true,
   },
   routes: {
+    // upload file, will be auto create
+    exclude: ['createOneBase'],
     // getManyBase: { decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('attachment.list-read')] },
     // getOneBase: { decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('attachment.item-read')] },
     // createOneBase: { decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('attachment.item-create')] },
@@ -36,7 +38,7 @@ import { CreateAttachmentInput, UpdateAttachmentInput } from '@leaa/common/src/d
   dto: {
     create: CreateAttachmentInput,
     update: UpdateAttachmentInput,
-    replace: UpdateAttachmentInput,
+    replace: Attachment,
   },
 })
 @Controller('/v1/attachments')
@@ -48,21 +50,28 @@ export class AttachmentController implements CrudController<Attachment> {
   //   return 'GET DONE!';
   // }
 
-  // @Get('/signature')
-  // async getSignature() {
-  //   return this.service.getSignature();
-  // }
+  @Get('signature')
+  async getSignature() {
+    return this.service.getSignature();
+  }
 
-  // @HttpCode(200)
-  // @Post('/upload')
-  // @UseGuards(JwtGuard)
-  // @UseInterceptors(FileInterceptor('file'))
-  // async uploadFile(@Body() body: IAttachmentParams, @UploadedFile() file: Express.Multer.File) {
-  //   return this.service.createAttachmentByLocal(body, file);
-  // }
-  //
-  // @Post('/oss/callback')
-  // async ossCallback(@Body() request: ICraeteAttachmentByOssCallback) {
-  //   return this.saveInOssService.ossCallback(request);
-  // }
+  @HttpCode(200)
+  @Post('upload')
+  @UseGuards(JwtGuard)
+  @UseInterceptors(FileInterceptor('file'))
+  async uploadFile(@Body() body: IAttachmentParams, @UploadedFile() file: Express.Multer.File) {
+    return this.service.createAttachmentByLocal(body, file);
+  }
+
+  @Post('oss/callback')
+  async ossCallback(@Body() request: ICraeteAttachmentByOssCallback) {
+    return this.saveInOssService.ossCallback(request);
+  }
+
+  @Post('batch')
+  @UseGuards(JwtGuard, PermissionsGuard)
+  @Permissions('attachment.item-update')
+  batchUpdate(@Body() dto: UpdateAttachmentsInput): Promise<string> {
+    return this.service.batchUpdate(dto);
+  }
 }

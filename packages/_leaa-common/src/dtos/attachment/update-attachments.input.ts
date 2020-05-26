@@ -1,9 +1,8 @@
-import { Field, InputType } from '@nestjs/graphql';
+import { IsNotEmpty } from 'class-validator';
 
-import { UpdateAttachmentInput } from './update-attachment.input';
+import { Attachment } from '@leaa/common/src/entrys';
 
-@InputType()
-export class UpdateAttachmentsInput extends UpdateAttachmentInput {
-  @Field(() => String)
-  uuid!: string;
+export class UpdateAttachmentsInput {
+  @IsNotEmpty()
+  attachments!: Attachment[];
 }

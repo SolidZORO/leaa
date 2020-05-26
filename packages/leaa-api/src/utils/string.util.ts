@@ -1,5 +1,6 @@
 import { v4 } from 'uuid';
 import crypto from 'crypto';
+import { isUUID as nestjsIsUUID } from '@nestjs/common/utils/is-uuid';
 
 export const getSlug = (str: string, secondChoiceStr?: string): string => {
   const trimStr = str ? str.trim().toLowerCase() : str;
@@ -27,6 +28,8 @@ export const randomString = (): string => {
 };
 
 export const uuid = (): string => v4();
+
+export const isUUID = nestjsIsUUID;
 
 export const md5 = (str: string): string => {
   return crypto.createHash('md5').update(str).digest('hex');

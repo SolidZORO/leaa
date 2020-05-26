@@ -28,6 +28,7 @@ import { ActionService } from './action.service';
   dto: {
     create: CreateActionInput,
     update: UpdateActionInput,
+    replace: Action,
   },
 })
 @Controller('/v1/actions')

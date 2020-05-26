@@ -35,6 +35,7 @@ import { SettingService } from './setting.service';
   dto: {
     create: CreateSettingInput,
     update: UpdateSettingInput,
+    replace: Setting,
   },
 })
 @Controller('/v1/settings')

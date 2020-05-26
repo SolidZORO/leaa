@@ -32,6 +32,7 @@ import { TagService } from './tag.service';
   dto: {
     create: CreateTagInput,
     update: UpdateTagInput,
+    replace: Tag,
   },
 })
 @Controller('/v1/tags')

@@ -5,14 +5,13 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 import { CrudRequest } from '@nestjsx/crud';
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException, NotFoundException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
 import { errorMsg, logger } from '@leaa/api/src/utils';
 import { User, Role, Auth } from '@leaa/common/src/entrys';
 import { UpdateUserInput, CreateUserInput } from '@leaa/common/src/dtos/user';
-
-import { UserProperty } from './user.property';
+import { RoleService } from '@leaa/api/src/modules/v1/role/role.service';
 
 const CLS_NAME = 'UserService';
 
@@ -22,7 +21,7 @@ export class UserService extends TypeOrmCrudService<User> {
     @InjectRepository(User) private readonly userRepo: Repository<User>,
     @InjectRepository(Role) private readonly roleRepo: Repository<Role>,
     @InjectRepository(Auth) private readonly authRepo: Repository<Auth>,
-    private readonly userProperty: UserProperty,
+    private readonly roleService: RoleService,
     private readonly jwtService: JwtService,
   ) {
     super(userRepo);
@@ -73,25 +72,23 @@ export class UserService extends TypeOrmCrudService<User> {
   async userByToken(body?: { token?: string }): Promise<User | undefined> {
     const token = body?.token;
 
-    if (!token) throw errorMsg('_error:tokenNotFound');
+    if (!token) throw new NotFoundException();
 
     // @ts-ignore
     const userDecode: { id: any } = this.jwtService.decode(token);
-    if (!userDecode || !userDecode.id) throw errorMsg('_error:tokenError');
 
-    const user = await this.userRepo.findOne(userDecode.id, {
-      relations: ['roles'],
-    });
+    if (!userDecode || !userDecode.id) throw new UnauthorizedException();
 
+    const user = await this.userRepo.findOneOrFail(userDecode.id, { relations: ['roles'] });
+
+    if (!user) throw new UnauthorizedException();
     if (user) {
-      user.flatPermissions = await this.userProperty.flatPermissions(user);
+      user.flatPermissions = await this.roleService.getFlatPermissionsByUser(user);
+
+      delete user.roles;
     }
 
     return user;
-  }
-
-  async userByHashid(): Promise<User | undefined> {
-    return this.userRepo.findOneOrFail('4ab04524-11a1-4cc9-b1bc-069d44d7e3bd');
   }
 
   async createPassword(password: string): Promise<string> {

@@ -37,7 +37,7 @@ import { RoleService } from './role.service';
   dto: {
     create: CreateRoleInput,
     update: UpdateRoleInput,
-    replace: UpdateRoleInput,
+    replace: Role,
   },
 })
 @Controller('/v1/roles')

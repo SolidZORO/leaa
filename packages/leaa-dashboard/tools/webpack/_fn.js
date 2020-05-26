@@ -16,7 +16,7 @@ function getEnvInfo() {
 
 const env = getEnvInfo();
 const getGitVersion = (childProcess.execSync('git rev-parse HEAD') || '').toString().substr(0, 4);
-const getVersion = `v${env.npm_package_version} (${getGitVersion})`;
+const getVersion = `v${process.env.npm_package_version} (${getGitVersion})`;
 
 function getIPAdress() {
   const ifaces = os.networkInterfaces();

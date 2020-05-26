@@ -8,7 +8,6 @@ import { AuthTokenModule } from '@leaa/api/src/modules/v1/auth-token/auth-token.
 import { AttachmentController } from '@leaa/api/src/modules/v1/attachment/attachment.controller';
 
 import { AttachmentService } from '@leaa/api/src/modules/v1/attachment/attachment.service';
-import { AttachmentProperty } from '@leaa/api/src/modules/v1/attachment/attachment.property';
 import { MulterService } from '@leaa/api/src/modules/v1/attachment/multer.service';
 import { SaveInOssService } from '@leaa/api/src/modules/v1/attachment/save-in-oss.service';
 import { SaveInLocalService } from '@leaa/api/src/modules/v1/attachment/save-in-local.service';
@@ -23,7 +22,7 @@ import { SaveInLocalService } from '@leaa/api/src/modules/v1/attachment/save-in-
     AuthTokenModule,
   ],
   controllers: [AttachmentController],
-  providers: [AttachmentService, AttachmentProperty, MulterService, SaveInOssService, SaveInLocalService],
-  exports: [AttachmentService, AttachmentProperty, MulterService, SaveInOssService, SaveInLocalService],
+  providers: [AttachmentService, MulterService, SaveInOssService, SaveInLocalService],
+  exports: [AttachmentService, MulterService, SaveInOssService, SaveInLocalService],
 })
 export class AttachmentModule {}

@@ -11,10 +11,10 @@ import { checkAvailableUser, logger } from '@leaa/api/src/utils';
 import { UserService } from '@leaa/api/src/modules/v1/user/user.service';
 import { ActionService } from '@leaa/api/src/modules/v1/action/action.service';
 import { ICrudRequest } from '@leaa/api/src/interfaces';
-import { UserProperty } from '@leaa/api/src/modules/v1/user/user.property';
 import { IJwtPayload } from '@leaa/common/src/interfaces';
 import moment from 'moment';
 import { ConfigService } from '@leaa/api/src/modules/v1/config/config.service';
+import { RoleService } from '@leaa/api/src/modules/v1/role/role.service';
 
 const CLS_NAME = 'AuthService';
 
@@ -33,9 +33,8 @@ export class AuthService {
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
     private readonly userService: UserService,
-    // private readonly authService: AuthService,
+    private readonly roleService: RoleService,
     private readonly actionService: ActionService,
-    private readonly userProperty: UserProperty,
   ) {}
 
   async login(req: ICrudRequest, body: AuthLoginInput): Promise<User | undefined> {
@@ -65,9 +64,8 @@ export class AuthService {
 
     const user = checkAvailableUser(findUser);
 
-    if (user) {
-      user.flatPermissions = await this.userProperty.flatPermissions(user);
-    }
+    if (!user) throw new UnauthorizedException();
+    if (user) user.flatPermissions = await this.roleService.getFlatPermissionsByUser(user);
     //
     // // log with user_id
     // if (loginAction?.id) await this.actionService.updateAction(gqlCtx, loginAction.id, { user_id: user.id });
@@ -117,6 +115,9 @@ export class AuthService {
     // last, clear Action and Verification
     await this.clearLoginActionAndVerification({ token: body.guestToken });
 
+    // delete something
+    delete user.roles;
+
     return this.addTokenToUser(user);
   }
 
@@ -134,7 +135,7 @@ export class AuthService {
       throw new UnauthorizedException();
     }
 
-    const flatPermissions = await this.userProperty.flatPermissions(user);
+    const flatPermissions = await this.roleService.getFlatPermissionsByUser(user);
 
     return { ...user, flatPermissions };
   }

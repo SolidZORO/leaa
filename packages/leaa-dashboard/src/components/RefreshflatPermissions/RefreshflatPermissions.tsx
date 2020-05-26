@@ -17,9 +17,7 @@ export const RefreshflatPermissions = (props: IProps) => {
     ajax
       .post(`${envConfig.API_URL}/${envConfig.API_VERSION}/users/userByToken`, { token: getAuthToken() })
       .then((res: IHttpRes<User>) => {
-        if (res.data?.data?.flatPermissions && res.data?.data.flatPermissions.length === 0) {
-          removeAuth();
-        }
+        if (res.data?.data?.flatPermissions && res.data?.data.flatPermissions.length === 0) removeAuth();
 
         if (res.data?.data?.flatPermissions && res.data?.data.flatPermissions.length !== 0) {
           setAuthInfo(_.pick(res.data.data, ['id', 'name', 'email', 'flatPermissions', 'avatar_url']));
@@ -28,6 +26,7 @@ export const RefreshflatPermissions = (props: IProps) => {
       .catch((e) => {
         if (e?.message === 'Network Error') return errorMsg(e.message);
         if (e?.message) errorMsg(e.message);
+
         if (removeAuth()) return props.history.push(LOGOUT_REDIRECT_URL);
 
         return false;

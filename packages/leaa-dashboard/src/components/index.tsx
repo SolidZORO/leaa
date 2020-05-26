@@ -37,3 +37,4 @@ export { TableColumnDeleteButton } from './TableColumnDeleteButton/TableColumnDe
 export { TableColumnStatusSwitch } from './TableColumnStatusSwitch/TableColumnStatusSwitch';
 export { TagSearchBox } from './TagSearchBox/TagSearchBox';
 export { SelectTagId } from './SelectTagId/SelectTagId';
+export { AttachmentBox } from './AttachmentBox/AttachmentBox';

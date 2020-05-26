@@ -9,6 +9,8 @@ import { MasterLayout, SuspenseFallback } from '@leaa/dashboard/src/components';
 
 // TIPS: permission: 'ALLOW_PERMISSION' will be always display
 
+const UUID_REGX = '[\\w]{8}-[\\w]{4}-[\\w]{4}-[\\w]{4}-[\\w]{12}';
+
 export const masterRoutes: IRouteItem[] = [
   //
   // -------- [Content Group] --------
@@ -37,7 +39,7 @@ export const masterRoutes: IRouteItem[] = [
         name: 'Edit Article',
         namei18n: '_route:editArticle',
         permission: 'article.item-read',
-        path: '/articles/:id([\\w]{8}-[\\w]{4}-[\\w]{4}-[\\w]{4}-[\\w]{12})',
+        path: `/articles/:id(${UUID_REGX})`,
         icon: 'ri-file-list-2-line',
         LazyComponent: React.lazy(() =>
           import(/* webpackChunkName: 'ArticleEdit' */ '../pages/Article/ArticleEdit/ArticleEdit'),
@@ -71,7 +73,7 @@ export const masterRoutes: IRouteItem[] = [
         name: 'Edit Tag',
         namei18n: '_route:editTag',
         permission: 'tag.item-read',
-        path: '/tags/:id([\\w]{8}-[\\w]{4}-[\\w]{4}-[\\w]{4}-[\\w]{12})',
+        path: `/tags/:id(${UUID_REGX})`,
         icon: 'ri-price-tag-3-line',
         LazyComponent: React.lazy(() => import(/* webpackChunkName: 'TagEdit' */ '../pages/Tag/TagEdit/TagEdit')),
         exact: true,
@@ -117,7 +119,7 @@ export const masterRoutes: IRouteItem[] = [
         name: 'Edit User',
         namei18n: '_route:editUser',
         permission: 'user.item-read',
-        path: '/users/:id([\\w]{8}-[\\w]{4}-[\\w]{4}-[\\w]{4}-[\\w]{12})',
+        path: `/users/:id(${UUID_REGX})`,
         icon: 'ri-user-3-line',
         LazyComponent: React.lazy(() => import(/* webpackChunkName: 'UserEdit' */ '../pages/User/UserEdit/UserEdit')),
         exact: true,
@@ -149,7 +151,7 @@ export const masterRoutes: IRouteItem[] = [
         name: 'Edit Role',
         namei18n: '_route:editRole',
         permission: 'role.item-read',
-        path: '/roles/:id([\\w]{8}-[\\w]{4}-[\\w]{4}-[\\w]{4}-[\\w]{12})',
+        path: `/roles/:id(${UUID_REGX})`,
         icon: 'ri-vip-crown-2-line',
         LazyComponent: React.lazy(() => import(/* webpackChunkName: 'RoleEdit' */ '../pages/Role/RoleEdit/RoleEdit')),
         exact: true,
@@ -181,7 +183,7 @@ export const masterRoutes: IRouteItem[] = [
         name: 'Edit Permission',
         namei18n: '_route:editPermission',
         permission: 'permission.item-read',
-        path: '/permissions/:id([\\w]{8}-[\\w]{4}-[\\w]{4}-[\\w]{4}-[\\w]{12})',
+        path: `/permissions/:id(${UUID_REGX})`,
         icon: 'ri-lock-2-line',
         LazyComponent: React.lazy(() =>
           import(/* webpackChunkName: 'PermissionEdit' */ '../pages/Permission/PermissionEdit/PermissionEdit'),
@@ -227,7 +229,7 @@ export const masterRoutes: IRouteItem[] = [
         name: 'Edit Ax',
         namei18n: '_route:editAx',
         permission: 'ax.item-read',
-        path: '/axs/:id([\\w]{8}-[\\w]{4}-[\\w]{4}-[\\w]{4}-[\\w]{12})',
+        path: `/axs/:id(${UUID_REGX})`,
         icon: 'ri-paint-brush-line',
         LazyComponent: React.lazy(() => import(/* webpackChunkName: 'AxEdit' */ '../pages/Ax/AxEdit/AxEdit')),
         exact: true,
@@ -263,7 +265,7 @@ export const masterRoutes: IRouteItem[] = [
     name: 'Edit Category',
     namei18n: '_route:editCategory',
     permission: 'category.item-read',
-    path: '/categories/:id([\\w]{8}-[\\w]{4}-[\\w]{4}-[\\w]{4}-[\\w]{12})',
+    path: `/categories/:id(${UUID_REGX})`,
     icon: 'ri-function-line',
     LazyComponent: React.lazy(() =>
       import(/* webpackChunkName: 'CategoryEdit' */ '../pages/Category/CategoryEdit/CategoryEdit'),

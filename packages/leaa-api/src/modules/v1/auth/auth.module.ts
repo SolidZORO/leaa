@@ -6,7 +6,6 @@ import { AuthTokenModule } from '@leaa/api/src/modules/v1/auth-token/auth-token.
 import { User, Role, Permission, Auth, Verification, Action } from '@leaa/common/src/entrys';
 
 import { UserService } from '@leaa/api/src/modules/v1/user/user.service';
-import { UserProperty } from '@leaa/api/src/modules/v1/user/user.property';
 import { RoleService } from '@leaa/api/src/modules/v1/role/role.service';
 import { PermissionService } from '@leaa/api/src/modules/v1/permission/permission.service';
 
@@ -29,12 +28,10 @@ import { AttachmentModule } from '@leaa/api/src/modules/v1/attachment/attachment
     JwtStrategy,
     ActionService,
     //
-    // AuthResolver222222222,
     AuthService,
     //
     // UserResolver,
     UserService,
-    UserProperty,
     //
     RoleService,
     PermissionService,

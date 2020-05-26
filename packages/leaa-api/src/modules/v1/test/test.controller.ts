@@ -1,12 +1,13 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Logger } from '@nestjs/common';
 import { Zan, Role } from '@leaa/common/src/entrys';
-import { Repository } from 'typeorm';
+import { Repository, getConnectionOptions, getMetadataArgsStorage } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { TestService } from '@leaa/api/src/modules/v1/test/test.service';
 import { RoleService } from '@leaa/api/src/modules/v1/role/role.service';
 import { req } from '@leaa/api/src/modules/v1/seed/__seed__.mock';
 import { CrudRequest } from '@nestjsx/crud';
+import { ConfigService } from '@leaa/api/src/modules/v1/config/config.service';
 
 // import { JwtGuard } from '@leaa/api/src/guards';
 
@@ -15,6 +16,7 @@ export class TestController {
   constructor(
     @InjectRepository(Zan) private readonly zanRepository: Repository<Zan>,
     @InjectRepository(Role) private readonly roleRepository: Repository<Role>,
+    readonly configService: ConfigService,
     private readonly testService: TestService,
     private readonly roleService: RoleService,
   ) {}
@@ -42,5 +44,11 @@ export class TestController {
     //
     // // return 'metadata';
     // return nextRole;
+  }
+
+  @Get('/orm')
+  async orm() {
+    // console.log(this.configService.API_URL);
+    return this.configService.API_URL;
   }
 }

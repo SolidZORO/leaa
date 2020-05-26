@@ -34,7 +34,7 @@ import { PermissionService } from './permission.service';
   dto: {
     create: CreatePermissionInput,
     update: UpdatePermissionInput,
-    replace: UpdatePermissionInput,
+    replace: Permission,
   },
 })
 @Controller('/v1/permissions')

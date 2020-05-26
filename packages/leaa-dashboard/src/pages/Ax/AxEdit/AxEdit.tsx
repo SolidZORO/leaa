@@ -2,14 +2,14 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from 'antd';
 
-import { Ax } from '@leaa/common/src/entrys';
+import { Ax, Attachment } from '@leaa/common/src/entrys';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { UpdateAxInput } from '@leaa/common/src/dtos/ax';
 import { IPage, ICommenFormRef, ISubmitData, IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
 import { msg, errorMsg, ajax } from '@leaa/dashboard/src/utils';
 
 import { envConfig } from '@leaa/dashboard/src/configs';
-import { PageCard, HtmlMeta, Rcon, SubmitBar } from '@leaa/dashboard/src/components';
+import { PageCard, HtmlMeta, Rcon, SubmitBar, AttachmentBox } from '@leaa/dashboard/src/components';
 
 import { AxInfoForm } from '../_components/AxInfoForm/AxInfoForm';
 
@@ -26,6 +26,8 @@ export default (props: IPage) => {
   const [item, setItem] = useState<Ax | undefined>();
   const [itemLoading, setItemLoading] = useState(false);
   const [submitLoading, setSubmitLoading] = useState(false);
+
+  const [attas, setAttas] = useState<Attachment[]>();
 
   const onFetchItem = () => {
     setItemLoading(true);
@@ -46,6 +48,7 @@ export default (props: IPage) => {
 
     const data: ISubmitData<UpdateAxInput> = {
       ...infoData,
+      attachments: attas,
     };
 
     setSubmitLoading(true);
@@ -68,6 +71,22 @@ export default (props: IPage) => {
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
       <AxInfoForm item={item} loading={itemLoading} ref={infoFormRef} />
+
+      <AttachmentBox
+        attachments={item?.attachments}
+        type="list"
+        title={t('_lang:galleryPc')}
+        disableMessage
+        onChangeAttasCallback={setAttas}
+        listHeight={500}
+        attachmentParams={{
+          type: 'image',
+          moduleId: item?.id,
+          moduleName: 'ax',
+          typeName: 'gallery',
+          typePlatform: 'pc',
+        }}
+      />
 
       <SubmitBar full>
         <Button

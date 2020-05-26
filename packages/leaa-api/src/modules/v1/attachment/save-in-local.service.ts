@@ -13,19 +13,18 @@ import {
   IAttachmentParams,
 } from '@leaa/common/src/interfaces';
 import { ConfigService } from '@leaa/api/src/modules/v1/config/config.service';
-import { AttachmentProperty } from '@leaa/api/src/modules/v1/attachment/attachment.property';
 import { Attachment } from '@leaa/common/src/entrys';
-import { logger, isAt2x } from '@leaa/api/src/utils';
+import { logger, isAt2x, uuid, buildUrl, buildUrlAt2x } from '@leaa/api/src/utils';
 import { attachmentConfig } from '@leaa/api/src/configs';
+import { isUUID } from '@nestjs/common/utils/is-uuid';
 
 const CLS_NAME = 'SaveInLocalService';
 
 @Injectable()
 export class SaveInLocalService {
   constructor(
-    @InjectRepository(Attachment) private readonly attachmentRepository: Repository<Attachment>,
+    @InjectRepository(Attachment) private readonly attachmentRepo: Repository<Attachment>,
     private readonly configService: ConfigService,
-    private readonly attachmentProperty: AttachmentProperty,
   ) {}
 
   async getSignature(): Promise<ISaveInLocalSignature> {
@@ -53,7 +52,7 @@ export class SaveInLocalService {
     options?: {
       onlySaveFile?: boolean;
     },
-  ): Promise<{ attachment: Attachment } | undefined> {
+  ): Promise<Attachment | undefined> {
     if (!file) {
       const message = 'Not Found Attachment';
 
@@ -84,7 +83,7 @@ export class SaveInLocalService {
     const filename = file.filename.replace('_2x', '');
     const ext = path.extname(file.filename);
     const title = path.basename(file.originalname, ext).replace('_2x', '');
-    const uuid = path.basename(filename, ext).replace('_2x', '');
+    const id = filename.replace(ext, '');
 
     if (isImage && at2x) {
       await this.saveAt2xToAt1xByLocal(file, width, height);
@@ -95,7 +94,7 @@ export class SaveInLocalService {
     }
 
     const attachmentData: IAttachmentCreateFieldByLocal = {
-      uuid,
+      id: isUUID(id) ? id : uuid(),
       title,
       alt: title,
       type: file.mimetype ? `${file.mimetype.split('/')[0]}` : 'no-mime',
@@ -116,15 +115,11 @@ export class SaveInLocalService {
       in_local: 1,
     };
 
-    const attachment = await this.attachmentRepository.save({ ...attachmentData });
-
     // eslint-disable-next-line consistent-return
-    return {
-      attachment: {
-        ...attachment,
-        url: this.attachmentProperty.url(attachment),
-        urlAt2x: this.attachmentProperty.urlAt2x(attachment),
-      },
-    };
+    return this.attachmentRepo.save({
+      ...attachmentData,
+      url: buildUrl(attachmentData as Attachment),
+      urlAt2x: buildUrlAt2x(attachmentData as Attachment),
+    });
   }
 }

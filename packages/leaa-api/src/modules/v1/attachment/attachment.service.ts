@@ -1,10 +1,15 @@
 import fs from 'fs';
+import _ from 'lodash';
 import { Express } from 'express';
 import { Repository, In } from 'typeorm';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Attachment } from '@leaa/common/src/entrys';
-import { DeleteAttachmentsObject } from '@leaa/common/src/dtos/attachment';
+import {
+  DeleteAttachmentsObject,
+  UpdateAttachmentInput,
+  UpdateAttachmentsInput,
+} from '@leaa/common/src/dtos/attachment';
 import { ISaveInOssSignature, ISaveInLocalSignature, IAttachmentParams } from '@leaa/common/src/interfaces';
 import { logger, getAt2xPath, filenameAt1xToAt2x } from '@leaa/api/src/utils';
 import { ConfigService } from '@leaa/api/src/modules/v1/config/config.service';
@@ -28,17 +33,13 @@ export class AttachmentService extends TypeOrmCrudService<Attachment> {
   }
 
   getSignature(): Promise<ISaveInOssSignature | ISaveInLocalSignature> | null {
-    if (this.configService.ATTACHMENT_SAVE_IN_OSS) {
-      return this.saveInOssServer.getSignature();
-    }
+    if (this.configService.ATTACHMENT_SAVE_IN_OSS) return this.saveInOssServer.getSignature();
+    if (this.configService.ATTACHMENT_SAVE_IN_LOCAL) return this.saveInLocalServer.getSignature();
 
-    if (this.configService.ATTACHMENT_SAVE_IN_LOCAL) {
-      return this.saveInLocalServer.getSignature();
-    }
+    const errorMsg = 'Signature Missing SAVE_IN... Params';
 
-    logger.warn('Signature Missing SAVE_IN... Params', CLS_NAME);
-
-    return null;
+    logger.warn(errorMsg, CLS_NAME);
+    throw new NotFoundException(errorMsg);
   }
 
   // async attachments(args: IAttachmentsArgs): Promise<AttachmentsWithPaginationObject> {
@@ -108,11 +109,21 @@ export class AttachmentService extends TypeOrmCrudService<Attachment> {
   //   });
   // }
 
-  async createAttachmentByLocal(
-    body: IAttachmentParams,
-    file: Express.Multer.File,
-  ): Promise<{ attachment: Attachment } | undefined> {
+  async createAttachmentByLocal(body: IAttachmentParams, file: Express.Multer.File): Promise<Attachment | undefined> {
     return this.saveInLocalServer.createAttachmentByLocal(body, file);
+  }
+
+  async batchUpdate(dto: UpdateAttachmentsInput): Promise<string> {
+    const safeAttas = dto.attachments.map((att) => _.pick(att, ['id', 'link', 'status', 'title', 'sort']));
+    const batchUpdate = safeAttas.map((att) => this.attachmentRepo.update(att.id, att));
+
+    return Promise.all(batchUpdate)
+      .then((data) => {
+        return `Batch Updated ${data.length} Attachment`;
+      })
+      .catch(() => {
+        throw new NotFoundException();
+      });
   }
 
   // async updateAttachment(uuid: string, args: UpdateAttachmentInput): Promise<Attachment | undefined> {
@@ -157,8 +168,8 @@ export class AttachmentService extends TypeOrmCrudService<Attachment> {
   //   };
   // }
 
-  async deleteAttachments(uuid: string[]): Promise<DeleteAttachmentsObject | undefined> {
-    const prevItems = await this.attachmentRepo.find({ uuid: In(uuid) });
+  async deleteAttachments(ids: string[]): Promise<DeleteAttachmentsObject | undefined> {
+    const prevItems = await this.attachmentRepo.find({ id: In(ids) });
     if (!prevItems) throw new NotFoundException();
 
     const nextItem = await this.attachmentRepo.remove(prevItems);
@@ -199,10 +210,10 @@ export class AttachmentService extends TypeOrmCrudService<Attachment> {
       }
     });
 
-    logger.log(`delete all-file ${uuid} successful: ${JSON.stringify(nextItem)}\n\n`, CLS_NAME);
+    logger.log(`delete all-file ${ids} successful: ${JSON.stringify(nextItem)}\n\n`, CLS_NAME);
 
     return {
-      items: nextItem.map((i) => i.uuid),
+      items: nextItem.map((i) => i.id),
     };
   }
 }

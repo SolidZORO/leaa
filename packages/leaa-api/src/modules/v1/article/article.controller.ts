@@ -39,6 +39,7 @@ import { ArticleService } from './article.service';
   dto: {
     create: CreateArticleInput,
     update: UpdateArticleInput,
+    replace: Article,
   },
 })
 @Controller('/v1/articles')

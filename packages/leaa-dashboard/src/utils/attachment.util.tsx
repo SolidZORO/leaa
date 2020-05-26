@@ -2,16 +2,18 @@ import _ from 'lodash';
 import React from 'react';
 import axios from 'axios';
 import * as uuid from 'uuid';
-import { message } from 'antd';
+// import { message } from 'antd';
 import { Translation } from 'react-i18next';
 
 import { ISaveInOssSignature, ISaveInLocalSignature } from '@leaa/common/src/interfaces';
-import { getAuthToken } from '@leaa/dashboard/src/utils/auth.util';
 import { envConfig } from '@leaa/dashboard/src/configs';
+import { IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
 
-interface ISignatureResult {
-  data: ISaveInOssSignature | ISaveInLocalSignature;
-}
+import { ajax } from './ajax.util';
+import { errorMsg, msg } from './msg.util';
+import { getAuthToken } from './auth.util';
+
+declare type ISignatureResult = ISaveInOssSignature | ISaveInLocalSignature | undefined;
 
 export const isAt2x = (originalname: string): boolean => /[＠@_]2x/i.test(originalname);
 
@@ -23,34 +25,39 @@ export const getSaveFilename = (originalname: string): string => {
 };
 
 export const getUploadSignature = async () => {
-  const signatureResult: ISignatureResult = await axios.get(
-    `${envConfig.API_URL}/${envConfig.API_VERSION}/attachments/signature`,
-  );
+  return ajax
+    .get(`${envConfig.API_URL}/${envConfig.API_VERSION}/attachments/signature`)
+    .then((res: IHttpRes<ISignatureResult>) => {
+      console.log(res.data.data);
 
-  if (!signatureResult || !signatureResult.data || !signatureResult.data || !signatureResult.data.uploadEndPoint) {
-    message.error(<Translation>{(t) => t('_lang:uploadError')}</Translation>);
-  }
+      if (res.data?.data && !_.isEmpty(res.data.data)) return res.data.data;
 
-  return signatureResult;
+      return undefined;
+    })
+    .catch((err: IHttpError) => {
+      // console.log(err.response?.data?.message || err.message);
+      errorMsg(err.response?.data?.message || err.message);
+    });
 };
 
-export const uploadFile = (
-  file: File,
-  signatureResult: ISignatureResult,
-  attachmentParams: any,
+interface IUploadFile {
+  signature: ISignatureResult;
+  attachmentParams: any;
+  ignoreMsg?: boolean;
   onCallback?: {
     onUploadSuccess?: (event: any) => void;
     onUploadProgress?: (event: any) => void;
     onUploadFail?: (event: any) => void;
     onUploadCatch?: (event: any) => void;
-  },
-) => {
-  const token = getAuthToken();
+  };
+}
+export const uploadFile = (file: File, { signature, ignoreMsg, attachmentParams, onCallback }: IUploadFile) => {
+  // const token = getAuthToken();
   const formData = new FormData();
 
   //
   // -------- OSS --------
-  if (signatureResult.data.saveIn === 'oss') {
+  if (signature?.saveIn === 'oss') {
     const saveFilename = getSaveFilename(file.name);
     const attachmentParamsSnakeCase: {} = {};
 
@@ -59,34 +66,33 @@ export const uploadFile = (
       attachmentParamsSnakeCase[`x:${_.snakeCase(k)}`] = v;
     });
 
-    _.map({ ...signatureResult.data, ...attachmentParamsSnakeCase }, (v, k) => formData.append(k, `${v}`));
+    _.map({ ...signature, ...attachmentParamsSnakeCase }, (v, k) => formData.append(k, `${v}`));
 
     // eslint-disable-next-line no-template-curly-in-string
     formData.append('x:originalname', file.name);
     formData.append('success_action_status', '200');
-    formData.append('key', `${signatureResult.data.saveDirPath}${saveFilename}`);
+    formData.append('key', `${signature?.saveDirPath}${saveFilename}`);
   }
 
   //
   // -------- LOCAL --------
-  if (signatureResult.data.saveIn === 'local') {
-    _.map({ ...signatureResult.data, ...attachmentParams }, (v, k) => formData.append(k, `${v}`));
+  if (signature?.saveIn === 'local') {
+    _.map({ ...signature, ...attachmentParams }, (v, k) => formData.append(k, `${v}`));
   }
 
   formData.append('file', file);
 
-  return axios
-    .post(signatureResult.data.uploadEndPoint, formData, {
-      headers: { Authorization: token ? `Bearer ${token}` : '' },
+  if (!signature?.uploadEndPoint) return errorMsg('missing uploadEndPoint');
+
+  return ajax
+    .post(signature?.uploadEndPoint, formData, {
       onUploadProgress: (e) => {
-        if (onCallback && onCallback.onUploadProgress) {
-          onCallback.onUploadProgress(e);
-        }
+        if (onCallback && onCallback.onUploadProgress) onCallback.onUploadProgress(e);
       },
     })
     .then((response) => {
       if (response.status === 203) {
-        message.error('Callback Failed');
+        errorMsg('Callback Failed');
 
         if (onCallback && onCallback.onUploadFail) {
           onCallback.onUploadFail(response);
@@ -96,22 +102,17 @@ export const uploadFile = (
       }
 
       if (response.status !== 200) {
-        message.error(response.statusText);
+        errorMsg(response.statusText);
 
         return;
       }
 
-      message.success(<Translation>{(t) => t('_lang:uploadSuccessfully')}</Translation>);
-
-      if (onCallback && onCallback.onUploadSuccess) {
-        onCallback.onUploadSuccess(response);
-      }
+      if (ignoreMsg) msg(<Translation>{(t) => t('_lang:uploadSuccessfully')}</Translation>);
+      if (onCallback && onCallback.onUploadSuccess) onCallback.onUploadSuccess(response);
     })
     .catch((err: Error) => {
-      message.info(err.message);
+      errorMsg(err.message);
 
-      if (onCallback && onCallback.onUploadCatch) {
-        onCallback.onUploadCatch(err);
-      }
+      if (onCallback && onCallback.onUploadCatch) onCallback.onUploadCatch(err);
     });
 };

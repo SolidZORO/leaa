@@ -21,10 +21,9 @@ import { AxService } from './ax.service';
     maxLimit: 1000,
     alwaysPaginate: true,
     sort: [{ field: 'created_at', order: 'DESC' }],
-    // join: {
-    //   tags: { eager: true },
-    //   categories: { eager: true },
-    // },
+    join: {
+      attachments: { eager: true },
+    },
   },
   routes: {
     // getManyBase: { decorators: [Permissions('ax.list-read')] },
@@ -39,6 +38,7 @@ import { AxService } from './ax.service';
   dto: {
     create: CreateAxInput,
     update: UpdateAxInput,
+    replace: Ax,
   },
 })
 @Controller('/v1/axs')

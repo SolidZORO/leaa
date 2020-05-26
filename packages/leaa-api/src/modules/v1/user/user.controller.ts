@@ -42,6 +42,7 @@ import { UserService } from './user.service';
   dto: {
     create: CreateUserInput,
     update: UpdateUserInput,
+    replace: User,
   },
 })
 @Controller('/v1/users')
@@ -72,7 +73,6 @@ export class UserController implements CrudController<User> {
   //
   //
 
-  @HttpCode(200)
   @Post('userByToken')
   async userByToken(@Req() req: ICrudRequest, @Body() body: any): Promise<any> {
     return this.service.userByToken(body);
