@@ -3,10 +3,11 @@ import React, { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { PlusOutlined } from '@ant-design/icons';
 
-import { uploadFile, getUploadSignature } from '@leaa/dashboard/src/utils';
 import { Attachment } from '@leaa/common/src/entrys';
 import { IAttachmentParams } from '@leaa/common/src/interfaces';
+
 import { IHttpRes } from '@leaa/dashboard/src/interfaces';
+import { uploadFile, getUploadSignature } from '@leaa/dashboard/src/utils';
 
 import style from './style.module.less';
 

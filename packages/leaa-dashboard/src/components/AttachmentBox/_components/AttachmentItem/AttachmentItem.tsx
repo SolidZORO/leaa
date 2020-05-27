@@ -13,12 +13,13 @@ import {
 import { XYCoord } from 'dnd-core';
 import { Input, Popover } from 'antd';
 import { useTranslation } from 'react-i18next';
-import { Attachment } from '@leaa/common/src/entrys';
-import { SwitchNumber, Rcon, ConfirmDeleteButton } from '@leaa/dashboard/src/components';
-import { ajax, errorMsg } from '@leaa/dashboard/src/utils';
 
-import { envConfig } from '@leaa/dashboard/src/configs';
+import { Attachment } from '@leaa/common/src/entrys';
+
 import { IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
+import { SwitchNumber, Rcon, ConfirmDeleteButton } from '@leaa/dashboard/src/components';
+import { envConfig } from '@leaa/dashboard/src/configs';
+import { ajax, errorMsg } from '@leaa/dashboard/src/utils';
 
 import style from './style.module.less';
 
@@ -102,16 +103,11 @@ const AttachmentItemInner = forwardRef((props: IProps, ref: React.Ref<any>) => {
     <div
       ref={ref}
       className={cx(style['attachmentItemWrapper'], {
-        // Fucking!! Warning: Unsupported style property wrapperItem-card. Did you mean wrapperItemCard?
         [style['wrapperItemList']]: props.type === 'list',
         [style['wrapperItemCard']]: props.type === 'card',
         [style['wrapperItemCircle']]: props.circle,
       })}
-      style={{
-        ...style,
-        // stylelint-disable-line
-        opacity,
-      }}
+      style={{ ...style, opacity }}
     >
       <div className={cx(style['toolbar'])} style={{ height: cardHeight }}>
         <ConfirmDeleteButton loading={deleteLoading} onClick={() => onDelete(props.attachment?.id)} />
@@ -145,35 +141,22 @@ const AttachmentItemInner = forwardRef((props: IProps, ref: React.Ref<any>) => {
       {props.type === 'list' && (
         <>
           <div ref={cardRef} className={style['handler']}>
-            <Input
-              className={style['sort']}
-              value={attachment?.sort}
-              disabled
-              // onBlur={(e) => onChangeAttachmentField('sort', e)}
-              // defaultValue={attachment?.sort}
-              // onChange={(e) => onChangeAttachmentField('sort', e)}
-              // onPressEnter={(e) => onChangeAttachmentField('sort', e)}
-              placeholder={t('_lang:sort')}
-            />
+            <Input className={style['sort']} value={attachment?.sort} disabled placeholder={t('_lang:sort')} />
           </div>
 
           <Input
             className={style['title']}
-            // value={attachment?.title}
             defaultValue={attachment?.title}
             onBlur={(e) => onChangeAttachmentField('title', e)}
             onPressEnter={(e) => onChangeAttachmentField('title', e)}
-            // onChange={(e) => onChangeAttachmentField('title', e)}
             placeholder={t('_lang:title')}
           />
 
           <Input
             className={style['link']}
-            // value={attachment?.link || undefined}
             defaultValue={attachment?.link || undefined}
             onBlur={(e) => onChangeAttachmentField('link', e)}
             onPressEnter={(e) => onChangeAttachmentField('link', e)}
-            // onChange={(e) => onChangeAttachmentField('link', e)}
             placeholder={t('_lang:link')}
           />
 
@@ -188,22 +171,15 @@ export const AttachmentItem = DropTarget(
   'card',
   {
     hover(props: IProps, monitor: DropTargetMonitor, component: IAttachmentInstance) {
-      if (!component) {
-        return;
-      }
+      if (!component) return;
 
       const node = component.getNode();
-
-      if (!node) {
-        return;
-      }
+      if (!node) return;
 
       const dragIndex = monitor.getItem().index;
       const hoverIndex = props.index;
 
-      if (dragIndex === hoverIndex) {
-        return;
-      }
+      if (dragIndex === hoverIndex) return;
 
       // Determine rectangle on screen
       const hoverBoundingRect = node.getBoundingClientRect();
@@ -211,13 +187,8 @@ export const AttachmentItem = DropTarget(
       const clientOffset = monitor.getClientOffset();
       const hoverClientY = (clientOffset as XYCoord).y - hoverBoundingRect.top;
 
-      if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
-        return;
-      }
-
-      if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-        return;
-      }
+      if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) return;
+      if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) return;
 
       props.onStopMoveAttaCallback(false);
       props.onMoveAttaCallback(dragIndex, hoverIndex);
@@ -237,9 +208,7 @@ export const AttachmentItem = DropTarget(
     'card',
     {
       beginDrag: (props: IProps) => {
-        if (props.type === 'card') {
-          return undefined;
-        }
+        if (props.type === 'card') return undefined;
 
         return {
           id: props.attachment?.id,
@@ -249,7 +218,7 @@ export const AttachmentItem = DropTarget(
     },
     (connect: DragSourceConnector, monitor: DragSourceMonitor) => ({
       connectDragSource: connect.dragSource(),
-      isDragging: monitor.isDragging(),
+      // isDragging: monitor.isDragging(),
     }),
   )(AttachmentItemInner),
 );

@@ -2,17 +2,15 @@ import _ from 'lodash';
 import cx from 'classnames';
 import { useTranslation } from 'react-i18next';
 import React, { useState, useEffect } from 'react';
-// import { useQuery, useMutation } from '@apollo/react-hooks';
 import { Tooltip } from 'antd';
-// import { GET_ATTACHMENTS, UPDATE_ATTACHMENTS } from '@leaa/dashboard/src/graphqls';
+
 import { IAttachmentParams } from '@leaa/common/src/interfaces';
-
 import { Attachment } from '@leaa/common/src/entrys';
-import { removeLangSpace, msg, ajax, errorMsg } from '@leaa/dashboard/src/utils';
 
+import { removeLangSpace, ajax, errorMsg } from '@leaa/dashboard/src/utils';
 import { envConfig } from '@leaa/dashboard/src/configs';
 import { FormCard } from '@leaa/dashboard/src/components';
-import { IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
+import { IHttpError } from '@leaa/dashboard/src/interfaces';
 
 import { AttachmentList } from './_components/AttachmentList/AttachmentList';
 import { AttachmentDropzone } from './_components/AttachmentDropzone/AttachmentDropzone';
@@ -129,7 +127,6 @@ export const AttachmentBox = (props: IProps) => {
           attachments={attachments}
           onDeleteAttaCallback={onDeletedAtta}
           onChangeAttasCallback={onChangeAttas}
-          // onChangeAttaCallback={onChangeAtta}
           type={type}
           listHeight={listHeight}
           cardHeight={cardHeight}
