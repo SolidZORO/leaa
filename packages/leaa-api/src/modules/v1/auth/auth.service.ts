@@ -7,14 +7,14 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 import { User, Verification, Action, Auth } from '@leaa/common/src/entrys';
 import { AuthLoginInput } from '@leaa/common/src/dtos/auth';
-import { checkAvailableUser, logger } from '@leaa/api/src/utils';
+import { checkUserIsEnable, logger } from '@leaa/api/src/utils';
 import { ActionService } from '@leaa/api/src/modules/v1/action/action.service';
 import { ICrudRequest } from '@leaa/api/src/interfaces';
 import { IJwtPayload } from '@leaa/common/src/interfaces';
 import moment from 'moment';
 import { ConfigService } from '@leaa/api/src/modules/v1/config/config.service';
 import { RoleService } from '@leaa/api/src/modules/v1/role/role.service';
-import { NotFoundIpException } from '@leaa/api/src/exceptions';
+import { NotFoundIpException, NotFoundTokenException, NotFoundUserException } from '@leaa/api/src/exceptions';
 
 const CLS_NAME = 'AuthService';
 
@@ -60,9 +60,9 @@ export class AuthService {
       account,
     });
 
-    const user = checkAvailableUser(findUser);
+    const user = checkUserIsEnable(findUser);
 
-    if (!user) throw new UnauthorizedException();
+    if (!user) throw new NotFoundTokenException();
     if (user) user.flatPermissions = await this.roleService.getFlatPermissionsByUser(user);
     //
     // // log with user_id
@@ -124,20 +124,28 @@ export class AuthService {
     return this.addTokenToUser(user);
   }
 
-  // MUST DO minimal cost query
   async validateUserByPayload(jwtPayload: IJwtPayload): Promise<User | undefined> {
-    if (!jwtPayload) throw new UnauthorizedException();
-    if (!jwtPayload.iat || !jwtPayload.exp || !jwtPayload.id) throw new UnauthorizedException();
+    if (!jwtPayload) throw new NotFoundTokenException();
+    if (!jwtPayload.iat || !jwtPayload.exp || !jwtPayload.id) throw new NotFoundTokenException();
 
-    const hasUser = await this.userRepo.findOne({
+    let user = await this.userRepo.findOne({
+      select: ['id', 'status', 'is_admin', 'name', 'avatar_url', 'last_token_at'],
       relations: ['roles'],
       where: { id: jwtPayload.id },
     });
 
-    const user = checkAvailableUser(hasUser);
+    if (!user) throw new NotFoundUserException();
 
-    // @TIPS IMPORTANT! if user info is changed, Compare jwt `iattz` and `last_token_at`
-    // 对比 jwtPayload.iattz（原来的 iat 可能会存在客户端与服务器 tz 不相同带问题，所以这里加了一个带 timezome 的 iat）
+    user = checkUserIsEnable(user);
+
+    /**
+     * IMPORTANT! if user info is changed, Compare jwt `iattz` and `last_token_at`
+     *
+     * @ideaNotes
+     * 对比 jwtPayload.iattz（jwt 默认的 iat 会存在 clinet 与 server 时间戳不相等问题，所以给 jwt 加了一个带 timezome 的 iat）
+     * 修改 user 的 password、status、is_admin 都会更新 last_token_at 为 now()，这样保证 last_token_at 一定会大于 iattz
+     * 这样用户在下一次访问的可以顺利被弹出用 : > 此方案不动用 DB 但做到了类似 backlist 的方案，非常环保
+     */
     if (moment(jwtPayload.iattz).isBefore(moment(user.last_token_at))) throw new UnauthorizedException();
 
     const flatPermissions = await this.roleService.getFlatPermissionsByUser(user);
@@ -151,7 +159,7 @@ export class AuthService {
   async userByToken(body?: { token?: string }): Promise<User | undefined> {
     const token = body?.token;
 
-    if (!token) throw new NotFoundException();
+    if (!token) throw new NotFoundTokenException();
 
     // @ts-ignore
     const jwtPayload: { id: any } = this.jwtService.decode(token);
@@ -165,6 +173,7 @@ export class AuthService {
       action: In(['login', 'guest']),
       token: In([token, 'NO-TOKEN']),
     });
+
     await this.verificationRepo.delete({ token });
   }
 
@@ -180,7 +189,10 @@ export class AuthService {
 
   async createToken(user: User): Promise<{ authExpiresIn: number; authToken: string }> {
     // iattz = iat timezone
-    const jwtPayload: IJwtPayload = { id: user.id, iattz: moment().toISOString() };
+    const jwtPayload: IJwtPayload = {
+      id: user.id,
+      iattz: moment().toISOString(),
+    };
 
     // https://github.com/auth0/node-jsonwebtoken#jwtsignpayload-secretorprivatekey-options-callback
     const authExpiresIn = this.configService.SERVER_COOKIE_EXPIRES_SECOND;
@@ -317,10 +329,10 @@ export class AuthService {
 // import { AuthsWithPaginationObject, CreateAuthInput } from '@leaa/common/src/dtos/auth';
 // import { IJwtPayload } from '@leaa/common/src/interfaces';
 // import { ConfigService } from '@leaa/api/src/modules/config/config.service';
-// import { checkAvailableUser, argsFormat, calcQbPageInfo, commonDelete, errorMsg } from '@leaa/api/src/utils';
+// import { checkUserIsEnable, argsFormat, calcQbPageInfo, commonDelete, errorMsg } from '@leaa/api/src/utils';
 // import { User, Verification, Action, Auth } from '@leaa/common/src/entrys';
 // import { AuthLoginInput } from '@leaa/common/src/dtos/auth';
-// import { checkAvailableUser, logger } from '@leaa/api/src/utils';
+// import { checkUserIsEnable, logger } from '@leaa/api/src/utils';
 // import { UserService } from '@leaa/api/src/modules/user/user.service';
 // import { permissionConfig } from '@leaa/api/src/configs';
 // import { AuthService } from '@leaa/api/src/modules/auth/auth.service';
@@ -495,7 +507,7 @@ export class AuthService {
 //     account,
 //   });
 //
-//   const user = checkAvailableUser(findUser);
+//   const user = checkUserIsEnable(findUser);
 //
 //   // IMPORTANT! if user info is changed, Compare `iat` and `last_token_at`
 //   if (moment(payload.iattz).isBefore(moment(user.last_token_at))) {

@@ -23,20 +23,23 @@ export class User extends Base {
   @Column({ type: 'int', default: 0 })
   status?: number;
 
-  @Exclude({ toPlainOnly: true })
+  @Exclude()
   @Column({ type: 'varchar', length: 64, select: false })
   password!: string;
 
   @Column({ type: 'int', default: 0 })
   is_admin?: number;
 
-  @Column({ type: 'varchar', length: 32, nullable: true })
+  @Exclude()
+  @Column({ type: 'varchar', length: 32, nullable: true, select: false })
   last_login_ip?: string;
 
-  @Column({ type: 'timestamp', nullable: true })
+  @Exclude()
+  @Column({ type: 'timestamp', nullable: true, select: false })
   last_login_at?: Date;
 
-  @Column({ type: 'timestamp', nullable: true })
+  @Exclude()
+  @Column({ type: 'timestamp', nullable: true, select: false })
   last_token_at?: Date;
 
   // @Exclude({ toPlainOnly: true })

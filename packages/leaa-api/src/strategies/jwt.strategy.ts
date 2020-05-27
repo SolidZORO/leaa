@@ -6,7 +6,7 @@ import { JwtService } from '@nestjs/jwt';
 import { IJwtPayload } from '@leaa/common/src/interfaces';
 import { ConfigService } from '@leaa/api/src/modules/v1/config/config.service';
 import { AuthService } from '@leaa/api/src/modules/v1/auth/auth.service';
-import { checkAvailableUser } from '@leaa/api/src/utils';
+import { checkUserIsEnable } from '@leaa/api/src/utils';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
@@ -29,6 +29,6 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
 
     if (!user) return new UnauthorizedException();
 
-    return checkAvailableUser(user);
+    return checkUserIsEnable(user);
   }
 }
