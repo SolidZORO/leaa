@@ -107,7 +107,6 @@ export default (props: IPage) => {
           routerName={API_PATH}
           columnFields={[
             'id',
-            'name',
             {
               title: t('_lang:name'),
               dataIndex: 'name',
@@ -127,6 +126,7 @@ export default (props: IPage) => {
                 </Link>
               ),
             },
+            'slug',
             'createdAt',
             { action: { fieldName: 'name' } },
           ]}
