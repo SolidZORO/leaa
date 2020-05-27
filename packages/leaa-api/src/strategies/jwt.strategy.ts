@@ -19,7 +19,11 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       secretOrKey: configService.JWT_SECRET_KEY,
       jsonWebTokenOptions: {
-        expiresIn: configService.SERVER_COOKIE_EXPIRES_SECOND * (60 * 60 * 24),
+        // # (60 * 60 * 24) * 7d = 604800
+        // # (60 * 60 * 24) * 30d = 2592000
+        // # (60 * 60 * 24) * 180d = 15552000
+        // Here is default value by .env, Can override
+        expiresIn: configService.SERVER_COOKIE_EXPIRES_SECOND,
       },
     });
   }

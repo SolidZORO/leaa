@@ -3031,6 +3031,13 @@
   resolved "https://registry.npm.taobao.org/@types/cache-manager/download/@types/cache-manager-2.10.3.tgz#6c5ffb177b45c2e251f32432354ff83bddbd18ec"
   integrity sha1-bF/7F3tFwuJR8yQyNU/4O929GOw=
 
+"@types/case-sensitive-paths-webpack-plugin@^2.1.4":
+  version "2.1.4"
+  resolved "https://registry.npm.taobao.org/@types/case-sensitive-paths-webpack-plugin/download/@types/case-sensitive-paths-webpack-plugin-2.1.4.tgz?cache=0&sync_timestamp=1588206428160&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fcase-sensitive-paths-webpack-plugin%2Fdownload%2F%40types%2Fcase-sensitive-paths-webpack-plugin-2.1.4.tgz#11c23e4ef9b5c81e9b4c112ec477690dee950c97"
+  integrity sha1-EcI+Tvm1yB6bTBEuxHdpDe6VDJc=
+  dependencies:
+    "@types/webpack" "*"
+
 "@types/caseless@*":
   version "0.12.2"
   resolved "https://registry.npm.taobao.org/@types/caseless/download/@types/caseless-0.12.2.tgz#f65d3d6389e01eeb458bd54dc8f52b95a9463bc8"
@@ -3290,7 +3297,7 @@
   resolved "https://registry.npm.taobao.org/@types/html-to-text/download/@types/html-to-text-5.1.0.tgz#6fc1446da15eb23d0472657598317daf0cc060b8"
   integrity sha1-b8FEbaFesj0EcmV1mDF9rwzAYLg=
 
-"@types/html-webpack-plugin@^3.2.3":
+"@types/html-webpack-plugin@*", "@types/html-webpack-plugin@^3.2.3":
   version "3.2.3"
   resolved "https://registry.npm.taobao.org/@types/html-webpack-plugin/download/@types/html-webpack-plugin-3.2.3.tgz#865323e30e82560c0ca898dbf9f6f9d1c541cd7f"
   integrity sha1-hlMj4w6CVgwMqJjb+fb50cVBzX8=
@@ -3352,6 +3359,11 @@
   dependencies:
     jest-diff "^25.2.1"
     pretty-format "^25.2.1"
+
+"@types/js-cookie@^2.2.6":
+  version "2.2.6"
+  resolved "https://registry.npm.taobao.org/@types/js-cookie/download/@types/js-cookie-2.2.6.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fjs-cookie%2Fdownload%2F%40types%2Fjs-cookie-2.2.6.tgz#f1a1cb35aff47bc5cfb05cb0c441ca91e914c26f"
+  integrity sha1-8aHLNa/0e8XPsFywxEHKkekUwm8=
 
 "@types/json-schema@*", "@types/json-schema@^7.0.3":
   version "7.0.4"
@@ -3610,6 +3622,11 @@
   resolved "https://registry.npm.taobao.org/@types/qs/download/@types/qs-6.9.2.tgz?cache=0&sync_timestamp=1588697197638&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fqs%2Fdownload%2F%40types%2Fqs-6.9.2.tgz#faab98ec4f96ee72c829b7ec0983af4f4d343113"
   integrity sha1-+quY7E+W7nLIKbfsCYOvT000MRM=
 
+"@types/qs@6.9.3":
+  version "6.9.3"
+  resolved "https://registry.npm.taobao.org/@types/qs/download/@types/qs-6.9.3.tgz#b755a0934564a200d3efdf88546ec93c369abd03"
+  integrity sha1-t1Wgk0VkogDT79+IVG7JPDaavQM=
+
 "@types/range-parser@*":
   version "1.2.3"
   resolved "https://registry.npm.taobao.org/@types/range-parser/download/@types/range-parser-1.2.3.tgz?cache=0&sync_timestamp=1588201516817&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Frange-parser%2Fdownload%2F%40types%2Frange-parser-1.2.3.tgz#7ee330ba7caafb98090bece86a5ee44115904c2c"
@@ -3619,6 +3636,17 @@
   version "4.6.2"
   resolved "https://registry.npm.taobao.org/@types/react-css-modules/download/@types/react-css-modules-4.6.2.tgz#ff6451cb848d5e49c074ce9820bb52073e028f82"
   integrity sha1-/2RRy4SNXknAdM6YILtSBz4Cj4I=
+
+"@types/react-dev-utils@^9.0.4":
+  version "9.0.4"
+  resolved "https://registry.npm.taobao.org/@types/react-dev-utils/download/@types/react-dev-utils-9.0.4.tgz#3e4bee79b7536777cef219427ab1d38adc24f3f2"
+  integrity sha1-PkvuebdTZ3fO8hlCerHTitwk8/I=
+  dependencies:
+    "@types/eslint" "*"
+    "@types/express" "*"
+    "@types/html-webpack-plugin" "*"
+    "@types/webpack" "*"
+    "@types/webpack-dev-server" "*"
 
 "@types/react-dom@16.9.8":
   version "16.9.8"
@@ -3809,7 +3837,7 @@
   dependencies:
     "@types/webpack" "*"
 
-"@types/webpack-dev-server@3.11.0":
+"@types/webpack-dev-server@*", "@types/webpack-dev-server@3.11.0":
   version "3.11.0"
   resolved "https://registry.npm.taobao.org/@types/webpack-dev-server/download/@types/webpack-dev-server-3.11.0.tgz#bcc3b85e7dc6ac2db25330610513f2228c2fcfb2"
   integrity sha1-vMO4Xn3GrC2yUzBhBRPyIowvz7I=
@@ -3824,6 +3852,13 @@
   version "1.15.2"
   resolved "https://registry.npm.taobao.org/@types/webpack-env/download/@types/webpack-env-1.15.2.tgz#927997342bb9f4a5185a86e6579a0a18afc33b0a"
   integrity sha1-knmXNCu59KUYWobmV5oKGK/DOwo=
+
+"@types/webpack-manifest-plugin@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.npm.taobao.org/@types/webpack-manifest-plugin/download/@types/webpack-manifest-plugin-2.1.0.tgz#1fc52fc795d165493ab957656a7aa9f5cb7c145e"
+  integrity sha1-H8Uvx5XRZUk6uVdlanqp9ct8FF4=
+  dependencies:
+    "@types/webpack" "*"
 
 "@types/webpack-sources@*":
   version "0.1.7"

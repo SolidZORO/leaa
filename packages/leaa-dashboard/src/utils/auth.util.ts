@@ -1,22 +1,24 @@
 import _ from 'lodash';
+import moment from 'moment';
+import Cookies from 'js-cookie';
+
 import { IPermissionSlug } from '@leaa/common/src/interfaces';
-import { AUTH_TOKEN_NAME, AUTH_EXPIRES_IN_NAME, AUTH_INFO, GUEST_TOKEN_NAME } from '@leaa/dashboard/src/constants';
+import { AUTH_TOKEN_NAME, AUTH_INFO, GUEST_TOKEN_NAME } from '@leaa/dashboard/src/constants';
 import { IAuthInfo } from '@leaa/dashboard/src/interfaces';
 
 //
 //
 //
-// AuthToken
+// AuthToken (cookie)
 export const setAuthToken = (token: string, expiresIn: number) => {
   // sync API tims format
-  const expiresInTime = `${Math.floor(Date.now() / 1000) + expiresIn}`;
+  const expires = moment().add(expiresIn * 1000).toDate(); // prettier-ignore
 
-  localStorage.setItem(AUTH_TOKEN_NAME, token);
-  localStorage.setItem(AUTH_EXPIRES_IN_NAME, expiresInTime);
+  Cookies.set(AUTH_TOKEN_NAME, token, { expires });
 };
 
 export const getAuthToken = (options = { onlyToken: false }): string | null => {
-  const authToken = localStorage.getItem(AUTH_TOKEN_NAME);
+  const authToken = Cookies.get(AUTH_TOKEN_NAME);
 
   if (!authToken) {
     console.log('Not Found Auth Token');
@@ -28,18 +30,24 @@ export const getAuthToken = (options = { onlyToken: false }): string | null => {
   return authToken;
 };
 
+export const removeAuthToken = (): boolean => {
+  if (!getAuthToken) return false;
+
+  Cookies.remove(AUTH_TOKEN_NAME);
+
+  return true;
+};
+
+//
+//
+//
+// AuthInfo (localStorage)
 export const setAuthInfo = (info: Partial<IAuthInfo>) => localStorage.setItem(AUTH_INFO, JSON.stringify(info));
 
 export const getAuthInfo = (): Required<IAuthInfo> => {
   const authInfo = localStorage.getItem(AUTH_INFO);
 
-  const nextAuthInfo: IAuthInfo = {
-    id: '',
-    email: '',
-    name: '',
-    avatar_url: null,
-    flatPermissions: [],
-  };
+  const nextAuthInfo: IAuthInfo = { id: '', email: '', name: '', avatar_url: null, flatPermissions: [] };
 
   return authInfo
     ? {
@@ -47,15 +55,6 @@ export const getAuthInfo = (): Required<IAuthInfo> => {
         ...JSON.parse(authInfo),
       }
     : nextAuthInfo;
-};
-
-export const removeAuthToken = (): boolean => {
-  if (!getAuthToken) return false;
-
-  localStorage.removeItem(AUTH_TOKEN_NAME);
-  localStorage.removeItem(AUTH_EXPIRES_IN_NAME);
-
-  return true;
 };
 
 export const removeAuthInfo = (): boolean => {
@@ -66,6 +65,10 @@ export const removeAuthInfo = (): boolean => {
   return true;
 };
 
+//
+//
+//
+// AuthToken+Info
 export const removeAuth = (): boolean => {
   const removedAuthToken = removeAuthToken();
   const removedAuthInfo = removeAuthInfo();
@@ -74,10 +77,10 @@ export const removeAuth = (): boolean => {
 };
 
 export const checkAuthIsAvailably = (): boolean => {
-  const authExpiresIn = localStorage.getItem(AUTH_EXPIRES_IN_NAME);
+  // const authExpiresIn = Cookies.get(AUTH_EXPIRES_IN_NAME);
   const authToken = getAuthToken();
 
-  if (!authToken || !authToken || !authExpiresIn || Math.floor(Date.now() / 1000) >= Number(authExpiresIn)) {
+  if (!authToken) {
     removeAuth();
 
     return false;
@@ -89,11 +92,11 @@ export const checkAuthIsAvailably = (): boolean => {
 //
 //
 //
-// GusetToken
-export const setGuestToken = (token: string) => localStorage.setItem(GUEST_TOKEN_NAME, token);
+// GusetToken (cookie)
+export const setGuestToken = (token: string) => Cookies.set(GUEST_TOKEN_NAME, token);
 
 export const getGuestToken = (options = { onlyToken: false }): string | null => {
-  const guestToken = localStorage.getItem(GUEST_TOKEN_NAME);
+  const guestToken = Cookies.get(GUEST_TOKEN_NAME);
 
   if (!guestToken) {
     console.log('Not Found Guest Token');
@@ -108,7 +111,7 @@ export const getGuestToken = (options = { onlyToken: false }): string | null => 
 export const removeGuestToken = (): boolean => {
   if (!getGuestToken) return false;
 
-  localStorage.removeItem(GUEST_TOKEN_NAME);
+  Cookies.remove(GUEST_TOKEN_NAME);
 
   return true;
 };

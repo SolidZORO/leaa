@@ -129,7 +129,7 @@ export class AuthService {
     if (!jwtPayload.iat || !jwtPayload.exp || !jwtPayload.id) throw new NotFoundTokenException();
 
     let user = await this.userRepo.findOne({
-      select: ['id', 'status', 'is_admin', 'name', 'avatar_url', 'last_token_at'],
+      select: ['id', 'status', 'is_admin', 'email', 'name', 'avatar_url', 'last_token_at'],
       relations: ['roles'],
       where: { id: jwtPayload.id },
     });

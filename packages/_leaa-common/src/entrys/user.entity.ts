@@ -23,7 +23,7 @@ export class User extends Base {
   @Column({ type: 'int', default: 0 })
   status?: number;
 
-  @Exclude()
+  @Exclude({ toPlainOnly: true })
   @Column({ type: 'varchar', length: 64, select: false })
   password!: string;
 
@@ -38,7 +38,7 @@ export class User extends Base {
   @Column({ type: 'timestamp', nullable: true, select: false })
   last_login_at?: Date;
 
-  @Exclude()
+  @Exclude({ toPlainOnly: true })
   @Column({ type: 'timestamp', nullable: true, select: false })
   last_token_at?: Date;
 
