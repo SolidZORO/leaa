@@ -8,7 +8,12 @@ import { ICraeteAttachmentByOssCallback, IAttachmentParams } from '@leaa/common/
 import { Crud, CrudController } from '@nestjsx/crud';
 import { Attachment } from '@leaa/common/src/entrys';
 import { Permissions } from '@leaa/api/src/decorators';
-import { CreateAttachmentInput, UpdateAttachmentInput, UpdateAttachmentsInput } from '@leaa/common/src/dtos/attachment';
+import {
+  CreateAttachmentInput,
+  UpdateAttachmentInput,
+  UpdateAttachmentsInput,
+  BatchUpdateAttachmentsSortInput,
+} from '@leaa/common/src/dtos/attachment';
 
 @Crud({
   model: { type: Attachment },
@@ -73,5 +78,12 @@ export class AttachmentController implements CrudController<Attachment> {
   @Permissions('attachment.item-update')
   batchUpdate(@Body() dto: UpdateAttachmentsInput): Promise<string> {
     return this.service.batchUpdate(dto);
+  }
+
+  @Post('batch-sort')
+  @UseGuards(JwtGuard, PermissionsGuard)
+  @Permissions('attachment.item-update')
+  batchUpdateSort(@Body() dto: BatchUpdateAttachmentsSortInput): Promise<string> {
+    return this.service.batchUpdateSort(dto);
   }
 }

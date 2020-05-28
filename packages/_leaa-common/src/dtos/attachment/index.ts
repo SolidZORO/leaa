@@ -4,5 +4,6 @@ export * from './update-attachments.input';
 export * from './attachments.args';
 export * from './attachment.args';
 export * from './attachments-with-pagination.object';
+export * from './batch-update-attachments-sort.input';
 export * from './attachments.object';
 export * from './delete-attachments.object';

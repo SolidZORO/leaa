@@ -1,10 +1,8 @@
 import _ from 'lodash';
-import React, { useState, useEffect } from 'react';
-import { DndProvider } from 'react-dnd';
 import cx from 'classnames';
-import { HTML5Backend } from 'react-dnd-html5-backend';
-import update from 'immutability-helper';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Droppable, DragDropContext, DropResult } from 'react-beautiful-dnd';
 
 import { Attachment } from '@leaa/common/src/entrys';
 import { IAttachmentParams } from '@leaa/common/src/interfaces';
@@ -27,82 +25,82 @@ interface IProps {
   circle?: boolean;
 }
 
+const getListStyle = (isDraggingOver: boolean) => ({
+  borderRadius: '3px',
+  backgroundColor: isDraggingOver ? '#f9f9f9' : 'transparent',
+});
+
 export const AttachmentList = (props: IProps) => {
   const { t, i18n } = useTranslation();
 
   const [attachments, setAttachments] = useState<Attachment[]>([]);
+  useEffect(() => {
+    if (props.attachments) setAttachments(props.attachments);
+  }, [props.attachments]);
 
-  const onMoveAtta = (dragIndex: number, hoverIndex: number) => {
-    if (attachments) {
-      const dragCard = attachments[dragIndex];
+  const reOrder = (list: Attachment[], startIndex: number, endIndex: number) => {
+    const result = Array.from(list);
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
 
-      setAttachments(
-        update(attachments, {
-          $splice: [
-            [dragIndex, 1],
-            [hoverIndex, 0, dragCard],
-          ],
-        }),
-      );
-    }
+    return result.map((a, i) => ({ ...a, sort: i + 1 } as Attachment));
   };
 
-  const onStopMoveAtta = (isStopMove: boolean) => {
-    if (isStopMove) {
-      if (!_.isEmpty(attachments)) {
-        const nextAttachments = attachments.map((a, i) => ({ ...a, sort: i + 1 } as Attachment));
-        setAttachments(nextAttachments);
+  const onDragEnd = (result: DropResult) => {
+    if (!result.destination) return;
 
-        if (props.onChangeAttasCallback) props.onChangeAttasCallback(nextAttachments);
-      }
-    }
+    const nextAttachments = reOrder(attachments, result.source.index, result.destination.index);
+    setAttachments(nextAttachments);
+
+    if (props.onChangeAttasCallback) props.onChangeAttasCallback(nextAttachments);
   };
 
-  const onChangeAtta = (newAttachment: any) => {
-    if (!_.isEmpty(attachments)) {
-      const aIndex = attachments.findIndex((a) => a.id === newAttachment.id);
+  const onChangeAtta = (atta: Attachment) => {
+    const nextAttas = attachments;
+    const i = attachments.findIndex((a) => a.id === atta.id);
+    nextAttas.splice(i, 1, atta);
 
-      if (typeof aIndex !== 'undefined') {
-        attachments[aIndex] = newAttachment;
-        setAttachments(attachments);
-
-        if (props.onChangeAttasCallback) props.onChangeAttasCallback(attachments);
-      }
-    }
+    setAttachments(nextAttas);
   };
 
-  const dndDom = () => {
-    if (!_.isEmpty(attachments)) {
-      return attachments.map((atta, i) => (
-        <AttachmentItem
-          key={atta.id}
-          index={i}
-          attachment={atta}
-          onMoveAttaCallback={onMoveAtta}
-          onStopMoveAttaCallback={onStopMoveAtta}
-          onChangeAttaCallback={onChangeAtta}
-          onDeleteAttaCallback={props.onDeleteAttaCallback}
-          type={props.type}
-          cardHeight={props.cardHeight}
-          circle={props.circle}
-        />
-      ));
-    }
+  const coreAttachmentsDom = attachments.map((atta, index) => (
+    <AttachmentItem
+      key={atta.id}
+      index={index}
+      attachment={atta}
+      onDeleteAttaCallback={props.onDeleteAttaCallback}
+      onChangeAttaCallback={onChangeAtta}
+      type={props.type}
+      cardHeight={props.cardHeight}
+      circle={props.circle}
+    />
+  ));
 
-    if (props.type === 'list') {
+  const innerDom = () => {
+    if (_.isEmpty(attachments))
       return (
         <div className={style['empty-text']}>
           {removeLangSpace(`${t('_lang:empty')} ${t('_lang:attachment')}`, i18n.language)}
         </div>
       );
-    }
+
+    if (props.type === 'card') return coreAttachmentsDom;
+    if (props.type === 'list')
+      return (
+        <DragDropContext onDragEnd={onDragEnd}>
+          <Droppable droppableId="droppable">
+            {(provided, snapshot) => (
+              <div {...provided.droppableProps} ref={provided.innerRef} style={getListStyle(snapshot.isDraggingOver)}>
+                {coreAttachmentsDom}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
+      );
 
     return null;
   };
-
-  useEffect(() => {
-    if (props.attachments) setAttachments(props.attachments);
-  }, [props.attachments]);
 
   return (
     <div
@@ -114,9 +112,7 @@ export const AttachmentList = (props: IProps) => {
       })}
       style={{ height: props.type === 'list' ? props.listHeight : undefined }}
     >
-      <div className={style['attachment-list-wrapper-inner']}>
-        <DndProvider backend={HTML5Backend}>{dndDom()}</DndProvider>
-      </div>
+      <div className={style['attachment-list-wrapper-inner']}>{innerDom()}</div>
     </div>
   );
 };

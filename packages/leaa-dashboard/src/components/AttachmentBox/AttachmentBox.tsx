@@ -30,7 +30,6 @@ interface IProps {
   cardHeight?: number;
   className?: string;
   circle?: boolean;
-  onDeleteAttaCallback?: (attachment: Attachment[]) => void;
   onChangeAttasCallback?: (attachment: Attachment[]) => void;
 }
 
@@ -53,29 +52,26 @@ export const AttachmentBox = (props: IProps) => {
   const listHeight = props.listHeight || 130;
 
   const [attachments, setAttachments] = useState<Attachment[]>([]);
+  useEffect(() => {
+    if (props.attachments) setAttachments(_.orderBy(props.attachments, 'sort', 'asc'));
+  }, [props.attachments]);
 
   const onChangeAttas = (attas: Attachment[]) => {
     setAttachments(attas);
 
     ajax
       .post(`${envConfig.API_URL}/${envConfig.API_VERSION}/attachments/batch`, { attachments: attas })
+      // 这里貌似没必要去拿 res 的 data 然后再设定
+      // .then((res: IHttpRes<Attachment[]>) => {
+      // if (props.onChangeAttasCallback) props.onChangeAttasCallback(res.data.data);
       .then(() => {
         if (props.onChangeAttasCallback) props.onChangeAttasCallback(attas);
       })
       .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message));
   };
 
-  const onDropzoneAttas = (attas: Attachment[]) => {
-    onChangeAttas(attachments?.concat(attas));
-  };
-
-  const onDeletedAtta = (atta: Attachment) => {
-    onChangeAttas(attachments?.filter((a) => a.id !== atta.id));
-  };
-
-  useEffect(() => {
-    if (props.attachments) setAttachments(_.orderBy(props.attachments, 'sort', 'asc'));
-  }, [props.attachments]);
+  const onDeletedAtta = (atta: Attachment) => onChangeAttas(attachments?.filter((a) => a.id !== atta.id));
+  const onDropzoneAttas = (attas: Attachment[]) => onChangeAttas(attachments?.concat(attas));
 
   return (
     <div

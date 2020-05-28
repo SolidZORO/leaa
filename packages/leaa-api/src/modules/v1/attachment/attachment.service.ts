@@ -9,6 +9,7 @@ import {
   DeleteAttachmentsObject,
   UpdateAttachmentInput,
   UpdateAttachmentsInput,
+  BatchUpdateAttachmentsSortInput,
 } from '@leaa/common/src/dtos/attachment';
 import { ISaveInOssSignature, ISaveInLocalSignature, IAttachmentParams } from '@leaa/common/src/interfaces';
 import { logger, getAt2xPath, filenameAt1xToAt2x } from '@leaa/api/src/utils';
@@ -120,6 +121,19 @@ export class AttachmentService extends TypeOrmCrudService<Attachment> {
     return Promise.all(batchUpdate)
       .then((data) => {
         return `Batch Updated ${data.length} Attachment`;
+      })
+      .catch(() => {
+        throw new NotFoundException();
+      });
+  }
+
+  async batchUpdateSort(dto: BatchUpdateAttachmentsSortInput): Promise<string> {
+    const safeAttas = dto.attachments.map((att) => _.pick(att, ['id', 'sort']));
+    const batchUpdate = safeAttas.map((att) => this.attachmentRepo.update(att.id, { sort: att.sort }));
+
+    return Promise.all(batchUpdate)
+      .then(() => {
+        return 'OK';
       })
       .catch(() => {
         throw new NotFoundException();
