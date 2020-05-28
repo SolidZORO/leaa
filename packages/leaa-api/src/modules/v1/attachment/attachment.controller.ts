@@ -27,6 +27,7 @@ import {
   query: {
     maxLimit: 1000,
     alwaysPaginate: true,
+    sort: [{ field: 'created_at', order: 'DESC' }],
   },
   routes: {
     // upload file, will be auto create
@@ -49,11 +50,6 @@ import {
 @Controller('/v1/attachments')
 export class AttachmentController implements CrudController<Attachment> {
   constructor(public readonly service: AttachmentService, private readonly saveInOssService: SaveInOssService) {}
-
-  // @Get('')
-  // async done() {
-  //   return 'GET DONE!';
-  // }
 
   @Get('signature')
   async getSignature() {

@@ -4,13 +4,13 @@ import { useTranslation } from 'react-i18next';
 import React, { useState, useEffect } from 'react';
 import { Tooltip } from 'antd';
 
-import { IAttachmentParams } from '@leaa/common/src/interfaces';
+import { IAttachmentParams, IAutoUpdateRelation } from '@leaa/common/src/interfaces';
 import { Attachment } from '@leaa/common/src/entrys';
 
-import { removeLangSpace, ajax, errorMsg } from '@leaa/dashboard/src/utils';
+import { removeLangSpace, ajax, errorMsg, genCrudRequestQuery, setCrudQueryToUrl } from '@leaa/dashboard/src/utils';
 import { envConfig } from '@leaa/dashboard/src/configs';
 import { FormCard } from '@leaa/dashboard/src/components';
-import { IHttpError } from '@leaa/dashboard/src/interfaces';
+import { IHttpError, IHttpRes, ICrudListRes, ICrudListQueryParams } from '@leaa/dashboard/src/interfaces';
 
 import { AttachmentList } from './_components/AttachmentList/AttachmentList';
 import { AttachmentDropzone } from './_components/AttachmentDropzone/AttachmentDropzone';
@@ -25,24 +25,35 @@ interface IProps {
   onSubmitCallback?: (v: any) => void;
   type?: 'list' | 'card';
   title?: React.ReactNode;
-  disableMessage?: boolean;
   listHeight?: number;
   cardHeight?: number;
   className?: string;
   circle?: boolean;
   onChangeAttasCallback?: (attachment: Attachment[]) => void;
+  autoUpdateRelation?: IAutoUpdateRelation;
 }
 
 /**
  * AttachmentBox
  *
  * @ideaNotes
- * 我的想法是这样的，组建只管上传文件，传完 Effect 抛出来一些 Attachments Ids，给上游 Item 提交
- *  - Success 成功
- *    这样 API 那边 ManyToMany 就会成功的把 Item.id 和 Atta.id 绑一起，relation 的时候能查出来
+ * 我的想法是这样的，AttachmentBox（下文叫 ABOX） 只管上传文件，传完写入 AttachmentTable。
  *
- *  - Fiald 失败（或上游 Item 没保存）
- *    文件和数据还是会在 Disk 和 DB，但是没有 module_id，如果需要清理文件，可以把这些没有 id 的清理掉
+ * 下面是 attachmentParams 范例（ajax get 那边会配合 genCrudRequestQuery 做 search）
+ * {
+ *    type: 'image',
+ *    moduleId: item?.id,
+ *    moduleName: 'ax',
+ *    typeName: 'gallery',
+ *    typePlatform: 'pc',
+ * }
+ *
+ * 你传什么 attachmentParams，那么 AttachmentTable 就存什么，把权利完全交给 ABOX 控制
+ * 所以每个 ABOX 都是独立的，有几个 ABOX 就意味着这个页面要发几个 ajax 过去 fetchList，而不是 API 那边事先 query 好丢出来。
+ *
+ * 之前想着给 moduleTable <--> attachmentTable 做 M2M 关联表，
+ * 但这样其实有个问题，当一个页面有多个 ABOX 的时候，每次 POST 这个 M2M 的时候还要把所有 ABOX 的 data 拿出来合并一起 POST，
+ * 因为如果不这样做会破坏 M2M 关系，想来想去，还是去掉 M2M，这样才有了上面的想法，让写（Write）这一步更自由，让查（Read）也更灵活。
  */
 export const AttachmentBox = (props: IProps) => {
   const { t, i18n } = useTranslation();
@@ -52,19 +63,46 @@ export const AttachmentBox = (props: IProps) => {
   const listHeight = props.listHeight || 130;
 
   const [attachments, setAttachments] = useState<Attachment[]>([]);
-  useEffect(() => {
-    if (props.attachments) setAttachments(_.orderBy(props.attachments, 'sort', 'asc'));
-  }, [props.attachments]);
+  const [listLoading, setListLoading] = useState(false);
+
+  const onFetchList = () => {
+    if (!props.attachmentParams) return;
+    setListLoading(true);
+
+    const params: ICrudListQueryParams = {
+      search: {
+        module_id: props.attachmentParams.moduleId,
+        module_name: props.attachmentParams.moduleName,
+        type_name: props.attachmentParams.typeName,
+        type_platform: props.attachmentParams.typePlatform,
+      },
+      sort: [
+        ['status', 'DESC'],
+        ['sort', 'ASC'],
+      ],
+    };
+
+    ajax
+      .get(`${envConfig.API_URL}/${envConfig.API_VERSION}/attachments`, { params: genCrudRequestQuery(params) })
+      // .get(`${envConfig.API_URL}/${envConfig.API_VERSION}/${API_PATH}`)
+      .then((res: IHttpRes<ICrudListRes<Attachment>>) => {
+        setAttachments(_.orderBy(res.data.data.data, ['status', 'sort'], ['desc', 'asc']) || []);
+
+        setCrudQueryToUrl({ window, query: params, replace: true });
+      })
+      .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
+      .finally(() => setListLoading(false));
+  };
+
+  useEffect(() => onFetchList(), []);
 
   const onChangeAttas = (attas: Attachment[]) => {
-    setAttachments(attas);
+    setAttachments(_.orderBy(attas, ['status', 'sort'], ['desc', 'asc']) || []);
 
     ajax
       .post(`${envConfig.API_URL}/${envConfig.API_VERSION}/attachments/batch`, { attachments: attas })
-      // 这里貌似没必要去拿 res 的 data 然后再设定
-      // .then((res: IHttpRes<Attachment[]>) => {
-      // if (props.onChangeAttasCallback) props.onChangeAttasCallback(res.data.data);
       .then(() => {
+        // 这里貌似没必要去拿 res 的 data 然后再设定
         if (props.onChangeAttasCallback) props.onChangeAttasCallback(attas);
       })
       .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message));
@@ -119,6 +157,7 @@ export const AttachmentBox = (props: IProps) => {
         />
 
         <AttachmentList
+          loading={listLoading}
           attachmentParams={props.attachmentParams}
           attachments={attachments}
           onDeleteAttaCallback={onDeletedAtta}

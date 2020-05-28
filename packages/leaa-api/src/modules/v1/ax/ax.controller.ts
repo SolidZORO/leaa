@@ -21,9 +21,6 @@ import { AxService } from './ax.service';
     maxLimit: 1000,
     alwaysPaginate: true,
     sort: [{ field: 'created_at', order: 'DESC' }],
-    join: {
-      attachments: { eager: true },
-    },
   },
   routes: {
     // getManyBase: { decorators: [Permissions('ax.list-read')] },

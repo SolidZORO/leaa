@@ -2855,21 +2855,6 @@
   resolved "https://registry.npm.taobao.org/@protobufjs/utf8/download/@protobufjs/utf8-1.1.0.tgz#a777360b5b39a1a2e5106f8e858f2fd2d060c570"
   integrity sha1-p3c2C1s5oaLlEG+OhY8v0tBgxXA=
 
-"@react-dnd/asap@^4.0.0":
-  version "4.0.0"
-  resolved "https://registry.npm.taobao.org/@react-dnd/asap/download/@react-dnd/asap-4.0.0.tgz#b300eeed83e9801f51bd66b0337c9a6f04548651"
-  integrity sha1-swDu7YPpgB9RvWawM3yabwRUhlE=
-
-"@react-dnd/invariant@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.npm.taobao.org/@react-dnd/invariant/download/@react-dnd/invariant-2.0.0.tgz#09d2e81cd39e0e767d7da62df9325860f24e517e"
-  integrity sha1-CdLoHNOeDnZ9faYt+TJYYPJOUX4=
-
-"@react-dnd/shallowequal@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.npm.taobao.org/@react-dnd/shallowequal/download/@react-dnd/shallowequal-2.0.0.tgz#a3031eb54129f2c66b2753f8404266ec7bf67f0a"
-  integrity sha1-owMetUEp8sZrJ1P4QEJm7Hv2fwo=
-
 "@samverschueren/stream-to-observable@^0.3.0":
   version "0.3.0"
   resolved "https://registry.npm.taobao.org/@samverschueren/stream-to-observable/download/@samverschueren/stream-to-observable-0.3.0.tgz#ecdf48d532c58ea477acfcab80348424f8d0662f"
@@ -7923,15 +7908,6 @@ dir-glob@^3.0.1:
   integrity sha1-Vtv3PZkqSpO6FYT0U0Bj/S5BcX8=
   dependencies:
     path-type "^4.0.0"
-
-dnd-core@^11.0.0:
-  version "11.0.0"
-  resolved "https://registry.npm.taobao.org/dnd-core/download/dnd-core-11.0.0.tgz#a5b6455566cbd86d2ea4561fabb28141c921b0b4"
-  integrity sha1-pbZFVWbL2G0upFYfq7KBQckhsLQ=
-  dependencies:
-    "@react-dnd/asap" "^4.0.0"
-    "@react-dnd/invariant" "^2.0.0"
-    redux "^4.0.4"
 
 dnd-core@^9.5.1:
   version "9.5.1"
@@ -15871,29 +15847,12 @@ react-display-name@^0.2.0:
   resolved "https://registry.npm.taobao.org/react-display-name/download/react-display-name-0.2.5.tgz#304c7cbfb59ee40389d436e1a822c17fe27936c6"
   integrity sha1-MEx8v7We5AOJ1DbhqCLBf+J5NsY=
 
-react-dnd-html5-backend@^11.0.0:
-  version "11.0.0"
-  resolved "https://registry.npm.taobao.org/react-dnd-html5-backend/download/react-dnd-html5-backend-11.0.0.tgz#63b530506bb0e364dd41557b6895a893c86befda"
-  integrity sha1-Y7UwUGuw42TdQVV7aJWok8hr79o=
-  dependencies:
-    dnd-core "^11.0.0"
-
 react-dnd-html5-backend@^9.3.4:
   version "9.5.1"
   resolved "https://registry.npm.taobao.org/react-dnd-html5-backend/download/react-dnd-html5-backend-9.5.1.tgz#e6a0aed3ece800c1abe004f9ed9991513e2e644c"
   integrity sha1-5qCu0+zoAMGr4AT57ZmRUT4uZEw=
   dependencies:
     dnd-core "^9.5.1"
-
-react-dnd@^11.0.0:
-  version "11.0.0"
-  resolved "https://registry.npm.taobao.org/react-dnd/download/react-dnd-11.0.0.tgz#93cbd8f359d9a9042b47d636c399312121242e26"
-  integrity sha1-k8vY81nZqQQrR9Y2w5kxISEkLiY=
-  dependencies:
-    "@react-dnd/shallowequal" "^2.0.0"
-    "@types/hoist-non-react-statics" "^3.3.1"
-    dnd-core "^11.0.0"
-    hoist-non-react-statics "^3.3.0"
 
 react-dnd@^9.3.1, react-dnd@^9.3.4:
   version "9.5.1"

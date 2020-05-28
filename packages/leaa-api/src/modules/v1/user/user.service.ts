@@ -32,7 +32,6 @@ export class UserService extends TypeOrmCrudService<User> {
 
   async updateOne(req: CrudRequest, dto: UpdateUserInput): Promise<User> {
     const prevUser = await this.getOneOrFail(req);
-
     const nextDto: UpdateUserInput & { roles?: Role[] } = dto;
 
     if (dto.password) nextDto.password = await this.createPassword(dto.password);

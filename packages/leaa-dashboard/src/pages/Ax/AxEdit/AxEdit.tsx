@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button } from 'antd';
+import { Button, Row, Col } from 'antd';
 
 import { Ax, Attachment } from '@leaa/common/src/entrys';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
@@ -72,21 +72,49 @@ export default (props: IPage) => {
 
       <AxInfoForm item={item} loading={itemLoading} ref={infoFormRef} />
 
-      <AttachmentBox
-        attachments={item?.attachments}
-        type="list"
-        title={t('_lang:galleryPc')}
-        disableMessage
-        onChangeAttasCallback={setAttas}
-        listHeight={500}
-        attachmentParams={{
-          type: 'image',
-          moduleId: item?.id,
-          moduleName: 'ax',
-          typeName: 'gallery',
-          typePlatform: 'pc',
-        }}
-      />
+      <Row gutter={16}>
+        <Col xs={24} sm={12}>
+          <AttachmentBox
+            // attachments={item?.attachments}
+            type="list"
+            title={t('_lang:galleryMb')}
+            onChangeAttasCallback={setAttas}
+            listHeight={350}
+            attachmentParams={{
+              type: 'image',
+              moduleId: item?.id,
+              moduleName: 'ax',
+              typeName: 'gallery',
+              typePlatform: 'mb',
+            }}
+            autoUpdateRelation={{
+              apiPath: API_PATH,
+              relationName: 'attachments',
+            }}
+          />
+        </Col>
+
+        <Col xs={24} sm={12}>
+          <AttachmentBox
+            // attachments={item?.attachments}
+            type="list"
+            title={t('_lang:galleryPc')}
+            onChangeAttasCallback={setAttas}
+            listHeight={350}
+            attachmentParams={{
+              type: 'image',
+              moduleId: item?.id,
+              moduleName: 'ax',
+              typeName: 'gallery',
+              typePlatform: 'pc',
+            }}
+            autoUpdateRelation={{
+              apiPath: API_PATH,
+              relationName: 'attachments',
+            }}
+          />
+        </Col>
+      </Row>
 
       <SubmitBar full>
         <Button

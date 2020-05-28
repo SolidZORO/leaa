@@ -27,6 +27,11 @@ export interface IAttachmentParams {
   typePlatform?: string;
 }
 
+export interface IAutoUpdateRelation {
+  apiPath: string;
+  relationName: string;
+}
+
 export type IAttachmentDbFilterField = Partial<
   Pick<Attachment, 'module_name' | 'module_id' | 'type_name' | 'type_platform'>
 >;

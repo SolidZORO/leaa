@@ -36,7 +36,6 @@ export default (props: IPage) => {
 
     ajax
       .get(`${envConfig.API_URL}/${envConfig.API_VERSION}/${API_PATH}`, { params: genCrudRequestQuery(params) })
-      // .get(`${envConfig.API_URL}/${envConfig.API_VERSION}/${API_PATH}`)
       .then((res: IHttpRes<ICrudListRes<Ax>>) => {
         setList(res.data.data);
 
@@ -65,7 +64,7 @@ export default (props: IPage) => {
                 ...crudQuery,
                 search: genCrudQuerySearch(q, {
                   crudQuery,
-                  condition: { $and: [{ $or: [{ slug: { $cont: q } }, { title: { $cont: q } }] }] },
+                  condition: { $and: [{ $or: [{ alt: { $cont: q } }, { title: { $cont: q } }] }] },
                   clear: { $and: [{ $or: undefined }] },
                 }),
                 q: q || undefined,
@@ -85,7 +84,7 @@ export default (props: IPage) => {
           setCrudQuery={setCrudQuery}
           route={props.route}
           routerName={API_PATH}
-          columnFields={['id', 'title', 'slug', 'createdAt', 'status', { action: { fieldName: 'title' } }]}
+          columnFields={['id', 'title', 'createdAt', 'status', { action: { fieldName: 'title' } }]}
           list={list}
         />
       )}

@@ -1,4 +1,4 @@
-import { Index, Entity, Column, ManyToMany, JoinTable } from 'typeorm';
+import { Index, Entity, Column } from 'typeorm';
 
 import { Base, Attachment } from '@leaa/common/src/entrys';
 
@@ -19,9 +19,5 @@ export class Ax extends Base {
   status?: number;
 
   // Virtual Field (not in DB)
-  // attachments?: AxAttachmentsObject;
-
-  @ManyToMany(() => Attachment)
-  @JoinTable()
   attachments?: Attachment[];
 }

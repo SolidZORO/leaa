@@ -23,7 +23,7 @@ import {
   Company,
 } from '@leaa/common/src/entrys';
 
-import { AttachmentSubscriber, UserSubscriber } from '@leaa/api/src/subscribers';
+import { UserSubscriber } from '@leaa/api/src/subscribers';
 import { ConfigService } from '@leaa/api/src/modules/v1/config/config.service';
 
 const CLS_NAME = 'TypeormService';
@@ -78,7 +78,7 @@ export class TypeormService implements TypeOrmOptionsFactory {
         Action,
         Company,
       ],
-      subscribers: [AttachmentSubscriber, UserSubscriber],
+      subscribers: [UserSubscriber],
     };
   }
 }

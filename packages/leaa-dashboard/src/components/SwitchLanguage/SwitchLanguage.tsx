@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import cx from 'classnames';
 import { Button, Popover, ConfigProvider } from 'antd';
 import { useTranslation } from 'react-i18next';
@@ -24,6 +24,20 @@ export const SwitchLanguage = (props: IProps): JSX.Element => {
   const changeLanguage = async (lng: string) => {
     await i18n.changeLanguage(lng);
   };
+
+  useEffect((): any => {
+    const lang = i18n.language;
+
+    // trans fallbackLng
+    if (['en', 'us'].includes(lang)) return i18n.changeLanguage('en-US');
+    if (['zh', 'cn'].includes(lang)) return i18n.changeLanguage('zh-CN');
+
+    if (!langs.includes(lang) && i18n.options.fallbackLng && i18n.options.fallbackLng.length) {
+      return i18n.changeLanguage(i18n.options.fallbackLng.toString());
+    }
+
+    return undefined;
+  }, []);
 
   return (
     <div

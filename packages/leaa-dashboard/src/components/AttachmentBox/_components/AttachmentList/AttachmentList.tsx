@@ -2,6 +2,7 @@ import _ from 'lodash';
 import cx from 'classnames';
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Spin } from 'antd';
 import { Droppable, DragDropContext, DropResult } from 'react-beautiful-dnd';
 
 import { Attachment } from '@leaa/common/src/entrys';
@@ -23,6 +24,7 @@ interface IProps {
   type?: 'list' | 'card';
   cardHeight?: number;
   circle?: boolean;
+  loading?: boolean;
 }
 
 const getListStyle = (isDraggingOver: boolean) => ({
@@ -112,7 +114,9 @@ export const AttachmentList = (props: IProps) => {
       })}
       style={{ height: props.type === 'list' ? props.listHeight : undefined }}
     >
-      <div className={style['attachment-list-wrapper-inner']}>{innerDom()}</div>
+      <Spin spinning={props.loading} size="small" style={{ marginTop: -40 }}>
+        <div className={style['attachment-list-wrapper-inner']}>{innerDom()}</div>
+      </Spin>
     </div>
   );
 };

@@ -111,6 +111,7 @@ export const uploadFile = (file: File, { signature, ignoreMsg, attachmentParams,
       if (onCallback && onCallback.onUploadSuccess) onCallback.onUploadSuccess(response);
     })
     .catch((err: Error) => {
+      console.log(`uploadFile Error (${signature?.saveIn})`, err);
       errorMsg(err.message);
 
       if (onCallback && onCallback.onUploadCatch) onCallback.onUploadCatch(err);
