@@ -42,7 +42,6 @@
     "bootstrap": "lerna bootstrap",
     "clean": "lerna clean",
     "fix": "lerna run fix",
-    "nuke": "yarn clean && yarn bootstrap",
     "tsc-check": "yarn workspaces run tsc-check",
     "commit": "git-cz",
     "u": "yarn upgrade-interactive --latest",
@@ -64,6 +63,7 @@
     "@types/eslint": "6.8.1",
     "@types/eslint-plugin-prettier": "^3.1.0",
     "@types/jest": "^25.2.3",
+    "@types/rimraf": "^3.0.0",
     "@typescript-eslint/eslint-plugin": "^2.34.0",
     "@typescript-eslint/parser": "^2.34.0",
     "babel-eslint": "^10.1.0",
@@ -95,5 +95,8 @@
     "ts-node-dev": "^1.0.0-pre.44",
     "tsconfig-paths": "^3.8.0",
     "typescript": "3.9.3"
+  },
+  "dependencies": {
+    "rimraf": "^3.0.2"
   }
 }
