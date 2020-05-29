@@ -658,3 +658,23 @@ Next.js，用你真的很累，很累。
 ### 2020-05-04 23:48
 
 leaa-www (Next.js) 拜拜，把你拆到独立的 repo 好了。
+
+### 2020-05-29 14:11
+
+3.0.0 了，过多不想写了。之前有些过一些在 https://github.com/SolidZORO/leaa/issues/6#issuecomment-633031883，我摘抄一下。
+
+主要是 Gql 用到后面感觉很麻烦，后端 API 那边麻烦，前端 Dashboard 这边也麻烦。
+
+API 麻烦在权限的处理，以及 req.heads 很多东西需要 trans 到 Gql 的 ctx 里面比较麻烦，需要手动传一些东西，然后就是权限判断，用了 graphql-shield 那套，感觉不够可靠，以及递归查询目前 Gql 还无解，比如无限分类，我不知道要写几层（兼容方案是查出来然后用 JSON.stringify 包一下丢出来一个 string，Dashboard 拿到解），还有就是 GET 的缓存问题，搞也能搞但非常麻烦。以及 entry 和 service 申明要多写一次显得乱糟糟，而且部分语法还是得用 Gql 的 Schema……
+
+Dashboard 麻烦在于一堆 Apollo 的 libs，至少 5 个+，比如 link，cache，http 这些，而且更新频繁，BC 是家常便饭，有时候写着写着更新一下版本就大面积不可用了，而且 throw 没有很好的最佳实践，一些 data 或 error 无法很好的控制。
+
+算了算了不写了，越写感觉 Gql 缺点越多。然后换回 restful，API 的问题都不见了，Dashboard 也只用一个 axios 搞定一切。
+
+说实话，Gql 如果想学习，用还是可以用的，起码是个新技术，但是未来会不会流行，我觉得大概率不会，要火早火了。
+
+这次选型 Gql，然后转 restful 的经验对我未来技术选型还是很关键的，经过这次可能我不再会用面世 < 5ys 的技术。
+
+---
+
+另外，restfu 真香 ⚠️。

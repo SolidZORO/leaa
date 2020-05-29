@@ -5,26 +5,23 @@
 [![Build Status](https://travis-ci.com/SolidZORO/leaa.svg?token=dp93c7BFxq7zs1iT4qaM&branch=master)](https://travis-ci.com/SolidZORO/leaa)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/4443217249ea4bbe8e057c691de4b0cd)](https://www.codacy.com?utm_source=github.com&utm_medium=referral&utm_content=SolidZORO/leaa&utm_campaign=Badge_Grade)
 
-Leaa is a monorepo CMS (Content Management System) built with Nest.js, Next.js, GraphQL, and Ant Design. The next major version (v1) of the plan will be added to the Online Store.
+Leaa is a monorepo CMS (Content Management System) built with Nest.js, Next.js, and Ant Design.
 
 ## **Monorepo-Packages**
 
 - [x] **\_leaa-common**
-- [x] **leaa-api** ([demo](https://test-leaa-api.herokuapp.com)) / backend (Nest.js + TypeGraphQL + MySQL + Docker Compose)
-- [x] **leaa-dashboard** ([demo](https://leaa-dashboard.now.sh)) / dashboard (React.js + Antd + MobX + Apollo / GraphQL)
-- [x] **leaa-www** ([demo](https://leaa-www.now.sh)) / website (Next.js + GraphQL)
-- [x] **leaa-miniprogram** ([independence-repo](https://github.com/SolidZORO/leaa-miniprogram)) / wechat-miniprogram (Taro.js + Taro-ui + GraphQL)
-- [x] **leaa-app** ([independence-repo](https://github.com/SolidZORO/leaa-app)) / iOS and Android (expo + GraphQL)
+- [x] **leaa-api** ([demo](https://test-leaa-api.herokuapp.com)) / backend (Nest.js + @nestjsx/crud + MySQL + Docker Compose)
+- [x] **leaa-dashboard** ([demo](https://leaa-dashboard.now.sh)) / dashboard (React.js + Antd + MobX)
+
+* [x] <del>**leaa-www** ([demo](https://leaa-www.now.sh)) / website (Next.js)</del>
+* [x] <del>**leaa-miniprogram** ([independence-repo](https://github.com/SolidZORO/leaa-miniprogram)) / wechat-miniprogram (Taro.js + Taro-ui + GraphQL)</del>
+* [x] <del>**leaa-app** ([independence-repo](https://github.com/SolidZORO/leaa-app)) / iOS and Android (expo + GraphQL)</del>
 
 [# read more TODOS v0](#TODOS-v0)
 
 ## **Install**
 
 View the `README.md` of each sub-directory in `packages`. You may need to look at yarn [workspaces](https://yarnpkg.com/lang/en/docs/workspaces/) first.
-
-## **Preview**
-
-You can click `demo` link online preview, all demos are deployed in `heroku` and `now.sh`, but the response is very SLOW, please be patient. all demos support responsive web design.
 
 ### Dashboard ([demo](https://leaa-dashboard.now.sh))
 
@@ -36,148 +33,14 @@ You can click `demo` link online preview, all demos are deployed in `heroku` and
 
 ![dashboard-user-edit](https://raw.githubusercontent.com/SolidZORO/leaa/master/designs/ui/dashboard-user-edit.png)
 
-### WWW ([demo](https://leaa-www.now.sh))
+## **Legacy**
 
-##### www-index
+- [last version graphql](https://github.com/SolidZORO/leaa/tree/d51cdcad3cd7b01a59a4d589a45a631385f2026b)
+- [last version leaa-www](https://github.com/SolidZORO/leaa/tree/e3b77b363c8b2214072d5f617b0670499faa4afb/packages/leaa-www)
 
-![www-index](https://raw.githubusercontent.com/SolidZORO/leaa/master/designs/ui/www-index.png)
+## **TODOS**
 
-##### www-login
-
-![www-login](https://raw.githubusercontent.com/SolidZORO/leaa/master/designs/ui/www-login.png)
-
-### [MINIPROGRAM](https://github.com/SolidZORO/leaa-miniprogram) and [APP](https://github.com/SolidZORO/leaa-app)
-
-##### gif (3.7MB)
-
-![app-article-list](https://raw.githubusercontent.com/SolidZORO/leaa/master/designs/ui/leaa-app-and-mini-program.gif)
-
-## **TODOS-v0**
-
-- [x] **\_leaa-common**
-- [x] **leaa-api** ([demo](https://test-leaa-api.herokuapp.com)) / backend (Nest.js + TypeGraphQL + MySQL + Docker Compose)
-  - [x] Auth
-    - [x] Email
-    - [x] Wechat
-    - [x] Wechat MiniProgram
-  - [x] User
-  - [x] Role
-  - [x] Permission
-  - [x] Article
-  - [x] Attachment
-    - [x] Local
-    - [x] OSS
-    - [x] OSS sync to Local
-    - [x] @2x to @1x
-  - [x] Ax (Ad)
-  - [x] Category (infinity level)
-  - [x] Tag (word segmentation by NodeJieba)
-  - [x] Logger
-  - [x] Seed
-  - [x] Setting
-- [x] **leaa-dashboard** ([demo](https://leaa-dashboard.now.sh)) / dashboard (React.js + Antd + MobX + Apollo / GraphQL)
-  - [x] Auth
-  - [x] User
-  - [x] Role
-  - [x] Permission
-  - [x] Home
-  - [x] Ax (Ad)
-  - [x] Category (infinity level)
-  - [x] Tag (word segmentation by NodeJieba)
-  - [x] Article
-    - [x] WYSIWYGEditor
-  - [x] Attachment
-    - [x] Drop to Upload
-    - [x] Drop to Sort
-  - [x] Setting
-  - [x] Error Boundary
-  - [x] Responsive Design
-  - [x] i18n
-- [x] **leaa-www** ([demo](https://leaa-www.now.sh)) / website (Next.js + GraphQL)
-  - [x] Home
-  - [x] Account
-    - [x] Login
-      - [x] Email
-      - [x] Wechat
-    - [x] Register
-      - [x] Email
-      - [x] Wechat
-    - [x] Logout
-  - [x] Article
-    - [x] List
-    - [x] Item
-  - [x] Banner Swiper
-    - [x] Support Retina @2x
-    - [x] Image Lazyload
-  - [x] SEO (HtmlMeta)
-- [x] **leaa-miniprogram** / wechat-miniprogram (Taro.js + GraphQL)
-  - [x] Home
-  - [x] Account
-    - [x] Login
-    - [x] Logout
-  - [x] Article
-    - [x] List
-    - [x] Item (Rich Text)
-- [x] **leaa-app** / iOS and Android (expo + GraphQL)
-  - [x] Home
-  - [x] Account
-    - [x] Login
-    - [x] Logout
-  - [x] Article
-    - [x] List
-    - [x] Item (Webview)
-
-<br />
-<br />
-
-## **TODOS-v1**
-
-- [ ] **leaa-api**
-  - [ ] Order
-  - [ ] Product
-    - [ ] Specs (universal property)
-  - [ ] Warehouses
-  - [ ] Stocktaking
-  - [ ] Statistics
-  - [ ] Booking
-  - [ ] Coupon
-  - [ ] Promo
-  - [ ] Payment
-    - [ ] Alipay
-    - [ ] Wechat
-- [ ] **leaa-dashboard**
-  - [ ] Order
-  - [ ] Product
-    - [ ] Specs (universal property)
-  - [ ] Warehouses
-  - [ ] Stocktaking
-  - [ ] Statistics
-  - [ ] Booking
-  - [ ] Coupon
-  - [ ] Promo
-- [ ] **leaa-www**
-  - [ ] Account
-    - [ ] Login
-      - [ ] Phone
-    - [ ] Register
-      - [ ] Phone
-    - [ ] Forget Password
-    - [ ] Profile
-      - [ ] Upload Avatar
-      - [ ] Bind / Unbind OAuth Account
-  - [ ] Cart
-  - [ ] Checkout
-  - [ ] Payment
-    - [ ] Alipay
-    - [ ] Wechat
-  - [ ] Order
-  - [ ] Product
-  - [ ] Booking
-  - [ ] Coupon
-  - [ ] Promo
-
-<br />
-<br />
+[TODOS](https://github.com/SolidZORO/leaa/issues/13)
 
 ## **DEV SUMMARY**
 
