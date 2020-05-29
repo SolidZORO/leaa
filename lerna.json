@@ -4,15 +4,5 @@
   "npmClient": "yarn",
   "includeMergedTags": true,
   "useWorkspaces": true,
-  "command": {
-    "publish": {
-      "allowBranch": "next",
-      "cdVersion": "prerelease",
-      "conventionalCommits": true,
-      "gitRemote": "upstream",
-      "preid": "alpha",
-      "message": "chore(release): publish %s"
-    }
-  },
   "ignoreChanges": ["**/__(fixtures|tests|specs)__/**", "**/*.(md|txt)"]
 }
