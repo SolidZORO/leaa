@@ -22,7 +22,8 @@ const product = '商品';
 const address = '地址';
 const division = '地址源';
 const zan = '集赞';
-const auth = '开放授权';
+const auth = '授权';
+const oauth = '开放授权';
 const action = '操作记录';
 
 export default {
@@ -109,4 +110,5 @@ export default {
   editAction: `${_lang.edit} ${action}`,
   //
   auth,
+  oauth,
 };

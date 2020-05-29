@@ -84,7 +84,14 @@ export default (props: IPage) => {
           setCrudQuery={setCrudQuery}
           route={props.route}
           routerName={API_PATH}
-          columnFields={['id', 'title', 'createdAt', 'status', { action: { fieldName: 'title' } }]}
+          columnFields={[
+            'id',
+            'title',
+            'createdAt',
+            { byte: { fieldName: 'size' } },
+            'status',
+            { action: { fieldName: 'title' } },
+          ]}
           list={list}
         />
       )}

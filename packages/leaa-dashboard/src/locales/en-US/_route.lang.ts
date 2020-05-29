@@ -23,6 +23,7 @@ const address = 'Address';
 const division = 'Division';
 const zan = 'Collect Zan';
 const auth = 'Auth';
+const oauth = 'OAuth';
 const action = 'Action Log';
 
 export default {
@@ -109,4 +110,5 @@ export default {
   editAction: `${_lang.edit} ${action}`,
   //
   auth,
+  oauth,
 };

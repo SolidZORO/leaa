@@ -27,6 +27,7 @@ export default {
   updatedAt: 'Updated At',
   releasedAt: 'Released At',
   action: 'Action',
+  size: 'Size',
   description: 'Description',
   link: 'Link',
   sort: 'Sort',

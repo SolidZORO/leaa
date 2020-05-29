@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import _ from 'lodash';
 import { v4 } from 'uuid';
+import prettyBytes from 'pretty-bytes';
 import cx from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -159,6 +160,15 @@ export const TableCard = <T extends object>(props: IProps<T>) => {
         />
       ),
     }),
+    byte: (options?: { fieldName?: string }) => ({
+      title: t('_lang:size'),
+      dataIndex: 'size',
+      width: 75,
+      sorter: true,
+      sortOrder: calcTableSortOrder('size', crudQuery?.sort),
+      render: (text: string, record: any) =>
+        options?.fieldName ? <small>{prettyBytes(record[options?.fieldName])}</small> : null,
+    }),
   };
 
   /**
@@ -169,22 +179,25 @@ export const TableCard = <T extends object>(props: IProps<T>) => {
    * 3，['id', { action: { p1: '1', p2: 'B'} }] -  {} 部分是参数
    * 4，['id', { render: => (<p />) }] - 原生 TableColumn
    * */
-  const genColumns = (cFields?: IColumnField[] | 'all'): ITableColumns => {
-    const cSetKeys = Object.keys(columnSet);
+  const genColumns = (columnFields?: IColumnField[] | 'all'): ITableColumns => {
+    const columnSetKeys = Object.keys(columnSet);
 
-    if (cFields === 'all') return Object.keys(columnSet).map((c) => columnSet[c]());
+    if (columnFields === 'all') return Object.keys(columnSet).map((c) => columnSet[c]());
 
-    if (_.isEmpty(cFields)) return undefined;
+    if (_.isEmpty(columnFields)) return undefined;
 
-    return _.map(cFields, (f) => {
-      // 如果 columnSet 没有这个 f，生成一个简单 column
-      if (_.isString(f) && !cSetKeys.includes(f)) return genSimpleColumn(f);
+    return _.map(columnFields, (field) => {
+      // 如果 columnSet 没有这个 field，生成一个简单 column
+      if (_.isString(field) && !columnSetKeys.includes(field)) return genSimpleColumn(field);
 
       // keys 包含 render，可认为是原生 TableColumn 直接 return
-      if (_.isObject(f) && Object.keys(f).includes('render')) return f;
+      if (_.isObject(field) && Object.keys(field).includes('render')) return field;
 
-      if (_.isObject(f)) return columnSet[Object.keys(f)[0]](Object.values(f)[0]);
-      if (_.isString(f)) return columnSet[f]();
+      // Object，解开
+      if (_.isObject(field)) return columnSet[Object.keys(field)[0]](Object.values(field)[0]);
+
+      // String，直接 return
+      if (_.isString(field)) return columnSet[field]();
 
       return undefined;
     });

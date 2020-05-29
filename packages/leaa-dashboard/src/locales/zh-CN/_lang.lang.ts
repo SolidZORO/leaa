@@ -30,6 +30,7 @@ export default {
   updatedTime: '更新时间',
   releasedTime: '发布时间',
   action: '操作',
+  size: '大小',
   description: '描述',
   link: '链接',
   sort: '排序',
