@@ -1,35 +1,25 @@
+import _ from 'lodash';
 import { notification } from 'antd';
-import gql from 'graphql-tag';
 
-import { ISetting } from '@leaa/dashboard/src/interfaces';
-// import { apolloClient } from '@leaa/dashboard/src/libs/apollo-client.lib';
-// import { SettingsWithPaginationObject } from '@leaa/common/src/dtos/setting';
-
-export const GET_SETTINGS = gql`
-  query {
-    settings {
-      total
-      items {
-        name
-        slug
-        value
-      }
-    }
-  }
-`;
+import { ISetting, IHttpRes, IHttpError, ICrudListRes } from '@leaa/dashboard/src/interfaces';
+import { ajax } from '@leaa/dashboard/src/utils/ajax.util';
+import { envConfig } from '@leaa/dashboard/src/configs';
+import { Setting } from '@leaa/common/src/entrys';
+import { errorMsg } from '@leaa/dashboard/src/utils/msg.util';
+import { genCrudRequestQuery } from '@leaa/dashboard/src/utils/crud.util';
 
 export const refreshLocalStorageSettings = () => {
-  // apolloClient
-  //   .query<any>({
-  //     query: GET_SETTINGS,
-  //     variables: {},
-  //     fetchPolicy: 'network-only',
-  //   })
-  //   .then((result: { data: { settings: SettingsWithPaginationObject } }) => {
-  //     if (result && result.data.settings && result.data.settings.items) {
-  //       localStorage.setItem('settings', JSON.stringify(result.data.settings.items));
-  //     }
-  //   });
+  ajax
+    .get(`${envConfig.API_URL}/${envConfig.API_VERSION}/settings`, {
+      params: genCrudRequestQuery({ fields: ['name', 'slug', 'value'] }),
+    })
+    .then((res: IHttpRes<ICrudListRes<Setting>>) => {
+      if (res.data?.data?.data && !_.isEmpty(res.data.data.data)) {
+        const settings = res.data.data.data.map((s) => _.pick(s, ['name', 'slug', 'value']));
+        localStorage.setItem('settings', JSON.stringify(settings));
+      }
+    })
+    .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message));
 };
 
 export const getLocalStorageSettings = (params: { key: string; disableNotification?: boolean }): ISetting => {

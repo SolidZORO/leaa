@@ -61,7 +61,7 @@ export const CategoryInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) 
         <Form form={form} name="category-info" layout="vertical">
           <Row gutter={16} className={style['form-row']}>
             <Col xs={24} sm={6}>
-              <Form.Item name="parent_id" label={`${t('_lang:parent')} ID`}>
+              <Form.Item name="parent_id" label={`${t('_lang:parentCategory')}`}>
                 <SelectCategoryIdByTree />
               </Form.Item>
             </Col>

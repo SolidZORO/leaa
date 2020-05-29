@@ -27,8 +27,6 @@ export default (props: IPage) => {
   const [itemLoading, setItemLoading] = useState(false);
   const [submitLoading, setSubmitLoading] = useState(false);
 
-  const [attas, setAttas] = useState<Attachment[]>();
-
   const onFetchItem = () => {
     setItemLoading(true);
 
@@ -48,7 +46,6 @@ export default (props: IPage) => {
 
     const data: ISubmitData<UpdateAxInput> = {
       ...infoData,
-      attachments: attas,
     };
 
     setSubmitLoading(true);
@@ -75,10 +72,8 @@ export default (props: IPage) => {
       <Row gutter={16}>
         <Col xs={24} sm={12}>
           <AttachmentBox
-            // attachments={item?.attachments}
             type="list"
             title={t('_lang:galleryMb')}
-            onChangeAttasCallback={setAttas}
             listHeight={350}
             attachmentParams={{
               type: 'image',
@@ -87,19 +82,13 @@ export default (props: IPage) => {
               typeName: 'gallery',
               typePlatform: 'mb',
             }}
-            autoUpdateRelation={{
-              apiPath: API_PATH,
-              relationName: 'attachments',
-            }}
           />
         </Col>
 
         <Col xs={24} sm={12}>
           <AttachmentBox
-            // attachments={item?.attachments}
             type="list"
             title={t('_lang:galleryPc')}
-            onChangeAttasCallback={setAttas}
             listHeight={350}
             attachmentParams={{
               type: 'image',
@@ -107,10 +96,6 @@ export default (props: IPage) => {
               moduleName: 'ax',
               typeName: 'gallery',
               typePlatform: 'pc',
-            }}
-            autoUpdateRelation={{
-              apiPath: API_PATH,
-              relationName: 'attachments',
             }}
           />
         </Col>

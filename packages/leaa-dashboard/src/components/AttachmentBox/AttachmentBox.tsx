@@ -2,7 +2,7 @@ import _ from 'lodash';
 import cx from 'classnames';
 import { useTranslation } from 'react-i18next';
 import React, { useState, useEffect } from 'react';
-import { Tooltip } from 'antd';
+import { Tooltip, Tag } from 'antd';
 
 import { IAttachmentParams, IAutoUpdateRelation } from '@leaa/common/src/interfaces';
 import { Attachment } from '@leaa/common/src/entrys';
@@ -37,7 +37,7 @@ interface IProps {
  * AttachmentBox
  *
  * @ideaNotes
- * 我的想法是这样的，AttachmentBox（下文叫 ABOX） 只管上传文件，传完写入 AttachmentTable。
+ * 我的想法是这样的，AttachmentBox（下文叫 ABOX）只管上传文件，传完写入 AttachmentTable。
  *
  * 下面是 attachmentParams 范例（ajax get 那边会配合 genCrudRequestQuery 做 search）
  * {
@@ -130,10 +130,12 @@ export const AttachmentBox = (props: IProps) => {
               )}
 
             <Tooltip
+              arrowPointAtCenter
               title={
                 <code className={style['title-code-tooltip']}>
-                  {props.attachmentParams?.type}-{props.attachmentParams?.moduleName}-{/* prettier-ignore */}
-                  {props.attachmentParams?.typeName}-{props.attachmentParams?.moduleId}
+                  {props.attachmentParams?.type}-{props.attachmentParams?.moduleName}-{props.attachmentParams?.typeName}
+                  <br />
+                  <small>{props.attachmentParams?.moduleId}</small>
                 </code>
               }
               trigger="hover"
@@ -141,7 +143,6 @@ export const AttachmentBox = (props: IProps) => {
               <code className={style['title-code-text']}>
                 {props.attachmentParams?.typeName}
                 <small>{props.attachmentParams?.typePlatform}</small>
-                <small>{props.attachmentParams?.moduleId}</small>
               </code>
             </Tooltip>
           </>
