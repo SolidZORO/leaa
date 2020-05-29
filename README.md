@@ -1,4 +1,4 @@
-![leaa-banner](https://raw.githubusercontent.com/SolidZORO/leaa/master/designs/ui/leaa-banner-github.png?v001)
+![leaa-banner](https://raw.githubusercontent.com/SolidZORO/leaa/master/designs/ui/leaa-banner-github-v300.png?v001)
 
 # Leaa (project 1d1h)
 
@@ -16,8 +16,6 @@ Leaa is a monorepo CMS (Content Management System) built with Nest.js, Next.js, 
 * [x] <del>**leaa-www** ([demo](https://leaa-www.now.sh)) / website (Next.js)</del>
 * [x] <del>**leaa-miniprogram** ([independence-repo](https://github.com/SolidZORO/leaa-miniprogram)) / wechat-miniprogram (Taro.js + Taro-ui + GraphQL)</del>
 * [x] <del>**leaa-app** ([independence-repo](https://github.com/SolidZORO/leaa-app)) / iOS and Android (expo + GraphQL)</del>
-
-[# read more TODOS v0](#TODOS-v0)
 
 ## **Install**
 
