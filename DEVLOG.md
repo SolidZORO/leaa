@@ -661,7 +661,7 @@ leaa-www (Next.js) 拜拜，把你拆到独立的 repo 好了。
 
 ### 2020-05-29 14:11
 
-3.0.0 了，过多不想写了。之前有些过一些在 https://github.com/SolidZORO/leaa/issues/6#issuecomment-633031883，我摘抄一下。
+3.0.0 了，过多不想写了。之前有些过一些在 https://github.com/SolidZORO/leaa/issues/6#issuecomment-633031883 我摘抄一下。
 
 主要是 Gql 用到后面感觉很麻烦，后端 API 那边麻烦，前端 Dashboard 这边也麻烦。
 
