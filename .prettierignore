@@ -1,5 +1,6 @@
 node_modules
 /dist
+/.docker
 /coverage
 
 **/*.d.ts
