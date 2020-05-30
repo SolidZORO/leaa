@@ -27,7 +27,7 @@ import {
   query: {
     maxLimit: 1000,
     alwaysPaginate: true,
-    sort: [{ field: 'created_at', order: 'DESC' }],
+    // sort: [{ field: 'created_at', order: 'DESC' }],
   },
   routes: {
     // upload file, will be auto create
@@ -71,6 +71,7 @@ export class AttachmentController implements CrudController<Attachment> {
     return this.service.createAttachmentByLocal(body, file);
   }
 
+  @HttpCode(200)
   @Get('oss/callback')
   async ossCallbackTips() {
     return 'METHOD ERROR, PLS CHANGE TO POST.';
@@ -78,8 +79,8 @@ export class AttachmentController implements CrudController<Attachment> {
 
   @HttpCode(200)
   @Post('oss/callback')
-  async ossCallback(@Body() request: ICraeteAttachmentByOssCallback) {
-    return this.saveInOssService.ossCallback(request);
+  async ossCallback(@Body() req: ICraeteAttachmentByOssCallback) {
+    return this.saveInOssService.ossCallback(req);
   }
 
   @Post('batch')
