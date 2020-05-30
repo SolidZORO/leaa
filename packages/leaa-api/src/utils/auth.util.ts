@@ -1,15 +1,15 @@
 import { User } from '@leaa/common/src/entrys';
 import { IPermissionSlug } from '@leaa/common/src/interfaces';
-import { UnauthorizedException } from '@nestjs/common';
+import { NotFoundUserException } from '@leaa/api/src/exceptions';
 
 export const checkUserIsEnable = (user?: User): User => {
-  if (!user || (user && user.status !== 1)) throw new UnauthorizedException();
+  if (!user || (user && user.status !== 1)) throw new NotFoundUserException();
 
   return user;
 };
 
 export const checkUserIsAdmin = (user?: User): User => {
-  if (!user || (user && user.status !== 1 && user.is_admin !== 1)) throw new UnauthorizedException();
+  if (!user || (user && user.status !== 1 && user.is_admin !== 1)) throw new NotFoundUserException();
 
   return user;
 };

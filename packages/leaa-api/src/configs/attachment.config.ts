@@ -11,7 +11,7 @@ const SAVE_DIR_BY_DB = `attachments/${SAVE_SUB_DIR}/`;
 
 const ALLOW_FILE_TYPES = /image|jpeg|jpg|png|gif|webp|pdf|text|mp4|mp3/;
 
-const URL_PREFIX_BY_LOCAL = `${envConfig.SERVER_PROTOCOL}://${envConfig.BASE_HOST}${
+const URL_PREFIX_BY_LOCAL = `${envConfig.SERVER_PROTOCOL}://${envConfig.SERVER_HOST}${
   __DEV__
     ? `:${envConfig.SERVER_PORT}` // __DEV__ have SERVER_PORT, e.g. http://localhost:8888/attachments/upload
     : '' //                   prod not PORT, e.g. http://test-leaa.com/attachments/upload

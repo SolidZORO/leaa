@@ -1,5 +1,7 @@
 import envalid from 'envalid';
 
+import ip from 'ip';
+
 import { IDotEnv } from '@leaa/api/src/interfaces';
 
 export class ConfigService {
@@ -17,6 +19,11 @@ export class ConfigService {
     return Number(this.envConfig.SERVER_PORT);
   }
 
+  get SERVER_HOST(): string {
+    // return this.envConfig.SERVER_HOST;
+    return this.envConfig.SERVER_HOST.replace('localhost', ip.address());
+  }
+
   get DEMO_MODE(): boolean {
     return Boolean(this.envConfig.DEMO_MODE === 'true');
   }
@@ -25,12 +32,8 @@ export class ConfigService {
     return Boolean(this.envConfig.DEBUG_MODE === 'true');
   }
 
-  get BASE_HOST(): string {
-    return this.envConfig.BASE_HOST;
-  }
-
   get API_URL(): string {
-    return `${this.envConfig.SERVER_PROTOCOL}://${this.envConfig.BASE_HOST}:${this.envConfig.SERVER_PORT}`;
+    return `${this.envConfig.SERVER_PROTOCOL}://${this.envConfig.SERVER_HOST}:${this.envConfig.SERVER_PORT}`;
   }
 
   get PUBLIC_DIR(): string {
@@ -83,6 +86,16 @@ export class ConfigService {
     return typeof this.envConfig.DB_SYNCHRONIZE !== 'undefined'
       ? Boolean(this.envConfig.DB_SYNCHRONIZE === 'true')
       : true;
+  }
+
+  //
+
+  get RATELIMIT_MAX(): number {
+    return Number(this.envConfig.RATELIMIT_MAX);
+  }
+
+  get RATELIMIT_WINDOWMS(): number {
+    return Number(this.envConfig.RATELIMIT_WINDOWMS);
   }
 
   //
@@ -169,11 +182,11 @@ export class ConfigService {
     const rule = {
       SERVER_PROTOCOL: envalid.str({ choices: ['http', 'https'], default: 'http' }),
       SERVER_PORT: envalid.port({ default: 5555 }),
+      SERVER_HOST: envalid.str(),
       //
       DEMO_MODE: envalid.str({ choices: ['true', 'false'], default: 'false' }),
       DEBUG_MODE: envalid.str({ choices: ['true', 'false'], default: 'false' }),
       //
-      BASE_HOST: envalid.str(),
       PUBLIC_DIR: envalid.str(),
       ATTACHMENT_DIR: envalid.str(),
       ATTACHMENT_LIMIT_SIZE_MB: envalid.num(),
@@ -187,6 +200,9 @@ export class ConfigService {
       DB_PASSWORD: envalid.str(),
       DB_DATABASE: envalid.str(),
       DB_SYNCHRONIZE: envalid.str(),
+      //
+      RATELIMIT_WINDOWMS: envalid.num(),
+      RATELIMIT_MAX: envalid.num(),
       //
       TRUST_PROXY: envalid.str(),
       JWT_SECRET_KEY: envalid.str(),

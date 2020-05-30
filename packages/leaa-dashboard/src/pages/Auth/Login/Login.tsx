@@ -89,6 +89,8 @@ export default (props: IPage) => {
   // }, [qs.ticket]);
 
   const onSubmit = async () => {
+    if (submitLoading) return;
+
     const submitData: ISubmitData<AuthLoginInput> = await loginFormRef.current?.onValidateForm();
 
     if (!submitData) return;
@@ -130,7 +132,12 @@ export default (props: IPage) => {
               <div className={style['description']}>{t('_page:Auth.Login.subTitle')}</div>
 
               <div className={style['login-form']}>
-                <LoginForm ref={loginFormRef} onPressSubmitCallback={onSubmit} loginErrorCount={loginErrorCount} />
+                <LoginForm
+                  ref={loginFormRef}
+                  onPressSubmitCallback={onSubmit}
+                  loginErrorCount={loginErrorCount}
+                  loading={submitLoading}
+                />
               </div>
 
               <div className={style['local-button']}>

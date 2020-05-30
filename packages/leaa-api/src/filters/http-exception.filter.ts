@@ -9,6 +9,8 @@ export interface IHttpException {
 @Catch()
 export class HttpExceptionFilter implements ExceptionFilter {
   catch(exception: unknown, host: ArgumentsHost) {
+    const __DEV__ = process.env.NODE_ENV !== 'production';
+
     const ctx = host.switchToHttp();
     const res = ctx.getResponse();
     const req = ctx.getRequest();
@@ -17,7 +19,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const lang = req.language || '';
 
     // @ts-ignore
-    let message = exception?.sqlMessage || exception?.message || 'KERNEL PANIC!!!';
+    let message = (__DEV__ && exception?.sqlMessage) || exception?.message || 'KERNEL PANIC!!!';
 
     if (exception instanceof HttpException) {
       message = exception.message;

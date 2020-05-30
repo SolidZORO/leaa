@@ -2872,6 +2872,13 @@
   resolved "https://registry.npm.taobao.org/@types/invariant/download/@types/invariant-2.2.32.tgz#cf523a609062564e36e7a7dadb5089ed87da6382"
   integrity sha1-z1I6YJBiVk4256fa21CJ7YfaY4I=
 
+"@types/ip@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.npm.taobao.org/@types/ip/download/@types/ip-1.1.0.tgz#aec4f5bfd49e4a4c53b590d88c36eb078827a7c0"
+  integrity sha1-rsT1v9SeSkxTtZDYjDbrB4gnp8A=
+  dependencies:
+    "@types/node" "*"
+
 "@types/istanbul-lib-coverage@*", "@types/istanbul-lib-coverage@^2.0.0", "@types/istanbul-lib-coverage@^2.0.1":
   version "2.0.1"
   resolved "https://registry.npm.taobao.org/@types/istanbul-lib-coverage/download/@types/istanbul-lib-coverage-2.0.1.tgz#42995b446db9a48a11a07ec083499a860e9138ff"

@@ -231,7 +231,7 @@ export class SaveInOssService {
 
     // if SAVE_IN_LOCAL failed, don't write DB
     if (this.configService.ATTACHMENT_SAVE_IN_LOCAL) {
-      const status = await this.saveOssToLocal(attachmentData);
+      const status = await this.saveOssToLocal(attachmentData as Attachment);
 
       if (status !== 'success') {
         throw Error('Save Oss To Local Error');

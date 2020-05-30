@@ -4,7 +4,6 @@ import { Col, Form, Input, Row, Checkbox } from 'antd';
 
 import { useTranslation } from 'react-i18next';
 import { LoginAccount } from '@leaa/common/src/dtos/demo';
-import { getGuestToken } from '@leaa/dashboard/src/utils';
 
 import style from './style.module.less';
 
@@ -22,6 +21,8 @@ export const LoginForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
   const [form] = Form.useForm();
 
   const onValidateForm = async () => {
+    if (props.loading) return false;
+
     try {
       return await form.validateFields();
     } catch (err) {
@@ -30,9 +31,7 @@ export const LoginForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
   };
 
   useEffect(() => {
-    if (props.initialValues) {
-      form.setFieldsValue(props.initialValues);
-    }
+    if (props.initialValues) form.setFieldsValue(props.initialValues);
   }, [form, props.initialValues]);
 
   useEffect(() => {

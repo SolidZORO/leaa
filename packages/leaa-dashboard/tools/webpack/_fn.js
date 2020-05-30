@@ -1,6 +1,6 @@
 const dotenv = require('dotenv');
 const childProcess = require('child_process');
-const os = require('os');
+const ip = require('ip');
 
 const { WPCONST } = require('./_const');
 
@@ -9,7 +9,7 @@ function getEnvInfo() {
   const env = dotenv.config({ path: envPath }).parsed;
 
   // DEV, Change API_URL to IP Address
-  if (WPCONST.__DEV__) env.API_URL = env.API_URL.replace('localhost', getIPAdress());
+  if (WPCONST.__DEV__) env.API_URL = env.API_URL.replace('localhost', ip.address());
 
   return env;
 }
@@ -18,40 +18,9 @@ const env = getEnvInfo();
 const getGitVersion = (childProcess.execSync('git rev-parse HEAD') || '').toString().substr(0, 4);
 const getVersion = `v${process.env.npm_package_version} (${getGitVersion})`;
 
-function getIPAdress() {
-  const ifaces = os.networkInterfaces();
-  let ip = '0.0.0.0';
-
-  Object.keys(ifaces).forEach((ifname) => {
-    let alias = 0;
-
-    ifaces[ifname].forEach((iface) => {
-      if (iface.family !== 'IPv4' || iface.internal !== false) {
-        // skip over internal (i.e. 127.0.0.1) and non-ipv4 addresses
-        return;
-      }
-
-      if (alias >= 1) {
-        // this single interface has multiple ipv4 addresses
-        // console.log(`${ifname}:${alias}`, iface.address);
-        ip = iface.address;
-      } else {
-        // this interface has only one ipv4 adress
-        // console.log(ifname, iface.address);
-        ip = iface.address;
-      }
-
-      // eslint-disable-next-line no-plusplus
-      ++alias;
-    });
-  });
-
-  return ip;
-}
-
 function showEnvInfo() {
   // emoji for CLI
-  const serverBaseByText = `${env.SERVER_PROTOCOL}://${getIPAdress() || env.SERVER_HOST}:${env.SERVER_PORT}`;
+  const serverBaseByText = `${env.SERVER_PROTOCOL}://${ip.address() || env.SERVER_HOST}:${env.SERVER_PORT}`;
   const serverBaseByEmoji = `✨✨ \x1b[00;45;9m${serverBaseByText}\x1b[0m ✨✨`;
   const serverEnv = `${env.NODE_ENV !== 'production' ? '🚀' : '🔰'} ${(env.NODE_ENV || 'NOT-ENV').toUpperCase()}`;
 
@@ -74,4 +43,4 @@ function showEnvInfo() {
   console.log('\n\n\n');
 }
 
-module.exports = { showEnvInfo, getVersion, getIPAdress, getEnvInfo };
+module.exports = { showEnvInfo, getVersion, getEnvInfo };

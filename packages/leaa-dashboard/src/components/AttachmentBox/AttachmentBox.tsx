@@ -2,12 +2,12 @@ import _ from 'lodash';
 import cx from 'classnames';
 import { useTranslation } from 'react-i18next';
 import React, { useState, useEffect } from 'react';
-import { Tooltip, Tag } from 'antd';
+import { Tooltip } from 'antd';
 
 import { IAttachmentParams, IAutoUpdateRelation } from '@leaa/common/src/interfaces';
 import { Attachment } from '@leaa/common/src/entrys';
 
-import { removeLangSpace, ajax, errorMsg, genCrudRequestQuery, setCrudQueryToUrl } from '@leaa/dashboard/src/utils';
+import { removeLangSpace, ajax, errorMsg, genCrudRequestQuery } from '@leaa/dashboard/src/utils';
 import { envConfig } from '@leaa/dashboard/src/configs';
 import { FormCard } from '@leaa/dashboard/src/components';
 import { IHttpError, IHttpRes, ICrudListRes, ICrudListQueryParams } from '@leaa/dashboard/src/interfaces';
@@ -84,17 +84,23 @@ export const AttachmentBox = (props: IProps) => {
 
     ajax
       .get(`${envConfig.API_URL}/${envConfig.API_VERSION}/attachments`, { params: genCrudRequestQuery(params) })
-      // .get(`${envConfig.API_URL}/${envConfig.API_VERSION}/${API_PATH}`)
       .then((res: IHttpRes<ICrudListRes<Attachment>>) => {
         setAttachments(_.orderBy(res.data.data.data, ['status', 'sort'], ['desc', 'asc']) || []);
-
-        setCrudQueryToUrl({ window, query: params, replace: true });
       })
       .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
       .finally(() => setListLoading(false));
   };
 
-  useEffect(() => onFetchList(), []);
+  useEffect(() => {
+    if (
+      props.attachmentParams?.moduleId &&
+      props.attachmentParams?.moduleName &&
+      props.attachmentParams?.typeName &&
+      props.attachmentParams?.typePlatform
+    ) {
+      onFetchList();
+    }
+  }, [props.attachmentParams]);
 
   const onChangeAttas = (attas: Attachment[]) => {
     setAttachments(_.orderBy(attas, ['status', 'sort'], ['desc', 'asc']) || []);

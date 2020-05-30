@@ -42,7 +42,7 @@ export class AuthService {
 
     const account = xss.filterXSS(body.email.trim().toLowerCase());
 
-    const findUser = await this.userRepo.findOneOrFail({
+    const findUser = await this.userRepo.findOne({
       select: ['id', 'email', 'name', 'status', 'password', 'avatar_url'],
       where: {
         email: account,

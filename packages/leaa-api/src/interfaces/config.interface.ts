@@ -1,11 +1,11 @@
 export interface IDotEnv {
   SERVER_PROTOCOL: string;
   SERVER_PORT: number;
+  SERVER_HOST: string;
 
   DEMO_MODE: string;
   DEBUG_MODE: string;
 
-  BASE_HOST: string;
   PUBLIC_DIR: string;
   ATTACHMENT_DIR: string;
   ATTACHMENT_LIMIT_SIZE_MB: number;
@@ -19,6 +19,9 @@ export interface IDotEnv {
   DB_PASSWORD: string;
   DB_DATABASE: string;
   DB_SYNCHRONIZE: string;
+
+  RATELIMIT_WINDOWMS: number;
+  RATELIMIT_MAX: number;
 
   TRUST_PROXY: string;
   JWT_SECRET_KEY: string;

@@ -64,6 +64,11 @@ export class AttachmentController implements CrudController<Attachment> {
     return this.service.createAttachmentByLocal(body, file);
   }
 
+  @Get('oss/callback')
+  async ossCallbackTips() {
+    return 'METHOD ERROR, PLS CHANGE TO POST.';
+  }
+
   @Post('oss/callback')
   async ossCallback(@Body() request: ICraeteAttachmentByOssCallback) {
     return this.saveInOssService.ossCallback(request);
