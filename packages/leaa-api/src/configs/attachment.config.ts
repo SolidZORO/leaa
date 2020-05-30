@@ -19,7 +19,7 @@ const URL_PREFIX_BY_LOCAL = `${envConfig.SERVER_PROTOCOL}://${envConfig.SERVER_H
 const URL_PREFIX_BY_OSS = `${envConfig.SERVER_PROTOCOL}://${envConfig.ATTACHMENT_OSS_ALIYUN_BUCKET}.${envConfig.ATTACHMENT_OSS_ALIYUN_REGION}.aliyuncs.com`; // eslint-disable-line max-len
 
 const UPLOAD_ENDPOINT_BY_LOCAL = `${URL_PREFIX_BY_LOCAL}/v1/attachments/upload`;
-// const UPLOAD_ENDPOINT_BY_OSS = URL_PREFIX_BY_OSS; // eslint-disable-line max-len
+const UPLOAD_ENDPOINT_BY_OSS = URL_PREFIX_BY_OSS; // eslint-disable-line max-len
 
 export const attachmentConfig = {
   SAVE_SUB_DIR,
@@ -29,5 +29,5 @@ export const attachmentConfig = {
   URL_PREFIX_BY_LOCAL,
   URL_PREFIX_BY_OSS,
   UPLOAD_ENDPOINT_BY_LOCAL,
-  UPLOAD_ENDPOINT_BY_OSS: URL_PREFIX_BY_OSS,
+  UPLOAD_ENDPOINT_BY_OSS,
 };

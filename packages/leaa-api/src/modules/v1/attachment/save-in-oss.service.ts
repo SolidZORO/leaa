@@ -1,6 +1,6 @@
 import fs from 'fs';
 import { Repository } from 'typeorm';
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpCode } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import axios from 'axios';
 import crypto from 'crypto';
@@ -58,7 +58,6 @@ export class SaveInOssService {
     });
 
     const policy = Buffer.from(policyJson).toString('base64');
-
     const signature = crypto.createHmac('sha1', OSSAccessKeySecret).update(policy).digest('base64');
 
     /* eslint-disable no-template-curly-in-string */
@@ -104,6 +103,7 @@ export class SaveInOssService {
   }
 
   async downloadFile(fileUrl: string, cb: (file: Buffer) => void) {
+    console.log('downloadFile', fileUrl);
     const tempFile = `/tmp/${new Date().getTime()}`;
     let result = null;
 
@@ -127,12 +127,14 @@ export class SaveInOssService {
   }
 
   async saveAt2xToAt1xByOss(filename: string): Promise<OSS.PutObjectResult | null> {
+    console.log('saveAt2xToAt1xByOss', filename);
     const at1xUrl = `${this.uploadEndPoint}/${filename}?x-oss-process=image/resize,p_50`;
 
     return this.downloadFile(at1xUrl, (file) => this.client.put(filename.replace('_2x', ''), file));
   }
 
   async saveOssToLocal(attachment: Attachment): Promise<'success' | Error> {
+    console.log('saveOssToLocal', attachment);
     await this.downloadFile(attachment.url || '', (file) => {
       try {
         mkdirp.sync(attachmentConfig.SAVE_DIR_BY_DISK);
@@ -158,6 +160,7 @@ export class SaveInOssService {
   }
 
   async createAttachmentByOss(req: ICraeteAttachmentByOssCallback): Promise<Attachment | undefined> {
+    console.log('createAttachmentByOss', req);
     const splitFilename = req.object.split('/').pop();
 
     if (!splitFilename) {
@@ -244,7 +247,7 @@ export class SaveInOssService {
     return this.attachmentRepo.save({ ...attachmentData });
   }
 
-  // @HttpCode(200)
+  @HttpCode(200)
   async ossCallback(req: ICraeteAttachmentByOssCallback): Promise<any> {
     console.log('-------- ATTACHMENT OSS CALLBACK --------\n', req);
 
