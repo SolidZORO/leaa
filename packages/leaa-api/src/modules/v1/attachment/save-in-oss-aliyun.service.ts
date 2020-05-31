@@ -20,13 +20,13 @@ import { attachmentConfig } from '@leaa/api/src/configs';
 import { ConfigService } from '@leaa/api/src/modules/v1/config/config.service';
 import { filenameAt1xToAt2x, isAt2x, logger, uuid, buildUrl, buildUrlAt2x } from '@leaa/api/src/utils';
 
-const CLS_NAME = 'SaveInOssService';
+const CLS_NAME = 'SaveInOssAliyunService';
 
 //
 //
 // ⚠️ if Enable OSS, You need to `Aliyun OSS` setting `CORS`, and Enable `AliyunOSSFullAccess` in `RAM` First.
 @Injectable()
-export class SaveInOssService {
+export class SaveInOssAliyunService {
   constructor(
     @InjectRepository(Attachment) private readonly attachmentRepo: Repository<Attachment>,
     private readonly configService: ConfigService,
@@ -254,5 +254,19 @@ export class SaveInOssService {
     console.log('📎 ATTACHMENT OSS CALLBACK\n', attachment);
 
     return attachment;
+  }
+
+  async deleteOssAliyunFiles(atta: Attachment): Promise<Attachment | undefined> {
+    if (atta.in_oss) {
+      const delete1xResult = await this.client.delete(atta.path.substr(1));
+      if (delete1xResult) logger.log(`delete oss-aliyun 1x file ${atta.path}\n\n`, CLS_NAME);
+
+      if (atta.at2x) {
+        const delete2xResult = await this.client.delete(filenameAt1xToAt2x(atta.path.substr(1)));
+        if (delete2xResult) logger.log(`delete oss-aliyun 2x file ${atta.path}\n\n`, CLS_NAME);
+      }
+    }
+
+    return atta;
   }
 }

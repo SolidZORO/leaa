@@ -3,7 +3,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 
 import { JwtGuard, PermissionsGuard } from '@leaa/api/src/guards';
 import { AttachmentService } from '@leaa/api/src/modules/v1/attachment/attachment.service';
-import { SaveInOssService } from '@leaa/api/src/modules/v1/attachment/save-in-oss.service';
+import { SaveInOssAliyunService } from '@leaa/api/src/modules/v1/attachment/save-in-oss-aliyun.service';
 import { ICraeteAttachmentByOssCallback, IAttachmentParams } from '@leaa/common/src/interfaces';
 import { Crud, CrudController, Override, ParsedRequest, CrudRequest } from '@nestjsx/crud';
 import { Attachment } from '@leaa/common/src/entrys';
@@ -46,7 +46,10 @@ import {
 })
 @Controller('/v1/attachments')
 export class AttachmentController implements CrudController<Attachment> {
-  constructor(public readonly service: AttachmentService, private readonly saveInOssService: SaveInOssService) {}
+  constructor(
+    public readonly service: AttachmentService,
+    private readonly saveInOssAliyunService: SaveInOssAliyunService,
+  ) {}
 
   @Override('deleteOneBase')
   @UseGuards(JwtGuard, PermissionsGuard)
@@ -78,16 +81,13 @@ export class AttachmentController implements CrudController<Attachment> {
   }
 
   @HttpCode(200)
-  @Get('oss/callback')
-  async ossCallbackTips() {
-    return 'METHOD ERROR, PLS CHANGE TO POST.';
-  }
-
-  @HttpCode(200)
   @Post('oss/callback')
   async ossCallback(@Body() req: ICraeteAttachmentByOssCallback) {
-    return this.saveInOssService.ossCallback(req);
+    return this.saveInOssAliyunService.ossCallback(req);
   }
+
+  //
+  //
 
   @Post('batch')
   @UseGuards(JwtGuard, PermissionsGuard)

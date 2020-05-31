@@ -1,4 +1,3 @@
-import fs from 'fs';
 import _ from 'lodash';
 import { Express } from 'express';
 import { Repository } from 'typeorm';
@@ -7,9 +6,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Attachment } from '@leaa/common/src/entrys';
 import { UpdateAttachmentsInput, BatchUpdateAttachmentsSortInput } from '@leaa/common/src/dtos/attachment';
 import { ISaveInOssSignature, ISaveInLocalSignature, IAttachmentParams } from '@leaa/common/src/interfaces';
-import { logger, getAt2xPath, filenameAt1xToAt2x } from '@leaa/api/src/utils';
+import { logger } from '@leaa/api/src/utils';
 import { ConfigService } from '@leaa/api/src/modules/v1/config/config.service';
-import { SaveInOssService } from '@leaa/api/src/modules/v1/attachment/save-in-oss.service';
+import { SaveInOssAliyunService } from '@leaa/api/src/modules/v1/attachment/save-in-oss-aliyun.service';
 import { SaveInLocalService } from '@leaa/api/src/modules/v1/attachment/save-in-local.service';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 import { CrudRequest } from '@nestjsx/crud';
@@ -22,14 +21,13 @@ export class AttachmentService extends TypeOrmCrudService<Attachment> {
     @InjectRepository(Attachment) private readonly attachmentRepo: Repository<Attachment>,
     private readonly configService: ConfigService,
     private readonly saveInLocalServer: SaveInLocalService,
-    private readonly saveInOssServer: SaveInOssService,
+    private readonly saveInOssAliyunService: SaveInOssAliyunService,
   ) {
     super(attachmentRepo);
   }
 
   async deleteOne(req: CrudRequest): Promise<Attachment | void> {
     const result = await super.deleteOne(req);
-
     if (result) await this.deleteRelationFiles(result);
 
     return result;
@@ -39,7 +37,7 @@ export class AttachmentService extends TypeOrmCrudService<Attachment> {
   //
 
   getSignature(): Promise<ISaveInOssSignature | ISaveInLocalSignature> | null {
-    if (this.configService.ATTACHMENT_SAVE_IN_OSS) return this.saveInOssServer.getSignature();
+    if (this.configService.ATTACHMENT_SAVE_IN_OSS) return this.saveInOssAliyunService.getSignature();
     if (this.configService.ATTACHMENT_SAVE_IN_LOCAL) return this.saveInLocalServer.getSignature();
 
     const errorMsg = 'Signature Missing SAVE_IN... Params';
@@ -79,36 +77,8 @@ export class AttachmentService extends TypeOrmCrudService<Attachment> {
   }
 
   async deleteRelationFiles(atta: Attachment): Promise<Attachment | undefined> {
-    // delete Local
-    if (atta.at2x) {
-      try {
-        // delete local
-        fs.unlinkSync(`${this.configService.PUBLIC_DIR}${getAt2xPath(atta.path)}`);
-
-        // delete oss
-        logger.log(`delete local 2x file ${atta.path}\n\n`, CLS_NAME);
-      } catch (err) {
-        logger.error(`delete _2x item ${atta.path} fail: ${JSON.stringify(atta)}\n\n`, CLS_NAME, err);
-      }
-    }
-
-    try {
-      fs.unlinkSync(`${this.configService.PUBLIC_DIR}${atta.path}`);
-      logger.log(`delete local 1x file ${atta.path}\n\n`, CLS_NAME);
-    } catch (err) {
-      logger.error(`delete file ${atta.path} fail: ${JSON.stringify(atta)}\n\n`, CLS_NAME, err);
-    }
-
-    // delete OSS
-    if (atta.in_oss) {
-      const delete1xResult = await this.saveInOssServer.client.delete(atta.path.substr(1));
-      if (delete1xResult) logger.log(`delete oss 1x file ${atta.path}\n\n`, CLS_NAME);
-
-      if (atta.at2x) {
-        const delete2xResult = await this.saveInOssServer.client.delete(filenameAt1xToAt2x(atta.path.substr(1)));
-        if (delete2xResult) logger.log(`delete oss 2x file ${atta.path}\n\n`, CLS_NAME);
-      }
-    }
+    await this.saveInLocalServer.deleteLocalFiles(atta);
+    if (atta.in_oss) await this.saveInOssAliyunService.deleteOssAliyunFiles(atta);
 
     return atta;
   }

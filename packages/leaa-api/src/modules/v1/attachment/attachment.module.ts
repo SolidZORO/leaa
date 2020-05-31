@@ -9,8 +9,9 @@ import { AttachmentController } from '@leaa/api/src/modules/v1/attachment/attach
 
 import { AttachmentService } from '@leaa/api/src/modules/v1/attachment/attachment.service';
 import { MulterService } from '@leaa/api/src/modules/v1/attachment/multer.service';
-import { SaveInOssService } from '@leaa/api/src/modules/v1/attachment/save-in-oss.service';
+
 import { SaveInLocalService } from '@leaa/api/src/modules/v1/attachment/save-in-local.service';
+import { SaveInOssAliyunService } from '@leaa/api/src/modules/v1/attachment/save-in-oss-aliyun.service';
 
 @Module({
   imports: [
@@ -22,7 +23,7 @@ import { SaveInLocalService } from '@leaa/api/src/modules/v1/attachment/save-in-
     AuthTokenModule,
   ],
   controllers: [AttachmentController],
-  providers: [AttachmentService, MulterService, SaveInOssService, SaveInLocalService],
-  exports: [AttachmentService, MulterService, SaveInOssService, SaveInLocalService],
+  providers: [AttachmentService, MulterService, SaveInOssAliyunService, SaveInLocalService],
+  exports: [AttachmentService, MulterService, SaveInOssAliyunService, SaveInLocalService],
 })
 export class AttachmentModule {}

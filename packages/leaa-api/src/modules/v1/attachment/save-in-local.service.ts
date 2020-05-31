@@ -14,7 +14,7 @@ import {
 } from '@leaa/common/src/interfaces';
 import { ConfigService } from '@leaa/api/src/modules/v1/config/config.service';
 import { Attachment } from '@leaa/common/src/entrys';
-import { logger, isAt2x, uuid, buildUrl, buildUrlAt2x } from '@leaa/api/src/utils';
+import { logger, isAt2x, uuid, buildUrl, buildUrlAt2x, getAt2xPath } from '@leaa/api/src/utils';
 import { attachmentConfig } from '@leaa/api/src/configs';
 import { isUUID } from '@nestjs/common/utils/is-uuid';
 
@@ -115,5 +115,25 @@ export class SaveInLocalService {
       url: buildUrl(attachmentData as Attachment),
       urlAt2x: buildUrlAt2x(attachmentData as Attachment),
     });
+  }
+
+  async deleteLocalFiles(atta: Attachment): Promise<Attachment | undefined> {
+    if (atta.at2x) {
+      try {
+        fs.unlinkSync(`${this.configService.PUBLIC_DIR}${getAt2xPath(atta.path)}`);
+        logger.log(`delete local 2x file ${atta.path}\n\n`, CLS_NAME);
+      } catch (err) {
+        logger.error(`delete _2x item ${atta.path} fail: ${JSON.stringify(atta)}\n\n`, CLS_NAME, err);
+      }
+    }
+
+    try {
+      fs.unlinkSync(`${this.configService.PUBLIC_DIR}${atta.path}`);
+      logger.log(`delete local 1x file ${atta.path}\n\n`, CLS_NAME);
+    } catch (err) {
+      logger.error(`delete file ${atta.path} fail: ${JSON.stringify(atta)}\n\n`, CLS_NAME, err);
+    }
+
+    return atta;
   }
 }
