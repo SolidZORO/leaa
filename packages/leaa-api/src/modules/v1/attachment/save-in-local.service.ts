@@ -49,9 +49,7 @@ export class SaveInLocalService {
   async createAttachmentByLocal(
     body: IAttachmentParams,
     file: Express.Multer.File,
-    options?: {
-      onlySaveFile?: boolean;
-    },
+    options?: { onlySaveFile?: boolean },
   ): Promise<Attachment | undefined> {
     if (!file) {
       const message = 'Not Found Attachment';
@@ -63,6 +61,7 @@ export class SaveInLocalService {
 
     const isImage = file.mimetype ? file.mimetype.includes(IAttachmentType.IMAGE) : false;
     const at2x = isAt2x(file.originalname) ? 1 : 0;
+
     let width = 0;
     let height = 0;
 
@@ -85,13 +84,8 @@ export class SaveInLocalService {
     const title = path.basename(file.originalname, ext).replace('_2x', '');
     const id = filename.replace(ext, '');
 
-    if (isImage && at2x) {
-      await this.saveAt2xToAt1xByLocal(file, width, height);
-    }
-
-    if (options && options.onlySaveFile) {
-      return;
-    }
+    if (isImage && at2x) await this.saveAt2xToAt1xByLocal(file, width, height);
+    if (options?.onlySaveFile) return;
 
     const attachmentData: IAttachmentCreateFieldByLocal = {
       id: isUUID(id) ? id : uuid(),

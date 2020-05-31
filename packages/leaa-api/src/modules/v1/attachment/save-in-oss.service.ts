@@ -1,11 +1,13 @@
 import fs from 'fs';
-import { Repository } from 'typeorm';
-import { Injectable, HttpCode, NotFoundException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
 import axios from 'axios';
 import crypto from 'crypto';
 import moment from 'moment';
 import OSS from 'ali-oss';
+import mkdirp from 'mkdirp';
+import { Repository } from 'typeorm';
+import { Injectable, HttpCode, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { isUUID } from '@nestjs/common/utils/is-uuid';
 
 import {
   ISaveInOssSignature,
@@ -13,15 +15,16 @@ import {
   IAttachmentType,
   IAttachmentCreateFieldByOss,
 } from '@leaa/common/src/interfaces';
-import { ConfigService } from '@leaa/api/src/modules/v1/config/config.service';
 import { Attachment } from '@leaa/common/src/entrys';
-import { filenameAt1xToAt2x, isAt2x, logger, uuid, buildUrl, buildUrlAt2x } from '@leaa/api/src/utils';
 import { attachmentConfig } from '@leaa/api/src/configs';
-import mkdirp from 'mkdirp';
-import { isUUID } from '@nestjs/common/utils/is-uuid';
+import { ConfigService } from '@leaa/api/src/modules/v1/config/config.service';
+import { filenameAt1xToAt2x, isAt2x, logger, uuid, buildUrl, buildUrlAt2x } from '@leaa/api/src/utils';
 
 const CLS_NAME = 'SaveInOssService';
 
+//
+//
+// ⚠️ if Enable OSS, You need to `Aliyun OSS` setting `CORS`, and Enable `AliyunOSSFullAccess` in `RAM` First.
 @Injectable()
 export class SaveInOssService {
   constructor(
@@ -56,26 +59,6 @@ export class SaveInOssService {
 
     const policy = Buffer.from(policyJson).toString('base64');
     const signature = crypto.createHmac('sha1', OSSAccessKeySecret).update(policy).digest('base64');
-
-    // /* eslint-disable no-template-curly-in-string */
-    // const callbackBody = {
-    //   object: '${object}',
-    //   bucket: '${bucket}',
-    //   size: '${size}',
-    //   etag: '${etag}',
-    //   height: '${imageInfo.height}',
-    //   width: '${imageInfo.width}',
-    //   mimeType: '${mimeType}',
-    //   format: '${imageInfo.format}',
-    //   //
-    //   type: '${x:type}',
-    //   typeName: '${x:type_name}',
-    //   moduleId: '${x:module_id}',
-    //   moduleName: '${x:module_name}',
-    //   originalname: '${x:originalname}',
-    //   typePlatform: '${x:type_platform}',
-    // };
-    // /* eslint-enable no-template-curly-in-string */
 
     /* eslint-disable no-template-curly-in-string */
     const callbackBody =

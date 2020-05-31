@@ -1,16 +1,11 @@
 import fs from 'fs';
 import _ from 'lodash';
 import { Express } from 'express';
-import { Repository, In } from 'typeorm';
+import { Repository } from 'typeorm';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Attachment } from '@leaa/common/src/entrys';
-import {
-  DeleteAttachmentsObject,
-  UpdateAttachmentInput,
-  UpdateAttachmentsInput,
-  BatchUpdateAttachmentsSortInput,
-} from '@leaa/common/src/dtos/attachment';
+import { UpdateAttachmentsInput, BatchUpdateAttachmentsSortInput } from '@leaa/common/src/dtos/attachment';
 import { ISaveInOssSignature, ISaveInLocalSignature, IAttachmentParams } from '@leaa/common/src/interfaces';
 import { logger, getAt2xPath, filenameAt1xToAt2x } from '@leaa/api/src/utils';
 import { ConfigService } from '@leaa/api/src/modules/v1/config/config.service';
@@ -21,8 +16,6 @@ import { CrudRequest } from '@nestjsx/crud';
 
 const CLS_NAME = 'AttachmentService';
 
-// @Injectable()
-// export class AttachmentService {
 @Injectable()
 export class AttachmentService extends TypeOrmCrudService<Attachment> {
   constructor(
@@ -55,7 +48,7 @@ export class AttachmentService extends TypeOrmCrudService<Attachment> {
     throw new NotFoundException(errorMsg);
   }
 
-  async createAttachmentByLocal(body: IAttachmentParams, file: Express.Multer.File): Promise<Attachment | undefined> {
+  async uploadFile(body: IAttachmentParams, file: Express.Multer.File): Promise<Attachment | undefined> {
     return this.saveInLocalServer.createAttachmentByLocal(body, file);
   }
 
@@ -86,6 +79,7 @@ export class AttachmentService extends TypeOrmCrudService<Attachment> {
   }
 
   async deleteRelationFiles(atta: Attachment): Promise<Attachment | undefined> {
+    // delete Local
     if (atta.at2x) {
       try {
         // delete local
@@ -93,30 +87,27 @@ export class AttachmentService extends TypeOrmCrudService<Attachment> {
 
         // delete oss
         logger.log(`delete local 2x file ${atta.path}\n\n`, CLS_NAME);
-
-        if (atta.in_oss) {
-          await this.saveInOssServer.client.delete(filenameAt1xToAt2x(atta.path.substr(1)));
-
-          logger.log(`delete oss 2x file ${atta.path}\n\n`, CLS_NAME);
-        }
       } catch (err) {
         logger.error(`delete _2x item ${atta.path} fail: ${JSON.stringify(atta)}\n\n`, CLS_NAME, err);
       }
     }
 
     try {
-      // delete local
       fs.unlinkSync(`${this.configService.PUBLIC_DIR}${atta.path}`);
       logger.log(`delete local 1x file ${atta.path}\n\n`, CLS_NAME);
-
-      // delete oss
-      if (atta.in_oss) {
-        await this.saveInOssServer.client.delete(atta.path.substr(1));
-
-        logger.log(`delete oss 1x file ${atta.path}\n\n`, CLS_NAME);
-      }
     } catch (err) {
       logger.error(`delete file ${atta.path} fail: ${JSON.stringify(atta)}\n\n`, CLS_NAME, err);
+    }
+
+    // delete OSS
+    if (atta.in_oss) {
+      const delete1xResult = await this.saveInOssServer.client.delete(atta.path.substr(1));
+      if (delete1xResult) logger.log(`delete oss 1x file ${atta.path}\n\n`, CLS_NAME);
+
+      if (atta.at2x) {
+        const delete2xResult = await this.saveInOssServer.client.delete(filenameAt1xToAt2x(atta.path.substr(1)));
+        if (delete2xResult) logger.log(`delete oss 2x file ${atta.path}\n\n`, CLS_NAME);
+      }
     }
 
     return atta;

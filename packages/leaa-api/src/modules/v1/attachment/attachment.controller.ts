@@ -58,6 +58,12 @@ export class AttachmentController implements CrudController<Attachment> {
   //
   //
 
+  /**
+   * @ideaNotes
+   * 在 upload 之前，会先给一个 data 到 client，告诉他应该往哪里传文件。
+   * 如果只开启了 ATTACHMENT_SAVE_IN_LOCAL，那就直接调用下面的 uploadFile 方法，
+   * 然后如果开了 ATTACHMENT_SAVE_IN_OSS，那 client 就直接传到 aliyun，然后 aliyun 会 POST 给下面的 ossCallback 去下载文件。
+   */
   @Get('signature')
   async getSignature() {
     return this.service.getSignature();
@@ -68,7 +74,7 @@ export class AttachmentController implements CrudController<Attachment> {
   @UseGuards(JwtGuard)
   @UseInterceptors(FileInterceptor('file'))
   async uploadFile(@Body() body: IAttachmentParams, @UploadedFile() file: Express.Multer.File) {
-    return this.service.createAttachmentByLocal(body, file);
+    return this.service.uploadFile(body, file);
   }
 
   @HttpCode(200)
