@@ -23,6 +23,7 @@ import { AxService } from './ax.service';
     sort: [{ field: 'created_at', order: 'DESC' }],
   },
   routes: {
+    exclude: ['createManyBase'],
     // getManyBase: { decorators: [Permissions('ax.list-read')] },
     // getOneBase: { decorators: [Permissions('ax.item-read')] },
     createOneBase: { decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('ax.item-create')] },

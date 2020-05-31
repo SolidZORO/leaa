@@ -25,6 +25,7 @@ import { RoleService } from './role.service';
     },
   },
   routes: {
+    exclude: ['createManyBase'],
     getManyBase: { decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('role.list-read')] },
     getOneBase: { decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('role.item-read')] },
     createOneBase: { decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('role.item-create')] },

@@ -30,6 +30,7 @@ import { UserService } from './user.service';
     },
   },
   routes: {
+    exclude: ['createManyBase'],
     getManyBase: { decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('user.list-read')] },
     getOneBase: { decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('user.item-read')] },
     // createOneBase: { decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('user.item-create')] },

@@ -20,6 +20,7 @@ import { CategoryService } from './category.service';
   },
   query: { maxLimit: 1000, alwaysPaginate: true },
   routes: {
+    exclude: ['createManyBase'],
     getManyBase: { decorators: [UseGuards(JwtGuard, PermissionsGuard)] },
     getOneBase: { decorators: [UseGuards(JwtGuard, PermissionsGuard)] },
     // createOneBase: { decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('category.item-create')] },

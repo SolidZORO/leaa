@@ -72,6 +72,8 @@ export const SelectCategoryIdByTree = (props: IProps) => {
 
   useEffect(() => {
     onFetchCategories();
+
+    return setTree([]);
   }, []);
 
   return (

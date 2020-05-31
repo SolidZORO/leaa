@@ -91,7 +91,6 @@
     "transliteration": "^2.1.11",
     "typeorm": "^0.2.25",
     "uuid": "^8.1.0",
-    "wechat-jssdk": "^5.0.4",
     "winston": "^3.2.1",
     "winston-daily-rotate-file": "^4.4.2",
     "xss": "^1.0.6"

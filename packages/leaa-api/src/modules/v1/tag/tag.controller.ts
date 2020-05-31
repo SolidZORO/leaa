@@ -20,10 +20,13 @@ import { TagService } from './tag.service';
   },
   query: { maxLimit: 1000, alwaysPaginate: true },
   routes: {
+    exclude: ['replaceOneBase', 'createManyBase'],
     // getManyBase: { decorators: [Permissions('tag.list-read')] },
     // getOneBase: { decorators: [Permissions('tag.item-read')] },
     createOneBase: { decorators: [UseGuards(JwtGuard)] },
+    // createManyBase: { decorators: [UseGuards(JwtGuard)] },
     updateOneBase: { decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('tag.item-update')] },
+    replaceOneBase: { decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('tag.item-update')] },
     deleteOneBase: {
       decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('tag.item-delete')],
       returnDeleted: true,

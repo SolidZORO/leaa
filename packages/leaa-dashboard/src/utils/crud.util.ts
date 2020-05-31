@@ -86,7 +86,6 @@ export function setCrudQueryToUrl({ window, query, replace }: ISetCrudQueryToUrl
 
 export function genCrudRequestQuery(crudState: ICrudListQueryParams): ICrudListQueryParams | undefined {
   try {
-    console.log(RequestQueryBuilder.create(crudState).queryObject);
     return RequestQueryBuilder.create(crudState).queryObject;
   } catch (err) {
     errorMsg(err.message);

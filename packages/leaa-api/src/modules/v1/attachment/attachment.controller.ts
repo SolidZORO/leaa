@@ -31,7 +31,7 @@ import {
   },
   routes: {
     // upload file, will be auto create
-    exclude: ['createOneBase'],
+    exclude: ['createOneBase', 'createManyBase'],
     // getManyBase: { decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('attachment.list-read')] },
     // getOneBase: { decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('attachment.item-read')] },
     // createOneBase: { decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('attachment.item-create')] },

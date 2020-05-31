@@ -17,6 +17,7 @@ import { ActionService } from './action.service';
     alwaysPaginate: true,
   },
   routes: {
+    exclude: ['createManyBase'],
     getManyBase: { decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('action.list-read')] },
     getOneBase: { decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('action.item-read')] },
     createOneBase: { decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('action.item-create')] },

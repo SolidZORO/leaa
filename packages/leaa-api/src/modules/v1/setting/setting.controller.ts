@@ -23,6 +23,7 @@ import { SettingService } from './setting.service';
     sort: [{ field: 'sort', order: 'ASC' }],
   },
   routes: {
+    exclude: ['createManyBase'],
     // getManyBase: { decorators: [Permissions('setting.list-read')] },
     // getOneBase: { decorators: [Permissions('setting.item-read')] },
     createOneBase: { decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('setting.item-create')] },

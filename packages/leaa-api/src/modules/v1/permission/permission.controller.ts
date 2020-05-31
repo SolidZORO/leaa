@@ -22,6 +22,7 @@ import { PermissionService } from './permission.service';
     alwaysPaginate: true,
   },
   routes: {
+    exclude: ['createManyBase'],
     getManyBase: { decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('permission.list-read')] },
     getOneBase: { decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('permission.item-read')] },
     createOneBase: { decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('permission.item-create')] },

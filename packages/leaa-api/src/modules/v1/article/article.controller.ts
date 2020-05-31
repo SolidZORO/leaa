@@ -27,6 +27,7 @@ import { ArticleService } from './article.service';
     },
   },
   routes: {
+    exclude: ['createManyBase'],
     // getManyBase: { decorators: [Permissions('article.list-read')] },
     // getOneBase: { decorators: [Permissions('article.item-read')] },
     // createOneBase: { decorators: [UseGuards(JwtGuard, PermissionsGuard), Permissions('article.item-create')] },

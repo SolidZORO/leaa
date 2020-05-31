@@ -64,9 +64,11 @@ export const AttachmentBox = (props: IProps) => {
 
   const [attachments, setAttachments] = useState<Attachment[]>([]);
   const [listLoading, setListLoading] = useState(false);
+  const [attachmentParams, setAttachmentParams] = useState<IAttachmentParams>();
 
   const onFetchList = () => {
-    if (!props.attachmentParams) return;
+    if (!props.attachmentParams || !props.attachmentParams.moduleId) return;
+
     setListLoading(true);
 
     const params: ICrudListQueryParams = {
@@ -92,12 +94,8 @@ export const AttachmentBox = (props: IProps) => {
   };
 
   useEffect(() => {
-    if (
-      props.attachmentParams?.moduleId &&
-      props.attachmentParams?.moduleName &&
-      props.attachmentParams?.typeName &&
-      props.attachmentParams?.typePlatform
-    ) {
+    if (props.attachmentParams?.moduleId && !attachmentParams) {
+      setAttachmentParams(props.attachmentParams);
       onFetchList();
     }
   }, [props.attachmentParams]);

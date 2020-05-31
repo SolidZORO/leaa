@@ -60,19 +60,15 @@ export class ArticleService extends TypeOrmCrudService<Article> {
     await this.formatRelationIdsToSave({ dto, toSave, idField: 'tagIds', saveField: 'tags', repo: this.tagRepo });
 
     // // auto add tag from article content (by jieba)
-    // if (dto.content && (!dto.tagIds || (dto.tagIds && dto.tagIds.length === 0))) {
-    //   const allText = formatHtmlToText(dto.content, dto.title);
-    //
-    //
-    //   console.log(cutTags(allText));
-    //
-    //   // batch create tags
-    //   toSave.tags = await this.tagService.createTags(cutTags(allText));
-    //
-    //   // ⚠️ sync tags
-    //   // execute only once when the article has no tag, reducing server pressure
-    //   await this.tagService.syncTagsToDictFile();
-    // }
+    if (dto.content && (!dto.tagIds || (dto.tagIds && dto.tagIds.length === 0))) {
+      const allText = formatHtmlToText(dto.content, dto.title);
+
+      toSave.tags = await this.tagRepo.save(cutTags(allText).map((tagStr) => ({ name: tagStr })));
+
+      // ⚠️ sync tags
+      // execute only once when the article has no tag, reducing server pressure
+      await this.tagService.syncTagsToDictFile();
+    }
 
     const updated = await this.repo.save(plainToClass(this.entityType, toSave));
 
