@@ -95,7 +95,7 @@ export default {
   deletedSuccessfully: '删除成功 #{{ id }}',
   //
   bannerMb: '主图 MB',
-  galleryMb: '商品图 MB',
+  galleryMb: '图列表 MB',
   bannerPc: '主图 PC',
-  galleryPc: '商品图 PC',
+  galleryPc: '图列表 PC',
 };

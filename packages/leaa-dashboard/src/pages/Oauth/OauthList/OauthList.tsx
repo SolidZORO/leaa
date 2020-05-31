@@ -5,5 +5,5 @@ import { IPage } from '@leaa/dashboard/src/interfaces';
 export default (props: IPage) => {
   const { t } = useTranslation();
 
-  return <p>N</p>;
+  return <p>N/A</p>;
 };
