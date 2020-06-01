@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.1](https://github.com/SolidZORO/leaa/compare/v3.1.0...v3.1.1) (2020-06-01)
+
+
+### Bug Fixes
+
+* fix packages version ([14e1ffb](https://github.com/SolidZORO/leaa/commit/14e1ffb64de596c0f28075acd9d73d9099305000))
+
+
+
+
+
 ## [3.0.1](https://github.com/SolidZORO/leaa/compare/v2.0.6...v3.0.1) (2020-05-29)
 
 ### Bug Fixes
