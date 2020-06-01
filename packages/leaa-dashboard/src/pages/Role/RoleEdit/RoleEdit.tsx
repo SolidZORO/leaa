@@ -4,7 +4,7 @@ import { Button } from 'antd';
 
 import { Role, Permission } from '@leaa/common/src/entrys';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
-import { UpdateRoleInput } from '@leaa/common/src/dtos/role';
+import { RoleUpdateOneReq } from '@leaa/common/src/dtos/role';
 import {
   IPage,
   ICommenFormRef,
@@ -30,8 +30,8 @@ export default (props: IPage) => {
   const { t } = useTranslation();
   const { id } = props.match.params as { id: string };
 
-  const infoFormRef = useRef<ICommenFormRef<UpdateRoleInput>>(null);
-  const permissionsRef = useRef<ICommenFormRef<UpdateRoleInput>>(null);
+  const infoFormRef = useRef<ICommenFormRef<RoleUpdateOneReq>>(null);
+  const permissionsRef = useRef<ICommenFormRef<RoleUpdateOneReq>>(null);
 
   const [item, setItem] = useState<Role | undefined>();
   const [itemLoading, setItemLoading] = useState(false);
@@ -65,13 +65,13 @@ export default (props: IPage) => {
   };
 
   const onUpdateItem = async () => {
-    const infoData: ISubmitData<UpdateRoleInput> = await infoFormRef.current?.onValidateForm();
-    const permissionsData: ISubmitData<UpdateRoleInput> = await permissionsRef.current?.onValidateForm();
+    const infoData: ISubmitData<RoleUpdateOneReq> = await infoFormRef.current?.onValidateForm();
+    const permissionsData: ISubmitData<RoleUpdateOneReq> = await permissionsRef.current?.onValidateForm();
 
     if (!infoData) return;
     if (!permissionsData || (permissionsData && !Array.isArray(permissionsData.permissionIds))) return;
 
-    const data: ISubmitData<UpdateRoleInput> = {
+    const data: ISubmitData<RoleUpdateOneReq> = {
       ...infoData,
       ...permissionsData,
     };

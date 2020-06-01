@@ -1,14 +1,11 @@
 /* eslint-disable max-len */
 // prettier-ignore
-import moment from 'moment';
-import { CreateArticleInput } from '@leaa/common/src/dtos/article';
-import { CreateCategoryInput } from '@leaa/common/src/dtos/category';
-import { CreateAxInput } from '@leaa/common/src/dtos/ax';
-import { CreateSettingInput } from '@leaa/common/src/dtos/setting';
-import { CreateCouponInput } from '@leaa/common/src/dtos/coupon';
-import { CreatePromoInput } from '@leaa/common/src/dtos/promo';
+import { ArticleCreateOneReq } from '@leaa/common/src/dtos/article';
+import { CategoryCreateOneReq } from '@leaa/common/src/dtos/category';
+import { AxCreateOneReq } from '@leaa/common/src/dtos/ax';
+import { SettingCreateOneReq } from '@leaa/common/src/dtos/setting';
 import { IPermissionSlug } from '@leaa/common/src/interfaces';
-import { CreateUserInput } from '@leaa/common/src/dtos/user';
+import { UserCreateOneReq } from '@leaa/common/src/dtos/user';
 
 // TIPS relation file: packages/leaa-api/src/configs/permission.config.ts
 export const permissionsSeed: { name: string; slug: IPermissionSlug }[] = [
@@ -217,7 +214,7 @@ export const rolesSeed = [
 ];
 
 // prettier-ignore
-export const usersSeed: CreateUserInput[] = [
+export const usersSeed: UserCreateOneReq[] = [
   { email: 'admin@local.com', name: 'Admin', password: 'h8Hx9qvPKoHMLQgj', status: 1, is_admin: 1, avatar_url: '' },
   { email: 'staff@local.com', name: 'Staff', password: '7PkQGjvHMMkoo4RZ', status: 1, is_admin: 1 },
   { email: 'disabled@local.com', name: 'Disabled', password: 'uUB3YGrdL3gJZYij', status: 1, is_admin: 1 },
@@ -260,7 +257,7 @@ export const rolesToUserSeed = [
   { userEmail: 'staff@local.com', roleSlugs: ['staff', 'attachment-manager'] },
 ];
 
-interface ICreateCategoryInput extends CreateCategoryInput {
+interface ICreateCategoryInput extends CategoryCreateOneReq {
   seedParentSlug?: string;
 }
 
@@ -280,7 +277,7 @@ export const categorySeed: ICreateCategoryInput[] = [
 ];
 
 // prettier-ignore
-export const articleSeed: CreateArticleInput[] = [
+export const articleSeed: ArticleCreateOneReq[] = [
   {
     title: '哈喽，Leaa',
     slug: 'hello-leaa',
@@ -391,7 +388,7 @@ export const articleSeed: CreateArticleInput[] = [
 ];
 
 // prettier-ignore
-export const axSeed: CreateAxInput[] = [
+export const axSeed: AxCreateOneReq[] = [
   { title: 'Index Swiper', description: '首页滚动图', slug: 'index-swiper', status: 1 },
   { title: 'Index Grid', description: '首页方块图', slug: 'index-grid', status: 0 },
 ];
@@ -467,45 +464,9 @@ export const attachmentSeed: any[] = [
 ];
 
 // prettier-ignore
-export const settingSeed: CreateSettingInput[] = [
+export const settingSeed: SettingCreateOneReq[] = [
   { name: 'Site Name', slug: 'site_name', type: 'input', sort: 1, value: 'Leaa', description: '站点名，最大 220 字' },
   { name: 'Site Description', slug: 'site_description', type: 'textarea', sort: 2, value: 'Leaa - project 1h 4 1d',  description: '站点描述， 最大 220 字' },
   { name: 'Site Keywords', slug: 'site_keywords', type: 'input', sort: 3, value: 'Leaa, mono-repo, C\'est la vie. project 1h 4 1d', description: '站点关键字，使用英文 , 分隔' },
   { name: 'Currency Symbol', slug: 'currency_symbol', type: 'radio', sort: 4, value: '$', description: 'Currency Symbol', options: '$\n¥' },
-];
-
-// prettier-ignore
-export const couponSeed: CreateCouponInput[] = [
-  {
-    type: 'coupon',
-    name: 'SEED-COUPON',
-    quantity: 5,
-    amount: 9,
-    start_time: moment().toDate(),
-    expire_time: moment().add(1, 'year').toDate(),
-    status: 1,
-  },
-  {
-    type: 'coupon',
-    name: '新人通用券',
-    quantity: 5,
-    amount: 99,
-    over_amount: 9999,
-    start_time: moment().toDate(),
-    expire_time: moment().add(1, 'year').toDate(),
-    status: 1,
-  },
-];
-
-// prettier-ignore
-export const promoSeed: CreatePromoInput[] = [
-  {
-    name: 'SEED-PROMO',
-    quantity: 5,
-    redeemed_quantity: 0,
-    amount: 66,
-    start_time: moment().toDate(),
-    expire_time: moment().add(1, 'year').toDate(),
-    status: 1,
-  },
 ];

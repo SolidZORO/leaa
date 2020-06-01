@@ -1,7 +1,7 @@
 import { Controller, UseGuards } from '@nestjs/common';
 import { Crud, CrudController, Override, ParsedRequest, CrudRequest, ParsedBody } from '@nestjsx/crud';
 import { Permissions } from '@leaa/api/src/decorators';
-import { CreateTagInput, UpdateTagInput } from '@leaa/common/src/dtos/tag';
+import { TagCreateOneReq, TagUpdateOneReq } from '@leaa/common/src/dtos/tag';
 import { JwtGuard, PermissionsGuard } from '@leaa/api/src/guards';
 import { Tag } from '@leaa/common/src/entrys';
 
@@ -33,8 +33,8 @@ import { TagService } from './tag.service';
     },
   },
   dto: {
-    create: CreateTagInput,
-    update: UpdateTagInput,
+    create: TagCreateOneReq,
+    update: TagUpdateOneReq,
     replace: Tag,
   },
 })
@@ -49,7 +49,7 @@ export class TagController implements CrudController<Tag> {
 
   @Override('createOneBase')
   @UseGuards(JwtGuard)
-  createOne(@ParsedRequest() req: CrudRequest, @ParsedBody() dto: Tag & CreateTagInput): Promise<Tag> {
+  createOne(@ParsedRequest() req: CrudRequest, @ParsedBody() dto: Tag & TagCreateOneReq): Promise<Tag> {
     return this.service.createOne(req, dto);
   }
 }

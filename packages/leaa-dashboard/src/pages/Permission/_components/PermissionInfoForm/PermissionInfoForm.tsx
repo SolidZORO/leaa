@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { Permission } from '@leaa/common/src/entrys';
 import { errorMsg } from '@leaa/dashboard/src/utils';
 import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
-import { UpdatePermissionInput } from '@leaa/common/src/dtos/permission';
+import { PermissionUpdateOneReq } from '@leaa/common/src/dtos/permission';
 
 import { FormCard, EntryInfoDate } from '@leaa/dashboard/src/components';
 
@@ -23,7 +23,7 @@ export const PermissionInfoForm = forwardRef((props: IProps, ref: React.Ref<any>
   const { t } = useTranslation();
   const [form] = Form.useForm();
 
-  const onValidateForm = async (): IOnValidateFormResult<UpdatePermissionInput> => {
+  const onValidateForm = async (): IOnValidateFormResult<PermissionUpdateOneReq> => {
     try {
       return await form.validateFields();
     } catch (err) {

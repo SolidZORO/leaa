@@ -16,7 +16,7 @@ import {
 } from '@leaa/dashboard/src/utils';
 import { LOGIN_REDIRECT_URL } from '@leaa/dashboard/src/constants';
 import { User } from '@leaa/common/src/entrys';
-import { AuthLoginInput } from '@leaa/common/src/dtos/auth';
+import { AuthLoginReq } from '@leaa/common/src/dtos/auth';
 import { envConfig } from '@leaa/dashboard/src/configs';
 import { HtmlMeta, SwitchLanguage, BuildInfo, AuthGithubButton } from '@leaa/dashboard/src/components';
 
@@ -33,7 +33,7 @@ export default (props: IPage) => {
   const [loginErrorCount, setLoginErrorCount] = useState<number>(1);
   const [submitLoading, setSubmitLoading] = useState<boolean>(false);
 
-  const loginFormRef = useRef<ICommenFormRef<AuthLoginInput>>(null);
+  const loginFormRef = useRef<ICommenFormRef<AuthLoginReq>>(null);
 
   const clearGuestInfo = () => {
     console.log('clearGuestInfo');
@@ -93,7 +93,7 @@ export default (props: IPage) => {
   const onSubmit = async () => {
     if (submitLoading) return;
 
-    const submitData: ISubmitData<AuthLoginInput> = await loginFormRef.current?.onValidateForm();
+    const submitData: ISubmitData<AuthLoginReq> = await loginFormRef.current?.onValidateForm();
 
     if (!submitData) return;
 

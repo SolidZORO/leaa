@@ -9,7 +9,7 @@ import { Injectable } from '@nestjs/common';
 
 import { logger } from '@leaa/api/src/utils';
 import { User, Role, Auth } from '@leaa/common/src/entrys';
-import { UpdateUserInput, CreateUserInput } from '@leaa/common/src/dtos/user';
+import { UserUpdateOneReq, UserCreateOneReq } from '@leaa/common/src/dtos/user';
 
 const CLS_NAME = 'UserService';
 
@@ -23,16 +23,16 @@ export class UserService extends TypeOrmCrudService<User> {
     super(userRepo);
   }
 
-  async createOne(req: CrudRequest, dto: User & CreateUserInput): Promise<User> {
+  async createOne(req: CrudRequest, dto: User & UserCreateOneReq): Promise<User> {
     const nextDto = dto;
     if (dto.password) nextDto.password = await this.createPassword(dto.password);
 
     return super.createOne(req, nextDto);
   }
 
-  async updateOne(req: CrudRequest, dto: UpdateUserInput): Promise<User> {
+  async updateOne(req: CrudRequest, dto: UserUpdateOneReq): Promise<User> {
     const prevUser = await this.getOneOrFail(req);
-    const nextDto: UpdateUserInput & { roles?: Role[] } = dto;
+    const nextDto: UserUpdateOneReq & { roles?: Role[] } = dto;
 
     if (dto.password) nextDto.password = await this.createPassword(dto.password);
 
@@ -100,7 +100,7 @@ export class UserService extends TypeOrmCrudService<User> {
 // import { InjectRepository } from '@nestjs/typeorm';
 //
 // import { User, Role, Auth } from '@leaa/common/src/entrys';
-// import { UsersWithPaginationObject, CreateUserInput, UpdateUserInput } from '@leaa/common/src/dtos/user';
+// import { UsersWithPaginationObject, UserCreateOneReq, UserUpdateOneReq } from '@leaa/common/src/dtos/user';
 // import { RoleService } from '@leaa/api/src/modules/role/role.service';
 // import { ConfigService } from '@leaa/api/src/modules/config/config.service';
 // import { AttachmentService } from '@leaa/api/src/modules/attachment/attachment.service';
@@ -233,8 +233,8 @@ export class UserService extends TypeOrmCrudService<User> {
 //
 
 //
-//   async createUser(args: CreateUserInput): Promise<User | undefined> {
-//     const nextArgs: CreateUserInput = args;
+//   async createUser(args: UserCreateOneReq): Promise<User | undefined> {
+//     const nextArgs: UserCreateOneReq = args;
 //
 //     if (args.password) {
 //       nextArgs.password = await this.createPassword(args.password);
@@ -243,7 +243,7 @@ export class UserService extends TypeOrmCrudService<User> {
 //     return this.userRepository.save({ ...nextArgs });
 //   }
 //
-//   async updateUser(id: string, args: UpdateUserInput): Promise<User | undefined> {
+//   async updateUser(id: string, args: UserUpdateOneReq): Promise<User | undefined> {
 //     if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id);
 //
 //     if (isOneField(args, 'status')) {

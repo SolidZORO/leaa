@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { Role } from '@leaa/common/src/entrys';
 import { errorMsg } from '@leaa/dashboard/src/utils';
 import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
-import { UpdateRoleInput } from '@leaa/common/src/dtos/role';
+import { RoleUpdateOneReq } from '@leaa/common/src/dtos/role';
 
 import { FormCard, EntryInfoDate } from '@leaa/dashboard/src/components';
 
@@ -23,7 +23,7 @@ export const RoleInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
   const { t } = useTranslation();
   const [form] = Form.useForm();
 
-  const onValidateForm = async (): IOnValidateFormResult<UpdateRoleInput> => {
+  const onValidateForm = async (): IOnValidateFormResult<RoleUpdateOneReq> => {
     try {
       return await form.validateFields();
     } catch (err) {

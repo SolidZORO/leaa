@@ -19,7 +19,7 @@ import {
 import { ajax, errorMsg, genCrudRequestQuery, msg } from '@leaa/dashboard/src/utils';
 import { PageCard, HtmlMeta, SubmitBar, Rcon } from '@leaa/dashboard/src/components';
 
-import { UpdateSettingsInput, UpdateSettingInput, CreateSettingInput } from '@leaa/common/src/dtos/setting';
+import { SettingUpdateManyReq, SettingUpdateOneReq, SettingCreateOneReq } from '@leaa/common/src/dtos/setting';
 
 import { SettingListForm } from '../_components/SettingListForm/SettingListForm';
 import { SettingModalForm } from '../_components/SettingModalForm/SettingModalForm';
@@ -28,12 +28,12 @@ import style from './style.module.less';
 
 const API_PATH = 'settings';
 
-declare type ICreateOrUpdateSettingInput = UpdateSettingInput | CreateSettingInput;
+declare type ICreateOrUpdateSettingInput = SettingUpdateOneReq | SettingCreateOneReq;
 
 export default (props: IPage) => {
   const { t } = useTranslation();
 
-  const settingsFormRef = useRef<ICommenFormRef<UpdateSettingsInput>>(null);
+  const settingsFormRef = useRef<ICommenFormRef<SettingUpdateManyReq>>(null);
   const settingModuleFormRef = useRef<ICommenFormRef<ICreateOrUpdateSettingInput>>(null);
 
   //
@@ -134,7 +134,7 @@ export default (props: IPage) => {
   // Batch Update
   const [batchUpdateLoading, setBatchUpdatesLoading] = useState(false);
   const onBatchUpdatSettings = async () => {
-    const data: ISubmitData<UpdateSettingsInput> = await settingsFormRef.current?.onValidateForm();
+    const data: ISubmitData<SettingUpdateManyReq> = await settingsFormRef.current?.onValidateForm();
 
     if (!data) return errorMsg('Not Found Updates Data');
     setBatchUpdatesLoading(true);

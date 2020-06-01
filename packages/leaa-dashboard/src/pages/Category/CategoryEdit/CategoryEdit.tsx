@@ -4,7 +4,7 @@ import { Button } from 'antd';
 
 import { Category } from '@leaa/common/src/entrys';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
-import { UpdateCategoryInput } from '@leaa/common/src/dtos/category';
+import { CategoryUpdateOneReq } from '@leaa/common/src/dtos/category';
 import { IPage, ICommenFormRef, ISubmitData, IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
 import { msg, errorMsg, ajax } from '@leaa/dashboard/src/utils';
 import { envConfig } from '@leaa/dashboard/src/configs';
@@ -21,7 +21,7 @@ export default (props: IPage) => {
   const { t } = useTranslation();
   const { id } = props.match.params as { id: string };
 
-  const infoFormRef = useRef<ICommenFormRef<UpdateCategoryInput>>(null);
+  const infoFormRef = useRef<ICommenFormRef<CategoryUpdateOneReq>>(null);
 
   const [item, setItem] = useState<Category | undefined>();
   const [itemLoading, setItemLoading] = useState(false);
@@ -40,11 +40,11 @@ export default (props: IPage) => {
   };
 
   const onUpdateItem = async () => {
-    const infoData: ISubmitData<UpdateCategoryInput> = await infoFormRef.current?.onValidateForm();
+    const infoData: ISubmitData<CategoryUpdateOneReq> = await infoFormRef.current?.onValidateForm();
 
     if (!infoData) return;
 
-    const data: ISubmitData<UpdateCategoryInput> = {
+    const data: ISubmitData<CategoryUpdateOneReq> = {
       ...infoData,
     };
 

@@ -1,1 +1,1 @@
-export * from './create-verification.input';
+export * from './verification.create-one.req';

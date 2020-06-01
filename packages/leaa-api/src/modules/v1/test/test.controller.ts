@@ -1,6 +1,6 @@
-import { Controller, Get, Logger } from '@nestjs/common';
-import { Zan, Role } from '@leaa/common/src/entrys';
-import { Repository, getConnectionOptions, getMetadataArgsStorage } from 'typeorm';
+import { Controller, Get } from '@nestjs/common';
+import { Role } from '@leaa/common/src/entrys';
+import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { TestService } from '@leaa/api/src/modules/v1/test/test.service';
@@ -14,19 +14,11 @@ import { ConfigService } from '@leaa/api/src/modules/v1/config/config.service';
 @Controller('/v1/test')
 export class TestController {
   constructor(
-    @InjectRepository(Zan) private readonly zanRepository: Repository<Zan>,
     @InjectRepository(Role) private readonly roleRepository: Repository<Role>,
     readonly configService: ConfigService,
     private readonly testService: TestService,
     private readonly roleService: RoleService,
   ) {}
-
-  @Get('/metadata')
-  async metadata() {
-    console.log(Object.keys(this.zanRepository.metadata.propertiesMap));
-
-    return 'metadata';
-  }
 
   @Get('/crud')
   async crud() {

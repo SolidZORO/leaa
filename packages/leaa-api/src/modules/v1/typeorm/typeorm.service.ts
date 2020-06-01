@@ -12,15 +12,10 @@ import {
   Setting,
   Auth,
   Tag,
-  Coupon,
-  Promo,
-  Product,
   Address,
   Division,
-  Zan,
   Verification,
   Action,
-  Company,
 } from '@leaa/common/src/entrys';
 
 import { UserSubscriber } from '@leaa/api/src/subscribers';
@@ -68,15 +63,10 @@ export class TypeormService implements TypeOrmOptionsFactory {
         Ax,
         Setting,
         Tag,
-        Coupon,
-        Promo,
-        Product,
         Address,
         Division,
-        Zan,
         Verification,
         Action,
-        Company,
       ],
       subscribers: [UserSubscriber],
     };

@@ -4,7 +4,7 @@ import { Button } from 'antd';
 
 import { Article } from '@leaa/common/src/entrys';
 import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
-import { UpdateArticleInput } from '@leaa/common/src/dtos/article';
+import { ArticleUpdateOneReq } from '@leaa/common/src/dtos/article';
 import { IPage, ICommenFormRef, ISubmitData, IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
 import { msg, errorMsg, ajax } from '@leaa/dashboard/src/utils';
 
@@ -20,16 +20,16 @@ const API_PATH = 'articles';
 export default (props: IPage) => {
   const { t } = useTranslation();
 
-  const infoFormRef = useRef<ICommenFormRef<UpdateArticleInput>>(null);
+  const infoFormRef = useRef<ICommenFormRef<ArticleUpdateOneReq>>(null);
 
   const [submitLoading, setSubmitLoading] = useState(false);
 
   const onCreateItem = async () => {
-    const infoData: ISubmitData<UpdateArticleInput> = await infoFormRef.current?.onValidateForm();
+    const infoData: ISubmitData<ArticleUpdateOneReq> = await infoFormRef.current?.onValidateForm();
 
     if (!infoData) return;
 
-    const data: ISubmitData<UpdateArticleInput> = {
+    const data: ISubmitData<ArticleUpdateOneReq> = {
       ...infoData,
     };
 

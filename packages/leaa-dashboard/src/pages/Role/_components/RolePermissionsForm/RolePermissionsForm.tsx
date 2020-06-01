@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 import { Role, Permission } from '@leaa/common/src/entrys';
 import { errorMsg } from '@leaa/dashboard/src/utils';
 import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
-import { UpdateRoleInput } from '@leaa/common/src/dtos/role';
+import { RoleUpdateOneReq } from '@leaa/common/src/dtos/role';
 
 import { FormCard } from '@leaa/dashboard/src/components';
 import { RolePermissionsCheckbox } from '../RolePermissionsCheckbox/RolePermissionsCheckbox';
@@ -36,7 +36,7 @@ export const RolePermissionsForm = forwardRef((props: IProps, ref: React.Ref<any
     return (rolePermissions && rolePermissions.map((r) => r.id)) || [];
   };
 
-  const onValidateForm = async (): IOnValidateFormResult<UpdateRoleInput> => {
+  const onValidateForm = async (): IOnValidateFormResult<RoleUpdateOneReq> => {
     try {
       return await form.validateFields();
     } catch (err) {

@@ -2,7 +2,7 @@ import { Controller, UseGuards } from '@nestjs/common';
 import { Crud, CrudController, Override, ParsedRequest, ParsedBody, CrudRequest } from '@nestjsx/crud';
 
 import { Permissions } from '@leaa/api/src/decorators';
-import { CreateArticleInput, UpdateArticleInput } from '@leaa/common/src/dtos/article';
+import { ArticleCreateOneReq, ArticleUpdateOneReq } from '@leaa/common/src/dtos/article';
 import { JwtGuard, PermissionsGuard } from '@leaa/api/src/guards';
 import { Article } from '@leaa/common/src/entrys';
 
@@ -38,8 +38,8 @@ import { ArticleService } from './article.service';
     },
   },
   dto: {
-    create: CreateArticleInput,
-    update: UpdateArticleInput,
+    create: ArticleCreateOneReq,
+    update: ArticleUpdateOneReq,
     replace: Article,
   },
 })
@@ -50,14 +50,14 @@ export class ArticleController implements CrudController<Article> {
   @Override('createOneBase')
   @UseGuards(JwtGuard, PermissionsGuard)
   @Permissions('article.item-create')
-  createOne(@ParsedRequest() req: CrudRequest, @ParsedBody() dto: Article & CreateArticleInput): Promise<Article> {
+  createOne(@ParsedRequest() req: CrudRequest, @ParsedBody() dto: Article & ArticleCreateOneReq): Promise<Article> {
     return this.service.createOne(req, dto);
   }
 
   @Override('updateOneBase')
   @UseGuards(JwtGuard, PermissionsGuard)
   @Permissions('article.item-update')
-  updateOne(@ParsedRequest() req: CrudRequest, @ParsedBody() dto: UpdateArticleInput): Promise<Article> {
+  updateOne(@ParsedRequest() req: CrudRequest, @ParsedBody() dto: ArticleUpdateOneReq): Promise<Article> {
     return this.service.updateOne(req, dto);
   }
 }

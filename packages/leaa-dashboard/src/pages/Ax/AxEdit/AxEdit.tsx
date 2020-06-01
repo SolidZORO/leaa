@@ -4,7 +4,7 @@ import { Button, Row, Col } from 'antd';
 
 import { Ax, Attachment } from '@leaa/common/src/entrys';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
-import { UpdateAxInput } from '@leaa/common/src/dtos/ax';
+import { AxUpdateOneReq } from '@leaa/common/src/dtos/ax';
 import { IPage, ICommenFormRef, ISubmitData, IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
 import { msg, errorMsg, ajax } from '@leaa/dashboard/src/utils';
 
@@ -21,7 +21,7 @@ export default (props: IPage) => {
   const { t } = useTranslation();
   const { id } = props.match.params as { id: string };
 
-  const infoFormRef = useRef<ICommenFormRef<UpdateAxInput>>(null);
+  const infoFormRef = useRef<ICommenFormRef<AxUpdateOneReq>>(null);
 
   const [item, setItem] = useState<Ax | undefined>();
   const [itemLoading, setItemLoading] = useState(false);
@@ -40,11 +40,11 @@ export default (props: IPage) => {
   };
 
   const onUpdateItem = async () => {
-    const infoData: ISubmitData<UpdateAxInput> = await infoFormRef.current?.onValidateForm();
+    const infoData: ISubmitData<AxUpdateOneReq> = await infoFormRef.current?.onValidateForm();
 
     if (!infoData) return;
 
-    const data: ISubmitData<UpdateAxInput> = {
+    const data: ISubmitData<AxUpdateOneReq> = {
       ...infoData,
     };
 

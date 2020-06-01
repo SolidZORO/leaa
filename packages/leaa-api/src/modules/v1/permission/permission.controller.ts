@@ -2,7 +2,7 @@ import { Controller, UseGuards } from '@nestjs/common';
 import { Crud, CrudController } from '@nestjsx/crud';
 
 import { Permissions } from '@leaa/api/src/decorators';
-import { CreatePermissionInput, UpdatePermissionInput } from '@leaa/common/src/dtos/permission';
+import { PermissionCreateOneReq, PermissionUpdateOneReq } from '@leaa/common/src/dtos/permission';
 import { JwtGuard, PermissionsGuard } from '@leaa/api/src/guards';
 import { Permission } from '@leaa/common/src/entrys';
 
@@ -33,8 +33,8 @@ import { PermissionService } from './permission.service';
     },
   },
   dto: {
-    create: CreatePermissionInput,
-    update: UpdatePermissionInput,
+    create: PermissionCreateOneReq,
+    update: PermissionUpdateOneReq,
     replace: Permission,
   },
 })

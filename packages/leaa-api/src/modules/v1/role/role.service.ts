@@ -6,7 +6,7 @@ import { CrudRequest } from '@nestjsx/crud';
 import { Injectable } from '@nestjs/common';
 
 import { Role, User, Permission } from '@leaa/common/src/entrys';
-import { UpdateRoleInput } from '@leaa/common/src/dtos/role';
+import { RoleUpdateOneReq } from '@leaa/common/src/dtos/role';
 
 // const CLS_NAME = 'RoleService';
 
@@ -19,7 +19,7 @@ export class RoleService extends TypeOrmCrudService<Role> {
     super(roleRepo);
   }
 
-  async updateOne(req: CrudRequest, dto: UpdateRoleInput): Promise<Role> {
+  async updateOne(req: CrudRequest, dto: RoleUpdateOneReq): Promise<Role> {
     const { allowParamsOverride, returnShallow } = req.options.routes?.updateOneBase || {};
 
     const paramsFilters = this.getParamFilters(req.parsed);
@@ -173,11 +173,11 @@ export class RoleService extends TypeOrmCrudService<Role> {
   //   return roleIds;
   // }
   //
-  // async createRole(args: CreateRoleInput): Promise<Role | undefined> {
+  // async createRole(args: RoleCreateOneReq): Promise<Role | undefined> {
   //   return this.roleRepo.save({ ...args });
   // }
   //
-  // async updateRole(id: string, args: UpdateRoleInput): Promise<Role | undefined> {
+  // async updateRole(id: string, args: RoleUpdateOneReq): Promise<Role | undefined> {
   //   // const { t } = gqlCtx;
   //
   //   if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id);

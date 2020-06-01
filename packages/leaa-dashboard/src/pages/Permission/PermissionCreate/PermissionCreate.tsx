@@ -4,7 +4,7 @@ import { Button } from 'antd';
 
 import { Permission } from '@leaa/common/src/entrys';
 import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
-import { UpdatePermissionInput } from '@leaa/common/src/dtos/permission';
+import { PermissionUpdateOneReq } from '@leaa/common/src/dtos/permission';
 import { IPage, ICommenFormRef, ISubmitData, IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
 import { msg, errorMsg, ajax } from '@leaa/dashboard/src/utils';
 
@@ -20,16 +20,16 @@ const API_PATH = 'permissions';
 export default (props: IPage) => {
   const { t } = useTranslation();
 
-  const infoFormRef = useRef<ICommenFormRef<UpdatePermissionInput>>(null);
+  const infoFormRef = useRef<ICommenFormRef<PermissionUpdateOneReq>>(null);
 
   const [submitLoading, setSubmitLoading] = useState(false);
 
   const onCreateItem = async () => {
-    const infoData: ISubmitData<UpdatePermissionInput> = await infoFormRef.current?.onValidateForm();
+    const infoData: ISubmitData<PermissionUpdateOneReq> = await infoFormRef.current?.onValidateForm();
 
     if (!infoData) return;
 
-    const data: ISubmitData<UpdatePermissionInput> = {
+    const data: ISubmitData<PermissionUpdateOneReq> = {
       ...infoData,
     };
 

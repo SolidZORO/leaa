@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { Setting } from '@leaa/common/src/entrys';
 import { errorMsg } from '@leaa/dashboard/src/utils';
 import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
-import { UpdateSettingsInput } from '@leaa/common/src/dtos/setting';
+import { SettingUpdateManyReq } from '@leaa/common/src/dtos/setting';
 
 import { FormCard, Rcon } from '@leaa/dashboard/src/components';
 
@@ -98,7 +98,7 @@ export const SettingListForm = forwardRef((props: IProps, ref: React.Ref<any>) =
     );
   };
 
-  const onValidateForm = async (): IOnValidateFormResult<UpdateSettingsInput[]> => {
+  const onValidateForm = async (): IOnValidateFormResult<SettingUpdateManyReq[]> => {
     try {
       const result = await form.validateFields();
 

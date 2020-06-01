@@ -1,10 +1,10 @@
 import { FindManyOptions } from 'typeorm';
 
-import { ItemsArgs } from '@leaa/common/src/dtos/_common';
+import { BaseGetManyReq } from '@leaa/common/src/dtos/_common';
 import { errorMsg } from '@leaa/api/src/utils/msg.util';
 // import { IGqlCtx } from '@leaa/api/src/interfaces';
 
-type IFormatArgs = FindManyOptions & ItemsArgs;
+type IFormatArgs = FindManyOptions & BaseGetManyReq;
 
 export const argsFormat = <T>(args: T & IFormatArgs): T & IFormatArgs => {
   if (!args) {

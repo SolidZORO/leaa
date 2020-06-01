@@ -1,1 +1,1 @@
-export * from './demo-data.object';
+export * from './demo.data.res';

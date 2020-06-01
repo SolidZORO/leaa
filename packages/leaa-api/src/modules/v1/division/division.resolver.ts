@@ -2,12 +2,12 @@
 //
 // import { Division, User } from '@leaa/common/src/entrys';
 // import {
-//   DivisionsArgs,
+//   DivisionGetManyReq,
 //   DivisionsWithPaginationObject,
-//   DivisionArgs,
-//   CreateDivisionInput,
-//   UpdateDivisionInput,
-//   SyncDivisionToFileObject,
+//   DivisionGetOneReq,
+//   DivisionCreateOneReq,
+//   DivisionUpdateOneReq,
+//   DivisionSyncToFileRes,
 // } from '@leaa/common/src/dtos/division';
 // import { DivisionService } from '@leaa/api/src/modules/v1/division/division.service';
 // import { CurrentUser, Permissions, GqlCtx } from '@leaa/api/src/decorators';
@@ -22,7 +22,7 @@
 //   @Query(() => DivisionsWithPaginationObject)
 //   async divisions(
 //     @GqlCtx() gqlCtx: IGqlCtx,
-//     @Args() args: DivisionsArgs,
+//     @Args() args: DivisionGetManyReq,
 //   ): Promise<DivisionsWithPaginationObject | undefined> {
 //     return this.divisionService.divisions(gqlCtx, args);
 //   }
@@ -44,20 +44,20 @@
 //   async division(
 //     @GqlCtx() gqlCtx: IGqlCtx,
 //     @Args({ name: 'id', type: () => String }) id: string,
-//     @Args() args?: DivisionArgs,
+//     @Args() args?: DivisionGetOneReq,
 //   ): Promise<Division | undefined> {
 //     return this.divisionService.division(gqlCtx, id, args);
 //   }
 //
 //   @Permissions('division.item-create')
 //   @Mutation(() => Division)
-//   async createDivision(@Args('division') args: CreateDivisionInput): Promise<Division | undefined> {
+//   async createDivision(@Args('division') args: DivisionCreateOneReq): Promise<Division | undefined> {
 //     return this.divisionService.createDivision(args);
 //   }
 //
 //   @Permissions('division.item-update')
-//   @Mutation(() => SyncDivisionToFileObject)
-//   async syncDivisionToFile(): Promise<SyncDivisionToFileObject> {
+//   @Mutation(() => DivisionSyncToFileRes)
+//   async syncDivisionToFile(): Promise<DivisionSyncToFileRes> {
 //     return this.divisionService.syncDivisionToFile();
 //   }
 //
@@ -66,7 +66,7 @@
 //   async updateDivision(
 //     @GqlCtx() gqlCtx: IGqlCtx,
 //     @Args({ name: 'id', type: () => String }) id: string,
-//     @Args('division') args: UpdateDivisionInput,
+//     @Args('division') args: DivisionUpdateOneReq,
 //   ): Promise<Division | undefined> {
 //     return this.divisionService.updateDivision(gqlCtx, id, args);
 //   }

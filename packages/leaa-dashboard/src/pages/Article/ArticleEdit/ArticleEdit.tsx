@@ -5,7 +5,7 @@ import { Button, Row, Col } from 'antd';
 import { Article, Tag } from '@leaa/common/src/entrys';
 import { IAttachmentBoxRef } from '@leaa/common/src/interfaces';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
-import { UpdateArticleInput } from '@leaa/common/src/dtos/article';
+import { ArticleUpdateOneReq } from '@leaa/common/src/dtos/article';
 import { IPage, ICommenFormRef, ISubmitData, IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
 import { msg, errorMsg, ajax } from '@leaa/dashboard/src/utils';
 
@@ -31,8 +31,8 @@ export default (props: IPage) => {
   const { t } = useTranslation();
   const { id } = props.match.params as { id: string };
 
-  const infoFormRef = useRef<ICommenFormRef<UpdateArticleInput>>(null);
-  const extFormRef = useRef<ICommenFormRef<UpdateArticleInput>>(null);
+  const infoFormRef = useRef<ICommenFormRef<ArticleUpdateOneReq>>(null);
+  const extFormRef = useRef<ICommenFormRef<ArticleUpdateOneReq>>(null);
 
   const [item, setItem] = useState<Article | undefined>();
   const [itemLoading, setItemLoading] = useState(false);
@@ -56,13 +56,13 @@ export default (props: IPage) => {
   };
 
   const onUpdateItem = async () => {
-    const infoData: ISubmitData<UpdateArticleInput> = await infoFormRef.current?.onValidateForm();
-    const extData: ISubmitData<UpdateArticleInput> = await extFormRef.current?.onValidateForm();
+    const infoData: ISubmitData<ArticleUpdateOneReq> = await infoFormRef.current?.onValidateForm();
+    const extData: ISubmitData<ArticleUpdateOneReq> = await extFormRef.current?.onValidateForm();
 
     if (!infoData) return;
     if (!extData) return;
 
-    const data: ISubmitData<UpdateArticleInput> = {
+    const data: ISubmitData<ArticleUpdateOneReq> = {
       ...infoData,
       ...extData,
       content: articleContentRef.current?.props?.value,

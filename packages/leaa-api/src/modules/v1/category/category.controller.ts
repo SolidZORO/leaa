@@ -2,7 +2,7 @@ import { Controller, UseGuards, Get, Req, Query } from '@nestjs/common';
 import { Crud, CrudController, CrudRequest, Override, ParsedRequest, ParsedBody } from '@nestjsx/crud';
 
 import { Permissions } from '@leaa/api/src/decorators';
-import { CreateCategoryInput, UpdateCategoryInput } from '@leaa/common/src/dtos/category';
+import { CategoryCreateOneReq, CategoryUpdateOneReq } from '@leaa/common/src/dtos/category';
 import { ICategoriesQuery } from '@leaa/common/src/interfaces';
 import { JwtGuard, PermissionsGuard } from '@leaa/api/src/guards';
 import { Category } from '@leaa/common/src/entrys';
@@ -31,8 +31,8 @@ import { CategoryService } from './category.service';
     },
   },
   dto: {
-    create: CreateCategoryInput,
-    update: UpdateCategoryInput,
+    create: CategoryCreateOneReq,
+    update: CategoryUpdateOneReq,
     replace: Category,
   },
 })
@@ -43,14 +43,14 @@ export class CategoryController implements CrudController<Category> {
   @Override('createOneBase')
   @UseGuards(JwtGuard, PermissionsGuard)
   @Permissions('category.item-create')
-  createOne(@ParsedRequest() req: CrudRequest, @ParsedBody() dto: Category | CreateCategoryInput): Promise<Category> {
+  createOne(@ParsedRequest() req: CrudRequest, @ParsedBody() dto: Category | CategoryCreateOneReq): Promise<Category> {
     return this.service.createOne(req, dto);
   }
 
   @Override('updateOneBase')
   @UseGuards(JwtGuard, PermissionsGuard)
   @Permissions('category.item-update')
-  updateOne(@ParsedRequest() req: CrudRequest, @ParsedBody() dto: Category | UpdateCategoryInput): Promise<Category> {
+  updateOne(@ParsedRequest() req: CrudRequest, @ParsedBody() dto: Category | CategoryUpdateOneReq): Promise<Category> {
     return this.service.updateOne(req, dto);
   }
 

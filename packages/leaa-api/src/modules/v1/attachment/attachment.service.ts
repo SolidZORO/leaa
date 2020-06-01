@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Attachment } from '@leaa/common/src/entrys';
-import { UpdateAttachmentsInput, BatchUpdateAttachmentsSortInput } from '@leaa/common/src/dtos/attachment';
+import { AttachmentUpdateManyReq, AttachmentUpdateManySortReq } from '@leaa/common/src/dtos/attachment';
 import { ISaveInOssSignature, ISaveInLocalSignature, IAttachmentParams } from '@leaa/common/src/interfaces';
 import { logger } from '@leaa/api/src/utils';
 import { ConfigService } from '@leaa/api/src/modules/v1/config/config.service';
@@ -50,7 +50,7 @@ export class AttachmentService extends TypeOrmCrudService<Attachment> {
     return this.saveInLocalServer.createAttachmentByLocal(body, file);
   }
 
-  async batchUpdate(dto: UpdateAttachmentsInput): Promise<string> {
+  async batchUpdate(dto: AttachmentUpdateManyReq): Promise<string> {
     const safeAttas = dto.attachments.map((att) => _.pick(att, ['id', 'link', 'status', 'title', 'sort']));
     const batchUpdate = safeAttas.map((att) => this.attachmentRepo.update(att.id, att));
 
@@ -63,7 +63,7 @@ export class AttachmentService extends TypeOrmCrudService<Attachment> {
       });
   }
 
-  async batchUpdateSort(dto: BatchUpdateAttachmentsSortInput): Promise<string> {
+  async batchUpdateSort(dto: AttachmentUpdateManySortReq): Promise<string> {
     const safeAttas = dto.attachments.map((att) => _.pick(att, ['id', 'sort']));
     const batchUpdate = safeAttas.map((att) => this.attachmentRepo.update(att.id, { sort: att.sort }));
 

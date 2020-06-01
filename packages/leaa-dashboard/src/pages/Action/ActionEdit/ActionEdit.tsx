@@ -4,7 +4,7 @@ import { Button } from 'antd';
 
 import { Action } from '@leaa/common/src/entrys';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
-import { UpdateActionInput } from '@leaa/common/src/dtos/action';
+import { ActionUpdateOneReq } from '@leaa/common/src/dtos/action';
 import { IPage, ICommenFormRef, IHttpError, ISubmitData, IHttpRes } from '@leaa/dashboard/src/interfaces';
 import { ajax, errorMsg, msg } from '@leaa/dashboard/src/utils';
 
@@ -21,7 +21,7 @@ export default (props: IPage) => {
   const { t } = useTranslation();
   const { id } = props.match.params as { id: string };
 
-  const infoFormRef = useRef<ICommenFormRef<UpdateActionInput>>(null);
+  const infoFormRef = useRef<ICommenFormRef<ActionUpdateOneReq>>(null);
 
   const [item, setItem] = useState<Action | undefined>();
   const [itemLoading, setitemLoading] = useState(false);
@@ -40,7 +40,7 @@ export default (props: IPage) => {
   };
 
   const onUpdateItem = async () => {
-    const data: ISubmitData<UpdateActionInput> = await infoFormRef.current?.onValidateForm();
+    const data: ISubmitData<ActionUpdateOneReq> = await infoFormRef.current?.onValidateForm();
     if (!data) return;
 
     setSubmitLoading(true);

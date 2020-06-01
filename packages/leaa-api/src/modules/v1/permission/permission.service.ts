@@ -41,8 +41,8 @@ export class PermissionService extends TypeOrmCrudService<Permission> {
 // import { Permission } from '@leaa/common/src/entrys';
 // import {
 //   PermissionsWithPaginationObject,
-//   CreatePermissionInput,
-//   UpdatePermissionInput,
+//   PermissionCreateOneReq,
+//   PermissionUpdateOneReq,
 // } from '@leaa/common/src/dtos/permission';
 // import { argsFormat, commonUpdate, commonDelete, isOneField, calcQbPageInfo, errorMsg } from '@leaa/api/src/utils';
 // import { IPermissionsArgs, IPermissionArgs, IGqlCtx } from '@leaa/api/src/interfaces';
@@ -117,11 +117,11 @@ export class PermissionService extends TypeOrmCrudService<Permission> {
 //
 
 //
-//   async createPermission(args: CreatePermissionInput): Promise<Permission | undefined> {
+//   async createPermission(args: PermissionCreateOneReq): Promise<Permission | undefined> {
 //     return this.permissionRepository.save({ ...args });
 //   }
 //
-//   async updatePermission(id: string, args: UpdatePermissionInput): Promise<Permission | undefined> {
+//   async updatePermission(id: string, args: PermissionUpdateOneReq): Promise<Permission | undefined> {
 //     if (this.configService.DEMO_MODE) await this.PLEASE_DONT_MODIFY_DEMO_DATA(id);
 //
 //     if (isOneField(args, 'status')) {

@@ -8,8 +8,8 @@
 // import { Division } from '@leaa/common/src/entrys';
 // import {
 //   DivisionsWithPaginationObject,
-//   UpdateDivisionInput,
-//   CreateDivisionInput,
+//   DivisionUpdateOneReq,
+//   DivisionCreateOneReq,
 // } from '@leaa/common/src/dtos/division';
 // import {
 //   argsFormat,
@@ -21,7 +21,7 @@
 //   errorMsg,
 // } from '@leaa/api/src/utils';
 // import { IDivisionSource } from '@leaa/common/src/interfaces';
-// import { SyncTagsToFileObject } from '@leaa/common/src/dtos/tag';
+// import { TagSyncToFileRes } from '@leaa/common/src/dtos/tag';
 // import { divisionConfig } from '@leaa/api/src/configs';
 // import { IDivisionsArgs, IDivisionArgs, IGqlCtx } from '@leaa/api/src/interfaces';
 //
@@ -128,7 +128,7 @@
 //     return JSON.stringify(provinces);
 //   }
 //
-//   async syncDivisionToFile(): Promise<SyncTagsToFileObject> {
+//   async syncDivisionToFile(): Promise<TagSyncToFileRes> {
 //     if (!fs.existsSync(divisionConfig.DIVISION_OF_CHINA_FILE_PATH)) {
 //       logger.log(`syncDivisionToFile, not exists ${divisionConfig.DIVISION_OF_CHINA_FILE_PATH}`, CLS_NAME);
 //
@@ -194,7 +194,7 @@
 //     };
 //   }
 //
-//   async createDivision(args: CreateDivisionInput): Promise<Division | undefined> {
+//   async createDivision(args: DivisionCreateOneReq): Promise<Division | undefined> {
 //     const relationArgs = {};
 //     const result = await this.divisionRepository.save({ ...args, ...relationArgs });
 //
@@ -205,7 +205,7 @@
 //     return result;
 //   }
 //
-//   async updateDivision(id: string, args: UpdateDivisionInput): Promise<Division | undefined> {
+//   async updateDivision(id: string, args: DivisionUpdateOneReq): Promise<Division | undefined> {
 //     if (isOneField(args, 'status')) {
 //       return commonUpdate({ repository: this.divisionRepository, CLS_NAME, id, args, gqlCtx });
 //     }

@@ -5,7 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 
 import { Ax, Attachment } from '@leaa/common/src/entrys';
-import { UpdateAxInput } from '@leaa/common/src/dtos/ax';
+import { AxUpdateOneReq } from '@leaa/common/src/dtos/ax';
 
 export interface ITransIdsToEntrys {
   dto: any;
@@ -23,7 +23,7 @@ export class AxService extends TypeOrmCrudService<Ax> {
     super(axRepo);
   }
 
-  async updateOne(req: CrudRequest, dto: UpdateAxInput): Promise<Ax> {
+  async updateOne(req: CrudRequest, dto: AxUpdateOneReq): Promise<Ax> {
     return super.updateOne(req, dto);
   }
 

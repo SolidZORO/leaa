@@ -9,10 +9,10 @@ import { Crud, CrudController, Override, ParsedRequest, CrudRequest } from '@nes
 import { Attachment } from '@leaa/common/src/entrys';
 import { Permissions } from '@leaa/api/src/decorators';
 import {
-  CreateAttachmentInput,
-  UpdateAttachmentInput,
-  UpdateAttachmentsInput,
-  BatchUpdateAttachmentsSortInput,
+  AttachmentCreateOneReq,
+  AttachmentUpdateOneReq,
+  AttachmentUpdateManyReq,
+  AttachmentUpdateManySortReq,
 } from '@leaa/common/src/dtos/attachment';
 
 @Crud({
@@ -39,8 +39,8 @@ import {
     deleteOneBase: { returnDeleted: true },
   },
   dto: {
-    create: CreateAttachmentInput,
-    update: UpdateAttachmentInput,
+    create: AttachmentCreateOneReq,
+    update: AttachmentUpdateOneReq,
     replace: Attachment,
   },
 })
@@ -92,14 +92,14 @@ export class AttachmentController implements CrudController<Attachment> {
   @Post('batch')
   @UseGuards(JwtGuard, PermissionsGuard)
   @Permissions('attachment.item-update')
-  batchUpdate(@Body() dto: UpdateAttachmentsInput): Promise<string> {
+  batchUpdate(@Body() dto: AttachmentUpdateManyReq): Promise<string> {
     return this.service.batchUpdate(dto);
   }
 
   @Post('batch-sort')
   @UseGuards(JwtGuard, PermissionsGuard)
   @Permissions('attachment.item-update')
-  batchUpdateSort(@Body() dto: BatchUpdateAttachmentsSortInput): Promise<string> {
+  batchUpdateSort(@Body() dto: AttachmentUpdateManySortReq): Promise<string> {
     return this.service.batchUpdateSort(dto);
   }
 }

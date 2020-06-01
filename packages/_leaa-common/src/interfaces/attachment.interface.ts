@@ -1,4 +1,4 @@
-// import { CreateAttachmentInput } from '@leaa/common/src/dtos/attachment';
+// import { AttachmentCreateOneReq } from '@leaa/common/src/dtos/attachment';
 import { Attachment } from '@leaa/common/src/entrys';
 
 export enum IAttachmentType {
@@ -15,7 +15,7 @@ export interface IMediaItem {
 }
 
 // export type IAttachmentParams = Pick<
-//   CreateAttachmentInput,
+//   AttachmentCreateOneReq,
 //   'type' | 'user_id' | 'moduleId' | 'moduleName' | 'typeName'
 // >;
 

@@ -4,7 +4,7 @@ import { Button } from 'antd';
 
 import { Role } from '@leaa/common/src/entrys';
 import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
-import { UpdateRoleInput } from '@leaa/common/src/dtos/role';
+import { RoleUpdateOneReq } from '@leaa/common/src/dtos/role';
 import { IPage, ICommenFormRef, ISubmitData, IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
 import { msg, errorMsg, ajax } from '@leaa/dashboard/src/utils';
 
@@ -20,16 +20,16 @@ const API_PATH = 'roles';
 export default (props: IPage) => {
   const { t } = useTranslation();
 
-  const infoFormRef = useRef<ICommenFormRef<UpdateRoleInput>>(null);
+  const infoFormRef = useRef<ICommenFormRef<RoleUpdateOneReq>>(null);
 
   const [submitLoading, setSubmitLoading] = useState(false);
 
   const onCreateItem = async () => {
-    const infoData: ISubmitData<UpdateRoleInput> = await infoFormRef.current?.onValidateForm();
+    const infoData: ISubmitData<RoleUpdateOneReq> = await infoFormRef.current?.onValidateForm();
 
     if (!infoData) return;
 
-    const data: ISubmitData<UpdateRoleInput> = {
+    const data: ISubmitData<RoleUpdateOneReq> = {
       ...infoData,
     };
 

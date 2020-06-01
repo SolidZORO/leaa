@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { Tag as TagEntry } from '@leaa/common/src/entrys';
 import { errorMsg } from '@leaa/dashboard/src/utils';
 import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
-import { UpdateTagInput } from '@leaa/common/src/dtos/tag';
+import { TagUpdateOneReq } from '@leaa/common/src/dtos/tag';
 
 import { FormCard, EntryInfoDate } from '@leaa/dashboard/src/components';
 
@@ -23,7 +23,7 @@ export const TagInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
   const { t } = useTranslation();
   const [form] = Form.useForm();
 
-  const onValidateForm = async (): IOnValidateFormResult<UpdateTagInput> => {
+  const onValidateForm = async (): IOnValidateFormResult<TagUpdateOneReq> => {
     try {
       return await form.validateFields();
     } catch (err) {

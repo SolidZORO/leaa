@@ -2,7 +2,7 @@ import { Controller, UseGuards, Post, Body } from '@nestjs/common';
 import { Crud, CrudController, Override, ParsedRequest, ParsedBody, CrudRequest } from '@nestjsx/crud';
 
 import { Permissions } from '@leaa/api/src/decorators';
-import { CreateSettingInput, UpdateSettingInput, UpdateSettingsInput } from '@leaa/common/src/dtos/setting';
+import { SettingCreateOneReq, SettingUpdateOneReq, SettingUpdateManyReq } from '@leaa/common/src/dtos/setting';
 import { JwtGuard, PermissionsGuard } from '@leaa/api/src/guards';
 import { Setting } from '@leaa/common/src/entrys';
 
@@ -34,8 +34,8 @@ import { SettingService } from './setting.service';
     },
   },
   dto: {
-    create: CreateSettingInput,
-    update: UpdateSettingInput,
+    create: SettingCreateOneReq,
+    update: SettingUpdateOneReq,
     replace: Setting,
   },
 })
@@ -46,7 +46,7 @@ export class SettingController implements CrudController<Setting> {
   @Override('updateOneBase')
   @UseGuards(JwtGuard, PermissionsGuard)
   @Permissions('setting.item-update')
-  updateOne(@ParsedRequest() req: CrudRequest, @ParsedBody() dto: UpdateSettingInput): Promise<Setting> {
+  updateOne(@ParsedRequest() req: CrudRequest, @ParsedBody() dto: SettingUpdateOneReq): Promise<Setting> {
     return this.service.updateOne(req, dto);
   }
 
@@ -55,7 +55,7 @@ export class SettingController implements CrudController<Setting> {
   @Post('batch')
   @UseGuards(JwtGuard, PermissionsGuard)
   @Permissions('setting.item-update')
-  batchUpdate(@Body() dto: UpdateSettingsInput): Promise<string> {
+  batchUpdate(@Body() dto: SettingUpdateManyReq): Promise<string> {
     return this.service.batchUpdate(dto);
   }
 }

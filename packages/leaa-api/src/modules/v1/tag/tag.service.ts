@@ -6,7 +6,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 import { logger } from '@leaa/api/src/utils';
 
-import { SyncTagsToFileObject, CreateTagInput } from '@leaa/common/src/dtos/tag';
+import { TagSyncToFileRes, TagCreateOneReq } from '@leaa/common/src/dtos/tag';
 import { dictConfig } from '@leaa/api/src/configs';
 
 import { Tag } from '@leaa/common/src/entrys';
@@ -28,7 +28,7 @@ export class TagService extends TypeOrmCrudService<Tag> {
   //   return this.doGetMany(builder, parsed, options);
   // }
 
-  async createOne(req: CrudRequest, dto: Tag & CreateTagInput): Promise<Tag> {
+  async createOne(req: CrudRequest, dto: Tag & TagCreateOneReq): Promise<Tag> {
     const hasTag = await this.tagRepo.findOne({ where: { name: dto.name } });
     if (hasTag) return hasTag;
 
@@ -38,7 +38,7 @@ export class TagService extends TypeOrmCrudService<Tag> {
   //
   //
 
-  async syncTagsToDictFile(): Promise<SyncTagsToFileObject> {
+  async syncTagsToDictFile(): Promise<TagSyncToFileRes> {
     if (!fs.existsSync(dictConfig.TAGS_DICT_PATH)) {
       logger.log(`syncTagsToDictFile, not exists ${dictConfig.DICT_DIR}`, CLS_NAME);
 

@@ -5,7 +5,7 @@ import { Button } from 'antd';
 import { User, Tag, Role } from '@leaa/common/src/entrys';
 import { IAttachmentBoxRef } from '@leaa/common/src/interfaces';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
-import { UpdateUserInput } from '@leaa/common/src/dtos/user';
+import { UserUpdateOneReq } from '@leaa/common/src/dtos/user';
 import { IPage, ICommenFormRef, ISubmitData, IHttpRes, IHttpError, ICrudListRes } from '@leaa/dashboard/src/interfaces';
 import { msg, errorMsg, ajax } from '@leaa/dashboard/src/utils';
 
@@ -25,8 +25,8 @@ export default (props: IPage) => {
   const { t } = useTranslation();
   const { id } = props.match.params as { id: string };
 
-  const infoFormRef = useRef<ICommenFormRef<UpdateUserInput>>(null);
-  const rolesFormRef = useRef<ICommenFormRef<UpdateUserInput>>(null);
+  const infoFormRef = useRef<ICommenFormRef<UserUpdateOneReq>>(null);
+  const rolesFormRef = useRef<ICommenFormRef<UserUpdateOneReq>>(null);
 
   const [item, setItem] = useState<User | undefined>();
   const [itemLoading, setItemLoading] = useState(false);
@@ -68,13 +68,13 @@ export default (props: IPage) => {
   };
 
   const onUpdateItem = async () => {
-    const infoData: ISubmitData<UpdateUserInput> = await infoFormRef.current?.onValidateForm();
-    const userRolesData: ISubmitData<UpdateUserInput> = await rolesFormRef.current?.onValidateForm();
+    const infoData: ISubmitData<UserUpdateOneReq> = await infoFormRef.current?.onValidateForm();
+    const userRolesData: ISubmitData<UserUpdateOneReq> = await rolesFormRef.current?.onValidateForm();
 
     if (!infoData) return;
     if (!userRolesData) return;
 
-    const data: ISubmitData<UpdateUserInput> = {
+    const data: ISubmitData<UserUpdateOneReq> = {
       ...infoData,
       ...userRolesData,
     };

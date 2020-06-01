@@ -1,7 +1,7 @@
 import { Controller, Post, Req, Body, Headers, HttpCode, Ip } from '@nestjs/common';
 import { AuthService } from '@leaa/api/src/modules/v1/auth/auth.service';
 import { ICrudRequest, IRequest } from '@leaa/api/src/interfaces';
-import { AuthLoginInput } from '@leaa/common/src/dtos/auth';
+import { AuthLoginReq } from '@leaa/common/src/dtos/auth';
 
 @Controller('/v1/auth')
 export class AuthController {
@@ -13,7 +13,7 @@ export class AuthController {
     @Req() req: IRequest,
     @Headers() headers: any,
     @Ip() ip: string,
-    @Body() body: AuthLoginInput,
+    @Body() body: AuthLoginReq,
   ): Promise<any> {
     return this.authService.login(req, headers, ip, body);
   }

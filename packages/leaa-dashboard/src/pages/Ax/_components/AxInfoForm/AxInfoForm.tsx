@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { Ax } from '@leaa/common/src/entrys';
 import { errorMsg } from '@leaa/dashboard/src/utils';
 import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
-import { UpdateAxInput, CreateAxInput } from '@leaa/common/src/dtos/ax';
+import { AxUpdateOneReq, AxCreateOneReq } from '@leaa/common/src/dtos/ax';
 
 import { FormCard, EntryInfoDate, SwitchNumber } from '@leaa/dashboard/src/components';
 
@@ -23,7 +23,7 @@ export const AxInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
   const { t } = useTranslation();
   const [form] = Form.useForm();
 
-  const onValidateForm = async (): IOnValidateFormResult<CreateAxInput | UpdateAxInput> => {
+  const onValidateForm = async (): IOnValidateFormResult<AxCreateOneReq | AxUpdateOneReq> => {
     try {
       return await form.validateFields();
     } catch (err) {

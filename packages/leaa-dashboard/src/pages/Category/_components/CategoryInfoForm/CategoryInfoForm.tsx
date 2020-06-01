@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { Category } from '@leaa/common/src/entrys';
 import { errorMsg } from '@leaa/dashboard/src/utils';
 import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
-import { UpdateCategoryInput } from '@leaa/common/src/dtos/category';
+import { CategoryUpdateOneReq } from '@leaa/common/src/dtos/category';
 
 import { FormCard, EntryInfoDate, SelectCategoryIdByTree } from '@leaa/dashboard/src/components';
 
@@ -32,7 +32,7 @@ export const CategoryInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) 
     return qs.parse(window.location.search, { ignoreQueryPrefix: true })?.parent_id;
   };
 
-  const onValidateForm = async (): IOnValidateFormResult<UpdateCategoryInput> => {
+  const onValidateForm = async (): IOnValidateFormResult<CategoryUpdateOneReq> => {
     try {
       return await form.validateFields();
     } catch (err) {

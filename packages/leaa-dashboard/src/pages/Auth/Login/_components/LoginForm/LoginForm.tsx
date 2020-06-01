@@ -9,7 +9,7 @@ import { ajax, getGuestToken, setAjaxToken, errorMsg } from '@leaa/dashboard/src
 import { envConfig } from '@leaa/dashboard/src/configs';
 import { IHttpRes, IHttpError, ICaptchaResult } from '@leaa/dashboard/src/interfaces';
 import { User } from '@leaa/common/src/entrys';
-import { CreateVerificationInput } from '@leaa/common/src/dtos/verification';
+import { VerificationCreateOneReq } from '@leaa/common/src/dtos/verification';
 
 import style from './style.module.less';
 

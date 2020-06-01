@@ -1,9 +1,8 @@
-import { Controller, UseGuards, Post, Get, Req, HttpCode, Body } from '@nestjs/common';
-import { ICrudRequest } from '@leaa/api/src/interfaces';
+import { Controller, UseGuards } from '@nestjs/common';
 import { Crud, CrudController, Override, ParsedRequest, CrudRequest, ParsedBody } from '@nestjsx/crud';
 
 import { Permissions } from '@leaa/api/src/decorators';
-import { CreateUserInput, UpdateUserInput } from '@leaa/common/src/dtos/user';
+import { UserCreateOneReq, UserUpdateOneReq } from '@leaa/common/src/dtos/user';
 import { JwtGuard, PermissionsGuard } from '@leaa/api/src/guards';
 import { User } from '@leaa/common/src/entrys';
 import { UserService } from './user.service';
@@ -41,8 +40,8 @@ import { UserService } from './user.service';
     },
   },
   dto: {
-    create: CreateUserInput,
-    update: UpdateUserInput,
+    create: UserCreateOneReq,
+    update: UserUpdateOneReq,
     replace: User,
   },
 })
@@ -53,14 +52,14 @@ export class UserController implements CrudController<User> {
   @Override('createOneBase')
   @UseGuards(JwtGuard, PermissionsGuard)
   @Permissions('user.item-create')
-  createOne(@ParsedRequest() req: CrudRequest, @ParsedBody() dto: User & CreateUserInput): Promise<User> {
+  createOne(@ParsedRequest() req: CrudRequest, @ParsedBody() dto: User & UserCreateOneReq): Promise<User> {
     return this.service.createOne(req, dto);
   }
 
   @Override('updateOneBase')
   @UseGuards(JwtGuard, PermissionsGuard)
   @Permissions('user.item-update')
-  updateOne(@ParsedRequest() req: CrudRequest, @ParsedBody() dto: UpdateUserInput): Promise<User> {
+  updateOne(@ParsedRequest() req: CrudRequest, @ParsedBody() dto: UserUpdateOneReq): Promise<User> {
     return this.service.updateOne(req, dto);
   }
 

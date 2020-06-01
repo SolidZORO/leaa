@@ -2,7 +2,7 @@ import React from 'react';
 import cx from 'classnames';
 import { Button } from 'antd';
 
-import { SyncTagsToFileObject } from '@leaa/common/src/dtos/tag';
+import { TagSyncToFileRes } from '@leaa/common/src/dtos/tag';
 import { SYNC_TAGS_TO_FILE } from '@leaa/dashboard/src/graphqls';
 import { msg } from '@leaa/dashboard/src/utils';
 import { Rcon } from '@leaa/dashboard/src/components';

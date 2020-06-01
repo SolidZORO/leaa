@@ -8,7 +8,7 @@ import { CrudRequest } from '@nestjsx/crud';
 
 import { Category } from '@leaa/common/src/entrys';
 import { ICategoriesQuery } from '@leaa/common/src/interfaces';
-import { CategoryTreeObject, CreateCategoryInput, UpdateCategoryInput } from '@leaa/common/src/dtos/category';
+import { CategoryGetTreeRes, CategoryCreateOneReq, CategoryUpdateOneReq } from '@leaa/common/src/dtos/category';
 
 @Injectable()
 export class CategoryService extends TypeOrmCrudService<Category> {
@@ -16,7 +16,7 @@ export class CategoryService extends TypeOrmCrudService<Category> {
     super(categoryRepo);
   }
 
-  async createOne(req: CrudRequest, dto: Category | CreateCategoryInput): Promise<Category> {
+  async createOne(req: CrudRequest, dto: Category | CategoryCreateOneReq): Promise<Category> {
     const nextDto = {
       ...dto,
       parent: await this.formatParentId(dto.parent_id),
@@ -25,7 +25,7 @@ export class CategoryService extends TypeOrmCrudService<Category> {
     return super.createOne(req, nextDto);
   }
 
-  async updateOne(req: CrudRequest, dto: Category | UpdateCategoryInput): Promise<Category> {
+  async updateOne(req: CrudRequest, dto: Category | CategoryUpdateOneReq): Promise<Category> {
     const nextDto = {
       ...dto,
       parent: await this.formatParentId(dto.parent_id),
@@ -67,8 +67,8 @@ export class CategoryService extends TypeOrmCrudService<Category> {
     };
   }
 
-  categoriesByTrees(items: Category[], options?: ICategoriesQuery): CategoryTreeObject[] {
-    const appendInfoToItem = (item: Category): Omit<CategoryTreeObject, 'children'> => ({
+  categoriesByTrees(items: Category[], options?: ICategoriesQuery): CategoryGetTreeRes[] {
+    const appendInfoToItem = (item: Category): Omit<CategoryGetTreeRes, 'children'> => ({
       ...item,
       // key: `${item.parent_id}-${item.id}-${item.slug}`,
       //
@@ -78,7 +78,7 @@ export class CategoryService extends TypeOrmCrudService<Category> {
       expanded: Boolean([true, 'true'].includes(options?.expanded || '')),
     });
 
-    const recursiveItems = (categories: Category[]): CategoryTreeObject[] => {
+    const recursiveItems = (categories: Category[]): CategoryGetTreeRes[] => {
       return categories.map((category) => {
         if (category.children && Array.isArray(category.children) && category.children.length > 0) {
           // eslint-disable-next-line no-param-reassign
@@ -93,7 +93,7 @@ export class CategoryService extends TypeOrmCrudService<Category> {
 
     // pick parent slug OR id
     if (result && _.isArray(result) && (options?.parentSlug || options?.parentId)) {
-      let pickPatent: CategoryTreeObject | undefined;
+      let pickPatent: CategoryGetTreeRes | undefined;
 
       if (options?.parentSlug) pickPatent = result.find((c) => c.slug === options.parentSlug);
       if (options?.parentId) pickPatent = result.find((c) => c.id === options.parentId);

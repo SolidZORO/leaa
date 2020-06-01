@@ -1,0 +1,8 @@
+import { IsNotEmpty } from 'class-validator';
+
+import { Attachment } from '@leaa/common/src/entrys';
+
+export class AttachmentUpdateManySortReq {
+  @IsNotEmpty()
+  attachments!: Pick<Attachment, 'id' | 'sort'>[];
+}

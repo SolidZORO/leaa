@@ -2,7 +2,7 @@ import { Controller, UseGuards } from '@nestjs/common';
 import { Crud, CrudController, Override, ParsedRequest, ParsedBody, CrudRequest } from '@nestjsx/crud';
 
 import { Permissions } from '@leaa/api/src/decorators';
-import { CreateAxInput, UpdateAxInput } from '@leaa/common/src/dtos/ax';
+import { AxCreateOneReq, AxUpdateOneReq } from '@leaa/common/src/dtos/ax';
 import { JwtGuard, PermissionsGuard } from '@leaa/api/src/guards';
 import { Ax } from '@leaa/common/src/entrys';
 
@@ -34,8 +34,8 @@ import { AxService } from './ax.service';
     },
   },
   dto: {
-    create: CreateAxInput,
-    update: UpdateAxInput,
+    create: AxCreateOneReq,
+    update: AxUpdateOneReq,
     replace: Ax,
   },
 })
@@ -46,7 +46,7 @@ export class AxController implements CrudController<Ax> {
   @Override('updateOneBase')
   @UseGuards(JwtGuard, PermissionsGuard)
   @Permissions('ax.item-update')
-  updateOne(@ParsedRequest() req: CrudRequest, @ParsedBody() dto: UpdateAxInput): Promise<Ax> {
+  updateOne(@ParsedRequest() req: CrudRequest, @ParsedBody() dto: AxUpdateOneReq): Promise<Ax> {
     return this.service.updateOne(req, dto);
   }
 }

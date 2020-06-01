@@ -4,7 +4,7 @@ import { Button } from 'antd';
 
 import { Tag } from '@leaa/common/src/entrys';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
-import { UpdateTagInput } from '@leaa/common/src/dtos/tag';
+import { TagUpdateOneReq } from '@leaa/common/src/dtos/tag';
 import { IPage, ICommenFormRef, ISubmitData, IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
 import { msg, errorMsg, ajax } from '@leaa/dashboard/src/utils';
 import { envConfig } from '@leaa/dashboard/src/configs';
@@ -21,7 +21,7 @@ export default (props: IPage) => {
   const { t } = useTranslation();
   const { id } = props.match.params as { id: string };
 
-  const infoFormRef = useRef<ICommenFormRef<UpdateTagInput>>(null);
+  const infoFormRef = useRef<ICommenFormRef<TagUpdateOneReq>>(null);
 
   const [item, setItem] = useState<Tag | undefined>();
   const [itemLoading, setItemLoading] = useState(false);
@@ -40,11 +40,11 @@ export default (props: IPage) => {
   };
 
   const onUpdateItem = async () => {
-    const infoData: ISubmitData<UpdateTagInput> = await infoFormRef.current?.onValidateForm();
+    const infoData: ISubmitData<TagUpdateOneReq> = await infoFormRef.current?.onValidateForm();
 
     if (!infoData) return;
 
-    const data: ISubmitData<UpdateTagInput> = {
+    const data: ISubmitData<TagUpdateOneReq> = {
       ...infoData,
     };
 

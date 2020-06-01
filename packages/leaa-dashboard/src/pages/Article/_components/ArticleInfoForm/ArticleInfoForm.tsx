@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Form, Input } from 'antd';
 
 import { Article } from '@leaa/common/src/entrys';
-import { UpdateArticleInput } from '@leaa/common/src/dtos/article';
+import { ArticleUpdateOneReq } from '@leaa/common/src/dtos/article';
 import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
 import { errorMsg } from '@leaa/dashboard/src/utils';
 
@@ -33,7 +33,7 @@ export const ArticleInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =
   const { t } = useTranslation();
   const [form] = Form.useForm();
 
-  const onValidateForm = async (): IOnValidateFormResult<UpdateArticleInput> => {
+  const onValidateForm = async (): IOnValidateFormResult<ArticleUpdateOneReq> => {
     try {
       return await form.validateFields();
     } catch (err) {

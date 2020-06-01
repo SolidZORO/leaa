@@ -9,7 +9,7 @@ import { plainToClass } from 'class-transformer';
 import { slugify } from 'transliteration';
 
 import { Article, Tag, Category } from '@leaa/common/src/entrys';
-import { UpdateArticleInput, CreateArticleInput } from '@leaa/common/src/dtos/article';
+import { ArticleUpdateOneReq, ArticleCreateOneReq } from '@leaa/common/src/dtos/article';
 import { TagService } from '@leaa/api/src/modules/v1/tag/tag.service';
 import { formatHtmlToText, cutTags } from '@leaa/api/src/utils';
 
@@ -32,14 +32,14 @@ export class ArticleService extends TypeOrmCrudService<Article> {
     super(articleRepo);
   }
 
-  async createOne(req: CrudRequest, dto: Article & CreateArticleInput): Promise<Article> {
+  async createOne(req: CrudRequest, dto: Article & ArticleCreateOneReq): Promise<Article> {
     const nextDto = dto;
     nextDto.slug = await this.genSlug({ title: dto.title, slug: dto.slug });
 
     return super.createOne(req, nextDto);
   }
 
-  async updateOne(req: CrudRequest, dto: UpdateArticleInput): Promise<Article> {
+  async updateOne(req: CrudRequest, dto: ArticleUpdateOneReq): Promise<Article> {
     const { allowParamsOverride, returnShallow } = req.options.routes?.updateOneBase || {};
 
     const paramsFilters = this.getParamFilters(req.parsed);

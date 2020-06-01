@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 import { User, Role } from '@leaa/common/src/entrys';
 import { errorMsg } from '@leaa/dashboard/src/utils';
 import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
-import { UpdateUserInput } from '@leaa/common/src/dtos/user';
+import { UserUpdateOneReq } from '@leaa/common/src/dtos/user';
 
 import { FormCard } from '@leaa/dashboard/src/components';
 
@@ -32,7 +32,7 @@ export const UserRolesForm = forwardRef((props: IProps, ref: React.Ref<any>) => 
 
   const [roleIds, setRoleIds] = useState<CheckboxValueType[]>(getRoleIds(props.item?.roles));
 
-  const onValidateForm = async (): IOnValidateFormResult<UpdateUserInput> => {
+  const onValidateForm = async (): IOnValidateFormResult<UserUpdateOneReq> => {
     try {
       return await form.validateFields();
     } catch (err) {

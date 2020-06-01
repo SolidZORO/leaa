@@ -6,7 +6,7 @@ import { Repository, In } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { User, Verification, Action, Auth } from '@leaa/common/src/entrys';
-import { AuthLoginInput } from '@leaa/common/src/dtos/auth';
+import { AuthLoginReq } from '@leaa/common/src/dtos/auth';
 import { checkUserIsEnable, logger, checkGuthorization } from '@leaa/api/src/utils';
 import { IRequest } from '@leaa/api/src/interfaces';
 import { IJwtPayload } from '@leaa/common/src/interfaces';
@@ -31,7 +31,7 @@ export class AuthService {
     private readonly roleService: RoleService,
   ) {}
 
-  async login(req: IRequest, headers: any, ip: string, body: AuthLoginInput): Promise<User | undefined> {
+  async login(req: IRequest, headers: any, ip: string, body: AuthLoginReq): Promise<User | undefined> {
     const { t } = req;
 
     if (!ip) throw new NotFoundIpException();

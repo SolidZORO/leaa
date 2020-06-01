@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { Setting } from '@leaa/common/src/entrys';
 import { errorMsg } from '@leaa/dashboard/src/utils';
 import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
-import { UpdateSettingInput } from '@leaa/common/src/dtos/setting';
+import { SettingUpdateOneReq } from '@leaa/common/src/dtos/setting';
 
 import { SwitchNumber, Rcon } from '@leaa/dashboard/src/components';
 import { buildTypeDom } from '../SettingListForm/SettingListForm';
@@ -33,7 +33,7 @@ export const SettingModalForm = forwardRef((props: IProps, ref: React.Ref<any>) 
     // checkbox: t('_lang:type_checkbox'),
   };
 
-  const onValidateForm = async (): IOnValidateFormResult<UpdateSettingInput> => {
+  const onValidateForm = async (): IOnValidateFormResult<SettingUpdateOneReq> => {
     try {
       return await form.validateFields();
     } catch (err) {

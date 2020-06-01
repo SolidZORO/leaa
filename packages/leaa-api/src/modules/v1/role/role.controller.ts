@@ -2,7 +2,7 @@ import { Controller, UseGuards } from '@nestjs/common';
 import { Crud, CrudController, Override, ParsedRequest, CrudRequest, ParsedBody } from '@nestjsx/crud';
 
 import { Permissions } from '@leaa/api/src/decorators';
-import { CreateRoleInput, UpdateRoleInput } from '@leaa/common/src/dtos/role';
+import { RoleCreateOneReq, RoleUpdateOneReq } from '@leaa/common/src/dtos/role';
 import { JwtGuard, PermissionsGuard } from '@leaa/api/src/guards';
 import { Role } from '@leaa/common/src/entrys';
 
@@ -36,8 +36,8 @@ import { RoleService } from './role.service';
     },
   },
   dto: {
-    create: CreateRoleInput,
-    update: UpdateRoleInput,
+    create: RoleCreateOneReq,
+    update: RoleUpdateOneReq,
     replace: Role,
   },
 })
@@ -48,7 +48,7 @@ export class RoleController implements CrudController<Role> {
   @Override('updateOneBase')
   @UseGuards(JwtGuard, PermissionsGuard)
   @Permissions('role.item-update')
-  updateOne(@ParsedRequest() req: CrudRequest, @ParsedBody() dto: UpdateRoleInput): Promise<Role> {
+  updateOne(@ParsedRequest() req: CrudRequest, @ParsedBody() dto: RoleUpdateOneReq): Promise<Role> {
     return this.service.updateOne(req, dto);
   }
 }

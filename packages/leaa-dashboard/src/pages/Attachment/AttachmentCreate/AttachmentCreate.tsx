@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { Attachment } from '@leaa/common/src/entrys';
-import { CreateAttachmentInput } from '@leaa/common/src/dtos/attachment';
+import { AttachmentCreateOneReq } from '@leaa/common/src/dtos/attachment';
 import { IPage, ICommenFormRef, ISubmitData, IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
 import { msg, errorMsg, ajax } from '@leaa/dashboard/src/utils';
 
@@ -16,16 +16,16 @@ const API_PATH = 'attachments';
 export default (props: IPage) => {
   const { t } = useTranslation();
 
-  const infoFormRef = useRef<ICommenFormRef<CreateAttachmentInput>>(null);
+  const infoFormRef = useRef<ICommenFormRef<AttachmentCreateOneReq>>(null);
 
   const [submitLoading, setSubmitLoading] = useState(false);
 
   const onCreateItem = async () => {
-    const infoData: ISubmitData<CreateAttachmentInput> = await infoFormRef.current?.onValidateForm();
+    const infoData: ISubmitData<AttachmentCreateOneReq> = await infoFormRef.current?.onValidateForm();
 
     if (!infoData) return;
 
-    const data: ISubmitData<CreateAttachmentInput> = {
+    const data: ISubmitData<AttachmentCreateOneReq> = {
       ...infoData,
     };
 
