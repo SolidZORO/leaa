@@ -7,7 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 import { User, Verification, Action, Auth } from '@leaa/common/src/entrys';
 import { AuthLoginInput } from '@leaa/common/src/dtos/auth';
-import { checkUserIsEnable, logger } from '@leaa/api/src/utils';
+import { checkUserIsEnable, logger, checkGuthorization } from '@leaa/api/src/utils';
 import { IRequest } from '@leaa/api/src/interfaces';
 import { IJwtPayload } from '@leaa/common/src/interfaces';
 import moment from 'moment';
@@ -35,9 +35,8 @@ export class AuthService {
     const { t } = req;
 
     if (!ip) throw new NotFoundIpException();
-    if (!headers?.guthorization) throw new BadRequestException();
 
-    const guthorization = headers?.guthorization;
+    const guthorization = checkGuthorization(headers?.guthorization);
     const account = xss.filterXSS(body.email.trim().toLowerCase());
 
     const findUser = await this.userRepo.findOne({
@@ -78,10 +77,8 @@ export class AuthService {
 
     // check Captcha
     if (accountLoginCount >= MUST_VERIFICATION_CAPTCHA_BY_LOGIN_ERROR) {
-      if (!guthorization) throw new BadRequestException('missing token');
-
       const captcha = await this.verificationRepo.findOne({ token: guthorization, code: body.captcha });
-      if (!captcha) throw new BadRequestException('verify code not match');
+      if (!captcha) throw new BadRequestException('Verify Code Not Match');
     }
 
     //

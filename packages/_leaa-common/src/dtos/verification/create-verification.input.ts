@@ -1,7 +1,7 @@
 import { IsNotEmpty, Length } from 'class-validator';
 
 export class CreateVerificationInput {
-  @Length(12)
-  @IsNotEmpty()
+  @IsNotEmpty({ each: true })
+  @Length(10)
   guthorization!: string;
 }

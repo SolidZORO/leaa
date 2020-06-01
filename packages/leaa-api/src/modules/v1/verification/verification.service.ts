@@ -1,14 +1,14 @@
-import { Injectable, BadRequestException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import svgCaptcha from 'svg-captcha';
 
 import { Verification, Action } from '@leaa/common/src/entrys';
 import { captchaConfig } from '@leaa/api/src/configs';
-import { CreateVerificationInput } from '@leaa/common/src/dtos/verification';
 import { ICaptchaResult } from '@leaa/api/src/interfaces';
 import { MUST_VERIFICATION_CAPTCHA_BY_LOGIN_ERROR } from '@leaa/api/src/modules/v1/auth/auth.service';
 import { ConfigService } from '@leaa/api/src/modules/v1/config/config.service';
+import { checkGuthorization } from '@leaa/api/src/utils';
 
 const CLS_NAME = 'VerificationService';
 
@@ -20,25 +20,25 @@ export class VerificationService {
     private readonly configService: ConfigService,
   ) {}
 
-  async createCaptchaForLogin(headers?: CreateVerificationInput): Promise<ICaptchaResult> {
-    if (!headers || !headers.guthorization) throw new BadRequestException();
+  async createCaptchaForLogin(t?: string): Promise<ICaptchaResult> {
+    const token = checkGuthorization(t);
 
     const guestTokenLoginErrorCount = await this.actionRepo.count({
       where: {
         module: 'auth',
         action: 'login',
-        token: headers.guthorization,
+        token,
       },
     });
 
     const captcha = svgCaptcha.create(captchaConfig.SVG_CAPTCHA);
 
-    const hasCaptcha = await this.verificationRepo.findOne({ token: headers.guthorization });
+    const hasCaptcha = await this.verificationRepo.findOne({ token });
     //
     if (hasCaptcha) {
       await this.verificationRepo.update(hasCaptcha?.id, { code: captcha.text.toLowerCase() });
     } else {
-      await this.verificationRepo.save({ token: headers.guthorization, code: captcha.text.toLowerCase() });
+      await this.verificationRepo.save({ token, code: captcha.text.toLowerCase() });
     }
 
     return {
