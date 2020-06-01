@@ -8,7 +8,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User, Verification, Action, Auth } from '@leaa/common/src/entrys';
 import { AuthLoginInput } from '@leaa/common/src/dtos/auth';
 import { checkUserIsEnable, logger } from '@leaa/api/src/utils';
-import { ActionService } from '@leaa/api/src/modules/v1/action/action.service';
 import { IRequest } from '@leaa/api/src/interfaces';
 import { IJwtPayload } from '@leaa/common/src/interfaces';
 import moment from 'moment';
@@ -18,7 +17,7 @@ import { NotFoundIpException, NotFoundTokenException, NotFoundUserException } fr
 
 const CLS_NAME = 'AuthService';
 
-export const MUST_VERIFICATION_CAPTCHA_BY_LOGIN_ERROR = 3;
+export const MUST_VERIFICATION_CAPTCHA_BY_LOGIN_ERROR = 5;
 
 @Injectable()
 export class AuthService {
@@ -30,7 +29,6 @@ export class AuthService {
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
     private readonly roleService: RoleService,
-    private readonly actionService: ActionService,
   ) {}
 
   async login(req: IRequest, headers: any, ip: string, body: AuthLoginInput): Promise<User | undefined> {
