@@ -1,9 +1,15 @@
 import cx from 'classnames';
-import React, { useEffect, forwardRef, useImperativeHandle } from 'react';
+import React, { useEffect, forwardRef, useImperativeHandle, useState } from 'react';
 import { Col, Form, Input, Row, Checkbox } from 'antd';
 
 import { useTranslation } from 'react-i18next';
 import { LoginAccount } from '@leaa/common/src/dtos/demo';
+
+import { ajax, getGuestToken, setAjaxToken, errorMsg } from '@leaa/dashboard/src/utils';
+import { envConfig } from '@leaa/dashboard/src/configs';
+import { IHttpRes, IHttpError, ICaptchaResult } from '@leaa/dashboard/src/interfaces';
+import { User } from '@leaa/common/src/entrys';
+import { CreateVerificationInput } from '@leaa/common/src/dtos/verification';
 
 import style from './style.module.less';
 
@@ -20,6 +26,8 @@ export const LoginForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
   const { t } = useTranslation();
   const [form] = Form.useForm();
 
+  const [captcha, setCaptcha] = useState<string>();
+
   const onValidateForm = async () => {
     if (props.loading) return false;
 
@@ -30,12 +38,25 @@ export const LoginForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
     }
   };
 
+  const onFetchCaptcha = async () => {
+    console.log('onFetchCaptcha');
+
+    ajax
+      .get(`${envConfig.API_URL}/${envConfig.API_VERSION}/verification/captcha-for-login`)
+      .then((res: IHttpRes<ICaptchaResult>) => {
+        setCaptcha(res.data.data.img);
+      })
+      .catch((err: IHttpError) => {
+        errorMsg(err.response?.data?.message || err.message);
+      });
+  };
+
   useEffect(() => {
     if (props.initialValues) form.setFieldsValue(props.initialValues);
   }, [form, props.initialValues]);
 
   useEffect(() => {
-    // if (props.loginErrorCount) getGuestQuery.refetch();
+    if (props.loginErrorCount) onFetchCaptcha();
   }, [props.loginErrorCount]);
 
   useImperativeHandle(ref, () => ({ form, onValidateForm }));
@@ -71,27 +92,27 @@ export const LoginForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
             </Form.Item>
           </Col>
 
-          {/* {getGuestQuery.data?.guest?.captcha && ( */}
-          {/*  <Col xs={24} sm={12}> */}
-          {/*    <Form.Item name="captcha" rules={[{ required: true }]} label={t('_page:Auth.Login.captcha')}> */}
-          {/*      <Input */}
-          {/*        size="large" */}
-          {/*        placeholder={t('_page:Auth.Login.captcha')} */}
-          {/*        onPressEnter={props.onPressSubmitCallback} */}
-          {/*        suffix={ */}
-          {/*          // eslint-disable-next-line max-len */}
-          {/*          // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
-          {/*          <div */}
-          {/*            // onClick={() => getGuestQuery.refetch()} */}
-          {/*            className={style['captcha-image']} */}
-          {/*            // eslint-disable-next-line react/no-danger */}
-          {/*            // dangerouslySetInnerHTML={{ __html: getGuestQuery.data?.guest?.captcha || '' }} */}
-          {/*          /> */}
-          {/*        } */}
-          {/*      /> */}
-          {/*    </Form.Item> */}
-          {/*  </Col> */}
-          {/* )} */}
+          {captcha && (
+            <Col xs={24} sm={12}>
+              <Form.Item name="captcha" rules={[{ required: true }]} label={t('_page:Auth.Login.captcha')}>
+                <Input
+                  size="large"
+                  placeholder={t('_page:Auth.Login.captcha')}
+                  onPressEnter={props.onPressSubmitCallback}
+                  suffix={
+                    // eslint-disable-next-line max-len
+                    // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
+                    <div
+                      onClick={onFetchCaptcha}
+                      className={style['captcha-image']}
+                      // eslint-disable-next-line react/no-danger
+                      dangerouslySetInnerHTML={{ __html: captcha || '' }}
+                    />
+                  }
+                />
+              </Form.Item>
+            </Col>
+          )}
         </Row>
 
         <Row gutter={16} className={style['remember-row']}>

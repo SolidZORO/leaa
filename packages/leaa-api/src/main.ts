@@ -40,7 +40,7 @@ import { envInfoForCli } from '@leaa/api/src/utils';
     maxAge: 0,
     optionsSuccessStatus: 200,
     // methods: '',
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Guthorization'],
     exposedHeaders: ['Authorization'],
     // preflightContinue: false,
   });

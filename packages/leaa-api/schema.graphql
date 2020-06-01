@@ -754,7 +754,7 @@ type Mutation {
   syncDivisionToFile: SyncDivisionToFileObject!
   updateDivision(division: UpdateDivisionInput!, id: String!): Division!
   deleteDivision(id: String!): Division!
-  createZan(zan: CreateZanInput!): Zan!
+  createZan(zan: CreateVerificationInput!): Zan!
   updateZan(zan: UpdateZanInput!, id: String!): Zan!
   deleteZan(id: String!): Zan!
   likeZan(id: String!): Zan!
@@ -1068,7 +1068,7 @@ input UpdateDivisionInput {
   name: String
 }
 
-input CreateZanInput {
+input CreateVerificationInput {
   title: String!
   status: Int
   description: String

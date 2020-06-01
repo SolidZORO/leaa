@@ -2904,6 +2904,11 @@
   dependencies:
     "@types/node" "*"
 
+"@types/clientjs@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.npm.taobao.org/@types/clientjs/download/@types/clientjs-0.1.0.tgz#ca79f0ed0e2426fe0e74cca77a86d11309a0fcc2"
+  integrity sha1-ynnw7Q4kJv4OdMyneobREwmg/MI=
+
 "@types/color-name@^1.1.1":
   version "1.1.1"
   resolved "https://registry.npm.taobao.org/@types/color-name/download/@types/color-name-1.1.1.tgz#1c1261bbeaa10a8055bbc5d8ab84b7b2afc846a0"
@@ -3036,6 +3041,11 @@
   integrity sha1-7I55Pidbf5DN7D/yhlGMa/e7j8M=
   dependencies:
     "@types/webpack" "*"
+
+"@types/fingerprintjs@^0.5.28":
+  version "0.5.28"
+  resolved "https://registry.npm.taobao.org/@types/fingerprintjs/download/@types/fingerprintjs-0.5.28.tgz#9d8718677add858b7ffab6f01b2e2eeb390eaa50"
+  integrity sha1-nYcYZ3rdhYt/+rbwGy4u6zkOqlA=
 
 "@types/glob@*", "@types/glob@^7.1.1":
   version "7.1.1"
@@ -5917,6 +5927,11 @@ cli-width@^2.0.0:
   resolved "https://registry.npm.taobao.org/cli-width/download/cli-width-2.2.1.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fcli-width%2Fdownload%2Fcli-width-2.2.1.tgz#b0433d0b4e9c847ef18868a4ef16fd5fc8271c48"
   integrity sha1-sEM9C06chH7xiGik7xb9X8gnHEg=
 
+clientjs@^0.1.11:
+  version "0.1.11"
+  resolved "https://registry.npm.taobao.org/clientjs/download/clientjs-0.1.11.tgz#466e1b13c229a3cbbd8484f98531dcd658f81054"
+  integrity sha1-Rm4bE8Ipo8u9hIT5hTHc1lj4EFQ=
+
 cliui@^5.0.0:
   version "5.0.0"
   resolved "https://registry.npm.taobao.org/cliui/download/cliui-5.0.0.tgz#deefcfdb2e800784aa34f46fa08e06851c7bbbc5"
@@ -8515,6 +8530,11 @@ findup-sync@3.0.0, findup-sync@^3.0.0:
     is-glob "^4.0.0"
     micromatch "^3.0.4"
     resolve-dir "^1.0.1"
+
+fingerprintjs@^0.5.3:
+  version "0.5.3"
+  resolved "https://registry.npm.taobao.org/fingerprintjs/download/fingerprintjs-0.5.3.tgz#0026422fae1ab1003691e136c143e19b7527b255"
+  integrity sha1-ACZCL64asQA2keE2wUPhm3UnslU=
 
 flat-cache@^2.0.1:
   version "2.0.1"

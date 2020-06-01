@@ -7,7 +7,7 @@
 // import { User, Auth } from '@leaa/common/src/entrys';
 // import { IRequest, IResponse, IRequestGithubCallback, ICreateAuthAndUserResult } from '@leaa/api/src/interfaces';
 // import { CreateAuthInput } from '@leaa/common/src/dtos/auth';
-// import { AuthService } from '@leaa/api/src/modules/v1/auth/auth.service';
+// import { VerificationService } from '@leaa/api/src/modules/v1/auth/auth.service';
 // import { UserService } from '@leaa/api/src/modules/v1/user/user.service';
 // import { ConfigService } from '@leaa/api/src/modules/v1/config/config.service';
 // import { logger, randomString } from '@leaa/api/src/utils';
@@ -19,7 +19,7 @@
 // export class AuthGithubService {
 //   constructor(
 //     @InjectRepository(Auth) private readonly authRepository: Repository<Auth>,
-//     private readonly authService: AuthService,
+//     private readonly authService: VerificationService,
 //     private readonly userService: UserService,
 //     private readonly configService: ConfigService,
 //   ) {}

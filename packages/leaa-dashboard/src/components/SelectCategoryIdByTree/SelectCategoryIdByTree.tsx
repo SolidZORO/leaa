@@ -5,7 +5,7 @@ import { TreeSelect } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { TreeSelectProps } from 'antd/es/tree-select';
 
-import { ICategoriesQuery } from '@leaa/api/src/interfaces';
+import { ICategoriesQuery } from '@leaa/common/src/interfaces';
 import { ajax, errorMsg } from '@leaa/dashboard/src/utils';
 import { envConfig } from '@leaa/dashboard/src/configs';
 import { IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';

@@ -5,6 +5,8 @@ import Cookies from 'js-cookie';
 import { IPermissionSlug } from '@leaa/common/src/interfaces';
 import { AUTH_TOKEN_NAME, AUTH_INFO, GUEST_TOKEN_NAME } from '@leaa/dashboard/src/constants';
 import { IAuthInfo } from '@leaa/dashboard/src/interfaces';
+// @ts-ignore
+import Fingerprint from 'fingerprintjs';
 
 //
 //
@@ -94,16 +96,14 @@ export const checkAuthIsAvailably = (): boolean => {
 //
 // GusetToken (cookie)
 export const setGuestToken = (token: string) => Cookies.set(GUEST_TOKEN_NAME, token);
+export const getGuestToken = (): string | null => {
+  if (Cookies.get(GUEST_TOKEN_NAME)) return Cookies.get(GUEST_TOKEN_NAME) || '';
 
-export const getGuestToken = (options = { onlyToken: false }): string | null => {
-  const guestToken = Cookies.get(GUEST_TOKEN_NAME);
-
-  if (!guestToken) {
-    console.log('Not Found Guest Token');
-    return null;
-  }
-
-  if (guestToken && options.onlyToken) return guestToken.replace(/^Bearer\s/, '');
+  // 必须保证保证第一次访问就能获取，这个其实可以当作 session 来对待
+  // MUST get it on the first visit.
+  // BTW, guestToken is called `Guthorization` at `Request Headers`.(@see ajax.util)
+  const guestToken = new Fingerprint().get();
+  setGuestToken(guestToken);
 
   return guestToken;
 };
@@ -114,10 +114,6 @@ export const removeGuestToken = (): boolean => {
   Cookies.remove(GUEST_TOKEN_NAME);
 
   return true;
-};
-
-export const checkGuestIsAvailably = (): boolean => {
-  return Boolean(getGuestToken());
 };
 
 //

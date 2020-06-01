@@ -12,6 +12,7 @@ import {
   errorMsg,
   ajax,
   setAjaxToken,
+  getGuestToken,
 } from '@leaa/dashboard/src/utils';
 import { LOGIN_REDIRECT_URL } from '@leaa/dashboard/src/constants';
 import { User } from '@leaa/common/src/entrys';
@@ -29,13 +30,14 @@ export default (props: IPage) => {
   const { t } = useTranslation();
   const urlObject = qs.parse(window.location.search, { ignoreQueryPrefix: true });
 
-  const [loginErrorCount, setLoginErrorCount] = useState<number>(0);
+  const [loginErrorCount, setLoginErrorCount] = useState<number>(1);
   const [submitLoading, setSubmitLoading] = useState<boolean>(false);
 
   const loginFormRef = useRef<ICommenFormRef<AuthLoginInput>>(null);
 
   const clearGuestInfo = () => {
-    setLoginErrorCount(0);
+    console.log('clearGuestInfo');
+    setLoginErrorCount(1);
     removeGuestToken();
   };
 
@@ -101,11 +103,11 @@ export default (props: IPage) => {
       .post(`${envConfig.API_URL}/${envConfig.API_VERSION}/auth/login`, submitData)
       .then((res: IHttpRes<User>) => {
         setLogin(res.data.data);
-
         if (res.data.data?.authToken) setAjaxToken(res.data.data.authToken);
       })
       .catch((err: IHttpError) => {
         errorMsg(err.response?.data?.message || err.message);
+        setLoginErrorCount(loginErrorCount + 1);
 
         return props.history.push('/login');
       })
@@ -137,6 +139,7 @@ export default (props: IPage) => {
                   onPressSubmitCallback={onSubmit}
                   loginErrorCount={loginErrorCount}
                   loading={submitLoading}
+                  initialValues={{ email: 'admin@local.com', password: 'h8Hx9qvPKoHMLQgj' }}
                 />
               </div>
 

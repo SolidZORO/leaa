@@ -3,7 +3,7 @@ import { Crud, CrudController, CrudRequest, Override, ParsedRequest, ParsedBody 
 
 import { Permissions } from '@leaa/api/src/decorators';
 import { CreateCategoryInput, UpdateCategoryInput } from '@leaa/common/src/dtos/category';
-import { ICategoriesQuery } from '@leaa/api/src/interfaces';
+import { ICategoriesQuery } from '@leaa/common/src/interfaces';
 import { JwtGuard, PermissionsGuard } from '@leaa/api/src/guards';
 import { Category } from '@leaa/common/src/entrys';
 

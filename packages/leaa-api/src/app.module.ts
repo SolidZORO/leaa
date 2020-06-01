@@ -7,6 +7,7 @@ import { TypeormService } from '@leaa/api/src/modules/v1/typeorm/typeorm.service
 import { SeedModule } from '@leaa/api/src/modules/v1/seed/seed.module';
 import { ConfigModule } from '@leaa/api/src/modules/v1/config/config.module';
 import { PlaygroundModule } from '@leaa/api/src/modules/v1/playground/playground.module';
+import { VerificationModule } from '@leaa/api/src/modules/v1/verification/verification.module';
 //
 import { AuthModule } from '@leaa/api/src/modules/v1/auth/auth.module';
 import { ActionModule } from '@leaa/api/src/modules/v1/action/action.module';
@@ -30,6 +31,7 @@ const imports = [
   SeedModule,
   ConfigModule,
   PlaygroundModule,
+  VerificationModule,
   //
   AuthModule,
   ActionModule,

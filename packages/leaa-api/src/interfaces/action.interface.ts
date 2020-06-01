@@ -4,3 +4,13 @@ import { Action } from '@leaa/common/src/entrys';
 
 export type IActionsArgs = ActionsArgs & FindOneOptions<Action>;
 export type IActionArgs = ActionArgs & FindOneOptions<Action>;
+
+export type ICreateOneCaptchaOptions = {
+  module: string;
+  action: string;
+};
+
+export type ICaptchaResult = {
+  img: string;
+  count?: number;
+};
