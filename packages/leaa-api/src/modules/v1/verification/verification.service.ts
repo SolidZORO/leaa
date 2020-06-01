@@ -12,6 +12,8 @@ import { checkGuthorization } from '@leaa/api/src/utils';
 
 const CLS_NAME = 'VerificationService';
 
+svgCaptcha.loadFont(captchaConfig.SVG_CAPTCHA_FONT_PATH);
+
 @Injectable()
 export class VerificationService {
   constructor(
@@ -31,8 +33,7 @@ export class VerificationService {
       },
     });
 
-    const captcha = svgCaptcha.create(captchaConfig.SVG_CAPTCHA);
-
+    const captcha = svgCaptcha.create(captchaConfig.SVG_CAPTCHA_OPTION);
     const hasCaptcha = await this.verificationRepo.findOne({ token });
     //
     if (hasCaptcha) {
