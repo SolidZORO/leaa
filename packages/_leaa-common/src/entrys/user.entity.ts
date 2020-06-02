@@ -11,11 +11,11 @@ export class User extends Base {
   @Column({ type: 'varchar', length: 64, nullable: true, default: '' })
   name?: string;
 
-  @Column({ type: 'varchar', length: 32, default: '' })
-  phone?: string;
+  @Column({ type: 'varchar', length: 16, default: null, unique: true })
+  phone?: string | null;
 
-  @Column({ type: 'varchar', length: 64, default: '' })
-  email?: string;
+  @Column({ type: 'varchar', length: 64, default: null, unique: true })
+  email?: string | null;
 
   @Column({ type: 'varchar', nullable: true, default: null })
   avatar_url?: string | null;
@@ -28,7 +28,7 @@ export class User extends Base {
   @BeforeInsert()
   async BeforeInsert() {
     // set default avatar
-    this.avatar_url = genAvatarUrl(this.email);
+    this.avatar_url = genAvatarUrl(this.email || this.phone || this.id || '');
   }
 
   @Column({ type: 'int', default: 0 })

@@ -14,6 +14,7 @@ export default {
   user: 'User',
   role: 'Role',
   email: 'Email',
+  phone: 'Phone',
   name: 'Name',
   fullname: 'Fullname',
   title: 'Title',

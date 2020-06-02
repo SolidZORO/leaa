@@ -35,6 +35,7 @@ export const envInfoForCli = ({
   console.log('     - RATELIMIT_WINDOWMS   ', config.RATELIMIT_WINDOWMS);
   console.log('     - ENABLE_CAPTCHA_TIMES ', config.ENABLE_CAPTCHA_BY_LOGIN_FAILD_TIMES);
   console.log('');
+  console.log('     - GRAVATAR_TYPE            ', config.GRAVATAR_TYPE);
   console.log('     - ATTACHMENT_DIR           ', config.ATTACHMENT_DIR);
   console.log('     - ATTACHMENT_LIMIT_SIZE_MB ', config.ATTACHMENT_LIMIT_SIZE_MB);
   console.log('     - ATTACHMENT_SAVE_IN_LOCAL ', config.ATTACHMENT_SAVE_IN_LOCAL);

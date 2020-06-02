@@ -1,15 +1,13 @@
-import { IsOptional, IsNotEmpty, Length, MinLength, IsEmail, IsPhoneNumber } from 'class-validator';
+import { IsOptional, IsNotEmpty, Length, IsEmail, IsPhoneNumber, ValidateIf } from 'class-validator';
 
 export class UserCreateOneReq {
-  @IsOptional()
+  @ValidateIf((e) => e.email === '')
   @IsPhoneNumber('CN')
-  @MinLength(11)
-  phone?: string;
+  phone?: string | null;
 
-  @IsOptional()
+  @ValidateIf((e) => e.phone === '')
   @IsEmail()
-  @MinLength(4)
-  email?: string;
+  email?: string | null;
 
   @IsOptional()
   @Length(1, 64)

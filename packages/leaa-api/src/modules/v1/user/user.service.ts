@@ -5,7 +5,7 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 import { CrudRequest } from '@nestjsx/crud';
-import { Injectable, ForbiddenException } from '@nestjs/common';
+import { Injectable, ForbiddenException, BadRequestException } from '@nestjs/common';
 
 import { logger } from '@leaa/api/src/utils';
 import { User, Role, Auth } from '@leaa/common/src/entrys';
@@ -26,6 +26,8 @@ export class UserService extends TypeOrmCrudService<User> {
   async createOne(req: CrudRequest, dto: User & UserCreateOneReq): Promise<User> {
     const nextDto = dto;
     if (dto.password) nextDto.password = await this.createPassword(dto.password);
+    if (!nextDto.email && !nextDto.phone) throw new BadRequestException('Missing Email or Phone');
+    if (Number.isNaN(Number(nextDto.phone))) throw new BadRequestException('Error Phone');
 
     const hasSuperuser = await this.userRepo.findOne({ is_superuser: 1 });
     if (hasSuperuser) delete nextDto.is_superuser;
@@ -37,8 +39,12 @@ export class UserService extends TypeOrmCrudService<User> {
   async updateOne(req: CrudRequest, dto: UserUpdateOneReq, jwtUser?: User): Promise<User> {
     const prevUser = await this.getOneOrFail(req);
     if (prevUser.id === jwtUser?.id) throw new ForbiddenException("Don't update yourself");
+    if (prevUser.is_superuser) throw new ForbiddenException('Huh?! What R U Doing??');
 
     const nextDto: UserUpdateOneReq & { roles?: Role[] } = dto;
+    if (!nextDto.email && !nextDto.phone) throw new BadRequestException('Missing Email or Phone');
+    if (Number.isNaN(Number(nextDto.phone))) throw new BadRequestException('Error Phone');
+
     if (dto.password) nextDto.password = await this.createPassword(dto.password);
 
     // @TIPS 更新某些关键信息之后，可以在 validateUserByPayload 那边通过对比 last_token_at 让用户强制弹出

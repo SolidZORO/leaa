@@ -1,4 +1,5 @@
 import { ExceptionFilter, Catch, ArgumentsHost, HttpException, HttpStatus } from '@nestjs/common';
+import { logger } from '@leaa/api/src/utils';
 
 export interface IHttpException {
   statusCode: number;
@@ -19,11 +20,17 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const lang = req.language || '';
 
     // @ts-ignore
-    let message = (__DEV__ && exception?.sqlMessage) || exception?.message || 'KERNEL PANIC!!!';
+    // let message = (__DEV__ && exception?.sqlMessage) || exception?.message || 'KERNEL PANIC!';
 
-    if (exception instanceof HttpException) {
-      message = exception.message;
-    }
+    // @ts-ignore
+    let message = statusCode >= 500 ? 'SERVER ERROR' : (__DEV__ && exception?.message) || 'KERNEL PANIC!';
+
+    // @ts-ignore
+    if (__DEV__ && exception?.sqlMessage) message = exception?.sqlMessage;
+    if (exception instanceof HttpException) message = exception.message;
+
+    logger.error(`${exception}` || 'HttpExceptionFilter ErrorMsg');
+    console.log(exception);
 
     res.status(statusCode).json({
       statusCode,

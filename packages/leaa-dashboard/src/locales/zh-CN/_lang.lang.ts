@@ -14,6 +14,7 @@ export default {
   user: '用户',
   role: '角色',
   email: 'Email',
+  phone: '手机号',
   name: '名字',
   fullname: '全名',
   title: '标题',

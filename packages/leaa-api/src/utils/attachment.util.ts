@@ -73,7 +73,7 @@ export const transAvatarUrl = (path?: string | null): string | null => {
 export const genAvatarUrl = (hash?: string): string => {
   const hashMd5 = crypto
     .createHash('md5')
-    .update(hash || `hash-${new Date().valueOf()}@local.com`)
+    .update(hash || `hash-${new Date().valueOf()}`)
     .digest('hex');
 
   return `//secure.gravatar.com/avatar/${hashMd5}`;

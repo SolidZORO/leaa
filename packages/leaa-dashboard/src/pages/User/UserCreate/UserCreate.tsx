@@ -4,7 +4,7 @@ import { Button } from 'antd';
 
 import { User } from '@leaa/common/src/entrys';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
-import { UserUpdateOneReq } from '@leaa/common/src/dtos/user';
+import { UserCreateOneReq } from '@leaa/common/src/dtos/user';
 import { IPage, ICommenFormRef, ISubmitData, IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
 import { msg, errorMsg, ajax } from '@leaa/dashboard/src/utils';
 
@@ -20,18 +20,21 @@ const API_PATH = 'users';
 export default (props: IPage) => {
   const { t } = useTranslation();
 
-  const infoFormRef = useRef<ICommenFormRef<UserUpdateOneReq>>(null);
+  const infoFormRef = useRef<ICommenFormRef<UserCreateOneReq>>(null);
 
   const [submitLoading, setSubmitLoading] = useState(false);
 
   const onCreateItem = async () => {
-    const infoData: ISubmitData<UserUpdateOneReq> = await infoFormRef.current?.onValidateForm();
+    const infoData: ISubmitData<UserCreateOneReq> = await infoFormRef.current?.onValidateForm();
 
     if (!infoData) return;
 
-    const data: ISubmitData<UserUpdateOneReq> = {
+    const data: ISubmitData<UserCreateOneReq> = {
       ...infoData,
     };
+
+    if (!data.phone) data.phone = null;
+    if (!data.email) data.email = null;
 
     setSubmitLoading(true);
 

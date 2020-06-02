@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from 'antd';
 
-import { User, Tag, Role } from '@leaa/common/src/entrys';
+import { User, Role } from '@leaa/common/src/entrys';
 import { IAttachmentBoxRef } from '@leaa/common/src/interfaces';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { UserUpdateOneReq } from '@leaa/common/src/dtos/user';
@@ -10,15 +10,12 @@ import { IPage, ICommenFormRef, ISubmitData, IHttpRes, IHttpError, ICrudListRes 
 import { msg, errorMsg, ajax } from '@leaa/dashboard/src/utils';
 
 import { envConfig } from '@leaa/dashboard/src/configs';
-import { PageCard, HtmlMeta, WYSIWYGEditor, Rcon, SubmitBar } from '@leaa/dashboard/src/components';
+import { PageCard, HtmlMeta, Rcon, SubmitBar } from '@leaa/dashboard/src/components';
 
 import { UserInfoForm } from '../_components/UserInfoForm/UserInfoForm';
 import { UserRolesForm } from '../_components/UserRolesForm/UserRolesForm';
-// import { UserExtForm } from '../_components/UserExtForm/UserExtForm';
-
+import { UploadUserAvatar } from '../_components/UploadUserAvatar/UploadUserAvatar';
 import style from './style.module.less';
-import { UploadUserAvatar } from '@leaa/dashboard/src/pages/User/_components/UploadUserAvatar/UploadUserAvatar';
-// import { UploadUserAvatar } from '@leaa/dashboard/src/pages/User/_components/UploadUserAvatar/UploadUserAvatar';
 
 const API_PATH = 'users';
 
@@ -36,10 +33,7 @@ export default (props: IPage) => {
   const [roles, setRoles] = useState<Role[]>();
   const [rolesLoading, setRolesLoading] = useState(false);
 
-  const userContentRef = useRef<any>(null);
   const attachmentBoxRef = useRef<IAttachmentBoxRef>(null);
-  const selectTagIdRef = useRef<any>(null);
-  const [userTags, setUserTags] = useState<Tag[]>();
 
   const onFetchItem = () => {
     setItemLoading(true);
@@ -80,6 +74,9 @@ export default (props: IPage) => {
       ...userRolesData,
     };
 
+    if (!data.phone) data.phone = null;
+    if (!data.email) data.email = null;
+
     setSubmitLoading(true);
 
     ajax
@@ -109,13 +106,7 @@ export default (props: IPage) => {
 
       <UploadUserAvatar item={item} loading={itemLoading} />
 
-      <UserRolesForm
-        ref={rolesFormRef}
-        item={item}
-        loading={false}
-        // roles={getRolesQuery.data?.roles?.items || []}
-        roles={roles || []}
-      />
+      <UserRolesForm ref={rolesFormRef} item={item} loading={rolesLoading} roles={roles || []} />
 
       <SubmitBar full>
         <Button

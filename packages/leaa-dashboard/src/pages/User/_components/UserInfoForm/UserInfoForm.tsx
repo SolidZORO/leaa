@@ -69,12 +69,7 @@ export const UserInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
             </Col>
 
             <Col xs={24} sm={6}>
-              <Form.Item
-                name="email"
-                rules={[{ type: 'email', min: 6 }]}
-                validateTrigger={['onBlur']}
-                label={t('_lang:email')}
-              >
+              <Form.Item name="email" rules={[{ type: 'email' }]} validateTrigger={['onBlur']} label={t('_lang:email')}>
                 <Input placeholder={t('_lang:email')} />
               </Form.Item>
             </Col>
