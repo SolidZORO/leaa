@@ -1,9 +1,17 @@
+import _ from 'lodash';
 import cx from 'classnames';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { DeleteOutlined } from '@ant-design/icons';
+import { Button, Tooltip } from 'antd';
 
 import { User } from '@leaa/common/src/entrys';
-import { ConfirmDeleteButton } from '@leaa/dashboard/src/components';
+import { AttachmentBox } from '@leaa/dashboard/src/components';
+
+import { ajax, errorMsg, msg } from '@leaa/dashboard/src/utils';
+import { envConfig } from '@leaa/dashboard/src/configs';
+import { IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
+import { UserUpdateOneReq } from '@leaa/common/src/dtos/user';
 
 import style from './style.module.less';
 
@@ -15,50 +23,80 @@ interface IProps {
 
 export const UploadUserAvatar = (props: IProps) => {
   const { t } = useTranslation();
-  const [aurl, setAurl] = useState(props.item?.avatar_url);
 
-  // const avatarParams = {
-  //   type: 'image',
-  //   moduleId: props.item?.id,
-  //   moduleName: 'user',
-  //   typeName: 'avatar',
-  // };
+  const [extAurl, setExtAurl] = useState(props.item?.avatar_url);
+  useEffect(() => setExtAurl(props.item?.avatar_url), [props.item?.avatar_url]);
 
-  useEffect(() => {
-    setAurl(props.item?.avatar_url);
-  }, [props.item?.avatar_url]);
+  const [updateLoading, setUpdateLoading] = useState(false);
 
-  // const [updateUserMutate, updateUserMutation] = useMutation<User>(UPDATE_USER, {
-  //   variables: {
-  //     id: Number(props.item?.id),
-  //     user: { avatar_url: null },
-  //   },
-  // });
+  // eslint-disable-next-line @typescript-eslint/camelcase
+  const onUpdateAvatar = async (avatar_url?: string | null) => {
+    setUpdateLoading(true);
+    if (!props.item?.id) return;
 
-  // const deleteAvatar = async () => {
-  //   const result = await updateUserMutate();
-  //
-  //   if (result) {
-  //     setAurl(null);
-  //   }
-  // };
+    ajax
+      .patch(`${envConfig.API_URL}/${envConfig.API_VERSION}/users/${props.item?.id}`, {
+        avatar_url,
+      } as UserUpdateOneReq)
+      .then((res: IHttpRes<User>) => {
+        console.log('AAAAAAA', res.data.data.avatar_url);
 
-  return (
-    <div className={cx(style['user-avatar-wrapper'], props.className)}>
-      {aurl && (
+        setExtAurl(res.data.data.avatar_url);
+
+        msg(t('_lang:updatedSuccessfully'));
+      })
+      .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
+      .finally(() => setUpdateLoading(false));
+  };
+
+  console.log(extAurl);
+
+  const avatarDom = () => {
+    if (extAurl && extAurl.includes('gravatar')) {
+      return (
         <div className={cx(style['avatar-box'], style['avatar-box--avatar-url'])}>
           <div className={cx(style['avatar-toolbar'])}>
-            <ConfirmDeleteButton
-              opacity={1}
-              // loading={updateUserMutation.loading}
-              // onClick={deleteAvatar}
-              title={t('_page:User.deleteAuthAvatar')}
-            />
+            <Tooltip title={t('_page:User.deleteAuthAvatar')}>
+              <Button
+                type="link"
+                size="small"
+                shape="circle"
+                icon={<DeleteOutlined />}
+                className={style['avatar-delete']}
+                onClick={() => onUpdateAvatar(null)}
+                loading={updateLoading}
+              />
+            </Tooltip>
           </div>
 
-          <img alt="" src={aurl || ''} />
+          <img alt={extAurl || ''} src={extAurl || ''} />
         </div>
-      )}
-    </div>
-  );
+      );
+    }
+
+    if ((!extAurl && props.item?.id) || (extAurl && !extAurl.includes('gravatar') && props.item?.id)) {
+      return (
+        <AttachmentBox
+          type="card"
+          title={t('_lang:avatar')}
+          attachmentParams={{
+            type: 'image',
+            moduleId: props.item?.id,
+            moduleName: 'user',
+            typeName: 'avatar',
+          }}
+          cardHeight={80}
+          className={style['avatar-box']}
+          circle
+          onChangeAttasCallback={(res) => {
+            if (!_.isEmpty(res) && res[0]) onUpdateAvatar(res[0].path);
+          }}
+        />
+      );
+    }
+
+    return null;
+  };
+
+  return <div className={cx(style['user-avatar-wrapper'], props.className)}>{avatarDom()}</div>;
 };

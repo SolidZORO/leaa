@@ -79,7 +79,7 @@ export const AttachmentList = (props: IProps) => {
   ));
 
   const innerDom = () => {
-    if (_.isEmpty(attachments))
+    if (_.isEmpty(attachments) && props.type !== 'card')
       return (
         <div className={style['empty-text']}>
           {removeLangSpace(`${t('_lang:empty')} ${t('_lang:attachment')}`, i18n.language)}

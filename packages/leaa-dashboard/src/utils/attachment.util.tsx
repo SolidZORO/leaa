@@ -1,8 +1,6 @@
 import _ from 'lodash';
 import React from 'react';
-import axios from 'axios';
 import * as uuid from 'uuid';
-// import { message } from 'antd';
 import { Translation } from 'react-i18next';
 
 import { ISaveInOssSignature, ISaveInLocalSignature } from '@leaa/common/src/interfaces';
@@ -11,7 +9,6 @@ import { IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
 
 import { ajax } from './ajax.util';
 import { errorMsg, msg } from './msg.util';
-import { getAuthToken } from './auth.util';
 
 declare type ISignatureResult = ISaveInOssSignature | ISaveInLocalSignature | undefined;
 
@@ -107,7 +104,7 @@ export const uploadFile = (file: File, { signature, ignoreMsg, attachmentParams,
         return;
       }
 
-      if (ignoreMsg) msg(<Translation>{(t) => t('_lang:uploadSuccessfully')}</Translation>);
+      if (!ignoreMsg) msg(<Translation>{(t) => t('_lang:uploadSuccessfully')}</Translation>);
       if (onCallback && onCallback.onUploadSuccess) onCallback.onUploadSuccess(response);
     })
     .catch((err: Error) => {

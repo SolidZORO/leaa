@@ -1,7 +1,7 @@
-import { Controller, UseGuards } from '@nestjs/common';
+import { Controller, UseGuards, Headers } from '@nestjs/common';
 import { Crud, CrudController, Override, ParsedRequest, CrudRequest, ParsedBody } from '@nestjsx/crud';
 
-import { Permissions } from '@leaa/api/src/decorators';
+import { Permissions, JwtUser } from '@leaa/api/src/decorators';
 import { UserCreateOneReq, UserUpdateOneReq } from '@leaa/common/src/dtos/user';
 import { JwtGuard, PermissionsGuard } from '@leaa/api/src/guards';
 import { User } from '@leaa/common/src/entrys';
@@ -23,7 +23,10 @@ import { UserService } from './user.service';
   query: {
     maxLimit: 1000,
     alwaysPaginate: true,
-    sort: [{ field: 'created_at', order: 'DESC' }],
+    sort: [
+      { field: 'created_at', order: 'DESC' },
+      { field: 'email', order: 'DESC' },
+    ],
     join: {
       roles: { eager: true },
     },
@@ -46,6 +49,7 @@ import { UserService } from './user.service';
   },
 })
 @Controller('/v1/users')
+// @ts-ignore
 export class UserController implements CrudController<User> {
   constructor(public service: UserService) {}
 
@@ -59,8 +63,12 @@ export class UserController implements CrudController<User> {
   @Override('updateOneBase')
   @UseGuards(JwtGuard, PermissionsGuard)
   @Permissions('user.item-update')
-  updateOne(@ParsedRequest() req: CrudRequest, @ParsedBody() dto: UserUpdateOneReq): Promise<User> {
-    return this.service.updateOne(req, dto);
+  updateOne(
+    @ParsedRequest() req: CrudRequest,
+    @ParsedBody() dto: UserUpdateOneReq,
+    @JwtUser() jwtUser: any,
+  ): Promise<User> {
+    return this.service.updateOne(req, dto, jwtUser);
   }
 
   @Override('deleteOneBase')

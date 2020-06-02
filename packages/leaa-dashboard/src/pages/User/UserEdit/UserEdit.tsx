@@ -17,6 +17,7 @@ import { UserRolesForm } from '../_components/UserRolesForm/UserRolesForm';
 // import { UserExtForm } from '../_components/UserExtForm/UserExtForm';
 
 import style from './style.module.less';
+import { UploadUserAvatar } from '@leaa/dashboard/src/pages/User/_components/UploadUserAvatar/UploadUserAvatar';
 // import { UploadUserAvatar } from '@leaa/dashboard/src/pages/User/_components/UploadUserAvatar/UploadUserAvatar';
 
 const API_PATH = 'users';
@@ -105,6 +106,8 @@ export default (props: IPage) => {
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
       <UserInfoForm item={item} loading={itemLoading} ref={infoFormRef} />
+
+      <UploadUserAvatar item={item} loading={itemLoading} />
 
       <UserRolesForm
         ref={rolesFormRef}

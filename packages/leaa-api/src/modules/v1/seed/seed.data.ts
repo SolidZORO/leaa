@@ -215,6 +215,7 @@ export const rolesSeed = [
 
 // prettier-ignore
 export const usersSeed: UserCreateOneReq[] = [
+  { email: 'superuser@local.com', name: 'Super User', password: 'RwurDVXqHvmUZZWzmrwLwKcrzyyDMKVsRJawqQUzZygEeqCorbfBf7fmxRZecNUx', status: 1, is_admin: 1, is_superuser: 1},
   { email: 'admin@local.com', name: 'Admin', password: 'h8Hx9qvPKoHMLQgj', status: 1, is_admin: 1, avatar_url: '' },
   { email: 'staff@local.com', name: 'Staff', password: '7PkQGjvHMMkoo4RZ', status: 1, is_admin: 1 },
   { email: 'disabled@local.com', name: 'Disabled', password: 'uUB3YGrdL3gJZYij', status: 1, is_admin: 1 },
@@ -253,8 +254,9 @@ export const permissionsToRoleSeed = [
 
 // prettier-ignore
 export const rolesToUserSeed = [
-  { userEmail: 'admin@local.com', roleSlugs: ['admin', 'staff', 'attachment-manager'] },
+  { userEmail: 'admin@local.com', roleSlugs: ['admin'] },
   { userEmail: 'staff@local.com', roleSlugs: ['staff', 'attachment-manager'] },
+  { userEmail: 'superuser@local.com', roleSlugs: ['admin']  },
 ];
 
 interface ICreateCategoryInput extends CategoryCreateOneReq {

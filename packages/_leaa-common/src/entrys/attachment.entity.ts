@@ -2,7 +2,7 @@ import { Entity, Column } from 'typeorm';
 import { Expose } from 'class-transformer';
 
 import { Base } from '@leaa/common/src/entrys';
-import { buildUrl, buildUrlAt2x } from '@leaa/api/src/utils/attachment.util';
+import { genUrl, genUrlAt2x } from '@leaa/api/src/utils/attachment.util';
 
 @Entity('attachments')
 export class Attachment extends Base {
@@ -82,11 +82,11 @@ export class Attachment extends Base {
 
   @Expose()
   get url(): null | undefined | string {
-    return buildUrl(this);
+    return genUrl(this);
   }
 
   @Expose()
   get urlAt2x(): null | undefined | string {
-    return buildUrlAt2x(this);
+    return genUrlAt2x(this);
   }
 }

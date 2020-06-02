@@ -39,6 +39,9 @@ export class UserUpdateOneReq {
   @IsOptional()
   last_token_at?: Date;
 
+  @IsOptional()
+  is_superuser?: number;
+
   // @IsOptional()
   //
   // roleSlugs?: string[];

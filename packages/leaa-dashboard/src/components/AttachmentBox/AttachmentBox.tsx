@@ -29,6 +29,7 @@ interface IProps {
   cardHeight?: number;
   className?: string;
   circle?: boolean;
+  ignoreMsg?: boolean;
   onChangeAttasCallback?: (attachment: Attachment[]) => void;
   autoUpdateRelation?: IAutoUpdateRelation;
 }

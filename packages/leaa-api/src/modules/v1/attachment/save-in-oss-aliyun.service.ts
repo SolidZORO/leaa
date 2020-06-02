@@ -18,7 +18,7 @@ import {
 import { Attachment } from '@leaa/common/src/entrys';
 import { attachmentConfig } from '@leaa/api/src/configs';
 import { ConfigService } from '@leaa/api/src/modules/v1/config/config.service';
-import { filenameAt1xToAt2x, isAt2x, logger, uuid, buildUrl, buildUrlAt2x } from '@leaa/api/src/utils';
+import { filenameAt1xToAt2x, isAt2x, logger, uuid, genUrl, genUrlAt2x } from '@leaa/api/src/utils';
 
 const CLS_NAME = 'SaveInOssAliyunService';
 
@@ -132,7 +132,7 @@ export class SaveInOssAliyunService {
   }
 
   async saveOssToLocal(attachment: Attachment): Promise<'ossIsSaveToLocal' | Error> {
-    await this.downloadFile(buildUrl(attachment) || '', (file) => {
+    await this.downloadFile(genUrl(attachment) || '', (file) => {
       try {
         mkdirp.sync(attachmentConfig.SAVE_DIR_BY_DISK);
 
@@ -144,7 +144,7 @@ export class SaveInOssAliyunService {
     });
 
     if (attachment.at2x) {
-      await this.downloadFile(buildUrlAt2x(attachment) || '', (file) => {
+      await this.downloadFile(genUrlAt2x(attachment) || '', (file) => {
         try {
           fs.writeFileSync(`${attachmentConfig.SAVE_DIR_BY_DISK}/${filenameAt1xToAt2x(attachment.filename)}`, file);
         } catch (e) {
@@ -243,8 +243,8 @@ export class SaveInOssAliyunService {
     // eslint-disable-next-line consistent-return
     return this.attachmentRepo.save({
       ...attachmentData,
-      url: buildUrl(attachmentData as Attachment),
-      urlAt2x: buildUrlAt2x(attachmentData as Attachment),
+      url: genUrl(attachmentData as Attachment),
+      urlAt2x: genUrlAt2x(attachmentData as Attachment),
     });
   }
 

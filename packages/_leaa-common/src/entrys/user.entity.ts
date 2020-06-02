@@ -1,7 +1,8 @@
-import { Index, Entity, Column, JoinTable, ManyToMany } from 'typeorm';
+import { Index, Entity, Column, JoinTable, ManyToMany, AfterLoad, BeforeInsert } from 'typeorm';
 import { Exclude } from 'class-transformer';
 
 import { Base, Role, Permission, Address, Attachment } from '@leaa/common/src/entrys';
+import { transAvatarUrl, genAvatarUrl } from '@leaa/api/src/utils/attachment.util';
 
 @Entity('users')
 // @Index('users_phone_unique', ['phone'], { unique: true })
@@ -20,6 +21,17 @@ export class User extends Base {
   @Column({ type: 'varchar', nullable: true, default: null })
   avatar_url?: string | null;
 
+  @AfterLoad()
+  AfterLoad() {
+    this.avatar_url = transAvatarUrl(this.avatar_url);
+  }
+
+  @BeforeInsert()
+  async BeforeInsert() {
+    // set default avatar
+    this.avatar_url = genAvatarUrl(this.email);
+  }
+
   @Column({ type: 'int', default: 0 })
   status?: number;
 
@@ -29,6 +41,10 @@ export class User extends Base {
 
   @Column({ type: 'int', default: 0 })
   is_admin?: number;
+
+  @Exclude({ toPlainOnly: true })
+  @Column({ type: 'int', default: 0, select: false })
+  is_superuser?: number;
 
   @Exclude()
   @Column({ type: 'varchar', length: 32, nullable: true, select: false })

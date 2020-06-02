@@ -26,7 +26,7 @@ export default {
     userInfo: 'User Info',
     userRoles: 'User Roles',
     userAvatar: 'User Avatar',
-    deleteAuthAvatar: 'Delete Avatar (avatar from service provider)',
+    deleteAuthAvatar: 'Delete Avatar',
   },
   Role: {
     roleInfo: 'Role Info',

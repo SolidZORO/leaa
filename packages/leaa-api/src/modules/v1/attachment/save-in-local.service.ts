@@ -14,7 +14,7 @@ import {
 } from '@leaa/common/src/interfaces';
 import { ConfigService } from '@leaa/api/src/modules/v1/config/config.service';
 import { Attachment } from '@leaa/common/src/entrys';
-import { logger, isAt2x, uuid, buildUrl, buildUrlAt2x, getAt2xPath } from '@leaa/api/src/utils';
+import { logger, isAt2x, uuid, genUrl, genUrlAt2x, getAt2xPath } from '@leaa/api/src/utils';
 import { attachmentConfig } from '@leaa/api/src/configs';
 import { isUUID } from '@nestjs/common/utils/is-uuid';
 
@@ -112,8 +112,8 @@ export class SaveInLocalService {
     // eslint-disable-next-line consistent-return
     return this.attachmentRepo.save({
       ...attachmentData,
-      url: buildUrl(attachmentData as Attachment),
-      urlAt2x: buildUrlAt2x(attachmentData as Attachment),
+      url: genUrl(attachmentData as Attachment),
+      urlAt2x: genUrlAt2x(attachmentData as Attachment),
     });
   }
 

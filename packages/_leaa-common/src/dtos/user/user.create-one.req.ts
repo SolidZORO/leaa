@@ -14,6 +14,9 @@ export class UserCreateOneReq {
   @Length(1, 64)
   name?: string;
 
+  @IsOptional()
+  is_superuser?: number;
+
   @IsNotEmpty()
   @Length(6, 64)
   password!: string;

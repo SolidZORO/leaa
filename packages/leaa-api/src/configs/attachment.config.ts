@@ -17,6 +17,7 @@ const URL_PREFIX_BY_LOCAL = `${envConfig.SERVER_PROTOCOL}://${envConfig.SERVER_H
     : '' //                   prod not PORT, e.g. http://test-leaa.com/attachments/upload
 }`;
 const URL_PREFIX_BY_OSS = `${envConfig.SERVER_PROTOCOL}://${envConfig.ATTACHMENT_OSS_ALIYUN_BUCKET}.${envConfig.ATTACHMENT_OSS_ALIYUN_REGION}.aliyuncs.com`; // eslint-disable-line max-len
+const URL_PREFIX_BY_AUTO = envConfig.ATTACHMENT_SAVE_IN_OSS ? URL_PREFIX_BY_OSS : URL_PREFIX_BY_LOCAL;
 
 const UPLOAD_ENDPOINT_BY_LOCAL = `${URL_PREFIX_BY_LOCAL}/v1/attachments/upload`;
 const UPLOAD_ENDPOINT_BY_OSS = URL_PREFIX_BY_OSS; // eslint-disable-line max-len
@@ -28,6 +29,7 @@ export const attachmentConfig = {
   ALLOW_FILE_TYPES,
   URL_PREFIX_BY_LOCAL,
   URL_PREFIX_BY_OSS,
+  URL_PREFIX_BY_AUTO,
   UPLOAD_ENDPOINT_BY_LOCAL,
   UPLOAD_ENDPOINT_BY_OSS,
 };

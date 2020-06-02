@@ -18,7 +18,6 @@ import {
   Action,
 } from '@leaa/common/src/entrys';
 
-import { UserSubscriber } from '@leaa/api/src/subscribers';
 import { ConfigService } from '@leaa/api/src/modules/v1/config/config.service';
 
 const CLS_NAME = 'TypeormService';
@@ -68,7 +67,7 @@ export class TypeormService implements TypeOrmOptionsFactory {
         Verification,
         Action,
       ],
-      subscribers: [UserSubscriber],
+      // subscribers: [],
     };
   }
 }
