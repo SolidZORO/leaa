@@ -3532,13 +3532,6 @@
   resolved "https://registry.npm.taobao.org/@types/strip-json-comments/download/@types/strip-json-comments-0.0.30.tgz#9aa30c04db212a9a0649d6ae6fd50accc40748a1"
   integrity sha1-mqMMBNshKpoGSdaub9UKzMQHSKE=
 
-"@types/stylelint@^9.10.1":
-  version "9.10.1"
-  resolved "https://registry.npm.taobao.org/@types/stylelint/download/@types/stylelint-9.10.1.tgz#211832381e43fd0774217b59f02ab389d82643ea"
-  integrity sha1-IRgyOB5D/Qd0IXtZ8CqzidgmQ+o=
-  dependencies:
-    postcss "7.x.x"
-
 "@types/superagent@*":
   version "4.1.7"
   resolved "https://registry.npm.taobao.org/@types/superagent/download/@types/superagent-4.1.7.tgz#a7d92d98c490ee0f802a127fdf149b9a114f77a5"
@@ -12056,18 +12049,10 @@ minipass-pipeline@^1.2.2:
   dependencies:
     minipass "^3.0.0"
 
-minipass@^2.3.5, minipass@^2.6.0, minipass@^2.8.6, minipass@^2.9.0:
-  version "2.9.0"
-  resolved "https://registry.npm.taobao.org/minipass/download/minipass-2.9.0.tgz?cache=0&sync_timestamp=1589332828776&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fminipass%2Fdownload%2Fminipass-2.9.0.tgz#e713762e7d3e32fed803115cf93e04bca9fcc9a6"
-  integrity sha1-5xN2Ln0+Mv7YAxFc+T4EvKn8yaY=
-  dependencies:
-    safe-buffer "^5.1.2"
-    yallist "^3.0.0"
-
-minipass@^3.0.0, minipass@^3.1.1:
-  version "3.1.1"
-  resolved "https://registry.npm.taobao.org/minipass/download/minipass-3.1.1.tgz#7607ce778472a185ad6d89082aa2070f79cedcd5"
-  integrity sha1-dgfOd4RyoYWtbYkIKqIHD3nO3NU=
+minipass@^2.3.5, minipass@^2.6.0, minipass@^2.8.6, minipass@^2.9.0, minipass@^3.0.0, minipass@^3.1.1, minipass@^3.1.3:
+  version "3.1.3"
+  resolved "https://registry.npm.taobao.org/minipass/download/minipass-3.1.3.tgz?cache=0&sync_timestamp=1589332828776&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fminipass%2Fdownload%2Fminipass-3.1.3.tgz#7d42ff1f39635482e15f9cdb53184deebd5815fd"
+  integrity sha1-fUL/HzljVILhX5zbUxhN7r1YFf0=
   dependencies:
     yallist "^4.0.0"
 
@@ -18389,7 +18374,7 @@ yallist@^2.0.0:
   resolved "https://registry.npm.taobao.org/yallist/download/yallist-2.1.2.tgz#1c11f9218f076089a47dd512f93c6699a6a81d52"
   integrity sha1-HBH5IY8HYImkfdUS+TxmmaaoHVI=
 
-yallist@^3.0.0, yallist@^3.0.2, yallist@^3.0.3:
+yallist@^3.0.2, yallist@^3.0.3:
   version "3.1.1"
   resolved "https://registry.npm.taobao.org/yallist/download/yallist-3.1.1.tgz#dbb7daf9bfd8bac9ab45ebf602b8cbad0d5d08fd"
   integrity sha1-27fa+b/YusmrRev2ArjLrQ1dCP0=

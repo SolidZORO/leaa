@@ -12,11 +12,11 @@ import { ActionModule } from '@leaa/api/src/modules/v1/action/action.module';
 
 import { SeedService } from '@leaa/api/src/modules/v1/seed/seed.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Attachment, Action } from '@leaa/common/src/entrys';
+import { Attachment, Action, User } from '@leaa/common/src/entrys';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Attachment, Action]),
+    TypeOrmModule.forFeature([Attachment, Action, User]),
     PermissionModule,
     RoleModule,
     UserModule,

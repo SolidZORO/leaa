@@ -20,17 +20,6 @@ export class User extends Base {
   @Column({ type: 'varchar', nullable: true, default: null })
   avatar_url?: string | null;
 
-  @AfterLoad()
-  AfterLoad() {
-    this.avatar_url = transAvatarUrl(this.avatar_url);
-  }
-
-  @BeforeInsert()
-  async BeforeInsert() {
-    // set default avatar
-    this.avatar_url = genAvatarUrl(this.email || this.phone || this.id || '');
-  }
-
   @Column({ type: 'int', default: 0 })
   status?: number;
 
@@ -72,4 +61,16 @@ export class User extends Base {
   authToken?: string;
   authExpiresIn?: number;
   avatar?: Attachment;
+
+  //
+
+  @AfterLoad()
+  AfterLoad?() {
+    this.avatar_url = transAvatarUrl(this.avatar_url);
+  }
+
+  @BeforeInsert()
+  BeforeInsert?() {
+    this.avatar_url = genAvatarUrl(this.email || this.phone || this.id || '');
+  }
 }

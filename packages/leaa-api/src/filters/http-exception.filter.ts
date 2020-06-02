@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { ExceptionFilter, Catch, ArgumentsHost, HttpException, HttpStatus } from '@nestjs/common';
 import { logger } from '@leaa/api/src/utils';
 
@@ -23,14 +24,18 @@ export class HttpExceptionFilter implements ExceptionFilter {
     // let message = (__DEV__ && exception?.sqlMessage) || exception?.message || 'KERNEL PANIC!';
 
     // @ts-ignore
-    let message = statusCode >= 500 ? 'SERVER ERROR' : (__DEV__ && exception?.message) || 'KERNEL PANIC!';
+    let message = statusCode >= 500 ? 'Http Server Error' : (__DEV__ && exception?.message) || 'Kernel Panic!';
 
     // @ts-ignore
-    if (__DEV__ && exception?.sqlMessage) message = exception?.sqlMessage;
-    if (exception instanceof HttpException) message = exception.message;
+    if (exception instanceof HttpException)
+      message =
+        (_.isArray(exception.response?.message) ? exception.response?.message[0] : exception.response?.message) ||
+        exception.message;
 
     logger.error(`${exception}` || 'HttpExceptionFilter ErrorMsg');
-    console.log(exception);
+
+    console.log(exception.sqlMessage);
+    console.log(exception.response);
 
     res.status(statusCode).json({
       statusCode,

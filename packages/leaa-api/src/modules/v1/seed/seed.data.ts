@@ -215,8 +215,11 @@ export const rolesSeed = [
 
 // prettier-ignore
 export const usersSeed: UserCreateOneReq[] = [
-  { email: 'superuser@local.com', name: 'Super User', password: 'RwurDVXqHvmUZZWzmrwLwKcrzyyDMKVsRJawqQUzZygEeqCorbfBf7fmxRZecNUx', status: 1, is_admin: 1, is_superuser: 1},
+  { email: 'superuser@local.com', name: 'Super User', password: 'RwurDVXqHvmUZZWzmrwLwKcrzyyDMKVsRJawqQUzZygEeqCorbfBf7fmxRZecNUx', status: 1, is_admin: 1},
   { email: 'admin@local.com', name: 'Admin', password: 'h8Hx9qvPKoHMLQgj', status: 1, is_admin: 1, avatar_url: '' },
+  //
+  { phone: '18688889999', name: 'MOBILE01', password: '18688889999', status: 1, is_admin: 1, },
+  //
   { email: 'staff@local.com', name: 'Staff', password: '7PkQGjvHMMkoo4RZ', status: 1, is_admin: 1 },
   { email: 'disabled@local.com', name: 'Disabled', password: 'uUB3YGrdL3gJZYij', status: 1, is_admin: 1 },
   { email: 'empty-en@local.com', name: 'Empty User', password: 'uUB3YGrdL3gJZYi1', status: 1 },

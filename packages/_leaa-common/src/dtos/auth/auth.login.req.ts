@@ -1,9 +1,12 @@
 import { Length, MinLength, IsEmail, IsOptional } from 'class-validator';
 
 export class AuthLoginReq {
-  @IsEmail()
+  // @IsEmail()
+  // @MinLength(6)
+  // email!: string;
+
   @MinLength(6)
-  email!: string;
+  account!: string;
 
   @Length(6, 64)
   password!: string;

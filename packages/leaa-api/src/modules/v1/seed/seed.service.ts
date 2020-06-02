@@ -12,7 +12,7 @@ import { SettingService } from '@leaa/api/src/modules/v1/setting/setting.service
 import { AuthService } from '@leaa/api/src/modules/v1/auth/auth.service';
 
 import { InjectRepository } from '@nestjs/typeorm';
-import { Attachment, Action } from '@leaa/common/src/entrys';
+import { Attachment, Action, User } from '@leaa/common/src/entrys';
 
 import {
   permissionsSeed,
@@ -32,16 +32,17 @@ import { req } from './__seed__.mock';
 @Injectable()
 export class SeedService {
   constructor(
-    @InjectRepository(Attachment) private readonly attachmentRepository: Repository<Attachment>,
-    @InjectRepository(Action) private readonly actionRepository: Repository<Action>,
-    private readonly permissionService: PermissionService,
+    @InjectRepository(Attachment) private readonly attachmentRepo: Repository<Attachment>,
+    @InjectRepository(Action) private readonly actionRepo: Repository<Action>,
+    @InjectRepository(User) private readonly userRepo: Repository<User>,
+    private readonly axService: AxService,
     private readonly roleService: RoleService,
     private readonly userService: UserService,
     private readonly authService: AuthService,
-    private readonly categoryService: CategoryService,
     private readonly articleService: ArticleService,
-    private readonly axService: AxService,
     private readonly settingService: SettingService,
+    private readonly categoryService: CategoryService,
+    private readonly permissionService: PermissionService,
   ) {}
 
   async insertPermissions() {
@@ -106,6 +107,12 @@ export class SeedService {
     }
   }
 
+  async insertSuperUserToUser() {
+    const su = await this.userRepo.findOneOrFail({ email: 'superuser@local.com' });
+
+    await this.userRepo.update(su.id, { is_superuser: 1 });
+  }
+
   async insertCategory() {
     for (const i of categorySeed) {
       let parent = null;
@@ -147,7 +154,7 @@ export class SeedService {
 
   async insertAttachment() {
     for (const i of attachmentSeed) {
-      const item = await this.attachmentRepository.save(i);
+      const item = await this.attachmentRepo.save(i);
 
       console.log(item);
     }
@@ -210,7 +217,7 @@ export class SeedService {
         'i18n',
       ];
 
-      const item = await this.actionRepository.save({
+      const item = await this.actionRepo.save({
         account: this.randomArray(usersSeed).email,
         module: this.randomArray(modules),
         action: this.randomArray(['edit', 'delete', 'create']),

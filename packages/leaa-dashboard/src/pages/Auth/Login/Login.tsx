@@ -12,7 +12,6 @@ import {
   errorMsg,
   ajax,
   setAjaxToken,
-  getGuestToken,
 } from '@leaa/dashboard/src/utils';
 import { LOGIN_REDIRECT_URL } from '@leaa/dashboard/src/constants';
 import { User } from '@leaa/common/src/entrys';
@@ -80,16 +79,6 @@ export default (props: IPage) => {
     }
   }, []);
 
-  // useEffect(() => {
-  //   // if (qs.ticket) {
-  //   //   (async () => {
-  //   //     await submitLoginByTicketMutate({
-  //   //       variables: { ticket: qs.ticket },
-  //   //     });
-  //   //   })();
-  //   // }
-  // }, [qs.ticket]);
-
   const onSubmit = async () => {
     if (submitLoading) return;
 
@@ -139,7 +128,7 @@ export default (props: IPage) => {
                   onPressSubmitCallback={onSubmit}
                   loginErrorCount={loginErrorCount}
                   loading={submitLoading}
-                  initialValues={{ email: 'admin@local.com', password: 'h8Hx9qvPKoHMLQgj' }}
+                  initialValues={{ account: 'admin@local.com', password: 'h8Hx9qvPKoHMLQgj' }}
                 />
               </div>
 

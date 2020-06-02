@@ -62,31 +62,31 @@ export const UserInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
           className={cx(style['form-wrapper'], { [style['form-wrapper--avatar']]: props.item })}
         >
           <Row gutter={16} className={style['form-row']}>
-            <Col xs={24} sm={6}>
+            <Col xs={24} sm={5}>
               <Form.Item name="phone" rules={[{ len: 11 }]} validateTrigger={['onBlur']} label={t('_lang:phone')}>
                 <Input placeholder={t('_lang:phone')} />
               </Form.Item>
             </Col>
 
-            <Col xs={24} sm={6}>
+            <Col xs={24} sm={5}>
               <Form.Item name="email" rules={[{ type: 'email' }]} validateTrigger={['onBlur']} label={t('_lang:email')}>
                 <Input placeholder={t('_lang:email')} />
               </Form.Item>
             </Col>
 
-            <Col xs={24} sm={6}>
+            <Col xs={24} sm={4}>
               <Form.Item name="password" rules={[{ required: !props.item }, { min: 6 }]} label={t('_lang:password')}>
                 <Input minLength={6} placeholder={t('_lang:password')} />
               </Form.Item>
             </Col>
 
-            <Col xs={24} sm={6}>
+            <Col xs={24} sm={5}>
               <Form.Item name="name" rules={[{ required: true }]} label={t('_lang:name')}>
                 <Input placeholder={t('_lang:name')} />
               </Form.Item>
             </Col>
 
-            <Col xs={24} sm={3}>
+            <Col xs={24} sm={2}>
               <Form.Item
                 name="status"
                 normalize={(e) => e && Number(e)}

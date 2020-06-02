@@ -10,6 +10,7 @@ import { Injectable, ForbiddenException, BadRequestException } from '@nestjs/com
 import { logger } from '@leaa/api/src/utils';
 import { User, Role, Auth } from '@leaa/common/src/entrys';
 import { UserUpdateOneReq, UserCreateOneReq } from '@leaa/common/src/dtos/user';
+import validator from 'validator';
 
 const CLS_NAME = 'UserService';
 
@@ -23,11 +24,25 @@ export class UserService extends TypeOrmCrudService<User> {
     super(userRepo);
   }
 
+  validateAccount(nextDto: UserCreateOneReq | UserUpdateOneReq, { type }: { type: 'create' | 'update' }) {
+    if (type === 'create' && !nextDto.email && !nextDto.phone) throw new BadRequestException('Missing Email or Phone');
+
+    if (nextDto.phone && !validator.isMobilePhone(nextDto.phone, 'zh-CN')) {
+      throw new BadRequestException('Error Phone');
+    }
+
+    if (nextDto.email && !validator.isEmail(nextDto.email)) {
+      throw new BadRequestException('Error Email');
+    }
+
+    return true;
+  }
+
   async createOne(req: CrudRequest, dto: User & UserCreateOneReq): Promise<User> {
     const nextDto = dto;
     if (dto.password) nextDto.password = await this.createPassword(dto.password);
-    if (!nextDto.email && !nextDto.phone) throw new BadRequestException('Missing Email or Phone');
-    if (Number.isNaN(Number(nextDto.phone))) throw new BadRequestException('Error Phone');
+
+    this.validateAccount(nextDto, { type: 'create' });
 
     const hasSuperuser = await this.userRepo.findOne({ is_superuser: 1 });
     if (hasSuperuser) delete nextDto.is_superuser;
@@ -42,8 +57,8 @@ export class UserService extends TypeOrmCrudService<User> {
     if (prevUser.is_superuser) throw new ForbiddenException('Huh?! What R U Doing??');
 
     const nextDto: UserUpdateOneReq & { roles?: Role[] } = dto;
-    if (!nextDto.email && !nextDto.phone) throw new BadRequestException('Missing Email or Phone');
-    if (Number.isNaN(Number(nextDto.phone))) throw new BadRequestException('Error Phone');
+
+    this.validateAccount(nextDto, { type: 'update' });
 
     if (dto.password) nextDto.password = await this.createPassword(dto.password);
 

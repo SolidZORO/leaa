@@ -6,6 +6,8 @@ export default {
       title: 'DASHBOARD',
       subTitle: 'Welcome Back, Please login to your account',
       email: 'Email',
+      account: 'Account',
+      accountTips: 'Phone or Email',
       password: _lang.password,
       login: _lang.login,
       rememberPassword: 'Remember Password',

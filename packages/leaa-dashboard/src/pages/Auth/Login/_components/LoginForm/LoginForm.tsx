@@ -1,15 +1,12 @@
 import cx from 'classnames';
 import React, { useEffect, forwardRef, useImperativeHandle, useState } from 'react';
-import { Col, Form, Input, Row, Checkbox } from 'antd';
-
+import { Col, Form, Input, Row } from 'antd';
 import { useTranslation } from 'react-i18next';
-import { LoginAccount } from '@leaa/common/src/dtos/demo';
 
-import { ajax, getGuestToken, setAjaxToken, errorMsg } from '@leaa/dashboard/src/utils';
+import { ajax, errorMsg } from '@leaa/dashboard/src/utils';
+import { AuthLoginReq } from '@leaa/common/src/dtos/auth';
 import { envConfig } from '@leaa/dashboard/src/configs';
 import { IHttpRes, IHttpError, ICaptchaResult } from '@leaa/dashboard/src/interfaces';
-import { User } from '@leaa/common/src/entrys';
-import { VerificationCreateOneReq } from '@leaa/common/src/dtos/verification';
 
 import style from './style.module.less';
 
@@ -17,8 +14,7 @@ interface IProps {
   className?: string;
   loading?: boolean;
   loginErrorCount?: number;
-  // guest?: Verification;
-  initialValues?: LoginAccount;
+  initialValues?: AuthLoginReq;
   onPressSubmitCallback?: () => void;
 }
 
@@ -68,12 +64,12 @@ export const LoginForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
         <Row gutter={16} className={style['form-row']}>
           <Col xs={24} sm={12}>
             <Form.Item
-              name="email"
-              rules={[{ required: true, type: 'email', min: 6 }]}
+              name="account"
+              rules={[{ required: true, min: 6 }]}
               validateTrigger={['onBlur']}
-              label={t('_page:Auth.Login.email')}
+              label={t('_page:Auth.Login.account')}
             >
-              <Input size="large" placeholder={t('_page:Auth.Login.email')} />
+              <Input size="large" placeholder={t('_page:Auth.Login.accountTips')} className={style['form-input']} />
             </Form.Item>
           </Col>
 
@@ -88,6 +84,7 @@ export const LoginForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
                 size="large"
                 placeholder={t('_page:Auth.Login.password')}
                 onPressEnter={props.onPressSubmitCallback}
+                className={style['form-input']}
               />
             </Form.Item>
           </Col>
@@ -109,18 +106,11 @@ export const LoginForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
                       dangerouslySetInnerHTML={{ __html: captcha || '' }}
                     />
                   }
+                  className={style['form-input']}
                 />
               </Form.Item>
             </Col>
           )}
-        </Row>
-
-        <Row gutter={16} className={style['remember-row']}>
-          <Col xs={24} sm={12}>
-            <Form.Item name="rememberPassword">
-              <Checkbox checked>{t('_page:Auth.Login.rememberPassword')}</Checkbox>
-            </Form.Item>
-          </Col>
         </Row>
       </Form>
     </div>

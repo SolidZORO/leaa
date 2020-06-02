@@ -1,14 +1,12 @@
-import { IsOptional, Length, IsEmail, ValidateIf, IsPhoneNumber, validate } from 'class-validator';
-
-validate('patch', { skipMissingProperties: true });
+import { IsOptional, Length, IsEmail, ValidateIf, IsPhoneNumber } from 'class-validator';
 
 export class UserUpdateOneReq {
-  @ValidateIf((e) => e.email === '')
+  @ValidateIf((e) => !e.email || e.email === '')
   @IsOptional()
   @IsPhoneNumber('CN')
   phone?: string | null;
   //
-  @ValidateIf((e) => e.phone === '')
+  @ValidateIf((e) => !e.phone || e.phone === '')
   @IsOptional()
   @IsEmail()
   email?: string | null;

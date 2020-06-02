@@ -1,5 +1,6 @@
 import xss from 'xss';
 import bcryptjs from 'bcryptjs';
+import validator from 'validator';
 import { JwtService } from '@nestjs/jwt';
 import { Injectable, UnauthorizedException, BadRequestException } from '@nestjs/common';
 import { Repository, In } from 'typeorm';
@@ -31,15 +32,18 @@ export class AuthService {
 
   async login(req: IRequest, headers: any, ip: string, body: AuthLoginReq): Promise<User | undefined> {
     if (!ip) throw new NotFoundIpException();
+    if (!body.account) throw new BadRequestException();
 
     const guthorization = checkGuthorization(headers?.guthorization);
-    const account = xss.filterXSS(body.email.trim().toLowerCase());
+    const account = xss.filterXSS(body.account.trim().toLowerCase());
+
+    let where = {};
+    if (validator.isEmail(account)) where = { email: account };
+    if (validator.isMobilePhone(account, 'zh-CN')) where = { phone: account };
 
     const findUser = await this.userRepo.findOne({
       select: ['id', 'email', 'name', 'status', 'password', 'avatar_url'],
-      where: {
-        email: account,
-      },
+      where,
       // for get flatPermissions
       relations: ['roles'],
     });

@@ -1,11 +1,11 @@
 import { IsOptional, IsNotEmpty, Length, IsEmail, IsPhoneNumber, ValidateIf } from 'class-validator';
 
 export class UserCreateOneReq {
-  @ValidateIf((e) => e.email === '')
+  @ValidateIf((e) => !e.email || e.email === '')
   @IsPhoneNumber('CN')
   phone?: string | null;
 
-  @ValidateIf((e) => e.phone === '')
+  @ValidateIf((e) => !e.phone || e.phone === '')
   @IsEmail()
   email?: string | null;
 
@@ -21,8 +21,6 @@ export class UserCreateOneReq {
   password!: string;
 
   status?: number;
-
   is_admin?: number;
-
   avatar_url?: string;
 }

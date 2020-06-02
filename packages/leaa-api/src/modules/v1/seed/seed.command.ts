@@ -47,11 +47,15 @@ import { LoggerService } from '@leaa/api/src/modules/v1/logger/logger.service';
     await seedService.insertPermissions();
     await seedService.insertRoles();
     await seedService.insertUsers();
-    //
+
     console.log('\n\n\n\n ----------- \n\n\n\n');
-    //
+
     await seedService.insertRolesToUser();
     await seedService.insertPermissionsToRole();
+
+    console.log('\n\n\n\n ----------- \n\n\n\n');
+
+    await seedService.insertSuperUserToUser();
   };
 
   //
