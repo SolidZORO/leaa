@@ -91,7 +91,7 @@ export const TableCard = <T extends object>(props: IProps<T>) => {
     phone: () => ({
       title: t('_lang:phone'),
       dataIndex: 'phone',
-      width: 60,
+      width: 70,
       sorter: true,
       sortOrder: calcTableSortOrder('phone', crudQuery.sort),
       render: (text: string, record: any) => <Link to={`${props.route.path}/${record.id}`}>{record.phone}</Link>,

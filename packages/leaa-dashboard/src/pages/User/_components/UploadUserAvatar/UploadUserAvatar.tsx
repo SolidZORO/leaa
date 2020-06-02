@@ -39,8 +39,6 @@ export const UploadUserAvatar = (props: IProps) => {
         avatar_url,
       } as UserUpdateOneReq)
       .then((res: IHttpRes<User>) => {
-        console.log('AAAAAAA', res.data.data.avatar_url);
-
         setExtAurl(res.data.data.avatar_url);
 
         msg(t('_lang:updatedSuccessfully'));
@@ -48,8 +46,6 @@ export const UploadUserAvatar = (props: IProps) => {
       .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
       .finally(() => setUpdateLoading(false));
   };
-
-  console.log(extAurl);
 
   const avatarDom = () => {
     if (extAurl && extAurl.includes('gravatar')) {
