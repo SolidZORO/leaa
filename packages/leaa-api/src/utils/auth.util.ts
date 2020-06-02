@@ -23,7 +23,7 @@ export function can(user: User, permissionName: IPermissionSlug): boolean {
 
 export function checkGuthorization(guthorization?: string): string {
   if (!guthorization) throw new BadRequestException('Missing Guthorization');
-  if (guthorization.length !== 10) throw new BadRequestException('Guthorization Size Error');
+  if (guthorization.length < 8) throw new BadRequestException('Guthorization Size Error');
 
   return guthorization;
 }

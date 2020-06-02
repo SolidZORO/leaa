@@ -17,8 +17,6 @@ import { NotFoundIpException, NotFoundTokenException, NotFoundUserException } fr
 
 const CLS_NAME = 'AuthService';
 
-export const MUST_VERIFICATION_CAPTCHA_BY_LOGIN_ERROR = 5;
-
 @Injectable()
 export class AuthService {
   constructor(
@@ -102,7 +100,7 @@ export class AuthService {
     });
 
     // check Captcha
-    if (accountLoginCount >= MUST_VERIFICATION_CAPTCHA_BY_LOGIN_ERROR) {
+    if (accountLoginCount >= this.configService.ENABLE_CAPTCHA_BY_LOGIN_FAILD_TIMES) {
       const hasCaptcha = await this.verificationRepo.findOne({ token, code: captcha });
       if (!hasCaptcha) throw new BadRequestException('Verify Code Not Match');
     }

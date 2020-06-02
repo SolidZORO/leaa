@@ -23,6 +23,8 @@ export interface IDotEnv {
   RATELIMIT_WINDOWMS: number;
   RATELIMIT_MAX: number;
 
+  ENABLE_CAPTCHA_BY_LOGIN_FAILD_TIMES: number;
+
   TRUST_PROXY: string;
   JWT_SECRET_KEY: string;
   CLIENT_COOKIE_EXPIRES_SECOND: number;

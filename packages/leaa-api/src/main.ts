@@ -48,8 +48,8 @@ import { envInfoForCli } from '@leaa/api/src/utils';
   app.use(helmet());
   app.use(
     rateLimit({
-      windowMs: configService.RATELIMIT_WINDOWMS || 5 * 60 * 1000, // 5 minutes
-      max: configService.RATELIMIT_MAX || 500, // limit each IP to 1000 requests per windowMs
+      windowMs: configService.RATELIMIT_WINDOWMS, // * minutes
+      max: configService.RATELIMIT_MAX, // limit each IP to * requests per windowMs
     }),
   );
   app.use(I18nextMiddleware);

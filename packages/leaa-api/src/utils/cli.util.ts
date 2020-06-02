@@ -27,7 +27,8 @@ export const envInfoForCli = ({
   console.log('     - DIRNAME ', DIRNAME);
   console.log('     - PUBLIC  ', PUBLIC_PATH);
   console.log('');
-  console.log('     - RATELIMIT_WINDOWMS  ', config.RATELIMIT_WINDOWMS);
-  console.log('     - RATELIMIT_MAX       ', config.RATELIMIT_MAX);
+  console.log('     - RATELIMIT_WINDOWMS    ', config.RATELIMIT_WINDOWMS);
+  console.log('     - RATELIMIT_MAX         ', config.RATELIMIT_MAX);
+  console.log('     - ENABLE_CAPTCHA_TIMES  ', config.ENABLE_CAPTCHA_BY_LOGIN_FAILD_TIMES);
   console.log('\n\n');
 };

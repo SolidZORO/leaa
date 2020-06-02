@@ -6,13 +6,10 @@ import svgCaptcha from 'svg-captcha';
 import { Verification, Action } from '@leaa/common/src/entrys';
 import { captchaConfig } from '@leaa/api/src/configs';
 import { ICaptchaResult } from '@leaa/api/src/interfaces';
-import { MUST_VERIFICATION_CAPTCHA_BY_LOGIN_ERROR } from '@leaa/api/src/modules/v1/auth/auth.service';
 import { ConfigService } from '@leaa/api/src/modules/v1/config/config.service';
 import { checkGuthorization } from '@leaa/api/src/utils';
 
 const CLS_NAME = 'VerificationService';
-
-svgCaptcha.loadFont(captchaConfig.SVG_CAPTCHA_FONT_PATH);
 
 @Injectable()
 export class VerificationService {
@@ -20,7 +17,9 @@ export class VerificationService {
     @InjectRepository(Verification) private readonly verificationRepo: Repository<Verification>,
     @InjectRepository(Action) private readonly actionRepo: Repository<Action>,
     private readonly configService: ConfigService,
-  ) {}
+  ) {
+    svgCaptcha.loadFont(captchaConfig.SVG_CAPTCHA_FONT_PATH);
+  }
 
   async createCaptchaForLogin(t?: string): Promise<ICaptchaResult> {
     const token = checkGuthorization(t);
@@ -45,7 +44,7 @@ export class VerificationService {
     return {
       // ⚠️ 这里必须在满足条件前给用户发送验证码图片
       // Here, the verification code picture must be sent to the user before the conditions are met
-      img: guestTokenLoginErrorCount + 1 >= MUST_VERIFICATION_CAPTCHA_BY_LOGIN_ERROR ? captcha.data : '',
+      img: guestTokenLoginErrorCount + 1 >= this.configService.ENABLE_CAPTCHA_BY_LOGIN_FAILD_TIMES ? captcha.data : '',
       count: this.configService.DEBUG_MODE ? guestTokenLoginErrorCount : undefined,
     };
   }

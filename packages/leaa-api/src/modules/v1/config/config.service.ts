@@ -91,11 +91,17 @@ export class ConfigService {
   //
 
   get RATELIMIT_MAX(): number {
-    return Number(this.envConfig.RATELIMIT_MAX);
+    return Number(this.envConfig.RATELIMIT_MAX) || 5 * 60 * 1000; // 5 minutes
   }
 
   get RATELIMIT_WINDOWMS(): number {
-    return Number(this.envConfig.RATELIMIT_WINDOWMS);
+    return Number(this.envConfig.RATELIMIT_WINDOWMS) || 500; // limit each IP to 1000 requests per windowMs
+  }
+
+  //
+
+  get ENABLE_CAPTCHA_BY_LOGIN_FAILD_TIMES(): number {
+    return Number(this.envConfig.ENABLE_CAPTCHA_BY_LOGIN_FAILD_TIMES) || 5;
   }
 
   //
@@ -203,6 +209,8 @@ export class ConfigService {
       //
       RATELIMIT_WINDOWMS: envalid.num(),
       RATELIMIT_MAX: envalid.num(),
+      //
+      ENABLE_CAPTCHA_BY_LOGIN_FAILD_TIMES: envalid.num(),
       //
       TRUST_PROXY: envalid.str(),
       JWT_SECRET_KEY: envalid.str(),
