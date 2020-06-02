@@ -1,7 +1,8 @@
+import crypto from 'crypto';
 import { Attachment } from '@leaa/common/src/entrys';
 import { attachmentConfig } from '@leaa/api/src/configs';
+import { envConfig } from '@leaa/api/src/modules/v1/config/config.module';
 import { getAt2xPath } from '@leaa/api/src/utils/path.util';
-import crypto from 'crypto';
 
 export const isAt2x = (originalname: string): boolean => /[＠@_]2x/i.test(originalname);
 
@@ -10,8 +11,6 @@ export const filenameAt1xToAt2x = (filename: string): string => {
 
   return filename.replace(ext, `_2x${ext}`);
 };
-
-// const CLS_NAME = 'AttachmentProperty';
 
 type IAttachment = Pick<Attachment, 'in_oss' | 'in_local' | 'path' | 'external_url'>;
 
@@ -47,8 +46,22 @@ export const genUrlAt2x = (attachment: Attachment): string | null => {
   return null;
 };
 
+// set default avatar @see https://cn.gravatar.com/site/implement/images/
+//
+// avatarType
+// 404: do not load any image if none is associated with the email hash
+// mp: (mystery-person) a simple, cartoon-style silhouetted outline of a person (does not vary by email hash)
+// identicon: a geometric pattern based on an email hash
+// monsterid: a generated 'monster' with different colors, faces, etc
+// wavatar: generated faces with differing features and backgrounds
+// retro: awesome generated, 8-bit arcade-style pixelated faces
+// robohash: a generated robot with different colors, faces, etc
+// blank: a transparent PNG image (border added to HTML below for demonstration purposes)
+export const GRAVATAR_AVATAR_TYPE = envConfig.GRAVATAR_TYPE || 'monsterid';
+export const GRAVATAR_AVATAR_PARAMS = `?s=160&d=${GRAVATAR_AVATAR_TYPE}`;
+
 export const transAvatarUrl = (path?: string | null): string | null => {
-  if (path?.includes('gravatar.com')) return path;
+  if (path?.includes('gravatar.com')) return `${path}${GRAVATAR_AVATAR_PARAMS}`;
 
   if (path?.includes('/attachments/') && !path?.includes('http')) {
     return `${attachmentConfig.URL_PREFIX_BY_AUTO}${path}`;
@@ -58,12 +71,10 @@ export const transAvatarUrl = (path?: string | null): string | null => {
 };
 
 export const genAvatarUrl = (hash?: string): string => {
-  // set default avatar
   const hashMd5 = crypto
     .createHash('md5')
     .update(hash || `hash-${new Date().valueOf()}@local.com`)
     .digest('hex');
 
-  const avatarParams = 's=160&d=monsterid';
-  return `//secure.gravatar.com/avatar/${hashMd5}?${avatarParams}`;
+  return `//secure.gravatar.com/avatar/${hashMd5}`;
 };

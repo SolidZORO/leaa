@@ -40,6 +40,10 @@ export class ConfigService {
     return this.envConfig.PUBLIC_DIR;
   }
 
+  get GRAVATAR_TYPE(): string {
+    return this.envConfig.GRAVATAR_TYPE;
+  }
+
   get ATTACHMENT_DIR(): string {
     return this.envConfig.ATTACHMENT_DIR;
   }
@@ -194,6 +198,11 @@ export class ConfigService {
       DEBUG_MODE: envalid.str({ choices: ['true', 'false'], default: 'false' }),
       //
       PUBLIC_DIR: envalid.str(),
+      GRAVATAR_TYPE: envalid.str({
+        choices: ['404', 'mp', 'identicon', 'monsterid', 'wavatar', 'retro', 'robohash', 'blank'],
+        default: 'monsterid',
+      }),
+      //
       ATTACHMENT_DIR: envalid.str(),
       ATTACHMENT_LIMIT_SIZE_MB: envalid.num(),
       ATTACHMENT_SAVE_IN_LOCAL: envalid.str({ choices: ['true', 'false'], default: 'false' }),

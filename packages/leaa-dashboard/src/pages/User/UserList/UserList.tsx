@@ -95,6 +95,7 @@ export default (props: IPage) => {
             'isAdmin',
             'avatar',
             'email',
+            'phone',
             'roleList',
             'createdAt',
             'status',

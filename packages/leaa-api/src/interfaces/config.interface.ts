@@ -7,6 +7,8 @@ export interface IDotEnv {
   DEBUG_MODE: string;
 
   PUBLIC_DIR: string;
+  GRAVATAR_TYPE: string;
+
   ATTACHMENT_DIR: string;
   ATTACHMENT_LIMIT_SIZE_MB: number;
   ATTACHMENT_SAVE_IN_LOCAL: string;

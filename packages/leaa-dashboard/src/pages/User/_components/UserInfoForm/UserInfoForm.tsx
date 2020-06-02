@@ -63,9 +63,15 @@ export const UserInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
         >
           <Row gutter={16} className={style['form-row']}>
             <Col xs={24} sm={6}>
+              <Form.Item name="phone" rules={[{ len: 11 }]} validateTrigger={['onBlur']} label={t('_lang:phone')}>
+                <Input placeholder={t('_lang:phone')} />
+              </Form.Item>
+            </Col>
+
+            <Col xs={24} sm={6}>
               <Form.Item
                 name="email"
-                rules={[{ required: true, type: 'email', min: 6 }]}
+                rules={[{ type: 'email', min: 6 }]}
                 validateTrigger={['onBlur']}
                 label={t('_lang:email')}
               >

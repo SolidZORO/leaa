@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import _ from 'lodash';
-import { v4 } from 'uuid';
 import prettyBytes from 'pretty-bytes';
 import cx from 'classnames';
 import { useTranslation } from 'react-i18next';
@@ -88,6 +87,14 @@ export const TableCard = <T extends object>(props: IProps<T>) => {
       sorter: true,
       sortOrder: calcTableSortOrder('name', crudQuery.sort),
       render: (text: string, record: any) => <Link to={`${props.route.path}/${record.id}`}>{record.name}</Link>,
+    }),
+    phone: () => ({
+      title: t('_lang:phone'),
+      dataIndex: 'phone',
+      width: 60,
+      sorter: true,
+      sortOrder: calcTableSortOrder('phone', crudQuery.sort),
+      render: (text: string, record: any) => <Link to={`${props.route.path}/${record.id}`}>{record.phone}</Link>,
     }),
     email: () => ({
       title: t('_lang:email'),

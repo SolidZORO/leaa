@@ -3,12 +3,13 @@ import { IsOptional, IsNotEmpty, Length, MinLength, IsEmail, IsPhoneNumber } fro
 export class UserCreateOneReq {
   @IsOptional()
   @IsPhoneNumber('CN')
+  @MinLength(11)
   phone?: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsEmail()
   @MinLength(4)
-  email!: string;
+  email?: string;
 
   @IsOptional()
   @Length(1, 64)

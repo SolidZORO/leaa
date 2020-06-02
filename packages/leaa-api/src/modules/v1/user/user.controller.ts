@@ -1,4 +1,4 @@
-import { Controller, UseGuards, Headers } from '@nestjs/common';
+import { Controller, UseGuards } from '@nestjs/common';
 import { Crud, CrudController, Override, ParsedRequest, CrudRequest, ParsedBody } from '@nestjsx/crud';
 
 import { Permissions, JwtUser } from '@leaa/api/src/decorators';

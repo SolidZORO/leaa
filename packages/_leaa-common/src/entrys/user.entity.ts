@@ -1,22 +1,21 @@
-import { Index, Entity, Column, JoinTable, ManyToMany, AfterLoad, BeforeInsert } from 'typeorm';
+import { Index, Entity, Column, JoinTable, ManyToMany, AfterLoad, BeforeInsert, Unique } from 'typeorm';
 import { Exclude } from 'class-transformer';
 
 import { Base, Role, Permission, Address, Attachment } from '@leaa/common/src/entrys';
 import { transAvatarUrl, genAvatarUrl } from '@leaa/api/src/utils/attachment.util';
 
 @Entity('users')
-// @Index('users_phone_unique', ['phone'], { unique: true })
-@Index('users_email_unique', ['email'], { unique: true })
+@Unique('account', ['phone', 'email'])
+@Index('account_unique', ['phone', 'email'])
 export class User extends Base {
   @Column({ type: 'varchar', length: 64, nullable: true, default: '' })
   name?: string;
 
-  // @Column({ type: 'varchar', length: 32, unique: true })
-  @Column({ type: 'varchar', length: 32, default: '', nullable: true })
+  @Column({ type: 'varchar', length: 32, default: '' })
   phone?: string;
 
-  @Column({ type: 'varchar', length: 64, unique: true })
-  email!: string;
+  @Column({ type: 'varchar', length: 64, default: '' })
+  email?: string;
 
   @Column({ type: 'varchar', nullable: true, default: null })
   avatar_url?: string | null;
