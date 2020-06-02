@@ -38,7 +38,7 @@ const htmlWebpackPluginOption = {
   ).toString('base64'),
   __ANALYTICS_CODE__: (!WPCONST.__DEV__ && env && env.ANALYTICS_CODE && `<script>${env.ANALYTICS_CODE}</script>`) || '',
   title: `${env.SITE_NAME || '-'}`,
-  manifest: `${WPCONST.CDN_DIR_PATH}/manifest.json`,
+  manifest: `${WPCONST.CDN_DIR_PATH}manifest.json`,
   filename: `${WPCONST.BUILD_PUBLIC_DIR}/index.html`,
   template: `${WPCONST.VIEWS_DIR}/index.ejs`,
   favicon: `${WPCONST.SRC_DIR}/assets/favicons/favicon.ico`,

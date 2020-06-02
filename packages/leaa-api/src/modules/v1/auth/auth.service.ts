@@ -32,8 +32,6 @@ export class AuthService {
   ) {}
 
   async login(req: IRequest, headers: any, ip: string, body: AuthLoginReq): Promise<User | undefined> {
-    const { t } = req;
-
     if (!ip) throw new NotFoundIpException();
 
     const guthorization = checkGuthorization(headers?.guthorization);
@@ -65,28 +63,23 @@ export class AuthService {
     // update action (add user.id)
     if (loginAction?.id) await this.actionRepo.update(loginAction.id, { user_id: user.id });
 
-    // Captcha
-    // check Login Count at Actions
-    const accountLoginCount = await this.actionRepo.count({
-      where: {
-        module: 'auth',
-        action: 'login',
-        token: guthorization,
-      },
-    });
+    await this.validateCaptcha(guthorization, body.captcha);
+    await this.validatePassword(body.password, user.password, account);
 
-    // check Captcha
-    if (accountLoginCount >= MUST_VERIFICATION_CAPTCHA_BY_LOGIN_ERROR) {
-      const captcha = await this.verificationRepo.findOne({ token: guthorization, code: body.captcha });
-      if (!captcha) throw new BadRequestException('Verify Code Not Match');
-    }
+    logger.log(`Local Login Auth, ${JSON.stringify(user)}`, CLS_NAME);
 
-    //
-    //
-    // Password
-    //
-    // check Password
-    const passwordIsMatch = await bcryptjs.compareSync(body.password, user.password);
+    await this.clearLoginActionAndVerification({ token: guthorization });
+    await this.userRepo.update(user.id, { last_login_ip: ip, last_login_at: new Date() });
+
+    // delete something
+    delete user.roles;
+    delete user.password;
+
+    return this.addTokenToUser(user);
+  }
+
+  async validatePassword(bodyPassword: string, userPassword: string, account?: string): Promise<boolean> {
+    const passwordIsMatch = await bcryptjs.compareSync(bodyPassword, userPassword);
 
     if (!passwordIsMatch) {
       const msg = `User (${account}) Info Not Match`;
@@ -95,22 +88,26 @@ export class AuthService {
       throw new BadRequestException(msg);
     }
 
-    if (user.password) delete user.password;
+    return true;
+  }
 
-    logger.log(`Local Login Auth, ${JSON.stringify(user)}`, CLS_NAME);
-
-    // last, clear Action and Verification
-    await this.clearLoginActionAndVerification({ token: guthorization });
-
-    await this.userRepo.update(user.id, {
-      last_login_ip: ip,
-      last_login_at: new Date(),
+  async validateCaptcha(token: string, captcha?: string): Promise<boolean> {
+    // check Login Count at Actions
+    const accountLoginCount = await this.actionRepo.count({
+      where: {
+        module: 'auth',
+        action: 'login',
+        token,
+      },
     });
 
-    // delete something
-    delete user.roles;
+    // check Captcha
+    if (accountLoginCount >= MUST_VERIFICATION_CAPTCHA_BY_LOGIN_ERROR) {
+      const hasCaptcha = await this.verificationRepo.findOne({ token, code: captcha });
+      if (!hasCaptcha) throw new BadRequestException('Verify Code Not Match');
+    }
 
-    return this.addTokenToUser(user);
+    return true;
   }
 
   async validateUserByPayload(jwtPayload: IJwtPayload): Promise<User | undefined> {
