@@ -1,4 +1,4 @@
-import React, { useState, useEffect, forwardRef, useCallback } from 'react';
+import React, { useState, useEffect, forwardRef, useCallback, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import cx from 'classnames';
 import _ from 'lodash';
@@ -28,6 +28,8 @@ const DEBOUNCE_MS = 300;
 export const TagSearchBox = forwardRef((props: IProps, ref: React.Ref<any>) => {
   const { t } = useTranslation();
 
+  const isAjaxCancelled = useRef(false);
+
   const [inputKey, setInputKey] = useState<string | undefined>(props.value);
   const [optionalTags, setOptionalTags] = useState<TagEntry[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -50,7 +52,7 @@ export const TagSearchBox = forwardRef((props: IProps, ref: React.Ref<any>) => {
         } as CreateQueryParams,
       })
       .then((res: IHttpRes<ICrudListRes<TagEntry>>) => {
-        if (res.data?.data?.data && !_.isEmpty(res.data.data.data)) {
+        if (res.data?.data?.data && !_.isEmpty(res.data.data.data) && !isAjaxCancelled.current) {
           return setOptionalTags(res.data?.data?.data as TagEntry[]);
         }
 
@@ -66,6 +68,7 @@ export const TagSearchBox = forwardRef((props: IProps, ref: React.Ref<any>) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const onSearch = useCallback(
     _.debounce((v?: string) => onFetchTags(v), DEBOUNCE_MS),
+
     [],
   );
 

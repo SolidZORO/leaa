@@ -88,6 +88,7 @@
     "lint-staged": "^10.2.7",
     "prettier": "^2.0.5",
     "pretty-quick": "^2.0.1",
+    "rimraf": "^3.0.2",
     "stylelint": "^13.5.0",
     "stylelint-config-standard": "^20.0.0",
     "stylelint-order": "4.1.0",
@@ -95,8 +96,5 @@
     "ts-node-dev": "^1.0.0-pre.44",
     "tsconfig-paths": "^3.8.0",
     "typescript": "3.9.3"
-  },
-  "dependencies": {
-    "rimraf": "^3.0.2"
   }
 }

@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import cx from 'classnames';
 import { useTranslation } from 'react-i18next';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Tooltip } from 'antd';
 
 import { IAttachmentParams, IAutoUpdateRelation } from '@leaa/common/src/interfaces';
@@ -59,6 +59,8 @@ interface IProps {
 export const AttachmentBox = (props: IProps) => {
   const { t, i18n } = useTranslation();
 
+  const isAjaxCancelled = useRef(false);
+
   const type = props.type || 'list';
   const cardHeight = props.cardHeight || 230;
   const listHeight = props.listHeight || 130;
@@ -88,7 +90,9 @@ export const AttachmentBox = (props: IProps) => {
     ajax
       .get(`${envConfig.API_URL}/${envConfig.API_VERSION}/attachments`, { params: genCrudRequestQuery(params) })
       .then((res: IHttpRes<ICrudListRes<Attachment>>) => {
-        setAttachments(_.orderBy(res.data.data.data, ['status', 'sort'], ['desc', 'asc']) || []);
+        if (!isAjaxCancelled.current) {
+          setAttachments(_.orderBy(res.data.data.data, ['status', 'sort'], ['desc', 'asc']) || []);
+        }
       })
       .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
       .finally(() => setListLoading(false));
@@ -99,6 +103,11 @@ export const AttachmentBox = (props: IProps) => {
       setAttachmentParams(props.attachmentParams);
       onFetchList();
     }
+
+    return () => {
+      isAjaxCancelled.current = true;
+    };
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.attachmentParams]);
 

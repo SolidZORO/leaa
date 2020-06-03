@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import cx from 'classnames';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { TreeSelect } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { TreeSelectProps } from 'antd/es/tree-select';
@@ -31,9 +31,10 @@ interface IProps {
 export const SelectCategoryIdByTree = (props: IProps) => {
   const { t } = useTranslation();
 
+  const isAjaxCancelled = useRef(false);
+
   const [tree, setTree] = useState<TreeItem[]>([]);
   const [treeLoading, setTreeLoading] = useState(false);
-
   const [value, setValue] = useState<string | string[] | undefined | null>(props.value || props.initialValues);
 
   const onFetchCategories = (params: ICategoriesQuery = { expanded: true, parentSlug: props?.parentSlug }) => {
@@ -42,7 +43,7 @@ export const SelectCategoryIdByTree = (props: IProps) => {
     ajax
       .get(`${envConfig.API_URL}/${envConfig.API_VERSION}/categories/tree`, { params })
       .then((res: IHttpRes<TreeItem[]>) => {
-        setTree(res.data?.data);
+        if (!isAjaxCancelled.current) setTree(res.data?.data);
       })
       .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
       .finally(() => setTreeLoading(false));
@@ -54,15 +55,6 @@ export const SelectCategoryIdByTree = (props: IProps) => {
     if (props.onChange) props.onChange(v);
   };
 
-  useEffect(() => {
-    if (props.initialValues) {
-      onChange(props.value || props.initialValues);
-    } else {
-      setValue(props.value || props.initialValues);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.value, props.initialValues]);
-
   const multipleSelectOption = props.multipleSelect
     ? {
         treeCheckable: true,
@@ -72,9 +64,22 @@ export const SelectCategoryIdByTree = (props: IProps) => {
     : {};
 
   useEffect(() => {
+    if (props.initialValues) {
+      onChange(props.value || props.initialValues);
+    } else {
+      setValue(props.value || props.initialValues);
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.value, props.initialValues]);
+
+  useEffect(() => {
     onFetchCategories();
 
-    return setTree([]);
+    return () => {
+      isAjaxCancelled.current = true;
+    };
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
