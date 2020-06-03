@@ -12,7 +12,7 @@ interface IProps {}
 
 interface IState {
   hasError: boolean;
-  errorInfo: {};
+  errorInfo: any;
 }
 
 const CATCH_HAS_REFRESH_URL_PARAM = '____CATCH';
@@ -30,7 +30,7 @@ export class ErrorBoundary extends React.Component<IProps, IState> {
     return { hasError: true };
   }
 
-  componentDidCatch(err: Error, info: {}) {
+  componentDidCatch(err: Error, info: any) {
     // TIPS: Many times DidCatch is because the JS file can't be retrieved, so refresh it first.
     // const qsQuery = qs.parse(window.location.search, { ignoreQueryPrefix: true });
 

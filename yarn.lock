@@ -2368,10 +2368,10 @@
     call-me-maybe "^1.0.1"
     glob-to-regexp "^0.3.0"
 
-"@nestjs/common@^7.1.2":
-  version "7.1.2"
-  resolved "https://registry.npm.taobao.org/@nestjs/common/download/@nestjs/common-7.1.2.tgz#81c77dcc5ccd7fac65f184ee9a157010296cc3a3"
-  integrity sha1-gcd9zFzNf6xl8YTumhVwEClsw6M=
+"@nestjs/common@^7.1.3":
+  version "7.1.3"
+  resolved "https://registry.npm.taobao.org/@nestjs/common/download/@nestjs/common-7.1.3.tgz#e89ec4891cf2219cfb943d0f46dcbfd583da757c"
+  integrity sha1-6J7EiRzyIZz7lD0PRty/1YPadXw=
   dependencies:
     axios "0.19.2"
     cli-color "2.0.0"
@@ -2379,10 +2379,10 @@
     tslib "2.0.0"
     uuid "8.0.0"
 
-"@nestjs/core@^7.1.2":
-  version "7.1.2"
-  resolved "https://registry.npm.taobao.org/@nestjs/core/download/@nestjs/core-7.1.2.tgz#a12fb9c8f55625b06cbb0c68a91b18bc8a97e693"
-  integrity sha1-oS+5yPVWJbBsuwxoqRsYvIqX5pM=
+"@nestjs/core@^7.1.3":
+  version "7.1.3"
+  resolved "https://registry.npm.taobao.org/@nestjs/core/download/@nestjs/core-7.1.3.tgz#a6320277c8693c4b82b35435df392214eeadc08c"
+  integrity sha1-pjICd8hpPEuCs1Q13zkiFO6twIw=
   dependencies:
     "@nuxtjs/opencollective" "0.2.2"
     fast-safe-stringify "2.0.7"
@@ -2405,10 +2405,10 @@
   resolved "https://registry.npm.taobao.org/@nestjs/passport/download/@nestjs/passport-7.0.0.tgz#c59617779b7e5888a0c72039a6980e28fd659518"
   integrity sha1-xZYXd5t+WIigxyA5ppgOKP1llRg=
 
-"@nestjs/platform-express@^7.1.2":
-  version "7.1.2"
-  resolved "https://registry.npm.taobao.org/@nestjs/platform-express/download/@nestjs/platform-express-7.1.2.tgz#4524a56228e3a3671892bcc44f3263022068469c"
-  integrity sha1-RSSlYijjo2cYkrzETzJjAiBoRpw=
+"@nestjs/platform-express@^7.1.3":
+  version "7.1.3"
+  resolved "https://registry.npm.taobao.org/@nestjs/platform-express/download/@nestjs/platform-express-7.1.3.tgz#0af9399082995ce8eae409593b9f1aa649e16ca1"
+  integrity sha1-Cvk5kIKZXOjq5AlZO58apknhbKE=
   dependencies:
     body-parser "1.19.0"
     cors "2.8.5"
@@ -2416,10 +2416,10 @@
     multer "1.4.2"
     tslib "2.0.0"
 
-"@nestjs/testing@^7.1.2":
-  version "7.1.2"
-  resolved "https://registry.npm.taobao.org/@nestjs/testing/download/@nestjs/testing-7.1.2.tgz#0f253bbbcbe664285b511bc76a6e1c4563c32894"
-  integrity sha1-DyU7u8vmZChbURvHam4cRWPDKJQ=
+"@nestjs/testing@^7.1.3":
+  version "7.1.3"
+  resolved "https://registry.npm.taobao.org/@nestjs/testing/download/@nestjs/testing-7.1.3.tgz#ca315f7e92d94124606e5c45298bdf476f6ecd68"
+  integrity sha1-yjFffpLZQSRgblxFKYvfR29uzWg=
   dependencies:
     optional "0.1.4"
     tslib "2.0.0"
@@ -2485,6 +2485,13 @@
   dependencies:
     "@nodelib/fs.scandir" "2.1.3"
     fastq "^1.6.0"
+
+"@npmcli/move-file@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.npm.taobao.org/@npmcli/move-file/download/@npmcli/move-file-1.0.1.tgz#de103070dac0f48ce49cf6693c23af59c0f70464"
+  integrity sha1-3hAwcNrA9IzknPZpPCOvWcD3BGQ=
+  dependencies:
+    mkdirp "^1.0.4"
 
 "@nuxtjs/opencollective@0.2.2":
   version "0.2.2"
@@ -3482,73 +3489,41 @@
   dependencies:
     "@types/yargs-parser" "*"
 
-"@typescript-eslint/eslint-plugin@^2.34.0":
-  version "2.34.0"
-  resolved "https://registry.npm.taobao.org/@typescript-eslint/eslint-plugin/download/@typescript-eslint/eslint-plugin-2.34.0.tgz#6f8ce8a46c7dea4a6f1d171d2bb8fbae6dac2be9"
-  integrity sha1-b4zopGx96kpvHRcdK7j7rm2sK+k=
+"@typescript-eslint/eslint-plugin@^3.1.0":
+  version "3.1.0"
+  resolved "https://registry.npm.taobao.org/@typescript-eslint/eslint-plugin/download/@typescript-eslint/eslint-plugin-3.1.0.tgz#4ac00ecca3bbea740c577f1843bc54fa69c3def2"
+  integrity sha1-SsAOzKO76nQMV38YQ7xU+mnD3vI=
   dependencies:
-    "@typescript-eslint/experimental-utils" "2.34.0"
+    "@typescript-eslint/experimental-utils" "3.1.0"
     functional-red-black-tree "^1.0.1"
     regexpp "^3.0.0"
+    semver "^7.3.2"
     tsutils "^3.17.1"
 
-"@typescript-eslint/experimental-utils@2.31.0":
-  version "2.31.0"
-  resolved "https://registry.npm.taobao.org/@typescript-eslint/experimental-utils/download/@typescript-eslint/experimental-utils-2.31.0.tgz?cache=0&sync_timestamp=1588612618774&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40typescript-eslint%2Fexperimental-utils%2Fdownload%2F%40typescript-eslint%2Fexperimental-utils-2.31.0.tgz#a9ec514bf7fd5e5e82bc10dcb6a86d58baae9508"
-  integrity sha1-qexRS/f9Xl6CvBDctqhtWLqulQg=
+"@typescript-eslint/experimental-utils@3.1.0":
+  version "3.1.0"
+  resolved "https://registry.npm.taobao.org/@typescript-eslint/experimental-utils/download/@typescript-eslint/experimental-utils-3.1.0.tgz#2d5dba7c2ac2a3da3bfa3f461ff64de38587a872"
+  integrity sha1-LV26fCrCo9o7+j9GH/ZN44WHqHI=
   dependencies:
     "@types/json-schema" "^7.0.3"
-    "@typescript-eslint/typescript-estree" "2.31.0"
+    "@typescript-eslint/typescript-estree" "3.1.0"
     eslint-scope "^5.0.0"
     eslint-utils "^2.0.0"
 
-"@typescript-eslint/experimental-utils@2.34.0":
-  version "2.34.0"
-  resolved "https://registry.npm.taobao.org/@typescript-eslint/experimental-utils/download/@typescript-eslint/experimental-utils-2.34.0.tgz#d3524b644cdb40eebceca67f8cf3e4cc9c8f980f"
-  integrity sha1-01JLZEzbQO687KZ/jPPkzJyPmA8=
-  dependencies:
-    "@types/json-schema" "^7.0.3"
-    "@typescript-eslint/typescript-estree" "2.34.0"
-    eslint-scope "^5.0.0"
-    eslint-utils "^2.0.0"
-
-"@typescript-eslint/parser@^2.24.0":
-  version "2.31.0"
-  resolved "https://registry.npm.taobao.org/@typescript-eslint/parser/download/@typescript-eslint/parser-2.31.0.tgz?cache=0&sync_timestamp=1588612661374&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40typescript-eslint%2Fparser%2Fdownload%2F%40typescript-eslint%2Fparser-2.31.0.tgz#beddd4e8efe64995108b229b2862cd5752d40d6f"
-  integrity sha1-vt3U6O/mSZUQiyKbKGLNV1LUDW8=
+"@typescript-eslint/parser@^3.1.0":
+  version "3.1.0"
+  resolved "https://registry.npm.taobao.org/@typescript-eslint/parser/download/@typescript-eslint/parser-3.1.0.tgz#9c02ba5d88ad2355672f39e6cd4176f172dd47f8"
+  integrity sha1-nAK6XYitI1VnLznmzUF28XLdR/g=
   dependencies:
     "@types/eslint-visitor-keys" "^1.0.0"
-    "@typescript-eslint/experimental-utils" "2.31.0"
-    "@typescript-eslint/typescript-estree" "2.31.0"
+    "@typescript-eslint/experimental-utils" "3.1.0"
+    "@typescript-eslint/typescript-estree" "3.1.0"
     eslint-visitor-keys "^1.1.0"
 
-"@typescript-eslint/parser@^2.34.0":
-  version "2.34.0"
-  resolved "https://registry.npm.taobao.org/@typescript-eslint/parser/download/@typescript-eslint/parser-2.34.0.tgz#50252630ca319685420e9a39ca05fe185a256bc8"
-  integrity sha1-UCUmMMoxloVCDpo5ygX+GFola8g=
-  dependencies:
-    "@types/eslint-visitor-keys" "^1.0.0"
-    "@typescript-eslint/experimental-utils" "2.34.0"
-    "@typescript-eslint/typescript-estree" "2.34.0"
-    eslint-visitor-keys "^1.1.0"
-
-"@typescript-eslint/typescript-estree@2.31.0":
-  version "2.31.0"
-  resolved "https://registry.npm.taobao.org/@typescript-eslint/typescript-estree/download/@typescript-eslint/typescript-estree-2.31.0.tgz?cache=0&sync_timestamp=1588612616426&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40typescript-eslint%2Ftypescript-estree%2Fdownload%2F%40typescript-eslint%2Ftypescript-estree-2.31.0.tgz#ac536c2d46672aa1f27ba0ec2140d53670635cfd"
-  integrity sha1-rFNsLUZnKqHye6DsIUDVNnBjXP0=
-  dependencies:
-    debug "^4.1.1"
-    eslint-visitor-keys "^1.1.0"
-    glob "^7.1.6"
-    is-glob "^4.0.1"
-    lodash "^4.17.15"
-    semver "^6.3.0"
-    tsutils "^3.17.1"
-
-"@typescript-eslint/typescript-estree@2.34.0":
-  version "2.34.0"
-  resolved "https://registry.npm.taobao.org/@typescript-eslint/typescript-estree/download/@typescript-eslint/typescript-estree-2.34.0.tgz#14aeb6353b39ef0732cc7f1b8285294937cf37d5"
-  integrity sha1-FK62NTs57wcyzH8bgoUpSTfPN9U=
+"@typescript-eslint/typescript-estree@3.1.0":
+  version "3.1.0"
+  resolved "https://registry.npm.taobao.org/@typescript-eslint/typescript-estree/download/@typescript-eslint/typescript-estree-3.1.0.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40typescript-eslint%2Ftypescript-estree%2Fdownload%2F%40typescript-eslint%2Ftypescript-estree-3.1.0.tgz#eaff52d31e615e05b894f8b9d2c3d8af152a5dd2"
+  integrity sha1-6v9S0x5hXgW4lPi50sPYrxUqXdI=
   dependencies:
     debug "^4.1.1"
     eslint-visitor-keys "^1.1.0"
@@ -5307,11 +5282,12 @@ cacache@^12.0.0, cacache@^12.0.2, cacache@^12.0.3:
     unique-filename "^1.1.1"
     y18n "^4.0.0"
 
-cacache@^15.0.3:
-  version "15.0.3"
-  resolved "https://registry.npm.taobao.org/cacache/download/cacache-15.0.3.tgz?cache=0&sync_timestamp=1588033405119&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fcacache%2Fdownload%2Fcacache-15.0.3.tgz#2225c2d1dd8e872339950d6a39c051e0e9334392"
-  integrity sha1-IiXC0d2OhyM5lQ1qOcBR4OkzQ5I=
+cacache@^15.0.4:
+  version "15.0.4"
+  resolved "https://registry.npm.taobao.org/cacache/download/cacache-15.0.4.tgz?cache=0&sync_timestamp=1591142705598&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fcacache%2Fdownload%2Fcacache-15.0.4.tgz#b2c23cf4ac4f5ead004fb15a0efb0a20340741f1"
+  integrity sha1-ssI89KxPXq0AT7FaDvsKIDQHQfE=
   dependencies:
+    "@npmcli/move-file" "^1.0.1"
     chownr "^2.0.0"
     fs-minipass "^2.0.0"
     glob "^7.1.4"
@@ -5322,7 +5298,6 @@ cacache@^15.0.3:
     minipass-flush "^1.0.5"
     minipass-pipeline "^1.2.2"
     mkdirp "^1.0.3"
-    move-file "^2.0.0"
     p-map "^4.0.0"
     promise-inflight "^1.0.1"
     rimraf "^3.0.2"
@@ -7559,12 +7534,12 @@ eslint-config-airbnb-base@^14.1.0:
     object.assign "^4.1.0"
     object.entries "^1.1.1"
 
-eslint-config-airbnb-typescript@^7.2.1:
-  version "7.2.1"
-  resolved "https://registry.npm.taobao.org/eslint-config-airbnb-typescript/download/eslint-config-airbnb-typescript-7.2.1.tgz?cache=0&sync_timestamp=1586506944505&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Feslint-config-airbnb-typescript%2Fdownload%2Feslint-config-airbnb-typescript-7.2.1.tgz#bce3f02fa894d1ec2f31ac527992e03761a9b7d4"
-  integrity sha1-vOPwL6iU0ewvMaxSeZLgN2Gpt9Q=
+eslint-config-airbnb-typescript@^8.0.0:
+  version "8.0.0"
+  resolved "https://registry.npm.taobao.org/eslint-config-airbnb-typescript/download/eslint-config-airbnb-typescript-8.0.0.tgz?cache=0&sync_timestamp=1591181718040&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Feslint-config-airbnb-typescript%2Fdownload%2Feslint-config-airbnb-typescript-8.0.0.tgz#7ed3ba7b9bb54fb89db9e50bd8d0d5a548e3da4a"
+  integrity sha1-ftO6e5u1T7idueUL2NDVpUjj2ko=
   dependencies:
-    "@typescript-eslint/parser" "^2.24.0"
+    "@typescript-eslint/parser" "^3.1.0"
     eslint-config-airbnb "^18.1.0"
     eslint-config-airbnb-base "^14.1.0"
 
@@ -11812,7 +11787,15 @@ minipass-pipeline@^1.2.2:
   dependencies:
     minipass "^3.0.0"
 
-minipass@^2.3.5, minipass@^2.6.0, minipass@^2.8.6, minipass@^2.9.0, minipass@^3.0.0, minipass@^3.1.1, minipass@^3.1.3:
+minipass@^2.3.5, minipass@^2.6.0, minipass@^2.8.6, minipass@^2.9.0:
+  version "2.9.0"
+  resolved "https://registry.npm.taobao.org/minipass/download/minipass-2.9.0.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fminipass%2Fdownload%2Fminipass-2.9.0.tgz#e713762e7d3e32fed803115cf93e04bca9fcc9a6"
+  integrity sha1-5xN2Ln0+Mv7YAxFc+T4EvKn8yaY=
+  dependencies:
+    safe-buffer "^5.1.2"
+    yallist "^3.0.0"
+
+minipass@^3.0.0, minipass@^3.1.1:
   version "3.1.3"
   resolved "https://registry.npm.taobao.org/minipass/download/minipass-3.1.3.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fminipass%2Fdownload%2Fminipass-3.1.3.tgz#7d42ff1f39635482e15f9cdb53184deebd5815fd"
   integrity sha1-fUL/HzljVILhX5zbUxhN7r1YFf0=
@@ -11865,7 +11848,7 @@ mkdirp-promise@^5.0.1:
   dependencies:
     mkdirp "*"
 
-mkdirp@*, mkdirp@1.0.4, mkdirp@1.x, mkdirp@^1.0.3:
+mkdirp@*, mkdirp@1.0.4, mkdirp@1.x, mkdirp@^1.0.3, mkdirp@^1.0.4:
   version "1.0.4"
   resolved "https://registry.npm.taobao.org/mkdirp/download/mkdirp-1.0.4.tgz?cache=0&sync_timestamp=1587535418745&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fmkdirp%2Fdownload%2Fmkdirp-1.0.4.tgz#3eb5ed62622756d79a5f0e2a221dfebad75c2f7e"
   integrity sha1-PrXtYmInVteaXw4qIh3+utdcL34=
@@ -11925,13 +11908,6 @@ move-concurrently@^1.0.1:
     mkdirp "^0.5.1"
     rimraf "^2.5.4"
     run-queue "^1.0.3"
-
-move-file@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.npm.taobao.org/move-file/download/move-file-2.0.0.tgz#83ffa309b5d7f69d518b28e1333e2ffadf331e3e"
-  integrity sha1-g/+jCbXX9p1RiyjhMz4v+t8zHj4=
-  dependencies:
-    path-exists "^4.0.0"
 
 mri@^1.1.4:
   version "1.1.5"
@@ -14039,7 +14015,7 @@ raf@^3.2.0, raf@^3.4.0, raf@^3.4.1:
   dependencies:
     performance-now "^2.1.0"
 
-randombytes@^2.0.0, randombytes@^2.0.1, randombytes@^2.0.5:
+randombytes@^2.0.0, randombytes@^2.0.1, randombytes@^2.0.5, randombytes@^2.1.0:
   version "2.1.0"
   resolved "https://registry.npm.taobao.org/randombytes/download/randombytes-2.1.0.tgz#df6f84372f0270dc65cdf6291349ab7a473d4f2a"
   integrity sha1-32+ENy8CcNxlzfYpE0mrekc9Tyo=
@@ -15530,10 +15506,12 @@ serialize-javascript@^2.1.2:
   resolved "https://registry.npm.taobao.org/serialize-javascript/download/serialize-javascript-2.1.2.tgz#ecec53b0e0317bdc95ef76ab7074b7384785fa61"
   integrity sha1-7OxTsOAxe9yV73arcHS3OEeF+mE=
 
-serialize-javascript@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.npm.taobao.org/serialize-javascript/download/serialize-javascript-3.0.0.tgz#492e489a2d77b7b804ad391a5f5d97870952548e"
-  integrity sha1-SS5Imi13t7gErTkaX12XhwlSVI4=
+serialize-javascript@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.npm.taobao.org/serialize-javascript/download/serialize-javascript-3.1.0.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fserialize-javascript%2Fdownload%2Fserialize-javascript-3.1.0.tgz#8bf3a9170712664ef2561b44b691eafe399214ea"
+  integrity sha1-i/OpFwcSZk7yVhtEtpHq/jmSFOo=
+  dependencies:
+    randombytes "^2.1.0"
 
 serve-index@^1.9.1:
   version "1.9.1"
@@ -16573,17 +16551,17 @@ terminal-link@^2.0.0:
     ansi-escapes "^4.2.1"
     supports-hyperlinks "^2.0.0"
 
-terser-webpack-plugin@3.0.2:
-  version "3.0.2"
-  resolved "https://registry.npm.taobao.org/terser-webpack-plugin/download/terser-webpack-plugin-3.0.2.tgz?cache=0&sync_timestamp=1590501116446&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fterser-webpack-plugin%2Fdownload%2Fterser-webpack-plugin-3.0.2.tgz#fdc501c73847d8904f6a80c5009b11ee2d11b8eb"
-  integrity sha1-/cUBxzhH2JBPaoDFAJsR7i0RuOs=
+terser-webpack-plugin@3.0.3:
+  version "3.0.3"
+  resolved "https://registry.npm.taobao.org/terser-webpack-plugin/download/terser-webpack-plugin-3.0.3.tgz#23bda2687b197f878a743373b9411d917adc2e45"
+  integrity sha1-I72iaHsZf4eKdDNzuUEdkXrcLkU=
   dependencies:
-    cacache "^15.0.3"
+    cacache "^15.0.4"
     find-cache-dir "^3.3.1"
     jest-worker "^26.0.0"
     p-limit "^2.3.0"
     schema-utils "^2.6.6"
-    serialize-javascript "^3.0.0"
+    serialize-javascript "^3.1.0"
     source-map "^0.6.1"
     terser "^4.6.13"
     webpack-sources "^1.4.3"
@@ -18081,7 +18059,7 @@ yallist@^2.0.0:
   resolved "https://registry.npm.taobao.org/yallist/download/yallist-2.1.2.tgz#1c11f9218f076089a47dd512f93c6699a6a81d52"
   integrity sha1-HBH5IY8HYImkfdUS+TxmmaaoHVI=
 
-yallist@^3.0.2, yallist@^3.0.3:
+yallist@^3.0.0, yallist@^3.0.2, yallist@^3.0.3:
   version "3.1.1"
   resolved "https://registry.npm.taobao.org/yallist/download/yallist-3.1.1.tgz#dbb7daf9bfd8bac9ab45ebf602b8cbad0d5d08fd"
   integrity sha1-27fa+b/YusmrRev2ArjLrQ1dCP0=

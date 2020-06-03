@@ -11,8 +11,6 @@ export interface IHttpException {
 @Catch()
 export class HttpExceptionFilter implements ExceptionFilter {
   catch(exception: unknown, host: ArgumentsHost) {
-    const __DEV__ = process.env.NODE_ENV !== 'production';
-
     const ctx = host.switchToHttp();
     const res = ctx.getResponse();
     const req = ctx.getRequest();
@@ -20,22 +18,21 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const statusCode = exception instanceof HttpException ? exception.getStatus() : HttpStatus.INTERNAL_SERVER_ERROR;
     const lang = req.language || '';
 
-    // @ts-ignore
-    // let message = (__DEV__ && exception?.sqlMessage) || exception?.message || 'KERNEL PANIC!';
+    let message = statusCode >= 500 ? 'Http Server Error' : 'Kernel Panic!';
 
-    // @ts-ignore
-    let message = statusCode >= 500 ? 'Http Server Error' : (__DEV__ && exception?.message) || 'Kernel Panic!';
-
-    // @ts-ignore
     if (exception instanceof HttpException)
       message =
+        // @ts-ignore
         (_.isArray(exception.response?.message) ? exception.response?.message[0] : exception.response?.message) ||
         exception.message;
 
     logger.error(`${exception}` || 'HttpExceptionFilter ErrorMsg');
 
-    console.log(exception.sqlMessage);
-    console.log(exception.response);
+    // @ts-ignore
+    console.error('\n\n---- EXCEPTION-SQL-MESSAGE ----\n', exception.sqlMessage);
+
+    // @ts-ignore
+    console.error('\n\n---- EXCEPTION-RESPONSE ----\n', exception.response);
 
     res.status(statusCode).json({
       statusCode,

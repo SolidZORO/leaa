@@ -1,4 +1,12 @@
 module.exports = {
+  extends: [
+    'airbnb',
+    'airbnb/hooks',
+    'airbnb-typescript',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:css-modules/recommended',
+    'plugin:prettier/recommended',
+  ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: '2018',
@@ -10,13 +18,6 @@ module.exports = {
     },
   },
   plugins: ['@typescript-eslint', 'react', 'import', 'css-modules'],
-  extends: [
-    'airbnb',
-    'airbnb-typescript',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:css-modules/recommended',
-    'plugin:prettier/recommended',
-  ],
   globals: {
     __DEV__: true,
     __PROD__: true,
@@ -32,7 +33,7 @@ module.exports = {
     'max-len': [2, 120],
     'no-console': 0,
     'no-var-requires': 0,
-    'no-underscore-dangle': ['error', { allow: ['__DEV__', '_insertCss'] }],
+    'no-underscore-dangle': ['error', { allow: ['__DEV__', '__PROD__', '_insertCss'] }],
     //
     'dot-notation': 0,
     'operator-linebreak': 0,
@@ -40,6 +41,8 @@ module.exports = {
     semi: ['error', 'always'],
     'lines-between-class-members': 0,
     'import/prefer-default-export': 0,
+    'no-use-before-define': ['error', { functions: false }],
+    'no-prototype-builtins': 0,
     //
     // 'react/forbid-prop-types': 0,
     'react/prop-types': 0,
@@ -59,8 +62,9 @@ module.exports = {
     '@typescript-eslint/explicit-member-accessibility': 0,
     '@typescript-eslint/interface-name-prefix': 0,
     '@typescript-eslint/no-unused-vars': 0,
-    '@typescript-eslint/camelcase': [1, { properties: 'never' }],
+    // '@typescript-eslint/camelcase': [1, { properties: 'never' }],
     '@typescript-eslint/no-empty-interface': 0,
+    // Makes no sense to allow type inferrence for expression parameters, but require typing the response
     '@typescript-eslint/explicit-function-return-type': 0,
     '@typescript-eslint/no-explicit-any': 0,
     '@typescript-eslint/ban-ts-ignore': 0,
@@ -68,6 +72,10 @@ module.exports = {
     '@typescript-eslint/no-empty-function': 0,
     '@typescript-eslint/no-useless-constructor': 0,
     '@typescript-eslint/no-use-before-define': ['error', { functions: false }],
+    '@typescript-eslint/dot-notation': 0,
+    '@typescript-eslint/naming-convention': 0,
+    '@typescript-eslint/ban-ts-comment': 0,
+    '@typescript-eslint/explicit-module-boundary-types': 0,
     //
     // NEST.JS
     'no-useless-constructor': 0,
