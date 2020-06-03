@@ -6,6 +6,7 @@ import { IRouteItem, IPage } from '@leaa/dashboard/src/interfaces';
 import { ALLOW_PERMISSION } from '@leaa/dashboard/src/constants';
 
 import { MasterLayout, SuspenseFallback } from '@leaa/dashboard/src/components';
+import { isDebugMode } from '@leaa/dashboard/src/utils/debug.util';
 
 // TIPS: permission: 'ALLOW_PERMISSION' will be always display
 
@@ -383,48 +384,53 @@ export const masterRoutes: IRouteItem[] = [
       },
     ],
   },
-  //
-  // -------- [Debug Group] --------
-  //
-  {
-    name: 'Debug Group',
-    namei18n: '_route:debug',
-    permission: 'lab.root',
-    path: '_debug-group',
-    icon: 'ri-code-s-slash-line',
-    children: [
-      {
-        name: 'Test Any',
-        namei18n: '_route:testAny',
-        permission: ALLOW_PERMISSION,
-        path: '/test-any',
-        icon: 'ri-code-s-slash-line',
-        LazyComponent: React.lazy(() => import(/* webpackChunkName: 'TestAny' */ '../pages/Test/TestAny/TestAny')),
-        exact: true,
-      },
-      {
-        name: 'Test Attachment',
-        namei18n: '_route:testAttachment',
-        permission: ALLOW_PERMISSION,
-        path: '/test-attachment',
-        icon: 'ri-code-s-slash-line',
-        LazyComponent: React.lazy(() =>
-          import(/* webpackChunkName: 'TestAttachment' */ '../pages/Test/TestAttachment/TestAttachment'),
-        ),
-        exact: true,
-      },
-      {
-        name: 'Test I18n',
-        namei18n: '_route:testI18n',
-        permission: ALLOW_PERMISSION,
-        path: '/test-i18n',
-        icon: 'ri-code-s-slash-line',
-        LazyComponent: React.lazy(() => import(/* webpackChunkName: 'TestI18n' */ '../pages/Test/TestI18n/TestI18n')),
-        exact: true,
-      },
-    ],
-  },
 ];
+
+if (isDebugMode()) {
+  masterRoutes.push(
+    //
+    // -------- [Debug Group] --------
+    //
+    {
+      name: 'Debug Group',
+      namei18n: '_route:debug',
+      permission: 'lab.root',
+      path: '_debug-group',
+      icon: 'ri-code-s-slash-line',
+      children: [
+        {
+          name: 'Test Any',
+          namei18n: '_route:testAny',
+          permission: ALLOW_PERMISSION,
+          path: '/test-any',
+          icon: 'ri-code-s-slash-line',
+          LazyComponent: React.lazy(() => import(/* webpackChunkName: 'TestAny' */ '../pages/Test/TestAny/TestAny')),
+          exact: true,
+        },
+        {
+          name: 'Test Attachment',
+          namei18n: '_route:testAttachment',
+          permission: ALLOW_PERMISSION,
+          path: '/test-attachment',
+          icon: 'ri-code-s-slash-line',
+          LazyComponent: React.lazy(() =>
+            import(/* webpackChunkName: 'TestAttachment' */ '../pages/Test/TestAttachment/TestAttachment'),
+          ),
+          exact: true,
+        },
+        {
+          name: 'Test I18n',
+          namei18n: '_route:testI18n',
+          permission: ALLOW_PERMISSION,
+          path: '/test-i18n',
+          icon: 'ri-code-s-slash-line',
+          LazyComponent: React.lazy(() => import(/* webpackChunkName: 'TestI18n' */ '../pages/Test/TestI18n/TestI18n')),
+          exact: true,
+        },
+      ],
+    },
+  );
+}
 
 const routerDom: ReactNode[] = [];
 const parseRoutes = (routeList: IRouteItem[]) => {
@@ -455,14 +461,10 @@ const parseFlatRoutes = (routeList: IRouteItem[], groupName?: string) => {
   routeList.forEach((item) => {
     const nextItem = _.omit(item, 'LazyComponent');
 
-    if (nextItem.children) {
-      parseFlatRoutes(nextItem.children, nextItem.path);
-    }
+    if (nextItem.children) parseFlatRoutes(nextItem.children, nextItem.path);
 
     // loop for children groupName
-    if (groupName) {
-      nextItem.groupName = groupName;
-    }
+    if (groupName) nextItem.groupName = groupName;
 
     flateRoutes.push(nextItem);
   });

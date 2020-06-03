@@ -18,3 +18,6 @@ export const GQL_SUCCESS_MESSAGE = 'COMPLETED (GQL)';
 export const FORMAT_DATA_TIME = 'YYYY-MM-DD HH:mm:ss';
 export const FORMAT_DATA = 'YYYY-MM-DD';
 export const FORMAT_TIME = 'HH:mm:ss';
+
+// debug
+export const DEBUG_MODE_SL_KEY = 'debugMode';
