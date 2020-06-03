@@ -29,7 +29,6 @@ export const UploadUserAvatar = (props: IProps) => {
 
   const [updateLoading, setUpdateLoading] = useState(false);
 
-  // eslint-disable-next-line @typescript-eslint/camelcase
   const onUpdateAvatar = async (avatar_url?: string | null) => {
     setUpdateLoading(true);
     if (!props.item?.id) return;

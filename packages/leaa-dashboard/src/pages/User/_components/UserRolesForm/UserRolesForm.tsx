@@ -82,6 +82,7 @@ export const UserRolesForm = forwardRef((props: IProps, ref: React.Ref<any>) => 
     if (props.item?.roles) setRoleIds(props.item?.roles?.map((r) => r.id));
   }, [props.item]);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => onUpdateForm(props.item), [form, props.item]);
   useImperativeHandle(ref, () => ({ form, onValidateForm }));
 

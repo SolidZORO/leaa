@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import cx from 'classnames';
 import { Button, Popover, ConfigProvider } from 'antd';
-import { useTranslation } from 'react-i18next';
 import { TooltipPlacement } from 'antd/es/tooltip';
+import i18n from 'i18next';
 
 import { CheckCircleOutlined } from '@ant-design/icons';
 
@@ -19,8 +19,6 @@ interface IProps {
 const langs = ['en-US', 'zh-CN'];
 
 export const SwitchLanguage = (props: IProps): JSX.Element => {
-  const { i18n, t } = useTranslation();
-
   const changeLanguage = async (lng: string) => {
     await i18n.changeLanguage(lng);
   };
@@ -60,7 +58,7 @@ export const SwitchLanguage = (props: IProps): JSX.Element => {
                   className={cx(style['lang-flag'], style[`lang-flag--${lang}`])}
                   onClick={() => changeLanguage(lang)}
                 >
-                  {t(`_lang:lang-${lang}`)}
+                  {i18n.t(`_lang:lang-${lang}`)}
                   {i18n.language === lang && <CheckCircleOutlined />}
                 </Button>
               ))}
@@ -70,7 +68,9 @@ export const SwitchLanguage = (props: IProps): JSX.Element => {
           <div className={style['switch-language-button']}>
             <Button type="link" size="small">
               <Rcon type="ri-translate-2" className={style['switch-language-button--icon']} />
-              <span className={style['switch-language-button--lang']}>{t(`_lang:lang-code-${i18n.language}`)}</span>
+              <span className={style['switch-language-button--lang']}>
+                {i18n.t(`_lang:lang-code-${i18n.language}`)}
+              </span>
             </Button>
           </div>
         </Popover>

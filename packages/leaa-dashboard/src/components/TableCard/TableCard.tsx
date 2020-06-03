@@ -44,7 +44,7 @@ interface IProps<T> extends TableProps<T> {
   route: IRouteItem;
 }
 
-export const TableCard = <T extends object>(props: IProps<T>) => {
+export const TableCard = <T extends Record<string, unknown>>(props: IProps<T>) => {
   const { t } = useTranslation();
   const { crudQuery } = props;
 
@@ -62,7 +62,7 @@ export const TableCard = <T extends object>(props: IProps<T>) => {
     id: () => ({
       title: 'ID',
       dataIndex: 'id',
-      width: 80, // ID
+      columnWidth: 80, // ID
       sorter: true,
       sortOrder: calcTableSortOrder('id', crudQuery.sort),
       render: (id: string) => <TableColumnId id={id} link={`${props.route?.path}/${id}`} />,
@@ -91,7 +91,7 @@ export const TableCard = <T extends object>(props: IProps<T>) => {
     phone: () => ({
       title: t('_lang:phone'),
       dataIndex: 'phone',
-      width: 70,
+      columnWidth: 70,
       sorter: true,
       sortOrder: calcTableSortOrder('phone', crudQuery.sort),
       render: (text: string, record: any) => <Link to={`${props.route.path}/${record.id}`}>{record.phone}</Link>,
@@ -114,12 +114,12 @@ export const TableCard = <T extends object>(props: IProps<T>) => {
     avatar: () => ({
       title: t('_lang:avatar'),
       dataIndex: 'avatar_url',
-      width: 60,
+      columnWidth: 60,
       render: (avatar: string) => <UserAvatar url={avatar} />,
     }),
     isAdmin: () => ({
       title: <Rcon type="ri-vip-crown-2-line" />,
-      width: 30,
+      columnWidth: 30,
       dataIndex: 'is_admin',
       sorter: true,
       sortOrder: calcTableSortOrder('name', crudQuery.sort),
@@ -128,7 +128,7 @@ export const TableCard = <T extends object>(props: IProps<T>) => {
     category: () => ({
       title: t('_lang:category'),
       dataIndex: 'category',
-      width: 100,
+      columnWidth: 100,
       render: (text: string, record: any) => (
         <span>{record.categories && record.categories.length > 0 ? record.categories[0].name : '----'}</span>
       ),
@@ -136,7 +136,7 @@ export const TableCard = <T extends object>(props: IProps<T>) => {
     views: () => ({
       title: t('_lang:views'),
       dataIndex: 'views',
-      width: 100,
+      columnWidth: 100,
       render: (text: string, record: any) => <small className="g-col-number">{record.views}</small>,
     }),
     createdAt: () => ({
@@ -149,7 +149,7 @@ export const TableCard = <T extends object>(props: IProps<T>) => {
     status: () => ({
       title: t('_lang:status'),
       dataIndex: 'status',
-      width: 60,
+      columnWidth: 60,
       render: (text: string, record: any) => (
         <TableColumnStatusSwitch id={record.id} value={record.status} apiPath={props.routerName} size="small" />
       ),
@@ -157,7 +157,7 @@ export const TableCard = <T extends object>(props: IProps<T>) => {
     action: (options?: { fieldName?: string }) => ({
       title: t('_lang:action'),
       dataIndex: 'operation',
-      width: 60,
+      columnWidth: 60,
       render: (text: string, record: any) => (
         <TableColumnDeleteButton
           id={record.id}
@@ -170,7 +170,7 @@ export const TableCard = <T extends object>(props: IProps<T>) => {
     byte: (options?: { fieldName?: string }) => ({
       title: t('_lang:size'),
       dataIndex: 'size',
-      width: 75,
+      columnWidth: 75,
       sorter: true,
       sortOrder: calcTableSortOrder('size', crudQuery?.sort),
       render: (text: string, record: any) =>

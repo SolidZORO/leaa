@@ -2,9 +2,9 @@ import _ from 'lodash';
 import { Repository } from 'typeorm';
 
 import { logger, errorMsg } from '@leaa/api/src/utils';
-import { IGqlCtx } from '@leaa/api/src/interfaces';
 
-export const isOneField = (args: {}, fieldName: string) => _.keys(args).length === 1 && _.has(args, fieldName);
+export const isOneField = (args: Record<string, unknown>, fieldName: string) =>
+  _.keys(args).length === 1 && _.has(args, fieldName);
 
 interface ICommonUpdate<Entity, UpdateInput> {
   CLS_NAME: string;

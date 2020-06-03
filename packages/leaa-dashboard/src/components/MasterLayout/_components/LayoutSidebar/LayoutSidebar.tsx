@@ -2,7 +2,7 @@ import cx from 'classnames';
 import React, { useState, useEffect } from 'react';
 import { Layout, Menu } from 'antd';
 import { Link, RouteComponentProps } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import i18n from 'i18next';
 
 import { IRouteItem } from '@leaa/dashboard/src/interfaces';
 import { masterRoutes, flateMasterRoutes } from '@leaa/dashboard/src/routes/master.route';
@@ -22,10 +22,8 @@ interface IProps extends RouteComponentProps {
 }
 
 const getMenuName = (menu: IRouteItem) => {
-  const { t } = useTranslation();
-
   if (menu.namei18n) {
-    return t(`${menu.namei18n}`);
+    return i18n.t(`${menu.namei18n}`);
   }
 
   return menu.name;

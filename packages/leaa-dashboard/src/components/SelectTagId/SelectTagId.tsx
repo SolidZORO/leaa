@@ -68,7 +68,7 @@ export const SelectTagId = forwardRef((props: IProps, ref: React.Ref<any>) => {
     if (props.onChangeSelectedTagsCallback) {
       props.onChangeSelectedTagsCallback(selectedTags);
     }
-  }, [selectedTags]);
+  }, [props, selectedTags]);
 
   // warning tag-selected-item exist
   useEffect(() => {

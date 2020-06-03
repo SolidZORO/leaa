@@ -16,7 +16,7 @@ import style from './style.module.less';
 interface IProps {
   moduleName: string;
   onClick?: () => void;
-  params?: {};
+  params?: Record<string, unknown>;
   size?: ButtonSize;
   className?: string;
 }

@@ -2,7 +2,6 @@ export { Rcon } from './Rcon/Rcon';
 export { HtmlMeta } from './HtmlMeta/HtmlMeta';
 export { BuildInfo } from './BuildInfo/BuildInfo';
 export { SubmitBar } from './SubmitBar/SubmitBar';
-export { CouponItem } from './CouponItem/CouponItem';
 export { PriceInput } from './PriceInput/PriceInput';
 export { AuthLayout } from './AuthLayout/AuthLayout';
 export { FilterIcon } from './FilterIcon/FilterIcon';

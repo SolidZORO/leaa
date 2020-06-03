@@ -2,7 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import { Tooltip } from 'antd';
 import cx from 'classnames';
-import { useTranslation } from 'react-i18next';
+import i18n from 'i18next';
 
 import { Rcon } from '@leaa/dashboard/src/components';
 import { FORMAT_DATA, FORMAT_DATA_TIME } from '@leaa/dashboard/src/constants';
@@ -21,11 +21,9 @@ export const EntryInfoDate = (props: IProps) => {
     return null;
   }
 
-  const { t } = useTranslation();
-
   const buildDateDom = (date: Date | undefined, type: 'createdAt' | 'updatedAt') => {
-    const tipsLabel = t(`_lang:${type}`);
-    const noDataLabel = t('_lang:noData');
+    const tipsLabel = i18n.t(`_lang:${type}`);
+    const noDataLabel = i18n.t('_lang:noData');
 
     if (!date) {
       return (

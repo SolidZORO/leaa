@@ -60,7 +60,8 @@ export const SelectCategoryIdByTree = (props: IProps) => {
     } else {
       setValue(props.value || props.initialValues);
     }
-  }, [props.value]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.value, props.initialValues]);
 
   const multipleSelectOption = props.multipleSelect
     ? {
@@ -74,6 +75,7 @@ export const SelectCategoryIdByTree = (props: IProps) => {
     onFetchCategories();
 
     return setTree([]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

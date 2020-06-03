@@ -63,6 +63,7 @@ export const TagSearchBox = forwardRef((props: IProps, ref: React.Ref<any>) => {
       .finally(() => setLoading(false));
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const onSearch = useCallback(
     _.debounce((v?: string) => onFetchTags(v), DEBOUNCE_MS),
     [],

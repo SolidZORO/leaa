@@ -96,6 +96,7 @@ export default (props: IPage) => {
   useEffect(() => {
     onFetchItem();
     onFetchRoles();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

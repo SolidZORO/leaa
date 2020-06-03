@@ -92,6 +92,7 @@ export default (props: IPage) => {
   useEffect(() => {
     onFetchItem();
     onFetchpPrmissions();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

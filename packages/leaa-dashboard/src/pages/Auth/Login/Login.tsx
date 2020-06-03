@@ -77,6 +77,8 @@ export default (props: IPage) => {
       clearGuestInfo();
       props.history.push('/');
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onSubmit = async () => {

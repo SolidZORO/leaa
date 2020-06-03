@@ -49,6 +49,7 @@ export const CategoryInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) 
     return undefined;
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => onRefreshForm(props.item), [form, props.item]);
   useImperativeHandle(ref, () => ({ form, onValidateForm }));
 

@@ -56,7 +56,7 @@ export const uploadFile = (file: File, { signature, ignoreMsg, attachmentParams,
   // -------- OSS --------
   if (signature?.saveIn === 'oss') {
     const saveFilename = getSaveFilename(file.name);
-    const attachmentParamsSnakeCase: {} = {};
+    const attachmentParamsSnakeCase: any = {};
 
     _.forEach(attachmentParams, (v, k) => {
       // @ts-ignore https://help.aliyun.com/document_detail/31989.html

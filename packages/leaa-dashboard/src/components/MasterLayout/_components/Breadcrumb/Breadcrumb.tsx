@@ -62,7 +62,7 @@ export const Breadcrumb = (props: IProps) => {
 
   const itemRender = (
     route: IBreadcrumb,
-    params: {},
+    params: Record<string, unknown>,
     routes: IBreadcrumb[],
     // paths: string[],
   ) => {

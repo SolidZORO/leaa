@@ -171,9 +171,8 @@ export default (props: IPage) => {
       .finally(() => setDeleteLoading(false));
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => onFetchList(crudQuery), [props.history.location.key]);
-
-  console.log(modalData);
 
   return (
     <PageCard

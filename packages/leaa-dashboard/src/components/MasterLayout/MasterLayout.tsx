@@ -34,16 +34,6 @@ export const MasterLayout = (props: IProps) => {
         const pageClassName =
           matchProps && matchProps.match.url ? `page-${transRouterPathToClassName(matchProps.match.url)}` : null;
 
-        useEffect(() => {
-          matchProps.history.listen(() => animateScrollTo(0));
-
-          const authIsAvailably = checkAuthIsAvailably();
-
-          if (!authIsAvailably) {
-            matchProps.history.push(`/login?redirect=${window.location.pathname}`);
-          }
-        }, []);
-
         return (
           <div
             className={cx(style['full-layout-wrapper'], 'g-full-layout-wrapper', {

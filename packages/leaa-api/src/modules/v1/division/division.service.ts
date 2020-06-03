@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 // import fs from 'fs';
 // import mkdirp from 'mkdirp';
 // import * as uuid from 'uuid';

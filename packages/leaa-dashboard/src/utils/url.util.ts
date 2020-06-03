@@ -27,7 +27,7 @@ export function transRouterPathToClassName(routerPath: string): string {
 
 interface IMergeParamToUrlQuery {
   window: Window;
-  params: {} | undefined;
+  params: Record<string, unknown> | undefined;
   replace: boolean;
 }
 

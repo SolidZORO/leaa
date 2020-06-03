@@ -52,7 +52,7 @@ export class SeedService {
       console.log(item);
     }
   }
-  //
+
   async insertRoles() {
     for (const i of rolesSeed) {
       const item = await this.roleService.createOne(req, i);
@@ -116,12 +116,10 @@ export class SeedService {
   async insertCategory() {
     for (const i of categorySeed) {
       let parent = null;
-      // eslint-disable-next-line @typescript-eslint/camelcase
       let parent_id = null;
 
       if (i.seedParentSlug) {
         parent = await this.categoryService.getOneBySlug(i?.seedParentSlug);
-        // eslint-disable-next-line @typescript-eslint/camelcase
         parent_id = parent?.id;
         await console.log('insertCategory >>>>>>>>>>>>>>', i.seedParentSlug, parent);
       }

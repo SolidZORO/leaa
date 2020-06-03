@@ -74,6 +74,7 @@ export const SettingModalForm = forwardRef((props: IProps, ref: React.Ref<any>) 
     });
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => onUpdateForm(props.item), [form, props.item]);
   useImperativeHandle(ref, () => ({ form, onValidateForm }));
 

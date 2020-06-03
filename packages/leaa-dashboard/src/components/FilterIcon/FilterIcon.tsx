@@ -36,7 +36,7 @@ export const FilterIcon = (props: IProps) => {
 
       setShowClose(JSON.stringify(prevQueryObj) !== '{}');
     }
-  }, [props.crudQuery]);
+  }, [props.crudQuery, props.clear]);
 
   return (
     <Rcon

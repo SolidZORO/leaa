@@ -99,6 +99,7 @@ export const AttachmentBox = (props: IProps) => {
       setAttachmentParams(props.attachmentParams);
       onFetchList();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.attachmentParams]);
 
   const onChangeAttas = (attas: Attachment[]) => {

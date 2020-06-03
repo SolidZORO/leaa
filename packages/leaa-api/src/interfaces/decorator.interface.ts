@@ -6,5 +6,5 @@ export interface IGqlCtx {
   user?: User;
   lang?: string;
   req?: IRequest;
-  t: TFunction | Function;
+  t: TFunction;
 }

@@ -1,5 +1,4 @@
 import { configure } from 'mobx';
-import { useStaticRendering } from 'mobx-react';
 import { createContext, useContext } from 'react';
 
 import { IMappingStore, MappingStore } from './mapping.store';
@@ -14,10 +13,10 @@ const isServer = typeof window === 'undefined';
 
 // configure({ enforceActions: 'observed' });
 configure({ enforceActions: 'never' });
-useStaticRendering(isServer);
 
 export class Store {
   mapping: MappingStore;
+
   auth: AuthStore;
 
   constructor(initData: IStore = {}) {

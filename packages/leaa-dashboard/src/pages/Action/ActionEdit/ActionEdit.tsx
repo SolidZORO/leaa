@@ -56,6 +56,7 @@ export default (props: IPage) => {
       .finally(() => setSubmitLoading(false));
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => onFetchItem(), []);
 
   return (

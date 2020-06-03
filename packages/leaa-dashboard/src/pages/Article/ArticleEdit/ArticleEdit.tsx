@@ -88,6 +88,7 @@ export default (props: IPage) => {
     await attachmentBoxRef.current?.onUpdateAttachments();
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => onFetchItem(), []);
 
   return (

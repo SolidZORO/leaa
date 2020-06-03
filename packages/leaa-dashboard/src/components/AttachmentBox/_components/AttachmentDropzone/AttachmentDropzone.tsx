@@ -47,6 +47,7 @@ export const AttachmentDropzone = (props: IProps) => {
     if (props.onDropzoneAttasCallback) await props.onDropzoneAttasCallback(uploadeds);
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const onDrop = useCallback(async (acceptedFiles) => onUploadFileList(acceptedFiles), [props.attachments]);
 
   const { getRootProps, getInputProps } = useDropzone({ onDrop, accept: 'image/*' });
