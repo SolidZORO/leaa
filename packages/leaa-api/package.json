@@ -53,7 +53,6 @@
     "@nestjsx/crud-typeorm": "^4.6.2",
     "ali-oss": "^6.8.0",
     "bcryptjs": "^2.4.3",
-    "cache-manager": "^3.3.0",
     "class-transformer": "^0.2.3",
     "class-validator": "^0.12.2",
     "core-js": "3.6.5",
@@ -84,12 +83,9 @@
     "passport-github": "^1.1.0",
     "passport-jwt": "^4.0.0",
     "path-to-regexp": "^6.1.0",
-    "query-string": "6.12.1",
     "reflect-metadata": "^0.1.12",
-    "request": "^2.88.2",
     "rimraf": "^3.0.2",
     "rxjs": "^6.5.5",
-    "supertest": "^4.0.2",
     "svg-captcha": "^1.4.0",
     "transliteration": "^2.1.11",
     "typeorm": "^0.2.25",
@@ -102,7 +98,6 @@
   "devDependencies": {
     "@types/ali-oss": "^6.0.5",
     "@types/bcryptjs": "^2.4.2",
-    "@types/cache-manager": "^2.10.3",
     "@types/core-js": "2.5.3",
     "@types/diff": "^4.0.2",
     "@types/dotenv": "^8.2.0",
@@ -122,14 +117,10 @@
     "@types/passport": "^1.0.3",
     "@types/passport-github": "^1.1.5",
     "@types/passport-jwt": "^3.0.3",
-    "@types/request": "^2.48.5",
     "@types/rimraf": "^3.0.0",
-    "@types/supertest": "^2.0.9",
     "@types/uuid": "^8.0.0",
+    "@types/validator": "^13.0.0",
     "eslint-plugin-react-hooks": "^4.0.4",
-    "express-serve-static-core": "^0.1.1",
-    "lerna": "^3.22.0",
-    "lint-staged": "^10.2.7",
-    "ts-jest": "26.1.0"
+    "express-serve-static-core": "^0.1.1"
   }
 }
