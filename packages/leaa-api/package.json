@@ -53,6 +53,7 @@
     "@nestjsx/crud-typeorm": "^4.6.2",
     "ali-oss": "^6.8.0",
     "bcryptjs": "^2.4.3",
+    "cache-manager": "^3.3.0",
     "class-transformer": "^0.2.3",
     "class-validator": "^0.12.2",
     "core-js": "3.6.5",
