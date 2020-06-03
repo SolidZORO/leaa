@@ -23,6 +23,7 @@ export const envInfoForCli = ({
   console.log(`\n\n> ${serverEnv} /     URL`, serverBaseByEmoji);
 
   console.log('\n> 📮 ENVDATA');
+  console.log('     - NAME    ', config.SERVER_NAME);
   console.log('     - VERSION ', `v${pkg.version}`);
   console.log('     - DIRNAME ', DIRNAME);
   console.log('     - PUBLIC  ', PUBLIC_PATH);

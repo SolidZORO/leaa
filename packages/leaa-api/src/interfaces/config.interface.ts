@@ -1,4 +1,5 @@
 export interface IDotEnv {
+  SERVER_NAME: string;
   SERVER_PROTOCOL: string;
   SERVER_PORT: number;
   SERVER_HOST: string;

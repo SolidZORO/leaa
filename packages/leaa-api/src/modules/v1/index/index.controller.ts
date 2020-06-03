@@ -71,7 +71,7 @@ export class IndexController {
           }    
         </style>
 
-        <h1>hello, leaa-api.</h1>
+        <h1>hello, ${this.configService.SERVER_NAME}.</h1>
 
         <div class="build-list">
           <div class="build-item">

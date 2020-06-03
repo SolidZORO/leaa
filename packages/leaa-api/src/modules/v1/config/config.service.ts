@@ -11,6 +11,10 @@ export class ConfigService {
     this.envConfig = this.validate(dotEnvPath);
   }
 
+  get SERVER_NAME(): string {
+    return this.envConfig.SERVER_NAME;
+  }
+
   get SERVER_PROTOCOL(): string {
     return this.envConfig.SERVER_PROTOCOL;
   }
@@ -190,6 +194,7 @@ export class ConfigService {
 
   private validate(dotEnvPath: string): IDotEnv {
     const rule = {
+      SERVER_NAME: envalid.str({ default: 'leaa' }),
       SERVER_PROTOCOL: envalid.str({ choices: ['http', 'https'], default: 'http' }),
       SERVER_PORT: envalid.port({ default: 5555 }),
       SERVER_HOST: envalid.str(),
