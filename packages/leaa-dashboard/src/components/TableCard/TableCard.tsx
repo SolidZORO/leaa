@@ -32,7 +32,7 @@ import style from './style.module.less';
 declare type IColumnField = string | { [key: string]: any };
 
 interface IProps<T> extends TableProps<T> {
-  list?: ICrudListRes<T>;
+  list?: ICrudListRes<T> | any;
   selectedRowBar?: React.ReactNode;
   selectedRowKeys?: IKey[];
   // columnFields?: IColumnField[];
@@ -227,7 +227,7 @@ export const TableCard = <T extends any>(props: IProps<T>) => {
       <div className={style['container']}>
         <Table
           showSorterTooltip={false}
-          rowKey={props.rowKey || 'id'}
+          rowKey={(props.rowKey as string) || 'id'}
           size={props.size || 'small'}
           rowSelection={rowSelection}
           columns={genColumns(props?.columnFields) || props?.columns || genColumns('all')}
