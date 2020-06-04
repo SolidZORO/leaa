@@ -9,6 +9,7 @@ import style from './style.module.less';
 
 interface IProps {
   className?: string;
+  showSwitchDebug?: boolean;
 }
 
 export const BuildInfo = (props: IProps) => {
@@ -30,10 +31,14 @@ export const BuildInfo = (props: IProps) => {
       <div className={style['build-list']}>
         <div className={style['build-item']}>
           <span>MODE:</span>
-          <Button type="link" size="small" className={style['switch-debug-module']} onClick={onAdd}>
+          {props.showSwitchDebug ? (
+            <Button type="link" size="small" className={style['switch-debug-module']} onClick={onAdd}>
+              <strong>{buildConfig.MODE}</strong>
+              <span className={style['switch-debug-bar']} style={{ width: debugCount * 10 }} />
+            </Button>
+          ) : (
             <strong>{buildConfig.MODE}</strong>
-            <span className={style['switch-debug-bar']} style={{ width: debugCount * 10 }} />
-          </Button>
+          )}
         </div>
 
         <div className={style['build-item']}>

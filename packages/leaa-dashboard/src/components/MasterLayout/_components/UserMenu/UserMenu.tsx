@@ -34,7 +34,7 @@ export const UserMenu = (props: IProps): JSX.Element => {
       <div className={style['container']}>
         <Skeleton active />
 
-        <BuildInfo />
+        <BuildInfo showSwitchDebug />
       </div>
 
       <div className={style['footer']}>
