@@ -95,7 +95,7 @@ export const AttachmentBox = (props: IProps) => {
         }
       })
       .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
-      .finally(() => setListLoading(false));
+      .finally(() => !isAjaxCancelled.current && setListLoading(false));
   };
 
   useEffect(() => {

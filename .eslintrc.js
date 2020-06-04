@@ -4,6 +4,7 @@ module.exports = {
     'airbnb/hooks',
     'airbnb-typescript',
     'plugin:@typescript-eslint/recommended',
+    'plugin:react-hooks/recommended',
     'plugin:css-modules/recommended',
     'plugin:prettier/recommended',
   ],
@@ -17,7 +18,7 @@ module.exports = {
       jsx: true,
     },
   },
-  plugins: ['@typescript-eslint', 'react', 'import', 'css-modules'],
+  plugins: ['@typescript-eslint', 'react', 'react-hooks', 'import', 'css-modules'],
   globals: {
     __DEV__: true,
     __PROD__: true,
@@ -86,8 +87,8 @@ module.exports = {
     'import/no-unresolved': ['error', { ignore: ['@leaa'] }],
     //
     // REACT HOOKS
-    // 'react-hooks/exhaustive-deps': 0,
-    // 'react-hooks/rules-of-hooks': 0,
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'error',
   },
   settings: {
     'import/resolver': {

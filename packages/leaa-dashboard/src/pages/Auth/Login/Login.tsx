@@ -27,6 +27,9 @@ const LOGO_BLACK = `/assets/images/logo/${envConfig.LOGO_BLACK_FILENAME || 'defa
 
 export default (props: IPage) => {
   const { t } = useTranslation();
+
+  const isAjaxCancelled = useRef(false);
+
   const urlObject = qs.parse(window.location.search, { ignoreQueryPrefix: true });
 
   const [loginErrorCount, setLoginErrorCount] = useState<number>(1);
@@ -70,17 +73,6 @@ export default (props: IPage) => {
     }
   };
 
-  useEffect(() => {
-    const authIsAvailably = checkAuthIsAvailably();
-
-    if (authIsAvailably) {
-      clearGuestInfo();
-      props.history.push('/');
-    }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   const onSubmit = async () => {
     if (submitLoading) return;
 
@@ -93,8 +85,10 @@ export default (props: IPage) => {
     ajax
       .post(`${envConfig.API_URL}/${envConfig.API_VERSION}/auth/login`, submitData)
       .then((res: IHttpRes<User>) => {
-        setLogin(res.data.data);
-        if (res.data.data?.authToken) setAjaxToken(res.data.data.authToken);
+        if (!isAjaxCancelled.current && res.data.data?.authToken) {
+          setLogin(res.data.data);
+          setAjaxToken(res.data.data.authToken);
+        }
       })
       .catch((err: IHttpError) => {
         errorMsg(err.response?.data?.message || err.message);
@@ -102,12 +96,27 @@ export default (props: IPage) => {
 
         return props.history.push('/login');
       })
-      .finally(() => setSubmitLoading(false));
+      .finally(() => !isAjaxCancelled.current && setSubmitLoading(false));
   };
 
   const onBack = () => {
     msg(t('_page:Auth.Login.backTips'));
   };
+
+  useEffect(() => {
+    const authIsAvailably = checkAuthIsAvailably();
+
+    if (authIsAvailably) {
+      clearGuestInfo();
+      props.history.push('/');
+    }
+
+    return () => {
+      isAjaxCancelled.current = true;
+    };
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className={style['wrapper']}>
