@@ -3,30 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [3.1.2](https://github.com/SolidZORO/leaa/compare/v3.1.1...v3.1.2) (2020-06-03)
-
-
-### Features
-
-* .env add `GRAVATAR_TYPE` ([dcb3ba1](https://github.com/SolidZORO/leaa/commit/dcb3ba1b959ad9702e5656255b7daebbd59c8e0a))
-* add use phone login dashboard ([4824440](https://github.com/SolidZORO/leaa/commit/482444069b3ea99e395ce50db09f52de526fc0c7))
-* can create user by phone ([77237f9](https://github.com/SolidZORO/leaa/commit/77237f9b615fbeaba1adc097635bb83f71ddbaa7))
-* user add avatar change ([c317528](https://github.com/SolidZORO/leaa/commit/c317528eabcb7e21dd280c5a2ebdf2afbb3a06a7))
-
-
-
-
-
-## [3.1.1](https://github.com/SolidZORO/leaa/compare/v3.1.0...v3.1.1) (2020-06-01)
-
+## [3.1.3](https://github.com/SolidZORO/leaa/compare/v3.1.1...v3.1.3) (2020-06-04)
 
 ### Bug Fixes
 
-* fix packages version ([14e1ffb](https://github.com/SolidZORO/leaa/commit/14e1ffb64de596c0f28075acd9d73d9099305000))
+- fix all Components `memory leak in your application.` ([d55e741](https://github.com/SolidZORO/leaa/commit/d55e7417e2580996e1559f7c5a0afe79f2b27371))
+- fix rowKey types ([4a11331](https://github.com/SolidZORO/leaa/commit/4a11331c85ac0b55c68a40010b0608292dbf6f70))
 
+### Features
 
+- .env add `LOGO_(BLACK|WHITE)_FILENAME` can mod default logo ([4978e30](https://github.com/SolidZORO/leaa/commit/4978e307508c348fabd7d00fdf399cd53eb5d2fc))
+- .env add GRAVATAR_TYPE ([dcb3ba1](https://github.com/SolidZORO/leaa/commit/dcb3ba1b959ad9702e5656255b7daebbd59c8e0a))
+- add use phone login dashboard ([4824440](https://github.com/SolidZORO/leaa/commit/482444069b3ea99e395ce50db09f52de526fc0c7))
+- can create user by phone ([77237f9](https://github.com/SolidZORO/leaa/commit/77237f9b615fbeaba1adc097635bb83f71ddbaa7))
+- dashboard add `debugMode` in header dropdown menu ([932d994](https://github.com/SolidZORO/leaa/commit/932d9946f09cb53e10a14de4d7c359cd81b8cf70))
+- user add avatar change ([c317528](https://github.com/SolidZORO/leaa/commit/c317528eabcb7e21dd280c5a2ebdf2afbb3a06a7))
 
+### Performance Improvements
 
+- debugCount 10 to 5 ([5614f84](https://github.com/SolidZORO/leaa/commit/5614f84159c74c02039ac75dfb1b27ffad364b30))
+
+## [3.1.2](https://github.com/SolidZORO/leaa/compare/v3.1.1...v3.1.2) (2020-06-03)
+
+### Features
+
+- .env add `GRAVATAR_TYPE` ([dcb3ba1](https://github.com/SolidZORO/leaa/commit/dcb3ba1b959ad9702e5656255b7daebbd59c8e0a))
+- add use phone login dashboard ([4824440](https://github.com/SolidZORO/leaa/commit/482444069b3ea99e395ce50db09f52de526fc0c7))
+- can create user by phone ([77237f9](https://github.com/SolidZORO/leaa/commit/77237f9b615fbeaba1adc097635bb83f71ddbaa7))
+- user add avatar change ([c317528](https://github.com/SolidZORO/leaa/commit/c317528eabcb7e21dd280c5a2ebdf2afbb3a06a7))
+
+## [3.1.1](https://github.com/SolidZORO/leaa/compare/v3.1.0...v3.1.1) (2020-06-01)
+
+### Bug Fixes
+
+- fix packages version ([14e1ffb](https://github.com/SolidZORO/leaa/commit/14e1ffb64de596c0f28075acd9d73d9099305000))
 
 ## [3.0.1](https://github.com/SolidZORO/leaa/compare/v2.0.6...v3.0.1) (2020-05-29)
 
