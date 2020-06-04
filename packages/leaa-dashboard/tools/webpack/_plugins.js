@@ -2,6 +2,7 @@
 const _ = require('lodash');
 const moment = require('moment');
 const webpack = require('webpack');
+const CopyPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const WriteFilePlugin = require('write-file-webpack-plugin');
@@ -38,8 +39,8 @@ const htmlWebpackPluginOption = {
   ).toString('base64'),
   __ANALYTICS_CODE__: (!WPCONST.__DEV__ && env && env.ANALYTICS_CODE && `<script>${env.ANALYTICS_CODE}</script>`) || '',
   title: `${env.SITE_NAME || '-'}`,
-  manifest: `${WPCONST.CDN_DIR_PATH}manifest.json`,
-  filename: `${WPCONST.BUILD_PUBLIC_DIR}/index.html`,
+  manifest: `${WPCONST.CDN_DIR_URL}/manifest.json`,
+  filename: `${WPCONST.BUILD_DIR}/index.html`,
   template: `${WPCONST.VIEWS_DIR}/index.ejs`,
   favicon: `${WPCONST.SRC_DIR}/assets/favicons/favicon.ico`,
   inject: true,
@@ -81,8 +82,6 @@ const lodashModuleReplacementPluginOption = {
 };
 
 const plugins = [
-  // new WriteFilePlugin(),
-  new WriteFilePlugin({ test: /(favicon\.ico$|index\.html$|robots\.|\/assets\/|\/libs\/)/, useHashIndex: true }),
   new webpack.ProvidePlugin(provide),
   new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /zh-cn/),
   new HtmlWebpackPlugin(htmlWebpackPluginOption),
@@ -90,6 +89,23 @@ const plugins = [
   // new CaseSensitivePathsPlugin(),
   new ManifestPlugin(),
   new ShowEnvInfoWebpackPlugin(),
+  new WriteFilePlugin(),
+  // new WriteFilePlugin({
+  //   test: /(index\.html$|robots\.txt|\/assets\/|\/libs\/)/,
+  //   useHashIndex: true,
+  // }),
+  new CopyPlugin({
+    patterns: [
+      {
+        from: `${WPCONST.PUBLIC_DIR}/assets/**/*`,
+        to: `${WPCONST.BUILD_DIR}`,
+        transformPath(targetPath) {
+          return `${targetPath}`.replace('public/', '');
+        },
+        cacheTransform: true,
+      },
+    ],
+  }),
 
   //
   // DEV ONLY

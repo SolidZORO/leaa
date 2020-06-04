@@ -19,11 +19,11 @@ import { AuthLoginReq } from '@leaa/common/src/dtos/auth';
 import { envConfig } from '@leaa/dashboard/src/configs';
 import { HtmlMeta, SwitchLanguage, BuildInfo, AuthGithubButton } from '@leaa/dashboard/src/components';
 
-import logo from '@leaa/dashboard/src/assets/images/logo/logo-black.svg';
-
 import { LoginForm } from './_components/LoginForm/LoginForm';
 
 import style from './style.module.less';
+
+const LOGO_BLACK = `/assets/images/logo/${envConfig.LOGO_BLACK_FILENAME || 'default-logo-black.svg'}`;
 
 export default (props: IPage) => {
   const { t } = useTranslation();
@@ -118,7 +118,7 @@ export default (props: IPage) => {
           <Col xs={24} lg={16} xl={12} xxl={10}>
             <div className={style['login-box']}>
               <div className={style['logo']}>
-                <img src={logo} alt="" />
+                <img src={LOGO_BLACK} alt="" />
               </div>
 
               <div className={style['title']}>{t('_page:Auth.Login.title')}</div>

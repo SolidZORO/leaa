@@ -8,7 +8,7 @@ import { IRouteItem } from '@leaa/dashboard/src/interfaces';
 import { masterRoutes, flateMasterRoutes } from '@leaa/dashboard/src/routes/master.route';
 import { getAuthInfo, isMobile } from '@leaa/dashboard/src/utils';
 import { Rcon } from '@leaa/dashboard/src/components';
-import logo from '@leaa/dashboard/src/assets/images/logo/logo-white.svg';
+import { envConfig } from '@leaa/dashboard/src/configs';
 
 import { ALLOW_PERMISSION, SIDERBAR_COLLAPSED_SL_KEY, CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 
@@ -20,6 +20,8 @@ interface IProps extends RouteComponentProps {
   className?: string;
   collapsedHash?: number;
 }
+
+const LOGO_WHITE = `/assets/images/logo/${envConfig.LOGO_WHITE_FILENAME || 'default-logo-white.svg'}`;
 
 const getMenuName = (menu: IRouteItem) => {
   if (menu.namei18n) {
@@ -162,7 +164,7 @@ export const LayoutSidebar = (props: IProps) => {
     >
       <div className={style['logo-wrapper']}>
         <Link to="/">
-          <img src={logo} alt="" width={40} />
+          <img src={LOGO_WHITE} alt="" width={40} />
         </Link>
       </div>
 

@@ -44,7 +44,7 @@ interface IProps<T> extends TableProps<T> {
   route: IRouteItem;
 }
 
-export const TableCard = <T extends Record<string, unknown>>(props: IProps<T>) => {
+export const TableCard = <T extends any>(props: IProps<T>) => {
   const { t } = useTranslation();
   const { crudQuery } = props;
 

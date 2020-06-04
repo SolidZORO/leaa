@@ -2,6 +2,8 @@ export interface IDotEnv {
   DEMO_MODE: boolean;
   DEBUG_MODE: boolean;
   SITE_NAME: string;
+  LOGO_BLACK_FILENAME: string;
+  LOGO_WHITE_FILENAME: string;
   SERVER_PROTOCOL: 'http' | 'https';
   SERVER_PORT: number;
   SERVER_HOST: string;
