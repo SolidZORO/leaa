@@ -1,5 +1,5 @@
 import cx from 'classnames';
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { PlusOutlined } from '@ant-design/icons';
 
@@ -13,7 +13,7 @@ import style from './style.module.less';
 
 interface IProps {
   value?: number | undefined;
-  attachmentParams?: IAttachmentParams;
+  attachmentParams: IAttachmentParams;
   onDropzoneAttasCallback?: (attachment: Attachment[]) => void;
   type?: 'list' | 'card';
   cardHeight?: number;
@@ -23,6 +23,8 @@ interface IProps {
 
 export const AttachmentDropzone = (props: IProps) => {
   const cardHeight = (props.type === 'card' && props.cardHeight) || undefined;
+
+  const [attachmentParams, setAttachmentParams] = useState<IAttachmentParams>(props.attachmentParams);
 
   const onUploadFileList = async (fileList: File[]) => {
     const signature = await getUploadSignature();
@@ -36,7 +38,7 @@ export const AttachmentDropzone = (props: IProps) => {
       // eslint-disable-next-line no-await-in-loop
       await uploadFile(file, {
         signature,
-        attachmentParams: props.attachmentParams,
+        attachmentParams,
         ignoreMsg: true,
         onCallback: {
           onUploadSuccess: (res: IHttpRes<Attachment>) => uploadeds.push(res.data.data),
@@ -48,10 +50,23 @@ export const AttachmentDropzone = (props: IProps) => {
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const onDrop = useCallback(async (acceptedFiles) => onUploadFileList(acceptedFiles), [props.attachments]);
+  const onDrop = useCallback(async (acceptedFiles) => onUploadFileList(acceptedFiles), [
+    props.attachments,
+    props.attachmentParams,
+  ]);
 
   const { getRootProps, getInputProps } = useDropzone({ onDrop, accept: 'image/*' });
   const isEmpty = props.attachments && props.attachments.length === 0;
+
+  useEffect(() => {
+    if (props.attachmentParams?.moduleId && !attachmentParams.moduleId) {
+      setAttachmentParams(props.attachmentParams);
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.attachmentParams]);
+
+  // console.log(attachmentParams);
 
   return (
     <div

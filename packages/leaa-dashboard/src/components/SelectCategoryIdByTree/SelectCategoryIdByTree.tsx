@@ -46,7 +46,7 @@ export const SelectCategoryIdByTree = (props: IProps) => {
         if (!isAjaxCancelled.current) setTree(res.data?.data);
       })
       .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
-      .finally(() => !isAjaxCancelled.current && setTreeLoading(false));
+      .finally(() => setTreeLoading(false));
   };
 
   const onChange = (v?: string | string[] | null) => {

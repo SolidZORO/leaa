@@ -25,8 +25,6 @@ export const getUploadSignature = async () => {
   return ajax
     .get(`${envConfig.API_URL}/${envConfig.API_VERSION}/attachments/signature`)
     .then((res: IHttpRes<ISignatureResult>) => {
-      console.log(res.data.data);
-
       if (res.data?.data && !_.isEmpty(res.data.data)) return res.data.data;
 
       return undefined;

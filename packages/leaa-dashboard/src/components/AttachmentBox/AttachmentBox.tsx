@@ -21,7 +21,7 @@ interface IProps {
   attachments?: Attachment[];
   value?: number | undefined;
   onChange?: (checked: boolean) => void;
-  attachmentParams?: IAttachmentParams;
+  attachmentParams: IAttachmentParams;
   onSubmitCallback?: (v: any) => void;
   type?: 'list' | 'card';
   title?: React.ReactNode;
@@ -59,27 +59,25 @@ interface IProps {
 export const AttachmentBox = (props: IProps) => {
   const { t, i18n } = useTranslation();
 
-  const isAjaxCancelled = useRef(false);
-
   const type = props.type || 'list';
   const cardHeight = props.cardHeight || 230;
   const listHeight = props.listHeight || 130;
 
   const [attachments, setAttachments] = useState<Attachment[]>([]);
   const [listLoading, setListLoading] = useState(false);
-  const [attachmentParams, setAttachmentParams] = useState<IAttachmentParams>();
+  const [attachmentParams, setAttachmentParams] = useState<IAttachmentParams>(props.attachmentParams);
 
-  const onFetchList = () => {
-    if (!props.attachmentParams || !props.attachmentParams.moduleId) return;
+  const onFetchList = (attaParams: IAttachmentParams) => {
+    if (!attaParams || !attaParams.moduleId) return;
 
     setListLoading(true);
 
     const params: ICrudListQueryParams = {
       search: {
-        module_id: props.attachmentParams.moduleId,
-        module_name: props.attachmentParams.moduleName,
-        type_name: props.attachmentParams.typeName,
-        type_platform: props.attachmentParams.typePlatform,
+        module_id: attaParams.moduleId,
+        module_name: attaParams.moduleName,
+        type_name: attaParams.typeName,
+        type_platform: attaParams.typePlatform,
       },
       sort: [
         ['status', 'DESC'],
@@ -90,23 +88,17 @@ export const AttachmentBox = (props: IProps) => {
     ajax
       .get(`${envConfig.API_URL}/${envConfig.API_VERSION}/attachments`, { params: genCrudRequestQuery(params) })
       .then((res: IHttpRes<ICrudListRes<Attachment>>) => {
-        if (!isAjaxCancelled.current) {
-          setAttachments(_.orderBy(res.data.data.data, ['status', 'sort'], ['desc', 'asc']) || []);
-        }
+        setAttachments(_.orderBy(res.data.data.data, ['status', 'sort'], ['desc', 'asc']) || []);
       })
       .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
-      .finally(() => !isAjaxCancelled.current && setListLoading(false));
+      .finally(() => setListLoading(false));
   };
 
   useEffect(() => {
-    if (props.attachmentParams?.moduleId && !attachmentParams) {
+    if (props.attachmentParams?.moduleId && !attachmentParams.moduleId) {
       setAttachmentParams(props.attachmentParams);
-      onFetchList();
+      onFetchList(props.attachmentParams);
     }
-
-    return () => {
-      isAjaxCancelled.current = true;
-    };
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.attachmentParams]);

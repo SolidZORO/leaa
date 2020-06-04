@@ -62,7 +62,7 @@ export const TagSearchBox = forwardRef((props: IProps, ref: React.Ref<any>) => {
         // console.log(err.response?.data?.message || err.message);
         errorMsg(err.response?.data?.message || err.message);
       })
-      .finally(() => !isAjaxCancelled.current && setLoading(false));
+      .finally(() => setLoading(false));
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
