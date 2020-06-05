@@ -3119,11 +3119,6 @@
   dependencies:
     "@types/node" "*"
 
-"@types/module-alias@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.npm.taobao.org/@types/module-alias/download/@types/module-alias-2.0.0.tgz#882668f8b8cdbda44812c3b592c590909e18849e"
-  integrity sha1-iCZo+LjNvaRIEsO1ksWQkJ4YhJ4=
-
 "@types/multer@^1.4.3":
   version "1.4.3"
   resolved "https://registry.npm.taobao.org/@types/multer/download/@types/multer-1.4.3.tgz?cache=0&sync_timestamp=1588204805358&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fmulter%2Fdownload%2F%40types%2Fmulter-1.4.3.tgz#bdff74b334c38a8ee1de9fbedb5d1d3dbc377422"
@@ -6432,11 +6427,6 @@ crypto-browserify@^3.11.0:
     public-encrypt "^4.0.0"
     randombytes "^2.0.0"
     randomfill "^1.0.3"
-
-crypto@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.npm.taobao.org/crypto/download/crypto-1.0.1.tgz#2af1b7cad8175d24c8a1b0778255794a21803037"
-  integrity sha1-KvG3ytgXXSTIobB3glV5SiGAMDc=
 
 css-box-model@^1.2.0:
   version "1.2.1"
@@ -11883,7 +11873,7 @@ minipass@^2.3.5, minipass@^2.6.0, minipass@^2.8.6, minipass@^2.9.0:
 
 minipass@^3.0.0, minipass@^3.1.1:
   version "3.1.3"
-  resolved "https://registry.npm.taobao.org/minipass/download/minipass-3.1.3.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fminipass%2Fdownload%2Fminipass-3.1.3.tgz#7d42ff1f39635482e15f9cdb53184deebd5815fd"
+  resolved "https://registry.npm.taobao.org/minipass/download/minipass-3.1.3.tgz?cache=0&sync_timestamp=1589332828776&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fminipass%2Fdownload%2Fminipass-3.1.3.tgz#7d42ff1f39635482e15f9cdb53184deebd5815fd"
   integrity sha1-fUL/HzljVILhX5zbUxhN7r1YFf0=
   dependencies:
     yallist "^4.0.0"
@@ -11967,11 +11957,6 @@ modify-values@^1.0.0:
   version "1.0.1"
   resolved "https://registry.npm.taobao.org/modify-values/download/modify-values-1.0.1.tgz#b3939fa605546474e3e3e3c63d64bd43b4ee6022"
   integrity sha1-s5OfpgVUZHTj4+PGPWS9Q7TuYCI=
-
-module-alias@^2.2.2:
-  version "2.2.2"
-  resolved "https://registry.npm.taobao.org/module-alias/download/module-alias-2.2.2.tgz#151cdcecc24e25739ff0aa6e51e1c5716974c0e0"
-  integrity sha1-FRzc7MJOJXOf8KpuUeHFcWl0wOA=
 
 moment@2.26.0, moment@^2.25.3:
   version "2.26.0"
@@ -15315,7 +15300,7 @@ resolve-url@^0.2.1:
   resolved "https://registry.npm.taobao.org/resolve-url/download/resolve-url-0.2.1.tgz?cache=0&sync_timestamp=1585438700247&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fresolve-url%2Fdownload%2Fresolve-url-0.2.1.tgz#2c637fe77c893afd2a663fe21aa9080068e2052a"
   integrity sha1-LGN/53yJOv0qZj/iGqkIAGjiBSo=
 
-resolve@^1.0.0, resolve@^1.10.0, resolve@^1.12.0, resolve@^1.13.1, resolve@^1.15.1, resolve@^1.17.0, resolve@^1.3.2, resolve@^1.8.1:
+resolve@^1.0.0, resolve@^1.10.0, resolve@^1.12.0, resolve@^1.13.1, resolve@^1.15.1, resolve@^1.17.0, resolve@^1.3.2, resolve@^1.8.1, resolve@^1.9.0:
   version "1.17.0"
   resolved "https://registry.npm.taobao.org/resolve/download/resolve-1.17.0.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fresolve%2Fdownload%2Fresolve-1.17.0.tgz#b25941b54968231cc2d1bb76a79cb7f2c0bf8444"
   integrity sha1-sllBtUloIxzC0bt2p5y38sC/hEQ=
@@ -17000,7 +16985,7 @@ ts-node@*:
     source-map-support "^0.5.17"
     yn "3.1.1"
 
-tsconfig-paths@^3.8.0:
+tsconfig-paths@^3.9.0:
   version "3.9.0"
   resolved "https://registry.npm.taobao.org/tsconfig-paths/download/tsconfig-paths-3.9.0.tgz#098547a6c4448807e8fcb8eae081064ee9a3c90b"
   integrity sha1-CYVHpsREiAfo/Ljq4IEGTumjyQs=
@@ -17046,6 +17031,13 @@ tty-browserify@0.0.0:
   version "0.0.0"
   resolved "https://registry.npm.taobao.org/tty-browserify/download/tty-browserify-0.0.0.tgz#a157ba402da24e9bf957f9aa69d524eed42901a6"
   integrity sha1-oVe6QC2iTpv5V/mqadUk7tQpAaY=
+
+ttypescript@^1.5.10:
+  version "1.5.10"
+  resolved "https://registry.npm.taobao.org/ttypescript/download/ttypescript-1.5.10.tgz#5045083a91cf09a735ecc95d4711c1f3b83f2059"
+  integrity sha1-UEUIOpHPCac17MldRxHB87g/IFk=
+  dependencies:
+    resolve "^1.9.0"
 
 tunnel-agent@^0.6.0:
   version "0.6.0"
@@ -17153,6 +17145,13 @@ typeorm@^0.2.25:
     xml2js "^0.4.17"
     yargonaut "^1.1.2"
     yargs "^13.2.1"
+
+typescript-transform-paths@^1.1.14:
+  version "1.1.14"
+  resolved "https://registry.npm.taobao.org/typescript-transform-paths/download/typescript-transform-paths-1.1.14.tgz#4a3800a04977a527270980488f9c93055a31e474"
+  integrity sha1-SjgAoEl3pScnCYBIj5yTBVox5HQ=
+  dependencies:
+    slash "^3.0.0"
 
 typescript@3.9.3:
   version "3.9.3"

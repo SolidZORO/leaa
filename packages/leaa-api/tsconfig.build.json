@@ -1,10 +1,13 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "_build",
+    "outDir": "_dist",
+
+    "module": "CommonJS",
+    "target": "ES6",
 
     "isolatedModules": false,
-    "declaration": false,
-    "noEmit": false
+    "noEmit": false,
+    "plugins": [{ "transform": "typescript-transform-paths" }]
   }
 }

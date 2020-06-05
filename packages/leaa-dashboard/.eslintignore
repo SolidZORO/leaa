@@ -15,7 +15,6 @@
 /public
 /static
 /src/assets
-/public/assets
 
 /tools/module-alias
 /packages/leaa-dashboard/tools/webpack2

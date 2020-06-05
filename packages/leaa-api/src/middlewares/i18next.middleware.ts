@@ -1,7 +1,7 @@
 // import { Injectable, NestMiddleware } from '@nestjs/common';
 import i18next from 'i18next';
 // @ts-ignore
-import i18nextHttpMiddleware from 'i18next-http-middleware';
+import i18nextHttpMiddleware from 'i18next-http-middleware/cjs';
 
 import { enUs, zhCn } from '@leaa/api/src/locales';
 

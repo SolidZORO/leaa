@@ -2,7 +2,7 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "baseUrl": ".",
-    "outDir": "_build",
+    "outDir": "_dist",
 
     "module": "CommonJS",
     "target": "ES2018",

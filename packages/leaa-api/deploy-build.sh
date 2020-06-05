@@ -15,11 +15,12 @@ echo "\x1B[96m
 LOCAL_TIME=$(date "+%Y-%m-%d %H:%M:%S")
 
 DEPLOY_HEROKU_APP_NAME="test-leaa-api"
+# shellcheck disable=SC2034
 DEPLOY_COMMIT="update AUTO-DEPLOY ${DEPLOY_HEROKU_APP_NAME} @ ${LOCAL_TIME}"
 CONFIRM_MESSAGE=$(printf "<%s> \n\n🤖 DEPLOY %s? \n\n(Enter/Esc)" "$(pwd)" "$DEPLOY_HEROKU_APP_NAME")
 
 DEPLOY_DIR="./_deploy"
-DIST_DIR="./${DEPLOY_DIR}/_build"
+DIST_DIR="./${DEPLOY_DIR}/_dist"
 API_DIR="./${DIST_DIR}/leaa-api"
 
 read -p "${CONFIRM_MESSAGE}" -n 1 -r KEY
@@ -30,7 +31,7 @@ if [[ $KEY = "" ]]; then
 
     yarn build
 
-    cp -fr ./_build ${DEPLOY_DIR}
+    cp -fr ./_dist ${DEPLOY_DIR}
 
     cp -fr ./index.js ${DEPLOY_DIR}
     cp -fr ./.env.production ${DEPLOY_DIR}
@@ -38,11 +39,15 @@ if [[ $KEY = "" ]]; then
 
     mkdir -p ${API_DIR}/public
     cp -fr ./public/robots.txt ${API_DIR}/public
+    cp -fr ./public/favicon.ico ${API_DIR}/public
     cp -fr ./public/get-weixin-code.html ${API_DIR}/public
     cp -fr ./public/buildinfo.json ${API_DIR}/public
 
     mkdir -p ${API_DIR}/public/assets/divisions
     cp -fr ./public/assets/divisions/source ${API_DIR}/public/assets/divisions
+
+    mkdir -p ${API_DIR}/public/assets/fonts
+    cp -fr ./public/assets/fonts/* ${API_DIR}/public/assets/fonts
 else
     echo "CANCEL"
 fi

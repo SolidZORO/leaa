@@ -12,8 +12,6 @@ _docker_data
 .docker
 tsconfig.tsbuildinfo
 
-/.nowignore
-
 # Logs
 logs
 *.log
@@ -38,4 +36,10 @@ logs
 !.vscode/launch.json
 !.vscode/extensions.json
 
+# Deplpoy
+.nowignore
+.vercelignore
 .now
+.vercel
+/.now
+/.vercel

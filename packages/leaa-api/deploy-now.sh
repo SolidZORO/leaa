@@ -8,7 +8,7 @@ DEPLOY_DIR="./_deploy"
 
 
 # DEPLOY_DIR
-cp -fr ./serverless/now/* index.js ${DEPLOY_DIR}
+cp -fr ./serverless/vercel/* ${DEPLOY_DIR}
 cd ${DEPLOY_DIR} || exit
 
-now --prod
+vercel --prod -c

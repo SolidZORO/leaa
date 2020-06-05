@@ -1,5 +1,5 @@
 {
-  "name": "test-leaa-api",
+  "name": "leaa-api",
   "version": 2,
   "env": {
     "NODE_ENV": "production",

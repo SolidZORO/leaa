@@ -39,7 +39,7 @@ WPCONST.VIEWS_DIR = path.resolve(`${WPCONST.SRC_DIR}/views`);
 
 //
 // BUILD PATH
-WPCONST.BUILD_DIR_NAME = WPCONST.__DEV__ ? '.cache' : '_build';
+WPCONST.BUILD_DIR_NAME = WPCONST.__DEV__ ? '.cache' : '_dist';
 
 WPCONST.CDN_DIR_PATH = '/statics/';
 WPCONST.BUILD_DIR = path.resolve(`${WPCONST.ROOT_DIR}/${WPCONST.BUILD_DIR_NAME}`);

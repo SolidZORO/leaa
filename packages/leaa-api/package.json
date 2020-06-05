@@ -28,12 +28,12 @@
     "dev-tsnodedev": "NODE_ENV=development ts-node-dev --respawn --transpileOnly --ignore-watch node_modules -r tsconfig-paths/register ./src/main.ts",
     "dev": "NODE_ENV=development yarn dev-tsnodedev",
     "seed": "NODE_ENV=development ts-node-dev --respawn --transpileOnly -r tsconfig-paths/register src/modules/v1/seed/seed.command.ts",
-    "clear": "rimraf _build",
+    "clear": "rimraf _dist",
     "---------------------------------------------------------------------- PROD ----": "----",
     "prod": "NODE_ENV=production ts-node-dev --respawn --transpileOnly -r tsconfig-paths/register ./src/main.ts",
     "---------------------------------------------------------------------- SERVER ----": "----",
-    "build": "yarn clear && NODE_ENV=production tsc -b tsconfig.build.json && node gen-buildinfo.js",
-    "start": "NODE_ENV=production node index.js",
+    "build": "yarn clear && NODE_ENV=production ttsc -b tsconfig.build.json && node gen-buildinfo.js",
+    "start": "NODE_ENV=production node ./_dist/leaa-api/src/main.js",
     "---------------------------------------------------------------------- ALIAS ----": "----",
     "commit": "git-cz",
     "u": "yarn upgrade-interactive --latest"
@@ -58,7 +58,6 @@
     "class-validator": "^0.12.2",
     "core-js": "3.6.5",
     "cross-env": "^7.0.2",
-    "crypto": "^1.0.1",
     "diff": "^4.0.2",
     "dotenv": "^8.2.0",
     "envalid": "^6.0.2",
@@ -74,7 +73,6 @@
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.15",
     "mkdirp": "1.0.4",
-    "module-alias": "^2.2.2",
     "moment": "2.26.0",
     "multer": "^1.4.1",
     "mysql": "^2.18.1",
@@ -89,6 +87,7 @@
     "rxjs": "^6.5.5",
     "svg-captcha": "^1.4.0",
     "transliteration": "^2.1.11",
+    "tsconfig-paths": "^3.9.0",
     "typeorm": "^0.2.25",
     "uuid": "^8.1.0",
     "validator": "^13.0.0",
@@ -99,9 +98,9 @@
   "devDependencies": {
     "@types/ali-oss": "^6.0.5",
     "@types/bcryptjs": "^2.4.2",
+    "@types/cache-manager": "^2.10.3",
     "@types/core-js": "2.5.3",
     "@types/diff": "^4.0.2",
-    "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.6",
     "@types/express-rate-limit": "^5.0.0",
     "@types/helmet": "^0.0.47",
@@ -110,7 +109,6 @@
     "@types/jsonwebtoken": "^8.5.0",
     "@types/lodash": "^4.14.155",
     "@types/mkdirp": "^1.0.0",
-    "@types/module-alias": "^2.0.0",
     "@types/multer": "^1.4.3",
     "@types/mysql": "^2.15.13",
     "@types/node": "^14.0.11",
@@ -122,6 +120,8 @@
     "@types/uuid": "^8.0.0",
     "@types/validator": "^13.0.0",
     "eslint-plugin-react-hooks": "^4.0.4",
-    "express-serve-static-core": "^0.1.1"
+    "express-serve-static-core": "^0.1.1",
+    "ttypescript": "^1.5.10",
+    "typescript-transform-paths": "^1.1.14"
   }
 }

@@ -7,8 +7,8 @@
     "module": "ES2020",
     "target": "ES6",
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "declaration": true,
-    "declarationMap": true,
+    "declaration": false,
+    "declarationMap": false,
 
     "sourceMap": false,
     "allowJs": false,

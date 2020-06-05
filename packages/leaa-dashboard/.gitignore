@@ -49,3 +49,11 @@ robots.txt
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+# Deplpoy
+.nowignore
+.vercelignore
+.now
+.vercel
+/.now
+/.vercel
