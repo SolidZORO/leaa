@@ -1,12 +1,12 @@
 import path from 'path';
 import winston from 'winston';
 
-const DailyRotateFile = require('winston-daily-rotate-file');
+require('winston-daily-rotate-file');
 
 const baseLog = (
   type: 'error' | 'warn' | 'info' | 'debug' | 'verbose',
   message: string,
-  context?: string,
+  context?: string | any,
   trace?: string | any,
 ) => {
   const LOG_DIR_PATH = path.resolve(__dirname, '../../logs');
@@ -24,8 +24,9 @@ const baseLog = (
     level: 'verbose',
     format: WINSTON_INFO_FORMAT,
     transports: [
-      new DailyRotateFile({
-        filename: `${LOG_DIR_PATH}/app-%DATE%.log`,
+      // @ts-ignore
+      new winston.transports.DailyRotateFile({
+        filename: `${LOG_DIR_PATH}/%DATE%.log`,
         datePattern: 'YYYY-MM-DD',
         zippedArchive: false,
         maxSize: '50m',
@@ -39,10 +40,12 @@ const baseLog = (
     ],
   });
 
-  let result = context ? `[${context}] ${message}` : `[ / ] ${message}`;
+  const nextContext = typeof context === 'string' ? context : JSON.stringify(context);
+  let result = context ? `[${nextContext}] ${message}` : `[ - ] ${message}`;
 
   if (trace) {
-    result += `\n\n📍[ERROR-TRACE] ${trace}\n\n`;
+    const nextTrace = typeof trace === 'string' ? trace : JSON.stringify(trace);
+    result += `\n\n📍[ERROR-TRACE] ${nextTrace}\n\n`;
   }
 
   return winstonLogger.log(type, result);
