@@ -71,6 +71,8 @@ export class User extends Base {
 
   @BeforeInsert()
   BeforeInsert?() {
-    this.avatar_url = genAvatarUrl(this.email || this.phone || this.id || '');
+    if (!this.avatar_url) {
+      this.avatar_url = genAvatarUrl(this.email || this.phone || this.id || '');
+    }
   }
 }

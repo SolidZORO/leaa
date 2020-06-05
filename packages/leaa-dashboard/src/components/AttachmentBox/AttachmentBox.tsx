@@ -31,6 +31,7 @@ interface IProps {
   circle?: boolean;
   ignoreMsg?: boolean;
   onChangeAttasCallback?: (attachment: Attachment[]) => void;
+  onDeleteAttaCallback?: () => void;
   autoUpdateRelation?: IAutoUpdateRelation;
 }
 
@@ -111,6 +112,7 @@ export const AttachmentBox = (props: IProps) => {
       .then(() => {
         // 这里貌似没必要去拿 res 的 data 然后再设定
         if (props.onChangeAttasCallback) props.onChangeAttasCallback(attas);
+        if (props.onDeleteAttaCallback) props.onDeleteAttaCallback();
       })
       .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message));
   };

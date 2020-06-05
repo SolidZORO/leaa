@@ -11,6 +11,7 @@ import { UserUpdateOneReq } from '@leaa/common/src/dtos/user';
 
 import { FormCard, EntryInfoDate, SwitchNumber, Rcon } from '@leaa/dashboard/src/components';
 
+import { UploadUserAvatar } from '../UploadUserAvatar/UploadUserAvatar';
 import style from './style.module.less';
 
 interface IProps {
@@ -46,6 +47,14 @@ export const UserInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
 
   return (
     <div className={cx(style['wrapper'], props.className)}>
+      <UploadUserAvatar
+        item={props.item}
+        loading={props.loading}
+        onUpdateAvatarCallback={(aurl) => {
+          form.setFieldsValue({ avatar_url: aurl });
+        }}
+      />
+
       <FormCard
         title={
           <>
@@ -63,6 +72,12 @@ export const UserInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
           className={cx(style['form-wrapper'], { [style['form-wrapper--avatar']]: props.item })}
         >
           <Row gutter={16} className={style['form-row']}>
+            <Col xs={24} style={{ display: 'none' }}>
+              <Form.Item name="avatar_url">
+                <Input placeholder={t('_lang:avatar_url')} />
+              </Form.Item>
+            </Col>
+
             <Col xs={24} sm={5}>
               <Form.Item name="phone" rules={[{ len: 11 }]} validateTrigger={['onBlur']} label={t('_lang:phone')}>
                 <Input placeholder={t('_lang:phone')} />

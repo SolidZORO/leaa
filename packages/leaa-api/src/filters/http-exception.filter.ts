@@ -28,11 +28,16 @@ export class HttpExceptionFilter implements ExceptionFilter {
 
     logger.error(`${exception}` || 'HttpExceptionFilter ErrorMsg');
 
-    // @ts-ignore
-    console.error('\n\n---- EXCEPTION-SQL-MESSAGE ----\n', exception.sqlMessage);
-
-    // @ts-ignore
-    console.error('\n\n---- EXCEPTION-RESPONSE ----\n', exception.response);
+    console.error(
+      '\n---- EXCEPTION ----\n',
+      '\nSQL:\n',
+      // @ts-ignore
+      exception.sqlMessage,
+      '\n\nRES:\n',
+      // @ts-ignore
+      exception.response,
+      '\n\n\n\n',
+    );
 
     res.status(statusCode).json({
       statusCode,

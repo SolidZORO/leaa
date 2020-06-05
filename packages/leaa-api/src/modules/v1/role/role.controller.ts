@@ -23,6 +23,10 @@ import { RoleService } from './role.service';
     join: {
       permissions: { eager: true },
     },
+    sort: [
+      { field: 'created_at', order: 'DESC' },
+      { field: 'slug', order: 'ASC' },
+    ],
   },
   routes: {
     exclude: ['createManyBase'],

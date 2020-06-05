@@ -20,6 +20,10 @@ import { PermissionService } from './permission.service';
   query: {
     maxLimit: 1000,
     alwaysPaginate: true,
+    sort: [
+      { field: 'created_at', order: 'DESC' },
+      { field: 'slug', order: 'ASC' },
+    ],
   },
   routes: {
     exclude: ['createManyBase'],

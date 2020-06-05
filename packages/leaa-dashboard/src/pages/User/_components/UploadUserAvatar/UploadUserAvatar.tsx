@@ -19,6 +19,7 @@ interface IProps {
   item?: User;
   className?: string;
   loading?: boolean;
+  onUpdateAvatarCallback?: (avatar_url?: string | null) => void;
 }
 
 export const UploadUserAvatar = (props: IProps) => {
@@ -31,22 +32,29 @@ export const UploadUserAvatar = (props: IProps) => {
 
   const onUpdateAvatar = async (avatar_url?: string | null) => {
     setUpdateLoading(true);
-    if (!props.item?.id) return;
 
-    ajax
-      .patch(`${envConfig.API_URL}/${envConfig.API_VERSION}/users/${props.item?.id}`, {
-        avatar_url,
-      } as UserUpdateOneReq)
-      .then((res: IHttpRes<User>) => {
-        setExtAurl(res.data.data.avatar_url);
+    if (!props.item?.id) {
+      // for create user
+      if (props.onUpdateAvatarCallback) props.onUpdateAvatarCallback(avatar_url);
+    } else {
+      // for update user
+      ajax
+        .patch(`${envConfig.API_URL}/${envConfig.API_VERSION}/users/${props.item?.id}`, {
+          avatar_url,
+        } as UserUpdateOneReq)
+        .then((res: IHttpRes<User>) => {
+          setExtAurl(res.data.data.avatar_url);
+          if (props.onUpdateAvatarCallback) props.onUpdateAvatarCallback(avatar_url);
 
-        msg(t('_lang:updatedSuccessfully'));
-      })
-      .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
-      .finally(() => setUpdateLoading(false));
+          msg(t('_lang:updatedSuccessfully'));
+        })
+        .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
+        .finally(() => setUpdateLoading(false));
+    }
   };
 
   const avatarDom = () => {
+    // gravatar
     if (extAurl && extAurl.includes('gravatar')) {
       return (
         <div className={cx(style['avatar-box'], style['avatar-box--avatar-url'])}>
@@ -69,28 +77,26 @@ export const UploadUserAvatar = (props: IProps) => {
       );
     }
 
-    if ((!extAurl && props.item?.id) || (extAurl && !extAurl.includes('gravatar') && props.item?.id)) {
-      return (
-        <AttachmentBox
-          type="card"
-          title={t('_lang:avatar')}
-          attachmentParams={{
-            type: 'image',
-            moduleId: props.item?.id,
-            moduleName: 'user',
-            typeName: 'avatar',
-          }}
-          cardHeight={80}
-          className={style['avatar-box']}
-          circle
-          onChangeAttasCallback={(res) => {
-            if (!_.isEmpty(res) && res[0]) onUpdateAvatar(res[0].path);
-          }}
-        />
-      );
-    }
-
-    return null;
+    // atta avatar
+    return (
+      <AttachmentBox
+        type="card"
+        title={t('_lang:avatar')}
+        attachmentParams={{
+          type: 'image',
+          moduleId: props.item?.id,
+          moduleName: 'user',
+          typeName: 'avatar',
+        }}
+        cardHeight={80}
+        className={style['avatar-box']}
+        circle
+        onChangeAttasCallback={(res) => {
+          if (_.isEmpty(res)) onUpdateAvatar(null);
+          if (!_.isEmpty(res) && res[0]) onUpdateAvatar(res[0].path);
+        }}
+      />
+    );
   };
 
   return <div className={cx(style['user-avatar-wrapper'], props.className)}>{avatarDom()}</div>;

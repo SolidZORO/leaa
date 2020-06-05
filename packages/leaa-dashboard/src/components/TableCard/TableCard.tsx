@@ -62,7 +62,8 @@ export const TableCard = <T extends any>(props: IProps<T>) => {
     id: () => ({
       title: 'ID',
       dataIndex: 'id',
-      columnWidth: 80, // ID
+      textWrap: 'word-break',
+      width: 60, // ID
       sorter: true,
       sortOrder: calcTableSortOrder('id', crudQuery.sort),
       render: (id: string) => <TableColumnId id={id} link={`${props.route?.path}/${id}`} />,
@@ -91,17 +92,30 @@ export const TableCard = <T extends any>(props: IProps<T>) => {
     phone: () => ({
       title: t('_lang:phone'),
       dataIndex: 'phone',
-      columnWidth: 70,
+      width: 140,
+      ellipsis: true,
+      textWrap: 'word-break',
       sorter: true,
       sortOrder: calcTableSortOrder('phone', crudQuery.sort),
-      render: (text: string, record: any) => <Link to={`${props.route.path}/${record.id}`}>{record.phone}</Link>,
+      render: (text: string, record: any) => (
+        <code>
+          {record.phone ? <Link to={`${props.route.path}/${record.id}`}>{record.phone}</Link> : <span>-</span>}
+        </code>
+      ),
     }),
     email: () => ({
       title: t('_lang:email'),
       dataIndex: 'email',
       sorter: true,
+      width: 180,
+      ellipsis: true,
+      textWrap: 'word-break',
       sortOrder: calcTableSortOrder('email', crudQuery.sort),
-      render: (text: string, record: any) => <Link to={`${props.route.path}/${record.id}`}>{record.email}</Link>,
+      render: (text: string, record: any) => (
+        <span>
+          {record.email ? <Link to={`${props.route.path}/${record.id}`}>{record.email}</Link> : <span>-</span>}
+        </span>
+      ),
     }),
     roleList: () => ({
       title: t('_lang:role'),
@@ -114,12 +128,12 @@ export const TableCard = <T extends any>(props: IProps<T>) => {
     avatar: () => ({
       title: t('_lang:avatar'),
       dataIndex: 'avatar_url',
-      columnWidth: 60,
+      width: 60,
       render: (avatar: string) => <UserAvatar url={avatar} />,
     }),
     isAdmin: () => ({
       title: <Rcon type="ri-vip-crown-2-line" />,
-      columnWidth: 30,
+      width: 30,
       dataIndex: 'is_admin',
       sorter: true,
       sortOrder: calcTableSortOrder('name', crudQuery.sort),
@@ -128,7 +142,7 @@ export const TableCard = <T extends any>(props: IProps<T>) => {
     category: () => ({
       title: t('_lang:category'),
       dataIndex: 'category',
-      columnWidth: 100,
+      width: 110,
       render: (text: string, record: any) => (
         <span>{record.categories && record.categories.length > 0 ? record.categories[0].name : '----'}</span>
       ),
@@ -136,20 +150,21 @@ export const TableCard = <T extends any>(props: IProps<T>) => {
     views: () => ({
       title: t('_lang:views'),
       dataIndex: 'views',
-      columnWidth: 100,
+      width: 100,
       render: (text: string, record: any) => <small className="g-col-number">{record.views}</small>,
     }),
     createdAt: () => ({
       title: t('_lang:createdAt'),
       dataIndex: 'created_at',
       sorter: true,
+      width: 110,
       sortOrder: calcTableSortOrder('created_at', crudQuery?.sort),
       render: (text: string) => <TableColumnDate date={text} size="small" />,
     }),
     status: () => ({
       title: t('_lang:status'),
       dataIndex: 'status',
-      columnWidth: 60,
+      width: 60,
       render: (text: string, record: any) => (
         <TableColumnStatusSwitch id={record.id} value={record.status} apiPath={props.routerName} size="small" />
       ),
@@ -157,7 +172,7 @@ export const TableCard = <T extends any>(props: IProps<T>) => {
     action: (options?: { fieldName?: string }) => ({
       title: t('_lang:action'),
       dataIndex: 'operation',
-      columnWidth: 60,
+      width: 60,
       render: (text: string, record: any) => (
         <TableColumnDeleteButton
           id={record.id}
@@ -170,7 +185,7 @@ export const TableCard = <T extends any>(props: IProps<T>) => {
     byte: (options?: { fieldName?: string }) => ({
       title: t('_lang:size'),
       dataIndex: 'size',
-      columnWidth: 75,
+      width: 75,
       sorter: true,
       sortOrder: calcTableSortOrder('size', crudQuery?.sort),
       render: (text: string, record: any) =>
@@ -211,7 +226,7 @@ export const TableCard = <T extends any>(props: IProps<T>) => {
   };
 
   const rowSelection = {
-    columnWidth: 30,
+    width: 30,
     onChange: (keys: IKey[]) => setSelectedRowKeys(keys),
     selectedRowKeys,
   };

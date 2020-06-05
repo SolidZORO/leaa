@@ -20,7 +20,9 @@ export class UserCreateOneReq {
   @Length(6, 64)
   password!: string;
 
+  @IsOptional()
+  avatar_url?: string | null;
+
   status?: number;
   is_admin?: number;
-  avatar_url?: string;
 }

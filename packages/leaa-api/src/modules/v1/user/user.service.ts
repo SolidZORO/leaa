@@ -8,7 +8,7 @@ import { CrudRequest } from '@nestjsx/crud';
 import { Injectable, ForbiddenException, BadRequestException } from '@nestjs/common';
 
 import { logger } from '@leaa/api/src/utils';
-import { User, Role, Auth } from '@leaa/common/src/entrys';
+import { User, Role, Auth, Attachment } from '@leaa/common/src/entrys';
 import { UserUpdateOneReq, UserCreateOneReq } from '@leaa/common/src/dtos/user';
 import validator from 'validator';
 
@@ -20,6 +20,7 @@ export class UserService extends TypeOrmCrudService<User> {
     @InjectRepository(User) private readonly userRepo: Repository<User>,
     @InjectRepository(Role) private readonly roleRepo: Repository<Role>,
     @InjectRepository(Auth) private readonly authRepo: Repository<Auth>,
+    @InjectRepository(Attachment) private readonly attachmentRepo: Repository<Attachment>,
   ) {
     super(userRepo);
   }
@@ -47,7 +48,10 @@ export class UserService extends TypeOrmCrudService<User> {
     const hasSuperuser = await this.userRepo.findOne({ is_superuser: 1 });
     if (hasSuperuser) delete nextDto.is_superuser;
 
-    return super.createOne(req, nextDto);
+    const result = await super.createOne(req, nextDto);
+    if (nextDto.avatar_url) await this.updateAvatarModuleIdByPath(nextDto.avatar_url, result.id);
+
+    return result;
   }
 
   // @ts-ignore
@@ -97,6 +101,11 @@ export class UserService extends TypeOrmCrudService<User> {
 
   //
   //
+
+  async updateAvatarModuleIdByPath(path: string, module_id: string): Promise<void> {
+    const atta = await this.attachmentRepo.findOne({ path });
+    if (atta) await this.attachmentRepo.update(atta.id, { module_id });
+  }
 
   async createPassword(password: string): Promise<string> {
     const salt = bcryptjs.genSaltSync();

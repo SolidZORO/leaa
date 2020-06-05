@@ -14,7 +14,7 @@ import { PageCard, HtmlMeta, Rcon, SubmitBar } from '@leaa/dashboard/src/compone
 
 import { UserInfoForm } from '../_components/UserInfoForm/UserInfoForm';
 import { UserRolesForm } from '../_components/UserRolesForm/UserRolesForm';
-import { UploadUserAvatar } from '../_components/UploadUserAvatar/UploadUserAvatar';
+
 import style from './style.module.less';
 
 const API_PATH = 'users';
@@ -104,8 +104,6 @@ export default (props: IPage) => {
       <HtmlMeta title={t(`${props.route.namei18n}`)} />
 
       <UserInfoForm item={item} loading={itemLoading} ref={infoFormRef} />
-
-      <UploadUserAvatar item={item} loading={itemLoading} />
 
       <UserRolesForm ref={rolesFormRef} item={item} loading={rolesLoading} roles={roles || []} />
 
