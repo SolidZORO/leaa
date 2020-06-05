@@ -1,6 +1,5 @@
 import path from 'path';
 import winston from 'winston';
-import { diff } from 'jsondiffpatch';
 
 const DailyRotateFile = require('winston-daily-rotate-file');
 
@@ -37,10 +36,6 @@ const baseLog = (
         filename: `${LOG_DIR_PATH}/_error.log`,
         level: 'error',
       }),
-      new winston.transports.File({
-        filename: `${LOG_DIR_PATH}/_warn.log`,
-        level: 'warn',
-      }),
     ],
   });
 
@@ -59,24 +54,4 @@ export const logger = {
   warn: (message: string, context?: string) => baseLog('warn', `⚠️ ${message}`, context),
   debug: (message: string, context?: string) => baseLog('debug', message, context),
   verbose: (message: string, context?: string) => baseLog('verbose', message, context),
-  updateLog: ({
-    id,
-    prevItem,
-    nextItem,
-    constructorName,
-  }: {
-    id: number | string;
-    prevItem: any;
-    nextItem: any;
-    constructorName: string;
-  }) => {
-    const diffObject = diff(prevItem, nextItem);
-
-    // TIPS: if update no change, no write log.
-    if (diffObject) {
-      // log('info', `update item #${id} successful PREV-ITEM: \n${JSON.stringify(prevItem)}\n\n`, constructorName);
-      // log('info', `update item #${id} successful NEXT-ITEM: \n${JSON.stringify(nextItem)}\n\n`, constructorName);
-      baseLog('info', `↔️ update item #${id} DIFF: ${JSON.stringify(diff(prevItem, nextItem))}`, constructorName);
-    }
-  },
 };
