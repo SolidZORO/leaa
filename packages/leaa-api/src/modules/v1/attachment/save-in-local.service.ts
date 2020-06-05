@@ -11,9 +11,9 @@ import {
   IAttachmentCreateFieldByLocal,
   ISaveInLocalSignature,
   IAttachmentParams,
-} from '@leaa/common/src/interfaces';
+} from '@leaa/api/src/interfaces';
 import { ConfigService } from '@leaa/api/src/modules/v1/config/config.service';
-import { Attachment } from '@leaa/common/src/entrys';
+import { Attachment } from '@leaa/api/src/entrys';
 import { logger, isAt2x, uuid, genUrl, genUrlAt2x, getAt2xPath } from '@leaa/api/src/utils';
 import { attachmentConfig } from '@leaa/api/src/configs';
 import { isUUID } from '@nestjs/common/utils/is-uuid';

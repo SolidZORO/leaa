@@ -2,10 +2,10 @@ import { Controller, UseGuards, Get, Req, Query } from '@nestjs/common';
 import { Crud, CrudController, CrudRequest, Override, ParsedRequest, ParsedBody } from '@nestjsx/crud';
 
 import { Permissions } from '@leaa/api/src/decorators';
-import { CategoryCreateOneReq, CategoryUpdateOneReq } from '@leaa/common/src/dtos/category';
-import { ICategoriesQuery } from '@leaa/common/src/interfaces';
+import { CategoryCreateOneReq, CategoryUpdateOneReq } from '@leaa/api/src/dtos/category';
+import { ICategoriesQuery } from '@leaa/api/src/interfaces';
 import { JwtGuard, PermissionsGuard } from '@leaa/api/src/guards';
-import { Category } from '@leaa/common/src/entrys';
+import { Category } from '@leaa/api/src/entrys';
 
 import { CategoryService } from './category.service';
 

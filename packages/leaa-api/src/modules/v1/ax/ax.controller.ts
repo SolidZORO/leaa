@@ -2,9 +2,9 @@ import { Controller, UseGuards } from '@nestjs/common';
 import { Crud, CrudController, Override, ParsedRequest, ParsedBody, CrudRequest } from '@nestjsx/crud';
 
 import { Permissions } from '@leaa/api/src/decorators';
-import { AxCreateOneReq, AxUpdateOneReq } from '@leaa/common/src/dtos/ax';
+import { AxCreateOneReq, AxUpdateOneReq } from '@leaa/api/src/dtos/ax';
 import { JwtGuard, PermissionsGuard } from '@leaa/api/src/guards';
-import { Ax } from '@leaa/common/src/entrys';
+import { Ax } from '@leaa/api/src/entrys';
 
 import { AxService } from './ax.service';
 

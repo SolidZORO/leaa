@@ -2,9 +2,9 @@ import React, { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from 'antd';
 
-import { Role } from '@leaa/common/src/entrys';
+import { Role } from '@leaa/api/src/entrys';
 import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
-import { RoleUpdateOneReq } from '@leaa/common/src/dtos/role';
+import { RoleUpdateOneReq } from '@leaa/api/src/dtos/role';
 import { IPage, ICommenFormRef, ISubmitData, IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
 import { msg, errorMsg, ajax } from '@leaa/dashboard/src/utils';
 

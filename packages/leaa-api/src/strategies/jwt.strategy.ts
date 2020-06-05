@@ -3,7 +3,7 @@ import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { JwtService } from '@nestjs/jwt';
 
-import { IJwtPayload } from '@leaa/common/src/interfaces';
+import { IJwtPayload } from '@leaa/api/src/interfaces';
 import { ConfigService } from '@leaa/api/src/modules/v1/config/config.service';
 import { AuthService } from '@leaa/api/src/modules/v1/auth/auth.service';
 import { checkUserIsEnable } from '@leaa/api/src/utils';

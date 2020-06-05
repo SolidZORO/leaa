@@ -4,8 +4,8 @@ import { useTranslation } from 'react-i18next';
 import React, { useState, useEffect, useRef } from 'react';
 import { Tooltip } from 'antd';
 
-import { IAttachmentParams, IAutoUpdateRelation } from '@leaa/common/src/interfaces';
-import { Attachment } from '@leaa/common/src/entrys';
+import { IAttachmentParams, IAutoUpdateRelation } from '@leaa/api/src/interfaces';
+import { Attachment } from '@leaa/api/src/entrys';
 
 import { removeLangSpace, ajax, errorMsg, genCrudRequestQuery } from '@leaa/dashboard/src/utils';
 import { envConfig } from '@leaa/dashboard/src/configs';

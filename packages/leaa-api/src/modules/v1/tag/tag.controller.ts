@@ -1,9 +1,9 @@
 import { Controller, UseGuards } from '@nestjs/common';
 import { Crud, CrudController, Override, ParsedRequest, CrudRequest, ParsedBody } from '@nestjsx/crud';
 import { Permissions } from '@leaa/api/src/decorators';
-import { TagCreateOneReq, TagUpdateOneReq } from '@leaa/common/src/dtos/tag';
+import { TagCreateOneReq, TagUpdateOneReq } from '@leaa/api/src/dtos/tag';
 import { JwtGuard, PermissionsGuard } from '@leaa/api/src/guards';
-import { Tag } from '@leaa/common/src/entrys';
+import { Tag } from '@leaa/api/src/entrys';
 
 import { TagService } from './tag.service';
 

@@ -4,10 +4,10 @@ import { Col, Form, Input, Row } from 'antd';
 
 import { useTranslation } from 'react-i18next';
 
-import { Tag as TagEntry } from '@leaa/common/src/entrys';
+import { Tag as TagEntry } from '@leaa/api/src/entrys';
 import { errorMsg } from '@leaa/dashboard/src/utils';
 import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
-import { TagUpdateOneReq } from '@leaa/common/src/dtos/tag';
+import { TagUpdateOneReq } from '@leaa/api/src/dtos/tag';
 
 import { FormCard, EntryInfoDate } from '@leaa/dashboard/src/components';
 

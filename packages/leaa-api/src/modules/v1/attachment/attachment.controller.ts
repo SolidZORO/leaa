@@ -4,16 +4,16 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { JwtGuard, PermissionsGuard } from '@leaa/api/src/guards';
 import { AttachmentService } from '@leaa/api/src/modules/v1/attachment/attachment.service';
 import { SaveInOssAliyunService } from '@leaa/api/src/modules/v1/attachment/save-in-oss-aliyun.service';
-import { ICraeteAttachmentByOssCallback, IAttachmentParams } from '@leaa/common/src/interfaces';
+import { ICraeteAttachmentByOssCallback, IAttachmentParams } from '@leaa/api/src/interfaces';
 import { Crud, CrudController, Override, ParsedRequest, CrudRequest } from '@nestjsx/crud';
-import { Attachment } from '@leaa/common/src/entrys';
+import { Attachment } from '@leaa/api/src/entrys';
 import { Permissions } from '@leaa/api/src/decorators';
 import {
   AttachmentCreateOneReq,
   AttachmentUpdateOneReq,
   AttachmentUpdateManyReq,
   AttachmentUpdateManySortReq,
-} from '@leaa/common/src/dtos/attachment';
+} from '@leaa/api/src/dtos/attachment';
 
 @Crud({
   model: { type: Attachment },

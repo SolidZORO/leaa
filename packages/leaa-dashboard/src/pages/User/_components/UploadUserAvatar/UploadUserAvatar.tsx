@@ -5,13 +5,13 @@ import { useTranslation } from 'react-i18next';
 import { DeleteOutlined } from '@ant-design/icons';
 import { Button, Tooltip } from 'antd';
 
-import { User } from '@leaa/common/src/entrys';
+import { User } from '@leaa/api/src/entrys';
 import { AttachmentBox } from '@leaa/dashboard/src/components';
 
 import { ajax, errorMsg, msg } from '@leaa/dashboard/src/utils';
 import { envConfig } from '@leaa/dashboard/src/configs';
 import { IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
-import { UserUpdateOneReq } from '@leaa/common/src/dtos/user';
+import { UserUpdateOneReq } from '@leaa/api/src/dtos/user';
 
 import style from './style.module.less';
 

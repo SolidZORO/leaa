@@ -3,7 +3,7 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import svgCaptcha from 'svg-captcha';
 
-import { Verification, Action } from '@leaa/common/src/entrys';
+import { Verification, Action } from '@leaa/api/src/entrys';
 import { captchaConfig } from '@leaa/api/src/configs';
 import { ICaptchaResult } from '@leaa/api/src/interfaces';
 import { ConfigService } from '@leaa/api/src/modules/v1/config/config.service';

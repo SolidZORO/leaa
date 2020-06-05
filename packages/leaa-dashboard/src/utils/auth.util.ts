@@ -2,7 +2,7 @@ import _ from 'lodash';
 import moment from 'moment';
 import Cookies from 'js-cookie';
 
-import { IPermissionSlug } from '@leaa/common/src/interfaces';
+import { IPermissionSlug } from '@leaa/api/src/interfaces';
 import { AUTH_TOKEN_NAME, AUTH_INFO, GUEST_TOKEN_NAME } from '@leaa/dashboard/src/constants';
 import { IAuthInfo } from '@leaa/dashboard/src/interfaces';
 // @ts-ignore

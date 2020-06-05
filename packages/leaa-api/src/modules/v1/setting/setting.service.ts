@@ -4,8 +4,8 @@ import { CrudRequest } from '@nestjsx/crud';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 
-import { Setting } from '@leaa/common/src/entrys';
-import { SettingCreateOneReq, SettingUpdateManyReq } from '@leaa/common/src/dtos/setting';
+import { Setting } from '@leaa/api/src/entrys';
+import { SettingCreateOneReq, SettingUpdateManyReq } from '@leaa/api/src/dtos/setting';
 
 @Injectable()
 export class SettingService extends TypeOrmCrudService<Setting> {

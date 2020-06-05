@@ -1,7 +1,7 @@
 // import { Module } from '@nestjs/common';
 // import { TypeOrmModule } from '@nestjs/typeorm';
 //
-// import { Division } from '@leaa/common/src/entrys';
+// import { Division } from '@leaa/api/src/entrys';
 // // import { DivisionResolver } from '@leaa/api/src/modules/v1/division/division.resolver';
 // import { DivisionService } from '@leaa/api/src/modules/v1/division/division.service';
 //

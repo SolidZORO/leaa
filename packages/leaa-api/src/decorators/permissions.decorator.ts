@@ -1,5 +1,5 @@
 import { SetMetadata } from '@nestjs/common';
-import { IPermissionSlug } from '@leaa/common/src/interfaces';
+import { IPermissionSlug } from '@leaa/api/src/interfaces';
 
 export const PermissionsMetadataKey = 'permissions';
 

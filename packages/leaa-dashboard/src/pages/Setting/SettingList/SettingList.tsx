@@ -5,7 +5,7 @@ import { Button, Modal, Popconfirm } from 'antd';
 import { DeleteOutlined, LoadingOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import { UPDATE_BUTTON_ICON, PAGE_CARD_TITLE_CREATE_ICON } from '@leaa/dashboard/src/constants';
 
-import { Setting } from '@leaa/common/src/entrys';
+import { Setting } from '@leaa/api/src/entrys';
 import { envConfig } from '@leaa/dashboard/src/configs';
 import {
   IPage,
@@ -19,7 +19,7 @@ import {
 import { ajax, errorMsg, genCrudRequestQuery, msg } from '@leaa/dashboard/src/utils';
 import { PageCard, HtmlMeta, SubmitBar, Rcon } from '@leaa/dashboard/src/components';
 
-import { SettingUpdateManyReq, SettingUpdateOneReq, SettingCreateOneReq } from '@leaa/common/src/dtos/setting';
+import { SettingUpdateManyReq, SettingUpdateOneReq, SettingCreateOneReq } from '@leaa/api/src/dtos/setting';
 
 import { SettingListForm } from '../_components/SettingListForm/SettingListForm';
 import { SettingModalForm } from '../_components/SettingModalForm/SettingModalForm';

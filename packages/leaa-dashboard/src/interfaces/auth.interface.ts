@@ -1,4 +1,4 @@
-import { User } from '@leaa/common/src/entrys';
+import { User } from '@leaa/api/src/entrys';
 
 export type IAuthInfo = Pick<
   User,

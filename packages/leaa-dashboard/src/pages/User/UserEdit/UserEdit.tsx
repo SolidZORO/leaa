@@ -2,10 +2,10 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from 'antd';
 
-import { User, Role } from '@leaa/common/src/entrys';
-import { IAttachmentBoxRef } from '@leaa/common/src/interfaces';
+import { User, Role } from '@leaa/api/src/entrys';
+import { IAttachmentBoxRef } from '@leaa/api/src/interfaces';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
-import { UserUpdateOneReq } from '@leaa/common/src/dtos/user';
+import { UserUpdateOneReq } from '@leaa/api/src/dtos/user';
 import { IPage, ICommenFormRef, ISubmitData, IHttpRes, IHttpError, ICrudListRes } from '@leaa/dashboard/src/interfaces';
 import { msg, errorMsg, ajax } from '@leaa/dashboard/src/utils';
 

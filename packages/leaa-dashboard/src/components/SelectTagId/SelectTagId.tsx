@@ -4,7 +4,7 @@ import cx from 'classnames';
 import { Tag, Button, Popover } from 'antd';
 import { TooltipPlacement } from 'antd/es/tooltip';
 
-import { Tag as TagEntry } from '@leaa/common/src/entrys';
+import { Tag as TagEntry } from '@leaa/api/src/entrys';
 import { TagSearchBox, Rcon } from '@leaa/dashboard/src/components';
 
 import { envConfig } from '@leaa/dashboard/src/configs';

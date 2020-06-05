@@ -2,9 +2,9 @@ import { Controller, UseGuards } from '@nestjs/common';
 import { Crud, CrudController, Override, ParsedRequest, CrudRequest, ParsedBody } from '@nestjsx/crud';
 
 import { Permissions, JwtUser } from '@leaa/api/src/decorators';
-import { UserCreateOneReq, UserUpdateOneReq } from '@leaa/common/src/dtos/user';
+import { UserCreateOneReq, UserUpdateOneReq } from '@leaa/api/src/dtos/user';
 import { JwtGuard, PermissionsGuard } from '@leaa/api/src/guards';
-import { User } from '@leaa/common/src/entrys';
+import { User } from '@leaa/api/src/entrys';
 import { UserService } from './user.service';
 
 @Crud({

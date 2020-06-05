@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { Action } from '@leaa/common/src/entrys';
+import { Action } from '@leaa/api/src/entrys';
 
 import { ActionService } from './action.service';
 import { ActionController } from './action.controller';

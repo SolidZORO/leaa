@@ -8,6 +8,7 @@ export * from './auth.interface';
 //
 export * from './http.interface';
 export * from './article.interface';
+export * from './module.interface';
 
 export * from './address.interface';
 export * from './division.interface';

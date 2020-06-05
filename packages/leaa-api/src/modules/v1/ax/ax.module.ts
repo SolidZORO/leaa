@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { Ax, Attachment } from '@leaa/common/src/entrys';
+import { Ax, Attachment } from '@leaa/api/src/entrys';
 import { AttachmentModule } from '@leaa/api/src/modules/v1/attachment/attachment.module';
 import { AuthTokenModule } from '@leaa/api/src/modules/v1/auth-token/auth-token.module';
 

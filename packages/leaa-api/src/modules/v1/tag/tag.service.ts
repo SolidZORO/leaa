@@ -6,10 +6,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 import { logger } from '@leaa/api/src/utils';
 
-import { TagSyncToFileRes, TagCreateOneReq } from '@leaa/common/src/dtos/tag';
+import { TagSyncToFileRes, TagCreateOneReq } from '@leaa/api/src/dtos/tag';
 import { dictConfig } from '@leaa/api/src/configs';
 
-import { Tag } from '@leaa/common/src/entrys';
+import { Tag } from '@leaa/api/src/entrys';
 import { CrudRequest } from '@nestjsx/crud';
 // import { CrudRequest, GetManyDefaultResponse } from '@nestjsx/crud';
 

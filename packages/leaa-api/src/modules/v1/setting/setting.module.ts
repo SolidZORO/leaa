@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { Setting } from '@leaa/common/src/entrys';
+import { Setting } from '@leaa/api/src/entrys';
 
 import { SettingController } from './setting.controller';
 import { SettingService } from './setting.service';

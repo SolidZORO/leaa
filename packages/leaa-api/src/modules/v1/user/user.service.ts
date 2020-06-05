@@ -8,8 +8,8 @@ import { CrudRequest } from '@nestjsx/crud';
 import { Injectable, ForbiddenException, BadRequestException } from '@nestjs/common';
 
 import { logger } from '@leaa/api/src/utils';
-import { User, Role, Auth, Attachment } from '@leaa/common/src/entrys';
-import { UserUpdateOneReq, UserCreateOneReq } from '@leaa/common/src/dtos/user';
+import { User, Role, Auth, Attachment } from '@leaa/api/src/entrys';
+import { UserUpdateOneReq, UserCreateOneReq } from '@leaa/api/src/dtos/user';
 import validator from 'validator';
 
 const CLS_NAME = 'UserService';

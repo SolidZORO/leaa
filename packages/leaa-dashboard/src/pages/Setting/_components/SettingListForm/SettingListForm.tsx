@@ -4,10 +4,10 @@ import { Form, Input, Select, Tooltip, Button } from 'antd';
 
 import { useTranslation } from 'react-i18next';
 
-import { Setting } from '@leaa/common/src/entrys';
+import { Setting } from '@leaa/api/src/entrys';
 import { errorMsg } from '@leaa/dashboard/src/utils';
 import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
-import { SettingUpdateOne } from '@leaa/common/src/dtos/setting';
+import { SettingUpdateOne } from '@leaa/api/src/dtos/setting';
 
 import { FormCard, Rcon } from '@leaa/dashboard/src/components';
 

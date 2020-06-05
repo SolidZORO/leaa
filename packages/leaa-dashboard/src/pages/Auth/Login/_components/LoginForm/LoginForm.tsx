@@ -4,7 +4,7 @@ import { Col, Form, Input, Row } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 import { ajax, errorMsg } from '@leaa/dashboard/src/utils';
-import { AuthLoginReq } from '@leaa/common/src/dtos/auth';
+import { AuthLoginReq } from '@leaa/api/src/dtos/auth';
 import { envConfig } from '@leaa/dashboard/src/configs';
 import { IHttpRes, IHttpError, ICaptchaResult } from '@leaa/dashboard/src/interfaces';
 

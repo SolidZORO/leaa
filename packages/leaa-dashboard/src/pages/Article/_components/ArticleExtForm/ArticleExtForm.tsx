@@ -5,10 +5,10 @@ import { Col, Form, Input, Row, DatePicker } from 'antd';
 
 import { useTranslation } from 'react-i18next';
 
-import { Article } from '@leaa/common/src/entrys';
+import { Article } from '@leaa/api/src/entrys';
 import { errorMsg, formatFieldsToMoment } from '@leaa/dashboard/src/utils';
 import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
-import { ArticleUpdateOneReq } from '@leaa/common/src/dtos/article';
+import { ArticleUpdateOneReq } from '@leaa/api/src/dtos/article';
 
 import { FormCard, EntryInfoDate } from '@leaa/dashboard/src/components';
 

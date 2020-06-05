@@ -5,7 +5,7 @@ import { LOGOUT_REDIRECT_URL } from '@leaa/dashboard/src/constants';
 import { setAuthInfo, getAuthToken, removeAuth, checkAuthIsAvailably, ajax, errorMsg } from '@leaa/dashboard/src/utils';
 import { envConfig } from '@leaa/dashboard/src/configs';
 import { IHttpRes } from '@leaa/dashboard/src/interfaces';
-import { User } from '@leaa/common/src/entrys';
+import { User } from '@leaa/api/src/entrys';
 
 interface IProps {
   children: React.ReactNode;

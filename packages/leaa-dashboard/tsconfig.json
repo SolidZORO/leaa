@@ -12,7 +12,7 @@
     "moduleResolution": "node",
 
     "paths": {
-      "@leaa/common/*": ["../_leaa-common/*"],
+      "@leaa/api/*": ["../leaa-api/*"],
       "@leaa/dashboard/*": ["./*"]
     }
   },

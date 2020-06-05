@@ -5,8 +5,8 @@ import { useTranslation } from 'react-i18next';
 import { Spin } from 'antd';
 import { Droppable, DragDropContext, DropResult } from 'react-beautiful-dnd';
 
-import { Attachment } from '@leaa/common/src/entrys';
-import { IAttachmentParams } from '@leaa/common/src/interfaces';
+import { Attachment } from '@leaa/api/src/entrys';
+import { IAttachmentParams } from '@leaa/api/src/interfaces';
 import { removeLangSpace } from '@leaa/dashboard/src/utils';
 
 import { AttachmentItem } from '../AttachmentItem/AttachmentItem';

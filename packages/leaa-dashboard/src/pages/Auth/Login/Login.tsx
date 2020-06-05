@@ -14,8 +14,8 @@ import {
   setAjaxToken,
 } from '@leaa/dashboard/src/utils';
 import { LOGIN_REDIRECT_URL } from '@leaa/dashboard/src/constants';
-import { User } from '@leaa/common/src/entrys';
-import { AuthLoginReq } from '@leaa/common/src/dtos/auth';
+import { User } from '@leaa/api/src/entrys';
+import { AuthLoginReq } from '@leaa/api/src/dtos/auth';
 import { envConfig } from '@leaa/dashboard/src/configs';
 import { HtmlMeta, SwitchLanguage, BuildInfo, AuthGithubButton } from '@leaa/dashboard/src/components';
 

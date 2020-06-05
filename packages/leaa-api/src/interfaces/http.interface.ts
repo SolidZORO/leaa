@@ -1,7 +1,7 @@
 import ICore from 'express-serve-static-core';
 import { TFunction } from 'i18next';
 
-import { User, Auth } from '@leaa/common/src/entrys';
+import { User, Auth } from '@leaa/api/src/entrys';
 import { IHttpException } from '@leaa/api/src/filters';
 import { IHttpData } from '@leaa/api/src/interceptors';
 import { CrudRequest, BaseRoute } from '@nestjsx/crud';

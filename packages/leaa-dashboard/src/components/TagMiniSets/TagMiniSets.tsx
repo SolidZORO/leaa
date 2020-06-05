@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Tag } from 'antd';
 import { AutoCompleteProps } from 'antd/es/auto-complete';
 
-import { Tag as TagEntry } from '@leaa/common/src/entrys';
+import { Tag as TagEntry } from '@leaa/api/src/entrys';
 
 import style from './style.module.less';
 

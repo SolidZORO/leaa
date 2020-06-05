@@ -2,9 +2,9 @@ import { Controller, UseGuards } from '@nestjs/common';
 import { Crud, CrudController, Override, ParsedRequest, CrudRequest, ParsedBody } from '@nestjsx/crud';
 
 import { Permissions } from '@leaa/api/src/decorators';
-import { RoleCreateOneReq, RoleUpdateOneReq } from '@leaa/common/src/dtos/role';
+import { RoleCreateOneReq, RoleUpdateOneReq } from '@leaa/api/src/dtos/role';
 import { JwtGuard, PermissionsGuard } from '@leaa/api/src/guards';
-import { Role } from '@leaa/common/src/entrys';
+import { Role } from '@leaa/api/src/entrys';
 
 import { RoleService } from './role.service';
 

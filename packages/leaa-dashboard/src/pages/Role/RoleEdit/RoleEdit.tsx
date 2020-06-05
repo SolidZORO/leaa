@@ -2,9 +2,9 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from 'antd';
 
-import { Role, Permission } from '@leaa/common/src/entrys';
+import { Role, Permission } from '@leaa/api/src/entrys';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
-import { RoleUpdateOneReq } from '@leaa/common/src/dtos/role';
+import { RoleUpdateOneReq } from '@leaa/api/src/dtos/role';
 import {
   IPage,
   ICommenFormRef,

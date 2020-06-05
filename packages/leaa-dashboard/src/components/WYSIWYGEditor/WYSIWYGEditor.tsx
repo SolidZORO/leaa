@@ -3,7 +3,7 @@ import cx from 'classnames';
 import React, { useState, useEffect, forwardRef } from 'react';
 import { Input } from 'antd';
 
-import { IAttachmentParams } from '@leaa/common/src/interfaces';
+import { IAttachmentParams } from '@leaa/api/src/interfaces';
 
 import style from './style.module.less';
 

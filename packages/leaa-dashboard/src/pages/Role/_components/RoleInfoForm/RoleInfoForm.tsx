@@ -4,10 +4,10 @@ import { Col, Form, Input, Row } from 'antd';
 
 import { useTranslation } from 'react-i18next';
 
-import { Role } from '@leaa/common/src/entrys';
+import { Role } from '@leaa/api/src/entrys';
 import { errorMsg } from '@leaa/dashboard/src/utils';
 import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
-import { RoleUpdateOneReq } from '@leaa/common/src/dtos/role';
+import { RoleUpdateOneReq } from '@leaa/api/src/dtos/role';
 
 import { FormCard, EntryInfoDate } from '@leaa/dashboard/src/components';
 

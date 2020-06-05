@@ -1,4 +1,4 @@
-import { User } from '@leaa/common/src/entrys';
+import { User } from '@leaa/api/src/entrys';
 import { IRequest } from '@leaa/api/src/interfaces/http.interface';
 import { TFunction } from 'i18next';
 

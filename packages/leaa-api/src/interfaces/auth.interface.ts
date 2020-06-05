@@ -1,6 +1,13 @@
 import { FindOneOptions } from 'typeorm';
-import { AuthGetManyReq, AuthGetOneReq } from '@leaa/common/src/dtos/auth';
-import { Auth, User } from '@leaa/common/src/entrys';
+import { AuthGetManyReq, AuthGetOneReq } from '@leaa/api/src/dtos/auth';
+import { Auth, User } from '@leaa/api/src/entrys';
+
+export interface IJwtPayload {
+  id: string; // 'aac87c0a-887f-468a-9596-4be051ce3510'
+  exp?: number; // 1593108804
+  iat?: number; // 1590516804
+  iattz?: string; // '2020-05-26T18:13:24.639Z'
+}
 
 export type IAuthsArgs = AuthGetManyReq & FindOneOptions<Auth>;
 export type IAuthArgs = AuthGetOneReq & FindOneOptions<Auth>;

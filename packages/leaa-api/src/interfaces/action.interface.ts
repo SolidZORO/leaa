@@ -1,6 +1,6 @@
 import { FindOneOptions } from 'typeorm';
-import { ActionGetManyReq, ActionGetOneReq } from '@leaa/common/src/dtos/action';
-import { Action } from '@leaa/common/src/entrys';
+import { ActionGetManyReq, ActionGetOneReq } from '@leaa/api/src/dtos/action';
+import { Action } from '@leaa/api/src/entrys';
 
 export type IActionsArgs = ActionGetManyReq & FindOneOptions<Action>;
 export type IActionArgs = ActionGetOneReq & FindOneOptions<Action>;

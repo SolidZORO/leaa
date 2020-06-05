@@ -1,11 +1,11 @@
 /* eslint-disable max-len */
 // prettier-ignore
-import { ArticleCreateOneReq } from '@leaa/common/src/dtos/article';
-import { CategoryCreateOneReq } from '@leaa/common/src/dtos/category';
-import { AxCreateOneReq } from '@leaa/common/src/dtos/ax';
-import { SettingCreateOneReq } from '@leaa/common/src/dtos/setting';
-import { IPermissionSlug } from '@leaa/common/src/interfaces';
-import { UserCreateOneReq } from '@leaa/common/src/dtos/user';
+import { ArticleCreateOneReq } from '@leaa/api/src/dtos/article';
+import { CategoryCreateOneReq } from '@leaa/api/src/dtos/category';
+import { AxCreateOneReq } from '@leaa/api/src/dtos/ax';
+import { SettingCreateOneReq } from '@leaa/api/src/dtos/setting';
+import { IPermissionSlug } from '@leaa/api/src/interfaces';
+import { UserCreateOneReq } from '@leaa/api/src/dtos/user';
 
 // TIPS relation file: packages/leaa-api/src/configs/permission.config.ts
 export const permissionsSeed: { name: string; slug: IPermissionSlug }[] = [

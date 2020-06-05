@@ -2,9 +2,9 @@ import { Controller, UseGuards, Post, Body } from '@nestjs/common';
 import { Crud, CrudController, Override, ParsedRequest, ParsedBody, CrudRequest } from '@nestjsx/crud';
 
 import { Permissions } from '@leaa/api/src/decorators';
-import { SettingCreateOneReq, SettingUpdateOneReq, SettingUpdateManyReq } from '@leaa/common/src/dtos/setting';
+import { SettingCreateOneReq, SettingUpdateOneReq, SettingUpdateManyReq } from '@leaa/api/src/dtos/setting';
 import { JwtGuard, PermissionsGuard } from '@leaa/api/src/guards';
-import { Setting } from '@leaa/common/src/entrys';
+import { Setting } from '@leaa/api/src/entrys';
 
 import { SettingService } from './setting.service';
 

@@ -1,6 +1,6 @@
 // import { Args, Query, Mutation, Resolver, Int } from '@nestjs/graphql';
 //
-// import { Division, User } from '@leaa/common/src/entrys';
+// import { Division, User } from '@leaa/api/src/entrys';
 // import {
 //   DivisionGetManyReq,
 //   DivisionsWithPaginationObject,
@@ -8,7 +8,7 @@
 //   DivisionCreateOneReq,
 //   DivisionUpdateOneReq,
 //   DivisionSyncToFileRes,
-// } from '@leaa/common/src/dtos/division';
+// } from '@leaa/api/src/dtos/division';
 // import { DivisionService } from '@leaa/api/src/modules/v1/division/division.service';
 // import { CurrentUser, Permissions, GqlCtx } from '@leaa/api/src/decorators';
 //

@@ -5,8 +5,8 @@ import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 import { CrudRequest } from '@nestjsx/crud';
 import { Injectable } from '@nestjs/common';
 
-import { Role, User, Permission } from '@leaa/common/src/entrys';
-import { RoleUpdateOneReq } from '@leaa/common/src/dtos/role';
+import { Role, User, Permission } from '@leaa/api/src/entrys';
+import { RoleUpdateOneReq } from '@leaa/api/src/dtos/role';
 
 // const CLS_NAME = 'RoleService';
 

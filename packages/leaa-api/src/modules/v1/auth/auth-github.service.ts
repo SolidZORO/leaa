@@ -4,9 +4,9 @@
 // import { Repository } from 'typeorm';
 // import { InjectRepository } from '@nestjs/typeorm';
 //
-// import { User, Auth } from '@leaa/common/src/entrys';
+// import { User, Auth } from '@leaa/api/src/entrys';
 // import { IRequest, IResponse, IRequestGithubCallback, ICreateAuthAndUserResult } from '@leaa/api/src/interfaces';
-// import { AuthCreateOneReq } from '@leaa/common/src/dtos/auth';
+// import { AuthCreateOneReq } from '@leaa/api/src/dtos/auth';
 // import { VerificationService } from '@leaa/api/src/modules/v1/auth/auth.service';
 // import { UserService } from '@leaa/api/src/modules/v1/user/user.service';
 // import { ConfigService } from '@leaa/api/src/modules/v1/config/config.service';

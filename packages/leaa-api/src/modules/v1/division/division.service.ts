@@ -7,12 +7,12 @@
 // import { Repository, getConnection } from 'typeorm';
 // import { InjectRepository } from '@nestjs/typeorm';
 //
-// import { Division } from '@leaa/common/src/entrys';
+// import { Division } from '@leaa/api/src/entrys';
 // import {
 //   DivisionsWithPaginationObject,
 //   DivisionUpdateOneReq,
 //   DivisionCreateOneReq,
-// } from '@leaa/common/src/dtos/division';
+// } from '@leaa/api/src/dtos/division';
 // import {
 //   argsFormat,
 //   calcQbPageInfo,
@@ -22,8 +22,8 @@
 //   logger,
 //   errorMsg,
 // } from '@leaa/api/src/utils';
-// import { IDivisionSource } from '@leaa/common/src/interfaces';
-// import { TagSyncToFileRes } from '@leaa/common/src/dtos/tag';
+// import { IDivisionSource } from '@leaa/api/src/interfaces';
+// import { TagSyncToFileRes } from '@leaa/api/src/dtos/tag';
 // import { divisionConfig } from '@leaa/api/src/configs';
 // import { IDivisionsArgs, IDivisionArgs, IGqlCtx } from '@leaa/api/src/interfaces';
 //

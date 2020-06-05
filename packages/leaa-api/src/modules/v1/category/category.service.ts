@@ -6,9 +6,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 import { CrudRequest } from '@nestjsx/crud';
 
-import { Category } from '@leaa/common/src/entrys';
-import { ICategoriesQuery } from '@leaa/common/src/interfaces';
-import { CategoryGetTreeRes, CategoryCreateOneReq, CategoryUpdateOneReq } from '@leaa/common/src/dtos/category';
+import { Category } from '@leaa/api/src/entrys';
+import { ICategoriesQuery } from '@leaa/api/src/interfaces';
+import { CategoryGetTreeRes, CategoryCreateOneReq, CategoryUpdateOneReq } from '@leaa/api/src/dtos/category';
 
 @Injectable()
 export class CategoryService extends TypeOrmCrudService<Category> {

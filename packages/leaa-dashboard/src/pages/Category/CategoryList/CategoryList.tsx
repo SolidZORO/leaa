@@ -9,7 +9,7 @@ import { envConfig } from '@leaa/dashboard/src/configs';
 import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { ajax, errorMsg } from '@leaa/dashboard/src/utils';
 import { IPage, IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
-import { ICategoriesQuery } from '@leaa/common/src/interfaces';
+import { ICategoriesQuery } from '@leaa/api/src/interfaces';
 
 import { HtmlMeta, PageCard, TableColumnDeleteButton, Rcon } from '@leaa/dashboard/src/components';
 

@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 
-import { Permission } from '@leaa/common/src/entrys';
+import { Permission } from '@leaa/api/src/entrys';
 import { Repository, In } from 'typeorm';
 
 export interface ITransIdsToEntrys {

@@ -8,8 +8,8 @@ import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 import { plainToClass } from 'class-transformer';
 import { slugify } from 'transliteration';
 
-import { Article, Tag, Category } from '@leaa/common/src/entrys';
-import { ArticleUpdateOneReq, ArticleCreateOneReq } from '@leaa/common/src/dtos/article';
+import { Article, Tag, Category } from '@leaa/api/src/entrys';
+import { ArticleUpdateOneReq, ArticleCreateOneReq } from '@leaa/api/src/dtos/article';
 import { TagService } from '@leaa/api/src/modules/v1/tag/tag.service';
 import { formatHtmlToText, cutTags } from '@leaa/api/src/utils';
 

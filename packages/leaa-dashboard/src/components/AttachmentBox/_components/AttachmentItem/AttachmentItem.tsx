@@ -5,7 +5,7 @@ import { Input, Popover } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { Draggable } from 'react-beautiful-dnd';
 
-import { Attachment } from '@leaa/common/src/entrys';
+import { Attachment } from '@leaa/api/src/entrys';
 
 import { IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
 import { SwitchNumber, Rcon, ConfirmDeleteButton } from '@leaa/dashboard/src/components';

@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { User, Role, Permission, Auth, Verification, Attachment } from '@leaa/common/src/entrys';
+import { User, Role, Permission, Auth, Verification, Attachment } from '@leaa/api/src/entrys';
 
 import { UserService } from '@leaa/api/src/modules/v1/user/user.service';
 import { RoleModule } from '@leaa/api/src/modules/v1/role/role.module';

@@ -4,10 +4,10 @@ import { Col, Form, Input, Row } from 'antd';
 
 import { useTranslation } from 'react-i18next';
 
-import { Ax } from '@leaa/common/src/entrys';
+import { Ax } from '@leaa/api/src/entrys';
 import { errorMsg } from '@leaa/dashboard/src/utils';
 import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
-import { AxUpdateOneReq, AxCreateOneReq } from '@leaa/common/src/dtos/ax';
+import { AxUpdateOneReq, AxCreateOneReq } from '@leaa/api/src/dtos/ax';
 
 import { FormCard, EntryInfoDate, SwitchNumber } from '@leaa/dashboard/src/components';
 

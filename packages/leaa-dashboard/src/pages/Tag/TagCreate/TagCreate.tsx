@@ -2,9 +2,9 @@ import React, { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from 'antd';
 
-import { Tag } from '@leaa/common/src/entrys';
+import { Tag } from '@leaa/api/src/entrys';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
-import { TagUpdateOneReq } from '@leaa/common/src/dtos/tag';
+import { TagUpdateOneReq } from '@leaa/api/src/dtos/tag';
 import { IPage, ICommenFormRef, ISubmitData, IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
 import { msg, errorMsg, ajax } from '@leaa/dashboard/src/utils';
 

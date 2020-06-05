@@ -3,8 +3,8 @@ import React, { useEffect, forwardRef, useImperativeHandle } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form, Input, Row, Col } from 'antd';
 
-import { Action } from '@leaa/common/src/entrys';
-import { ActionUpdateOneReq } from '@leaa/common/src/dtos/action';
+import { Action } from '@leaa/api/src/entrys';
+import { ActionUpdateOneReq } from '@leaa/api/src/dtos/action';
 import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
 import { errorMsg } from '@leaa/dashboard/src/utils';
 

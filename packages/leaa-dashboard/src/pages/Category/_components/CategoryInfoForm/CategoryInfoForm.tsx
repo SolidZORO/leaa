@@ -5,10 +5,10 @@ import { Col, Form, Input, Row } from 'antd';
 
 import { useTranslation } from 'react-i18next';
 
-import { Category } from '@leaa/common/src/entrys';
+import { Category } from '@leaa/api/src/entrys';
 import { errorMsg } from '@leaa/dashboard/src/utils';
 import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
-import { CategoryUpdateOneReq } from '@leaa/common/src/dtos/category';
+import { CategoryUpdateOneReq } from '@leaa/api/src/dtos/category';
 
 import { FormCard, EntryInfoDate, SelectCategoryIdByTree } from '@leaa/dashboard/src/components';
 

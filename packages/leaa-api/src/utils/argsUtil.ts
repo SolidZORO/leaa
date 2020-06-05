@@ -1,6 +1,6 @@
 import { FindManyOptions } from 'typeorm';
 
-import { BaseGetManyReq } from '@leaa/common/src/dtos/_common';
+import { BaseGetManyReq } from '@leaa/api/src/dtos/_common';
 import { errorMsg } from '@leaa/api/src/utils/msg.util';
 // import { IGqlCtx } from '@leaa/api/src/interfaces';
 

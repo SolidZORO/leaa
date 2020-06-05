@@ -16,7 +16,7 @@ import {
   Division,
   Verification,
   Action,
-} from '@leaa/common/src/entrys';
+} from '@leaa/api/src/entrys';
 
 import { ConfigService } from '@leaa/api/src/modules/v1/config/config.service';
 

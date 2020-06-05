@@ -33,7 +33,7 @@
     "prod": "NODE_ENV=production ts-node-dev --respawn --transpileOnly -r tsconfig-paths/register ./src/main.ts",
     "---------------------------------------------------------------------- SERVER ----": "----",
     "build": "yarn clear && NODE_ENV=production ttsc -b tsconfig.build.json && node gen-buildinfo.js",
-    "start": "NODE_ENV=production node ./_dist/leaa-api/src/main.js",
+    "start": "NODE_ENV=production node ./index.js",
     "---------------------------------------------------------------------- ALIAS ----": "----",
     "commit": "git-cz",
     "u": "yarn upgrade-interactive --latest"

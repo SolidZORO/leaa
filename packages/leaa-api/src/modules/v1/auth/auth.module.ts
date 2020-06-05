@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AuthTokenModule } from '@leaa/api/src/modules/v1/auth-token/auth-token.module';
 
-import { User, Role, Permission, Auth, Verification, Action } from '@leaa/common/src/entrys';
+import { User, Role, Permission, Auth, Verification, Action } from '@leaa/api/src/entrys';
 import { RoleService } from '@leaa/api/src/modules/v1/role/role.service';
 import { PermissionService } from '@leaa/api/src/modules/v1/permission/permission.service';
 

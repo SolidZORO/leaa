@@ -4,10 +4,10 @@ import { Col, Form, Input, Row, Select, InputNumber } from 'antd';
 
 import { useTranslation } from 'react-i18next';
 
-import { Setting } from '@leaa/common/src/entrys';
+import { Setting } from '@leaa/api/src/entrys';
 import { errorMsg } from '@leaa/dashboard/src/utils';
 import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
-import { SettingUpdateOneReq } from '@leaa/common/src/dtos/setting';
+import { SettingUpdateOneReq } from '@leaa/api/src/dtos/setting';
 
 import { SwitchNumber, Rcon } from '@leaa/dashboard/src/components';
 import { buildTypeDom } from '../SettingListForm/SettingListForm';

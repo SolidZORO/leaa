@@ -1,5 +1,5 @@
 import { RouteComponentProps } from 'react-router-dom';
-import { IOrderSort } from '@leaa/common/src/dtos/_common';
+import { IOrderSort } from '@leaa/api/src/dtos/_common';
 
 import { ColumnsType } from 'antd/es/table/interface';
 

@@ -3,7 +3,7 @@ import React from 'react';
 import * as uuid from 'uuid';
 import { Translation } from 'react-i18next';
 
-import { ISaveInOssSignature, ISaveInLocalSignature } from '@leaa/common/src/interfaces';
+import { ISaveInOssSignature, ISaveInLocalSignature } from '@leaa/api/src/interfaces';
 import { envConfig } from '@leaa/dashboard/src/configs';
 import { IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
 

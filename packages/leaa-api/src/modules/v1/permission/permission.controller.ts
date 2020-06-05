@@ -2,9 +2,9 @@ import { Controller, UseGuards } from '@nestjs/common';
 import { Crud, CrudController } from '@nestjsx/crud';
 
 import { Permissions } from '@leaa/api/src/decorators';
-import { PermissionCreateOneReq, PermissionUpdateOneReq } from '@leaa/common/src/dtos/permission';
+import { PermissionCreateOneReq, PermissionUpdateOneReq } from '@leaa/api/src/dtos/permission';
 import { JwtGuard, PermissionsGuard } from '@leaa/api/src/guards';
-import { Permission } from '@leaa/common/src/entrys';
+import { Permission } from '@leaa/api/src/entrys';
 
 import { PermissionService } from './permission.service';
 

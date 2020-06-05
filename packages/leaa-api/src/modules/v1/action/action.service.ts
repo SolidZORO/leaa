@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 
-import { Action } from '@leaa/common/src/entrys';
+import { Action } from '@leaa/api/src/entrys';
 import { Repository } from 'typeorm';
 
 @Injectable()

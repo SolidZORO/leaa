@@ -1,8 +1,8 @@
 import React, { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Attachment } from '@leaa/common/src/entrys';
-import { AttachmentCreateOneReq } from '@leaa/common/src/dtos/attachment';
+import { Attachment } from '@leaa/api/src/entrys';
+import { AttachmentCreateOneReq } from '@leaa/api/src/dtos/attachment';
 import { IPage, ICommenFormRef, ISubmitData, IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
 import { msg, errorMsg, ajax } from '@leaa/dashboard/src/utils';
 

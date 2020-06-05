@@ -14,8 +14,8 @@ import {
   ICraeteAttachmentByOssCallback,
   IAttachmentType,
   IAttachmentCreateFieldByOss,
-} from '@leaa/common/src/interfaces';
-import { Attachment } from '@leaa/common/src/entrys';
+} from '@leaa/api/src/interfaces';
+import { Attachment } from '@leaa/api/src/entrys';
 import { attachmentConfig } from '@leaa/api/src/configs';
 import { ConfigService } from '@leaa/api/src/modules/v1/config/config.service';
 import { filenameAt1xToAt2x, isAt2x, logger, uuid, genUrl, genUrlAt2x } from '@leaa/api/src/utils';

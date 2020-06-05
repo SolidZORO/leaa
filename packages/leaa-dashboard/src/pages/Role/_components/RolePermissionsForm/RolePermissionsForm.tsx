@@ -6,10 +6,10 @@ import { CheckboxValueType } from 'antd/es/checkbox/Group';
 
 import { useTranslation } from 'react-i18next';
 
-import { Role, Permission } from '@leaa/common/src/entrys';
+import { Role, Permission } from '@leaa/api/src/entrys';
 import { errorMsg } from '@leaa/dashboard/src/utils';
 import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
-import { RoleUpdateOneReq } from '@leaa/common/src/dtos/role';
+import { RoleUpdateOneReq } from '@leaa/api/src/dtos/role';
 
 import { FormCard } from '@leaa/dashboard/src/components';
 import { RolePermissionsCheckbox } from '../RolePermissionsCheckbox/RolePermissionsCheckbox';

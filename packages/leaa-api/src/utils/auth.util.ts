@@ -1,5 +1,5 @@
-import { User } from '@leaa/common/src/entrys';
-import { IPermissionSlug } from '@leaa/common/src/interfaces';
+import { User } from '@leaa/api/src/entrys';
+import { IPermissionSlug } from '@leaa/api/src/interfaces';
 import { NotFoundUserException } from '@leaa/api/src/exceptions';
 import { BadRequestException } from '@nestjs/common';
 

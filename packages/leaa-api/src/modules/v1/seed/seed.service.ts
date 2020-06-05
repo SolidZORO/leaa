@@ -12,7 +12,7 @@ import { SettingService } from '@leaa/api/src/modules/v1/setting/setting.service
 import { AuthService } from '@leaa/api/src/modules/v1/auth/auth.service';
 
 import { InjectRepository } from '@nestjs/typeorm';
-import { Attachment, Action, User } from '@leaa/common/src/entrys';
+import { Attachment, Action, User } from '@leaa/api/src/entrys';
 
 import {
   permissionsSeed,

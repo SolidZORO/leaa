@@ -1,5 +1,5 @@
 import { Controller, Get } from '@nestjs/common';
-import { Role } from '@leaa/common/src/entrys';
+import { Role } from '@leaa/api/src/entrys';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 

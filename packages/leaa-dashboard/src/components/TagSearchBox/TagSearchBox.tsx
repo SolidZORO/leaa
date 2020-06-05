@@ -6,7 +6,7 @@ import { AutoComplete } from 'antd';
 import { AutoCompleteProps } from 'antd/es/auto-complete';
 import { CreateQueryParams } from '@nestjsx/crud-request';
 
-import { Tag as TagEntry } from '@leaa/common/src/entrys';
+import { Tag as TagEntry } from '@leaa/api/src/entrys';
 import { ajax, errorMsg } from '@leaa/dashboard/src/utils';
 import { envConfig } from '@leaa/dashboard/src/configs';
 import { IHttpRes, IHttpError, ICrudListRes } from '@leaa/dashboard/src/interfaces';

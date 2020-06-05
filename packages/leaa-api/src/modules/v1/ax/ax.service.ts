@@ -4,8 +4,8 @@ import { CrudRequest } from '@nestjsx/crud';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 
-import { Ax, Attachment } from '@leaa/common/src/entrys';
-import { AxUpdateOneReq } from '@leaa/common/src/dtos/ax';
+import { Ax, Attachment } from '@leaa/api/src/entrys';
+import { AxUpdateOneReq } from '@leaa/api/src/dtos/ax';
 
 export interface ITransIdsToEntrys {
   dto: any;
