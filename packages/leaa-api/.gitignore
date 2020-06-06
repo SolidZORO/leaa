@@ -5,13 +5,8 @@
 #Accests
 /public/attachments
 /public/buildinfo.json
-
-/public/assets/divisions/*.json
-
-/src/assets/dicts/*
-!/src/assets/dicts/.gitkeep
-/src/assets/divisions/*
-!/src/assets/divisions/.gitkeep
+/public/version.txt
+/public/logs
 
 # Compiled
 /.cache

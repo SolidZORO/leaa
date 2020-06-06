@@ -2747,6 +2747,11 @@
   resolved "https://registry.npm.taobao.org/@types/browserslist/download/@types/browserslist-4.8.0.tgz#60489aefdf0fcb56c2d8eb65267ff08dad7a526d"
   integrity sha1-YEia798Py1bC2OtlJn/wja16Um0=
 
+"@types/cache-manager@^2.10.3":
+  version "2.10.3"
+  resolved "https://registry.npm.taobao.org/@types/cache-manager/download/@types/cache-manager-2.10.3.tgz#6c5ffb177b45c2e251f32432354ff83bddbd18ec"
+  integrity sha1-bF/7F3tFwuJR8yQyNU/4O929GOw=
+
 "@types/case-sensitive-paths-webpack-plugin@^2.1.4":
   version "2.1.4"
   resolved "https://registry.npm.taobao.org/@types/case-sensitive-paths-webpack-plugin/download/@types/case-sensitive-paths-webpack-plugin-2.1.4.tgz?cache=0&sync_timestamp=1588206428160&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fcase-sensitive-paths-webpack-plugin%2Fdownload%2F%40types%2Fcase-sensitive-paths-webpack-plugin-2.1.4.tgz#11c23e4ef9b5c81e9b4c112ec477690dee950c97"
@@ -2820,13 +2825,6 @@
   integrity sha1-SOtaQwc35zIfFpv+xsk6OsVmwJQ=
   dependencies:
     "@types/webpack" "*"
-
-"@types/dotenv@^8.2.0":
-  version "8.2.0"
-  resolved "https://registry.npm.taobao.org/@types/dotenv/download/@types/dotenv-8.2.0.tgz#5cd64710c3c98e82d9d15844375a33bf1b45d053"
-  integrity sha1-XNZHEMPJjoLZ0VhEN1ozvxtF0FM=
-  dependencies:
-    dotenv "*"
 
 "@types/draft-js@^0.10.40":
   version "0.10.40"
@@ -7229,15 +7227,15 @@ dotenv-webpack@^1.8.0:
   dependencies:
     dotenv-defaults "^1.0.2"
 
-dotenv@*, dotenv@^8.2.0:
-  version "8.2.0"
-  resolved "https://registry.npm.taobao.org/dotenv/download/dotenv-8.2.0.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fdotenv%2Fdownload%2Fdotenv-8.2.0.tgz#97e619259ada750eea3e4ea3e26bceea5424b16a"
-  integrity sha1-l+YZJZradQ7qPk6j4mvO6lQksWo=
-
 dotenv@^6.2.0:
   version "6.2.0"
   resolved "https://registry.npm.taobao.org/dotenv/download/dotenv-6.2.0.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fdotenv%2Fdownload%2Fdotenv-6.2.0.tgz#941c0410535d942c8becf28d3f357dbd9d476064"
   integrity sha1-lBwEEFNdlCyL7PKNPzV9vZ1HYGQ=
+
+dotenv@^8.2.0:
+  version "8.2.0"
+  resolved "https://registry.npm.taobao.org/dotenv/download/dotenv-8.2.0.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fdotenv%2Fdownload%2Fdotenv-8.2.0.tgz#97e619259ada750eea3e4ea3e26bceea5424b16a"
+  integrity sha1-l+YZJZradQ7qPk6j4mvO6lQksWo=
 
 duplexer@^0.1.1:
   version "0.1.1"

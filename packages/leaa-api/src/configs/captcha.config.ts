@@ -1,6 +1,5 @@
-import { ConfigObject } from 'svg-captcha';
 import path from 'path';
-import { envConfig } from '@leaa/api/src/modules/v1/config/config.module';
+import { ConfigObject } from 'svg-captcha';
 
 const SVG_CAPTCHA_OPTION: ConfigObject = {
   noise: 3,
@@ -13,7 +12,8 @@ const SVG_CAPTCHA_OPTION: ConfigObject = {
   // background: '#cc9966',
 };
 
-const SVG_CAPTCHA_FONT_PATH: string = path.resolve(__dirname, `../../${envConfig.PUBLIC_DIR}/assets/fonts/halva.otf`);
+const FONT_DIR = path.resolve(__dirname, '../assets/fonts');
+const SVG_CAPTCHA_FONT_PATH = `${FONT_DIR}/halva.otf`;
 
 export const captchaConfig = {
   SVG_CAPTCHA_OPTION,

@@ -2,4 +2,4 @@
 
 cd "$(dirname "$0")" || exit
 
-sh deploy-now.sh
+sh deploy-vercel.sh

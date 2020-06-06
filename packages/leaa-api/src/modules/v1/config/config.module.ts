@@ -3,13 +3,10 @@ import { Module, Global } from '@nestjs/common';
 
 import { ConfigService } from '@leaa/api/src/modules/v1/config/config.service';
 
-const __DEV__ = process.env.NODE_ENV !== 'production';
+const __PROD__ = process.env.NODE_ENV === 'production';
+const envFilePath = path.resolve(__PROD__ ? '.env.production' : '.env');
 
-const envFilePath = __DEV__
-  ? path.resolve(__dirname, '../../../../.env')
-  : path.resolve(__dirname, '../../../../../../.env.production');
-
-console.log('envFilePath:', envFilePath);
+console.log('\n\n🌈 ENV-FILE-PATH:', envFilePath, '\n\n');
 
 export const envConfig = new ConfigService(envFilePath);
 

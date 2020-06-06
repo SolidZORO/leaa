@@ -10,11 +10,13 @@ export class IndexController {
 
   @Get('')
   async test() {
-    const BUILDINFO_PATH = path.resolve(__dirname, `../../../${this.configService.PUBLIC_DIR}/buildinfo.json`);
+    const BUILDINFO_PATH = path.resolve('public/version.txt');
 
     const defaultBuildInfo: IBuild = {
       BUILDTIME: 'DEV',
       VERSION: 'DEV',
+      MODE: process.env.NODE_ENV || 'UNKNOW',
+      LANG: process.env.LANG || 'UNKNOW',
     };
 
     let buildInfo: IBuild = defaultBuildInfo;
@@ -41,6 +43,7 @@ export class IndexController {
           body  {
             font-family: ${styleFontFamily};
             font-size: 100%;
+            user-select: revert;
           }
           
           h1 {
@@ -54,6 +57,12 @@ export class IndexController {
             bottom: 16px;
             font-size: 50%;
             color: #e2e2e2;
+            transition: all 0.3s;
+          }
+          
+          .build-list:hover {
+            color: #000;
+            transition: all 0.3s;
           }
           
           .build-item {
@@ -74,6 +83,18 @@ export class IndexController {
         <h1>hello, ${this.configService.SERVER_NAME}.</h1>
 
         <div class="build-list">
+          <div class="build-item">
+            <span>MODE:</span>
+            <strong>${buildInfo.MODE}</strong>
+          </div>
+          
+          <div class="build-item">
+            <span>LANG:</span>
+            <strong>${buildInfo.LANG}</strong>
+          </div>
+          
+          <br />
+          
           <div class="build-item">
             <span>VERSION:</span>
             <strong>${buildInfo.VERSION}</strong>
