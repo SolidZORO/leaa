@@ -7,9 +7,13 @@
 /.dist
 /_dist
 node_modules
-docker_data
-_docker_data
+__docker__
+__docker-data__
+__DOCKER-DATA__
+__docker-data-dev__
+__DOCKER-DATA-DEV__
 .docker
+.docker__
 tsconfig.tsbuildinfo
 
 # Logs
@@ -43,3 +47,4 @@ logs
 .vercel
 /.now
 /.vercel
+packages/leaa-api/public/version.txt

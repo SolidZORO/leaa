@@ -8,7 +8,7 @@ import { Button, Tooltip } from 'antd';
 import { User } from '@leaa/api/src/entrys';
 import { AttachmentBox } from '@leaa/dashboard/src/components';
 
-import { ajax, errorMsg, msg } from '@leaa/dashboard/src/utils';
+import { ajax, errorMsg, msg, formatAttaUrl } from '@leaa/dashboard/src/utils';
 import { envConfig } from '@leaa/dashboard/src/configs';
 import { IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
 import { UserUpdateOneReq } from '@leaa/api/src/dtos/user';
@@ -72,7 +72,7 @@ export const UploadUserAvatar = (props: IProps) => {
             </Tooltip>
           </div>
 
-          <img alt={extAurl || ''} src={extAurl || ''} />
+          <img alt={extAurl || ''} src={formatAttaUrl(extAurl) || ''} />
         </div>
       );
     }

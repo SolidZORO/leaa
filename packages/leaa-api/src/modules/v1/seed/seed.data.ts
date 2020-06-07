@@ -7,6 +7,8 @@ import { SettingCreateOneReq } from '@leaa/api/src/dtos/setting';
 import { IPermissionSlug } from '@leaa/api/src/interfaces';
 import { UserCreateOneReq } from '@leaa/api/src/dtos/user';
 
+const __DEV__ = process.env.NODE_ENV !== 'production';
+
 // TIPS relation file: packages/leaa-api/src/configs/permission.config.ts
 export const permissionsSeed: { name: string; slug: IPermissionSlug }[] = [
   { name: 'Playground', slug: 'playground.root' },
@@ -470,7 +472,7 @@ export const attachmentSeed: any[] = [
 
 // prettier-ignore
 export const settingSeed: SettingCreateOneReq[] = [
-  { name: 'Site Name', slug: 'site_name', type: 'input', sort: 1, value: 'Leaa', description: '站点名，最大 220 字' },
+  { name: 'Site Name', slug: 'site_name', type: 'input', sort: 1, value: __DEV__ ? 'Leaa_DEV' : 'Leaa', description: '站点名，最大 220 字' },
   { name: 'Site Description', slug: 'site_description', type: 'textarea', sort: 2, value: 'Leaa - project 1h 4 1d',  description: '站点描述， 最大 220 字' },
   { name: 'Site Keywords', slug: 'site_keywords', type: 'input', sort: 3, value: 'Leaa, mono-repo, C\'est la vie. project 1h 4 1d', description: '站点关键字，使用英文 , 分隔' },
   { name: 'Currency Symbol', slug: 'currency_symbol', type: 'radio', sort: 4, value: '$', description: 'Currency Symbol', options: '$\n¥' },

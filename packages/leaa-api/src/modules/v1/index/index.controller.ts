@@ -3,20 +3,30 @@ import path from 'path';
 import { Controller, Get } from '@nestjs/common';
 import { ConfigService } from '@leaa/api/src/modules/v1/config/config.service';
 import { IBuild } from '@leaa/api/src/interfaces';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Setting } from '@leaa/api/src/entrys';
+import { Repository } from 'typeorm';
+import { slugify } from 'transliteration';
 
 @Controller('')
 export class IndexController {
-  constructor(readonly configService: ConfigService) {}
+  constructor(
+    @InjectRepository(Setting) private readonly settingRepo: Repository<Setting>,
+    readonly configService: ConfigService,
+  ) {}
 
   @Get('')
   async test() {
     const BUILDINFO_PATH = path.resolve('public/version.txt');
 
+    const dbSiteName = await this.settingRepo.findOne({ slug: 'site_name' });
+    const siteName = dbSiteName?.value ? slugify(dbSiteName.value) : 'UNKNOW';
+
     const defaultBuildInfo: IBuild = {
+      NAME: siteName,
       BUILDTIME: 'DEV',
       VERSION: 'DEV',
       MODE: process.env.NODE_ENV || 'UNKNOW',
-      LANG: process.env.LANG || 'UNKNOW',
     };
 
     let buildInfo: IBuild = defaultBuildInfo;
@@ -84,13 +94,13 @@ export class IndexController {
 
         <div class="build-list">
           <div class="build-item">
-            <span>MODE:</span>
-            <strong>${buildInfo.MODE}</strong>
+            <span>NAME:</span>
+            <strong>${buildInfo.NAME}</strong>
           </div>
           
           <div class="build-item">
-            <span>LANG:</span>
-            <strong>${buildInfo.LANG}</strong>
+            <span>MODE:</span>
+            <strong>${buildInfo.MODE}</strong>
           </div>
           
           <br />

@@ -45,6 +45,7 @@ export class TypeormService implements TypeOrmOptionsFactory {
       // https://stackoverflow.com/questions/35553432/error-handshake-inactivity-timeout-in-node-js-mysql-module
       keepConnectionAlive: true,
       acquireTimeout: 20 * 1000, // 20s
+      connectTimeout: 20 * 1000, // 20s
       // fix local and server timeone out of sync
       // dateStrings: true,
       // timezone: 'Z',

@@ -46,9 +46,52 @@ interface IUploadFile {
     onUploadCatch?: (event: any) => void;
   };
 }
+
+export const formatAttaUrl = (url?: string | null) => {
+  if (!url) return 'DEFAULT-IMAGE.jpg';
+
+  //   oss: https://oss.com/attas/abc.jpg
+  // local: /attas/abc.jpg
+  // if (/^http/.test(url)) return url;
+  if (url.startsWith('http')) return url;
+
+  return `${envConfig.API_URL}${url}`;
+};
+
+interface IUploadFile {
+  signature: ISignatureResult;
+  attachmentParams: any;
+  ignoreMsg?: boolean;
+  onCallback?: {
+    onUploadSuccess?: (event: any) => void;
+    onUploadProgress?: (event: any) => void;
+    onUploadFail?: (event: any) => void;
+    onUploadCatch?: (event: any) => void;
+  };
+}
+
+/**
+ * uploadFile
+ *
+ * @ideaNotes
+ * I was thinking about uploading the API where uploadEndPoint was sent, but putting it in the PROD environment does not
+ * make sense, because the server does not know its own environment, It is very likely that the upstream of the API is a
+ * layer of nginx proxy. Therefore, to determine if there is no `http`, use the API path defined by .env.
+ *
+ * 之前这里是想着 API 给什么 uploadEndPoint 就传到哪里，但放到 PROD 环境下，这样做其实没有意义，因为服务器自己也不知道自己的环境，
+ * 很有可能 API 上游是一层 nginx proxy。 所以，这里要判断如果没有 `http`，就用 .env 定义的 API 路径。
+ */
 export const uploadFile = (file: File, { signature, ignoreMsg, attachmentParams, onCallback }: IUploadFile) => {
+  if (!signature?.uploadEndPoint) return errorMsg('missing uploadEndPoint');
+
   // const token = getAuthToken();
   const formData = new FormData();
+
+  // if saveIn === 'local', uploadEndPoint will return '/v1/attachments/upload'
+  const nextUploadEndPoint =
+    signature?.saveIn === 'local' ? `${envConfig.API_URL}${signature?.uploadEndPoint}` : signature?.uploadEndPoint;
+
+  console.log('nextUploadEndPoint', nextUploadEndPoint);
 
   //
   // -------- OSS --------
@@ -75,12 +118,12 @@ export const uploadFile = (file: File, { signature, ignoreMsg, attachmentParams,
     _.map({ ...signature, ...attachmentParams }, (v, k) => formData.append(k, `${v}`));
   }
 
+  //
+  // -------- START UPLOAD --------
   formData.append('file', file);
 
-  if (!signature?.uploadEndPoint) return errorMsg('missing uploadEndPoint');
-
   return ajax
-    .post(signature?.uploadEndPoint, formData, {
+    .post(nextUploadEndPoint, formData, {
       onUploadProgress: (e) => {
         if (onCallback && onCallback.onUploadProgress) onCallback.onUploadProgress(e);
       },

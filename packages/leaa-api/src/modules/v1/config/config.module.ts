@@ -6,7 +6,7 @@ import { ConfigService } from '@leaa/api/src/modules/v1/config/config.service';
 const __PROD__ = process.env.NODE_ENV === 'production';
 const envFilePath = path.resolve(__PROD__ ? '.env.production' : '.env');
 
-console.log('\n\n🌈 ENV-FILE-PATH:', envFilePath, '\n\n');
+console.log('\n\n🌈  .env File Path:', envFilePath, '\n\n');
 
 export const envConfig = new ConfigService(envFilePath);
 

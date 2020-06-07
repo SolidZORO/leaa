@@ -1,6 +1,6 @@
 #! /bin/bash
 
-unset PLATFORM IGNORE_BUILD
+unset PLATFORM YARN_BUILD
 
 cd "$(dirname "$0")" || exit
 
@@ -9,7 +9,7 @@ __DEPLOY__="./_deploy"
 
 usage() {
   # shellcheck disable=SC2028
-  echo "\n🔰 Usage: $0 -p test|ecs|vercel|heroku [-i]  (e.g. sh -p test)\n"
+  echo "\n\n\n\n🔰  Usage: $0 -p test|test_docker|ecs|vercel|heroku [-i]  (e.g. sh -p test)\n\n\n\n"
   exit 2
 }
 
@@ -17,11 +17,20 @@ set_var() {
   local arg_name=$1
   shift
 
+  # shellcheck disable=SC2028
+  echo "VAR { $arg_name: $* }"
+
   if [ -z "${!arg_name}" ]; then
-    if echo "$*" | grep -Eq '^test|ecs|vercel|heroku$'; then
+    if [ "$arg_name" = "PLATFORM" ]; then
+      if echo "$*" | grep -Eq '^test|test_docker|ecs|vercel|heroku$'; then
         eval "$arg_name=\"$*\""
-    else
-      usage
+      else
+        usage
+      fi
+    fi
+
+    if [ "$arg_name" = "YARN_BUILD" ]; then
+        eval "$arg_name=\"$*\""
     fi
 
   else
@@ -40,13 +49,22 @@ platform_vercel() {
 platform_ecs() {
   cd ${__DEPLOY__} || exit
 
-  ls
+  # shellcheck disable=SC2028
+  echo "\n✨  Done Platform ECS\n"
 }
 
 platform_test() {
   cd ${__DEPLOY__} || exit
 
   yarn start
+}
+
+platform_test_docker() {
+  cp -f ./.env.production ${__DEPLOY__}
+  cp -f ./docker-compose.yml ${__DEPLOY__}
+  cd ${__DEPLOY__} || exit
+
+  docker-compose --env-file ./.env.production up
 }
 
 platform_heroku() {
@@ -63,13 +81,12 @@ platform_heroku() {
   git push -f heroku master
 }
 
-
-while getopts 'p:i:?h' arg
+while getopts 'p:i?h' arg
 do
   # shellcheck disable=SC2220
   case $arg in
     p) set_var PLATFORM "$OPTARG" ;;
-    i) set_var IGNORE_BUILD yes ;;
+    i) set_var YARN_BUILD ignore ;;
     h|?) usage ;;
     *) usage ;; esac
 done
@@ -84,17 +101,18 @@ echo "\x1B[96m
 
 \x1B[0m"
 
+
 [ -z "$PLATFORM" ] && usage
 
 CONFIRM_MESSAGE=$(printf "\n\n🤖 \033[1m Start Deploy <%s> ?\033[0m  (Enter/n)" "${PLATFORM}")
 read -p "${CONFIRM_MESSAGE}" -n 1 -r KEY
 
 
-if [[ $KEY = "" ]]; then
+if [ "$KEY" = "" ]; then
   # ---------
   # @ROOT-DIR
   # ---------
-  if [[ $IGNORE_BUILD != "yes" ]]; then
+  if [ "$YARN_BUILD" != "ignore" ]; then
     yarn build
   fi
 
@@ -104,7 +122,6 @@ if [[ $KEY = "" ]]; then
   fi
   cp -fr ./_dist/* ${__DEPLOY__}
   cp -f ./tools/deploy-config/ecs/index.js ${__DEPLOY__}
-  cp -f ./.env.example ${__DEPLOY__}
   cp -f ./.gitignore ${__DEPLOY__}
 
   #/assets (copy and then delete some gen files)
@@ -133,7 +150,8 @@ if [[ $KEY = "" ]]; then
   if [ -n "$PLATFORM" ]; then
     case $PLATFORM in
       test) platform_test ;;
-      ecs) platform_test ;;
+      test_docker) platform_test_docker ;;
+      ecs) platform_ecs ;;
       vercel) platform_vercel ;;
       heroku) platform_heroku ;;
       *) usage ;; esac

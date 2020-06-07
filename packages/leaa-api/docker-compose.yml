@@ -1,26 +1,30 @@
 version: '3.6'
 
+networks:
+  default:
+    external:
+      name: app
+
 services:
-  mysql:
-    container_name: ${DOCKER_MYSQL_HOST}
-    image: mysql:5.7.23
-    restart: always
-    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+  node:
+    container_name: ${DOCKER_NODE_CONTAINER_NAME}
+    image: node:14-buster-slim
+    expose:
+      - ${DOCKER_NODE_PORT}
     ports:
-      - ${DOCKER_MYSQL_PORT}:3306
+      - ${DOCKER_NODE_PORT}:${DOCKER_NODE_PORT}
     environment:
-      - MYSQL_USER=${DOCKER_MYSQL_USER}
-      - MYSQL_PASSWORD=${DOCKER_MYSQL_PASSWORD}
-      - MYSQL_ROOT_PASSWORD=${DOCKER_MYSQL_ROOT_PASSWORD}
-      - MYSQL_DATABASE=${DOCKER_MYSQL_DATABASE}
-      - TZ=Asia/Shanghai
+      - NODE_ENV=production
+    working_dir: /home/node
     volumes:
-      - ${DOCKER_DATA_DIR}/mysql:/var/lib/mysql:rw,cached
-#  adminer:
-#    container_name: leaa-adminer
-#    image: adminer:4.7.1-standalone
-#    restart: always
-#    depends_on:
-#      - mysql
-#    ports:
-#      - ${ADMINER_PORT}:8080
+      - ./:/home/node:rw,cached
+    command: sh -c "
+      echo '\n\n\n\n' &&
+      echo '---- @ DOCKER_NODE_NPM_DISTURL ${DOCKER_NODE_NPM_REGISTRY} ----\n' &&
+      echo '---- @ DOCKER_NODE_WORKING_DIR ${DOCKER_NODE_NPM_REGISTRY} ----\n' &&
+      echo '\n\n\n\n' &&
+      yarn config set --global registry ${DOCKER_NODE_NPM_REGISTRY} &&
+      yarn config set --global disturl ${DOCKER_NODE_NPM_DISTURL} &&
+      yarn config set registry ${DOCKER_NODE_NPM_REGISTRY} &&
+      yarn config set disturl ${DOCKER_NODE_NPM_DISTURL} &&
+      yarn install --prod && yarn start"

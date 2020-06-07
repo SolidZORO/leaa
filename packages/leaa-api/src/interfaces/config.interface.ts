@@ -52,8 +52,8 @@ export interface IDotEnv {
 }
 
 export interface IBuild {
+  NAME: string;
   MODE: string;
-  LANG: string;
   VERSION: string;
   BUILDTIME: string;
 }

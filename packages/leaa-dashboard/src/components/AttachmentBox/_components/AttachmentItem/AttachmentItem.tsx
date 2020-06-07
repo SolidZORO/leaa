@@ -10,7 +10,7 @@ import { Attachment } from '@leaa/api/src/entrys';
 import { IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
 import { SwitchNumber, Rcon, ConfirmDeleteButton } from '@leaa/dashboard/src/components';
 import { envConfig } from '@leaa/dashboard/src/configs';
-import { ajax, errorMsg } from '@leaa/dashboard/src/utils';
+import { ajax, errorMsg, formatAttaUrl } from '@leaa/dashboard/src/utils';
 
 import style from './style.module.less';
 
@@ -108,7 +108,7 @@ export const AttachmentItem = (props: IProps) => {
             // @ts-ignore
             // eslint-disable-next-line react/jsx-no-target-blank
             <a href={props.attachment?.url} target="_blank">
-              <img alt={props.attachment?.alt} src={`${props.attachment?.url}`} />
+              <img alt={props.attachment?.alt} src={`${formatAttaUrl(props.attachment?.url)}`} />
             </a>
           }
         >
@@ -117,7 +117,7 @@ export const AttachmentItem = (props: IProps) => {
 
         {props.attachment?.at2x === 1 && <Rcon type="ri-hd-line" title="@2x image" className={style['at2xdot']} />}
 
-        <img src={`${props.attachment?.url}`} alt="" />
+        <img src={`${formatAttaUrl(props.attachment?.url)}`} alt="" />
       </div>
     </>
   );

@@ -25,7 +25,7 @@ yarn dev
 
 ## **DEPLOY**
 
-more step see `deploy-local-test.sh`
+more step see `deploy.sh`
 
 ## **TIPS**
 

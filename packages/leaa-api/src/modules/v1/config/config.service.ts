@@ -24,7 +24,6 @@ export class ConfigService {
   }
 
   get SERVER_HOST(): string {
-    // return this.envConfig.SERVER_HOST;
     return this.envConfig.SERVER_HOST.replace('localhost', ip.address());
   }
 

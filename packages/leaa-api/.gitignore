@@ -26,9 +26,13 @@
 /deploy
 
 node_modules
-docker_data
-_docker_data
+__docker__
+__docker-data__
+__DOCKER-DATA__
+__docker-data-dev__
+__DOCKER-DATA-DEV__
 .docker
+.docker__
 
 # Logs
 logs

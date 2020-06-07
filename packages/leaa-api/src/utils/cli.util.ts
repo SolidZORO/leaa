@@ -18,7 +18,7 @@ export const envInfoForCli = ({
   const serverBaseByEmoji = `✨✨ \x1b[00;44;9m${serverBaseByText}\x1b[0m ✨✨`;
   const serverEnv = `${NODE_ENV !== 'production' ? '🚀' : '🔰'} ${(NODE_ENV || 'NOT-ENV').toUpperCase()}`;
 
-  console.log(`\n\n> 🌈 DEBUG ${config.DEBUG_MODE ? '✅' : '➖'} / DEMO ${config.DEMO_MODE ? '✅' : '➖'}`);
+  console.log(`\n\n> 🌈  DEBUG ${config.DEBUG_MODE ? '✅' : '➖'} / DEMO ${config.DEMO_MODE ? '✅' : '➖'}`);
 
   console.log(`\n\n> ${serverEnv} /     URL`, serverBaseByEmoji);
 

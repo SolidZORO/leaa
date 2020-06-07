@@ -2,6 +2,7 @@ import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { getConnection, getManager, getRepository } from 'typeorm';
+import readlineSync from 'readline-sync';
 
 import { AppModule } from '@leaa/api/src/app.module';
 import { SeedService } from '@leaa/api/src/modules/v1/seed/seed.service';
@@ -16,6 +17,14 @@ import { LoggerService } from '@leaa/api/src/modules/v1/logger/logger.service';
     process.kill(process.pid);
     process.abort();
   };
+
+  if (readlineSync.keyInYN('Do you want to Seeding?')) {
+    // 'Y'
+    console.log('Seeding now...');
+  } else {
+    // 'N'
+    forceExit();
+  }
 
   // CLI Tips
   if (
