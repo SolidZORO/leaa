@@ -1,9 +1,0 @@
-# OS
-*~
-.DS_Store
-logs
-*.log
-
-# Compiled
-node_modules
-yarn.lock

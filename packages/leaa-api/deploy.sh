@@ -81,6 +81,8 @@ platform_heroku() {
   git push -f heroku master
 }
 
+# ------------------------------------------------------------------------
+
 while getopts 'p:i?h' arg
 do
   # shellcheck disable=SC2220
@@ -90,6 +92,7 @@ do
     h|?) usage ;;
     *) usage ;; esac
 done
+
 
 echo "\x1B[96m
 
