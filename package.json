@@ -93,6 +93,7 @@
     "stylelint-config-standard": "^20.0.0",
     "stylelint-order": "4.1.0",
     "ts-jest": "26.1.0",
+    "ts-node-dev": "^1.0.0-pre.44",
     "typescript": "3.9.3"
   }
 }

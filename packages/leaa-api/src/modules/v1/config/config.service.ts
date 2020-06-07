@@ -121,10 +121,6 @@ export class ConfigService {
     return this.envConfig.JWT_SECRET_KEY;
   }
 
-  get CLIENT_COOKIE_EXPIRES_SECOND(): number {
-    return Number(this.envConfig.CLIENT_COOKIE_EXPIRES_SECOND);
-  }
-
   get SERVER_COOKIE_EXPIRES_SECOND(): number {
     return Number(this.envConfig.SERVER_COOKIE_EXPIRES_SECOND);
   }
@@ -227,7 +223,6 @@ export class ConfigService {
       //
       TRUST_PROXY: envalid.str(),
       JWT_SECRET_KEY: envalid.str(),
-      CLIENT_COOKIE_EXPIRES_SECOND: envalid.num(),
       SERVER_COOKIE_EXPIRES_SECOND: envalid.num(),
     };
 
