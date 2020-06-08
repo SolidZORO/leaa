@@ -7,7 +7,7 @@ networks:
 
 services:
   node:
-    container_name: ${DOCKER_NODE_CONTAINER_NAME}
+    container_name: ${__ENV__}_${DOCKER_NODE_CONTAINER_NAME}
     image: node:14-buster-slim
     expose:
       - ${DOCKER_NODE_PORT}
@@ -15,14 +15,15 @@ services:
       - ${DOCKER_NODE_PORT}:${DOCKER_NODE_PORT}
     environment:
       - NODE_ENV=production
-    working_dir: /home/node
     volumes:
       - ./:/home/node:rw,cached
+    working_dir: /home/node
     command: sh -c "
-      echo '\n\n\n\n' &&
-      echo '---- NPM_REGISTRY -> ${DOCKER_NODE_NPM_REGISTRY} ----' &&
-      echo '----  WORKING_DIR -> ${DOCKER_NODE_NPM_DISTURL} ----' &&
-      echo '\n\n\n\n' &&
+      echo '\n\n' &&
+      echo '__ENV__      -> ${__ENV__}\n' &&
+      echo 'NPM_REGISTRY -> ${DOCKER_NODE_NPM_REGISTRY}' &&
+      echo 'NPM_DISTURL  -> ${DOCKER_NODE_NPM_DISTURL}' &&
+      echo '\n\n' &&
       yarn config set registry ${DOCKER_NODE_NPM_REGISTRY} &&
       yarn config set disturl ${DOCKER_NODE_NPM_DISTURL} &&
       yarn install --prod && yarn start"
