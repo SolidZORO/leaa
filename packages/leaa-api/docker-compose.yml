@@ -3,7 +3,7 @@ version: '3.6'
 networks:
   default:
     external:
-      name: app
+      name: ${DOCKER_NETWORK_NAME}
 
 services:
   node:
@@ -20,11 +20,9 @@ services:
       - ./:/home/node:rw,cached
     command: sh -c "
       echo '\n\n\n\n' &&
-      echo '---- @ DOCKER_NODE_NPM_DISTURL ${DOCKER_NODE_NPM_REGISTRY} ----\n' &&
-      echo '---- @ DOCKER_NODE_WORKING_DIR ${DOCKER_NODE_NPM_REGISTRY} ----\n' &&
+      echo '---- NPM_REGISTRY -> ${DOCKER_NODE_NPM_REGISTRY} ----' &&
+      echo '----  WORKING_DIR -> ${DOCKER_NODE_NPM_DISTURL} ----' &&
       echo '\n\n\n\n' &&
-      yarn config set --global registry ${DOCKER_NODE_NPM_REGISTRY} &&
-      yarn config set --global disturl ${DOCKER_NODE_NPM_DISTURL} &&
       yarn config set registry ${DOCKER_NODE_NPM_REGISTRY} &&
       yarn config set disturl ${DOCKER_NODE_NPM_DISTURL} &&
       yarn install --prod && yarn start"
