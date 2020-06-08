@@ -4,8 +4,8 @@ const { stats } = require('./_stats');
 module.exports = {
   devServer: {
     contentBase: WPCONST.BUILD_DIR,
-    https: Boolean(`${process.env.SERVER_PROTOCOL}` === 'https'),
-    port: process.env.SERVER_PORT,
+    https: Boolean(`${WPCONST.SERVER_PROTOCOL}` === 'https'),
+    port: Number(WPCONST.SERVER_PORT),
     hot: true,
     // inline: true,
     // Specify what bundle information gets displayed

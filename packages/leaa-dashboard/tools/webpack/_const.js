@@ -1,15 +1,49 @@
 /* eslint-disable no-underscore-dangle, max-len */
 const path = require('path');
+const dotenv = require('dotenv');
+const ip = require('ip');
+const fs = require('fs');
 
-const WPCONST = {};
+const ROOT_DIR = path.resolve(__dirname, '../../');
+const __DEV__ = process.env.NODE_ENV !== 'production';
 
-// ENV
-if (WPCONST.IS_ANALYZER) {
-  console.log('\n\n👏👏👏👏 ANALYZER \n\n');
+const ENV_FILE_NAME = process.env.NODE_ENV === 'production' ? '.env' : `.env.${process.env.NODE_ENV}`;
+
+function getEnvFilePath() {
+  const envFilePath = `${ROOT_DIR}/${ENV_FILE_NAME}`;
+
+  if (!fs.existsSync(envFilePath)) {
+    console.log('\n');
+    console.log(''.padStart(48, '='));
+    console.error(`\n🔰  Please create \`${ENV_FILE_NAME}\` file first\n`);
+    console.log(''.padStart(48, '='));
+    console.log('\n\n');
+
+    process.exit(-1);
+  }
+
+  return envFilePath;
 }
 
-WPCONST.__DEV__ = !process.argv.includes('--release');
-WPCONST.__PROD__ = process.argv.includes('--release');
+const ENV_FILE_PATH = getEnvFilePath();
+
+function getEnvData() {
+  const env = dotenv.config({ path: ENV_FILE_PATH }).parsed;
+
+  // DEV, Change API_URL to IP Address
+  if (__DEV__) env.API_URL = env.API_URL.replace('localhost', ip.address());
+
+  return env || {};
+}
+
+const WPCONST = getEnvData();
+
+WPCONST.__DEV__ = __DEV__;
+WPCONST.__PROD__ = !__DEV__;
+
+WPCONST.ENV_FILE_NAME = ENV_FILE_NAME;
+WPCONST.ENV_FILE_PATH = ENV_FILE_PATH;
+
 WPCONST.IS_SERVER = process.argv.includes('--server');
 WPCONST.IS_VERBOSE = process.argv.includes('--verbose');
 WPCONST.IS_SMP = process.argv.includes('--smp');
@@ -19,6 +53,8 @@ WPCONST.IS_ANALYZER =
   process.argv.includes('--vvv') ||
   process.argv.includes('-vvv');
 WPCONST.IS_DEBUG = process.argv.includes('--debug');
+
+if (WPCONST.IS_ANALYZER) console.log('\n\n👏👏👏👏 ANALYZER \n\n');
 
 WPCONST.DEV_PREFIX = WPCONST.__DEV__ ? '____' : '';
 WPCONST.CHUNK_HASH = WPCONST.__DEV__ ? '-DEV' : '_[chunkhash:4]';
@@ -31,7 +67,7 @@ WPCONST.DEVTOOL = WPCONST.__DEV__ && WPCONST.IS_DEBUG ? 'eval-source-map' : fals
 
 //
 // DIR PATH
-WPCONST.ROOT_DIR = path.resolve(__dirname, '../../');
+WPCONST.ROOT_DIR = ROOT_DIR;
 WPCONST.SRC_DIR = path.resolve(`${WPCONST.ROOT_DIR}/src`);
 WPCONST.PUBLIC_DIR = path.resolve(`${WPCONST.ROOT_DIR}/public`);
 WPCONST.NODEMODULES_DIR = path.resolve(`${WPCONST.ROOT_DIR}/node_modules`);
@@ -75,4 +111,4 @@ WPCONST.REGX_FONT = /\.(woff2|woff|ttf|eot)$/;
 // eslint-disable-next-line no-underscore-dangle
 WPCONST.PACKAGE_FILE = path.resolve(`${WPCONST.ROOT_DIR}/package.json`);
 
-module.exports = { WPCONST };
+module.exports = { WPCONST, getEnvData };

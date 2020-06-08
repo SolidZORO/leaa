@@ -14,12 +14,10 @@ const InlineChunkHtmlPlugin = require('react-dev-utils/InlineChunkHtmlPlugin');
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
 // const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 
-const { showEnvInfo, getEnvInfo } = require('./_fn');
+const { showEnvInfo } = require('./_fn');
 const { WPCONST } = require('./_const');
 const { analyzer } = require('./_analyzer');
 const { provide } = require('./_provide');
-
-const env = getEnvInfo();
 
 class ShowEnvInfoWebpackPlugin {
   apply(compiler) {
@@ -29,7 +27,23 @@ class ShowEnvInfoWebpackPlugin {
 
 // HtmlWebpackPlugin
 const htmlWebpackPluginOption = {
-  __ENV_DATA__: Buffer.from(JSON.stringify(_.pick(env, Object.keys(env)))).toString('base64'),
+  __ENV_DATA__: Buffer.from(
+    JSON.stringify(
+      _.pick(WPCONST, [
+        'SITE_NAME',
+        'API_URL',
+        'API_VERSION',
+        'ANALYTICS_CODE',
+        //
+        'DEMO_MODE',
+        'DEBUG_MODE',
+        //
+        'SERVER_PROTOCOL',
+        'SERVER_PORT',
+        'SERVER_HOST',
+      ]),
+    ),
+  ).toString('base64'),
   __BUILD_DATA__: Buffer.from(
     JSON.stringify({
       BUILDTIME: moment().format('YYYYMMDD-HHmmss'),
@@ -37,8 +51,9 @@ const htmlWebpackPluginOption = {
       MODE: WPCONST.MODE,
     }),
   ).toString('base64'),
-  __ANALYTICS_CODE__: (!WPCONST.__DEV__ && env && env.ANALYTICS_CODE && `<script>${env.ANALYTICS_CODE}</script>`) || '',
-  title: `${env.SITE_NAME || '-'}`,
+  __ANALYTICS_CODE__:
+    (!WPCONST.__DEV__ && WPCONST && WPCONST.ANALYTICS_CODE && `<script>${WPCONST.ANALYTICS_CODE}</script>`) || '',
+  title: `${WPCONST.SITE_NAME || '-'}`,
   manifest: `${WPCONST.CDN_DIR_PATH}/manifest.json`,
   filename: `${WPCONST.BUILD_DIR}/index.html`,
   template: `${WPCONST.VIEWS_DIR}/index.ejs`,
