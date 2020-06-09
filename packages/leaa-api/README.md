@@ -23,16 +23,18 @@ yarn insatll && yarn seed --nuke
 yarn dev
 ```
 
+## **DATABASE**
+
+leaa-api uses `mysql` driver, and I recommended to use mysql at `docker`, [dockerrr](https://github.com/SolidZORO/dockerrr) is a docker scaffolding that I used when developing leaa-api.
+
 ## **DEPLOY**
 
-more step see `deploy.sh`
+More detailed you can see `./deploy.sh`
 
 ## **TIPS**
 
-starting from `v1.0.4`, the api also supports `i18n`.
+Starting from `v1.0.4`, the api also supports `i18n`.
 
-the currently available languages are 🇺🇸 English (en-US) and 🇨🇳 Chinese (zh-CN). The default is English.
+The currently available languages are 🇺🇸 English (en-US) and 🇨🇳 Chinese (zh-CN). The default is English. to request Chinese, please set req.header.lang, e.g. `req.heard.lang = 'zh-CN'`
 
-to request Chinese, please set req.header.lang, e.g. `req.heard.lang = 'zh-CN'`
-
-more config @see `leaa-api/src/modules/i18n/i18n.service.ts`
+More config detailed you can see `leaa-api/src/modules/i18n/i18n.service.ts`

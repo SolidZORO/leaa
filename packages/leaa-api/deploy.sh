@@ -60,17 +60,17 @@ platform_test() {
 }
 
 platform_test_docker() {
-  if [ -f "${__DEPLOY__}/.env.production" ]; then
+  if [ -f "${__DEPLOY__}/.env" ]; then
       # shellcheck disable=SC2028
-      echo '\n✨  Already .env.production, Do not copy.\n'
+      echo '\n✨  Already .env, Do not copy.\n'
     else
-      cp -f ./.env.production ${__DEPLOY__}
+      cp -f ./.env ${__DEPLOY__}
   fi
 
   cp -f ./docker-compose.yml ${__DEPLOY__}
   cd ${__DEPLOY__} || exit
 
-  docker-compose --env-file ./.env.production up
+  docker-compose up
 }
 
 platform_heroku() {

@@ -18,13 +18,13 @@ export const envInfoForCli = ({
   const serverBaseByEmoji = `✨✨ \x1b[00;44;9m${serverBaseByText}\x1b[0m ✨✨`;
   const serverEnv = `${NODE_ENV !== 'production' ? '🚀' : '🔰'} ${(NODE_ENV || 'NOT-ENV').toUpperCase()}`;
 
-  console.log(`\n\n> 🌈  DEBUG ${config.DEBUG_MODE ? '✅' : '➖'} / DEMO ${config.DEMO_MODE ? '✅' : '➖'}`);
+  console.log(`\n\n\n> 🌈  DEBUG ${config.DEBUG_MODE ? '✅' : '⛔️'}  /  DEMO ${config.DEMO_MODE ? '✅' : '⛔️'}`);
 
-  console.log(`\n\n> ${serverEnv} /     URL`, serverBaseByEmoji);
+  console.log(`\n> ${serverEnv}  /  URL`, serverBaseByEmoji);
 
-  console.log('\n> 📮 ENVDATA');
-  console.log('     - NAME    ', config.SERVER_NAME);
-  console.log('     - VERSION ', `v${pkg.version}`);
+  console.log('\n> 📮 ENVINFO');
+  console.log('     - NAME    ', `${config.SERVER_NAME} v${pkg.version}`);
+  console.log('');
   console.log('     - DIRNAME ', DIRNAME);
   console.log('     - PUBLIC  ', PUBLIC_PATH);
   console.log('');
