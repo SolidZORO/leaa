@@ -1,13 +1,8 @@
 {
-  "packages": [
-    "packages/*"
-  ],
-  "version": "3.3.0",
+  "packages": ["packages/*"],
+  "version": "3.3.1",
   "npmClient": "yarn",
   "includeMergedTags": true,
   "useWorkspaces": true,
-  "ignoreChanges": [
-    "**/__(fixtures|tests|specs)__/**",
-    "**/*.(md|txt)"
-  ]
+  "ignoreChanges": ["**/__(fixtures|tests|specs)__/**", "**/*.(md|txt)"]
 }
