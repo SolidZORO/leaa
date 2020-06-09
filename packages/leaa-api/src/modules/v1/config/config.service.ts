@@ -11,6 +11,11 @@ export class ConfigService {
     this.envConfig = this.validate(dotEnvPath);
   }
 
+  get __ENV__(): string {
+    // eslint-disable-next-line no-underscore-dangle
+    return this.envConfig.__ENV__;
+  }
+
   get SERVER_NAME(): string {
     return this.envConfig.SERVER_NAME;
   }
@@ -189,6 +194,7 @@ export class ConfigService {
 
   private validate(dotEnvPath: string): IDotEnv {
     const rule = {
+      __ENV__: envalid.str({ choices: ['prod', 'dev', 'test'] }),
       SERVER_NAME: envalid.str({ default: 'leaa' }),
       SERVER_PROTOCOL: envalid.str({ choices: ['http', 'https'], default: 'http' }),
       SERVER_PORT: envalid.port({ default: 5555 }),
