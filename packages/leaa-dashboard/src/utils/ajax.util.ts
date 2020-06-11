@@ -3,7 +3,7 @@ import axios from 'axios';
 import { getAuthToken, getGuestToken } from './auth.util';
 
 export const ajax = axios;
-ajax.defaults.timeout = 100000;
+ajax.defaults.timeout = 10000;
 
 ajax.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
 ajax.defaults.headers.common.Authorization = getAuthToken() ? `Bearer ${getAuthToken()}` : '';
