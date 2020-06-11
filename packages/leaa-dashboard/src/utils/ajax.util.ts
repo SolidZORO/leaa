@@ -5,8 +5,6 @@ import { getAuthToken, getGuestToken } from './auth.util';
 export const ajax = axios;
 ajax.defaults.timeout = 10000;
 
-// console.log('hi, here just test update conventional-changelog');
-
 ajax.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
 ajax.defaults.headers.common.Authorization = getAuthToken() ? `Bearer ${getAuthToken()}` : '';
 ajax.defaults.headers.common.Guthorization = getGuestToken();
