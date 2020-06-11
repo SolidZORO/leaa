@@ -3,6 +3,35 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.3.2](https://github.com/SolidZORO/leaa/compare/v3.1.1...v3.3.2) (2020-06-11)
+
+### Bug Fixes
+
+- deploy docker_test fn ([c501324](https://github.com/SolidZORO/leaa/commit/c501324279a19c6d014666f9a960089f23885e5d))
+- fix test load .env path ([c084508](https://github.com/SolidZORO/leaa/commit/c084508e7d6b5b6c1960ee87960a58fab8736c21))
+- fix the `cache-manager` package is missing ([3e8c4b7](https://github.com/SolidZORO/leaa/commit/3e8c4b7e4b5aba4a33412b604bd5d3065fa208d2))
+- update user and update avatar at the same time ([298ccfa](https://github.com/SolidZORO/leaa/commit/298ccfa0917ee2968666ce637b743fd166adb8a7))
+
+### Code Refactoring
+
+- 💡 .env change to production default env file ([dcca7d0](https://github.com/SolidZORO/leaa/commit/dcca7d0e2fbe55c0cd5775d9d76deaf6ce4d7d32))
+
+### Features
+
+- .env add `ENABLE_CAPTCHA_BY_LOGIN_FAILD_TIMES` ([5925c5a](https://github.com/SolidZORO/leaa/commit/5925c5a83f5546272340a2742cf065dde1f6c8e6))
+- .env add `SERVER_NAME` ([bc3965d](https://github.com/SolidZORO/leaa/commit/bc3965db35d4e7f81187ae8e5f0043be158ef07f))
+- .env add GRAVATAR_TYPE ([dcb3ba1](https://github.com/SolidZORO/leaa/commit/dcb3ba1b959ad9702e5656255b7daebbd59c8e0a))
+- add deploy bash script ([d3914d1](https://github.com/SolidZORO/leaa/commit/d3914d19f4c05932cb3abda3bdc3c483c6d0f0fb))
+- add use phone login dashboard ([4824440](https://github.com/SolidZORO/leaa/commit/482444069b3ea99e395ce50db09f52de526fc0c7))
+- can create user by phone ([77237f9](https://github.com/SolidZORO/leaa/commit/77237f9b615fbeaba1adc097635bb83f71ddbaa7))
+- user add avatar change ([c317528](https://github.com/SolidZORO/leaa/commit/c317528eabcb7e21dd280c5a2ebdf2afbb3a06a7))
+
+### BREAKING CHANGES
+
+- 🧨 .env change to production default env file, keep docker .env compatible,
+  and follow dotenv recommended @link
+  https://github.com/motdotla/dotenv#should-i-have-multiple-env-files
+
 ## [3.3.1](https://github.com/SolidZORO/leaa/compare/v3.1.1...v3.3.1) (2020-06-09)
 
 ### Bug Fixes
