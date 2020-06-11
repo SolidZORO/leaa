@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.3.5](https://github.com/SolidZORO/leaa/compare/v3.3.4...v3.3.5) (2020-06-11)
+
+### Bug Fixes
+
+- clean ajax console.log ([be7ce89](https://github.com/SolidZORO/leaa/commit/be7ce8968a1120aeaae05c4efcc3b889dba09562))
+
 ## [3.3.4](https://github.com/SolidZORO/leaa/compare/v3.3.3...v3.3.4) (2020-06-11)
 
 **Note:** Version bump only for package @leaa/dashboard
