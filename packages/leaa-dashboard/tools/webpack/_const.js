@@ -12,7 +12,7 @@ const ENV_FILE_NAME = process.env.NODE_ENV === 'production' ? '.env' : `.env.${p
 function getEnvFilePath() {
   const envFilePath = `${ROOT_DIR}/${ENV_FILE_NAME}`;
 
-  if (!fs.existsSync(envFilePath)) {
+  if (process.env.NODE_ENV && !fs.existsSync(envFilePath)) {
     console.log('\n');
     console.log(''.padStart(48, '='));
     console.error(`\n🔰  Please create \`${ENV_FILE_NAME}\` file first\n`);
@@ -108,7 +108,6 @@ WPCONST.REGX_FONT = /\.(woff2|woff|ttf|eot)$/;
 
 //
 // ETC
-// eslint-disable-next-line no-underscore-dangle
 WPCONST.PACKAGE_FILE = path.resolve(`${WPCONST.ROOT_DIR}/package.json`);
 
 module.exports = { WPCONST, getEnvData };

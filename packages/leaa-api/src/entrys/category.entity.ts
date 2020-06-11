@@ -10,7 +10,6 @@ export class Category extends Base {
   @Column({ type: 'varchar', length: 64, unique: true })
   name!: string | null;
 
-  // @Index()
   @Column({ type: 'varchar', length: 64, unique: true })
   slug!: string;
 
@@ -25,7 +24,4 @@ export class Category extends Base {
 
   @TreeParent()
   parent?: Category | null;
-
-  // Virtual Field (not in DB)
-  // key?: string | null;
 }
