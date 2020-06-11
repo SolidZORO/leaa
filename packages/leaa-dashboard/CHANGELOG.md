@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.3.3](https://github.com/SolidZORO/leaa/compare/v3.3.2...v3.3.3) (2020-06-11)
+
+### Bug Fixes
+
+- ajax timeout to 10s ([b6f56ed](https://github.com/SolidZORO/leaa/commit/b6f56ed472e93e5deba0a59f76bfd8a15ddcacda))
+
 ## [3.3.2](https://github.com/SolidZORO/leaa/compare/v3.1.1...v3.3.2) (2020-06-11)
 
 ### Bug Fixes
