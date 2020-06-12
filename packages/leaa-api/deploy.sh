@@ -9,7 +9,7 @@ __DEPLOY__="./_deploy"
 
 usage() {
   # shellcheck disable=SC2028
-  echo "\n\n\n\n🔰  Usage: $0 -p test|test_docker|ecs|vercel|heroku [-i]  (e.g. sh -p test)\n\n\n\n"
+  echo "\n\n\n\n🔰  Usage: $0 -p local_start|docker_start|docker_install|ecs|vercel|heroku [-i]  (e.g. sh -p test)\n\n\n\n"
   exit 2
 }
 
@@ -22,7 +22,7 @@ set_var() {
 
   if [ -z "${!arg_name}" ]; then
     if [ "$arg_name" = "PLATFORM" ]; then
-      if echo "$*" | grep -Eq '^test|test_docker|ecs|vercel|heroku$'; then
+      if echo "$*" | grep -Eq '^local_start|docker_start|docker_install|ecs|vercel|heroku$'; then
         eval "$arg_name=\"$*\""
       else
         usage
@@ -46,20 +46,19 @@ platform_vercel() {
   vercel --prod -c
 }
 
-platform_ecs() {
-  cd ${__DEPLOY__} || exit
-
-  # shellcheck disable=SC2028
-  echo "\n✨  Done Platform ECS\n"
-}
-
-platform_test() {
+platform_local_start() {
   cd ${__DEPLOY__} || exit
 
   yarn start
 }
 
-platform_test_docker() {
+platform_docker_start() {
+  cd ${__DEPLOY__} || exit
+
+  yarn docker-start
+}
+
+platform_docker_install() {
   if [ -f "${__DEPLOY__}/.env" ]; then
       # shellcheck disable=SC2028
       echo '\n✨  Already .env, Do not copy.\n'
@@ -67,10 +66,19 @@ platform_test_docker() {
       cp -f ./.env ${__DEPLOY__}
   fi
 
+  cp -f ./tools/deploy-config/ecs/pm2.json ${__DEPLOY__}
   cp -f ./docker-compose.yml ${__DEPLOY__}
+
   cd ${__DEPLOY__} || exit
 
-  docker-compose up
+  # shellcheck disable=SC2016
+  # shellcheck disable=SC2002
+  cat ./docker-compose.yml | \
+  sed 's/${__ENV__}_${DOCKER_NODE_CONTAINER_NAME}/deploy-yarn-install/g' | \
+  sed 's/yarn docker-start/yarn docker-install/g' | tee docker-compose-deploy-yarn-install.yml
+
+  docker-compose -f docker-compose-deploy-yarn-install.yml down && docker-compose -f docker-compose-deploy-yarn-install.yml up
+  # after replace: "docker-install": "NODE_ENV=production yarn install --production && yarn add pm2",
 }
 
 platform_heroku() {
@@ -131,6 +139,7 @@ if [ "$KEY" = "" ]; then
   fi
   cp -fr ./_dist/* ${__DEPLOY__}
   cp -f ./tools/deploy-config/ecs/index.js ${__DEPLOY__}
+  cp -f ./tools/deploy-config/ecs/package.json ${__DEPLOY__}
   cp -f ./.gitignore ${__DEPLOY__}
 
   #/assets (copy and then delete some gen files)
@@ -158,9 +167,9 @@ if [ "$KEY" = "" ]; then
   # -----------
   if [ -n "$PLATFORM" ]; then
     case $PLATFORM in
-      test) platform_test ;;
-      test_docker) platform_test_docker ;;
-      ecs) platform_ecs ;;
+      local_start) platform_local_start ;;
+      docker_start) platform_docker_start ;;
+      docker_install) platform_docker_install ;;
       vercel) platform_vercel ;;
       heroku) platform_heroku ;;
       *) usage ;; esac

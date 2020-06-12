@@ -1,0 +1,24 @@
+{
+  "apps": {
+    "name": "api",
+    "cwd": "./",
+    "script": "./index.js",
+    "watch": true,
+    "ignore_watch": [
+      "pm2",
+      "node_modules",
+      "logs",
+      ".git",
+      ".vscode",
+      ".idea",
+      ".cache",
+      ".dist",
+      ".docker",
+      ".DS_Store",
+      "*~"
+    ],
+    "out_file": "/dev/null",
+    "error_file": "./pm2/logs/_error.log",
+    "autorestart": true
+  }
+}
