@@ -1,4 +1,4 @@
-name: Test Api
+name: leaa-api
 
 on:
   push:
@@ -13,7 +13,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        node_version: [12.16.3]
+        node_version: [12.x, 14.x]
         os: [ubuntu-latest]
 
     steps:

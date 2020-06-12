@@ -2,7 +2,7 @@
 
 # Leaa (project 1d1h)
 
-[![Build Status](https://travis-ci.com/SolidZORO/leaa.svg?token=dp93c7BFxq7zs1iT4qaM&branch=master)](https://travis-ci.com/SolidZORO/leaa)
+[![Build Status](https://github.com/SolidZORO/leaa/workflows/leaa-api/badge.svg)](https://github.com/SolidZORO/leaa/actions)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/4443217249ea4bbe8e057c691de4b0cd)](https://www.codacy.com?utm_source=github.com&utm_medium=referral&utm_content=SolidZORO/leaa&utm_campaign=Badge_Grade)
 
 Leaa is a monorepo CMS (Content Management System) built with Nest.js, Next.js, and Ant Design.
