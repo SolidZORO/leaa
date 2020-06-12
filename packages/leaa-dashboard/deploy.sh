@@ -9,7 +9,7 @@ __DEPLOY__="./_deploy"
 
 usage() {
   # shellcheck disable=SC2028
-  echo "\n\n\n\n🔰  Usage: $0 -p test|ecs|vercel [-i]  (e.g. sh -p test)\n\n\n\n"
+  echo "\n\n\n\n🔰  Usage: $0 -p test|local_build|vercel [-i]  (e.g. sh -p test)\n\n\n\n"
   exit 2
 }
 
@@ -22,7 +22,7 @@ set_var() {
 
   if [ -z "${!arg_name}" ]; then
     if [ "$arg_name" = "PLATFORM" ]; then
-      if echo "$*" | grep -Eq '^test|ecs|vercel$'; then
+      if echo "$*" | grep -Eq '^test|local_build|vercel$'; then
         eval "$arg_name=\"$*\""
       else
         usage
@@ -47,11 +47,11 @@ platform_vercel() {
   vercel --prod -c
 }
 
-platform_ecs() {
+platform_local_build() {
   cd ${__DEPLOY__} || exit
 
   # shellcheck disable=SC2028
-  echo "\n✨  Done Platform ECS\n"
+  echo "\n✨  Done Platform Local Build\n"
 }
 
 platform_test() {
@@ -113,7 +113,7 @@ if [ "$KEY" = "" ]; then
   if [ -n "$PLATFORM" ]; then
     case $PLATFORM in
       test) platform_test ;;
-      ecs) platform_ecs ;;
+      local_build) platform_local_build ;;
       vercel) platform_vercel ;;
       *) usage ;; esac
   fi

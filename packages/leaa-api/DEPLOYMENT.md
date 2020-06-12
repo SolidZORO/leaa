@@ -1,6 +1,6 @@
 ### 打包
 
-建议使用 `sh ./deploy.sh -p ecs` 把项目打包到 `_deploy` 目录。
+建议使用 `sh ./deploy.sh -p local_build` 把项目打包到 `_deploy` 目录。
 
 ### 本地
 

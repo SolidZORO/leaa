@@ -9,7 +9,7 @@ __DEPLOY__="./_deploy"
 
 usage() {
   # shellcheck disable=SC2028
-  echo "\n\n\n\n🔰  Usage: $0 -p local_start|docker_start|docker_install|ecs|vercel|heroku [-i]  (e.g. sh -p test)\n\n\n\n"
+  echo "\n\n\n\n🔰  Usage: $0 -p local_start|docker_start|docker_install|vercel|heroku [-i]  (e.g. sh -p test)\n\n\n\n"
   exit 2
 }
 
@@ -22,7 +22,7 @@ set_var() {
 
   if [ -z "${!arg_name}" ]; then
     if [ "$arg_name" = "PLATFORM" ]; then
-      if echo "$*" | grep -Eq '^local_start|docker_start|docker_install|ecs|vercel|heroku$'; then
+      if echo "$*" | grep -Eq '^local_start|docker_start|docker_install|vercel|heroku$'; then
         eval "$arg_name=\"$*\""
       else
         usage
@@ -66,7 +66,7 @@ platform_docker_install() {
       cp -f ./.env ${__DEPLOY__}
   fi
 
-  cp -f ./tools/deploy-config/ecs/pm2.json ${__DEPLOY__}
+  cp -f ./tools/deploy-config/server/pm2.json ${__DEPLOY__}
   cp -f ./docker-compose.yml ${__DEPLOY__}
 
   cd ${__DEPLOY__} || exit
@@ -138,8 +138,8 @@ if [ "$KEY" = "" ]; then
     mkdir -p ${__DEPLOY__}
   fi
   cp -fr ./_dist/* ${__DEPLOY__}
-  cp -f ./tools/deploy-config/ecs/index.js ${__DEPLOY__}
-  cp -f ./tools/deploy-config/ecs/package.json ${__DEPLOY__}
+  cp -f ./tools/deploy-config/server/index.js ${__DEPLOY__}
+  cp -f ./tools/deploy-config/server/package.json ${__DEPLOY__}
   cp -f ./.gitignore ${__DEPLOY__}
 
   #/assets (copy and then delete some gen files)
