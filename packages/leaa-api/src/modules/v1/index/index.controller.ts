@@ -1,12 +1,13 @@
 import fs from 'fs';
 import path from 'path';
-import { Controller, Get } from '@nestjs/common';
-import { ConfigService } from '@leaa/api/src/modules/v1/config/config.service';
-import { IBuild } from '@leaa/api/src/interfaces';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Setting } from '@leaa/api/src/entrys';
 import { Repository } from 'typeorm';
-import { slugify } from 'transliteration';
+import { Controller, Get } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { ConfigService } from '@leaa/api/src/modules/v1/config/config.service';
+
+import { IBuild } from '@leaa/api/src/interfaces';
+import { Setting } from '@leaa/api/src/entrys';
+import { genSlug } from '@leaa/api/src/utils';
 
 @Controller('')
 export class IndexController {
@@ -20,7 +21,7 @@ export class IndexController {
     const BUILDINFO_PATH = path.resolve('public/version.txt');
 
     const dbSiteName = await this.settingRepo.findOne({ slug: 'site_name' });
-    const siteName = dbSiteName?.value ? slugify(dbSiteName.value) : 'UNKNOW';
+    const siteName = dbSiteName?.value ? genSlug(dbSiteName.value) : 'UNKNOW';
 
     const defaultBuildInfo: IBuild = {
       NAME: siteName,

@@ -6,12 +6,11 @@ import { CrudRequest } from '@nestjsx/crud';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 import { plainToClass } from 'class-transformer';
-import { slugify } from 'transliteration';
 
 import { Article, Tag, Category } from '@leaa/api/src/entrys';
 import { ArticleUpdateOneReq, ArticleCreateOneReq } from '@leaa/api/src/dtos/article';
 import { TagService } from '@leaa/api/src/modules/v1/tag/tag.service';
-import { formatHtmlToText, cutTags } from '@leaa/api/src/utils';
+import { formatHtmlToText, cutTags, genSlug } from '@leaa/api/src/utils';
 
 export interface ITransIdsToEntrys {
   dto: any;
@@ -87,13 +86,13 @@ export class ArticleService extends TypeOrmCrudService<Article> {
 
   async genSlug({ title, slug }: { title: string; slug?: string | null }): Promise<string> {
     if (!slug) {
-      const prevSlug = slugify(title);
+      const prevSlug = genSlug(title);
       const hasSlug = await this.articleRepo.findOne({ where: { slug: prevSlug } });
 
       return hasSlug ? `${prevSlug}-${new Date().getMilliseconds()}` : prevSlug;
     }
 
-    return slugify(slug);
+    return genSlug(slug);
   }
 
   async formatRelationIdsToSave({ dto, toSave, idField, saveField, repo }: ITransIdsToEntrys) {
