@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.4.0](https://github.com/SolidZORO/leaa/compare/v3.3.5...v3.4.0) (2020-06-13)
+
+### Bug Fixes
+
+- recover `getSlug` to `genSlug` ([a3ffb93](https://github.com/SolidZORO/leaa/commit/a3ffb931e2839c5d83cdc1970aa9fe3ab58f6f7d))
+
+### Features
+
+- `ecosystem.config.js.example` pull to api root dir ([b83fed1](https://github.com/SolidZORO/leaa/commit/b83fed1c964169c3808659bd446f539211ef5c49))
+- auto push to DeployRepo and Server and RUN! ([a7a91ac](https://github.com/SolidZORO/leaa/commit/a7a91ac2731a989878bb39bde3fe98659540e3a7))
+
+### Performance Improvements
+
+- auto deploy workflow ([eb0bf5a](https://github.com/SolidZORO/leaa/commit/eb0bf5a250faa552fc05b105a8004d4af747b4df))
+
 ## [3.3.4](https://github.com/SolidZORO/leaa/compare/v3.3.3...v3.3.4) (2020-06-11)
 
 **Note:** Version bump only for package @leaa/api
