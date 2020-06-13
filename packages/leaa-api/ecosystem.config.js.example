@@ -34,7 +34,15 @@ module.exports = {
       repo: 'git@xxxxxxxx.com:aaaa/bbbb.git',
       path: '/var/www/bbbb',
       env: { NODE_ENV: 'production' },
-      'post-deploy': 'echo "\n\n\n\n" && pwd && echo "\n\n" && ls -la && docker-compose down && docker-compose up',
+      'post-deploy': `
+         echo -------- &&
+         pwd &&
+         echo - &&
+         ls -la &&
+         echo -------- &&
+         docker-compose down &&
+         docker-compose up
+      `,
     },
   },
 };

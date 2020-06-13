@@ -9,7 +9,7 @@ __DEPLOY__="./_deploy"
 
 usage() {
   # shellcheck disable=SC2028
-  echo "\n\n\n\n🔰  Usage: $0 -p local_start|docker_start|docker_install|vercel|heroku [-i]  (e.g. sh -p test)\n\n\n\n"
+  echo "\n\n\n\n🔰  Usage: $0 -p local_start|docker_start|docker_install|vercel [-i]  (e.g. sh -p test)\n\n\n\n"
   exit 2
 }
 
@@ -22,11 +22,15 @@ set_var() {
 
   if [ -z "${!arg_name}" ]; then
     if [ "$arg_name" = "PLATFORM" ]; then
-      if echo "$*" | grep -Eq '^local_start|docker_start|docker_install|vercel|heroku$'; then
+      if echo "$*" | grep -Eq '^local_start|docker_start|docker_install|vercel'; then
         eval "$arg_name=\"$*\""
       else
         usage
       fi
+    fi
+
+    if [ "$arg_name" = "YARN_BUILD" ]; then
+        eval "$arg_name=\"$*\""
     fi
 
     if [ "$arg_name" = "YARN_BUILD" ]; then
@@ -39,24 +43,6 @@ set_var() {
   fi
 }
 
-platform_vercel() {
-  cp -fr ./tools/deploy-config/vercel/* ${__DEPLOY__}
-  cd ${__DEPLOY__} || exit
-
-  vercel --prod -c
-}
-
-platform_local_start() {
-  cd ${__DEPLOY__} || exit
-
-  yarn start
-}
-
-platform_docker_start() {
-  cd ${__DEPLOY__} || exit
-
-  yarn docker-start
-}
 
 platform_docker_install() {
   if [ -f "${__DEPLOY__}/.env" ]; then
@@ -86,19 +72,25 @@ platform_docker_install() {
   echo '\n\n\n\n🎉  All Dependencies Installation Completed!\n\n\n\n\n'
 }
 
-platform_heroku() {
-  LOCAL_TIME=$(date "+%Y-%m-%d %H:%M:%S")
-
-  DEPLOY_HEROKU_APP_NAME="test-leaa-api"
-  DEPLOY_COMMIT="update AUTO-DEPLOY ${DEPLOY_HEROKU_APP_NAME} @ ${LOCAL_TIME}"
-
+platform_vercel() {
+  cp -fr ./tools/deploy-config/vercel/* ${__DEPLOY__}
   cd ${__DEPLOY__} || exit
-  git init
-  git remote add heroku https://git.heroku.com/${DEPLOY_HEROKU_APP_NAME}.git
-  git add -A
-  git commit -m "${DEPLOY_COMMIT}"
-  git push -f heroku master
+
+  vercel --prod -c
 }
+
+platform_local_start() {
+  cd ${__DEPLOY__} || exit
+
+  yarn start
+}
+
+platform_docker_start() {
+  cd ${__DEPLOY__} || exit
+
+  yarn docker-start
+}
+
 
 # ------------------------------------------------------------------------
 
@@ -176,7 +168,6 @@ if [ "$KEY" = "" ]; then
       docker_start) platform_docker_start ;;
       docker_install) platform_docker_install ;;
       vercel) platform_vercel ;;
-      heroku) platform_heroku ;;
       *) usage ;; esac
   fi
 
