@@ -3,27 +3,31 @@
 .DS_Store
 
 #Accests
-/public/attachments
-/public/buildinfo.json
-/public/version.txt
-/public/logs
+public/attachments
+public/buildinfo.json
+public/version.txt
+public/logs
+
+ecosystem.config.*
+!ecosystem.config.js.example
+
 
 # Compiled
-/.cache
-/_cache
-/cache
+.cache
+_cache
+cache
 
-/.build
-/_build
-/build
+.build
+_build
+build
 
-/.dist
-/_dist
-/dist
+.dist
+_dist
+dist
 
-/.deploy
-/_deploy
-/deploy
+.deploy
+_deploy
+deploy
 
 node_modules
 __docker__

@@ -61,24 +61,29 @@ platform_docker_start() {
 platform_docker_install() {
   if [ -f "${__DEPLOY__}/.env" ]; then
       # shellcheck disable=SC2028
-      echo '\n✨  Already .env, Do not copy.\n'
+      echo '\n✨  Already .env, Do not Copy :)\n'
     else
       cp -f ./.env ${__DEPLOY__}
   fi
 
-  cp -f ./tools/deploy-config/server/pm2.json ${__DEPLOY__}
+  if [ -f "./ecosystem.config.js" ]; then
+      cp -f ./ecosystem.config.js ${__DEPLOY__}
+    else
+      echo '⚠️  Please rename ecosystem.config.js.example to ecosystem.config.js first \n'
+  fi
+
   cp -f ./docker-compose.yml ${__DEPLOY__}
 
   cd ${__DEPLOY__} || exit
 
-  # shellcheck disable=SC2016
   # shellcheck disable=SC2002
   cat ./docker-compose.yml | \
-  sed 's/${__ENV__}_${DOCKER_NODE_CONTAINER_NAME}/deploy-yarn-install/g' | \
-  sed 's/yarn docker-start/yarn docker-install/g' | tee docker-compose-deploy-yarn-install.yml
+  sed 's/${__ENV__}_${DOCKER_NODE_CONTAINER_NAME}/deploy_yarn_install/g' | \
+  sed 's/yarn docker-start/yarn docker-install/g' > docker-compose-deploy-yarn-install.yml
 
   docker-compose -f docker-compose-deploy-yarn-install.yml down && docker-compose -f docker-compose-deploy-yarn-install.yml up
-  # after replace: "docker-install": "NODE_ENV=production yarn install --production && yarn add pm2",
+
+  echo '\n\n\n\n🎉  All Dependencies Installation Completed!\n\n\n\n\n'
 }
 
 platform_heroku() {

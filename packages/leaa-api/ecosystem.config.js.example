@@ -1,0 +1,40 @@
+module.exports = {
+  // for pm2 runing
+  // https://pm2.keymetrics.io/docs/usage/signals-clean-restart/
+  apps: {
+    name: 'api',
+    cwd: './',
+    script: './index.js',
+    watch: true,
+    ignore_watch: [
+      'pm2',
+      'node_modules',
+      'logs',
+      '.git',
+      '.vscode',
+      '.idea',
+      '.cache',
+      '.dist',
+      '.docker',
+      '.DS_Store',
+      '*~',
+    ],
+    env_production: { NODE_ENV: 'production' },
+    exec_mode: 'cluster',
+    autorestart: true,
+  },
+  // for pm2 deploy (remote server exec pull and deploy)
+  // https://pm2.keymetrics.io/docs/usage/deployment/
+  deploy: {
+    api: {
+      user: 'www-data',
+      host: '111.111.111.111',
+      port: '22',
+      ref: 'origin/api',
+      repo: 'git@xxxxxxxx.com:aaaa/bbbb.git',
+      path: '/var/www/bbbb',
+      env: { NODE_ENV: 'production' },
+      'post-deploy': 'echo "\n\n\n\n" && pwd && echo "\n\n" && ls -la && docker-compose down && docker-compose up',
+    },
+  },
+};
