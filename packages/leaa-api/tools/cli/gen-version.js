@@ -14,8 +14,8 @@ const DIST_PUBLIC_DIR = path.resolve(__dirname, '../../public');
 const DIST_FILE_PATH = `${DIST_PUBLIC_DIR}/version.txt`;
 
 const buildInfo = {
-  BUILDTIME: moment().format('YYYYMMDD-HHmmss'),
   VERSION: getVersion,
+  BUILDTIME: moment().format('YYYYMMDD-HHmmss'),
 };
 
 if (!fs.existsSync(DIST_PUBLIC_DIR)) {

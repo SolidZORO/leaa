@@ -46,9 +46,9 @@ const htmlWebpackPluginOption = {
   ).toString('base64'),
   __BUILD_DATA__: Buffer.from(
     JSON.stringify({
-      BUILDTIME: moment().format('YYYYMMDD-HHmmss'),
       VERSION: `v${process.env.npm_package_version}`,
       MODE: WPCONST.MODE,
+      BUILDTIME: moment().format('YYYYMMDD-HHmmss'),
     }),
   ).toString('base64'),
   __ANALYTICS_CODE__:
