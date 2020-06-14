@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.4.1](https://github.com/SolidZORO/leaa/compare/v3.4.0...v3.4.1) (2020-06-14)
+
+
+### Performance Improvements
+
+* api index UX ([95db263](https://github.com/SolidZORO/leaa/commit/95db2632967f0254889654217c1ce8f8eb753ba9))
+
+
+
+
+
 # [3.4.0](https://github.com/SolidZORO/leaa/compare/v3.3.5...v3.4.0) (2020-06-13)
 
 ### Bug Fixes
