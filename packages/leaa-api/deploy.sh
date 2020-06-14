@@ -41,11 +41,11 @@ set_var() {
     fi
 
     if [ "$arg_name" = "YARN_BUILD" ]; then
-        eval "$arg_name=\"$*\""
+      eval "$arg_name=\"$*\""
     fi
 
     if [ "$arg_name" = "PM2_SETUP" ]; then
-        eval "$arg_name=\"$*\""
+      eval "$arg_name=\"$*\""
     fi
 
   else
@@ -57,28 +57,28 @@ set_var() {
 platform_docker_install() {
   DEPLOY_DOTENV_FILE="$__DEPLOY__/.env"
   if [ -f $DEPLOY_DOTENV_FILE ]; then
-      # shellcheck disable=SC2028
-      printf "\n👌  Already %s, do NOT Copy :)\n\n" $DEPLOY_DOTENV_FILE
-    else
-      cp -f ./.env $DEPLOY_DOTENV_FILE
+    # shellcheck disable=SC2028
+    printf "\n👌  Already %s, do NOT Copy :)\n\n" $DEPLOY_DOTENV_FILE
+  else
+    cp -f ./.env $DEPLOY_DOTENV_FILE
   fi
 
   if [ -f "./ecosystem.config.js" ]; then
-      cp -f ./ecosystem.config.js ${__DEPLOY__}
-    else
-      printf '⚠️  Please rename ecosystem.config.js.example to ecosystem.config.js first \n'
+    cp -f ./ecosystem.config.js ${__DEPLOY__}
+  else
+    printf '⚠️  Please rename ecosystem.config.js.example to ecosystem.config.js first \n'
   fi
 
   cp -f ./docker-compose.yml ${__DEPLOY__}
 
   cd ${__DEPLOY__} || exit
 
-  cat < ./docker-compose.yml | \
-  sed 's/yarn docker-pm2-test && yarn docker-start/while true;do echo debugging;sleep 5;done/g' > docker-compose-deploy-debug.yml
+  cat <./docker-compose.yml |
+    sed 's/yarn docker-pm2-test && yarn docker-start/while true;do echo debugging;sleep 5;done/g' >docker-compose-deploy-debug.yml
 
-  cat < ./docker-compose.yml | \
-  sed 's/${__ENV__}_${DOCKER_NODE_CONTAINER_NAME}/deploy_yarn_install/g' | \
-  sed 's/yarn docker-pm2-test && yarn docker-start/yarn docker-install/g' > docker-compose-deploy-yarn-install.yml
+  cat <./docker-compose.yml |
+    sed 's/${__ENV__}_${DOCKER_NODE_CONTAINER_NAME}/deploy_yarn_install/g' |
+    sed 's/yarn docker-pm2-test && yarn docker-start/yarn docker-install/g' >docker-compose-deploy-yarn-install.yml
 
   docker-compose -f docker-compose-deploy-yarn-install.yml down && docker-compose -f docker-compose-deploy-yarn-install.yml up
 
@@ -86,16 +86,16 @@ platform_docker_install() {
 }
 
 platform_docker_local_test() {
-  platform_docker_install;
+  platform_docker_install
 
-  docker-compose up;
+  docker-compose up
 }
 
 platform_push_to_repo() {
-  platform_docker_install;
+  platform_docker_install
 
   pwd
-  GIT_MESSAGE_STR=$(cat < ./public/version.txt | sed 's/["{}]//g' | sed 's/[,]/ /g')
+  GIT_MESSAGE_STR=$(cat <./public/version.txt | sed 's/["{}]//g' | sed 's/[,]/ /g')
   # GIT_MESSAGE_HASH=$(head /dev/urandom | tr -dc A-Z0-9 | head -c 4 ; echo '')
   GIT_MESSAGE_HASH=$(openssl rand -hex 2 | awk '{print toupper($0)}')
   GIT_MESSAGE="$GIT_MESSAGE_STR <$GIT_MESSAGE_HASH>"
@@ -110,7 +110,7 @@ platform_push_to_repo() {
 }
 
 platform_sync_run() {
-  platform_push_to_repo;
+  platform_push_to_repo
 
   if [ "$PM2_SETUP" = "true" ]; then
     pm2 deploy api setup
@@ -142,18 +142,16 @@ platform_docker_start() {
   yarn docker-start
 }
 
-
 # ------------------------------------------------------------------------
 
-while getopts 'p:i?S?h' arg
-do
+while getopts 'p:i?S?h' arg; do
   # shellcheck disable=SC2220
   case $arg in
-    p) set_var PLATFORM "$OPTARG" ;;
-    i) set_var YARN_BUILD ignore ;;
-    S) set_var PM2_SETUP true ;;
-    h|?) usage ;;
-    *) usage ;; esac
+  p) set_var PLATFORM "$OPTARG" ;;
+  i) set_var YARN_BUILD ignore ;;
+  S) set_var PM2_SETUP true ;;
+  h | ?) usage ;;
+  *) usage ;; esac
 done
 
 echo "\x1B[96m
@@ -166,14 +164,13 @@ echo "\x1B[96m
 
 \x1B[0m"
 
-
 [ -z "$PLATFORM" ] && usage
 
-CONFIRM_MESSAGE=$(printf "\n\n🔰 \033[1m Start Deploy   👉 <%s> ?\033[0m    (Enter/n)" "${PLATFORM}")
-read -p "${CONFIRM_MESSAGE}" -n 1 -r KEY
+CONFIRM_MESSAGE=$(printf "\n\n🔰 \033[1m Start Deploy   👉 <%s> ?\033[0m" "${PLATFORM}")
+read -r -p "${CONFIRM_MESSAGE}    [y/N] " response
 
-
-if [ "$KEY" = "" ]; then
+case "$response" in
+[yY][eE][sS] | [yY])
   # ---------
   # @ROOT-DIR
   # ---------
@@ -209,23 +206,24 @@ if [ "$KEY" = "" ]; then
   cp -f ./public/get-weixin-code.html ${__DEPLOY__}/public
   cp -f ./public/version.txt ${__DEPLOY__}/public
 
-
   # -----------
   # @DEPLOY-DIR
   # -----------
   if [ -n "$PLATFORM" ]; then
     case $PLATFORM in
-      local_start) platform_local_start ;;
-      docker_start) platform_docker_start ;;
-      docker_local_test) platform_docker_local_test ;;
-      docker_install) platform_docker_install ;;
-      push_to_repo) platform_push_to_repo ;;
-      sync_run) platform_sync_run ;;
-      vercel) platform_vercel ;;
-      *) usage ;; esac
+    local_start) platform_local_start ;;
+    docker_start) platform_docker_start ;;
+    docker_local_test) platform_docker_local_test ;;
+    docker_install) platform_docker_install ;;
+    push_to_repo) platform_push_to_repo ;;
+    sync_run) platform_sync_run ;;
+    vercel) platform_vercel ;;
+    *) usage ;; esac
   fi
 
-else
-    # shellcheck disable=SC2028
-    echo "\nCancel Deploy\n"
-fi
+  ;;
+*)
+  # shellcheck disable=SC2028
+  echo "\nCancel Deploy\n"
+  ;;
+esac

@@ -6,10 +6,16 @@ cd "$(dirname "$0")" || exit
 
 __DEPLOY__="./_deploy"
 
-
 usage() {
   # shellcheck disable=SC2028
-  echo "\n\n\n\n🔰  Usage: $0 -p test|local_build|vercel [-i]  (e.g. sh -p test)\n\n\n\n"
+  echo "\n\n
+  🔰  Usage: $0 -p (test | local_build | vercel) [-i] [-S]
+      \n
+      -p platform
+      -i ignore yarn build
+      \n
+      e.g. sh deploy.sh -p vercel
+  \n\n"
   exit 2
 }
 
@@ -30,7 +36,7 @@ set_var() {
     fi
 
     if [ "$arg_name" = "YARN_BUILD" ]; then
-        eval "$arg_name=\"$*\""
+      eval "$arg_name=\"$*\""
     fi
 
   else
@@ -62,17 +68,15 @@ platform_test() {
   yarn start
 }
 
-
 # ------------------------------------------------------------------------
 
-while getopts 'p:i?h' arg
-do
+while getopts 'p:i?h' arg; do
   # shellcheck disable=SC2220
   case $arg in
-    p) set_var PLATFORM "$OPTARG" ;;
-    i) set_var YARN_BUILD ignore ;;
-    h|?) usage ;;
-    *) usage ;; esac
+  p) set_var PLATFORM "$OPTARG" ;;
+  i) set_var YARN_BUILD ignore ;;
+  h | ?) usage ;;
+  *) usage ;; esac
 done
 
 echo "\x1B[95m
@@ -85,14 +89,14 @@ echo "\x1B[95m
 
 \x1B[0m"
 
-
 [ -z "$PLATFORM" ] && usage
 
-CONFIRM_MESSAGE=$(printf "\n\n🤖 \033[1m Start Deploy <%s> ?\033[0m  (Enter/n)" "${PLATFORM}")
-read -p "${CONFIRM_MESSAGE}" -n 1 -r KEY
+CONFIRM_MESSAGE=$(printf "\n\n🔰 \033[1m Start Deploy   👉 <%s> ?\033[0m" "${PLATFORM}")
+read -r -p "${CONFIRM_MESSAGE}    [y/N] " response
 
+case "$response" in
+[yY][eE][sS] | [yY])
 
-if [ "$KEY" = "" ]; then
   # ---------
   # @ROOT-DIR
   # ---------
@@ -112,13 +116,15 @@ if [ "$KEY" = "" ]; then
   # -----------
   if [ -n "$PLATFORM" ]; then
     case $PLATFORM in
-      test) platform_test ;;
-      local_build) platform_local_build ;;
-      vercel) platform_vercel ;;
-      *) usage ;; esac
+    test) platform_test ;;
+    local_build) platform_local_build ;;
+    vercel) platform_vercel ;;
+    *) usage ;; esac
   fi
 
-else
-    # shellcheck disable=SC2028
-    echo "\nCancel Deploy\n"
-fi
+  ;;
+*)
+  # shellcheck disable=SC2028
+  echo "\nCancel Deploy\n"
+  ;;
+esac
