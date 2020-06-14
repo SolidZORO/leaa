@@ -1,12 +1,10 @@
 #! /bin/bash
 
-unset PLATFORM YARN_BUILD PM2_SETUP
-
 cd "$(dirname "$0")" || exit
 
 __DEPLOY__="./_deploy"
 
-
+unset PLATFORM YARN_BUILD PM2_SETUP
 
 usage() {
   # -p = platform
@@ -15,7 +13,7 @@ usage() {
 
   # shellcheck disable=SC2028
   echo "\n\n
-  🔰  Usage: $0 -p (node_start | docker_start | docker_install | push_to_repo | sync_run | vercel) [-i] [-S]
+  🔰  Usage: $0 -p (local_start | docker_start | docker_install | docker_local_test | push_to_repo | sync_run | vercel) [-i] [-S]
       \n
       -p platform
       -i ignore yarn build
@@ -31,11 +29,11 @@ set_var() {
   shift
 
   # shellcheck disable=SC2028
-  echo "BASH-VAR { $arg_name: $* }"
+  echo "Variable: { $arg_name: $* }"
 
   if [ -z "${!arg_name}" ]; then
     if [ "$arg_name" = "PLATFORM" ]; then
-      if echo "$*" | grep -Eq '^node_start|docker_start|docker_install|push_to_repo|sync_run|vercel'; then
+      if echo "$*" | grep -Eq '^local_start|docker_start|docker_install|docker_local_test|push_to_repo|sync_run|vercel'; then
         eval "$arg_name=\"$*\""
       else
         usage
@@ -57,46 +55,58 @@ set_var() {
 }
 
 platform_docker_install() {
-  if [ -f "${__DEPLOY__}/.env" ]; then
+  DEPLOY_DOTENV_FILE="$__DEPLOY__/.env"
+  if [ -f $DEPLOY_DOTENV_FILE ]; then
       # shellcheck disable=SC2028
-      echo '\n👌  Already .env, Do not Copy :)\n'
+      printf "\n👌  Already %s, do NOT Copy :)\n\n" $DEPLOY_DOTENV_FILE
     else
-      cp -f ./.env ${__DEPLOY__}
+      cp -f ./.env $DEPLOY_DOTENV_FILE
   fi
 
   if [ -f "./ecosystem.config.js" ]; then
       cp -f ./ecosystem.config.js ${__DEPLOY__}
     else
-      echo '⚠️  Please rename ecosystem.config.js.example to ecosystem.config.js first \n'
+      printf '⚠️  Please rename ecosystem.config.js.example to ecosystem.config.js first \n'
   fi
 
   cp -f ./docker-compose.yml ${__DEPLOY__}
 
   cd ${__DEPLOY__} || exit
 
-  # shellcheck disable=SC2002
-  cat ./docker-compose.yml | \
+  cat < ./docker-compose.yml | \
+  sed 's/yarn docker-pm2-test && yarn docker-start/while true;do echo debugging;sleep 5;done/g' > docker-compose-deploy-debug.yml
+
+  cat < ./docker-compose.yml | \
   sed 's/${__ENV__}_${DOCKER_NODE_CONTAINER_NAME}/deploy_yarn_install/g' | \
-  sed 's/yarn docker-start/yarn docker-install/g' > docker-compose-deploy-yarn-install.yml
+  sed 's/yarn docker-pm2-test && yarn docker-start/yarn docker-install/g' > docker-compose-deploy-yarn-install.yml
 
   docker-compose -f docker-compose-deploy-yarn-install.yml down && docker-compose -f docker-compose-deploy-yarn-install.yml up
 
-  echo '\n\n🎉  All Dependencies Installation Completed!\n\n\n'
+  printf '\n\n🎉  All Dependencies Installation Completed!\n\n\n'
+}
+
+platform_docker_local_test() {
+  platform_docker_install;
+
+  docker-compose up;
 }
 
 platform_push_to_repo() {
   platform_docker_install;
 
   pwd
-  # shellcheck disable=SC2002
-  GIT_MESSAGE=$(cat ./public/version.txt | sed 's/["{}]//g' | sed 's/[,]/ /g')
+  GIT_MESSAGE_STR=$(cat < ./public/version.txt | sed 's/["{}]//g' | sed 's/[,]/ /g')
+  # GIT_MESSAGE_HASH=$(head /dev/urandom | tr -dc A-Z0-9 | head -c 4 ; echo '')
+  GIT_MESSAGE_HASH=$(openssl rand -hex 2 | awk '{print toupper($0)}')
+  GIT_MESSAGE="$GIT_MESSAGE_STR <$GIT_MESSAGE_HASH>"
 
   git status
   git add -A
-  git commit -m "$GIT_MESSAGE"
-  git push -u origin api
+  git commit -m "ci: $GIT_MESSAGE"
+  git checkout -b api
+  git push -u origin api -f
 
-  echo '\n\n\n📮  Push To Deploy Repo Completed!\n\n\n'
+  printf '\n\n\n📮  Push To Deploy Repo Completed!\n\n\n'
 }
 
 platform_sync_run() {
@@ -105,12 +115,12 @@ platform_sync_run() {
   if [ "$PM2_SETUP" = "true" ]; then
     pm2 deploy api setup
 
-    echo '\n\n🚚  PM2 Setup Completed!\n\n\n'
+    printf '\n\n🚚  PM2 Setup Completed!\n\n\n'
   fi
 
   pm2 deploy api
 
-  echo "\n\n\n\n✅  PM2 Deploy Completed! <$GIT_MESSAGE>\n\n\n\n"
+  printf "\n\n\n\n✅  PM2 Deploy Completed! <%s>\n\n\n\n" "$GIT_MESSAGE"
 }
 
 platform_vercel() {
@@ -120,7 +130,7 @@ platform_vercel() {
   vercel --prod -c
 }
 
-platform_node_start() {
+platform_local_start() {
   cd ${__DEPLOY__} || exit
 
   yarn start
@@ -148,7 +158,7 @@ done
 
 echo "\x1B[96m
 
-   ___   ___  ____ ${PLATFORM}
+   ___   ___  ____ <${PLATFORM}>
   / _ | / _ \/  _/
  / __ |/ ___// /
 /_/ |_/_/  /___/
@@ -177,19 +187,8 @@ if [ "$KEY" = "" ]; then
   fi
   cp -fr ./_dist/* ${__DEPLOY__}
   cp -f ./tools/deploy-config/server/index.js ${__DEPLOY__}
-  cp -f ./tools/deploy-config/server/package.json ${__DEPLOY__}
-
-
-  if [ -f "./ecosystem.config.js" ]; then
-      cp -f ./.gitignore ${__DEPLOY__}
-  fi
-
-  if [ -f "${__DEPLOY__}/.gitignore" ]; then
-      # shellcheck disable=SC2028
-      echo '\n\n👌  Already .gitignore, Do not Copy :)\n'
-    else
-      cp -f ./.gitignore ${__DEPLOY__}
-  fi
+  cp -f ./tools/deploy-config/server/deploy_repo_gitignore ${__DEPLOY__}/.gitignore
+  cp -f ./tools/deploy-config/server/deploy_repo_package.json ${__DEPLOY__}/package.json
 
   #/assets (copy and then delete some gen files)
   if [ ! -d ${__DEPLOY__}/src/assets ]; then
@@ -216,8 +215,9 @@ if [ "$KEY" = "" ]; then
   # -----------
   if [ -n "$PLATFORM" ]; then
     case $PLATFORM in
-      node_start) platform_node_start ;;
+      local_start) platform_local_start ;;
       docker_start) platform_docker_start ;;
+      docker_local_test) platform_docker_local_test ;;
       docker_install) platform_docker_install ;;
       push_to_repo) platform_push_to_repo ;;
       sync_run) platform_sync_run ;;

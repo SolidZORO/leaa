@@ -1,9 +1,10 @@
+public/attachments
+public/logs
+
 # OS
 *~
 .DS_Store
-node_modules
 
-# Compiled
 # Compiled
 /.cache
 /_cache
@@ -21,14 +22,17 @@ node_modules
 /_deploy
 /deploy
 
+/__docker__
+/__docker-data__
+/__DOCKER-DATA__
+/__docker-data-dev__
+/__DOCKER-DATA-DEV__
+/.docker
+/.docker__
+
 # Logs
 logs
 *.log
-
-# Env
-.env*
-!.env.example
-robots.txt
 
 # Test
 /coverage
@@ -48,7 +52,9 @@ robots.txt
 !.vscode/launch.json
 !.vscode/extensions.json
 
+
 # Deplpoy
+.pm2
 .nowignore
 .vercelignore
 .now

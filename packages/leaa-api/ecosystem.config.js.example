@@ -20,8 +20,8 @@ module.exports = {
       '*~',
     ],
     env_production: { NODE_ENV: 'production' },
-    exec_mode: 'cluster',
     autorestart: true,
+    // exec_mode: 'cluster',
   },
   // for pm2 deploy (remote server exec pull and deploy)
   // https://pm2.keymetrics.io/docs/usage/deployment/
