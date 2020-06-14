@@ -46,13 +46,22 @@ export class IndexController {
 
     const styleFontFamily =
       // eslint-disable-next-line max-len
-      "'Avenir Next', 'Avenir', 'Segoe UI', Roboto, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;";
+      "'Avenir Next', 'Avenir', 'Segoe UI', Roboto, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial";
+    const welcomeText = `hello, ${this.configService.SERVER_NAME}.`;
 
     return `
-      <div>
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <title>${welcomeText}</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="renderer" content="webkit">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
         <style>
           body  {
-            font-family: ${styleFontFamily};
+            font-family: ${styleFontFamily}, sans-serif;
             font-size: 100%;
             user-select: revert;
           }
@@ -90,9 +99,9 @@ export class IndexController {
             font-family: monospace;
           }    
         </style>
-
-        <h1>hello, ${this.configService.SERVER_NAME}.</h1>
-
+      </head>
+      <body>
+        <h1>${welcomeText}</h1>
         <div class="build-list">
           <div class="build-item">
             <span>NAME:</span>
@@ -116,7 +125,8 @@ export class IndexController {
             <strong>${buildInfo.BUILDTIME}</strong>
           </div>
         </div>
-      </div>
+      </body>
+      </html>
     `;
   }
 }
