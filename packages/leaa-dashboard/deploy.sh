@@ -1,10 +1,10 @@
 #! /bin/bash
 
-unset PLATFORM YARN_BUILD
-
 cd "$(dirname "$0")" || exit
 
 __DEPLOY__="./_deploy"
+
+unset PLATFORM YARN_BUILD
 
 usage() {
   # shellcheck disable=SC2028
@@ -23,8 +23,7 @@ set_var() {
   local arg_name=$1
   shift
 
-  # shellcheck disable=SC2028
-  echo "VAR { $arg_name: $* }"
+  echo "Variable: { $arg_name: $* }"
 
   if [ -z "${!arg_name}" ]; then
     if [ "$arg_name" = "PLATFORM" ]; then
@@ -125,7 +124,6 @@ case "$response" in
 
   ;;
 *)
-  # shellcheck disable=SC2028
-  echo "\nCancel Deploy\n"
+  printf  "\nCancel Deploy\n"
   ;;
 esac

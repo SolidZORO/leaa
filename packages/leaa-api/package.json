@@ -39,6 +39,7 @@
     "docker-install": "yarn install --production",
     "docker-start": "NODE_ENV=production pm2-docker ecosystem.config.js start",
     "docker-pm2-test": "NODE_ENV=production pm2 -v",
+    "pm2": "pm2",
     "---------------------------------------------------------------------- SERVER ----": "----",
     "start": "NODE_ENV=production node ./index.js",
     "---------------------------------------------------------------------- ALIAS ----": "----",

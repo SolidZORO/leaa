@@ -28,7 +28,6 @@ set_var() {
   local arg_name=$1
   shift
 
-  # shellcheck disable=SC2028
   echo "Variable: { $arg_name: $* }"
 
   if [ -z "${!arg_name}" ]; then
@@ -76,9 +75,14 @@ platform_docker_install() {
   cat <./docker-compose.yml |
     sed 's/yarn docker-pm2-test && yarn docker-start/while true;do echo debugging;sleep 5;done/g' >docker-compose-deploy-debug.yml
 
+  # shellcheck disable=SC2016
+  # Prevent PORT Conflicts (here use 9119)
   cat <./docker-compose.yml |
     sed 's/${__ENV__}_${DOCKER_NODE_CONTAINER_NAME}/deploy_yarn_install/g' |
+    sed 's/${DOCKER_NODE_PORT}/9119/g' |
     sed 's/yarn docker-pm2-test && yarn docker-start/yarn docker-install/g' >docker-compose-deploy-yarn-install.yml
+
+  printf '🚚  Start Dependencies Installation...\n\n'
 
   docker-compose -f docker-compose-deploy-yarn-install.yml down && docker-compose -f docker-compose-deploy-yarn-install.yml up
 
@@ -223,7 +227,6 @@ case "$response" in
 
   ;;
 *)
-  # shellcheck disable=SC2028
-  echo "\nCancel Deploy\n"
+  printf "\nCancel Deploy\n"
   ;;
 esac
