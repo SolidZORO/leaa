@@ -17,6 +17,8 @@ services:
       - NODE_ENV=production
     volumes:
       - ./:/home/node:rw,cached
+      - ./.cache:/usr/local/share/.cache:rw,cached
+      # `.cache` can greatly increase the speed of local yarn install. And does not affect the prod env.
     working_dir: /home/node
     command: sh -c "
       echo '\n\n' &&
