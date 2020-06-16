@@ -27,23 +27,7 @@ class ShowEnvInfoWebpackPlugin {
 
 // HtmlWebpackPlugin
 const htmlWebpackPluginOption = {
-  __ENV_DATA__: Buffer.from(
-    JSON.stringify(
-      _.pick(WPCONST, [
-        'SITE_NAME',
-        'API_URL',
-        'API_VERSION',
-        'ANALYTICS_CODE',
-        //
-        'DEMO_MODE',
-        'DEBUG_MODE',
-        //
-        'SERVER_PROTOCOL',
-        'SERVER_PORT',
-        'SERVER_HOST',
-      ]),
-    ),
-  ).toString('base64'),
+  __ENV_FILE__: WPCONST.ENV_FILE_NAME_HACKING_FOR_WEBPACK_SERVER,
   __BUILD_DATA__: Buffer.from(
     JSON.stringify({
       VERSION: `v${process.env.npm_package_version}`,
@@ -51,10 +35,8 @@ const htmlWebpackPluginOption = {
       BUILDTIME: moment().format('YYYYMMDD-HHmmss'),
     }),
   ).toString('base64'),
-  __ANALYTICS_CODE__:
-    (!WPCONST.__DEV__ && WPCONST && WPCONST.ANALYTICS_CODE && `<script>${WPCONST.ANALYTICS_CODE}</script>`) || '',
   title: `${WPCONST.SITE_NAME || '-'}`,
-  manifest: `${WPCONST.OUTPUT_PUBLIC_PATH}/manifest.json`,
+  manifest: `${WPCONST.OUTPUT_PUBLIC_PATH}manifest.json`,
   filename: `${WPCONST.BUILD_DIR}/index.html`,
   template: `${WPCONST.VIEWS_DIR}/index.ejs`,
   favicon: `${WPCONST.SRC_DIR}/assets/favicons/favicon.ico`,
@@ -114,6 +96,15 @@ const plugins = [
       {
         from: `${WPCONST.PUBLIC_DIR}/assets/**/*`,
         to: `${WPCONST.BUILD_DIR}`,
+        transformPath(targetPath) {
+          return `${targetPath}`.replace('public/', '');
+        },
+        cacheTransform: true,
+      },
+      {
+        // ⚠️ Webpack Server NOT Support dot file, so hacking it. (DEV ONLY)
+        from: WPCONST.ENV_FILE_PATH,
+        to: `${WPCONST.BUILD_DIR}/${WPCONST.ENV_FILE_NAME_HACKING_FOR_WEBPACK_SERVER}`,
         transformPath(targetPath) {
           return `${targetPath}`.replace('public/', '');
         },

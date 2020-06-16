@@ -1,16 +1,15 @@
 /* eslint-disable no-underscore-dangle, max-len */
 const path = require('path');
-const dotenv = require('dotenv');
 const ip = require('ip');
 const fs = require('fs');
 
-const ROOT_DIR = path.resolve(__dirname, '../../');
+const ROOT_DIR = path.join(__dirname, '../../');
 const __DEV__ = process.env.NODE_ENV !== 'production';
 
-const ENV_FILE_NAME = process.env.NODE_ENV === 'production' ? '.env' : `.env.${process.env.NODE_ENV}`;
+const ENV_FILE_NAME = !__DEV__ ? '.env.js' : `.env.${process.env.NODE_ENV}.js`;
 
 function getEnvFilePath() {
-  const envFilePath = `${ROOT_DIR}/${ENV_FILE_NAME}`;
+  const envFilePath = `${ROOT_DIR}${ENV_FILE_NAME}`;
 
   if (process.env.NODE_ENV && !fs.existsSync(envFilePath)) {
     console.log('\n');
@@ -28,7 +27,8 @@ function getEnvFilePath() {
 const ENV_FILE_PATH = getEnvFilePath();
 
 function getEnvData() {
-  const env = dotenv.config({ path: ENV_FILE_PATH }).parsed;
+  // eslint-disable-next-line global-require,import/no-dynamic-require
+  const env = require(ENV_FILE_PATH);
 
   // DEV, Change API_URL to IP Address
   if (__DEV__) env.API_URL = env.API_URL.replace('localhost', ip.address());
@@ -43,6 +43,11 @@ WPCONST.__PROD__ = !__DEV__;
 
 WPCONST.ENV_FILE_NAME = ENV_FILE_NAME;
 WPCONST.ENV_FILE_PATH = ENV_FILE_PATH;
+
+// ⚠️ Webpack Server NOT Support dot file, so hacking it. (DEV ONLY)
+WPCONST.ENV_FILE_NAME_HACKING_FOR_WEBPACK_SERVER = __DEV__
+  ? ENV_FILE_NAME.replace('.env', '__ENV_FILE_NAME_HACKING_FOR_WEBPACK_SERVER__')
+  : ENV_FILE_NAME;
 
 WPCONST.IS_SERVER = process.argv.includes('--server');
 WPCONST.IS_VERBOSE = process.argv.includes('--verbose');

@@ -20,7 +20,7 @@ module.exports = {
     // watchContentBase: true,
     // historyApiFallback: true,
     historyApiFallback: {
-      // disableDotRule: false,
+      disableDotRule: false,
       // index: '/index.html',
     },
     clientLogLevel: 'error',

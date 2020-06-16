@@ -14,10 +14,10 @@
   -->
   <link rel="manifest" href="<%= htmlWebpackPlugin.options.manifest %>" />
   <title><%= htmlWebpackPlugin.options.title %></title>
+  <script src="<%= htmlWebpackPlugin.options.__ENV_FILE__ %>"></script>
 </head>
 <body>
 <div id="app"></div>
-<script id="__ENV_DATA__" type="application/json"><%= htmlWebpackPlugin.options.__ENV_DATA__ %></script>
 <script id="__BUILD_DATA__" type="application/json"><%= htmlWebpackPlugin.options.__BUILD_DATA__ %></script>
 <%= htmlWebpackPlugin.options.__ANALYTICS_CODE__ %>
 </body>
