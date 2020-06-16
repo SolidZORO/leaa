@@ -6,6 +6,7 @@
   "routes": [
     { "src": "^/statics/(.*)", "dest": "/statics/$1" },
     { "src": "^/assets/(.*)", "dest": "/assets/$1" },
+    { "src": "^/_env.js", "dest": "/_env.js" },
     { "src": "^/(.*)", "dest": "/index.html" }
   ]
 }

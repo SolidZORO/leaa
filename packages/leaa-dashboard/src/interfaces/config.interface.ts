@@ -22,4 +22,6 @@ export interface IBuild {
   MODE: string;
   VERSION: string;
   BUILDTIME: string;
+  GIT_VERSION: string;
+  VERSION_SLUG: string;
 }

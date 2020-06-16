@@ -19,6 +19,7 @@
     "lint": "yarn run lint-js && yarn run lint-css",
     "fix": "yarn run fix-js && yarn run fix-css",
     "tsc-check": "tsc -v && tsc --noEmit",
+    "path-test": "NODE_ENV=development cross-env node ./tools/webpack/__path-test.js",
     "---------------------------------------------------------------------- DEV ----": "----",
     "dev-server": "NODE_ENV=development cross-env webpack-dev-server --config ./tools/webpack/webpack.config.js --progress --hot --inline --server --host 0.0.0.0",
     "dev": "NODE_ENV=development yarn dev-server",

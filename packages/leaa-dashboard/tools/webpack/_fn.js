@@ -33,4 +33,4 @@ function showEnvInfo() {
   console.log('\n\n\n');
 }
 
-module.exports = { showEnvInfo, getVersion };
+module.exports = { showEnvInfo, getVersion, getGitVersion };

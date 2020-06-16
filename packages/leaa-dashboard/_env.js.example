@@ -1,4 +1,4 @@
-const __ENV__ = {
+const __ENV_DATA__ = {
   __ENV__: 'prod',
 
   // PROJECT
@@ -24,4 +24,4 @@ const __ENV__ = {
   SERVER_HOST: 'localhost',
 };
 
-typeof window !== 'undefined' ? (window.__ENV__ = __ENV__) : (module.exports = __ENV__);
+typeof window !== 'undefined' ? (window.__ENV_DATA__ = __ENV_DATA__) : (module.exports = __ENV_DATA__);

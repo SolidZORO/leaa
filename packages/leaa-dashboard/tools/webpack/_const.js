@@ -3,20 +3,19 @@ const path = require('path');
 const ip = require('ip');
 const fs = require('fs');
 
-const ROOT_DIR = path.join(__dirname, '../../');
 const __DEV__ = process.env.NODE_ENV !== 'production';
+const ROOT_DIR = path.resolve(__dirname, '../../');
 
-const ENV_FILE_NAME = !__DEV__ ? '.env.js' : `.env.${process.env.NODE_ENV}.js`;
+const ENV_FILE_NAME = !__DEV__ ? '_env.js' : `_env.${process.env.NODE_ENV}.js`;
 
 function getEnvFilePath() {
-  const envFilePath = `${ROOT_DIR}${ENV_FILE_NAME}`;
+  const envFilePath = path.join(ROOT_DIR, ENV_FILE_NAME);
 
+  console.log('ENV_FILE_PATHENV_FILE_PATHENV_FILE_PATHENV_FILE_PATHENV_FILE_PATHENV_FILE_PATH', envFilePath);
   if (process.env.NODE_ENV && !fs.existsSync(envFilePath)) {
-    console.log('\n');
-    console.log(''.padStart(48, '='));
-    console.error(`\n🔰  Please create \`${ENV_FILE_NAME}\` file first\n`);
-    console.log(''.padStart(48, '='));
-    console.log('\n\n');
+    console.log('\n\n', '\n'.padStart(48, '='));
+    console.error(`\n🔰  Please create \`${ENV_FILE_NAME}\` file first\n\n`);
+    console.log('\n'.padStart(48, '='), '\n\n');
 
     process.exit(-1);
   }
@@ -25,6 +24,8 @@ function getEnvFilePath() {
 }
 
 const ENV_FILE_PATH = getEnvFilePath();
+
+console.log('ENV_FILE_PATHENV_FILE_PATHENV_FILE_PATHENV_FILE_PATHENV_FILE_PATHENV_FILE_PATH', ENV_FILE_PATH);
 
 function getEnvData() {
   // eslint-disable-next-line global-require,import/no-dynamic-require
@@ -36,6 +37,11 @@ function getEnvData() {
   return env || {};
 }
 
+//
+//
+//
+//
+
 const WPCONST = getEnvData();
 
 WPCONST.__DEV__ = __DEV__;
@@ -43,11 +49,6 @@ WPCONST.__PROD__ = !__DEV__;
 
 WPCONST.ENV_FILE_NAME = ENV_FILE_NAME;
 WPCONST.ENV_FILE_PATH = ENV_FILE_PATH;
-
-// ⚠️ Webpack Server NOT Support dot file, so hacking it. (DEV ONLY)
-WPCONST.ENV_FILE_NAME_HACKING_FOR_WEBPACK_SERVER = __DEV__
-  ? ENV_FILE_NAME.replace('.env', '__ENV_FILE_NAME_HACKING_FOR_WEBPACK_SERVER__')
-  : ENV_FILE_NAME;
 
 WPCONST.IS_SERVER = process.argv.includes('--server');
 WPCONST.IS_VERBOSE = process.argv.includes('--verbose');
@@ -73,10 +74,11 @@ WPCONST.DEVTOOL = WPCONST.__DEV__ && WPCONST.IS_DEBUG ? 'eval-source-map' : fals
 //
 // DIR PATH
 WPCONST.ROOT_DIR = ROOT_DIR;
-WPCONST.SRC_DIR = path.resolve(`${WPCONST.ROOT_DIR}/src`);
-WPCONST.PUBLIC_DIR = path.resolve(`${WPCONST.ROOT_DIR}/public`);
-WPCONST.NODEMODULES_DIR = path.resolve(`${WPCONST.ROOT_DIR}/node_modules`);
-WPCONST.VIEWS_DIR = path.resolve(`${WPCONST.SRC_DIR}/views`);
+WPCONST.SRC_DIR = path.join(WPCONST.ROOT_DIR, 'src');
+
+WPCONST.PUBLIC_DIR = path.join(WPCONST.ROOT_DIR, 'public');
+WPCONST.NODEMODULES_DIR = path.join(WPCONST.ROOT_DIR, 'node_modules');
+WPCONST.VIEWS_DIR = path.join(WPCONST.SRC_DIR, 'views');
 
 //
 // BUILD PATH
@@ -86,10 +88,10 @@ WPCONST.BUILD_DIR_NAME = WPCONST.__DEV__ ? '.cache' : '_dist';
 WPCONST.OUTPUT_PUBLIC_PATH = '/statics/';
 
 // e.g. /_dist
-WPCONST.BUILD_DIR = path.resolve(`${WPCONST.ROOT_DIR}/${WPCONST.BUILD_DIR_NAME}`);
+WPCONST.BUILD_DIR = path.join(WPCONST.ROOT_DIR, WPCONST.BUILD_DIR_NAME);
 
 // e.g. /_dist/statics/
-WPCONST.OUTPUT_PATH = path.resolve(`${WPCONST.ROOT_DIR}/${WPCONST.BUILD_DIR_NAME}${WPCONST.OUTPUT_PUBLIC_PATH}`);
+WPCONST.OUTPUT_PATH = path.join(WPCONST.ROOT_DIR, WPCONST.BUILD_DIR_NAME, WPCONST.OUTPUT_PUBLIC_PATH);
 
 //
 // CHUNK PATH
@@ -118,6 +120,6 @@ WPCONST.REGX_FONT = /\.(woff2|woff|ttf|eot)$/;
 
 //
 // ETC
-WPCONST.PACKAGE_FILE = path.resolve(`${WPCONST.ROOT_DIR}/package.json`);
+WPCONST.PACKAGE_FILE = path.join(WPCONST.ROOT_DIR, 'package.json');
 
 module.exports = { WPCONST, getEnvData };

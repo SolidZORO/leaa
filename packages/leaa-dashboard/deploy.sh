@@ -9,7 +9,7 @@ __DEPLOY__="./_deploy"
 usage() {
   # shellcheck disable=SC2028
   echo "\n\n
-  🔰  Usage: $0 -p (test | local_build | vercel) [-i] [-S]
+  🔰  Usage: $0 -p (local_test | only_build | vercel) [-i] [-S]
       \n
       -p platform
       -i ignore yarn build
@@ -28,7 +28,7 @@ set_var() {
 
   if [ -z "${!arg_name}" ]; then
     if [ "$arg_name" = "PLATFORM" ]; then
-      if echo "$*" | grep -Eq '^test|local_build|vercel$'; then
+      if echo "$*" | grep -Eq '^local_test|only_build|vercel$'; then
         eval "$arg_name=\"$*\""
       else
         usage
@@ -53,14 +53,14 @@ platform_vercel() {
   vercel --prod -c
 }
 
-platform_local_build() {
+platform_only_build() {
   cd ${__DEPLOY__} || exit
 
   # shellcheck disable=SC2028
-  echo "\n✨  Done Platform Local Build\n"
+  echo "\n✨  Done Platform Build\n"
 }
 
-platform_test() {
+platform_local_test() {
   cd ${__DEPLOY__} || exit
 
   serve ./ -s -p 5555
@@ -110,14 +110,15 @@ case "$response" in
   fi
   cp -fr ./_dist/* ${__DEPLOY__}
   cp -fr ./public/* ${__DEPLOY__}
+  cp -fr ./.env.js ${__DEPLOY__}
 
   # -----------
   # @DEPLOY-DIR
   # -----------
   if [ -n "$PLATFORM" ]; then
     case $PLATFORM in
-    test) platform_test ;;
-    local_build) platform_local_build ;;
+    local_test) platform_local_test ;;
+    only_build) platform_only_build ;;
     vercel) platform_vercel ;;
     *) usage ;; esac
   fi

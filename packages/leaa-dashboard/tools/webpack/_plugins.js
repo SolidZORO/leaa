@@ -1,5 +1,4 @@
 /* eslint-disable no-underscore-dangle, max-len */
-const _ = require('lodash');
 const moment = require('moment');
 const webpack = require('webpack');
 const CopyPlugin = require('copy-webpack-plugin');
@@ -14,7 +13,7 @@ const InlineChunkHtmlPlugin = require('react-dev-utils/InlineChunkHtmlPlugin');
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
 // const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 
-const { showEnvInfo } = require('./_fn');
+const { showEnvInfo, getGitVersion } = require('./_fn');
 const { WPCONST } = require('./_const');
 const { analyzer } = require('./_analyzer');
 const { provide } = require('./_provide');
@@ -27,12 +26,14 @@ class ShowEnvInfoWebpackPlugin {
 
 // HtmlWebpackPlugin
 const htmlWebpackPluginOption = {
-  __ENV_FILE__: WPCONST.ENV_FILE_NAME_HACKING_FOR_WEBPACK_SERVER,
+  __ENV_FILE__: WPCONST.ENV_FILE_NAME,
   __BUILD_DATA__: Buffer.from(
     JSON.stringify({
       VERSION: `v${process.env.npm_package_version}`,
+      VERSION_SLUG: `v${process.env.npm_package_version}-${getGitVersion}`,
       MODE: WPCONST.MODE,
       BUILDTIME: moment().format('YYYYMMDD-HHmmss'),
+      GIT_VERSION: getGitVersion,
     }),
   ).toString('base64'),
   title: `${WPCONST.SITE_NAME || '-'}`,
@@ -42,6 +43,7 @@ const htmlWebpackPluginOption = {
   favicon: `${WPCONST.SRC_DIR}/assets/favicons/favicon.ico`,
   inject: true,
   hash: true,
+  version_hash: `v${process.env.npm_package_version}-${getGitVersion}`,
   minify: WPCONST.__PROD__
     ? {
         removeComments: true,
@@ -95,16 +97,15 @@ const plugins = [
     patterns: [
       {
         from: `${WPCONST.PUBLIC_DIR}/assets/**/*`,
-        to: `${WPCONST.BUILD_DIR}`,
+        to: WPCONST.BUILD_DIR,
         transformPath(targetPath) {
           return `${targetPath}`.replace('public/', '');
         },
         cacheTransform: true,
       },
       {
-        // ⚠️ Webpack Server NOT Support dot file, so hacking it. (DEV ONLY)
         from: WPCONST.ENV_FILE_PATH,
-        to: `${WPCONST.BUILD_DIR}/${WPCONST.ENV_FILE_NAME_HACKING_FOR_WEBPACK_SERVER}`,
+        to: WPCONST.BUILD_DIR,
         transformPath(targetPath) {
           return `${targetPath}`.replace('public/', '');
         },

@@ -26,9 +26,11 @@ logs
 *.log
 
 # Env
+_env.*
 .env*
 !.env.example
 !.env.js.example
+!_env.js.example
 robots.txt
 
 # Test

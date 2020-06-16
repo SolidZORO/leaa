@@ -14,7 +14,7 @@
   -->
   <link rel="manifest" href="<%= htmlWebpackPlugin.options.manifest %>" />
   <title><%= htmlWebpackPlugin.options.title %></title>
-  <script src="<%= htmlWebpackPlugin.options.__ENV_FILE__ %>"></script>
+  <script src="<%= htmlWebpackPlugin.options.__ENV_FILE__ %>?<%= htmlWebpackPlugin.options.version_hash %>"></script>
 </head>
 <body>
 <div id="app"></div>
