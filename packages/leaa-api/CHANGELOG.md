@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.5.0](https://github.com/SolidZORO/leaa/compare/v3.4.1...v3.5.0) (2020-06-16)
+
+
+### Bug Fixes
+
+* append some files to pm2 'ignore_watch` fix loop reset ([2d52bad](https://github.com/SolidZORO/leaa/commit/2d52bad58744429ecf3eeaefbfaf120445eed7d7))
+* reset to `nodejieba`, because `@node-rs/jieba` have bug ([85d7003](https://github.com/SolidZORO/leaa/commit/85d700387305f2d073fa57bea3fd665fb57cc66f))
+
+
+### Features
+
+* api .env add `AUTO_CUT_TAGS` ([b8ca654](https://github.com/SolidZORO/leaa/commit/b8ca6540de38898097bc74ede8fcbd6e6e574d18))
+
+
+### Performance Improvements
+
+* update UX ([cb8867a](https://github.com/SolidZORO/leaa/commit/cb8867a60c125f6aacda13aaf7f4703fd075b035))
+
+
+
+
+
 ## [3.4.1](https://github.com/SolidZORO/leaa/compare/v3.4.0...v3.4.1) (2020-06-14)
 
 

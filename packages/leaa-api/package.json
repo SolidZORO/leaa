@@ -1,7 +1,7 @@
 {
   "name": "@leaa/api",
   "author": "solidzoro@live.com",
-  "version": "3.4.1",
+  "version": "3.5.0",
   "private": false,
   "sideEffect": false,
   "license": "BSD-3-Clause-Clear",
