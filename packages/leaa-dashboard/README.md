@@ -1,18 +1,27 @@
 # Leaa Dashboard
 
-## **ABOUT**
+## About
 
 leaa-dashboard compiled by webpack.
 
-## **INSTALLATION**
+## Install
 
 ```shell script
 # .env for development
-cp .env.example .env
+cp _env.js.example _env.development.js
 
 # .env for production
-cp .env.example .env.production # for production
+cp _env.js.example _env.js
 
 yarn install
 yarn dev
 ```
+
+## Why `_env.js` Not `.env` ?
+
+![leaa-banner](./docs/images/_env_design.jpg)
+
+
+
+
+
