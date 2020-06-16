@@ -16,22 +16,6 @@ export class ConfigService {
     return this.envConfig.__ENV__;
   }
 
-  get SERVER_NAME(): string {
-    return this.envConfig.SERVER_NAME;
-  }
-
-  get SERVER_PROTOCOL(): string {
-    return this.envConfig.SERVER_PROTOCOL;
-  }
-
-  get SERVER_PORT(): number {
-    return Number(this.envConfig.SERVER_PORT);
-  }
-
-  get SERVER_HOST(): string {
-    return this.envConfig.SERVER_HOST.replace('localhost', ip.address());
-  }
-
   get DEMO_MODE(): boolean {
     return Boolean(this.envConfig.DEMO_MODE === 'true');
   }
@@ -40,35 +24,41 @@ export class ConfigService {
     return Boolean(this.envConfig.DEBUG_MODE === 'true');
   }
 
-  get API_URL(): string {
-    return `${this.envConfig.SERVER_PROTOCOL}://${this.envConfig.SERVER_HOST}:${this.envConfig.SERVER_PORT}`;
+  get SERVER_NAME(): string {
+    return this.envConfig.SERVER_NAME;
+  }
+
+  get SERVER_PROTOCOL(): string {
+    return this.envConfig.SERVER_PROTOCOL;
+  }
+
+  get SERVER_HOST(): string {
+    return this.envConfig.SERVER_HOST.replace('localhost', ip.address());
+  }
+
+  get SERVER_PORT(): number {
+    return Number(this.envConfig.SERVER_PORT);
   }
 
   get PUBLIC_DIR(): string {
     return this.envConfig.PUBLIC_DIR;
   }
 
-  get GRAVATAR_TYPE(): string {
-    return this.envConfig.GRAVATAR_TYPE;
+  get TRUST_PROXY(): string {
+    return this.envConfig.TRUST_PROXY;
   }
 
-  get ATTACHMENT_DIR(): string {
-    return this.envConfig.ATTACHMENT_DIR;
+  get JWT_SECRET_KEY(): string {
+    return this.envConfig.JWT_SECRET_KEY;
   }
 
-  get ATTACHMENT_LIMIT_SIZE_MB(): number {
-    return Number(this.envConfig.ATTACHMENT_LIMIT_SIZE_MB);
-  }
-
-  get ATTACHMENT_SAVE_IN_LOCAL(): boolean {
-    return Boolean(this.envConfig.ATTACHMENT_SAVE_IN_LOCAL === 'true');
-  }
-
-  get ATTACHMENT_SAVE_IN_OSS(): boolean {
-    return Boolean(this.envConfig.ATTACHMENT_SAVE_IN_OSS === 'true');
+  get SERVER_COOKIE_EXPIRES_SECOND(): number {
+    return Number(this.envConfig.SERVER_COOKIE_EXPIRES_SECOND);
   }
 
   //
+  //
+  // DB
 
   get DB_TYPE(): string {
     return this.envConfig.DB_TYPE;
@@ -95,42 +85,38 @@ export class ConfigService {
   }
 
   get DB_SYNCHRONIZE(): boolean {
-    return typeof this.envConfig.DB_SYNCHRONIZE !== 'undefined'
-      ? Boolean(this.envConfig.DB_SYNCHRONIZE === 'true')
-      : true;
+    return Boolean(this.envConfig.DB_SYNCHRONIZE === 'true');
   }
 
   //
-
-  get RATELIMIT_MAX(): number {
-    return Number(this.envConfig.RATELIMIT_MAX) || 5 * 60 * 1000; // 5 minutes
-  }
 
   get RATELIMIT_WINDOWMS(): number {
     return Number(this.envConfig.RATELIMIT_WINDOWMS) || 500; // limit each IP to 1000 requests per windowMs
   }
 
-  //
+  get RATELIMIT_MAX(): number {
+    return Number(this.envConfig.RATELIMIT_MAX) || 5 * 60 * 1000; // 5 minutes
+  }
 
   get ENABLE_CAPTCHA_BY_LOGIN_FAILD_TIMES(): number {
     return Number(this.envConfig.ENABLE_CAPTCHA_BY_LOGIN_FAILD_TIMES) || 5;
   }
 
-  //
-
-  get TRUST_PROXY(): string {
-    return this.envConfig.TRUST_PROXY;
+  get ATTACHMENT_DIR(): string {
+    return this.envConfig.ATTACHMENT_DIR;
   }
 
-  get JWT_SECRET_KEY(): string {
-    return this.envConfig.JWT_SECRET_KEY;
+  get ATTACHMENT_LIMIT_SIZE_MB(): number {
+    return Number(this.envConfig.ATTACHMENT_LIMIT_SIZE_MB);
   }
 
-  get SERVER_COOKIE_EXPIRES_SECOND(): number {
-    return Number(this.envConfig.SERVER_COOKIE_EXPIRES_SECOND);
+  get ATTACHMENT_SAVE_IN_LOCAL(): boolean {
+    return Boolean(this.envConfig.ATTACHMENT_SAVE_IN_LOCAL === 'true');
   }
 
-  //
+  get ATTACHMENT_SAVE_IN_OSS(): boolean {
+    return Boolean(this.envConfig.ATTACHMENT_SAVE_IN_OSS === 'true');
+  }
 
   get ATTACHMENT_OSS_ALIYUN_BUCKET(): string {
     return this.envConfig.ATTACHMENT_OSS_ALIYUN_BUCKET || '';
@@ -152,7 +138,17 @@ export class ConfigService {
     return this.envConfig.ATTACHMENT_OSS_ALIYUN_CALLBACK_URL || '';
   }
 
+  get GRAVATAR_TYPE(): string {
+    return this.envConfig.GRAVATAR_TYPE;
+  }
+
+  get AUTO_CUT_TAGS(): boolean {
+    return Boolean(this.envConfig.AUTO_CUT_TAGS === 'true');
+  }
+
   //
+  //
+  // OPTIONAL
 
   get OAUTH_WECHAT_APP_ID(): string {
     return this.envConfig.OAUTH_WECHAT_APP_ID || '';
@@ -195,24 +191,20 @@ export class ConfigService {
   private validate(dotEnvPath: string): IDotEnv {
     const rule = {
       __ENV__: envalid.str({ choices: ['prod', 'dev', 'test'] }),
-      SERVER_NAME: envalid.str({ default: 'leaa' }),
-      SERVER_PROTOCOL: envalid.str({ choices: ['http', 'https'], default: 'http' }),
-      SERVER_PORT: envalid.port({ default: 5555 }),
-      SERVER_HOST: envalid.str(),
       //
       DEMO_MODE: envalid.str({ choices: ['true', 'false'], default: 'false' }),
       DEBUG_MODE: envalid.str({ choices: ['true', 'false'], default: 'false' }),
       //
-      PUBLIC_DIR: envalid.str(),
-      GRAVATAR_TYPE: envalid.str({
-        choices: ['404', 'mp', 'identicon', 'monsterid', 'wavatar', 'retro', 'robohash', 'blank'],
-        default: 'monsterid',
-      }),
+      SERVER_NAME: envalid.str({ default: 'leaa' }),
+      SERVER_PROTOCOL: envalid.str({ choices: ['http', 'https'], default: 'http' }),
+      SERVER_PORT: envalid.port({ default: 5005 }),
+      SERVER_HOST: envalid.str(),
       //
-      ATTACHMENT_DIR: envalid.str(),
-      ATTACHMENT_LIMIT_SIZE_MB: envalid.num(),
-      ATTACHMENT_SAVE_IN_LOCAL: envalid.str({ choices: ['true', 'false'], default: 'false' }),
-      ATTACHMENT_SAVE_IN_OSS: envalid.str({ choices: ['true', 'false'], default: 'false' }),
+      PUBLIC_DIR: envalid.str(),
+      TRUST_PROXY: envalid.str(),
+      JWT_SECRET_KEY: envalid.str(),
+      //
+      SERVER_COOKIE_EXPIRES_SECOND: envalid.num(),
       //
       DB_TYPE: envalid.str({ choices: ['mysql'], default: 'mysql' }),
       DB_HOST: envalid.str(),
@@ -224,12 +216,19 @@ export class ConfigService {
       //
       RATELIMIT_WINDOWMS: envalid.num(),
       RATELIMIT_MAX: envalid.num(),
-      //
       ENABLE_CAPTCHA_BY_LOGIN_FAILD_TIMES: envalid.num(),
       //
-      TRUST_PROXY: envalid.str(),
-      JWT_SECRET_KEY: envalid.str(),
-      SERVER_COOKIE_EXPIRES_SECOND: envalid.num(),
+      ATTACHMENT_DIR: envalid.str(),
+      ATTACHMENT_LIMIT_SIZE_MB: envalid.num(),
+      ATTACHMENT_SAVE_IN_LOCAL: envalid.str({ choices: ['true', 'false'], default: 'false' }),
+      ATTACHMENT_SAVE_IN_OSS: envalid.str({ choices: ['true', 'false'], default: 'false' }),
+      //
+      //
+      GRAVATAR_TYPE: envalid.str({
+        choices: ['404', 'mp', 'identicon', 'monsterid', 'wavatar', 'retro', 'robohash', 'blank'],
+        default: 'monsterid',
+      }),
+      AUTO_CUT_TAGS: envalid.str({ choices: ['true', 'false'], default: 'false' }),
     };
 
     return envalid.cleanEnv(process.env, rule, { dotEnvPath });

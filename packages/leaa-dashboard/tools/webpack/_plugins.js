@@ -26,7 +26,7 @@ class ShowEnvInfoWebpackPlugin {
 
 // HtmlWebpackPlugin
 const htmlWebpackPluginOption = {
-  __ENV_FILE__: WPCONST.ENV_FILE_NAME,
+  __ENV_FILE__: `/${WPCONST.ENV_FILE_NAME}`,
   __BUILD_DATA__: Buffer.from(
     JSON.stringify({
       VERSION: `v${process.env.npm_package_version}`,

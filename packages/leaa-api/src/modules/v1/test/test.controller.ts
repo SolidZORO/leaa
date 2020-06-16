@@ -15,7 +15,7 @@ import { ConfigService } from '@leaa/api/src/modules/v1/config/config.service';
 export class TestController {
   constructor(
     @InjectRepository(Role) private readonly roleRepository: Repository<Role>,
-    readonly configService: ConfigService,
+    private readonly configService: ConfigService,
     private readonly testService: TestService,
     private readonly roleService: RoleService,
   ) {}
@@ -41,6 +41,6 @@ export class TestController {
   @Get('/orm')
   async orm() {
     // console.log(this.configService.API_URL);
-    return this.configService.API_URL;
+    return this.configService.DB_TYPE;
   }
 }

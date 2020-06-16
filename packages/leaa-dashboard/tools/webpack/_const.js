@@ -11,7 +11,6 @@ const ENV_FILE_NAME = !__DEV__ ? '_env.js' : `_env.${process.env.NODE_ENV}.js`;
 function getEnvFilePath() {
   const envFilePath = path.join(ROOT_DIR, ENV_FILE_NAME);
 
-  console.log('ENV_FILE_PATHENV_FILE_PATHENV_FILE_PATHENV_FILE_PATHENV_FILE_PATHENV_FILE_PATH', envFilePath);
   if (process.env.NODE_ENV && !fs.existsSync(envFilePath)) {
     console.log('\n\n', '\n'.padStart(48, '='));
     console.error(`\n🔰  Please create \`${ENV_FILE_NAME}\` file first\n\n`);
@@ -24,8 +23,6 @@ function getEnvFilePath() {
 }
 
 const ENV_FILE_PATH = getEnvFilePath();
-
-console.log('ENV_FILE_PATHENV_FILE_PATHENV_FILE_PATHENV_FILE_PATHENV_FILE_PATHENV_FILE_PATH', ENV_FILE_PATH);
 
 function getEnvData() {
   // eslint-disable-next-line global-require,import/no-dynamic-require

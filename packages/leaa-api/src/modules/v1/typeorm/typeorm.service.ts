@@ -26,7 +26,7 @@ const CLS_NAME = 'TypeormService';
 export class TypeormService implements TypeOrmOptionsFactory {
   private logger: Logger;
 
-  constructor(readonly configService: ConfigService) {
+  constructor(private readonly configService: ConfigService) {
     this.logger = new Logger(CLS_NAME);
   }
 

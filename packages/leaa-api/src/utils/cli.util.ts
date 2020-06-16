@@ -28,10 +28,8 @@ export const envInfoForCli = ({
   console.log(`\n> ${serverEnv}  /  URL`, serverBaseByEmoji);
 
   console.log('\n> 📮 ENVINFO');
-  console.log('     - NAME    ', `${config.SERVER_NAME} v${pkg.version}`);
   console.log('');
-  console.log('     - DIRNAME ', DIRNAME);
-  console.log('     - PUBLIC  ', PUBLIC_PATH);
+  console.log('     - NAME    ', `${config.SERVER_NAME} v${pkg.version}`);
   console.log('');
   console.log('     - DB_TYPE        ', config.DB_TYPE);
   console.log('     - DB_DATABASE    ', config.DB_DATABASE);
@@ -41,10 +39,15 @@ export const envInfoForCli = ({
   console.log('     - RATELIMIT_WINDOWMS   ', config.RATELIMIT_WINDOWMS);
   console.log('     - ENABLE_CAPTCHA_TIMES ', config.ENABLE_CAPTCHA_BY_LOGIN_FAILD_TIMES);
   console.log('');
-  console.log('     - GRAVATAR_TYPE            ', config.GRAVATAR_TYPE);
+  console.log('     - DIRNAME ', DIRNAME);
+  console.log('     - PUBLIC  ', PUBLIC_PATH);
+  console.log('');
   console.log('     - ATTACHMENT_DIR           ', config.ATTACHMENT_DIR);
   console.log('     - ATTACHMENT_LIMIT_SIZE_MB ', config.ATTACHMENT_LIMIT_SIZE_MB);
   console.log('     - ATTACHMENT_SAVE_IN_LOCAL ', config.ATTACHMENT_SAVE_IN_LOCAL);
   console.log('     - ATTACHMENT_SAVE_IN_OSS   ', config.ATTACHMENT_SAVE_IN_OSS);
+  console.log('');
+  console.log('     - GRAVATAR_TYPE            ', config.GRAVATAR_TYPE);
+  console.log('     - AUTO_CUT_TAGS            ', config.AUTO_CUT_TAGS);
   console.log('\n\n');
 };

@@ -13,7 +13,7 @@ import { genSlug } from '@leaa/api/src/utils';
 export class IndexController {
   constructor(
     @InjectRepository(Setting) private readonly settingRepo: Repository<Setting>,
-    readonly configService: ConfigService,
+    private readonly configService: ConfigService,
   ) {}
 
   @Get('')

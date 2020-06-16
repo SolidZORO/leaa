@@ -11,6 +11,7 @@ import { Article, Tag, Category } from '@leaa/api/src/entrys';
 import { ArticleUpdateOneReq, ArticleCreateOneReq } from '@leaa/api/src/dtos/article';
 import { TagService } from '@leaa/api/src/modules/v1/tag/tag.service';
 import { formatHtmlToText, cutTags, genSlug } from '@leaa/api/src/utils';
+import { ConfigService } from '@leaa/api/src/modules/v1/config/config.service';
 
 export interface ITransIdsToEntrys {
   dto: any;
@@ -27,6 +28,7 @@ export class ArticleService extends TypeOrmCrudService<Article> {
     @InjectRepository(Tag) private readonly tagRepo: Repository<Tag>,
     @InjectRepository(Category) private readonly categoryRepo: Repository<Category>,
     private readonly tagService: TagService,
+    private readonly configService: ConfigService,
   ) {
     super(articleRepo);
   }
@@ -66,7 +68,7 @@ export class ArticleService extends TypeOrmCrudService<Article> {
 
       // ⚠️ sync tags
       // execute only once when the article has no tag, reducing server pressure
-      await this.tagService.syncTagsToDictFile();
+      if (this.configService.AUTO_CUT_TAGS) await this.tagService.syncTagsToDictFile();
     }
 
     const updated = await this.repo.save(plainToClass(this.entityType, toSave));

@@ -1,21 +1,19 @@
 export interface IDotEnv {
   __ENV__: string;
 
-  SERVER_NAME: string;
-  SERVER_PROTOCOL: string;
-  SERVER_PORT: number;
-  SERVER_HOST: string;
-
   DEMO_MODE: string;
   DEBUG_MODE: string;
 
-  PUBLIC_DIR: string;
-  GRAVATAR_TYPE: string;
+  SERVER_NAME: string;
+  SERVER_PROTOCOL: string;
+  SERVER_HOST: string;
+  SERVER_PORT: number;
 
-  ATTACHMENT_DIR: string;
-  ATTACHMENT_LIMIT_SIZE_MB: number;
-  ATTACHMENT_SAVE_IN_LOCAL: string;
-  ATTACHMENT_SAVE_IN_OSS: string;
+  PUBLIC_DIR: string;
+  TRUST_PROXY: string;
+  JWT_SECRET_KEY: string;
+
+  SERVER_COOKIE_EXPIRES_SECOND: number;
 
   DB_TYPE: string;
   DB_HOST: string;
@@ -27,18 +25,21 @@ export interface IDotEnv {
 
   RATELIMIT_WINDOWMS: number;
   RATELIMIT_MAX: number;
-
   ENABLE_CAPTCHA_BY_LOGIN_FAILD_TIMES: number;
 
-  TRUST_PROXY: string;
-  JWT_SECRET_KEY: string;
-  SERVER_COOKIE_EXPIRES_SECOND: number;
+  ATTACHMENT_DIR: string;
+  ATTACHMENT_LIMIT_SIZE_MB: number;
+  ATTACHMENT_SAVE_IN_LOCAL: string;
+  ATTACHMENT_SAVE_IN_OSS: string;
 
   ATTACHMENT_OSS_ALIYUN_BUCKET?: string;
   ATTACHMENT_OSS_ALIYUN_AK_SECRET?: string;
   ATTACHMENT_OSS_ALIYUN_AK_ID?: string;
   ATTACHMENT_OSS_ALIYUN_REGION?: string;
   ATTACHMENT_OSS_ALIYUN_CALLBACK_URL?: string;
+
+  GRAVATAR_TYPE: string;
+  AUTO_CUT_TAGS: string;
 
   OAUTH_WECHAT_APP_ID?: string;
   OAUTH_WECHAT_APP_SECRET?: string;

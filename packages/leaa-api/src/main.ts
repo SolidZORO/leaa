@@ -57,8 +57,10 @@ import { envInfoForCli } from '@leaa/api/src/utils';
   await app.listen(configService.SERVER_PORT);
 
   // ⚠️ sync all tags to file @ initApp
-  const tagService = await app.get(TagService);
-  await tagService.syncTagsToDictFile();
+  if (configService.AUTO_CUT_TAGS) {
+    const tagService = await app.get(TagService);
+    await tagService.syncTagsToDictFile();
+  }
 
   envInfoForCli({
     config: configService,

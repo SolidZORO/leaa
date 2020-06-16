@@ -11,13 +11,17 @@ import { dictConfig } from '@leaa/api/src/configs';
 
 import { Tag } from '@leaa/api/src/entrys';
 import { CrudRequest } from '@nestjsx/crud';
+import { ConfigService } from '@leaa/api/src/modules/v1/config/config.service';
 // import { CrudRequest, GetManyDefaultResponse } from '@nestjsx/crud';
 
 const CLS_NAME = 'TagService';
 
 @Injectable()
 export class TagService extends TypeOrmCrudService<Tag> {
-  constructor(@InjectRepository(Tag) private readonly tagRepo: Repository<Tag>) {
+  constructor(
+    @InjectRepository(Tag) private readonly tagRepo: Repository<Tag>,
+    private readonly configService: ConfigService,
+  ) {
     super(tagRepo);
   }
 
@@ -39,6 +43,8 @@ export class TagService extends TypeOrmCrudService<Tag> {
   //
 
   async syncTagsToDictFile(): Promise<TagSyncToFileRes> {
+    if (!this.configService.AUTO_CUT_TAGS) return { status: 'AUTO_CUT_TAGS is Disable' };
+
     if (!fs.existsSync(dictConfig.TAGS_DICT_PATH)) {
       logger.log(`syncTagsToDictFile, not exists ${dictConfig.DICT_DIR}`, CLS_NAME);
 
