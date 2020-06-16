@@ -39,11 +39,16 @@ let webpackConfig = {
 
     // # for Project
     pathinfo: WPCONST.__DEV__,
-    path: WPCONST.BUILD_STATICS_DIR,
+
+    // e.g. src/_dist/statics/
+    path: WPCONST.OUTPUT_PATH,
+
     // webpack uses `publicPath` to determine where the app is being served from.
     // It requires a trailing slash, or the file assets will get an incorrect path.
     // We inferred the "public path" (such as / or /my-project) from homepage.
-    publicPath: WPCONST.CDN_DIR_PATH,
+    // e.g. xxx.com/statics/
+    publicPath: WPCONST.OUTPUT_PUBLIC_PATH,
+
     // futureEmitAssets: true,
     // There will be one main bundle, and one file per asynchronous chunk.
     // In development, it does not produce real files.

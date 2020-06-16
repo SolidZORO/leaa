@@ -25,6 +25,10 @@ import style from './style.module.less';
 
 const LOGO_BLACK = `/assets/images/logo/${envConfig.LOGO_BLACK_FILENAME || 'default-logo-black.svg'}`;
 
+const DEMO_ACCOUNT = envConfig.DEBUG_MODE
+  ? { account: 'admin@local.com', password: 'h8Hx9qvPKoHMLQgj' }
+  : { account: '', password: '' };
+
 export default (props: IPage) => {
   const { t } = useTranslation();
 
@@ -139,7 +143,7 @@ export default (props: IPage) => {
                   onPressSubmitCallback={onSubmit}
                   loginErrorCount={loginErrorCount}
                   loading={submitLoading}
-                  initialValues={{ account: 'admin@local.com', password: 'h8Hx9qvPKoHMLQgj' }}
+                  initialValues={DEMO_ACCOUNT}
                 />
               </div>
 

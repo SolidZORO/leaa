@@ -77,9 +77,14 @@ WPCONST.VIEWS_DIR = path.resolve(`${WPCONST.SRC_DIR}/views`);
 // BUILD PATH
 WPCONST.BUILD_DIR_NAME = WPCONST.__DEV__ ? '.cache' : '_dist';
 
-WPCONST.CDN_DIR_PATH = '/statics/';
+// e.g. xxx.com/statics/
+WPCONST.OUTPUT_PUBLIC_PATH = '/statics/';
+
+// e.g. /_dist
 WPCONST.BUILD_DIR = path.resolve(`${WPCONST.ROOT_DIR}/${WPCONST.BUILD_DIR_NAME}`);
-WPCONST.BUILD_STATICS_DIR = path.resolve(`${WPCONST.BUILD_DIR}${WPCONST.CDN_DIR_PATH}`);
+
+// e.g. /_dist/statics/
+WPCONST.OUTPUT_PATH = path.resolve(`${WPCONST.ROOT_DIR}/${WPCONST.BUILD_DIR_NAME}${WPCONST.OUTPUT_PUBLIC_PATH}`);
 
 //
 // CHUNK PATH

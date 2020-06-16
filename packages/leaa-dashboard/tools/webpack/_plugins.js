@@ -54,7 +54,7 @@ const htmlWebpackPluginOption = {
   __ANALYTICS_CODE__:
     (!WPCONST.__DEV__ && WPCONST && WPCONST.ANALYTICS_CODE && `<script>${WPCONST.ANALYTICS_CODE}</script>`) || '',
   title: `${WPCONST.SITE_NAME || '-'}`,
-  manifest: `${WPCONST.CDN_DIR_PATH}/manifest.json`,
+  manifest: `${WPCONST.OUTPUT_PUBLIC_PATH}/manifest.json`,
   filename: `${WPCONST.BUILD_DIR}/index.html`,
   template: `${WPCONST.VIEWS_DIR}/index.ejs`,
   favicon: `${WPCONST.SRC_DIR}/assets/favicons/favicon.ico`,
