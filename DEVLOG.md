@@ -689,4 +689,4 @@ Dashboard 麻烦在于一堆 Apollo 的 libs，至少 5 个+，比如 link，cac
 2，在前端 SPA 上使用 .env 的思想
 ![_env-design](./packages/leaa-dashboard/docs/images/_env-design.jpg)
 
-有时候我感觉 deploy 比开发更难，很多东西都值得深思，最佳实践不是「想想看「，而是「做做看」，少用酷炫的黑魔法，千万不要搞得现在部署好了，几个月回头变一头雾水。
+有时候我感觉 deploy 比开发更难，很多东西都值得深思，最佳实践不是「想想看」，而是「做做看」，少用酷炫的黑魔法，千万不要搞得现在部署好了，几个月回头变一头雾水。

@@ -9,7 +9,6 @@ Leaa is a monorepo CMS (Content Management System) built with Nest.js, Next.js, 
 
 ## **Monorepo-Packages**
 
-- [x] **\_leaa-common**
 - [x] **leaa-api** ([demo](https://test-leaa-api.herokuapp.com)) / backend (Nest.js + @nestjsx/crud + MySQL + Docker Compose)
 - [x] **leaa-dashboard** ([demo](https://leaa-dashboard.now.sh)) / dashboard (React.js + Antd + MobX)
 
