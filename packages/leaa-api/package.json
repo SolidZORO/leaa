@@ -36,7 +36,7 @@
     "build": "yarn clear && NODE_ENV=production ttsc -b tsconfig.build.json",
     "---------------------------------------------------------------------- DOCKER ----": "----",
     "docker-install-notes": "⚠️ All the install actions of yarn are completed in the local docker, and then created git repo for deployment, all dist files (includes node_modules dir) push to this repo. It will be very large for the init time, but it will be very small afterwards, and when needed Can be rolled back reliably and conveniently. (More See DEPLOYMENT.md) 所有关于 yarn 的安装动作都在本地的 docker 中完成，然后新建一个专门用于部署的 git-repo，然后把所有 dist 文件（包含完整的 node_modules）提交到这个 repo，第一次提交体积会很大，但是之后就小了，并且在需要的时候可以很方便、可靠的回滚。（更多细节请阅读 DEPLOYMENT.md）",
-    "docker-install": "yarn install --production",
+    "docker-install": "yarn add node-gyp -D && yarn install --production",
     "docker-start": "NODE_ENV=production pm2-docker ecosystem.config.js start",
     "docker-pm2-test": "NODE_ENV=production pm2 -v",
     "pm2": "pm2",

@@ -13,13 +13,13 @@ usage() {
 
   # shellcheck disable=SC2028
   echo "\n\n
-  🔰  Usage: $0 -p (local_start | docker_start | docker_install | docker_local_test | push_to_repo | sync_run | vercel) [-i] [-S]
+  🔰  Usage: $0 -p (node_start | docker_start | docker_install | docker_local_test | push_to_repo | docker_install_and_push | vercel) [-i] [-S]
       \n
       -p platform
       -i ignore yarn build
       -S Setup (init PM2 deploy)
       \n
-      e.g. sh deploy-api.sh -p sync_run -S
+      e.g. sh deploy-api.sh -p docker_install_and_push -S
   \n\n"
   exit 2
 }
@@ -32,7 +32,7 @@ set_var() {
 
   if [ -z "${!arg_name}" ]; then
     if [ "$arg_name" = "PLATFORM" ]; then
-      if echo "$*" | grep -Eq '^local_start|docker_start|docker_install|docker_local_test|push_to_repo|sync_run|vercel'; then
+      if echo "$*" | grep -Eq '^node_start|docker_start|docker_install|docker_local_test|push_to_repo|docker_install_and_push|vercel'; then
         eval "$arg_name=\"$*\""
       else
         usage
@@ -47,13 +47,17 @@ set_var() {
       eval "$arg_name=\"$*\""
     fi
 
+    if [ "$arg_name" = "AUTO_CONFIRM" ]; then
+      eval "$arg_name=\"$*\""
+    fi
+
   else
     echo "Error: $arg_name already set"
     usage
   fi
 }
 
-platform_docker_install() {
+__init_config_file() {
   DEPLOY_DOTENV_FILE="$__DEPLOY__/.env"
   if [ -f $DEPLOY_DOTENV_FILE ]; then
     # shellcheck disable=SC2028
@@ -69,6 +73,10 @@ platform_docker_install() {
   fi
 
   cp -f ./docker-compose.yml ${__DEPLOY__}
+}
+
+platform_docker_install() {
+  __init_config_file
 
   cd ${__DEPLOY__} || exit
 
@@ -92,10 +100,15 @@ platform_docker_install() {
 platform_docker_local_test() {
   platform_docker_install
 
-  docker-compose up
+  printf '\n\n🎏  Show All Containers.\n\n\n'
+
+  docker container ls -a
+
+  printf '\n\n🎏  Up Docker Local Test.\n\n\n'
+  docker-compose down && docker-compose up
 }
 
-platform_push_to_repo() {
+__push_to_deploy_repo() {
   platform_docker_install
 
   pwd
@@ -113,8 +126,8 @@ platform_push_to_repo() {
   printf '\n\n\n📮  Push To Deploy Repo Completed!\n\n\n'
 }
 
-platform_sync_run() {
-  platform_push_to_repo
+platform_docker_install_and_push() {
+  __push_to_deploy_repo
 
   if [ "$PM2_SETUP" = "true" ]; then
     pm2 deploy api setup
@@ -127,14 +140,7 @@ platform_sync_run() {
   printf "\n\n\n\n✅  PM2 Deploy Completed! <%s>\n\n\n\n" "$GIT_MESSAGE"
 }
 
-platform_vercel() {
-  cp -fr ./tools/deploy-config/vercel/* ${__DEPLOY__}
-  cd ${__DEPLOY__} || exit
-
-  vercel --prod -c
-}
-
-platform_local_start() {
+platform_node_start() {
   cd ${__DEPLOY__} || exit
 
   yarn start
@@ -146,13 +152,21 @@ platform_docker_start() {
   yarn docker-start
 }
 
+platform_vercel() {
+  cp -fr ./tools/deploy-config/vercel/* ${__DEPLOY__}
+  cd ${__DEPLOY__} || exit
+
+  vercel --prod -c
+}
+
 # ------------------------------------------------------------------------
 
-while getopts 'p:i?S?h' arg; do
+while getopts 'p:i?S?hy' arg; do
   # shellcheck disable=SC2220
   case $arg in
   p) set_var PLATFORM "$OPTARG" ;;
   i) set_var YARN_BUILD ignore ;;
+  y) set_var AUTO_CONFIRM y ;;
   S) set_var PM2_SETUP true ;;
   h | ?) usage ;;
   *) usage ;; esac
@@ -171,9 +185,12 @@ echo "\x1B[96m
 [ -z "$PLATFORM" ] && usage
 
 CONFIRM_MESSAGE=$(printf "\n\n🔰 \033[1m Start Deploy   👉 <%s> ?\033[0m" "${PLATFORM}")
-read -r -p "${CONFIRM_MESSAGE}    [y/N] " response
 
-case "$response" in
+if [ "$AUTO_CONFIRM" != "y" ]; then
+  read -r -p "${CONFIRM_MESSAGE}    [y/N] " AUTO_CONFIRM
+fi
+
+case "$AUTO_CONFIRM" in
 [yY][eE][sS] | [yY])
   # ---------
   # @ROOT-DIR
@@ -215,12 +232,11 @@ case "$response" in
   # -----------
   if [ -n "$PLATFORM" ]; then
     case $PLATFORM in
-    local_start) platform_local_start ;;
+    node_start) platform_node_start ;;
     docker_start) platform_docker_start ;;
     docker_local_test) platform_docker_local_test ;;
     docker_install) platform_docker_install ;;
-    push_to_repo) platform_push_to_repo ;;
-    sync_run) platform_sync_run ;;
+    docker_install_and_push) platform_docker_install_and_push ;;
     vercel) platform_vercel ;;
     *) usage ;; esac
   fi
