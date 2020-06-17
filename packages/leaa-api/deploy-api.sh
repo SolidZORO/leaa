@@ -19,7 +19,7 @@ usage() {
       -i ignore yarn build
       -S Setup (init PM2 deploy)
       \n
-      e.g. sh deploy.sh -p sync_run -S
+      e.g. sh deploy-api.sh -p sync_run -S
   \n\n"
   exit 2
 }

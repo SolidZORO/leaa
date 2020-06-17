@@ -14,7 +14,7 @@ usage() {
       -p platform
       -i ignore yarn build
       \n
-      e.g. sh deploy.sh -p vercel
+      e.g. sh deploy-dashboard.sh -p vercel
   \n\n"
   exit 2
 }

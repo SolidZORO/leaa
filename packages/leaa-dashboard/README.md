@@ -1,10 +1,16 @@
-# Leaa Dashboard
+## Leaa Dashboard
 
-## About
+### Introduction
 
-leaa-dashboard compiled by webpack.
+leaa-dashboard is an Dashboard of leaa, Compiled by Webpack.
 
-## Install
+### Demo
+
+review [leaa-dashboard](https://leaa-dashboard.now.sh)
+
+### Get Started
+
+Install the latest version via npm or yarn
 
 ```shell script
 # .env for development
@@ -17,11 +23,6 @@ yarn install
 yarn dev
 ```
 
-## Why `_env.js` Not `.env` ?
+### Why is `_env.js` instead of `.env` ?
 
-![leaa-banner](./docs/images/_env_design.jpg)
-
-
-
-
-
+![_env-design](./docs/images/_env-design.jpg)
