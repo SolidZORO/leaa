@@ -4,7 +4,7 @@ cd "$(dirname "$0")" || exit
 
 __DEPLOY__="./_deploy"
 
-unset PLATFORM YARN_BUILD PM2_SETUP
+unset PLATFORM SKIP_BUILD SKIP_CONFIRM PM2_SETUP
 
 usage() {
   # -p = platform
@@ -16,10 +16,12 @@ usage() {
   🔰  Usage: $0 -p (node_start | docker_start | docker_install | docker_local_test | push_to_repo | docker_install_and_push | vercel) [-i] [-S]
       \n
       -p platform
-      -i ignore yarn build
+      -i skip yarn build
+      -y skip confirm
+
       -S Setup (init PM2 deploy)
       \n
-      e.g. sh deploy-api.sh -p docker_install_and_push -S
+      e.g. sh $0 -p docker_install_and_push
   \n\n"
   exit 2
 }
@@ -39,15 +41,15 @@ set_var() {
       fi
     fi
 
-    if [ "$arg_name" = "YARN_BUILD" ]; then
+    if [ "$arg_name" = "SKIP_BUILD" ]; then
+      eval "$arg_name=\"$*\""
+    fi
+
+    if [ "$arg_name" = "SKIP_CONFIRM" ]; then
       eval "$arg_name=\"$*\""
     fi
 
     if [ "$arg_name" = "PM2_SETUP" ]; then
-      eval "$arg_name=\"$*\""
-    fi
-
-    if [ "$arg_name" = "AUTO_CONFIRM" ]; then
       eval "$arg_name=\"$*\""
     fi
 
@@ -98,7 +100,6 @@ platform_docker_install() {
 
   printf '\n\n🎉  All Dependencies Installation Completed!\n\n\n'
 }
-
 
 platform_docker_local_test() {
   platform_docker_install
@@ -168,8 +169,8 @@ while getopts 'p:i?S?hy' arg; do
   # shellcheck disable=SC2220
   case $arg in
   p) set_var PLATFORM "$OPTARG" ;;
-  i) set_var YARN_BUILD ignore ;;
-  y) set_var AUTO_CONFIRM y ;;
+  i) set_var SKIP_BUILD y ;;
+  y) set_var SKIP_CONFIRM y ;;
   S) set_var PM2_SETUP true ;;
   h | ?) usage ;;
   *) usage ;; esac
@@ -189,16 +190,16 @@ echo "\x1B[96m
 
 CONFIRM_MESSAGE=$(printf "\n\n🔰 \033[1m Start Deploy   👉 <%s> ?\033[0m" "${PLATFORM}")
 
-if [ "$AUTO_CONFIRM" != "y" ]; then
-  read -r -p "${CONFIRM_MESSAGE}    [y/N] " AUTO_CONFIRM
+if [ "$SKIP_CONFIRM" != "y" ]; then
+  read -r -p "${CONFIRM_MESSAGE}    [y/N] " SKIP_CONFIRM
 fi
 
-case "$AUTO_CONFIRM" in
+case "$SKIP_CONFIRM" in
 [yY][eE][sS] | [yY])
   # ---------
   # @ROOT-DIR
   # ---------
-  if [ "$YARN_BUILD" != "ignore" ]; then
+  if [ "$SKIP_BUILD" != "y" ]; then
     yarn build
   fi
 

@@ -4,7 +4,7 @@ cd "$(dirname "$0")" || exit
 
 __DEPLOY__="./_deploy"
 
-unset PLATFORM YARN_BUILD
+unset PLATFORM SKIP_BUILD
 
 usage() {
   # shellcheck disable=SC2028
@@ -12,9 +12,10 @@ usage() {
   🔰  Usage: $0 -p (local_test | only_build | vercel) [-i] [-S]
       \n
       -p platform
-      -i ignore yarn build
+      -i skip yarn build
+      -y skip confirm
       \n
-      e.g. sh deploy-dashboard.sh -p vercel
+      e.g. sh $0 -p vercel
   \n\n"
   exit 2
 }
@@ -34,7 +35,11 @@ set_var() {
       fi
     fi
 
-    if [ "$arg_name" = "YARN_BUILD" ]; then
+    if [ "$arg_name" = "SKIP_BUILD" ]; then
+      eval "$arg_name=\"$*\""
+    fi
+
+    if [ "$arg_name" = "SKIP_CONFIRM" ]; then
       eval "$arg_name=\"$*\""
     fi
 
@@ -56,7 +61,7 @@ platform_only_build() {
   cd ${__DEPLOY__} || exit
 
   # shellcheck disable=SC2028
-  echo "\n✨  Done Platform Build\n"
+  echo "\n✨  Only Build Done.\n"
 }
 
 platform_local_test() {
@@ -73,7 +78,7 @@ while getopts 'p:i?h' arg; do
   # shellcheck disable=SC2220
   case $arg in
   p) set_var PLATFORM "$OPTARG" ;;
-  i) set_var YARN_BUILD ignore ;;
+  i) set_var SKIP_BUILD y ;;
   h | ?) usage ;;
   *) usage ;; esac
 done
@@ -91,15 +96,18 @@ echo "\x1B[95m
 [ -z "$PLATFORM" ] && usage
 
 CONFIRM_MESSAGE=$(printf "\n\n🔰 \033[1m Start Deploy   👉 <%s> ?\033[0m" "${PLATFORM}")
-read -r -p "${CONFIRM_MESSAGE}    [y/N] " response
 
-case "$response" in
+if [ "$SKIP_CONFIRM" != "y" ]; then
+  read -r -p "${CONFIRM_MESSAGE}    [y/N] " SKIP_CONFIRM
+fi
+
+case "$SKIP_CONFIRM" in
 [yY][eE][sS] | [yY])
 
   # ---------
   # @ROOT-DIR
   # ---------
-  if [ "$YARN_BUILD" != "ignore" ]; then
+  if [ "$SKIP_BUILD" != "y" ]; then
     yarn build
   fi
 

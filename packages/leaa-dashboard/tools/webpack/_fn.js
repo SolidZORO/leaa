@@ -23,6 +23,7 @@ function showEnvInfo() {
   console.log(`\n> ${serverEnv}  /  URL ${serverBaseByEmoji}`);
 
   console.log('\n> 📮 ENVINFO');
+  console.log('');
   console.log('     - NAME              ', `${WPCONST.SITE_NAME} ${getVersion}`);
   console.log('     - API               ', `${WPCONST.API_URL}`);
   console.log('');
