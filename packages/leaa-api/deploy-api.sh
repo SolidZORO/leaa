@@ -213,16 +213,16 @@ case "$SKIP_CONFIRM" in
   cp -f ./tools/deploy-config/server/deploy_repo_package.json ${__DEPLOY__}/package.json
 
   # dicts
-  if [ ! -d ${__DEPLOY__}/resource/dicts ]; then mkdir -p ${__DEPLOY__}/resource/dicts; fi
-  cp -fr ./resource/dicts/.gitignore ${__DEPLOY__}/resource/dicts
+  if [ ! -d ${__DEPLOY__}/resources/dicts ]; then mkdir -p ${__DEPLOY__}/resources/dicts; fi
+  cp -fr ./resources/dicts/.gitignore ${__DEPLOY__}/resources/dicts
 
   # fonts
-  if [ ! -d ${__DEPLOY__}/resource/fonts ]; then mkdir -p ${__DEPLOY__}/resource/fonts; fi
-  cp -fr ./resource/fonts/halva.otf ${__DEPLOY__}/resource/fonts
+  if [ ! -d ${__DEPLOY__}/resources/fonts ]; then mkdir -p ${__DEPLOY__}/resources/fonts; fi
+  cp -fr ./resources/fonts/halva.otf ${__DEPLOY__}/resources/fonts
 
   # divisions
-  if [ ! -d ${__DEPLOY__}/resource/divisions ]; then mkdir -p ${__DEPLOY__}/resource/divisions; fi
-  cp -fr ./resource/divisions/source ${__DEPLOY__}/resource/divisions
+  if [ ! -d ${__DEPLOY__}/resources/divisions ]; then mkdir -p ${__DEPLOY__}/resources/divisions; fi
+  cp -fr ./resources/divisions/source ${__DEPLOY__}/resources/divisions
 
   # public
   if [ ! -d ${__DEPLOY__}/public ]; then mkdir -p ${__DEPLOY__}/public; fi
