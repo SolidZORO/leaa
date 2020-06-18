@@ -13,7 +13,7 @@ usage() {
 
   # shellcheck disable=SC2028
   echo "\n\n
-  🔰  Usage: $0 -p (node_start | docker_start | docker_install | docker_local_test | push_to_repo | docker_install_and_push | vercel) [-i] [-S]
+  🔰  Usage: $0 -p (node_start | docker_start | docker_install | docker_local_test | push_to_repo | docker_install_and_push | update_config_and_push | vercel) [-i] [-S]
       \n
       -p platform
       -i skip yarn build
@@ -34,7 +34,7 @@ set_var() {
 
   if [ -z "${!arg_name}" ]; then
     if [ "$arg_name" = "PLATFORM" ]; then
-      if echo "$*" | grep -Eq '^node_start|docker_start|docker_install|docker_local_test|push_to_repo|docker_install_and_push|vercel'; then
+      if echo "$*" | grep -Eq '^node_start|docker_start|docker_install|docker_local_test|push_to_repo|update_config_and_push|docker_install_and_push|vercel'; then
         eval "$arg_name=\"$*\""
       else
         usage
@@ -112,8 +112,8 @@ platform_docker_local_test() {
   docker-compose down && docker-compose up
 }
 
-__push_to_deploy_repo() {
-  platform_docker_install
+platform_update_config_and_push() {
+  cd ${__DEPLOY__} || exit
 
   pwd
   GIT_MESSAGE_STR=$(cat <./public/version.txt | sed 's/["{}]//g' | sed 's/[,]/ /g')
@@ -131,7 +131,10 @@ __push_to_deploy_repo() {
 }
 
 platform_docker_install_and_push() {
-  __push_to_deploy_repo
+  platform_docker_install
+  platform_update_config_and_push
+
+  cd ${__DEPLOY__} || exit
 
   if [ "$PM2_SETUP" = "true" ]; then
     pm2 deploy api setup
@@ -200,7 +203,9 @@ case "$SKIP_CONFIRM" in
   # @ROOT-DIR
   # ---------
   if [ "$SKIP_BUILD" != "y" ]; then
-    yarn build
+    if [ "$PLATFORM" != "update_config_and_push" ]; then
+      yarn build
+    fi
   fi
 
   #/
@@ -237,6 +242,7 @@ case "$SKIP_CONFIRM" in
   if [ -n "$PLATFORM" ]; then
     case $PLATFORM in
     node_start) platform_node_start ;;
+    update_config_and_push) platform_update_config_and_push ;;
     docker_start) platform_docker_start ;;
     docker_local_test) platform_docker_local_test ;;
     docker_install) platform_docker_install ;;
