@@ -117,7 +117,7 @@ case "$SKIP_CONFIRM" in
   fi
   cp -fr ./_dist/* ${__DEPLOY__}
   cp -fr ./public/* ${__DEPLOY__}
-  cp -fr ./.env.js ${__DEPLOY__}
+  cp -fr ./_env.js ${__DEPLOY__}
 
   # -----------
   # @DEPLOY-DIR
