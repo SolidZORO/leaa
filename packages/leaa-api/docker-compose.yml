@@ -8,7 +8,7 @@ networks:
 services:
   node:
     container_name: ${__ENV__}_${DOCKER_NODE_CONTAINER_NAME}
-    image: node:14-buster-slim
+    image: node:14-alpine
     expose:
       - ${DOCKER_NODE_PORT}
     ports:

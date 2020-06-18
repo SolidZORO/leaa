@@ -80,13 +80,15 @@ platform_docker_install() {
 
   cd ${__DEPLOY__} || exit
 
+  # for debug
   cat <./docker-compose.yml |
     sed 's/yarn docker-pm2-test && yarn docker-start/while true;do echo debugging;sleep 5;done/g' >docker-compose-deploy-debug.yml
 
+  # for install, prevent PORT conflicts (here use 9119)
   # shellcheck disable=SC2016
-  # Prevent PORT Conflicts (here use 9119)
   cat <./docker-compose.yml |
     sed 's/${__ENV__}_${DOCKER_NODE_CONTAINER_NAME}/deploy_yarn_install/g' |
+    sed 's/node:14-alpine/registry.cn-hangzhou.aliyuncs.com\/solidzoro\/node:14-alpine-gyp-sdk/g' |
     sed 's/${DOCKER_NODE_PORT}/9119/g' |
     sed 's/yarn docker-pm2-test && yarn docker-start/yarn docker-install/g' >docker-compose-deploy-yarn-install.yml
 
@@ -96,6 +98,7 @@ platform_docker_install() {
 
   printf '\n\n🎉  All Dependencies Installation Completed!\n\n\n'
 }
+
 
 platform_docker_local_test() {
   platform_docker_install
