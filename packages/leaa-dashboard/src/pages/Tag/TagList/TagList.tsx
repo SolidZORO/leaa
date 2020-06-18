@@ -15,6 +15,7 @@ import {
   genCrudQuerySearch,
 } from '@leaa/dashboard/src/utils';
 import { PageCard, HtmlMeta, TableCard, SearchInput, FilterIcon } from '@leaa/dashboard/src/components';
+import { SyncTagsToFileButton } from '../_components/SyncTagsToFileButton/SyncTagsToFileButton';
 
 import style from './style.module.less';
 
@@ -56,6 +57,8 @@ export default (props: IPage) => {
       title="@LIST"
       extra={
         <div className="g-page-card-extra-filter-bar-wrapper">
+          <SyncTagsToFileButton />
+
           <FilterIcon
             crudQuery={crudQuery}
             clear={['q', 'search', 'categoryId']}

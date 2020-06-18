@@ -7,7 +7,7 @@ import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 import { logger } from '@leaa/api/src/utils';
 
 import { TagSyncToFileRes, TagCreateOneReq } from '@leaa/api/src/dtos/tag';
-import { dictConfig } from '@leaa/api/src/configs';
+import { tagConfig } from '@leaa/api/src/configs';
 
 import { Tag } from '@leaa/api/src/entrys';
 import { CrudRequest } from '@nestjsx/crud';
@@ -43,15 +43,15 @@ export class TagService extends TypeOrmCrudService<Tag> {
   //
 
   async syncTagsToDictFile(): Promise<TagSyncToFileRes> {
-    if (!this.configService.AUTO_CUT_TAGS) return { status: 'AUTO_CUT_TAGS is Disable' };
+    if (!this.configService.AUTO_CUT_TAGS) return { message: 'AUTO_CUT_TAGS is Disable' };
 
-    if (!fs.existsSync(dictConfig.TAGS_DICT_PATH)) {
-      logger.log(`syncTagsToDictFile, not exists ${dictConfig.DICT_DIR}`, CLS_NAME);
+    if (!fs.existsSync(tagConfig.TAGS_DICT_PATH)) {
+      logger.log(`syncTagsToDictFile, not exists ${tagConfig.DICT_DIR}`, CLS_NAME);
 
       try {
-        mkdirp.sync(dictConfig.DICT_DIR);
+        mkdirp.sync(tagConfig.DICT_DIR);
       } catch (err) {
-        logger.log(`syncTagsToDictFile, mkdirp ${dictConfig.DICT_DIR} ${JSON.stringify(err)}`, CLS_NAME);
+        logger.log(`syncTagsToDictFile, mkdirp ${tagConfig.DICT_DIR} ${JSON.stringify(err)}`, CLS_NAME);
         throw Error(err.message);
       }
     }
@@ -59,13 +59,13 @@ export class TagService extends TypeOrmCrudService<Tag> {
     const [items, total] = await this.tagRepo.findAndCount({ select: ['name'] });
 
     if (total) {
-      fs.writeFileSync(dictConfig.TAGS_DICT_PATH, items.map((item) => item.name).join('\n'));
+      fs.writeFileSync(tagConfig.TAGS_DICT_PATH, items.map((item) => item.name).join('\n'));
     }
 
     logger.log(`syncTagsToDictFile, ${total} tags`, CLS_NAME);
 
     return {
-      status: `Synced ${total} Tags`,
+      message: `Synced ${total} Tags`,
     };
   }
 }

@@ -12,7 +12,7 @@ const SVG_CAPTCHA_OPTION: ConfigObject = {
   // background: '#cc9966',
 };
 
-const FONT_DIR = path.resolve(__dirname, '../assets/fonts');
+const FONT_DIR = path.resolve(__dirname, '../../resources/fonts');
 const SVG_CAPTCHA_FONT_PATH = `${FONT_DIR}/halva.otf`;
 
 export const captchaConfig = {

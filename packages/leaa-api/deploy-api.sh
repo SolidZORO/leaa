@@ -212,20 +212,20 @@ case "$SKIP_CONFIRM" in
   cp -f ./tools/deploy-config/server/deploy_repo_gitignore ${__DEPLOY__}/.gitignore
   cp -f ./tools/deploy-config/server/deploy_repo_package.json ${__DEPLOY__}/package.json
 
-  #/assets (copy and then delete some gen files)
-  if [ ! -d ${__DEPLOY__}/src/assets ]; then
-    mkdir -p ${__DEPLOY__}/src/assets
-  fi
-  cp -fr ./src/assets/* ${__DEPLOY__}/src/assets
+  # dicts
+  if [ ! -d ${__DEPLOY__}/resource/dicts ]; then mkdir -p ${__DEPLOY__}/resource/dicts; fi
+  cp -fr ./resource/dicts/.gitignore ${__DEPLOY__}/resource/dicts
 
-  #delete some gen files
-  rm -f ./src/assets/dicts/*.dict.txt
-  rm -f ./src/assets/divisions/*.division.json
+  # fonts
+  if [ ! -d ${__DEPLOY__}/resource/fonts ]; then mkdir -p ${__DEPLOY__}/resource/fonts; fi
+  cp -fr ./resource/fonts/halva.otf ${__DEPLOY__}/resource/fonts
 
-  #public
-  if [ ! -d ${__DEPLOY__}/public ]; then
-    mkdir -p ${__DEPLOY__}/public
-  fi
+  # divisions
+  if [ ! -d ${__DEPLOY__}/resource/divisions ]; then mkdir -p ${__DEPLOY__}/resource/divisions; fi
+  cp -fr ./resource/divisions/source ${__DEPLOY__}/resource/divisions
+
+  # public
+  if [ ! -d ${__DEPLOY__}/public ]; then mkdir -p ${__DEPLOY__}/public; fi
   cp -f ./public/robots.txt ${__DEPLOY__}/public
   cp -f ./public/favicon.ico ${__DEPLOY__}/public
   cp -f ./public/get-weixin-code.html ${__DEPLOY__}/public

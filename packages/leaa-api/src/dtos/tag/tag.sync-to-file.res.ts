@@ -1,3 +1,3 @@
 export class TagSyncToFileRes {
-  status?: string;
+  message?: string;
 }

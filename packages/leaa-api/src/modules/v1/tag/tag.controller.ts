@@ -1,4 +1,4 @@
-import { Controller, UseGuards } from '@nestjs/common';
+import { Controller, UseGuards, Post } from '@nestjs/common';
 import { Crud, CrudController, Override, ParsedRequest, CrudRequest, ParsedBody } from '@nestjsx/crud';
 import { Permissions } from '@leaa/api/src/decorators';
 import { TagCreateOneReq, TagUpdateOneReq } from '@leaa/api/src/dtos/tag';
@@ -51,5 +51,11 @@ export class TagController implements CrudController<Tag> {
   @UseGuards(JwtGuard)
   createOne(@ParsedRequest() req: CrudRequest, @ParsedBody() dto: Tag & TagCreateOneReq): Promise<Tag> {
     return this.service.createOne(req, dto);
+  }
+
+  @Post('sync-tags-to-dict-file')
+  @UseGuards(JwtGuard)
+  async userByToken(): Promise<any> {
+    return this.service.syncTagsToDictFile();
   }
 }
