@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.5.1](https://github.com/SolidZORO/leaa/compare/v3.5.0...v3.5.1) (2020-06-18)
+
+
+### Bug Fixes
+
+* fixed resource dir in `deploy-api.sh` ([3e625ab](https://github.com/SolidZORO/leaa/commit/3e625ab942129fecbf25a6e0315f31a098130ee3))
+* resource -> resources ([6ede647](https://github.com/SolidZORO/leaa/commit/6ede647424a3c751179aff623b5f28e05aeef24b))
+
+
+### Features
+
+* add Dockerfile for deploy, some packages NEED node-gyp ([4f29db7](https://github.com/SolidZORO/leaa/commit/4f29db7bc813f24c4e18ea25d0ed9eff35aa8f9c))
+* docker-install add `yarn add node-gyp` ([78f7ed2](https://github.com/SolidZORO/leaa/commit/78f7ed21459e4c0ac746e7f43c3941435b04ef67))
+
+
+### Performance Improvements
+
+* better CLI UX ([3848713](https://github.com/SolidZORO/leaa/commit/3848713c8cb7895fe0a1c63c6199860e840543e5))
+
+
+
+
+
 # [3.5.0](https://github.com/SolidZORO/leaa/compare/v3.4.1...v3.5.0) (2020-06-16)
 
 
