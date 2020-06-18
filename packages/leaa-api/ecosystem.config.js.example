@@ -5,22 +5,9 @@ module.exports = {
     name: 'api',
     cwd: './',
     script: './index.js',
-    watch: true,
-    ignore_watch: [
-      '*~',
-      '.DS_Store',
-      '.git',
-      '.vscode',
-      '.idea',
-      '.cache',
-      '.dist',
-      '.docker',
-      'node_modules',
-      'pm2',
-      'logs',
-      'public',
-      'src/assets',
-    ],
+    watch: ['.env', 'src', 'docker-compose.yml', 'package.json', 'index.js'],
+    instances: 1,
+    ignore_watch: ['*~', '.DS_Store', '.git', '.vscode', '.idea', '.cache', '.dist', '.docker', 'node_modules'],
     env_production: { NODE_ENV: 'production' },
     autorestart: true,
     // exec_mode: 'cluster',
@@ -34,16 +21,26 @@ module.exports = {
       port: '22',
       ref: 'origin/api',
       repo: 'git@xxxxxxxx.com:aaaa/bbbb.git',
-      path: '/var/www/bbbb',
       env: { NODE_ENV: 'production' },
+      path: '/var/www/leaa-api',
+      'pre-setup': `
+        echo ----PRE---- &&
+        echo ----PRE---- &&
+        echo ----PRE---- &&
+        echo ----PRE---- &&
+        pwd &&
+        ls -la &&
+        echo ----PRE---- &&
+        echo ----PRE---- &&
+        echo ----PRE---- &&
+        echo ----PRE----
+      `,
       'post-deploy': `
-         echo -------- &&
-         pwd &&
-         echo - &&
-         ls -la &&
-         echo -------- &&
-         docker-compose down &&
-         docker-compose up
+        echo -------- &&
+        pwd &&
+        echo - &&
+        ls -la &&
+        echo --------
       `,
     },
   },
