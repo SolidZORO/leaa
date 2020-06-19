@@ -60,6 +60,8 @@ interface IProps {
 export const AttachmentBox = (props: IProps) => {
   const { t, i18n } = useTranslation();
 
+  const isAjaxCancelled = useRef(false);
+
   const type = props.type || 'list';
   const cardHeight = props.cardHeight || 230;
   const listHeight = props.listHeight || 130;
@@ -89,10 +91,12 @@ export const AttachmentBox = (props: IProps) => {
     ajax
       .get(`${envConfig.API_URL}/${envConfig.API_VERSION}/attachments`, { params: genCrudRequestQuery(params) })
       .then((res: IHttpRes<ICrudListRes<Attachment>>) => {
-        setAttachments(_.orderBy(res.data.data.data, ['status', 'sort'], ['desc', 'asc']) || []);
+        if (!isAjaxCancelled.current) {
+          setAttachments(_.orderBy(res.data.data.data, ['status', 'sort'], ['desc', 'asc']) || []);
+        }
       })
       .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
-      .finally(() => setListLoading(false));
+      .finally(() => !isAjaxCancelled.current && setListLoading(false));
   };
 
   useEffect(() => {
@@ -103,6 +107,12 @@ export const AttachmentBox = (props: IProps) => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.attachmentParams]);
+
+  useEffect(() => {
+    return () => {
+      isAjaxCancelled.current = true;
+    };
+  }, []);
 
   const onChangeAttas = (attas: Attachment[]) => {
     setAttachments(_.orderBy(attas, ['status', 'sort'], ['desc', 'asc']) || []);
