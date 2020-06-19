@@ -50,10 +50,14 @@ interface IUploadFile {
 export const formatAttaUrl = (url?: string | null) => {
   if (!url) return 'DEFAULT-IMAGE.jpg';
 
-  //   oss: https://oss.com/attas/abc.jpg
-  // local: /attas/abc.jpg
+  // oss      : https://oss.com/attas/abc.jpg
+  // local    : /attas/abc.jpg
+  // gravatar : //gravatar.com/avatar/85354d887ba83c626ede32c5f299cdd0?s=160&d=monsterid 404 (Not Found)
+
   // if (/^http/.test(url)) return url;
   if (url.startsWith('http')) return url;
+
+  if (url.startsWith('//secure.gravatar') || url.startsWith('//gravatar')) return url;
 
   return `${envConfig.API_URL}${url}`;
 };
