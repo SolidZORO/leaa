@@ -6,6 +6,9 @@ const __ENV_DATA__ = {
   API_URL: 'http://localhost:5000',
   API_VERSION: 'v1',
 
+  // phone | email (Primary Display at UI)
+  PRIMARY_ACCOUNT_TYPE: 'email',
+
   // PATH in /public/assets/images/logo/*
   LOGO_BLACK_FILENAME: 'default-logo-black.svg',
   LOGO_WHITE_FILENAME: 'default-logo-white.svg',
