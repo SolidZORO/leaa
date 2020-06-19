@@ -7,24 +7,27 @@ import style from './style.module.less';
 
 interface IProps {
   className?: string;
-  text?: string;
+  nullText?: string;
   opacity?: number;
+  tooltip?: boolean;
   scale?: number;
 }
 
 export const NullTag = (props: IProps) => {
   const { t } = useTranslation();
 
+  const nullDom = (
+    <div style={{ transform: `scale(${props.scale || 0.9})` }} className={style['null-tag-inner']}>
+      {props.nullText || 'NULL'}
+    </div>
+  );
+
   return (
     <div
       style={{ opacity: props.opacity || 1 }}
       className={cx(style['null-tag-wrapper'], props.className, 'g-null-tag-wrapper')}
     >
-      <Tooltip title={t('_lang:noData')}>
-        <div style={{ transform: `scale(${props.scale || 0.9})` }} className={style['null-tag-inner']}>
-          {props.text || 'NULL'}
-        </div>
-      </Tooltip>
+      {props.tooltip ? <Tooltip title={t('_lang:noData')}>{nullDom}</Tooltip> : nullDom}
     </div>
   );
 };
