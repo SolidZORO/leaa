@@ -14,7 +14,12 @@ import {
 } from '@leaa/dashboard/src/interfaces';
 
 import { DEFAULT_PAGE_SIZE_OPTIONS } from '@leaa/dashboard/src/constants';
-import { formatOrderSort, calcTableSortOrder, transUrlQueryToCrudState } from '@leaa/dashboard/src/utils';
+import {
+  formatOrderSort,
+  calcTableSortOrder,
+  transUrlQueryToCrudState,
+  formatAttaUrl,
+} from '@leaa/dashboard/src/utils';
 import { Table, Tag } from 'antd';
 import { TableProps } from 'antd/es/table/Table';
 import {
@@ -92,22 +97,22 @@ export const TableCard = <T extends any>(props: IProps<T>) => {
     phone: () => ({
       title: t('_lang:phone'),
       dataIndex: 'phone',
-      width: 140,
+      width: 120,
       ellipsis: true,
       textWrap: 'word-break',
       sorter: true,
       sortOrder: calcTableSortOrder('phone', crudQuery.sort),
       render: (text: string, record: any) => (
-        <code>
+        <span>
           {record.phone ? <Link to={`${props.route.path}/${record.id}`}>{record.phone}</Link> : <span>-</span>}
-        </code>
+        </span>
       ),
     }),
     email: () => ({
       title: t('_lang:email'),
+      width: 180,
       dataIndex: 'email',
       sorter: true,
-      width: 180,
       ellipsis: true,
       textWrap: 'word-break',
       sortOrder: calcTableSortOrder('email', crudQuery.sort),
@@ -119,21 +124,36 @@ export const TableCard = <T extends any>(props: IProps<T>) => {
     }),
     roleList: () => ({
       title: t('_lang:role'),
+      width: 100,
       dataIndex: 'role',
       sortOrder: calcTableSortOrder('name', crudQuery.sort),
       render: (text: string, record: any) => (
-        <div>{record.roles && record.roles.map((r: any) => <Tag key={r.name}>{r.name}</Tag>)}</div>
+        <div>
+          {record.roles &&
+            record.roles.map((r: any) => (
+              <Tag
+                style={{
+                  fontSize: '12px',
+                  transform: 'scale(0.8)',
+                  transformOrigin: 'left',
+                }}
+                key={r.name}
+              >
+                {r.name}
+              </Tag>
+            ))}
+        </div>
       ),
     }),
     avatar: () => ({
       title: t('_lang:avatar'),
       dataIndex: 'avatar_url',
-      width: 60,
-      render: (avatar: string) => <UserAvatar url={avatar} />,
+      width: 55,
+      render: (avatar: string) => <UserAvatar url={formatAttaUrl(avatar)} />,
     }),
     isAdmin: () => ({
       title: <Rcon type="ri-vip-crown-2-line" />,
-      width: 30,
+      width: 25,
       dataIndex: 'is_admin',
       sorter: true,
       sortOrder: calcTableSortOrder('name', crudQuery.sort),

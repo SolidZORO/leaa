@@ -1,10 +1,8 @@
 module.exports = {
   extends: [
     'airbnb',
-    'airbnb/hooks',
     'airbnb-typescript',
     'plugin:@typescript-eslint/recommended',
-    'plugin:react-hooks/recommended',
     'plugin:css-modules/recommended',
     'plugin:prettier/recommended',
   ],
@@ -88,7 +86,8 @@ module.exports = {
     //
     // REACT HOOKS
     'react-hooks/rules-of-hooks': 'error',
-    'react-hooks/exhaustive-deps': 'error',
+    // 'react-hooks/exhaustive-deps': 'error',
+    'react-hooks/exhaustive-deps': 1,
   },
   settings: {
     'import/resolver': {

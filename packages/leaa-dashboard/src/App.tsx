@@ -16,6 +16,7 @@ import { RefreshSetting } from '@leaa/dashboard/src/components/RefreshSetting/Re
 import { masterRoute, authRoute, otherRoute, testWithoutLayoutRoute } from '@leaa/dashboard/src/routes';
 import { initStore, StoreProvider } from '@leaa/dashboard/src/stores';
 import i18n from '@leaa/dashboard/src/i18n';
+import { envConfig } from '@leaa/dashboard/src/configs';
 
 const store = initStore();
 
@@ -29,7 +30,10 @@ export const App = (): JSX.Element => {
     setLocale(getLocale());
   });
 
-  // return <p>NULL-MIN-TEST</p>;
+  const NOT_FOUND_CONFIG_DOM = <p>PLEASE CHECK THE CONFIG FILE!</p>;
+
+  if (!envConfig) return NOT_FOUND_CONFIG_DOM;
+  // return NOT_FOUND_CONFIG_DOM;
 
   return (
     <ErrorBoundary>

@@ -2,6 +2,7 @@ export interface IDotEnv {
   DEMO_MODE: boolean;
   DEBUG_MODE: boolean;
   SITE_NAME: string;
+  PRIMARY_ACCOUNT_TYPE: 'email' | 'phone';
   LOGO_BLACK_FILENAME: string;
   LOGO_WHITE_FILENAME: string;
   SERVER_PROTOCOL: 'http' | 'https';

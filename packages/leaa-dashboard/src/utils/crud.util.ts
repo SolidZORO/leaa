@@ -68,7 +68,14 @@ interface ISetCrudQueryToUrl {
   replace?: boolean;
 }
 
-export function setCrudQueryToUrl({ window, query, replace }: ISetCrudQueryToUrl): string {
+export function setCrudQueryToUrl({ window, query, replace }: ISetCrudQueryToUrl): string | boolean {
+  // DEFAULT_QUERY don't change URL
+  if (_.isEqual(query, DEFAULT_QUERY)) {
+    animateScrollTo(0);
+
+    return false;
+  }
+
   const urlPath = getUrlPath(window);
   const urlObject = qs.parse(window.location.search, { ignoreQueryPrefix: true });
 

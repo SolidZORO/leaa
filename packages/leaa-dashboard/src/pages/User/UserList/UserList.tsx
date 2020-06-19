@@ -1,6 +1,8 @@
+import _ from 'lodash';
 import cx from 'classnames';
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 import { User } from '@leaa/api/src/entrys';
 import { envConfig } from '@leaa/dashboard/src/configs';
@@ -14,7 +16,7 @@ import {
   genCrudRequestQuery,
   genCrudQuerySearch,
 } from '@leaa/dashboard/src/utils';
-import { PageCard, HtmlMeta, TableCard, SearchInput, FilterIcon } from '@leaa/dashboard/src/components';
+import { PageCard, HtmlMeta, TableCard, SearchInput, FilterIcon, NullTag } from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';
 
@@ -29,7 +31,6 @@ export default (props: IPage) => {
   });
 
   const [listLoading, setListLoading] = useState(false);
-
   const [list, setList] = useState<ICrudListRes<User>>();
 
   const onFetchList = (params: ICrudListQueryParams) => {
@@ -47,8 +48,9 @@ export default (props: IPage) => {
       .finally(() => setListLoading(false));
   };
 
-  useEffect(() => onFetchList(crudQuery), [crudQuery]);
-  useEffect(() => (props.history.location.key ? setCrudQuery(DEFAULT_QUERY) : undefined), [props.history.location.key]);
+  useEffect(() => {
+    onFetchList(crudQuery);
+  }, [crudQuery]);
 
   return (
     <PageCard
@@ -94,8 +96,30 @@ export default (props: IPage) => {
             'id',
             'isAdmin',
             'avatar',
-            'phone',
-            'email',
+            {
+              title: t('_lang:account'),
+              width: 180,
+              dataIndex: 'account',
+              sorter: true,
+              ellipsis: true,
+              textWrap: 'word-break',
+              render: (text: string, record: any) => {
+                const accountColDom = [
+                  <>{record.email || <NullTag nullText="----" />}</>,
+                  <>{record.phone || <NullTag nullText="----" />}</>,
+                ];
+
+                if (envConfig.PRIMARY_ACCOUNT_TYPE === 'phone') accountColDom.reverse();
+
+                return (
+                  <Link to={`${props.route.path}/${record.id}`}>
+                    <span>{accountColDom[0]}</span>
+                    <br />
+                    <small>{accountColDom[1]}</small>
+                  </Link>
+                );
+              },
+            },
             'roleList',
             'createdAt',
             'status',
