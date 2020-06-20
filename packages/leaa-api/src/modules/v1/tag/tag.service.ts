@@ -1,6 +1,6 @@
 import fs from 'fs';
 import mkdirp from 'mkdirp';
-import { Repository } from 'typeorm';
+import { Repository, getRepository, getConnection, In } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
@@ -12,7 +12,6 @@ import { tagConfig } from '@leaa/api/src/configs';
 import { Tag } from '@leaa/api/src/entrys';
 import { CrudRequest } from '@nestjsx/crud';
 import { ConfigService } from '@leaa/api/src/modules/v1/config/config.service';
-// import { CrudRequest, GetManyDefaultResponse } from '@nestjsx/crud';
 
 const CLS_NAME = 'TagService';
 
@@ -25,13 +24,6 @@ export class TagService extends TypeOrmCrudService<Tag> {
     super(tagRepo);
   }
 
-  // async getMany(req: CrudRequest): Promise<GetManyDefaultResponse<Tag> | Tag[]> {
-  //   const { parsed, options } = req;
-  //   const builder = await this.createBuilder(parsed, options);
-  //
-  //   return this.doGetMany(builder, parsed, options);
-  // }
-
   async createOne(req: CrudRequest, dto: Tag & TagCreateOneReq): Promise<Tag> {
     const hasTag = await this.tagRepo.findOne({ where: { name: dto.name } });
     if (hasTag) return hasTag;
@@ -41,6 +33,27 @@ export class TagService extends TypeOrmCrudService<Tag> {
 
   //
   //
+
+  async createManyByTagName(dto?: { name: string }[]): Promise<Tag[]> {
+    if (!dto) return [];
+
+    const tagNames = dto.map((r) => r.name);
+    const qb = await getRepository(Tag).createQueryBuilder('tag');
+
+    await qb
+      .insert()
+      .into(Tag)
+      .values(dto)
+      .orUpdate({
+        conflict_target: ['name'],
+        overwrite: ['name'],
+      })
+      .execute();
+
+    const nextTags = await qb.where('tag.name IN (:tagNames)', { tagNames }).getMany();
+
+    return nextTags || [];
+  }
 
   async syncTagsToDictFile(): Promise<TagSyncToFileRes> {
     if (!this.configService.AUTO_CUT_TAGS) return { message: 'AUTO_CUT_TAGS is Disable' };

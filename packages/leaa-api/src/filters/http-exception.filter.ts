@@ -9,7 +9,7 @@ export interface IHttpException {
 }
 
 @Catch()
-export class HttpExceptionFilter implements ExceptionFilter {
+export class HttpExceptionFilter implements ExceptionFilter<unknown> {
   catch(exception: unknown, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const res = ctx.getResponse();
@@ -18,25 +18,22 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const statusCode = exception instanceof HttpException ? exception.getStatus() : HttpStatus.INTERNAL_SERVER_ERROR;
     const lang = req.language || '';
 
-    let message = statusCode >= 500 ? 'Http Server Error' : 'Kernel Panic!';
+    let message = statusCode >= 500 ? 'Server Error' : 'Kernel Panic!';
 
-    if (exception instanceof HttpException)
-      message =
-        // @ts-ignore
-        (_.isArray(exception.response?.message) ? exception.response?.message[0] : exception.response?.message) ||
-        exception.message;
+    if (exception instanceof HttpException) message = exception?.message;
 
+    // @ts-ignore
+    // e.g. `Duplicate entry 'EMPTY' for key 'IDX_d90243459a697eadb8ad56e909'`
+    if (exception?.sqlMessage && `${exception?.sqlMessage}`.includes('Duplicate entry')) message = 'Duplicate Entry';
+
+    // File log & Cli log
     logger.error(`${exception}` || 'HttpExceptionFilter ErrorMsg');
-
     console.error(
       '\n---- EXCEPTION ----\n',
-      '\nSQL:\n',
       // @ts-ignore
-      exception.sqlMessage,
-      '\n\nRES:\n',
+      `\nSQL:\n ${exception.sqlMessage}`,
       // @ts-ignore
-      exception.response,
-      '\n\n\n\n',
+      `\n\nRES:\n ${exception.response}\n\n\n\n`,
     );
 
     res.status(statusCode).json({

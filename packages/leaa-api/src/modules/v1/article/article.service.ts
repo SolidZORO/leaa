@@ -64,7 +64,7 @@ export class ArticleService extends TypeOrmCrudService<Article> {
     if (dto.content && (!dto.tagIds || (dto.tagIds && dto.tagIds.length === 0))) {
       const allText = formatHtmlToText(dto.content, dto.title);
 
-      toSave.tags = await this.tagRepo.save(cutTags(allText).map((tagStr) => ({ name: tagStr })));
+      toSave.tags = await this.tagService.createManyByTagName(cutTags(allText).map((tagStr) => ({ name: tagStr })));
 
       // ⚠️ sync tags
       // execute only once when the article has no tag, reducing server pressure
