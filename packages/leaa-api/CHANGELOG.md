@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.5.2](https://github.com/SolidZORO/leaa/compare/v3.5.1...v3.5.2) (2020-06-20)
+
+
+### Bug Fixes
+
+* add createManyByTagName fix tag target `Duplicate entry` ([8a32f98](https://github.com/SolidZORO/leaa/commit/8a32f9870f71e1f70812eae270ec32302faa947b)), closes [#16](https://github.com/SolidZORO/leaa/issues/16)
+* fix table account dataIndex ([cda97aa](https://github.com/SolidZORO/leaa/commit/cda97aab901d441c8ffa8038f1ecfe73fd23663b))
+* fixed pm2 loop restart ([76b9c91](https://github.com/SolidZORO/leaa/commit/76b9c91a0198802706a242d64ae8a0b112e6c4ed))
+* formatAttaUrl format gravatar error display ([c436884](https://github.com/SolidZORO/leaa/commit/c436884371fd547101de6a04a0ffa7213a5507cb))
+
+
+### Features
+
+* `deploy-api` add -p `update_config_and_push` ([3c62457](https://github.com/SolidZORO/leaa/commit/3c62457eb8171eb4bcbb3e64c665bf6d5211b4c8))
+
+
+
+
+
 ## [3.5.1](https://github.com/SolidZORO/leaa/compare/v3.5.0...v3.5.1) (2020-06-18)
 
 

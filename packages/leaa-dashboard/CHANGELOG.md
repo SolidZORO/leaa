@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.5.2](https://github.com/SolidZORO/leaa/compare/v3.5.1...v3.5.2) (2020-06-20)
+
+
+### Bug Fixes
+
+* `.env.js` -> `_.env.js` ([5c88115](https://github.com/SolidZORO/leaa/commit/5c88115894630a711ba3d2cf1e14c21733208e8d))
+* fix table account dataIndex ([cda97aa](https://github.com/SolidZORO/leaa/commit/cda97aab901d441c8ffa8038f1ecfe73fd23663b))
+* formatAttaUrl format gravatar error display ([c436884](https://github.com/SolidZORO/leaa/commit/c436884371fd547101de6a04a0ffa7213a5507cb))
+
+
+### Features
+
+* dashboard .env add `PRIMARY_ACCOUNT_TYPE` ([97e4f2a](https://github.com/SolidZORO/leaa/commit/97e4f2ae7349e4460c372c2f724b73c05ab2fe79))
+
+
+### Performance Improvements
+
+* click sidebar menu item can refresh list ([e85e385](https://github.com/SolidZORO/leaa/commit/e85e385be61bec2d66b492d5894fc7f6eeaebb03))
+* DEFAULT_PAGE_SIZE value to `20`, one screen can display ([3596609](https://github.com/SolidZORO/leaa/commit/359660950ba04f69fc7a6478bc18acd5b4783e4d))
+* onFetchList use `react-use` control effect ([d46dad9](https://github.com/SolidZORO/leaa/commit/d46dad9084e1b09324f41a5a6d84fb007e9bcb8e))
+
+
+
+
+
 ## [3.5.1](https://github.com/SolidZORO/leaa/compare/v3.5.0...v3.5.1) (2020-06-18)
 
 
