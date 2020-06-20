@@ -2,9 +2,10 @@ import _ from 'lodash';
 import React, { ReactNode } from 'react';
 import { Route } from 'react-router-dom';
 import loadable from '@loadable/component';
+import pMinDelay from 'p-min-delay';
 
 import { IRouteItem, IPage } from '@leaa/dashboard/src/interfaces';
-import { ALLOW_PERMISSION } from '@leaa/dashboard/src/constants';
+import { ALLOW_PERMISSION, LOADABLE_DELAY } from '@leaa/dashboard/src/constants';
 
 import { MasterLayout, SuspenseFallback } from '@leaa/dashboard/src/components';
 import { isDebugMode } from '@leaa/dashboard/src/utils/debug.util';
@@ -32,7 +33,10 @@ export const masterRoutes: IRouteItem[] = [
         path: '/articles/create',
         icon: 'ri-file-list-2-line',
         LazyComponent: loadable(() =>
-          import(/* webpackChunkName: 'ArticleCreate' */ '../pages/Article/ArticleCreate/ArticleCreate'),
+          pMinDelay(
+            import(/* webpackChunkName: 'ArticleCreate' */ '../pages/Article/ArticleCreate/ArticleCreate'),
+            LOADABLE_DELAY,
+          ),
         ),
         exact: true,
         isCreate: true,
@@ -44,7 +48,10 @@ export const masterRoutes: IRouteItem[] = [
         path: `/articles/:id(${UUID_REGX})`,
         icon: 'ri-file-list-2-line',
         LazyComponent: loadable(() =>
-          import(/* webpackChunkName: 'ArticleEdit' */ '../pages/Article/ArticleEdit/ArticleEdit'),
+          pMinDelay(
+            import(/* webpackChunkName: 'ArticleEdit' */ '../pages/Article/ArticleEdit/ArticleEdit'),
+            LOADABLE_DELAY,
+          ),
         ),
         exact: true,
       },
@@ -55,7 +62,10 @@ export const masterRoutes: IRouteItem[] = [
         path: '/articles',
         icon: 'ri-file-list-2-line',
         LazyComponent: loadable(() =>
-          import(/* webpackChunkName: 'ArticleList' */ '../pages/Article/ArticleList/ArticleList'),
+          pMinDelay(
+            import(/* webpackChunkName: 'ArticleList' */ '../pages/Article/ArticleList/ArticleList'),
+            LOADABLE_DELAY,
+          ),
         ),
         canCreate: true,
         exact: true,
@@ -67,7 +77,9 @@ export const masterRoutes: IRouteItem[] = [
         permission: 'tag.item-create',
         path: '/tags/create',
         icon: 'ri-price-tag-3-line',
-        LazyComponent: loadable(() => import(/* webpackChunkName: 'TagCreate' */ '../pages/Tag/TagCreate/TagCreate')),
+        LazyComponent: loadable(() =>
+          pMinDelay(import(/* webpackChunkName: 'TagCreate' */ '../pages/Tag/TagCreate/TagCreate'), LOADABLE_DELAY),
+        ),
         exact: true,
         isCreate: true,
       },
@@ -77,7 +89,9 @@ export const masterRoutes: IRouteItem[] = [
         permission: 'tag.item-read',
         path: `/tags/:id(${UUID_REGX})`,
         icon: 'ri-price-tag-3-line',
-        LazyComponent: loadable(() => import(/* webpackChunkName: 'TagEdit' */ '../pages/Tag/TagEdit/TagEdit')),
+        LazyComponent: loadable(() =>
+          pMinDelay(import(/* webpackChunkName: 'TagEdit' */ '../pages/Tag/TagEdit/TagEdit'), LOADABLE_DELAY),
+        ),
         exact: true,
       },
       {
@@ -86,7 +100,9 @@ export const masterRoutes: IRouteItem[] = [
         permission: 'tag.list-read',
         path: '/tags',
         icon: 'ri-price-tag-3-line',
-        LazyComponent: loadable(() => import(/* webpackChunkName: 'TagList' */ '../pages/Tag/TagList/TagList')),
+        LazyComponent: loadable(() =>
+          pMinDelay(import(/* webpackChunkName: 'TagList' */ '../pages/Tag/TagList/TagList'), LOADABLE_DELAY),
+        ),
         canCreate: true,
         exact: true,
       },
@@ -112,7 +128,7 @@ export const masterRoutes: IRouteItem[] = [
         path: '/users/create',
         icon: 'ri-user-3-line',
         LazyComponent: loadable(() =>
-          import(/* webpackChunkName: 'UserCreate' */ '../pages/User/UserCreate/UserCreate'),
+          pMinDelay(import(/* webpackChunkName: 'UserCreate' */ '../pages/User/UserCreate/UserCreate'), LOADABLE_DELAY),
         ),
         exact: true,
         isCreate: true,
@@ -123,7 +139,9 @@ export const masterRoutes: IRouteItem[] = [
         permission: 'user.item-read',
         path: `/users/:id(${UUID_REGX})`,
         icon: 'ri-user-3-line',
-        LazyComponent: loadable(() => import(/* webpackChunkName: 'UserEdit' */ '../pages/User/UserEdit/UserEdit')),
+        LazyComponent: loadable(() =>
+          pMinDelay(import(/* webpackChunkName: 'UserEdit' */ '../pages/User/UserEdit/UserEdit'), LOADABLE_DELAY),
+        ),
         exact: true,
       },
       {
@@ -132,7 +150,9 @@ export const masterRoutes: IRouteItem[] = [
         permission: 'user.list-read',
         path: '/users',
         icon: 'ri-user-3-line',
-        LazyComponent: loadable(() => import(/* webpackChunkName: 'UserList' */ '../pages/User/UserList/UserList')),
+        LazyComponent: loadable(() =>
+          pMinDelay(import(/* webpackChunkName: 'UserList' */ '../pages/User/UserList/UserList'), LOADABLE_DELAY),
+        ),
         canCreate: true,
         exact: true,
       },
@@ -144,7 +164,7 @@ export const masterRoutes: IRouteItem[] = [
         path: '/roles/create',
         icon: 'ri-vip-crown-2-line',
         LazyComponent: loadable(() =>
-          import(/* webpackChunkName: 'RoleCreate' */ '../pages/Role/RoleCreate/RoleCreate'),
+          pMinDelay(import(/* webpackChunkName: 'RoleCreate' */ '../pages/Role/RoleCreate/RoleCreate'), LOADABLE_DELAY),
         ),
         exact: true,
         isCreate: true,
@@ -155,7 +175,9 @@ export const masterRoutes: IRouteItem[] = [
         permission: 'role.item-read',
         path: `/roles/:id(${UUID_REGX})`,
         icon: 'ri-vip-crown-2-line',
-        LazyComponent: loadable(() => import(/* webpackChunkName: 'RoleEdit' */ '../pages/Role/RoleEdit/RoleEdit')),
+        LazyComponent: loadable(() =>
+          pMinDelay(import(/* webpackChunkName: 'RoleEdit' */ '../pages/Role/RoleEdit/RoleEdit'), LOADABLE_DELAY),
+        ),
         exact: true,
       },
       {
@@ -164,7 +186,9 @@ export const masterRoutes: IRouteItem[] = [
         permission: 'role.list-read',
         path: '/roles',
         icon: 'ri-vip-crown-2-line',
-        LazyComponent: loadable(() => import(/* webpackChunkName: 'RoleList' */ '../pages/Role/RoleList/RoleList')),
+        LazyComponent: loadable(() =>
+          pMinDelay(import(/* webpackChunkName: 'RoleList' */ '../pages/Role/RoleList/RoleList'), LOADABLE_DELAY),
+        ),
         canCreate: true,
         exact: true,
       },
@@ -176,7 +200,10 @@ export const masterRoutes: IRouteItem[] = [
         path: '/permissions/create',
         icon: 'ri-lock-2-line',
         LazyComponent: loadable(() =>
-          import(/* webpackChunkName: 'PermissionCreate' */ '../pages/Permission/PermissionCreate/PermissionCreate'),
+          pMinDelay(
+            import(/* webpackChunkName: 'PermissionCreate' */ '../pages/Permission/PermissionCreate/PermissionCreate'),
+            LOADABLE_DELAY,
+          ),
         ),
         exact: true,
         isCreate: true,
@@ -188,7 +215,10 @@ export const masterRoutes: IRouteItem[] = [
         path: `/permissions/:id(${UUID_REGX})`,
         icon: 'ri-lock-2-line',
         LazyComponent: loadable(() =>
-          import(/* webpackChunkName: 'PermissionEdit' */ '../pages/Permission/PermissionEdit/PermissionEdit'),
+          pMinDelay(
+            import(/* webpackChunkName: 'PermissionEdit' */ '../pages/Permission/PermissionEdit/PermissionEdit'),
+            LOADABLE_DELAY,
+          ),
         ),
         exact: true,
       },
@@ -199,7 +229,10 @@ export const masterRoutes: IRouteItem[] = [
         path: '/permissions',
         icon: 'ri-lock-2-line',
         LazyComponent: loadable(() =>
-          import(/* webpackChunkName: 'PermissionList' */ '../pages/Permission/PermissionList/PermissionList'),
+          pMinDelay(
+            import(/* webpackChunkName: 'PermissionList' */ '../pages/Permission/PermissionList/PermissionList'),
+            LOADABLE_DELAY,
+          ),
         ),
         canCreate: true,
         exact: true,
@@ -223,7 +256,9 @@ export const masterRoutes: IRouteItem[] = [
         permission: 'ax.item-create',
         path: '/axs/create',
         icon: 'ri-paint-brush-line',
-        LazyComponent: loadable(() => import(/* webpackChunkName: 'AxCreate' */ '../pages/Ax/AxCreate/AxCreate')),
+        LazyComponent: loadable(() =>
+          pMinDelay(import(/* webpackChunkName: 'AxCreate' */ '../pages/Ax/AxCreate/AxCreate'), LOADABLE_DELAY),
+        ),
         exact: true,
         isCreate: true,
       },
@@ -233,7 +268,9 @@ export const masterRoutes: IRouteItem[] = [
         permission: 'ax.item-read',
         path: `/axs/:id(${UUID_REGX})`,
         icon: 'ri-paint-brush-line',
-        LazyComponent: loadable(() => import(/* webpackChunkName: 'AxEdit' */ '../pages/Ax/AxEdit/AxEdit')),
+        LazyComponent: loadable(() =>
+          pMinDelay(import(/* webpackChunkName: 'AxEdit' */ '../pages/Ax/AxEdit/AxEdit'), LOADABLE_DELAY),
+        ),
         exact: true,
       },
       {
@@ -242,7 +279,9 @@ export const masterRoutes: IRouteItem[] = [
         permission: 'ax.list-read',
         path: '/axs',
         icon: 'ri-paint-brush-line',
-        LazyComponent: loadable(() => import(/* webpackChunkName: 'AxList' */ '../pages/Ax/AxList/AxList')),
+        LazyComponent: loadable(() =>
+          pMinDelay(import(/* webpackChunkName: 'AxList' */ '../pages/Ax/AxList/AxList'), LOADABLE_DELAY),
+        ),
         canCreate: true,
         exact: true,
       },
@@ -258,7 +297,10 @@ export const masterRoutes: IRouteItem[] = [
     path: '/categories/create',
     icon: 'ri-function-line',
     LazyComponent: loadable(() =>
-      import(/* webpackChunkName: 'CategoryCreate' */ '../pages/Category/CategoryCreate/CategoryCreate'),
+      pMinDelay(
+        import(/* webpackChunkName: 'CategoryCreate' */ '../pages/Category/CategoryCreate/CategoryCreate'),
+        LOADABLE_DELAY,
+      ),
     ),
     exact: true,
     isCreate: true,
@@ -270,7 +312,10 @@ export const masterRoutes: IRouteItem[] = [
     path: `/categories/:id(${UUID_REGX})`,
     icon: 'ri-function-line',
     LazyComponent: loadable(() =>
-      import(/* webpackChunkName: 'CategoryEdit' */ '../pages/Category/CategoryEdit/CategoryEdit'),
+      pMinDelay(
+        import(/* webpackChunkName: 'CategoryEdit' */ '../pages/Category/CategoryEdit/CategoryEdit'),
+        LOADABLE_DELAY,
+      ),
     ),
     exact: true,
   },
@@ -281,7 +326,10 @@ export const masterRoutes: IRouteItem[] = [
     path: '/categories',
     icon: 'ri-function-line',
     LazyComponent: loadable(() =>
-      import(/* webpackChunkName: 'CategoryList' */ '../pages/Category/CategoryList/CategoryList'),
+      pMinDelay(
+        import(/* webpackChunkName: 'CategoryList' */ '../pages/Category/CategoryList/CategoryList'),
+        LOADABLE_DELAY,
+      ),
     ),
     canCreate: true,
     exact: true,
@@ -296,7 +344,10 @@ export const masterRoutes: IRouteItem[] = [
     path: '/settings',
     icon: 'ri-settings-line',
     LazyComponent: loadable(() =>
-      import(/* webpackChunkName: 'SettingList' */ '../pages/Setting/SettingList/SettingList'),
+      pMinDelay(
+        import(/* webpackChunkName: 'SettingList' */ '../pages/Setting/SettingList/SettingList'),
+        LOADABLE_DELAY,
+      ),
     ),
     exact: true,
   },
@@ -308,7 +359,9 @@ export const masterRoutes: IRouteItem[] = [
     namei18n: '_route:home',
     permission: ALLOW_PERMISSION,
     path: '/',
-    LazyComponent: loadable(() => import(/* webpackChunkName: 'Home' */ '../pages/Home/Home/Home')),
+    LazyComponent: loadable(() =>
+      pMinDelay(import(/* webpackChunkName: 'Home' */ '../pages/Home/Home/Home'), LOADABLE_DELAY),
+    ),
     exact: true,
   },
   //
@@ -328,7 +381,9 @@ export const masterRoutes: IRouteItem[] = [
         permission: 'oauth.list-read',
         path: '/oauths',
         icon: 'ri-key-2-line',
-        LazyComponent: loadable(() => import(/* webpackChunkName: 'OauthList' */ '../pages/Oauth/OauthList/OauthList')),
+        LazyComponent: loadable(() =>
+          pMinDelay(import(/* webpackChunkName: 'OauthList' */ '../pages/Oauth/OauthList/OauthList'), LOADABLE_DELAY),
+        ),
         canCreate: false,
         exact: true,
       },
@@ -340,7 +395,10 @@ export const masterRoutes: IRouteItem[] = [
         path: '/actions',
         icon: 'ri-file-list-2-line',
         LazyComponent: loadable(() =>
-          import(/* webpackChunkName: 'ActionList' */ '../pages/Action/ActionList/ActionList'),
+          pMinDelay(
+            import(/* webpackChunkName: 'ActionList' */ '../pages/Action/ActionList/ActionList'),
+            LOADABLE_DELAY,
+          ),
         ),
         // canCreate: true,
         exact: true,
@@ -352,7 +410,10 @@ export const masterRoutes: IRouteItem[] = [
         path: '/actions/:id(\\d+)',
         icon: 'ri-function-line',
         LazyComponent: loadable(() =>
-          import(/* webpackChunkName: 'ActionEdit' */ '../pages/Action/ActionEdit/ActionEdit'),
+          pMinDelay(
+            import(/* webpackChunkName: 'ActionEdit' */ '../pages/Action/ActionEdit/ActionEdit'),
+            LOADABLE_DELAY,
+          ),
         ),
         exact: true,
       },
@@ -364,7 +425,10 @@ export const masterRoutes: IRouteItem[] = [
         path: '/attachments',
         icon: 'ri-file-list-2-line',
         LazyComponent: loadable(() =>
-          import(/* webpackChunkName: 'AttachmentList' */ '../pages/Attachment/AttachmentList/AttachmentList'),
+          pMinDelay(
+            import(/* webpackChunkName: 'AttachmentList' */ '../pages/Attachment/AttachmentList/AttachmentList'),
+            LOADABLE_DELAY,
+          ),
         ),
         canCreate: true,
         exact: true,
@@ -376,7 +440,10 @@ export const masterRoutes: IRouteItem[] = [
         path: '/attachments/create',
         icon: 'ri-file-list-2-line',
         LazyComponent: loadable(() =>
-          import(/* webpackChunkName: 'AttachmentCreate' */ '../pages/Attachment/AttachmentCreate/AttachmentCreate'),
+          pMinDelay(
+            import(/* webpackChunkName: 'AttachmentCreate' */ '../pages/Attachment/AttachmentCreate/AttachmentCreate'),
+            LOADABLE_DELAY,
+          ),
         ),
         exact: true,
         isCreate: true,
@@ -403,7 +470,9 @@ if (isDebugMode()) {
           permission: ALLOW_PERMISSION,
           path: '/test-any',
           icon: 'ri-code-s-slash-line',
-          LazyComponent: loadable(() => import(/* webpackChunkName: 'TestAny' */ '../pages/Test/TestAny/TestAny')),
+          LazyComponent: loadable(() =>
+            pMinDelay(import(/* webpackChunkName: 'TestAny' */ '../pages/Test/TestAny/TestAny'), LOADABLE_DELAY),
+          ),
           exact: true,
         },
         {
@@ -413,7 +482,10 @@ if (isDebugMode()) {
           path: '/test-attachment',
           icon: 'ri-code-s-slash-line',
           LazyComponent: loadable(() =>
-            import(/* webpackChunkName: 'TestAttachment' */ '../pages/Test/TestAttachment/TestAttachment'),
+            pMinDelay(
+              import(/* webpackChunkName: 'TestAttachment' */ '../pages/Test/TestAttachment/TestAttachment'),
+              LOADABLE_DELAY,
+            ),
           ),
           exact: true,
         },
@@ -423,7 +495,9 @@ if (isDebugMode()) {
           permission: ALLOW_PERMISSION,
           path: '/test-i18n',
           icon: 'ri-code-s-slash-line',
-          LazyComponent: loadable(() => import(/* webpackChunkName: 'TestI18n' */ '../pages/Test/TestI18n/TestI18n')),
+          LazyComponent: loadable(() =>
+            pMinDelay(import(/* webpackChunkName: 'TestI18n' */ '../pages/Test/TestI18n/TestI18n'), LOADABLE_DELAY),
+          ),
           exact: true,
         },
       ],

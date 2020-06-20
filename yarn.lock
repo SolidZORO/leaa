@@ -6825,6 +6825,11 @@ del@^4.1.1:
     pify "^4.0.1"
     rimraf "^2.6.3"
 
+delay@^4.1.0:
+  version "4.3.0"
+  resolved "https://registry.npm.taobao.org/delay/download/delay-4.3.0.tgz#efeebfb8f545579cb396b3a722443ec96d14c50e"
+  integrity sha1-7+6/uPVFV5yzlrOnIkQ+yW0UxQ4=
+
 delayed-stream@~1.0.0:
   version "1.0.0"
   resolved "https://registry.npm.taobao.org/delayed-stream/download/delayed-stream-1.0.0.tgz#df3ae199acadfb7d440aaae0b29e2272b24ec619"
@@ -12715,6 +12720,13 @@ p-map@^4.0.0:
   integrity sha1-uy+Vpe2i7BaOySdOBqdHw+KQTSs=
   dependencies:
     aggregate-error "^3.0.0"
+
+p-min-delay@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.npm.taobao.org/p-min-delay/download/p-min-delay-3.1.0.tgz#9355640bd988710f85abfb82fd6002502b4b17c7"
+  integrity sha1-k1VkC9mIcQ+Fq/uC/WACUCtLF8c=
+  dependencies:
+    delay "^4.1.0"
 
 p-pipe@^1.2.0:
   version "1.2.0"

@@ -1,8 +1,9 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 import { IRouteItem, IPage } from '@leaa/dashboard/src/interfaces';
-import { ALLOW_PERMISSION } from '@leaa/dashboard/src/constants';
+import { ALLOW_PERMISSION, LOADABLE_DELAY } from '@leaa/dashboard/src/constants';
 import loadable from '@loadable/component';
+import pMinDelay from 'p-min-delay';
 
 import { AuthLayout, SuspenseFallback } from '@leaa/dashboard/src/components';
 
@@ -12,7 +13,9 @@ export const authRoutes: IRouteItem[] = [
     namei18n: '_route:login',
     permission: ALLOW_PERMISSION,
     path: '/login',
-    LazyComponent: loadable(() => import(/* webpackChunkName: 'Login' */ '../pages/Auth/Login/Login')),
+    LazyComponent: loadable(() =>
+      pMinDelay(import(/* webpackChunkName: 'Login' */ '../pages/Auth/Login/Login'), LOADABLE_DELAY),
+    ),
     exact: true,
   },
 ];

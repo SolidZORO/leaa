@@ -1,9 +1,10 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 import { IRouteItem } from '@leaa/dashboard/src/interfaces';
-import { ALLOW_PERMISSION } from '@leaa/dashboard/src/constants';
 import { SuspenseFallback } from '@leaa/dashboard/src/components';
+import { ALLOW_PERMISSION, LOADABLE_DELAY } from '@leaa/dashboard/src/constants';
 import loadable from '@loadable/component';
+import pMinDelay from 'p-min-delay';
 
 const testWithoutLayoutRoutes: IRouteItem[] = [
   {
@@ -12,8 +13,13 @@ const testWithoutLayoutRoutes: IRouteItem[] = [
     permission: ALLOW_PERMISSION,
     // @ts-ignore
     // prettier-ignore
-    // eslint-disable-next-line max-len
-    LazyComponent: loadable(() => import(/* webpackChunkName: 'TestAnyWithoutLayout' */ '../pages/TestWithoutLayout/TestAnyWithoutLayout/TestAnyWithoutLayout')),
+    LazyComponent: loadable(() =>
+      pMinDelay(
+        // eslint-disable-next-line max-len
+        import(/* webpackChunkName: 'TestAnyWithoutLayout' */ '../pages/TestWithoutLayout/TestAnyWithoutLayout/TestAnyWithoutLayout'),
+        LOADABLE_DELAY,
+      ),
+    ),
     canCreate: true,
     exact: true,
   },

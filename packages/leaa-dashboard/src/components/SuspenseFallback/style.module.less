@@ -2,14 +2,16 @@
 
 .suspense-fallback-loader {
   z-index: 99999;
-  position: absolute;
-  top: @page-card-padding-x;
-  //right: @page-card-padding-x + 5;
-  left: @page-card-padding-x + 5;
   opacity: 0.5;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  margin-top: 113px;
 
   span {
     margin-top: 0 !important;
-    font-size: 120% !important;
+    font-size: 180% !important;
   }
 }
