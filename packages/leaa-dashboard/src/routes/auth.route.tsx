@@ -2,6 +2,7 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import { IRouteItem, IPage } from '@leaa/dashboard/src/interfaces';
 import { ALLOW_PERMISSION } from '@leaa/dashboard/src/constants';
+import { lazy } from '@loadable/component';
 
 import { AuthLayout, SuspenseFallback } from '@leaa/dashboard/src/components';
 
@@ -11,7 +12,7 @@ export const authRoutes: IRouteItem[] = [
     namei18n: '_route:login',
     permission: ALLOW_PERMISSION,
     path: '/login',
-    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'Login' */ '../pages/Auth/Login/Login')),
+    LazyComponent: lazy(() => import(/* webpackChunkName: 'Login' */ '../pages/Auth/Login/Login')),
     exact: true,
   },
 ];

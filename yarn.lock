@@ -2997,6 +2997,13 @@
   resolved "https://registry.npm.taobao.org/@types/less/download/@types/less-3.0.1.tgz#625694093c72f8356c4042754e222407e50d6b08"
   integrity sha1-YlaUCTxy+DVsQEJ1TiIkB+UNawg=
 
+"@types/loadable__component@^5.10.0":
+  version "5.10.0"
+  resolved "https://registry.npm.taobao.org/@types/loadable__component/download/@types/loadable__component-5.10.0.tgz#178fdc401983f4f93647fac778226da7b8c1e080"
+  integrity sha1-F4/cQBmD9Pk2R/rHeCJtp7jB4IA=
+  dependencies:
+    "@types/react" "*"
+
 "@types/lodash-webpack-plugin@^0.11.4":
   version "0.11.4"
   resolved "https://registry.npm.taobao.org/@types/lodash-webpack-plugin/download/@types/lodash-webpack-plugin-0.11.4.tgz#5a8cd1bd3b6ff773f788d5ab4903cca1793e0be0"

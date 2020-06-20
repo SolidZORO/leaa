@@ -3,6 +3,7 @@ import { Route } from 'react-router-dom';
 import { IRouteItem } from '@leaa/dashboard/src/interfaces';
 import { ALLOW_PERMISSION } from '@leaa/dashboard/src/constants';
 import { SuspenseFallback } from '@leaa/dashboard/src/components';
+import { lazy } from '@loadable/component';
 
 const testWithoutLayoutRoutes: IRouteItem[] = [
   {
@@ -12,7 +13,7 @@ const testWithoutLayoutRoutes: IRouteItem[] = [
     // @ts-ignore
     // prettier-ignore
     // eslint-disable-next-line max-len
-    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'TestAnyWithoutLayout' */ '../pages/TestWithoutLayout/TestAnyWithoutLayout/TestAnyWithoutLayout')),
+    LazyComponent: lazy(() => import(/* webpackChunkName: 'TestAnyWithoutLayout' */ '../pages/TestWithoutLayout/TestAnyWithoutLayout/TestAnyWithoutLayout')),
     canCreate: true,
     exact: true,
   },

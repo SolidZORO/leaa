@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
+import { lazy } from '@loadable/component';
 
 import { IRouteItem, IPage } from '@leaa/dashboard/src/interfaces';
 import { ALLOW_PERMISSION } from '@leaa/dashboard/src/constants';
@@ -11,7 +12,7 @@ const otherRoutes: IRouteItem[] = [
     name: '*',
     path: '/*',
     permission: ALLOW_PERMISSION,
-    LazyComponent: React.lazy(() => import(/* webpackChunkName: 'NotFound' */ '../pages/NotFound/NotFound/NotFound')),
+    LazyComponent: lazy(() => import(/* webpackChunkName: 'NotFound' */ '../pages/NotFound/NotFound/NotFound')),
     canCreate: true,
     exact: true,
   },
