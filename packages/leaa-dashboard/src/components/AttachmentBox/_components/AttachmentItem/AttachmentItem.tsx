@@ -107,7 +107,7 @@ export const AttachmentItem = (props: IProps) => {
           title={
             // @ts-ignore
             // eslint-disable-next-line react/jsx-no-target-blank
-            <a href={props.attachment?.url} target="_blank">
+            <a href={`${formatAttaUrl(props.attachment?.url)}`} target="_blank">
               <img alt={props.attachment?.alt} src={`${formatAttaUrl(props.attachment?.url)}`} />
             </a>
           }

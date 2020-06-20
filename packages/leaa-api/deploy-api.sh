@@ -2,7 +2,8 @@
 
 cd "$(dirname "$0")" || exit
 
-__DEPLOY__="./_deploy"
+__ABS_PATH__="$(cd "$(dirname "$0")";pwd)" || exit
+__DEPLOY__="$__ABS_PATH__/_deploy"
 
 unset PLATFORM SKIP_BUILD SKIP_CONFIRM PM2_SETUP
 
@@ -59,6 +60,11 @@ set_var() {
   fi
 }
 
+__cd_deploy() {
+  pwd
+  cd ${__DEPLOY__} || exit
+}
+
 __init_config_file() {
   DEPLOY_DOTENV_FILE="$__DEPLOY__/.env"
   if [ -f $DEPLOY_DOTENV_FILE ]; then
@@ -79,8 +85,7 @@ __init_config_file() {
 
 platform_docker_install() {
   __init_config_file
-
-  cd ${__DEPLOY__} || exit
+  __cd_deploy
 
   # for debug
   cat <./docker-compose.yml |
@@ -113,7 +118,7 @@ platform_docker_local_test() {
 }
 
 platform_update_config_and_push() {
-  cd ${__DEPLOY__} || exit
+  __cd_deploy
 
   pwd
   GIT_MESSAGE_STR=$(cat <./public/version.txt | sed 's/["{}]//g' | sed 's/[,]/ /g')
@@ -134,8 +139,6 @@ platform_docker_install_and_push() {
   platform_docker_install
   platform_update_config_and_push
 
-  cd ${__DEPLOY__} || exit
-
   if [ "$PM2_SETUP" = "true" ]; then
     pm2 deploy api setup
 
@@ -148,20 +151,20 @@ platform_docker_install_and_push() {
 }
 
 platform_node_start() {
-  cd ${__DEPLOY__} || exit
+  __cd_deploy
 
   yarn start
 }
 
 platform_docker_start() {
-  cd ${__DEPLOY__} || exit
+  __cd_deploy
 
   yarn docker-start
 }
 
 platform_vercel() {
   cp -fr ./tools/deploy-config/vercel/* ${__DEPLOY__}
-  cd ${__DEPLOY__} || exit
+  __cd_deploy
 
   vercel --prod -c
 }

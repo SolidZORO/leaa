@@ -101,7 +101,7 @@ export default (props: IPage) => {
             {
               title: t('_lang:account'),
               width: 180,
-              dataIndex: 'account',
+              dataIndex: envConfig.PRIMARY_ACCOUNT_TYPE || 'email',
               sorter: true,
               ellipsis: true,
               textWrap: 'word-break',
