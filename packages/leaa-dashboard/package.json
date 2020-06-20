@@ -65,6 +65,7 @@
     "react-router-dom": "5.2.0",
     "react-sortable-tree": "^2.7.1",
     "react-test-renderer": "16.13.1",
+    "react-use": "^15.3.0",
     "uuid": "^8.1.0"
   },
   "devDependencies": {

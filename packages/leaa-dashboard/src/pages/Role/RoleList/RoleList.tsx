@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import cx from 'classnames';
 import { Link } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
@@ -26,6 +27,7 @@ const API_PATH = 'roles';
 
 export default (props: IPage) => {
   const { t } = useTranslation();
+  const [mounted, setMounted] = useState(false);
 
   const [crudQuery, setCrudQuery] = useState<ICrudListQueryParams>({
     ...DEFAULT_QUERY,
@@ -61,9 +63,30 @@ export default (props: IPage) => {
       .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message));
   };
 
-  useEffect(() => onFetchpPrmissions(), []);
-  useEffect(() => onFetchList(crudQuery), [crudQuery]);
-  useEffect(() => (props.history.location.key ? setCrudQuery(DEFAULT_QUERY) : undefined), [props.history.location.key]);
+  useEffect(() => {
+    if (mounted) return;
+    setMounted(true);
+    onFetchList(crudQuery);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (!mounted) return;
+    if (!_.isEqual(crudQuery, DEFAULT_QUERY)) {
+      onFetchList(crudQuery);
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [crudQuery]);
+
+  useEffect(() => {
+    if (!mounted) return;
+    onFetchpPrmissions();
+    onFetchList(DEFAULT_QUERY);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.history.location.key]);
 
   return (
     <PageCard

@@ -24,6 +24,7 @@ const API_PATH = 'users';
 
 export default (props: IPage) => {
   const { t } = useTranslation();
+  const [mounted, setMounted] = useState(false);
 
   const [crudQuery, setCrudQuery] = useState<ICrudListQueryParams>({
     ...DEFAULT_QUERY,
@@ -49,8 +50,28 @@ export default (props: IPage) => {
   };
 
   useEffect(() => {
+    if (mounted) return;
+    setMounted(true);
     onFetchList(crudQuery);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (!mounted) return;
+    if (!_.isEqual(crudQuery, DEFAULT_QUERY)) {
+      onFetchList(crudQuery);
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [crudQuery]);
+
+  useEffect(() => {
+    if (!mounted) return;
+    onFetchList(DEFAULT_QUERY);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.history.location.key]);
 
   return (
     <PageCard
