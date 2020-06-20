@@ -69,17 +69,21 @@ export default (props: IPage) => {
    * List组件 一般会有几种情况需要刷新数据 (非页面)
    *
    * 1，第一次进来时 (Init)
-   * 2，改变分页等常规操作时 (Normal)
-   * 3，点击 Sidebar 时，刚好点中了当前 Page 的 Router，我点我自己，但 URL 没有变化 (Sidebar)
+   * 2，点击 Sidebar 时，刚好点中了当前 Page 的 Router，我点我自己，但 URL 没有变化 (Sidebar)
+   * 3，改变分页等常规操作时 (Normal)
    */
 
   // 1️⃣ Init
   // 组件 init 进来，先设定为已加载，然后 fetch 数据
   useMount(() => onFetchList(crudQuery));
 
+  // 2️⃣ Sidebar
   // useEffectOnce
+  // 每次切换路由 (react-router)，无聊是从 /abc 切换到 /123 还是从 /abc 切换到 /abc， 其 `location.key` 都会发生变化，
+  // 此 key 是 SPA 里为数不多可以用来当 effect 的值，最后用默认的 `DEFAULT_QUERY` 去 featch。
+  useUpdateEffect(() => onFetchList(DEFAULT_QUERY), [props.history.location.key]);
 
-  // 2️⃣ Normal
+  // 3️⃣ Normal
   // 每次 `crudQuery` 有 effect 时都会执行的 fetch 数据，除了 组件 init 的时候（因为 useUpdateEffect 不在 useMount 执行）
   // 后面那个 `!_.isEqual` 是什么意思呢？ 是因为 crudQuery 如果等于 DEFAULT_QUERY { page: 1, limit: 20 } 的情况下不体现在 URL :
   //
@@ -87,11 +91,6 @@ export default (props: IPage) => {
   //
   // 为什么不体现在 URL？因为我觉得没必要把默认参数也写出来，而且 react-router 跳到 /abc 还要再跳一次参数。
   useUpdateEffect(() => (!_.isEqual(crudQuery, DEFAULT_QUERY) ? onFetchList(crudQuery) : undefined), [crudQuery]);
-
-  // 3️⃣ Sidebar
-  // 每次切换路由 (react-router)，无聊是从 /abc 切换到 /123 还是从 /abc 切换到 /abc， 其 `location.key` 都会发生变化，
-  // 此 key 是 SPA 里为数不多可以用来当 effect 的值，最后用默认的 `DEFAULT_QUERY` 去 featch。
-  useUpdateEffect(() => onFetchList(DEFAULT_QUERY), [props.history.location.key]);
 
   return (
     <PageCard

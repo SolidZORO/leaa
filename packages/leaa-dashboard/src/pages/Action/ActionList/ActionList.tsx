@@ -54,8 +54,8 @@ export default (props: IPage) => {
   };
 
   useMount(() => onFetchList(crudQuery));
-  useUpdateEffect(() => (!_.isEqual(crudQuery, DEFAULT_QUERY) ? onFetchList(crudQuery) : undefined), [crudQuery]);
   useUpdateEffect(() => onFetchList(DEFAULT_QUERY), [props.history.location.key]);
+  useUpdateEffect(() => (!_.isEqual(crudQuery, DEFAULT_QUERY) ? onFetchList(crudQuery) : undefined), [crudQuery]);
 
   return (
     <PageCard

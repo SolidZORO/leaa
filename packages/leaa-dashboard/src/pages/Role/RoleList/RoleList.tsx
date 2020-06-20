@@ -1,8 +1,9 @@
 import _ from 'lodash';
 import cx from 'classnames';
 import { Link } from 'react-router-dom';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useMount, useUpdateEffect } from 'react-use';
 
 import { Role, Permission } from '@leaa/api/src/entrys';
 import { envConfig } from '@leaa/dashboard/src/configs';
@@ -63,30 +64,17 @@ export default (props: IPage) => {
       .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message));
   };
 
-  useEffect(() => {
-    if (mounted) return;
-    setMounted(true);
-    onFetchList(crudQuery);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    if (!mounted) return;
-    if (!_.isEqual(crudQuery, DEFAULT_QUERY)) {
-      onFetchList(crudQuery);
-    }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [crudQuery]);
-
-  useEffect(() => {
-    if (!mounted) return;
+  useMount(() => {
     onFetchpPrmissions();
-    onFetchList(DEFAULT_QUERY);
+    onFetchList(crudQuery);
+  });
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  useUpdateEffect(() => {
+    onFetchpPrmissions();
+    onFetchList(crudQuery);
   }, [props.history.location.key]);
+
+  useUpdateEffect(() => (!_.isEqual(crudQuery, DEFAULT_QUERY) ? onFetchList(crudQuery) : undefined), [crudQuery]);
 
   return (
     <PageCard

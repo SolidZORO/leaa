@@ -36,13 +36,9 @@ export default (props: IPage) => {
   const settingsFormRef = useRef<ICommenFormRef<SettingUpdateManyReq>>(null);
   const settingModuleFormRef = useRef<ICommenFormRef<ICreateOrUpdateSettingInput>>(null);
 
-  //
-
   const [modalData, setModalData] = useState<Setting>();
   const [modalType, setModalType] = useState<'create' | 'update' | null>(null);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
-
-  //
 
   const onCloseModalVisible = () => {
     setModalVisible(false);

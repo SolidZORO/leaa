@@ -1,9 +1,10 @@
 import _ from 'lodash';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { Button } from 'antd';
 import SortableTree, { TreeItem } from 'react-sortable-tree';
+import { useMount, useUpdateEffect } from 'react-use';
 
 import { envConfig } from '@leaa/dashboard/src/configs';
 import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
@@ -36,7 +37,8 @@ export default (props: IPage) => {
       .finally(() => setTreeLoading(false));
   };
 
-  useEffect(() => onFetchList(), []);
+  useMount(() => onFetchList());
+  useUpdateEffect(() => onFetchList(), [props.history.location.key]);
 
   return (
     <PageCard route={props.route} title="@LIST" className={style['wapper']} loading={treeLoading}>

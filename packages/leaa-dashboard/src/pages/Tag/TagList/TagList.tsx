@@ -1,6 +1,8 @@
+import _ from 'lodash';
 import cx from 'classnames';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useMount, useUpdateEffect } from 'react-use';
 
 import { Tag } from '@leaa/api/src/entrys';
 import { envConfig } from '@leaa/dashboard/src/configs';
@@ -48,8 +50,9 @@ export default (props: IPage) => {
       .finally(() => setListLoading(false));
   };
 
-  useEffect(() => onFetchList(crudQuery), [crudQuery]);
-  useEffect(() => (props.history.location.key ? setCrudQuery(DEFAULT_QUERY) : undefined), [props.history.location.key]);
+  useMount(() => onFetchList(crudQuery));
+  useUpdateEffect(() => onFetchList(DEFAULT_QUERY), [props.history.location.key]);
+  useUpdateEffect(() => (!_.isEqual(crudQuery, DEFAULT_QUERY) ? onFetchList(crudQuery) : undefined), [crudQuery]);
 
   return (
     <PageCard
