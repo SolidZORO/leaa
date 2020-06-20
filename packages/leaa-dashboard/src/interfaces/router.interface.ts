@@ -1,8 +1,4 @@
-import React from 'react';
 import { RouteProps } from 'react-router-dom';
-import loadable, { LoadableComponent } from '@loadable/component';
-
-import { IPage } from '@leaa/dashboard/src/interfaces';
 
 export interface IRouteItem extends RouteProps {
   name: string;

@@ -3,7 +3,7 @@ import { Route } from 'react-router-dom';
 import { IRouteItem } from '@leaa/dashboard/src/interfaces';
 import { ALLOW_PERMISSION } from '@leaa/dashboard/src/constants';
 import { SuspenseFallback } from '@leaa/dashboard/src/components';
-import { lazy } from '@loadable/component';
+import loadable from '@loadable/component';
 
 const testWithoutLayoutRoutes: IRouteItem[] = [
   {
@@ -13,7 +13,7 @@ const testWithoutLayoutRoutes: IRouteItem[] = [
     // @ts-ignore
     // prettier-ignore
     // eslint-disable-next-line max-len
-    LazyComponent: lazy(() => import(/* webpackChunkName: 'TestAnyWithoutLayout' */ '../pages/TestWithoutLayout/TestAnyWithoutLayout/TestAnyWithoutLayout')),
+    LazyComponent: loadable(() => import(/* webpackChunkName: 'TestAnyWithoutLayout' */ '../pages/TestWithoutLayout/TestAnyWithoutLayout/TestAnyWithoutLayout')),
     canCreate: true,
     exact: true,
   },
@@ -21,6 +21,6 @@ const testWithoutLayoutRoutes: IRouteItem[] = [
 
 export const testWithoutLayoutRoute = testWithoutLayoutRoutes.map((item: any) => (
   <Route key={item.path} exact={item.exact} path={item.path}>
-    <React.Suspense fallback={<SuspenseFallback />}>{item.LazyComponent && <item.LazyComponent />}</React.Suspense>
+    {item.LazyComponent && <item.LazyComponent fallback={<SuspenseFallback />} />}
   </Route>
 ));
