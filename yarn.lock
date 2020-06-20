@@ -1124,7 +1124,7 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
-"@babel/runtime@^7.10.3":
+"@babel/runtime@^7.10.3", "@babel/runtime@^7.7.7":
   version "7.10.3"
   resolved "https://registry.npm.taobao.org/@babel/runtime/download/@babel/runtime-7.10.3.tgz?cache=0&sync_timestamp=1592601015947&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40babel%2Fruntime%2Fdownload%2F%40babel%2Fruntime-7.10.3.tgz#670d002655a7c366540c67f6fd3342cd09500364"
   integrity sha1-Zw0AJlWnw2ZUDGf2/TNCzQlQA2Q=
@@ -2299,6 +2299,14 @@
   dependencies:
     npmlog "^4.1.2"
     write-file-atomic "^2.3.0"
+
+"@loadable/component@^5.12.0":
+  version "5.12.0"
+  resolved "https://registry.npm.taobao.org/@loadable/component/download/@loadable/component-5.12.0.tgz#34d056d15f53dc08d04e9203cad6867cf4f7306c"
+  integrity sha1-NNBW0V9T3AjQTpIDytaGfPT3MGw=
+  dependencies:
+    "@babel/runtime" "^7.7.7"
+    hoist-non-react-statics "^3.3.1"
 
 "@marionebl/sander@^0.6.0":
   version "0.6.1"
@@ -7646,10 +7654,10 @@ eslint-visitor-keys@^1.0.0, eslint-visitor-keys@^1.1.0, eslint-visitor-keys@^1.2
   resolved "https://registry.npm.taobao.org/eslint-visitor-keys/download/eslint-visitor-keys-1.2.0.tgz#74415ac884874495f78ec2a97349525344c981fa"
   integrity sha1-dEFayISHRJX3jsKpc0lSU0TJgfo=
 
-eslint@^7.3.0:
-  version "7.3.0"
-  resolved "https://registry.npm.taobao.org/eslint/download/eslint-7.3.0.tgz#f9f1fc3dc1227985d0db88769f2bbac7b4b875d7"
-  integrity sha1-+fH8PcEieYXQ24h2nyu6x7S4ddc=
+eslint@7.2.0:
+  version "7.2.0"
+  resolved "https://registry.npm.taobao.org/eslint/download/eslint-7.2.0.tgz#d41b2e47804b30dbabb093a967fb283d560082e6"
+  integrity sha1-1BsuR4BLMNursJOpZ/soPVYAguY=
   dependencies:
     "@babel/code-frame" "^7.0.0"
     ajv "^6.10.0"
@@ -7657,7 +7665,6 @@ eslint@^7.3.0:
     cross-spawn "^7.0.2"
     debug "^4.0.1"
     doctrine "^3.0.0"
-    enquirer "^2.3.5"
     eslint-scope "^5.1.0"
     eslint-utils "^2.0.0"
     eslint-visitor-keys "^1.2.0"
@@ -7671,6 +7678,7 @@ eslint@^7.3.0:
     ignore "^4.0.6"
     import-fresh "^3.0.0"
     imurmurhash "^0.1.4"
+    inquirer "^7.0.0"
     is-glob "^4.0.0"
     js-yaml "^3.13.1"
     json-stable-stringify-without-jsonify "^1.0.1"
@@ -9039,7 +9047,7 @@ hoist-non-react-statics@^2.5.5:
   resolved "https://registry.npm.taobao.org/hoist-non-react-statics/download/hoist-non-react-statics-2.5.5.tgz#c5903cf409c0dfd908f388e619d86b9c1174cb47"
   integrity sha1-xZA89AnA39kI84jmGdhrnBF0y0c=
 
-hoist-non-react-statics@^3.1.0, hoist-non-react-statics@^3.3.0, hoist-non-react-statics@^3.3.2:
+hoist-non-react-statics@^3.1.0, hoist-non-react-statics@^3.3.0, hoist-non-react-statics@^3.3.1, hoist-non-react-statics@^3.3.2:
   version "3.3.2"
   resolved "https://registry.npm.taobao.org/hoist-non-react-statics/download/hoist-non-react-statics-3.3.2.tgz#ece0acaf71d62c2969c2ec59feff42a4b1a85b45"
   integrity sha1-7OCsr3HWLClpwuxZ/v9CpLGoW0U=
@@ -9622,6 +9630,25 @@ inquirer@^6.2.0:
     rxjs "^6.4.0"
     string-width "^2.1.0"
     strip-ansi "^5.1.0"
+    through "^2.3.6"
+
+inquirer@^7.0.0:
+  version "7.2.0"
+  resolved "https://registry.npm.taobao.org/inquirer/download/inquirer-7.2.0.tgz?cache=0&sync_timestamp=1592184323964&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Finquirer%2Fdownload%2Finquirer-7.2.0.tgz#63ce99d823090de7eb420e4bb05e6f3449aa389a"
+  integrity sha1-Y86Z2CMJDefrQg5LsF5vNEmqOJo=
+  dependencies:
+    ansi-escapes "^4.2.1"
+    chalk "^3.0.0"
+    cli-cursor "^3.1.0"
+    cli-width "^2.0.0"
+    external-editor "^3.0.3"
+    figures "^3.0.0"
+    lodash "^4.17.15"
+    mute-stream "0.0.8"
+    run-async "^2.4.0"
+    rxjs "^6.5.3"
+    string-width "^4.1.0"
+    strip-ansi "^6.0.0"
     through "^2.3.6"
 
 insert-css@^2.0.0:
@@ -15130,7 +15157,7 @@ rtl-css-js@^1.9.0:
   dependencies:
     "@babel/runtime" "^7.1.2"
 
-run-async@^2.2.0:
+run-async@^2.2.0, run-async@^2.4.0:
   version "2.4.1"
   resolved "https://registry.npm.taobao.org/run-async/download/run-async-2.4.1.tgz#8440eccf99ea3e70bd409d49aab88e10c189a455"
   integrity sha1-hEDsz5nqPnC9QJ1JqriOEMGJpFU=
