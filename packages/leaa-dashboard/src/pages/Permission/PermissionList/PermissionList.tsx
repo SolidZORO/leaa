@@ -1,7 +1,8 @@
 import _ from 'lodash';
 import cx from 'classnames';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useMount, useUpdateEffect } from 'react-use';
 
 import { Permission } from '@leaa/api/src/entrys';
 import { envConfig } from '@leaa/dashboard/src/configs';
@@ -23,7 +24,6 @@ const API_PATH = 'permissions';
 
 export default (props: IPage) => {
   const { t } = useTranslation();
-  const [mounted, setMounted] = useState(false);
 
   const [crudQuery, setCrudQuery] = useState<ICrudListQueryParams>({
     ...DEFAULT_QUERY,
@@ -64,62 +64,34 @@ export default (props: IPage) => {
   /**
    * @ideaNotes
    *
-   * 为了能够让用户 F5 刷新后，能把页面之前所有状态都通过 URL load 回来，着实需要做蛮多事情，
-   * 而且下面几个 effect 还伴随着 react-hooks/exhaustive-deps 看起来有点复杂，我来说一下思路，为什么要这样写。
+   * 为了能够让用户 F5 刷新后，能把页面之前所有状态都通过 URL load 回来，着实需要做蛮多事情，我来说一下思路，为什么要这样写。
    *
-   * List 一般会有几种情况需要刷新数据 (非页面)
+   * List组件 一般会有几种情况需要刷新数据 (非页面)
    *
    * 1，第一次进来时 (Init)
    * 2，改变分页等常规操作时 (Normal)
    * 3，点击 Sidebar 时，刚好点中了当前 Page 的 Router，我点我自己，但 URL 没有变化 (Sidebar)
    */
 
-  // Init (1)
-  useEffect(() => {
-    if (mounted) return;
+  // 1️⃣ Init
+  // 组件 init 进来，先设定为已加载，然后 fetch 数据
+  useMount(() => onFetchList(crudQuery));
 
-    // 组件 init 进来，先设定为已加载，然后 fetch 数据
-    console.log('️1️⃣ Init');
-    setMounted(true);
-    onFetchList(crudQuery);
+  // useEffectOnce
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // 2️⃣ Normal
+  // 每次 `crudQuery` 有 effect 时都会执行的 fetch 数据，除了 组件 init 的时候（因为 useUpdateEffect 不在 useMount 执行）
+  // 后面那个 `!_.isEqual` 是什么意思呢？ 是因为 crudQuery 如果等于 DEFAULT_QUERY { page: 1, limit: 20 } 的情况下不体现在 URL :
+  //
+  // /permissions <---- equal ----> /permissions?page=1&limit=20
+  //
+  // 为什么不体现在 URL？因为我觉得没必要把默认参数也写出来，而且 react-router 跳到 /abc 还要再跳一次参数。
+  useUpdateEffect(() => (!_.isEqual(crudQuery, DEFAULT_QUERY) ? onFetchList(crudQuery) : undefined), [crudQuery]);
 
-  // Normal (2)
-  useEffect(() => {
-    if (!mounted) return;
-
-    // 每次 `crudQuery` 有 effect 时都会执行的 fetch 数据，除了 组件 init 的时候，因为这里有一个 if `mounted`
-    // 然后后面那个 `!_.isEqual` 是什么意思呢？
-    //
-    // 是应为 crudQuery 如果等于 DEFAULT_QUERY ({ page: 1, limit: 20 }) 的情况下，是不体现在 URL 的：
-    //
-    //                equal
-    // /permissions --------> /permissions?page=1&limit=20
-    //
-    // 为什么不体现在 URL？因为我觉得没必要把默认参数也写出来，而且 react-router 跳到 /abc 还要再跳一次参数～
-    //
-    if (!_.isEqual(crudQuery, DEFAULT_QUERY)) {
-      console.log('2️⃣ Normal');
-      onFetchList(crudQuery);
-    }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [crudQuery]);
-
-  // Sidebar (3)
-  useEffect(() => {
-    if (!mounted) return;
-
-    // 每次切换路由 (react-router)，无聊是从 /abc 切换到 /123 还是从 /abc 切换到 /abc， 其 `location.key` 都会发生变化
-    // 此 key 是 SPA 里为数不多可以用来当 effect 的值，最后用默认的 `DEFAULT_QUERY` 去 featch
-    // 因为已经 `mounted` 了，
-    console.log('3️⃣ Sidebar');
-    onFetchList(DEFAULT_QUERY);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.history.location.key]);
+  // 3️⃣ Sidebar
+  // 每次切换路由 (react-router)，无聊是从 /abc 切换到 /123 还是从 /abc 切换到 /abc， 其 `location.key` 都会发生变化，
+  // 此 key 是 SPA 里为数不多可以用来当 effect 的值，最后用默认的 `DEFAULT_QUERY` 去 featch。
+  useUpdateEffect(() => onFetchList(DEFAULT_QUERY), [props.history.location.key]);
 
   return (
     <PageCard

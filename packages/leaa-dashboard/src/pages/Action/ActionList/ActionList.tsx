@@ -1,8 +1,9 @@
 import _ from 'lodash';
 import cx from 'classnames';
 import { Link } from 'react-router-dom';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useMount, useUpdateEffect } from 'react-use';
 
 import { Action } from '@leaa/api/src/entrys';
 import { envConfig } from '@leaa/dashboard/src/configs';
@@ -25,7 +26,6 @@ const API_PATH = 'actions';
 
 export default (props: IPage) => {
   const { t } = useTranslation();
-  const [mounted, setMounted] = useState(false);
 
   const [crudQuery, setCrudQuery] = useState<ICrudListQueryParams>({
     ...DEFAULT_QUERY,
@@ -53,29 +53,9 @@ export default (props: IPage) => {
       .finally(() => setListLoading(false));
   };
 
-  useEffect(() => {
-    if (mounted) return;
-    setMounted(true);
-    onFetchList(crudQuery);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    if (!mounted) return;
-    if (!_.isEqual(crudQuery, DEFAULT_QUERY)) {
-      onFetchList(crudQuery);
-    }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [crudQuery]);
-
-  useEffect(() => {
-    if (!mounted) return;
-    onFetchList(DEFAULT_QUERY);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.history.location.key]);
+  useMount(() => onFetchList(crudQuery));
+  useUpdateEffect(() => (!_.isEqual(crudQuery, DEFAULT_QUERY) ? onFetchList(crudQuery) : undefined), [crudQuery]);
+  useUpdateEffect(() => onFetchList(DEFAULT_QUERY), [props.history.location.key]);
 
   return (
     <PageCard
