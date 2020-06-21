@@ -1,17 +1,15 @@
 import React from 'react';
-import _ from 'lodash';
 // @ts-ignore
 import NProgress from 'nprogress';
-// import { Spin } from 'antd';
 
 export const Spinner = () => {
   React.useEffect(() => {
-    const nStart = _.debounce(NProgress.start, 100);
-    nStart();
+    NProgress.set(0.1);
+    NProgress.start();
 
     return () => {
-      nStart.cancel();
       NProgress.done();
+      NProgress.remove();
     };
   }, []);
 

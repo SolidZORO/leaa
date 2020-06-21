@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import { lazy } from '@loadable/component';
+import lazy from '@loadable/component';
 
 import { IRouteItem, IPage } from '@leaa/dashboard/src/interfaces';
 import { ALLOW_PERMISSION } from '@leaa/dashboard/src/constants';
@@ -35,11 +35,7 @@ export const otherRoute = otherRoutes.map((item: IRouteItem) => (
   <Route key={item.path} exact path={item.path}>
     {item.LazyComponent && (
       <RootLayout
-        lazyComponent={(matchProps: IPage) => (
-          <React.Suspense fallback={<Spinner />}>
-            <item.LazyComponent {...matchProps} />
-          </React.Suspense>
-        )}
+        lazyComponent={(matchProps: IPage) => <item.LazyComponent {...matchProps} fallback={<Spinner />} />}
       />
     )}
   </Route>

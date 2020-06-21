@@ -1,8 +1,7 @@
 import _ from 'lodash';
 import React, { ReactNode } from 'react';
 import { Route } from 'react-router-dom';
-// import { lazy, LazyBoundary } from 'react-imported-component';
-import { lazy } from '@loadable/component';
+import lazy from '@loadable/component';
 
 import { IRouteItem, IPage } from '@leaa/dashboard/src/interfaces';
 import { ALLOW_PERMISSION } from '@leaa/dashboard/src/constants';
@@ -432,16 +431,10 @@ const parseRoutes = (routeList: IRouteItem[]) => {
 
     routerDom.push(
       <Route key={item.children ? `group-${item.name}` : item.path} exact={item.exact} path={item.path}>
-        {item.LazyComponent && (
-          <MasterLayout
-            route={item}
-            lazyComponent={(matchProps: IPage) => (
-              <React.Suspense fallback={<Spinner />}>
-                <item.LazyComponent {...matchProps} />
-              </React.Suspense>
-            )}
-          />
-        )}
+        <MasterLayout
+          route={item}
+          lazyComponent={(matchProps: IPage) => <item.LazyComponent {...matchProps} fallback={<Spinner />} />}
+        />
       </Route>,
     );
   });
