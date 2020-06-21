@@ -2,7 +2,7 @@ import React from 'react';
 import { RouteProps, RouteComponentProps } from 'react-router-dom';
 
 import { IRouteItem } from '@leaa/dashboard/src/interfaces';
-import { DefaultLayout } from '@leaa/dashboard/src/components';
+import { DefaultLayout } from '@leaa/dashboard/src/layouts';
 
 import '@leaa/dashboard/src/styles/global.less';
 

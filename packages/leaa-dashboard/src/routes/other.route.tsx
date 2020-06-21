@@ -6,7 +6,8 @@ import { ALLOW_PERMISSION, LOADABLE_DELAY } from '@leaa/dashboard/src/constants'
 import loadable from '@loadable/component';
 import pMinDelay from 'p-min-delay';
 
-import { DefaultLayout, SuspenseFallback } from '@leaa/dashboard/src/components';
+import { DefaultLayout } from '@leaa/dashboard/src/layouts';
+import { Spinner } from '@leaa/dashboard/src/components';
 
 const otherRoutes: IRouteItem[] = [
   {
@@ -25,7 +26,7 @@ export const otherRoute = otherRoutes.map((item: IRouteItem) => (
   <Route key={item.path} exact path={item.path}>
     <DefaultLayout
       component={(matchProps: IPage) => {
-        return item.LazyComponent && <item.LazyComponent {...matchProps} fallback={<SuspenseFallback />} />;
+        return item.LazyComponent && <item.LazyComponent {...matchProps} fallback={<Spinner />} />;
       }}
     />
   </Route>

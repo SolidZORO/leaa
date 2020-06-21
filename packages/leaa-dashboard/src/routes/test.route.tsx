@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 import { IRouteItem } from '@leaa/dashboard/src/interfaces';
-import { SuspenseFallback } from '@leaa/dashboard/src/components';
+import { Spinner } from '@leaa/dashboard/src/components';
 import { ALLOW_PERMISSION, LOADABLE_DELAY } from '@leaa/dashboard/src/constants';
 import loadable from '@loadable/component';
 import pMinDelay from 'p-min-delay';
@@ -27,6 +27,6 @@ const testWithoutLayoutRoutes: IRouteItem[] = [
 
 export const testWithoutLayoutRoute = testWithoutLayoutRoutes.map((item: any) => (
   <Route key={item.path} exact={item.exact} path={item.path}>
-    {item.LazyComponent && <item.LazyComponent fallback={<SuspenseFallback />} />}
+    {item.LazyComponent && <item.LazyComponent fallback={<Spinner />} />}
   </Route>
 ));

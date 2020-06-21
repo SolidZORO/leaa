@@ -3,4 +3,4 @@ import { Spin } from 'antd';
 
 import style from './style.module.less';
 
-export const SuspenseFallback = () => <Spin className={style['suspense-fallback-loader']} />;
+export const Spinner = () => <Spin className={style['suspense-fallback-loader']} />;

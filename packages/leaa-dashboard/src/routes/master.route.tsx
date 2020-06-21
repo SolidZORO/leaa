@@ -7,7 +7,8 @@ import pMinDelay from 'p-min-delay';
 import { IRouteItem, IPage } from '@leaa/dashboard/src/interfaces';
 import { ALLOW_PERMISSION, LOADABLE_DELAY } from '@leaa/dashboard/src/constants';
 
-import { MasterLayout, SuspenseFallback } from '@leaa/dashboard/src/components';
+import { Spinner } from '@leaa/dashboard/src/components';
+import { MasterLayout } from '@leaa/dashboard/src/layouts';
 import { isDebugMode } from '@leaa/dashboard/src/utils/debug.util';
 
 // TIPS: permission: 'ALLOW_PERMISSION' will be always display
@@ -517,7 +518,7 @@ const parseRoutes = (routeList: IRouteItem[]) => {
         <MasterLayout
           route={item}
           component={(matchProps: IPage) => {
-            return item.LazyComponent && <item.LazyComponent {...matchProps} fallback={<SuspenseFallback />} />;
+            return item.LazyComponent && <item.LazyComponent {...matchProps} fallback={<Spinner />} />;
           }}
         />
       </Route>,

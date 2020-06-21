@@ -5,7 +5,8 @@ import { ALLOW_PERMISSION, LOADABLE_DELAY } from '@leaa/dashboard/src/constants'
 import loadable from '@loadable/component';
 import pMinDelay from 'p-min-delay';
 
-import { AuthLayout, SuspenseFallback } from '@leaa/dashboard/src/components';
+import { Spinner } from '@leaa/dashboard/src/components';
+import { AuthLayout } from '@leaa/dashboard/src/layouts';
 
 export const authRoutes: IRouteItem[] = [
   {
@@ -25,7 +26,7 @@ export const authRoute = authRoutes.map((item: IRouteItem) => (
     <AuthLayout
       route={item}
       component={(matchProps: IPage) => {
-        return item.LazyComponent && <item.LazyComponent {...matchProps} fallback={<SuspenseFallback />} />;
+        return item.LazyComponent && <item.LazyComponent {...matchProps} fallback={<Spinner />} />;
       }}
     />
   </Route>

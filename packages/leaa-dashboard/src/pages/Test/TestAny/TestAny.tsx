@@ -7,7 +7,7 @@ import {
   HtmlMeta,
   SelectCategoryIdByTree,
   Rcon,
-  SuspenseFallback,
+  Spinner,
   TagSearchBox,
   SelectTagId,
 } from '@leaa/dashboard/src/components';
@@ -60,7 +60,7 @@ export default (props: IPage) => {
       <br />
       <br />
 
-      <SuspenseFallback />
+      <Spinner />
 
       <Rcon type="ri-time-line" />
     </div>
