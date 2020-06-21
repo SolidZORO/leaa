@@ -1,4 +1,5 @@
 export { Rcon } from './Rcon/Rcon';
+export { Spinner } from './Spinner/Spinner';
 export { HtmlMeta } from './HtmlMeta/HtmlMeta';
 export { BuildInfo } from './BuildInfo/BuildInfo';
 export { SubmitBar } from './SubmitBar/SubmitBar';
@@ -17,7 +18,6 @@ export { EntryInfoDate } from './EntryInfoDate/EntryInfoDate';
 export { AttachmentBox } from './AttachmentBox/AttachmentBox';
 export { RefreshSetting } from './RefreshSetting/RefreshSetting';
 export { SwitchLanguage } from './SwitchLanguage/SwitchLanguage';
-export { Spinner } from './Spinner/Spinner';
 export { AuthGithubButton } from './AuthGithubButton/AuthGithubButton';
 export { ConfirmDeleteButton } from './ConfirmDeleteButton/ConfirmDeleteButton';
 export { SelectCategoryIdByTree } from './SelectCategoryIdByTree/SelectCategoryIdByTree';

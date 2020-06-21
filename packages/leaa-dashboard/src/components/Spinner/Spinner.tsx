@@ -1,6 +1,20 @@
 import React from 'react';
-import { Spin } from 'antd';
+import _ from 'lodash';
+// @ts-ignore
+import NProgress from 'nprogress';
+// import { Spin } from 'antd';
 
-import style from './style.module.less';
+export const Spinner = () => {
+  React.useEffect(() => {
+    const nStart = _.debounce(NProgress.start, 100);
+    nStart();
 
-export const Spinner = () => <Spin className={style['suspense-fallback-loader']} />;
+    return () => {
+      nStart.cancel();
+      NProgress.done();
+    };
+  }, []);
+
+  return null;
+  // return <Spin className={style['suspense-fallback-loader']} />;
+};

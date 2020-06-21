@@ -12,6 +12,7 @@ import { history } from '@leaa/dashboard/src/libs';
 import { ErrorBoundary } from '@leaa/dashboard/src/components/ErrorBoundary/ErrorBoundary';
 import { RefreshflatPermissions } from '@leaa/dashboard/src/components/RefreshflatPermissions/RefreshflatPermissions';
 import { RefreshSetting } from '@leaa/dashboard/src/components/RefreshSetting/RefreshSetting';
+import { ProgressLoading } from '@leaa/dashboard/src/components/ProgressLoading/ProgressLoading';
 
 import { masterRoute, authRoute, otherRoute } from '@leaa/dashboard/src/routes';
 import { initStore, StoreProvider } from '@leaa/dashboard/src/stores';
