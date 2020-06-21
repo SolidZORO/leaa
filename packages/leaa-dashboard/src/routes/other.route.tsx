@@ -1,11 +1,10 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
+import { lazy } from '@loadable/component';
 
 import { IRouteItem, IPage } from '@leaa/dashboard/src/interfaces';
 import { ALLOW_PERMISSION } from '@leaa/dashboard/src/constants';
-import { lazy } from '@loadable/component';
-
-import { BaseLayout } from '@leaa/dashboard/src/layouts';
+import { RootLayout } from '@leaa/dashboard/src/layouts';
 import { Spinner } from '@leaa/dashboard/src/components';
 
 const otherRoutes: IRouteItem[] = [
@@ -34,12 +33,14 @@ const otherRoutes: IRouteItem[] = [
 
 export const otherRoute = otherRoutes.map((item: IRouteItem) => (
   <Route key={item.path} exact path={item.path}>
-    <BaseLayout
-      component={(matchProps: IPage) => (
-        <React.Suspense fallback={<Spinner />}>
-          {item.LazyComponent && <item.LazyComponent {...matchProps} />}
-        </React.Suspense>
-      )}
-    />
+    {item.LazyComponent && (
+      <RootLayout
+        lazyComponent={(matchProps: IPage) => (
+          <React.Suspense fallback={<Spinner />}>
+            <item.LazyComponent {...matchProps} />
+          </React.Suspense>
+        )}
+      />
+    )}
   </Route>
 ));

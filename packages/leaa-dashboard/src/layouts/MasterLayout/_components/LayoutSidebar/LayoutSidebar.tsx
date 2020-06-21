@@ -164,7 +164,7 @@ export const LayoutSidebar = (props: IProps) => {
     >
       <div className={style['logo-wrapper']}>
         <Link to="/">
-          <img src={LOGO_WHITE} alt="" width={40} />
+          <img src={LOGO_WHITE} alt="" className={style['logo-image']} />
         </Link>
       </div>
 

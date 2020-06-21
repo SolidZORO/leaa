@@ -45,6 +45,11 @@
   padding-left: 7px;
   color: @usermenu-name-color;
   transition: all 0.3s;
+  display: none !important;
+
+  @media (min-width: @screen-md) {
+    display: inline-block !important;
+  }
 }
 
 .usermenu-name-icon {

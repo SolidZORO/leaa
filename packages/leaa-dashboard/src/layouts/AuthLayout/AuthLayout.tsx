@@ -2,22 +2,22 @@ import React from 'react';
 import { RouteProps, RouteComponentProps } from 'react-router-dom';
 
 import { IRouteItem } from '@leaa/dashboard/src/interfaces';
-import { BaseLayout } from '@leaa/dashboard/src/layouts';
+import { RootLayout } from '@leaa/dashboard/src/layouts';
 
 import '@leaa/dashboard/src/styles/global.less';
 
 interface IProps extends RouteProps {
-  component: any;
+  lazyComponent: any;
   route: IRouteItem;
 }
 
 export const AuthLayout = (props: IProps) => {
   return (
-    <BaseLayout
-      component={(matchProps: RouteComponentProps) => {
+    <RootLayout
+      lazyComponent={(matchProps: RouteComponentProps) => {
         return (
           <div className="g-full-layout-wrapper">
-            <props.component {...matchProps} route={props.route} />
+            <props.lazyComponent {...matchProps} route={props.route} />
           </div>
         );
       }}

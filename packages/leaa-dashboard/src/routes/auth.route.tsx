@@ -20,13 +20,15 @@ export const authRoutes: IRouteItem[] = [
 
 export const authRoute = authRoutes.map((item: IRouteItem) => (
   <Route key={item.path} exact={item.exact} path={item.path}>
-    <AuthLayout
-      route={item}
-      component={(matchProps: IPage) => (
-        <React.Suspense fallback={<Spinner />}>
-          {item.LazyComponent && <item.LazyComponent {...matchProps} />}
-        </React.Suspense>
-      )}
-    />
+    {item.LazyComponent && (
+      <AuthLayout
+        route={item}
+        lazyComponent={(matchProps: IPage) => (
+          <React.Suspense fallback={<Spinner />}>
+            <item.LazyComponent {...matchProps} />
+          </React.Suspense>
+        )}
+      />
+    )}
   </Route>
 ));

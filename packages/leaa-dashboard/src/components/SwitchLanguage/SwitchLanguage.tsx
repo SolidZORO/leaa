@@ -49,21 +49,17 @@ export const SwitchLanguage = (props: IProps): JSX.Element => {
           arrowPointAtCenter
           placement={props.placement}
           overlayClassName={cx(style['switch-language-popover'], 'switch-language-popover')}
-          content={
-            <>
-              {langs.map((lang) => (
-                <Button
-                  key={lang}
-                  type="link"
-                  className={cx(style['lang-flag'], style[`lang-flag--${lang}`])}
-                  onClick={() => changeLanguage(lang)}
-                >
-                  {i18n.t(`_lang:lang-${lang}`)}
-                  {i18n.language === lang && <CheckCircleOutlined />}
-                </Button>
-              ))}
-            </>
-          }
+          content={langs.map((lang) => (
+            <Button
+              key={lang}
+              type="link"
+              className={cx(style['lang-flag'], style[`lang-flag--${lang}`])}
+              onClick={() => changeLanguage(lang)}
+            >
+              {i18n.t(`_lang:lang-${lang}`)}
+              {i18n.language === lang && <CheckCircleOutlined />}
+            </Button>
+          ))}
         >
           <div className={style['switch-language-button']}>
             <Button type="link" size="small">

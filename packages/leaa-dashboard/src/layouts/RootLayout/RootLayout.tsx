@@ -1,10 +1,10 @@
 import React from 'react';
 import { Route, RouteProps } from 'react-router-dom';
 
-interface IBaseLayoutParam extends RouteProps {
-  component: any;
+interface IRootLayoutParam extends RouteProps {
+  lazyComponent: any;
 }
 
-export const BaseLayout = ({ component: Component, ...rest }: IBaseLayoutParam) => (
+export const RootLayout = ({ lazyComponent: Component, ...rest }: IRootLayoutParam) => (
   <Route {...rest} render={(matchProps: RouteProps) => <Component {...matchProps} />} />
 );
