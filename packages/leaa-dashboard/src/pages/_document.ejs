@@ -6,8 +6,8 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="renderer" content="webkit">
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="keywords" content="<%= htmlWebpackPlugin.options.title %>,leaa,dashboard,leaa-dashboard" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <!--
   manifest.json provides metadata used when your web app is installed on a
   user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
@@ -17,8 +17,9 @@
   <script src="<%= htmlWebpackPlugin.options.__ENV_FILE__ %>?<%= htmlWebpackPlugin.options.version_hash %>"></script>
 </head>
 <body>
-<div id="app"></div>
-<script id="__BUILD_DATA__" type="application/json"><%= htmlWebpackPlugin.options.__BUILD_DATA__ %></script>
-<%= htmlWebpackPlugin.options.__ANALYTICS_CODE__ %>
+  <noscript>Out-of-the-box mid-stage front/design solution!</noscript>
+  <div id="app"></div>
+  <script id="__BUILD_DATA__" type="application/json"><%= htmlWebpackPlugin.options.__BUILD_DATA__ %></script>
+  <%= htmlWebpackPlugin.options.__ANALYTICS_CODE__ %>
 </body>
 </html>

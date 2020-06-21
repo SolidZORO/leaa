@@ -1,10 +1,10 @@
 import React from 'react';
 import { Route, RouteProps } from 'react-router-dom';
 
-interface IDefaultLayoutParam extends RouteProps {
+interface IBaseLayoutParam extends RouteProps {
   component: any;
 }
 
-export const DefaultLayout = ({ component: Component, ...rest }: IDefaultLayoutParam) => (
+export const BaseLayout = ({ component: Component, ...rest }: IBaseLayoutParam) => (
   <Route {...rest} render={(matchProps: RouteProps) => <Component {...matchProps} />} />
 );

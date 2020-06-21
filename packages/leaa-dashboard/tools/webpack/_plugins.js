@@ -39,7 +39,7 @@ const htmlWebpackPluginOption = {
   title: `${WPCONST.SITE_NAME || '-'}`,
   manifest: `${WPCONST.OUTPUT_PUBLIC_PATH}manifest.json`,
   filename: `${WPCONST.BUILD_DIR}/index.html`,
-  template: `${WPCONST.VIEWS_DIR}/index.ejs`,
+  template: `${WPCONST.PAGES_DIR}/_document.ejs`,
   favicon: `${WPCONST.SRC_DIR}/assets/favicons/favicon.ico`,
   inject: true,
   hash: true,

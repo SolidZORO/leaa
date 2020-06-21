@@ -13,7 +13,7 @@ import { ErrorBoundary } from '@leaa/dashboard/src/components/ErrorBoundary/Erro
 import { RefreshflatPermissions } from '@leaa/dashboard/src/components/RefreshflatPermissions/RefreshflatPermissions';
 import { RefreshSetting } from '@leaa/dashboard/src/components/RefreshSetting/RefreshSetting';
 
-import { masterRoute, authRoute, otherRoute, testWithoutLayoutRoute } from '@leaa/dashboard/src/routes';
+import { masterRoute, authRoute, otherRoute } from '@leaa/dashboard/src/routes';
 import { initStore, StoreProvider } from '@leaa/dashboard/src/stores';
 import i18n from '@leaa/dashboard/src/i18n';
 import { envConfig } from '@leaa/dashboard/src/configs';
@@ -47,7 +47,6 @@ export const App = (): JSX.Element => {
                     <Switch>
                       {authRoute}
                       {masterRoute}
-                      {testWithoutLayoutRoute}
                       {otherRoute}
                     </Switch>
                   </Router>

@@ -6,7 +6,7 @@ import { LoadingOutlined } from '@ant-design/icons';
 
 import { transRouterPathToClassName, checkAuthIsAvailably } from '@leaa/dashboard/src/utils';
 import { IRouteItem } from '@leaa/dashboard/src/interfaces';
-import { DefaultLayout } from '@leaa/dashboard/src/layouts';
+import { BaseLayout } from '@leaa/dashboard/src/layouts';
 import { history } from '@leaa/dashboard/src/libs';
 import '@leaa/dashboard/src/styles/global.less';
 
@@ -37,7 +37,7 @@ export const MasterLayout = (props: IProps) => {
   }, []);
 
   return (
-    <DefaultLayout
+    <BaseLayout
       component={(matchProps: RouteComponentProps) => {
         const pageClassName =
           matchProps && matchProps.match.url ? `page-${transRouterPathToClassName(matchProps.match.url)}` : null;

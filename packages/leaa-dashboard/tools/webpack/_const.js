@@ -76,6 +76,7 @@ WPCONST.SRC_DIR = path.join(WPCONST.ROOT_DIR, 'src');
 WPCONST.PUBLIC_DIR = path.join(WPCONST.ROOT_DIR, 'public');
 WPCONST.NODEMODULES_DIR = path.join(WPCONST.ROOT_DIR, 'node_modules');
 WPCONST.VIEWS_DIR = path.join(WPCONST.SRC_DIR, 'views');
+WPCONST.PAGES_DIR = path.join(WPCONST.SRC_DIR, 'pages');
 
 //
 // BUILD PATH

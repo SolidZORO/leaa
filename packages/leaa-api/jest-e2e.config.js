@@ -18,6 +18,7 @@ module.exports = {
   //
   testRegex: '.*\\.e2e-(spec|test).(t|j)s$',
   collectCoverageFrom: [
+    '__test__/**/*.{js,jsx,tsx,ts}',
     'test/**/*.{js,jsx,tsx,ts}',
     // 'src/**/*.{js,jsx,tsx,ts}',
     '!**/node_modules/**',

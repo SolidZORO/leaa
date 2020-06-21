@@ -2,7 +2,7 @@ import React from 'react';
 import { RouteProps, RouteComponentProps } from 'react-router-dom';
 
 import { IRouteItem } from '@leaa/dashboard/src/interfaces';
-import { DefaultLayout } from '@leaa/dashboard/src/layouts';
+import { BaseLayout } from '@leaa/dashboard/src/layouts';
 
 import '@leaa/dashboard/src/styles/global.less';
 
@@ -13,7 +13,7 @@ interface IProps extends RouteProps {
 
 export const AuthLayout = (props: IProps) => {
   return (
-    <DefaultLayout
+    <BaseLayout
       component={(matchProps: RouteComponentProps) => {
         return (
           <div className="g-full-layout-wrapper">
