@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.5.3](https://github.com/SolidZORO/leaa/compare/v3.5.2...v3.5.3) (2020-06-21)
+
+
+### Bug Fixes
+
+* temp downgrading eslint to v7.2.0 ([a1e5c31](https://github.com/SolidZORO/leaa/commit/a1e5c31f5c56ce0a6cb862f2a37c3957af3ad22a))
+
+
+### Features
+
+* add a pMinDelay load ([977c2d2](https://github.com/SolidZORO/leaa/commit/977c2d2f5f4fba164edadd93451a5c617b045d8b))
+* dashboard header top add `nprogress` Loading ([3815ca8](https://github.com/SolidZORO/leaa/commit/3815ca89c9d5b981e0b1ff5fc85f18ecea85f051))
+
+
+### Performance Improvements
+
+* react-router perf ([a2b97f3](https://github.com/SolidZORO/leaa/commit/a2b97f357c8e4d65243c7bf5b942e6cd016de77e))
+* react-router use `lazy` from '@loadable/component' ([58e306d](https://github.com/SolidZORO/leaa/commit/58e306d3e38034d8f34fa7312563a4736b04ad30))
+
+
+
+
+
 ## [3.5.2](https://github.com/SolidZORO/leaa/compare/v3.5.1...v3.5.2) (2020-06-20)
 
 
