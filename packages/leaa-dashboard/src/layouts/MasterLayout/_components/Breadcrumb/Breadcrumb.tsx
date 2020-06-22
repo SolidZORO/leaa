@@ -1,100 +1,52 @@
+import _ from 'lodash';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Breadcrumb as AntdBreadcrumb } from 'antd';
-import { Route } from 'antd/es/breadcrumb/Breadcrumb';
-
 import { Link, RouteComponentProps } from 'react-router-dom';
+import { Breadcrumb } from 'antd';
 
 import { Rcon } from '@leaa/dashboard/src/components';
 import { flateMasterRoutes } from '@leaa/dashboard/src/routes/master.route';
 
 import style from './style.module.less';
 
-interface IBreadcrumb {
-  path: string;
-  breadcrumbName: string;
-  children?: Omit<Route, 'children'>[];
-}
-
 interface IProps extends RouteComponentProps {}
 
-export const Breadcrumb = (props: IProps) => {
+const routesTransBreadcrumbs = (rs: any) =>
+  rs.reduce((acc: any, cur: any) => {
+    acc[cur.path] = cur.namei18n || '';
+
+    return acc;
+  }, {});
+
+const breadcrumbs = routesTransBreadcrumbs(flateMasterRoutes);
+const breadcrumbHome = _.pick(breadcrumbs, '/');
+
+export const NavBreadcrumb = (props: IProps) => {
   const { t } = useTranslation();
-  const spaceToSlash = (path: string) => (path === '' ? '/' : path);
+  const { location } = props;
 
-  const urlPath = (props && props.match && props.match.path.replace(/(.*?)\?.*/, '$1')) || '';
+  const pathSnippets = location.pathname.split('/').filter((i) => i);
+  const extraBreadcrumbItems = pathSnippets.map((k, i) => {
+    const url = `/${pathSnippets.slice(0, i + 1).join('/')}`;
 
-  let urlPathList = urlPath.split('/');
-
-  // specialties Home
-  if (urlPathList && urlPathList[0] === '' && urlPathList[1] === '') {
-    urlPathList = [''];
-  }
-
-  const breadcrumbs: IBreadcrumb[] = [];
-
-  urlPathList.forEach((path, i) => {
-    // join current path with urlPathList[index]
-    // e.g. ['', 'news', '99'].slice(0, 2)
-    //       ^    ^^^^  ------------------> ['', 'news'] --> '/news'
-    const currentPath = spaceToSlash(urlPathList.slice(0, i + 1).join('/'));
-
-    // find footerMenu by flatMenuList
-    const currentMenu = flateMasterRoutes.find((m) => m.path === currentPath);
-
-    // not found name, use urlPathList[last]
-    // e.g. /news/101, urlPathList[last] = 101
-    // let breadcrumbName = (currentMenu && t(`${currentMenu.namei18n}`)) || urlPathList[i];
-    let breadcrumbName = urlPathList[i];
-
-    if (currentMenu && currentMenu.namei18n) {
-      breadcrumbName = t(`${currentMenu.namei18n}`);
-    } else if (currentMenu && currentMenu.name) {
-      breadcrumbName = currentMenu.name;
-    }
-
-    if (breadcrumbName && path === '') {
-      breadcrumbs.push({ path: spaceToSlash(path), breadcrumbName, children: [] });
-    } else if (breadcrumbName) {
-      breadcrumbs.push({ path: currentPath, breadcrumbName, children: [] });
-    }
+    return (
+      <Breadcrumb.Item key={url}>
+        <Link to={url}>{t(breadcrumbs[url])}</Link>
+      </Breadcrumb.Item>
+    );
   });
 
-  const itemRender = (
-    route: IBreadcrumb,
-    params: Record<string, unknown>,
-    routes: IBreadcrumb[],
-    // paths: string[],
-  ) => {
-    const homeBreadcrumbItem = routes.indexOf(route) === 0;
-    const lastBreadcrumbItem = routes.indexOf(route) === routes.length - 1;
-
-    if (homeBreadcrumbItem && routes.length === 1) {
-      return (
-        <Link to={route.path}>
-          <Rcon type="ri-home-5-line" /> {route.breadcrumbName}
-        </Link>
-      );
-    }
-
-    if (homeBreadcrumbItem) {
-      return (
-        <Link to={route.path}>
-          <Rcon type="ri-home-5-line" />
-        </Link>
-      );
-    }
-
-    if (lastBreadcrumbItem) {
-      return <em>{route.breadcrumbName}</em>;
-    }
-
-    return <Link to={route.path}>{route.breadcrumbName}</Link>;
-  };
+  const breadcrumbItems = [
+    <Breadcrumb.Item key={`${Object.keys(breadcrumbHome)}`}>
+      <Link to={`${Object.keys(breadcrumbHome)}`}>
+        <Rcon type="ri-home-5-line" /> {t(Object.values(breadcrumbHome))}
+      </Link>
+    </Breadcrumb.Item>,
+  ].concat(extraBreadcrumbItems);
 
   return (
     <div className={style['breadcrumb-wrapper']}>
-      <AntdBreadcrumb itemRender={itemRender} routes={breadcrumbs} />
+      <Breadcrumb>{breadcrumbItems}</Breadcrumb>
     </div>
   );
 };

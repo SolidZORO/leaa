@@ -1,17 +1,16 @@
 import React, { useEffect } from 'react';
 import cx from 'classnames';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { RouteComponentProps, Switch } from 'react-router-dom';
 import { Layout, Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 
 import { transRouterPathToClassName, checkAuthIsAvailably } from '@leaa/dashboard/src/utils';
-import { IRouteItem } from '@leaa/dashboard/src/interfaces';
 import { history } from '@leaa/dashboard/src/libs';
 import '@leaa/dashboard/src/styles/global.less';
+import { masterRoute } from '@leaa/dashboard/src/routes';
 
 import { LayoutHeader } from './_components/LayoutHeader/LayoutHeader';
 import { LayoutSidebar } from './_components/LayoutSidebar/LayoutSidebar';
-import { LayoutContent } from './_components/LayoutContent/LayoutContent';
 
 import style from './style.module.less';
 
@@ -19,17 +18,13 @@ import style from './style.module.less';
 Spin.setDefaultIndicator(<LoadingOutlined spin />);
 
 interface IProps extends RouteComponentProps {
-  lazyComponent: any;
-  route: IRouteItem;
   disableSidebar?: boolean;
   disableHeader?: boolean;
-  onCallbackSidebarTarget?: (status: boolean) => void;
+  onCallbackSidebarTarget?: () => void;
 }
 
 // export const MasterLayoutInner = (props: IProps) => {
-export const MasterLayout = withRouter((props: IProps) => {
-  console.log('MSTER', props);
-
+export const MasterLayout = (props: IProps) => {
   useEffect(() => {
     const authIsAvailably = checkAuthIsAvailably();
 
@@ -38,7 +33,6 @@ export const MasterLayout = withRouter((props: IProps) => {
     }
   }, []);
 
-  console.log(props);
   const pageClassName = props && props.match.url ? `page-${transRouterPathToClassName(props.match.url)}` : null;
 
   return (
@@ -52,9 +46,12 @@ export const MasterLayout = withRouter((props: IProps) => {
 
         <Layout>
           {!props.disableHeader && <LayoutHeader {...props} />}
-          <LayoutContent />
+
+          <Layout.Content className={style['full-layout-content']}>
+            <Switch>{masterRoute}</Switch>
+          </Layout.Content>
         </Layout>
       </Layout>
     </div>
   );
-});
+};

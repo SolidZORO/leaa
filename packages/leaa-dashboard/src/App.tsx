@@ -11,10 +11,11 @@ import { ErrorBoundary } from '@leaa/dashboard/src/components/ErrorBoundary/Erro
 import { RefreshflatPermissions } from '@leaa/dashboard/src/components/RefreshflatPermissions/RefreshflatPermissions';
 import { RefreshSetting } from '@leaa/dashboard/src/components/RefreshSetting/RefreshSetting';
 
-import { Routes } from '@leaa/dashboard/src/routes';
 import { initStore, StoreProvider } from '@leaa/dashboard/src/stores';
 import i18n from '@leaa/dashboard/src/i18n';
 import { envConfig } from '@leaa/dashboard/src/configs';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { MasterLayout } from '@leaa/dashboard/src/layouts';
 
 const store = initStore();
 
@@ -41,7 +42,11 @@ export const App = (): JSX.Element => {
             <I18nextProvider i18n={i18n}>
               <RefreshSetting>
                 <RefreshflatPermissions>
-                  <Routes />
+                  <Router>
+                    <Switch>
+                      <Route component={MasterLayout} />
+                    </Switch>
+                  </Router>
                 </RefreshflatPermissions>
               </RefreshSetting>
             </I18nextProvider>

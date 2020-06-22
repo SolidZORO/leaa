@@ -5,19 +5,20 @@ import { RouteComponentProps } from 'react-router-dom';
 
 import { SwitchLanguage } from '@leaa/dashboard/src/components';
 
-import { Breadcrumb } from '../Breadcrumb/Breadcrumb';
+import { NavBreadcrumb } from '../Breadcrumb/Breadcrumb';
 import { UserMenu } from '../UserMenu/UserMenu';
 
 import style from './style.module.less';
 
 interface IProps extends RouteComponentProps {
-  onCallbackSidebarTarget?: () => void;
+  disableSidebar?: boolean;
+  disableHeader?: boolean;
 }
 
 export const LayoutHeader = (props: IProps) => (
   <Layout.Header className={style['full-layout-header']}>
     <div className={cx(style['full-layout-breadcrumb'], 'g-full-layout-breadcrumb')}>
-      <Breadcrumb {...props} />
+      <NavBreadcrumb {...props} />
     </div>
 
     <div className={cx(style['full-layout-toolsbar'], 'g-full-layout-toolsbar')}>

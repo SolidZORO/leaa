@@ -296,16 +296,16 @@ export const masterRoutes: IRouteItem[] = [
   //   exact: true,
   // },
   // //
-  // // ---- Home ----
-  // //
-  // {
-  //   name: 'Home',
-  //   namei18n: '_route:home',
-  //   permission: ALLOW_PERMISSION,
-  //   path: '/',
-  //   LazyComponent: lazy(() => import(/* webpackChunkName: 'Home' */ '../pages/Home/Home/Home')),
-  //   exact: true,
-  // },
+  // ---- Home ----
+  //
+  {
+    name: 'Home',
+    namei18n: '_route:home',
+    permission: ALLOW_PERMISSION,
+    path: '/',
+    LazyComponent: lazy(() => import(/* webpackChunkName: 'Home' */ '../pages/Home/Home/Home')),
+    exact: true,
+  },
   // //
   // // -------- [Data Group] --------
   // //
@@ -433,7 +433,8 @@ const parseRoutes = (routeList: IRouteItem[]) => {
       <Route
         {...route}
         key={route.children ? `group-${route.name}` : route?.path}
-        render={(props) => <route.LazyComponent {...props} route={route} fallback={<Spinner />} />}
+        // eslint-disable-next-line react/no-children-prop
+        children={(props) => <route.LazyComponent {...props} route={route} fallback={<Spinner />} />}
       />,
     );
   });
@@ -458,5 +459,5 @@ const parseFlatRoutes = (routeList: IRouteItem[], groupName?: string) => {
 };
 
 export const masterRoute = parseRoutes(masterRoutes);
-export const flateMasterRoutes = parseFlatRoutes(masterRoutes);
+export const flateMasterRoutes: IRouteItem[] = parseFlatRoutes(masterRoutes);
 // export const flateMasterRoutes = [];
