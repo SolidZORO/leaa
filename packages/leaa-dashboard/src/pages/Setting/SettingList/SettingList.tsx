@@ -176,7 +176,7 @@ export default (props: IPage) => {
       title={
         <span>
           <Rcon type={props.route.icon} />
-          <strong>{t(`${props.route.namei18n}`)}</strong>
+          <strong>{t(`${props.route?.namei18n}`)}</strong>
           <Button
             className={cx('g-page-card-create-button', style['create-button'])}
             onClick={onOpenCreateSetting}
@@ -189,7 +189,7 @@ export default (props: IPage) => {
       className={style['wapper']}
       loading={listLoading}
     >
-      <HtmlMeta title={t(`${props.route.namei18n}`)} />
+      <HtmlMeta title={t(`${props.route?.namei18n}`)} />
 
       <SettingListForm ref={settingsFormRef} items={list} onClickLabelEditCallback={onOpenUpdateSetting} />
 

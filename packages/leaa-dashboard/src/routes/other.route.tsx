@@ -32,11 +32,14 @@ const otherRoutes: IRouteItem[] = [
 ];
 
 export const otherRoute = otherRoutes.map((item: IRouteItem) => (
-  <Route key={item.path} exact path={item.path}>
-    {item.LazyComponent && (
+  <Route
+    key={item.path}
+    exact
+    path={item.path}
+    render={() => (
       <RootLayout
         lazyComponent={(matchProps: IPage) => <item.LazyComponent {...matchProps} fallback={<Spinner />} />}
       />
     )}
-  </Route>
+  />
 ));

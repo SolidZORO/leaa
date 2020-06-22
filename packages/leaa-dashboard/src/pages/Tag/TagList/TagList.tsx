@@ -54,6 +54,8 @@ export default (props: IPage) => {
   useUpdateEffect(() => onFetchList(DEFAULT_QUERY), [props.history.location.key]);
   useUpdateEffect(() => (!_.isEqual(crudQuery, DEFAULT_QUERY) ? onFetchList(crudQuery) : undefined), [crudQuery]);
 
+  // return <p>taglist{JSON.stringify(props)}</p>;
+
   return (
     <PageCard
       route={props.route}
@@ -88,7 +90,7 @@ export default (props: IPage) => {
       className={style['wapper']}
       loading={listLoading}
     >
-      <HtmlMeta title={t(`${props.route.namei18n}`)} />
+      <HtmlMeta title={t(`${props.route?.namei18n}`)} />
 
       {list?.data && (
         <TableCard

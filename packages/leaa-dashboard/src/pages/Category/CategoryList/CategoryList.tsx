@@ -42,7 +42,7 @@ export default (props: IPage) => {
 
   return (
     <PageCard route={props.route} title="@LIST" className={style['wapper']} loading={treeLoading}>
-      <HtmlMeta title={t(`${props.route.namei18n}`)} />
+      <HtmlMeta title={t(`${props.route?.namei18n}`)} />
 
       <div style={{ height: '100%', overflow: 'auto' }}>
         <SortableTree

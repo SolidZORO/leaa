@@ -30,7 +30,7 @@ export default (props: IPage) => {
 
   return (
     <div>
-      <HtmlMeta title={t(`${props.route.namei18n}`)} />
+      <HtmlMeta title={t(`${props.route?.namei18n}`)} />
 
       <h2>Auth Github</h2>
       <GithubAuthButton />

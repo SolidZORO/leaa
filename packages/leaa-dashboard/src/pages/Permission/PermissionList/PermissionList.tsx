@@ -135,7 +135,7 @@ export default (props: IPage) => {
       className={style['wapper']}
       loading={listLoading}
     >
-      <HtmlMeta title={t(`${props.route.namei18n}`)} />
+      <HtmlMeta title={t(`${props.route?.namei18n}`)} />
 
       {list?.data && (
         <TableCard

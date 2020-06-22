@@ -48,7 +48,7 @@ export default (props: IPage) => {
 
   return (
     <PageCard route={props.route} title="@CREATE" className={style['wapper']} loading={submitLoading}>
-      <HtmlMeta title={t(`${props.route.namei18n}`)} />
+      <HtmlMeta title={t(`${props.route?.namei18n}`)} />
 
       <ArticleInfoForm ref={infoFormRef} />
 

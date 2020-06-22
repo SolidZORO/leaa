@@ -97,7 +97,7 @@ export default (props: IPage) => {
 
   return (
     <PageCard route={props.route} title="@EDIT" className={style['wapper']} loading={itemLoading || submitLoading}>
-      <HtmlMeta title={t(`${props.route.namei18n}`)} />
+      <HtmlMeta title={t(`${props.route?.namei18n}`)} />
 
       <RoleInfoForm item={item} loading={itemLoading} ref={infoFormRef} />
 

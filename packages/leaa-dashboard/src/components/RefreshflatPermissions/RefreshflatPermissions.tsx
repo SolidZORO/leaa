@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React from 'react';
-import { History } from 'history';
+import { history } from '@leaa/dashboard/src/libs';
 import { LOGOUT_REDIRECT_URL } from '@leaa/dashboard/src/constants';
 import { setAuthInfo, getAuthToken, removeAuth, checkAuthIsAvailably, ajax, errorMsg } from '@leaa/dashboard/src/utils';
 import { envConfig } from '@leaa/dashboard/src/configs';
@@ -9,7 +9,6 @@ import { User } from '@leaa/api/src/entrys';
 
 interface IProps {
   children: React.ReactNode;
-  history: History;
 }
 
 export const RefreshflatPermissions = (props: IProps) => {
@@ -27,7 +26,7 @@ export const RefreshflatPermissions = (props: IProps) => {
         if (e?.message === 'Network Error') return errorMsg(e.message);
         if (e?.message) errorMsg(e.message);
 
-        if (removeAuth()) return props.history.push(LOGOUT_REDIRECT_URL);
+        if (removeAuth()) return history.push(LOGOUT_REDIRECT_URL);
 
         return false;
       });
