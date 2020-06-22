@@ -2,12 +2,11 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import lazy from '@loadable/component';
 
-import { IRouteItem, IPage } from '@leaa/dashboard/src/interfaces';
+import { IRouteItem } from '@leaa/dashboard/src/interfaces';
 import { ALLOW_PERMISSION } from '@leaa/dashboard/src/constants';
-import { RootLayout } from '@leaa/dashboard/src/layouts';
 import { Spinner } from '@leaa/dashboard/src/components';
 
-const otherRoutes: IRouteItem[] = [
+const testRouteList: IRouteItem[] = [
   {
     name: 'TestAnyWithoutLayout',
     path: '/test-any-without-layout',
@@ -21,25 +20,21 @@ const otherRoutes: IRouteItem[] = [
     canCreate: true,
     exact: true,
   },
-  {
-    name: '*',
-    path: '/*',
-    permission: ALLOW_PERMISSION,
-    LazyComponent: lazy(() => import(/* webpackChunkName: 'NotFound' */ '../pages/NotFound/NotFound/NotFound')),
-    canCreate: true,
-    exact: true,
-  },
+  // {
+  //   name: '*',
+  //   path: '/*',
+  //   permission: ALLOW_PERMISSION,
+  //   LazyComponent: lazy(() => import(/* webpackChunkName: 'NotFound' */ '../pages/NotFound/NotFound/NotFound')),
+  //   canCreate: true,
+  //   exact: true,
+  // },
 ];
 
-export const otherRoute = otherRoutes.map((item: IRouteItem) => (
+export const testRoute = testRouteList.map((route: IRouteItem) => (
   <Route
-    key={item.path}
-    exact
-    path={item.path}
-    render={() => (
-      <RootLayout
-        lazyComponent={(matchProps: IPage) => <item.LazyComponent {...matchProps} fallback={<Spinner />} />}
-      />
-    )}
+    {...route}
+    key={route.path}
+    // eslint-disable-next-line react/no-children-prop
+    children={(props) => <route.LazyComponent {...props} route={route} fallback={<Spinner />} />}
   />
 ));

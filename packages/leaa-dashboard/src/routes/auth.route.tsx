@@ -1,33 +1,27 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import { IRouteItem, IPage } from '@leaa/dashboard/src/interfaces';
+import { IRouteItem } from '@leaa/dashboard/src/interfaces';
 import { ALLOW_PERMISSION } from '@leaa/dashboard/src/constants';
-import { lazy } from '@loadable/component';
+import lazy from '@loadable/component';
 
 import { Spinner } from '@leaa/dashboard/src/components';
-import { AuthLayout } from '@leaa/dashboard/src/layouts';
 
-export const authRoutes: IRouteItem[] = [
+export const authRouteList: IRouteItem[] = [
   {
     name: 'Login',
     namei18n: '_route:login',
     permission: ALLOW_PERMISSION,
     path: '/login',
     LazyComponent: lazy(() => import(/* webpackChunkName: 'Login' */ '../pages/Auth/Login/Login')),
-    exact: true,
+    // exact: true,
   },
 ];
 
-export const authRoute = authRoutes.map((item: IRouteItem) => (
+export const authRoute = authRouteList.map((route: IRouteItem) => (
   <Route
-    key={item.path}
-    exact={item.exact}
-    path={item.path}
-    render={() => (
-      <AuthLayout
-        route={item}
-        lazyComponent={(matchProps: IPage) => <item.LazyComponent {...matchProps} fallback={<Spinner />} />}
-      />
-    )}
+    {...route}
+    key={route.children ? `group-${route.name}` : route?.path}
+    // eslint-disable-next-line react/no-children-prop
+    children={(props) => <route.LazyComponent {...props} route={route} fallback={<Spinner />} />}
   />
 ));

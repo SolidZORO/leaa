@@ -1,11 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import cx from 'classnames';
-import { RouteComponentProps, Switch } from 'react-router-dom';
+import { RouteComponentProps, Switch, Redirect } from 'react-router-dom';
 import { Layout, Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 
 import { transRouterPathToClassName, checkAuthIsAvailably } from '@leaa/dashboard/src/utils';
-import { history } from '@leaa/dashboard/src/libs';
 import '@leaa/dashboard/src/styles/global.less';
 import { masterRoute } from '@leaa/dashboard/src/routes';
 
@@ -23,17 +22,12 @@ interface IProps extends RouteComponentProps {
   onCallbackSidebarTarget?: () => void;
 }
 
-// export const MasterLayoutInner = (props: IProps) => {
 export const MasterLayout = (props: IProps) => {
-  useEffect(() => {
-    const authIsAvailably = checkAuthIsAvailably();
+  if (!checkAuthIsAvailably()) return <Redirect to={`/login?redirect=${window.location.pathname}`} />;
 
-    if (!authIsAvailably) {
-      history.push(`/login?redirect=${window.location.pathname}`);
-    }
-  }, []);
-
-  const pageClassName = props && props.match.url ? `page-${transRouterPathToClassName(props.match.url)}` : null;
+  const pageClassName = props.location?.pathname
+    ? `page-${transRouterPathToClassName(props.location?.pathname)}`
+    : null;
 
   return (
     <div
@@ -48,7 +42,10 @@ export const MasterLayout = (props: IProps) => {
           {!props.disableHeader && <LayoutHeader {...props} />}
 
           <Layout.Content className={style['full-layout-content']}>
-            <Switch>{masterRoute}</Switch>
+            <Switch>
+              {masterRoute}
+              <Redirect to="/404" />
+            </Switch>
           </Layout.Content>
         </Layout>
       </Layout>

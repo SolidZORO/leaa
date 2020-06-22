@@ -19,10 +19,13 @@ export function getUrlPath(w?: Window): string {
  * /articles/create -> articles-create
  */
 export function transRouterPathToClassName(routerPath: string): string {
-  return routerPath
-    .replace(/^\//, '') //         remove ^/
-    .replace(/\/\d+/g, '-item') // replace /444  ->  -item
-    .replace(/\//g, '-'); //       replace all /  ->  -
+  return (
+    routerPath
+      .replace(/^\//, '') //            remove ^/
+      // .replace(/\/\d+/g, '-item') // replace /444  ->  -item
+      .replace(/\/[\w]{8}-[\w]{4}-[\w]{4}-[\w]{4}-[\w]{12}/g, '-item') // replace /444  ->  -item
+      .replace(/\//g, '-') //           replace all /  ->  -
+  );
 }
 
 interface IMergeParamToUrlQuery {

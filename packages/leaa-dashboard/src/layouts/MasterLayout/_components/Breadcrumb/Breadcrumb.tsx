@@ -23,10 +23,9 @@ const breadcrumbHome = _.pick(breadcrumbs, '/');
 
 export const NavBreadcrumb = (props: IProps) => {
   const { t } = useTranslation();
-  const { location } = props;
 
-  const pathSnippets = location.pathname.split('/').filter((i) => i);
-  const extraBreadcrumbItems = pathSnippets.map((k, i) => {
+  const pathSnippets = props.location?.pathname.split('/').filter((i) => i);
+  const extraBreadcrumbs = pathSnippets.map((k, i) => {
     const url = `/${pathSnippets.slice(0, i + 1).join('/')}`;
 
     return (
@@ -42,7 +41,7 @@ export const NavBreadcrumb = (props: IProps) => {
         <Rcon type="ri-home-5-line" /> {t(Object.values(breadcrumbHome))}
       </Link>
     </Breadcrumb.Item>,
-  ].concat(extraBreadcrumbItems);
+  ].concat(extraBreadcrumbs);
 
   return (
     <div className={style['breadcrumb-wrapper']}>

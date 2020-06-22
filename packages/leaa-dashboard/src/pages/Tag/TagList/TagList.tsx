@@ -26,6 +26,8 @@ const API_PATH = 'tags';
 export default (props: IPage) => {
   const { t } = useTranslation();
 
+  console.log('TTTTTTTTTTTTT');
+
   const [crudQuery, setCrudQuery] = useState<ICrudListQueryParams>({
     ...DEFAULT_QUERY,
     ...transUrlQueryToCrudState(window),
@@ -53,8 +55,6 @@ export default (props: IPage) => {
   useMount(() => onFetchList(crudQuery));
   useUpdateEffect(() => onFetchList(DEFAULT_QUERY), [props.history.location.key]);
   useUpdateEffect(() => (!_.isEqual(crudQuery, DEFAULT_QUERY) ? onFetchList(crudQuery) : undefined), [crudQuery]);
-
-  // return <p>taglist{JSON.stringify(props)}</p>;
 
   return (
     <PageCard

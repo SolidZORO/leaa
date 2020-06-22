@@ -4,7 +4,6 @@ import NProgress from 'nprogress';
 
 export const Spinner = () => {
   React.useEffect(() => {
-    NProgress.set(0.1);
     NProgress.start();
 
     return () => {
