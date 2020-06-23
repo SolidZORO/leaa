@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.5.4](https://github.com/SolidZORO/leaa/compare/v3.5.3...v3.5.4) (2020-06-23)
+
+
+### Bug Fixes
+
+* @loadable/component on sidebar link error ([228608f](https://github.com/SolidZORO/leaa/commit/228608f3ee074ea915358063ddb3d91371f740ae))
+* Route `component` to `children` ([1cc0f1d](https://github.com/SolidZORO/leaa/commit/1cc0f1d5bcf8860d758970d74725922781716b02))
+
+
+### Performance Improvements
+
+* done all routes lazy load by `react-imported-component` ([d546ce0](https://github.com/SolidZORO/leaa/commit/d546ce0eff888cdbbe33f8a5e825818ba23082cc))
+* done all routes lazy load, use `react-imported-componet ([1ce8e89](https://github.com/SolidZORO/leaa/commit/1ce8e89d26cfc990b6ed91efae6c79e800e254e9))
+
+
+
+
+
 ## [3.5.3](https://github.com/SolidZORO/leaa/compare/v3.5.2...v3.5.3) (2020-06-21)
 
 
