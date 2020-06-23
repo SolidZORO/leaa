@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import cx from 'classnames';
 import React, { useState } from 'react';
 import { Layout, Menu, Drawer } from 'antd';
@@ -22,6 +23,7 @@ interface IProps extends RouteComponentProps {
 }
 
 const LOGO_WHITE = `/assets/images/logo/${envConfig.LOGO_WHITE_FILENAME || 'default-logo-white.svg'}`;
+const LOGO_BLACK = `/assets/images/logo/${envConfig.LOGO_BLACK_FILENAME || 'default-logo-black.svg'}`;
 
 export const LayoutSidebar = (props: IProps) => {
   const isMobile = useMedia(IS_MOBILE_SCREEN);
@@ -36,21 +38,13 @@ export const LayoutSidebar = (props: IProps) => {
     if (isMobile) setDrawer(false);
   }, [props.history.location.key]);
 
-  const menuBaseDom = () => (
-    <Layout.Sider
-      collapsible
-      collapsedWidth={0}
-      trigger={null}
-      className={style['full-layout-sidebar']}
-      breakpoint="md"
-    >
-      {!isMobile && (
-        <div className={style['logo-wrapper']}>
-          <Link to="/">
-            <img src={LOGO_WHITE} alt="" className={style['logo-image']} />
-          </Link>
-        </div>
-      )}
+  const menuBaseDom = (
+    <Layout.Sider collapsible collapsedWidth={0} trigger={null} className={style['full-layout-sidebar']}>
+      <div className={style['logo-wrapper']}>
+        <Link to="/">
+          <img src={isMobile ? LOGO_BLACK : LOGO_WHITE} alt="" className={style['logo-image']} />
+        </Link>
+      </div>
 
       {masterRouteList && (
         <Menu
@@ -86,13 +80,13 @@ export const LayoutSidebar = (props: IProps) => {
         visible={drawer}
         getContainer={false}
       >
-        {menuBaseDom()}
+        {menuBaseDom}
       </Drawer>
     </>
   );
 
   // PC
-  const menuPcDom = <>{menuBaseDom()}</>;
+  const menuPcDom = <>{menuBaseDom}</>;
 
   const onCallbackSidebarTarget = () => (isMobile ? setDrawer(true) : undefined);
 
@@ -169,8 +163,10 @@ function makeFlatMenu(menu: IRouteItem): React.ReactNode {
 }
 
 // SubMenu
-function makeFlatMenus(menus: IRouteItem[]): React.ReactNode {
-  return menus.map((menu) => {
+function makeFlatMenus(menus?: IRouteItem[]): React.ReactNode {
+  if (_.isEmpty(menus)) return null;
+
+  return menus?.map((menu) => {
     if (menu.children && (checkPermission(menu.permission) || menu.permission === ALLOW_PERMISSION)) {
       return (
         <Menu.SubMenu

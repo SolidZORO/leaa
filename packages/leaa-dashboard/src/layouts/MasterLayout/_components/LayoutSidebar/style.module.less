@@ -22,12 +22,25 @@
 .logo-wrapper {
   cursor: pointer;
   display: table;
-  margin: 0 auto;
-  padding: 25px 0 15px 0;
+  margin: 0;
+  margin-top: 10px;
+  padding: 15px 25px;
+
+  @media (min-width: @screen-md) {
+    margin: 0 auto;
+    padding: 25px 0 15px 0;
+  }
 
   .logo-image {
-    width: 40px;
-    height: 40px;
+    @w: 28px;
+    width: @w;
+    height: @w;
+
+    @media (min-width: @screen-md) {
+      @w: 40px;
+      width: @w;
+      height: @w;
+    }
   }
 }
 
@@ -92,11 +105,20 @@
 // mb menu
 .drawer-wrapper {
   :global {
+    .ant-drawer-content-wrapper {
+      width: @layout-sidebar-width--pc !important;
+    }
+
     .ant-drawer-close {
       opacity: 0.1;
       top: -12px;
       right: -12px;
       font-size: 12px;
+    }
+
+    .ant-drawer-body {
+      overflow: hidden;
+      //padding: 0;
     }
   }
 }
@@ -142,6 +164,10 @@
 
       .ant-menu-item-selected {
         background-color: @sidebar-color-mb !important;
+      }
+
+      .ant-menu {
+        overflow: hidden !important;
       }
     }
   }
