@@ -1,5 +1,5 @@
 import cx from 'classnames';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Layout, Menu, Drawer } from 'antd';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { useMedia, useUpdateEffect } from 'react-use';
@@ -10,12 +10,7 @@ import { masterRouteList, flateMasterRoutes } from '@leaa/dashboard/src/routes/m
 import { getAuthInfo } from '@leaa/dashboard/src/utils';
 import { Rcon } from '@leaa/dashboard/src/components';
 import { envConfig } from '@leaa/dashboard/src/configs';
-import {
-  ALLOW_PERMISSION,
-  SIDERBAR_COLLAPSED_SL_KEY,
-  CREATE_BUTTON_ICON,
-  IS_MOBILE_SCREEN,
-} from '@leaa/dashboard/src/constants';
+import { ALLOW_PERMISSION, CREATE_BUTTON_ICON, IS_MOBILE_SCREEN } from '@leaa/dashboard/src/constants';
 
 import { SidebarTarget } from '../SidebarTarget/SidebarTarget';
 
@@ -37,40 +32,17 @@ export const LayoutSidebar = (props: IProps) => {
 
   const openKey = flateMasterRoutes.find((r) => r.path === selectedKey)?.groupName || '';
 
-  const collapsedByLS = localStorage.getItem(SIDERBAR_COLLAPSED_SL_KEY);
-  let collapsedInit = collapsedByLS !== null && collapsedByLS === 'true';
-
-  if (isMobile && collapsedByLS === null) collapsedInit = true;
-  const [collapsed, setCollapsed] = useState<boolean>(collapsedInit);
-
-  const onCollapse = (isCollapsed: boolean, type: 'responsive' | 'clickTrigger') => {
-    if (type === 'clickTrigger') {
-      const nextCollapsed = !collapsed;
-      localStorage.setItem(SIDERBAR_COLLAPSED_SL_KEY, `${nextCollapsed}`);
-
-      setCollapsed(nextCollapsed);
-    }
-  };
-
-  useEffect(() => {
-    if (collapsed) document.body.classList.add('siderbar-collapsed');
-    else document.body.classList.remove('siderbar-collapsed');
-  }, [collapsed]);
-
   useUpdateEffect(() => {
     if (isMobile) setDrawer(false);
   }, [props.history.location.key]);
 
   const menuBaseDom = () => (
     <Layout.Sider
-      collapsed={collapsed}
-      defaultCollapsed={collapsed}
       collapsible
       collapsedWidth={0}
-      onCollapse={(isCollapsed, type) => onCollapse(isCollapsed, type)}
       trigger={null}
       className={style['full-layout-sidebar']}
-      // breakpoint="md"
+      breakpoint="md"
     >
       {!isMobile && (
         <div className={style['logo-wrapper']}>
@@ -122,12 +94,12 @@ export const LayoutSidebar = (props: IProps) => {
   // PC
   const menuPcDom = <>{menuBaseDom()}</>;
 
-  const onCallbackSidebarTarget = () => (isMobile ? setDrawer(true) : onCollapse(collapsed, 'clickTrigger'));
+  const onCallbackSidebarTarget = () => (isMobile ? setDrawer(true) : undefined);
 
   return (
     <div className={cx(style['full-layout-sidebar-wrapper'], 'g-full-layout-sidebar-wrapper')}>
       <div className={cx(style['target-button-wrapper'], 'target-button-wrapper')}>
-        <SidebarTarget onCallbackSidebarTarget={onCallbackSidebarTarget} collapsed={collapsed} />
+        <SidebarTarget onCallbackSidebarTarget={onCallbackSidebarTarget} />
       </div>
 
       {isMobile ? menuMbDom : menuPcDom}

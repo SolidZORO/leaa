@@ -42,7 +42,6 @@ export default (props: IPage) => {
   const loginFormRef = useRef<ICommenFormRef<AuthLoginReq>>(null);
 
   const clearGuestInfo = () => {
-    console.log('clearGuestInfo');
     setLoginErrorCount(1);
     removeGuestToken();
   };

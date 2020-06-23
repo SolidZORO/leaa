@@ -35,8 +35,6 @@ export const LoginForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
   };
 
   const onFetchCaptcha = async () => {
-    console.log('onFetchCaptcha');
-
     ajax
       .get(`${envConfig.API_URL}/${envConfig.API_VERSION}/verification/captcha-for-login`)
       .then((res: IHttpRes<ICaptchaResult>) => {
