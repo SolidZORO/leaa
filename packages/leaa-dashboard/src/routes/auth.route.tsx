@@ -2,9 +2,7 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import { IRouteItem } from '@leaa/dashboard/src/interfaces';
 import { ALLOW_PERMISSION } from '@leaa/dashboard/src/constants';
-import lazy from '@loadable/component';
-
-import { Spinner } from '@leaa/dashboard/src/components';
+import { lazy } from './lazy';
 
 export const authRouteList: IRouteItem[] = [
   {
@@ -22,6 +20,6 @@ export const authRoute = authRouteList.map((route: IRouteItem) => (
     {...route}
     key={route.children ? `group-${route.name}` : route?.path}
     // eslint-disable-next-line react/no-children-prop
-    children={(props) => <route.LazyComponent {...props} route={route} fallback={<Spinner />} />}
+    children={(props) => <route.LazyComponent {...props} route={route} />}
   />
 ));

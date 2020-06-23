@@ -103,8 +103,6 @@ export default (props: IPage) => {
     }
   }, [crudQuery]);
 
-  console.log(props.history.location.key);
-
   return (
     <PageCard
       route={props.route}

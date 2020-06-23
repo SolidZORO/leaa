@@ -1,14 +1,11 @@
 import _ from 'lodash';
-import React, { ReactNode, Suspense } from 'react';
+import React, { ReactNode } from 'react';
 import { Route } from 'react-router-dom';
-import lazy from '@loadable/component';
-// import { lazy } from '@loadable/component';
 
 import { IRouteItem } from '@leaa/dashboard/src/interfaces';
 import { ALLOW_PERMISSION } from '@leaa/dashboard/src/constants';
-
-import { Spinner } from '@leaa/dashboard/src/components';
 import { isDebugMode } from '@leaa/dashboard/src/utils/debug.util';
+import { lazy } from './lazy';
 
 // TIPS: permission: 'ALLOW_PERMISSION' will be always display
 
@@ -434,7 +431,7 @@ const parseRoutes = (routeList: IRouteItem[]) => {
         {...route}
         key={route.children ? `group-${route.name}` : route?.path}
         // eslint-disable-next-line react/no-children-prop
-        children={(props) => <route.LazyComponent {...props} route={route} fallback={<Spinner />} />}
+        children={(props) => <route.LazyComponent {...props} route={route} />}
       />,
     );
   });

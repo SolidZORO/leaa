@@ -31,6 +31,7 @@ module.exports = {
         style: true,
       },
     ],
+    ['react-imported-component/babel'],
     ['@babel/plugin-transform-runtime'],
   ],
   ignore: [

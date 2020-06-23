@@ -26,8 +26,6 @@ const API_PATH = 'tags';
 export default (props: IPage) => {
   const { t } = useTranslation();
 
-  console.log('TTTTTTTTTTTTT');
-
   const [crudQuery, setCrudQuery] = useState<ICrudListQueryParams>({
     ...DEFAULT_QUERY,
     ...transUrlQueryToCrudState(window),

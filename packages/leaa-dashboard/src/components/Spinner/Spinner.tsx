@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 // @ts-ignore
 import NProgress from 'nprogress';
 
+import './nprogress.less';
+
 export const Spinner = () => {
-  React.useEffect(() => {
+  useEffect(() => {
     NProgress.start();
 
     return () => {
       NProgress.done();
-      NProgress.remove();
+      // NProgress.remove();
     };
   }, []);
 
