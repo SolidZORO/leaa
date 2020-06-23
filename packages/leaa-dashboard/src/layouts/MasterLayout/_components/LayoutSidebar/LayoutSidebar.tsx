@@ -67,11 +67,10 @@ export const LayoutSidebar = (props: IProps) => {
       defaultCollapsed={collapsed}
       collapsible
       collapsedWidth={0}
-      className={style['full-layout-sidebar']}
-      id="full-layout-sidebar"
-      breakpoint="md"
       onCollapse={(isCollapsed, type) => onCollapse(isCollapsed, type)}
       trigger={null}
+      className={style['full-layout-sidebar']}
+      // breakpoint="md"
     >
       {!isMobile && (
         <div className={style['logo-wrapper']}>
@@ -124,8 +123,6 @@ export const LayoutSidebar = (props: IProps) => {
   const menuPcDom = <>{menuBaseDom()}</>;
 
   const onCallbackSidebarTarget = () => (isMobile ? setDrawer(true) : onCollapse(collapsed, 'clickTrigger'));
-
-  console.log(isMobile);
 
   return (
     <div className={cx(style['full-layout-sidebar-wrapper'], 'g-full-layout-sidebar-wrapper')}>

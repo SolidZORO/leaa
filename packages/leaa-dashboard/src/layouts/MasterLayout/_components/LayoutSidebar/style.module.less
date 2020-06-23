@@ -5,13 +5,18 @@
 }
 
 .full-layout-sidebar-wrapper {
-  //display: none;
-  transition: all 0.3s;
+  transition: all 0.2s;
   position: relative;
+  //height: 100vh;
 }
 
 .full-layout-sidebar {
-  position: relative;
+  transition: all 0.2s;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  overflow-y: auto;
 }
 
 .logo-wrapper {
@@ -153,7 +158,7 @@
       }
 
       .ant-layout-sider {
-        background: transparent;
+        //background: transparent;
       }
 
       .ant-menu-item-selected {
