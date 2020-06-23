@@ -5,4 +5,4 @@ export const CSS_SCREEN_LG = getComputedStyle(document.documentElement).getPrope
 export const CSS_SCREEN_XL = getComputedStyle(document.documentElement).getPropertyValue('--screen-xl') || '1200px';
 export const CSS_SCREEN_XXL = getComputedStyle(document.documentElement).getPropertyValue('--screen-xxl') || '1600px';
 
-export const IS_MOBILE_SCREEN = `(max-width: ${CSS_SCREEN_XS})`;
+export const IS_MOBILE_SCREEN = `(max-width: ${CSS_SCREEN_MD})`;

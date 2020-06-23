@@ -14,9 +14,14 @@ interface IProps {
 
 export const SubmitBar = (props: IProps) => (
   <div
-    className={cx(style['wrapper'], props.className, {
-      [style['wrapper--full']]: props.full,
-    })}
+    className={cx(
+      style['wrapper'],
+      props.className,
+      {
+        [style['wrapper--full']]: props.full,
+      },
+      'g-wrapper--full',
+    )}
   >
     <div className={style['container']}>{props.children}</div>
   </div>

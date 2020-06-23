@@ -1,8 +1,8 @@
 import cx from 'classnames';
 import React, { useState, useEffect } from 'react';
-import { Layout, Menu, Drawer, Button } from 'antd';
+import { Layout, Menu, Drawer } from 'antd';
 import { Link, RouteComponentProps } from 'react-router-dom';
-import { useMedia } from 'react-use';
+import { useMedia, useUpdateEffect } from 'react-use';
 import i18n from 'i18next';
 
 import { IRouteItem } from '@leaa/dashboard/src/interfaces';
@@ -41,7 +41,6 @@ export const LayoutSidebar = (props: IProps) => {
   let collapsedInit = collapsedByLS !== null && collapsedByLS === 'true';
 
   if (isMobile && collapsedByLS === null) collapsedInit = true;
-
   const [collapsed, setCollapsed] = useState<boolean>(collapsedInit);
 
   const onCollapse = (isCollapsed: boolean, type: 'responsive' | 'clickTrigger') => {
@@ -53,16 +52,14 @@ export const LayoutSidebar = (props: IProps) => {
     }
   };
 
-  const onSelect = async () => {
-    await setSelectedKey(getPathname());
-
-    if (isMobile) await setDrawer(false);
-  };
-
   useEffect(() => {
     if (collapsed) document.body.classList.add('siderbar-collapsed');
     else document.body.classList.remove('siderbar-collapsed');
   }, [collapsed]);
+
+  useUpdateEffect(() => {
+    if (isMobile) setDrawer(false);
+  }, [props.history.location.key]);
 
   const menuBaseDom = () => (
     <Layout.Sider
@@ -92,7 +89,7 @@ export const LayoutSidebar = (props: IProps) => {
           selectable
           mode="inline"
           theme={isMobile ? 'light' : 'dark'}
-          onSelect={onSelect}
+          onSelect={() => setSelectedKey(getPathname())}
         >
           {makeFlatMenus(masterRouteList)}
         </Menu>
@@ -105,16 +102,9 @@ export const LayoutSidebar = (props: IProps) => {
   //
   //
 
+  // MB
   const menuMbDom = (
     <>
-      <Button
-        className={style['drawer-button']}
-        type="link"
-        size="large"
-        onClick={() => setDrawer(true)}
-        icon={<Rcon type="ri-function-line" />}
-      />
-
       <Drawer
         className={style['drawer-wrapper']}
         placement="left"
@@ -130,17 +120,19 @@ export const LayoutSidebar = (props: IProps) => {
     </>
   );
 
-  const menuPcDom = (
-    <>
-      {menuBaseDom()}
-      <div className={cx(style['target-button-wrapper'], 'target-button-wrapper')}>
-        <SidebarTarget onCallbackSidebarTarget={() => onCollapse(collapsed, 'clickTrigger')} collapsed={collapsed} />
-      </div>
-    </>
-  );
+  // PC
+  const menuPcDom = <>{menuBaseDom()}</>;
+
+  const onCallbackSidebarTarget = () => (isMobile ? setDrawer(true) : onCollapse(collapsed, 'clickTrigger'));
+
+  console.log(isMobile);
 
   return (
     <div className={cx(style['full-layout-sidebar-wrapper'], 'g-full-layout-sidebar-wrapper')}>
+      <div className={cx(style['target-button-wrapper'], 'target-button-wrapper')}>
+        <SidebarTarget onCallbackSidebarTarget={onCallbackSidebarTarget} collapsed={collapsed} />
+      </div>
+
       {isMobile ? menuMbDom : menuPcDom}
     </div>
   );

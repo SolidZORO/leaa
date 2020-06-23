@@ -110,6 +110,10 @@
   position: absolute;
   top: 8px;
   left: 4px;
+
+  @media (min-width: @screen-md) {
+    display: none;
+  }
 }
 
 :global {
@@ -117,7 +121,7 @@
     @sidebar-color-mb: #f5f5f5;
 
     .g-full-layout-breadcrumb {
-      margin-left: 35px;
+      margin-left: 45px;
     }
 
     .g-full-layout-sidebar-wrapper {
@@ -141,7 +145,12 @@
     @sidebar-color-pc: @primary-color;
 
     .g-full-layout-sidebar-wrapper {
-      background: shade(@sidebar-color-pc, 95%);
+      background: shade(@sidebar-color-pc, 90%);
+      background: linear-gradient(shade(@sidebar-color-pc, 83%), shade(@sidebar-color-pc, 93%));
+
+      .ant-menu-dark .ant-menu-inline.ant-menu-sub {
+        background: transparent;
+      }
 
       .ant-layout-sider {
         background: transparent;

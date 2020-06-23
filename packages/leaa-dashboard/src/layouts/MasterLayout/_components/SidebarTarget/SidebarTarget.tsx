@@ -15,8 +15,8 @@ interface IProps {
 export const SidebarTarget = (props: IProps): JSX.Element => {
   return (
     <div
-      className={cx(style['wrapper'], {
-        [style['wrapper--collapsed']]: props.collapsed,
+      className={cx(style['sidebar-target-wrapper'], {
+        [style['sidebar-target-wrapper--collapsed']]: props.collapsed,
       })}
     >
       <Button type="link" onClick={props.onCallbackSidebarTarget}>
