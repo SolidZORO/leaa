@@ -1,5 +1,6 @@
 import React from 'react';
 import cx from 'classnames';
+import { useMedia } from 'react-use';
 import { RouteComponentProps, Switch, Redirect } from 'react-router-dom';
 import { Layout, Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
@@ -7,6 +8,7 @@ import { LoadingOutlined } from '@ant-design/icons';
 import { transRouterPathToClassName, checkAuthIsAvailably } from '@leaa/dashboard/src/utils';
 import '@leaa/dashboard/src/styles/global.less';
 import { masterRoute } from '@leaa/dashboard/src/routes';
+import { IS_MOBILE_SCREEN } from '@leaa/dashboard/src/constants';
 
 import { LayoutHeader } from './_components/LayoutHeader/LayoutHeader';
 import { LayoutSidebar } from './_components/LayoutSidebar/LayoutSidebar';
@@ -23,6 +25,8 @@ interface IProps extends RouteComponentProps {
 }
 
 export const MasterLayout = (props: IProps) => {
+  const isMobile = useMedia(IS_MOBILE_SCREEN);
+
   if (!checkAuthIsAvailably()) return <Redirect to={`/login?redirect=${window.location.pathname}`} />;
 
   const pageClassName = props.location?.pathname
@@ -33,6 +37,8 @@ export const MasterLayout = (props: IProps) => {
     <div
       className={cx(style['full-layout-wrapper'], 'g-full-layout-wrapper', {
         [`g-full-layout-wrapper--${pageClassName}`]: pageClassName,
+        'g-full-layout-wrapper--mb': isMobile,
+        'g-full-layout-wrapper--pc': !isMobile,
       })}
     >
       <Layout className={style['full-layout-inner']} hasSider>

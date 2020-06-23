@@ -4,18 +4,14 @@
   position: relative;
 }
 
-@sidebar-background-color: #001529;
+.full-layout-sidebar-wrapper {
+  //display: none;
+  transition: all 0.3s;
+  position: relative;
+}
 
 .full-layout-sidebar {
-  //display: none;
   position: relative;
-  background: shade(@primary-color, 95%);
-  background: linear-gradient(shade(@primary-color, 85%), shade(@primary-color, 80%), shade(@primary-color, 75%));
-  transition: all 0.3s;
-
-  @media (min-width: @screen-md) {
-    //display: block;
-  }
 }
 
 .logo-wrapper {
@@ -45,11 +41,6 @@
       }
     }
 
-    .ant-menu-inline.ant-menu-sub {
-      box-shadow: none;
-      background-color: @sidebar-background-color !important;
-    }
-
     .ant-menu-item {
       padding-left: 24px;
     }
@@ -58,10 +49,6 @@
       .ant-menu-item {
         padding-left: 46px;
       }
-    }
-
-    .ant-menu-item-selected {
-      background-color: shade(@primary-color, 50%) !important;
     }
   }
 }
@@ -97,10 +84,72 @@
   }
 }
 
+// mb menu
+.drawer-wrapper {
+  :global {
+    .ant-drawer-close {
+      opacity: 0.1;
+      top: -12px;
+      right: -12px;
+      font-size: 12px;
+    }
+  }
+}
+
+.drawer-button {
+  position: absolute;
+  color: #555;
+  top: 3px;
+  left: 0;
+}
+
+// pc menu
 .target-button-wrapper {
   transition: all 0.2s;
   z-index: 2;
   position: absolute;
   top: 8px;
   left: 4px;
+}
+
+:global {
+  .g-full-layout-wrapper--mb {
+    @sidebar-color-mb: #f5f5f5;
+
+    .g-full-layout-breadcrumb {
+      margin-left: 35px;
+    }
+
+    .g-full-layout-sidebar-wrapper {
+      background: @sidebar-color-mb;
+
+      .ant-menu-inline {
+        border: none 0;
+      }
+
+      .ant-layout-sider {
+        background: transparent;
+      }
+
+      .ant-menu-item-selected {
+        background-color: @sidebar-color-mb !important;
+      }
+    }
+  }
+
+  .g-full-layout-wrapper--pc {
+    @sidebar-color-pc: @primary-color;
+
+    .g-full-layout-sidebar-wrapper {
+      background: shade(@sidebar-color-pc, 95%);
+
+      .ant-layout-sider {
+        background: transparent;
+      }
+
+      .ant-menu-item-selected {
+        background-color: shade(@sidebar-color-pc, 50%) !important;
+      }
+    }
+  }
 }

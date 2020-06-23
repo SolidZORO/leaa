@@ -63,6 +63,7 @@ export default (props: IPage) => {
     <PageCard
       route={props.route}
       title="@LIST"
+      complexExtra
       extra={
         <div className="g-page-card-extra-filter-bar-wrapper">
           <FilterIcon

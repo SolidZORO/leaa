@@ -19,6 +19,7 @@ interface IProps {
   extra?: React.ReactNode;
   className?: string;
   route: IRouteItem;
+  complexExtra?: boolean;
   loading?: boolean;
 }
 
@@ -58,7 +59,11 @@ export const PageCard = (props: IProps) => {
   };
 
   return (
-    <div className={cx(style['wrapper'], props.className)}>
+    <div
+      className={cx(style['page-card-wrapper'], props.className, {
+        [style['page-card-wrapper--complex']]: props.complexExtra,
+      })}
+    >
       <div className={style['header']}>
         {genTitlt(props.title)}
 

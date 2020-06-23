@@ -1,15 +1,21 @@
 import cx from 'classnames';
 import React, { useState, useEffect } from 'react';
-import { Layout, Menu } from 'antd';
+import { Layout, Menu, Drawer, Button } from 'antd';
 import { Link, RouteComponentProps } from 'react-router-dom';
+import { useMedia } from 'react-use';
 import i18n from 'i18next';
 
 import { IRouteItem } from '@leaa/dashboard/src/interfaces';
 import { masterRouteList, flateMasterRoutes } from '@leaa/dashboard/src/routes/master.route';
-import { getAuthInfo, isMobile } from '@leaa/dashboard/src/utils';
+import { getAuthInfo } from '@leaa/dashboard/src/utils';
 import { Rcon } from '@leaa/dashboard/src/components';
 import { envConfig } from '@leaa/dashboard/src/configs';
-import { ALLOW_PERMISSION, SIDERBAR_COLLAPSED_SL_KEY, CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
+import {
+  ALLOW_PERMISSION,
+  SIDERBAR_COLLAPSED_SL_KEY,
+  CREATE_BUTTON_ICON,
+  IS_MOBILE_SCREEN,
+} from '@leaa/dashboard/src/constants';
 
 import { SidebarTarget } from '../SidebarTarget/SidebarTarget';
 
@@ -23,15 +29,18 @@ interface IProps extends RouteComponentProps {
 const LOGO_WHITE = `/assets/images/logo/${envConfig.LOGO_WHITE_FILENAME || 'default-logo-white.svg'}`;
 
 export const LayoutSidebar = (props: IProps) => {
+  const isMobile = useMedia(IS_MOBILE_SCREEN);
+
   const getPathname = () => props.location?.pathname.replace(/(^.*)\/.*/, '$1') || props.location?.pathname;
   const [selectedKey, setSelectedKey] = useState<string>(getPathname());
+  const [drawer, setDrawer] = useState<boolean>(false);
 
   const openKey = flateMasterRoutes.find((r) => r.path === selectedKey)?.groupName || '';
 
   const collapsedByLS = localStorage.getItem(SIDERBAR_COLLAPSED_SL_KEY);
   let collapsedInit = collapsedByLS !== null && collapsedByLS === 'true';
 
-  if (isMobile() && collapsedByLS === null) collapsedInit = true;
+  if (isMobile && collapsedByLS === null) collapsedInit = true;
 
   const [collapsed, setCollapsed] = useState<boolean>(collapsedInit);
 
@@ -44,15 +53,18 @@ export const LayoutSidebar = (props: IProps) => {
     }
   };
 
+  const onSelect = async () => {
+    await setSelectedKey(getPathname());
+
+    if (isMobile) await setDrawer(false);
+  };
+
   useEffect(() => {
-    if (collapsed) {
-      document.body.classList.add('siderbar-collapsed');
-    } else {
-      document.body.classList.remove('siderbar-collapsed');
-    }
+    if (collapsed) document.body.classList.add('siderbar-collapsed');
+    else document.body.classList.remove('siderbar-collapsed');
   }, [collapsed]);
 
-  return (
+  const menuBaseDom = () => (
     <Layout.Sider
       collapsed={collapsed}
       defaultCollapsed={collapsed}
@@ -64,11 +76,13 @@ export const LayoutSidebar = (props: IProps) => {
       onCollapse={(isCollapsed, type) => onCollapse(isCollapsed, type)}
       trigger={null}
     >
-      <div className={style['logo-wrapper']}>
-        <Link to="/">
-          <img src={LOGO_WHITE} alt="" className={style['logo-image']} />
-        </Link>
-      </div>
+      {!isMobile && (
+        <div className={style['logo-wrapper']}>
+          <Link to="/">
+            <img src={LOGO_WHITE} alt="" className={style['logo-image']} />
+          </Link>
+        </div>
+      )}
 
       {masterRouteList && (
         <Menu
@@ -77,17 +91,58 @@ export const LayoutSidebar = (props: IProps) => {
           defaultOpenKeys={[openKey]}
           selectable
           mode="inline"
-          theme="dark"
-          onSelect={() => setSelectedKey(getPathname())}
+          theme={isMobile ? 'light' : 'dark'}
+          onSelect={onSelect}
         >
           {makeFlatMenus(masterRouteList)}
         </Menu>
       )}
+    </Layout.Sider>
+  );
 
+  //
+  //
+  //
+  //
+
+  const menuMbDom = (
+    <>
+      <Button
+        className={style['drawer-button']}
+        type="link"
+        size="large"
+        onClick={() => setDrawer(true)}
+        icon={<Rcon type="ri-function-line" />}
+      />
+
+      <Drawer
+        className={style['drawer-wrapper']}
+        placement="left"
+        mask
+        maskClosable
+        // closable
+        onClose={() => setDrawer(false)}
+        visible={drawer}
+        getContainer={false}
+      >
+        {menuBaseDom()}
+      </Drawer>
+    </>
+  );
+
+  const menuPcDom = (
+    <>
+      {menuBaseDom()}
       <div className={cx(style['target-button-wrapper'], 'target-button-wrapper')}>
         <SidebarTarget onCallbackSidebarTarget={() => onCollapse(collapsed, 'clickTrigger')} collapsed={collapsed} />
       </div>
-    </Layout.Sider>
+    </>
+  );
+
+  return (
+    <div className={cx(style['full-layout-sidebar-wrapper'], 'g-full-layout-sidebar-wrapper')}>
+      {isMobile ? menuMbDom : menuPcDom}
+    </div>
   );
 };
 

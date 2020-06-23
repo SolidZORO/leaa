@@ -8,6 +8,9 @@ import localIconfont from '@leaa/dashboard/src/assets/fonts/ri/iconfont';
 
 import style from './style.module.less';
 
+// Licnese by REMIX ICON 2.1.0 (https://remixicon.com/)
+// ref: https://www.iconfont.cn/collections/detail?cid=19375
+
 type IIconType =
   | 'ri-x-add-line'
   | 'ri-function-line'

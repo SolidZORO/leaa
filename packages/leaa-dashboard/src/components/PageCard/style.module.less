@@ -1,6 +1,6 @@
 @import '~@leaa/dashboard/src/styles/variables.less';
 
-.wrapper {
+.page-card-wrapper {
   //min-height: 300px;
   transition: all 0.3s;
   padding-bottom: 30px;
@@ -26,6 +26,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
+
+  @media (min-width: @screen-md) {
+    justify-content: space-between;
+    display: flex;
+  }
 
   .title {
     margin: 0;
@@ -81,8 +87,14 @@
 
   .extra {
     //font-size: 140%;
-    margin: 0;
+    margin: 10px 0 0 0;
     padding: 0 0 0 3px;
+    display: flex;
+    justify-content: flex-end;
+
+    @media (min-width: @screen-md) {
+      margin: 0;
+    }
 
     :global {
       .g-page-card-extra-filter-bar-wrapper {
@@ -111,6 +123,22 @@
       //.g-extra-filter-bar--export {
       //  width: auto;
       //}
+    }
+  }
+}
+
+.page-card-wrapper--complex {
+  .header {
+    display: block;
+
+    @media (min-width: @screen-md) {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .extra {
+      display: block;
+      justify-content: start;
     }
   }
 }
