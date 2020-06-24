@@ -61,7 +61,7 @@ export default (props: IPage) => {
           loading={submitLoading}
           onClick={onCreateItem}
         >
-          {t('_lang:update')}
+          {t('_lang:create')}
         </Button>
       </SubmitBar>
     </PageCard>
