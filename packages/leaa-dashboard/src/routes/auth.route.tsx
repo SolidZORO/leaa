@@ -2,7 +2,7 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import { IRouteItem } from '@leaa/dashboard/src/interfaces';
 import { ALLOW_PERMISSION } from '@leaa/dashboard/src/constants';
-import { lazy } from './lazy';
+import { lazy } from './_lazy';
 
 export const authRouteList: IRouteItem[] = [
   {

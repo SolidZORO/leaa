@@ -6,7 +6,7 @@ export interface IRouteItem extends RouteProps {
   permission: string;
   //
   namei18n?: string;
-  icon?: string;
+  icon?: JSX.Element | string;
   isGroup?: boolean; // gropu of sidebar, not into rotues (flatMenu).
   groupName?: string;
   canCreate?: boolean;

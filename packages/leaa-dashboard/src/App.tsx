@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { IconContext } from 'react-icons';
 import { Spin, ConfigProvider } from 'antd';
 import { I18nextProvider } from 'react-i18next';
 import { HelmetProvider } from 'react-helmet-async';
@@ -38,11 +39,13 @@ export const App = (): JSX.Element => {
         <ConfigProvider locale={locale}>
           <StoreProvider value={store}>
             <I18nextProvider i18n={i18n}>
-              <RefreshSetting>
-                <RefreshflatPermissions>
-                  <Routes />
-                </RefreshflatPermissions>
-              </RefreshSetting>
+              <IconContext.Provider value={{ className: 'rcicon' }}>
+                <RefreshSetting>
+                  <RefreshflatPermissions>
+                    <Routes />
+                  </RefreshflatPermissions>
+                </RefreshSetting>
+              </IconContext.Provider>
             </I18nextProvider>
           </StoreProvider>
         </ConfigProvider>

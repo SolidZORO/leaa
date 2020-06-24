@@ -74,11 +74,12 @@ platform_local_test() {
 
 # ------------------------------------------------------------------------
 
-while getopts 'p:i?h' arg; do
+while getopts 'p:i?y?h' arg; do
   # shellcheck disable=SC2220
   case $arg in
   p) set_var PLATFORM "$OPTARG" ;;
   i) set_var SKIP_BUILD y ;;
+  y) set_var SKIP_CONFIRM y ;;
   h | ?) usage ;;
   *) usage ;; esac
 done

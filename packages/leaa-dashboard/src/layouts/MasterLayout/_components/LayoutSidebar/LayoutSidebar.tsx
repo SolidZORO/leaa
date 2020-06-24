@@ -5,6 +5,8 @@ import { Layout, Menu, Drawer } from 'antd';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { useMedia, useUpdateEffect } from 'react-use';
 import i18n from 'i18next';
+import { RiMenuLine, RiAddLine } from 'react-icons/ri';
+import { QuestionCircleOutlined, CheckCircleOutlined } from '@ant-design/icons';
 
 import { IRouteItem } from '@leaa/dashboard/src/interfaces';
 import { masterRouteList, flateMasterRoutes } from '@leaa/dashboard/src/routes/master.route';
@@ -46,19 +48,17 @@ export const LayoutSidebar = (props: IProps) => {
         </Link>
       </div>
 
-      {masterRouteList && (
-        <Menu
-          className={style['menu-wrapper']}
-          defaultSelectedKeys={[selectedKey]}
-          defaultOpenKeys={[openKey]}
-          selectable
-          mode="inline"
-          theme={isMobile ? 'light' : 'dark'}
-          onSelect={() => setSelectedKey(getPathname())}
-        >
-          {makeFlatMenus(masterRouteList)}
-        </Menu>
-      )}
+      <Menu
+        className={style['menu-wrapper']}
+        defaultSelectedKeys={[selectedKey]}
+        defaultOpenKeys={[openKey]}
+        selectable
+        mode="inline"
+        theme={isMobile ? 'light' : 'dark'}
+        // onSelect={() => setSelectedKey(getPathname())}
+      >
+        {makeFlatMenus(masterRouteList)}
+      </Menu>
     </Layout.Sider>
   );
 
@@ -143,7 +143,7 @@ function makeFlatMenu(menu: IRouteItem): React.ReactNode {
       <Menu.Item key={menu.path} className={`g-sidebar-menu-${menu.path}`}>
         <Link to={menu.path}>
           <span className={style['nav-text']}>
-            {menu.icon && <Rcon type={menu.icon} />}
+            {menu.icon}
             <em className="menu-name">{getMenuName(menu)}</em>
           </span>
         </Link>
@@ -152,7 +152,7 @@ function makeFlatMenu(menu: IRouteItem): React.ReactNode {
           (getAuthInfo().flatPermissions.includes(currentMenuCreatePermission) ||
             menu.permission === ALLOW_PERMISSION) && (
             <Link to={`${menu.path}/create`} className={style['can-create-button']}>
-              <Rcon type={CREATE_BUTTON_ICON} />
+              <RiAddLine />
             </Link>
           )}
       </Menu.Item>
@@ -174,7 +174,7 @@ function makeFlatMenus(menus?: IRouteItem[]): React.ReactNode {
           key={menu.path}
           title={
             <span className={style['nav-text']}>
-              {menu.icon && <Rcon type={menu.icon} />}
+              {menu.icon}
               <em className="menu-name">{getMenuName(menu)}</em>
             </span>
           }

@@ -5,7 +5,7 @@ import { RouteComponentProps } from 'react-router-dom';
 
 import { SwitchLanguage } from '@leaa/dashboard/src/components';
 
-import { NavBreadcrumb } from '../Breadcrumb/Breadcrumb';
+import { NavBreadcrumb } from '@leaa/dashboard/src/layouts/MasterLayout/_components/NavBreadcrumb/NavBreadcrumb';
 import { UserMenu } from '../UserMenu/UserMenu';
 
 import style from './style.module.less';

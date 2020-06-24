@@ -11,21 +11,23 @@ import style from './style.module.less';
 
 interface IProps extends RouteComponentProps {}
 
-const routesTransBreadcrumbs = (rs: any) =>
-  rs.reduce((acc: any, cur: any) => {
+const routesTransBreadcrumbs = (routes: any) =>
+  routes.reduce((acc: any, cur: any) => {
     acc[cur.path] = cur.namei18n || '';
 
     return acc;
   }, {});
 
 const breadcrumbs = routesTransBreadcrumbs(flateMasterRoutes);
-const breadcrumbHome = _.pick(breadcrumbs, '/');
+let home = _.pick(breadcrumbs, '/');
+if (_.isEmpty(home)) home = { '/': '_route:home' };
 
 export const NavBreadcrumb = (props: IProps) => {
   const { t } = useTranslation();
 
-  const pathSnippets = props.location?.pathname.split('/').filter((i) => i);
-  const extraBreadcrumbs = pathSnippets.map((k, i) => {
+  // const pathSnippets = props.location?.pathname?.split('/')?.filter((i) => i);
+  const pathSnippets = props.location?.pathname?.split('/')?.filter((i) => i);
+  const extraBreadcrumbs = pathSnippets?.map((k, i) => {
     const url = `/${pathSnippets.slice(0, i + 1).join('/')}`;
 
     return (
@@ -36,9 +38,9 @@ export const NavBreadcrumb = (props: IProps) => {
   });
 
   const breadcrumbItems = [
-    <Breadcrumb.Item key={`${Object.keys(breadcrumbHome)}`}>
-      <Link to={`${Object.keys(breadcrumbHome)}`}>
-        <Rcon type="ri-home-5-line" /> {t(Object.values(breadcrumbHome))}
+    <Breadcrumb.Item key={`${Object.keys(home)}`}>
+      <Link to={`${Object.keys(home)}`}>
+        <Rcon type="ri-home-5-line" /> {t(Object.values(home))}
       </Link>
     </Breadcrumb.Item>,
   ].concat(extraBreadcrumbs);

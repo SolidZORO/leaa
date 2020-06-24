@@ -59,8 +59,8 @@
     "@types/eslint-plugin-prettier": "^3.1.0",
     "@types/jest": "^26.0.0",
     "@types/rimraf": "^3.0.0",
-    "@typescript-eslint/eslint-plugin": "^3.3.0",
-    "@typescript-eslint/parser": "^3.3.0",
+    "@typescript-eslint/eslint-plugin": "^3.4.0",
+    "@typescript-eslint/parser": "^3.4.0",
     "babel-eslint": "^10.1.0",
     "codecov": "^3.7.0",
     "commitizen": "4.1.2",
@@ -78,7 +78,7 @@
     "eslint-plugin-react": "^7.20.0",
     "eslint-plugin-react-hooks": "^4.0.4",
     "husky": "^4.2.5",
-    "jest": "^26.0.1",
+    "jest": "^26.1.0",
     "lerna": "^3.22.1",
     "lint-staged": "^10.2.11",
     "prettier": "^2.0.5",
@@ -87,7 +87,7 @@
     "stylelint": "^13.6.1",
     "stylelint-config-standard": "^20.0.0",
     "stylelint-order": "4.1.0",
-    "ts-jest": "26.1.0",
+    "ts-jest": "26.1.1",
     "ts-node-dev": "^1.0.0-pre.49",
     "typescript": "3.9.5"
   }
