@@ -3,91 +3,67 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [3.5.3](https://github.com/SolidZORO/leaa/compare/v3.5.2...v3.5.3) (2020-06-21)
+## [3.5.5](https://github.com/SolidZORO/leaa/compare/v3.5.4...v3.5.5) (2020-06-24)
 
+### Features
+
+- use `react-icons` replace `<Rcon>` ([4699686](https://github.com/SolidZORO/leaa/commit/46996863c4791e9de3e865e8138effe0712cb054))
+
+## [3.5.3](https://github.com/SolidZORO/leaa/compare/v3.5.2...v3.5.3) (2020-06-21)
 
 ### Performance Improvements
 
-* react-router use `lazy` from '@loadable/component' ([58e306d](https://github.com/SolidZORO/leaa/commit/58e306d3e38034d8f34fa7312563a4736b04ad30))
-
-
-
-
+- react-router use `lazy` from '@loadable/component' ([58e306d](https://github.com/SolidZORO/leaa/commit/58e306d3e38034d8f34fa7312563a4736b04ad30))
 
 ## [3.5.2](https://github.com/SolidZORO/leaa/compare/v3.5.1...v3.5.2) (2020-06-20)
 
-
 ### Bug Fixes
 
-* add createManyByTagName fix tag target `Duplicate entry` ([8a32f98](https://github.com/SolidZORO/leaa/commit/8a32f9870f71e1f70812eae270ec32302faa947b)), closes [#16](https://github.com/SolidZORO/leaa/issues/16)
-* fix table account dataIndex ([cda97aa](https://github.com/SolidZORO/leaa/commit/cda97aab901d441c8ffa8038f1ecfe73fd23663b))
-* fixed pm2 loop restart ([76b9c91](https://github.com/SolidZORO/leaa/commit/76b9c91a0198802706a242d64ae8a0b112e6c4ed))
-* formatAttaUrl format gravatar error display ([c436884](https://github.com/SolidZORO/leaa/commit/c436884371fd547101de6a04a0ffa7213a5507cb))
-
+- add createManyByTagName fix tag target `Duplicate entry` ([8a32f98](https://github.com/SolidZORO/leaa/commit/8a32f9870f71e1f70812eae270ec32302faa947b)), closes [#16](https://github.com/SolidZORO/leaa/issues/16)
+- fix table account dataIndex ([cda97aa](https://github.com/SolidZORO/leaa/commit/cda97aab901d441c8ffa8038f1ecfe73fd23663b))
+- fixed pm2 loop restart ([76b9c91](https://github.com/SolidZORO/leaa/commit/76b9c91a0198802706a242d64ae8a0b112e6c4ed))
+- formatAttaUrl format gravatar error display ([c436884](https://github.com/SolidZORO/leaa/commit/c436884371fd547101de6a04a0ffa7213a5507cb))
 
 ### Features
 
-* `deploy-api` add -p `update_config_and_push` ([3c62457](https://github.com/SolidZORO/leaa/commit/3c62457eb8171eb4bcbb3e64c665bf6d5211b4c8))
-
-
-
-
+- `deploy-api` add -p `update_config_and_push` ([3c62457](https://github.com/SolidZORO/leaa/commit/3c62457eb8171eb4bcbb3e64c665bf6d5211b4c8))
 
 ## [3.5.1](https://github.com/SolidZORO/leaa/compare/v3.5.0...v3.5.1) (2020-06-18)
 
-
 ### Bug Fixes
 
-* fixed resource dir in `deploy-api.sh` ([3e625ab](https://github.com/SolidZORO/leaa/commit/3e625ab942129fecbf25a6e0315f31a098130ee3))
-* resource -> resources ([6ede647](https://github.com/SolidZORO/leaa/commit/6ede647424a3c751179aff623b5f28e05aeef24b))
-
+- fixed resource dir in `deploy-api.sh` ([3e625ab](https://github.com/SolidZORO/leaa/commit/3e625ab942129fecbf25a6e0315f31a098130ee3))
+- resource -> resources ([6ede647](https://github.com/SolidZORO/leaa/commit/6ede647424a3c751179aff623b5f28e05aeef24b))
 
 ### Features
 
-* add Dockerfile for deploy, some packages NEED node-gyp ([4f29db7](https://github.com/SolidZORO/leaa/commit/4f29db7bc813f24c4e18ea25d0ed9eff35aa8f9c))
-* docker-install add `yarn add node-gyp` ([78f7ed2](https://github.com/SolidZORO/leaa/commit/78f7ed21459e4c0ac746e7f43c3941435b04ef67))
-
+- add Dockerfile for deploy, some packages NEED node-gyp ([4f29db7](https://github.com/SolidZORO/leaa/commit/4f29db7bc813f24c4e18ea25d0ed9eff35aa8f9c))
+- docker-install add `yarn add node-gyp` ([78f7ed2](https://github.com/SolidZORO/leaa/commit/78f7ed21459e4c0ac746e7f43c3941435b04ef67))
 
 ### Performance Improvements
 
-* better CLI UX ([3848713](https://github.com/SolidZORO/leaa/commit/3848713c8cb7895fe0a1c63c6199860e840543e5))
-
-
-
-
+- better CLI UX ([3848713](https://github.com/SolidZORO/leaa/commit/3848713c8cb7895fe0a1c63c6199860e840543e5))
 
 # [3.5.0](https://github.com/SolidZORO/leaa/compare/v3.4.1...v3.5.0) (2020-06-16)
 
-
 ### Bug Fixes
 
-* append some files to pm2 'ignore_watch` fix loop reset ([2d52bad](https://github.com/SolidZORO/leaa/commit/2d52bad58744429ecf3eeaefbfaf120445eed7d7))
-* reset to `nodejieba`, because `@node-rs/jieba` have bug ([85d7003](https://github.com/SolidZORO/leaa/commit/85d700387305f2d073fa57bea3fd665fb57cc66f))
-
+- append some files to pm2 'ignore_watch` fix loop reset ([2d52bad](https://github.com/SolidZORO/leaa/commit/2d52bad58744429ecf3eeaefbfaf120445eed7d7))
+- reset to `nodejieba`, because `@node-rs/jieba` have bug ([85d7003](https://github.com/SolidZORO/leaa/commit/85d700387305f2d073fa57bea3fd665fb57cc66f))
 
 ### Features
 
-* api .env add `AUTO_CUT_TAGS` ([b8ca654](https://github.com/SolidZORO/leaa/commit/b8ca6540de38898097bc74ede8fcbd6e6e574d18))
-
+- api .env add `AUTO_CUT_TAGS` ([b8ca654](https://github.com/SolidZORO/leaa/commit/b8ca6540de38898097bc74ede8fcbd6e6e574d18))
 
 ### Performance Improvements
 
-* update UX ([cb8867a](https://github.com/SolidZORO/leaa/commit/cb8867a60c125f6aacda13aaf7f4703fd075b035))
-
-
-
-
+- update UX ([cb8867a](https://github.com/SolidZORO/leaa/commit/cb8867a60c125f6aacda13aaf7f4703fd075b035))
 
 ## [3.4.1](https://github.com/SolidZORO/leaa/compare/v3.4.0...v3.4.1) (2020-06-14)
 
-
 ### Performance Improvements
 
-* api index UX ([95db263](https://github.com/SolidZORO/leaa/commit/95db2632967f0254889654217c1ce8f8eb753ba9))
-
-
-
-
+- api index UX ([95db263](https://github.com/SolidZORO/leaa/commit/95db2632967f0254889654217c1ce8f8eb753ba9))
 
 # [3.4.0](https://github.com/SolidZORO/leaa/compare/v3.3.5...v3.4.0) (2020-06-13)
 

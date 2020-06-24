@@ -3,124 +3,110 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [3.5.4](https://github.com/SolidZORO/leaa/compare/v3.5.3...v3.5.4) (2020-06-23)
-
-
-### Bug Fixes
-
-* @loadable/component on sidebar link error ([228608f](https://github.com/SolidZORO/leaa/commit/228608f3ee074ea915358063ddb3d91371f740ae))
-* Route `component` to `children` ([1cc0f1d](https://github.com/SolidZORO/leaa/commit/1cc0f1d5bcf8860d758970d74725922781716b02))
-
-
-### Performance Improvements
-
-* done all routes lazy load by `react-imported-component` ([d546ce0](https://github.com/SolidZORO/leaa/commit/d546ce0eff888cdbbe33f8a5e825818ba23082cc))
-* done all routes lazy load, use `react-imported-componet ([1ce8e89](https://github.com/SolidZORO/leaa/commit/1ce8e89d26cfc990b6ed91efae6c79e800e254e9))
-
-
-
-
-
-## [3.5.3](https://github.com/SolidZORO/leaa/compare/v3.5.2...v3.5.3) (2020-06-21)
-
+## [3.5.5](https://github.com/SolidZORO/leaa/compare/v3.5.4...v3.5.5) (2020-06-24)
 
 ### Bug Fixes
 
-* temp downgrading eslint to v7.2.0 ([a1e5c31](https://github.com/SolidZORO/leaa/commit/a1e5c31f5c56ce0a6cb862f2a37c3957af3ad22a))
+- page card align title ([64e7724](https://github.com/SolidZORO/leaa/commit/64e77240eed7ba3b049a60c8e03e516ee21292df))
+- sidebar on mb has scroll y ([f6ba5c5](https://github.com/SolidZORO/leaa/commit/f6ba5c5db0f353a146a748944736c99b1932efdb))
+- sidebar position fixed ([5d39d2a](https://github.com/SolidZORO/leaa/commit/5d39d2a54085cda08b312a89b525389a8378d03f))
 
+### Code Refactoring
+
+- remove sidebar collapsed fn of pc ([87dcd8f](https://github.com/SolidZORO/leaa/commit/87dcd8fb90bd8402d0452ccd822f707226b0cfd3))
 
 ### Features
 
-* add a pMinDelay load ([977c2d2](https://github.com/SolidZORO/leaa/commit/977c2d2f5f4fba164edadd93451a5c617b045d8b))
-* dashboard header top add `nprogress` Loading ([3815ca8](https://github.com/SolidZORO/leaa/commit/3815ca89c9d5b981e0b1ff5fc85f18ecea85f051))
-
+- use `react-icons` replace `<Rcon>` ([4699686](https://github.com/SolidZORO/leaa/commit/46996863c4791e9de3e865e8138effe0712cb054))
 
 ### Performance Improvements
 
-* react-router perf ([a2b97f3](https://github.com/SolidZORO/leaa/commit/a2b97f357c8e4d65243c7bf5b942e6cd016de77e))
-* react-router use `lazy` from '@loadable/component' ([58e306d](https://github.com/SolidZORO/leaa/commit/58e306d3e38034d8f34fa7312563a4736b04ad30))
-
-
-
-
-
-## [3.5.2](https://github.com/SolidZORO/leaa/compare/v3.5.1...v3.5.2) (2020-06-20)
-
-
-### Bug Fixes
-
-* `.env.js` -> `_.env.js` ([5c88115](https://github.com/SolidZORO/leaa/commit/5c88115894630a711ba3d2cf1e14c21733208e8d))
-* fix table account dataIndex ([cda97aa](https://github.com/SolidZORO/leaa/commit/cda97aab901d441c8ffa8038f1ecfe73fd23663b))
-* formatAttaUrl format gravatar error display ([c436884](https://github.com/SolidZORO/leaa/commit/c436884371fd547101de6a04a0ffa7213a5507cb))
-
-
-### Features
-
-* dashboard .env add `PRIMARY_ACCOUNT_TYPE` ([97e4f2a](https://github.com/SolidZORO/leaa/commit/97e4f2ae7349e4460c372c2f724b73c05ab2fe79))
-
-
-### Performance Improvements
-
-* click sidebar menu item can refresh list ([e85e385](https://github.com/SolidZORO/leaa/commit/e85e385be61bec2d66b492d5894fc7f6eeaebb03))
-* DEFAULT_PAGE_SIZE value to `20`, one screen can display ([3596609](https://github.com/SolidZORO/leaa/commit/359660950ba04f69fc7a6478bc18acd5b4783e4d))
-* onFetchList use `react-use` control effect ([d46dad9](https://github.com/SolidZORO/leaa/commit/d46dad9084e1b09324f41a5a6d84fb007e9bcb8e))
-
-
-
-
-
-## [3.5.1](https://github.com/SolidZORO/leaa/compare/v3.5.0...v3.5.1) (2020-06-18)
-
-
-### Bug Fixes
-
-* fixed resource dir in `deploy-api.sh` ([3e625ab](https://github.com/SolidZORO/leaa/commit/3e625ab942129fecbf25a6e0315f31a098130ee3))
-
-
-### Performance Improvements
-
-* better CLI UX ([3848713](https://github.com/SolidZORO/leaa/commit/3848713c8cb7895fe0a1c63c6199860e840543e5))
-
-
-
-
-
-# [3.5.0](https://github.com/SolidZORO/leaa/compare/v3.4.1...v3.5.0) (2020-06-16)
-
-
-### Bug Fixes
-
-* change `.env.js` to `_env.js`, fix serverless not load ([7c35661](https://github.com/SolidZORO/leaa/commit/7c35661d051657cd90b50b7feca2e217e77a636b))
-* LoginForm check env.DEMO_MODE inject account ([b59e64c](https://github.com/SolidZORO/leaa/commit/b59e64c48def40fa3a9ec0970edd5f2827698708))
-
-
-### Features
-
-* api .env add `AUTO_CUT_TAGS` ([b8ca654](https://github.com/SolidZORO/leaa/commit/b8ca6540de38898097bc74ede8fcbd6e6e574d18))
-* delete dotenv of dashboard use `.env.js` replace `.env` ([7cc0950](https://github.com/SolidZORO/leaa/commit/7cc0950930004ef9da852448155734f254f4f891))
-
-
-### Performance Improvements
-
-* update UX ([cb8867a](https://github.com/SolidZORO/leaa/commit/cb8867a60c125f6aacda13aaf7f4703fd075b035))
-
+- dashboard UI mobile friendly ([7d21749](https://github.com/SolidZORO/leaa/commit/7d2174948e642b9ef6beb3cc0bb88f22f8b2977b))
 
 ### BREAKING CHANGES
 
-* change `.env.js` to `_env.js`, fix serverless not load
-* delete dotenv of dashboard use `.env.js` replace `.env`
+- remove sidebar collapsed fn of pc
 
+## [3.5.4](https://github.com/SolidZORO/leaa/compare/v3.5.3...v3.5.4) (2020-06-23)
 
+### Bug Fixes
 
+- @loadable/component on sidebar link error ([228608f](https://github.com/SolidZORO/leaa/commit/228608f3ee074ea915358063ddb3d91371f740ae))
+- Route `component` to `children` ([1cc0f1d](https://github.com/SolidZORO/leaa/commit/1cc0f1d5bcf8860d758970d74725922781716b02))
 
+### Performance Improvements
+
+- done all routes lazy load by `react-imported-component` ([d546ce0](https://github.com/SolidZORO/leaa/commit/d546ce0eff888cdbbe33f8a5e825818ba23082cc))
+- done all routes lazy load, use `react-imported-componet ([1ce8e89](https://github.com/SolidZORO/leaa/commit/1ce8e89d26cfc990b6ed91efae6c79e800e254e9))
+
+## [3.5.3](https://github.com/SolidZORO/leaa/compare/v3.5.2...v3.5.3) (2020-06-21)
+
+### Bug Fixes
+
+- temp downgrading eslint to v7.2.0 ([a1e5c31](https://github.com/SolidZORO/leaa/commit/a1e5c31f5c56ce0a6cb862f2a37c3957af3ad22a))
+
+### Features
+
+- add a pMinDelay load ([977c2d2](https://github.com/SolidZORO/leaa/commit/977c2d2f5f4fba164edadd93451a5c617b045d8b))
+- dashboard header top add `nprogress` Loading ([3815ca8](https://github.com/SolidZORO/leaa/commit/3815ca89c9d5b981e0b1ff5fc85f18ecea85f051))
+
+### Performance Improvements
+
+- react-router perf ([a2b97f3](https://github.com/SolidZORO/leaa/commit/a2b97f357c8e4d65243c7bf5b942e6cd016de77e))
+- react-router use `lazy` from '@loadable/component' ([58e306d](https://github.com/SolidZORO/leaa/commit/58e306d3e38034d8f34fa7312563a4736b04ad30))
+
+## [3.5.2](https://github.com/SolidZORO/leaa/compare/v3.5.1...v3.5.2) (2020-06-20)
+
+### Bug Fixes
+
+- `.env.js` -> `_.env.js` ([5c88115](https://github.com/SolidZORO/leaa/commit/5c88115894630a711ba3d2cf1e14c21733208e8d))
+- fix table account dataIndex ([cda97aa](https://github.com/SolidZORO/leaa/commit/cda97aab901d441c8ffa8038f1ecfe73fd23663b))
+- formatAttaUrl format gravatar error display ([c436884](https://github.com/SolidZORO/leaa/commit/c436884371fd547101de6a04a0ffa7213a5507cb))
+
+### Features
+
+- dashboard .env add `PRIMARY_ACCOUNT_TYPE` ([97e4f2a](https://github.com/SolidZORO/leaa/commit/97e4f2ae7349e4460c372c2f724b73c05ab2fe79))
+
+### Performance Improvements
+
+- click sidebar menu item can refresh list ([e85e385](https://github.com/SolidZORO/leaa/commit/e85e385be61bec2d66b492d5894fc7f6eeaebb03))
+- DEFAULT_PAGE_SIZE value to `20`, one screen can display ([3596609](https://github.com/SolidZORO/leaa/commit/359660950ba04f69fc7a6478bc18acd5b4783e4d))
+- onFetchList use `react-use` control effect ([d46dad9](https://github.com/SolidZORO/leaa/commit/d46dad9084e1b09324f41a5a6d84fb007e9bcb8e))
+
+## [3.5.1](https://github.com/SolidZORO/leaa/compare/v3.5.0...v3.5.1) (2020-06-18)
+
+### Bug Fixes
+
+- fixed resource dir in `deploy-api.sh` ([3e625ab](https://github.com/SolidZORO/leaa/commit/3e625ab942129fecbf25a6e0315f31a098130ee3))
+
+### Performance Improvements
+
+- better CLI UX ([3848713](https://github.com/SolidZORO/leaa/commit/3848713c8cb7895fe0a1c63c6199860e840543e5))
+
+# [3.5.0](https://github.com/SolidZORO/leaa/compare/v3.4.1...v3.5.0) (2020-06-16)
+
+### Bug Fixes
+
+- change `.env.js` to `_env.js`, fix serverless not load ([7c35661](https://github.com/SolidZORO/leaa/commit/7c35661d051657cd90b50b7feca2e217e77a636b))
+- LoginForm check env.DEMO_MODE inject account ([b59e64c](https://github.com/SolidZORO/leaa/commit/b59e64c48def40fa3a9ec0970edd5f2827698708))
+
+### Features
+
+- api .env add `AUTO_CUT_TAGS` ([b8ca654](https://github.com/SolidZORO/leaa/commit/b8ca6540de38898097bc74ede8fcbd6e6e574d18))
+- delete dotenv of dashboard use `.env.js` replace `.env` ([7cc0950](https://github.com/SolidZORO/leaa/commit/7cc0950930004ef9da852448155734f254f4f891))
+
+### Performance Improvements
+
+- update UX ([cb8867a](https://github.com/SolidZORO/leaa/commit/cb8867a60c125f6aacda13aaf7f4703fd075b035))
+
+### BREAKING CHANGES
+
+- change `.env.js` to `_env.js`, fix serverless not load
+- delete dotenv of dashboard use `.env.js` replace `.env`
 
 ## [3.4.1](https://github.com/SolidZORO/leaa/compare/v3.4.0...v3.4.1) (2020-06-14)
 
 **Note:** Version bump only for package @leaa/dashboard
-
-
-
-
 
 # [3.4.0](https://github.com/SolidZORO/leaa/compare/v3.3.5...v3.4.0) (2020-06-13)
 
