@@ -8,7 +8,7 @@ i18n
   .use(initReactI18next)
   .use(LanguageDetector)
   .init({
-    // whitelist: ['en-US', 'zh-CN', 'zh', 'en'],
+    whitelist: ['en-US', 'zh-CN', 'zh', 'en'],
     resources: {
       'en-US': enUs,
       'zh-CN': zhCn,

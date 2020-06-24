@@ -3,7 +3,7 @@ import cx from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { Input } from 'antd';
 import { InputProps } from 'antd/es/input';
-import { SearchOutlined } from '@ant-design/icons';
+import { RiSearchLine } from 'react-icons/ri';
 
 import style from './style.module.less';
 
@@ -14,7 +14,7 @@ interface IProps extends InputProps {
 
 export const SearchInput = (props: IProps) => {
   const { t } = useTranslation();
-  const [text, setText] = useState<string | number | string[] | undefined>(props.value);
+  const [text, setText] = useState<string | number | string[] | undefined>();
 
   const onChange = (str?: string) => {
     const nextStr = str || undefined;
@@ -42,7 +42,7 @@ export const SearchInput = (props: IProps) => {
         onChange={(e) => onChange(e.currentTarget.value)}
         value={text}
         addonAfter={
-          <SearchOutlined className={style['search-input-search-button']} onClick={() => onSearch(text as string)} />
+          <RiSearchLine className={style['search-input-search-button']} onClick={() => onSearch(text as string)} />
         }
         onPressEnter={() => onSearch(text as string)}
         className={cx(style['search-input-wrapper'], 'search-input-wrapper')}

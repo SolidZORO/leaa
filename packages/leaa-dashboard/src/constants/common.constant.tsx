@@ -1,7 +1,12 @@
-// Icon / Rcon name
-export const PAGE_CARD_TITLE_CREATE_ICON = 'ri-x-add-line';
-export const CREATE_BUTTON_ICON = 'ri-plus-line';
-export const UPDATE_BUTTON_ICON = 'ri-edit-2-line';
+import React from 'react';
+import { RiAddLine, RiEditLine } from 'react-icons/ri';
+
+// Icon name
+export const PAGE_CARD_TITLE_CREATE_ICON = <RiAddLine />;
+export const CREATE_BUTTON_ICON = <RiAddLine style={{ fontSize: '120%', verticalAlign: '-4px' }} />;
+export const UPDATE_BUTTON_ICON = <RiEditLine />;
+
+//  SL
 export const SIDERBAR_COLLAPSED_SL_KEY = 'siderbarCollapsed';
 
 // onValidateForm Fn

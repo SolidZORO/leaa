@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import cx from 'classnames';
 import { Button } from 'antd';
+import { RiRefreshLine } from 'react-icons/ri';
 
 import { TagSyncToFileRes } from '@leaa/api/src/dtos/tag';
 import { msg, ajax, errorMsg } from '@leaa/dashboard/src/utils';
-import { Rcon } from '@leaa/dashboard/src/components';
 
 import { IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
 import { envConfig } from '@leaa/dashboard/src/configs';
@@ -37,7 +37,7 @@ export const SyncTagsToFileButton = (props: IProps) => {
     <Button
       className={cx(style['sync-button'], props.className)}
       type="link"
-      icon={<Rcon type="ri-refresh-line" />}
+      icon={<RiRefreshLine />}
       onClick={() => onSyncTagsToFile()}
       loading={loading}
     >

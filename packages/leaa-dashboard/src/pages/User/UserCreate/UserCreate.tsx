@@ -3,13 +3,13 @@ import { useTranslation } from 'react-i18next';
 import { Button } from 'antd';
 
 import { User } from '@leaa/api/src/entrys';
-import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
+import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { UserCreateOneReq } from '@leaa/api/src/dtos/user';
 import { IPage, ICommenFormRef, ISubmitData, IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
 import { msg, errorMsg, ajax } from '@leaa/dashboard/src/utils';
 
 import { envConfig } from '@leaa/dashboard/src/configs';
-import { PageCard, HtmlMeta, Rcon, SubmitBar } from '@leaa/dashboard/src/components';
+import { PageCard, HtmlMeta, SubmitBar } from '@leaa/dashboard/src/components';
 
 import { UserInfoForm } from '../_components/UserInfoForm/UserInfoForm';
 
@@ -59,7 +59,7 @@ export default (props: IPage) => {
         <Button
           type="primary"
           size="large"
-          icon={<Rcon type={UPDATE_BUTTON_ICON} />}
+          icon={CREATE_BUTTON_ICON}
           className="g-submit-bar-button"
           loading={submitLoading}
           onClick={onCreateItem}

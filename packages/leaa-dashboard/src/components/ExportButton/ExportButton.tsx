@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import cx from 'classnames';
 import moment from 'moment';
+import { RiDownload2Line } from 'react-icons/ri';
 
 import { Button, message } from 'antd';
 import { ButtonSize } from 'antd/es/button';
 import { useTranslation } from 'react-i18next';
 
-import { Rcon } from '@leaa/dashboard/src/components';
 import { envConfig } from '@leaa/dashboard/src/configs';
 import { getAuthToken } from '@leaa/dashboard/src/utils';
 
@@ -63,7 +63,7 @@ export const ExportButton = (props: IProps) => {
     <div className={cx(style['wrapper'], props.className)}>
       <Button
         size={props.size}
-        icon={<Rcon type="ri-download-2-line" />}
+        icon={<RiDownload2Line />}
         onClick={onExport}
         loading={loading}
         className={cx('g-extra-filter-bar--item', 'g-extra-filter-bar--export')}

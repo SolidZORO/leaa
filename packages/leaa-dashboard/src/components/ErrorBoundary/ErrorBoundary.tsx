@@ -1,10 +1,9 @@
 import React from 'react';
 import qs from 'qs';
 import { Button } from 'antd';
-
+import { RiArrowLeftLine, RiCloseLine } from 'react-icons/ri';
 // import { mergeUrlParamToUrlQuery } from '@leaa/dashboard/src/utils/url.util';
 import { getUrlPath } from '@leaa/dashboard/src/utils/url.util';
-import { Rcon } from '@leaa/dashboard/src/components/Rcon/Rcon';
 
 import style from './style.module.less';
 
@@ -64,7 +63,7 @@ export class ErrorBoundary extends React.Component<IProps, IState> {
               <Button
                 type="primary"
                 shape="circle"
-                icon={<Rcon type="ri-arrow-left-line" />}
+                icon={<RiArrowLeftLine />}
                 onClick={this.onGoToHome}
                 className={style['goto-home-button']}
               />
@@ -75,7 +74,7 @@ export class ErrorBoundary extends React.Component<IProps, IState> {
               <code>{JSON.stringify(this.state.errorInfo)}</code>
               <Button
                 shape="circle"
-                icon={<Rcon type="ri-close-line" />}
+                icon={<RiCloseLine />}
                 size="small"
                 onClick={this.onGoToHome}
                 className={style['close-error-info']}

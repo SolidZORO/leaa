@@ -3,8 +3,8 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Breadcrumb } from 'antd';
+import { RiHome5Line } from 'react-icons/ri';
 
-import { Rcon } from '@leaa/dashboard/src/components';
 import { flateMasterRoutes } from '@leaa/dashboard/src/routes/master.route';
 
 import style from './style.module.less';
@@ -40,7 +40,7 @@ export const NavBreadcrumb = (props: IProps) => {
   const breadcrumbItems = [
     <Breadcrumb.Item key={`${Object.keys(home)}`}>
       <Link to={`${Object.keys(home)}`}>
-        <Rcon type="ri-home-5-line" /> {t(Object.values(home))}
+        <RiHome5Line /> {t(Object.values(home))}
       </Link>
     </Breadcrumb.Item>,
   ].concat(extraBreadcrumbs);

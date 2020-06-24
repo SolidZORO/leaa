@@ -2,8 +2,8 @@ import _ from 'lodash';
 import cx from 'classnames';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { DeleteOutlined } from '@ant-design/icons';
 import { Button, Tooltip } from 'antd';
+import { RiDeleteBin7Line } from 'react-icons/ri';
 
 import { User } from '@leaa/api/src/entrys';
 import { AttachmentBox } from '@leaa/dashboard/src/components';
@@ -64,7 +64,7 @@ export const UploadUserAvatar = (props: IProps) => {
                 type="link"
                 size="small"
                 shape="circle"
-                icon={<DeleteOutlined />}
+                icon={<RiDeleteBin7Line />}
                 className={style['avatar-delete']}
                 onClick={() => onUpdateAvatar(null)}
                 loading={updateLoading}

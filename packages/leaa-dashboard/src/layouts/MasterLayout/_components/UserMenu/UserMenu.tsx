@@ -2,10 +2,11 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Skeleton, Popover, Button } from 'antd';
 import { RouteComponentProps } from 'react-router-dom';
+import { RiLogoutBoxRLine, RiArrowDropDownLine } from 'react-icons/ri';
 
 import { getAuthInfo, removeAuth } from '@leaa/dashboard/src/utils';
 import { LOGOUT_REDIRECT_URL } from '@leaa/dashboard/src/constants';
-import { Rcon, BuildInfo, UserAvatar } from '@leaa/dashboard/src/components';
+import { BuildInfo, UserAvatar } from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';
 
@@ -39,8 +40,7 @@ export const UserMenu = (props: IProps): JSX.Element => {
 
       <div className={style['footer']}>
         <Button className={style['logout-button']} block type="ghost" onClick={onLogout}>
-          {t('_comp:UserMenu.safelyLogout')}{' '}
-          <Rcon type="ri-logout-box-r-line" className={style['safely-logout-button']} />
+          {t('_comp:UserMenu.safelyLogout')} <RiLogoutBoxRLine className={style['safely-logout-button']} />
         </Button>
       </div>
     </div>
@@ -52,7 +52,7 @@ export const UserMenu = (props: IProps): JSX.Element => {
         <Button type="link" className={style['usermenu-button']}>
           <UserAvatar url={user.avatar_url} />
           <span className={style['usermenu-name']}>{user.name}</span>
-          <Rcon type="ri-arrow-drop-down-fill" className={style['usermenu-name-icon']} />
+          <RiArrowDropDownLine className={style['usermenu-name-icon']} />
         </Button>
       </Popover>
     </div>

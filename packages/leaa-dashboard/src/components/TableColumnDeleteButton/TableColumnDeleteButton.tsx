@@ -4,7 +4,8 @@ import { ButtonSize } from 'antd/es/button';
 import { useTranslation } from 'react-i18next';
 import cx from 'classnames';
 
-import { DeleteOutlined, LoadingOutlined, QuestionCircleOutlined } from '@ant-design/icons';
+import { LoadingOutlined } from '@ant-design/icons';
+import { RiDeleteBin7Line, RiQuestionLine } from 'react-icons/ri';
 
 import { ajax, errorMsg, msg } from '@leaa/dashboard/src/utils';
 import { envConfig } from '@leaa/dashboard/src/configs';
@@ -52,11 +53,7 @@ export const TableColumnDeleteButton = (props: IProps) => {
         icon={null}
         title={
           <span className={style['title-wrapper']}>
-            {loading ? (
-              <LoadingOutlined className={style['icon-question']} />
-            ) : (
-              <QuestionCircleOutlined className={style['icon-question']} />
-            )}
+            {loading ? <LoadingOutlined spin /> : <RiQuestionLine color="red" />}
             {t('_comp:TableColumnDeleteButton.confirmDeleteItem')} {props.id && <IdTag id={props.id} />}{' '}
             {props.tipsTitle ? <em>{props.tipsTitle} ?</em> : null}
           </span>
@@ -64,7 +61,7 @@ export const TableColumnDeleteButton = (props: IProps) => {
         placement="topRight"
         onConfirm={onChange}
       >
-        <Button icon={<DeleteOutlined />} size={props.size || 'small'} loading={loading} />
+        <Button icon={<RiDeleteBin7Line />} size={props.size || 'small'} loading={loading} />
       </Popconfirm>
     </div>
   );

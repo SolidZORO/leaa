@@ -1,7 +1,7 @@
 import cx from 'classnames';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { PlusOutlined } from '@ant-design/icons';
+import { RiAddLine } from 'react-icons/ri';
 
 import { Attachment } from '@leaa/api/src/entrys';
 import { IAttachmentParams } from '@leaa/api/src/interfaces';
@@ -69,6 +69,7 @@ export const AttachmentDropzone = (props: IProps) => {
   // console.log(attachmentParams);
 
   return (
+    // @ts-ignore
     <div
       {...getRootProps()}
       className={cx(style['attachment-dropzone-wrapper'], {
@@ -81,7 +82,9 @@ export const AttachmentDropzone = (props: IProps) => {
       style={{ height: cardHeight }}
     >
       <input {...getInputProps()} className={style['file-input']} />
-      <PlusOutlined className={style['file-icon']} style={{ height: cardHeight }} />
+      <div className={style['file-icon']} style={{ height: cardHeight || '40px' }}>
+        <RiAddLine />
+      </div>
     </div>
   );
 };

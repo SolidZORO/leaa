@@ -1,5 +1,6 @@
 import cx from 'classnames';
 import React, { useState, useEffect } from 'react';
+import { RiZoomInLine, RiHdLine } from 'react-icons/ri';
 
 import { Input, Popover } from 'antd';
 import { useTranslation } from 'react-i18next';
@@ -8,7 +9,7 @@ import { Draggable } from 'react-beautiful-dnd';
 import { Attachment } from '@leaa/api/src/entrys';
 
 import { IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
-import { SwitchNumber, Rcon, ConfirmDeleteButton } from '@leaa/dashboard/src/components';
+import { SwitchNumber, ConfirmDeleteButton } from '@leaa/dashboard/src/components';
 import { envConfig } from '@leaa/dashboard/src/configs';
 import { ajax, errorMsg, formatAttaUrl } from '@leaa/dashboard/src/utils';
 
@@ -112,10 +113,10 @@ export const AttachmentItem = (props: IProps) => {
             </a>
           }
         >
-          <Rcon type="ri-eye-line" className={style['zoomimage']} />
+          <RiZoomInLine className={style['zoomimage']} />
         </Popover>
 
-        {props.attachment?.at2x === 1 && <Rcon type="ri-hd-line" title="@2x image" className={style['at2xdot']} />}
+        {props.attachment?.at2x === 1 && <RiHdLine title="@2x image" className={style['at2xdot']} />}
 
         <img src={`${formatAttaUrl(props.attachment?.url)}`} alt="" />
       </div>

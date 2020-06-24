@@ -1,19 +1,17 @@
 import _ from 'lodash';
 import cx from 'classnames';
+import i18n from 'i18next';
 import React, { useState } from 'react';
 import { Layout, Menu, Drawer } from 'antd';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { useMedia, useUpdateEffect } from 'react-use';
-import i18n from 'i18next';
-import { RiMenuLine, RiAddLine } from 'react-icons/ri';
-import { QuestionCircleOutlined, CheckCircleOutlined } from '@ant-design/icons';
+import { RiAddLine } from 'react-icons/ri';
 
 import { IRouteItem } from '@leaa/dashboard/src/interfaces';
 import { masterRouteList, flateMasterRoutes } from '@leaa/dashboard/src/routes/master.route';
 import { getAuthInfo } from '@leaa/dashboard/src/utils';
-import { Rcon } from '@leaa/dashboard/src/components';
 import { envConfig } from '@leaa/dashboard/src/configs';
-import { ALLOW_PERMISSION, CREATE_BUTTON_ICON, IS_MOBILE_SCREEN } from '@leaa/dashboard/src/constants';
+import { ALLOW_PERMISSION, IS_MOBILE_SCREEN } from '@leaa/dashboard/src/constants';
 
 import { SidebarTarget } from '../SidebarTarget/SidebarTarget';
 

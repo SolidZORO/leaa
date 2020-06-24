@@ -2,8 +2,9 @@ import cx from 'classnames';
 import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Modal, Popconfirm } from 'antd';
-import { DeleteOutlined, LoadingOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import { UPDATE_BUTTON_ICON, PAGE_CARD_TITLE_CREATE_ICON } from '@leaa/dashboard/src/constants';
+import { LoadingOutlined } from '@ant-design/icons';
+import { RiDeleteBin7Line, RiQuestionLine } from 'react-icons/ri';
 
 import { Setting } from '@leaa/api/src/entrys';
 import { envConfig } from '@leaa/dashboard/src/configs';
@@ -17,7 +18,7 @@ import {
   ISubmitData,
 } from '@leaa/dashboard/src/interfaces';
 import { ajax, errorMsg, genCrudRequestQuery, msg } from '@leaa/dashboard/src/utils';
-import { PageCard, HtmlMeta, SubmitBar, Rcon } from '@leaa/dashboard/src/components';
+import { PageCard, HtmlMeta, SubmitBar } from '@leaa/dashboard/src/components';
 
 import { SettingUpdateManyReq, SettingUpdateOneReq, SettingCreateOneReq } from '@leaa/api/src/dtos/setting';
 
@@ -175,14 +176,14 @@ export default (props: IPage) => {
       route={props.route}
       title={
         <span>
-          <Rcon type={props.route.icon} />
+          {props.route?.icon}
           <strong>{t(`${props.route?.namei18n}`)}</strong>
           <Button
             className={cx('g-page-card-create-button', style['create-button'])}
             onClick={onOpenCreateSetting}
             type="link"
           >
-            <Rcon type={PAGE_CARD_TITLE_CREATE_ICON} />
+            {PAGE_CARD_TITLE_CREATE_ICON}
           </Button>
         </span>
       }
@@ -197,7 +198,7 @@ export default (props: IPage) => {
         <Button
           type="primary"
           size="large"
-          icon={<Rcon type={UPDATE_BUTTON_ICON} />}
+          icon={UPDATE_BUTTON_ICON}
           className="g-submit-bar-button"
           loading={batchUpdateLoading}
           onClick={onBatchUpdatSettings}
@@ -207,9 +208,10 @@ export default (props: IPage) => {
       </SubmitBar>
 
       <Modal
-        title={`${t(`_lang:${modalType}`)}${modalData?.name ? `  ${modalData.name}` : ''}`}
+        title={`${t(`_lang:${modalType}`)}${modalData?.name ? `  ${modalData?.name}` : ''}`}
+        // visible={modalVisible}
         visible={modalVisible}
-        // visible
+        getContainer={false}
         onOk={() => (modalType === 'update' ? onUpdateSetting(modalData?.id) : onCreateSetting(modalData?.id))}
         // confirmLoading={updateSettingMutation.loading}
         className={style['setting-modal']}
@@ -218,16 +220,17 @@ export default (props: IPage) => {
       >
         <div className={style['delete-button']}>
           <Popconfirm
-            icon={deleteLoading ? <LoadingOutlined /> : <QuestionCircleOutlined />}
+            icon={null}
             title={
-              <span>
+              <span className={style['title-wrapper']}>
+                {createLoading || updateLoading ? <LoadingOutlined spin /> : <RiQuestionLine color="red" />}
                 {t('_page:Setting.confirmDelete')} {modalData?.name}?
               </span>
             }
             placement="topRight"
             onConfirm={() => onDeleteSettings(modalData?.id)}
           >
-            <Button icon={<DeleteOutlined />} />
+            <Button icon={<RiDeleteBin7Line />} loading={createLoading || updateLoading} />
           </Popconfirm>
         </div>
 

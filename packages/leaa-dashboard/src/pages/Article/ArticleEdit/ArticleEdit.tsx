@@ -14,7 +14,6 @@ import {
   PageCard,
   HtmlMeta,
   WYSIWYGEditor,
-  Rcon,
   SubmitBar,
   SelectTagId,
   AttachmentBox,
@@ -160,7 +159,7 @@ export default (props: IPage) => {
         <Button
           type="primary"
           size="large"
-          icon={<Rcon type={UPDATE_BUTTON_ICON} />}
+          icon={UPDATE_BUTTON_ICON}
           className="g-submit-bar-button"
           loading={submitLoading}
           onClick={onUpdateItem}

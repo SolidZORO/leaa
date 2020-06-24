@@ -3,8 +3,7 @@ import moment from 'moment';
 import { Tooltip } from 'antd';
 import cx from 'classnames';
 import i18n from 'i18next';
-
-import { Rcon } from '@leaa/dashboard/src/components';
+import { RiTimeLine } from 'react-icons/ri';
 import { FORMAT_DATA, FORMAT_DATA_TIME } from '@leaa/dashboard/src/constants';
 
 import style from './style.module.less';
@@ -46,7 +45,7 @@ export const EntryInfoDate = (props: IProps) => {
         [style['wrapper--small']]: props.size === 'small',
       })}
     >
-      <Rcon type="ri-time-line" />
+      <RiTimeLine />
 
       {props.date && (
         <div className={style['inner']}>

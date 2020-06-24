@@ -7,12 +7,11 @@ import SortableTree, { TreeItem } from 'react-sortable-tree';
 import { useMount, useUpdateEffect } from 'react-use';
 
 import { envConfig } from '@leaa/dashboard/src/configs';
-import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { ajax, errorMsg } from '@leaa/dashboard/src/utils';
 import { IPage, IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
 import { ICategoriesQuery } from '@leaa/api/src/interfaces';
 
-import { HtmlMeta, PageCard, TableColumnDeleteButton, Rcon } from '@leaa/dashboard/src/components';
+import { HtmlMeta, PageCard, TableColumnDeleteButton } from '@leaa/dashboard/src/components';
 
 import 'react-sortable-tree/style.css';
 import style from './style.module.less';
@@ -75,9 +74,7 @@ export default (props: IPage) => {
                 className={style['tree-item-delete-button']}
               />,
               <Button key={`${node.id}`} title={_.toString(node)} size="small">
-                <Link to={`/categories/create?parent_id=${node.id}`}>
-                  <Rcon type={CREATE_BUTTON_ICON} />
-                </Link>
+                <Link to={`/categories/create?parent_id=${node.id}`}>CREATE_BUTTON_ICON</Link>
               </Button>,
               <span key={`${node.id}`}>&nbsp;</span>,
             ],

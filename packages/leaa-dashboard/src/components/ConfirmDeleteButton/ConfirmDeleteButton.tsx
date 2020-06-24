@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import cx from 'classnames';
 import { useTranslation } from 'react-i18next';
-import { DeleteOutlined } from '@ant-design/icons';
 import { Tooltip, Button } from 'antd';
 import { ButtonProps } from 'antd/es/button';
+import { RiDeleteBin7Line } from 'react-icons/ri';
 
 import style from './style.module.less';
 
@@ -30,7 +30,7 @@ export const ConfirmDeleteButton = (props: IProps) => {
           type={props.type || 'link'}
           size={props.size || 'small'}
           shape={props.shape || 'circle'}
-          icon={props.icon || <DeleteOutlined />}
+          icon={props.icon || <RiDeleteBin7Line />}
           {...props}
           className={cx(style['delete'], { [style['delete-need--confirm']]: confirm })}
           style={{ ...props.style, opacity: props.opacity }}

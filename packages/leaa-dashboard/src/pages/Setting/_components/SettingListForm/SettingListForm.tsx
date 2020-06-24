@@ -1,6 +1,7 @@
 import cx from 'classnames';
 import React, { useEffect, forwardRef, useImperativeHandle } from 'react';
 import { Form, Input, Select, Tooltip, Button } from 'antd';
+import { RiQuestionLine, RiEdit2Line, RiLock2Line } from 'react-icons/ri';
 
 import { useTranslation } from 'react-i18next';
 
@@ -9,7 +10,7 @@ import { errorMsg } from '@leaa/dashboard/src/utils';
 import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
 import { SettingUpdateOne } from '@leaa/api/src/dtos/setting';
 
-import { FormCard, Rcon } from '@leaa/dashboard/src/components';
+import { FormCard } from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';
 
@@ -71,7 +72,7 @@ export const SettingListForm = forwardRef((props: IProps, ref: React.Ref<any>) =
         <Tooltip
           title={
             <>
-              <Rcon type="ri-question-line" /> {setting.description}
+              <RiQuestionLine /> {setting.description}
             </>
           }
           trigger="hover"
@@ -84,11 +85,11 @@ export const SettingListForm = forwardRef((props: IProps, ref: React.Ref<any>) =
               className={cx(style['label-button'])}
             >
               <strong className={cx(style['label-text'])}>
-                {setting.private ? <Rcon type="ri-lock-2-line" className={style['private-icon']} /> : null}
+                {setting.private ? <RiLock2Line className={style['private-icon']} /> : null}
                 {setting.name}
               </strong>
 
-              <Rcon type="ri-edit-2-line" />
+              <RiEdit2Line />
             </Button>
 
             <code>{setting.slug}</code>

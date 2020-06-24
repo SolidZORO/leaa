@@ -1,6 +1,5 @@
 import React from 'react';
 import { IPage } from '@leaa/dashboard/src/interfaces';
-import { CheckCircleOutlined } from '@ant-design/icons';
 import { RiMenuLine, RiCheckboxCircleLine } from 'react-icons/ri';
 import { FiCheckCircle } from 'react-icons/fi';
 
@@ -12,7 +11,6 @@ export default (props: IPage) => {
       <Test />
 
       <RiMenuLine />
-      <CheckCircleOutlined />
       <FiCheckCircle />
       <RiCheckboxCircleLine />
 

@@ -17,6 +17,7 @@ import {
   RiKeyLine,
   RiTodoLine,
   RiCodeSSlashLine,
+  RiAttachmentLine,
 } from 'react-icons/ri';
 
 import { IRouteItem } from '@leaa/dashboard/src/interfaces';
@@ -363,7 +364,7 @@ export const masterRouteList: IRouteItem[] = [
         namei18n: '_route:attachment',
         permission: 'attachment.list-read',
         path: '/attachments',
-        icon: <RiTodoLine />,
+        icon: <RiAttachmentLine />,
         LazyComponent: lazy(() =>
           import(/* webpackChunkName: 'AttachmentList' */ '../pages/Attachment/AttachmentList/AttachmentList'),
         ),
@@ -375,7 +376,7 @@ export const masterRouteList: IRouteItem[] = [
         namei18n: '_route:createAttachment',
         permission: 'attachment.item-create',
         path: '/attachments/create',
-        icon: <RiTodoLine />,
+        icon: <RiAttachmentLine />,
         LazyComponent: lazy(() =>
           import(/* webpackChunkName: 'AttachmentCreate' */ '../pages/Attachment/AttachmentCreate/AttachmentCreate'),
         ),

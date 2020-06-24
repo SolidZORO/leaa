@@ -2,14 +2,14 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Row, Col } from 'antd';
 
-import { Ax, Attachment } from '@leaa/api/src/entrys';
+import { Ax } from '@leaa/api/src/entrys';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { AxUpdateOneReq } from '@leaa/api/src/dtos/ax';
 import { IPage, ICommenFormRef, ISubmitData, IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
 import { msg, errorMsg, ajax } from '@leaa/dashboard/src/utils';
 
 import { envConfig } from '@leaa/dashboard/src/configs';
-import { PageCard, HtmlMeta, Rcon, SubmitBar, AttachmentBox } from '@leaa/dashboard/src/components';
+import { PageCard, HtmlMeta, SubmitBar, AttachmentBox } from '@leaa/dashboard/src/components';
 
 import { AxInfoForm } from '../_components/AxInfoForm/AxInfoForm';
 
@@ -106,7 +106,7 @@ export default (props: IPage) => {
         <Button
           type="primary"
           size="large"
-          icon={<Rcon type={UPDATE_BUTTON_ICON} />}
+          icon={UPDATE_BUTTON_ICON}
           className="g-submit-bar-button"
           loading={submitLoading}
           onClick={onUpdateItem}

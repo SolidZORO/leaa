@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from 'antd';
-import { Rcon } from '@leaa/dashboard/src/components';
+import { RiArrowLeftLine } from 'react-icons/ri';
 
 import style from './style.module.less';
 
@@ -12,7 +12,7 @@ export default () => (
   <div className={style['wrapper']}>
     <div className={style['container']}>
       <div className={style['title']}>
-        <Button type="primary" shape="circle" icon={<Rcon type="ri-arrow-left-line" />} onClick={onGoToHome} />
+        <Button type="primary" shape="circle" icon={<RiArrowLeftLine />} onClick={onGoToHome} />
         <strong>404 - Page Not Found</strong>
       </div>
     </div>

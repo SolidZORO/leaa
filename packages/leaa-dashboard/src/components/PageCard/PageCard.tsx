@@ -4,10 +4,8 @@ import cx from 'classnames';
 import { Spin } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { IRouteItem } from '@leaa/dashboard/src/interfaces';
-
-import { Rcon } from '@leaa/dashboard/src/components';
+import { RiAddLine } from 'react-icons/ri';
 import { Link } from 'react-router-dom';
-import { PAGE_CARD_TITLE_CREATE_ICON } from '@leaa/dashboard/src/constants';
 
 import style from './style.module.less';
 
@@ -33,11 +31,11 @@ export const PageCard = (props: IProps) => {
       return (
         <div className={style['title']}>
           <span>
-            <Rcon type={props.route?.icon} />
+            {props.route?.icon}
             <strong>{t(`${props.route?.namei18n}`)}</strong>
             {props.route?.canCreate && (
               <Link className="g-page-card-create-link" to={`${props.route?.path}/create`}>
-                <Rcon type={PAGE_CARD_TITLE_CREATE_ICON} />
+                <RiAddLine title="PAGE_CARD_TITLE_CREATE_ICON" />
               </Link>
             )}
           </span>
@@ -49,7 +47,7 @@ export const PageCard = (props: IProps) => {
       return (
         <div className={style['title']}>
           <span>
-            <Rcon type={props.route?.icon} />
+            {props.route?.icon}
             <strong>{t(`${props.route?.namei18n}`)}</strong>
           </span>
         </div>

@@ -1,6 +1,7 @@
 import cx from 'classnames';
 import React, { useEffect, forwardRef, useImperativeHandle } from 'react';
 import { Col, Form, Input, Row } from 'antd';
+import { RiVipCrown2Line } from 'react-icons/ri';
 
 import { useTranslation } from 'react-i18next';
 
@@ -9,7 +10,7 @@ import { errorMsg } from '@leaa/dashboard/src/utils';
 import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
 import { UserUpdateOneReq } from '@leaa/api/src/dtos/user';
 
-import { FormCard, EntryInfoDate, SwitchNumber, Rcon } from '@leaa/dashboard/src/components';
+import { FormCard, EntryInfoDate, SwitchNumber } from '@leaa/dashboard/src/components';
 
 import { UploadUserAvatar } from '../UploadUserAvatar/UploadUserAvatar';
 import style from './style.module.less';
@@ -59,9 +60,7 @@ export const UserInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
         title={
           <>
             {t('_page:User.userInfo')}{' '}
-            {props.item && props.item.is_admin ? (
-              <Rcon type="ri-vip-crown-2-line" className={style['is-admin-icon']} />
-            ) : null}
+            {props.item && props.item.is_admin ? <RiVipCrown2Line className={style['is-admin-icon']} /> : null}
           </>
         }
         extra={<EntryInfoDate date={props.item && [props.item.created_at, props.item.updated_at]} />}

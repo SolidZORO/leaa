@@ -9,7 +9,7 @@ import { IPage, ICommenFormRef, ISubmitData, IHttpRes, IHttpError } from '@leaa/
 import { msg, errorMsg, ajax } from '@leaa/dashboard/src/utils';
 import { envConfig } from '@leaa/dashboard/src/configs';
 
-import { PageCard, HtmlMeta, Rcon, SubmitBar } from '@leaa/dashboard/src/components';
+import { PageCard, HtmlMeta, SubmitBar } from '@leaa/dashboard/src/components';
 
 import { CategoryInfoForm } from '../_components/CategoryInfoForm/CategoryInfoForm';
 
@@ -74,7 +74,7 @@ export default (props: IPage) => {
         <Button
           type="primary"
           size="large"
-          icon={<Rcon type={UPDATE_BUTTON_ICON} />}
+          icon={UPDATE_BUTTON_ICON}
           className="g-submit-bar-button"
           loading={submitLoading}
           onClick={onUpdateItem}

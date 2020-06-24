@@ -28,11 +28,11 @@ import {
   TableColumnDeleteButton,
   TableColumnId,
   TagMiniSets,
-  Rcon,
   UserAvatar,
 } from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';
+import { RiVipCrown2Line } from 'react-icons/ri';
 
 declare type IColumnField = string | { [key: string]: any };
 
@@ -152,12 +152,12 @@ export const TableCard = <T extends any>(props: IProps<T>) => {
       render: (avatar: string) => <UserAvatar url={formatAttaUrl(avatar)} />,
     }),
     isAdmin: () => ({
-      title: <Rcon type="ri-vip-crown-2-line" />,
+      title: <RiVipCrown2Line />,
       width: 25,
       dataIndex: 'is_admin',
       sorter: true,
       sortOrder: calcTableSortOrder('name', crudQuery.sort),
-      render: (text: string, record: any) => (record.is_admin ? <Rcon type="ri-vip-crown-2-line" /> : null),
+      render: (text: string, record: any) => (record.is_admin ? <RiVipCrown2Line /> : null),
     }),
     category: () => ({
       title: t('_lang:category'),

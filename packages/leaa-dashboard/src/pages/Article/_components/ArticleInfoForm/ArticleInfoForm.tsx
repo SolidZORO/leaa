@@ -2,13 +2,14 @@ import cx from 'classnames';
 import React, { useEffect, forwardRef, useImperativeHandle } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Form, Input } from 'antd';
+import { RiExternalLinkLine } from 'react-icons/ri';
 
 import { Article } from '@leaa/api/src/entrys';
 import { ArticleUpdateOneReq } from '@leaa/api/src/dtos/article';
 import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
 import { errorMsg } from '@leaa/dashboard/src/utils';
 
-import { SwitchNumber, SelectCategoryIdByTree, Rcon } from '@leaa/dashboard/src/components';
+import { SwitchNumber, SelectCategoryIdByTree } from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';
 
@@ -71,7 +72,7 @@ export const ArticleInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =
             <Input
               size="small"
               className={style['form-item-slug-input']}
-              prefix={<Rcon type="ri-link-m" />}
+              prefix={<RiExternalLinkLine type="ri-link-m" />}
               placeholder={t('_lang:slug')}
             />
           </Form.Item>

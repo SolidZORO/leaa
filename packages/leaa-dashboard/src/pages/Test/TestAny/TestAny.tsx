@@ -3,14 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { IPage } from '@leaa/dashboard/src/interfaces';
 import { useStore } from '@leaa/dashboard/src/stores';
 
-import {
-  HtmlMeta,
-  SelectCategoryIdByTree,
-  Rcon,
-  Spinner,
-  TagSearchBox,
-  SelectTagId,
-} from '@leaa/dashboard/src/components';
+import { HtmlMeta, SelectCategoryIdByTree, Spinner, TagSearchBox, SelectTagId } from '@leaa/dashboard/src/components';
 
 import { GithubAuthButton } from '../_components/GithubAuthButton/GithubAuthButton';
 
@@ -61,8 +54,6 @@ export default (props: IPage) => {
       <br />
 
       <Spinner />
-
-      <Rcon type="ri-time-line" />
     </div>
   );
 };

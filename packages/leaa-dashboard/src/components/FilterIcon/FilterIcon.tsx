@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import cx from 'classnames';
 import _ from 'lodash';
+import { RiFilterLine, RiCloseCircleLine } from 'react-icons/ri';
 
-import { Rcon } from '@leaa/dashboard/src/components';
 import { ICrudListQueryParams } from '@leaa/dashboard/src/interfaces';
 import { DEFAULT_QUERY } from '@leaa/dashboard/src/constants';
 
@@ -38,11 +38,12 @@ export const FilterIcon = (props: IProps) => {
     }
   }, [props.crudQuery, props.clear]);
 
-  return (
-    <Rcon
-      className={cx(style['filter-bar-icon'], { [style['filter-bar-icon--show-close']]: showClose })}
-      type={showClose ? 'ri-close-circle-line' : 'ri-filter-line'}
+  return showClose ? (
+    <RiCloseCircleLine
+      className={cx(style['filter-bar-icon'], style['filter-bar-icon--show-close'])}
       onClick={onClose}
     />
+  ) : (
+    <RiFilterLine className={cx(style['filter-bar-icon'])} />
   );
 };

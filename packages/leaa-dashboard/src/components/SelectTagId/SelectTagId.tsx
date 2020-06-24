@@ -3,13 +3,13 @@ import { useTranslation } from 'react-i18next';
 import cx from 'classnames';
 import { Tag, Button, Popover } from 'antd';
 import { TooltipPlacement } from 'antd/es/tooltip';
+import { RiAddLine } from 'react-icons/ri';
 
 import { Tag as TagEntry } from '@leaa/api/src/entrys';
-import { TagSearchBox, Rcon } from '@leaa/dashboard/src/components';
-
+import { TagSearchBox } from '@leaa/dashboard/src/components';
 import { envConfig } from '@leaa/dashboard/src/configs';
 import { ajax } from '@leaa/dashboard/src/utils';
-import { IHttpRes, IHttpError, ICommenFormRef } from '@leaa/dashboard/src/interfaces';
+import { IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
 
 import style from './style.module.less';
 
@@ -135,8 +135,8 @@ export const SelectTagId = forwardRef((props: IProps, ref: React.Ref<any>) => {
             placement={props.placement || 'bottomLeft'}
             overlayClassName={style['popover-overlay']}
           >
-            <Button size="small" icon={<Rcon type="ri-plus-line" />} className={style['add-tag-button']}>
-              {t('_comp:SelectTagId.addTag')}
+            <Button size="small" className={style['add-tag-button']}>
+              <RiAddLine /> {t('_comp:SelectTagId.addTag')}
             </Button>
           </Popover>
         )}

@@ -1,6 +1,7 @@
 import cx from 'classnames';
 import React, { useEffect, forwardRef, useState, useImperativeHandle } from 'react';
 import { Col, Form, Input, Row, Select, InputNumber } from 'antd';
+import { RiQuestionLine } from 'react-icons/ri';
 
 import { useTranslation } from 'react-i18next';
 
@@ -9,7 +10,7 @@ import { errorMsg } from '@leaa/dashboard/src/utils';
 import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
 import { SettingUpdateOneReq } from '@leaa/api/src/dtos/setting';
 
-import { SwitchNumber, Rcon } from '@leaa/dashboard/src/components';
+import { SwitchNumber } from '@leaa/dashboard/src/components';
 import { buildTypeDom } from '../SettingListForm/SettingListForm';
 
 import style from './style.module.less';
@@ -171,7 +172,7 @@ export const SettingModalForm = forwardRef((props: IProps, ref: React.Ref<any>) 
               rules={[]}
               label={
                 <span>
-                  <Rcon type="ri-question-line" /> {t('_lang:tips')}
+                  <RiQuestionLine /> {t('_lang:tips')}
                 </span>
               }
             >

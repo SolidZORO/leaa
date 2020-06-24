@@ -5,19 +5,11 @@ import { Button } from 'antd';
 import { Role, Permission } from '@leaa/api/src/entrys';
 import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { RoleUpdateOneReq } from '@leaa/api/src/dtos/role';
-import {
-  IPage,
-  ICommenFormRef,
-  ISubmitData,
-  IHttpRes,
-  IHttpError,
-  ICrudListQueryParams,
-  ICrudListRes,
-} from '@leaa/dashboard/src/interfaces';
+import { IPage, ICommenFormRef, ISubmitData, IHttpRes, IHttpError, ICrudListRes } from '@leaa/dashboard/src/interfaces';
 import { msg, errorMsg, ajax } from '@leaa/dashboard/src/utils';
 
 import { envConfig } from '@leaa/dashboard/src/configs';
-import { PageCard, HtmlMeta, Rcon, SubmitBar } from '@leaa/dashboard/src/components';
+import { PageCard, HtmlMeta, SubmitBar } from '@leaa/dashboard/src/components';
 
 import { RoleInfoForm } from '../_components/RoleInfoForm/RoleInfoForm';
 import { RolePermissionsForm } from '../_components/RolePermissionsForm/RolePermissionsForm';
@@ -112,7 +104,7 @@ export default (props: IPage) => {
         <Button
           type="primary"
           size="large"
-          icon={<Rcon type={UPDATE_BUTTON_ICON} />}
+          icon={UPDATE_BUTTON_ICON}
           className="g-submit-bar-button"
           loading={submitLoading}
           onClick={onUpdateItem}
