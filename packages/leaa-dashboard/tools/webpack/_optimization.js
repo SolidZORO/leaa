@@ -157,9 +157,6 @@ if (WPCONST.__DEV__) {
       canPrint: true,
     }),
   ];
-
-  optimization.minimize = false;
-  optimization.minimizer = [];
 }
 
 module.exports = { optimization };
