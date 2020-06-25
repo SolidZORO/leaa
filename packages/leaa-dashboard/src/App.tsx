@@ -32,7 +32,6 @@ export const App = (): JSX.Element => {
   const NOT_FOUND_CONFIG_DOM = <p>PLEASE CHECK THE CONFIG FILE!</p>;
 
   if (!envConfig) return NOT_FOUND_CONFIG_DOM;
-  // return NOT_FOUND_CONFIG_DOM;
 
   return (
     <ErrorBoundary>

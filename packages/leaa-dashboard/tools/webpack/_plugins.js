@@ -84,11 +84,11 @@ const plugins = [
   new LodashModuleReplacementPlugin(lodashModuleReplacementPluginOption),
   // new CaseSensitivePathsPlugin(),
   new ShowEnvInfoWebpackPlugin(),
-  new WriteFilePlugin(),
-  // new WriteFilePlugin({
-  //   test: /(index\.html$|robots\.txt|\/assets\/|\/libs\/)/,
-  //   useHashIndex: true,
-  // }),
+  // new WriteFilePlugin(),
+  new WriteFilePlugin({
+    test: /(index\.html$|robots\.txt|\/assets\/|\/libs\/|_env.*)/,
+    useHashIndex: true,
+  }),
   new CopyPlugin({
     patterns: [
       {
