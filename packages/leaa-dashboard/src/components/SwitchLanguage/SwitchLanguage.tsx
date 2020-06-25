@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import cx from 'classnames';
 import { Button, Popover, ConfigProvider } from 'antd';
 import { TooltipPlacement } from 'antd/es/tooltip';
@@ -17,23 +17,23 @@ interface IProps {
 const langs = ['en-US', 'zh-CN'];
 
 export const SwitchLanguage = (props: IProps): JSX.Element => {
-  const changeLanguage = async (lng: string) => {
-    await i18n.changeLanguage(lng);
-  };
-
-  useEffect((): any => {
-    const lang = i18n.language;
-
+  const formatLang = (lang?: string) => {
     // trans fallbackLng
-    if (['en', 'us'].includes(lang)) return i18n.changeLanguage('en-US');
-    if (['zh', 'cn'].includes(lang)) return i18n.changeLanguage('zh-CN');
+    if (lang && ['en', 'us'].includes(lang)) return 'en-US';
+    if (lang && ['zh', 'cn'].includes(lang)) return 'zh-CN';
 
-    if (!langs.includes(lang) && i18n.options.fallbackLng && i18n.options.fallbackLng.length) {
-      return i18n.changeLanguage(i18n.options.fallbackLng.toString());
+    if ((!lang || !langs.includes(lang)) && i18n?.options.fallbackLng && i18n?.options.fallbackLng.length) {
+      return i18n.options.fallbackLng.toString();
     }
 
-    return undefined;
-  }, []);
+    return 'en-US';
+  };
+
+  const [language, setLanguage] = useState<string>(formatLang(i18n.language));
+
+  useEffect((): any => {
+    i18n.changeLanguage(language);
+  }, [language]);
 
   return (
     <div
@@ -52,7 +52,7 @@ export const SwitchLanguage = (props: IProps): JSX.Element => {
               key={lang}
               type="link"
               className={cx(style['lang-flag'], style[`lang-flag--${lang}`])}
-              onClick={() => changeLanguage(lang)}
+              onClick={() => setLanguage(lang)}
             >
               {i18n.t(`_lang:lang-${lang}`)}
               {i18n.language === lang && <RiCheckboxCircleLine className={style['switch-language-selected']} />}
@@ -62,9 +62,7 @@ export const SwitchLanguage = (props: IProps): JSX.Element => {
           <div className={style['switch-language-button']}>
             <Button type="link" size="small">
               <MdTranslate className={style['switch-language-button--icon']} />
-              <span className={style['switch-language-button--lang']}>
-                {i18n.t(`_lang:lang-code-${i18n.language}`)}
-              </span>
+              <span className={style['switch-language-button--lang']}>{i18n.t(`_lang:lang-code-${language}`)}</span>
             </Button>
           </div>
         </Popover>

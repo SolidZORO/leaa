@@ -158,8 +158,8 @@ if (WPCONST.__DEV__) {
     }),
   ];
 
-  // optimization.minimize = false;
-  // optimization.minimizer = [];
+  optimization.minimize = false;
+  optimization.minimizer = [];
 }
 
 module.exports = { optimization };
