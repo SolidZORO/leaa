@@ -3,7 +3,6 @@ const moment = require('moment');
 const webpack = require('webpack');
 const CopyPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ManifestPlugin = require('webpack-manifest-plugin');
 const WriteFilePlugin = require('write-file-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
@@ -84,7 +83,6 @@ const plugins = [
   new HtmlWebpackPlugin(htmlWebpackPluginOption),
   new LodashModuleReplacementPlugin(lodashModuleReplacementPluginOption),
   // new CaseSensitivePathsPlugin(),
-  new ManifestPlugin(),
   new ShowEnvInfoWebpackPlugin(),
   new WriteFilePlugin(),
   // new WriteFilePlugin({
