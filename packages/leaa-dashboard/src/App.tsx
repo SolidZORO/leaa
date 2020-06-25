@@ -29,7 +29,7 @@ export const App = (): JSX.Element => {
     setLocale(getLocale());
   });
 
-  const NOT_FOUND_CONFIG_DOM = <p>PLEASE CHECK THE CONFIG FILE!</p>;
+  const NOT_FOUND_CONFIG_DOM = <p>PLEASE CHECK ENV CONFIG FILE!</p>;
 
   if (!envConfig) return NOT_FOUND_CONFIG_DOM;
 

@@ -6,6 +6,7 @@ import { Button } from 'antd';
 import SortableTree, { TreeItem } from 'react-sortable-tree';
 import { useMount, useUpdateEffect } from 'react-use';
 
+import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { envConfig } from '@leaa/dashboard/src/configs';
 import { ajax, errorMsg } from '@leaa/dashboard/src/utils';
 import { IPage, IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
@@ -15,7 +16,6 @@ import { HtmlMeta, PageCard, TableColumnDeleteButton } from '@leaa/dashboard/src
 
 import 'react-sortable-tree/style.css';
 import style from './style.module.less';
-import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 
 const API_PATH = 'categories';
 
