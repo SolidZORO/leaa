@@ -17,8 +17,7 @@ interface IProps {
 const langs = ['en-US', 'zh-CN'];
 
 export const SwitchLanguage = (props: IProps): JSX.Element => {
-  const formatLang = (lang?: string) => {
-    // trans fallbackLng
+  const formatLang = (lang: string) => {
     if (lang && ['en', 'us'].includes(lang)) return 'en-US';
     if (lang && ['zh', 'cn'].includes(lang)) return 'zh-CN';
 
@@ -26,13 +25,16 @@ export const SwitchLanguage = (props: IProps): JSX.Element => {
       return i18n.options.fallbackLng.toString();
     }
 
-    return 'en-US';
+    return lang;
   };
 
+  const [visible, setVisible] = useState(false);
   const [language, setLanguage] = useState<string>(formatLang(i18n.language));
 
   useEffect((): any => {
     i18n.changeLanguage(language);
+
+    setVisible(false);
   }, [language]);
 
   return (
@@ -44,6 +46,7 @@ export const SwitchLanguage = (props: IProps): JSX.Element => {
       <ConfigProvider autoInsertSpaceInButton={false}>
         <Popover
           trigger="click"
+          visible={visible}
           arrowPointAtCenter
           placement={props.placement}
           overlayClassName={cx(style['switch-language-popover'], 'switch-language-popover')}
@@ -55,12 +58,12 @@ export const SwitchLanguage = (props: IProps): JSX.Element => {
               onClick={() => setLanguage(lang)}
             >
               {i18n.t(`_lang:lang-${lang}`)}
-              {i18n.language === lang && <RiCheckboxCircleLine className={style['switch-language-selected']} />}
+              {language === lang && <RiCheckboxCircleLine className={style['switch-language-selected']} />}
             </Button>
           ))}
         >
           <div className={style['switch-language-button']}>
-            <Button type="link" size="small">
+            <Button type="link" size="small" onClick={() => setVisible(!visible)}>
               <MdTranslate className={style['switch-language-button--icon']} />
               <span className={style['switch-language-button--lang']}>{i18n.t(`_lang:lang-code-${language}`)}</span>
             </Button>
