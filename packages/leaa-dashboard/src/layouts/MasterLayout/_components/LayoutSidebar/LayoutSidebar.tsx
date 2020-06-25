@@ -22,8 +22,13 @@ interface IProps extends RouteComponentProps {
   collapsedHash?: number;
 }
 
-const LOGO_WHITE = `/assets/images/logo/${envConfig.LOGO_WHITE_FILENAME || 'default-logo-white.svg'}`;
-const LOGO_BLACK = `/assets/images/logo/${envConfig.LOGO_BLACK_FILENAME || 'default-logo-black.svg'}`;
+const LOGO_WHITE = `${envConfig.ROUTER_BASENAME}assets/images/logo/${
+  envConfig.LOGO_WHITE_FILENAME || 'default-logo-white.svg'
+}`;
+
+const LOGO_BLACK = `${envConfig.ROUTER_BASENAME}assets/images/logo/${
+  envConfig.LOGO_BLACK_FILENAME || 'default-logo-black.svg'
+}`;
 
 export const LayoutSidebar = (props: IProps) => {
   const isMobile = useMedia(IS_MOBILE_SCREEN);

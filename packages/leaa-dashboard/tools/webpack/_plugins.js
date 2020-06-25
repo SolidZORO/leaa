@@ -26,16 +26,14 @@ class ShowEnvInfoWebpackPlugin {
 
 // HtmlWebpackPlugin
 const htmlWebpackPluginOption = {
-  __ENV_FILE__: `/${WPCONST.ENV_FILE_NAME}`,
-  __BUILD_DATA__: Buffer.from(
-    JSON.stringify({
-      VERSION: `v${process.env.npm_package_version}`,
-      VERSION_SLUG: `v${process.env.npm_package_version}-${getGitVersion}`,
-      MODE: WPCONST.MODE,
-      BUILDTIME: moment().format('YYYYMMDD-HHmmss'),
-      GIT_VERSION: getGitVersion,
-    }),
-  ).toString('base64'),
+  __ENV_FILE__: `${WPCONST.ROUTER_BASENAME}${WPCONST.ENV_FILE_NAME}`,
+  __BUILD_DATA__: JSON.stringify({
+    VERSION: `v${process.env.npm_package_version}`,
+    VERSION_SLUG: `v${process.env.npm_package_version}-${getGitVersion}`,
+    MODE: WPCONST.MODE,
+    BUILDTIME: moment().format('YYYYMMDD-HHmmss'),
+    GIT_VERSION: getGitVersion,
+  }),
   title: `${WPCONST.SITE_NAME || '-'}`,
   manifest: `${WPCONST.OUTPUT_PUBLIC_PATH}manifest.json`,
   filename: `${WPCONST.BUILD_DIR}/index.html`,
@@ -97,7 +95,7 @@ const plugins = [
     patterns: [
       {
         from: `${WPCONST.PUBLIC_DIR}/assets/**/*`,
-        to: WPCONST.BUILD_DIR,
+        to: `${WPCONST.BUILD_DIR}${WPCONST.OUTPUT_PUBLIC_PATH}`,
         transformPath(targetPath) {
           return `${targetPath}`.replace('public/', '');
         },
@@ -105,7 +103,7 @@ const plugins = [
       },
       {
         from: WPCONST.ENV_FILE_PATH,
-        to: WPCONST.BUILD_DIR,
+        to: `${WPCONST.BUILD_DIR}${WPCONST.OUTPUT_PUBLIC_PATH}`,
         transformPath(targetPath) {
           return `${targetPath}`.replace('public/', '');
         },

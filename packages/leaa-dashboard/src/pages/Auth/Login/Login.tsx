@@ -23,7 +23,9 @@ import { LoginForm } from './_components/LoginForm/LoginForm';
 
 import style from './style.module.less';
 
-const LOGO_BLACK = `/assets/images/logo/${envConfig.LOGO_BLACK_FILENAME || 'default-logo-black.svg'}`;
+const LOGO_BLACK = `${envConfig.ROUTER_BASENAME}assets/images/logo/${
+  envConfig.LOGO_BLACK_FILENAME || 'default-logo-black.svg'
+}`;
 
 const DEMO_ACCOUNT = envConfig.DEBUG_MODE
   ? { account: 'admin@local.com', password: 'h8Hx9qvPKoHMLQgj' }

@@ -82,8 +82,8 @@ WPCONST.PAGES_DIR = path.join(WPCONST.SRC_DIR, 'pages');
 // BUILD PATH
 WPCONST.BUILD_DIR_NAME = WPCONST.__DEV__ ? '.cache' : '_dist';
 
-// e.g. xxx.com/statics/
-WPCONST.OUTPUT_PUBLIC_PATH = '/statics/';
+// envConfig.ROUTER_BASENAME || '/'
+WPCONST.OUTPUT_PUBLIC_PATH = `${WPCONST.ROUTER_BASENAME}`;
 
 // e.g. /_dist
 WPCONST.BUILD_DIR = path.join(WPCONST.ROOT_DIR, WPCONST.BUILD_DIR_NAME);

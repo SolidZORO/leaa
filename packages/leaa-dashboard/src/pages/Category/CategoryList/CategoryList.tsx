@@ -15,6 +15,7 @@ import { HtmlMeta, PageCard, TableColumnDeleteButton } from '@leaa/dashboard/src
 
 import 'react-sortable-tree/style.css';
 import style from './style.module.less';
+import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 
 const API_PATH = 'categories';
 
@@ -74,7 +75,7 @@ export default (props: IPage) => {
                 className={style['tree-item-delete-button']}
               />,
               <Button key={`${node.id}`} title={_.toString(node)} size="small">
-                <Link to={`/categories/create?parent_id=${node.id}`}>CREATE_BUTTON_ICON</Link>
+                <Link to={`/categories/create?parent_id=${node.id}`}>{CREATE_BUTTON_ICON}</Link>
               </Button>,
               <span key={`${node.id}`}>&nbsp;</span>,
             ],

@@ -194,7 +194,7 @@ export default (props: IPage) => {
 
       <SettingListForm ref={settingsFormRef} items={list} onClickLabelEditCallback={onOpenUpdateSetting} />
 
-      <SubmitBar>
+      <SubmitBar full>
         <Button
           type="primary"
           size="large"
@@ -211,7 +211,6 @@ export default (props: IPage) => {
         title={`${t(`_lang:${modalType}`)}${modalData?.name ? `  ${modalData?.name}` : ''}`}
         // visible={modalVisible}
         visible={modalVisible}
-        getContainer={false}
         onOk={() => (modalType === 'update' ? onUpdateSetting(modalData?.id) : onCreateSetting(modalData?.id))}
         // confirmLoading={updateSettingMutation.loading}
         className={style['setting-modal']}

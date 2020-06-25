@@ -1,6 +1,7 @@
 import React from 'react';
 import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
 import { MasterLayout } from '@leaa/dashboard/src/layouts';
+import { envConfig } from '@leaa/dashboard/src/configs';
 import Error404 from '@leaa/dashboard/src/pages/Error/404/404';
 
 import { testRoute } from './test.route';
@@ -11,7 +12,7 @@ export * from './master.route';
 export * from './test.route';
 
 export const Routes = () => (
-  <Router>
+  <Router basename={envConfig.ROUTER_BASENAME}>
     <Switch>
       {authRoute}
       {testRoute}
