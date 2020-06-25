@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.5.6](https://github.com/SolidZORO/leaa/compare/v3.5.5...v3.5.6) (2020-06-25)
+
+
+### Bug Fixes
+
+* `react-imported-component` bug in HMR, reset `loadable` ([d2b5582](https://github.com/SolidZORO/leaa/commit/d2b5582cfcf7665f6b2fb19ddf474a63732fa2c7))
+* fixed _lang:create ([f3da7d9](https://github.com/SolidZORO/leaa/commit/f3da7d960896005fcd2f2a0d9b82eb7a2845d909))
+
+
+### Features
+
+* `ROUTER_BASENAME` compatible `sub dir` deploy on nginx ([b9c89c6](https://github.com/SolidZORO/leaa/commit/b9c89c62ee6b7df3e23ec601143bcdfe3e2125d6))
+
+
+
+
+
 ## [3.5.5](https://github.com/SolidZORO/leaa/compare/v3.5.4...v3.5.5) (2020-06-24)
 
 ### Bug Fixes
