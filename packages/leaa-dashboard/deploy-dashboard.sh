@@ -2,18 +2,27 @@
 
 cd "$(dirname "$0")" || exit
 
-__DEPLOY__="./_deploy"
+__DEPLOY_GIT_BRANCH__="dashboard"
+
+__ABS_PATH__="$(cd "$(dirname "$0")";pwd)" || exit
+__DEPLOY__="$__ABS_PATH__/_deploy"
 
 unset PLATFORM SKIP_BUILD
 
 usage() {
+  # -p = platform
+  # -i = ignore yarn build
+  # -S = Setup (pm2)
+
   # shellcheck disable=SC2028
   echo "\n\n
-  🔰  Usage: $0 -p (local_test | only_build | vercel) [-i] [-S]
+  🔰  Usage: $0 -p (local_test | only_build | build_and_push | vercel) [-i] [-S]
       \n
       -p platform
       -i skip yarn build
       -y skip confirm
+
+      -S Setup (init PM2 deploy)
       \n
       e.g. sh $0 -p vercel
   \n\n"
@@ -28,7 +37,7 @@ set_var() {
 
   if [ -z "${!arg_name}" ]; then
     if [ "$arg_name" = "PLATFORM" ]; then
-      if echo "$*" | grep -Eq '^local_test|only_build|vercel$'; then
+      if echo "$*" | grep -Eq '^local_test|only_build|build_and_push|vercel$'; then
         eval "$arg_name=\"$*\""
       else
         usage
@@ -43,15 +52,58 @@ set_var() {
       eval "$arg_name=\"$*\""
     fi
 
+    if [ "$arg_name" = "PM2_SETUP" ]; then
+      eval "$arg_name=\"$*\""
+    fi
+
   else
     echo "Error: $arg_name already set"
     usage
   fi
 }
 
+__cd_deploy() {
+  pwd
+  cd ${__DEPLOY__} || exit
+}
+
+__init_config_file() {
+  DEPLOY_DOTENV_FILE="$__DEPLOY__/_env.js"
+  if [ -f $DEPLOY_DOTENV_FILE ]; then
+    # shellcheck disable=SC2028
+    printf "\n👌  Already %s, do NOT Copy :)\n\n" $DEPLOY_DOTENV_FILE
+  else
+    cp -f ./_env.js $DEPLOY_DOTENV_FILE
+  fi
+
+  if [ -f "./ecosystem.config.js" ]; then
+    cp -f ./ecosystem.config.js ${__DEPLOY__}
+  else
+    printf '⚠️  Please rename ecosystem.config.js.example to ecosystem.config.js first \n'
+  fi
+}
+
+platform_build_and_push() {
+  __cd_deploy
+
+  pwd
+  GIT_MESSAGE_STR=$(cat <./version.txt | sed 's/["{}]//g' | sed 's/[,]/ /g')
+  # GIT_MESSAGE_HASH=$(head /dev/urandom | tr -dc A-Z0-9 | head -c 4 ; echo '')
+  GIT_MESSAGE_HASH=$(openssl rand -hex 2 | awk '{print toupper($0)}')
+  GIT_MESSAGE="$GIT_MESSAGE_STR <$GIT_MESSAGE_HASH>"
+
+  git status
+  git add -A
+  git commit -m "ci: $GIT_MESSAGE"
+  git checkout -b $__DEPLOY_GIT_BRANCH__
+  git push -u origin $__DEPLOY_GIT_BRANCH__ -f
+
+  printf "\n\n\n📮  Push To Deploy Repo <%s> Completed!\n\n\n" $__DEPLOY_GIT_BRANCH__
+}
+
 platform_vercel() {
   cp -fr ./tools/deploy-config/vercel/* ${__DEPLOY__}
-  cd ${__DEPLOY__} || exit
+  __cd_deploy
   mv robots.example.txt robots.txt
 
   vercel --prod -c
@@ -127,6 +179,7 @@ case "$SKIP_CONFIRM" in
     case $PLATFORM in
     local_test) platform_local_test ;;
     only_build) platform_only_build ;;
+    build_and_push) platform_build_and_push ;;
     vercel) platform_vercel ;;
     *) usage ;; esac
   fi

@@ -24,16 +24,16 @@ module.exports = {
       env: { NODE_ENV: 'production' },
       path: '/var/www/leaa-api',
       'pre-setup': `
-        echo ----PRE---- &&
-        echo ----PRE---- &&
-        echo ----PRE---- &&
-        echo ----PRE---- &&
+        echo ----API-PRE---- &&
+        echo ----API-PRE---- &&
+        echo ----API-PRE---- &&
+        echo ----API-PRE---- &&
         pwd &&
         ls -la &&
-        echo ----PRE---- &&
-        echo ----PRE---- &&
-        echo ----PRE---- &&
-        echo ----PRE----
+        echo ----API-PRE---- &&
+        echo ----API-PRE---- &&
+        echo ----API-PRE---- &&
+        echo ----API-PRE----
       `,
       'post-deploy': `
         echo -------- &&

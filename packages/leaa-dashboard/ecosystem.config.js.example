@@ -1,0 +1,34 @@
+module.exports = {
+  // for pm2 deploy (remote server exec pull and deploy)
+  // https://pm2.keymetrics.io/docs/usage/deployment/
+  deploy: {
+    api: {
+      host: '111.111.111.111',
+      port: '22',
+      user: 'www-data',
+      ref: 'origin/dashboard',
+      repo: 'git@xxxxxxxx.com:aaaa/bbbb.git',
+      env: { NODE_ENV: 'production' },
+      path: '/var/www/leaa-dashboard',
+      'pre-setup': `
+        echo ----DASHBOARD---- &&
+        echo ----DASHBOARD---- &&
+        echo ----DASHBOARD---- &&
+        echo ----DASHBOARD---- &&
+        pwd &&
+        ls -la &&
+        echo ----DASHBOARD---- &&
+        echo ----DASHBOARD---- &&
+        echo ----DASHBOARD---- &&
+        echo ----DASHBOARD----
+      `,
+      'post-deploy': `
+        echo -------- &&
+        pwd &&
+        echo - &&
+        ls -la &&
+        echo --------
+      `,
+    },
+  },
+};
