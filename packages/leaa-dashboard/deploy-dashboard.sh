@@ -4,10 +4,13 @@ cd "$(dirname "$0")" || exit
 
 __DEPLOY_GIT_BRANCH__="dashboard"
 
-__ABS_PATH__="$(cd "$(dirname "$0")";pwd)" || exit
+__ABS_PATH__="$(
+  cd "$(dirname "$0")"
+  pwd
+)" || exit
 __DEPLOY__="$__ABS_PATH__/_deploy"
 
-unset PLATFORM SKIP_BUILD
+unset PLATFORM SKIP_BUILD SKIP_CONFIRM PM2_SETUP
 
 usage() {
   # -p = platform
@@ -63,7 +66,7 @@ set_var() {
 }
 
 __cd_deploy() {
-  pwd
+  printf "\n📌 __cd_deploy >>> " && pwd && printf "\n"
   cd ${__DEPLOY__} || exit
 }
 
@@ -86,19 +89,59 @@ __init_config_file() {
 platform_build_and_push() {
   __cd_deploy
 
-  pwd
+  # find git origin repo
+  GIT_REMOTE_ORIGIN=$(cat <ecosystem.config.js | grep -E -o 'git@.*\.git')
+  if [ -z "$GIT_REMOTE_ORIGIN" ]; then
+    printf '⚠️  Please check ecosystem.config.js repo first \n'
+    exit 2
+  fi
+
+  # set git origin repo
+  GIT_CURRENT_ORIGIN=$(git remote -v)
+  if [ -z "$GIT_CURRENT_ORIGIN" ]; then
+    git remote add origin $GIT_REMOTE_ORIGIN
+    git remote -v
+  fi
+
+  # check git branch and init
+  GIT_CURRENT_BRANCH=$(git symbolic-ref --short HEAD)
+  if [ "$GIT_CURRENT_BRANCH" != "$__DEPLOY_GIT_BRANCH__" ]; then
+    printf "⚠️️ '/_deploy' directory is not an independent Git Repo"
+
+    git init
+    git checkout -b $__DEPLOY_GIT_BRANCH__
+
+    printf '\n\n🚚  _deploy Git Repo Branch <%s> Create Completed!\n\n\n' $__DEPLOY_GIT_BRANCH__
+  fi
+
+  # git push
   GIT_MESSAGE_STR=$(cat <./version.txt | sed 's/["{}]//g' | sed 's/[,]/ /g')
   # GIT_MESSAGE_HASH=$(head /dev/urandom | tr -dc A-Z0-9 | head -c 4 ; echo '')
   GIT_MESSAGE_HASH=$(openssl rand -hex 2 | awk '{print toupper($0)}')
-  GIT_MESSAGE="$GIT_MESSAGE_STR <$GIT_MESSAGE_HASH>"
+  GIT_MESSAGE="ci: $GIT_MESSAGE_STR <$GIT_MESSAGE_HASH>"
+
+  # shellcheck disable=SC2028
+  echo "✏️  GIT_MESSAGE <$__DEPLOY_GIT_BRANCH__> >>> $GIT_MESSAGE \n"
 
   git status
   git add -A
-  git commit -m "ci: $GIT_MESSAGE"
+  git commit -m "$GIT_MESSAGE"
   git checkout -b $__DEPLOY_GIT_BRANCH__
   git push -u origin $__DEPLOY_GIT_BRANCH__ -f
 
-  printf "\n\n\n📮  Push To Deploy Repo <%s> Completed!\n\n\n" $__DEPLOY_GIT_BRANCH__
+  printf "\n\n\n📮  Git Push To Deploy Repo <%s> Completed!\n\n\n" $__DEPLOY_GIT_BRANCH__
+
+  # pm2 step
+  if [ "$PM2_SETUP" = "true" ]; then
+    pm2 deploy $__DEPLOY_GIT_BRANCH__ setup
+
+    printf '\n\n🚚  PM2 Setup <%s> Completed!\n\n\n' $__DEPLOY_GIT_BRANCH__
+  fi
+
+  # pm2 deploy
+  pm2 deploy $__DEPLOY_GIT_BRANCH__
+
+  printf "\n\n\n\n✅  PM2 Deploy Completed! <%s>\n\n\n\n" "$GIT_MESSAGE"
 }
 
 platform_vercel() {
@@ -110,7 +153,7 @@ platform_vercel() {
 }
 
 platform_only_build() {
-  cd ${__DEPLOY__} || exit
+  __cd_deploy
 
   # shellcheck disable=SC2028
   echo "\n✨  Only Build Done.\n"
@@ -126,12 +169,13 @@ platform_local_test() {
 
 # ------------------------------------------------------------------------
 
-while getopts 'p:i?y?h' arg; do
+while getopts 'p:i?y?S?h' arg; do
   # shellcheck disable=SC2220
   case $arg in
   p) set_var PLATFORM "$OPTARG" ;;
   i) set_var SKIP_BUILD y ;;
   y) set_var SKIP_CONFIRM y ;;
+  S) set_var PM2_SETUP true ;;
   h | ?) usage ;;
   *) usage ;; esac
 done
@@ -157,10 +201,13 @@ fi
 case "$SKIP_CONFIRM" in
 [yY][eE][sS] | [yY])
 
+
   # ---------
   # @ROOT-DIR
   # ---------
   if [ "$SKIP_BUILD" != "y" ]; then
+    # ⚠️ if build, delete all directories first.
+    find ./_deploy -type d -maxdepth 1 | grep -v .git | grep -Ev ./_deploy$ | xargs rm -r
     yarn build
   fi
 
@@ -169,8 +216,9 @@ case "$SKIP_CONFIRM" in
     mkdir -p ${__DEPLOY__}
   fi
   cp -fr ./_dist/* ${__DEPLOY__}
-  cp -fr ./public/* ${__DEPLOY__}
-  cp -fr ./_env.js ${__DEPLOY__}
+  cp -f ./tools/deploy-config/server/deploy_repo_gitignore ${__DEPLOY__}/.gitignore
+
+
 
   # -----------
   # @DEPLOY-DIR
@@ -186,6 +234,6 @@ case "$SKIP_CONFIRM" in
 
   ;;
 *)
-  printf  "\nCancel Deploy\n"
+  printf "\nCancel Deploy\n"
   ;;
 esac

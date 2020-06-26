@@ -22,11 +22,11 @@ interface IProps extends RouteComponentProps {
   collapsedHash?: number;
 }
 
-const LOGO_WHITE = `${envConfig.ROUTER_BASENAME}assets/images/logo/${
+const LOGO_WHITE = `${envConfig.ROUTER_BASENAME}/assets/images/logo/${
   envConfig.LOGO_WHITE_FILENAME || 'default-logo-white.svg'
 }`;
 
-const LOGO_BLACK = `${envConfig.ROUTER_BASENAME}assets/images/logo/${
+const LOGO_BLACK = `${envConfig.ROUTER_BASENAME}/assets/images/logo/${
   envConfig.LOGO_BLACK_FILENAME || 'default-logo-black.svg'
 }`;
 

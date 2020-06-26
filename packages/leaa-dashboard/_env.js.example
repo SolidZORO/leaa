@@ -6,8 +6,8 @@ const __ENV_DATA__ = {
   API_URL: 'http://localhost:5000',
   API_VERSION: 'v1',
 
-  // if using nginx to deploy to a sub dir, can modify, e.g. `/dash`
-  ROUTER_BASENAME: '/',
+  // if using nginx to deploy to a sub dir, can modify, e.g. '/dash' [default: '']
+  ROUTER_BASENAME: '',
 
   // phone | email (Primary Display at UI)
   PRIMARY_ACCOUNT_TYPE: 'email',

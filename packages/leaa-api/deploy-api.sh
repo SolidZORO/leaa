@@ -2,7 +2,12 @@
 
 cd "$(dirname "$0")" || exit
 
-__ABS_PATH__="$(cd "$(dirname "$0")";pwd)" || exit
+__DEPLOY_GIT_BRANCH__="api"
+
+__ABS_PATH__="$(
+  cd "$(dirname "$0")"
+  pwd
+)" || exit
 __DEPLOY__="$__ABS_PATH__/_deploy"
 
 unset PLATFORM SKIP_BUILD SKIP_CONFIRM PM2_SETUP
@@ -61,7 +66,7 @@ set_var() {
 }
 
 __cd_deploy() {
-  pwd
+  printf "\n📌 __cd_deploy >>> " && pwd && printf "\n"
   cd ${__DEPLOY__} || exit
 }
 
@@ -107,7 +112,9 @@ platform_docker_install() {
 }
 
 platform_docker_local_test() {
+  __cd_deploy
   platform_docker_install
+  docker-compose -f docker-compose-deploy-yarn-install.yml down
 
   printf '\n\n🎏  Show All Containers.\n\n\n'
 
@@ -120,32 +127,65 @@ platform_docker_local_test() {
 platform_update_config_and_push() {
   __cd_deploy
 
-  pwd
+  # find git origin repo
+  GIT_REMOTE_ORIGIN=$(cat <ecosystem.config.js | grep -E -o 'git@.*\.git')
+  if [ -z "$GIT_REMOTE_ORIGIN" ]; then
+    printf '⚠️  Please check ecosystem.config.js repo first \n'
+    exit 2
+  fi
+
+  # set git origin repo
+  GIT_CURRENT_ORIGIN=$(git remote -v)
+  if [ -z "$GIT_CURRENT_ORIGIN" ]; then
+    git remote add origin $GIT_REMOTE_ORIGIN
+    git remote -v
+  fi
+
+  # check git branch and init
+  GIT_CURRENT_BRANCH=$(git symbolic-ref --short HEAD)
+  if [ "$GIT_CURRENT_BRANCH" != "$__DEPLOY_GIT_BRANCH__" ]; then
+    printf "⚠️️ '/_deploy' directory is not an independent Git Repo"
+
+    git init
+    git checkout -b $__DEPLOY_GIT_BRANCH__
+
+    printf '\n\n🚚  _deploy Git Repo Branch <%s> Create Completed!\n\n\n' $__DEPLOY_GIT_BRANCH__
+  fi
+
+  # git push
   GIT_MESSAGE_STR=$(cat <./public/version.txt | sed 's/["{}]//g' | sed 's/[,]/ /g')
   # GIT_MESSAGE_HASH=$(head /dev/urandom | tr -dc A-Z0-9 | head -c 4 ; echo '')
   GIT_MESSAGE_HASH=$(openssl rand -hex 2 | awk '{print toupper($0)}')
-  GIT_MESSAGE="$GIT_MESSAGE_STR <$GIT_MESSAGE_HASH>"
+  GIT_MESSAGE="ci: $GIT_MESSAGE_STR <$GIT_MESSAGE_HASH>"
+
+  # shellcheck disable=SC2028
+  echo "✏️  GIT_MESSAGE <$__DEPLOY_GIT_BRANCH__> >>> $GIT_MESSAGE \n"
 
   git status
   git add -A
-  git commit -m "ci: $GIT_MESSAGE"
-  git checkout -b api
-  git push -u origin api -f
+  git commit -m "$GIT_MESSAGE"
+  git checkout -b $__DEPLOY_GIT_BRANCH__
+  git push -u origin $__DEPLOY_GIT_BRANCH__ -f
 
-  printf '\n\n\n📮  Push To Deploy Repo Completed!\n\n\n'
+  printf "\n\n\n📮  Git Push To Deploy Repo <%s> Completed!\n\n\n" $__DEPLOY_GIT_BRANCH__
 }
 
 platform_docker_install_and_push() {
-  platform_docker_install
-  platform_update_config_and_push
-
-  if [ "$PM2_SETUP" = "true" ]; then
-    pm2 deploy api setup
-
-    printf '\n\n🚚  PM2 Setup Completed!\n\n\n'
+  if [ "$SKIP_BUILD" != "y" ]; then
+    platform_docker_install
   fi
 
-  pm2 deploy api
+  platform_update_config_and_push
+
+  # pm2 step
+  if [ "$PM2_SETUP" = "true" ]; then
+    pm2 deploy $__DEPLOY_GIT_BRANCH__ setup
+
+    printf '\n\n🚚  PM2 Setup <%s> Completed!\n\n\n' $__DEPLOY_GIT_BRANCH__
+  fi
+
+  # pm2 deploy
+  pm2 deploy $__DEPLOY_GIT_BRANCH__
 
   printf "\n\n\n\n✅  PM2 Deploy Completed! <%s>\n\n\n\n" "$GIT_MESSAGE"
 }

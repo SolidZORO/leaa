@@ -25,7 +25,7 @@ class ShowEnvInfoWebpackPlugin {
 
 // HtmlWebpackPlugin
 const htmlWebpackPluginOption = {
-  __ENV_FILE__: `${WPCONST.ROUTER_BASENAME}${WPCONST.ENV_FILE_NAME}`,
+  __ENV_FILE__: `${WPCONST.ROUTER_BASENAME}/${WPCONST.ENV_FILE_NAME}`,
   __BUILD_DATA__: JSON.stringify({
     VERSION: `v${process.env.npm_package_version}`,
     VERSION_SLUG: `v${process.env.npm_package_version}-${getGitVersion}`,
@@ -34,7 +34,6 @@ const htmlWebpackPluginOption = {
     GIT_VERSION: getGitVersion,
   }),
   title: `${WPCONST.SITE_NAME || '-'}`,
-  manifest: `${WPCONST.OUTPUT_PUBLIC_PATH}manifest.json`,
   filename: `${WPCONST.BUILD_DIR}/index.html`,
   template: `${WPCONST.PAGES_DIR}/_document.ejs`,
   favicon: `${WPCONST.SRC_DIR}/assets/favicons/favicon.ico`,

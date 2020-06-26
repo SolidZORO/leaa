@@ -12,7 +12,7 @@ const dotenv: IDotEnv = {
     API_URL: 'PLS_SET_API_URL',
     API_VERSION: 'v1',
     //
-    ROUTER_BASENAME: '/',
+    ROUTER_BASENAME: '',
     PRIMARY_ACCOUNT_TYPE: 'email',
     LOGO_BLACK_FILENAME: 'default-logo-black.svg',
     LOGO_WHITE_FILENAME: 'default-logo-white.svg',

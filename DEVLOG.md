@@ -690,3 +690,65 @@ Dashboard 麻烦在于一堆 Apollo 的 libs，至少 5 个+，比如 link，cac
 ![_env-design](./packages/leaa-dashboard/docs/images/_env-design.jpg)
 
 有时候我感觉 deploy 比开发更难，很多东西都值得深思，最佳实践不是「想想看」，而是「做做看」，少用酷炫的黑魔法，千万不要搞得现在部署好了，几个月回头变一头雾水。
+
+### 2020-06-26 21:07
+
+记录个东西，关于 docker nginx 的 `resolver`。
+
+我在 ECS Server 上丢 docker 环境本质上只有 mysql 和 ningx，因为这两个比较常用，而且 nginx 暴露的 `80` 和 `443` 一台机器上只能有一个，所以我干脆把这两个 container 当成 common_container 来看待。
+
+不过有个问题，就是 nginx container 这边和 其他 container 耦合了，为什么说是耦合呢？看配置：
+
+```smartyconfig
+location ^~ /api {
+    proxy_pass http://prod_api:5000;
+    proxy_redirect   off;
+}
+```
+
+可以看到上面 proxy_pass 代理了另一个 container `prod_api`，但是如果这个 container 没有启动，或者挂了，那 `nginx` 就起不来了，会出现 `host not found in upstream` (假如使用了 upstream)。
+
+我看了网上很多人说加上 resolver 就可以解决，即改成这样：
+
+```smartyconfig
+location ^~ /api {
+    resolver 127.0.0.1;
+    set $api prod_api:5000;
+    proxy_pass http://$api;
+    proxy_redirect   off;
+}
+```
+
+可是我试了还是不行，后来用几个 keyword 找了下 github code，发现大家不约而同用上了 `resolver 127.0.0.11` （就是 .1 换成了 .11），于是我换上，问题立马解决，nginx 不在关心 `prod_api` 这边的状况，一路绿灯。
+不过我开始纳闷了，为什么是 .11？我换了 .12，.13 这些都不行，Google 满大街也没找到 .11 的含义，最多解释是 loopback（RFC6890）。
+
+最后直到我跑 container 中 `cat /etc/resolv.conf` 看到：
+
+```
+nameserver 127.0.0.11
+options ndots:0
+```
+
+才解开我的疑惑，原来人家官方 nginx_docker_images 就是这样配置的…… nameserver 就是 `127.0.0.11` 啊！
+
+最后，完整配置必须贴一下：
+
+```smartyconfig
+server {
+    listen 80;
+    server_name local.xxx;
+
+    location ^~ /api {
+        resolver 127.0.0.11 valid=30s;
+        set $api prod_api:5000;
+        proxy_pass http://$api;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Nginx-Proxy true;
+        proxy_set_header Host $http_host;
+        proxy_redirect   off;
+
+        rewrite /api(.*) $1 break;
+    }
+}
+```
