@@ -1,23 +1,22 @@
 @import '~@leaa/dashboard/src/styles/variables.less';
 
+:global {
+  .ant-layout {
+    background-color: transparent;
+  }
+}
+
 .full-layout-wrapper {
   position: relative;
 
   @media (min-width: @screen-md) {
-    margin-left: @layout-sidebar-width--pc;
+    margin-left: var(--layout-sidebar-width--pc);
   }
 }
 
 .full-layout-inner {
   position: relative;
   min-height: 100vh;
-
-  :global {
-    .ant-layout {
-      background-color: @page-layout-bg-color;
-      //background-color: red;
-    }
-  }
 }
 
 .full-layout-container {
@@ -27,9 +26,14 @@
 .full-layout-content {
   position: relative;
   min-height: 500px;
-  padding: @page-card-padding-x 10px;
+  padding: var(--page-card-padding-x) 10px;
+  margin: 0;
+  background-color: var(--layout-main-bg-color);
 
   @media (min-width: @screen-md) {
-    padding: @page-card-padding-x;
+    padding: var(--page-card-padding-x);
+    //border-radius: var(--page-border-radius) var(--page-border-radius) 0 0;
+    border-radius: 24px 24px 0 0;
+    margin: var(--layout-padding-x) var(--layout-padding-x) 0 0;
   }
 }

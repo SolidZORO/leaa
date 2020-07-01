@@ -8,7 +8,7 @@
 
 .usermenu-box {
   width: 250px;
-  margin: -12px (-(@page-card-padding-x));
+  margin: -12px;
 
   .header,
   .container {
@@ -37,27 +37,23 @@
   border: 0;
   box-shadow: none;
   padding: 0;
+  height: 40px;
+  line-height: 40px;
 }
 
 @usermenu-name-color: #555;
 
 .usermenu-name {
-  padding-left: 7px;
+  padding-left: 10px;
   color: @usermenu-name-color;
   transition: all 0.3s;
   display: none !important;
+  font-weight: 600;
+  font-size: 16px;
 
   @media (min-width: @screen-md) {
     display: inline-block !important;
   }
-}
-
-.usermenu-name-icon {
-  display: inline-block;
-  color: @usermenu-name-color;
-  font-size: 16px;
-  margin: 0 !important;
-  position: relative;
 }
 
 .usermenu-avatar {

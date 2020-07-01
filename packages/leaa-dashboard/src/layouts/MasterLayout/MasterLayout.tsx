@@ -45,8 +45,6 @@ export const MasterLayout = (props: IProps) => {
         {!props.disableSidebar && <LayoutSidebar {...props} />}
 
         <Layout>
-          {!props.disableHeader && <LayoutHeader {...props} />}
-
           <Layout.Content className={style['full-layout-content']}>
             <Switch>
               {masterRoute}

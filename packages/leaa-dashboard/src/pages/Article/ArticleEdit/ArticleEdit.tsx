@@ -15,6 +15,7 @@ import {
   HtmlMeta,
   WYSIWYGEditor,
   SubmitBar,
+  SubmitToolbar,
   SelectTagId,
   AttachmentBox,
 } from '@leaa/dashboard/src/components';
@@ -155,18 +156,15 @@ export default (props: IPage) => {
         </Row>
       </div>
 
-      <SubmitBar full>
-        <Button
-          type="primary"
-          size="large"
-          icon={UPDATE_BUTTON_ICON}
-          className="g-submit-bar-button"
-          loading={submitLoading}
-          onClick={onUpdateItem}
-        >
-          {t('_lang:update')}
-        </Button>
-      </SubmitBar>
+      <SubmitToolbar
+        full
+        buttonGroup={
+          <Button type="link" icon={UPDATE_BUTTON_ICON} loading={submitLoading} onClick={onUpdateItem}>
+            {t('_lang:update')}
+          </Button>
+        }
+        moreGroup={<p>more</p>}
+      />
     </PageCard>
   );
 };

@@ -3,7 +3,7 @@
 .page-card-wrapper {
   //min-height: 300px;
   transition: all 0.3s;
-  padding-bottom: 30px;
+  padding-bottom: 60px;
 
   :global {
     .ant-card {
@@ -22,11 +22,12 @@
 
 .header {
   background: transparent;
-  margin: 0 0 12px 0;
+  //margin: 12px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  margin-bottom: 28px;
   min-height: 32px;
 
   @media (min-width: @screen-md) {
@@ -40,39 +41,43 @@
     color: #26254b;
 
     :global {
-      .rcicon {
-        font-weight: 400;
-        margin-right: 8px;
-        vertical-align: -4px;
-        font-size: 20px;
-      }
-
       span {
         strong {
-          font-weight: 500;
-          font-size: 18px;
-          vertical-align: -1px;
+          font-size: 28px;
         }
       }
+    }
+  }
 
-      .g-page-card-create-link,
-      .g-page-card-create-button {
-        display: inline-block;
-        margin-left: 10px;
-        color: #ccc;
+  .page-card-create-link {
+    margin-left: 20px;
+    //background-color: #ff0;
+    //border: 1px solid @primary-color;
+  }
 
-        &:hover {
-          color: @primary-color;
-        }
+  .page-card-create-button {
+    background-color: transparent;
+    border-color: @primary-color;
+    color: @primary-color;
+    //padding: 15px;
+    height: 34px;
 
-        .rcicon {
-          display: inline-block;
-          font-size: 20px;
-        }
-      }
+    svg {
+      line-height: 0;
+      font-size: 180%;
+      vertical-align: -2px;
+    }
 
-      .page-card-create-button {
-      }
+    span {
+      line-height: 0;
+      vertical-align: 5px;
+      padding: 0 8px;
+      font-size: 120%;
+    }
+
+    &:hover {
+      background-color: @primary-color;
+      color: #fff;
     }
   }
 
@@ -124,6 +129,8 @@
 }
 
 .container {
+  display: contents;
+  position: relative;
   background: transparent;
   margin-bottom: 80px;
 }

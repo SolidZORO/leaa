@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React from 'react';
 import cx from 'classnames';
-import { Spin } from 'antd';
+import { Spin, Button } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { IRouteItem } from '@leaa/dashboard/src/interfaces';
 import { RiAddLine } from 'react-icons/ri';
@@ -31,11 +31,20 @@ export const PageCard = (props: IProps) => {
       return (
         <div className={style['title']}>
           <span>
-            {props.route?.icon}
             <strong>{t(`${props.route?.namei18n}`)}</strong>
             {props.route?.canCreate && (
-              <Link className="g-page-card-create-link" to={`${props.route?.path}/create`}>
-                <RiAddLine title="PAGE_CARD_TITLE_CREATE_ICON" />
+              <Link
+                className={cx(style['page-card-create-link'], 'g-page-card-create-link')}
+                to={`${props.route?.path}/create`}
+              >
+                <Button
+                  shape="round"
+                  type="ghost"
+                  icon={<RiAddLine />}
+                  className={cx(style['page-card-create-button'])}
+                >
+                  {t('_lang:create')}
+                </Button>
               </Link>
             )}
           </span>
@@ -47,7 +56,6 @@ export const PageCard = (props: IProps) => {
       return (
         <div className={style['title']}>
           <span>
-            {props.route?.icon}
             <strong>{t(`${props.route?.namei18n}`)}</strong>
           </span>
         </div>

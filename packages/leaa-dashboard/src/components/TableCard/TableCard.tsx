@@ -4,6 +4,7 @@ import prettyBytes from 'pretty-bytes';
 import cx from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import { RiVipCrown2Line } from 'react-icons/ri';
 import {
   IKey,
   ITableColumns,
@@ -32,7 +33,6 @@ import {
 } from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';
-import { RiVipCrown2Line } from 'react-icons/ri';
 
 declare type IColumnField = string | { [key: string]: any };
 
@@ -254,16 +254,16 @@ export const TableCard = <T extends any>(props: IProps<T>) => {
   return (
     <div
       className={cx(
-        style['wrapper'],
+        style['table-card-wrapper'],
         { [style['selected-row-bar']]: props.selectedRowKeys && props.selectedRowKeys.length > 0 },
         props.className,
       )}
     >
-      <div className={style['container']}>
+      <div className={style['table-card-container']}>
         <Table
           showSorterTooltip={false}
           rowKey={(props.rowKey as string) || 'id'}
-          size={props.size || 'small'}
+          size={props.size}
           rowSelection={rowSelection}
           columns={genColumns(props?.columnFields) || props?.columns || genColumns('all')}
           dataSource={props.list?.data || []}

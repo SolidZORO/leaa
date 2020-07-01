@@ -12,8 +12,10 @@ import { masterRouteList, flateMasterRoutes } from '@leaa/dashboard/src/routes/m
 import { getAuthInfo } from '@leaa/dashboard/src/utils';
 import { envConfig } from '@leaa/dashboard/src/configs';
 import { ALLOW_PERMISSION, IS_MOBILE_SCREEN } from '@leaa/dashboard/src/constants';
+import { SwitchLanguage } from '@leaa/dashboard/src/components';
+import { UserMenu } from '@leaa/dashboard/src/layouts/MasterLayout/_components/UserMenu/UserMenu';
 
-import { SidebarTarget } from '../SidebarTarget/SidebarTarget';
+import { SidemenuTarget } from '../SidemenuTarget/SidemenuTarget';
 
 import style from './style.module.less';
 
@@ -22,11 +24,7 @@ interface IProps extends RouteComponentProps {
   collapsedHash?: number;
 }
 
-const LOGO_WHITE = `${envConfig.ROUTER_BASENAME}/assets/images/logo/${
-  envConfig.LOGO_WHITE_FILENAME || 'default-logo-white.svg'
-}`;
-
-const LOGO_BLACK = `${envConfig.ROUTER_BASENAME}/assets/images/logo/${
+const LOGO = `${envConfig.ROUTER_BASENAME}/assets/images/logo/${
   envConfig.LOGO_BLACK_FILENAME || 'default-logo-black.svg'
 }`;
 
@@ -45,9 +43,13 @@ export const LayoutSidebar = (props: IProps) => {
 
   const menuBaseDom = (
     <Layout.Sider collapsible collapsedWidth={0} trigger={null} className={style['full-layout-sidebar']}>
+      <div className={cx(style['switch-language'], 'g-switch-language')}>
+        <SwitchLanguage placement="topLeft" />
+      </div>
+
       <div className={style['logo-wrapper']}>
         <Link to="/">
-          <img src={isMobile ? LOGO_BLACK : LOGO_WHITE} alt="" className={style['logo-image']} />
+          <img src={LOGO} alt="" className={style['logo-image']} />
         </Link>
       </div>
 
@@ -57,11 +59,14 @@ export const LayoutSidebar = (props: IProps) => {
         defaultOpenKeys={[openKey]}
         selectable
         mode="inline"
-        theme={isMobile ? 'light' : 'dark'}
-        // onSelect={() => setSelectedKey(getPathname())}
+        theme="light"
       >
         {makeFlatMenus(masterRouteList)}
       </Menu>
+
+      <div className={cx(style['user-menu'], 'g-user-menu')}>
+        <UserMenu {...props} />
+      </div>
     </Layout.Sider>
   );
 
@@ -96,7 +101,7 @@ export const LayoutSidebar = (props: IProps) => {
   return (
     <div className={cx(style['full-layout-sidebar-wrapper'], 'g-full-layout-sidebar-wrapper')}>
       <div className={cx(style['target-button-wrapper'], 'target-button-wrapper')}>
-        <SidebarTarget onCallbackSidebarTarget={onCallbackSidebarTarget} />
+        <SidemenuTarget onCallbackSidebarTarget={onCallbackSidebarTarget} />
       </div>
 
       {isMobile ? menuMbDom : menuPcDom}
@@ -129,7 +134,7 @@ function checkPermission(permission: string) {
   return flatPermissions.includes(permission);
 }
 
-// Menu
+// Menu Item
 function makeFlatMenu(menu: IRouteItem): React.ReactNode {
   let flatMenuDom = null;
 
@@ -143,12 +148,10 @@ function makeFlatMenu(menu: IRouteItem): React.ReactNode {
     const currentMenuCreatePermission = `${menu.permission.split('.')[0]}.item-create`;
 
     flatMenuDom = (
-      <Menu.Item key={menu.path} className={`g-sidebar-menu-${menu.path}`}>
+      <Menu.Item key={menu.path} className={cx(style['sidebar-menu-item'], `g-sidebar-menu-item-${menu.path}`)}>
         <Link to={menu.path}>
-          <span className={style['nav-text']}>
-            {menu.icon}
-            <em className="menu-name">{getMenuName(menu)}</em>
-          </span>
+          {menu.icon && <i>{menu.icon}</i>}
+          <em>{getMenuName(menu)}</em>
         </Link>
 
         {menu.canCreate &&
@@ -165,7 +168,7 @@ function makeFlatMenu(menu: IRouteItem): React.ReactNode {
   return flatMenuDom;
 }
 
-// SubMenu
+// Menu List
 function makeFlatMenus(menus?: IRouteItem[]): React.ReactNode {
   if (_.isEmpty(menus)) return null;
 
@@ -173,13 +176,13 @@ function makeFlatMenus(menus?: IRouteItem[]): React.ReactNode {
     if (menu.children && (checkPermission(menu.permission) || menu.permission === ALLOW_PERMISSION)) {
       return (
         <Menu.SubMenu
-          className={`g-sidebar-group-menu-${menu.path}`}
+          className={cx(style['sidebar-menu-item-group'], `g-sidebar-menu-item-group-${menu.path}`)}
           key={menu.path}
           title={
-            <span className={style['nav-text']}>
-              {menu.icon}
-              <em className="menu-name">{getMenuName(menu)}</em>
-            </span>
+            <>
+              <i>{menu.icon}</i>
+              <em>{getMenuName(menu)}</em>
+            </>
           }
         >
           {menu.children.map((subMenu) => makeFlatMenu(subMenu))}

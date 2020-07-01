@@ -17,19 +17,71 @@
   left: 0;
   height: 100vh;
   overflow-y: auto;
+
+  flex: 0 0 var(--layout-sidebar-width--pc) !important;
+  max-width: var(--layout-sidebar-width--pc) !important;
+  min-width: var(--layout-sidebar-width--pc) !important;
+  width: var(--layout-sidebar-width--pc) !important;
+  //background-color: #fff;
+  //box-shadow: 0 0 14px 4px #ececec;
+  //background-color: #f0f;
+}
+
+:global {
+  .ant-layout-sider {
+    background: var(--layout-sidebar-bg-color);
+  }
+
+  .ant-menu {
+    background: transparent !important;
+
+    .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+      background-color: transparent;
+    }
+
+    .ant-menu-submenu {
+      a {
+        &:hover {
+          color: @primary-color;
+        }
+      }
+    }
+
+    .ant-menu-item-selected {
+      a {
+        color: @primary-color;
+      }
+    }
+  }
+}
+
+.switch-language {
+  position: absolute;
+  top: 8px;
+  left: 10px;
+}
+
+.user-menu {
+  z-index: 999999;
+  position: fixed;
+  padding: 20px 0;
+  bottom: 0;
+  width: var(--layout-sidebar-width--pc) !important;
+  background-color: #fffe;
+
+  :global {
+    .g-usermenu-wrapper {
+      display: table;
+      margin: 0 auto;
+    }
+  }
 }
 
 .logo-wrapper {
   cursor: pointer;
   display: table;
-  margin: 0;
-  margin-top: 10px;
-  padding: 15px 25px;
-
-  @media (min-width: @screen-md) {
-    margin: 0 auto;
-    padding: 25px 0 15px 0;
-  }
+  margin: 0 auto;
+  padding: 40px 0 10px 0;
 
   .logo-image {
     @w: 28px;
@@ -44,54 +96,87 @@
   }
 }
 
-.menu-wrapper {
-  background-color: transparent !important;
+ul.menu-wrapper {
+  padding: 16px;
+  border: none 0;
+  margin: 0;
 
-  li {
-    padding: 0;
-  }
+  @item-level-1-height: 54px;
+  @item-level-2-height: 42px;
 
-  :global {
-    svg.rcicon {
-      margin-right: 8px;
+  // level 1
+  & > li {
+    :global {
+      .ant-menu-submenu-title {
+        height: @item-level-1-height !important;
+        line-height: @item-level-1-height !important;
+      }
     }
 
-    .ant-menu-item {
-      padding-left: 24px;
+    &.sidebar-menu-item {
+      height: @item-level-1-height !important;
+      line-height: @item-level-1-height !important;
     }
 
-    .ant-menu-submenu {
-      .ant-menu-item {
-        padding-left: 46px;
+    em {
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 600;
+      margin-left: 14px;
+    }
+
+    i {
+      display: inline-block;
+
+      svg {
+        font-size: 28px;
+        vertical-align: -7px;
+      }
+    }
+
+    // level 2
+    li.sidebar-menu-item {
+      height: @item-level-2-height !important;
+      line-height: @item-level-2-height !important;
+
+      em {
+        font-size: 16px;
+        font-weight: normal;
+        margin-left: 20px;
       }
     }
   }
 }
 
-.nav-text {
-  em {
-    font-size: 14px;
-    font-style: normal;
+.sidebar-menu-item-group {
+}
+
+.sidebar-menu-item {
+  .can-create-button {
+    display: none;
+    position: absolute;
+    right: 14px;
+    top: 0;
+    opacity: 0.5;
+    transition: all 0.4s;
+
+    &:hover {
+      transition: all 0.4s;
+      opacity: 1;
+    }
   }
 }
 
-.can-create-button {
-  position: absolute;
-  right: 6px;
-  top: 0;
-  opacity: 0.4;
-  transition: all 0.4s;
-
-  &:hover {
-    opacity: 1;
-  }
-}
+//
+//
+//
+//
 
 // mb menu
 .drawer-wrapper {
   :global {
     .ant-drawer-content-wrapper {
-      width: @layout-sidebar-width--pc !important;
+      width: var(--layout-sidebar-width--pc) !important;
     }
 
     .ant-drawer-close {
@@ -125,56 +210,5 @@
 
   @media (min-width: @screen-md) {
     display: none;
-  }
-}
-
-:global {
-  .g-full-layout-wrapper--mb {
-    @sidebar-color-mb: #f5f5f5;
-
-    .g-full-layout-breadcrumb {
-      margin-left: 45px;
-    }
-
-    .g-full-layout-sidebar-wrapper {
-      background: @sidebar-color-mb;
-
-      .ant-menu-inline {
-        border: none 0;
-      }
-
-      .ant-layout-sider {
-        background: transparent;
-      }
-
-      .ant-menu-item-selected {
-        background-color: @sidebar-color-mb !important;
-      }
-
-      .ant-menu {
-        overflow: hidden !important;
-      }
-    }
-  }
-
-  .g-full-layout-wrapper--pc {
-    @sidebar-color-pc: @primary-color;
-
-    .g-full-layout-sidebar-wrapper {
-      background: shade(@sidebar-color-pc, 90%);
-      background: linear-gradient(shade(@sidebar-color-pc, 83%), shade(@sidebar-color-pc, 93%));
-
-      .ant-menu-dark .ant-menu-inline.ant-menu-sub {
-        background: transparent;
-      }
-
-      .ant-layout-sider {
-        //background: transparent;
-      }
-
-      .ant-menu-item-selected {
-        background-color: shade(@sidebar-color-pc, 50%) !important;
-      }
-    }
   }
 }

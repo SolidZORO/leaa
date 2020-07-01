@@ -36,6 +36,7 @@
     "@ant-design/icons": "4.2.1",
     "@loadable/component": "^5.12.0",
     "@nestjsx/crud-request": "^4.6.2",
+    "@svgr/webpack": "^5.4.0",
     "animated-scroll-to": "^2.0.7",
     "antd": "4.3.5",
     "axios": "^0.19.2",

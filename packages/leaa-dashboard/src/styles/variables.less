@@ -2,11 +2,19 @@
 //
 // PROJECT
 // ------------------------------------------
-@page-card-padding-x: 16px;
-//@page-layout-bg-color: #f6f8fa;
-@page-layout-bg-color: #f0f4fa;
 @container-ext-width: 280px;
-@layout-sidebar-width--pc: 200px;
+
+@page-body-bg-color: #fff;
+@page-card-padding-x: 30px;
+@page-border-radius: 16px;
+
+@layout-padding-x: 16px;
+@layout-main-bg-color: #f6fbfe;
+@layout-sidebar-bg-color: #fff;
+@layout-sidebar-width--pc: 240px;
+@layout-sidebar-width--mb: 100%;
+
+@comp-submit-toolbar-bg-color: #eff4f9;
 
 //
 // ANTD
@@ -23,11 +31,13 @@
 @number-family: 'Avenir Next', 'Avenir', 'Segoe UI', Roboto, -apple-system, BlinkMacSystemFont, 'Helvetica Neue',
   Helvetica, Arial, sans-serif;
 
-@border-radius-base: 3px;
-@border-radius-sm: 1px;
+//@border-radius-base: 4px;
+@border-radius-base: 16px;
+@border-radius-sm: 8px;
 
 // Colors
-@primary-color: #6a3cff;
+//@primary-color: #6a3cff;
+@primary-color: #0044ff;
 @secondary-color: #1f8a85;
 @info-color: #1890ff;
 @success-color: #52c41a;
@@ -55,6 +65,67 @@
 @screen-xl: 1200px; // -
 @screen-xxl: 1600px; // -
 
+// Menu
+// ---
+//@menu-inline-toplevel-item-height: 34px;
+//@menu-item-height: 26px;
+//@menu-item-group-height: @line-height-base;
+//@menu-collapsed-width: 80px;
+//@menu-bg: @component-background;
+//@menu-popup-bg: @component-background;
+@menu-item-color: @text-color;
+//@menu-highlight-color: @primary-color;
+@menu-highlight-color: #111;
+//@menu-highlight-danger-color: @error-color;
+@menu-item-active-bg: transparent;
+//@menu-item-active-danger-bg: @red-1;
+@menu-item-active-border-width: 0;
+//@menu-item-group-title-color: @text-color-secondary;
+//@menu-item-vertical-margin: 4px;
+@menu-item-font-size: 14px;
+//@menu-item-boundary-margin: 8px;
+//@menu-item-padding: 0 20px;
+//@menu-horizontal-line-height: 46px;
+//@menu-icon-margin-right: 10px;
+@menu-icon-size: 24px;
+//@menu-icon-size-lg: @font-size-lg;
+@menu-item-group-title-font-size: 18px;
+
 // Table
-@table-border-radius-base: 4px;
+// --
+//@table-bg: @component-background;
+//@table-header-bg: @background-color-light;
+//@table-header-color: @heading-color;
+//@table-header-sort-bg: @background-color-base;
+//@table-body-sort-bg: #fafafa;
+//@table-row-hover-bg: @background-color-light;
+//@table-selected-row-color: inherit;
+//@table-selected-row-bg: @primary-1;
+//@table-body-selected-sort-bg: @table-selected-row-bg;
+//@table-selected-row-hover-bg: darken(@table-selected-row-bg, 2%);
+//@table-expanded-row-bg: #fbfbfb;
+//@table-padding-vertical: 16px;
+//@table-padding-horizontal: 16px;
+//@table-padding-vertical-md: @table-padding-vertical * 3 / 4;
+//@table-padding-horizontal-md: @table-padding-horizontal / 2;
+//@table-padding-vertical-sm: @table-padding-vertical / 2;
+//@table-padding-horizontal-sm: @table-padding-horizontal / 2;
+//@table-border-radius-base: @border-radius-base;
+//@table-border-radius-base: @page-border-radius;
 @item-hover-bg: #f5f5f5;
+//@table-footer-bg: @background-color-light;
+//@table-footer-color: @heading-color;
+//@table-header-bg-sm: @table-header-bg;
+//@table-font-size: @font-size-base;
+//@table-font-size-md: @table-font-size;
+//@table-font-size-sm: @table-font-size;
+//// Sorter
+//// Legacy: `table-header-sort-active-bg` is used for hover not real active
+//@table-header-sort-active-bg: darken(@table-header-bg, 3%);
+//// Filter
+//@table-header-filter-active-bg: darken(@table-header-sort-active-bg, 5%);
+//@table-filter-btns-bg: inherit;
+//@table-filter-dropdown-bg: @component-background;
+//@table-expand-icon-bg: @component-background;
+//@table-selection-column-width: 60px;
+//@table-selection-extra-right: 0;

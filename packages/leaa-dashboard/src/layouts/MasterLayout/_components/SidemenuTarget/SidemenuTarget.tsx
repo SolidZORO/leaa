@@ -13,7 +13,7 @@ interface IProps {
   collapsed?: boolean;
 }
 
-export const SidebarTarget = (props: IProps): JSX.Element => {
+export const SidemenuTarget = (props: IProps): JSX.Element => {
   return (
     <div
       className={cx(style['sidebar-target-wrapper'], {

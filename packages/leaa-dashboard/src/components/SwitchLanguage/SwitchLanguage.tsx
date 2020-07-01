@@ -39,8 +39,8 @@ export const SwitchLanguage = (props: IProps): JSX.Element => {
 
   return (
     <div
-      className={cx(style['wrapper'], props.className, {
-        [style['wrapper--dark']]: props.dark,
+      className={cx(style['switch-language-wrapper'], props.className, {
+        [style['switch-language-wrapper--dark']]: props.dark,
       })}
     >
       <ConfigProvider autoInsertSpaceInButton={false}>

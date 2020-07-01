@@ -1,10 +1,12 @@
 import React from 'react';
-import { RiAddLine, RiEditLine } from 'react-icons/ri';
+import { RiAddLine } from 'react-icons/ri';
+import { RiEdit2Fill } from './icons';
 
 // Icon name
 export const PAGE_CARD_TITLE_CREATE_ICON = <RiAddLine />;
 export const CREATE_BUTTON_ICON = <RiAddLine style={{ fontSize: '120%', verticalAlign: '-4px' }} />;
-export const UPDATE_BUTTON_ICON = <RiEditLine />;
+// export const UPDATE_BUTTON_ICON = <RiEditLine />;
+export const UPDATE_BUTTON_ICON = <RiEdit2Fill />;
 
 //  SL
 export const SIDERBAR_COLLAPSED_SL_KEY = 'siderbarCollapsed';

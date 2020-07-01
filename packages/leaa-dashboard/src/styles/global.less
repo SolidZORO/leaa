@@ -1,12 +1,29 @@
 @import './variables.less';
 
 :root {
+  // antd
   --screen-xs: @screen-xs; // Phone
   --screen-sm: @screen-sm; // Pda P
   --screen-md: @screen-md; // Pad L
   --screen-lg: @screen-lg; // PC
   --screen-xl: @screen-xl; // -
   --screen-xxl: @screen-xxl; // -
+
+  // project
+  --container-ext-width: @container-ext-width;
+
+  --page-body-bg-color: @page-body-bg-color;
+  --page-card-padding-x: @page-card-padding-x;
+  --page-border-radius: @page-border-radius;
+  //
+  --layout-padding-x: @layout-padding-x;
+  --layout-main-bg-color: @layout-main-bg-color;
+  --layout-sidebar-bg-color: @layout-sidebar-bg-color;
+  --layout-sidebar-width--pc: @layout-sidebar-width--pc;
+  --layout-sidebar-width--mb: @layout-sidebar-width--mb;
+
+  // comp
+  --comp-submit-toolbar-bg-color: @comp-submit-toolbar-bg-color;
 }
 
 .rcicon {
@@ -44,4 +61,40 @@ body {
   padding-left: @padding-x;
   padding-right: @padding-x;
   border-radius: 200px !important;
+}
+
+.ant-menu-submenu-open.ant-menu-submenu-inline > .ant-menu-submenu-title,
+.ant-menu-submenu-inline > .ant-menu-submenu-title {
+  .ant-menu-submenu-arrow {
+    &:after,
+    &:before {
+      opacity: 0.6;
+      width: 7px !important;
+      height: 1px !important;
+    }
+  }
+}
+
+.ant-menu-submenu-inline > .ant-menu-submenu-title {
+  .ant-menu-submenu-arrow {
+    &:after {
+      transform: rotate(45deg) translateX(-3px) !important;
+    }
+
+    &:before {
+      transform: rotate(-45deg) translateX(3px) !important;
+    }
+  }
+}
+
+.ant-menu-submenu-open.ant-menu-submenu-inline > .ant-menu-submenu-title {
+  .ant-menu-submenu-arrow {
+    &:after {
+      transform: rotate(-45deg) translateX(-3px) !important;
+    }
+
+    &:before {
+      transform: rotate(45deg) translateX(3px) !important;
+    }
+  }
 }
