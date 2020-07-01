@@ -44,7 +44,7 @@ export const ActionInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =>
   useImperativeHandle(ref, () => ({ form, onValidateForm }));
 
   return (
-    <div className={cx(style['wrapper'], props.className)}>
+    <div className={cx(style['action-info-form-wrapper'], props.className)}>
       <FormCard
         title={t('_page:Action.actionInfo')}
         extra={<EntryInfoDate date={props.item && [props.item.created_at, props.item.updated_at]} />}

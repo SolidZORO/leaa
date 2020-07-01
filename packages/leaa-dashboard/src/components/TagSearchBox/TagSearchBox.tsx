@@ -97,7 +97,7 @@ export const TagSearchBox = forwardRef((props: IProps, ref: React.Ref<any>) => {
   }, []);
 
   return (
-    <div className={cx(style['wrapper'], props.className)}>
+    <div className={cx(style['tag-search-box-wrapper'], props.className)}>
       <div className={cx(style['container'])}>
         <AutoComplete
           // backfill

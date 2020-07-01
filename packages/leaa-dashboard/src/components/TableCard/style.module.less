@@ -8,9 +8,7 @@
 
 .table-card-container {
   position: relative;
-  //border-radius: 4px;
   border-radius: var(--page-border-radius);
-  //border-radius: 10px;
   background-color: #fff;
   .g-box-shadow();
 
@@ -32,13 +30,13 @@
       justify-content: flex-end;
       float: inherit;
       margin: 0;
-      padding: 13px 20px;
+      padding: 16px;
       border: 1px solid #eee;
       border-top: none 0;
       border-radius: 0 0 @table-border-radius-base @table-border-radius-base;
 
       .li-style() {
-        @height: 28px;
+        @height: 32px;
 
         height: @height !important;
         line-height: @height !important;
@@ -51,6 +49,10 @@
       .ant-select-selection-item,
       .ant-select-selector {
         .li-style();
+      }
+
+      .ant-select-selector {
+        padding: 0 15px;
       }
 
       .ant-pagination-item {
@@ -69,10 +71,13 @@
 
           background-color: #fff !important;
           margin: 0 12px;
-          padding-left: 12px;
-          padding-right: 12px;
+          padding: 0 16px;
           border: 1px solid #ddd;
         }
+      }
+
+      .ant-pagination-item-active {
+        padding: 0 8px;
       }
 
       .ant-pagination-disabled {
@@ -86,17 +91,7 @@
       }
     }
 
-    //.ant-table-small > .ant-table-content > .ant-table-body {
-    //  margin: 0 3px;
-    //}
-
-    .ant-pagination-options {
-      //width: 120px;
-      //min-width: 120px;
-    }
-
     .ant-table-container {
-      //border: 1px solid #f0f0f0;
       border-bottom: none 0;
     }
 
@@ -107,6 +102,11 @@
     }
   }
 }
+
+//
+//
+//
+//
 
 .selected-row-bar {
   :global {
@@ -154,11 +154,11 @@
   }
 }
 
-.items-length {
+.table-total-info {
   color: #ccc;
   font-size: 12px;
   position: absolute;
-  bottom: 18px;
+  bottom: 23px;
   left: 20px;
 }
 

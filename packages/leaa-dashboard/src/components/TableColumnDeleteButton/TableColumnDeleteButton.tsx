@@ -47,7 +47,7 @@ export const TableColumnDeleteButton = (props: IProps) => {
   };
 
   return (
-    <div className={cx(style['wrapper'], props.className)}>
+    <div className={cx(style['table-column-delete-button-wrapper'], props.className)}>
       <Popconfirm
         overlayClassName={style['popconfirm-wrapper']}
         icon={null}
@@ -61,7 +61,7 @@ export const TableColumnDeleteButton = (props: IProps) => {
         placement="topRight"
         onConfirm={onChange}
       >
-        <Button icon={<RiDeleteBin7Line />} size={props.size || 'small'} loading={loading} />
+        <Button icon={<RiDeleteBin7Line />} size={props.size} loading={loading} />
       </Popconfirm>
     </div>
   );

@@ -18,7 +18,7 @@ interface IProps {
 
 export const GithubAuthButton = (props: IProps) => {
   return (
-    <div className={cx(style['wrapper'], props.className)}>
+    <div className={cx(style['github-auth-button-wrapper'], props.className)}>
       <Button
         size="small"
         className={style['like-button']}

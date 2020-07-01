@@ -34,7 +34,7 @@ export const SearchInput = (props: IProps) => {
   }, [props.value]);
 
   return (
-    <div className={cx(style['wrapper'], props.className)}>
+    <div className={cx(style['search-input-wrapper'], props.className)}>
       <Input
         prefixCls="search-input ant-input"
         allowClear
@@ -45,7 +45,7 @@ export const SearchInput = (props: IProps) => {
           <RiSearchLine className={style['search-input-search-button']} onClick={() => onSearch(text as string)} />
         }
         onPressEnter={() => onSearch(text as string)}
-        className={cx(style['search-input-wrapper'], 'search-input-wrapper')}
+        className={cx(style['search-input-inner'], 'search-input-inner')}
       />
     </div>
   );

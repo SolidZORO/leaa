@@ -268,6 +268,8 @@ export const TableCard = <T extends any>(props: IProps<T>) => {
           columns={genColumns(props?.columnFields) || props?.columns || genColumns('all')}
           dataSource={props.list?.data || []}
           pagination={{
+            // simple: true,
+            size: 'small',
             total: props.list?.total,
             current: props.list?.page,
             pageSize: crudQuery?.limit,
@@ -295,7 +297,9 @@ export const TableCard = <T extends any>(props: IProps<T>) => {
           </div>
         )}
 
-        <div className={style['items-length']}>{t('_comp:TableCard.totalLength', { length: props.list?.total })}</div>
+        <div className={style['table-total-info']}>
+          {t('_comp:TableCard.totalLength', { length: props.list?.total })}
+        </div>
       </div>
     </div>
   );

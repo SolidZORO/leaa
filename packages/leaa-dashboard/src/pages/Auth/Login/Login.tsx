@@ -124,7 +124,7 @@ export default (props: IPage) => {
   }, []);
 
   return (
-    <div className={style['wrapper']}>
+    <div className={style['login-wrapper']}>
       <div className={style['login-bg']}>
         <HtmlMeta title={t(`${props.route?.namei18n}`)} />
 

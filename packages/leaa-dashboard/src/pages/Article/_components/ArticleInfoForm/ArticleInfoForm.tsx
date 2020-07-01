@@ -59,7 +59,7 @@ export const ArticleInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =
   useImperativeHandle(ref, () => ({ form, onValidateForm }));
 
   return (
-    <div className={cx(style['wrapper'], props.className)}>
+    <div className={cx(style['article-info-form-wrapper'], props.className)}>
       <Form form={form} name="article-info" layout="vertical" className={style['form--title-wrapper']}>
         <Form.Item name="title" rules={[{ required: true }]}>
           <Input size="large" placeholder={t('_lang:title')} />

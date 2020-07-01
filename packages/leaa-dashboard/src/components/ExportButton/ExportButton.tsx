@@ -60,7 +60,7 @@ export const ExportButton = (props: IProps) => {
   };
 
   return (
-    <div className={cx(style['wrapper'], props.className)}>
+    <div className={cx(style['export-button-wrapper'], props.className)}>
       <Button
         size={props.size}
         icon={<RiDownload2Line />}

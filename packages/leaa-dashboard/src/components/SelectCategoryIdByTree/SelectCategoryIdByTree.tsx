@@ -84,7 +84,7 @@ export const SelectCategoryIdByTree = (props: IProps) => {
   }, []);
 
   return (
-    <div className={cx(style['wrapper'], props.className)}>
+    <div className={cx(style['select-category-id-by-tree-wrapper'], props.className)}>
       <TreeSelect
         {...multipleSelectOption}
         loading={treeLoading}

@@ -9,7 +9,7 @@ const onGoToHome = () => {
 };
 
 export default () => (
-  <div className={style['wrapper']}>
+  <div className={style['error-404-wrapper']}>
     <div className={style['container']}>
       <div className={style['title']}>
         <Button type="primary" shape="circle" icon={<RiArrowLeftLine />} onClick={onGoToHome} />

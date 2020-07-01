@@ -47,7 +47,7 @@ export const UserInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
   useImperativeHandle(ref, () => ({ form, onValidateForm }));
 
   return (
-    <div className={cx(style['wrapper'], props.className)}>
+    <div className={cx(style['user-info-form-wrapper'], props.className)}>
       <UploadUserAvatar
         item={props.item}
         loading={props.loading}

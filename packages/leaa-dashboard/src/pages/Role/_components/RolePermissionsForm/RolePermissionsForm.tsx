@@ -72,7 +72,7 @@ export const RolePermissionsForm = forwardRef((props: IProps, ref: React.Ref<any
   useImperativeHandle(ref, () => ({ form, onValidateForm }));
 
   return (
-    <div className={cx(style['wrapper'], props.className)}>
+    <div className={cx(style['role-permissions-form-wrapper'], props.className)}>
       <FormCard
         title={
           <span>

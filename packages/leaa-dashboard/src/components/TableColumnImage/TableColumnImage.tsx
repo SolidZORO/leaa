@@ -17,7 +17,7 @@ export const TableColumnImage = (props: IProps) => {
   const width = props.width || 48;
 
   return (
-    <div className={cx(style['wrapper'], props.className)}>
+    <div className={cx(style['table-column-image-wrapper'], props.className)}>
       <img src={src} alt="" className={style['image']} width={width} height={width} />
     </div>
   );

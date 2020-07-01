@@ -48,7 +48,7 @@ export const TableColumnStatusSwitch = (props: IProps) => {
   };
 
   return (
-    <div className={cx(style['wrapper'], props.className)}>
+    <div className={cx(style['table-column-status-switch-wrapper'], props.className)}>
       <Switch checked={status} onChange={onChange} size={props.size} loading={loading} />
     </div>
   );

@@ -57,8 +57,8 @@ export class ErrorBoundary extends React.Component<IProps, IState> {
   render() {
     if (this.state.hasError) {
       return (
-        <div className={style['wrapper']}>
-          <div className={style['container']}>
+        <div className={style['error-boundary-wrapper']}>
+          <div className={style['error-boundary-container']}>
             <div className={style['title']}>
               <Button
                 type="primary"

@@ -80,7 +80,7 @@ export const SelectTagId = forwardRef((props: IProps, ref: React.Ref<any>) => {
   }, [props.selectedTags]);
 
   return (
-    <div className={cx(style['wrapper'])}>
+    <div className={cx(style['select-tag-id-wrapper'])}>
       <div className={style['tag-selected-wrapper']} ref={ref}>
         {selectedTags &&
           selectedTags.map((tag) => (
@@ -112,7 +112,7 @@ export const SelectTagId = forwardRef((props: IProps, ref: React.Ref<any>) => {
                     [style['popover-title-button--hide']]: !tagName,
                   })}
                 >
-                  <div className={cx(style['wrapper'])}>
+                  <div className={cx(style['select-tag-id-wrapper'])}>
                     <Button onClick={() => onCreateTag(tagName)} size="small">
                       {t('_comp:SelectTagId.createAndAdd')}
                     </Button>

@@ -124,7 +124,7 @@ export const SettingListForm = forwardRef((props: IProps, ref: React.Ref<any>) =
   useImperativeHandle(ref, () => ({ form, onValidateForm }));
 
   return (
-    <div className={cx(style['wrapper'], props.className)}>
+    <div className={cx(style['setting-list-form-wrapper'], props.className)}>
       <FormCard>
         <Form
           form={form}

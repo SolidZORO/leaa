@@ -62,7 +62,7 @@ export const RolePermissionsCheckbox = forwardRef((props: IProps, ref: React.Ref
   }, [props.permissionsFlat]);
 
   return (
-    <div className={style['form-row']} ref={ref}>
+    <div className={style['role-permissions-checkbox-wrapper']} ref={ref}>
       <Checkbox
         indeterminate={onClacIndeterminate()}
         checked={onClacChecked()}

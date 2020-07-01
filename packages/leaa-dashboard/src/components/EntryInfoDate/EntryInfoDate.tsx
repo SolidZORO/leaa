@@ -41,7 +41,7 @@ export const EntryInfoDate = (props: IProps) => {
 
   return (
     <div
-      className={cx(style['wrapper'], props.className, {
+      className={cx(style['entry-info-date-wrapper'], props.className, {
         [style['wrapper--small']]: props.size === 'small',
       })}
     >

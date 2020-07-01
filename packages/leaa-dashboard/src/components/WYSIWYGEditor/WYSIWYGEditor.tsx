@@ -27,7 +27,7 @@ export const WYSIWYGEditor = forwardRef((props: IProps, ref: React.Ref<any>) => 
 
   // TODO: here is missing a WYSIWYGEditor
   return (
-    <div className={cx(style['wrapper'], props.className)}>
+    <div className={cx(style['wysiwyg-editor-wrapper'], props.className)}>
       <Input.TextArea ref={ref} value={value} onChange={onChange} autoSize={{ minRows: 20, maxRows: 80 }} />
     </div>
   );

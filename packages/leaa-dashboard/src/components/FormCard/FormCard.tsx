@@ -12,7 +12,7 @@ interface IProps {
 }
 
 export const FormCard = (props: IProps) => (
-  <Card className={cx(style['wrapper'], 'g-form-card-wrapper', props.className)}>
+  <Card className={cx(style['form-card-wrapper'], 'g-form-card-wrapper', props.className)}>
     <div
       className={cx(style['header'], {
         [style['header--less']]: !props.title && !props.extra,

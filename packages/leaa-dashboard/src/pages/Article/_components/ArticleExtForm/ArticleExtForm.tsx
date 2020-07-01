@@ -46,7 +46,7 @@ export const ArticleExtForm = forwardRef((props: IProps, ref: React.Ref<any>) =>
   useImperativeHandle(ref, () => ({ form, onValidateForm }));
 
   return (
-    <div className={cx(style['wrapper'], props.className)}>
+    <div className={cx(style['article-ext-form-wrapper'], props.className)}>
       <FormCard
         title={null}
         extra={<EntryInfoDate date={props.item && [props.item.created_at, props.item.updated_at]} />}

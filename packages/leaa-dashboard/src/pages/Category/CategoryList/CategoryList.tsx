@@ -41,7 +41,7 @@ export default (props: IPage) => {
   useUpdateEffect(() => onFetchList(), [props.history.location.key]);
 
   return (
-    <PageCard route={props.route} title="@LIST" className={style['wapper']} loading={treeLoading}>
+    <PageCard route={props.route} title="@LIST" className={style['category-list-wapper']} loading={treeLoading}>
       <HtmlMeta title={t(`${props.route?.namei18n}`)} />
 
       <div style={{ height: '100%', overflow: 'auto' }}>

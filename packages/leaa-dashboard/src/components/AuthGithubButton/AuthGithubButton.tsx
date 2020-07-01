@@ -17,7 +17,7 @@ export const AuthGithubButton = (props: IProps) => {
   const { t } = useTranslation();
 
   return (
-    <div className={cx(style['wrapper'], props.className)}>
+    <div className={cx(style['auth-github-button-wrapper'], props.className)}>
       <Button size="small" href={`${envConfig.API_URL}/${envConfig.API_VERSION}/auth/github/login`}>
         Github
       </Button>

@@ -87,7 +87,7 @@ export const UserRolesForm = forwardRef((props: IProps, ref: React.Ref<any>) => 
   useImperativeHandle(ref, () => ({ form, onValidateForm }));
 
   return (
-    <div className={cx(style['wrapper'], props.className)}>
+    <div className={cx(style['user-roles-form-wrapper'], props.className)}>
       <FormCard title={t('_page:User.userRoles')}>
         <Checkbox
           indeterminate={onClacIndeterminate()}
