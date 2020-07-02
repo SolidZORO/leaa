@@ -19,6 +19,11 @@
       vertical-align: 5px;
       padding: 0 8px;
       font-size: 110%;
+      display: none;
+
+      @media (min-width: @screen-md) {
+        display: inline-block;
+      }
     }
 
     &:hover {
@@ -51,23 +56,30 @@
 .header {
   background: transparent;
   //margin: 12px 0;
-  display: flex;
+  //display: flex;
+  display: block;
   justify-content: space-between;
+  //justify-content: flex-start;
   align-items: center;
-  width: 100%;
+  //width: 100%;
   margin-bottom: 14px;
   min-height: 32px;
 
   @media (min-width: @screen-md) {
-    justify-content: space-between;
+    //justify-content: space-between;
     display: flex;
-    margin-bottom: 28px;
+    //margin-bottom: 28px;
   }
 
   .title {
     margin: 0;
     padding: 0 0 0 2px;
     color: #26254b;
+    //width: 100%;
+    //
+    //@media (min-width: @screen-md) {
+    //  width: auto;
+    //}
 
     :global {
       span {
@@ -80,8 +92,6 @@
 
   .page-card-create-link {
     margin-left: 20px;
-    //background-color: #ff0;
-    //border: 1px solid @primary-color;
   }
 
   .page-card-create-button {
@@ -91,9 +101,17 @@
   .extra {
     //font-size: 140%;
     margin: 0;
+    margin-top: 10px;
     padding: 0 0 0 3px;
     display: flex;
-    justify-content: flex-end;
+    //justify-content: flex-start;
+    justify-content: space-between;
+
+    //@media (min-width: @screen-md) {
+    //  justify-content: space-between;
+    //  display: flex;
+    //  margin-bottom: 28px;
+    //}
 
     :global {
       .g-page-card-extra-filter-bar-wrapper {
@@ -116,6 +134,10 @@
 
 .title-wrapper {
   margin-left: 40px;
+
+  @media (min-width: @screen-md) {
+    margin-left: 0;
+  }
 }
 
 .page-card-wrapper--complex {

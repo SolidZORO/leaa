@@ -64,6 +64,8 @@ export default (props: IPage) => {
       route={props.route}
       title="@LIST"
       complexExtra
+      className={style['wapper']}
+      loading={listLoading}
       extra={
         <div className="g-page-card-extra-filter-bar-wrapper">
           <FilterIcon
@@ -107,8 +109,6 @@ export default (props: IPage) => {
           />
         </div>
       }
-      className={style['wapper']}
-      loading={listLoading}
     >
       <HtmlMeta title={t(`${props.route?.namei18n}`)} />
 

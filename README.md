@@ -22,13 +22,9 @@ View the `README.md` of each sub-directory in `packages`. You may need to look a
 
 ### Dashboard ([demo](https://leaa-dashboard.now.sh))
 
-##### dashboard-login
+##### dashboard UI
 
-![dashboard-login](https://raw.githubusercontent.com/SolidZORO/leaa/master/designs/ui/dashboard-login.png)
-
-##### dashboard-user-edit
-
-![dashboard-user-edit](https://raw.githubusercontent.com/SolidZORO/leaa/master/designs/ui/dashboard-user-edit.png)
+![dashboard-UI]![new ui](./packages/leaa-dashboard/docs/images/leaa-dashboard-new-ui.png)
 
 ## **Legacy**
 
