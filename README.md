@@ -24,7 +24,7 @@ View the `README.md` of each sub-directory in `packages`. You may need to look a
 
 ##### dashboard UI
 
-![dashboard-UI]![new ui](./packages/leaa-dashboard/docs/images/leaa-dashboard-new-ui.png)
+![dashboard-UI](./packages/leaa-dashboard/docs/images/leaa-dashboard-new-ui.png)
 
 ## **Legacy**
 

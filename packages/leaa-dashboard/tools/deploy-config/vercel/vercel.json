@@ -4,8 +4,8 @@
   "env": { "NODE_ENV": "production" },
   "builds": [{ "src": "**", "use": "@now/static" }],
   "routes": [
-    { "src": "^/(scripts|styles|assets)/(.*)", "dest": "/$1/$2" },
-    { "src": "^/_env.js", "dest": "/_env.js" },
-    { "src": "^/(.*)", "dest": "/index.html" }
+    { "src": "^/(scripts|styles|assets)/(.*)", "dest": "/admin/$1/$2" },
+    { "src": "^/_env.js", "dest": "/admin/_env.js" },
+    { "src": "^/(.*)", "dest": "/admin/index.html" }
   ]
 }
