@@ -10,6 +10,7 @@ import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
 import { errorMsg } from '@leaa/dashboard/src/utils';
 
 import { SwitchNumber, SelectCategoryIdByTree } from '@leaa/dashboard/src/components';
+import { FORM_SIZE } from '@leaa/dashboard/src/constants';
 
 import style from './style.module.less';
 
@@ -20,7 +21,7 @@ interface IProps {
 }
 
 /**
- * 关于 categoryIds 为空的处理方式
+ * 关于 categoryIds 为 empty 的处理方式
  *
  * @ideaNotes
  * categoryIds 如果没有值，请设置为 null，以强表示为清空，API 看到这个值会做清空处理，
@@ -60,17 +61,23 @@ export const ArticleInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =
 
   return (
     <div className={cx(style['article-info-form-wrapper'], props.className)}>
-      <Form form={form} name="article-info" layout="vertical" className={style['form--title-wrapper']}>
+      <Form form={form} name="article-info" layout="vertical" className={style['form--title-wrapper']} size={FORM_SIZE}>
         <Form.Item name="title" rules={[{ required: true }]}>
-          <Input size="large" placeholder={t('_lang:title')} />
+          <Input placeholder={t('_lang:title')} />
         </Form.Item>
       </Form>
 
-      <Form form={form} name="article-info-2" layout="inline" hideRequiredMark className={style['form--slug-wrapper']}>
+      <Form
+        form={form}
+        name="article-info-2"
+        layout="inline"
+        hideRequiredMark
+        className={style['form--slug-wrapper']}
+        size={FORM_SIZE}
+      >
         <div className={style['block--slug']}>
           <Form.Item name="slug" rules={[]} className={style['item--slug']}>
             <Input
-              size="small"
               className={style['form-item-slug-input']}
               prefix={<RiExternalLinkLine type="ri-link-m" />}
               placeholder={t('_lang:slug')}
@@ -87,11 +94,7 @@ export const ArticleInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =
             colon={false}
             className={style['item--category']}
           >
-            <SelectCategoryIdByTree
-              parentSlug="articles"
-              componentProps={{ allowClear: true, size: 'small' }}
-              dropdownWidth={200}
-            />
+            <SelectCategoryIdByTree parentSlug="articles" componentProps={{ allowClear: true }} dropdownWidth={200} />
           </Form.Item>
 
           <Form.Item
@@ -102,7 +105,7 @@ export const ArticleInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =
             colon={false}
             className={style['item--status']}
           >
-            <SwitchNumber size="small" />
+            <SwitchNumber />
           </Form.Item>
         </div>
       </Form>

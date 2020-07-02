@@ -58,7 +58,7 @@ export const genUrlAt2x = (attachment: Attachment): string | null => {
 // robohash: a generated robot with different colors, faces, etc
 // blank: a transparent PNG image (border added to HTML below for demonstration purposes)
 export const GRAVATAR_AVATAR_TYPE = envConfig.GRAVATAR_TYPE || 'monsterid';
-export const GRAVATAR_AVATAR_PARAMS = `?s=160&d=${GRAVATAR_AVATAR_TYPE}`;
+export const GRAVATAR_AVATAR_PARAMS = `?s=280&d=${GRAVATAR_AVATAR_TYPE}`;
 
 export const transAvatarUrl = (path?: string | null): string | null => {
   if (path?.includes('gravatar.com')) return `${path}${GRAVATAR_AVATAR_PARAMS}`;

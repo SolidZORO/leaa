@@ -2,25 +2,24 @@
 @import '~@leaa/dashboard/src/styles/mixin.less';
 
 .submit-toolbar-wrapper {
-  //position: relative;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  // if antd `Affix` is used, this can be very simple.
   padding: 20px 0;
-  z-index: 99;
 
-  @media (min-width: @screen-md) {
-    margin-left: var(--layout-sidebar-width--pc);
-  }
+  //position: relative;
+  //position: fixed;
+  //bottom: 0;
+  //left: 0;
+  //right: 0;
+  //z-index: 99;
+  //
+  //@media (min-width: @screen-md) {
+  //  margin-left: var(--layout-sidebar-width--pc);
+  //}
 }
 
 .submit-toolbar-container {
-  //background-color: #fff;
-  background-color: #f3f9fd;
-  //padding: 15px;
+  background-color: #fff;
   border-radius: 12px;
-  //border: 2px solid darken(@comp-submit-toolbar-bg-color, 5%);
   display: flex;
   width: 90%;
   padding: 10px;
@@ -31,31 +30,31 @@
   @media (min-width: @screen-md) {
     width: 400px;
   }
+}
 
-  //:global {
-  //  .g-submit-toolbar-button {
-  //    padding: 0 28px;
-  //
-  //    .rcicon {
-  //      margin-right: 8px;
-  //    }
-  //  }
-  //}
+.submit-toolbar-buttonGroup,
+.submit-toolbar-moreGroup {
+  button {
+    height: 56px;
+    line-height: 0;
+    border-radius: 12px;
+    width: 100%;
+
+    &:focus,
+    &:hover {
+      background-color: darken(@comp-submit-toolbar-bg-color, 1%);
+    }
+  }
 }
 
 .submit-toolbar-buttonGroup {
   flex: 1;
-  //background-color: transparent;
-  //background-color: #f00;
   display: flex;
   justify-content: center;
-  //justify-content: space-between;
   text-align: center;
 
   button {
-    //background-color: #f00;
     height: 56px;
-    //line-height: 40px;
     line-height: 0;
     border-radius: 12px;
     width: 100%;
@@ -75,66 +74,56 @@
     span {
       margin-top: 2px;
     }
-
-    &:focus,
-    &:hover {
-      color: @primary-color;
-      background-color: darken(@comp-submit-toolbar-bg-color, 1%);
-    }
   }
 }
 
 .submit-toolbar-moreGroup {
-  width: 60px;
+  width: 50px;
   margin-left: 5px;
 
   button {
-    //background-color: #f00;
     height: 56px;
-    //line-height: 40px;
     line-height: 0;
     border-radius: 12px;
     width: 100%;
 
     svg {
-      color: #79879c;
+      color: #c0c8d2;
       font-size: 28px;
       line-height: 1;
       margin: 0 auto;
       display: block;
     }
+  }
+}
 
-    &:focus,
-    &:hover {
-      color: #36445c;
-      background-color: darken(@comp-submit-toolbar-bg-color, 1%);
+.submit-toolbar-wrapper--dark {
+  .submit-toolbar-container {
+    background-color: @primary-color;
+  }
+
+  .submit-toolbar-buttonGroup,
+  .submit-toolbar-moreGroup {
+    button {
+      svg,
+      span {
+        color: #fff;
+      }
+
+      &:focus,
+      &:hover {
+        //color: lighten(@primary-color, 5%);
+        background-color: lighten(@primary-color, 8%);
+      }
     }
   }
 }
 
-//.submit-toolbar-wrapper--full {
-//  position: fixed;
-//  bottom: 0;
-//  left: 0;
-//  right: 0;
-//  padding: 20px 0;
-//  z-index: 99;
-//
-//  @media (min-width: @screen-md) {
-//    left: var(--layout-sidetoolbar-width--pc);
-//  }
-//
-//  .submit-toolbar-container {
-//    background-color: #fffc;
-//    //padding: 15px;
-//    border-radius: 90px;
-//    display: flex;
-//    width: 90%;
-//    justify-content: space-around;
-//    margin: 0 auto;
-//
-//    @media (min-width: @screen-md) {
-//      width: 400px;
-//    }
-//  }
-//}
+.submit-toolbar-wrapper--light {
+}
+
+.submit-toolbar-wrapper--notAffix {
+  .submit-toolbar-container {
+    .g-box-shadow(0.05);
+  }
+}

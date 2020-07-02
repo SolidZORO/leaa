@@ -88,7 +88,7 @@ export const UploadUserAvatar = (props: IProps) => {
           moduleName: 'user',
           typeName: 'avatar',
         }}
-        cardHeight={80}
+        cardHeight={140}
         className={style['avatar-box']}
         circle
         onChangeAttasCallback={(res) => {

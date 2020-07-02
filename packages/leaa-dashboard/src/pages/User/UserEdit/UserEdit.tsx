@@ -1,16 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button } from 'antd';
 
 import { User, Role } from '@leaa/api/src/entrys';
 import { IAttachmentBoxRef } from '@leaa/api/src/interfaces';
-import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { UserUpdateOneReq } from '@leaa/api/src/dtos/user';
 import { IPage, ICommenFormRef, ISubmitData, IHttpRes, IHttpError, ICrudListRes } from '@leaa/dashboard/src/interfaces';
 import { msg, errorMsg, ajax } from '@leaa/dashboard/src/utils';
 
 import { envConfig } from '@leaa/dashboard/src/configs';
-import { PageCard, HtmlMeta, SubmitBar } from '@leaa/dashboard/src/components';
+import { PageCard, HtmlMeta, SubmitToolbar } from '@leaa/dashboard/src/components';
 
 import { UserInfoForm } from '../_components/UserInfoForm/UserInfoForm';
 import { UserRolesForm } from '../_components/UserRolesForm/UserRolesForm';
@@ -100,25 +98,17 @@ export default (props: IPage) => {
   }, []);
 
   return (
-    <PageCard route={props.route} title="@EDIT" className={style['wapper']} loading={itemLoading || submitLoading}>
+    <PageCard route={props.route} title="@UPDATE" className={style['wapper']} loading={itemLoading || submitLoading}>
       <HtmlMeta title={t(`${props.route?.namei18n}`)} />
 
       <UserInfoForm item={item} loading={itemLoading} ref={infoFormRef} />
 
       <UserRolesForm ref={rolesFormRef} item={item} loading={rolesLoading} roles={roles || []} />
 
-      <SubmitBar full>
-        <Button
-          type="primary"
-          size="large"
-          icon={UPDATE_BUTTON_ICON}
-          className="g-submit-bar-button"
-          loading={submitLoading}
-          onClick={onUpdateItem}
-        >
-          {t('_lang:update')}
-        </Button>
-      </SubmitBar>
+      <SubmitToolbar
+        simpleButtonGroup={{ title: '@UPDATE', loading: submitLoading }}
+        simpleButtonAction={onUpdateItem}
+      />
     </PageCard>
   );
 };

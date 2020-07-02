@@ -1,15 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button } from 'antd';
 
 import { Role, Permission } from '@leaa/api/src/entrys';
-import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { RoleUpdateOneReq } from '@leaa/api/src/dtos/role';
 import { IPage, ICommenFormRef, ISubmitData, IHttpRes, IHttpError, ICrudListRes } from '@leaa/dashboard/src/interfaces';
 import { msg, errorMsg, ajax } from '@leaa/dashboard/src/utils';
 
 import { envConfig } from '@leaa/dashboard/src/configs';
-import { PageCard, HtmlMeta, SubmitBar } from '@leaa/dashboard/src/components';
+import { PageCard, HtmlMeta, SubmitToolbar } from '@leaa/dashboard/src/components';
 
 import { RoleInfoForm } from '../_components/RoleInfoForm/RoleInfoForm';
 import { RolePermissionsForm } from '../_components/RolePermissionsForm/RolePermissionsForm';
@@ -88,7 +86,7 @@ export default (props: IPage) => {
   }, []);
 
   return (
-    <PageCard route={props.route} title="@EDIT" className={style['wapper']} loading={itemLoading || submitLoading}>
+    <PageCard route={props.route} title="@UPDATE" className={style['wapper']} loading={itemLoading || submitLoading}>
       <HtmlMeta title={t(`${props.route?.namei18n}`)} />
 
       <RoleInfoForm item={item} loading={itemLoading} ref={infoFormRef} />
@@ -100,18 +98,10 @@ export default (props: IPage) => {
         permissions={prmissions || []}
       />
 
-      <SubmitBar full>
-        <Button
-          type="primary"
-          size="large"
-          icon={UPDATE_BUTTON_ICON}
-          className="g-submit-bar-button"
-          loading={submitLoading}
-          onClick={onUpdateItem}
-        >
-          {t('_lang:update')}
-        </Button>
-      </SubmitBar>
+      <SubmitToolbar
+        simpleButtonGroup={{ title: '@UPDATE', loading: submitLoading }}
+        simpleButtonAction={onUpdateItem}
+      />
     </PageCard>
   );
 };

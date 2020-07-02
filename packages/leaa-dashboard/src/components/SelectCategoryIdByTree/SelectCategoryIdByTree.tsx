@@ -87,6 +87,7 @@ export const SelectCategoryIdByTree = (props: IProps) => {
     <div className={cx(style['select-category-id-by-tree-wrapper'], props.className)}>
       <TreeSelect
         {...multipleSelectOption}
+        size="large"
         loading={treeLoading}
         // TIPS: value 即便是有值，也必须等待 tree query 完毕后才现实，不然 select 会被 uuid 撑开
         value={!_.isEmpty(tree) ? value : '----'}

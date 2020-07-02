@@ -14,7 +14,7 @@ interface IProps {
 export const TableColumnId = (props: IProps) => {
   return (
     <div className={cx(style['table-column-id-wrapper'], props.className)}>
-      <IdTag id={props.id} size="small" linkNormalColor link={props.link} width={4} />
+      <IdTag id={props.id} size="small" linkNormalColor link={props.link} />
     </div>
   );
 };

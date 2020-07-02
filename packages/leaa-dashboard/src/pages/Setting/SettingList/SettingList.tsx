@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Button, Modal, Popconfirm } from 'antd';
 import { UPDATE_BUTTON_ICON, PAGE_CARD_TITLE_CREATE_ICON } from '@leaa/dashboard/src/constants';
 import { LoadingOutlined } from '@ant-design/icons';
-import { RiDeleteBin7Line, RiQuestionLine } from 'react-icons/ri';
+import { RiDeleteBin7Line, RiQuestionLine, RiAddLine } from 'react-icons/ri';
 
 import { Setting } from '@leaa/api/src/entrys';
 import { envConfig } from '@leaa/dashboard/src/configs';
@@ -18,7 +18,7 @@ import {
   ISubmitData,
 } from '@leaa/dashboard/src/interfaces';
 import { ajax, errorMsg, genCrudRequestQuery, msg } from '@leaa/dashboard/src/utils';
-import { PageCard, HtmlMeta, SubmitBar } from '@leaa/dashboard/src/components';
+import { PageCard, HtmlMeta, SubmitBar, SubmitToolbar } from '@leaa/dashboard/src/components';
 
 import { SettingUpdateManyReq, SettingUpdateOneReq, SettingCreateOneReq } from '@leaa/api/src/dtos/setting';
 
@@ -176,14 +176,17 @@ export default (props: IPage) => {
       route={props.route}
       title={
         <span>
-          {props.route?.icon}
           <strong>{t(`${props.route?.namei18n}`)}</strong>
+
           <Button
-            className={cx('g-page-card-create-button', style['create-button'])}
+            size="large"
+            shape="round"
+            type="ghost"
+            icon={<RiAddLine />}
             onClick={onOpenCreateSetting}
-            type="link"
+            className={cx(style['page-card-create-button'], 'g-page-card-create-button')}
           >
-            {PAGE_CARD_TITLE_CREATE_ICON}
+            {t('_lang:create')}
           </Button>
         </span>
       }
@@ -194,18 +197,10 @@ export default (props: IPage) => {
 
       <SettingListForm ref={settingsFormRef} items={list} onClickLabelEditCallback={onOpenUpdateSetting} />
 
-      <SubmitBar full>
-        <Button
-          type="primary"
-          size="large"
-          icon={UPDATE_BUTTON_ICON}
-          className="g-submit-bar-button"
-          loading={batchUpdateLoading}
-          onClick={onBatchUpdatSettings}
-        >
-          {t('_lang:update')}
-        </Button>
-      </SubmitBar>
+      <SubmitToolbar
+        simpleButtonGroup={{ title: '@UPDATE', loading: batchUpdateLoading }}
+        simpleButtonAction={onBatchUpdatSettings}
+      />
 
       <Modal
         title={`${t(`_lang:${modalType}`)}${modalData?.name ? `  ${modalData?.name}` : ''}`}

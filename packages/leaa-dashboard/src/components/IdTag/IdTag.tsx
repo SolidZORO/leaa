@@ -16,8 +16,16 @@ interface IProps {
   width?: number; // show id width
 }
 
+const DEFAULT_WIDTH = 4;
+
 export const IdTag = (props: IProps) => {
-  const idStr = typeof props.id === 'string' && props.width ? props.id.substr(0, props.width || 4) : props.id;
+  // if id, show all, if uuid, show 4
+  let idStr = `${props.id}`.includes('-') ? props.id.substr(0, DEFAULT_WIDTH) : props.id;
+
+  if (props.width && props.width !== DEFAULT_WIDTH && `${props.id}`.includes('-')) {
+    idStr = props.id.substr(0, props.width);
+  }
+
   const idInnerDom = (
     <div className={style['id-tag-inner']}>
       {props.icon}

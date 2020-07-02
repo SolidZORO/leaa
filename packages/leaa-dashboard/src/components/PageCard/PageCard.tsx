@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 
 import style from './style.module.less';
 
-declare type IPropTitle = null | '@LIST' | '@EDIT' | '@CREATE' | '@ITEM' | React.ReactNode;
+declare type IPropTitle = null | '@LIST' | '@UPDATE' | '@CREATE' | '@ITEM' | React.ReactNode;
 
 interface IProps {
   children: React.ReactNode;
@@ -38,10 +38,11 @@ export const PageCard = (props: IProps) => {
                 to={`${props.route?.path}/create`}
               >
                 <Button
+                  size="large"
                   shape="round"
                   type="ghost"
                   icon={<RiAddLine />}
-                  className={cx(style['page-card-create-button'])}
+                  className={cx(style['page-card-create-button'], 'g-page-card-create-button')}
                 >
                   {t('_lang:create')}
                 </Button>
@@ -52,7 +53,7 @@ export const PageCard = (props: IProps) => {
       );
 
     // Page 里面 title 还是该写什么写什么，不知道那天这里会出现 if 判断
-    if (_.isString(title) && ['@EDIT', '@CREATE', '@ITEM'].includes(title))
+    if (_.isString(title) && ['@UPDATE', '@CREATE', '@ITEM'].includes(title))
       return (
         <div className={style['title']}>
           <span>
@@ -71,7 +72,7 @@ export const PageCard = (props: IProps) => {
       })}
     >
       <div className={style['header']}>
-        {genTitlt(props.title)}
+        <div className={style['title-wrapper']}>{genTitlt(props.title)}</div>
 
         {props.extra && <div className={style['extra']}>{props.extra}</div>}
       </div>

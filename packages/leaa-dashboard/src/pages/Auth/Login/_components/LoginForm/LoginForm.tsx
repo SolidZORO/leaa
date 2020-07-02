@@ -7,6 +7,7 @@ import { ajax, errorMsg } from '@leaa/dashboard/src/utils';
 import { AuthLoginReq } from '@leaa/api/src/dtos/auth';
 import { envConfig } from '@leaa/dashboard/src/configs';
 import { IHttpRes, IHttpError, ICaptchaResult } from '@leaa/dashboard/src/interfaces';
+import { FORM_SIZE } from '@leaa/dashboard/src/constants';
 
 import style from './style.module.less';
 
@@ -58,7 +59,7 @@ export const LoginForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
   // @ts-ignore
   return (
     <div className={cx(style['login-form-wrapper'], props.className)}>
-      <Form form={form} name="login" layout="vertical" initialValues={props.initialValues}>
+      <Form form={form} name="login" layout="vertical" initialValues={props.initialValues} size={FORM_SIZE}>
         <Row gutter={16} className={style['form-row']}>
           <Col xs={24} sm={12}>
             <Form.Item
@@ -79,7 +80,6 @@ export const LoginForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
               label={t('_page:Auth.Login.password')}
             >
               <Input.Password
-                size="large"
                 placeholder={t('_page:Auth.Login.password')}
                 onPressEnter={props.onPressSubmitCallback}
                 className={style['form-input']}
@@ -91,7 +91,6 @@ export const LoginForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
             <Col xs={24} sm={12}>
               <Form.Item name="captcha" rules={[{ required: true }]} label={t('_page:Auth.Login.captcha')}>
                 <Input
-                  size="large"
                   placeholder={t('_page:Auth.Login.captcha')}
                   onPressEnter={props.onPressSubmitCallback}
                   suffix={

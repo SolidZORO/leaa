@@ -14,6 +14,7 @@ interface IProps {
   onClose: (clearCondition: any) => void;
 }
 
+// TODO, clear bug
 export const FilterIcon = (props: IProps) => {
   const [showClose, setShowClose] = useState(false);
 
@@ -36,7 +37,7 @@ export const FilterIcon = (props: IProps) => {
 
       setShowClose(JSON.stringify(prevQueryObj) !== '{}');
     }
-  }, [props.crudQuery, props.clear]);
+  }, [props]);
 
   return showClose ? (
     <RiCloseCircleLine

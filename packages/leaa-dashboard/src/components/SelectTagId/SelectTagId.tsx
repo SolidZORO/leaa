@@ -113,9 +113,7 @@ export const SelectTagId = forwardRef((props: IProps, ref: React.Ref<any>) => {
                   })}
                 >
                   <div className={cx(style['select-tag-id-wrapper'])}>
-                    <Button onClick={() => onCreateTag(tagName)} size="small">
-                      {t('_comp:SelectTagId.createAndAdd')}
-                    </Button>
+                    <Button onClick={() => onCreateTag(tagName)}>{t('_comp:SelectTagId.createAndAdd')}</Button>
                   </div>
                 </div>
               </div>
@@ -135,7 +133,7 @@ export const SelectTagId = forwardRef((props: IProps, ref: React.Ref<any>) => {
             placement={props.placement || 'bottomLeft'}
             overlayClassName={style['popover-overlay']}
           >
-            <Button size="small" className={style['add-tag-button']}>
+            <Button className={style['add-tag-button']}>
               <RiAddLine /> {t('_comp:SelectTagId.addTag')}
             </Button>
           </Popover>

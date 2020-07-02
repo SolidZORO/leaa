@@ -10,6 +10,7 @@ import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
 import { RoleUpdateOneReq } from '@leaa/api/src/dtos/role';
 
 import { FormCard, EntryInfoDate } from '@leaa/dashboard/src/components';
+import { FORM_SIZE } from '@leaa/dashboard/src/constants';
 
 import style from './style.module.less';
 
@@ -59,15 +60,15 @@ export const RoleInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
         title={t('_page:Role.roleInfo')}
         extra={<EntryInfoDate date={props.item && [props.item.created_at, props.item.updated_at]} />}
       >
-        <Form form={form} name="role-info" layout="vertical">
+        <Form form={form} name="role-info" layout="vertical" size={FORM_SIZE}>
           <Row gutter={16}>
-            <Col xs={24} sm={6}>
+            <Col xs={24} sm={12}>
               <Form.Item name="name" rules={[{ required: true }]} label={t('_lang:name')}>
                 <Input placeholder={t('_lang:name')} />
               </Form.Item>
             </Col>
 
-            <Col xs={24} sm={6}>
+            <Col xs={24} sm={12}>
               <Form.Item name="slug" rules={[{ required: true }]} label={t('_lang:slug')}>
                 <Input placeholder={t('_lang:slug')} />
               </Form.Item>

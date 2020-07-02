@@ -55,46 +55,92 @@ body {
 }
 
 // antd
-.ant-message-notice-content {
-  @padding-x: 20px;
+html {
+  //
+  //
+  //
+  // message
+  .ant-message-notice-content {
+    @padding-x: 20px;
 
-  padding-left: @padding-x;
-  padding-right: @padding-x;
-  border-radius: 200px !important;
-}
+    padding-left: @padding-x;
+    padding-right: @padding-x;
+    border-radius: var(--page-border-radius);
+  }
 
-.ant-menu-submenu-open.ant-menu-submenu-inline > .ant-menu-submenu-title,
-.ant-menu-submenu-inline > .ant-menu-submenu-title {
-  .ant-menu-submenu-arrow {
-    &:after,
-    &:before {
-      opacity: 0.6;
-      width: 7px !important;
-      height: 1px !important;
+  //
+  //
+  //
+  // menu
+  .ant-menu-submenu-open.ant-menu-submenu-inline > .ant-menu-submenu-title,
+  .ant-menu-submenu-inline > .ant-menu-submenu-title {
+    .ant-menu-submenu-arrow {
+      &:after,
+      &:before {
+        opacity: 0.6;
+        width: 7px;
+        height: 1px;
+      }
     }
   }
-}
 
-.ant-menu-submenu-inline > .ant-menu-submenu-title {
-  .ant-menu-submenu-arrow {
-    &:after {
-      transform: rotate(45deg) translateX(-3px) !important;
-    }
+  .ant-menu-submenu-inline > .ant-menu-submenu-title {
+    .ant-menu-submenu-arrow {
+      &:after {
+        transform: rotate(45deg) translateX(-3px);
+      }
 
-    &:before {
-      transform: rotate(-45deg) translateX(3px) !important;
+      &:before {
+        transform: rotate(-45deg) translateX(3px);
+      }
     }
   }
-}
 
-.ant-menu-submenu-open.ant-menu-submenu-inline > .ant-menu-submenu-title {
-  .ant-menu-submenu-arrow {
-    &:after {
-      transform: rotate(-45deg) translateX(-3px) !important;
+  .ant-menu-submenu-open.ant-menu-submenu-inline > .ant-menu-submenu-title {
+    .ant-menu-submenu-arrow {
+      &:after {
+        transform: rotate(-45deg) translateX(-3px);
+      }
+
+      &:before {
+        transform: rotate(45deg) translateX(3px);
+      }
+    }
+  }
+
+  //
+  //
+  //
+  // table
+  .ant-table-thead {
+    th.ant-table-column-has-sorters {
+      &:hover {
+        background-color: #f4f7ff;
+      }
+    }
+  }
+
+  td.ant-table-column-sort {
+    background-color: var(--layout-main-bg-color);
+  }
+
+  .ant-table-tbody {
+    & > tr.ant-table-row-selected > td {
+      background-color: darken(@layout-main-bg-color, 4%);
     }
 
-    &:before {
-      transform: rotate(45deg) translateX(3px) !important;
+    & > tr.ant-table-row:hover > td {
+      background-color: var(--layout-main-bg-color);
+    }
+  }
+
+  //
+  //
+  //
+  // checkbox (radius-status)
+  .ant-checkbox-indeterminate {
+    .ant-checkbox-inner::after {
+      border-radius: var(--page-border-radius);
     }
   }
 }

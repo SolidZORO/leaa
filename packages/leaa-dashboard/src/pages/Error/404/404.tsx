@@ -12,7 +12,7 @@ export default () => (
   <div className={style['error-404-wrapper']}>
     <div className={style['container']}>
       <div className={style['title']}>
-        <Button type="primary" shape="circle" icon={<RiArrowLeftLine />} onClick={onGoToHome} />
+        <Button type="primary" shape="circle" icon={<RiArrowLeftLine />} onClick={onGoToHome} size="large" />
         <strong>404 - Page Not Found</strong>
       </div>
     </div>

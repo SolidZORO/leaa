@@ -14,6 +14,7 @@
 
   :global {
     .ant-table-content {
+      position: relative;
     }
 
     .ant-table {
@@ -24,7 +25,7 @@
       }
     }
 
-    .ant-pagination.ant-pagination.mini {
+    .ant-pagination.mini {
       background-color: #fdfdfd;
       display: flex;
       justify-content: flex-end;
@@ -42,7 +43,7 @@
         line-height: @height !important;
       }
 
-      ul.li,
+      //ul.li,
       .ant-pagination-item,
       .ant-pagination-item-link,
       .ant-pagination-item-container,
@@ -69,11 +70,17 @@
         .ant-pagination-item-link {
           .btn-default();
 
+          cursor: pointer;
           background-color: #fff !important;
-          margin: 0 12px;
-          padding: 0 16px;
+          //margin: 0 12px;
+          padding: 0 18px;
           border: 1px solid #ddd;
         }
+      }
+
+      .ant-pagination-item {
+        margin: 0 4px;
+        cursor: pointer;
       }
 
       .ant-pagination-item-active {
@@ -81,13 +88,17 @@
       }
 
       .ant-pagination-disabled {
-        opacity: 0.5;
+        opacity: 0.3;
 
         &:hover {
           .ant-pagination-item-link {
             border-color: #ddd;
           }
         }
+      }
+
+      .ant-pagination-options {
+        margin-left: 20px;
       }
     }
 

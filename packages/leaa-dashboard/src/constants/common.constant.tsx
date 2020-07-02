@@ -8,6 +8,9 @@ export const CREATE_BUTTON_ICON = <RiAddLine style={{ fontSize: '120%', vertical
 // export const UPDATE_BUTTON_ICON = <RiEditLine />;
 export const UPDATE_BUTTON_ICON = <RiEdit2Fill />;
 
+// setting
+export const FORM_SIZE = 'large';
+
 //  SL
 export const SIDERBAR_COLLAPSED_SL_KEY = 'siderbarCollapsed';
 
@@ -21,7 +24,6 @@ export const GQL_ERROR_MESSAGE = 'ERROR (GQL)';
 export const GQL_SUCCESS_MESSAGE = 'COMPLETED (GQL)';
 
 // time
-
 export const FORMAT_DATA_TIME = 'YYYY-MM-DD HH:mm:ss';
 export const FORMAT_DATA = 'YYYY-MM-DD';
 export const FORMAT_TIME = 'HH:mm:ss';

@@ -11,6 +11,8 @@ import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
 import { SettingUpdateOneReq } from '@leaa/api/src/dtos/setting';
 
 import { SwitchNumber } from '@leaa/dashboard/src/components';
+import { FORM_SIZE } from '@leaa/dashboard/src/constants';
+
 import { buildTypeDom } from '../SettingListForm/SettingListForm';
 
 import style from './style.module.less';
@@ -81,7 +83,7 @@ export const SettingModalForm = forwardRef((props: IProps, ref: React.Ref<any>) 
 
   return (
     <div className={cx(style['setting-modal-form-wrapper'], props.className)}>
-      <Form form={form} name="setting-modal" layout="vertical">
+      <Form form={form} name="setting-modal" layout="vertical" size={FORM_SIZE}>
         <Row gutter={16}>
           {props.type !== 'create' && (
             <div style={{ display: 'none' }}>

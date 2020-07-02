@@ -1,15 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Row, Col } from 'antd';
+import { Row, Col } from 'antd';
 
 import { Ax } from '@leaa/api/src/entrys';
-import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { AxUpdateOneReq } from '@leaa/api/src/dtos/ax';
 import { IPage, ICommenFormRef, ISubmitData, IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
 import { msg, errorMsg, ajax } from '@leaa/dashboard/src/utils';
 
 import { envConfig } from '@leaa/dashboard/src/configs';
-import { PageCard, HtmlMeta, SubmitBar, AttachmentBox } from '@leaa/dashboard/src/components';
+import { PageCard, HtmlMeta, AttachmentBox, SubmitToolbar } from '@leaa/dashboard/src/components';
 
 import { AxInfoForm } from '../_components/AxInfoForm/AxInfoForm';
 
@@ -65,7 +64,7 @@ export default (props: IPage) => {
   useEffect(() => onFetchItem(), []);
 
   return (
-    <PageCard route={props.route} title="@EDIT" className={style['wapper']} loading={itemLoading || submitLoading}>
+    <PageCard route={props.route} title="@UPDATE" className={style['wapper']} loading={itemLoading || submitLoading}>
       <HtmlMeta title={t(`${props.route?.namei18n}`)} />
 
       <AxInfoForm item={item} loading={itemLoading} ref={infoFormRef} />
@@ -102,18 +101,10 @@ export default (props: IPage) => {
         </Col>
       </Row>
 
-      <SubmitBar full>
-        <Button
-          type="primary"
-          size="large"
-          icon={UPDATE_BUTTON_ICON}
-          className="g-submit-bar-button"
-          loading={submitLoading}
-          onClick={onUpdateItem}
-        >
-          {t('_lang:update')}
-        </Button>
-      </SubmitBar>
+      <SubmitToolbar
+        simpleButtonGroup={{ title: '@UPDATE', loading: submitLoading }}
+        simpleButtonAction={onUpdateItem}
+      />
     </PageCard>
   );
 };

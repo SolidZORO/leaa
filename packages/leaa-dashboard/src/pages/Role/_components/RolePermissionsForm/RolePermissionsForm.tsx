@@ -12,6 +12,8 @@ import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
 import { RoleUpdateOneReq } from '@leaa/api/src/dtos/role';
 
 import { FormCard } from '@leaa/dashboard/src/components';
+import { FORM_SIZE } from '@leaa/dashboard/src/constants';
+
 import { RolePermissionsCheckbox } from '../RolePermissionsCheckbox/RolePermissionsCheckbox';
 import { RolePermissionLength } from '../RolePermissionLength/RolePermissionLength';
 
@@ -86,7 +88,7 @@ export const RolePermissionsForm = forwardRef((props: IProps, ref: React.Ref<any
           </span>
         }
       >
-        <Form form={form} name="role-permissions" layout="vertical">
+        <Form form={form} name="role-permissions" layout="vertical" size={FORM_SIZE}>
           <Form.Item name="permissionIds" rules={[]} validateTrigger={['onBlur']}>
             <RolePermissionsCheckbox
               permissionsFlat={

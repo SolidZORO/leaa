@@ -9,8 +9,6 @@ import { transRouterPathToClassName, checkAuthIsAvailably } from '@leaa/dashboar
 import '@leaa/dashboard/src/styles/global.less';
 import { masterRoute } from '@leaa/dashboard/src/routes';
 import { IS_MOBILE_SCREEN } from '@leaa/dashboard/src/constants';
-
-import { LayoutHeader } from './_components/LayoutHeader/LayoutHeader';
 import { LayoutSidebar } from './_components/LayoutSidebar/LayoutSidebar';
 
 import style from './style.module.less';

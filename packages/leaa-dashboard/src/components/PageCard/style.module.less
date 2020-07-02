@@ -1,9 +1,37 @@
 @import '~@leaa/dashboard/src/styles/variables.less';
 
+:global {
+  .g-page-card-create-button {
+    background-color: transparent;
+    border-color: @primary-color;
+    color: @primary-color;
+    ////padding: 15px;
+    //height: 34px;
+
+    svg {
+      line-height: 0;
+      font-size: 160%;
+      vertical-align: -2px;
+    }
+
+    span {
+      line-height: 0;
+      vertical-align: 5px;
+      padding: 0 8px;
+      font-size: 110%;
+    }
+
+    &:hover {
+      background-color: @primary-color;
+      color: #fff;
+    }
+  }
+}
+
 .page-card-wrapper {
   //min-height: 300px;
   transition: all 0.3s;
-  padding-bottom: 60px;
+  //padding-bottom: 75px;
 
   :global {
     .ant-card {
@@ -27,12 +55,13 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  margin-bottom: 28px;
+  margin-bottom: 14px;
   min-height: 32px;
 
   @media (min-width: @screen-md) {
     justify-content: space-between;
     display: flex;
+    margin-bottom: 28px;
   }
 
   .title {
@@ -43,7 +72,7 @@
     :global {
       span {
         strong {
-          font-size: 28px;
+          font-size: 30px;
         }
       }
     }
@@ -56,29 +85,7 @@
   }
 
   .page-card-create-button {
-    background-color: transparent;
-    border-color: @primary-color;
-    color: @primary-color;
-    //padding: 15px;
-    height: 34px;
-
-    svg {
-      line-height: 0;
-      font-size: 180%;
-      vertical-align: -2px;
-    }
-
-    span {
-      line-height: 0;
-      vertical-align: 5px;
-      padding: 0 8px;
-      font-size: 120%;
-    }
-
-    &:hover {
-      background-color: @primary-color;
-      color: #fff;
-    }
+    // @see .g-page-card-create-button
   }
 
   .extra {
@@ -105,6 +112,10 @@
       }
     }
   }
+}
+
+.title-wrapper {
+  margin-left: 40px;
 }
 
 .page-card-wrapper--complex {

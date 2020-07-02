@@ -1,15 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button } from 'antd';
 
 import { Action } from '@leaa/api/src/entrys';
-import { UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { ActionUpdateOneReq } from '@leaa/api/src/dtos/action';
 import { IPage, ICommenFormRef, IHttpError, ISubmitData, IHttpRes } from '@leaa/dashboard/src/interfaces';
 import { ajax, errorMsg, msg } from '@leaa/dashboard/src/utils';
 
 import { envConfig } from '@leaa/dashboard/src/configs';
-import { PageCard, HtmlMeta, SubmitBar } from '@leaa/dashboard/src/components';
+import { PageCard, HtmlMeta, SubmitToolbar } from '@leaa/dashboard/src/components';
 
 import { ActionInfoForm } from '../_components/ActionInfoForm/ActionInfoForm';
 
@@ -60,23 +58,15 @@ export default (props: IPage) => {
   useEffect(() => onFetchItem(), []);
 
   return (
-    <PageCard route={props.route} title="@EDIT" className={style['wapper']} loading={itemLoading || submitLoading}>
+    <PageCard route={props.route} title="@UPDATE" className={style['wapper']} loading={itemLoading || submitLoading}>
       <HtmlMeta title={t(`${props.route?.namei18n}`)} />
 
       <ActionInfoForm item={item} loading={itemLoading} ref={infoFormRef} />
 
-      <SubmitBar full>
-        <Button
-          type="primary"
-          size="large"
-          icon={UPDATE_BUTTON_ICON}
-          className="g-submit-bar-button"
-          loading={submitLoading}
-          onClick={onUpdateItem}
-        >
-          {t('_lang:update')}
-        </Button>
-      </SubmitBar>
+      <SubmitToolbar
+        simpleButtonGroup={{ title: '@UPDATE', loading: submitLoading }}
+        simpleButtonAction={onUpdateItem}
+      />
     </PageCard>
   );
 };

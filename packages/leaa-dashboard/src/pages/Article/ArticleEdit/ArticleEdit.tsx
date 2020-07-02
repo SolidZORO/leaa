@@ -14,7 +14,6 @@ import {
   PageCard,
   HtmlMeta,
   WYSIWYGEditor,
-  SubmitBar,
   SubmitToolbar,
   SelectTagId,
   AttachmentBox,
@@ -92,7 +91,7 @@ export default (props: IPage) => {
   useEffect(() => onFetchItem(), []);
 
   return (
-    <PageCard route={props.route} title="@EDIT" className={style['wapper']} loading={itemLoading || submitLoading}>
+    <PageCard route={props.route} title="@UPDATE" className={style['wapper']} loading={itemLoading || submitLoading}>
       <HtmlMeta title={t(`${props.route?.namei18n}`)} />
 
       <ArticleInfoForm item={item} loading={itemLoading} ref={infoFormRef} />
@@ -157,13 +156,8 @@ export default (props: IPage) => {
       </div>
 
       <SubmitToolbar
-        full
-        buttonGroup={
-          <Button type="link" icon={UPDATE_BUTTON_ICON} loading={submitLoading} onClick={onUpdateItem}>
-            {t('_lang:update')}
-          </Button>
-        }
-        moreGroup={<p>more</p>}
+        simpleButtonGroup={{ title: '@UPDATE', loading: submitLoading }}
+        simpleButtonAction={onUpdateItem}
       />
     </PageCard>
   );

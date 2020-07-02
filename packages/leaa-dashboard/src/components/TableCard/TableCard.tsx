@@ -59,6 +59,8 @@ export const TableCard = <T extends any>(props: IProps<T>) => {
     title: t(`_lang:${colName}`),
     dataIndex: colName,
     sorter: true,
+    ellipsis: true,
+    textWrap: 'word-break',
     sortOrder: calcTableSortOrder(colName, crudQuery.sort),
     render: (text: string, record: any) => record[colName],
   });
@@ -91,6 +93,8 @@ export const TableCard = <T extends any>(props: IProps<T>) => {
       title: t('_lang:name'),
       dataIndex: 'name',
       sorter: true,
+      ellipsis: true,
+      textWrap: 'word-break',
       sortOrder: calcTableSortOrder('name', crudQuery.sort),
       render: (text: string, record: any) => <Link to={`${props.route.path}/${record.id}`}>{record.name}</Link>,
     }),

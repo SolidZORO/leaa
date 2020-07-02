@@ -10,6 +10,7 @@ import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
 import { AxUpdateOneReq, AxCreateOneReq } from '@leaa/api/src/dtos/ax';
 
 import { FormCard, EntryInfoDate, SwitchNumber } from '@leaa/dashboard/src/components';
+import { FORM_SIZE } from '@leaa/dashboard/src/constants';
 
 import style from './style.module.less';
 
@@ -50,21 +51,21 @@ export const AxInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
         title={t('_page:Ax.axInfo')}
         extra={<EntryInfoDate date={props.item && [props.item.created_at, props.item.updated_at]} />}
       >
-        <Form form={form} name="ax-info" layout="vertical">
+        <Form form={form} name="ax-info" layout="vertical" size={FORM_SIZE}>
           <Row gutter={16}>
-            <Col xs={24} sm={6}>
+            <Col xs={24} sm={10}>
               <Form.Item name="title" rules={[{ required: true }]} label={t('_lang:title')}>
                 <Input placeholder={t('_lang:title')} />
               </Form.Item>
             </Col>
 
-            <Col xs={24} sm={6}>
+            <Col xs={24} sm={10}>
               <Form.Item name="slug" rules={[{ required: true }]} label={t('_lang:slug')}>
                 <Input placeholder={t('_lang:slug')} />
               </Form.Item>
             </Col>
 
-            <Col xs={24} sm={3}>
+            <Col xs={24} sm={4}>
               <Form.Item
                 name="status"
                 normalize={(e) => e && Number(e)}

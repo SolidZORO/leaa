@@ -81,18 +81,16 @@
   cursor: pointer;
   display: table;
   margin: 0 auto;
-  padding: 40px 0 10px 0;
+  padding: 40px 0 5px 0;
+
+  @media (min-width: @screen-md) {
+    padding: 40px 0 10px 0;
+  }
 
   .logo-image {
-    @w: 28px;
+    @w: 40px;
     width: @w;
     height: @w;
-
-    @media (min-width: @screen-md) {
-      @w: 40px;
-      width: @w;
-      height: @w;
-    }
   }
 }
 
@@ -100,6 +98,7 @@ ul.menu-wrapper {
   padding: 16px;
   border: none 0;
   margin: 0;
+  margin-bottom: 80px;
 
   @item-level-1-height: 54px;
   @item-level-2-height: 42px;
@@ -205,8 +204,8 @@ ul.menu-wrapper {
   transition: all 0.2s;
   z-index: 2;
   position: absolute;
-  top: 8px;
-  left: 4px;
+  top: 17px;
+  left: 0px;
 
   @media (min-width: @screen-md) {
     display: none;

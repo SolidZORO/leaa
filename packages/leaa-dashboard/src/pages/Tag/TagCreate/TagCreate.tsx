@@ -9,7 +9,7 @@ import { IPage, ICommenFormRef, ISubmitData, IHttpRes, IHttpError } from '@leaa/
 import { msg, errorMsg, ajax } from '@leaa/dashboard/src/utils';
 
 import { envConfig } from '@leaa/dashboard/src/configs';
-import { PageCard, HtmlMeta, SubmitBar } from '@leaa/dashboard/src/components';
+import { PageCard, HtmlMeta, SubmitBar, SubmitToolbar } from '@leaa/dashboard/src/components';
 
 import { TagInfoForm } from '../_components/TagInfoForm/TagInfoForm';
 
@@ -52,18 +52,10 @@ export default (props: IPage) => {
 
       <TagInfoForm ref={infoFormRef} />
 
-      <SubmitBar full>
-        <Button
-          type="primary"
-          size="large"
-          icon={CREATE_BUTTON_ICON}
-          className="g-submit-bar-button"
-          loading={submitLoading}
-          onClick={onCreateItem}
-        >
-          {t('_lang:create')}
-        </Button>
-      </SubmitBar>
+      <SubmitToolbar
+        simpleButtonGroup={{ title: '@CREATE', loading: submitLoading }}
+        simpleButtonAction={onCreateItem}
+      />
     </PageCard>
   );
 };

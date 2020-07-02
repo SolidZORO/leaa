@@ -38,12 +38,11 @@ export const SearchInput = (props: IProps) => {
       <Input
         prefixCls="search-input ant-input"
         allowClear
+        size="large"
         placeholder={`${t('_comp:SearchInput.placeholder')}`}
         onChange={(e) => onChange(e.currentTarget.value)}
         value={text}
-        addonAfter={
-          <RiSearchLine className={style['search-input-search-button']} onClick={() => onSearch(text as string)} />
-        }
+        prefix={<RiSearchLine />}
         onPressEnter={() => onSearch(text as string)}
         className={cx(style['search-input-inner'], 'search-input-inner')}
       />
