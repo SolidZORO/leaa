@@ -5,6 +5,7 @@ const home = 'Home';
 const playground = 'Playground';
 const test = 'Test';
 const debug = 'Debug';
+const account = 'Account';
 const user = 'User';
 const role = 'Role';
 const permission = 'Permission';
@@ -39,6 +40,7 @@ export default {
   testI18n: 'Test I18n',
   testStore: 'Test Store',
   //
+  accountGroup: `${account}`,
   userGroup: `${user}`,
   user,
   createUser: `${_lang.create} ${user}`,

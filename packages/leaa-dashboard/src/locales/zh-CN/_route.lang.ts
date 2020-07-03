@@ -6,6 +6,7 @@ const playground = '游乐园';
 const test = '测试';
 const debug = '调试';
 const user = '用户';
+const account = '账号';
 const role = '角色';
 const permission = '权限';
 const category = '分类';
@@ -39,6 +40,7 @@ export default {
   testI18n: '测试 I18n',
   testStore: '测试 Store',
   //
+  accountGroup: `${account}`,
   userGroup: `${user}`,
   user,
   createUser: `${_lang.create}${user}`,

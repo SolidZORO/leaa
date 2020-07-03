@@ -1,24 +1,7 @@
 import _ from 'lodash';
 import React, { ReactNode } from 'react';
 import { Route } from 'react-router-dom';
-import {
-  RiArchiveLine,
-  RiFileList2Line,
-  RiPriceTag3Line,
-  RiContactsLine,
-  RiUserLine,
-  RiVipCrown2Line,
-  RiLock2Line,
-  RiVoiceprintLine,
-  RiPaintBrushLine,
-  RiFunctionLine,
-  RiSettingsLine,
-  RiHardDriveLine,
-  RiKeyLine,
-  RiTodoLine,
-  RiCodeSSlashLine,
-  RiAttachmentLine,
-} from 'react-icons/ri';
+import { RiBookLine, RiFlagLine, RiSettingsLine, RiGroupLine, RiStackLine, RiCodeSSlashLine } from 'react-icons/ri';
 
 import { IRouteItem } from '@leaa/dashboard/src/interfaces';
 import { ALLOW_PERMISSION } from '@leaa/dashboard/src/constants';
@@ -48,7 +31,7 @@ export const masterRouteList: IRouteItem[] = [
     namei18n: '_route:contentGroup',
     permission: 'article.list-read | tag.list-read',
     path: '_content-group',
-    icon: <RiArchiveLine />,
+    icon: <RiBookLine />,
     children: [
       // ---- Article ----
       {
@@ -117,6 +100,86 @@ export const masterRouteList: IRouteItem[] = [
         canCreate: true,
         exact: true,
       },
+      //
+      // ---- Category ----
+      //
+      {
+        name: 'Create Category',
+        namei18n: '_route:createCategory',
+        permission: 'category.item-create',
+        path: '/categories/create',
+        // icon: <RiFunctionLine />,
+        LazyComponent: lazy(() =>
+          import(/* webpackChunkName: 'CategoryCreate' */ '../pages/Category/CategoryCreate/CategoryCreate'),
+        ),
+        exact: true,
+        isCreate: true,
+      },
+      {
+        name: 'Edit Category',
+        namei18n: '_route:editCategory',
+        permission: 'category.item-read',
+        path: `/categories/:id(${UUID_REGX})`,
+        // icon: <RiFunctionLine />,
+        LazyComponent: lazy(() =>
+          import(/* webpackChunkName: 'CategoryEdit' */ '../pages/Category/CategoryEdit/CategoryEdit'),
+        ),
+        exact: true,
+      },
+      {
+        name: 'Category',
+        namei18n: '_route:category',
+        permission: 'category.list-read',
+        path: '/categories',
+        // icon: <RiFunctionLine />,
+        LazyComponent: lazy(() =>
+          import(/* webpackChunkName: 'CategoryList' */ '../pages/Category/CategoryList/CategoryList'),
+        ),
+        canCreate: true,
+        exact: true,
+      },
+    ],
+  },
+  //
+  // -------- [Marketing Group] --------
+  //
+  {
+    name: 'Marketing Group',
+    namei18n: '_route:marketingGroup',
+    permission: 'coupon.list-read | ax.list-read | promo.list-read',
+    path: '_marketing-group',
+    icon: <RiFlagLine />,
+    children: [
+      // ---- Ax ----
+      {
+        name: 'Create Ax',
+        namei18n: '_route:createAx',
+        permission: 'ax.item-create',
+        path: '/axs/create',
+        // icon: <RiPaintBrushLine />,
+        LazyComponent: lazy(() => import(/* webpackChunkName: 'AxCreate' */ '../pages/Ax/AxCreate/AxCreate')),
+        exact: true,
+        isCreate: true,
+      },
+      {
+        name: 'Edit Ax',
+        namei18n: '_route:editAx',
+        permission: 'ax.item-read',
+        path: `/axs/:id(${UUID_REGX})`,
+        // icon: <RiPaintBrushLine />,
+        LazyComponent: lazy(() => import(/* webpackChunkName: 'AxEdit' */ '../pages/Ax/AxEdit/AxEdit')),
+        exact: true,
+      },
+      {
+        name: 'Ax',
+        namei18n: '_route:ax',
+        permission: 'ax.list-read',
+        path: '/axs',
+        // icon: <RiPaintBrushLine />,
+        LazyComponent: lazy(() => import(/* webpackChunkName: 'AxList' */ '../pages/Ax/AxList/AxList')),
+        canCreate: true,
+        exact: true,
+      },
     ],
   },
   // -------- [User Group] --------
@@ -125,7 +188,7 @@ export const masterRouteList: IRouteItem[] = [
     namei18n: '_route:userGroup',
     permission: 'user.list-read | role.list-read | permission.list-read',
     path: '_user-group',
-    icon: <RiContactsLine />,
+    icon: <RiGroupLine />,
     children: [
       // ---- User ----
       {
@@ -225,98 +288,7 @@ export const masterRouteList: IRouteItem[] = [
       },
     ],
   },
-  //
-  // -------- [Marketing Group] --------
-  //
-  {
-    name: 'Marketing Group',
-    namei18n: '_route:marketingGroup',
-    permission: 'coupon.list-read | ax.list-read | promo.list-read',
-    path: '_marketing-group',
-    icon: <RiVoiceprintLine />,
-    children: [
-      // ---- Ax ----
-      {
-        name: 'Create Ax',
-        namei18n: '_route:createAx',
-        permission: 'ax.item-create',
-        path: '/axs/create',
-        // icon: <RiPaintBrushLine />,
-        LazyComponent: lazy(() => import(/* webpackChunkName: 'AxCreate' */ '../pages/Ax/AxCreate/AxCreate')),
-        exact: true,
-        isCreate: true,
-      },
-      {
-        name: 'Edit Ax',
-        namei18n: '_route:editAx',
-        permission: 'ax.item-read',
-        path: `/axs/:id(${UUID_REGX})`,
-        // icon: <RiPaintBrushLine />,
-        LazyComponent: lazy(() => import(/* webpackChunkName: 'AxEdit' */ '../pages/Ax/AxEdit/AxEdit')),
-        exact: true,
-      },
-      {
-        name: 'Ax',
-        namei18n: '_route:ax',
-        permission: 'ax.list-read',
-        path: '/axs',
-        // icon: <RiPaintBrushLine />,
-        LazyComponent: lazy(() => import(/* webpackChunkName: 'AxList' */ '../pages/Ax/AxList/AxList')),
-        canCreate: true,
-        exact: true,
-      },
-    ],
-  },
-  //
-  // ---- Category ----
-  //
-  {
-    name: 'Create Category',
-    namei18n: '_route:createCategory',
-    permission: 'category.item-create',
-    path: '/categories/create',
-    // icon: <RiFunctionLine />,
-    LazyComponent: lazy(() =>
-      import(/* webpackChunkName: 'CategoryCreate' */ '../pages/Category/CategoryCreate/CategoryCreate'),
-    ),
-    exact: true,
-    isCreate: true,
-  },
-  {
-    name: 'Edit Category',
-    namei18n: '_route:editCategory',
-    permission: 'category.item-read',
-    path: `/categories/:id(${UUID_REGX})`,
-    // icon: <RiFunctionLine />,
-    LazyComponent: lazy(() =>
-      import(/* webpackChunkName: 'CategoryEdit' */ '../pages/Category/CategoryEdit/CategoryEdit'),
-    ),
-    exact: true,
-  },
-  {
-    name: 'Category',
-    namei18n: '_route:category',
-    permission: 'category.list-read',
-    path: '/categories',
-    icon: <RiFunctionLine />,
-    LazyComponent: lazy(() =>
-      import(/* webpackChunkName: 'CategoryList' */ '../pages/Category/CategoryList/CategoryList'),
-    ),
-    canCreate: true,
-    exact: true,
-  },
-  //
-  // ---- Setting ----
-  //
-  {
-    name: 'Setting',
-    namei18n: '_route:setting',
-    permission: 'setting.list-read',
-    path: '/settings',
-    icon: <RiSettingsLine />,
-    LazyComponent: lazy(() => import(/* webpackChunkName: 'SettingList' */ '../pages/Setting/SettingList/SettingList')),
-    exact: true,
-  },
+
   //
   // -------- [Data Group] --------
   //
@@ -325,7 +297,7 @@ export const masterRouteList: IRouteItem[] = [
     namei18n: '_route:dataGroup',
     permission: 'address.list-read',
     path: '_data-group',
-    icon: <RiHardDriveLine />,
+    icon: <RiStackLine />,
     children: [
       // ---- Oauth ----
       {
@@ -384,6 +356,18 @@ export const masterRouteList: IRouteItem[] = [
         isCreate: true,
       },
     ],
+  },
+  //
+  // ---- Setting ----
+  //
+  {
+    name: 'Setting',
+    namei18n: '_route:setting',
+    permission: 'setting.list-read',
+    path: '/settings',
+    icon: <RiSettingsLine />,
+    LazyComponent: lazy(() => import(/* webpackChunkName: 'SettingList' */ '../pages/Setting/SettingList/SettingList')),
+    exact: true,
   },
 ];
 

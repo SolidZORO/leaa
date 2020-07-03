@@ -81,10 +81,16 @@
       .ant-pagination-item {
         margin: 0 4px;
         cursor: pointer;
+        display: none;
+
+        @media (min-width: @screen-md) {
+          display: inline-block;
+        }
       }
 
       .ant-pagination-item-active {
         padding: 0 8px;
+        display: inline-block;
       }
 
       .ant-pagination-disabled {

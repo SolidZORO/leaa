@@ -32,7 +32,14 @@ export const SubmitToolbar = (props: IProps) => {
 
   if (props.simpleButtonGroup?.title === '@CREATE') {
     buttonGroup = (
-      <Button type="link" icon={CREATE_BUTTON_ICON} loading={props.loading} onClick={props.simpleButtonAction}>
+      <Button
+        className={style['button--create']}
+        size="large"
+        type="link"
+        icon={CREATE_BUTTON_ICON}
+        loading={props.loading}
+        onClick={props.simpleButtonAction}
+      >
         {t('_lang:create')}
       </Button>
     );
@@ -40,7 +47,14 @@ export const SubmitToolbar = (props: IProps) => {
 
   if (props.simpleButtonGroup?.title === '@UPDATE') {
     buttonGroup = (
-      <Button type="link" icon={UPDATE_BUTTON_ICON} loading={props.loading} onClick={props.simpleButtonAction}>
+      <Button
+        className={style['button--update']}
+        size="large"
+        type="link"
+        icon={UPDATE_BUTTON_ICON}
+        loading={props.loading}
+        onClick={props.simpleButtonAction}
+      >
         {t('_lang:update')}
       </Button>
     );

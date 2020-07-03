@@ -31,10 +31,13 @@ export const SwitchLanguage = (props: IProps): JSX.Element => {
   const [visible, setVisible] = useState(false);
   const [language, setLanguage] = useState<string>(formatLang(i18n.language));
 
+  const onChangeLang = (l: string) => {
+    setVisible(false);
+    setLanguage(l);
+  };
+
   useEffect((): any => {
     i18n.changeLanguage(language);
-
-    setVisible(false);
   }, [language]);
 
   return (
@@ -53,9 +56,10 @@ export const SwitchLanguage = (props: IProps): JSX.Element => {
           content={langs.map((lang) => (
             <Button
               key={lang}
+              size="large"
               type="link"
               className={cx(style['lang-flag'], style[`lang-flag--${lang}`])}
-              onClick={() => setLanguage(lang)}
+              onClick={() => onChangeLang(lang)}
             >
               {i18n.t(`_lang:lang-${lang}`)}
               {language === lang && <RiCheckboxCircleLine className={style['switch-language-selected']} />}

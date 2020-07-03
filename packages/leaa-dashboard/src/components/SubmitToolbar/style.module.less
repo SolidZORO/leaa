@@ -28,7 +28,7 @@
   .g-box-shadow();
 
   @media (min-width: @screen-md) {
-    width: 400px;
+    width: 60%;
   }
 }
 
@@ -54,25 +54,32 @@
   text-align: center;
 
   button {
-    height: 56px;
+    height: 58px;
     line-height: 0;
     border-radius: 12px;
     width: 100%;
 
-    svg,
-    span {
-      font-size: 14px;
-      line-height: 1;
-      margin: 0 auto;
-      display: block;
-    }
-
     svg {
-      font-size: 22px;
+      font-size: 22px !important;
+      margin-right: 5px;
     }
 
     span {
-      margin-top: 2px;
+      font-size: 16px;
+      //margin-top: 2px;
+    }
+  }
+
+  .button--create {
+    svg {
+      vertical-align: -7px !important;
+      font-size: 26px !important;
+    }
+  }
+
+  .button--update {
+    svg {
+      vertical-align: -5px !important;
     }
   }
 }
@@ -124,6 +131,7 @@
 
 .submit-toolbar-wrapper--notAffix {
   .submit-toolbar-container {
-    .g-box-shadow(0.05);
+    //position: relative;
+    //.g-box-shadow(8px, 0.04);
   }
 }

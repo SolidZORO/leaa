@@ -1,15 +1,13 @@
 import React, { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button } from 'antd';
 
 import { Article } from '@leaa/api/src/entrys';
-import { CREATE_BUTTON_ICON, UPDATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { ArticleUpdateOneReq } from '@leaa/api/src/dtos/article';
 import { IPage, ICommenFormRef, ISubmitData, IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
 import { msg, errorMsg, ajax } from '@leaa/dashboard/src/utils';
 
 import { envConfig } from '@leaa/dashboard/src/configs';
-import { PageCard, HtmlMeta, SubmitBar, SubmitToolbar } from '@leaa/dashboard/src/components';
+import { PageCard, HtmlMeta, SubmitToolbar } from '@leaa/dashboard/src/components';
 
 import { ArticleInfoForm } from '../_components/ArticleInfoForm/ArticleInfoForm';
 
