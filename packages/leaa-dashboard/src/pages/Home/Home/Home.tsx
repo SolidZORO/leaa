@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { IPage } from '@leaa/dashboard/src/interfaces';
 
-import { HtmlMeta, BuildInfo, FilterIcon, SearchInput, TableCard, PageCard } from '@leaa/dashboard/src/components';
+import { HtmlMeta, BuildInfo, PageCard } from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';
 

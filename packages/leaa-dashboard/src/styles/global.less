@@ -34,16 +34,17 @@
   font-size: 16px;
 }
 
-body {
-  &:after {
-    display: none;
-    content: 'xs';
-
-    @media (min-width: @screen-md) {
-      content: 'md';
-    }
-  }
-}
+// history check media (PC or MB)
+//body {
+//  &:after {
+//    display: none;
+//    content: 'xs';
+//
+//    @media (min-width: @screen-md) {
+//      content: 'md';
+//    }
+//  }
+//}
 
 .g-input-number {
   width: 100% !important;
@@ -65,7 +66,7 @@ html {
 
     padding-left: @padding-x;
     padding-right: @padding-x;
-    border-radius: var(--page-border-radius);
+    //border-radius: var(--page-border-radius);
   }
 
   //
@@ -132,6 +133,10 @@ html {
     & > tr.ant-table-row:hover > td {
       background-color: var(--layout-main-bg-color);
     }
+  }
+
+  td.ant-table-cell.ant-table-cell-fix-right {
+    background-color: #fffa;
   }
 
   //

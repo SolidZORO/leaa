@@ -3,7 +3,7 @@ import cx from 'classnames';
 import { Button } from 'antd';
 
 // import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
-import { RiMenuLine, RiMenu2Line } from 'react-icons/ri';
+import { RiMenuLine, RiMenu3Line } from 'react-icons/ri';
 
 import style from './style.module.less';
 
@@ -21,7 +21,7 @@ export const SidemenuTarget = (props: IProps): JSX.Element => {
       })}
     >
       <Button type="link" onClick={props.onCallbackSidebarTarget}>
-        {props.collapsed ? <RiMenuLine /> : <RiMenu2Line />}
+        {props.collapsed ? <RiMenuLine /> : <RiMenu3Line />}
       </Button>
     </div>
   );

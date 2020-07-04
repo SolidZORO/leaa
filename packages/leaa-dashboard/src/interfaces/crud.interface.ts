@@ -7,6 +7,7 @@ export interface ICrudListQueryParams extends CreateQueryParams {
   banderId?: string;
   tagId?: string;
   userId?: string;
+  filterbar?: string;
 }
 
 export interface ICrudListRes<T> {

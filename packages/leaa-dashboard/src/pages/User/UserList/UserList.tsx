@@ -17,7 +17,7 @@ import {
   genCrudRequestQuery,
   genCrudQuerySearch,
 } from '@leaa/dashboard/src/utils';
-import { PageCard, HtmlMeta, TableCard, SearchInput, FilterIcon, NullTag } from '@leaa/dashboard/src/components';
+import { PageCard, HtmlMeta, TableCard, SearchInput, NullTag } from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';
 
@@ -59,29 +59,21 @@ export default (props: IPage) => {
       route={props.route}
       title="@LIST"
       extra={
-        <div className="g-page-card-extra-filter-bar-wrapper">
-          <FilterIcon
-            crudQuery={crudQuery}
-            clear={['q', 'search', 'categoryId']}
-            onClose={(query: any) => setCrudQuery(query)}
-          />
-
-          <SearchInput
-            className={cx('g-extra-filter-bar--item', 'g-extra-filter-bar--q')}
-            value={crudQuery.q}
-            onSearch={(q?: string) => {
-              return setCrudQuery({
-                ...crudQuery,
-                search: genCrudQuerySearch(q, {
-                  crudQuery,
-                  condition: { $and: [{ $or: [{ name: { $cont: q } }] }] },
-                  clear: { $and: [{ $or: undefined }] },
-                }),
-                q: q || undefined,
-              });
-            }}
-          />
-        </div>
+        <SearchInput
+          className={cx('g-extra-filter-bar--item', 'g-extra-filter-bar--q')}
+          value={crudQuery.q}
+          onSearch={(q?: string) => {
+            return setCrudQuery({
+              ...crudQuery,
+              search: genCrudQuerySearch(q, {
+                crudQuery,
+                condition: { $and: [{ $or: [{ name: { $cont: q } }] }] },
+                clear: { $and: [{ $or: undefined }] },
+              }),
+              q: q || undefined,
+            });
+          }}
+        />
       }
       className={style['wapper']}
       loading={listLoading}
@@ -90,6 +82,7 @@ export default (props: IPage) => {
 
       {list?.data && (
         <TableCard
+          componentsRawProps={{ scroll: { x: true } }}
           crudQuery={crudQuery}
           setCrudQuery={setCrudQuery}
           route={props.route}

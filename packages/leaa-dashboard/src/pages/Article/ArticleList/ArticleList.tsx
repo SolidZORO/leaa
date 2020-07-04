@@ -6,7 +6,7 @@ import { useMount, useUpdateEffect } from 'react-use';
 
 import { Article } from '@leaa/api/src/entrys';
 import { envConfig } from '@leaa/dashboard/src/configs';
-import { DEFAULT_QUERY } from '@leaa/dashboard/src/constants';
+import { DEFAULT_QUERY, CSS_SCREEN_MD } from '@leaa/dashboard/src/constants';
 import { IPage, ICrudListQueryParams, IHttpRes, ICrudListRes, IHttpError } from '@leaa/dashboard/src/interfaces';
 import {
   ajax,
@@ -16,14 +16,7 @@ import {
   genCrudRequestQuery,
   genCrudQuerySearch,
 } from '@leaa/dashboard/src/utils';
-import {
-  PageCard,
-  HtmlMeta,
-  TableCard,
-  SearchInput,
-  FilterIcon,
-  SelectCategoryIdByTree,
-} from '@leaa/dashboard/src/components';
+import { PageCard, HtmlMeta, TableCard, SearchInput, SelectCategoryIdByTree } from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';
 
@@ -59,61 +52,71 @@ export default (props: IPage) => {
   useUpdateEffect(() => onFetchList(DEFAULT_QUERY), [props.history.location.key]);
   useUpdateEffect(() => (!_.isEqual(crudQuery, DEFAULT_QUERY) ? onFetchList(crudQuery) : undefined), [crudQuery]);
 
+  console.log(CSS_SCREEN_MD);
+
   return (
     <PageCard
       route={props.route}
       title="@LIST"
-      complexExtra
       className={style['wapper']}
       loading={listLoading}
       extra={
-        <div className="g-page-card-extra-filter-bar-wrapper">
-          <FilterIcon
-            crudQuery={crudQuery}
-            clear={['q', 'search', 'categoryId']}
-            onClose={(query: any) => setCrudQuery(query)}
-          />
-
-          <SelectCategoryIdByTree
-            className={cx('g-extra-filter-bar--item', 'g-extra-filter-bar--category')}
-            componentProps={{ allowClear: true }}
-            onChange={(cId?: string) => {
-              setCrudQuery({
-                ...crudQuery,
-                search: genCrudQuerySearch(cId, {
-                  crudQuery,
-                  condition: { $and: [{ 'categories.id': { $eq: cId } }] },
-                  clear: { $and: [{ 'categories.id': undefined }] },
-                }),
-                categoryId: cId || undefined,
-              });
-            }}
-            value={crudQuery?.categoryId || undefined}
-            parentSlug="articles"
-          />
-
-          <SearchInput
-            className={cx('g-extra-filter-bar--item', 'g-extra-filter-bar--q')}
-            value={crudQuery.q}
-            onSearch={(q?: string) => {
-              return setCrudQuery({
-                ...crudQuery,
-                search: genCrudQuerySearch(q, {
-                  crudQuery,
-                  condition: { $and: [{ $or: [{ title: { $cont: q } }, { slug: { $cont: q } }] }] },
-                  clear: { $and: [{ $or: undefined }] },
-                }),
-                q: q || undefined,
-              });
-            }}
-          />
-        </div>
+        <SearchInput
+          className={cx('g-search-input')}
+          value={crudQuery.q}
+          onSearch={(q?: string) => {
+            return setCrudQuery({
+              ...crudQuery,
+              search: genCrudQuerySearch(q, {
+                crudQuery,
+                condition: { $and: [{ $or: [{ title: { $cont: q } }, { slug: { $cont: q } }] }] },
+                clear: { $and: [{ $or: undefined }] },
+              }),
+              q: q || undefined,
+            });
+          }}
+        />
       }
+      filter={[
+        {
+          label: t('_lang:category'),
+          content: (
+            <SelectCategoryIdByTree
+              // className={cx('g-extra-filter-bar--item', 'g-extra-filter-bar--category')}
+              componentProps={{ allowClear: true }}
+              onChange={(cId?: string) => {
+                setCrudQuery({
+                  ...crudQuery,
+                  search: genCrudQuerySearch(cId, {
+                    crudQuery,
+                    condition: { $and: [{ 'categories.id': { $eq: cId } }] },
+                    clear: { $and: [{ 'categories.id': undefined }] },
+                  }),
+                  categoryId: cId || undefined,
+                });
+              }}
+              value={crudQuery?.categoryId || undefined}
+              parentSlug="articles"
+            />
+          ),
+        },
+      ]}
+      filterCloseCallback={() => {
+        setCrudQuery({
+          ...crudQuery,
+          filterbar: undefined,
+          categoryId: undefined,
+          search: {
+            $and: [{ 'categories.id': undefined }],
+          },
+        });
+      }}
     >
       <HtmlMeta title={t(`${props.route?.namei18n}`)} />
 
       {list?.data && (
         <TableCard
+          componentsRawProps={{ scroll: { x: true } }}
           crudQuery={crudQuery}
           setCrudQuery={setCrudQuery}
           route={props.route}

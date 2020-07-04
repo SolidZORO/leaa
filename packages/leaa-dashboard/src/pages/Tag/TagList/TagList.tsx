@@ -16,7 +16,7 @@ import {
   genCrudRequestQuery,
   genCrudQuerySearch,
 } from '@leaa/dashboard/src/utils';
-import { PageCard, HtmlMeta, TableCard, SearchInput, FilterIcon } from '@leaa/dashboard/src/components';
+import { PageCard, HtmlMeta, TableCard, SearchInput } from '@leaa/dashboard/src/components';
 import { SyncTagsToFileButton } from '../_components/SyncTagsToFileButton/SyncTagsToFileButton';
 
 import style from './style.module.less';
@@ -59,14 +59,8 @@ export default (props: IPage) => {
       route={props.route}
       title="@LIST"
       extra={
-        <div className="g-page-card-extra-filter-bar-wrapper">
+        <div className="g-page-card-title-bar-extra">
           <SyncTagsToFileButton />
-
-          <FilterIcon
-            crudQuery={crudQuery}
-            clear={['q', 'search', 'categoryId']}
-            onClose={(query: any) => setCrudQuery(query)}
-          />
 
           <SearchInput
             className={cx('g-extra-filter-bar--item', 'g-extra-filter-bar--q')}
@@ -92,6 +86,7 @@ export default (props: IPage) => {
 
       {list?.data && (
         <TableCard
+          componentsRawProps={{ scroll: { x: true } }}
           crudQuery={crudQuery}
           setCrudQuery={setCrudQuery}
           route={props.route}

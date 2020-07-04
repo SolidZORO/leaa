@@ -43,6 +43,7 @@ interface IProps<T> extends TableProps<T> {
   // columnFields?: IColumnField[];
   columnFields?: IColumnField[];
   //
+  componentsRawProps?: TableProps<any>;
   routerName: string;
   crudQuery: ICrudListQueryParams;
   setCrudQuery: (obj: ICrudListQueryParams) => void;
@@ -58,9 +59,10 @@ export const TableCard = <T extends any>(props: IProps<T>) => {
   const genSimpleColumn = (colName: string) => ({
     title: t(`_lang:${colName}`),
     dataIndex: colName,
-    sorter: true,
-    ellipsis: true,
+    width: 100,
     textWrap: 'word-break',
+    ellipsis: true,
+    sorter: true,
     sortOrder: calcTableSortOrder(colName, crudQuery.sort),
     render: (text: string, record: any) => record[colName],
   });
@@ -69,8 +71,9 @@ export const TableCard = <T extends any>(props: IProps<T>) => {
     id: () => ({
       title: 'ID',
       dataIndex: 'id',
-      textWrap: 'word-break',
       width: 60, // ID
+      textWrap: 'word-break',
+      ellipsis: true,
       sorter: true,
       sortOrder: calcTableSortOrder('id', crudQuery.sort),
       render: (id: string) => <TableColumnId id={id} link={`${props.route?.path}/${id}`} />,
@@ -195,8 +198,9 @@ export const TableCard = <T extends any>(props: IProps<T>) => {
     }),
     action: (options?: { fieldName?: string }) => ({
       title: t('_lang:action'),
+      fixed: 'right',
       dataIndex: 'operation',
-      width: 60,
+      width: 65,
       render: (text: string, record: any) => (
         <TableColumnDeleteButton
           id={record.id}
@@ -265,6 +269,7 @@ export const TableCard = <T extends any>(props: IProps<T>) => {
     >
       <div className={style['table-card-container']}>
         <Table
+          {...props.componentsRawProps}
           showSorterTooltip={false}
           rowKey={(props.rowKey as string) || 'id'}
           size={props.size}

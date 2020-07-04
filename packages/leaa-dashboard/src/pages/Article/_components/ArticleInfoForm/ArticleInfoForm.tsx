@@ -1,7 +1,7 @@
 import cx from 'classnames';
 import React, { useEffect, forwardRef, useImperativeHandle } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Form, Input } from 'antd';
+import { Form, Input, Col, DatePicker, Row } from 'antd';
 import { RiExternalLinkLine } from 'react-icons/ri';
 
 import { Article } from '@leaa/api/src/entrys';
@@ -13,6 +13,7 @@ import { SwitchNumber, SelectCategoryIdByTree } from '@leaa/dashboard/src/compon
 import { FORM_SIZE } from '@leaa/dashboard/src/constants';
 
 import style from './style.module.less';
+import moment from 'moment';
 
 interface IProps {
   item?: Article;
@@ -61,53 +62,46 @@ export const ArticleInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =
 
   return (
     <div className={cx(style['article-info-form-wrapper'], props.className)}>
-      <Form form={form} name="article-info" layout="vertical" className={style['form--title-wrapper']} size={FORM_SIZE}>
+      <Form form={form} name="article-info" layout="vertical" size={FORM_SIZE}>
         <Form.Item name="title" rules={[{ required: true }]}>
           <Input placeholder={t('_lang:title')} />
         </Form.Item>
       </Form>
 
-      <Form
-        form={form}
-        name="article-info-2"
-        layout="inline"
-        hideRequiredMark
-        className={style['form--slug-wrapper']}
-        size={FORM_SIZE}
-      >
-        <div className={style['block--slug']}>
-          <Form.Item name="slug" rules={[]} className={style['item--slug']}>
-            <Input
-              className={style['form-item-slug-input']}
-              prefix={<RiExternalLinkLine type="ri-link-m" />}
-              placeholder={t('_lang:slug')}
-            />
-          </Form.Item>
-        </div>
+      <Form form={form} name="article-info-2" hideRequiredMark size={FORM_SIZE}>
+        <Row gutter={16} className={style['form-row']}>
+          <Col xs={24}>
+            <Form.Item name="slug" rules={[]}>
+              <Input prefix={<RiExternalLinkLine type="ri-link-m" />} placeholder={t('_lang:slug')} />
+            </Form.Item>
+          </Col>
+        </Row>
 
-        <div className={style['block--category-and-status']}>
-          <Form.Item
-            name="categoryIds"
-            normalize={(e) => e || null}
-            rules={[]}
-            label={t('_lang:category')}
-            colon={false}
-            className={style['item--category']}
-          >
-            <SelectCategoryIdByTree parentSlug="articles" componentProps={{ allowClear: true }} dropdownWidth={200} />
-          </Form.Item>
+        <Row gutter={16} className={style['form-row']}>
+          <Col xs={24} sm={12}>
+            <Form.Item
+              name="categoryIds"
+              normalize={(e) => e || null}
+              rules={[]}
+              label={t('_lang:category')}
+              colon={false}
+            >
+              <SelectCategoryIdByTree parentSlug="articles" componentProps={{ allowClear: true }} dropdownWidth={200} />
+            </Form.Item>
+          </Col>
 
-          <Form.Item
-            name="status"
-            normalize={(e) => e && Number(e)}
-            rules={[{ required: true }]}
-            label={t('_lang:status')}
-            colon={false}
-            className={style['item--status']}
-          >
-            <SwitchNumber />
-          </Form.Item>
-        </div>
+          <Col xs={24} sm={6}>
+            <Form.Item
+              name="status"
+              normalize={(e) => e && Number(e)}
+              rules={[{ required: true }]}
+              label={t('_lang:status')}
+              colon={false}
+            >
+              <SwitchNumber />
+            </Form.Item>
+          </Col>
+        </Row>
       </Form>
     </div>
   );

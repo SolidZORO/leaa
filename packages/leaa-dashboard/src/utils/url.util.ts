@@ -7,6 +7,7 @@ import { SortOrder, SorterResult } from 'antd/es/table/interface';
 
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from '@leaa/dashboard/src/constants';
 import { ITablePagination } from '@leaa/dashboard/src/interfaces';
+import { transCrudStateToUrlQuery } from '@leaa/dashboard/src/utils/crud.util';
 
 export function getUrlPath(w?: Window): string {
   const win = w || window;
@@ -32,34 +33,31 @@ interface IMergeParamToUrlQuery {
   window: Window;
   params: Record<string, unknown> | undefined;
   replace: boolean;
+  scrollToTop?: boolean;
 }
 
-export function mergeUrlParamToUrlQuery({ window, params, replace }: IMergeParamToUrlQuery): string {
-  const prevBaseUrl = `${window.location.origin}${window.location.pathname}`;
-  const query = qs.parse(window.location.search, { ignoreQueryPrefix: true });
+export function mergeUrlParamToUrlQuery({ window, params, replace, scrollToTop }: IMergeParamToUrlQuery): string {
+  const urlPath = getUrlPath(window);
+  const urlObject = qs.parse(window.location.search, { ignoreQueryPrefix: true });
 
-  const paramsObject = {
-    ...query,
-    ...params,
-  };
-
-  let nextUrl = prevBaseUrl;
-
-  let paramsString = '';
-
-  if (paramsObject) {
-    paramsString = qs.stringify(paramsObject, { addQueryPrefix: true });
-  }
-
-  nextUrl += `${paramsString ? '?' : ''}${paramsString}`;
+  const nextQuery = qs.stringify({ ...urlObject, ...params }, { addQueryPrefix: true });
+  const nextUrl = `${urlPath}${nextQuery}`;
 
   if (replace) {
     window.history.pushState(null, '', nextUrl);
   }
 
-  animateScrollTo(0);
+  if (scrollToTop) animateScrollTo(0);
 
   return nextUrl;
+}
+
+export function getFieldByUrl(field: string): string | undefined {
+  const urlObject: any = qs.parse(window.location.search, { ignoreQueryPrefix: true });
+
+  if (!urlObject || (urlObject && !urlObject[field])) return undefined;
+
+  return urlObject[field];
 }
 
 interface IGetPaginationResult {

@@ -3,7 +3,6 @@ export { HtmlMeta } from './HtmlMeta/HtmlMeta';
 export { BuildInfo } from './BuildInfo/BuildInfo';
 export { SubmitToolbar } from './SubmitToolbar/SubmitToolbar';
 export { PriceInput } from './PriceInput/PriceInput';
-export { FilterIcon } from './FilterIcon/FilterIcon';
 export { UserAvatar } from './UserAvatar/UserAvatar';
 export { SearchInput } from './SearchInput/SearchInput';
 export { TagMiniSets } from './TagMiniSets/TagMiniSets';

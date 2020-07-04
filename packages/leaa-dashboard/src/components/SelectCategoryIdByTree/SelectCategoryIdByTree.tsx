@@ -84,24 +84,22 @@ export const SelectCategoryIdByTree = (props: IProps) => {
   }, []);
 
   return (
-    <div className={cx(style['select-category-id-by-tree-wrapper'], props.className)}>
-      <TreeSelect
-        {...multipleSelectOption}
-        size="large"
-        loading={treeLoading}
-        // TIPS: value 即便是有值，也必须等待 tree query 完毕后才现实，不然 select 会被 uuid 撑开
-        value={!_.isEmpty(tree) ? value : '----'}
-        treeDefaultExpandAll
-        dropdownClassName={style['tree-dropdown']}
-        dropdownStyle={{ width: props.dropdownWidth || 'auto' }}
-        dropdownMatchSelectWidth={false}
-        treeData={tree as any}
-        placeholder={props.placeholder || t('_lang:category')}
-        onChange={onChange}
-        className={style['tree-select-wrapper']}
-        style={props.style}
-        {...props.componentProps}
-      />
-    </div>
+    <TreeSelect
+      {...multipleSelectOption}
+      className={cx(style['select-category-id-by-tree-wrapper'], props.className)}
+      size="large"
+      loading={treeLoading}
+      // TIPS: value 即便是有值，也必须等待 tree query 完毕后才现实，不然 select 会被 uuid 撑开
+      value={!_.isEmpty(tree) ? value : '----'}
+      treeDefaultExpandAll
+      dropdownClassName={style['tree-dropdown']}
+      dropdownStyle={{ width: props.dropdownWidth || 'auto' }}
+      dropdownMatchSelectWidth={false}
+      treeData={tree as any}
+      placeholder={props.placeholder || t('_lang:category')}
+      onChange={onChange}
+      style={props.style}
+      {...props.componentProps}
+    />
   );
 };

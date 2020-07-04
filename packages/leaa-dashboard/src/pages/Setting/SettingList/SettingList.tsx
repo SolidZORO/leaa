@@ -174,20 +174,18 @@ export default (props: IPage) => {
     <PageCard
       route={props.route}
       title={
-        <span>
-          <strong>{t(`${props.route?.namei18n}`)}</strong>
+        <>
+          <strong className={style['title-name']}>{t(`${props.route?.namei18n}`)}</strong>
 
           <Button
             size="large"
-            shape="round"
-            type="ghost"
             icon={<RiAddLine />}
             onClick={onOpenCreateSetting}
             className={cx(style['page-card-create-button'], 'g-page-card-create-button')}
           >
             {t('_lang:create')}
           </Button>
-        </span>
+        </>
       }
       className={style['wapper']}
       loading={listLoading}
