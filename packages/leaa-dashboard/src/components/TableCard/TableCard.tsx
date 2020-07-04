@@ -184,7 +184,7 @@ export const TableCard = <T extends any>(props: IProps<T>) => {
       title: t('_lang:createdAt'),
       dataIndex: 'created_at',
       sorter: true,
-      width: 110,
+      width: 125,
       sortOrder: calcTableSortOrder('created_at', crudQuery?.sort),
       render: (text: string) => <TableColumnDate date={text} size="small" />,
     }),
