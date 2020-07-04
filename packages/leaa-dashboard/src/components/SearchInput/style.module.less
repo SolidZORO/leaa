@@ -2,26 +2,24 @@
 
 .search-input-wrapper {
   position: relative;
-  width: 120px;
 
-  @media (min-width: @screen-md) {
-    width: 170px;
+  .search-input-inner {
   }
-}
 
-.search-input-inner {
   :global {
+    .ant-input-affix-wrapper {
+      width: 100%;
+
+      @media (min-width: @screen-md) {
+        width: 160px;
+      }
+    }
+
     .ant-input-prefix {
       svg {
         font-size: 130%;
         color: #ccc;
       }
     }
-  }
-}
-
-:global {
-  .ant-input-affix-wrapper > input.ant-input {
-    padding-left: 3px !important;
   }
 }

@@ -60,7 +60,7 @@ export default (props: IPage) => {
       loading={listLoading}
       extra={
         <SearchInput
-          className={cx('g-search-input')}
+          className={cx('g-page-card-extra-search-input')}
           value={crudQuery.q}
           onSearch={(q?: string) => {
             return setCrudQuery({
@@ -80,7 +80,6 @@ export default (props: IPage) => {
           label: t('_lang:category'),
           content: (
             <SelectCategoryIdByTree
-              // className={cx('g-extra-filter-bar--item', 'g-extra-filter-bar--category')}
               componentProps={{ allowClear: true }}
               onChange={(cId?: string) => {
                 setCrudQuery({

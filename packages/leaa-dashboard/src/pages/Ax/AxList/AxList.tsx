@@ -59,7 +59,7 @@ export default (props: IPage) => {
       title="@LIST"
       extra={
         <SearchInput
-          className={cx('g-extra-filter-bar--item', 'g-extra-filter-bar--q')}
+          className={cx('g-page-card-extra-search-input')}
           value={crudQuery.q}
           onSearch={(q?: string) => {
             return setCrudQuery({

@@ -59,23 +59,21 @@ export default (props: IPage) => {
       route={props.route}
       title="@LIST"
       extra={
-        <div className="g-page-card-title-bar-extra">
-          <SearchInput
-            className={cx('g-extra-filter-bar--item', 'g-extra-filter-bar--q')}
-            value={crudQuery.q}
-            onSearch={(q?: string) => {
-              return setCrudQuery({
-                ...crudQuery,
-                search: genCrudQuerySearch(q, {
-                  crudQuery,
-                  condition: { $and: [{ $or: [{ name: { $cont: q } }] }] },
-                  clear: { $and: [{ $or: undefined }] },
-                }),
-                q: q || undefined,
-              });
-            }}
-          />
-        </div>
+        <SearchInput
+          className={cx('g-page-card-extra-search-input')}
+          value={crudQuery.q}
+          onSearch={(q?: string) => {
+            return setCrudQuery({
+              ...crudQuery,
+              search: genCrudQuerySearch(q, {
+                crudQuery,
+                condition: { $and: [{ $or: [{ name: { $cont: q } }] }] },
+                clear: { $and: [{ $or: undefined }] },
+              }),
+              q: q || undefined,
+            });
+          }}
+        />
       }
       className={style['wapper']}
       loading={listLoading}

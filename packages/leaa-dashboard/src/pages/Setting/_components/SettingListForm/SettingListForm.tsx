@@ -11,6 +11,7 @@ import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
 import { SettingUpdateOne } from '@leaa/api/src/dtos/setting';
 
 import { FormCard } from '@leaa/dashboard/src/components';
+import { FORM_SIZE } from '@leaa/dashboard/src/constants';
 
 import style from './style.module.less';
 
@@ -24,11 +25,11 @@ interface IProps {
 const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
-    sm: { span: 6 },
+    sm: { span: 8 },
   },
   wrapperCol: {
     xs: { span: 24 },
-    sm: { span: 14 },
+    sm: { span: 16 },
   },
 };
 
@@ -79,7 +80,6 @@ export const SettingListForm = forwardRef((props: IProps, ref: React.Ref<any>) =
         >
           <div className={cx(style['label-box'])}>
             <Button
-              size="small"
               type="link"
               onClick={() => props.onClickLabelEditCallback(setting)}
               className={cx(style['label-button'])}
@@ -133,6 +133,7 @@ export const SettingListForm = forwardRef((props: IProps, ref: React.Ref<any>) =
           hideRequiredMark
           {...formItemLayout}
           className={style['form-wrapper']}
+          size={FORM_SIZE}
         >
           {props.items?.map((item) => (
             <Form.Item

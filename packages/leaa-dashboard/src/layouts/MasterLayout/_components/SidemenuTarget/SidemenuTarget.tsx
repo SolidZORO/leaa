@@ -14,14 +14,14 @@ interface IProps {
 
 export const SidemenuTarget = (props: IProps): JSX.Element => {
   return (
-    <div
+    <Button
+      type="link"
+      onClick={props.onCallbackSidebarTarget}
       className={cx(style['sidebar-target-wrapper'], {
         [style['sidebar-target-wrapper--collapsed']]: props.collapsed,
       })}
     >
-      <Button type="link" onClick={props.onCallbackSidebarTarget}>
-        {props.collapsed ? <RiMenuLine /> : <RiMenu3Line />}
-      </Button>
-    </div>
+      {props.collapsed ? <RiMenuLine /> : <RiMenu3Line />}
+    </Button>
   );
 };

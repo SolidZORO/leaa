@@ -66,7 +66,7 @@ export const ExportButton = (props: IProps) => {
         icon={<RiDownload2Line />}
         onClick={onExport}
         loading={loading}
-        className={cx('g-extra-filter-bar--item', 'g-extra-filter-bar--export')}
+        className={cx('g-extra-filter-bar--item')}
       >
         {t('_lang:export')}
       </Button>
