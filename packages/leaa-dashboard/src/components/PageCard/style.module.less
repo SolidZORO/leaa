@@ -132,7 +132,7 @@
         //margin-top: -4px;
         //right: @page-card-padding-x;
         right: 0;
-        top: -11px;
+        top: (@layout-padding-x / 2) + 1;
         display: inline-block;
         text-align: right;
 
@@ -152,11 +152,11 @@
 
     .fn-wrapper {
       display: flex;
-      margin-top: 5px;
-      margin-bottom: 10px;
+      margin-top: 10px;
+      margin-bottom: 15px;
 
       @media (min-width: @screen-md) {
-        margin-top: 0;
+        margin: 0;
       }
 
       .extra {

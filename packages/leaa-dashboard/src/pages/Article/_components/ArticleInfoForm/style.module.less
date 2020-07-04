@@ -4,10 +4,38 @@
   position: relative;
 }
 
+.form-item--title {
+  margin-bottom: 16px;
+
+  :global {
+    .ant-input {
+      padding: 10px 11px;
+      font-size: 18px;
+    }
+  }
+}
+
 .form-wrapper {
 }
 
 .form-row {
+}
+
+.form-row--status {
+  :global {
+    .ant-form-item-label {
+      line-height: 1;
+      padding: 0 5px;
+
+      label {
+        height: 32px;
+
+        @media (min-width: @screen-md) {
+          height: 40px;
+        }
+      }
+    }
+  }
 }
 
 .form-row--slug-wrapper {
