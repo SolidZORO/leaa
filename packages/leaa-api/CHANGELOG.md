@@ -3,17 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [3.6.0](https://github.com/SolidZORO/leaa/compare/v3.5.6...v3.6.0) (2020-07-02)
+# [3.7.0](https://github.com/SolidZORO/leaa/compare/v3.6.0...v3.7.0) (2020-07-04)
 
+**Note:** Version bump only for package @leaa/api
+
+# [3.6.0](https://github.com/SolidZORO/leaa/compare/v3.5.6...v3.6.0) (2020-07-02)
 
 ### Features
 
-* add `platform_build_and_push` to dashboard ([0a0dc2b](https://github.com/SolidZORO/leaa/commit/0a0dc2b4fc55d9e8596ecd26c0fbc331ebb97086))
-* done new UI ([a39c982](https://github.com/SolidZORO/leaa/commit/a39c982c0afd454dca5a02a96d8619d242b23d2a))
-
-
-
-
+- add `platform_build_and_push` to dashboard ([0a0dc2b](https://github.com/SolidZORO/leaa/commit/0a0dc2b4fc55d9e8596ecd26c0fbc331ebb97086))
+- done new UI ([a39c982](https://github.com/SolidZORO/leaa/commit/a39c982c0afd454dca5a02a96d8619d242b23d2a))
 
 ## [3.5.5](https://github.com/SolidZORO/leaa/compare/v3.5.4...v3.5.5) (2020-06-24)
 

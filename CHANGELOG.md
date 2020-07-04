@@ -3,42 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [3.6.0](https://github.com/SolidZORO/leaa/compare/v3.5.6...v3.6.0) (2020-07-02)
-
+# [3.7.0](https://github.com/SolidZORO/leaa/compare/v3.6.0...v3.7.0) (2020-07-04)
 
 ### Bug Fixes
 
-* compatible mobile ([2f9c8bf](https://github.com/SolidZORO/leaa/commit/2f9c8bf60e6961c6f4b541699c9ef06f416d8eb8))
-* fix SwitchLanguage click missing setVisible ([367c798](https://github.com/SolidZORO/leaa/commit/367c7985cfe5ed8fe2f8f503875bc907b1e28660))
-* fix SwitchLanguage in Safari bug ([cb3e0d6](https://github.com/SolidZORO/leaa/commit/cb3e0d67ae389fe98305db42a464a79968f6af83))
+- click filterbar have reset URL query ([a141c05](https://github.com/SolidZORO/leaa/commit/a141c055a04fe1b46bc9e1f44ce6955bbe29e174))
 
+# [3.6.0](https://github.com/SolidZORO/leaa/compare/v3.5.6...v3.6.0) (2020-07-02)
+
+### Bug Fixes
+
+- compatible mobile ([2f9c8bf](https://github.com/SolidZORO/leaa/commit/2f9c8bf60e6961c6f4b541699c9ef06f416d8eb8))
+- fix SwitchLanguage click missing setVisible ([367c798](https://github.com/SolidZORO/leaa/commit/367c7985cfe5ed8fe2f8f503875bc907b1e28660))
+- fix SwitchLanguage in Safari bug ([cb3e0d6](https://github.com/SolidZORO/leaa/commit/cb3e0d67ae389fe98305db42a464a79968f6af83))
 
 ### Features
 
-* add `platform_build_and_push` to dashboard ([0a0dc2b](https://github.com/SolidZORO/leaa/commit/0a0dc2b4fc55d9e8596ecd26c0fbc331ebb97086))
-* done new UI ([a39c982](https://github.com/SolidZORO/leaa/commit/a39c982c0afd454dca5a02a96d8619d242b23d2a))
-* WIP UI redesign ([a3f0946](https://github.com/SolidZORO/leaa/commit/a3f09466dc39e3550ba349d2c6861513c4da1bed))
-
-
-
-
+- add `platform_build_and_push` to dashboard ([0a0dc2b](https://github.com/SolidZORO/leaa/commit/0a0dc2b4fc55d9e8596ecd26c0fbc331ebb97086))
+- done new UI ([a39c982](https://github.com/SolidZORO/leaa/commit/a39c982c0afd454dca5a02a96d8619d242b23d2a))
+- WIP UI redesign ([a3f0946](https://github.com/SolidZORO/leaa/commit/a3f09466dc39e3550ba349d2c6861513c4da1bed))
 
 ## [3.5.6](https://github.com/SolidZORO/leaa/compare/v3.5.5...v3.5.6) (2020-06-25)
 
-
 ### Bug Fixes
 
-* `react-imported-component` bug in HMR, reset `loadable` ([d2b5582](https://github.com/SolidZORO/leaa/commit/d2b5582cfcf7665f6b2fb19ddf474a63732fa2c7))
-* fixed _lang:create ([f3da7d9](https://github.com/SolidZORO/leaa/commit/f3da7d960896005fcd2f2a0d9b82eb7a2845d909))
-
+- `react-imported-component` bug in HMR, reset `loadable` ([d2b5582](https://github.com/SolidZORO/leaa/commit/d2b5582cfcf7665f6b2fb19ddf474a63732fa2c7))
+- fixed \_lang:create ([f3da7d9](https://github.com/SolidZORO/leaa/commit/f3da7d960896005fcd2f2a0d9b82eb7a2845d909))
 
 ### Features
 
-* `ROUTER_BASENAME` compatible `sub dir` deploy on nginx ([b9c89c6](https://github.com/SolidZORO/leaa/commit/b9c89c62ee6b7df3e23ec601143bcdfe3e2125d6))
-
-
-
-
+- `ROUTER_BASENAME` compatible `sub dir` deploy on nginx ([b9c89c6](https://github.com/SolidZORO/leaa/commit/b9c89c62ee6b7df3e23ec601143bcdfe3e2125d6))
 
 ## [3.5.5](https://github.com/SolidZORO/leaa/compare/v3.5.4...v3.5.5) (2020-06-24)
 
