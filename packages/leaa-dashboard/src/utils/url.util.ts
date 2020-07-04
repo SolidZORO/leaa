@@ -7,7 +7,6 @@ import { SortOrder, SorterResult } from 'antd/es/table/interface';
 
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from '@leaa/dashboard/src/constants';
 import { ITablePagination } from '@leaa/dashboard/src/interfaces';
-import { transCrudStateToUrlQuery } from '@leaa/dashboard/src/utils/crud.util';
 
 export function getUrlPath(w?: Window): string {
   const win = w || window;

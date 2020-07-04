@@ -6,7 +6,6 @@ import { HelmetProvider } from 'react-helmet-async';
 import { LoadingOutlined } from '@ant-design/icons';
 import zhCN from 'antd/es/locale-provider/zh_CN';
 import enUS from 'antd/es/locale-provider/en_US';
-
 // cannot use deconstruction components dir in here (App.tsx)
 import { ErrorBoundary } from '@leaa/dashboard/src/components/ErrorBoundary/ErrorBoundary';
 import { RefreshflatPermissions } from '@leaa/dashboard/src/components/RefreshflatPermissions/RefreshflatPermissions';

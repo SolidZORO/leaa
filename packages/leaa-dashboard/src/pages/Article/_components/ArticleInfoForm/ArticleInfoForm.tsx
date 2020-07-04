@@ -1,7 +1,7 @@
 import cx from 'classnames';
 import React, { useEffect, forwardRef, useImperativeHandle } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Form, Input, Col, DatePicker, Row } from 'antd';
+import { Form, Input, Col, Row } from 'antd';
 import { RiExternalLinkLine } from 'react-icons/ri';
 
 import { Article } from '@leaa/api/src/entrys';
@@ -13,7 +13,6 @@ import { SwitchNumber, SelectCategoryIdByTree } from '@leaa/dashboard/src/compon
 import { FORM_SIZE } from '@leaa/dashboard/src/constants';
 
 import style from './style.module.less';
-import moment from 'moment';
 
 interface IProps {
   item?: Article;
