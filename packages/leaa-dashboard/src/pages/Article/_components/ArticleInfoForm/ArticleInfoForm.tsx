@@ -62,7 +62,7 @@ export const ArticleInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =
   return (
     <div className={cx(style['article-info-form-wrapper'], props.className)}>
       <Form form={form} name="article-info" layout="vertical" size={FORM_SIZE}>
-        <Form.Item name="title" rules={[{ required: true }]}>
+        <Form.Item name="title" rules={[{ required: true }]} className={style['form-item--title']}>
           <Input placeholder={t('_lang:title')} />
         </Form.Item>
       </Form>
@@ -76,8 +76,8 @@ export const ArticleInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =
           </Col>
         </Row>
 
-        <Row gutter={16} className={style['form-row']}>
-          <Col xs={24} sm={12}>
+        <Row gutter={16} align="middle" className={style['form-row--status']}>
+          <Col xs={16} sm={18}>
             <Form.Item
               name="categoryIds"
               normalize={(e) => e || null}
@@ -89,7 +89,7 @@ export const ArticleInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =
             </Form.Item>
           </Col>
 
-          <Col xs={24} sm={6}>
+          <Col xs={8} sm={6}>
             <Form.Item
               name="status"
               normalize={(e) => e && Number(e)}

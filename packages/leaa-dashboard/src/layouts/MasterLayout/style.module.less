@@ -10,7 +10,7 @@
   position: relative;
 
   @media (min-width: @screen-md) {
-    margin-left: var(--layout-sidebar-width--pc);
+    margin-left: @layout-sidebar-width--pc;
   }
 }
 
@@ -30,14 +30,13 @@
   padding: @layout-padding-x / 2;
   //padding: 10px;
   margin: 0;
-  background-color: var(--layout-main-bg-color);
+  background-color: @layout-main-bg-color;
   padding-bottom: 30px;
 
   @media (min-width: @screen-md) {
-    padding: var(--page-card-padding-x);
+    padding: (@page-card-padding-x / 1.25) @page-card-padding-x;
     padding-bottom: 50px;
-    //border-radius: var(--page-border-radius) var(--page-border-radius) 0 0;
     border-radius: 24px 24px 0 0;
-    margin: var(--layout-padding-x) var(--layout-padding-x) 0 0;
+    margin: @layout-padding-x @layout-padding-x 0 0;
   }
 }
