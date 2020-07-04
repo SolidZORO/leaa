@@ -52,8 +52,6 @@ export default (props: IPage) => {
   useUpdateEffect(() => onFetchList(DEFAULT_QUERY), [props.history.location.key]);
   useUpdateEffect(() => (!_.isEqual(crudQuery, DEFAULT_QUERY) ? onFetchList(crudQuery) : undefined), [crudQuery]);
 
-  console.log(CSS_SCREEN_MD);
-
   return (
     <PageCard
       route={props.route}

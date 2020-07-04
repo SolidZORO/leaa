@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import cx from 'classnames';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, forwardRef } from 'react';
 import { TreeSelect } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { TreeSelectProps } from 'antd/es/tree-select';
@@ -28,7 +28,8 @@ interface IProps {
   dropdownWidth?: number;
 }
 
-export const SelectCategoryIdByTree = (props: IProps) => {
+// export const SelectCategoryIdByTree = (props: IProps) => {
+export const SelectCategoryIdByTree = forwardRef((props: IProps, ref: React.Ref<any>) => {
   const { t } = useTranslation();
 
   const isAjaxCancelled = useRef(false);
@@ -86,6 +87,7 @@ export const SelectCategoryIdByTree = (props: IProps) => {
   return (
     <TreeSelect
       {...multipleSelectOption}
+      ref={ref}
       className={cx(style['select-category-id-by-tree-wrapper'], props.className)}
       size="large"
       loading={treeLoading}
@@ -102,4 +104,4 @@ export const SelectCategoryIdByTree = (props: IProps) => {
       {...props.componentProps}
     />
   );
-};
+});

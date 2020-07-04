@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import cx from 'classnames';
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Spin, Button, Tooltip, Collapse } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { IRouteItem } from '@leaa/dashboard/src/interfaces';
@@ -9,6 +9,8 @@ import { RiAddLine, RiFilterLine } from 'react-icons/ri';
 import { mergeUrlParamToUrlQuery, getFieldByUrl } from '@leaa/dashboard/src/utils';
 
 import style from './style.module.less';
+import { useUpdateEffect } from 'react-use';
+import { DEFAULT_QUERY } from '@leaa/dashboard/src/constants';
 
 declare type IPropTitle = null | '@LIST' | '@UPDATE' | '@CREATE' | '@ITEM' | React.ReactNode;
 
@@ -30,6 +32,7 @@ interface IProps {
 
 export const PageCard = (props: IProps) => {
   const { t } = useTranslation();
+  const history = useHistory();
   const [filterShow, setFilterShow] = useState(Number(getFieldByUrl('filterbar')));
 
   const genTitltDom = (title?: IPropTitle) => {
@@ -96,6 +99,13 @@ export const PageCard = (props: IProps) => {
       replace: true,
     });
   };
+
+  // if you click on sidebar routePath === current routePath, close & reset filter
+  useUpdateEffect(() => {
+    setFilterShow(0);
+
+    if (props.filterCloseCallback) props.filterCloseCallback();
+  }, [history.location.key]);
 
   return (
     <div className={cx(style['page-card-wrapper'], props.className)}>

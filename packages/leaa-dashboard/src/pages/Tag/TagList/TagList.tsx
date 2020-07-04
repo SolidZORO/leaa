@@ -60,8 +60,6 @@ export default (props: IPage) => {
       title="@LIST"
       extra={
         <div className="g-page-card-title-bar-extra">
-          <SyncTagsToFileButton />
-
           <SearchInput
             className={cx('g-extra-filter-bar--item', 'g-extra-filter-bar--q')}
             value={crudQuery.q}
@@ -95,6 +93,10 @@ export default (props: IPage) => {
           list={list}
         />
       )}
+
+      <div className={style['sync-tags-to-file-button-wrapper']}>
+        <SyncTagsToFileButton />
+      </div>
     </PageCard>
   );
 };
