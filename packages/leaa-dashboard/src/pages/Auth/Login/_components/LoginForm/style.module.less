@@ -11,6 +11,24 @@
   //input {
   //  height: @element-hegith;
   //}
+
+  :global {
+    .ant-form-item {
+      margin-bottom: 14px;
+
+      @media (min-width: @screen-md) {
+        margin-bottom: 24px;
+      }
+    }
+
+    .ant-form-item-label {
+      padding: 0 0 2px;
+
+      @media (min-width: @screen-md) {
+        padding: 0 0 8px;
+      }
+    }
+  }
 }
 
 .form-input {
