@@ -47,8 +47,8 @@
     "---------------------------------------------------------------------- LINE ----": "----",
     "versionup": "lerna version --conventional-commits --no-push",
     "versionup:patch": "lerna version patch --conventional-commits --no-push",
-    "versionup:minor": "lerna version minor --conventional-commits --no-push",
-    "versionup:major": "lerna version major --conventional-commits --no-push",
+    "versionup:minor": "lerna version minor --conventional-commits",
+    "versionup:major": "lerna version major --conventional-commits",
     "commit-version": "git add . && git commit -m \"chore(release): publish `node -p 'require(\"./lerna.json\").version'`\""
   },
   "devDependencies": {
