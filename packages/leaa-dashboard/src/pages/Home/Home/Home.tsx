@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import cx from 'classnames';
 
 import { IPage } from '@leaa/dashboard/src/interfaces';
 
@@ -14,7 +15,7 @@ export default (props: IPage) => {
     <PageCard route={props.route} title="@LIST" loading={false}>
       <HtmlMeta title={t(`${props.route?.namei18n}`)} />
 
-      <BuildInfo className={style['build-info']} />
+      <BuildInfo className={cx(style['build-info'], 'g-card--shadow')} />
     </PageCard>
   );
 };

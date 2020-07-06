@@ -12,21 +12,26 @@
 }
 
 .switch-language-selected {
-  margin-left: 8px;
   font-size: 24px;
-  vertical-align: -5px;
 }
 
 .switch-language-button {
   font-weight: 400;
 
   button {
-    margin-right: 30px;
-    color: #aaa;
-    position: relative;
+    @button-color: #aaa;
+
+    padding: 10px 15px;
+    height: auto;
     line-height: 1;
-    top: 2px;
+    color: @button-color;
+    position: relative;
     font-weight: 400;
+
+    &:hover,
+    &:focus {
+      color: @button-color;
+    }
   }
 
   .switch-language-button--icon {
@@ -35,15 +40,11 @@
   }
 
   .switch-language-button--lang {
-    position: absolute !important;
-    right: -16px;
-    top: -3px;
     display: inline-block;
-    margin-left: 4px !important;
     border: 1px solid #ccc;
     border-radius: 3px;
-    padding: 1px 5px;
     line-height: 1;
+    padding: 2px 5px;
     font-size: 12px;
     font-weight: 400;
     transform: scale(0.8);
@@ -77,12 +78,10 @@
 }
 
 .lang-flag--current {
-  @color: #333;
-
-  color: @color;
+  color: @text-color;
 
   &:focus {
-    color: @color;
+    color: @text-color;
   }
 
   &:before {
@@ -97,11 +96,11 @@
   }
 
   &:hover {
-    color: @color;
+    color: @text-color;
 
     &:before,
     span {
-      color: @color;
+      color: @text-color;
       opacity: 1;
     }
   }

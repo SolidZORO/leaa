@@ -10,7 +10,9 @@ export default (props: IPage) => {
     <PageCard route={props.route} title="@LIST" loading={false}>
       <HtmlMeta title={t(`${props.route?.namei18n}`)} />
 
-      <p>N/A</p>
+      <div className="g-card--shadow">
+        <span>N/A</span>
+      </div>
     </PageCard>
   );
 };
