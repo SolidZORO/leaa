@@ -1,7 +1,7 @@
 {
   "name": "@leaa/dashboard",
   "author": "solidzoro@live.com",
-  "version": "3.8.0",
+  "version": "3.8.1",
   "private": false,
   "sideEffect": false,
   "license": "BSD-3-Clause-Clear",

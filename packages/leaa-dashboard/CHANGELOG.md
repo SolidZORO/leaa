@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.8.1](https://github.com/SolidZORO/leaa/compare/v3.8.0...v3.8.1) (2020-07-06)
+
+### Bug Fixes
+
+- sidebar drawer scroll bug ([d060cb6](https://github.com/SolidZORO/leaa/commit/d060cb6a483ae4761a215717a9ac545719c7856e))
+
+### Performance Improvements
+
+- adjust login UI ([7858bf6](https://github.com/SolidZORO/leaa/commit/7858bf66de36ab3b1d807dfd7965c3eb5bcff663))
+- adjust UI ([333362c](https://github.com/SolidZORO/leaa/commit/333362c87a0b442b4674a6163d6c044410ae9787))
+
 # [3.8.0](https://github.com/SolidZORO/leaa/compare/v3.7.0...v3.8.0) (2020-07-06)
 
 ### Bug Fixes
