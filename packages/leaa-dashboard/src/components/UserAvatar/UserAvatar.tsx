@@ -5,6 +5,7 @@ import React from 'react';
 import { Avatar } from 'antd';
 import { AvatarProps } from 'antd/es/avatar';
 
+import { formatAttaUrl } from '@leaa/dashboard/src/utils';
 import avatar from '@leaa/dashboard/src/assets/images/avatar/avatar-line-w.svg';
 
 import style from './style.module.less';
@@ -19,7 +20,7 @@ interface IProps extends AvatarProps {
 export const UserAvatar = (props: IProps) => {
   const avatarDom = (
     <Avatar
-      src={props.url || avatar}
+      src={formatAttaUrl(props.url) || avatar}
       alt="Avatar"
       shape="circle"
       {...props}

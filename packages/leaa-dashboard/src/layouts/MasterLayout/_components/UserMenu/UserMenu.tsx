@@ -5,7 +5,7 @@ import { Skeleton, Popover, Button } from 'antd';
 import { RouteComponentProps } from 'react-router-dom';
 import { RiLogoutBoxRLine } from 'react-icons/ri';
 
-import { getAuthInfo, removeAuth } from '@leaa/dashboard/src/utils';
+import { getAuthInfo, removeAuth, formatAttaUrl } from '@leaa/dashboard/src/utils';
 import { LOGOUT_REDIRECT_URL } from '@leaa/dashboard/src/constants';
 import { BuildInfo, UserAvatar } from '@leaa/dashboard/src/components';
 
@@ -51,7 +51,7 @@ export const UserMenu = (props: IProps): JSX.Element => {
     <div className={cx(style['usermenu-wrapper'], 'g-usermenu-wrapper')}>
       <Popover trigger="click" placement="topRight" content={menuDom}>
         <Button type="link" className={style['usermenu-button']}>
-          <UserAvatar url={user.avatar_url} size={40} />
+          <UserAvatar url={formatAttaUrl(user.avatar_url)} size={40} />
           <span className={style['usermenu-name']}>{user.name}</span>
         </Button>
       </Popover>
