@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import cx from 'classnames';
 import i18n from 'i18next';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Layout, Menu, Drawer } from 'antd';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { useMedia, useUpdateEffect } from 'react-use';
@@ -40,6 +40,10 @@ export const LayoutSidebar = (props: IProps) => {
   useUpdateEffect(() => {
     if (isMobile) setDrawer(false);
   }, [props.history.location.key]);
+
+  useEffect(() => {
+    document.body.style.overflow = drawer && isMobile ? 'hidden' : '';
+  }, [drawer, isMobile]);
 
   const menuBaseDom = (
     <Layout.Sider collapsible collapsedWidth={0} trigger={null} className={style['full-layout-sidebar']}>
