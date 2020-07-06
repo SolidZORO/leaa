@@ -3023,6 +3023,11 @@
   resolved "https://registry.npm.taobao.org/@types/normalize-package-data/download/@types/normalize-package-data-2.4.0.tgz#e486d0d97396d79beedd0a6e33f4534ff6b4973e"
   integrity sha1-5IbQ2XOW15vu3QpuM/RTT/a0lz4=
 
+"@types/nprogress@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.npm.taobao.org/@types/nprogress/download/@types/nprogress-0.2.0.tgz#86c593682d4199212a0509cc3c4d562bbbd6e45f"
+  integrity sha1-hsWTaC1BmSEqBQnMPE1WK7vW5F8=
+
 "@types/oauth@*":
   version "0.9.1"
   resolved "https://registry.npm.taobao.org/@types/oauth/download/@types/oauth-0.9.1.tgz#e17221e7f7936b0459ae7d006255dff61adca305"
@@ -3139,6 +3144,14 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-loadable@^5.5.3":
+  version "5.5.3"
+  resolved "https://registry.npm.taobao.org/@types/react-loadable/download/@types/react-loadable-5.5.3.tgz#65d50a6f9f7ff62513010bd6a460ed60ba58ca7d"
+  integrity sha1-ZdUKb59/9iUTAQvWpGDtYLpYyn0=
+  dependencies:
+    "@types/react" "*"
+    "@types/webpack" "*"
+
 "@types/react-router-dom@^5.1.5":
   version "5.1.5"
   resolved "https://registry.npm.taobao.org/@types/react-router-dom/download/@types/react-router-dom-5.1.5.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Freact-router-dom%2Fdownload%2F%40types%2Freact-router-dom-5.1.5.tgz#7c334a2ea785dbad2b2dcdd83d2cf3d9973da090"
@@ -3218,14 +3231,6 @@
   version "1.1.1"
   resolved "https://registry.npm.taobao.org/@types/shallowequal/download/@types/shallowequal-1.1.1.tgz#aad262bb3f2b1257d94c71d545268d592575c9b1"
   integrity sha1-qtJiuz8rElfZTHHVRSaNWSV1ybE=
-
-"@types/shelljs@^0.8.8":
-  version "0.8.8"
-  resolved "https://registry.npm.taobao.org/@types/shelljs/download/@types/shelljs-0.8.8.tgz#e439c69929b88a2c8123c1a55e09eb708315addf"
-  integrity sha1-5DnGmSm4iiyBI8GlXgnrcIMVrd8=
-  dependencies:
-    "@types/glob" "*"
-    "@types/node" "*"
 
 "@types/source-list-map@*":
   version "0.1.2"
@@ -3309,13 +3314,6 @@
   version "1.15.2"
   resolved "https://registry.npm.taobao.org/@types/webpack-env/download/@types/webpack-env-1.15.2.tgz?cache=0&sync_timestamp=1588202205779&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fwebpack-env%2Fdownload%2F%40types%2Fwebpack-env-1.15.2.tgz#927997342bb9f4a5185a86e6579a0a18afc33b0a"
   integrity sha1-knmXNCu59KUYWobmV5oKGK/DOwo=
-
-"@types/webpack-manifest-plugin@^2.1.0":
-  version "2.1.0"
-  resolved "https://registry.npm.taobao.org/@types/webpack-manifest-plugin/download/@types/webpack-manifest-plugin-2.1.0.tgz#1fc52fc795d165493ab957656a7aa9f5cb7c145e"
-  integrity sha1-H8Uvx5XRZUk6uVdlanqp9ct8FF4=
-  dependencies:
-    "@types/webpack" "*"
 
 "@types/webpack-sources@*":
   version "1.4.0"
