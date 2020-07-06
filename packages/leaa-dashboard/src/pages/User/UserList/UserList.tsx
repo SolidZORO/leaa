@@ -82,7 +82,6 @@ export default (props: IPage) => {
 
       {list?.data && (
         <TableCard
-          componentsRawProps={{ scroll: { x: true } }}
           crudQuery={crudQuery}
           setCrudQuery={setCrudQuery}
           route={props.route}

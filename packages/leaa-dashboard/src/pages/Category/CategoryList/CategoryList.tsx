@@ -44,7 +44,7 @@ export default (props: IPage) => {
     <PageCard route={props.route} title="@LIST" className={style['category-list-wapper']} loading={treeLoading}>
       <HtmlMeta title={t(`${props.route?.namei18n}`)} />
 
-      <div style={{ height: '100%', overflow: 'auto' }}>
+      <div style={{ height: '100%', overflow: 'auto' }} className="g-card--shadow">
         <SortableTree
           className={style['tree-wrapper']}
           isVirtualized={false}

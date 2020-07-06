@@ -1,4 +1,5 @@
 @import './variables.less';
+@import './mixin.less';
 
 :root {
   // antd
@@ -53,6 +54,13 @@
 .g-col-number {
   font-weight: 500;
   font-family: @number-family;
+}
+
+.g-card--shadow {
+  background: #fff;
+  .g-box-shadow();
+  padding: @layout-padding-x;
+  border-radius: @border-radius-base;
 }
 
 // antd

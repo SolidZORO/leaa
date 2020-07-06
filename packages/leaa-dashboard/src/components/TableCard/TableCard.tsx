@@ -269,6 +269,7 @@ export const TableCard = <T extends any>(props: IProps<T>) => {
     >
       <div className={style['table-card-container']}>
         <Table
+          scroll={{ x: true }}
           {...props.componentsRawProps}
           showSorterTooltip={false}
           rowKey={(props.rowKey as string) || 'id'}
