@@ -15,8 +15,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Performance Improvements
 
-- adjest login UI ([776af81](https://github.com/SolidZORO/leaa/commit/776af8188d7e3e627b6213cd97a38c7ab4bb510e))
-- adjest UI ([304cc4d](https://github.com/SolidZORO/leaa/commit/304cc4d9ec58f1f31bcab3faaf7f0069f05ac75a))
+- adjust login UI ([776af81](https://github.com/SolidZORO/leaa/commit/776af8188d7e3e627b6213cd97a38c7ab4bb510e))
+- adjust UI ([304cc4d](https://github.com/SolidZORO/leaa/commit/304cc4d9ec58f1f31bcab3faaf7f0069f05ac75a))
 
 # [3.7.0](https://github.com/SolidZORO/leaa/compare/v3.6.0...v3.7.0) (2020-07-04)
 
