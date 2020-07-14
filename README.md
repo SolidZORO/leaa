@@ -28,7 +28,7 @@ View the `README.md` of each sub-directory in `packages`. You may need to look a
 
 ## **Legacy**
 
-- [legacy-graphql version](https://github.com/SolidZORO/leaa/blob/legacy-graphql)
+- [legacy-graphql version](https://github.com/SolidZORO/leaa/tree/legacy-graphql)
 - [legacy-www version](https://github.com/SolidZORO/leaa/blob/legacy-www/packages/leaa-www)
 
 ## **TODOS**
