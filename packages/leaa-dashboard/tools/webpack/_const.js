@@ -113,7 +113,6 @@ WPCONST.REGX_TS = /\.(ts|tsx)$/;
 WPCONST.REGX_SCRIPT = /\.(js|jsx)$/;
 WPCONST.REGX_SCRIPT_MAP = /\.(js|jsx)\.map$/;
 WPCONST.REGX_STYLE = /\.(less|css|styl|scss|sass|sss)$/;
-WPCONST.REGX_MODULE_STYLE = /\.module\.less$/;
 WPCONST.REGX_IMAGE = /\.(bmp|gif|jpg|jpeg|png|svg)$/;
 // WPCONST.REGX_SVG = /\.svg$/;
 WPCONST.REGX_FONT = /\.(woff2|woff|ttf|eot)$/;

@@ -18,45 +18,15 @@ modules.rules = [
     test: WPCONST.REGX_TS,
     include: WPCONST.SRC_DIR,
     exclude: /node_modules/,
-    rules: [{ loader: 'babel-loader?cacheDirectory' }],
+    use: [{ loader: 'babel-loader?cacheDirectory' }],
   },
   {
     test: WPCONST.REGX_SCRIPT_MAP,
-    rules: [{ loader: 'file-loader' }],
+    use: [{ loader: 'file-loader' }],
   },
-  //
-  // for MODULE STYLE
-  {
-    test: WPCONST.REGX_MODULE_STYLE,
-    rules: [
-      { loader: WPCONST.__DEV__ ? 'style-loader' : MiniCssExtractPlugin.loader },
-      {
-        loader: 'css-loader',
-        options: {
-          importLoaders: 2,
-          sourceMap: false,
-          modules: {
-            localIdentName: WPCONST.LOADER_CSS_LOADERR_LOCAL_IDENT_NAME,
-          },
-        },
-      },
-      { loader: 'postcss-loader' },
-      {
-        loader: 'less-loader',
-        options: {
-          lessOptions: {
-            javascriptEnabled: true,
-            modifyVars: antdModifyVars,
-          },
-        },
-      },
-    ],
-  },
-  //
   // for STYLE
   {
     test: WPCONST.REGX_STYLE,
-    exclude: [WPCONST.REGX_MODULE_STYLE],
     use: [
       { loader: WPCONST.__DEV__ ? 'style-loader' : MiniCssExtractPlugin.loader },
       {
@@ -64,6 +34,10 @@ modules.rules = [
         options: {
           importLoaders: 2,
           sourceMap: false,
+          modules: {
+            auto: true,
+            localIdentName: WPCONST.LOADER_CSS_LOADERR_LOCAL_IDENT_NAME,
+          },
         },
       },
       { loader: 'postcss-loader' },
