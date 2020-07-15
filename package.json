@@ -52,15 +52,15 @@
     "commit-version": "git add . && git commit -m \"chore(release): publish `node -p 'require(\"./lerna.json\").version'`\""
   },
   "devDependencies": {
-    "@commitlint/cli": "^9.0.1",
-    "@commitlint/config-conventional": "^9.0.1",
-    "@commitlint/config-lerna-scopes": "^9.0.1",
+    "@commitlint/cli": "^9.1.1",
+    "@commitlint/config-conventional": "^9.1.1",
+    "@commitlint/config-lerna-scopes": "^9.1.1",
     "@types/eslint": "7.2.0",
     "@types/eslint-plugin-prettier": "^3.1.0",
-    "@types/jest": "^26.0.3",
+    "@types/jest": "^26.0.4",
     "@types/rimraf": "^3.0.0",
-    "@typescript-eslint/eslint-plugin": "^3.5.0",
-    "@typescript-eslint/parser": "^3.5.0",
+    "@typescript-eslint/eslint-plugin": "^3.6.1",
+    "@typescript-eslint/parser": "^3.6.1",
     "babel-eslint": "^10.1.0",
     "codecov": "^3.7.0",
     "commitizen": "4.1.2",
@@ -76,7 +76,7 @@
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react": "^7.20.3",
-    "eslint-plugin-react-hooks": "^4.0.5",
+    "eslint-plugin-react-hooks": "^4.0.8",
     "husky": "^4.2.5",
     "jest": "^26.1.0",
     "lerna": "^3.22.1",
@@ -87,8 +87,8 @@
     "stylelint": "^13.6.1",
     "stylelint-config-standard": "^20.0.0",
     "stylelint-order": "4.1.0",
-    "ts-jest": "26.1.1",
-    "ts-node-dev": "^1.0.0-pre.50",
+    "ts-jest": "26.1.2",
+    "ts-node-dev": "^1.0.0-pre.51",
     "typescript": "3.9.6"
   }
 }
