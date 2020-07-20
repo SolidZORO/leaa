@@ -217,16 +217,30 @@ export const rolesSeed = [
 
 // prettier-ignore
 export const usersSeed: UserCreateOneReq[] = [
-  { email: 'superuser@local.com', name: 'Super User', password: 'RwurDVXqHvmUZZWzmrwLwKcrzyyDMKVsRJawqQUzZygEeqCorbfBf7fmxRZecNUx', status: 1, is_admin: 1},
-  { email: 'admin@local.com', name: 'Admin', password: 'h8Hx9qvPKoHMLQgj', status: 1, is_admin: 1, avatar_url: '' },
+  {
+    email: 'superuser@local.com',
+    name: 'Super User',
+    password: 'RwurDVXqHvmUZZWzmrwLwKcrzyyDMKVsRJawqQUzZygEeqCorbfBf7fmxRZecNUx',
+    status: 1,
+    is_admin: 1,
+  },
+  { email: 'admin@local.com', name: 'Admin', password: 'h8Hx9qvPKoHMLQgj', status: 1, is_admin: 1 },
   //
-  { phone: '18688889999', name: 'MOBILE01', password: '18688889999', status: 1, is_admin: 1, },
   //
+  { phone: '18688889999', name: 'MOBILE01', password: '18688889999', status: 1, is_admin: 1 },
   { email: 'staff@local.com', name: 'Staff', password: '7PkQGjvHMMkoo4RZ', status: 1, is_admin: 1 },
-  { email: 'disabled@local.com', name: 'Disabled', password: 'uUB3YGrdL3gJZYij', status: 1, is_admin: 1 },
+  {
+    email: 'disabled@local.com',
+    name: 'Disabled',
+    password: 'uUB3YGrdL3gJZYij',
+    status: 1,
+    is_admin: 0,
+  },
   { email: 'empty-en@local.com', name: 'Empty User', password: 'uUB3YGrdL3gJZYi1', status: 1 },
   { email: 'empty-cn@local.com', name: '空号用户', password: 'uUB3YGrdL3gJZYi2', status: 1 },
   { email: 'empty-jp@local.com', name: '空のユーザー', password: 'uUB3YGrdL3gJZYi3', status: 1 },
+  //
+  //
   { email: 'ram-01@local.com', name: 'RAM-01', password: 'uUB3YGrdL3gJZYi3', status: 1 },
   { email: 'ram-02@local.com', name: 'RAM-02', password: 'uUB3YGrdL3gJZYi3', status: 1 },
   { email: 'ram-03@local.com', name: 'RAM-03', password: 'uUB3YGrdL3gJZYi3', status: 1 },
@@ -254,14 +268,17 @@ export const randomSersSeed = randomSersSeedData;
 export const permissionsToRoleSeed = [
   { roleSlug: 'admin', permissionSlugs: permissionsSeed.map(p => p.slug) }, // allpermissions
   { roleSlug: 'staff', permissionSlugs: permissionsSeed.filter(p => p.slug.includes('user.')).map(p => p.slug) },
-  { roleSlug: 'attachment-manager', permissionSlugs: permissionsSeed.filter(p => p.slug.includes('attachment.')).map(p => p.slug) },
+  {
+    roleSlug: 'attachment-manager',
+    permissionSlugs: permissionsSeed.filter(p => p.slug.includes('attachment.')).map(p => p.slug),
+  },
 ];
 
 // prettier-ignore
 export const rolesToUserSeed = [
   { userEmail: 'admin@local.com', roleSlugs: ['admin'] },
   { userEmail: 'staff@local.com', roleSlugs: ['staff', 'attachment-manager'] },
-  { userEmail: 'superuser@local.com', roleSlugs: ['admin']  },
+  { userEmail: 'superuser@local.com', roleSlugs: ['admin'] },
 ];
 
 interface ICreateCategoryInput extends CategoryCreateOneReq {
@@ -270,128 +287,143 @@ interface ICreateCategoryInput extends CategoryCreateOneReq {
 
 // prettier-ignore
 export const categorySeed: ICreateCategoryInput[] = [
-  {  name: 'Articles', description: '文章分类', slug: 'articles' },
-  {  name: 'Products', description: '商品分类', slug: 'products' },
-  {  name: 'Brands', description: '品牌分类', slug: 'brands' },
+  { name: 'Articles', description: '文章分类', slug: 'articles' },
+  { name: 'Products', description: '商品分类', slug: 'products' },
+  { name: 'Brands', description: '品牌分类', slug: 'brands' },
   //
-  {  name: 'Frontend', slug: 'frontend', seedParentSlug: 'articles' },
-  {  name: 'Backend', slug: 'backend', seedParentSlug: 'articles' },
-  {  name: 'Help', slug: 'help', seedParentSlug: 'articles' },
-  {  name: 'Digit', slug: 'digit', seedParentSlug: 'products' },
-  {  name: 'Home Appliance', slug: 'home-appliance', seedParentSlug: 'products' },
-  {  name: 'Apple', slug: 'apple', seedParentSlug: 'brands' },
-  {  name: 'FILCO', slug: 'filco', seedParentSlug: 'brands' },
+  { name: 'Frontend', slug: 'frontend', seedParentSlug: 'articles' },
+  { name: 'Backend', slug: 'backend', seedParentSlug: 'articles' },
+  { name: 'Help', slug: 'help', seedParentSlug: 'articles' },
+  { name: 'Digit', slug: 'digit', seedParentSlug: 'products' },
+  { name: 'Home Appliance', slug: 'home-appliance', seedParentSlug: 'products' },
+  { name: 'Apple', slug: 'apple', seedParentSlug: 'brands' },
+  { name: 'FILCO', slug: 'filco', seedParentSlug: 'brands' },
 ];
 
 // prettier-ignore
 export const articleSeed: ArticleCreateOneReq[] = [
   {
-    title: '哈喽，Leaa',
-    slug: 'hello-leaa',
+    title: 'New Highly-Critical SAP Bug Could Let Attackers Take Over Corporate Servers',
     status: 1,
-    description: 'Hello, World 是指在计算机屏幕显示 “Hello, World!”（你好，世界！）',
-    content: '<p>Hello, World 是指在计算机屏幕显示 “Hello, World!”（你好，世界！）字符串的计算机程序。</p>',
+    content: `<div class="articlebody clear cf" id="articlebody"><div dir="ltr" style="text-align: left;" trbidi="on">
+<div class="separator" style="clear: both; text-align: left;">
+<a href="https://thehackernews.com/images/-z8Uzw7Wp2Zk/Xw1bORR-XAI/AAAAAAAAAjM/4WKXCZsAtEw0zA9nzsUj0BUhmpjsEtR6wCLcBGAsYHQ/s728-e100/sap.jpg" imageanchor="1" style="clear: left; float: left; margin-bottom: 15px; margin-right: 1em; margin-left: 0px;"><img border="0" data-original-height="380" data-original-width="728" src="https://thehackernews.com/images/-z8Uzw7Wp2Zk/Xw1bORR-XAI/AAAAAAAAAjM/4WKXCZsAtEw0zA9nzsUj0BUhmpjsEtR6wCLcBGAsYHQ/s728-e100/sap.jpg"></a></div>
+SAP has patched a <a href="https://wiki.scn.sap.com/wiki/pages/viewpage.action?pageId=552599675" target="_blank">critical vulnerability</a> impacting the LM Configuration Wizard component in NetWeaver Application Server (AS) Java platform, allowing an unauthenticated attacker to take control of SAP applications.<br>
+<br>
+The bug, dubbed RECON and tracked as <b>CVE-2020-6287</b>, is rated with a maximum CVSS score of 10 out of 10, potentially affecting over 40,000 SAP customers, according to cybersecurity firm Onapsis, which <a href="https://www.onapsis.com/recon-sap-cyber-security-vulnerability" target="_blank">uncovered the flaw</a>.<br>
+<div class="ad_two clear" style="text-align: left;"><center class="cf"><div id="967ecfad-bf6b-429e-9a39-9770c8b7d188" class="_ap_apex_ad" max-height="290" style="text-align: left;"> <script> var adpushup = adpushup || {}; adpushup.que = adpushup.que || []; adpushup.que.push(function() { adpushup.triggerAd("967ecfad-bf6b-429e-9a39-9770c8b7d188"); });</script></div></center></div><br>
+"If successfully exploited, a remote, unauthenticated attacker can obtain unrestricted access to SAP systems through the creation of high-privileged users and the execution of arbitrary operating system commands with the privileges of the SAP service user account, which has unrestricted access to the SAP database and is able to perform application maintenance activities, such as shutting down federated SAP applications," the US Cybersecurity and Infrastructure Security Agency (CISA) said in an <a href="https://us-cert.cisa.gov/ncas/alerts/aa20-195a" target="_blank">advisory</a>.<br>
+<br>
+"The confidentiality, integrity, and availability of the data and processes hosted by the SAP application are at risk by this vulnerability," it added.<br>
+<br>
+The vulnerability is present by default in SAP applications running on top of SAP NetWeaver AS Java 7.3 and newer (up to SAP NetWeaver 7.5), putting several SAP business solutions at risk, including but not limited to SAP Enterprise Resource Planning, SAP Product Lifecycle Management, SAP Customer Relationship Management, SAP Supply Chain Management, SAP Business Intelligence, and SAP Enterprise Portal.<br>
+<br>
+According to Onapsis, RECON is caused due to a lack of authentication in the web component of the SAP NetWeaver AS for Java, thus granting an attacker to perform high-privileged activities on the susceptible SAP system.<br>
+<br>
+"A remote, unauthenticated attacker can exploit this vulnerability through an HTTP interface, which is typically exposed to end users and, in many cases, exposed to the internet," CISA said.<br>
+<div class="ad_two clear" style="text-align: left;"><center class="cf"><div id="8c2d7f94-a9c5-43b2-83a4-cdcf711ae05e" class="_ap_apex_ad" max-height="290" style="text-align: left;"> <script> var adpushup = adpushup || {}; adpushup.que = adpushup.que || []; adpushup.que.push(function() { adpushup.triggerAd("8c2d7f94-a9c5-43b2-83a4-cdcf711ae05e"); }); </script> </div></center></div><br>
+By exploiting the flaw to create a new SAP user with maximum privileges, the intruder can compromise SAP installations to execute arbitrary commands, such as modifying or extracting highly sensitive information as well as disrupting critical business processes.<br>
+<br>
+Although there's no evidence of any active exploitation of the vulnerability, CISA cautioned that the patches' availability could make it easier for adversaries to reverse-engineer the flaw to create exploits and target unpatched systems.<br>
+<br>
+Given the severity of RECON, it's recommended that organizations apply critical patches as soon as possible and scan SAP systems for all known vulnerabilities and analyze systems for malicious or excessive user authorizations.</div>
+<br>
+<div class="cf note-b" style="text-align: left;">Found this article interesting? Follow THN on <a href="https://www.facebook.com/thehackernews" rel="noopener" target="_blank">Facebook</a>, <a href="https://twitter.com/thehackersnews" rel="noopener" target="_blank">Twitter <i class="icon-font icon-twitter"></i></a> and <a href="https://www.linkedin.com/company/thehackernews/" rel="noopener" target="_blank">LinkedIn</a> to read more exclusive content we post.</div>
+</div>`,
   },
+
   {
-    title: 'Sample Article',
-    slug: 'demo-article',
+    title: 'DualSense手柄上手体验，全新触觉反馈让你沉浸游戏世界',
     status: 1,
-    description: 'Sample Article Description',
-    content: '<p>JUST A SAMPLE ARTICLE</p><br /><br /><br /><br /><br />',
+    content: `首先他提到了他认为 DualSense 最大的一点改变，是L2 及R2 按钮上的自动调整触发器，并说明这对游戏的影响是深远的。触觉回馈同样也是他认为DualSense 很值得一谈的点，并不像一般手柄的振动，全新升级的触觉回馈可以让玩家获得更高的沉浸体验。
+
+在用 DualSense 来游玩《Astro's Playroom》的时候，他也展示了 DualSense 的诸多不同特点。在诸多场景里，DualSense 都会透过其扬声器以及触觉回馈来带给玩家更深的带入感。`,
   },
+
   {
-    title: '<script>alert(\'hello, leaa.\')</script>',
-    slug: 'alert-test',
+    title: '仅有米粒大小！LG发布全球最小蓝牙模块，苹果有望采用',
     status: 1,
-    description: '<script>alert(\'hello, leaa.\')</script>',
-    content: '<p>&lt;script&gt;alert(&#x27;hello, leaa.&#x27;)&lt;/script&gt;</p>',
+    content: `<p>根据外媒最新报导，LG 集团下属尖端物料和元件制造商 LG Innotek 共同宣布，他们开发出了世界最小蓝牙模组。据悉，该模组仅仅只有 6x4 mm大小，大概是一粒米的大小，比之前日本厂商保持的最小蓝牙模组记录缩小了1/4。
+
+虽然是世界最小蓝牙模组，但是却“麻雀虽小五脏俱全”。该模组以高精度、高集成技术为基础，在一粒米的空间内塞进了通信芯片、电阻器、电感等 20 多个元件，不仅仅性能全面，甚至还要比一些提体积更大的蓝牙模组性能提升 30%，可在复杂、苛刻的环境中进行收发数据。除此之外，该模组与 LG Innotek 的「天线集成」技术进行了集成，将蓝牙天线也囊括在内，可通过最大化天线面积提升通信性能。
+
+
+
+值得一提的是，LG Innotek 是苹果的供应商之一，如果量产顺利的话，或许苹果会考虑应用在未来的iPhone、AirPods、Apple Watch 等产品中。</p>`,
   },
+
   {
-    title: 'The State of Web Browsers 2019 edition',
-    slug: 'the-state-of-web-browsers-2019-edition',
+    title: 'Microsoft to launch cloud video game service, Project xCloud, in September',
     status: 1,
-    description: 'Two days ago, I published a bitter sweet article on the state of web browsers.',
-    content: '<p>Two days ago, I published a bitter sweet article on the state of web browsers, triggered by the news that Microsoft would abandon their EdgeHTML engine, replacing it with Chromium. Which was the final nail in the coffin, effectively establishing Chromium as the web’s engine, combined with Safari’s webkit. The only resistance to this monopoly, Mozilla, finds itself without any significant allies or traction to counter this development.</p><p>The article got some readership and a fair amount of feedback. The general consensus seems to be that the article is truthful but depressing.</p><p>Critical notes suggest that some statements are true-ish but too broad, lacking finer details and nuance. I agree. Some statements could be more polished, but it would make the article twice as long, and not all of those details matter for the larger conclusions I was going for. To illustrate, the article got tens of thousands of views, only 25% bothered to actually read it. Which surely has to do with length, and I suppose some were so disgusted halfway-in, they gave up, saving both time and the chance of a clinical depression.</p><p></p><p>Only a few critiqued the delivery style of brutal honesty, most seemed to appreciate it. And some don’t, it comes with the territory. All I can say is that I won’t tone it down, I was actually in a mild mood that day. I don’t apply brutal honesty for shock value or attention, I genuinely believe that in a world ruled by tech, we need no nonsense critique, not sugar coated suggestions. Plus, I’m dutch, this is our default tone of voice.</p><p>Back on point, why a second article? I want to address the depressing part of the original article. If you were brave enough to read it to the end, you’d notice the lack of a happy ending. You could be under the impression that the web is a lost cause, the open web in great danger, and that we’ve returned to medieval IE times. It would take the greatest of optimists to wade through that article without it ruining your day, if you care about the web.</p><p></p><p>I cannot change the fact that the road to Chromium/Webkit dominance was messy or even abusive. It is a questionable history that will not be undone. We’re going to leave this one to the lawyers, but sure enough, those browsers aren’t going to be uninstalled. It’s a done deal.</p><p>In this article, we’re going to accept the new state, where Chromium dominates the web, and look ahead. To see what Chromium dominance means for users, developers and the open web. The spoiler is of course that there’s plenty of reasons to be happy, optimistic, and even excited about this new state, even if the new state came into existence in unfair ways.</p><p></p><p><a href="https://ferdychristant.com/the-state-of-web-browsers-88224d55b4e6" target="_blank">[Link]</a></p>'
+    content: 'N/A',
   },
+
   {
-    title: 'web 浏览器现状 2019版',
-    slug: 'the-state-of-web-browsers-2019-edition-cn',
+    title: 'I fell in love with a tiny, 2 TB, ultra quiet SSD hard drive',
     status: 1,
-    description: '两天前，有感于微软放弃 Edgehtml 引擎，使用 Chromiun 取而代之的事件',
-    content: '<p>两天前，😊 有感于微软放弃 Edgehtml 引擎，使用 Chromiun 取而代之的事件，我发表了一篇关于浏览器兴衰的文章。微软的此番作为被视为将 Chromium 与 Safari 的 webkit 结合建立搜索引擎的最后一步。而此时，唯一能对微软的垄断行为产生威胁的对手 —— Mozilla，发现自己已经没有盟友和动力来应对微软的这一举措了。</p><p></p><p>这篇文章获得了大量读者的反馈，大家普遍肯定了文章的真实性，但也对文章揭露的事实感到沮丧。</p><p></p><p>一些批判性的评论则认为文章的一些观点是真实可信的，但过于宽泛，缺乏细节。我肯定有些观点可以更加精辟，但这会使文章的篇幅增加一倍，并且增加的内容对我所要阐述的核心观点没有太大用处。比如说，该篇文章获得了数万读者的浏览，实际上仅仅有 25% 左右的读者真正通读了，可能是因为文章的长度，有些读者感到厌烦，在阅读中途就放弃了，既节省了时间又免得内心沮丧。</p><p></p><p>只有少数人批评我近似残酷的诚实，更多读者则偏向欣赏我的做法。这等同于领土问题。我所能说的是，尽管那天我的情绪很平和，但我并不会降低语气。我也不会用我的诚实获取价值和关注，我坚信在一个由科技主导的世界里不需要毫无意义的批评，更不需要高谈阔论的建议。另外，我是一个荷兰人，我们惯有的语调就是如此。</p><p></p><p>回到主题上，为什么要发布第二篇文章？我想要谈谈原文中令人沮丧的那部分内容。如果你有足够的时间读到最后，你会在末尾发现这将是一个缺少快乐的结局。你可能会认为 web 是一个失败的东西，开放的 web 处于极大的危险中，我们已经回到了中世纪的 IE 时代。如果你关心 web 的话，即使是最乐观的人也会在不破坏自己一天的情况下读完这篇文章。</p><p></p><p>我不能改变的事实是： Chromium/Webkit 的统治之路是混乱的，甚至是滥用的。这是一段不可抹去的、值得怀疑的历史。我们将把这个留给律师，但足够肯定的是，这些浏览器仍不会被卸载。咱们走着瞧。</p><p></p><p>在本文中，我们将接受 Chrome 主导 web 的新态势，并展望未来。看看 Chromium 的优势对用户、开发者和开放 web 意味着什么。剧透一下，我们将有很多理由对这个态势感到高兴、乐观，甚至兴奋，即使这个新态势是以一种不公平的方式出现的。</p><p></p><p><a href="https://github.com/xitu/gold-miner/blob/master/TODO1/the-state-of-web-browsers-2019-edition.md" target="_blank">[全文链接]</a></p>',
+    content: `
+<p class="gnt_ar_b_p">Meanwhile, I dealt with my storage problem by consolidating media and moving them from drives to drives. It's under control now. I also put as many of the files as possible&nbsp; onto online backup.</p>
+<p class="gnt_ar_b_p">One concern is how long this new external SSD + Jeff relationship will last. Hard drives don't live forever and eventually go bad, and SSD drives also suffer the same fate. A blog post by online backup service Backblaze says a good SSD drive should last <a href="https://www.backblaze.com/blog/how-reliable-are-ssds/" target="_blank" rel="noopener" data-t-l="|inline|intext|n/a" class="gnt_ar_b_a">three to five years.</a></p>
+<p class="gnt_ar_b_p">So it will be a short, but hopefully fruitful union. But since I backup everything twice, if not more, I look forward to reporting back to you in 2024 with tales of my new 10 TB, and ultra quiet SSD drive.</p>`,
   },
+
   {
-    title: 'The 4 types of ‘Why’: What is the driving force behind your product?',
-    slug: 'the-4-types-of-why-what-is-the-driving-force-behind-your-product',
+    title: 'グーグル、新しい「エモい」絵文字を今秋リリース――Android 11で利用可能へ',
     status: 1,
-    description: '',
-    content: '<p style="text-align:start;" size="3" _root="[object Object]" __ownerID="undefined" __hash="undefined" __altered="false">I recently wrote about a framework I created called <a href="https://medium.com/@kit_ulrich/a-surprisingly-simple-technique-for-a-rockstar-product-vision-the-ladder-of-needs-ae624d81ca6b" target="_blank" class="bb cn ld le lf lg">the Ladder of Needs</a>, a simple tool for product people to create a compelling vision. It combines the best of Simon Sinek’s ideas from <a href="https://www.amazon.com/Start-Why-Leaders-Inspire-Everyone/dp/1591846447" target="_blank" class="bb cn ld le lf lg">Start with Why</a> and Clay Christensen’s classic <a href="https://hbr.org/2016/09/know-your-customers-jobs-to-be-done" target="_blank" class="bb cn ld le lf lg">framework of ‘jobs to be done’</a>.</p><p><br/></p><div class="media-wrap image-wrap"><img alt="" width="680px" height="549.484px" src="https://miro.medium.com/max/1584/1*4RcIun2jW3x010o9MrYIVw.png" class="mt mu fm n o fl x fj" /></div><p></p><p style="text-align:start;text-indent:2em;" id="9834" class="kp kq fo bs kr b ks kt ku kv kw kx ky kz la lb lc" data-selectable-paragraph=""></p><p></p><p>So, how do you determine the ‘Why’ behind your product?</p><p></p><blockquote>“People often ask what will be different in the world in 10 years, the more important question is what will be the same” — Jeff Bezos</blockquote><p style="text-align:start;text-indent:2em;" id="295a" class="kp kq fo bs kr b ks kt ku kv kw kx ky kz la lb lc" data-selectable-paragraph=""></p><p>Start by considering this gem from Jeff Bezos:</p><p></p><p>So true, because the fundamentals of what people want and need are exactly that…fundamental truths. In my time as a product leader, I have found 4 models that apply to almost all consumer experiences and products. These are not mutually exclusive — they are ideas that overlap in many ways, but one will likely call to you more than the others.</p><p><br/></p><div class="media-wrap image-wrap"><img width="680px" height="81.1406px" src="https://miro.medium.com/max/1542/0*1mrb_-l-2fb9vd5i" class="mt mu fm n o fl x fj" alt="" /></div><p>What is your customer’s scarcest resource? It tends to be either money, time, energy.</p><p></p><p>You may have seen this meme on Twitter or Instagram before (I’d love to know whom to credit with it’s creation). It’s a great framework for products.</p><p><br/></p><div class="media-wrap image-wrap"><img width="680px" height="338.625px" src="https://miro.medium.com/max/1486/0*3CW4a_5cLbHd2Jc3" class="mt mu fm n o fl x fj" alt="" /></div><p>This is why Bezos’ answer to his own question, ‘what will be the same in the world in 10 years’, was that Amazon customers would always want lower prices (money) and faster shipping (time). Amazon’s strategy was built by focusing on these core customer needs.This is also why Uber isn’t in the business of selling rides, it is in the business of selling time.</p><p></p><p><a href="https://medium.com/@kit_ulrich/the-4-types-of-why-what-is-the-driving-force-behind-your-product-1b06fb4ef7bc" target="_blank">[Full Link]</a></p>',
+    content: '<div class="contents-section contents-section-layer-1" id="contents-section-1"><div class="image-wrap frame-border-none"><div class="inner"><div class="row"><div class="column" style="width:480px;"><div class="img-wrap-h" style="width:480px;height:200px;"><div class="img-wrap-w"><a href="/img/ktw/docs/1266/517/html/cont01.jpg.html" class="resource" rel="nofollow"><img src="/img/ktw/docs/1266/517/cont01_l.jpg" class="resource" style="width:480px;height:200px;" id="cont01_l.jpg"></a></div></div></div></div></div></div><p> グーグルは、嬉し泣きなどの表現や多様性を取り入れた新しい絵文字を、今年秋ごろにリリースする。今秋リリースのAndroid 11でも利用できる予定。 </p><p> グーグルは、昨年に絵文字の標準とガイドラインを定めるUcode コンソーシアムに新しい絵文字の提案を行っており、提案した絵文字が公開される。 </p><p> 新しく公開される絵文字には、多様な表現のほか、ベールの男性やタキシードの女性、赤ちゃんにミルクを飲ませる男性や女性など、多様性を受け入れたものも含まれる。 </p><div class="image-wrap frame-border-none"><div class="inner"><div class="row"><div class="column" style="width:512px;"><div class="img-wrap-h" style="width:512px;height:186px;"><div class="img-wrap-w"><img src="/img/watch/parts/icon/loading.png" class="resource" style="width:512px;height:186px;" id="cont02.gif" ajax="/img/ktw/docs/1266/517/cont02.gif"></div></div></div></div></div></div><p> このほか、メキシコなどの子供のお祭りに使われる人形「ピニャータ」やホッキョクグマなどの新しい動物たちも登場する。食事に関するものでは、タピオカミルクティーやティーポットなどが追加される。 </p><div class="image-wrap frame-border-none"><div class="inner"><div class="row"><div class="column" style="width:480px;"><div class="img-wrap-h" style="width:480px;height:174px;"><div class="img-wrap-w"><a href="/img/ktw/docs/1266/517/html/cont03.gif.html" class="resource" rel="nofollow"><img src="/img/watch/parts/icon/loading.png" class="resource" style="width:480px;height:174px;" id="cont03_l.gif" ajax="/img/ktw/docs/1266/517/cont03_l.gif"></a></div></div></div></div></div></div><p> また、既存の絵文字見直され、表現の修正やダークモード向けのデザインも公開する。動物の絵文字は、モントレーベイ水族館やビクトリア昆虫館の専門家と協力し、より詳細に表現している。 </p><div class="image-wrap"><div class="inner"><div class="row"><div class="column" style="width:512px;"><div class="img-wrap-h" style="width:512px;height:186px;"><div class="img-wrap-w"><img src="/img/watch/parts/icon/loading.png" class="resource" style="width:512px;height:186px;" id="cont04.gif" ajax="/img/ktw/docs/1266/517/cont04.gif"></div></div></div></div></div></div><p> このほか、温かみのあるキャラクターなどが追加される。 </p><div class="image-wrap frame-border-none"><div class="inner"><div class="row"><div class="column" style="width:400px;"><div class="img-wrap-h" style="width:400px;height:300px;"><div class="img-wrap-w"><a href="/img/ktw/docs/1266/517/html/cont05.gif.html" class="resource" rel="nofollow"><img src="/img/watch/parts/icon/loading.png" class="resource" style="width:400px;height:300px;" id="cont05_l.gif" ajax="/img/ktw/docs/1266/517/cont05_l.gif"></a></div></div></div></div></div></div></div>',
   },
-  { title: 'EMPTY-DEMO-01', slug: 'empty-demo-01', status: 1, description: 'EMPTY-DEMO-01', content: '<p>EMPTY-CONTENT-01</p>' },
-  { title: 'EMPTY-DEMO-02', slug: 'empty-demo-02', status: 1, description: 'EMPTY-DEMO-02', content: '<p>EMPTY-CONTENT-02</p>' },
-  { title: 'EMPTY-DEMO-03', slug: 'empty-demo-03', status: 1, description: 'EMPTY-DEMO-03', content: '<p>EMPTY-CONTENT-03</p>' },
-  { title: 'EMPTY-DEMO-04', slug: 'empty-demo-04', status: 1, description: 'EMPTY-DEMO-04', content: '<p>EMPTY-CONTENT-04</p>' },
-  { title: 'EMPTY-DEMO-05', slug: 'empty-demo-05', status: 1, description: 'EMPTY-DEMO-05', content: '<p>EMPTY-CONTENT-05</p>' },
-  { title: 'EMPTY-DEMO-06', slug: 'empty-demo-06', status: 1, description: 'EMPTY-DEMO-06', content: '<p>EMPTY-CONTENT-06</p>' },
-  { title: 'EMPTY-DEMO-07', slug: 'empty-demo-07', status: 1, description: 'EMPTY-DEMO-07', content: '<p>EMPTY-CONTENT-07</p>' },
-  { title: 'EMPTY-DEMO-08', slug: 'empty-demo-08', status: 1, description: 'EMPTY-DEMO-08', content: '<p>EMPTY-CONTENT-08</p>' },
-  { title: 'EMPTY-DEMO-09', slug: 'empty-demo-09', status: 1, description: 'EMPTY-DEMO-09', content: '<p>EMPTY-CONTENT-09</p>' },
-  { title: 'EMPTY-DEMO-10', slug: 'empty-demo-10', status: 1, description: 'EMPTY-DEMO-10', content: '<p>EMPTY-CONTENT-10</p>' },
-  { title: 'EMPTY-DEMO-11', slug: 'empty-demo-11', status: 1, description: 'EMPTY-DEMO-11', content: '<p>EMPTY-CONTENT-11</p>' },
-  { title: 'EMPTY-DEMO-12', slug: 'empty-demo-12', status: 1, description: 'EMPTY-DEMO-12', content: '<p>EMPTY-CONTENT-12</p>' },
-  { title: 'EMPTY-DEMO-13', slug: 'empty-demo-13', status: 1, description: 'EMPTY-DEMO-13', content: '<p>EMPTY-CONTENT-13</p>' },
-  { title: 'EMPTY-DEMO-14', slug: 'empty-demo-14', status: 1, description: 'EMPTY-DEMO-14', content: '<p>EMPTY-CONTENT-14</p>' },
-  { title: 'EMPTY-DEMO-15', slug: 'empty-demo-15', status: 1, description: 'EMPTY-DEMO-15', content: '<p>EMPTY-CONTENT-15</p>' },
-  { title: 'EMPTY-DEMO-16', slug: 'empty-demo-16', status: 1, description: 'EMPTY-DEMO-16', content: '<p>EMPTY-CONTENT-16</p>' },
-  { title: 'EMPTY-DEMO-17', slug: 'empty-demo-17', status: 1, description: 'EMPTY-DEMO-17', content: '<p>EMPTY-CONTENT-17</p>' },
-  { title: 'EMPTY-DEMO-18', slug: 'empty-demo-18', status: 1, description: 'EMPTY-DEMO-18', content: '<p>EMPTY-CONTENT-18</p>' },
-  { title: 'EMPTY-DEMO-19', slug: 'empty-demo-19', status: 1, description: 'EMPTY-DEMO-19', content: '<p>EMPTY-CONTENT-19</p>' },
-  { title: 'EMPTY-DEMO-20', slug: 'empty-demo-20', status: 1, description: 'EMPTY-DEMO-20', content: '<p>EMPTY-CONTENT-20</p>' },
-  { title: 'EMPTY-DEMO-21', slug: 'empty-demo-21', status: 1, description: 'EMPTY-DEMO-21', content: '<p>EMPTY-CONTENT-21</p>' },
-  { title: 'EMPTY-DEMO-22', slug: 'empty-demo-22', status: 1, description: 'EMPTY-DEMO-22', content: '<p>EMPTY-CONTENT-22</p>' },
-  { title: 'EMPTY-DEMO-23', slug: 'empty-demo-23', status: 1, description: 'EMPTY-DEMO-23', content: '<p>EMPTY-CONTENT-23</p>' },
-  { title: 'EMPTY-DEMO-24', slug: 'empty-demo-24', status: 1, description: 'EMPTY-DEMO-24', content: '<p>EMPTY-CONTENT-24</p>' },
-  { title: 'EMPTY-DEMO-25', slug: 'empty-demo-25', status: 1, description: 'EMPTY-DEMO-25', content: '<p>EMPTY-CONTENT-25</p>' },
-  { title: 'EMPTY-DEMO-26', slug: 'empty-demo-26', status: 1, description: 'EMPTY-DEMO-26', content: '<p>EMPTY-CONTENT-26</p>' },
-  { title: 'EMPTY-DEMO-27', slug: 'empty-demo-27', status: 1, description: 'EMPTY-DEMO-27', content: '<p>EMPTY-CONTENT-27</p>' },
-  { title: 'EMPTY-DEMO-28', slug: 'empty-demo-28', status: 1, description: 'EMPTY-DEMO-28', content: '<p>EMPTY-CONTENT-28</p>' },
-  { title: 'EMPTY-DEMO-29', slug: 'empty-demo-29', status: 1, description: 'EMPTY-DEMO-29', content: '<p>EMPTY-CONTENT-29</p>' },
+
   {
-    title: '亚马逊推出 3 代 Kindle Oasis，加入色温调节功能',
-    slug: 'kindle-oasis-s',
+    title: 'iPhoneを「REC MOUNT+」でマウントしまくり!!!',
     status: 1,
-    description: '',
-    content: '<p> </p><div class="media-wrap image-wrap"><img alt="" class="media-wrap image-wrap" src="https://files.techcrunch.cn/2019/06/kindle-oasis-front-light.jpg?w=738"/></div><p>对电子书阅读器爱好者来说，<a href="https://techcrunch.com/2017/10/31/amazons-new-kindle-oasis-is-the-best-e-reader-a-lot-of-money-can-buy/" target="_blank">Kindle Oasis</a> 可以说是最好的产品了。在这个产品类别中，亚马逊是挺立到最后的巨头玩家（除非你认为巴诺书店还算 “挺立” 着），而 Oasis 是他们制造的最好 Kindle，货真价实。在 2017 年年底时，我曾对当时最新款的 Oasis 进行过评测，我十分享受使用它的美好时光。<br/> 现在，亚马逊对 Oasis 进行了迭代，让这份美好继续延续。但首先需要说清楚的是，跟最近标准版 Kindle 获得的升级一样，Oasis 这次的升级幅度也很小。从外观上看，新款 Oasis 保留了前代产品的所有优点，包括 7 英寸、300ppi 的显示屏，以及翻页实体按钮。<br/> 这次的重大变化在于，新款 Oasis 加入了调节显示屏色温的功能，这能够让用户在白天阅读时眼睛更加舒适，以及在夜里阅读后更好地入眠。此外，新款设备还内置了一个选项，可以全天自动调节显示屏色温。<br/> </p><div class="media-wrap image-wrap"><a style="display:inline-block" href="https://files.techcrunch.cn/2019/06/kindle-oasis-graphite-front.jpg" target="_blank"><img class="media-wrap image-wrap" alt="" src="https://files.techcrunch.cn/2019/06/kindle-oasis-graphite-front.jpg?w=1200&amp;h=1200"/></a></div><p><br/> 老实说，这就是新款 Oasis 的主要新卖点了。此外，它还采用了新一代的电子墨水屏技术，虽然分辨率与前代产品相同，但却提供了更高的刷新率，从而让翻页速度加快（稍后我会就此更新报道），这顺应的是科技迈向更快速度的潮流。在这里，我就不深入讲这项技术的显著优势了，这些年媒体已经做过大量的报道。<br/> 来自前代产品的功能还包括 IPX8 级防水，这意味着 Oasis 可以放在最深 2 米的水下长达 1 小时。内置的蓝牙功能可以让用户通过 Audible 收听有声读物，机身背部则采用了金属材质。<br/> 与 2017 年款一样，新款 Oasis 的 8GB 版本起价为 250 美元，32GB 版本起价为 280 美元（如果你想要无广告版本，还得再多破费一些）。亚马逊向购买新款 Oasis 的用户赠送了 6 个月的 Kindle Unlimited 服务。从周三开始，用户可以进行预订，这款产品将于 7 月 24 日开始发货，届时还有一系列不同的保护套可供选购。<br/> 翻译：王灿均（<a href="https://www.douban.com/people/remexwang/" target="_blank">@何无鱼</a>）<br/> <a href="https://techcrunch.com/2019/06/19/amazon-adds-color-adjustable-lighting-to-its-best-kindle/" target="_blank">Amazon adds color adjustable lighting to its best Kindle</a><br/> </p>',
+    content: `まあ、このテの製品としてはわりとよくあるシステムではある。が、REC MOUNT+の場合、けっこう定番的な製品で入手性が良く、デバイス用ケースやマウントのラインナップも幅広い。自転車向け、モーターサイクル向け、クルマ向けにランニング向け、さらには家庭内で使えるマウントなども用意されている。
+
+マウントシステムとして統一しやすく、各シーンでの流用が利く。例えばREC MOUNT+ケースに入れたiPhoneを、自転車からモーターサイクルへ、さらにクルマへと手軽に装着し直すことができるし、必要とあらばベルトに装着することも可能。
+
+`,
   },
-  { title: 'EMPTY-DEMO-30', slug: 'empty-demo-30', status: 1, description: 'EMPTY-DEMO-30', content: '<p>EMPTY-CONTENT-30</p>' },
-  { title: 'EMPTY-DEMO-31', slug: 'empty-demo-31', status: 1, description: 'EMPTY-DEMO-31', content: '<p>EMPTY-CONTENT-31</p>' },
-  { title: 'EMPTY-DEMO-32', slug: 'empty-demo-32', status: 1, description: 'EMPTY-DEMO-32', content: '<p>EMPTY-CONTENT-32</p>' },
-  { title: 'EMPTY-DEMO-33', slug: 'empty-demo-33', status: 1, description: 'EMPTY-DEMO-33', content: '<p>EMPTY-CONTENT-33</p>' },
-  { title: 'EMPTY-DEMO-34', slug: 'empty-demo-34', status: 1, description: 'EMPTY-DEMO-34', content: '<p>EMPTY-CONTENT-34</p>' },
-  { title: 'EMPTY-DEMO-35', slug: 'empty-demo-35', status: 1, description: 'EMPTY-DEMO-35', content: '<p>EMPTY-CONTENT-35</p>' },
-  { title: 'EMPTY-DEMO-36', slug: 'empty-demo-36', status: 1, description: 'EMPTY-DEMO-36', content: '<p>EMPTY-CONTENT-36</p>' },
-  { title: 'EMPTY-DEMO-37', slug: 'empty-demo-37', status: 1, description: 'EMPTY-DEMO-37', content: '<p>EMPTY-CONTENT-37</p>' },
-  { title: 'EMPTY-DEMO-38', slug: 'empty-demo-38', status: 1, description: 'EMPTY-DEMO-38', content: '<p>EMPTY-CONTENT-38</p>' },
-  { title: 'EMPTY-DEMO-39', slug: 'empty-demo-39', status: 1, description: 'EMPTY-DEMO-39', content: '<p>EMPTY-CONTENT-39</p>' },
-  { title: '-- LINE-01 --', slug: 'empty-line-01', status: 1, description: 'EMPTY-LINE-01', content: '<p>EMPTY-CONTENT-L1</p>' },
-  { title: 'EMPTY-DEMO-40', slug: 'empty-demo-40', status: 1, description: 'EMPTY-DEMO-40', content: '<p>EMPTY-CONTENT-40</p>' },
-  { title: 'EMPTY-DEMO-41', slug: 'empty-demo-41', status: 1, description: 'EMPTY-DEMO-41', content: '<p>EMPTY-CONTENT-41</p>' },
-  { title: 'EMPTY-DEMO-42', slug: 'empty-demo-42', status: 1, description: 'EMPTY-DEMO-42', content: '<p>EMPTY-CONTENT-42</p>' },
-  { title: 'EMPTY-DEMO-43', slug: 'empty-demo-43', status: 1, description: 'EMPTY-DEMO-43', content: '<p>EMPTY-CONTENT-43</p>' },
-  { title: 'EMPTY-DEMO-44', slug: 'empty-demo-44', status: 1, description: 'EMPTY-DEMO-44', content: '<p>EMPTY-CONTENT-44</p>' },
-  { title: 'EMPTY-DEMO-45', slug: 'empty-demo-45', status: 1, description: 'EMPTY-DEMO-45', content: '<p>EMPTY-CONTENT-45</p>' },
-  { title: 'EMPTY-DEMO-46', slug: 'empty-demo-46', status: 1, description: 'EMPTY-DEMO-46', content: '<p>EMPTY-CONTENT-46</p>' },
-  { title: 'EMPTY-DEMO-47', slug: 'empty-demo-47', status: 1, description: 'EMPTY-DEMO-47', content: '<p>EMPTY-CONTENT-47</p>' },
-  { title: 'EMPTY-DEMO-48', slug: 'empty-demo-48', status: 1, description: 'EMPTY-DEMO-48', content: '<p>EMPTY-CONTENT-48</p>' },
-  { title: 'EMPTY-DEMO-49', slug: 'empty-demo-49', status: 1, description: 'EMPTY-DEMO-49', content: '<p>EMPTY-CONTENT-49</p>' },
-  { title: '-- LINE-02 --', slug: 'empty-line-02', status: 1, description: 'EMPTY-LINE-02', content: '<p>EMPTY-CONTENT-L2</p>' },
+
   {
-    title: '关于谷歌 I/O 发布会，你想知道的一切都在这里',
-    slug: 'heres-everything-google-announced-today-at-the-i-o-2019-keynote',
+    title: 'スマートホームサービス対応のガス警報器を発売、エンコアードジャパンと新コスモス電機',
     status: 1,
-    description: '',
-    content: '<p>在今天下午举行的谷歌年度 I/O 开发者大会上，该公司在长达两小时的主题演讲中发布了一系列新产品——从新手机到下一代语音助手 Assistant——这些产品都是谷歌在过去一年开发的。</p>',
+    content: `ソフトバンク子会社のエンコアードジャパンと新コスモス電機は、スマートホームサービスに対応したガス警報器「快適ウォッチ SMART（スマート） XW-735」を開発した。都市ガス向けのガス警報器となり、東邦ガスでは「みまもり警報器」として8月21日から、西部ガスでは「快適ウォッチ SMART」として9月1日から取り扱う。
+
+これまでのガス警報器は、ガス漏れや一酸化炭素濃度の検出のための装置であった。新コスモス電機では、これに加えて熱中症や室内の乾燥を検知し、ユーザーに知らせる「快適ウォッチ」を発売した。今回、「快適ウォッチ」に、エンコアードジャパンのスマートホーム関連サービスを組み込み、スマートフォンアプリと連携したガス警報器を開発したという。
+
+今回のガス警報器には、ガス漏れ検知などの基本機能とリモートアラーム機能、簡易セキュリティ機能、熱中症予防機能、家族みまもり機能、帰宅確認機能などに対応する。
+
+ガス漏れ検知、一酸化炭素検知、熱中症予防、乾燥予防機能は、警報器のセンサーで検知し、警報器本体からの通知とともに、設定したスマートフォンアプリに通知が届く。外出中や離れて暮らす家族の異常をすぐに確認できる。
+
+また、付属するコネクトセンサーを利用して、スマートホームサービスを利用できる。
+
+玄関ドアにセンサーを取り付ければ簡易セキュリティ機能として、玄関ドアが開いたときにアプリから通知される。アプリから操作することで、警報音や威嚇するメッセージを再生することもできるという。
+
+離れて暮らす高齢者の部屋やトイレのドアにセンサーを取り付けると生活みまもり機能が利用できる。設定した時間以上ドアの開閉を検知できないとアプリから通知される。病気などで動けなくなったなどをいち早く確認できる。`,
   },
+
+  {
+    title: 'TypeORM is an ORM that can run in NodeJS, Browser, Cordova, PhoneGap, Ionic, React Native, NativeScript, Expo, and Electron platforms and can be used with TypeScript and JavaScript (ES5, ES6, ES7, ES8).',
+    status: 1,
+    content: `TypeORM is an ORM that can run in NodeJS, Browser, Cordova, PhoneGap, Ionic, React Native, NativeScript, Expo, and Electron platforms and can be used with TypeScript and JavaScript (ES5, ES6, ES7, ES8). Its goal is to always support the latest JavaScript features and provide additional features that help you to develop any kind of application that uses databases - from small applications with a few tables to large scale enterprise applications with multiple databases.
+
+TypeORM supports both Active Record and Data Mapper patterns, unlike all other JavaScript ORMs currently in existence, which means you can write high quality, loosely coupled, scalable, maintainable applications the most productive way.
+
+TypeORM is highly influenced by other ORMs, such as Hibernate, Doctrine and Entity Framework.`,
+  },
+
+  {
+    title: '《集合啦！动物森友会》夏日新CM公开 夏日同游其乐融融！',
+    status: 1,
+    content: '今日（7月20日），任天堂官方公开了《集合啦！动物森友会》两段夏日新CM，该作已经登陆任天堂Switch平台，夏天的免费更新资料第2弹将于8月上旬发布，一起来欣赏一下此次官方公开的新CM。',
+  },
+
+  {
+    title: '报道称三星正努力提升5nm EUV产能 高通骁龙875G芯片组或受影响',
+    status: 1,
+    content: 'DigiTimes 近日报道称，三星正在努力提升自家的 5nm EUV 产能。过去几年，这家韩国科技巨头一直在努力追赶台积电。为了抢到更多客户，三星已规划从 5nm 进阶至 3nm 工艺。遗憾的是，若该公司无法顺利提升 5nm EUV 产能，那高通未来旗舰芯片组（骁龙 875G SoC / 骁龙 X60 5G 基带）的发布也可能受到影响。',
+  },
+
+
 ];
 
 // prettier-ignore
@@ -472,8 +504,37 @@ export const attachmentSeed: any[] = [
 
 // prettier-ignore
 export const settingSeed: SettingCreateOneReq[] = [
-  { name: 'Site Name', slug: 'site_name', type: 'input', sort: 1, value: __DEV__ ? 'Leaa_DEV' : 'Leaa', description: '站点名，最大 220 字' },
-  { name: 'Site Description', slug: 'site_description', type: 'textarea', sort: 2, value: 'Leaa - project 1h 4 1d',  description: '站点描述， 最大 220 字' },
-  { name: 'Site Keywords', slug: 'site_keywords', type: 'input', sort: 3, value: 'Leaa, mono-repo, C\'est la vie. project 1h 4 1d', description: '站点关键字，使用英文 , 分隔' },
-  { name: 'Currency Symbol', slug: 'currency_symbol', type: 'radio', sort: 4, value: '$', description: 'Currency Symbol', options: '$\n¥' },
+  {
+    name: 'Site Name',
+    slug: 'site_name',
+    type: 'input',
+    sort: 1,
+    value: __DEV__ ? 'Leaa_DEV' : 'Leaa',
+    description: '站点名，最大 220 字',
+  },
+  {
+    name: 'Site Description',
+    slug: 'site_description',
+    type: 'textarea',
+    sort: 2,
+    value: 'Leaa - project 1h 4 1d',
+    description: '站点描述， 最大 220 字',
+  },
+  {
+    name: 'Site Keywords',
+    slug: 'site_keywords',
+    type: 'input',
+    sort: 3,
+    value: 'Leaa, mono-repo, C\'est la vie. project 1h 4 1d',
+    description: '站点关键字，使用英文 , 分隔',
+  },
+  {
+    name: 'Currency Symbol',
+    slug: 'currency_symbol',
+    type: 'radio',
+    sort: 4,
+    value: '$',
+    description: 'Currency Symbol',
+    options: '$\n¥',
+  },
 ];

@@ -3,8 +3,8 @@ import { Index, Entity, Column } from 'typeorm';
 import { Base } from '@leaa/api/src/entrys';
 
 @Entity('tags')
-@Index('tags_name_unique', ['name'], { unique: true })
 export class Tag extends Base {
+  @Index('name')
   @Column({ type: 'varchar', length: 64, unique: true, default: null })
   name!: string;
 

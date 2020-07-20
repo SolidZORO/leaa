@@ -10,11 +10,11 @@ export class Action {
   @Column({ type: 'varchar', length: 128, nullable: true })
   ip!: string;
 
-  @Index()
+  @Index('module')
   @Column({ type: 'enum', enum: IModuleNameEnum })
   module!: string;
 
-  @Index()
+  @Index('action')
   @Column({ type: 'varchar', length: 64 })
   action!: string;
 

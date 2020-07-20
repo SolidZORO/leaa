@@ -49,7 +49,14 @@ export class UserService extends TypeOrmCrudService<User> {
     if (hasSuperuser) delete nextDto.is_superuser;
 
     const result = await super.createOne(req, nextDto);
-    if (nextDto.avatar_url) await this.updateAvatarModuleIdByPath(nextDto.avatar_url, result.id);
+    if (nextDto.avatar_url) {
+      // yes, it's string 'null', NOT null
+      if (nextDto.avatar_url === 'null') {
+        nextDto.avatar_url = '';
+      } else {
+        await this.updateAvatarModuleIdByPath(nextDto.avatar_url, result.id);
+      }
+    }
 
     return result;
   }

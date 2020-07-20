@@ -3,12 +3,12 @@ import { Index, Entity, Column } from 'typeorm';
 import { Base, Attachment } from '@leaa/api/src/entrys';
 
 @Entity('axs')
-@Index('axs_title_unique', ['title'], { unique: true })
-@Index('axs_slug_unique', ['slug'], { unique: true })
 export class Ax extends Base {
+  @Index('title')
   @Column({ type: 'varchar', length: 32, unique: true })
   title!: string;
 
+  @Index('slug')
   @Column({ type: 'varchar', length: 32, unique: true, default: null })
   slug?: string;
 

@@ -3,9 +3,9 @@ import { Index, Entity, Column } from 'typeorm';
 import { Base } from '@leaa/api/src/entrys';
 
 @Entity('divisions')
-@Index('divisions_code_unique', ['code'], { unique: true })
 export class Division extends Base {
-  @Column({ type: 'int' })
+  @Index('code')
+  @Column({ type: 'int', unique: true })
   code!: number;
 
   @Column({ type: 'int', default: null })

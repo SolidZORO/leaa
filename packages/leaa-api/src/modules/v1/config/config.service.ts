@@ -138,6 +138,14 @@ export class ConfigService {
     return this.envConfig.ATTACHMENT_OSS_ALIYUN_CALLBACK_URL || '';
   }
 
+  get DEFAULT_IMAGE_FILENAME(): string {
+    return this.envConfig.DEFAULT_IMAGE_FILENAME || 'default-image.svg';
+  }
+
+  get DEFAULT_AVATAR_FILENAME(): string {
+    return this.envConfig.DEFAULT_AVATAR_FILENAME || 'default-avatar.svg';
+  }
+
   get GRAVATAR_TYPE(): string {
     return this.envConfig.GRAVATAR_TYPE;
   }
@@ -223,10 +231,13 @@ export class ConfigService {
       ATTACHMENT_SAVE_IN_LOCAL: envalid.str({ choices: ['true', 'false'], default: 'false' }),
       ATTACHMENT_SAVE_IN_OSS: envalid.str({ choices: ['true', 'false'], default: 'false' }),
       //
+      DEFAULT_IMAGE_FILENAME: envalid.str({ default: 'default-image.svg' }),
+      DEFAULT_AVATAR_FILENAME: envalid.str({ default: 'default-avatar.svg' }),
+      //
       //
       GRAVATAR_TYPE: envalid.str({
-        choices: ['404', 'mp', 'identicon', 'monsterid', 'wavatar', 'retro', 'robohash', 'blank'],
-        default: 'monsterid',
+        choices: ['off', '404', 'mp', 'identicon', 'monsterid', 'wavatar', 'retro', 'robohash', 'blank'],
+        default: 'off',
       }),
       AUTO_CUT_TAGS: envalid.str({ choices: ['true', 'false'], default: 'false' }),
     };

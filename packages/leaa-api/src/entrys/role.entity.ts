@@ -3,12 +3,12 @@ import { Index, Entity, Column, JoinTable, ManyToMany } from 'typeorm';
 import { Base, User, Permission } from '@leaa/api/src/entrys';
 
 @Entity('roles')
-@Index('roles_name_unique', ['name'], { unique: true })
-@Index('roles_slug_unique', ['slug'], { unique: true })
 export class Role extends Base {
+  @Index('name')
   @Column({ type: 'varchar', length: 32, unique: true })
   name!: string;
 
+  @Index('slug')
   @Column({ type: 'varchar', length: 32, unique: true })
   slug!: string;
 

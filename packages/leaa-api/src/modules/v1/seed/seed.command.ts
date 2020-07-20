@@ -83,8 +83,8 @@ import { LoggerService } from '@leaa/api/src/modules/v1/logger/logger.service';
       await insertAllAboutAuth();
 
       await seedService.insertCategory();
-      // await seedService.insertArticle();
-      // await seedService.insertAttachment();
+      await seedService.insertArticle();
+      await seedService.insertAttachment();
 
       if (process.argv.includes('--debug')) {
         await seedService.insertRandomUsers();

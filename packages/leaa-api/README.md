@@ -18,13 +18,22 @@ cp .env.example .env
 yarn insatll
 
 # fill init database
+# or you can import SQL file `./packages/leaa-api/docs/sqls/leaa-api-seed.sql` use tools.
 yarn seed-dev --nuke
+
 yarn dev
 ```
 
 ### Database
 
 leaa-api uses `mysql` driver, and I recommended to use mysql at `docker`, [dockerrr](https://github.com/SolidZORO/dockerrr) is a docker scaffolding that I used when developing leaa-api.
+
+```
+Demo Account
+
+account: admin@local.com
+password: h8Hx9qvPKoHMLQgj
+```
 
 ### Tips
 

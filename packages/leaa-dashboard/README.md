@@ -8,6 +8,13 @@ leaa-dashboard is an Dashboard of leaa, Compiled by Webpack.
 
 review [leaa-dashboard](https://leaa-dashboard.now.sh)
 
+```
+Demo Account
+
+account: admin@local.com
+password: h8Hx9qvPKoHMLQgj
+```
+
 ### Get Started
 
 Install the latest version via npm or yarn

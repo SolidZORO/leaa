@@ -10,8 +10,8 @@ export enum AuthPlatform {
 }
 
 @Entity('auths')
-@Index('auths_open_id_unique', ['open_id'], { unique: true })
 export class Auth extends Base {
+  @Index('open_id')
   @Column({ type: 'varchar', length: 64, unique: true })
   open_id!: string;
 

@@ -3,11 +3,11 @@ import { Index, Entity, Column, ManyToMany, JoinTable } from 'typeorm';
 import { Base, Category, Tag } from '@leaa/api/src/entrys';
 
 @Entity('articles')
-@Index('articles_slug_unique', ['slug'], { unique: true })
 export class Article extends Base {
   @Column({ type: 'varchar', length: 220 })
   title!: string;
 
+  @Index('slug')
   @Column({ type: 'varchar', length: 220, unique: true, default: null })
   slug?: string;
 

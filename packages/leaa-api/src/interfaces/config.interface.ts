@@ -38,6 +38,9 @@ export interface IDotEnv {
   ATTACHMENT_OSS_ALIYUN_REGION?: string;
   ATTACHMENT_OSS_ALIYUN_CALLBACK_URL?: string;
 
+  DEFAULT_IMAGE_FILENAME: string;
+  DEFAULT_AVATAR_FILENAME: string;
+
   GRAVATAR_TYPE: string;
   AUTO_CUT_TAGS: string;
 

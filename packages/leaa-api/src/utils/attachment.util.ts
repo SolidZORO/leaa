@@ -57,11 +57,13 @@ export const genUrlAt2x = (attachment: Attachment): string | null => {
 // retro: awesome generated, 8-bit arcade-style pixelated faces
 // robohash: a generated robot with different colors, faces, etc
 // blank: a transparent PNG image (border added to HTML below for demonstration purposes)
-export const GRAVATAR_AVATAR_TYPE = envConfig.GRAVATAR_TYPE || 'monsterid';
+export const GRAVATAR_AVATAR_TYPE = envConfig.GRAVATAR_TYPE || 'off';
 export const GRAVATAR_AVATAR_PARAMS = `?s=280&d=${GRAVATAR_AVATAR_TYPE}`;
 
 export const transAvatarUrl = (path?: string | null): string | null => {
-  if (path?.includes('gravatar.com')) return `${path}${GRAVATAR_AVATAR_PARAMS}`;
+  if (GRAVATAR_AVATAR_TYPE && GRAVATAR_AVATAR_TYPE !== 'off') {
+    if (path?.includes('gravatar.com')) return `${path}${GRAVATAR_AVATAR_PARAMS}`;
+  }
 
   if (path?.includes('/attachments/') && !path?.includes('http')) {
     return `${attachmentConfig.URL_PREFIX_BY_AUTO}${path}`;
@@ -71,10 +73,14 @@ export const transAvatarUrl = (path?: string | null): string | null => {
 };
 
 export const genAvatarUrl = (hash?: string): string => {
-  const hashMd5 = crypto
-    .createHash('md5')
-    .update(hash || `hash-${new Date().valueOf()}`)
-    .digest('hex');
+  if (GRAVATAR_AVATAR_TYPE && GRAVATAR_AVATAR_TYPE !== 'off') {
+    const hashMd5 = crypto
+      .createHash('md5')
+      .update(hash || `hash-${new Date().valueOf()}`)
+      .digest('hex');
 
-  return `//secure.gravatar.com/avatar/${hashMd5}`;
+    return `//secure.gravatar.com/avatar/${hashMd5}`;
+  }
+
+  return '/assets/images/default-avatar.svg';
 };
