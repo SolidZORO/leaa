@@ -66,8 +66,10 @@ set_var() {
 }
 
 __cd_deploy() {
-  printf "\n📌 __cd_deploy >>> " && pwd && printf "\n"
+  printf "\n"
+  printf "📌 __pwd       >>> " && pwd
   cd ${__DEPLOY__} || exit
+  printf "📌 __cd_deploy >>> " && pwd && printf "\n"
 }
 
 __init_config_file() {
@@ -124,6 +126,7 @@ platform_docker_local_test() {
   docker-compose down && docker-compose up
 }
 
+# just for edit config and push (debug)
 platform_update_config_and_push() {
   __cd_deploy
 

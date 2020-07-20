@@ -156,7 +156,7 @@ export const TableCard = <T extends any>(props: IProps<T>) => {
       title: t('_lang:avatar'),
       dataIndex: 'avatar_url',
       width: 55,
-      render: (avatar: string) => <UserAvatar url={formatAttaUrl(avatar)} />,
+      render: (avatar: string) => <UserAvatar url={avatar} />,
     }),
     isAdmin: () => ({
       title: <RiVipCrown2Line />,

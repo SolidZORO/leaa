@@ -51,7 +51,7 @@ export const UserMenu = (props: IProps): JSX.Element => {
     <div className={cx(style['usermenu-wrapper'], 'g-usermenu-wrapper')}>
       <Popover trigger="click" placement="topRight" content={menuDom}>
         <Button type="link" className={style['usermenu-button']}>
-          <UserAvatar url={formatAttaUrl(user.avatar_url)} size={40} />
+          <UserAvatar url={user.avatar_url} size={40} />
           <span className={style['usermenu-name']}>{user.name}</span>
         </Button>
       </Popover>

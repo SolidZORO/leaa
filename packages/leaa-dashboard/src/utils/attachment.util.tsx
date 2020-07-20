@@ -6,6 +6,7 @@ import { Translation } from 'react-i18next';
 import { ISaveInOssSignature, ISaveInLocalSignature } from '@leaa/api/src/interfaces';
 import { envConfig } from '@leaa/dashboard/src/configs';
 import { IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
+import defaultImage from '@leaa/dashboard/src/assets/images/default-image.svg';
 
 import { ajax } from './ajax.util';
 import { errorMsg, msg } from './msg.util';
@@ -25,7 +26,9 @@ export const getUploadSignature = async () => {
   return ajax
     .get(`${envConfig.API_URL}/${envConfig.API_VERSION}/attachments/signature`)
     .then((res: IHttpRes<ISignatureResult>) => {
-      if (res.data?.data && !_.isEmpty(res.data.data)) return res.data.data;
+      if (res.data?.data && !_.isEmpty(res.data.data)) {
+        return res.data.data;
+      }
 
       return undefined;
     })
@@ -47,17 +50,28 @@ interface IUploadFile {
   };
 }
 
-export const formatAttaUrl = (url?: string | null) => {
-  if (!url) return 'DEFAULT-IMAGE.jpg';
+export const formatAttaUrl = (url?: string | null, params?: { defaultImage: any }) => {
+  if (!url) {
+    if (params?.defaultImage) {
+      return params.defaultImage;
+    }
+
+    // console.log('xcxxxxxxxxx');
+    return defaultImage;
+  }
 
   // oss      : https://oss.com/attas/abc.jpg
   // local    : /attas/abc.jpg
   // gravatar : //gravatar.com/avatar/85354d887ba83c626ede32c5f299cdd0?s=160&d=monsterid 404 (Not Found)
 
   // if (/^http/.test(url)) return url;
-  if (url.startsWith('http')) return url;
+  if (url.startsWith('http')) {
+    return url;
+  }
 
-  if (url.startsWith('//secure.gravatar') || url.startsWith('//gravatar')) return url;
+  if (url.startsWith('//secure.gravatar') || url.startsWith('//gravatar')) {
+    return url;
+  }
 
   return `${envConfig.API_URL}${url}`;
 };
@@ -86,7 +100,9 @@ interface IUploadFile {
  * 很有可能 API 上游是一层 nginx proxy。 所以，这里要判断如果没有 `http`，就用 .env 定义的 API 路径。
  */
 export const uploadFile = (file: File, { signature, ignoreMsg, attachmentParams, onCallback }: IUploadFile) => {
-  if (!signature?.uploadEndPoint) return errorMsg('missing uploadEndPoint');
+  if (!signature?.uploadEndPoint) {
+    return errorMsg('missing uploadEndPoint');
+  }
 
   // const token = getAuthToken();
   const formData = new FormData();
@@ -129,7 +145,9 @@ export const uploadFile = (file: File, { signature, ignoreMsg, attachmentParams,
   return ajax
     .post(nextUploadEndPoint, formData, {
       onUploadProgress: (e) => {
-        if (onCallback && onCallback.onUploadProgress) onCallback.onUploadProgress(e);
+        if (onCallback && onCallback.onUploadProgress) {
+          onCallback.onUploadProgress(e);
+        }
       },
     })
     .then((response) => {
@@ -149,13 +167,19 @@ export const uploadFile = (file: File, { signature, ignoreMsg, attachmentParams,
         return;
       }
 
-      if (!ignoreMsg) msg(<Translation>{(t) => t('_lang:uploadSuccessfully')}</Translation>);
-      if (onCallback && onCallback.onUploadSuccess) onCallback.onUploadSuccess(response);
+      if (!ignoreMsg) {
+        msg(<Translation>{(t) => t('_lang:uploadSuccessfully')}</Translation>);
+      }
+      if (onCallback && onCallback.onUploadSuccess) {
+        onCallback.onUploadSuccess(response);
+      }
     })
     .catch((err: Error) => {
       console.log(`uploadFile Error (${signature?.saveIn})`, err);
       errorMsg(err.message);
 
-      if (onCallback && onCallback.onUploadCatch) onCallback.onUploadCatch(err);
+      if (onCallback && onCallback.onUploadCatch) {
+        onCallback.onUploadCatch(err);
+      }
     });
 };

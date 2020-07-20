@@ -185,7 +185,7 @@ export class SeedService {
   randomArray = (items: any[]) => items[Math.floor(Math.random() * items.length)];
 
   async fillAction() {
-    for (let i = 0; i < 500; i += 1) {
+    for (let i = 0; i < 100; i += 1) {
       const modules = [
         'config',
         'seed',

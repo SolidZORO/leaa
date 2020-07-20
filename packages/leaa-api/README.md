@@ -18,7 +18,7 @@ cp .env.example .env
 yarn insatll
 
 # fill init database
-yarn seed --nuke
+yarn seed-dev --nuke
 yarn dev
 ```
 
