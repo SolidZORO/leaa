@@ -38,7 +38,7 @@
     "@nestjsx/crud-request": "^4.6.2",
     "@svgr/webpack": "^5.4.0",
     "animated-scroll-to": "^2.0.10",
-    "antd": "4.4.2",
+    "antd": "4.4.3",
     "axios": "^0.19.2",
     "classnames": "^2.2.6",
     "copy-webpack-plugin": "^6.0.3",
