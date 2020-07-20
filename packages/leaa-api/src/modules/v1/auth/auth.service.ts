@@ -73,11 +73,6 @@ export class AuthService {
     await this.clearLoginActionAndVerification({ token: guthorization });
     await this.userRepo.update(user.id, { last_login_ip: ip, last_login_at: moment().toDate() });
 
-    logger.log(JSON.stringify({ last_login_ip: ip, last_login_at: moment().toDate() }));
-    logger.log(JSON.stringify(moment().toNow()));
-    logger.log(JSON.stringify(moment()));
-    logger.log(JSON.stringify(moment().toDate()));
-
     // delete something
     delete user.roles;
     delete user.password;
