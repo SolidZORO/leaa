@@ -9,13 +9,16 @@ services:
   node:
     container_name: ${__ENV__}_${DOCKER_NODE_CONTAINER_NAME}
     image: node:14-alpine
+    environment:
+      NODE_ENV: production
+      TZ: ${TZ}
     expose:
       - ${DOCKER_NODE_PORT}
     ports:
       - ${DOCKER_NODE_PORT}:${DOCKER_NODE_PORT}
-    environment:
-      - NODE_ENV=production
     volumes:
+      - ./dockerfile/timezone:/etc/timezone:ro
+      - ./dockerfile/localtime:/etc/localtime:ro
       - ./:/home/node:rw,cached
       - ./.cache:/usr/local/share/.cache:rw,cached
       # `.cache` can greatly increase the speed of local yarn install. And does not affect the prod env.

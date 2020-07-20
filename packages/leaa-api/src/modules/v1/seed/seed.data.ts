@@ -278,7 +278,7 @@ export const permissionsToRoleSeed = [
 export const rolesToUserSeed = [
   { userEmail: 'admin@local.com', roleSlugs: ['admin'] },
   { userEmail: 'staff@local.com', roleSlugs: ['staff', 'attachment-manager'] },
-  { userEmail: 'superuser@local.com', roleSlugs: ['admin'] },
+  { userEmail: 'superuser@local.co1m', roleSlugs: ['admin'] },
 ];
 
 interface ICreateCategoryInput extends CategoryCreateOneReq {

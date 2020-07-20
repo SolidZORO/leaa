@@ -1,5 +1,6 @@
 export interface IDotEnv {
   __ENV__: string;
+  TZ: string;
 
   DEMO_MODE: string;
   DEBUG_MODE: string;

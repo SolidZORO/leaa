@@ -16,6 +16,10 @@ export class ConfigService {
     return this.envConfig.__ENV__;
   }
 
+  get TZ(): string {
+    return this.envConfig.TZ || 'Asia/Shanghai';
+  }
+
   get DEMO_MODE(): boolean {
     return Boolean(this.envConfig.DEMO_MODE === 'true');
   }
@@ -199,6 +203,7 @@ export class ConfigService {
   private validate(dotEnvPath: string): IDotEnv {
     const rule = {
       __ENV__: envalid.str({ choices: ['prod', 'dev', 'test'] }),
+      TZ: envalid.str({ default: 'Asia/Shanghai' }),
       //
       DEMO_MODE: envalid.str({ choices: ['true', 'false'], default: 'false' }),
       DEBUG_MODE: envalid.str({ choices: ['true', 'false'], default: 'false' }),

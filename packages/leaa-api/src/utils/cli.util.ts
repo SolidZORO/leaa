@@ -1,6 +1,7 @@
 import { IDotEnv } from '@leaa/api/src/interfaces';
 
 import pkg from '@leaa/api/package.json';
+import moment from 'moment';
 
 export const envInfoForCli = ({
   config,
@@ -38,6 +39,11 @@ export const envInfoForCli = ({
   console.log('     - RATELIMIT_MAX        ', config.RATELIMIT_MAX);
   console.log('     - RATELIMIT_WINDOWMS   ', config.RATELIMIT_WINDOWMS);
   console.log('     - ENABLE_CAPTCHA_TIMES ', config.ENABLE_CAPTCHA_BY_LOGIN_FAILD_TIMES);
+  console.log('');
+  console.log('     - DATE       ', moment().toDate());
+  console.log('     - NOW        ', moment().format('YYYY-MM-DD HH:mm:ss'));
+  console.log('     - TZ         ', config.TZ);
+  console.log('     - TZ_OFFSET  ', moment().utcOffset());
   console.log('');
   console.log('     - DIRNAME ', DIRNAME);
   console.log('     - PUBLIC  ', PUBLIC_PATH);

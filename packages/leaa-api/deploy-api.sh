@@ -120,7 +120,7 @@ platform_docker_local_test() {
 
   printf '\n\n🎏  Show All Containers.\n\n\n'
 
-  docker container ls -a
+  docker container ls
 
   printf '\n\n🎏  Up Docker Local Test.\n\n\n'
   docker-compose down && docker-compose up
@@ -282,6 +282,11 @@ case "$SKIP_CONFIRM" in
   cp -f ./public/favicon.ico ${__DEPLOY__}/public
   cp -f ./public/get-weixin-code.html ${__DEPLOY__}/public
   cp -f ./public/version.txt ${__DEPLOY__}/public
+
+  # dockerfile
+  if [ ! -d ${__DEPLOY__}/dockerfile ]; then mkdir -p ${__DEPLOY__}/dockerfile; fi
+  cp -f ./dockerfile/localtime.example ${__DEPLOY__}/dockerfile/localtime
+  cp -f ./dockerfile/timezone.example ${__DEPLOY__}/dockerfile/timezone
 
   # -----------
   # @DEPLOY-DIR

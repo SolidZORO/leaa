@@ -1,4 +1,6 @@
 import _ from 'lodash';
+import moment from 'moment';
+import validator from 'validator';
 import bcryptjs from 'bcryptjs';
 import * as jsondiffpatch from 'jsondiffpatch';
 import { Repository } from 'typeorm';
@@ -10,7 +12,6 @@ import { Injectable, ForbiddenException, BadRequestException } from '@nestjs/com
 import { logger } from '@leaa/api/src/utils';
 import { User, Role, Auth, Attachment } from '@leaa/api/src/entrys';
 import { UserUpdateOneReq, UserCreateOneReq } from '@leaa/api/src/dtos/user';
-import validator from 'validator';
 
 const CLS_NAME = 'UserService';
 
@@ -75,7 +76,7 @@ export class UserService extends TypeOrmCrudService<User> {
 
     // @TIPS 更新某些关键信息之后，可以在 validateUserByPayload 那边通过对比 last_token_at 让用户强制弹出
     if (dto.password || dto.is_admin !== prevUser.is_admin || dto.status !== prevUser.status) {
-      nextDto.last_token_at = new Date();
+      nextDto.last_token_at = moment().toDate();
     }
 
     if (dto.roleIds && _.isArray(dto.roleIds)) nextDto.roles = await this.roleRepo.findByIds(dto.roleIds);
