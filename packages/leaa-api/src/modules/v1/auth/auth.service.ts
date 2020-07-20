@@ -9,8 +9,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User, Verification, Action, Auth } from '@leaa/api/src/entrys';
 import { AuthLoginReq } from '@leaa/api/src/dtos/auth';
 import { checkUserIsEnable, logger, checkGuthorization } from '@leaa/api/src/utils';
-import { IRequest } from '@leaa/api/src/interfaces';
-import { IJwtPayload } from '@leaa/api/src/interfaces';
+import { IRequest, IJwtPayload } from '@leaa/api/src/interfaces';
+
 import moment from 'moment';
 import { ConfigService } from '@leaa/api/src/modules/v1/config/config.service';
 import { RoleService } from '@leaa/api/src/modules/v1/role/role.service';

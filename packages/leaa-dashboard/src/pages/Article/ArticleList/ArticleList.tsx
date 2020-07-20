@@ -6,7 +6,7 @@ import { useMount, useUpdateEffect } from 'react-use';
 
 import { Article } from '@leaa/api/src/entrys';
 import { envConfig } from '@leaa/dashboard/src/configs';
-import { DEFAULT_QUERY, CSS_SCREEN_MD } from '@leaa/dashboard/src/constants';
+import { DEFAULT_QUERY } from '@leaa/dashboard/src/constants';
 import { IPage, ICrudListQueryParams, IHttpRes, ICrudListRes, IHttpError } from '@leaa/dashboard/src/interfaces';
 import {
   ajax,

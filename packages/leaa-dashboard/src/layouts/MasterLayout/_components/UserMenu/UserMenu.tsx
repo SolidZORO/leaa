@@ -5,7 +5,7 @@ import { Skeleton, Popover, Button } from 'antd';
 import { RouteComponentProps } from 'react-router-dom';
 import { RiLogoutBoxRLine } from 'react-icons/ri';
 
-import { getAuthInfo, removeAuth, formatAttaUrl } from '@leaa/dashboard/src/utils';
+import { getAuthInfo, removeAuth } from '@leaa/dashboard/src/utils';
 import { LOGOUT_REDIRECT_URL } from '@leaa/dashboard/src/constants';
 import { BuildInfo, UserAvatar } from '@leaa/dashboard/src/components';
 

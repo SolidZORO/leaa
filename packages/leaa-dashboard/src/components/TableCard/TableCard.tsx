@@ -15,12 +15,7 @@ import {
 } from '@leaa/dashboard/src/interfaces';
 
 import { DEFAULT_PAGE_SIZE_OPTIONS } from '@leaa/dashboard/src/constants';
-import {
-  formatOrderSort,
-  calcTableSortOrder,
-  transUrlQueryToCrudState,
-  formatAttaUrl,
-} from '@leaa/dashboard/src/utils';
+import { formatOrderSort, calcTableSortOrder, transUrlQueryToCrudState } from '@leaa/dashboard/src/utils';
 import { Table, Tag } from 'antd';
 import { TableProps } from 'antd/es/table/Table';
 import {

@@ -1,7 +1,6 @@
-import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common';
+import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { IPermissionSlug } from '@leaa/api/src/interfaces';
-import { IRequest } from '@leaa/api/src/interfaces';
+import { IPermissionSlug, IRequest } from '@leaa/api/src/interfaces';
 
 @Injectable()
 export class PermissionsGuard implements CanActivate {

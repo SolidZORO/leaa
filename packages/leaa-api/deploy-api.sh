@@ -277,6 +277,7 @@ case "$SKIP_CONFIRM" in
 
   # public
   if [ ! -d ${__DEPLOY__}/public ]; then mkdir -p ${__DEPLOY__}/public; fi
+  cp -f ./public/assets ${__DEPLOY__}/public
   cp -f ./public/robots.txt ${__DEPLOY__}/public
   cp -f ./public/favicon.ico ${__DEPLOY__}/public
   cp -f ./public/get-weixin-code.html ${__DEPLOY__}/public
