@@ -8,9 +8,9 @@ import { IRouteItem } from '@leaa/dashboard/src/interfaces';
 import { RiAddLine, RiFilterLine } from 'react-icons/ri';
 import { mergeUrlParamToUrlQuery, getFieldByUrl } from '@leaa/dashboard/src/utils';
 
-import style from './style.module.less';
 import { useUpdateEffect } from 'react-use';
-import { DEFAULT_QUERY } from '@leaa/dashboard/src/constants';
+
+import style from './style.module.less';
 
 declare type IPropTitle = null | '@LIST' | '@UPDATE' | '@CREATE' | '@ITEM' | React.ReactNode;
 
