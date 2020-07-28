@@ -1,4 +1,4 @@
-import xss from 'xss';
+import * as xss from 'xss';
 import bcryptjs from 'bcryptjs';
 import validator from 'validator';
 import { JwtService } from '@nestjs/jwt';
