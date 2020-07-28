@@ -93,11 +93,11 @@
     "svg-captcha": "^1.4.0",
     "transliteration": "^2.1.11",
     "typeorm": "^0.2.25",
-    "uuid": "^8.2.0",
+    "uuid": "^8.3.0",
     "validator": "^13.1.1",
     "winston": "^3.3.3",
     "winston-daily-rotate-file": "^4.5.0",
-    "xss": "^1.0.7"
+    "xss": "^1.0.8"
   },
   "devDependencies": {
     "@types/ali-oss": "^6.0.5",
@@ -111,11 +111,11 @@
     "@types/html-to-text": "^5.1.1",
     "@types/ip": "^1.1.0",
     "@types/jsonwebtoken": "^8.5.0",
-    "@types/lodash": "^4.14.156",
+    "@types/lodash": "^4.14.158",
     "@types/mkdirp": "^1.0.1",
     "@types/multer": "^1.4.3",
     "@types/mysql": "^2.15.15",
-    "@types/node": "^14.0.23",
+    "@types/node": "^14.0.26",
     "@types/node-xlsx": "^0.15.0",
     "@types/passport": "^1.0.4",
     "@types/passport-github": "^1.1.5",
