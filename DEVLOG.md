@@ -813,3 +813,11 @@ CST-8
 ```
 
 哈哈，肉眼可见的区别。看起来是由某个 tools encode 出来的，如果我想要自然人知其所以然势必得找到 decode 的 tools 了。害～ 再说啦，这种事情真的很迷，晚安。
+
+### 2020-07-28 02:29
+
+记录一下 sharp 在 macOS 安装的历程。
+
+一开始 `yarn add sharp` 是不成功的，说缺少 `vips`，大概报了 `/usr/local/include/vips/vips8:35:10: fatal error: 'glib-object.h' file not found` 这种错误。
+
+然后我 `brew install vips --with-webp --with-graphicsmagick` 说参数不对，`brew install vips` 就 OK 了，但是还是装不上 sharp，后来看到[官方这边](https://sharp.pixelplumbing.com/install#chinese-mirror) 有个中国特供方案，于是 `yarn config set sharp_binary_host https://npm.taobao.org/mirrors/sharp && yarn config set sharp_libvips_binary_host https://npm.taobao.org/mirrors/sharp-libvips && yarn add sharp` 就都好了。当然其实过程还是蛮曲折的，这里只是最短路径说一下。

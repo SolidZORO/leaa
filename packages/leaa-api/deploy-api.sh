@@ -18,18 +18,19 @@ usage() {
   # -S = Setup (pm2)
 
   # shellcheck disable=SC2028
-  echo "\n\n
-  🔰  Usage: $0 -p (node_start | docker_start | docker_install | docker_local_test | push_to_repo | docker_install_and_push | update_config_and_push | vercel) [-i] [-S]
-      \n
-      -p platform
-      -i skip yarn build
-      -y skip confirm
+  echo "\n🔰 Deploy Help\n
+Usage: sh $0 -p <platform> [-i] [-S]
 
-      -S Setup (init PM2 deploy)
-      \n
-      e.g. sh $0 -p docker_install_and_push
-  \n\n"
-  exit 2
+Options:
+  -p platform [node_start | docker_start | docker_install | docker_local_test | push_to_repo | docker_install_and_push | update_config_and_push | vercel]
+  -i skip yarn build
+  -y skip confirm
+  -s setup (init PM2 deploy)
+
+
+e.g: sh $0 -p docker_install_and_push
+"
+  exit 1
 }
 
 set_var() {

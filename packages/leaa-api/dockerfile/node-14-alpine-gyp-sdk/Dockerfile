@@ -12,7 +12,14 @@
 FROM node:14-alpine
 
 ENV YARN_REGISTRY https://registry.npm.taobao.org
-ENV YARN_DISTURL https://npm.taobao.org/dist
+ENV YARN_DIST https://npm.taobao.org/dist
+
+# fix sharp install error
+# https://sharp.pixelplumbing.com/install#chinese-mirror
+# yarn config set sharp_binary_host https://npm.taobao.org/mirrors/sharp && yarn config set sharp_libvips_binary_host https://npm.taobao.org/mirrors/sharp-libvips && yarn add sharp
+ENV SHARP_BINARY_HOST https://npm.taobao.org/mirrors/sharp
+ENV SHARP_LIBVIPS_BINARY_HOST https://npm.taobao.org/mirrors/sharp-libvips
+
 ENV BUILD_DEPS \
   python \
   alpine-sdk
@@ -29,9 +36,11 @@ RUN echo "---- 🔰 ---- " \
   && npm config get registry \
   && yarn config get disturl \
   && npm config set -g registry ${YARN_REGISTRY} \
-  && npm config set -g disturl ${YARN_DISTURL} \
+  && npm config set -g disturl ${YARN_DIST} \
   && npm config set registry ${YARN_REGISTRY} \
-  && npm config set disturl ${YARN_DISTURL} \
+  && npm config set disturl ${YARN_DIST} \
+  && npm config set sharp_binary_host ${SHARP_BINARY_HOST} \
+  && npm config set sharp_libvips_binary_host ${SHARP_LIBVIPS_BINARY_HOST} \
   && npm config get registry \
   && yarn config get disturl \
   #
@@ -41,9 +50,11 @@ RUN echo "---- 🔰 ---- " \
   && yarn config get registry \
   && yarn config get disturl \
   && yarn config set --global registry ${YARN_REGISTRY} \
-  && yarn config set --global disturl ${YARN_DISTURL} \
+  && yarn config set --global disturl ${YARN_DIST} \
   && yarn config set registry ${YARN_REGISTRY} \
-  && yarn config set disturl ${YARN_DISTURL} \
+  && yarn config set disturl ${YARN_DIST} \
+  && yarn config set sharp_binary_host ${SHARP_BINARY_HOST} \
+  && yarn config set sharp_libvips_binary_host ${SHARP_LIBVIPS_BINARY_HOST} \
   && yarn config get registry \
   && yarn config get disturl \
   #
