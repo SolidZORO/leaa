@@ -328,6 +328,16 @@ export const masterRouteList: IRouteItem[] = [
         exact: true,
         isCreate: true,
       },
+      {
+        name: 'Edit Attachment',
+        namei18n: '_route:editAttachment',
+        permission: 'attachment.item-read',
+        path: `/attachments/:id(${UUID_REGX})`,
+        LazyComponent: lazy(() =>
+          import(/* webpackChunkName: 'AttachmentEdit' */ '../pages/Attachment/AttachmentEdit/AttachmentEdit'),
+        ),
+        exact: true,
+      },
     ],
   },
   //

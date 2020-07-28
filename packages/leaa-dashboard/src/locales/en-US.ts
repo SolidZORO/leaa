@@ -102,6 +102,8 @@ const _lang = {
   creator: 'Creator',
   ip: 'IP',
   token: 'Token',
+  info: 'Info',
+  comingSoon: 'Coming Soon...',
   //
   select: 'Select',
   selected: 'Selected',

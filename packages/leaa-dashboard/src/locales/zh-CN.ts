@@ -105,6 +105,8 @@ const _lang = {
   creator: '创建人',
   ip: 'IP',
   token: 'Token',
+  info: '信息',
+  comingSoon: 'Coming Soon...',
   //
   select: '选择',
   selected: '选中',

@@ -12,7 +12,7 @@ import { useUpdateEffect } from 'react-use';
 
 import style from './style.module.less';
 
-declare type IPropTitle = null | '@LIST' | '@UPDATE' | '@CREATE' | '@ITEM' | React.ReactNode;
+declare type IPropTitle = null | '@LIST' | '@UPDATE' | '@CREATE' | '@ITEM' | '@VIEW-ONLY' | React.ReactNode;
 
 interface IFilterItem {
   label: string;
@@ -70,7 +70,7 @@ export const PageCard = (props: IProps) => {
     }
 
     // Page 里面 title 还是该写什么写什么，不知道那天这里会出现 if 判断
-    if (_.isString(title) && ['@UPDATE', '@CREATE', '@ITEM'].includes(title)) {
+    if (_.isString(title) && ['@UPDATE', '@CREATE', '@ITEM', '@VIEW-ONLY'].includes(title)) {
       const routePathMatch = props.route?.path?.match(/^(\/.*)\//);
 
       return (
@@ -80,6 +80,12 @@ export const PageCard = (props: IProps) => {
             <div className={style['page-card-create-button-in-non-list-wrapper']}>
               {createButtonDom(routePathMatch ? routePathMatch[1] : props.route?.path)}
             </div>
+          )}
+
+          {['@VIEW-ONLY'].includes(title) && (
+            <sup>
+              <strong>VIEW ONLY</strong>
+            </sup>
           )}
         </>
       );

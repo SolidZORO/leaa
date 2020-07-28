@@ -51,12 +51,13 @@ interface IUploadFile {
 }
 
 export const formatAttaUrl = (url?: string | null, params?: { defaultImage: any }) => {
+  if (typeof url === 'undefined') return null;
+
   if (!url) {
     if (params?.defaultImage) {
       return params.defaultImage;
     }
 
-    // console.log('xcxxxxxxxxx');
     return defaultImage;
   }
 

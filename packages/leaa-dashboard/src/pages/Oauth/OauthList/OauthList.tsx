@@ -11,7 +11,9 @@ export default (props: IPage) => {
       <HtmlMeta title={t(`${props.route?.namei18n}`)} />
 
       <div className="g-card--shadow">
-        <span>N/A</span>
+        <br />
+        <h2>{t('_lang:comingSoon')}</h2>
+        <br />
       </div>
     </PageCard>
   );

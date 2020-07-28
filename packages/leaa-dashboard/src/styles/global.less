@@ -35,18 +35,6 @@
   font-size: 16px;
 }
 
-// history check media (PC or MB)
-//body {
-//  &:after {
-//    display: none;
-//    content: 'xs';
-//
-//    @media (min-width: @screen-md) {
-//      content: 'md';
-//    }
-//  }
-//}
-
 .g-input-number {
   width: 100% !important;
 }
@@ -165,5 +153,17 @@ html {
   // fix border-radius cover cursor
   .ant-input-affix-wrapper > input.ant-input {
     padding-left: 3px !important;
+  }
+
+  //
+  //
+  //
+  // form
+  //
+  // fix border-radius cover cursor
+  .ant-form-vertical {
+    .ant-form-item-label {
+      padding-bottom: 0;
+    }
   }
 }

@@ -34,7 +34,9 @@ export const ArticleExtForm = forwardRef((props: IProps, ref: React.Ref<any>) =>
   };
 
   const onRefreshForm = (item?: Article) => {
-    if (!item) return form.setFieldsValue({});
+    if (!item) {
+      return form.setFieldsValue({});
+    }
 
     form.resetFields();
     form.setFieldsValue(formatFieldsToMoment(item, { fields: ['released_at', 'updated_at'] }));
@@ -54,19 +56,17 @@ export const ArticleExtForm = forwardRef((props: IProps, ref: React.Ref<any>) =>
       >
         <Form form={form} name="article-ext" layout="vertical" size={FORM_SIZE}>
           <Row gutter={16} className={style['form-row']}>
-            <Col xs={24}>
+            <Col xs={24} sm={16}>
               <Form.Item name="description" label={t('_lang:description')}>
-                <Input.TextArea rows={3} placeholder={t('_lang:description')} />
+                <Input.TextArea rows={6} placeholder={t('_lang:description')} />
               </Form.Item>
             </Col>
 
-            <Col xs={24}>
+            <Col xs={24} sm={8}>
               <Form.Item name="released_at" label={t('_lang:releasedAt')}>
                 <DatePicker showTime />
               </Form.Item>
-            </Col>
 
-            <Col xs={24}>
               <Form.Item label={t('_lang:updatedAt')}>
                 <DatePicker showTime disabled value={moment(props.item?.updated_at)} />
               </Form.Item>

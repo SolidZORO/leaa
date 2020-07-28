@@ -208,7 +208,7 @@ export const TableCard = <T extends any>(props: IProps<T>) => {
     byte: (options?: { fieldName?: string }) => ({
       title: t('_lang:size'),
       dataIndex: 'size',
-      width: 75,
+      width: 90,
       sorter: true,
       sortOrder: calcTableSortOrder('size', crudQuery?.sort),
       render: (text: string, record: any) =>

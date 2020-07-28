@@ -2,7 +2,7 @@ import React from 'react';
 import cx from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { Skeleton, Popover, Button } from 'antd';
-import { RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps, Link } from 'react-router-dom';
 import { RiLogoutBoxRLine } from 'react-icons/ri';
 
 import { getAuthInfo, removeAuth } from '@leaa/dashboard/src/utils';
@@ -31,7 +31,9 @@ export const UserMenu = (props: IProps): JSX.Element => {
 
   const menuDom = (
     <div className={cx(style['usermenu-box'])}>
-      <div className={style['header']}>Hi, {user.name || user.email}</div>
+      <div className={style['header']}>
+        Hi, <Link to={`/users/${user.id}`}>{user.name || user.email}</Link>
+      </div>
 
       <div className={style['container']}>
         <Skeleton active />

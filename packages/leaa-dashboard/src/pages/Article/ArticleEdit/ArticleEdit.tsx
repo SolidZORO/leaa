@@ -116,42 +116,40 @@ export default (props: IPage) => {
         />
       </div>
 
+      <Row gutter={16}>
+        <Col xs={24} sm={12}>
+          <AttachmentBox
+            type="list"
+            title={t('_lang:galleryMb')}
+            listHeight={350}
+            attachmentParams={{
+              type: 'image',
+              moduleId: item?.id,
+              moduleName: 'article',
+              typeName: 'gallery',
+              typePlatform: 'mb',
+            }}
+          />
+        </Col>
+
+        <Col xs={24} sm={12}>
+          <AttachmentBox
+            type="list"
+            title={t('_lang:galleryPc')}
+            listHeight={350}
+            attachmentParams={{
+              type: 'image',
+              moduleId: item?.id,
+              moduleName: 'article',
+              typeName: 'gallery',
+              typePlatform: 'pc',
+            }}
+          />
+        </Col>
+      </Row>
+
       <div className={style['container-ext']}>
-        <Row gutter={16}>
-          <Col xs={24} sm={8}>
-            <AttachmentBox
-              type="list"
-              title={t('_lang:galleryMb')}
-              listHeight={350}
-              attachmentParams={{
-                type: 'image',
-                moduleId: item?.id,
-                moduleName: 'article',
-                typeName: 'gallery',
-                typePlatform: 'mb',
-              }}
-            />
-          </Col>
-
-          <Col xs={24} sm={8}>
-            <AttachmentBox
-              type="list"
-              title={t('_lang:galleryPc')}
-              listHeight={350}
-              attachmentParams={{
-                type: 'image',
-                moduleId: item?.id,
-                moduleName: 'article',
-                typeName: 'gallery',
-                typePlatform: 'pc',
-              }}
-            />
-          </Col>
-
-          <Col xs={24} sm={8}>
-            <ArticleExtForm item={item} loading={itemLoading} ref={extFormRef} />
-          </Col>
-        </Row>
+        <ArticleExtForm item={item} loading={itemLoading} ref={extFormRef} />
       </div>
 
       <SubmitToolbar

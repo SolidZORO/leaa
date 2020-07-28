@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import cx from 'classnames';
+import { Tag } from 'antd';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useMount, useUpdateEffect } from 'react-use';
@@ -28,6 +29,7 @@ export default (props: IPage) => {
   const [crudQuery, setCrudQuery] = useState<ICrudListQueryParams>({
     ...DEFAULT_QUERY,
     ...transUrlQueryToCrudState(window),
+    sort: ['created_at', 'DESC'],
   });
 
   const [list, setList] = useState<ICrudListRes<Ax>>();
@@ -86,7 +88,24 @@ export default (props: IPage) => {
           columnFields={[
             'id',
             'title',
-            'createdAt',
+            {
+              title: t('_lang:info'),
+              dataIndex: 'info',
+              sorter: true,
+              width: 250,
+              render: (text: string, record: any) => (
+                <div>
+                  <code>
+                    <strong>{record.module_name}</strong>/<span>{record.type_name}</span>
+                    <sup> {record.type_platform || ''}</sup>
+                  </code>
+                  <div>
+                    {!!record.in_oss && 'oss'} {!!record.in_local && 'local'}
+                  </div>
+                </div>
+              ),
+            },
+
             { byte: { fieldName: 'size' } },
             'status',
             { action: { fieldName: 'title' } },
