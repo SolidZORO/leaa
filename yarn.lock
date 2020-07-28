@@ -3403,6 +3403,13 @@
   resolved "https://registry.npm.taobao.org/@types/shallowequal/download/@types/shallowequal-1.1.1.tgz#aad262bb3f2b1257d94c71d545268d592575c9b1"
   integrity sha1-qtJiuz8rElfZTHHVRSaNWSV1ybE=
 
+"@types/sharp@^0.25.1":
+  version "0.25.1"
+  resolved "https://registry.npm.taobao.org/@types/sharp/download/@types/sharp-0.25.1.tgz#9472207f9ef63fd82b134f26e9870cb1ac3290dc"
+  integrity sha1-lHIgf572P9grE08m6YcMsawykNw=
+  dependencies:
+    "@types/node" "*"
+
 "@types/source-list-map@*":
   version "0.1.2"
   resolved "https://registry.npm.taobao.org/@types/source-list-map/download/@types/source-list-map-0.1.2.tgz?cache=0&sync_timestamp=1588202412220&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fsource-list-map%2Fdownload%2F%40types%2Fsource-list-map-0.1.2.tgz#0078836063ffaf17412349bba364087e0ac02ec9"

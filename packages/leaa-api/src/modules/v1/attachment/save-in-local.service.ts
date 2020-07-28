@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import ImageSize from 'image-size';
+import sharp from 'sharp';
 import { Express } from 'express';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -35,15 +36,17 @@ export class SaveInLocalService {
     };
   }
 
-  async saveAt2xToAt1xByLocal(file: Express.Multer.File, rawWidth: number, rawHeight: number) {
-    const width = Math.round(rawWidth / 2);
-    const height = Math.round(rawHeight / 2);
-
+  async saveAt2xToAt1xByLocal(file: Express.Multer.File, width: number, height: number) {
     const pathAt1x = file.path.replace('_2x', '');
-    console.log('@1x w/h', width, height);
 
-    // TODO MUST load a image lib resize
-    fs.copyFileSync(file.path, pathAt1x);
+    console.log(file);
+    console.log(`>>>> @1x w ${width}/h ${height}`);
+
+    let resizeHandler = sharp(file.path).resize(width, height);
+
+    if (/image\/jpe?g/.test(file.mimetype)) resizeHandler = resizeHandler.jpeg({ quality: 90 });
+
+    await resizeHandler.toFile(pathAt1x);
   }
 
   async createAttachmentByLocal(

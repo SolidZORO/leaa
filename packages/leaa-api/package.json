@@ -121,6 +121,7 @@
     "@types/passport-github": "^1.1.5",
     "@types/passport-jwt": "^3.0.3",
     "@types/readline-sync": "^1.4.3",
+    "@types/sharp": "^0.25.1",
     "@types/uuid": "^8.0.0",
     "@types/validator": "^13.0.0",
     "express-serve-static-core": "^0.1.1",
