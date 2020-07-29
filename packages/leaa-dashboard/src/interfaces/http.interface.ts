@@ -12,4 +12,8 @@ export interface IHttpRes<T> extends AxiosResponse {
   };
 }
 
+export interface IFetchRes<T> extends AxiosResponse {
+  data: T;
+}
+
 export interface IHttpError extends AxiosError {}

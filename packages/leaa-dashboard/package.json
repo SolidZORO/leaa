@@ -74,6 +74,7 @@
     "react-sortable-tree": "^2.7.1",
     "react-test-renderer": "16.13.1",
     "react-use": "^15.3.3",
+    "swr": "^0.2.3",
     "uuid": "^8.3.0"
   },
   "devDependencies": {
