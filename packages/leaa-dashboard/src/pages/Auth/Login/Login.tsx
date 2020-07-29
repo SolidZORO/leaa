@@ -10,9 +10,8 @@ import {
   removeGuestToken,
   msg,
   errorMsg,
-  ajax,
-  setAjaxToken,
 } from '@leaa/dashboard/src/utils';
+import { fetcher, setAjaxToken } from '@leaa/dashboard/src/libs';
 import { LOGIN_REDIRECT_URL } from '@leaa/dashboard/src/constants';
 import { User } from '@leaa/api/src/entrys';
 import { AuthLoginReq } from '@leaa/api/src/dtos/auth';
@@ -87,7 +86,7 @@ export default (props: IPage) => {
 
     setSubmitLoading(true);
 
-    ajax
+    fetcher
       .post(`${envConfig.API_URL}/${envConfig.API_VERSION}/auth/login`, submitData)
       .then((res: IHttpRes<User>) => {
         if (!isAjaxCancelled.current && res.data.data?.authToken) {

@@ -11,7 +11,9 @@ import { Attachment } from '@leaa/api/src/entrys';
 import { IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
 import { SwitchNumber, ConfirmDeleteButton } from '@leaa/dashboard/src/components';
 import { envConfig } from '@leaa/dashboard/src/configs';
-import { ajax, errorMsg, formatAttaUrl } from '@leaa/dashboard/src/utils';
+
+import { fetcher } from '@leaa/dashboard/src/libs';
+import { errorMsg, formatAttaUrl } from '@leaa/dashboard/src/utils';
 
 import style from './style.module.less';
 
@@ -56,7 +58,7 @@ export const AttachmentItem = (props: IProps) => {
   const onDelete = (id?: string) => {
     setDeleteLoading(true);
 
-    ajax
+    fetcher
       .delete(`${envConfig.API_URL}/${envConfig.API_VERSION}/attachments/${id}`)
       .then((res: IHttpRes<Attachment>) => {
         // msg(t('_lang:deletedSuccessfully', { id: res?.data?.data?.id }));
@@ -67,7 +69,7 @@ export const AttachmentItem = (props: IProps) => {
   };
 
   const onUpdate = (id: string, atta: { [k: string]: string | number | boolean }) => {
-    ajax
+    fetcher
       .patch(`${envConfig.API_URL}/${envConfig.API_VERSION}/attachments/${id}`, atta)
       .then((res: IHttpRes<Attachment>) => {
         // if (res.data?.data) setAttachment(res.data.data);

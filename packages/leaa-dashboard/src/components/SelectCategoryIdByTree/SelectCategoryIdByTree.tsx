@@ -6,7 +6,8 @@ import { useTranslation } from 'react-i18next';
 import { TreeSelectProps } from 'antd/es/tree-select';
 
 import { ICategoriesQuery } from '@leaa/api/src/interfaces';
-import { ajax, errorMsg } from '@leaa/dashboard/src/utils';
+import { fetcher } from '@leaa/dashboard/src/libs';
+import { errorMsg } from '@leaa/dashboard/src/utils';
 import { envConfig } from '@leaa/dashboard/src/configs';
 import { IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
 import { TreeItem } from 'react-sortable-tree';
@@ -41,7 +42,7 @@ export const SelectCategoryIdByTree = forwardRef((props: IProps, ref: React.Ref<
   const onFetchCategories = (params: ICategoriesQuery = { expanded: true, parentSlug: props?.parentSlug }) => {
     setTreeLoading(true);
 
-    ajax
+    fetcher
       .get(`${envConfig.API_URL}/${envConfig.API_VERSION}/categories/tree`, { params })
       .then((res: IHttpRes<TreeItem[]>) => {
         if (!isAjaxCancelled.current) setTree(res.data?.data);

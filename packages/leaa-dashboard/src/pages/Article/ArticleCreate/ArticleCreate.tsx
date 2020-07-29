@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Article } from '@leaa/api/src/entrys';
 import { ArticleUpdateOneReq } from '@leaa/api/src/dtos/article';
 import { IPage, ICommenFormRef, ISubmitData, IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
-import { msg, errorMsg, ajax } from '@leaa/dashboard/src/utils';
+import { msg, errorMsg } from '@leaa/dashboard/src/utils';
 
 import { envConfig } from '@leaa/dashboard/src/configs';
 import { PageCard, HtmlMeta, SubmitToolbar } from '@leaa/dashboard/src/components';
@@ -33,7 +33,7 @@ export default (props: IPage) => {
 
     setSubmitLoading(true);
 
-    ajax
+    fetcher
       .post(`${envConfig.API_URL}/${envConfig.API_VERSION}/${API_PATH}`, data)
       .then((res: IHttpRes<Article>) => {
         msg(t('_lang:createdSuccessfully'));

@@ -5,7 +5,8 @@ import { useTranslation } from 'react-i18next';
 import { Switch, message } from 'antd';
 import { SwitchSize } from 'antd/es/switch';
 
-import { ajax, errorMsg } from '@leaa/dashboard/src/utils';
+import { fetcher } from '@leaa/dashboard/src/libs';
+import { errorMsg } from '@leaa/dashboard/src/utils';
 import { envConfig } from '@leaa/dashboard/src/configs';
 import { IHttpError, IHttpRes } from '@leaa/dashboard/src/interfaces';
 
@@ -29,7 +30,7 @@ export const TableColumnStatusSwitch = (props: IProps) => {
   const onChange = (v: boolean) => {
     setLoadin(true);
 
-    ajax
+    fetcher
       .put(`${envConfig.API_URL}/${envConfig.API_VERSION}/${props.apiPath}/${props.id}`, { status: Number(v) })
       .then((res: IHttpRes<{ status: number }>) => {
         setStatus(Boolean(res.data.data?.status));

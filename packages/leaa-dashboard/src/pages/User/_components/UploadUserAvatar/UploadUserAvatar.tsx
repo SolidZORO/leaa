@@ -7,8 +7,9 @@ import { RiDeleteBin7Line } from 'react-icons/ri';
 
 import { User } from '@leaa/api/src/entrys';
 import { AttachmentBox } from '@leaa/dashboard/src/components';
+import { fetcher } from '@leaa/dashboard/src/libs';
 
-import { ajax, errorMsg, msg, formatAttaUrl } from '@leaa/dashboard/src/utils';
+import { errorMsg, msg, formatAttaUrl } from '@leaa/dashboard/src/utils';
 import { envConfig } from '@leaa/dashboard/src/configs';
 import { IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
 import { UserUpdateOneReq } from '@leaa/api/src/dtos/user';
@@ -38,7 +39,7 @@ export const UploadUserAvatar = (props: IProps) => {
       if (props.onUpdateAvatarCallback) props.onUpdateAvatarCallback(avatar_url);
     } else {
       // for update user
-      ajax
+      fetcher
         .patch(`${envConfig.API_URL}/${envConfig.API_VERSION}/users/${props.item?.id}`, {
           avatar_url,
         } as UserUpdateOneReq)

@@ -16,7 +16,9 @@ import {
   ICommenFormRef,
   ISubmitData,
 } from '@leaa/dashboard/src/interfaces';
-import { ajax, errorMsg, genCrudRequestQuery, msg } from '@leaa/dashboard/src/utils';
+
+import { fetcher } from '@leaa/dashboard/src/libs';
+import { errorMsg, genCrudRequestQuery, msg } from '@leaa/dashboard/src/utils';
 import { PageCard, HtmlMeta, SubmitToolbar } from '@leaa/dashboard/src/components';
 
 import { SettingUpdateManyReq, SettingUpdateOneReq, SettingCreateOneReq } from '@leaa/api/src/dtos/setting';
@@ -72,7 +74,7 @@ export default (props: IPage) => {
   const onFetchList = (params: ICrudListQueryParams) => {
     setListLoading(true);
 
-    ajax
+    fetcher
       .get(`${envConfig.API_URL}/${envConfig.API_VERSION}/${API_PATH}`, { params: genCrudRequestQuery(params) })
       .then((res: IHttpRes<ICrudListRes<Setting>>) => {
         setList(res.data.data?.data);
@@ -91,7 +93,7 @@ export default (props: IPage) => {
 
     setCreateLoading(true);
 
-    ajax
+    fetcher
       .post(`${envConfig.API_URL}/${envConfig.API_VERSION}/${API_PATH}`, data)
       .then((res: IHttpRes<Setting>) => {
         msg(t('_lang:createdSuccessfully'));
@@ -114,7 +116,7 @@ export default (props: IPage) => {
 
     setUpdateLoading(true);
 
-    return ajax
+    return fetcher
       .patch(`${envConfig.API_URL}/${envConfig.API_VERSION}/${API_PATH}/${id}`, data)
       .then((res: IHttpRes<{ id: number | string }>) => {
         msg(t('_lang:updatedSuccessfully', { id: res?.data?.data?.id }));
@@ -135,7 +137,7 @@ export default (props: IPage) => {
     if (!data) return errorMsg('Not Found Updates Data');
     setBatchUpdatesLoading(true);
 
-    return ajax
+    return fetcher
       .post(`${envConfig.API_URL}/${envConfig.API_VERSION}/${API_PATH}/batch`, { settings: data })
       .then((res: IHttpRes<{ id: number | string }>) => {
         msg(t('_lang:updatedSuccessfully'));
@@ -155,7 +157,7 @@ export default (props: IPage) => {
 
     setDeleteLoading(true);
 
-    return ajax
+    return fetcher
       .delete(`${envConfig.API_URL}/${envConfig.API_VERSION}/${API_PATH}/${id}`)
       .then((res: IHttpRes<{ id: number | string }>) => {
         msg(t('_lang:deletedSuccessfully', { id: res?.data?.data?.id }));

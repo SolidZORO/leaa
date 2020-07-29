@@ -5,7 +5,7 @@ import { User, Role } from '@leaa/api/src/entrys';
 import { IAttachmentBoxRef } from '@leaa/api/src/interfaces';
 import { UserUpdateOneReq } from '@leaa/api/src/dtos/user';
 import { IPage, ICommenFormRef, ISubmitData, IHttpRes, IHttpError, ICrudListRes } from '@leaa/dashboard/src/interfaces';
-import { msg, errorMsg, ajax } from '@leaa/dashboard/src/utils';
+import { msg, errorMsg } from '@leaa/dashboard/src/utils';
 
 import { envConfig } from '@leaa/dashboard/src/configs';
 import { PageCard, HtmlMeta, SubmitToolbar } from '@leaa/dashboard/src/components';
@@ -36,7 +36,7 @@ export default (props: IPage) => {
   const onFetchItem = () => {
     setItemLoading(true);
 
-    ajax
+    fetcher
       .get(`${envConfig.API_URL}/${envConfig.API_VERSION}/${API_PATH}/${id}`)
       .then((res: IHttpRes<User>) => {
         setItem(res.data.data);
@@ -48,7 +48,7 @@ export default (props: IPage) => {
   const onFetchRoles = () => {
     setRolesLoading(true);
 
-    ajax
+    fetcher
       .get(`${envConfig.API_URL}/${envConfig.API_VERSION}/roles`)
       .then((res: IHttpRes<ICrudListRes<Role>>) => {
         // console.log(res.data.data?.data);
@@ -77,7 +77,7 @@ export default (props: IPage) => {
 
     setSubmitLoading(true);
 
-    ajax
+    fetcher
       .patch(`${envConfig.API_URL}/${envConfig.API_VERSION}/${API_PATH}/${id}`, data)
       .then((res: IHttpRes<User>) => {
         setItem(res.data.data);

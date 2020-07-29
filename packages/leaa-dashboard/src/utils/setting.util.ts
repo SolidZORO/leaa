@@ -2,14 +2,14 @@ import _ from 'lodash';
 import { notification } from 'antd';
 
 import { ISetting, IHttpRes, IHttpError, ICrudListRes } from '@leaa/dashboard/src/interfaces';
-import { ajax } from '@leaa/dashboard/src/utils/ajax.util';
+import { fetcher } from '@leaa/dashboard/src/libs';
 import { envConfig } from '@leaa/dashboard/src/configs';
 import { Setting } from '@leaa/api/src/entrys';
 import { errorMsg } from '@leaa/dashboard/src/utils/msg.util';
 import { genCrudRequestQuery } from '@leaa/dashboard/src/utils/crud.util';
 
 export const refreshLocalStorageSettings = () => {
-  ajax
+  fetcher
     .get(`${envConfig.API_URL}/${envConfig.API_VERSION}/settings`, {
       params: genCrudRequestQuery({ fields: ['name', 'slug', 'value'] }),
     })

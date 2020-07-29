@@ -8,7 +8,7 @@ import { RiAddLine } from 'react-icons/ri';
 import { Tag as TagEntry } from '@leaa/api/src/entrys';
 import { TagSearchBox } from '@leaa/dashboard/src/components';
 import { envConfig } from '@leaa/dashboard/src/configs';
-import { ajax } from '@leaa/dashboard/src/utils';
+import { fetcher } from '@leaa/dashboard/src/libs';
 import { IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
 
 import style from './style.module.less';
@@ -47,7 +47,7 @@ export const SelectTagId = forwardRef((props: IProps, ref: React.Ref<any>) => {
   const onCreateTag = async (name?: string) => {
     if (!name) return;
 
-    ajax
+    fetcher
       .post(`${envConfig.API_URL}/${envConfig.API_VERSION}/tags`, { name })
       .then((res: IHttpRes<TagEntry>) => {
         console.log('onCreateTag Done', res.data?.data);

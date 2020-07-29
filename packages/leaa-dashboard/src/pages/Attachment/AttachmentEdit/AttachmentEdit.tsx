@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Input } from 'antd';
 
 import { Attachment } from '@leaa/api/src/entrys';
 import { IPage, IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
-import { errorMsg, ajax, formatAttaUrl } from '@leaa/dashboard/src/utils';
+import { errorMsg, formatAttaUrl } from '@leaa/dashboard/src/utils';
 import { envConfig } from '@leaa/dashboard/src/configs';
-import { Input } from 'antd';
+import { fetcher } from '@leaa/dashboard/src/libs';
 
 import { PageCard, HtmlMeta } from '@leaa/dashboard/src/components';
 
@@ -23,7 +24,7 @@ export default (props: IPage) => {
   const onFetchItem = () => {
     setItemLoading(true);
 
-    ajax
+    fetcher
       .get(`${envConfig.API_URL}/${envConfig.API_VERSION}/${API_PATH}/${id}`)
       .then((res: IHttpRes<Attachment>) => {
         setItem(res.data.data);

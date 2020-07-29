@@ -7,7 +7,8 @@ import { AutoCompleteProps } from 'antd/es/auto-complete';
 import { CreateQueryParams } from '@nestjsx/crud-request';
 
 import { Tag as TagEntry } from '@leaa/api/src/entrys';
-import { ajax, errorMsg } from '@leaa/dashboard/src/utils';
+import { fetcher } from '@leaa/dashboard/src/libs';
+import { errorMsg } from '@leaa/dashboard/src/utils';
 import { envConfig } from '@leaa/dashboard/src/configs';
 import { IHttpRes, IHttpError, ICrudListRes } from '@leaa/dashboard/src/interfaces';
 
@@ -44,7 +45,7 @@ export const TagSearchBox = forwardRef((props: IProps, ref: React.Ref<any>) => {
     setLoading(true);
     setOptionalTags([]);
 
-    ajax
+    fetcher
       .get(`${envConfig.API_URL}/${envConfig.API_VERSION}/tags`, {
         params: {
           s: { $or: [{ name: { $cont: v } }] },

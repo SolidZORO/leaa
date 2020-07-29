@@ -6,7 +6,7 @@ import { Article, Tag } from '@leaa/api/src/entrys';
 import { IAttachmentBoxRef } from '@leaa/api/src/interfaces';
 import { ArticleUpdateOneReq } from '@leaa/api/src/dtos/article';
 import { IPage, ICommenFormRef, ISubmitData, IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
-import { msg, errorMsg, ajax } from '@leaa/dashboard/src/utils';
+import { msg, errorMsg } from '@leaa/dashboard/src/utils';
 
 import { envConfig } from '@leaa/dashboard/src/configs';
 import {
@@ -44,7 +44,7 @@ export default (props: IPage) => {
   const onFetchItem = () => {
     setItemLoading(true);
 
-    ajax
+    fetcher
       .get(`${envConfig.API_URL}/${envConfig.API_VERSION}/${API_PATH}/${id}`)
       .then((res: IHttpRes<Article>) => {
         setItem(res.data.data);
@@ -72,7 +72,7 @@ export default (props: IPage) => {
 
     console.log(data);
 
-    ajax
+    fetcher
       .patch(`${envConfig.API_URL}/${envConfig.API_VERSION}/${API_PATH}/${id}`, data)
       .then((res: IHttpRes<Article>) => {
         setItem(res.data.data);

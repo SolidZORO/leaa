@@ -7,7 +7,8 @@ import { Tooltip } from 'antd';
 import { IAttachmentParams, IAutoUpdateRelation } from '@leaa/api/src/interfaces';
 import { Attachment } from '@leaa/api/src/entrys';
 
-import { removeLangSpace, ajax, errorMsg, genCrudRequestQuery } from '@leaa/dashboard/src/utils';
+import { fetcher } from '@leaa/dashboard/src/libs';
+import { removeLangSpace, errorMsg, genCrudRequestQuery } from '@leaa/dashboard/src/utils';
 import { envConfig } from '@leaa/dashboard/src/configs';
 import { FormCard } from '@leaa/dashboard/src/components';
 import { IHttpError, IHttpRes, ICrudListRes, ICrudListQueryParams } from '@leaa/dashboard/src/interfaces';
@@ -88,7 +89,7 @@ export const AttachmentBox = (props: IProps) => {
       ],
     };
 
-    ajax
+    fetcher
       .get(`${envConfig.API_URL}/${envConfig.API_VERSION}/attachments`, { params: genCrudRequestQuery(params) })
       .then((res: IHttpRes<ICrudListRes<Attachment>>) => {
         if (!isAjaxCancelled.current) {
@@ -117,7 +118,7 @@ export const AttachmentBox = (props: IProps) => {
   const onChangeAttas = (attas: Attachment[]) => {
     setAttachments(_.orderBy(attas, ['status', 'sort'], ['desc', 'asc']) || []);
 
-    ajax
+    fetcher
       .post(`${envConfig.API_URL}/${envConfig.API_VERSION}/attachments/batch`, { attachments: attas })
       .then(() => {
         // 这里貌似没必要去拿 res 的 data 然后再设定

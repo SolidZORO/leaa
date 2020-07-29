@@ -8,7 +8,7 @@ import { envConfig } from '@leaa/dashboard/src/configs';
 import { IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
 import defaultImage from '@leaa/dashboard/src/assets/images/default-image.svg';
 
-import { ajax } from './ajax.util';
+import { fetcher } from '@leaa/dashboard/src/libs';
 import { errorMsg, msg } from './msg.util';
 
 declare type ISignatureResult = ISaveInOssSignature | ISaveInLocalSignature | undefined;
@@ -23,7 +23,7 @@ export const getSaveFilename = (originalname: string): string => {
 };
 
 export const getUploadSignature = async () => {
-  return ajax
+  return fetcher
     .get(`${envConfig.API_URL}/${envConfig.API_VERSION}/attachments/signature`)
     .then((res: IHttpRes<ISignatureResult>) => {
       if (res.data?.data && !_.isEmpty(res.data.data)) {
@@ -143,7 +143,7 @@ export const uploadFile = (file: File, { signature, ignoreMsg, attachmentParams,
   // -------- START UPLOAD --------
   formData.append('file', file);
 
-  return ajax
+  return fetcher
     .post(nextUploadEndPoint, formData, {
       onUploadProgress: (e) => {
         if (onCallback && onCallback.onUploadProgress) {

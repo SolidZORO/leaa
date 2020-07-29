@@ -4,7 +4,9 @@ import { useTranslation } from 'react-i18next';
 import { Action } from '@leaa/api/src/entrys';
 import { ActionUpdateOneReq } from '@leaa/api/src/dtos/action';
 import { IPage, ICommenFormRef, IHttpError, ISubmitData, IHttpRes } from '@leaa/dashboard/src/interfaces';
-import { ajax, errorMsg, msg } from '@leaa/dashboard/src/utils';
+
+import { fetcher } from '@leaa/dashboard/src/libs';
+import { errorMsg, msg } from '@leaa/dashboard/src/utils';
 
 import { envConfig } from '@leaa/dashboard/src/configs';
 import { PageCard, HtmlMeta, SubmitToolbar } from '@leaa/dashboard/src/components';
@@ -28,7 +30,7 @@ export default (props: IPage) => {
   const onFetchItem = () => {
     setitemLoading(true);
 
-    ajax
+    fetcher
       .get(`${envConfig.API_URL}/${envConfig.API_VERSION}/${API_PATH}/v1/${id}`)
       .then((res: IHttpRes<Action>) => {
         setItem(res.data.data);
@@ -43,7 +45,7 @@ export default (props: IPage) => {
 
     setSubmitLoading(true);
 
-    ajax
+    fetcher
       .patch(`${envConfig.API_URL}/${envConfig.API_VERSION}/${API_PATH}/v1/${id}`, data)
       .then((res: IHttpRes<Action>) => {
         setItem(res.data.data);

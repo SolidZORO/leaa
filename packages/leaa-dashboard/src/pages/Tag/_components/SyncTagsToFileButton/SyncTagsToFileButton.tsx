@@ -4,7 +4,8 @@ import { Button } from 'antd';
 import { RiRefreshLine } from 'react-icons/ri';
 
 import { TagSyncToFileRes } from '@leaa/api/src/dtos/tag';
-import { msg, ajax, errorMsg } from '@leaa/dashboard/src/utils';
+import { fetcher } from '@leaa/dashboard/src/libs';
+import { msg, errorMsg } from '@leaa/dashboard/src/utils';
 
 import { IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
 import { envConfig } from '@leaa/dashboard/src/configs';
@@ -24,7 +25,7 @@ export const SyncTagsToFileButton = (props: IProps) => {
   const onSyncTagsToFile = async () => {
     setLoading(true);
 
-    ajax
+    fetcher
       .post(`${envConfig.API_URL}/${envConfig.API_VERSION}/tags/sync-tags-to-dict-file`)
       .then((res: IHttpRes<TagSyncToFileRes>) => {
         msg(res?.data?.data?.message);

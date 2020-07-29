@@ -7,7 +7,8 @@ import cx from 'classnames';
 import { LoadingOutlined } from '@ant-design/icons';
 import { RiDeleteBin7Line, RiQuestionLine } from 'react-icons/ri';
 
-import { ajax, errorMsg, msg } from '@leaa/dashboard/src/utils';
+import { fetcher } from '@leaa/dashboard/src/libs';
+import { errorMsg, msg } from '@leaa/dashboard/src/utils';
 import { envConfig } from '@leaa/dashboard/src/configs';
 import { IHttpError, IHttpRes } from '@leaa/dashboard/src/interfaces';
 
@@ -33,7 +34,7 @@ export const TableColumnDeleteButton = (props: IProps) => {
   const onChange = () => {
     setLoading(true);
 
-    ajax
+    fetcher
       .delete(`${envConfig.API_URL}/${envConfig.API_VERSION}/${props.apiPath}/${props.id}`)
       .then((res: IHttpRes<{ id: number | string }>) => {
         msg(t('_lang:deletedSuccessfully', { id: res?.data?.data?.id }));

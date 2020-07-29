@@ -3,7 +3,8 @@ import React, { useEffect, forwardRef, useImperativeHandle, useState } from 'rea
 import { Col, Form, Input, Row } from 'antd';
 import { useTranslation } from 'react-i18next';
 
-import { ajax, errorMsg } from '@leaa/dashboard/src/utils';
+import { fetcher } from '@leaa/dashboard/src/libs';
+import { errorMsg } from '@leaa/dashboard/src/utils';
 import { AuthLoginReq } from '@leaa/api/src/dtos/auth';
 import { envConfig } from '@leaa/dashboard/src/configs';
 import { IHttpRes, IHttpError, ICaptchaResult } from '@leaa/dashboard/src/interfaces';
@@ -36,7 +37,7 @@ export const LoginForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
   };
 
   const onFetchCaptcha = async () => {
-    ajax
+    fetcher
       .get(`${envConfig.API_URL}/${envConfig.API_VERSION}/verification/captcha-for-login`)
       .then((res: IHttpRes<ICaptchaResult>) => {
         setCaptcha(res.data.data.img);

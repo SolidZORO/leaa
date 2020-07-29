@@ -8,8 +8,8 @@ import { Ax } from '@leaa/api/src/entrys';
 import { envConfig } from '@leaa/dashboard/src/configs';
 import { DEFAULT_QUERY } from '@leaa/dashboard/src/constants';
 import { IPage, ICrudListQueryParams, IHttpRes, ICrudListRes, IHttpError } from '@leaa/dashboard/src/interfaces';
+import { fetcher } from '@leaa/dashboard/src/libs';
 import {
-  ajax,
   errorMsg,
   setCrudQueryToUrl,
   transUrlQueryToCrudState,
@@ -38,7 +38,7 @@ export default (props: IPage) => {
     setCrudQuery(params);
     setListLoading(true);
 
-    ajax
+    fetcher
       .get(`${envConfig.API_URL}/${envConfig.API_VERSION}/${API_PATH}`, { params: genCrudRequestQuery(params) })
       .then((res: IHttpRes<ICrudListRes<Ax>>) => {
         setList(res.data.data);

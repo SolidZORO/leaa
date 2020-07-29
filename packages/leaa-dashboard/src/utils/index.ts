@@ -7,4 +7,3 @@ export * from './auth.util';
 export * from './table.util';
 export * from './setting.util';
 export * from './attachment.util';
-export * from './ajax.util';

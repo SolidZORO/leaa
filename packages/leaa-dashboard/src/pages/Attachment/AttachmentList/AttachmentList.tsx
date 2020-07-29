@@ -1,6 +1,5 @@
 import _ from 'lodash';
 import cx from 'classnames';
-import { Button } from 'antd';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useUpdateEffect } from 'react-use';
@@ -34,7 +33,6 @@ export default (props: IPage) => {
 
   const list = useFetch<IFetchRes<ICrudListRes<Ax>>>(
     {
-      method: 'GET',
       url: `${envConfig.API_URL}/${envConfig.API_VERSION}/${API_PATH}`,
       params: genCrudRequestQuery(crudQuery),
       crudQuery,
@@ -76,40 +74,38 @@ export default (props: IPage) => {
     >
       <HtmlMeta title={t(`${props.route?.namei18n}`)} />
 
-      {list.data?.data && (
-        <TableCard
-          crudQuery={crudQuery}
-          setCrudQuery={setCrudQuery}
-          route={props.route}
-          routerName={API_PATH}
-          columnFields={[
-            'id',
-            'title',
-            {
-              title: t('_lang:info'),
-              dataIndex: 'info',
-              sorter: true,
-              width: 250,
-              render: (text: string, record: any) => (
+      <TableCard
+        crudQuery={crudQuery}
+        setCrudQuery={setCrudQuery}
+        route={props.route}
+        routerName={API_PATH}
+        columnFields={[
+          'id',
+          'title',
+          {
+            title: t('_lang:info'),
+            dataIndex: 'info',
+            sorter: true,
+            width: 250,
+            render: (text: string, record: any) => (
+              <div>
+                <code>
+                  <strong>{record.module_name}</strong>/<span>{record.type_name}</span>
+                  <sup> {record.type_platform || ''}</sup>
+                </code>
                 <div>
-                  <code>
-                    <strong>{record.module_name}</strong>/<span>{record.type_name}</span>
-                    <sup> {record.type_platform || ''}</sup>
-                  </code>
-                  <div>
-                    {!!record.in_oss && 'oss'} {!!record.in_local && 'local'}
-                  </div>
+                  {!!record.in_oss && 'oss'} {!!record.in_local && 'local'}
                 </div>
-              ),
-            },
+              </div>
+            ),
+          },
 
-            { byte: { fieldName: 'size' } },
-            'status',
-            { action: { fieldName: 'title' } },
-          ]}
-          list={list.data?.data}
-        />
-      )}
+          { byte: { fieldName: 'size' } },
+          'status',
+          { action: { fieldName: 'title' } },
+        ]}
+        list={list.data?.data}
+      />
     </PageCard>
   );
 };

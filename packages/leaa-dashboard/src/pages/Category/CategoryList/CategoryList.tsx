@@ -8,7 +8,8 @@ import { useMount, useUpdateEffect } from 'react-use';
 
 import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { envConfig } from '@leaa/dashboard/src/configs';
-import { ajax, errorMsg } from '@leaa/dashboard/src/utils';
+import { fetcher } from '@leaa/dashboard/src/libs';
+import { errorMsg } from '@leaa/dashboard/src/utils';
 import { IPage, IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
 import { ICategoriesQuery } from '@leaa/api/src/interfaces';
 
@@ -28,7 +29,7 @@ export default (props: IPage) => {
   const onFetchList = (params: ICategoriesQuery = { expanded: true }) => {
     setTreeLoading(true);
 
-    ajax
+    fetcher
       .get(`${envConfig.API_URL}/${envConfig.API_VERSION}/${API_PATH}/tree`, { params })
       .then((res: IHttpRes<TreeItem[]>) => {
         setTree(res.data?.data);
