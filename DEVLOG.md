@@ -821,3 +821,9 @@ CST-8
 一开始 `yarn add sharp` 是不成功的，说缺少 `vips`，大概报了 `/usr/local/include/vips/vips8:35:10: fatal error: 'glib-object.h' file not found` 这种错误。
 
 然后我 `brew install vips --with-webp --with-graphicsmagick` 说参数不对，`brew install vips` 就 OK 了，但是还是装不上 sharp，后来看到[官方这边](https://sharp.pixelplumbing.com/install#chinese-mirror) 有个中国特供方案，于是 `yarn config set sharp_binary_host https://npm.taobao.org/mirrors/sharp && yarn config set sharp_libvips_binary_host https://npm.taobao.org/mirrors/sharp-libvips && yarn add sharp` 就都好了。当然其实过程还是蛮曲折的，这里只是最短路径说一下。
+
+### 2020-07-30 17:44
+
+试了一下 vercel 的新作 [useSWR](https://swr.vercel.app/) 感觉良好，让 dashboard 少些了很多诸如 `setLoading` 之类的代码。 当然啦，我只用到 useSWR 很小的一部分，很多亮点功能比如 Revalidation on focus 等我默认关闭的。
+
+录了一个体验视频在 B 站 上，[SWR by vercel 使用体验](https://www.bilibili.com/video/BV1iT4y1j75z/) 想用 useSRW 但又搞不懂什么场景下用的可以看看。P.S 整个 B 站 就我一个 SWR 视频，感觉用户量实在不多（深坑警告哈哈哈哈）。
