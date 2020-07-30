@@ -112,7 +112,7 @@ export const SelectTagId = forwardRef((props: IProps, ref: React.Ref<any>) => {
                     [style['popover-title-button--hide']]: !tagName,
                   })}
                 >
-                  <div className={cx(style['select-tag-id-wrapper'])}>
+                  <div className={cx(style['select-tag-id-comp-wrapper'])}>
                     <Button onClick={() => onCreateTag(tagName)}>{t('_comp:SelectTagId.createAndAdd')}</Button>
                   </div>
                 </div>

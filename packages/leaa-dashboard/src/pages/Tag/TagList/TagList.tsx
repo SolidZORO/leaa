@@ -76,12 +76,15 @@ export default (props: IPage) => {
       <HtmlMeta title={t(`${props.route?.namei18n}`)} />
 
       <TableCard
-        crudQuery={crudQuery}
-        setCrudQuery={setCrudQuery}
         route={props.route}
         routerName={API_PATH}
-        columnFields={['id', 'name', 'views', 'createdAt', { action: { fieldName: 'title' } }]}
+        crudQuery={crudQuery}
+        setCrudQuery={setCrudQuery}
+        //
         list={list.data?.data}
+        mutate={list.mutate}
+        //
+        columnFields={['id', 'name', 'views', 'createdAt', { action: { fieldName: 'title' } }]}
       />
 
       <div className={style['sync-tags-to-file-button-wrapper']}>

@@ -91,12 +91,15 @@ export default (props: IPage) => {
       <HtmlMeta title={t(`${props.route?.namei18n}`)} />
 
       <TableCard
-        crudQuery={crudQuery}
-        setCrudQuery={setCrudQuery}
         route={props.route}
         routerName={API_PATH}
-        columnFields={['id', 'name', 'slug', 'createdAt', { action: { fieldName: 'name' } }]}
+        crudQuery={crudQuery}
+        setCrudQuery={setCrudQuery}
+        //
         list={list.data?.data}
+        mutate={list.mutate}
+        //
+        columnFields={['id', 'name', 'slug', 'createdAt', { action: { fieldName: 'name' } }]}
       />
     </PageCard>
   );

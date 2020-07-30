@@ -15,7 +15,7 @@ import {
 } from '@leaa/dashboard/src/interfaces';
 
 import { DEFAULT_PAGE_SIZE_OPTIONS } from '@leaa/dashboard/src/constants';
-import { formatOrderSort, calcTableSortOrder, transUrlQueryToCrudState } from '@leaa/dashboard/src/utils';
+import { formatOrderSort, calcTableSortOrder } from '@leaa/dashboard/src/utils';
 import { Table, Tag } from 'antd';
 import { TableProps } from 'antd/es/table/Table';
 import {
@@ -43,6 +43,7 @@ interface IProps<T> extends TableProps<T> {
   crudQuery: ICrudListQueryParams;
   setCrudQuery: (obj: ICrudListQueryParams) => void;
   route: IRouteItem;
+  mutate?: (data?: any, shouldRevalidate?: boolean) => Promise<any | undefined>;
 }
 
 export const TableCard = <T extends any>(props: IProps<T>) => {
@@ -201,7 +202,7 @@ export const TableCard = <T extends any>(props: IProps<T>) => {
           id={record.id}
           tipsTitle={options?.fieldName ? record[options?.fieldName] : record.title}
           apiPath={props.routerName}
-          onSuccessCallback={() => props.setCrudQuery(transUrlQueryToCrudState(window))}
+          onSuccessCallback={() => props.mutate && props.mutate()}
         />
       ),
     }),

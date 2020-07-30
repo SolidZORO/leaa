@@ -75,10 +75,14 @@ export default (props: IPage) => {
       <HtmlMeta title={t(`${props.route?.namei18n}`)} />
 
       <TableCard
-        crudQuery={crudQuery}
-        setCrudQuery={setCrudQuery}
         route={props.route}
         routerName={API_PATH}
+        crudQuery={crudQuery}
+        setCrudQuery={setCrudQuery}
+        //
+        list={list.data?.data}
+        mutate={list.mutate}
+        //
         columnFields={[
           'id',
           'title',
@@ -104,7 +108,6 @@ export default (props: IPage) => {
           'status',
           { action: { fieldName: 'title' } },
         ]}
-        list={list.data?.data}
       />
     </PageCard>
   );

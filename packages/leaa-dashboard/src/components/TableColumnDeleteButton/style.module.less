@@ -8,6 +8,16 @@
     height: 24px;
     vertical-align: -7px;
 
+    &:focus,
+    &:focus-within,
+    &:active,
+    &:hover {
+      border-color: @error-color;
+      color: @error-color;
+      //color: #fff;
+      //background-color: lighten(@error-color, 44%);
+    }
+
     svg {
       vertical-align: 1px;
     }
