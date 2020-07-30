@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.10.0](https://github.com/SolidZORO/leaa/compare/v3.9.0...v3.10.0) (2020-07-30)
+
+### Bug Fixes
+
+- avoid all props.history.push fn memory op leak ([e2e426e](https://github.com/SolidZORO/leaa/commit/e2e426e4b9d522ec7c07dbf13a8578652fa4abe9))
+- fixed cp public/assets ([39af580](https://github.com/SolidZORO/leaa/commit/39af58080b6c1b38f1e2f1dab62c1fb591897bf3))
+- fixed xss types ([daa5f32](https://github.com/SolidZORO/leaa/commit/daa5f32f89c5b133cdc97e4a6fa02ad579a16515))
+- switch language lang-flag padding ([ebd73a1](https://github.com/SolidZORO/leaa/commit/ebd73a174959a60cd7e99f9a9461a21808582abe))
+- use `formatAttaUrl` to `UserAvatar` ([6e093af](https://github.com/SolidZORO/leaa/commit/6e093af4dbe42962186d2cfc644bd590e828abb4))
+
+### Features
+
+- add atta view-only page ([8b4f31d](https://github.com/SolidZORO/leaa/commit/8b4f31d9dc8c9f374cb91a8cbb68b583f2bc4a73))
+- add default image ([7705c32](https://github.com/SolidZORO/leaa/commit/7705c32996621b7d2424af3fa3cd6547e1ad811d))
+- add image 2x trans 1x ([d229099](https://github.com/SolidZORO/leaa/commit/d229099f872d69a67a27962c2ab0313411d85b09))
+- api .env add DEFAULT IMAGE and AVATAR ([21b696d](https://github.com/SolidZORO/leaa/commit/21b696d6e6b179d5d3e1287c9c6c767464bdfe35))
+- comp `TableCard` add `mutate` prop ([d1d25a3](https://github.com/SolidZORO/leaa/commit/d1d25a37d118af3f7e8e55528b5bce143e2c0a4a))
+- container add localtime and timezone ([79abc8f](https://github.com/SolidZORO/leaa/commit/79abc8f1eb13042a0ee47abec12f620c931ad623))
+- use SWR for part modules ([694f56c](https://github.com/SolidZORO/leaa/commit/694f56c8df0fb8ab0b2dc1cbd92aa22b76f333e8))
+
 # [3.9.0](https://github.com/SolidZORO/leaa/compare/v3.8.2...v3.9.0) (2020-07-06)
 
 **Note:** Version bump only for package leaa
