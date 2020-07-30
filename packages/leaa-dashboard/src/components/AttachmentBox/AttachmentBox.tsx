@@ -42,7 +42,7 @@ interface IProps {
  * @ideaNotes
  * 我的想法是这样的，AttachmentBox（下文叫 ABOX）只管上传文件，传完写入 AttachmentTable。
  *
- * 下面是 attachmentParams 范例（fetcher get 那边会配合 genCrudRequestQuery 做 search）
+ * 下面是 attachmentParams 范例（ajax get 那边会配合 genCrudRequestQuery 做 search）
  * {
  *    type: 'image',
  *    moduleId: item?.id,
@@ -52,7 +52,7 @@ interface IProps {
  * }
  *
  * 你传什么 attachmentParams，那么 AttachmentTable 就存什么，把权利完全交给 ABOX 控制
- * 所以每个 ABOX 都是独立的，有几个 ABOX 就意味着这个页面要发几个 request 过去 fetchList，而不是 API 那边事先 query 好丢出来。
+ * 所以每个 ABOX 都是独立的，有几个 ABOX 就意味着这个页面要发几个 ajax 过去 fetchList，而不是 API 那边事先 query 好丢出来。
  *
  * 之前想着给 moduleTable <--> attachmentTable 做 M2M 关联表，
  * 但这样其实有个问题，当一个页面有多个 ABOX 的时候，每次 POST 这个 M2M 的时候还要把所有 ABOX 的 data 拿出来合并一起 POST，
@@ -121,7 +121,7 @@ export const AttachmentBox = (props: IProps) => {
     fetcher
       .post(`${envConfig.API_URL}/${envConfig.API_VERSION}/attachments/batch`, { attachments: attas })
       .then(() => {
-        // 这里貌似没必要去拿 res 的 data 然后再设定
+        // 这里没必要去拿 res 的 data 然后再设定
         if (props.onChangeAttasCallback) props.onChangeAttasCallback(attas);
         if (props.onDeleteAttaCallback) props.onDeleteAttaCallback();
       })

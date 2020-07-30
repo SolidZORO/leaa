@@ -1,10 +1,9 @@
-import React, { useState, useEffect, forwardRef, useCallback, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
-import cx from 'classnames';
 import _ from 'lodash';
-import { AutoComplete } from 'antd';
+import cx from 'classnames';
+import React, { useState, useEffect, forwardRef, useCallback, useRef } from 'react';
 import { AutoCompleteProps } from 'antd/es/auto-complete';
 import { CreateQueryParams } from '@nestjsx/crud-request';
+import { AutoComplete } from 'antd';
 
 import { Tag as TagEntry } from '@leaa/api/src/entrys';
 import { fetcher } from '@leaa/dashboard/src/libs';
@@ -27,22 +26,17 @@ interface IProps extends AutoCompleteProps {
 const DEBOUNCE_MS = 300;
 
 export const TagSearchBox = forwardRef((props: IProps, ref: React.Ref<any>) => {
-  const { t } = useTranslation();
-
   const isAjaxCancelled = useRef(false);
 
   const [inputKey, setInputKey] = useState<string | undefined>(props.value);
   const [optionalTags, setOptionalTags] = useState<TagEntry[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
 
   const init = () => {
-    setLoading(false);
     setInputKey(undefined);
     setOptionalTags([]);
   };
 
   const onFetchTags = (v?: string) => {
-    setLoading(true);
     setOptionalTags([]);
 
     fetcher
@@ -59,8 +53,7 @@ export const TagSearchBox = forwardRef((props: IProps, ref: React.Ref<any>) => {
 
         return undefined;
       })
-      .catch(httpErrorMsg)
-      .finally(() => isAjaxCancelled.current && setLoading(false));
+      .catch(httpErrorMsg);
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
