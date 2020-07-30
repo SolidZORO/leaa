@@ -9,7 +9,7 @@ import { TreeItem } from 'react-sortable-tree';
 import { envConfig } from '@leaa/dashboard/src/configs';
 import { IHttpRes } from '@leaa/dashboard/src/interfaces';
 import { ICategoriesQuery } from '@leaa/api/src/interfaces';
-import { httpErrorMsg, setCrudQueryToUrl } from '@leaa/dashboard/src/utils';
+import { httpErrorMsg } from '@leaa/dashboard/src/utils';
 import { useSWR } from '@leaa/dashboard/src/libs';
 
 import style from './style.module.less';
@@ -39,10 +39,7 @@ export const SelectCategoryIdByTree = forwardRef((props: IProps, ref: React.Ref<
       url: `${envConfig.API_URL}/${envConfig.API_VERSION}/categories/tree`,
       params: { expanded: true, parentSlug: props?.parentSlug } as ICategoriesQuery,
     },
-    {
-      onError: httpErrorMsg,
-      onSuccess: (res) => setCrudQueryToUrl({ window, query: res.config.crudQuery, replace: true }),
-    },
+    { onError: httpErrorMsg },
   );
 
   const onChange = (v?: string | string[] | null) => {

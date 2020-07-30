@@ -11,7 +11,7 @@ import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
 import { ArticleUpdateOneReq } from '@leaa/api/src/dtos/article';
 
 import { FormCard, EntryInfoDate } from '@leaa/dashboard/src/components';
-import { FORM_SIZE } from '@leaa/dashboard/src/constants';
+import { FORM_SIZE, FORMAT_DATA_TIME } from '@leaa/dashboard/src/constants';
 
 import style from './style.module.less';
 
@@ -34,9 +34,7 @@ export const ArticleExtForm = forwardRef((props: IProps, ref: React.Ref<any>) =>
   };
 
   const onRefreshForm = (item?: Article) => {
-    if (!item) {
-      return form.setFieldsValue({});
-    }
+    if (!item) return form.setFieldsValue({});
 
     form.resetFields();
     form.setFieldsValue(formatFieldsToMoment(item, { fields: ['released_at', 'updated_at'] }));
@@ -64,11 +62,15 @@ export const ArticleExtForm = forwardRef((props: IProps, ref: React.Ref<any>) =>
 
             <Col xs={24} sm={8}>
               <Form.Item name="released_at" label={t('_lang:releasedAt')}>
-                <DatePicker showTime />
+                <DatePicker showTime className="g-date-picker-block" />
               </Form.Item>
 
               <Form.Item label={t('_lang:updatedAt')}>
-                <DatePicker showTime disabled value={moment(props.item?.updated_at)} />
+                <Input
+                  placeholder={t('_lang:updatedAt')}
+                  value={props.item?.updated_at && moment(props.item?.updated_at).format(FORMAT_DATA_TIME).toString()}
+                  disabled
+                />
               </Form.Item>
             </Col>
           </Row>

@@ -22,7 +22,6 @@ export default (props: IPage) => {
   const infoFormRef = useRef<ICommenFormRef<ArticleUpdateOneReq>>(null);
 
   const [submitLoading, setSubmitLoading] = useState(false);
-
   const onCreateItem = async () => {
     const infoData: ISubmitData<ArticleUpdateOneReq> = await infoFormRef.current?.onValidateForm();
     if (!infoData) return;
@@ -34,11 +33,12 @@ export default (props: IPage) => {
       .post(`${envConfig.API_URL}/${envConfig.API_VERSION}/${API_PATH}`, data)
       .then((res: IHttpRes<Article>) => {
         msg(t('_lang:createdSuccessfully'));
-
         props.history.push(`/${API_PATH}/${res.data.data?.id}`);
       })
-      .catch(httpErrorMsg)
-      .finally(() => setSubmitLoading(false));
+      .catch((err) => {
+        setSubmitLoading(false);
+        httpErrorMsg(err);
+      });
   };
 
   return (

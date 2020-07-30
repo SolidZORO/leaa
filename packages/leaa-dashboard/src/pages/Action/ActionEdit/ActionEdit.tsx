@@ -40,7 +40,6 @@ export default (props: IPage) => {
       .patch(`${envConfig.API_URL}/${envConfig.API_VERSION}/${API_PATH}/v1/${id}`, data)
       .then((res: IHttpRes<Action>) => {
         item.mutate(res, false);
-
         msg(t('_lang:updatedSuccessfully'));
       })
       .catch(httpErrorMsg)

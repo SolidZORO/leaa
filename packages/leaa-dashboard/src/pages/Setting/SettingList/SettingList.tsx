@@ -140,7 +140,6 @@ export default (props: IPage) => {
       .post(`${envConfig.API_URL}/${envConfig.API_VERSION}/${API_PATH}/batch`, { settings: data })
       .then((res: IHttpRes<{ id: number | string }>) => {
         msg(t('_lang:updatedSuccessfully'));
-        //
         onFetchList(crudQuery);
         onCloseModalVisible();
       })

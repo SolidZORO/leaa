@@ -88,18 +88,20 @@ export default (props: IPage) => {
     fetcher
       .post(`${envConfig.API_URL}/${envConfig.API_VERSION}/auth/login`, submitData)
       .then((res: IHttpRes<User>) => {
+        setSubmitLoading(false);
+
         if (!isAjaxCancelled.current && res.data.data?.authToken) {
           setLogin(res.data.data);
           setAjaxToken(res.data.data.authToken);
         }
       })
       .catch((err) => {
+        // setSubmitLoading(false);
         httpErrorMsg(err);
         setLoginErrorCount(loginErrorCount + 1);
 
         return props.history.push('/login');
-      })
-      .finally(() => !isAjaxCancelled.current && setSubmitLoading(false));
+      });
   };
 
   const onBack = () => {

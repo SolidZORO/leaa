@@ -46,7 +46,6 @@ export const UploadUserAvatar = (props: IProps) => {
         .then((res: IHttpRes<User>) => {
           setExtAurl(res.data.data.avatar_url);
           if (props.onUpdateAvatarCallback) props.onUpdateAvatarCallback(avatar_url);
-
           msg(t('_lang:updatedSuccessfully'));
         })
         .catch(httpErrorMsg)

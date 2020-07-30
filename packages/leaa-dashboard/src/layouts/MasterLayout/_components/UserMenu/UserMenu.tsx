@@ -17,9 +17,7 @@ export const UserMenu = (props: IProps): JSX.Element => {
   const { t } = useTranslation();
 
   const onLogout = (): void => {
-    if (removeAuth()) {
-      return props.history.push(LOGOUT_REDIRECT_URL);
-    }
+    if (removeAuth()) return props.history.push(LOGOUT_REDIRECT_URL);
 
     const messageText = t('_comp:UserMenu.logoutFaild');
     console.log(messageText);

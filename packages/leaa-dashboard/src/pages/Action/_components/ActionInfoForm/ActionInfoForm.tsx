@@ -9,8 +9,9 @@ import { IOnValidateFormResult } from '@leaa/dashboard/src/interfaces';
 import { errorMsg } from '@leaa/dashboard/src/utils';
 
 import { EntryInfoDate, FormCard } from '@leaa/dashboard/src/components';
-import { FORM_SIZE } from '@leaa/dashboard/src/constants';
+import { FORM_SIZE, FORMAT_DATA_TIME } from '@leaa/dashboard/src/constants';
 
+import moment from 'moment';
 import style from './style.module.less';
 
 interface IProps {
@@ -89,8 +90,12 @@ export const ActionInfoForm = forwardRef((props: IProps, ref: React.Ref<any>) =>
             </Col>
 
             <Col xs={24} sm={6}>
-              <Form.Item name="updated_at" label={t('_lang:updatedAt')}>
-                <Input disabled placeholder={t('_lang:updated_at')} />
+              <Form.Item label={t('_lang:updatedAt')}>
+                <Input
+                  placeholder={t('_lang:updatedAt')}
+                  value={props.item?.updated_at && moment(props.item?.updated_at).format(FORMAT_DATA_TIME).toString()}
+                  disabled
+                />
               </Form.Item>
             </Col>
           </Row>

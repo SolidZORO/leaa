@@ -47,15 +47,6 @@ export default (props: IPage) => {
     else setCrudQuery(DEFAULT_QUERY);
   }, [props.history.location.key]);
 
-  // useUpdateEffect(() => {
-  //   // if (_.isEqual(crudQuery, DEFAULT_QUERY)) list.mutate();
-  //   // else setCrudQuery(DEFAULT_QUERY);
-  //   list.mutate();
-  //   // setCrudQuery(DEFAULT_QUERY);
-  // }, [crudQuery]);
-
-  console.log('QQQQQ', props.history.location.key, crudQuery);
-
   return (
     <PageCard
       route={props.route}
