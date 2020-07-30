@@ -1,11 +1,11 @@
 import _ from 'lodash';
 import { notification } from 'antd';
 
-import { ISetting, IHttpRes, IHttpError, ICrudListRes } from '@leaa/dashboard/src/interfaces';
+import { ISetting, IHttpRes, ICrudListRes } from '@leaa/dashboard/src/interfaces';
 import { fetcher } from '@leaa/dashboard/src/libs';
 import { envConfig } from '@leaa/dashboard/src/configs';
 import { Setting } from '@leaa/api/src/entrys';
-import { errorMsg } from '@leaa/dashboard/src/utils/msg.util';
+import { httpErrorMsg } from '@leaa/dashboard/src/utils/msg.util';
 import { genCrudRequestQuery } from '@leaa/dashboard/src/utils/crud.util';
 
 export const refreshLocalStorageSettings = () => {
@@ -19,7 +19,7 @@ export const refreshLocalStorageSettings = () => {
         localStorage.setItem('settings', JSON.stringify(settings));
       }
     })
-    .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message));
+    .catch(httpErrorMsg);
 };
 
 export const getLocalStorageSettings = (params: { key: string; disableNotification?: boolean }): ISetting => {

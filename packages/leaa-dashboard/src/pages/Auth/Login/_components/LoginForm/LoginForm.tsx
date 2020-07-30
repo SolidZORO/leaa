@@ -4,10 +4,10 @@ import { Col, Form, Input, Row } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 import { fetcher } from '@leaa/dashboard/src/libs';
-import { errorMsg } from '@leaa/dashboard/src/utils';
+import { httpErrorMsg } from '@leaa/dashboard/src/utils';
 import { AuthLoginReq } from '@leaa/api/src/dtos/auth';
 import { envConfig } from '@leaa/dashboard/src/configs';
-import { IHttpRes, IHttpError, ICaptchaResult } from '@leaa/dashboard/src/interfaces';
+import { IHttpRes, ICaptchaResult } from '@leaa/dashboard/src/interfaces';
 import { FORM_SIZE } from '@leaa/dashboard/src/constants';
 
 import style from './style.module.less';
@@ -42,9 +42,7 @@ export const LoginForm = forwardRef((props: IProps, ref: React.Ref<any>) => {
       .then((res: IHttpRes<ICaptchaResult>) => {
         setCaptcha(res.data.data.img);
       })
-      .catch((err: IHttpError) => {
-        errorMsg(err.response?.data?.message || err.message);
-      });
+      .catch(httpErrorMsg);
   };
 
   useEffect(() => {

@@ -23,7 +23,7 @@ export const ErrorCard = (props: IProps) => {
   useEffect(() => {
     if (message) {
       // @ts-ignore
-      notification.error({ message: errorMsg(message), className: style['error-card-wrapper'] });
+      notification.error({ message: errorMsg(message), className: style['error-card-comp-wrapper'] });
     }
   }, [message]);
 

@@ -8,9 +8,9 @@ import { CreateQueryParams } from '@nestjsx/crud-request';
 
 import { Tag as TagEntry } from '@leaa/api/src/entrys';
 import { fetcher } from '@leaa/dashboard/src/libs';
-import { errorMsg } from '@leaa/dashboard/src/utils';
+import { httpErrorMsg } from '@leaa/dashboard/src/utils';
 import { envConfig } from '@leaa/dashboard/src/configs';
-import { IHttpRes, IHttpError, ICrudListRes } from '@leaa/dashboard/src/interfaces';
+import { IHttpRes, ICrudListRes } from '@leaa/dashboard/src/interfaces';
 
 import style from './style.module.less';
 
@@ -59,10 +59,7 @@ export const TagSearchBox = forwardRef((props: IProps, ref: React.Ref<any>) => {
 
         return undefined;
       })
-      .catch((err: IHttpError) => {
-        // console.log(err.response?.data?.message || err.message);
-        errorMsg(err.response?.data?.message || err.message);
-      })
+      .catch(httpErrorMsg)
       .finally(() => isAjaxCancelled.current && setLoading(false));
   };
 
@@ -98,7 +95,7 @@ export const TagSearchBox = forwardRef((props: IProps, ref: React.Ref<any>) => {
   }, []);
 
   return (
-    <div className={cx(style['tag-search-box-wrapper'], props.className)}>
+    <div className={cx(style['tag-search-box-comp-wrapper'], props.className)}>
       <div className={cx(style['container'])}>
         <AutoComplete
           // backfill

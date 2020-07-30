@@ -46,13 +46,13 @@ export const IdTag = (props: IProps) => {
   return (
     <div
       className={cx(
-        style['id-tag-wrapper'],
+        style['id-tag-comp-wrapper'],
         props.className,
-        style[`id-tag-wrapper--size-${props.size}`],
+        style[`id-tag-comp-wrapper--size-${props.size}`],
         'g-id-tag-wrapper',
         {
-          [style['id-tag-wrapper--empty']]: !props.id,
-          [style['id-tag-wrapper--link-normal-color']]: props.linkNormalColor,
+          [style['id-tag-comp-wrapper--empty']]: !props.id,
+          [style['id-tag-comp-wrapper--link-normal-color']]: props.linkNormalColor,
         },
       )}
     >

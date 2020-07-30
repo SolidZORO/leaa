@@ -8,9 +8,9 @@ import { LoadingOutlined } from '@ant-design/icons';
 import { RiDeleteBin7Line, RiQuestionLine } from 'react-icons/ri';
 
 import { fetcher } from '@leaa/dashboard/src/libs';
-import { errorMsg, msg } from '@leaa/dashboard/src/utils';
+import { msg, httpErrorMsg } from '@leaa/dashboard/src/utils';
 import { envConfig } from '@leaa/dashboard/src/configs';
-import { IHttpError, IHttpRes } from '@leaa/dashboard/src/interfaces';
+import { IHttpRes } from '@leaa/dashboard/src/interfaces';
 
 import { IdTag } from '../IdTag/IdTag';
 
@@ -41,14 +41,14 @@ export const TableColumnDeleteButton = (props: IProps) => {
 
         if (props.onSuccessCallback) props.onSuccessCallback();
       })
-      .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
+      .catch(httpErrorMsg)
       .finally(() => setLoading(false));
 
     if (props.onChange) props.onChange();
   };
 
   return (
-    <div className={cx(style['table-column-delete-button-wrapper'], props.className)}>
+    <div className={cx(style['table-column-delete-button-comp-wrapper'], props.className)}>
       <Popconfirm
         overlayClassName={style['popconfirm-wrapper']}
         icon={null}

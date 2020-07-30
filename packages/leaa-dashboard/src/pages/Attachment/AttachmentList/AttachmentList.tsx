@@ -9,14 +9,14 @@ import { envConfig } from '@leaa/dashboard/src/configs';
 import { DEFAULT_QUERY } from '@leaa/dashboard/src/constants';
 import { IPage, ICrudListQueryParams, ICrudListRes, IFetchRes } from '@leaa/dashboard/src/interfaces';
 import {
-  errorMsg,
   setCrudQueryToUrl,
   transUrlQueryToCrudState,
   genCrudRequestQuery,
   genCrudQuerySearch,
+  httpErrorMsg,
 } from '@leaa/dashboard/src/utils';
 import { PageCard, HtmlMeta, TableCard, SearchInput } from '@leaa/dashboard/src/components';
-import { useFetch } from '@leaa/dashboard/src/libs';
+import { useSWR } from '@leaa/dashboard/src/libs';
 
 import style from './style.module.less';
 
@@ -31,14 +31,14 @@ export default (props: IPage) => {
     ...transUrlQueryToCrudState(window),
   });
 
-  const list = useFetch<IFetchRes<ICrudListRes<Ax>>>(
+  const list = useSWR<IFetchRes<ICrudListRes<Ax>>>(
     {
       url: `${envConfig.API_URL}/${envConfig.API_VERSION}/${API_PATH}`,
       params: genCrudRequestQuery(crudQuery),
       crudQuery,
     },
     {
-      onError: (err) => errorMsg(err.message),
+      onError: httpErrorMsg,
       onSuccess: (res) => setCrudQueryToUrl({ window, query: res.config.crudQuery, replace: true }),
     },
   );
@@ -69,7 +69,7 @@ export default (props: IPage) => {
           }}
         />
       }
-      className={style['wapper']}
+      className={style['page-card-wapper']}
       loading={list.loading}
     >
       <HtmlMeta title={t(`${props.route?.namei18n}`)} />

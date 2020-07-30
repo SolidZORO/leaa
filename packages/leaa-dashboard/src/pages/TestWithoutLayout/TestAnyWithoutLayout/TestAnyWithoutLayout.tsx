@@ -2,7 +2,7 @@ import React from 'react';
 import { IPage } from '@leaa/dashboard/src/interfaces';
 import { RiMenuLine, RiCheckboxCircleLine } from 'react-icons/ri';
 import { FiCheckCircle } from 'react-icons/fi';
-import { useFetch } from '@leaa/dashboard/src/libs';
+import { useSWR } from '@leaa/dashboard/src/libs';
 import { envConfig } from '@leaa/dashboard/src/configs';
 
 import { CrudRequestTest as Test } from './_components/CrudRequestTest/CrudRequestTest';
@@ -10,7 +10,7 @@ import { CrudRequestTest as Test } from './_components/CrudRequestTest/CrudReque
 const API_PATH = 'attachments';
 
 export default (props: IPage) => {
-  const { data, loading: aa } = useFetch<string[]>({
+  const { data, loading: aa } = useSWR<string[]>({
     // url: '/api/data',
     url: `${envConfig.API_URL}/${envConfig.API_VERSION}/${API_PATH}`,
   });

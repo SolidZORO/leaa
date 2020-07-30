@@ -12,13 +12,12 @@ import {
   ICrudListQueryParams,
   IHttpRes,
   ICrudListRes,
-  IHttpError,
   ICommenFormRef,
   ISubmitData,
 } from '@leaa/dashboard/src/interfaces';
 
 import { fetcher } from '@leaa/dashboard/src/libs';
-import { errorMsg, genCrudRequestQuery, msg } from '@leaa/dashboard/src/utils';
+import { errorMsg, genCrudRequestQuery, msg, httpErrorMsg } from '@leaa/dashboard/src/utils';
 import { PageCard, HtmlMeta, SubmitToolbar } from '@leaa/dashboard/src/components';
 
 import { SettingUpdateManyReq, SettingUpdateOneReq, SettingCreateOneReq } from '@leaa/api/src/dtos/setting';
@@ -79,7 +78,7 @@ export default (props: IPage) => {
       .then((res: IHttpRes<ICrudListRes<Setting>>) => {
         setList(res.data.data?.data);
       })
-      .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
+      .catch(httpErrorMsg)
       .finally(() => setListLoading(false));
   };
 
@@ -101,7 +100,7 @@ export default (props: IPage) => {
         onFetchList(crudQuery);
         onCloseModalVisible();
       })
-      .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
+      .catch(httpErrorMsg)
       .finally(() => setCreateLoading(false));
   };
 
@@ -124,7 +123,7 @@ export default (props: IPage) => {
         onFetchList(crudQuery);
         onCloseModalVisible();
       })
-      .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
+      .catch(httpErrorMsg)
       .finally(() => setUpdateLoading(false));
   };
 
@@ -145,7 +144,7 @@ export default (props: IPage) => {
         onFetchList(crudQuery);
         onCloseModalVisible();
       })
-      .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
+      .catch(httpErrorMsg)
       .finally(() => setBatchUpdatesLoading(false));
   };
 
@@ -165,7 +164,7 @@ export default (props: IPage) => {
         onFetchList(crudQuery);
         onCloseModalVisible();
       })
-      .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
+      .catch(httpErrorMsg)
       .finally(() => setDeleteLoading(false));
   };
 
@@ -189,7 +188,7 @@ export default (props: IPage) => {
           </Button>
         </>
       }
-      className={style['wapper']}
+      className={style['page-card-wapper']}
       loading={listLoading}
     >
       <HtmlMeta title={t(`${props.route?.namei18n}`)} />

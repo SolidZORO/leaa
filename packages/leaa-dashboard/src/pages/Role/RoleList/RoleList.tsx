@@ -3,20 +3,20 @@ import cx from 'classnames';
 import { Link } from 'react-router-dom';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useMount, useUpdateEffect } from 'react-use';
+import { useUpdateEffect } from 'react-use';
 
 import { Role, Permission } from '@leaa/api/src/entrys';
 import { envConfig } from '@leaa/dashboard/src/configs';
 import { DEFAULT_QUERY } from '@leaa/dashboard/src/constants';
-import { IPage, ICrudListQueryParams, IHttpRes, ICrudListRes, IHttpError } from '@leaa/dashboard/src/interfaces';
-import { fetcher } from '@leaa/dashboard/src/libs';
+import { IPage, ICrudListQueryParams, ICrudListRes, IFetchRes } from '@leaa/dashboard/src/interfaces';
+import { useSWR } from '@leaa/dashboard/src/libs';
 import {
-  errorMsg,
   setCrudQueryToUrl,
   transUrlQueryToCrudState,
   genCrudRequestQuery,
   genCrudQuerySearch,
   calcTableSortOrder,
+  httpErrorMsg,
 } from '@leaa/dashboard/src/utils';
 import { PageCard, HtmlMeta, TableCard, SearchInput } from '@leaa/dashboard/src/components';
 
@@ -28,53 +28,35 @@ const API_PATH = 'roles';
 
 export default (props: IPage) => {
   const { t } = useTranslation();
-  const [mounted, setMounted] = useState(false);
 
   const [crudQuery, setCrudQuery] = useState<ICrudListQueryParams>({
     ...DEFAULT_QUERY,
     ...transUrlQueryToCrudState(window),
   });
 
-  const [listLoading, setListLoading] = useState(false);
+  const list = useSWR<IFetchRes<ICrudListRes<Role>>>(
+    {
+      url: `${envConfig.API_URL}/${envConfig.API_VERSION}/${API_PATH}`,
+      params: genCrudRequestQuery(crudQuery),
+      crudQuery,
+    },
+    {
+      onError: httpErrorMsg,
+      onSuccess: (res) => setCrudQueryToUrl({ window, query: res.config.crudQuery, replace: true }),
+    },
+  );
 
-  const [list, setList] = useState<ICrudListRes<Role>>();
-  const [prmissions, setPrmissions] = useState<Permission[] | undefined>([]);
-
-  const onFetchList = (params: ICrudListQueryParams) => {
-    setCrudQuery(params);
-    setListLoading(true);
-
-    fetcher
-      .get(`${envConfig.API_URL}/${envConfig.API_VERSION}/${API_PATH}`, { params: genCrudRequestQuery(params) })
-      .then((res: IHttpRes<ICrudListRes<Role>>) => {
-        setList(res.data.data);
-
-        setCrudQueryToUrl({ window, query: params, replace: true });
-      })
-      .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
-      .finally(() => setListLoading(false));
-  };
-
-  const onFetchpPrmissions = () => {
-    fetcher
-      .get(`${envConfig.API_URL}/${envConfig.API_VERSION}/permissions`)
-      .then((res: IHttpRes<ICrudListRes<Permission>>) => {
-        setPrmissions(res.data.data?.data);
-      })
-      .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message));
-  };
-
-  useMount(() => {
-    onFetchpPrmissions();
-    onFetchList(crudQuery);
-  });
+  const prmissions = useSWR<IFetchRes<ICrudListRes<Permission>>>(
+    { url: `${envConfig.API_URL}/${envConfig.API_VERSION}/permissions` },
+    { onError: httpErrorMsg },
+  );
 
   useUpdateEffect(() => {
-    onFetchpPrmissions();
-    onFetchList(crudQuery);
+    if (_.isEqual(crudQuery, DEFAULT_QUERY)) {
+      list.mutate();
+      prmissions.mutate();
+    } else setCrudQuery(DEFAULT_QUERY);
   }, [props.history.location.key]);
-
-  useUpdateEffect(() => (!_.isEqual(crudQuery, DEFAULT_QUERY) ? onFetchList(crudQuery) : undefined), [crudQuery]);
 
   return (
     <PageCard
@@ -97,45 +79,43 @@ export default (props: IPage) => {
           }}
         />
       }
-      className={style['wapper']}
-      loading={listLoading}
+      className={style['page-card-wapper']}
+      loading={list.loading}
     >
       <HtmlMeta title={t(`${props.route?.namei18n}`)} />
 
-      {list?.data && (
-        <TableCard
-          crudQuery={crudQuery}
-          setCrudQuery={setCrudQuery}
-          route={props.route}
-          routerName={API_PATH}
-          columnFields={[
-            'id',
-            {
-              title: t('_lang:name'),
-              dataIndex: 'name',
-              sorter: true,
-              sortOrder: calcTableSortOrder('id', crudQuery.sort),
-              render: (text: string, record: Role) => (
-                <Link to={`${props.route.path}/${record.id}`}>
-                  <span>
-                    {record.name}{' '}
-                    <sup>
-                      <RolePermissionLength
-                        rolePermissionsLength={record.permissions?.length}
-                        allPermissionsLength={prmissions?.length}
-                      />
-                    </sup>
-                  </span>
-                </Link>
-              ),
-            },
-            'slug',
-            'createdAt',
-            { action: { fieldName: 'name' } },
-          ]}
-          list={list}
-        />
-      )}
+      <TableCard
+        crudQuery={crudQuery}
+        setCrudQuery={setCrudQuery}
+        route={props.route}
+        routerName={API_PATH}
+        columnFields={[
+          'id',
+          {
+            title: t('_lang:name'),
+            dataIndex: 'name',
+            sorter: true,
+            sortOrder: calcTableSortOrder('id', crudQuery.sort),
+            render: (text: string, record: Role) => (
+              <Link to={`${props.route.path}/${record.id}`}>
+                <span>
+                  {record.name}{' '}
+                  <sup>
+                    <RolePermissionLength
+                      rolePermissionsLength={record.permissions?.length}
+                      allPermissionsLength={prmissions.data?.data?.data?.length}
+                    />
+                  </sup>
+                </span>
+              </Link>
+            ),
+          },
+          'slug',
+          'createdAt',
+          { action: { fieldName: 'name' } },
+        ]}
+        list={list.data?.data}
+      />
     </PageCard>
   );
 };

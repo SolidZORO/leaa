@@ -11,7 +11,7 @@ export default (props: IPage) => {
   const { t } = useTranslation();
 
   return (
-    <PageCard route={props.route} title="@CREATE" className={style['wapper']} loading={false}>
+    <PageCard route={props.route} title="@CREATE" className={style['page-card-wapper']} loading={false}>
       <HtmlMeta title={t(`${props.route?.namei18n}`)} />
 
       <AttachmentBox

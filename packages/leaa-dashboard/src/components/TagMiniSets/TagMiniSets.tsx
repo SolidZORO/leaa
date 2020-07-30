@@ -21,7 +21,7 @@ export const TagMiniSets = (props: IProps) => {
   if (!innerTags || innerTags.length === 0) return null;
 
   return (
-    <div className={style['tag-mini-sets-wrapper']}>
+    <div className={style['tag-mini-sets-comp-wrapper']}>
       <small className={style['col-tags-wrapper']}>
         {innerTags.map((tag) => (
           <Tag key={tag.name} className={style['col-tags-item']}>

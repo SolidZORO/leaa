@@ -3,20 +3,20 @@ import cx from 'classnames';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { useMount, useUpdateEffect } from 'react-use';
+import { useUpdateEffect } from 'react-use';
 
 import { User } from '@leaa/api/src/entrys';
 import { envConfig } from '@leaa/dashboard/src/configs';
 import { DEFAULT_QUERY } from '@leaa/dashboard/src/constants';
-import { IPage, ICrudListQueryParams, IHttpRes, ICrudListRes, IHttpError } from '@leaa/dashboard/src/interfaces';
-import { fetcher } from '@leaa/dashboard/src/libs';
+import { IPage, ICrudListQueryParams, ICrudListRes, IFetchRes } from '@leaa/dashboard/src/interfaces';
 import {
-  errorMsg,
   setCrudQueryToUrl,
   transUrlQueryToCrudState,
   genCrudRequestQuery,
   genCrudQuerySearch,
+  httpErrorMsg,
 } from '@leaa/dashboard/src/utils';
+import { useSWR } from '@leaa/dashboard/src/libs';
 import { PageCard, HtmlMeta, TableCard, SearchInput, NullTag } from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';
@@ -25,34 +25,28 @@ const API_PATH = 'users';
 
 export default (props: IPage) => {
   const { t } = useTranslation();
-  const [mounted, setMounted] = useState(false);
 
   const [crudQuery, setCrudQuery] = useState<ICrudListQueryParams>({
     ...DEFAULT_QUERY,
     ...transUrlQueryToCrudState(window),
   });
 
-  const [listLoading, setListLoading] = useState(false);
-  const [list, setList] = useState<ICrudListRes<User>>();
+  const list = useSWR<IFetchRes<ICrudListRes<User>>>(
+    {
+      url: `${envConfig.API_URL}/${envConfig.API_VERSION}/${API_PATH}`,
+      params: genCrudRequestQuery(crudQuery),
+      crudQuery,
+    },
+    {
+      onError: httpErrorMsg,
+      onSuccess: (res) => setCrudQueryToUrl({ window, query: res.config.crudQuery, replace: true }),
+    },
+  );
 
-  const onFetchList = (params: ICrudListQueryParams) => {
-    setCrudQuery(params);
-    setListLoading(true);
-
-    fetcher
-      .get(`${envConfig.API_URL}/${envConfig.API_VERSION}/${API_PATH}`, { params: genCrudRequestQuery(params) })
-      .then((res: IHttpRes<ICrudListRes<User>>) => {
-        setList(res.data.data);
-
-        setCrudQueryToUrl({ window, query: params, replace: true });
-      })
-      .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
-      .finally(() => setListLoading(false));
-  };
-
-  useMount(() => onFetchList(crudQuery));
-  useUpdateEffect(() => onFetchList(DEFAULT_QUERY), [props.history.location.key]);
-  useUpdateEffect(() => (!_.isEqual(crudQuery, DEFAULT_QUERY) ? onFetchList(crudQuery) : undefined), [crudQuery]);
+  useUpdateEffect(() => {
+    if (_.isEqual(crudQuery, DEFAULT_QUERY)) list.mutate();
+    else setCrudQuery(DEFAULT_QUERY);
+  }, [props.history.location.key]);
 
   return (
     <PageCard
@@ -75,53 +69,51 @@ export default (props: IPage) => {
           }}
         />
       }
-      className={style['wapper']}
-      loading={listLoading}
+      className={style['page-card-wapper']}
+      loading={list.loading}
     >
       <HtmlMeta title={t(`${props.route?.namei18n}`)} />
 
-      {list?.data && (
-        <TableCard
-          crudQuery={crudQuery}
-          setCrudQuery={setCrudQuery}
-          route={props.route}
-          routerName={API_PATH}
-          columnFields={[
-            'id',
-            'isAdmin',
-            'avatar',
-            {
-              title: t('_lang:account'),
-              width: 180,
-              dataIndex: envConfig.PRIMARY_ACCOUNT_TYPE || 'email',
-              sorter: true,
-              ellipsis: true,
-              textWrap: 'word-break',
-              render: (text: string, record: any) => {
-                const accountColDom = [
-                  <>{record.email || <NullTag nullText="----" />}</>,
-                  <>{record.phone || <NullTag nullText="----" />}</>,
-                ];
+      <TableCard
+        crudQuery={crudQuery}
+        setCrudQuery={setCrudQuery}
+        route={props.route}
+        routerName={API_PATH}
+        columnFields={[
+          'id',
+          'isAdmin',
+          'avatar',
+          {
+            title: t('_lang:account'),
+            width: 180,
+            dataIndex: envConfig.PRIMARY_ACCOUNT_TYPE || 'email',
+            sorter: true,
+            ellipsis: true,
+            textWrap: 'word-break',
+            render: (text: string, record: any) => {
+              const accountColDom = [
+                <>{record.email || <NullTag nullText="----" />}</>,
+                <>{record.phone || <NullTag nullText="----" />}</>,
+              ];
 
-                if (envConfig.PRIMARY_ACCOUNT_TYPE === 'phone') accountColDom.reverse();
+              if (envConfig.PRIMARY_ACCOUNT_TYPE === 'phone') accountColDom.reverse();
 
-                return (
-                  <Link to={`${props.route.path}/${record.id}`}>
-                    <span>{accountColDom[0]}</span>
-                    <br />
-                    <small>{accountColDom[1]}</small>
-                  </Link>
-                );
-              },
+              return (
+                <Link to={`${props.route.path}/${record.id}`}>
+                  <span>{accountColDom[0]}</span>
+                  <br />
+                  <small>{accountColDom[1]}</small>
+                </Link>
+              );
             },
-            'roleList',
-            'createdAt',
-            'status',
-            { action: { fieldName: 'name' } },
-          ]}
-          list={list}
-        />
-      )}
+          },
+          'roleList',
+          'createdAt',
+          'status',
+          { action: { fieldName: 'name' } },
+        ]}
+        list={list.data?.data}
+      />
     </PageCard>
   );
 };

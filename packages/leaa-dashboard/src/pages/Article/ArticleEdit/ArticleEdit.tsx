@@ -1,12 +1,13 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Row, Col } from 'antd';
 
 import { Article, Tag } from '@leaa/api/src/entrys';
 import { IAttachmentBoxRef } from '@leaa/api/src/interfaces';
 import { ArticleUpdateOneReq } from '@leaa/api/src/dtos/article';
-import { IPage, ICommenFormRef, ISubmitData, IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
-import { msg, errorMsg } from '@leaa/dashboard/src/utils';
+import { IPage, ICommenFormRef, ISubmitData, IHttpRes, IFetchRes } from '@leaa/dashboard/src/interfaces';
+import { msg, httpErrorMsg } from '@leaa/dashboard/src/utils';
+import { fetcher, useSWR } from '@leaa/dashboard/src/libs';
 
 import { envConfig } from '@leaa/dashboard/src/configs';
 import {
@@ -31,29 +32,21 @@ export default (props: IPage) => {
 
   const infoFormRef = useRef<ICommenFormRef<ArticleUpdateOneReq>>(null);
   const extFormRef = useRef<ICommenFormRef<ArticleUpdateOneReq>>(null);
-
-  const [item, setItem] = useState<Article | undefined>();
-  const [itemLoading, setItemLoading] = useState(false);
-  const [submitLoading, setSubmitLoading] = useState(false);
-
   const articleContentRef = useRef<any>(null);
   const attachmentBoxRef = useRef<IAttachmentBoxRef>(null);
   const selectTagIdRef = useRef<any>(null);
+
   const [articleTags, setArticleTags] = useState<Tag[]>();
 
-  const onFetchItem = () => {
-    setItemLoading(true);
+  const item = useSWR<IFetchRes<Article>>(
+    { url: `${envConfig.API_URL}/${envConfig.API_VERSION}/${API_PATH}/${id}` },
+    { onError: httpErrorMsg },
+  );
 
-    fetcher
-      .get(`${envConfig.API_URL}/${envConfig.API_VERSION}/${API_PATH}/${id}`)
-      .then((res: IHttpRes<Article>) => {
-        setItem(res.data.data);
-      })
-      .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
-      .finally(() => setItemLoading(false));
-  };
-
+  const [submitLoading, setSubmitLoading] = useState(false);
   const onUpdateItem = async () => {
+    if (submitLoading) return;
+
     const infoData: ISubmitData<ArticleUpdateOneReq> = await infoFormRef.current?.onValidateForm();
     const extData: ISubmitData<ArticleUpdateOneReq> = await extFormRef.current?.onValidateForm();
 
@@ -67,37 +60,36 @@ export default (props: IPage) => {
     };
 
     data.tagIds = articleTags?.length ? articleTags.map((tag) => tag.id) : null;
-
     setSubmitLoading(true);
-
-    console.log(data);
 
     fetcher
       .patch(`${envConfig.API_URL}/${envConfig.API_VERSION}/${API_PATH}/${id}`, data)
       .then((res: IHttpRes<Article>) => {
-        setItem(res.data.data);
+        item.mutate(res, false);
 
         msg(t('_lang:updatedSuccessfully'));
       })
-      .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
+      .catch(httpErrorMsg)
       .finally(() => setSubmitLoading(false));
 
     // attachments
     await attachmentBoxRef.current?.onUpdateAttachments();
   };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => onFetchItem(), []);
-
   return (
-    <PageCard route={props.route} title="@UPDATE" className={style['wapper']} loading={itemLoading || submitLoading}>
+    <PageCard
+      route={props.route}
+      title="@UPDATE"
+      className={style['page-card-wapper']}
+      loading={item.loading || submitLoading}
+    >
       <HtmlMeta title={t(`${props.route?.namei18n}`)} />
 
-      <ArticleInfoForm item={item} loading={itemLoading} ref={infoFormRef} />
+      <ArticleInfoForm ref={infoFormRef} item={item?.data?.data} loading={item.loading} />
 
       <WYSIWYGEditor
         ref={articleContentRef}
-        content={item?.content}
+        content={item?.data?.data.content}
         attachmentParams={{
           type: 'image',
           moduleId: id,
@@ -111,7 +103,7 @@ export default (props: IPage) => {
           ref={selectTagIdRef}
           placement="topLeft"
           maxSelectedSize={10}
-          selectedTags={item?.tags}
+          selectedTags={item?.data?.data.tags}
           onChangeSelectedTagsCallback={(tags: Tag[]) => setArticleTags(tags)}
         />
       </div>
@@ -124,7 +116,7 @@ export default (props: IPage) => {
             listHeight={350}
             attachmentParams={{
               type: 'image',
-              moduleId: item?.id,
+              moduleId: item?.data?.data.id,
               moduleName: 'article',
               typeName: 'gallery',
               typePlatform: 'mb',
@@ -139,7 +131,7 @@ export default (props: IPage) => {
             listHeight={350}
             attachmentParams={{
               type: 'image',
-              moduleId: item?.id,
+              moduleId: item?.data?.data.id,
               moduleName: 'article',
               typeName: 'gallery',
               typePlatform: 'pc',
@@ -149,7 +141,7 @@ export default (props: IPage) => {
       </Row>
 
       <div className={style['container-ext']}>
-        <ArticleExtForm item={item} loading={itemLoading} ref={extFormRef} />
+        <ArticleExtForm item={item?.data?.data} loading={item.loading} ref={extFormRef} />
       </div>
 
       <SubmitToolbar

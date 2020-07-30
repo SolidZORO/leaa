@@ -1,11 +1,11 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { Role, Permission } from '@leaa/api/src/entrys';
 import { RoleUpdateOneReq } from '@leaa/api/src/dtos/role';
-import { IPage, ICommenFormRef, ISubmitData, IHttpRes, IHttpError, ICrudListRes } from '@leaa/dashboard/src/interfaces';
-import { fetcher } from '@leaa/dashboard/src/libs';
-import { msg, errorMsg } from '@leaa/dashboard/src/utils';
+import { IPage, ICommenFormRef, ISubmitData, IHttpRes, ICrudListRes, IFetchRes } from '@leaa/dashboard/src/interfaces';
+import { fetcher, useSWR } from '@leaa/dashboard/src/libs';
+import { msg, httpErrorMsg } from '@leaa/dashboard/src/utils';
 
 import { envConfig } from '@leaa/dashboard/src/configs';
 import { PageCard, HtmlMeta, SubmitToolbar } from '@leaa/dashboard/src/components';
@@ -24,38 +24,20 @@ export default (props: IPage) => {
   const infoFormRef = useRef<ICommenFormRef<RoleUpdateOneReq>>(null);
   const permissionsRef = useRef<ICommenFormRef<RoleUpdateOneReq>>(null);
 
-  const [item, setItem] = useState<Role | undefined>();
-  const [itemLoading, setItemLoading] = useState(false);
+  const item = useSWR<IFetchRes<Role>>(
+    { url: `${envConfig.API_URL}/${envConfig.API_VERSION}/${API_PATH}/${id}` },
+    { onError: httpErrorMsg },
+  );
+
+  const permissions = useSWR<IFetchRes<ICrudListRes<Permission>>>(
+    { url: `${envConfig.API_URL}/${envConfig.API_VERSION}/permissions` },
+    { onError: httpErrorMsg },
+  );
+
   const [submitLoading, setSubmitLoading] = useState(false);
-
-  const [prmissions, setPrmissions] = useState<Permission[] | undefined>([]);
-  const [prmissionsLoading, setPrmissionsLoading] = useState(false);
-
-  const onFetchItem = () => {
-    setItemLoading(true);
-
-    fetcher
-      .get(`${envConfig.API_URL}/${envConfig.API_VERSION}/${API_PATH}/${id}`)
-      .then((res: IHttpRes<Role>) => {
-        setItem(res.data.data);
-      })
-      .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
-      .finally(() => setItemLoading(false));
-  };
-
-  const onFetchpPrmissions = () => {
-    setPrmissionsLoading(true);
-
-    fetcher
-      .get(`${envConfig.API_URL}/${envConfig.API_VERSION}/permissions`)
-      .then((res: IHttpRes<ICrudListRes<Permission>>) => {
-        setPrmissions(res.data.data?.data);
-      })
-      .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
-      .finally(() => setPrmissionsLoading(false));
-  };
-
   const onUpdateItem = async () => {
+    if (submitLoading) return;
+
     const infoData: ISubmitData<RoleUpdateOneReq> = await infoFormRef.current?.onValidateForm();
     const permissionsData: ISubmitData<RoleUpdateOneReq> = await permissionsRef.current?.onValidateForm();
 
@@ -72,31 +54,30 @@ export default (props: IPage) => {
     fetcher
       .patch(`${envConfig.API_URL}/${envConfig.API_VERSION}/${API_PATH}/${id}`, data)
       .then((res: IHttpRes<Role>) => {
-        setItem(res.data.data);
+        item.mutate(res, false);
 
         msg(t('_lang:updatedSuccessfully'));
       })
-      .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
+      .catch(httpErrorMsg)
       .finally(() => setSubmitLoading(false));
   };
 
-  useEffect(() => {
-    onFetchItem();
-    onFetchpPrmissions();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   return (
-    <PageCard route={props.route} title="@UPDATE" className={style['wapper']} loading={itemLoading || submitLoading}>
+    <PageCard
+      route={props.route}
+      title="@UPDATE"
+      className={style['page-card-wapper']}
+      loading={item.loading || submitLoading}
+    >
       <HtmlMeta title={t(`${props.route?.namei18n}`)} />
 
-      <RoleInfoForm item={item} loading={itemLoading} ref={infoFormRef} />
+      <RoleInfoForm ref={infoFormRef} item={item?.data?.data} loading={item.loading} />
 
       <RolePermissionsForm
         ref={permissionsRef}
-        item={item}
-        loading={prmissionsLoading}
-        permissions={prmissions || []}
+        item={item?.data?.data}
+        loading={permissions.loading}
+        permissions={permissions?.data?.data?.data || []}
       />
 
       <SubmitToolbar

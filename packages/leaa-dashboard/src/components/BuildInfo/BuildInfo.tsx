@@ -27,7 +27,7 @@ export const BuildInfo = (props: IProps) => {
   const onAdd = () => setDebugCount((prevState) => prevState + 1);
 
   return (
-    <div className={cx(style['build-info-wrapper'], props.className)}>
+    <div className={cx(style['build-info-comp-wrapper'], props.className)}>
       <div className={style['build-list']}>
         <div className={style['build-item']}>
           <span>MODE:</span>

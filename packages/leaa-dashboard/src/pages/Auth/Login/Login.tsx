@@ -2,14 +2,14 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import qs from 'qs';
 import { Row, Col, Button } from 'antd';
-import { IPage, ICommenFormRef, ISubmitData, IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
+import { IPage, ICommenFormRef, ISubmitData, IHttpRes } from '@leaa/dashboard/src/interfaces';
 import {
   setAuthToken,
   setAuthInfo,
   checkAuthIsAvailably,
   removeGuestToken,
   msg,
-  errorMsg,
+  httpErrorMsg,
 } from '@leaa/dashboard/src/utils';
 import { fetcher, setAjaxToken } from '@leaa/dashboard/src/libs';
 import { LOGIN_REDIRECT_URL } from '@leaa/dashboard/src/constants';
@@ -81,7 +81,6 @@ export default (props: IPage) => {
     if (submitLoading) return;
 
     const submitData: ISubmitData<AuthLoginReq> = await loginFormRef.current?.onValidateForm();
-
     if (!submitData) return;
 
     setSubmitLoading(true);
@@ -94,8 +93,8 @@ export default (props: IPage) => {
           setAjaxToken(res.data.data.authToken);
         }
       })
-      .catch((err: IHttpError) => {
-        errorMsg(err.response?.data?.message || err.message);
+      .catch((err) => {
+        httpErrorMsg(err);
         setLoginErrorCount(loginErrorCount + 1);
 
         return props.history.push('/login');

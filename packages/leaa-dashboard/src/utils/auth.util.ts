@@ -101,7 +101,7 @@ export const getGuestToken = (): string | null => {
 
   // 必须保证保证第一次访问就能获取，这个其实可以当作 session 来对待
   // MUST get it on the first visit.
-  // BTW, guestToken is called `Guthorization` at `Request Headers`.(@see ajax.util)
+  // BTW, guestToken is called `Guthorization` at `Request Headers`.(@see fetcher.lib)
   const guestToken = new Fingerprint().get();
   setGuestToken(guestToken);
 

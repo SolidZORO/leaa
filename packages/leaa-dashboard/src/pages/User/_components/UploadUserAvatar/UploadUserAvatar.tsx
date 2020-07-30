@@ -9,9 +9,9 @@ import { User } from '@leaa/api/src/entrys';
 import { AttachmentBox } from '@leaa/dashboard/src/components';
 import { fetcher } from '@leaa/dashboard/src/libs';
 
-import { errorMsg, msg, formatAttaUrl } from '@leaa/dashboard/src/utils';
+import { msg, formatAttaUrl, httpErrorMsg } from '@leaa/dashboard/src/utils';
 import { envConfig } from '@leaa/dashboard/src/configs';
-import { IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
+import { IHttpRes } from '@leaa/dashboard/src/interfaces';
 import { UserUpdateOneReq } from '@leaa/api/src/dtos/user';
 
 import style from './style.module.less';
@@ -49,7 +49,7 @@ export const UploadUserAvatar = (props: IProps) => {
 
           msg(t('_lang:updatedSuccessfully'));
         })
-        .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
+        .catch(httpErrorMsg)
         .finally(() => setUpdateLoading(false));
     }
   };

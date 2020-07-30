@@ -1,14 +1,15 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { User, Role } from '@leaa/api/src/entrys';
 import { IAttachmentBoxRef } from '@leaa/api/src/interfaces';
 import { UserUpdateOneReq } from '@leaa/api/src/dtos/user';
-import { IPage, ICommenFormRef, ISubmitData, IHttpRes, IHttpError, ICrudListRes } from '@leaa/dashboard/src/interfaces';
-import { msg, errorMsg } from '@leaa/dashboard/src/utils';
+import { IPage, ICommenFormRef, ISubmitData, IHttpRes, ICrudListRes, IFetchRes } from '@leaa/dashboard/src/interfaces';
+import { msg, httpErrorMsg } from '@leaa/dashboard/src/utils';
 
 import { envConfig } from '@leaa/dashboard/src/configs';
 import { PageCard, HtmlMeta, SubmitToolbar } from '@leaa/dashboard/src/components';
+import { fetcher, useSWR } from '@leaa/dashboard/src/libs';
 
 import { UserInfoForm } from '../_components/UserInfoForm/UserInfoForm';
 import { UserRolesForm } from '../_components/UserRolesForm/UserRolesForm';
@@ -23,44 +24,22 @@ export default (props: IPage) => {
 
   const infoFormRef = useRef<ICommenFormRef<UserUpdateOneReq>>(null);
   const rolesFormRef = useRef<ICommenFormRef<UserUpdateOneReq>>(null);
-
-  const [item, setItem] = useState<User | undefined>();
-  const [itemLoading, setItemLoading] = useState(false);
-  const [submitLoading, setSubmitLoading] = useState(false);
-
-  const [roles, setRoles] = useState<Role[]>();
-  const [rolesLoading, setRolesLoading] = useState(false);
-
   const attachmentBoxRef = useRef<IAttachmentBoxRef>(null);
 
-  const onFetchItem = () => {
-    setItemLoading(true);
+  const item = useSWR<IFetchRes<User>>(
+    { url: `${envConfig.API_URL}/${envConfig.API_VERSION}/${API_PATH}/${id}` },
+    { onError: httpErrorMsg },
+  );
 
-    fetcher
-      .get(`${envConfig.API_URL}/${envConfig.API_VERSION}/${API_PATH}/${id}`)
-      .then((res: IHttpRes<User>) => {
-        setItem(res.data.data);
-      })
-      .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
-      .finally(() => setItemLoading(false));
-  };
+  const roles = useSWR<IFetchRes<ICrudListRes<Role>>>(
+    { url: `${envConfig.API_URL}/${envConfig.API_VERSION}/roles` },
+    { onError: httpErrorMsg },
+  );
 
-  const onFetchRoles = () => {
-    setRolesLoading(true);
-
-    fetcher
-      .get(`${envConfig.API_URL}/${envConfig.API_VERSION}/roles`)
-      .then((res: IHttpRes<ICrudListRes<Role>>) => {
-        // console.log(res.data.data?.data);
-        setRoles(res.data.data?.data);
-
-        // setItem(res.data.data);
-      })
-      .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
-      .finally(() => setRolesLoading(false));
-  };
-
+  const [submitLoading, setSubmitLoading] = useState(false);
   const onUpdateItem = async () => {
+    if (submitLoading) return;
+
     const infoData: ISubmitData<UserUpdateOneReq> = await infoFormRef.current?.onValidateForm();
     const userRolesData: ISubmitData<UserUpdateOneReq> = await rolesFormRef.current?.onValidateForm();
 
@@ -80,30 +59,34 @@ export default (props: IPage) => {
     fetcher
       .patch(`${envConfig.API_URL}/${envConfig.API_VERSION}/${API_PATH}/${id}`, data)
       .then((res: IHttpRes<User>) => {
-        setItem(res.data.data);
+        item.mutate(res, false);
 
         msg(t('_lang:updatedSuccessfully'));
       })
-      .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
+      .catch(httpErrorMsg)
       .finally(() => setSubmitLoading(false));
 
     // attachments
     await attachmentBoxRef.current?.onUpdateAttachments();
   };
 
-  useEffect(() => {
-    onFetchItem();
-    onFetchRoles();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   return (
-    <PageCard route={props.route} title="@UPDATE" className={style['wapper']} loading={itemLoading || submitLoading}>
+    <PageCard
+      route={props.route}
+      title="@UPDATE"
+      className={style['page-card-wapper']}
+      loading={item.loading || submitLoading}
+    >
       <HtmlMeta title={t(`${props.route?.namei18n}`)} />
 
-      <UserInfoForm item={item} loading={itemLoading} ref={infoFormRef} />
+      <UserInfoForm ref={infoFormRef} item={item?.data?.data} loading={item.loading} />
 
-      <UserRolesForm ref={rolesFormRef} item={item} loading={rolesLoading} roles={roles || []} />
+      <UserRolesForm
+        ref={rolesFormRef}
+        item={item?.data?.data}
+        loading={roles.loading}
+        roles={roles?.data?.data?.data || []}
+      />
 
       <SubmitToolbar
         simpleButtonGroup={{ title: '@UPDATE', loading: submitLoading }}

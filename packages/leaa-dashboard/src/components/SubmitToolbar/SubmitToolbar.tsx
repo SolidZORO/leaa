@@ -68,11 +68,11 @@ export const SubmitToolbar = (props: IProps) => {
     <Affix offsetBottom={0} onChange={(e) => setIsAffix(Boolean(e))}>
       <div
         className={cx(
-          style['submit-toolbar-wrapper'],
-          style[`submit-toolbar-wrapper--${props.theme}`],
+          style['submit-toolbar-comp-wrapper'],
+          style[`submit-toolbar-comp-wrapper--${props.theme}`],
           props.className,
           {
-            [style['submit-toolbar-wrapper--notAffix']]: !isAffix,
+            [style['submit-toolbar-comp-wrapper--notAffix']]: !isAffix,
           },
         )}
       >

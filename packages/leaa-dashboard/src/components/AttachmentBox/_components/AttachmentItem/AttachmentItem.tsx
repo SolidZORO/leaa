@@ -8,12 +8,12 @@ import { Draggable } from 'react-beautiful-dnd';
 
 import { Attachment } from '@leaa/api/src/entrys';
 
-import { IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
+import { IHttpRes } from '@leaa/dashboard/src/interfaces';
 import { SwitchNumber, ConfirmDeleteButton } from '@leaa/dashboard/src/components';
 import { envConfig } from '@leaa/dashboard/src/configs';
 
 import { fetcher } from '@leaa/dashboard/src/libs';
-import { errorMsg, formatAttaUrl } from '@leaa/dashboard/src/utils';
+import { formatAttaUrl, httpErrorMsg } from '@leaa/dashboard/src/utils';
 
 import style from './style.module.less';
 
@@ -64,7 +64,7 @@ export const AttachmentItem = (props: IProps) => {
         // msg(t('_lang:deletedSuccessfully', { id: res?.data?.data?.id }));
         if (props.onDeleteAttaCallback) props.onDeleteAttaCallback(res.data.data);
       })
-      .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
+      .catch(httpErrorMsg)
       .finally(() => setDeleteLoading(deleteLoading));
   };
 
@@ -76,7 +76,7 @@ export const AttachmentItem = (props: IProps) => {
         setAttachment(res.data.data);
         if (props.onChangeAttaCallback) props.onChangeAttaCallback(res.data.data);
       })
-      .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message));
+      .catch(httpErrorMsg);
   };
 
   const onChangeAttachmentField = (field: string, event: React.FormEvent<HTMLInputElement>) => {

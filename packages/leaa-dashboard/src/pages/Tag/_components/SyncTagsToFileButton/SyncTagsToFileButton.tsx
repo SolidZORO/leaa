@@ -5,9 +5,9 @@ import { RiRefreshLine } from 'react-icons/ri';
 
 import { TagSyncToFileRes } from '@leaa/api/src/dtos/tag';
 import { fetcher } from '@leaa/dashboard/src/libs';
-import { msg, errorMsg } from '@leaa/dashboard/src/utils';
+import { msg, httpErrorMsg } from '@leaa/dashboard/src/utils';
 
-import { IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
+import { IHttpRes } from '@leaa/dashboard/src/interfaces';
 import { envConfig } from '@leaa/dashboard/src/configs';
 import { useTranslation } from 'react-i18next';
 
@@ -30,7 +30,7 @@ export const SyncTagsToFileButton = (props: IProps) => {
       .then((res: IHttpRes<TagSyncToFileRes>) => {
         msg(res?.data?.data?.message);
       })
-      .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
+      .catch(httpErrorMsg)
       .finally(() => setLoading(false));
   };
 

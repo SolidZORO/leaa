@@ -34,7 +34,7 @@ export const SearchInput = (props: IProps) => {
   }, [props.value]);
 
   return (
-    <div className={cx(style['search-input-wrapper'], props.className)}>
+    <div className={cx(style['search-input-comp-wrapper'], props.className)}>
       <Input
         prefixCls="search-input ant-input"
         allowClear

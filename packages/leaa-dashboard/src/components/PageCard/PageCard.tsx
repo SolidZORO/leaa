@@ -114,7 +114,7 @@ export const PageCard = (props: IProps) => {
   }, [history.location.key]);
 
   return (
-    <div className={cx(style['page-card-wrapper'], props.className)}>
+    <div className={cx(style['page-card-comp-wrapper'], props.className)}>
       <div className={style['header']}>
         <div className={style['title-bar']}>
           <div className={style['title-wrapper']}>{genTitltDom(props.title)}</div>

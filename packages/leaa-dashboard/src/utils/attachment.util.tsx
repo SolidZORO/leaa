@@ -5,11 +5,11 @@ import { Translation } from 'react-i18next';
 
 import { ISaveInOssSignature, ISaveInLocalSignature } from '@leaa/api/src/interfaces';
 import { envConfig } from '@leaa/dashboard/src/configs';
-import { IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
+import { IHttpRes } from '@leaa/dashboard/src/interfaces';
 import defaultImage from '@leaa/dashboard/src/assets/images/default-image.svg';
 
 import { fetcher } from '@leaa/dashboard/src/libs';
-import { errorMsg, msg } from './msg.util';
+import { errorMsg, msg, httpErrorMsg } from './msg.util';
 
 declare type ISignatureResult = ISaveInOssSignature | ISaveInLocalSignature | undefined;
 
@@ -32,10 +32,7 @@ export const getUploadSignature = async () => {
 
       return undefined;
     })
-    .catch((err: IHttpError) => {
-      // console.log(err.response?.data?.message || err.message);
-      errorMsg(err.response?.data?.message || err.message);
-    });
+    .catch(httpErrorMsg);
 };
 
 interface IUploadFile {

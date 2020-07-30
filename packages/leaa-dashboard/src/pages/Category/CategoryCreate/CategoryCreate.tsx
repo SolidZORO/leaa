@@ -3,9 +3,9 @@ import { useTranslation } from 'react-i18next';
 
 import { Category } from '@leaa/api/src/entrys';
 import { CategoryUpdateOneReq } from '@leaa/api/src/dtos/category';
-import { IPage, ICommenFormRef, ISubmitData, IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
+import { IPage, ICommenFormRef, ISubmitData, IHttpRes } from '@leaa/dashboard/src/interfaces';
 import { fetcher } from '@leaa/dashboard/src/libs';
-import { msg, errorMsg } from '@leaa/dashboard/src/utils';
+import { msg, httpErrorMsg } from '@leaa/dashboard/src/utils';
 
 import { envConfig } from '@leaa/dashboard/src/configs';
 import { PageCard, HtmlMeta, SubmitToolbar } from '@leaa/dashboard/src/components';
@@ -25,13 +25,9 @@ export default (props: IPage) => {
 
   const onCreateItem = async () => {
     const infoData: ISubmitData<CategoryUpdateOneReq> = await infoFormRef.current?.onValidateForm();
-
     if (!infoData) return;
 
-    const data: ISubmitData<CategoryUpdateOneReq> = {
-      ...infoData,
-    };
-
+    const data: ISubmitData<CategoryUpdateOneReq> = infoData;
     setSubmitLoading(true);
 
     fetcher
@@ -41,12 +37,12 @@ export default (props: IPage) => {
 
         props.history.push(`/${API_PATH}/${res.data.data?.id}`);
       })
-      .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
+      .catch(httpErrorMsg)
       .finally(() => setSubmitLoading(false));
   };
 
   return (
-    <PageCard route={props.route} title="@CREATE" className={style['wapper']} loading={submitLoading}>
+    <PageCard route={props.route} title="@CREATE" className={style['page-card-wapper']} loading={submitLoading}>
       <HtmlMeta title={t(`${props.route?.namei18n}`)} />
 
       <CategoryInfoForm ref={infoFormRef} />

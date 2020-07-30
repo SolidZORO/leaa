@@ -25,7 +25,7 @@ export const NullTag = (props: IProps) => {
   return (
     <div
       style={{ opacity: props.opacity || 1 }}
-      className={cx(style['null-tag-wrapper'], props.className, 'g-null-tag-wrapper')}
+      className={cx(style['null-tag-comp-wrapper'], props.className, 'g-null-tag-comp-wrapper')}
     >
       {props.tooltip ? <Tooltip title={t('_lang:noData')}>{nullDom}</Tooltip> : nullDom}
     </div>

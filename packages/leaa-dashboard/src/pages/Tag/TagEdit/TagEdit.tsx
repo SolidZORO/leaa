@@ -3,13 +3,12 @@ import { useTranslation } from 'react-i18next';
 
 import { Tag } from '@leaa/api/src/entrys';
 import { TagUpdateOneReq } from '@leaa/api/src/dtos/tag';
-import { IPage, ICommenFormRef, ISubmitData, IHttpRes, IHttpError, IFetchRes } from '@leaa/dashboard/src/interfaces';
-import { msg, errorMsg, setCrudQueryToUrl } from '@leaa/dashboard/src/utils';
-import { useFetch, fetcher } from '@leaa/dashboard/src/libs';
+import { IPage, ICommenFormRef, ISubmitData, IFetchRes } from '@leaa/dashboard/src/interfaces';
 import { envConfig } from '@leaa/dashboard/src/configs';
+import { msg, httpErrorMsg } from '@leaa/dashboard/src/utils';
+import { fetcher, useSWR } from '@leaa/dashboard/src/libs';
 
 import { PageCard, HtmlMeta, SubmitToolbar } from '@leaa/dashboard/src/components';
-
 import { TagInfoForm } from '../_components/TagInfoForm/TagInfoForm';
 
 import style from './style.module.less';
@@ -23,20 +22,17 @@ export default (props: IPage) => {
   const infoFormRef = useRef<ICommenFormRef<TagUpdateOneReq>>(null);
   const [submitLoading, setSubmitLoading] = useState(false);
 
-  const item = useFetch<IFetchRes<Tag>>(
+  const item = useSWR<IFetchRes<Tag>>(
     { url: `${envConfig.API_URL}/${envConfig.API_VERSION}/${API_PATH}/${id}` },
-    {
-      onError: (err) => errorMsg(err.message),
-      onSuccess: (res) => setCrudQueryToUrl({ window, query: res.config.crudQuery, replace: true }),
-    },
+    { onError: httpErrorMsg },
   );
 
   const onUpdateItem = async () => {
-    const infoData: ISubmitData<TagUpdateOneReq> = await infoFormRef.current?.onValidateForm();
+    if (submitLoading) return;
 
-    if (!infoData) return;
+    const data: ISubmitData<TagUpdateOneReq> = await infoFormRef.current?.onValidateForm();
+    if (!data) return;
 
-    const data: ISubmitData<TagUpdateOneReq> = { ...infoData };
     setSubmitLoading(true);
 
     fetcher
@@ -46,12 +42,17 @@ export default (props: IPage) => {
 
         msg(t('_lang:updatedSuccessfully'));
       })
-      .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
+      .catch(httpErrorMsg)
       .finally(() => setSubmitLoading(false));
   };
 
   return (
-    <PageCard route={props.route} title="@UPDATE" className={style['wapper']} loading={item.loading || submitLoading}>
+    <PageCard
+      route={props.route}
+      title="@UPDATE"
+      className={style['page-card-wapper']}
+      loading={item.loading || submitLoading}
+    >
       <HtmlMeta title={t(`${props.route?.namei18n}`)} />
 
       <TagInfoForm item={item?.data?.data} loading={item.loading} ref={infoFormRef} />

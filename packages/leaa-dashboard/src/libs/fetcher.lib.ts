@@ -10,7 +10,6 @@ fetcher.defaults.timeout = 10000;
 fetcher.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
 fetcher.defaults.headers.common.Authorization = getAuthToken() ? `Bearer ${getAuthToken()}` : '';
 fetcher.defaults.headers.common.Guthorization = getGuestToken();
-fetcher.defaults.headers.common.Duthorization = 'a';
 
 // fetcher.interceptors.request.use(
 //   (res) => {

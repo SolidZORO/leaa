@@ -80,7 +80,7 @@ export const SelectTagId = forwardRef((props: IProps, ref: React.Ref<any>) => {
   }, [props.selectedTags]);
 
   return (
-    <div className={cx(style['select-tag-id-wrapper'])}>
+    <div className={cx(style['select-tag-id-comp-wrapper'])}>
       <div className={style['tag-selected-wrapper']} ref={ref}>
         {selectedTags &&
           selectedTags.map((tag) => (

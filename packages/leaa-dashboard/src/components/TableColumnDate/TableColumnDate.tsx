@@ -19,8 +19,8 @@ interface IProps {
 export const TableColumnDate = (props: IProps) => {
   return (
     <div
-      className={cx(style['table-column-date-wrapper'], props.className, {
-        [style['table-column-date-wrapper--small']]: props.size === 'small',
+      className={cx(style['table-column-date-comp-wrapper'], props.className, {
+        [style['table-column-date-comp-wrapper--small']]: props.size === 'small',
       })}
     >
       {props.date ? (

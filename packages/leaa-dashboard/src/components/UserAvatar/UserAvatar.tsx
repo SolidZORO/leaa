@@ -24,7 +24,7 @@ export const UserAvatar = (props: IProps) => {
       alt="Avatar"
       shape="circle"
       {...props}
-      className={cx(style['avatar'], props.className)}
+      className={cx(style['user-avatar-comp-wrapper'], props.className)}
       style={{ borderWidth: props.border || 0 }}
     />
   );

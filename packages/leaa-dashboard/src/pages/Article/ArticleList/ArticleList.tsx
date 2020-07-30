@@ -2,19 +2,20 @@ import _ from 'lodash';
 import cx from 'classnames';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useMount, useUpdateEffect } from 'react-use';
+import { useUpdateEffect } from 'react-use';
 
 import { Article } from '@leaa/api/src/entrys';
 import { envConfig } from '@leaa/dashboard/src/configs';
 import { DEFAULT_QUERY } from '@leaa/dashboard/src/constants';
-import { IPage, ICrudListQueryParams, IHttpRes, ICrudListRes, IHttpError } from '@leaa/dashboard/src/interfaces';
+import { IPage, ICrudListQueryParams, ICrudListRes, IFetchRes } from '@leaa/dashboard/src/interfaces';
 import {
-  errorMsg,
   setCrudQueryToUrl,
   transUrlQueryToCrudState,
   genCrudRequestQuery,
   genCrudQuerySearch,
+  httpErrorMsg,
 } from '@leaa/dashboard/src/utils';
+import { useSWR } from '@leaa/dashboard/src/libs';
 import { PageCard, HtmlMeta, TableCard, SearchInput, SelectCategoryIdByTree } from '@leaa/dashboard/src/components';
 
 import style from './style.module.less';
@@ -29,34 +30,29 @@ export default (props: IPage) => {
     ...transUrlQueryToCrudState(window),
   });
 
-  const [listLoading, setListLoading] = useState(false);
-  const [list, setList] = useState<ICrudListRes<Article>>();
+  const list = useSWR<IFetchRes<ICrudListRes<Article>>>(
+    {
+      url: `${envConfig.API_URL}/${envConfig.API_VERSION}/${API_PATH}`,
+      params: genCrudRequestQuery(crudQuery),
+      crudQuery,
+    },
+    {
+      onError: httpErrorMsg,
+      onSuccess: (res) => setCrudQueryToUrl({ window, query: res.config.crudQuery, replace: true }),
+    },
+  );
 
-  const onFetchList = (params: ICrudListQueryParams) => {
-    setCrudQuery(params);
-    setListLoading(true);
-
-    fetcher
-      .get(`${envConfig.API_URL}/${envConfig.API_VERSION}/${API_PATH}`, { params: genCrudRequestQuery(params) })
-      .then((res: IHttpRes<ICrudListRes<Article>>) => {
-        setList(res.data.data);
-
-        setCrudQueryToUrl({ window, query: params, replace: true });
-      })
-      .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
-      .finally(() => setListLoading(false));
-  };
-
-  useMount(() => onFetchList(crudQuery));
-  useUpdateEffect(() => onFetchList(DEFAULT_QUERY), [props.history.location.key]);
-  useUpdateEffect(() => (!_.isEqual(crudQuery, DEFAULT_QUERY) ? onFetchList(crudQuery) : undefined), [crudQuery]);
+  useUpdateEffect(() => {
+    if (_.isEqual(crudQuery, DEFAULT_QUERY)) list.mutate();
+    else setCrudQuery(DEFAULT_QUERY);
+  }, [props.history.location.key]);
 
   return (
     <PageCard
       route={props.route}
       title="@LIST"
-      className={style['wapper']}
-      loading={listLoading}
+      className={style['page-card-wapper']}
+      loading={list.loading}
       extra={
         <SearchInput
           className={cx('g-page-card-extra-search-input')}
@@ -110,16 +106,14 @@ export default (props: IPage) => {
     >
       <HtmlMeta title={t(`${props.route?.namei18n}`)} />
 
-      {list?.data && (
-        <TableCard
-          crudQuery={crudQuery}
-          setCrudQuery={setCrudQuery}
-          route={props.route}
-          routerName={API_PATH}
-          columnFields={['id', 'title', 'category', 'createdAt', 'status', { action: { fieldName: 'title' } }]}
-          list={list}
-        />
-      )}
+      <TableCard
+        crudQuery={crudQuery}
+        setCrudQuery={setCrudQuery}
+        route={props.route}
+        routerName={API_PATH}
+        columnFields={['id', 'title', 'category', 'createdAt', 'status', { action: { fieldName: 'title' } }]}
+        list={list.data?.data}
+      />
     </PageCard>
   );
 };

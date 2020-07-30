@@ -7,9 +7,9 @@ import { TreeSelectProps } from 'antd/es/tree-select';
 
 import { ICategoriesQuery } from '@leaa/api/src/interfaces';
 import { fetcher } from '@leaa/dashboard/src/libs';
-import { errorMsg } from '@leaa/dashboard/src/utils';
+import { httpErrorMsg } from '@leaa/dashboard/src/utils';
 import { envConfig } from '@leaa/dashboard/src/configs';
-import { IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
+import { IHttpRes } from '@leaa/dashboard/src/interfaces';
 import { TreeItem } from 'react-sortable-tree';
 
 import style from './style.module.less';
@@ -47,7 +47,7 @@ export const SelectCategoryIdByTree = forwardRef((props: IProps, ref: React.Ref<
       .then((res: IHttpRes<TreeItem[]>) => {
         if (!isAjaxCancelled.current) setTree(res.data?.data);
       })
-      .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
+      .catch(httpErrorMsg)
       .finally(() => !isAjaxCancelled.current && setTreeLoading(false));
   };
 
@@ -89,7 +89,7 @@ export const SelectCategoryIdByTree = forwardRef((props: IProps, ref: React.Ref<
     <TreeSelect
       {...multipleSelectOption}
       ref={ref}
-      className={cx(style['select-category-id-by-tree-wrapper'], props.className)}
+      className={cx(style['select-category-id-by-tree-comp-wrapper'], props.className)}
       size="large"
       loading={treeLoading}
       // TIPS: value 即便是有值，也必须等待 tree query 完毕后才现实，不然 select 会被 uuid 撑开

@@ -9,8 +9,8 @@ import { useMount, useUpdateEffect } from 'react-use';
 import { CREATE_BUTTON_ICON } from '@leaa/dashboard/src/constants';
 import { envConfig } from '@leaa/dashboard/src/configs';
 import { fetcher } from '@leaa/dashboard/src/libs';
-import { errorMsg } from '@leaa/dashboard/src/utils';
-import { IPage, IHttpRes, IHttpError } from '@leaa/dashboard/src/interfaces';
+import { httpErrorMsg } from '@leaa/dashboard/src/utils';
+import { IPage, IHttpRes } from '@leaa/dashboard/src/interfaces';
 import { ICategoriesQuery } from '@leaa/api/src/interfaces';
 
 import { HtmlMeta, PageCard, TableColumnDeleteButton } from '@leaa/dashboard/src/components';
@@ -34,7 +34,7 @@ export default (props: IPage) => {
       .then((res: IHttpRes<TreeItem[]>) => {
         setTree(res.data?.data);
       })
-      .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
+      .catch(httpErrorMsg)
       .finally(() => setTreeLoading(false));
   };
 

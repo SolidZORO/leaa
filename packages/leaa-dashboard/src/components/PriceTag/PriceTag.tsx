@@ -19,8 +19,8 @@ export const PriceTag = (props: IProps) => {
 
   return (
     <div
-      className={cx(style['price-tag-wrapper'], props.className, 'g-price-tag-wrapper', {
-        [style[`price-tag-wrapper--${props.size}`]]: props.size,
+      className={cx(style['price-tag-comp-wrapper'], props.className, 'g-price-tag-comp-wrapper', {
+        [style[`price-tag-comp-wrapper--${props.size}`]]: props.size,
       })}
     >
       <span className={cx(style['price-tag-symbol'], 'g-price-tag-symbol')}>{symbol}</span>

@@ -15,7 +15,7 @@ export const PriceInput = (props: IProps) => {
 
   return (
     <div
-      className={cx(style['price-input-wrapper'], 'g-price-input-wrapper', {
+      className={cx(style['price-input-comp-wrapper'], 'g-price-input-comp-wrapper', {
         [style[`price-input-wrapper--${props.size}`]]: props.size,
       })}
     >

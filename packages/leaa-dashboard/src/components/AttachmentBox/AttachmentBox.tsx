@@ -8,10 +8,10 @@ import { IAttachmentParams, IAutoUpdateRelation } from '@leaa/api/src/interfaces
 import { Attachment } from '@leaa/api/src/entrys';
 
 import { fetcher } from '@leaa/dashboard/src/libs';
-import { removeLangSpace, errorMsg, genCrudRequestQuery } from '@leaa/dashboard/src/utils';
+import { removeLangSpace, genCrudRequestQuery, httpErrorMsg } from '@leaa/dashboard/src/utils';
 import { envConfig } from '@leaa/dashboard/src/configs';
 import { FormCard } from '@leaa/dashboard/src/components';
-import { IHttpError, IHttpRes, ICrudListRes, ICrudListQueryParams } from '@leaa/dashboard/src/interfaces';
+import { IHttpRes, ICrudListRes, ICrudListQueryParams } from '@leaa/dashboard/src/interfaces';
 
 import { AttachmentList } from './_components/AttachmentList/AttachmentList';
 import { AttachmentDropzone } from './_components/AttachmentDropzone/AttachmentDropzone';
@@ -42,7 +42,7 @@ interface IProps {
  * @ideaNotes
  * 我的想法是这样的，AttachmentBox（下文叫 ABOX）只管上传文件，传完写入 AttachmentTable。
  *
- * 下面是 attachmentParams 范例（ajax get 那边会配合 genCrudRequestQuery 做 search）
+ * 下面是 attachmentParams 范例（fetcher get 那边会配合 genCrudRequestQuery 做 search）
  * {
  *    type: 'image',
  *    moduleId: item?.id,
@@ -52,7 +52,7 @@ interface IProps {
  * }
  *
  * 你传什么 attachmentParams，那么 AttachmentTable 就存什么，把权利完全交给 ABOX 控制
- * 所以每个 ABOX 都是独立的，有几个 ABOX 就意味着这个页面要发几个 ajax 过去 fetchList，而不是 API 那边事先 query 好丢出来。
+ * 所以每个 ABOX 都是独立的，有几个 ABOX 就意味着这个页面要发几个 request 过去 fetchList，而不是 API 那边事先 query 好丢出来。
  *
  * 之前想着给 moduleTable <--> attachmentTable 做 M2M 关联表，
  * 但这样其实有个问题，当一个页面有多个 ABOX 的时候，每次 POST 这个 M2M 的时候还要把所有 ABOX 的 data 拿出来合并一起 POST，
@@ -96,7 +96,7 @@ export const AttachmentBox = (props: IProps) => {
           setAttachments(_.orderBy(res.data.data.data, ['status', 'sort'], ['desc', 'asc']) || []);
         }
       })
-      .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message))
+      .catch(httpErrorMsg)
       .finally(() => !isAjaxCancelled.current && setListLoading(false));
   };
 
@@ -125,7 +125,7 @@ export const AttachmentBox = (props: IProps) => {
         if (props.onChangeAttasCallback) props.onChangeAttasCallback(attas);
         if (props.onDeleteAttaCallback) props.onDeleteAttaCallback();
       })
-      .catch((err: IHttpError) => errorMsg(err.response?.data?.message || err.message));
+      .catch(httpErrorMsg);
   };
 
   const onDeletedAtta = (atta: Attachment) => onChangeAttas(attachments?.filter((a) => a.id !== atta.id));
@@ -133,7 +133,7 @@ export const AttachmentBox = (props: IProps) => {
 
   return (
     <div
-      className={cx(style['attachment-box-wrapper'], props.className, {
+      className={cx(style['attachment-box-comp-wrapper'], props.className, {
         [style['wrapper-box--list']]: type === 'list',
         [style['wrapper-box--card']]: type === 'card',
         [style['wrapper-box--circle']]: props.circle,

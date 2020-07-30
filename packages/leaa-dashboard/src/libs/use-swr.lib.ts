@@ -1,4 +1,5 @@
-import useSWR, { ConfigInterface, responseInterface } from 'swr';
+// eslint-disable-next-line import/no-named-default
+import { default as useSWRLib, ConfigInterface, responseInterface } from 'swr';
 import { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import { ICrudListQueryParams } from '@leaa/dashboard/src/interfaces';
 
@@ -28,11 +29,11 @@ export interface IConfig<Data = unknown, Error = unknown>
   initialData?: Data;
 }
 
-export function useFetch<Data = unknown, Error = unknown>(
+export function useSWR<Data = unknown, Error = unknown>(
   request: IAxiosRequestConfig | null,
   { initialData, ...config }: IConfig<Data, Error> = {},
 ): IReturn<Data, Error> {
-  const { data: response, error, isValidating, revalidate, mutate } = useSWR<AxiosResponse<Data>, AxiosError<Error>>(
+  const { data: response, error, isValidating, revalidate, mutate } = useSWRLib<AxiosResponse<Data>, AxiosError<Error>>(
     request?.url ? JSON.stringify(request) : null,
     /**
      * NOTE: Typescript thinks `request` can be `null` here, but the fetcher

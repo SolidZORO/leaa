@@ -257,7 +257,7 @@ export const TableCard = <T extends any>(props: IProps<T>) => {
   return (
     <div
       className={cx(
-        style['table-card-wrapper'],
+        style['table-card-comp-wrapper'],
         { [style['selected-row-bar']]: props.selectedRowKeys && props.selectedRowKeys.length > 0 },
         props.className,
       )}
