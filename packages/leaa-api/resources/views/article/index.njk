@@ -11,38 +11,40 @@
       font-weight: bold;
     }
 
+    .article-list {
+      padding: 2%;
+    }
   </style>
 {% endblock %}
 
 {% block layoutContainer %}
+  <div class="article-list">
+    {% for item in list.data %}
+      <a href="/a/{{ item.id }}">
+        <h2>{{ item.title }}</h2>
+      </a>
+      <h3>{{ item.slug }}</h3>
 
-  {% for item in list.data %}
-    <a href="/a/{{ item.id }}">
-      <h2>{{ item.title }}</h2>
-    </a>
-    <h3>{{ item.slug }}</h3>
-    <p>{{ item.content }}</p>
+      {% if item.tags | length %}
+        <div class="article-tags">
+          &nbsp;Tags:
+          {% for tag in item.tags %}
+            <span>{{ tag.name }}</span>
+          {% endfor %}
+        </div>
+      {% endif %}
 
-    {% if item.tags | length %}
-      <div class="article-tags">
-        &nbsp;Tags:
-        {% for tag in item.tags %}
-          <span>{{ tag.name }}</span>
-        {% endfor %}
-      </div>
-    {% endif %}
-
-    {% if item.tags | length %}
-      <div class="article-tags">
-        Cates:
-        {% for category in item.categories %}
-          <span>{{ category.name }}</span>
-        {% endfor %}
-      </div>
-    {% endif %}
-    <hr>
-  {% endfor %}
-
+      {% if item.categories | length %}
+        <div class="article-tags">
+          Cates:
+          {% for category in item.categories %}
+            <span>{{ category.name }}</span>
+          {% endfor %}
+        </div>
+      {% endif %}
+      <hr>
+    {% endfor %}
+  </div>
 
   <div class="article-pagination">
     {% include "../_components/pagination.component.njk" %}

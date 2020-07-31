@@ -16,8 +16,9 @@
       {% include "../_components/header.component.njk" %}
     {% endblock %}
 
-    {% block layoutContainer %}
-    {% endblock %}
+    <div class="layout-container-comp-wrapper">
+      {% block layoutContainer %}{% endblock %}
+    </div>
 
     {% block layoutFooter %}
       {% include "../_components/footer.component.njk" %}

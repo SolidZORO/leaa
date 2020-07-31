@@ -1,39 +1,66 @@
+html,
 body {
+  margin: 0;
+  padding: 0;
   font-family: 'Avenir Next', 'Avenir', 'Segoe UI', Roboto, -apple-system, BlinkMacSystemFont, 'Helvetica Neue',
     Helvetica, Arial, sans-serif;
   font-size: 100%;
   user-select: revert;
 }
 
-h1 {
-  font-size: 120%;
-  font-weight: 600;
+a {
+  color: #00e;
+  text-decoration: none;
 }
 
-.build-list {
-  position: fixed;
-  left: 16px;
-  bottom: 16px;
-  font-size: 50%;
-  color: #e2e2e2;
-  transition: all 0.3s;
+a:hover {
+  color: #00e;
 }
 
-.build-list:hover {
-  color: #000;
-  transition: all 0.3s;
+.typo {
+  line-height: 1.6;
+  font-size: 18px;
 }
 
-.build-item {
-  font-size: 80%;
+.layout-header-comp-wrapper {
+  text-align: center;
 }
 
-.build-item span {
-  display: inline-block;
+.layout-header-comp-wrapper a {
 }
 
-.build-item strong {
-  font-weight: 400;
-  margin-left: 5px;
-  font-family: monospace;
+.layout-header-comp-wrapper .layout-header-nav {
+  font-size: 160%;
+  margin: 40px;
+}
+
+.layout-header-comp-wrapper .layout-header-nav a {
+  color: #fff;
+  background-color: #00e;
+  padding: 4px 20px;
+}
+
+.layout-container-comp-wrapper {
+  width: 100%;
+  margin: 0 auto;
+}
+
+@media (min-width: 680px) {
+  .layout-container-comp-wrapper {
+    width: 680px;
+  }
+}
+
+.layout-footer-comp-wrapper {
+}
+
+.layout-footer-comp-wrapper .layout-footer-eof {
+  text-align: center;
+  margin: 40px;
+}
+
+.layout-footer-comp-wrapper .layout-footer-eof a {
+  font-size: small;
+  font-weight: normal !important;
+  color: #ccc;
 }

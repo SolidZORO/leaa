@@ -1,6 +1,18 @@
 {% extends "../_layouts/master.layout.njk" %}
 
+
+{% block headStyle %}
+  <style>
+    .article-item {
+      padding: 2%;
+    }
+  </style>
+{% endblock %}
+
 {% block layoutContainer %}
-  <h1>{{ item.title }}</h1>
-  <div>{{ item.content | safe }}</div>
+
+  <div class="article-item">
+    <h1>{{ item.title }}</h1>
+    <div class="typo">{{ item.content | safe }}</div>
+  </div>
 {% endblock %}
