@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
 
-import { IndexController } from '@leaa/api/src/modules/v1/index/index.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Setting } from '@leaa/api/src/entrys';
+
+import { IndexController } from './index.controller';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Setting])],

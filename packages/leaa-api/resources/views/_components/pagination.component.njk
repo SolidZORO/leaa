@@ -1,0 +1,14 @@
+{#
+"count":2,"total":11,"page":1,"pageCount":6
+#}
+
+
+{% for i in range(1, list.pageCount) %}
+  {% if i === list.page %}
+    [{{ i }}]
+  {% else %}
+    <a href="/a?page={{ i }}">
+      {{ i }}
+    </a>
+  {% endif %}
+{% endfor %}

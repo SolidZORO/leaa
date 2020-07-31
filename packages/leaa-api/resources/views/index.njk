@@ -1,0 +1,75 @@
+{% extends "_layouts/empty.layout.njk" %}
+
+{% block headStyle %}
+  <style>
+    body {
+      font-family: 'Avenir Next', 'Avenir', 'Segoe UI', Roboto, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 100%;
+      user-select: revert;
+    }
+
+    h1 {
+      font-size: 120%;
+      font-weight: 600;
+    }
+
+    .build-list {
+      position: fixed;
+      left: 16px;
+      bottom: 16px;
+      font-size: 50%;
+      color: #e2e2e2;
+      transition: all 0.3s;
+    }
+
+    .build-list:hover {
+      color: #000;
+      transition: all 0.3s;
+    }
+
+    .build-item {
+      font-size: 80%;
+    }
+
+    .build-item span {
+      display: inline-block;
+    }
+
+    .build-item strong {
+      font-weight: 400;
+      margin-left: 5px;
+      font-family: monospace;
+    }
+  </style>
+{% endblock %}
+
+
+
+{% block layoutContainer %}
+  <h1>{{ welcomeText }}</h1>
+  <h1>{{ t2 }}</h1>
+  <div class="build-list">
+    <div class="build-item">
+      <span>NAME:</span>
+      <strong>{{ buildInfo.NAME }}</strong>
+    </div>
+
+    <div class="build-item">
+      <span>MODE:</span>
+      <strong>{{ buildInfo.MODE }}</strong>
+    </div>
+
+    <br />
+
+    <div class="build-item">
+      <span>VERSION:</span>
+      <strong>{{ buildInfo.VERSION }}</strong>
+    </div>
+
+    <div class="build-item">
+      <span>BUILDTIME:</span>
+      <strong>{{ buildInfo.BUILDTIME }}</strong>
+    </div>
+  </div>
+{% endblock %}
+

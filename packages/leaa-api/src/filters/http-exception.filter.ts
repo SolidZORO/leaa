@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import { ExceptionFilter, Catch, ArgumentsHost, HttpException, HttpStatus } from '@nestjs/common';
 import { logger } from '@leaa/api/src/utils';
 
@@ -26,15 +25,19 @@ export class HttpExceptionFilter implements ExceptionFilter<unknown> {
     // e.g. `Duplicate entry 'EMPTY' for key 'IDX_d90243459a697eadb8ad56e909'`
     if (exception?.sqlMessage && `${exception?.sqlMessage}`.includes('Duplicate entry')) message = 'Duplicate Entry';
 
+    let consoleLog = '\n\n\n---- EXCEPTION ----\n\n';
+
+    // @ts-ignore
+    if (exception?.sqlMessage) consoleLog += `\nSQL: ${JSON.stringify(exception.sqlMessage)}\n\n`;
+
+    // @ts-ignore
+    if (exception?.response) consoleLog += `\nRES: ${JSON.stringify(exception.response)}\n\n`;
+
+    consoleLog += `\nRAW: ${JSON.stringify(exception)}\n\n`;
+    console.error(consoleLog);
+
     // File log & Cli log
-    logger.error(`${exception}` || 'HttpExceptionFilter ErrorMsg');
-    console.error(
-      '\n---- EXCEPTION ----\n',
-      // @ts-ignore
-      `\nSQL:\n ${exception.sqlMessage}`,
-      // @ts-ignore
-      `\n\nRES:\n ${exception.response}\n\n\n\n`,
-    );
+    logger.error(JSON.stringify(exception) || 'HttpExceptionFilter ErrorMsg');
 
     res.status(statusCode).json({
       statusCode,

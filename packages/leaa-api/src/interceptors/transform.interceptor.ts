@@ -17,10 +17,10 @@ export class TransformInterceptor<T> implements NestInterceptor<T, IHttpData<T>>
     const res: IResponse = ctx.getResponse();
     const req: IRequest = ctx.getRequest();
 
-    const ignoreList = ['/'];
+    console.log(req.route.path);
 
-    // ignore index
-    if (ignoreList.includes(req.route.path)) return next.handle();
+    // non API URL check your nginx rewrite, not necessarily an `api`
+    if (!/^(\/api\/)?\/v1\//.test(req.route.path)) return next.handle();
 
     const statusCode = res.statusCode || HttpStatus.OK;
     const message = 'Success';

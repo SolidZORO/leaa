@@ -1,5 +1,14 @@
 import { Controller, UseGuards, Post } from '@nestjs/common';
-import { Crud, CrudController, Override, ParsedRequest, CrudRequest, ParsedBody } from '@nestjsx/crud';
+import {
+  Crud,
+  CrudController,
+  Override,
+  ParsedRequest,
+  CrudRequest,
+  ParsedBody,
+  GetManyDefaultResponse,
+} from '@nestjsx/crud';
+import { ICrudRequest } from '@leaa/api/src/interfaces';
 import { Permissions } from '@leaa/api/src/decorators';
 import { TagCreateOneReq, TagUpdateOneReq } from '@leaa/api/src/dtos/tag';
 import { JwtGuard, PermissionsGuard } from '@leaa/api/src/guards';
@@ -42,10 +51,12 @@ import { TagService } from './tag.service';
 export class TagController implements CrudController<Tag> {
   constructor(public service: TagService) {}
 
-  // @Override('getManyBase')
-  // getMany(@ParsedRequest() req: CrudRequest): Promise<GetManyDefaultResponse<Tag> | Tag[]> {
-  //   return this.service.getMany(req);
-  // }
+  @Override('getManyBase')
+  getMany(@ParsedRequest() req: ICrudRequest): Promise<GetManyDefaultResponse<Tag> | Tag[]> {
+    // console.log('Tag Controller Dump Req >>>', req);
+
+    return this.service.getMany(req);
+  }
 
   @Override('createOneBase')
   @UseGuards(JwtGuard)

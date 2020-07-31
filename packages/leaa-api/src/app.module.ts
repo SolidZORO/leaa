@@ -21,6 +21,11 @@ import { TagModule } from '@leaa/api/src/modules/v1/tag/tag.module';
 import { CategoryModule } from '@leaa/api/src/modules/v1/category/category.module';
 import { AttachmentModule } from '@leaa/api/src/modules/v1/attachment/attachment.module';
 import { ConfigService } from '@leaa/api/src/modules/v1/config/config.service';
+//
+//
+//
+// view
+import { ArticleViewModule } from '@leaa/api/src/views/v1/article/article-view.module';
 
 const imports = [
   CacheModule.register(),
@@ -44,6 +49,11 @@ const imports = [
   TagModule,
   CategoryModule,
   AttachmentModule,
+  //
+  //
+  //
+  // view
+  ArticleViewModule,
 ];
 
 @Module({

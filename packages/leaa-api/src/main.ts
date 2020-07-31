@@ -1,5 +1,6 @@
 import path from 'path';
 import helmet from 'helmet';
+import nunjucks from 'nunjucks';
 import rateLimit from 'express-rate-limit';
 import { NestFactory } from '@nestjs/core';
 import { Logger, ValidationPipe } from '@nestjs/common';
@@ -25,9 +26,28 @@ import { envInfoForCli } from '@leaa/api/src/utils';
   });
 
   const configService = await app.get(ConfigService);
-  const publicPath = path.resolve(__dirname, `../${configService.PUBLIC_DIR}`);
+
+  const rootPath = path.resolve(__dirname, '..');
+  const publicPath = `${rootPath}/${configService.PUBLIC_DIR}`;
+  const viewsPath = `${rootPath}/resources/views`;
 
   app.useStaticAssets(publicPath);
+
+  const njkEnv = nunjucks.configure([viewsPath], {
+    // autoescape: true,
+    // throwOnUndefined: false,
+    trimBlocks: true,
+    lstripBlocks: false,
+    watch: true,
+    noCache: process.env.NODE_ENV !== 'production',
+    express: app,
+  });
+
+  app.setBaseViewsDir(viewsPath);
+  app.setViewEngine('njk');
+  app.engine('njk', njkEnv.render);
+  app.set('view cache', true);
+
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalFilters(new HttpExceptionFilter());
   app.useGlobalInterceptors(new TransformInterceptor());
@@ -66,6 +86,7 @@ import { envInfoForCli } from '@leaa/api/src/utils';
     config: configService,
     NODE_ENV: process.env.NODE_ENV,
     PUBLIC_PATH: publicPath,
+    VIEWS_PATH: viewsPath,
     DIRNAME: __dirname,
   });
 })();

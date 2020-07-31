@@ -7,11 +7,13 @@ export const envInfoForCli = ({
   config,
   NODE_ENV,
   PUBLIC_PATH,
+  VIEWS_PATH,
   DIRNAME,
 }: {
   config: IDotEnv | any;
   NODE_ENV?: string;
   PUBLIC_PATH?: string;
+  VIEWS_PATH?: string;
   DIRNAME?: string;
 }) => {
   // emoji for CLI
@@ -47,6 +49,7 @@ export const envInfoForCli = ({
   console.log('');
   console.log('     - DIRNAME ', DIRNAME);
   console.log('     - PUBLIC  ', PUBLIC_PATH);
+  console.log('     - VIEWS   ', VIEWS_PATH);
   console.log('');
   console.log('     - ATTACHMENT_DIR           ', config.ATTACHMENT_DIR);
   console.log('     - ATTACHMENT_LIMIT_SIZE_MB ', config.ATTACHMENT_LIMIT_SIZE_MB);

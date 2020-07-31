@@ -1,0 +1,6 @@
+{% extends "../_layouts/master.layout.njk" %}
+
+{% block layoutContainer %}
+  <h1>{{ item.title }}</h1>
+  <div>{{ item.content | safe }}</div>
+{% endblock %}
