@@ -276,6 +276,10 @@ case "$SKIP_CONFIRM" in
   if [ ! -d ${__DEPLOY__}/resources/divisions ]; then mkdir -p ${__DEPLOY__}/resources/divisions; fi
   cp -fr ./resources/divisions/source ${__DEPLOY__}/resources/divisions
 
+  # views
+  if [ ! -d ${__DEPLOY__}/resources/views ]; then mkdir -p ${__DEPLOY__}/resources/views; fi
+  cp -fr ./resources/views/** ${__DEPLOY__}/resources/views
+
   # public
   if [ ! -d ${__DEPLOY__}/public ]; then mkdir -p ${__DEPLOY__}/public; fi
   cp -fr ./public/assets ${__DEPLOY__}/public

@@ -22,7 +22,7 @@ import { ArticleService } from '@leaa/api/src/modules/v1/article/article.service
       tags: { eager: true, allow: ['name'] },
       categories: { eager: true, allow: ['name'] },
     },
-    limit: 5,
+    limit: 3,
   },
 })
 @Controller('/a')

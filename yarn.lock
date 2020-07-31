@@ -8596,11 +8596,6 @@ for-own@^0.1.3:
   dependencies:
     for-in "^1.0.1"
 
-foreachasync@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.npm.taobao.org/foreachasync/download/foreachasync-3.0.0.tgz#5502987dc8714be3392097f32e0071c9dee07cf6"
-  integrity sha1-VQKYfchxS+M5IJfzLgBxyd7gfPY=
-
 forever-agent@~0.6.1:
   version "0.6.1"
   resolved "https://registry.npm.taobao.org/forever-agent/download/forever-agent-0.6.1.tgz#fbc71f0c41adeb37f96c577ad1ed42d8fdacca91"
@@ -9137,7 +9132,7 @@ handle-thing@^2.0.0:
   resolved "https://registry.npm.taobao.org/handle-thing/download/handle-thing-2.0.1.tgz#857f79ce359580c340d43081cc648970d0bb234e"
   integrity sha1-hX95zjWVgMNA1DCBzGSJcNC7I04=
 
-handlebars@4.7.6, handlebars@^4.7.6:
+handlebars@^4.7.6:
   version "4.7.6"
   resolved "https://registry.npm.taobao.org/handlebars/download/handlebars-4.7.6.tgz#d4c05c1baf90e9945f77aa68a7a219aa4a7df74e"
   integrity sha1-1MBcG6+Q6ZRfd6pop6IZqkp9904=
@@ -9248,14 +9243,6 @@ hash.js@^1.0.0, hash.js@^1.0.3:
   dependencies:
     inherits "^2.0.3"
     minimalistic-assert "^1.0.1"
-
-hbs@^4.1.1:
-  version "4.1.1"
-  resolved "https://registry.npm.taobao.org/hbs/download/hbs-4.1.1.tgz#8aab17ca6ae70f9aaa225278bed7af31011254b7"
-  integrity sha1-iqsXymrnD5qqIlJ4vtevMQESVLc=
-  dependencies:
-    handlebars "4.7.6"
-    walk "2.3.14"
 
 he@^1.2.0:
   version "1.2.0"
@@ -18072,13 +18059,6 @@ w3c-xmlserializer@^2.0.0:
   integrity sha1-PnEEoFt1FGzGD1ZDgLf2g6zxAgo=
   dependencies:
     xml-name-validator "^3.0.0"
-
-walk@2.3.14:
-  version "2.3.14"
-  resolved "https://registry.npm.taobao.org/walk/download/walk-2.3.14.tgz#60ec8631cfd23276ae1e7363ce11d626452e1ef3"
-  integrity sha1-YOyGMc/SMnauHnNjzhHWJkUuHvM=
-  dependencies:
-    foreachasync "^3.0.0"
 
 walker@^1.0.7, walker@~1.0.5:
   version "1.0.7"
