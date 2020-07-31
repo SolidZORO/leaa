@@ -25,7 +25,7 @@ import { ArticleService } from '@leaa/api/src/modules/v1/article/article.service
     limit: 3,
   },
 })
-@Controller('/a')
+@Controller('/aaa')
 export class ArticleViewController implements CrudController<Article> {
   constructor(public service: ArticleService) {}
 

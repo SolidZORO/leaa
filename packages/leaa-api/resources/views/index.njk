@@ -1,4 +1,4 @@
-{% extends "_layouts/empty.layout.njk" %}
+{% extends "_layouts/master.layout.njk" %}
 
 {% block headStyle %}
   <style>
@@ -40,14 +40,28 @@
       margin-left: 5px;
       font-family: monospace;
     }
+
+    .layout-container-comp-wrapper {
+      width: 100% !important;
+    }
+
+    .welcome-text {
+      padding: 16px;
+      font-size: 20px;
+    }
   </style>
 {% endblock %}
 
 
+{% block layoutHeader %}{% endblock %}
+{% block layoutFooter %}{% endblock %}
 
 {% block layoutContainer %}
-  <h1>{{ welcomeText }}</h1>
-  <h1>{{ t2 }}</h1>
+
+  <div class="welcome-text">
+    <h1>{{ welcomeText }}</h1>
+  </div>
+
   <div class="build-list">
     <div class="build-item">
       <span>NAME:</span>

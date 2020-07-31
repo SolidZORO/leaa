@@ -7,7 +7,76 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="renderer" content="webkit">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link rel="stylesheet" type="text/css" href="/assets/styles/theme-global.css" />
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Avenir Next', 'Avenir', 'Segoe UI', Roboto, -apple-system, BlinkMacSystemFont, 'Helvetica Neue',
+        Helvetica, Arial, sans-serif;
+        font-size: 100%;
+        user-select: revert;
+      }
+
+      a {
+        color: #00e;
+        text-decoration: none;
+      }
+
+      a:hover {
+        color: #00e;
+      }
+
+      .typo {
+        line-height: 1.6;
+        font-size: 18px;
+      }
+
+      .layout-header-comp-wrapper {
+        text-align: center;
+      }
+
+      .layout-header-comp-wrapper a {
+      }
+
+      .layout-header-comp-wrapper .layout-header-nav {
+        font-size: 160%;
+        margin: 40px;
+      }
+
+      .layout-header-comp-wrapper .layout-header-nav a {
+        color: #fff;
+        background-color: #00e;
+        padding: 4px 20px;
+      }
+
+      .layout-container-comp-wrapper {
+        width: 100%;
+        margin: 0 auto;
+      }
+
+      @media (min-width: 680px) {
+        .layout-container-comp-wrapper {
+          width: 680px;
+        }
+      }
+
+      .layout-footer-comp-wrapper {
+      }
+
+      .layout-footer-comp-wrapper .layout-footer-eof {
+        text-align: center;
+        margin: 40px;
+      }
+
+      .layout-footer-comp-wrapper .layout-footer-eof a {
+        font-size: small;
+        font-weight: normal !important;
+        color: #ccc;
+      }
+    </style>
+
+
     {% block headStyle %}{% endblock %}
     {% block headScript %}{% endblock %}
   </head>

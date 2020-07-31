@@ -1,7 +1,5 @@
 {% extends "../_layouts/master.layout.njk" %}
 
-
-
 {% block headStyle %}
   <style>
     .article-pagination {
@@ -20,7 +18,7 @@
 {% block layoutContainer %}
   <div class="article-list">
     {% for item in list.data %}
-      <a href="/a/{{ item.id }}">
+      <a href="/aaa/{{ item.id }}">
         <h2>{{ item.title }}</h2>
       </a>
       <h3>{{ item.slug }}</h3>
