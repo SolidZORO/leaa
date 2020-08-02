@@ -9,7 +9,6 @@ export class HttpCacheInterceptor extends CacheInterceptor {
     // const httpServer = httpAdapter.getHttpServer();
 
     // const isGetRequest = httpServer.getRequestMethod(request) === 'GET';
-    // console.log('111111111', isGetRequest);
 
     // const cacheKey = this.reflector.get(CACHE_KEY_METADATA, context.getHandler());
     //
