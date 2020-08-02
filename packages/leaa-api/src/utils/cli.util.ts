@@ -21,18 +21,20 @@ export const envInfoForCli = ({
   const serverBaseByEmoji = `✨✨ \x1b[00;44;9m${serverBaseByText}\x1b[0m ✨✨`;
   const serverEnv = `${NODE_ENV !== 'production' ? '🚀' : '🔰'} ${(NODE_ENV || 'NOT-ENV').toUpperCase()}`;
 
-  console.log(
-    `\n\n\n> 🌈  DEBUG ${config.DEBUG_MODE ? '✅' : '⛔️'}  /  DEMO ${config.DEMO_MODE ? '✅' : '⛔️'}  /  ${
-      // eslint-disable-next-line no-underscore-dangle
-      config.__ENV__
-    }`,
-  );
-
-  console.log(`\n> ${serverEnv}  /  URL`, serverBaseByEmoji);
+  console.log(`\n\n> ${serverEnv}  /  URL`, serverBaseByEmoji);
 
   console.log('\n> 📮 ENVINFO');
   console.log('');
-  console.log('     - NAME    ', `${config.SERVER_NAME} v${pkg.version}`);
+  // eslint-disable-next-line no-underscore-dangle
+  console.log('     - NAME    ', `${config.SERVER_NAME} v${pkg.version} (${config.__ENV__})`);
+  console.log('');
+  console.log('     - DEMO_MODE      ', `${config.DEMO_MODE ? 'enable' : '-'}`);
+  console.log('     - DEBUG_MODE     ', `${config.DEBUG_MODE ? 'enable' : '-'}`);
+  console.log('');
+  console.log('     - DATE           ', moment().toDate());
+  console.log('     - NOW            ', moment().format('YYYY-MM-DD HH:mm:ss'));
+  console.log('     - TZ             ', config.TZ);
+  console.log('     - TZ_OFFSET      ', moment().utcOffset());
   console.log('');
   console.log('     - DB_TYPE        ', config.DB_TYPE);
   console.log('     - DB_DATABASE    ', config.DB_DATABASE);
@@ -41,11 +43,6 @@ export const envInfoForCli = ({
   console.log('     - RATELIMIT_MAX        ', config.RATELIMIT_MAX);
   console.log('     - RATELIMIT_WINDOWMS   ', config.RATELIMIT_WINDOWMS);
   console.log('     - ENABLE_CAPTCHA_TIMES ', config.ENABLE_CAPTCHA_BY_LOGIN_FAILD_TIMES);
-  console.log('');
-  console.log('     - DATE       ', moment().toDate());
-  console.log('     - NOW        ', moment().format('YYYY-MM-DD HH:mm:ss'));
-  console.log('     - TZ         ', config.TZ);
-  console.log('     - TZ_OFFSET  ', moment().utcOffset());
   console.log('');
   console.log('     - DIRNAME ', DIRNAME);
   console.log('     - PUBLIC  ', PUBLIC_PATH);
