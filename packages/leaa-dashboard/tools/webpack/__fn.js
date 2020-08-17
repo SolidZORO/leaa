@@ -35,7 +35,7 @@ function showEnvInfo(WPCONST) {
   console.log(`\n> ${serverEnv} URL ${serverBaseByEmoji}`);
   console.log('\n> 📮 ENVINFO');
   // prettier-ignore
-  console.log('     - NAME                 ', `${WPCONST.SITE_NAME} ~ v${getPkgVersion.VERSION}(${getPkgVersion.VERSION_HASH})`);
+  console.log('     - NAME                 ', `${WPCONST.SITE_NAME} ~ v${getPkgVersion.VERSION} (${getPkgVersion.VERSION_HASH})`);
   console.log('');
   console.log('     - CHUNK                ', `${WPCONST.CHUNK_HASH}`);
   console.log('     - PUBLIC_DIR           ', `${WPCONST.PUBLIC_DIR}`);

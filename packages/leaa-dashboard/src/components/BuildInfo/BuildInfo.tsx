@@ -44,7 +44,7 @@ export const BuildInfo = (props: IProps) => {
         <div className={style['build-item']}>
           <span>VERSION:</span>
           <strong>
-            {buildConfig.VERSION} ({buildConfig.GIT_VERSION})
+            v{buildConfig.VERSION} ({buildConfig.VERSION_HASH})
           </strong>
         </div>
 
