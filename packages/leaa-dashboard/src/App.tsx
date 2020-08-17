@@ -32,6 +32,8 @@ export const App = (): JSX.Element => {
 
   if (!envConfig) return NOT_FOUND_CONFIG_DOM;
 
+  // return <p>for DEBUG</p>;
+
   return (
     <ErrorBoundary>
       <HelmetProvider>

@@ -19,14 +19,13 @@ export const envInfoForCli = ({
   // emoji for CLI
   const serverBaseByText = `${config.SERVER_PROTOCOL}://${config.SERVER_HOST}:${config.SERVER_PORT}`;
   const serverBaseByEmoji = `✨✨ \x1b[00;44;9m${serverBaseByText}\x1b[0m ✨✨`;
-  const serverEnv = `${NODE_ENV !== 'production' ? '🚀' : '🔰'} ${(NODE_ENV || 'NOT-ENV').toUpperCase()}`;
+  const serverEnv = `${NODE_ENV !== 'production' ? '🚀' : '🔰'}`;
 
-  console.log(`\n\n> ${serverEnv}  /  URL`, serverBaseByEmoji);
-
+  console.log(`\n\n\n\n> 🌈 DEBUG ${config.DEMO_MODE === 'true' ? '✅' : '✖️'}  /  ${NODE_ENV}`);
+  console.log(`\n> ${serverEnv} URL ${serverBaseByEmoji}`);
   console.log('\n> 📮 ENVINFO');
-  console.log('');
   // eslint-disable-next-line no-underscore-dangle
-  console.log('     - NAME    ', `${config.SERVER_NAME} v${pkg.version} (${config.__ENV__})`);
+  console.log('     - NAME           ', `${config.SERVER_NAME} ~ v${pkg.version}`);
   console.log('');
   console.log('     - DEMO_MODE      ', `${config.DEMO_MODE ? 'enable' : '-'}`);
   console.log('     - DEBUG_MODE     ', `${config.DEBUG_MODE ? 'enable' : '-'}`);

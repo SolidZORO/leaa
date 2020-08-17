@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 const TerserPlugin = require('terser-webpack-plugin');
 const safePostCssParser = require('postcss-safe-parser');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
@@ -7,29 +6,23 @@ const { WPCONST } = require('./_const');
 
 const optimization = {
   namedModules: true,
-  runtimeChunk: true,
+  runtimeChunk: false,
   noEmitOnErrors: true,
   // concatenateModules: true,
-  //
-  // usedExports: true,
-  // usedExports: false,
-  // sideEffects: true,
-  // sideEffects: false,
 };
 
 optimization.splitChunks = {
   chunks: 'all',
-  minSize: 30000,
+  minSize: 100000,
   // minChunks: 2,
   // maxAsyncRequests: 5,
   // maxInitialRequests: 3,
   // automaticNameDelimiter: '~',
   automaticNameMaxLength: 30,
-  // name: true,
   name: true,
   cacheGroups: {
     REACT: {
-      name: '_react',
+      name: 'react',
       test: /[\\/](react|react-dom|react-router)/,
       chunks: 'initial',
       priority: 95,
@@ -37,39 +30,31 @@ optimization.splitChunks = {
       enforce: true,
     },
     ANTD: {
-      name: '_antd',
-      test: /[\\/](antd)/,
+      name: 'antd',
+      test: /[\\/](@ant-design|antd)/,
       chunks: 'initial',
       priority: 90,
       reuseExistingChunk: true,
       enforce: true,
     },
     ANTD_EXT: {
-      name: '_antd-ext',
-      test: /[\\/](@ant-design|rc-*|tinycolor2)/,
+      name: 'antd-ext',
+      test: /[\\/](rc-*|tinycolor2)/,
       chunks: 'initial',
-      priority: 80,
+      priority: 89,
       reuseExistingChunk: true,
       enforce: true,
     },
     LIBS: {
-      name: '_libs',
-      test: /[\\/]node_modules[\\/](mobx|axios|i18next)/,
+      name: 'libs',
+      test: /[\\/]node_modules[\\/](mobx|redux|axios|i18next)/,
       chunks: 'initial',
       priority: 40,
       reuseExistingChunk: true,
       enforce: true,
     },
-    REACT_SORTABLE_TREE: {
-      name: '_react-sortable-tree',
-      test: /[\\/]node_modules[\\/]react-sortable-tree/,
-      chunks: 'initial',
-      priority: 20,
-      reuseExistingChunk: true,
-      enforce: true,
-    },
     VENDORS: {
-      name: '_vendors',
+      name: 'vendors',
       test: /[\\/]node_modules[\\/]/,
       chunks: 'initial',
       priority: 10,
@@ -83,6 +68,7 @@ optimization.splitChunks = {
     //   priority: 1,
     //   reuseExistingChunk: true,
     //   enforce: true,
+    // },
   },
 };
 
@@ -90,8 +76,9 @@ if (WPCONST.__DEV__) {
   //
   // DEV PLUGIN
   //
+  optimization.minimize = false;
+  optimization.minimizer = [];
 } else {
-  // optimization.minimizer = [];
   //
   // PROD PLUGIN
   //
@@ -157,6 +144,9 @@ if (WPCONST.__DEV__) {
       canPrint: true,
     }),
   ];
+
+  // optimization.minimize = false;
+  // optimization.minimizer = [];
 }
 
 module.exports = { optimization };

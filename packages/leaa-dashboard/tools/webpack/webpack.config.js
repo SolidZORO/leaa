@@ -1,6 +1,3 @@
-/* eslint-disable no-underscore-dangle */
-const SpeedMeasurePlugin = require('speed-measure-webpack-plugin');
-
 const { WPCONST } = require('./_const');
 const { modules } = require('./_modules');
 const { plugins } = require('./_plugins');
@@ -12,7 +9,7 @@ const { devServer } = require('./_devServer');
 const { optimization } = require('./_optimization');
 
 // @see https://webpack.docschina.org/configuration/devtool/
-let webpackConfig = {
+const webpackConfig = {
   entry: { index: './src/index.tsx' },
   context: WPCONST.ROOT_DIR,
   mode: WPCONST.MODE,
@@ -30,50 +27,28 @@ let webpackConfig = {
   externals,
   optimization,
   output: {
-    // # for Lib
+    pathinfo: WPCONST.__DEV__,
+    path: WPCONST.OUTPUT_PATH,
+    publicPath: WPCONST.OUTPUT_PUBLIC_PATH,
+    //
+    // # for PROJECT
+    filename: WPCONST.OUTPUT_SCRIPT_FILENAME,
+    chunkFilename: WPCONST.OUTPUT_SCRIPT_CHUNK_FILENAME,
+    sourceMapFilename: WPCONST.OUTPUT_SCRIPT_SOURCEMAP_FILENAME,
+    //
+    // # for LIBS
     // filename: 'x.js',
     // library: 'X',
     // libraryTarget: 'umd',
     // libraryExport: 'default',
     // umdNamedDefine: true,
-
-    // # for Project
-    pathinfo: WPCONST.__DEV__,
-
-    // e.g. src/_dist/statics/
-    path: WPCONST.OUTPUT_PATH,
-
-    // webpack uses `publicPath` to determine where the app is being served from.
-    // It requires a trailing slash, or the file assets will get an incorrect path.
-    // We inferred the "public path" (such as / or /my-project) from homepage.
-    // e.g. xxx.com/statics/
-    publicPath: WPCONST.OUTPUT_PUBLIC_PATH,
-
-    // futureEmitAssets: true,
-    // There will be one main bundle, and one file per asynchronous chunk.
-    // In development, it does not produce real files.
-    filename: WPCONST.OUTPUT_SCRIPT_FILENAME,
-    chunkFilename: WPCONST.OUTPUT_SCRIPT_CHUNK_FILENAME,
-    sourceMapFilename: WPCONST.OUTPUT_SCRIPT_SOURCEMAP_FILENAME,
-    // this defaults to 'window', but by setting it to 'this' then
-    // module chunks which are built will work in web workers as well.
-    // globalObject: 'this',
+    // chunkFilename: WPCONST.OUTPUT_SCRIPT_CHUNK_FILENAME,
+    // sourceMapFilename: WPCONST.OUTPUT_SCRIPT_SOURCEMAP_FILENAME,
   },
   node: {
-    module: 'empty',
-    dgram: 'empty',
-    dns: 'mock',
     fs: 'empty',
-    http2: 'empty',
-    net: 'empty',
-    tls: 'empty',
-    child_process: 'empty',
+    path: 'empty',
   },
 };
-
-if (WPCONST.IS_SMP) {
-  const smp = new SpeedMeasurePlugin();
-  webpackConfig = smp.wrap(webpackConfig);
-}
 
 module.exports = webpackConfig;

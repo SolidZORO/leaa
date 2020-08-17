@@ -4,8 +4,8 @@
     "outDir": "_build",
 
     /* Basic Operations */
-    "module": "ES2020",
-    "target": "ES6",
+    "module": "ESNext",
+    "target": "ES2015",
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "declaration": false,
     "declarationMap": false,
@@ -50,26 +50,33 @@
     }
   },
   "compileOnSave": false,
-  "include": ["packages/*/src", "packages/*/typings"],
+  "include": ["packages/*/src/**/*", "lang/*", "typings/*", "global.d.ts"],
   "exclude": [
     "node_modules",
-    "**/__mocks__/**/*",
-    "**/__tests__/**/*",
     //
-    "**/.cache/**/*",
-    "**/_cache/**/*",
-    "**/cache/**/*",
+    ".docker",
+    "/.docker",
+    "/_docker",
+    "/docker",
     //
-    "**/.build/**/*",
-    "**/_build/**/*",
-    "**/build/**/*",
+    ".cache",
+    "/.cache",
+    "/_cache",
+    "/cache",
     //
-    "**/.dist/**/*",
-    "**/_dist/**/*",
-    "**/dist/**/*",
+    ".build",
+    "/.build",
+    "/_build",
+    "/build",
     //
-    "**/.deploy/**/*",
-    "**/_deploy/**/*",
-    "**/deplo/**/*y"
+    ".dist",
+    "/.dist",
+    "/_dist",
+    "/dist",
+    //
+    ".deploy",
+    "/.deploy",
+    "/_deploy",
+    "/deploy"
   ]
 }

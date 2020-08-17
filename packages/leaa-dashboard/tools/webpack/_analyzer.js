@@ -5,9 +5,9 @@ module.exports = {
     // Host that will be used in `server` mode to start HTTP server.
     analyzerHost: 'localhost',
     // Port that will be used in `server` mode to start HTTP server.
-    analyzerPort: 1799,
+    analyzerPort: 63333,
     reportFilename: 'report.html',
-    // defaultSizes: 'parsed',
+    defaultSizes: 'parsed',
     openAnalyzer: true,
     generateStatsFile: false,
     statsFilename: 'stats.json',
