@@ -6,6 +6,9 @@
   "routes": [
     { "src": "^/(scripts|styles|assets)/(.*)", "dest": "/$1/$2" },
     { "src": "^/_env.js", "dest": "/_env.js" },
+    { "src": "^/favicon.svg", "dest": "/favicon.svg" },
+    { "src": "^/favicon.ico", "dest": "/favicon.ico" },
+    { "src": "^/robots.txt", "dest": "/robots.txt" },
     { "src": "^/(.*)", "dest": "/index.html" }
   ]
 }
