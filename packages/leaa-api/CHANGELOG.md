@@ -3,21 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [3.10.1](https://github.com/SolidZORO/leaa/compare/v3.10.0...v3.10.1) (2020-08-17)
+## [3.10.2](https://github.com/SolidZORO/leaa/compare/v3.10.1...v3.10.2) (2020-08-17)
 
+### Bug Fixes
+
+- fixed BuildInfo show git version hash ([2e41371](https://github.com/SolidZORO/leaa/commit/2e4137107710abf882c806fd2c0c7fca4f73bc1d))
+
+## [3.10.1](https://github.com/SolidZORO/leaa/compare/v3.10.0...v3.10.1) (2020-08-17)
 
 ### Features
 
-* add a template render demo ([9bde501](https://github.com/SolidZORO/leaa/commit/9bde50105a242ce7da4121820b48fbf02a814425))
-
+- add a template render demo ([9bde501](https://github.com/SolidZORO/leaa/commit/9bde50105a242ce7da4121820b48fbf02a814425))
 
 ### Performance Improvements
 
-* njk tpl and style ([772754b](https://github.com/SolidZORO/leaa/commit/772754b6324c8ec334c1c5a10d650b55d2657b83))
-
-
-
-
+- njk tpl and style ([772754b](https://github.com/SolidZORO/leaa/commit/772754b6324c8ec334c1c5a10d650b55d2657b83))
 
 # [3.10.0](https://github.com/SolidZORO/leaa/compare/v3.9.0...v3.10.0) (2020-07-30)
 

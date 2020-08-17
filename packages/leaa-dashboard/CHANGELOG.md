@@ -3,13 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.10.2](https://github.com/SolidZORO/leaa/compare/v3.10.1...v3.10.2) (2020-08-17)
+
+### Bug Fixes
+
+- fixed BuildInfo show git version hash ([2e41371](https://github.com/SolidZORO/leaa/commit/2e4137107710abf882c806fd2c0c7fca4f73bc1d))
+- fixed vercel.json favicon rewrite ([c4dddac](https://github.com/SolidZORO/leaa/commit/c4dddac364960241c9b9aae792effe6e8ef736a6))
+
 ## [3.10.1](https://github.com/SolidZORO/leaa/compare/v3.10.0...v3.10.1) (2020-08-17)
 
 **Note:** Version bump only for package @leaa/dashboard
-
-
-
-
 
 # [3.10.0](https://github.com/SolidZORO/leaa/compare/v3.9.0...v3.10.0) (2020-07-30)
 
