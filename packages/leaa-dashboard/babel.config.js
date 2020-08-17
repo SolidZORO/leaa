@@ -68,11 +68,7 @@ module.exports = function (api) {
     env: {
       development: {},
       production: {
-        plugins: [
-          ['@babel/plugin-transform-react-constant-elements'],
-          ['@babel/plugin-transform-react-inline-elements'],
-          ['transform-react-remove-prop-types'],
-        ],
+        plugins: [['@babel/plugin-transform-react-inline-elements'], ['transform-react-remove-prop-types']],
       },
     },
     ignore: [
