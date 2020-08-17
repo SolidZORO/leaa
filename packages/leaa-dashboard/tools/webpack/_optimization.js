@@ -6,8 +6,10 @@ const { WPCONST } = require('./_const');
 
 const optimization = {
   namedModules: true,
-  runtimeChunk: false,
   noEmitOnErrors: true,
+  runtimeChunk: {
+    name: 'manifest',
+  },
   // concatenateModules: true,
 };
 

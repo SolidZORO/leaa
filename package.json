@@ -52,8 +52,6 @@
     "commit-version": "git add . && git commit -m \"chore(release): publish `node -p 'require(\"./lerna.json\").version'`\""
   },
   "devDependencies": {
-    "@commitlint/cli": "^9.1.2",
-    "@commitlint/config-conventional": "^9.1.2",
     "@commitlint/config-lerna-scopes": "^9.1.2",
     "@types/eslint": "7.2.0",
     "@types/eslint-plugin-prettier": "^3.1.0",
@@ -62,10 +60,7 @@
     "@typescript-eslint/eslint-plugin": "^3.9.0",
     "@typescript-eslint/parser": "^3.9.0",
     "babel-eslint": "^10.1.0",
-    "codecov": "^3.7.2",
-    "commitizen": "4.1.2",
     "cross-env": "^7.0.2",
-    "cz-conventional-changelog": "3.2.0",
     "eslint": "7.7.0",
     "eslint-config-airbnb": "18.2.0",
     "eslint-config-airbnb-typescript": "^9.0.0",

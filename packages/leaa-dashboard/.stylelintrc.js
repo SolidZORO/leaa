@@ -69,4 +69,15 @@ module.exports = {
     // https://github.com/hudochenkov/stylelint-order/blob/master/rules/properties-order/README.md
     'order/properties-order': [],
   },
+  // https://github.com/stylelint/vscode-stylelint/issues/72
+  ignoreFiles: [
+    'node_modules/**/*',
+    '**/typings/**/*',
+    'src/assets/**/*',
+    'public/**/*',
+    'tools/**/*',
+    '_dist/**/*',
+    '_deploy/**/*',
+    '.cache/**/*',
+  ],
 };

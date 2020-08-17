@@ -6,5 +6,13 @@
   "singleQuote": true,
   "bracketSpacing": true,
   "trailingComma": "all",
-  "jsxBracketSameLine": false
+  "jsxBracketSameLine": false,
+  "overrides": [
+    {
+      "files": "*.(md|html|ejs)",
+      "options": {
+        "tabWidth": 2
+      }
+    }
+  ]
 }
