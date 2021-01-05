@@ -36,7 +36,7 @@
     "@svgr/webpack": "^5.4.0",
     "animated-scroll-to": "^2.0.10",
     "antd": "^4.5.4",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "classnames": "^2.2.6",
     "copy-webpack-plugin": "^6.0.3",
     "core-js": "^3.6.5",
