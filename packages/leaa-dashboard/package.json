@@ -150,7 +150,7 @@
     "postcss": "^7.0.32",
     "postcss-loader": "^3.0.0",
     "postcss-safe-parser": "^4.0.2",
-    "react-dev-utils": "^10.2.1",
+    "react-dev-utils": "^11.0.4",
     "style-loader": "^1.2.1",
     "terser-webpack-plugin": "^4.1.0",
     "url-loader": "^4.1.0",
