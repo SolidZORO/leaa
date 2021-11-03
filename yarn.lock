@@ -16922,9 +16922,9 @@ validator@13.0.0:
   integrity sha1-D7bGu1IY6iPTaKg0fm0PWnDjvKs=
 
 validator@^13.0.0, validator@^13.1.1:
-  version "13.1.1"
-  resolved "https://registry.npm.taobao.org/validator/download/validator-13.1.1.tgz#f8811368473d2173a9d8611572b58c5783f223bf"
-  integrity sha1-+IETaEc9IXOp2GEVcrWMV4PyI78=
+  version "13.7.0"
+  resolved "https://registry.yarnpkg.com/validator/-/validator-13.7.0.tgz#4f9658ba13ba8f3d82ee881d3516489ea85c0857"
+  integrity sha512-nYXQLCBkpJ8X6ltALua9dRrZDHVYxjJ1wgskNt1lH9fzGjs3tgojGSCBjmEPwkWS1y29+DrizMTW19Pr9uB2nw==
 
 value-equal@^1.0.1:
   version "1.0.1"
