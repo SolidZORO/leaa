@@ -86,7 +86,7 @@
     "readline-sync": "^1.4.10",
     "reflect-metadata": "^0.1.12",
     "rxjs": "^6.6.2",
-    "sharp": "^0.25.4",
+    "sharp": "^0.30.5",
     "svg-captcha": "^1.4.0",
     "transliteration": "^2.1.11",
     "typeorm": "^0.2.25",
