@@ -70,7 +70,7 @@
     "image-size": "^0.8.3",
     "ip": "^1.1.5",
     "jsondiffpatch": "^0.4.1",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "lodash": "^4.17.20",
     "mkdirp": "^1.0.4",
     "moment": "^2.27.0",
