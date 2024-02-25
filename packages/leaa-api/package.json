@@ -57,7 +57,7 @@
     "bcryptjs": "^2.4.3",
     "cache-manager": "^3.3.0",
     "class-transformer": "^0.3.1",
-    "class-validator": "^0.12.2",
+    "class-validator": "^0.14.0",
     "core-js": "^3.6.5",
     "dotenv": "^8.2.0",
     "envalid": "^6.0.2",
